@@ -1,0 +1,134 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo1",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo2",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo3",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            },
+            "finished": true
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            }
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "userInfo4",
+            "clientReorder": false,
+            "dataProvider": {},
+            "error": {
+                "code": "ERR_AWAIT_TIMEDOUT",
+                "name": "TimeoutError"
+            },
+            "finished": true
+        }
+    }
+]

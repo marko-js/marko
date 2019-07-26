@@ -1,0 +1,41 @@
+---
+1
+<await(data.getD1())>
+    <@then|d1|>
+        2
+        <await(data.getD2())>
+            <@then|d2|>3</@then>
+        </await>
+        4
+        <await(data.getD3())>
+            <@then|d3|>
+                5
+                <await(data.getD4())>
+                    <@then|d4|>6</@then>
+                </await>
+                7
+            </@then>
+        </await>
+        8
+    </@then>
+</await>
+9
+<await(data.getD5())>
+    <@then|d5|>
+        10
+        <await(data.getD6())>
+            <@then|d6|>11</@then>
+        </await>
+        12
+        <await(data.getD7())>
+            <@then|d7|>13</@then>
+        </await>
+        14
+        <await(data.getD8())>
+            <@then|d8|>15</@then>
+        </await>
+        16
+    </@then>
+</await>
+17
+---

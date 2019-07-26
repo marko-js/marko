@@ -1,0 +1,22 @@
+<await(data.outer) client-reorder>
+    <@then|outer|>
+        <div class="outer">
+            <h1>Outer</h1>
+            <await(data.inner1) client-reorder>
+                <@then|inner1|>
+                    <div class="inner1">
+                        <h2>Inner 1</h2>
+                    </div>
+                </@then>
+            </await>
+            <await(data.inner2) client-reorder>
+                <@then|inner2|>
+                    <div class="inner2">
+                        <h2>Inner 2</h2>
+                    </div>
+                </@then>
+            </await>
+        </div>
+    </@then>
+</await>
+<await-reorderer/>

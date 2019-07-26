@@ -1,0 +1,55 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": 0
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": 0
+        }
+    },
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false,
+            "dataProvider": {}
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.inner1",
+            "clientReorder": false,
+            "dataProvider": {},
+            "finished": true
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "data.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": 0,
+            "finished": true
+        }
+    }
+]

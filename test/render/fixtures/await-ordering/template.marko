@@ -1,0 +1,21 @@
+---
+1
+<await(data.getD1())>
+    <@then|d1|>
+        2
+        <await(data.getD2())>
+            <@then|d2|>3</@then>
+        </await>
+        4
+        <await(data.getD3())>
+            <@then|d3|>5</@then>
+        </await>
+        6
+    </@then>
+</await>
+7
+<await(data.getD4())>
+    <@then|d4|>8</@then>
+</await>
+9
+---

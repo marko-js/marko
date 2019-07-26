@@ -1,0 +1,8 @@
+---
+BEFORE
+<await(Promise.reject(new Error("Something went wrong!")))>
+    <@then|testData|>Success!</@then>
+    <@catch>something went wrong!</@catch>
+</await>
+AFTER
+---
