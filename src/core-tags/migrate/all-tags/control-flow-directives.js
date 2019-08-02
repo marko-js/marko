@@ -18,7 +18,7 @@ module.exports = function migrate(el, context) {
             !(el.tagName === "else" && name === "if") // <else if(x)> gets passed through
         ) {
             context.deprecate(
-                `The "${name}" attribute is deprecated. Please use the <${name}> tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive`
+                `The "${name}" attribute is deprecated. Please use the <${name}> tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-attributes`
             );
             el.removeAttribute(name);
             el.wrapWith(

@@ -8,7 +8,7 @@ module.exports = function migrate(el, context) {
             el.tagName !== "assign"
         ) {
             context.deprecate(
-                `The "*=widget.elId("someId")" is deprecated. Please use "*:scoped="someId"" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                `The "*=widget.elId("someId")" is deprecated. Please use "*:scoped="someId"" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
             );
 
             attr.name += ":scoped";
@@ -29,7 +29,7 @@ module.exports = function migrate(el, context) {
 
         if (found) {
             context.deprecate(
-                `The "widget" variable is deprecated. Please use "component" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-widget-identifier`
+                `The "widget" variable is deprecated. Please use "component" instead.`
             );
         }
     });

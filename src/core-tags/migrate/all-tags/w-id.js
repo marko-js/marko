@@ -8,11 +8,11 @@ module.exports = function migrate(el, context) {
 
     if (findBoundParent(el)) {
         context.deprecate(
-            `The "w-id" attribute is deprecated. Please use "key" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+            `The "w-id" attribute is deprecated. Please use "key" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
         );
     } else {
         context.deprecate(
-            `Using "w-id" in a template without a "w-bind" is deprecated. The "w-id" attribute is also deprecated. Please use "key" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+            `Using "w-id" in a template without a "w-bind" is deprecated. The "w-id" attribute is also deprecated. Please use "key" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
         );
         context.setMigrationFlag("legacyWidgetAttrsWithoutBind");
     }
