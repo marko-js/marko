@@ -1,0 +1,829 @@
+# Upgrading to Marko 4
+
+The following guide will help you get through the upgrade process quickly and smoothly. After any given step you should have a working application.
+
+This means you should complete a step and get it merged back into master fairly quickly. You shouldn't need to have a `marko-4-upgrade` branch for your project that lives in limbo for a couple of weeks falling behind the other changes that are being merged into master.
+
+If you do decide to pause and later jump in where you left off, be sure to repeat Step 0 first 😉.
+
+## Step 0 - Ensure you're in a working state
+
+Run your application and tests to ensure your project is in a working state. There's little worse than finding an issue after you've started the upgrade process only to figure out the issue existed beforehand.
+
+## Step 1 - Upgrade to latest 3.x
+
+Before we start, you'll want to make sure that you are already on the latest `3.x` release of `marko` and the latest `6.x` release of `marko-widgets`. Later versions of `marko@3` and `marko-widgets@6` ship with deprecation warnings should be handled (the next step) before upgrading to Marko 4. This will make your life _so_ much easier.
+
+```
+npm install marko@^3 marko-widgets@^6
+```
+
+or
+
+```
+yarn upgrade marko@^3 marko-widgets@^6
+```
+
+> Note: Do NOT run `npm install marko` (without the `@^3`). This will put you on Marko 4 and we're not quite there yet.
+
+## Step 2 - Deal with deprecations
+
+Run your application and tests and ensure that there are no deprecation warnings logged to the console. If there are, you should follow the instructions in the deprecation messages to avoid the deprecated pattern and migrate to the recommended pattern.
+
+Please note that you will need to deal with deprecations in any dependent modules as well before continuing with the upgrade process (usually this means updating dependencies).
+
+## Step 3 - Upgrade dependencies
+
+Before upgrading to Marko 4, it is recommended to make sure that your Marko-related dependencies are up-to-date. Many packages have versions that support both Marko 3 and Marko 4. If one of your dependencies doesn't have a version that supports both, you'll need to wait to upgrade it until you're upgrading Marko.
+
+After upgrading, run your application and tests to ensure that everything is still working as intended. If there are any issues, please refer to the changelogs of the modules you just upgraded to see if you need to make any changes within your app to accommodate the new versions.
+
+### Step 3.1 - Dependencies with widgets
+
+If you have any Marko components installed from npm, chances are at least one of them has a direct dependency on `marko@^3` or `marko-widgets@^6`. **This is bad.**
+
+Marko 4 for has legacy support for Marko 3 widgets, but if a dependency directly depends on an old version of `marko` or `marko-widgets`, it will try to use that old version and after your app is on Marko 4 this will cause all sorts of errors.
+
+You can run `npm ls marko marko-widgets` (or `yarn list marko marko-widgets`) to view any dependencies that have a direct dependency on either of these. Any packages that provide components will need to move these into `peerDependencies`.
+
+> NOTE: Some modules that have direct dependencies on Marko do not need to be updated, but as a general rule, they do.
+
+Let's take a look at what a `package.json` for a dependency _should_ look like (minus the comments, because that's not valid JSON 😉).
+
+```js
+{
+   // marko and marko-widgets are NOT here
+   "dependencies":{}
+
+   // use marko@3 and marko-widgets@6 for testing
+   "devDependencies":{
+      "marko": "^3",
+      "marko-widgets": "^6"
+   },
+
+   // use the app's version of marko/marko-widgets, but
+   // give a warning if it doesn't match the versions this
+   // package is compatible with (both Marko 3 and 4)
+   "peerDependencies": {
+      "marko": "^3 || ^4",
+      "marko-widgets": "^6 || ^7"
+   }
+}
+```
+
+## Step 4 - Upgrade marko
+
+Phew! With all the prep out of the way we're finally ready to upgrade `marko`!
+
+```
+npm install marko@^4 marko-widgets@^7
+```
+
+or
+
+```
+yarn upgrade marko@^4 marko-widgets@^7
+```
+
+If at this point you're thinking, "Wait... I thought Marko 4 didn't need `marko-widgets` any more...", you'd be correct. `marko-widgets@7` is just there to help with the migration. We'll remove it soon, but for now, there's still a bunch of calls to `require('marko-widgets').defineComponent` all over your app's code and we don't want that to throw saying it can't find the module.
+
+Now run your application and its tests. Marko 4 contains a legacy compatibility layer, so everything should still work! Congratulations, you've upgraded to Marko 4!
+
+You will however have noticed a swarm of deprecations in your console. We'll get to those.
+
+> NOTE: `marko-widgets@7` isn't tagged as latest, therefore `npm install marko-widgets` and `npm install marko-widgets@latest` will NOT get you to `7.x`.
+
+## Step 5 - Deal with Marko 4 deprecations
+
+Despite having a lot of deprecation warnings, the beauty is that you can deal with them on a template by template, component by component basis and keep a working app in between migrating each template/component.
+
+Additionally, any deprecation warnings that start with `MIGRATION` are automatically migratable by [`marko migrate`](https://github.com/marko-js/cli/blob/master/packages/migrate/README.md). Most migrations are 100% safe and will run automatically. However, there are a few migrations which are considered unsafe: they may only get you 90% of the way there. These migrations will prompt and ask if you want to run the migration. It is highly recommended to run these only on a single component at a time and then finish the migration manually using the guide below so that your app is always in a working state
+
+### 6.1 - Layouts
+
+#### `<layout-use>` → Layout components with `<@tags>` (or `import`)
+
+The layout taglib is no longer necessary in Marko 4 because components have the ability to easily recieve multiple blocks of content and can render those blocks whereever they like.
+
+You can also directly `import` a template by it's path much like `<layout-use>` and render it using the `<${dynamic}/>` syntax, but the recommended way to reference it is by creating components. You should move the layout into your `components/` directory and use it as any other component.
+
+**Old:**
+
+```
+src/
+   components/
+   layouts/
+       site-layout.marko
+   pages/
+      home/
+         template.marko
+```
+
+```marko
+<layout-use('../../layouts/site-layout.marko')>
+    <layout-put into="body">
+        Hello World
+    </layout-put>
+</layout-use>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+import SiteLayout from '../../layouts/site-layout.marko';
+
+<${SiteLayout}>
+    <@body>
+        Hello World
+    </@body>
+</>
+```
+
+> NOTE: If you're using a layout from an npm package that requires you to reference it by its path, you can `import` it. However we recommend checking to see if there is a newer version of the package that exposes the layout as a component or updating the package to expose the layout as a component.
+
+**New (Recommended):**
+
+```
+src/
+   components/
+       site-layout.marko
+   pages/
+      home/
+         template.marko
+```
+
+```marko
+<site-layout>
+    <@body>
+        Hello World
+    </@body>
+</site-layout>
+```
+
+Related Docs: [Custom Tags](http://markojs.com/docs/custom-tags/)
+
+#### `<layout-placeholder>` → `<${dynamic}>`
+
+**Old:**
+
+```marko
+<!doctype>
+<html>
+<body>
+    <layout-placeholder name="body">
+        Default body content
+    </layout-placeholder>
+</body>
+</html>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<!doctype>
+<html>
+<body>
+    <if(input.body)>
+        <${input.body}/>
+    </if>
+    <else>
+        Default body content
+    </else>
+</body>
+</html>
+```
+
+##### Without fallback content
+
+**Old:**
+
+```marko
+<!doctype>
+<html>
+<body>
+    <layout-placeholder name="body"/>
+</body>
+</html>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<!doctype>
+<html>
+<body>
+    <${input.body}/>
+</body>
+</html>
+```
+
+Related Docs: [Body content](http://markojs.com/docs/body-content/)
+
+### 6.2 - Variables & Scripts
+
+#### `<script marko-init>` → `import`/`static`
+
+The `<script marko-init>` attribute is deprecated, but in its place you get ES Module `import` syntax and the `static` keyword. Anything after the `static` keyword is executed as JavaScript _when the template is loaded_.
+
+**Old:**
+
+```marko
+<script marko-init>
+   var capitalize = require('./util/caps');
+   var NAME = capitalize('Frank');
+</script>
+
+<div>${NAME}</div>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+import capitalize from './util/caps';
+static var NAME = capitalize('Frank');
+
+<div>${NAME}</div>
+```
+
+Related Docs:
+
+- [Static JavaScript](http://markojs.com/docs/syntax/#static-javascript)
+- [Importing external files](http://markojs.com/docs/syntax/#importing-external-files)
+
+#### `<var>`/`<assign>`/`<invoke>` → `$`
+
+The `<var>` tag is deprecated, but in its place you get `$`. Similar to `static`, a line that begins with `$` will execute the JavaScript that follows _as a part of each render_.
+
+**Old:**
+
+```marko
+<var name="Frank"/>
+<assign name="John"/>
+<invoke console.log(name)/>
+<div>${name}</div>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+$ var name = "Frank";
+$ name = "John";
+$ console.log(name);
+<div>${name}</div>
+```
+
+Related Docs: [Inline JavaScript](http://markojs.com/docs/syntax/#inline-javascript)
+
+### 6.3 - `w-*` Atrributes
+
+#### `w-id` → `key`
+
+**Old:**
+
+```marko
+<div w-id="foo"/>
+```
+
+**New:**
+
+```marko
+<div key="foo"/>
+```
+
+Related Docs: [The `key` attribute](http://markojs.com/docs/class-components/#key)
+
+#### `w-for` → `for:scoped`
+
+**Old:**
+
+```marko
+<label w-for="name">Name</label>
+<input type="text" w-id="name"/>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<label for:scoped="name">Name</label>
+<input type="text" id:scoped="name"/>
+```
+
+Related Docs: [The `:scoped` attribute modifier](http://markojs.com/docs/class-components/#scoped)
+
+#### `widget.elId` → `:scoped`
+
+You can use `:scoped` on any attribute to reference a scoped value. This value will be unique to this component instance and is useful for other attributes that take an `id` to reference, so you can use a scoped `id` instead.
+
+**Old:**
+
+```marko
+<button aria-describedby=widget.elId("tooltip")>...</button>
+<div w-id="tooltip" role="tooltip">...</div>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<button aria-describedby:scoped="tooltip">...</button>
+<div id:scoped="tooltip" role="tooltip">...</div>
+```
+
+Related Docs: [The `:scoped` attribute modifier](http://markojs.com/docs/class-components/#scoped)
+
+#### `w-preserve` → `no-update`
+
+**Old:**
+
+```marko
+<div w-preserve>
+   ...
+</div>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<div no-update>
+   ...
+</div>
+```
+
+#### `w-preserve-attrs` → `:no-update`
+
+**Old:**
+
+```marko
+<div class="foo" w-preserve-attrs="class">
+   ...
+</div>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<div class:no-update="foo">
+   ...
+</div>
+```
+
+#### `w-on-*` → `on-*()`
+
+**Old:**
+
+```marko
+<button w-on-click="handleClick">click me</button>
+```
+
+or
+
+```marko
+<button w-onClick="handleClick">click me</button>
+```
+
+**New (_automatically migratable_):**
+
+```marko
+<button on-click('handleClick')>click me</button>
+```
+
+The new syntax support binding additional arguments.
+
+Related Docs: [Listening to events](http://markojs.com/docs/events/#listening-to-events)
+
+### 6.4 Widgets → Components
+
+It's time to migrate your first legacy (Marko 3 style) widget to a Marko 4 component. Before you continue, please note that you'll need to go through all these steps for a given component. Partially migrated components will break your app. This is the section for which there are unsafe migrations provided by `marko migrate`. Again, these migrations should be run on a single component, and then follow the steps below to ensure the component is fully migrated.
+
+#### Remove `w-bind`
+
+`w-bind` is the indicator used by Marko to determine whether a component should operate in legacy mode. Marko 4 automatically binds the top level elements in a component, so `w-bind` is not necessary. Let's remove it. There's no turning back now...
+
+#### Rename widget methods
+
+- `this.getWidget` → `this.getComponent`
+- `this.getWidgets` → `this.getComponents`
+
+Related Docs:
+
+- [`getComponent()`](http://markojs.com/docs/class-components/#getcomponentkey-index)
+- [`getComponents()`](http://markojs.com/docs/class-components/#getcomponentskey-index)
+
+#### Component filename structure
+
+##### Traditional widget
+
+**Old:**
+
+Marko 3 widgets were traditionally structured as follows:
+
+```
+  components/
+    my-cool-component/
+      index.js       → Widget Definition
+      template.marko → Widget Marko Template
+```
+
+Your `index.js` acts as the entry point for the component, contains a call to `require('marko-widgets').defineComponent` and requires `template.marko`.
+
+**New:**
+
+Marko 4 changes the filename structure and makes the template the entry point for the component:
+
+- `template.marko` → `index.marko` (the template)
+- `index.js` → `component.js` (component behavior for server/client)
+
+Thus a full split file based component in Marko 4 would be structured as follows:
+
+```
+  components/
+    my-cool-component/
+      component.js → Component Definition
+      index.marko  → Component Marko Template
+```
+
+Marko 4 also introduces [single file components](http://markojs.com/docs/class-components/#single-file-components) within `index.marko`.
+
+##### Split renderer/widget
+
+**Old:**
+
+Marko 3 Split renderer/widgets were structured as follows:
+
+```
+  components/
+    my-cool-component/
+      renderer.js    → Renderer Definition
+      template.marko → Widget Marko Template
+      widget.js      → Widget Definition
+```
+
+Your `renderer.js` acts as the entry point for the component, contains a call to `require('marko-widgets').defineRenderer` and requires `template.marko`.
+
+Your `widget.js` should contain a call to `require('marko-widgets').defineWidget`.
+
+**New:**
+
+Marko 4 changes the filename structure and makes the template the entry point for the component:
+
+- `template.marko` → `index.marko` (the template)
+- `renderer.js` → `component.js` (component behavior for server/client)
+- `widget.js` → `component-browser.js` (component behavior for client only & causes `component.js` to be server only).
+
+Thus a full component in Marko 4 would be structured as follows:
+
+```
+  components/
+    my-cool-component/
+      component.js → Component Definition (Server)
+      component-browser.js → Component Definition (Browser)
+      index.marko  → Component Marko Template
+```
+
+#### Remove all references to `marko-widgets`
+
+**Old:**
+
+As noted in file structure section above, Marko 3 used `marko-widgets` to define a component within each `index.js`. This was the entry point for the component and it required `template.marko` so it knew how to render itself.
+
+_index.js_
+
+```js
+module.exports = require("marko-widgets").defineComponent({
+  template: require("./template.marko")
+  // ...
+});
+```
+
+**New:**
+
+In Marko 4, `marko-widgets` is no longer necessary and `index.marko` becomes the component entry point so referencing the template from the `component.js` file is not necessary (and might cause circular dependency issues).
+
+_component.js_
+
+```js
+module.exports = {
+  // ...
+};
+```
+
+> NOTE: Once this step has been completed for all components in a project, you can remove `marko-widgets` as a dependency!
+
+#### `data` → `input`/`state`
+
+**Old:**
+
+In Marko 3, a template received a single `data` variable that contained the input data. In the case of a widget, the `getTemplateData` method could be used to combine the widget state with the widget input data into a single `data` object to be passed to the template.
+
+_index.js_
+
+```js
+// ...
+getTemplateData(state, input) {
+   return {
+      foo: state.foo,
+      bar: input.bar
+   }
+}
+// ...
+```
+
+_template.marko_
+
+```marko
+<ul>
+   <li>Foo: ${data.foo}</li>
+   <li>Bar: ${data.bar}</li>
+</ul>
+```
+
+**New:**
+
+In Marko 4, components are passed the input data as `input` and a separate `state` variable contains component state. This removes the need for `getTemplateData`! (And it is no longer called)
+
+_index.marko_
+
+```marko
+<ul>
+   <li>Foo: ${state.foo}</li>
+   <li>Bar: ${input.bar}</li>
+</ul>
+```
+
+_component.js_
+
+```js
+// getTemplateData is removed
+```
+
+> NOTE: `input` is aliased as `data`, so accessing `data` will still work, but it is recommended to use `input`. Accessing `data` will be officially deprecated at a later date.
+
+##### Data massaging
+
+If your `getTemplateData` has a lot of logic in it to transform the `state` or `input`, you'll probably want to retain that logic, but still remove the `getTemplateData` method.
+
+**Old:**
+
+_index.js_
+
+```
+// ...
+getTemplateData: function(state, input) {
+     var value = state.value;
+     var sign;
+
+     if (value < 0) {
+         sign = 'negative';
+     } else if (value > 0) {
+         sign = 'positive';
+     }
+
+     return {
+         value: value,
+         sign: sign
+     };
+ }
+// ...
+```
+
+_template.marko_
+
+```marko
+<div class=data.sign>
+   ${data.value}
+</div>
+```
+
+**New:**
+
+Instead of manipulating `input`/`state` before it makes it to the template, move the manipulation logic from `getTemplateData` into a helper function that can be imported into your template. This has the added benefit that it is now easy to write unit tests for any helper functions you might have.
+
+_helpers.js_
+
+```
+exports.getSign = function(value) {
+     var sign;
+
+     if (value < 0) {
+         sign = 'negative';
+     } else if (value > 0) {
+         sign = 'positive';
+     }
+
+     return sign;
+}
+```
+
+_index.marko_
+
+```marko
+import { getSign } from './helpers';
+
+<div class=getSign(state.value)>
+   ${state.value}
+</div>
+```
+
+#### Initializing state
+
+**Old:**
+
+In Marko 3, `input` was transient: it was only there for the first render (or when _new_ input was passed into a component). This meant that when your component re-rendered, if there was data that was in the `input` that was necessary for a re-render, you had to put it in `state` to make sure it got kept around.
+
+_index.js_
+
+```js
+// ...
+getInitialState(input) {
+   return {
+      count: input.initialCount || 0,
+      color: input.color
+   }
+}
+// ...
+```
+
+_template.marko_
+
+```marko
+<div style={ color:data.color }>
+   ${data.count}
+</div>
+```
+
+**New:**
+
+In Marko 4, `getInitialState` is no longer called. You can set initial state in `onCreate`. If you have some state that is derived from `input` and should be reset when the `input` changes, you can set it in `onInput`, but this should be a rare occurrence.
+
+Marko 4 keeps the original `input` around for subsequent renders, so you don't need to add `input` properties into the `state`. Only values that are controlled by the component should be put in `state`.
+
+_component.js_
+
+```js
+// ...
+onCreate(input) {
+   this.state = {
+      count: input.initialCount || 0
+   };
+}
+// ...
+```
+
+_index.marko_
+
+```marko
+<div style={ color:input.color }>
+   ${state.count}
+</div>
+```
+
+> NOTE: From within the component you can access `this.state` as well as `this.input`
+
+Related Docs:
+
+- [`onCreate`](http://markojs.com/docs/class-components/#oncreateinput-out)
+- [`onInput`](http://markojs.com/docs/class-components/#oninputinput-out)
+- [`this.state`](http://markojs.com/docs/class-components/#thisstate)
+- [`this.input`](http://markojs.com/docs/class-components/#thisinput)
+
+#### Browser initialization
+
+**Old:**
+
+In Marko 3, the `init` method was used to set things up in the browser and was the first time the DOM for the component was ready since `init` was called immediately after _mounting_ the component to the DOM.
+
+The `getWidgetConfig` method was used to create a `config` object that would be serialized and sent to the browser to be used in the `init` method. This was necessary because `input` was not available in `init`.
+
+_index.js_
+
+```js
+// ...
+init(config) {
+   $(this.el).dataTable(config);
+}
+getWidgetConfig(input) {
+   return {
+      paginate: input.paginate,
+      scrollY: input.scrollY
+   };
+}
+// ...
+```
+
+**New:**
+
+`init` has been renamed to the more appropriate `onMount` which better describes where in a component's lifecycle it is called. `getWidgetConfig` is no longer necessary (or called) because we can access `this.input`.
+
+_component.js_
+
+```js
+// ...
+onMount() {
+   $(this.el).dataTable({
+      paginate: this.input.paginate,
+      scrollY: this.input.scrollY
+   });
+}
+// ...
+```
+
+> NOTE: If you need values from `out`, you can grab them in `onCreate`, attach them to the component instance and access them in `onMount`:
+>
+> ```js
+> //...
+> onCreate(input, out) {
+>    this.value = out.global.value;
+> }
+> onMount() {
+>    console.log(this.value)
+> }
+> // ...
+> ```
+
+Related Docs: [`onMount`](http://markojs.com/docs/class-components/#onmount)
+
+#### Widget body
+
+**Old:**
+
+```js
+// ...
+getInitialBody(input, out) {
+   return input.renderBody || input.label
+}
+//
+```
+
+```marko
+<button>
+   <w-body/>
+</button>
+```
+
+**New:**
+
+```marko
+<button>
+   <if(input.renderBody)>
+      <${input.renderBody}/>
+   </if>
+   <else>
+      ${input.label}
+   </else>
+</button>
+```
+
+#### `getInitialProps(input, out)`
+
+**Old:**
+
+This method existed because `input` was passed to `getInitialState`, `getInitialBody`, `getWidgetConfig` and `getTemplateData`. If the input needed to be transformed, `getInitialProps` allowed you to do it in a single place.
+
+**New:**
+
+`getInitialProps` is no longer called. If you need to transform your input, move that logic into helper methods or another appropriate location.
+
+#### Lifecycle methods
+
+A few of these have already been covered:
+
+- `init` ➔ `onMount`
+- `getWidgetConfig` ➔ `onMount`/`onCreate`
+- `getInitialState` ➔ `onCreate`
+- `getTemplateData` ➔ (no longer needed)
+- `getInitialProps` ➔ (no longer needed)
+- `getInitialBody` ➔ (no longer needed)
+
+##### `onRender`
+
+The legacy `onRender` method was called with `firstRender === true` [immediately after mounting the widget in the DOM](https://github.com/marko-js/marko-widgets/blob/5b226b9ede8227bb68e16fa8316ef3058daf3d06/lib/init-widgets-browser.js#L205-L209).
+
+Subsequent calls `onRender` occurred [immediately after calls to `onUpdate`](https://github.com/marko-js/marko-widgets/blob/5b226b9ede8227bb68e16fa8316ef3058daf3d06/lib/init-widgets-browser.js#L195-L196).
+
+This behavior did not align with where the actual render takes place (it actually occurs before mounting and before updating the DOM). So we've changed its behavior in Marko 4. If you were using `onRender` in Marko 3, use `onMount` or `onUpdate` instead.
+
+- `onRender` (first render) ➔ `onMount`
+- `onRender` (subsequent renders) ➔ `onUpdate`
+
+##### `onBeforeUpdate` and `onUpdate`
+
+- `onBeforeUpdate` ➔ `onUpdate`/`onRender`
+- `onUpdate` ➔ `onUpdate`
+
+The `onUpdate` is called after DOM updates have been made. The `onRender` method is now called before rendering, so it can replace some use-cases of `onBeforeUpdate`.
+
+##### `onBeforeDestroy` and `onDestroy`
+
+- `onBeforeDestroy` ➔ `onDestroy`
+- `onDestroy` ➔ `onDestroy`
+
+The `onDestroy` is now called immediately before destroying the DOM associated with a component.
+
+See how the [legacy adaptor remaps these methods](https://github.com/marko-js/marko/blob/373a7ceb52b60454a9661fc94a3c9935e5a7dbfa/src/components/legacy/defineWidget-legacy-browser.js#L72-L102).
+
+Related Docs: [Lifecycle events](http://markojs.com/docs/class-components/#lifecycle-events)
+
+#### Fin.
+
+👍🎉 You've fully migrated your first component! 🎉👍
+
+Repeat this process for each component in your app. As you get familiar with "Thinking in Marko 4" each one will be easier. And remember, you should have a working application after converting each individual component, so you don't have to do it all at once.
