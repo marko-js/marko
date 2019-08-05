@@ -18,12 +18,12 @@ module.exports = function migrate(el, context) {
 
             if (name === "w-for" && !findBoundParent(el)) {
                 context.deprecate(
-                    `Using "w-for" in a template without a "w-bind" is deprecated. The "${name}" attribute is also deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                    `Using "w-for" in a template without a "w-bind" is deprecated. The "${name}" attribute is also deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
                 );
                 context.setMigrationFlag("legacyWidgetAttrsWithoutBind");
             } else {
                 context.deprecate(
-                    `The "${name}" attribute is deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                    `The "${name}" attribute is deprecated. Please use "for:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
                 );
             }
 

@@ -14,7 +14,7 @@ module.exports = function migrate(el, context) {
     el.tagName = `@${nestedTagName}`;
 
     context.deprecate(
-        'The "<my-tag:nested>" tagName syntax is deprecated. Please use the "<@nested>" tagName syntax instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-nested-tag',
+        'The "<my-tag:nested>" tagName syntax is deprecated. Please use the "<@nested>" tagName syntax instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-nested-tags',
         el
     );
 };

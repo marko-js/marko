@@ -290,4 +290,4 @@ Coming soon: auto correction and autonomous coding
 ---
 
 _Cover image credit:
-_[Wikipedia](https://en.wikipedia.org/wiki/List_of_rock_formations#/media/File:Amanhecer_no_Hercules_--.jpg)
+_[Wikipedia](https://commons.wikimedia.org/wiki/File:Amanhecer_no_Hercules_--.jpg)

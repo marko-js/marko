@@ -34,7 +34,7 @@ module.exports = function migrator(el, context) {
 
     if (found) {
         context.deprecate(
-            "Non standard template literals have been deprecated, please use javascript template literals instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-non-standard-template-literal"
+            "Non standard template literals have been deprecated, please use javascript template literals instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-nonstandard-template-literals"
         );
     }
 };
