@@ -4,7 +4,7 @@ function compile(bodyText) {
 
 module.exports = function generateCode(elNode, codegen) {
     var builder = codegen.builder;
-    return builder.htmlElement("script", {}, [
+    return builder.htmlElement("script", { type: '"text/html"' }, [
         builder.text(builder.literal(compile(elNode.bodyText)))
     ]);
 };
