@@ -7,3 +7,13 @@
     Hello
   </>
 </my-tag>
+
+<no:parent>
+  Tags with colons shouldn’t be migrated if they have no parent that matches their prefix
+</no:parent>
+
+<my-tag>
+  <if(true)>
+    <my-tag:subtag>But I should be, even though my parent doesn’t match</my-tag:subtag>
+  </if>
+</my-tag>

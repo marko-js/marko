@@ -4,3 +4,13 @@
     <@test>Hello</@test>
     <${should ? be : ignored}>Hello</>
 </my-tag>
+
+<no:parent>
+    Tags with colons shouldn’t be migrated if they have no parent that matches their prefix
+</no:parent>
+
+<my-tag>
+    <if(true)>
+        <@subtag>But I should be, even though my parent doesn’t match</@subtag>
+    </if>
+</my-tag>
