@@ -20,6 +20,8 @@ module.exports = function beginComponent(
 
     var componentId = component.id;
 
+    // existingComponentDef is only here to allow binding a conditional
+    // widget.  It should be removed when the legacy compat layer is removed.
     var componentDef =
         existingComponentDef ||
         (componentsContext.___componentDef = new ComponentDef(
