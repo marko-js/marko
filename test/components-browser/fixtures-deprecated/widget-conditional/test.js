@@ -15,5 +15,3 @@ module.exports = function(helpers) {
 
     expect(widget != null).to.equal(true);
 };
-
-module.exports.fails_hydrate = true;

@@ -113,7 +113,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             component,
             key,
             ownerComponentDef,
-            isSplit
+            isSplit,
+            isFakeComponent
         );
         var parentLegacyComponentDef = componentsContext.___legacyComponentDef;
         componentsContext.___legacyComponentDef = componentDef;
@@ -127,10 +128,38 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         componentDef.t = function(typeName) {
             if (typeName) {
-                vComponentNode.___component = this.___component = component = registry.___createComponent(
-                    typeName,
-                    component.id
-                );
+                if (registry.___isServer) {
+                    var oldComponent = component;
+                    if (renderingLogic) delete renderingLogic.onRender;
+                    component = registry.___createComponent(
+                        renderingLogic || {},
+                        id,
+                        input,
+                        out,
+                        typeName,
+                        customEvents,
+                        ownerComponentId
+                    );
+                    if (input.___widgetProps) {
+                        component.input = input.___widgetProps;
+                    }
+                    Object.assign(component, oldComponent);
+                    beginComponent(
+                        componentsContext,
+                        component,
+                        key,
+                        ownerComponentDef,
+                        isSplit,
+                        false,
+                        this
+                    );
+                } else {
+                    vComponentNode.___component = component = registry.___createComponent(
+                        typeName,
+                        component.id
+                    );
+                }
+                this.___component = component;
             }
         };
 
