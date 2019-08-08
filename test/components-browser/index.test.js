@@ -108,7 +108,7 @@ function runHydrateTest(fixture) {
                 helpers.isHydrate = true;
 
                 helpers.mount = function() {
-                    return browser.window.components[curInstance++];
+                    return browser.window.getComponent(curInstance++);
                 };
 
                 if (hasCallback) {
