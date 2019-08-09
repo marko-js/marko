@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.11
+
+- Fix server-rendered conditional widgets in the compatibility layer. [#1395](https://github.com/marko-js/marko/pull/1395)
+- Deprecate the partial dynamic tag. [#1397](https://github.com/marko-js/marko/pull/1397)
+
 ### 4.18.10
 
 - Improve migration for `getInitialState` with legacy widgets. [#1385](https://github.com/marko-js/marko/pull/1385)
