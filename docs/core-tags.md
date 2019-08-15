@@ -70,9 +70,9 @@ _HTML Output:_
 
 ```html
 <ul>
-   <li>0: red</li>
-   <li>1: green</li>
-   <li>2: blue</li>
+  <li>0: red</li>
+  <li>1: green</li>
+  <li>2: blue</li>
 </ul>
 ```
 
