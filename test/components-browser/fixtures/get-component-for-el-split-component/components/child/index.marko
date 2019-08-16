@@ -1,0 +1,15 @@
+class {
+    onCreate(input) {
+        this.name = input.name;
+    }
+}
+
+<macro|input| name="fragment">
+    <${input}/>
+</macro>
+
+<fragment>
+    <fragment>
+        <div class=input.name/>
+    </fragment>
+</fragment>
