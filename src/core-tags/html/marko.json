@@ -1,10 +1,5 @@
 {
     "taglib-id": "marko-html",
-    "<html-comment>": {
-        "body": "parsed-text",
-        "code-generator": "./html-comment-tag.js",
-        "attribute-groups": ["html-attributes"]
-    },
     "<a>": {
         "@href": "#html-href",
         "@hreflang": "#html-hreflang",

@@ -12,12 +12,10 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "displayText": "key=\"<method>\"",
-                    "snippet": "key=\"${1:method}\"",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
-                },
-                {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
+                    "displayText": "key=\"<name>\"",
+                    "snippet": "key=\"${1:name}\"",
+                    "description": "Used to identify loop interations and to reference the rendered tag within the component class.",
+                    "descriptionMoreURL": "https://markojs.com/docs/conditionals-and-lists/#always-set-a-key"
                 }
             ]
         },
@@ -30,8 +28,9 @@
             "autocomplete": [
                 {
                     "displayText": "on<event>(\"<method>\")",
+                    "description": "Used to attach an event handler to an element or component.",
                     "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
-                    "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
+                    "descriptionMoreURL": "https://markojs.com/docs/events"
                 }
             ]
         },
@@ -43,8 +42,9 @@
             "set-flag": "hasComponentEvents",
             "autocomplete": {
                 "displayText": "once<event>(\"<method>\")",
+                "description": "Used to attach an event handler once to an element or component.",
                 "snippet": "once${1:Click}(\"handle${2:Button}${1:Click}\")",
-                "descriptionMoreURL": "https://markojs.com/docs/components/#attaching-dom-event-listeners"
+                "descriptionMoreURL": "https://markojs.com/docs/events"
             }
         },
         "@no-update": {
@@ -52,7 +52,8 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "description": "Prevents updates to this tag after the initial render.",
+                    "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update"
                 }
             ]
         },
@@ -61,7 +62,8 @@
             "preserve-name": true,
             "autocomplete": [
                 {
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "description": "Prevents updates to the body content after the initial render.",
+                    "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-body"
                 }
             ]
         },
@@ -70,7 +72,8 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-if(${1:condition})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "description": "Prevents updates to this tag after the initial render if the condition is met.",
+                    "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-if"
                 }
             ]
         },
@@ -79,7 +82,8 @@
             "autocomplete": [
                 {
                     "snippet": "no-update-body-if(${1:condition})",
-                    "descriptionMoreURL": "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+                    "description": "Prevents updates to the body content after the initial render if the condition is met.",
+                    "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-body-if"
                 }
             ]
         },
@@ -112,6 +116,7 @@
         "@id": "string",
         "@if": "expression",
         "@body-only": "expression",
+        "deprecated": true,
         "autocomplete": []
     },
     "<widget-types>": {
@@ -125,7 +130,15 @@
     },
     "<class>": {
         "node-factory": "./class-tag-node-factory.js",
-        "open-tag-only": true
+        "open-tag-only": true,
+        "autocomplete": [
+            {
+                "displayText": "class { /** lifecycle methods **/ }",
+                "snippet": "class {\n\t$0\n}",
+                "description": "A class containing the lifecycle methods, event handlers, and other properties for this component.",
+                "descriptionMoreURL": "https://markojs.com/docs/class-components/#single-file-components"
+            }
+        ]
     },
     "transformer": "./components-transformer.js"
 }

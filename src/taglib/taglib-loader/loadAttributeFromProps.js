@@ -132,7 +132,9 @@ class AttrLoader {
     /**
      * The description of the attribute. Only used for documentation.
      */
-    description() {}
+    description(value) {
+        this.attr.description = value;
+    }
 
     /**
      * The "set-flag" property allows a "flag" to be added to a Node instance
