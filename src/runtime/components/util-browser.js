@@ -11,6 +11,20 @@ var componentLookup = {};
 var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
+function getParentComponentForEl(node) {
+    while (node && !componentsByDOMNode.get(node)) {
+        node = node.previousSibling || node.parentNode;
+        if (node.fragment) {
+            if (node === node.fragment.endNode) {
+                node = node.fragment.previousSibling || node.parentNode;
+            } else {
+                node = node.fragment;
+            }
+        }
+    }
+    return node && componentsByDOMNode.get(node);
+}
+
 function getComponentForEl(el, doc) {
     if (el) {
         var node =
@@ -19,7 +33,9 @@ function getComponentForEl(el, doc) {
                 : el;
         if (node) {
             var vElement = vElementsByDOMNode.get(node);
-            return vElement && vElement.___ownerComponent;
+            return vElement
+                ? vElement.___ownerComponent
+                : getParentComponentForEl(node);
         }
     }
 }
