@@ -682,6 +682,13 @@ class TagLoader {
         this.tag.noOutput = value;
     }
 
+    /**
+     * The description of the tag. Only used for documentation.
+     */
+    description(value) {
+        this.tag.description = value;
+    }
+
     autocomplete(value) {
         this.tag.autocomplete = value;
     }
