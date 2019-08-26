@@ -37,7 +37,7 @@
             "type": "expression",
             "autocomplete": [
                 {
-                    "description": "Iterates over an list of items."
+                    "description": "Iterates over a list of items."
                 }
             ]
         },
@@ -53,7 +53,7 @@
             "type": "number",
             "autocomplete": [
                 {
-                    "description": "Iterates up to the provided number"
+                    "description": "Iterates up to the provided number (inclusive)"
                 }
             ]
         },
@@ -61,7 +61,7 @@
             "type": "number",
             "autocomplete": [
                 {
-                    "description": "Iterates starting from the provided number"
+                    "description": "Iterates starting from the provided number (inclusive)"
                 }
             ]
         },
