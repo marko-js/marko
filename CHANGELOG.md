@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.12
+
+- Improve autocompletion for core tags. [#1405](https://github.com/marko-js/marko/pull/1405)
+- Fix issue when using `getComponentForEl` with split components. [#1400](https://github.com/marko-js/marko/pull/1400)
+
 ### 4.18.11
 
 - Fix server-rendered conditional widgets in the compatibility layer. [#1395](https://github.com/marko-js/marko/pull/1395)
