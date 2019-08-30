@@ -1,8 +1,0 @@
-{
-    "requireRemap": [
-        {
-            "from": "./index.js",
-            "to": "./index-browser-dynamic.js"
-        }
-    ]
-}
