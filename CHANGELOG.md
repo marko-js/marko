@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.13
+
+- Improve support for consuming v3 components via webpack. [#1410](https://github.com/marko-js/marko/pull/1410)
+
 ### 4.18.12
 
 - Improve autocompletion for core tags. [#1405](https://github.com/marko-js/marko/pull/1405)
