@@ -1826,15 +1826,6 @@
         ],
         "attribute-groups": ["html-attributes"]
     },
-    "<opt>": {
-        "html": true,
-        "autocomplete": [
-            {
-                "snippet": "option${1: value=\"${2:option}\"}"
-            }
-        ],
-        "attribute-groups": ["html-attributes"]
-    },
     "<template>": {
         "html": true,
         "autocomplete": [
