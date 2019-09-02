@@ -18,7 +18,7 @@
             {},
             {
                 "displayText": "a href=\"\"",
-                "snippet": "a href=\"${1:#}\""
+                "snippet": "a href=\"${1:https://}\""
             },
             {
                 "displayText": "a href=\"mailto:\"",
@@ -58,7 +58,7 @@
             {},
             {
                 "displayText": "area shape=\"\" coords=\"\" href=\"\"",
-                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
+                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:https://}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"],
@@ -101,7 +101,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "base href=\"${1:#}\" target=\"${2:_blank}\""
+                "snippet": "base href=\"${1:https://}\" target=\"${2:_top}\""
             }
         ],
         "attribute-groups": ["html-attributes"],
@@ -109,12 +109,6 @@
     },
     "<bdi>": {
         "html": true,
-        "autocomplete": [
-            {},
-            {
-                "snippet": "bdi dir=\"${1:auto}\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<bdo>": {
@@ -134,7 +128,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "blockquote cite=\"${1:http://}\""
+                "snippet": "blockquote cite=\"${1:https://}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -275,7 +269,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
+                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:https://}\" width=\"${3:300}\" height=\"${4:300}\""
             }
         ],
         "attribute-groups": ["html-attributes"],
@@ -313,7 +307,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
+                "snippet": "form class=\"$1\" action=\"${2:/}\" method=\"${3:post}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -364,15 +358,15 @@
         "autocomplete": [
             {},
             {
-                "snippet": "!DOCTYPE html"
+                "snippet": "!doctype html"
             },
             {
                 "displayText": "HTML page",
-                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+                "snippet": "<!doctype html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
             },
             {
                 "displayText": "HTML page (concise)",
-                "snippet": "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+                "snippet": "<!doctype html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"utf-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -518,7 +512,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
+                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:all}\" title=\"${4:no title}\""
             },
             {
                 "snippet": "link rel=\"icon\" href=\"$1.ico\""
@@ -594,7 +588,7 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet": "object data=\"${1:http://}\" type=\"${2:mimetype}\""
+                "snippet": "object data=\"${1:https://}\" type=\"${2:mime/type}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -752,7 +746,7 @@
         "html": true,
         "autocomplete": [
             {
-                "snippet": "source src=\"${1:http://}\" type=\"${2:mimetype}\""
+                "snippet": "source src=\"${1:https://}\" type=\"${2:mime/type}\""
             }
         ],
         "attribute-groups": ["html-attributes"],
@@ -773,11 +767,6 @@
         "@nonce": "#html-nonce",
         "@type": "#html-type",
         "html": true,
-        "autocomplete": [
-            {
-                "snippet": "style media=\"screen\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<sub>": {
@@ -901,8 +890,8 @@
         "html": true,
         "autocomplete": [
             {
-                "displayText": "video src=\"\" autoplay poster=\"\"",
-                "snippet": "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
+                "displayText": "video src=\"\" controls poster=\"\"",
+                "snippet": "video src=\"${1:videofile.ogg}\" ${2:controls} ${3:poster=\"${4:posterimage.jpg}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"]
