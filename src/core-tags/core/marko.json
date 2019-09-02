@@ -4,7 +4,7 @@
         "attributes": {},
         "autocomplete": [
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
             }
         ]
     },
@@ -14,11 +14,11 @@
         "autocomplete": [
             {
                 "snippet": "else-if(${1:condition})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
             },
             {
                 "snippet": "else-if",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
             }
         ]
     },
@@ -34,15 +34,15 @@
         "autocomplete": [
             {
                 "snippet": "for|${1:value}, ${2:index}| of=\"${3:array}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#for"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#for"
             },
             {
                 "snippet": "for|${1:name}, ${2:value}| in=\"${3:object}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#property-looping"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties"
             },
             {
                 "snippet": "for|${1:index}| from=\"${2:number}\" to=\"${3:number}\" step=\"${4:number}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#range-looping"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers"
             }
         ]
     },
@@ -52,10 +52,10 @@
         "autocomplete": [
             {
                 "snippet": "if(${1:condition})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#ifelse-ifelse"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
             }
         ]
     },
@@ -72,10 +72,10 @@
             {
                 "displayText": "include-html(<path>)",
                 "snippet": "include-html(${1:\"./foo.html\"})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-html"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-html"
             }
         ]
     },
@@ -85,10 +85,10 @@
             {
                 "displayText": "include-text(<path>)",
                 "snippet": "include-text(${1:\"./foo.txt\"})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-text"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#includes"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-text"
             }
         ]
     },
@@ -98,10 +98,10 @@
             {
                 "displayText": "macro|<params>| name=\"<name>\"",
                 "snippet": "macro|${2:param1, param2}| name=\"${1:name}\"",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#macro"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#macros"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#macro"
             }
         ],
         "no-output": true
@@ -119,7 +119,7 @@
         "preserve-whitespace": true,
         "autocomplete": [
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#whitespace"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#marko-preserve-whitespace"
             }
         ]
     },
@@ -140,10 +140,10 @@
         "autocomplete": [
             {
                 "snippet": "while(${1:condition})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#while"
             },
             {
-                "descriptionMoreURL": "http://markojs.com/docs/marko/language-guide/#looping"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#while"
             }
         ]
     },
@@ -173,7 +173,7 @@
         "autocomplete": [
             {
                 "snippet": "await(${1:promise})",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait><code>"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#await"
             }
         ]
     },
@@ -182,7 +182,7 @@
         "autocomplete": [
             {
                 "snippet": "await-reorderer",
-                "descriptionMoreURL": "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+                "descriptionMoreURL": "https://markojs.com/docs/core-tags/#await"
             }
         ]
     },
