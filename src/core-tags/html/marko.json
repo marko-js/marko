@@ -1250,6 +1250,214 @@
             "vocab": {
                 "html": true
             },
+            "aria-activedescendant": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-atomic": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-autocomplete": {
+                "enum": [
+                    "inline",
+                    "list",
+                    "both",
+                    "none"
+                ],
+                "html": true
+            },
+            "aria-busy": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-checked": {
+                "enum": ["true", "false", "mixed"],
+                "html": true
+            },
+            "aria-colcount": {
+                "type": "number",
+                "html": true
+            },
+            "aria-colindex": {
+                "type": "number",
+                "html": true
+            },
+            "aria-colspan": {
+                "type": "number",
+                "html": true
+            },
+            "aria-controls": {
+                "html": true
+            },
+            "aria-current": {
+                "enum": [
+                    "page",
+                    "step",
+                    "location",
+                    "date",
+                    "time",
+                    "true",
+                    "false"
+                ],
+                "html": true
+            },
+            "aria-descrbedby": {
+                "html": true
+            },
+            "aria-details": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-disabled": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-errormessage": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-expanded": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-flowto": {
+                "html": true
+            },
+            "aria-haspopup": {
+                "enum": [
+                    "menu",
+                    "listbox",
+                    "tree",
+                    "grid",
+                    "dialog"
+                ],
+                "html": true
+            },
+            "aria-hidden": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-invalid": {
+                "enum": [
+                    "true",
+                    "false",
+                    "grammar",
+                    "spelling"
+                ],
+                "html": true
+            },
+            "aria-keyshortcuts": {
+                "html": true
+            },
+            "aria-label": {
+                "html": true
+            },
+            "aria-labelledby": {
+                "html": true
+            },
+            "aria-level": {
+                "type": "number",
+                "html": true
+            },
+            "aria-live": {
+                "enum": ["off", "polite", "assertive"],
+                "html": true
+            },
+            "aria-modal": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-multiline": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-multiselectable": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-orientation": {
+                "enum": ["horizontal", "vertical"],
+                "html": true
+            },
+            "aria-owns": {
+                "html": true
+            },
+            "aria-placeholder": {
+                "html": true
+            },
+            "aria-posinset": {
+                "type": "number",
+                "html": true
+            },
+            "aria-pressed": {
+                "enum": ["true", "false", "mixed"],
+                "html": true
+            },
+            "aria-readonly": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-relevant": {
+                "enum": [
+                    "additions",
+                    "additions text",
+                    "all",
+                    "removals",
+                    "text"
+                ],
+                "html": true
+            },
+            "aria-required": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-roledescription": {
+                "html": true
+            },
+            "aria-rowcount": {
+                "type": "number",
+                "html": true
+            },
+            "aria-rowindex": {
+                "type": "number",
+                "html": true
+            },
+            "aria-rowspan": {
+                "type": "number",
+                "html": true
+            },
+            "aria-selected": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-setsize": {
+                "type": "number",
+                "html": true
+            },
+            "aria-sort": {
+                "enum": [
+                    "ascending",
+                    "descending",
+                    "none"
+                ],
+                "html": true
+            },
+            "aria-valuemax": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuemin": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuenow": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuetext": {
+                "html": true
+            },
             "onabort": {
                 "html": true
             },
