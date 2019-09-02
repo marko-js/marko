@@ -62,7 +62,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<article>": {
         "html": true,
@@ -105,7 +105,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<bdi>": {
         "html": true,
@@ -156,7 +156,7 @@
     "<br>": {
         "html": true,
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<button>": {
         "@autofocus": "#html-autofocus",
@@ -208,7 +208,7 @@
         "@span": "#html-span",
         "html": true,
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<colgroup>": {
         "@span": "#html-span",
@@ -273,7 +273,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<fieldset>": {
         "@disabled": "#html-disabled",
@@ -351,7 +351,7 @@
     "<hr>": {
         "html": true,
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<html>": {
         "html": true,
@@ -419,7 +419,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<input>": {
         "@accept": "#html-accept",
@@ -462,7 +462,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<ins>": {
         "@cite": "#html-cite",
@@ -522,7 +522,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<map>": {
         "@name": "#html-name",
@@ -550,7 +550,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<meter>": {
         "@form": "#html-form",
@@ -645,7 +645,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<picture>": {
         "html": true,
@@ -750,7 +750,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<span>": {
         "html": true,
@@ -861,7 +861,7 @@
             }
         ],
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "<u>": {
         "html": true,
@@ -899,7 +899,7 @@
     "<wbr>": {
         "html": true,
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "attribute-groups": {
         "html-attributes": {
