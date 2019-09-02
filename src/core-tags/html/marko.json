@@ -5,7 +5,7 @@
         "code-generator": "./html-comment-tag.js"
     },
     "<a>": {
-        "download": "#html-download",
+        "@download": "#html-download",
         "@href": "#html-href",
         "@hreflang": "#html-hreflang",
         "@media": "#html-media",
