@@ -29,7 +29,7 @@ function convertAttrValue(type, value) {
     if (value === true) {
         return "";
     } else if (type == "object") {
-        return JSON.stringify(value);
+        return value instanceof RegExp ? value.source : JSON.stringify(value);
     } else {
         return toString(value);
     }
