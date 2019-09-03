@@ -313,13 +313,6 @@ class Parser {
                 attrDef.spread = true;
             }
 
-            if (attrRawValue) {
-                if (/^component\.(?:getE|e)lId\(.*\)$/.test(attrRawValue)) {
-                    // TODO: add complain call here
-                    context.data.hasImperativeComponentIds = true;
-                }
-            }
-
             parsedAttributes.push(attrDef);
         });
 
