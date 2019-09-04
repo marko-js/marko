@@ -6,7 +6,7 @@ module.exports = function render(elNode, context) {
     commonTagMigrator(elNode, context);
     elNode.setTransformerApplied(commonTagMigrator);
     context.deprecate(
-        "The <layout-placeholder> tag is deprecated. Please use the <${dynamic}> tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tags"
+        "The <layout-placeholder> tag is deprecated. Please use the <${dynamic}> tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tag"
     );
 
     const builder = context.builder;

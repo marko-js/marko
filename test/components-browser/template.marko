@@ -5,8 +5,8 @@
     </head>
     <body>
         <div#testsTarget>
-            <for|component| of=input.components>
-                <${require(component.template)} ...component.input key="components[]"/>
+            <for|component, index| of=input.components>
+                <${require(component.template)} ...component.input key=`component--${index}`/>
             </for>
         </div>
     </body>

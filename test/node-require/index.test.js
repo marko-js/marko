@@ -3,7 +3,7 @@
 require("../__util__/test-init");
 
 const chai = require("chai");
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 require("chai").should();
 const expect = require("chai").expect;
 

@@ -6,7 +6,7 @@ module.exports = function migrate(el, context) {
 
     const values = attr.value.value;
     context.deprecate(
-        `The "w-preserve-attrs" attribute is deprecated. Please use ":no-update" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+        `The "w-preserve-attrs" attribute is deprecated. Please use ":no-update" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
     );
 
     values.split(",").forEach(val => {

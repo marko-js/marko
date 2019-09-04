@@ -10,11 +10,11 @@ module.exports = function migrate(el, context) {
 
         if (findBoundParent(el)) {
             context.deprecate(
-                `The "w-on*" attributes are deprecated. Please use "on*()" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                `The "w-on*" attributes are deprecated. Please use "on*()" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
             );
         } else {
             context.deprecate(
-                `Using "w-on*" in a template without a "w-bind" is deprecated. The "w-on*" attributes are also deprecated. Please use "on*()" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+                `Using "w-on*" in a template without a "w-bind" is deprecated. The "w-on*" attributes are also deprecated. Please use "on*()" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
             );
             context.setMigrationFlag("legacyWidgetAttrsWithoutBind");
         }

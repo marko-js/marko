@@ -6,7 +6,7 @@ module.exports = function migrate(el, context) {
     }
 
     context.deprecate(
-        'The "w-body" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w-body)'
+        'The "w-body" attribute is deprecated. Please use the "<${dynamicTag}/>" tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-Widget-body-(w‐body)'
     );
 
     const builder = context.builder;

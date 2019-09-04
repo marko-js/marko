@@ -7,7 +7,7 @@ module.exports = function migrate(el, context) {
             return;
         }
         context.deprecate(
-            `The ":key" modifier is deprecated. Please use ":scoped" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+            `The ":key" modifier is deprecated. Please use ":scoped" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
         );
 
         let nameNoModifier = name.slice(0, 0 - ":key".length);

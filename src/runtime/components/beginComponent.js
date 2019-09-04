@@ -13,17 +13,22 @@ module.exports = function beginComponent(
     key,
     ownerComponentDef,
     isSplitComponent,
-    isImplicitComponent
+    isImplicitComponent,
+    existingComponentDef
 ) {
     var globalContext = componentsContext.___globalContext;
 
     var componentId = component.id;
 
-    var componentDef = (componentsContext.___componentDef = new ComponentDef(
-        component,
-        componentId,
-        globalContext
-    ));
+    // existingComponentDef is only here to allow binding a conditional
+    // widget.  It should be removed when the legacy compat layer is removed.
+    var componentDef =
+        existingComponentDef ||
+        (componentsContext.___componentDef = new ComponentDef(
+            component,
+            componentId,
+            globalContext
+        ));
 
     // On the server
     if (

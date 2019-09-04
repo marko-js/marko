@@ -26,7 +26,7 @@ And support complex expressions using the [tag arguments](./syntax.md#arguments)
 </if>
 ```
 
-> **Note:** You may see conditionals applied as attributes. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive).
+> **Note:** You may see conditionals applied as attributes. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-attributes).
 >
 > ```marko
 > <div if(arriving)>Hey there</div>
@@ -70,9 +70,9 @@ _HTML Output:_
 
 ```html
 <ul>
-  <li>red</li>
-  <li>green</li>
-  <li>blue</li>
+  <li>0: red</li>
+  <li>1: green</li>
+  <li>2: blue</li>
 </ul>
 ```
 
@@ -192,7 +192,7 @@ _HTML Output:_
 </ul>
 ```
 
-> **Note:** You may also see `while` used as an attribute. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-directive).
+> **Note:** You may also see `while` used as an attribute. This is [deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-attributes).
 >
 > ```marko
 > $ var n = 0;

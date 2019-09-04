@@ -8,7 +8,7 @@ module.exports = function migrator(elNode, context) {
     elNode.setTransformerApplied(commonTagMigrator);
 
     context.deprecate(
-        'The "<assign>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var-assign-invoke-tags'
+        'The "<assign>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var,-assign,-invoke-tags'
     );
 
     if (!attributes) {

@@ -68,9 +68,9 @@ You can also provide an object as the value for an attribute definition which ex
       "default-value": 0, // The attribute will default to this value.
       "preserve-name": true, // By default component attributes are camelCased, this disables that feature.
       "remove-dashes": true, // By default native tag attributes are dash-cased, this disables that feature.
+      "required": true, // Error during compilation if this attribute is undefined.
 
       // The following attributes do nothing, but are picked up by tooling.
-      "required": true,
       "deprecated": true,
       "description": "Sets the heading for the component"
     }

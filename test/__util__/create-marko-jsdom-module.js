@@ -29,6 +29,7 @@ module.exports = function(dir, html, options) {
         // runScripts: 'dangerously', // JSDOM 10+
         beforeParse(window, browser) {
             window.global = window;
+            window.alert = () => {};
             jQuery(window);
             browser.require("complain").log = (...args) =>
                 require("complain").log(...args);

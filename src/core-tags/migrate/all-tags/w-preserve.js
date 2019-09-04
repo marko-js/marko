@@ -13,7 +13,7 @@ module.exports = function migrate(el, context) {
 
         const newAttrName = newTags[name];
         context.deprecate(
-            `The "${name}" attribute is deprecated. Please use "${newAttrName}" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w-*-Atrributes`
+            `The "${name}" attribute is deprecated. Please use "${newAttrName}" attribute instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
         );
 
         attr.name = newAttrName;

@@ -6,7 +6,7 @@ module.exports = function render(elNode, context) {
     commonTagMigrator(elNode, context);
     elNode.setTransformerApplied(commonTagMigrator);
     context.deprecate(
-        "The <layout-use> tag is deprecated. Please use a combination of the <${dynamic}> tag and imports instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tags"
+        "The <layout-use> tag is deprecated. Please use a combination of the <${dynamic}> tag and imports instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tag"
     );
 
     const rawArg = elNode.argument;

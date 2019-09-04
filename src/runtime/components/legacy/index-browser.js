@@ -1,12 +1,13 @@
 var modernMarko = require("../");
 var Component = require("../Component");
+var loader = require("../../../loader");
 
 var complain = "MARKO_DEBUG" && require("complain");
 
 // expose legacy
 window.$markoLegacy = exports;
 exports.load = function(typeName) {
-    return exports.defineWidget(require(typeName));
+    return exports.defineWidget(loader(typeName));
 };
 
 // legacy api
