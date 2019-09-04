@@ -334,10 +334,19 @@ module.exports = exports = {
         }
 
         if (targetProperty || hasNestedTags) {
+            // Handle nested tags
             return function(input, out, parent, renderBody) {
-                // Handle nested tags
+                // Preserve the widget args for the main tag.
+                var widgetArgs = out.data.widgetArgs;
+                delete out.data.widgetArgs;
+
                 if (renderBody) {
                     renderBody(out, input);
+                }
+
+                // restore the main tag widget args.
+                if (widgetArgs) {
+                    out.data.widgetArgs = widgetArgs;
                 }
 
                 if (targetProperty) {
