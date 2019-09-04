@@ -904,12 +904,7 @@
                 "html": true
             },
             "autocapitalize": {
-                "enum": [
-                    "none", 
-                    "sentences", 
-                    "words", 
-                    "characters"
-                ],
+                "enum": ["none", "sentences", "words", "characters"],
                 "html": true
             },
             "class": {
@@ -1244,12 +1239,7 @@
                 "html": true
             },
             "aria-autocomplete": {
-                "enum": [
-                    "inline",
-                    "list",
-                    "both",
-                    "none"
-                ],
+                "enum": ["inline", "list", "both", "none"],
                 "html": true
             },
             "aria-busy": {
@@ -1310,13 +1300,7 @@
                 "html": true
             },
             "aria-haspopup": {
-                "enum": [
-                    "menu",
-                    "listbox",
-                    "tree",
-                    "grid",
-                    "dialog"
-                ],
+                "enum": ["menu", "listbox", "tree", "grid", "dialog"],
                 "html": true
             },
             "aria-hidden": {
@@ -1324,12 +1308,7 @@
                 "html": true
             },
             "aria-invalid": {
-                "enum": [
-                    "true",
-                    "false",
-                    "grammar",
-                    "spelling"
-                ],
+                "enum": ["true", "false", "grammar", "spelling"],
                 "html": true
             },
             "aria-keyshortcuts": {
@@ -1421,11 +1400,7 @@
                 "html": true
             },
             "aria-sort": {
-                "enum": [
-                    "ascending",
-                    "descending",
-                    "none"
-                ],
+                "enum": ["ascending", "descending", "none"],
                 "html": true
             },
             "aria-valuemax": {
@@ -1677,7 +1652,7 @@
         },
         "html-autocomplete": {
             "enum": [
-                "off", 
+                "off",
                 "on",
                 "name",
                 "honorific-prefix",
@@ -1754,12 +1729,7 @@
             }
         },
         "html-charset": {
-            "enum": [
-                "utf-8",
-                "shift-jis",
-                "euc-jp",
-                "big5"
-            ],
+            "enum": ["utf-8", "shift-jis", "euc-jp", "big5"],
             "html": true,
             "name": "charset"
         },
@@ -1792,11 +1762,7 @@
             "name": "controls"
         },
         "html-controlslist": {
-            "enum": [
-                "nodownload",
-                "nofullscreen",
-                "noremoteplayback"
-            ],
+            "enum": ["nodownload", "nofullscreen", "noremoteplayback"],
             "html": true,
             "name": "controlslist"
         },
@@ -1941,10 +1907,7 @@
             "name": "hreflang"
         },
         "html-http-equiv": {
-            "enum": [
-                "content-security-policy",
-                "refresh"
-            ],
+            "enum": ["content-security-policy", "refresh"],
             "html": true,
             "name": "http-equiv"
         },
