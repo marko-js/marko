@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2015", "scripthost"],
+    "pretty": true,
+    "target": "es5",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": true,
+    "stripInternal": true,
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["**/__tests__"]
+}

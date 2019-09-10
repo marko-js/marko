@@ -1,0 +1,48 @@
+{
+  "name": "PROJECT_NAME",
+  "description": "PROJECT_DESCRIPTION",
+  "version": "1.0.0",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "bugs": "https://github.com/PROJECT_ORG/PROJECT_NAME/issues",
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.3",
+    "coveralls": "^3.0.6",
+    "husky": "^3.0.5",
+    "jest": "^24.9.0",
+    "lint-staged": "^9.2.5",
+    "prettier": "^1.18.2",
+    "standard-version": "^7.0.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.6.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
+  "keywords": [
+    "PROJECT_KEYWORDS"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PROJECT_ORG/PROJECT_NAME"
+  },
+  "scripts": {
+    "build": "tsc",
+    "ci:report": "cat coverage/lcov.info | coveralls",
+    "ci:test": "jest --ci --coverage",
+    "format": "prettier \"**/*.{json,md,js,ts}\" --write",
+    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json 'src/**/*.ts'",
+    "prepublishOnly": "npm run build",
+    "release": "standard-version",
+    "test": "jest -o",
+    "test:watch": "jest -o --watch"
+  },
+  "types": "dist/index.d.ts"
+}

@@ -1,0 +1,14 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "forin": false,
+    "no-empty": false,
+    "no-console": false,
+    "no-namespace": false,
+    "variable-name": false,
+    "interface-name": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
+  }
+}

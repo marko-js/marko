@@ -1,0 +1,11 @@
+sudo: false
+node_js:
+  - '10'
+  - '12'
+cache:
+  directories:
+    - node_modules
+language: node_js
+before_script: npm run lint
+script: npm run ci:test
+after_success: npm run ci:report
