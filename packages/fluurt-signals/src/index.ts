@@ -1,28 +1,14 @@
 let depTracker: Set<Signal<any>> | undefined;
-let cleanupTracker: Function[] | undefined;
 const IS_FRAGMENT = Symbol("fragment");
-const IS_SIGNAL = Symbol("signal")
-const GET =  Symbol("get");
-const SET =  Symbol("set");
-const ON =  Symbol("on");
-const OFF =  Symbol("off");
+const IS_SIGNAL = Symbol("signal");
+const GET = Symbol("get");
+const SET = Symbol("set");
+const ON = Symbol("on");
+const OFF = Symbol("off");
 const LISTENERS = Symbol("listeners");
 
 export type MaybeSignal<T> = Signal<T> | T;
-export type DefiniteNode = Fragment | Node;
-export type ReferenceNode = Fragment | Node | null | undefined;
-export type ContainerNode = Fragment | ParentNode & Node;
-
-class Fragment {
-  public prev: ReferenceNode;
-  public last: DefiniteNode;
-  public [IS_FRAGMENT]: boolean;
-  constructor(prev: ReferenceNode, last: DefiniteNode) {
-    this.prev = prev;
-    this.last = last;
-    this[IS_FRAGMENT] = true;
-  }
-}
+export type Raw<T> = T extends Signal<infer V> ? V : T;
 
 export class Signal<T> {
   public [GET]: T;
@@ -31,51 +17,55 @@ export class Signal<T> {
     this[GET] = current;
     this[LISTENERS] = new Set();
   }
-  [SET](next: T) {
+  public [SET](next: T) {
     this[GET] = next;
-    for(const l of this[LISTENERS]) {
+    for (const l of this[LISTENERS]) {
       l();
     }
   }
-  [ON](listener: Function) {
+  public [ON](listener: () => void) {
     this[LISTENERS].add(listener);
   }
-  [OFF](listener: Function) {
+  public [OFF](listener: () => void) {
     this[LISTENERS].remove(listener);
   }
 }
 
-export function compute(fn: Function) {
-  let set: Signal<any>[typeof SET];
+export function compute<T>(fn: () => T) {
+  let update: Signal<any>[typeof SET];
   let deps: Set<Signal<any>> | undefined;
-  
-  const compute = () => {
+
+  const _compute = () => {
     const parentTracker = depTracker;
-    const nextDeps = depTracker = new Set() as Set<Signal<any>>;
-    const computed = fn();
+    const nextDeps = (depTracker = new Set() as Set<Signal<any>>);
+    const value = fn();
     depTracker = parentTracker;
-    for(const d of nextDeps) {
-      d[ON](compute)
+    for (const d of nextDeps) {
+      d[ON](_compute);
     }
     if (deps) {
-      for(const d of deps) {
-        if (!nextDeps.has(d)) d[OFF](compute);
+      for (const d of deps) {
+        if (!nextDeps.has(d)) {
+          d[OFF](_compute);
+        }
       }
     }
     deps = nextDeps;
-    set && set(computed);
-    return computed;
-  }
+    if (update) {
+      update(value);
+    }
+    return value;
+  };
 
-  const computed = compute();
+  const computed = _compute();
 
   if ((deps as Set<Signal<any>>).size) {
     const value = new Signal(computed);
-    set = value[SET];
-    if (cleanupTracker) {
-      cleanupTracker.push(() => {
-        for(const d of deps as Set<Signal<any>>) {
-          d[OFF](compute);
+    update = value[SET];
+    if (currentFragment) {
+      currentFragment.cleanup.add(() => {
+        for (const d of deps as Set<Signal<any>>) {
+          d[OFF](_compute);
         }
       });
     }
@@ -102,234 +92,348 @@ export function set(value: MaybeSignal<any>, newValue: any) {
   return newValue;
 }
 
-export function computeInput(fn: Function, names: string[]) {
-  const input = compute(fn) as object;
+export function computeInput(fn: () => object, names: string[]) {
+  const input = compute(fn);
   if (isSignal(input)) {
-    names.forEach(name => Object.defineProperty(input, name, {
-      value: compute(() => get(get(input)[name]))
-    }));
+    names.forEach(name =>
+      Object.defineProperty(input, name, {
+        value: compute(() => get(get(input)[name]))
+      })
+    );
   }
   return input;
 }
 
-export function loop(array: MaybeSignal<Array<any>>, render: Function, parent: ContainerNode, prev: ReferenceNode, getKey: Function) {
+export function loop(
+  array: MaybeSignal<any[]>,
+  render: (
+    item: MaybeSignal<any>,
+    index: MaybeSignal<number>,
+    all: typeof array,
+    parent: Fragment
+  ) => void,
+  parent: ContainerNode,
+  getKey: (item: any, index: number) => string
+) {
   let oldNodes: Map<string, Fragment> = new Map();
   let newNodes: Map<string, Fragment> = new Map();
   let oldKeys: string[] = [];
-  let previousSibling: ReferenceNode;
-  let emptyNode: Text;
-  
+
+  const rootFragment = beginFragment(parent);
+  let target: DocumentFragment | Fragment = rootFragment;
+  let firstRender = true;
+
   compute(() => {
     let index = 0;
-    previousSibling = prev;
+
+    if (!firstRender && target === rootFragment) {
+      target = (resolveParent(parent)
+        .ownerDocument as Document).createDocumentFragment();
+    }
 
     for (const item of get(array)) {
-      const key = getKey ? getKey(item, index) : index;
-      const previousFragment = oldNodes.get(key);
-      if (!previousFragment) {
-        const lastChild = render(item, index, array, parent, previousSibling);
-        newNodes.set(key, previousSibling = new Fragment(previousSibling, lastChild));
+      const key = getKey ? getKey(item, index) : "" + index;
+      const previousChildFragment = oldNodes.get(key);
+      if (!previousChildFragment) {
+        const childFragment = beginFragment(target);
+        const itemSignal = isSignal(array)
+          ? (childFragment.itemSignal = new Signal(item))
+          : item;
+        const indexSignal = isSignal(array)
+          ? (childFragment.indexSignal = new Signal(index))
+          : index;
+        render(itemSignal, indexSignal, array, childFragment);
+        endFragment(childFragment);
+        newNodes.set(key, childFragment);
       } else {
-        newNodes.set(key, previousSibling = previousFragment);
+        previousChildFragment.itemSignal[SET](item);
+        previousChildFragment.indexSignal[SET](index);
+        newNodes.set(key, previousChildFragment);
       }
+      index++;
     }
 
     const newKeys = Array.from(newNodes.keys());
 
-    if (newKeys.length === 0) {
-      clearFragment(fragment);
-    } else {
-      reconcile(fragment, oldKeys, oldNodes, newKeys, newNodes);
+    if (!firstRender) {
+      if (newKeys.length === 0) {
+        clearFragment(rootFragment);
+      } else {
+        reconcile(rootFragment, oldKeys, oldNodes, newKeys, newNodes);
+      }
     }
 
     const clearedNodes = (oldNodes.clear(), oldNodes);
     oldKeys = newKeys;
     oldNodes = newNodes;
     newNodes = clearedNodes;
+    firstRender = false;
   });
 
-  const fragment = new Fragment(prev, previousSibling || text("", parent, prev));
-  return fragment;
+  endFragment(rootFragment);
+
+  return rootFragment;
 }
 
-export function conditional(branchIndex: MaybeSignal<number>, branches: Function[], parent: ContainerNode, prev: ReferenceNode) {
-  let emptyNode: Text | undefined;
-  let emptyCleanup: [] | undefined;
-  let lastIndex: number | undefined;
-  let cleanupFns: Function[];
-  const fragment = new Fragment(prev, undefined as any as Node);
+function conditional(
+  render: MaybeSignal<(parent: Fragment) => void>,
+  parent: ContainerNode
+) {
+  let lastRender: Raw<typeof render> | undefined;
+  let rootFragment: Fragment | undefined;
 
   compute(() => {
-    const index = get(branchIndex);
-    if (index !== lastIndex) {
-      if (lastIndex !== undefined) {
-        clearFragment(fragment);
+    const nextRender = get(render);
+    if (nextRender !== lastRender) {
+      if (rootFragment) {
+        clearFragment(rootFragment);
       }
-      const branch = branches[index];
-      if (branch) {
-        const parentTracker = cleanupTracker;
-        cleanupFns = cleanupTracker = [];
-        fragment.last = branch();
-        cleanupTracker = parentTracker;
-      } else {
-        cleanupFns = emptyCleanup || (emptyCleanup = []);
-        fragment.last = emptyNode || (emptyNode = text("", parent, prev));
+      rootFragment = beginFragment(parent, rootFragment);
+      if (nextRender) {
+        nextRender(rootFragment);
       }
-      lastIndex = index;
+      endFragment(rootFragment);
+      lastRender = nextRender;
     }
   });
 
-  if (cleanupTracker) {
-    cleanupTracker.push(() => {
-      for(const clean of cleanupFns) {
-        clean();
+  return rootFragment;
+}
+
+// could remove this and do it in the template
+export function ifConditional(
+  branchIndex: MaybeSignal<number>,
+  branches: Array<(parent: Fragment) => void>,
+  parent: ContainerNode
+) {
+  return conditional(compute(() => branches[get(branchIndex)]), parent);
+}
+
+export function el(name: string, parent: ContainerNode) {
+  const document = resolveParent(parent).ownerDocument as Document;
+  const elNode = document.createElement(name);
+  append(elNode, parent);
+  return elNode;
+}
+
+export function dynamicTag(
+  tag: MaybeSignal<
+    | string
+    | (((input: MaybeSignal<object>, parent: ContainerNode) => void) & {
+        names: string[];
+      })
+  >,
+  input: MaybeSignal<object>,
+  parent: ContainerNode,
+  body: ((parent: ContainerNode) => void) | undefined
+) {
+  const renderFns = new Map();
+
+  return conditional(
+    compute(() => {
+      const nextTag = get(tag);
+      let nextRender = renderFns.get(nextTag);
+      if (!nextRender) {
+        if (typeof nextTag === "string") {
+          nextRender = (fragmentParent: Fragment) => {
+            const nextEl = el(nextTag, fragmentParent);
+            dynamicAttrs(nextEl, input);
+            if (body) {
+              body(nextEl);
+            }
+          };
+        } else if (nextTag) {
+          const getInput = body
+            ? () => ({ ...get(input), renderBody: body })
+            : () => input;
+          nextRender = (fragmentParent: Fragment) =>
+            nextTag(computeInput(getInput, nextTag.names), fragmentParent);
+        } else {
+          nextRender = body || (() => {});
+        }
+        renderFns.set(nextTag, nextRender);
       }
-    });
-  }
-
-  return fragment;
+      return nextRender;
+    }),
+    parent
+  );
 }
 
-export function el(name: string, parent: ContainerNode, prev: DefiniteNode | null | undefined) {
-  const document = asParent(parent).ownerDocument as Document;
-  const el = document.createElement(name);
-  insertAfter(el, parent, prev);
-  return el;
-}
-
-export function dynamicEl(name: MaybeSignal<string>, parent: ContainerNode, prev: ReferenceNode) {
-  let currentEl: Element | undefined;
-  compute(() => {
-    const nextEl = el(get(name), parent, currentEl ? currentEl.previousSibling : prev);
-    if (currentEl) {
-      while(currentEl.firstChild) {
-        nextEl.appendChild(currentEl.firstChild);
-      }
-      asParent(parent).removeChild(currentEl);
-      fragment.last = nextEl;
-    }
-    currentEl = nextEl;
-  });
-  const fragment = new Fragment(prev, currentEl as Element);
-  return fragment;
-}
-
-export function text(value: string, parent: ContainerNode, prev: ReferenceNode) {
-  const document = asParent(parent).ownerDocument as Document;
-  const text = document.createTextNode(value);
-  insertAfter(text, parent, prev);
-  return text;
-}
-
-export function dynamicText(value: MaybeSignal<string>, parent: ContainerNode, prev: ReferenceNode) {
-  const textNode = text("", parent, prev);
-  compute(() => textNode.nodeValue = get(value));
+export function text(value: string, parent: ContainerNode) {
+  const document = resolveParent(parent).ownerDocument as Document;
+  const textNode = document.createTextNode(normalizeValue(value));
+  append(textNode, parent);
   return textNode;
 }
 
-export function attr(el: Element, name: string, value: any, remove?: boolean) {
+export function dynamicText(value: MaybeSignal<string>, parent: ContainerNode) {
+  const textNode = text("", parent);
+  compute(() => (textNode.nodeValue = normalizeValue(get(value))));
+  return textNode;
+}
+
+export function attr(
+  element: Element,
+  name: string,
+  value: any,
+  remove?: boolean
+) {
   const normalized = normalizeAttributeValue(value);
   if (normalized) {
-    el.setAttribute(name, normalized);
-  } else if(remove) {
-    el.removeAttribute(name);
+    element.setAttribute(name, normalized);
+  } else if (remove) {
+    element.removeAttribute(name);
   }
 }
 
-export function dynamicAttr(el: Element, name: string, value: any) {
-  compute(() => attr(el, name, get(value), true));
+export function dynamicAttr(element: Element, name: string, value: any) {
+  compute(() => attr(element, name, get(value), true));
 }
 
-export function dynamicAttrs(el: Element, attrs: MaybeSignal<object>) {
+export function dynamicAttrs(element: Element, attrs: MaybeSignal<object>) {
   let previousAttrs: object;
-  let seenAttrs: Set<string> = new Set();
+  const seenAttrs: Set<string> = new Set();
   compute(() => {
     const nextAttrs = get(attrs);
-    for(const name in previousAttrs) {
+    for (const name in previousAttrs) {
       if (!nextAttrs.hasOwnProperty(name)) {
-        el.removeAttribute(name);
+        element.removeAttribute(name);
       }
     }
-    if (seenAttrs.has(name))
-    for(const name in nextAttrs) {
-      if (seenAttrs.has(name))
-      attr(el, name, get(nextAttrs[name]), true);
+    if (seenAttrs.has(name)) {
+      for (const name in nextAttrs) {
+        if (seenAttrs.has(name)) {
+          attr(element, name, get(nextAttrs[name]), true);
+        }
+      }
     }
     previousAttrs = nextAttrs;
   });
 }
 
-export function prop(el: Element, name: string, value: any) {
-  el[name] = value;
+export function prop(element: Element, name: string, value: any) {
+  element[name] = value;
 }
 
-export function dynamicProp(el: Element, name: string, value: any) {
-  compute(() => el[name] = get(value));
+export function dynamicProp(element: Element, name: string, value: any) {
+  compute(() => (element[name] = get(value)));
 }
 
-export function dynamicProps(el: Element, props: MaybeSignal<object>) {
+export function dynamicProps(element: Element, props: MaybeSignal<object>) {
   let previousProps: object;
   compute(() => {
     const nextProps = get(props);
-    for(const name in previousProps) {
+    for (const name in previousProps) {
       if (!nextProps.hasOwnProperty(name)) {
-        delete el[name];
+        delete element[name];
       }
     }
-    for(const name in nextProps) {
-      el[name] = nextProps[name];
+    for (const name in nextProps) {
+      element[name] = nextProps[name];
     }
     previousProps = nextProps;
   });
 }
 
-function insertAfter(node: ChildNode, parent: ContainerNode, prev: ReferenceNode) {
-  asParent(parent).insertBefore(node, prev ? nextSibling(prev) : firstChild(parent));
+export type DefiniteNode = Fragment | Node;
+export type ReferenceNode = Fragment | Node | null;
+export type ContainerNode = Fragment | ParentNode & Node;
+export interface Fragment {
+  before: Text;
+  after: Text;
+  parent: Fragment | undefined;
+  cleanup: Set<Fragment | (() => void)>;
+  [IS_FRAGMENT]: true;
+  [propName: string]: any;
 }
 
-function asParent(node: ContainerNode): ParentNode & Node {
-  return isFragment(node) ? getParent(node.last) : node;
+let currentFragment: Fragment | undefined;
+
+function beginFragment(parent: ContainerNode, fragment?: Fragment): Fragment {
+  const parentFragment = currentFragment;
+  currentFragment = fragment || {
+    before: text("", parent),
+    after: text("", parent),
+    parent: parentFragment,
+    cleanup: new Set(),
+    [IS_FRAGMENT]: true
+  };
+  if (parentFragment) {
+    parentFragment.cleanup.add(currentFragment);
+  }
+  return currentFragment;
 }
 
-function getParent(node: DefiniteNode) {
-  return isFragment(node) ? getParent(node.last) : node.parentNode;
+function endFragment(fragment: Fragment) {
+  currentFragment = fragment.parent;
 }
 
-function nextSibling(node: DefiniteNode): Node | null {
-  return isFragment(node) ? nextSibling(node.last) : node.nextSibling;
+function append(child: Node, parent: ContainerNode) {
+  let next: Node | null = null;
+  if (isFragment(parent)) {
+    next = parent.after;
+    parent = next.parentNode as ParentNode & Node;
+  }
+  parent.insertBefore(child, next);
 }
 
-function firstChild(node: DefiniteNode): Node | null {
-  return isFragment(node) ? (node.prev ? nextSibling(node.prev) : isFragment(node.last) ? firstChild(node.last) : node.last) : node.firstChild;
-}
-
-function lastChild(node: DefiniteNode): Node | null {
-  return isFragment(node) ? (isFragment(node.last) ? lastChild(node.last) : node.last) : node.lastChild;
-}
-
-function clearFragment(fragment: Fragment) {
-  const parent = getParent(fragment.last);
-  const next = nextSibling(fragment.last);
-  let current = fragment.prev ? nextSibling(fragment.prev) : firstChild(parent);
-  while (current && current !== next) {
-    parent.removeChild(current as Node);
+function insertFragmentBefore(
+  fragment: Fragment,
+  parent: ContainerNode,
+  next: ReferenceNode
+) {
+  const domParent = resolveParent(parent);
+  const reference = resolveFirstChild(next);
+  const stop = fragment.after.nextSibling;
+  let current: Node | null = fragment.before;
+  while (current && current !== stop) {
+    domParent.insertBefore(current, reference);
     current = current.nextSibling;
   }
 }
 
-function insertFragmentBefore(fragment: Fragment, parent: ContainerNode, next: ReferenceNode) {
-  const last = lastChild(fragment);
+function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
+  const domParent = resolveParent(fragment);
+  const stop = removeMarkers ? fragment.after.nextSibling : fragment.after;
+  let current: Node | null = removeMarkers
+    ? fragment.before
+    : fragment.before.nextSibling;
+  while (current && current !== stop) {
+    domParent.removeChild(current);
+    current = current.nextSibling;
+  }
+  cleanupFragment(fragment);
 }
 
-function removeFragment(parent: ContainerNode, node: Fragment) {
+function removeFragment(parent: ContainerNode, fragment: Fragment) {
+  clearFragment(fragment, true);
+}
 
+function cleanupFragment(fragment: Fragment) {
+  for (const cleanup of fragment.cleanup) {
+    if (isFragment(cleanup)) {
+      cleanupFragment(cleanup);
+    } else {
+      cleanup();
+    }
+  }
+}
+
+function resolveFirstChild(node: ReferenceNode) {
+  return node && isFragment(node) ? node.before : node;
+}
+
+function resolveParent(node: ContainerNode): ParentNode & Node {
+  return isFragment(node)
+    ? (node.before.parentNode as ParentNode & Node)
+    : node;
 }
 
 function isSignal(value: MaybeSignal<any>): value is Signal<any> {
   return value[IS_SIGNAL] === true;
 }
 
-function isFragment(value: DefiniteNode): value is Fragment {
+function isFragment(value: any): value is Fragment {
   return value[IS_FRAGMENT] === true;
 }
 
@@ -338,7 +442,7 @@ function normalizeAttributeValue(value: unknown) {
 }
 
 function normalizeValue(value: unknown) {
-  return (value == null ? "" : value + "");
+  return value == null ? "" : value + "";
 }
 
 export function classComponent(def) {
@@ -399,7 +503,8 @@ function reconcile(
     // All old nodes are in the correct place, insert the remaining new nodes.
     if (newStart <= newEnd) {
       k = newEnd + 1;
-      nextSibling = k < newKeys.length ? newNodes.get(newKeys[k]) as Fragment : null;
+      nextSibling =
+        k < newKeys.length ? (newNodes.get(newKeys[k]) as Fragment) : null;
       do {
         insertFragmentBefore(
           parent,
@@ -451,7 +556,11 @@ function reconcile(
       // All oldNodes need to be removed, all newNodes need to be inserted
       clearFragment(parent);
       for (; newStart < newLength; ++newStart) {
-        insertFragmentBefore(parent, newNodes.get(newKeys[newStart]) as Fragment, null);
+        insertFragmentBefore(
+          parent,
+          newNodes.get(newKeys[newStart]) as Fragment,
+          null
+        );
       }
     } else {
       i = oldLength - synced;
@@ -472,14 +581,24 @@ function reconcile(
           if (sources[i] === -1) {
             pos = i + newStart;
             newKey = newKeys[pos++];
-            nextSibling = pos < k ? newNodes.get(newKeys[pos]) as Fragment : null;
-            insertFragmentBefore(parent, newNodes.get(newKey) as Fragment, nextSibling);
+            nextSibling =
+              pos < k ? (newNodes.get(newKeys[pos]) as Fragment) : null;
+            insertFragmentBefore(
+              parent,
+              newNodes.get(newKey) as Fragment,
+              nextSibling
+            );
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newKey = newKeys[pos++];
-              nextSibling = pos < k ? newNodes.get(newKeys[pos]) as Fragment : null;
-              insertFragmentBefore(parent, newNodes.get(newKey) as Fragment, nextSibling);
+              nextSibling =
+                pos < k ? (newNodes.get(newKeys[pos]) as Fragment) : null;
+              insertFragmentBefore(
+                parent,
+                newNodes.get(newKey) as Fragment,
+                nextSibling
+              );
             } else {
               --j;
             }
@@ -491,8 +610,13 @@ function reconcile(
           if (sources[i] === -1) {
             pos = i + newStart;
             newKey = newKeys[pos++];
-            nextSibling = pos < k ? newNodes.get(newKeys[pos]) as Fragment : null;
-            insertFragmentBefore(parent, newNodes.get(newKey) as Fragment, nextSibling);
+            nextSibling =
+              pos < k ? (newNodes.get(newKeys[pos]) as Fragment) : null;
+            insertFragmentBefore(
+              parent,
+              newNodes.get(newKey) as Fragment,
+              nextSibling
+            );
           }
         }
       }
