@@ -9,6 +9,7 @@
     "variable-name": false,
     "interface-name": false,
     "ordered-imports": false,
+    "max-classes-per-file": false,
     "object-literal-sort-keys": false
   }
 }
