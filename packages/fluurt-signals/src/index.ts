@@ -10,6 +10,7 @@ export {
 } from "./signals";
 export {
   el,
+  endEl,
   dynamicTag,
   text,
   dynamicText,

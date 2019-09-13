@@ -3,9 +3,11 @@ import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
 
 export function el(name: string, parent: ContainerNode) {
-  const elNode = parent.ownerDocument!.createElement(name);
+  return parent.ownerDocument!.createElement(name);
+}
+
+export function endEl(elNode: Element, parent: ContainerNode) {
   parent.appendChild(elNode);
-  return elNode;
 }
 
 export function dynamicTag(
@@ -33,6 +35,7 @@ export function dynamicTag(
             if (body) {
               body(nextEl);
             }
+            endEl(nextEl, fragmentParent);
           };
         } else if (nextTag) {
           const getInput = body
