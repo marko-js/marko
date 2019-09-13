@@ -1,12 +1,4 @@
-import {
-  Signal,
-  compute,
-  get,
-  set,
-  isSignal,
-  MaybeSignal,
-  Raw
-} from "./signals";
+import { Signal, compute, get, set, MaybeSignal, Raw } from "./signals";
 import {
   Fragment,
   ContainerNode,
@@ -56,10 +48,11 @@ export function loop<T>(
         const childFragment = beginFragment(target) as ForIterationFragment<
           typeof item
         >;
-        const itemSignal = isSignal(array)
+        const isSignal = array instanceof Signal;
+        const itemSignal = isSignal
           ? (childFragment.itemSignal = new Signal(item))
           : item;
-        const indexSignal = isSignal(array)
+        const indexSignal = isSignal
           ? (childFragment.indexSignal = new Signal(index))
           : index;
         render(childFragment, itemSignal, indexSignal, array);

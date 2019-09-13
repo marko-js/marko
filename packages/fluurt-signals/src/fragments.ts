@@ -1,4 +1,5 @@
 import { text } from "./dom";
+import { ComputedSignal } from "./signals";
 
 const IS_FRAGMENT = Symbol("fragment");
 
@@ -10,12 +11,12 @@ export class Fragment {
   public before: Text;
   public after: Text;
   public parent?: Fragment;
-  public cleanup: Set<Fragment | (() => void)>;
+  public tracked: Set<Fragment | ComputedSignal<unknown>>;
   public [IS_FRAGMENT]: true;
   constructor(parent: ContainerNode) {
     this.before = text("", parent);
     this.after = text("", parent);
-    this.cleanup = new Set();
+    this.tracked = new Set();
     this[IS_FRAGMENT] = true;
   }
   public appendChild(childNode: ChildNode & Node) {
@@ -24,6 +25,12 @@ export class Fragment {
   }
   public get ownerDocument() {
     return this.before.ownerDocument;
+  }
+  public cleanup() {
+    for (const tracked of this.tracked) {
+      tracked.cleanup();
+    }
+    this.tracked.clear();
   }
 }
 
@@ -35,7 +42,7 @@ export function beginFragment(
   currentFragment = fragment || new Fragment(parent);
   currentFragment.parent = parentFragment;
   if (parentFragment) {
-    parentFragment.cleanup.add(currentFragment);
+    parentFragment.tracked.add(currentFragment);
   }
   return currentFragment;
 }
@@ -70,24 +77,9 @@ export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
     domParent.removeChild(current);
     current = next;
   }
-  cleanupFragment(fragment);
+  fragment.cleanup();
 }
 
 export function removeFragment(fragment: Fragment) {
   clearFragment(fragment, true);
-}
-
-export function cleanupFragment(fragment: Fragment) {
-  for (const cleanup of fragment.cleanup) {
-    if (isFragment(cleanup)) {
-      cleanupFragment(cleanup);
-    } else {
-      cleanup();
-    }
-  }
-  fragment.cleanup.clear();
-}
-
-function isFragment(value: any): value is Fragment {
-  return value[IS_FRAGMENT] === true;
 }
