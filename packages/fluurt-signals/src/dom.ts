@@ -1,4 +1,4 @@
-import { MaybeSignal, compute, computeInput, get } from "./signals";
+import { MaybeSignal, Raw, compute, computeInput, get } from "./signals";
 import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
 
@@ -13,11 +13,11 @@ export function endEl(elNode: Element, parent: ContainerNode) {
 export function dynamicTag(
   tag: MaybeSignal<
     | string
-    | (((input: MaybeSignal<object>, parent: ContainerNode) => void) & {
-        names: string[];
+    | (((parent: ContainerNode, ...input: unknown[]) => void) & {
+        input?: string[];
       })
   >,
-  input: MaybeSignal<object>,
+  input: MaybeSignal<{ [x: string]: unknown }>,
   parent: ContainerNode,
   body: ((parent: ContainerNode) => void) | undefined
 ) {
@@ -38,11 +38,15 @@ export function dynamicTag(
             endEl(nextEl, fragmentParent);
           };
         } else if (nextTag) {
-          const getInput = body
-            ? () => ({ ...get(input), renderBody: body })
-            : () => input;
-          nextRender = (fragmentParent: Fragment) =>
-            nextTag(computeInput(getInput, nextTag.names), fragmentParent);
+          if (nextTag.input) {
+            const getInput = body
+              ? () => ({ ...get(input), renderBody: body })
+              : () => input;
+            nextRender = (fragmentParent: Fragment) =>
+              nextTag(fragmentParent, computeInput(getInput, nextTag.input!));
+          } else {
+            nextRender = (fragmentParent: Fragment) => nextTag(fragmentParent);
+          }
         } else {
           nextRender = body || (() => {});
         }
@@ -60,46 +64,42 @@ export function text(value: string, parent: ContainerNode) {
   return textNode;
 }
 
-export function dynamicText(value: MaybeSignal<string>, parent: ContainerNode) {
+export function dynamicText(
+  value: MaybeSignal<string | undefined>,
+  parent: ContainerNode
+) {
   const textNode = text("", parent);
   compute(() => (textNode.nodeValue = normalizeValue(get(value))));
   return textNode;
 }
 
-export function attr(
-  element: Element,
-  name: string,
-  value: unknown,
-  remove?: boolean
-) {
+export function attr(element: Element, name: string, value: unknown) {
   const normalized = normalizeAttributeValue(value);
   if (normalized) {
     element.setAttribute(name, normalized);
-  } else if (remove) {
+  } else {
     element.removeAttribute(name);
   }
 }
 
 export function dynamicAttr(element: Element, name: string, value: unknown) {
-  compute(() => attr(element, name, get(value), true));
+  compute(() => attr(element, name, get(value)));
 }
 
-export function dynamicAttrs(element: Element, attrs: MaybeSignal<object>) {
-  let previousAttrs: object;
-  const seenAttrs: Set<string> = new Set();
+export function dynamicAttrs(
+  element: Element,
+  attrs: MaybeSignal<{ [x: string]: unknown } | null | undefined>
+) {
+  let previousAttrs: Raw<typeof attrs>;
   compute(() => {
     const nextAttrs = get(attrs);
     for (const name in previousAttrs) {
-      if (!nextAttrs.hasOwnProperty(name)) {
+      if (!nextAttrs || !nextAttrs.hasOwnProperty(name)) {
         element.removeAttribute(name);
       }
     }
-    if (seenAttrs.has(name)) {
-      for (const name in nextAttrs) {
-        if (seenAttrs.has(name)) {
-          attr(element, name, get(nextAttrs[name]), true);
-        }
-      }
+    for (const name in nextAttrs) {
+      attr(element, name, get(nextAttrs[name]));
     }
     previousAttrs = nextAttrs;
   });

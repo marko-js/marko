@@ -52,17 +52,18 @@ export function endFragment(fragment: Fragment) {
 }
 
 export function insertFragmentBefore(
-  fragment: Fragment,
   parent: Fragment,
-  next: Fragment | null
+  fragment: Fragment,
+  nextSibling: Fragment | null
 ) {
   const domParent = parent.before.parentNode!;
-  const reference = next && next.before;
+  const reference = nextSibling ? nextSibling.before : parent.after;
   const stop = fragment.after.nextSibling;
   let current: Node | null = fragment.before;
   while (current && current !== stop) {
+    const next = current.nextSibling;
     domParent.insertBefore(current, reference);
-    current = current.nextSibling;
+    current = next;
   }
 }
 

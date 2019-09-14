@@ -9,14 +9,14 @@ import {
 import { reconcile } from "./reconcile";
 
 type ForIterationFragment<T> = Fragment & {
-  itemSignal?: Signal<T>;
-  indexSignal?: Signal<number>;
+  itemSignal: Signal<T>;
+  indexSignal: Signal<number>;
 };
 
 export function loop<T>(
   array: MaybeSignal<T[]>,
   render: (
-    parent: Fragment,
+    parent: ContainerNode,
     item: MaybeSignal<T>,
     index: MaybeSignal<number>,
     all: typeof array
@@ -28,96 +28,90 @@ export function loop<T>(
   let newNodes: Map<string, Fragment> = new Map();
   let oldKeys: string[] = [];
 
-  const rootFragment = beginFragment(parent);
-  let target: DocumentFragment | Fragment = rootFragment;
-  let firstRender = true;
+  if (array instanceof Signal) {
+    const rootFragment = beginFragment(parent);
+    let target: DocumentFragment | Fragment = rootFragment;
+    let firstRender = true;
 
-  compute(() => {
-    let index = 0;
+    compute(() => {
+      let index = 0;
 
-    if (!firstRender && target === rootFragment) {
-      target = parent.ownerDocument!.createDocumentFragment();
-    }
+      if (!firstRender && target === rootFragment) {
+        target = parent.ownerDocument!.createDocumentFragment();
+      }
 
-    for (const item of get(array)) {
-      const key = getKey ? getKey(item, index) : "" + index;
-      const previousChildFragment = oldNodes.get(key) as ForIterationFragment<
-        typeof item
-      >;
-      if (!previousChildFragment) {
-        const childFragment = beginFragment(target) as ForIterationFragment<
+      for (const item of get(array)) {
+        const key = getKey ? getKey(item, index) : "" + index;
+        const previousChildFragment = oldNodes.get(key) as ForIterationFragment<
           typeof item
         >;
-        const isSignal = array instanceof Signal;
-        const itemSignal = isSignal
-          ? (childFragment.itemSignal = new Signal(item))
-          : item;
-        const indexSignal = isSignal
-          ? (childFragment.indexSignal = new Signal(index))
-          : index;
-        render(childFragment, itemSignal, indexSignal, array);
-        endFragment(childFragment);
-        newNodes.set(key, childFragment);
-      } else {
-        set(previousChildFragment.itemSignal, item);
-        set(previousChildFragment.indexSignal, index);
-        newNodes.set(key, previousChildFragment);
+        if (!previousChildFragment) {
+          const childFragment = beginFragment(target) as ForIterationFragment<
+            T
+          >;
+          const itemSignal = (childFragment.itemSignal = new Signal(item));
+          const indexSignal = (childFragment.indexSignal = new Signal(index));
+          render(childFragment, itemSignal, indexSignal, array);
+          endFragment(childFragment);
+          newNodes.set(key, childFragment);
+        } else {
+          set(previousChildFragment.itemSignal, item);
+          set(previousChildFragment.indexSignal, index);
+          newNodes.set(key, previousChildFragment);
+        }
+        index++;
       }
+
+      const newKeys = Array.from(newNodes.keys());
+
+      if (!firstRender) {
+        if (newKeys.length === 0) {
+          clearFragment(rootFragment);
+        } else {
+          reconcile(rootFragment, oldKeys, oldNodes, newKeys, newNodes);
+        }
+      }
+
+      const clearedNodes = (oldNodes.clear(), oldNodes);
+      oldKeys = newKeys;
+      oldNodes = newNodes;
+      newNodes = clearedNodes;
+      firstRender = false;
+    });
+
+    endFragment(rootFragment);
+  } else {
+    let index = 0;
+    for (const item of array) {
+      render(parent, item, index, array);
       index++;
     }
-
-    const newKeys = Array.from(newNodes.keys());
-
-    if (!firstRender) {
-      if (newKeys.length === 0) {
-        clearFragment(rootFragment);
-      } else {
-        reconcile(rootFragment, oldKeys, oldNodes, newKeys, newNodes);
-      }
-    }
-
-    const clearedNodes = (oldNodes.clear(), oldNodes);
-    oldKeys = newKeys;
-    oldNodes = newNodes;
-    newNodes = clearedNodes;
-    firstRender = false;
-  });
-
-  endFragment(rootFragment);
-
-  return rootFragment;
+  }
 }
 
 export function conditional(
-  render: MaybeSignal<(parent: Fragment) => void>,
+  render: MaybeSignal<((parent: ContainerNode) => void) | undefined>,
   parent: ContainerNode
 ) {
   let lastRender: Raw<typeof render> | undefined;
   let rootFragment: Fragment | undefined;
 
-  compute(() => {
-    const nextRender = get(render);
-    if (nextRender !== lastRender) {
-      if (rootFragment) {
-        clearFragment(rootFragment);
+  if (render instanceof Signal) {
+    compute(() => {
+      const nextRender = get(render);
+      if (nextRender !== lastRender) {
+        if (rootFragment) {
+          clearFragment(rootFragment);
+        }
+        rootFragment = beginFragment(parent, rootFragment);
+        if (nextRender) {
+          nextRender(rootFragment);
+        }
+        endFragment(rootFragment);
+        lastRender = nextRender;
       }
-      rootFragment = beginFragment(parent, rootFragment);
-      if (nextRender) {
-        nextRender(rootFragment);
-      }
-      endFragment(rootFragment);
-      lastRender = nextRender;
-    }
-  });
-
-  return rootFragment;
-}
-
-// could remove this and do it in the template
-export function ifConditional(
-  branchIndex: MaybeSignal<number>,
-  branches: Array<(parent: Fragment) => void>,
-  parent: ContainerNode
-) {
-  return conditional(compute(() => branches[get(branchIndex)]), parent);
+    });
+  } else if (render) {
+    render(parent);
+  }
 }

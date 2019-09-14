@@ -9,8 +9,9 @@
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.3",
     "coveralls": "^3.0.6",
+    "diffable-html": "^4.0.0",
     "husky": "^3.0.5",
-    "jest": "^24.9.0",
+    "jest": "^25.0.0",
     "lint-staged": "^9.2.5",
     "minified-size": "^2.0.3",
     "prettier": "^1.18.2",
@@ -42,9 +43,10 @@
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json 'src/**/*.ts'",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
-    "test": "jest -o",
-    "test:watch": "jest -o --watch",
-    "size": "tsc && rollup --format iife --input ./dist/index.js | minified-size --json --"
+    "test": "jest -o ./test/main.test.ts",
+    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o ./test/main.test.ts --testTimeout=0",
+    "test:watch": "jest -o --watch ./test/main.test.t",
+    "size": "tsc | rollup --format iife --name marko --input ./dist/index.js | minified-size --json --"
   },
   "types": "dist/index.d.ts"
 }

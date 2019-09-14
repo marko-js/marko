@@ -5,4 +5,4 @@ CHANGELOG.md
 node_modules
 coverage
 dist
-__snapshots__
+snapshot.*.md

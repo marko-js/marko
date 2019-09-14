@@ -61,7 +61,8 @@ export class ComputedSignal<T> extends Signal<T> {
     const prevDeps = this.prevDeps;
     const parentTracker = depTracker;
     const nextDeps = (depTracker = new Set());
-    const value = fn();
+    const prevValue = this[GET];
+    const nextValue = fn();
     depTracker = parentTracker;
     for (const d of nextDeps) {
       d[ON](this);
@@ -72,12 +73,14 @@ export class ComputedSignal<T> extends Signal<T> {
           d[OFF](this);
         }
       }
-      this[SET](value);
+      if (nextValue !== prevValue || nextValue instanceof Object) {
+        this[SET](nextValue);
+      }
     } else {
-      this[GET] = value;
+      this[GET] = nextValue;
     }
     this.prevDeps = nextDeps;
-    return value;
+    return nextValue;
   }
   public cleanup() {
     for (const d of this.prevDeps) {
@@ -86,9 +89,7 @@ export class ComputedSignal<T> extends Signal<T> {
   }
 }
 
-export function compute<T>(fn: () => T) {
-  return ComputedSignal.create(fn);
-}
+export const compute = ComputedSignal.create;
 
 export function computeInput(fn: () => object, names: string[]) {
   const input = compute(fn);

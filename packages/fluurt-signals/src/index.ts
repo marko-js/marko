@@ -1,5 +1,5 @@
 export { ContainerNode } from "./fragments";
-export { loop, ifConditional } from "./control-flow";
+export { loop, conditional } from "./control-flow";
 export {
   Signal,
   MaybeSignal,
