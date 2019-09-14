@@ -1,5 +1,5 @@
 import {
-  el,
+  beginEl,
   ContainerNode,
   compute,
   get,
@@ -27,9 +27,9 @@ const renderer = (
   parent: ContainerNode,
   input: { value: string | undefined }
 ) => {
-  const div = el("div", parent);
+  const div = beginEl("div", parent);
   const branch0 = (ifParent: ContainerNode) => {
-    const span = el("span", ifParent);
+    const span = beginEl("span", ifParent);
     dynamicText(input.value, span);
     endEl(span, ifParent);
   };

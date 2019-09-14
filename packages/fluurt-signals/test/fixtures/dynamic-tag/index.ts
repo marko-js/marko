@@ -1,4 +1,11 @@
-import { el, ContainerNode, attr, endEl, text, dynamicTag } from "../../../src";
+import {
+  beginEl,
+  ContainerNode,
+  attr,
+  endEl,
+  text,
+  dynamicTag
+} from "../../../src";
 
 export const inputs = [
   {
@@ -21,7 +28,7 @@ export const inputs = [
         parent: ContainerNode,
         input: { a: 1; renderBody: (p: ContainerNode) => void }
       ) => {
-        const div = el("div", parent);
+        const div = beginEl("div", parent);
         attr(div, "a", input.a);
         input.renderBody(div);
         endEl(div, parent);

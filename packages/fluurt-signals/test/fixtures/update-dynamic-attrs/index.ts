@@ -1,4 +1,4 @@
-import { el, endEl, dynamicAttrs, ContainerNode } from "../../../src";
+import { beginEl, endEl, dynamicAttrs, ContainerNode } from "../../../src";
 
 export const inputs = [
   {
@@ -19,7 +19,7 @@ export const inputs = [
 ];
 
 const renderer = (parent: ContainerNode, input: (typeof inputs)[number]) => {
-  const div = el("div", parent);
+  const div = beginEl("div", parent);
   dynamicAttrs(div, input.value);
   endEl(div, parent);
 };

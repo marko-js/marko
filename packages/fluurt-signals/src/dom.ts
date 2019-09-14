@@ -3,6 +3,12 @@ import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
 
 export function el(name: string, parent: ContainerNode) {
+  const elNode = beginEl(name, parent);
+  endEl(elNode, parent);
+  return elNode;
+}
+
+export function beginEl(name: string, parent: ContainerNode) {
   return parent.ownerDocument!.createElement(name);
 }
 
@@ -30,7 +36,7 @@ export function dynamicTag(
       if (!nextRender) {
         if (typeof nextTag === "string") {
           nextRender = (fragmentParent: Fragment) => {
-            const nextEl = el(nextTag, fragmentParent);
+            const nextEl = beginEl(nextTag, fragmentParent);
             dynamicAttrs(nextEl, input);
             if (body) {
               body(nextEl);

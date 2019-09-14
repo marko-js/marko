@@ -1,5 +1,5 @@
 import {
-  el,
+  beginEl,
   loop,
   ContainerNode,
   compute,
@@ -50,7 +50,7 @@ const renderer = (
   parent: ContainerNode,
   input: { children: Array<{ id: number; text: string }> }
 ) => {
-  const div = el("div", parent);
+  const div = beginEl("div", parent);
   loop(
     input.children,
     (loopParent, item) => {
