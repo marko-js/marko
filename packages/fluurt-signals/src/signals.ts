@@ -13,10 +13,12 @@ export class Signal<T> {
   constructor(current: T) {
     this.___value = current;
   }
-  public ___set(next: T) {
-    this.___value = next;
-    for (const l of this.___listeners) {
-      l.___compute();
+  public ___set(nextValue: T) {
+    if (nextValue !== this.___value || nextValue instanceof Object) {
+      this.___value = nextValue;
+      for (const l of this.___listeners) {
+        l.___compute();
+      }
     }
   }
   public ___on(listener: ComputedSignal<unknown>) {
@@ -53,7 +55,6 @@ export class ComputedSignal<T> extends Signal<T> {
     const prevDeps = this.prevDeps;
     const parentTracker = depTracker;
     const nextDeps = (depTracker = new Set());
-    const prevValue = this.___value;
     const nextValue = fn();
     depTracker = parentTracker;
     for (const d of nextDeps) {
@@ -65,9 +66,7 @@ export class ComputedSignal<T> extends Signal<T> {
           d.___off(this);
         }
       }
-      if (nextValue !== prevValue || nextValue instanceof Object) {
-        this.___set(nextValue);
-      }
+      this.___set(nextValue);
     } else {
       this.___value = nextValue;
     }
