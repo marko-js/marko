@@ -1,12 +1,5 @@
 import { currentFragment } from "./fragments";
 
-const IS_SIGNAL = Symbol("signal");
-const GET = Symbol("get");
-const SET = Symbol("set");
-const ON = Symbol("on");
-const OFF = Symbol("off");
-const LISTENERS = Symbol("listeners");
-
 let depTracker: Set<Signal<unknown>> | undefined;
 let sid = 0;
 
@@ -15,23 +8,22 @@ export type Raw<T> = T extends Signal<infer V> ? V : T;
 
 export class Signal<T> {
   public sid: number = sid++;
-  public [GET]: T;
-  public [IS_SIGNAL] = true;
-  private [LISTENERS]: Set<ComputedSignal<unknown>> = new Set();
+  public ___value: T;
+  private ___listeners: Set<ComputedSignal<unknown>> = new Set();
   constructor(current: T) {
-    this[GET] = current;
+    this.___value = current;
   }
-  public [SET](next: T) {
-    this[GET] = next;
-    for (const l of this[LISTENERS]) {
-      l.compute();
+  public ___set(next: T) {
+    this.___value = next;
+    for (const l of this.___listeners) {
+      l.___compute();
     }
   }
-  public [ON](listener: ComputedSignal<unknown>) {
-    this[LISTENERS].add(listener);
+  public ___on(listener: ComputedSignal<unknown>) {
+    this.___listeners.add(listener);
   }
-  public [OFF](listener: ComputedSignal<unknown>) {
-    this[LISTENERS].delete(listener);
+  public ___off(listener: ComputedSignal<unknown>) {
+    this.___listeners.delete(listener);
   }
 }
 
@@ -43,7 +35,7 @@ export class ComputedSignal<T> extends Signal<T> {
       if (currentFragment) {
         currentFragment.tracked.add(signal);
       }
-      return signal[GET];
+      return signal.___value;
     } else {
       return signal;
     }
@@ -54,37 +46,37 @@ export class ComputedSignal<T> extends Signal<T> {
   constructor(fn: () => T) {
     super((undefined as any) as T);
     this.fn = fn;
-    this.compute();
+    this.___compute();
   }
-  public compute() {
+  public ___compute() {
     const fn = this.fn;
     const prevDeps = this.prevDeps;
     const parentTracker = depTracker;
     const nextDeps = (depTracker = new Set());
-    const prevValue = this[GET];
+    const prevValue = this.___value;
     const nextValue = fn();
     depTracker = parentTracker;
     for (const d of nextDeps) {
-      d[ON](this);
+      d.___on(this);
     }
     if (prevDeps) {
       for (const d of prevDeps) {
         if (!nextDeps.has(d)) {
-          d[OFF](this);
+          d.___off(this);
         }
       }
       if (nextValue !== prevValue || nextValue instanceof Object) {
-        this[SET](nextValue);
+        this.___set(nextValue);
       }
     } else {
-      this[GET] = nextValue;
+      this.___value = nextValue;
     }
     this.prevDeps = nextDeps;
     return nextValue;
   }
-  public cleanup() {
+  public ___cleanup() {
     for (const d of this.prevDeps) {
-      d[OFF](this);
+      d.___off(this);
     }
   }
 }
@@ -108,14 +100,14 @@ export function get<T>(value: MaybeSignal<T>): T {
     if (depTracker) {
       depTracker.add(value);
     }
-    value = value[GET];
+    value = value.___value;
   }
   return value;
 }
 
 export function set(value: MaybeSignal<unknown>, newValue: unknown) {
   if (value instanceof Signal) {
-    value[SET](newValue);
+    value.___set(newValue);
   }
   return newValue;
 }

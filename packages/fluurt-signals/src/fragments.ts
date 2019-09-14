@@ -26,9 +26,9 @@ export class Fragment {
   public get ownerDocument() {
     return this.before.ownerDocument;
   }
-  public cleanup() {
+  public ___cleanup() {
     for (const tracked of this.tracked) {
-      tracked.cleanup();
+      tracked.___cleanup();
     }
     this.tracked.clear();
   }
@@ -78,7 +78,7 @@ export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
     domParent.removeChild(current);
     current = next;
   }
-  fragment.cleanup();
+  fragment.___cleanup();
 }
 
 export function removeFragment(fragment: Fragment) {
