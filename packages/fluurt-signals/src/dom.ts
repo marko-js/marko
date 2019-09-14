@@ -1,4 +1,4 @@
-import { MaybeSignal, Raw, compute, computeInput, get } from "./signals";
+import { MaybeSignal, Raw, compute, get, dynamicKeys } from "./signals";
 import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
 
@@ -39,11 +39,11 @@ export function dynamicTag(
           };
         } else if (nextTag) {
           if (nextTag.input) {
-            const getInput = body
-              ? () => ({ ...get(input), renderBody: body })
-              : () => input;
+            const tagInput = body
+              ? compute(() => ({ ...get(input), renderBody: body }))
+              : input;
             nextRender = (fragmentParent: Fragment) =>
-              nextTag(fragmentParent, computeInput(getInput, nextTag.input!));
+              nextTag(fragmentParent, dynamicKeys(tagInput, nextTag.input!));
           } else {
             nextRender = (fragmentParent: Fragment) => nextTag(fragmentParent);
           }

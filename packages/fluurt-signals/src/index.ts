@@ -1,13 +1,6 @@
 export { ContainerNode } from "./fragments";
 export { loop, conditional } from "./control-flow";
-export {
-  Signal,
-  MaybeSignal,
-  compute,
-  computeInput,
-  get,
-  set
-} from "./signals";
+export { Signal, MaybeSignal, compute, dynamicKeys, get, set } from "./signals";
 export {
   el,
   endEl,

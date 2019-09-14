@@ -83,16 +83,16 @@ export class ComputedSignal<T> extends Signal<T> {
 
 export const compute = ComputedSignal.create;
 
-export function computeInput(fn: () => object, names: string[]) {
-  const input = compute(fn);
-  if (input instanceof Signal) {
-    names.forEach(name =>
-      Object.defineProperty(input, name, {
-        value: compute(() => get(get(input)[name]))
-      })
+export function dynamicKeys(
+  object: MaybeSignal<{ [x: string]: unknown }>,
+  watchedKeys: string[]
+) {
+  if (object instanceof Signal) {
+    watchedKeys.forEach(
+      key => (object[key] = compute(() => get(get(object)[key])))
     );
   }
-  return input;
+  return object;
 }
 
 export function get<T>(value: MaybeSignal<T>): T {
