@@ -15,3 +15,5 @@ export {
   dynamicProp,
   dynamicProps
 } from "./dom";
+
+export { on, once } from "./event";

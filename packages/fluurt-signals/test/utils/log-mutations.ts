@@ -10,6 +10,8 @@ export default async function logMutations(renderer, updates): Promise<string> {
   });
 
   const container = document.createElement("div");
+  container.TEST_ROOT = true;
+  document.body.appendChild(container);
   observer.observe(container, {
     attributes: true,
     attributeOldValue: true,
@@ -30,18 +32,30 @@ export default async function logMutations(renderer, updates): Promise<string> {
 
   for (const update of updates.slice(1)) {
     changes = [];
-    set(inputSignal, update);
+    if (typeof update === "function") {
+      update(container);
+    } else {
+      set(inputSignal, update);
+    }
     await tick();
     result.push(getStatusString(container, changes, update));
   }
 
+  document.body.removeChild(container);
   observer.disconnect();
 
   return result.join("\n\n\n");
 }
 
-function getStatusString(container: HTMLDivElement, changes, input) {
-  return `# Render ${JSON.stringify(input)}\n\`\`\`html\n${diffableHTML(
+function getStatusString(container: HTMLDivElement, changes, update) {
+  return `# Render ${
+    typeof update === "function"
+      ? `\n${update
+          .toString()
+          .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
+          .replace(/^    /gm, "")}\n`
+      : JSON.stringify(update)
+  }\n\`\`\`html\n${diffableHTML(
     container.innerHTML
   ).trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${changes
     .map(formatMutationRecord)

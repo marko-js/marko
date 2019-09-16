@@ -13,7 +13,7 @@ export function getNodePath(node: Node) {
   while (cur) {
     const { parentNode } = cur;
 
-    if (!parentNode) {
+    if (!parentNode || (cur as any).TEST_ROOT) {
       break;
     }
 

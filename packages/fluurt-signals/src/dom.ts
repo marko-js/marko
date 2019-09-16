@@ -71,7 +71,7 @@ export function text(value: string, parent: ContainerNode) {
 }
 
 export function dynamicText(
-  value: MaybeSignal<string | undefined>,
+  value: MaybeSignal<unknown>,
   parent: ContainerNode
 ) {
   const textNode = text("", parent);

@@ -46,7 +46,7 @@
     "test": "jest -o ./test/main.test.ts",
     "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o ./test/main.test.ts --testTimeout=0",
     "test:watch": "jest -o --watch ./test/main.test.t",
-    "size": "tsc | rollup --format iife --name marko --input ./dist/index.js | minified-size --json --"
+    "size": "tsc && rollup --format iife --name marko --input ./dist/index.js | minified-size --json --"
   },
   "types": "dist/index.d.ts"
 }
