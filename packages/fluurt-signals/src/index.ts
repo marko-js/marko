@@ -1,4 +1,3 @@
-export { ContainerNode } from "./fragments";
 export { loop, conditional } from "./control-flow";
 export {
   Signal,

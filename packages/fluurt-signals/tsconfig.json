@@ -2,7 +2,6 @@
   "compilerOptions": {
     "pretty": true,
     "target": "es6",
-    "outDir": "./dist",
     "sourceMap": true,
     "declaration": true,
     "stripInternal": true,
@@ -14,6 +13,5 @@
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true
   },
-  "include": ["./src/**/*"],
-  "exclude": ["**/__tests__"]
+  "include": ["./src/**/*"]
 }
