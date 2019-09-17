@@ -5,6 +5,8 @@ let sid = 0;
 let batchedComputations: Array<ComputedSignal<unknown>> | undefined;
 let batchIndex: number;
 
+const noop = () => {};
+
 export type MaybeSignal<T> = Signal<T> | T;
 export type Raw<T> = T extends Signal<infer V> ? V : T;
 
@@ -38,26 +40,26 @@ export class ComputedSignal<T> extends Signal<T> {
   public static create<T>(fn: () => T) {
     const signal = new ComputedSignal(fn);
 
-    if (!signal.prevDeps.size) {
+    if (signal.___prevDeps.size) {
       if (currentFragment) {
         currentFragment.tracked.add(signal);
       }
-      return signal.___value;
-    } else {
       return signal;
+    } else {
+      return signal.___value;
     }
   }
 
-  private fn: () => T;
-  private prevDeps: Set<Signal<unknown>>;
+  private ___fn: () => T;
+  private ___prevDeps: Set<Signal<unknown>>;
   constructor(fn: () => T) {
     super((undefined as any) as T);
-    this.fn = fn;
+    this.___fn = fn;
     this.___compute();
   }
   public ___compute() {
-    const fn = this.fn;
-    const prevDeps = this.prevDeps;
+    const fn = this.___fn;
+    const prevDeps = this.___prevDeps;
     const parentTracker = depTracker;
     const nextDeps = (depTracker = new Set());
     const nextValue = fn();
@@ -75,13 +77,14 @@ export class ComputedSignal<T> extends Signal<T> {
     } else {
       this.___value = nextValue;
     }
-    this.prevDeps = nextDeps;
+    this.___prevDeps = nextDeps;
     return nextValue;
   }
   public ___cleanup() {
-    for (const d of this.prevDeps) {
+    for (const d of this.___prevDeps) {
       d.___off(this);
     }
+    this.___compute = noop as () => T;
   }
 }
 

@@ -65,11 +65,7 @@ export function loop<T>(
       const newKeys = Array.from(newNodes.keys());
 
       if (!firstRender) {
-        if (newKeys.length === 0) {
-          clearFragment(rootFragment);
-        } else {
-          reconcile(rootFragment, oldKeys, oldNodes, newKeys, newNodes);
-        }
+        reconcile(rootFragment, oldKeys, oldNodes, newKeys, newNodes);
       }
 
       const clearedNodes = (oldNodes.clear(), oldNodes);
