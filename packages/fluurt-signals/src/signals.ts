@@ -37,12 +37,12 @@ export class Signal<T> {
 }
 
 export class ComputedSignal<T> extends Signal<T> {
-  public static create<T>(fn: () => T) {
+  public static ___create<T>(fn: () => T) {
     const signal = new ComputedSignal(fn);
 
     if (signal.___prevDeps.size) {
       if (currentFragment) {
-        currentFragment.tracked.add(signal);
+        currentFragment.___tracked.add(signal);
       }
       return signal;
     } else {
@@ -88,7 +88,7 @@ export class ComputedSignal<T> extends Signal<T> {
   }
 }
 
-export const compute = ComputedSignal.create;
+export const compute = ComputedSignal.___create;
 
 export function dynamicKeys(
   object: MaybeSignal<{ [x: string]: unknown }>,

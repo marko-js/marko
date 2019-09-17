@@ -56,18 +56,18 @@ export function beginFragment(fragment?: Fragment): Fragment {
   }
 
   currentNode = currentFragment;
-  currentFragment.parent = parentFragment;
+  currentFragment.___parent = parentFragment;
   parentForNode.set(currentNode, parentNode);
 
   if (parentFragment) {
-    parentFragment.tracked.add(currentFragment);
+    parentFragment.___tracked.add(currentFragment);
   }
 
   return currentFragment;
 }
 
 export function endFragment(fragment: Fragment) {
-  currentFragment = fragment.parent;
+  currentFragment = fragment.___parent;
   currentNode = parentForNode.get(fragment)!;
 }
 
@@ -142,7 +142,7 @@ export function dynamicAttrs(
   compute(() => {
     const nextAttrs = get(attrs);
     for (const name in previousAttrs) {
-      if (!nextAttrs || !nextAttrs.hasOwnProperty(name)) {
+      if (!(nextAttrs && name in nextAttrs)) {
         elNode.removeAttribute(name);
       }
     }
@@ -168,8 +168,8 @@ export function dynamicProps(props: MaybeSignal<object>) {
   compute(() => {
     const nextProps = get(props);
     for (const name in previousProps) {
-      if (!nextProps.hasOwnProperty(name)) {
-        delete elNode![name];
+      if (!(nextProps && name in nextProps)) {
+        elNode![name] = undefined;
       }
     }
     for (const name in nextProps) {

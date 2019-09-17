@@ -8,6 +8,7 @@ import {
   set
 } from "./signals";
 import { currentNode } from "./dom";
+const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {
   ___delegated?: Set<string>;
@@ -26,11 +27,10 @@ export function on<
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: H | Unset) {
   const el = currentNode as Element;
-  const doc = el.ownerDocument! as DocumentWithDelegated;
   const delegated = doc.___delegated || (doc.___delegated = new Set());
   if (!delegated.has(type)) {
     delegated.add(type);
-    el.ownerDocument!.addEventListener(type, delegateEvent, eventOpts);
+    doc.addEventListener(type, delegateEvent, eventOpts);
   }
 
   el[getKey(type)] = handler;

@@ -1,34 +1,27 @@
 import { text } from "./dom";
 import { ComputedSignal } from "./signals";
 
-const IS_FRAGMENT = Symbol("fragment");
-
 export type ContainerNode = Element | Fragment | DocumentFragment;
 
 export class Fragment {
-  public before: Text;
-  public after: Text;
-  public parent?: Fragment;
-  public tracked: Set<Fragment | ComputedSignal<unknown>>;
-  public [IS_FRAGMENT]: true;
+  public ___before: Text;
+  public ___after: Text;
+  public ___parent?: Fragment;
+  public ___tracked: Set<Fragment | ComputedSignal<unknown>>;
   constructor() {
-    this.before = text("");
-    this.after = text("");
-    this.tracked = new Set();
-    this[IS_FRAGMENT] = true;
+    this.___before = text("");
+    this.___after = text("");
+    this.___tracked = new Set();
   }
   public appendChild(childNode: ChildNode & Node) {
-    const after = this.after;
-    after.parentNode!.insertBefore(childNode, this.after);
-  }
-  public get ownerDocument() {
-    return this.before.ownerDocument;
+    const after = this.___after;
+    after.parentNode!.insertBefore(childNode, this.___after);
   }
   public ___cleanup() {
-    for (const tracked of this.tracked) {
+    for (const tracked of this.___tracked) {
       tracked.___cleanup();
     }
-    this.tracked.clear();
+    this.___tracked.clear();
   }
 }
 
@@ -37,10 +30,10 @@ export function insertFragmentBefore(
   fragment: Fragment,
   nextSibling: Fragment | null
 ) {
-  const domParent = parent.before.parentNode!;
-  const reference = nextSibling ? nextSibling.before : parent.after;
-  const stop = fragment.after.nextSibling;
-  let current: Node | null = fragment.before;
+  const domParent = parent.___before.parentNode!;
+  const reference = nextSibling ? nextSibling.___before : parent.___after;
+  const stop = fragment.___after.nextSibling;
+  let current: Node | null = fragment.___before;
   while (current && current !== stop) {
     const next = current.nextSibling;
     domParent.insertBefore(current, reference);
@@ -49,11 +42,13 @@ export function insertFragmentBefore(
 }
 
 export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
-  const domParent = fragment.before.parentNode!;
-  const stop = removeMarkers ? fragment.after.nextSibling : fragment.after;
+  const domParent = fragment.___before.parentNode!;
+  const stop = removeMarkers
+    ? fragment.___after.nextSibling
+    : fragment.___after;
   let current: Node | null = removeMarkers
-    ? fragment.before
-    : fragment.before.nextSibling;
+    ? fragment.___before
+    : fragment.___before.nextSibling;
   while (current && current !== stop) {
     const next = current.nextSibling;
     domParent.removeChild(current);
