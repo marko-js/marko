@@ -20,14 +20,14 @@ inserted div0
 
 # Mutations
 ```
-div0/#text2: "b" => "c"
-div0/#text5: "a" => "d"
 removed #text after div0/#text6
 inserted div0/#text1
 removed #text after div0/#text6
 inserted div0/#text2
 removed #text after div0/#text6
 inserted div0/#text3
+div0/#text5: "a" => "d"
+div0/#text2: "b" => "c"
 ```
 
 

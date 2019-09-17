@@ -2,12 +2,14 @@ import { currentFragment } from "./fragments";
 
 let depTracker: Set<Signal<unknown>> | undefined;
 let sid = 0;
+let batchedComputations: Array<ComputedSignal<unknown>> | undefined;
+let batchIndex: number;
 
 export type MaybeSignal<T> = Signal<T> | T;
 export type Raw<T> = T extends Signal<infer V> ? V : T;
 
 export class Signal<T> {
-  public sid: number = sid++;
+  public ___sid: number = sid++;
   public ___value: T;
   private ___listeners: Set<ComputedSignal<unknown>> = new Set();
   constructor(current: T) {
@@ -17,7 +19,10 @@ export class Signal<T> {
     if (nextValue !== this.___value || nextValue instanceof Object) {
       this.___value = nextValue;
       for (const l of this.___listeners) {
-        l.___compute();
+        const index = getIndex(batchedComputations, l.___sid);
+        if (batchedComputations![index] !== l) {
+          batchedComputations!.splice(index, 0, l);
+        }
       }
     }
   }
@@ -109,4 +114,40 @@ export function set(value: MaybeSignal<unknown>, newValue: unknown) {
     value.___set(newValue);
   }
   return newValue;
+}
+
+export function beginBatch() {
+  if (!batchedComputations) {
+    return (batchedComputations = []);
+  }
+}
+
+export function endBatch(b: typeof batchedComputations) {
+  if (b === batchedComputations) {
+    for (
+      batchIndex = 0;
+      batchIndex < batchedComputations!.length;
+      batchIndex++
+    ) {
+      batchedComputations![batchIndex].___compute();
+    }
+    batchedComputations = undefined;
+    batchIndex = 0;
+  }
+}
+
+function getIndex(array: typeof batchedComputations, value: number) {
+  let low = batchIndex;
+  let high = array!.length;
+
+  while (low < high) {
+    const mid = (low + high) >>> 1;
+    if (array![mid].___sid < value) {
+      low = mid + 1;
+    } else {
+      high = mid;
+    }
+  }
+
+  return low;
 }

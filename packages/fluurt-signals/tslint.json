@@ -4,6 +4,7 @@
   "rules": {
     "forin": false,
     "no-empty": false,
+    "no-bitwise": false,
     "no-console": false,
     "no-namespace": false,
     "variable-name": false,

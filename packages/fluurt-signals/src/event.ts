@@ -1,3 +1,5 @@
+import { beginBatch, endBatch } from "./signals";
+
 interface DocumentWithDelegated extends Document {
   ___delegated?: Set<string>;
 }
@@ -52,7 +54,9 @@ function delegateEvent(ev: GlobalEventHandlersEventMap[EventNames]) {
     }
 
     if (handler) {
+      const batch = beginBatch();
       handler(ev, target);
+      endBatch(batch);
     }
   }
 }
