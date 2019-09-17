@@ -5,9 +5,7 @@ Static Dynamic 1
 
 # Mutations
 ```
-inserted #text0
-inserted #text1
-#text1: "" => "Dynamic 1"
+inserted #text0, #text1
 ```
 
 

@@ -1,7 +1,13 @@
 import diffableHTML from "diffable-html";
-import { window, document } from "./jsdom";
 import { getNodePath, getTypeName } from "./get-node-info";
-import { render, Signal, set, beginBatch, endBatch } from "../../src";
+import {
+  render,
+  Signal,
+  set,
+  beginBatch,
+  endBatch,
+  dynamicKeys
+} from "../../src";
 
 export default async function logMutations(renderer, updates): Promise<string> {
   let changes = [];
@@ -10,7 +16,7 @@ export default async function logMutations(renderer, updates): Promise<string> {
   });
 
   const container = document.createElement("div");
-  container.TEST_ROOT = true;
+  (container as any).TEST_ROOT = true;
   document.body.appendChild(container);
   observer.observe(container, {
     attributes: true,
@@ -23,7 +29,10 @@ export default async function logMutations(renderer, updates): Promise<string> {
 
   const first = updates[0];
   const inputSignal = new Signal(first);
-  render(renderer, inputSignal, container);
+
+  container.appendChild(
+    render(() => renderer(dynamicKeys(inputSignal, renderer.input)))
+  );
 
   await tick();
 

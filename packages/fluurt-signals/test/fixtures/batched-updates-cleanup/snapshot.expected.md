@@ -9,10 +9,7 @@
 
 # Mutations
 ```
-inserted button0
-inserted #text1
-inserted #text3
-inserted span2
+inserted button0, #text1, span2, #text3
 ```
 
 

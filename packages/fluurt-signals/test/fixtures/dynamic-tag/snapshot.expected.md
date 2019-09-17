@@ -7,9 +7,7 @@
 
 # Mutations
 ```
-inserted #text0
-inserted #text2
-inserted span1
+inserted #text0, span1, #text2
 ```
 
 

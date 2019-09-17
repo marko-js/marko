@@ -1,25 +1,28 @@
 import { MaybeSignal, Raw, compute, get, dynamicKeys } from "./signals";
 import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
+
+interface UnknownObject {
+  [x: string]: unknown;
+}
+type Renderer = ((...input: unknown[]) => void) & {
+  input?: string[];
+};
+
 export let currentFragment: Fragment | undefined;
 export let currentNode: ContainerNode | undefined;
-let docFragment: DocumentFragment;
+const doc = document;
+const detachedContainer = doc.createDocumentFragment();
 const parentForNode: WeakMap<
   ContainerNode,
   ContainerNode | undefined
 > = new WeakMap();
 
-export function render(
-  renderer: ((input: MaybeSignal<{ [x: string]: unknown }>) => void) & {
-    input: string[];
-  },
-  input: MaybeSignal<{ [x: string]: unknown }>,
-  container: Element
-) {
-  currentNode = container;
-  docFragment = container.ownerDocument!.createDocumentFragment();
-  renderer(dynamicKeys(input, renderer.input));
+export function render(renderer: Renderer, input: UnknownObject = {}) {
+  const container = (currentNode = doc.createDocumentFragment());
+  renderer(input);
   currentNode = undefined;
+  return container;
 }
 
 export function el(name: string) {
@@ -30,7 +33,7 @@ export function el(name: string) {
 
 export function beginEl(name: string) {
   const parentNode = currentNode!;
-  currentNode = parentNode.ownerDocument!.createElement(name);
+  currentNode = doc.createElement(name);
   parentForNode.set(currentNode, parentNode);
   return currentNode;
 }
@@ -48,7 +51,7 @@ export function beginFragment(fragment?: Fragment): Fragment {
   if (fragment) {
     currentFragment = fragment;
   } else {
-    currentNode = currentNode || docFragment;
+    currentNode = currentNode || detachedContainer;
     currentFragment = new Fragment();
   }
 
@@ -69,13 +72,8 @@ export function endFragment(fragment: Fragment) {
 }
 
 export function dynamicTag(
-  tag: MaybeSignal<
-    | string
-    | (((...input: unknown[]) => void) & {
-        input?: string[];
-      })
-  >,
-  input: MaybeSignal<{ [x: string]: unknown }>,
+  tag: MaybeSignal<string | Renderer>,
+  input: MaybeSignal<UnknownObject>,
   body: (() => void) | undefined
 ) {
   const renderFns = new Map();
@@ -114,9 +112,7 @@ export function dynamicTag(
 }
 
 export function text(value: string) {
-  const textNode = currentNode!.ownerDocument!.createTextNode(
-    normalizeValue(value)
-  );
+  const textNode = doc.createTextNode(normalizeValue(value));
   currentNode!.appendChild(textNode);
   return textNode;
 }
@@ -139,7 +135,7 @@ export function dynamicAttr(name: string, value: unknown) {
 }
 
 export function dynamicAttrs(
-  attrs: MaybeSignal<{ [x: string]: unknown } | null | undefined>
+  attrs: MaybeSignal<UnknownObject | null | undefined>
 ) {
   const elNode = currentNode as Element;
   let previousAttrs: Raw<typeof attrs>;
