@@ -22,7 +22,8 @@ export {
   dynamicAttrs,
   prop,
   dynamicProp,
-  dynamicProps
+  dynamicProps,
+  render
 } from "./dom";
 
-export { on, once } from "./event";
+export { on, dynamicOn, once } from "./event";

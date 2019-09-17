@@ -1,12 +1,7 @@
 import { Signal, compute, get, set, MaybeSignal, Raw } from "./signals";
-import {
-  Fragment,
-  ContainerNode,
-  beginFragment,
-  endFragment,
-  clearFragment
-} from "./fragments";
+import { Fragment, clearFragment } from "./fragments";
 import { reconcile } from "./reconcile";
+import { beginFragment, endFragment } from "./dom";
 
 type ForIterationFragment<T> = Fragment & {
   itemSignal: Signal<T>;
@@ -16,12 +11,10 @@ type ForIterationFragment<T> = Fragment & {
 export function loop<T>(
   array: MaybeSignal<T[]>,
   render: (
-    parent: ContainerNode,
     item: MaybeSignal<T>,
     index: MaybeSignal<number>,
     all: typeof array
   ) => void,
-  parent: ContainerNode,
   getKey: (item: T, index: number) => string
 ) {
   let oldNodes: Map<string, Fragment> = new Map();
@@ -29,16 +22,11 @@ export function loop<T>(
   let oldKeys: string[] = [];
 
   if (array instanceof Signal) {
-    const rootFragment = beginFragment(parent);
-    let target: DocumentFragment | Fragment = rootFragment;
+    const rootFragment = beginFragment();
     let firstRender = true;
 
     compute(() => {
       let index = 0;
-
-      if (!firstRender && target === rootFragment) {
-        target = parent.ownerDocument!.createDocumentFragment();
-      }
 
       for (const item of get(array)) {
         const key = getKey ? getKey(item, index) : "" + index;
@@ -46,12 +34,10 @@ export function loop<T>(
           typeof item
         >;
         if (!previousChildFragment) {
-          const childFragment = beginFragment(target) as ForIterationFragment<
-            T
-          >;
+          const childFragment = beginFragment() as ForIterationFragment<T>;
           const itemSignal = (childFragment.itemSignal = new Signal(item));
           const indexSignal = (childFragment.indexSignal = new Signal(index));
-          render(childFragment, itemSignal, indexSignal, array);
+          render(itemSignal, indexSignal, array);
           endFragment(childFragment);
           newNodes.set(key, childFragment);
         } else {
@@ -79,16 +65,13 @@ export function loop<T>(
   } else {
     let index = 0;
     for (const item of array) {
-      render(parent, item, index, array);
+      render(item, index, array);
       index++;
     }
   }
 }
 
-export function conditional(
-  render: MaybeSignal<((parent: ContainerNode) => void) | undefined>,
-  parent: ContainerNode
-) {
+export function conditional(render: MaybeSignal<(() => void) | undefined>) {
   let lastRender: Raw<typeof render> | undefined;
   let rootFragment: Fragment | undefined;
 
@@ -99,15 +82,15 @@ export function conditional(
         if (rootFragment) {
           clearFragment(rootFragment);
         }
-        rootFragment = beginFragment(parent, rootFragment);
+        rootFragment = beginFragment(rootFragment);
         if (nextRender) {
-          nextRender(rootFragment);
+          nextRender();
         }
         endFragment(rootFragment);
         lastRender = nextRender;
       }
     });
   } else if (render) {
-    render(parent);
+    render();
   }
 }

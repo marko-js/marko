@@ -1,19 +1,12 @@
-import {
-  beginEl,
-  ContainerNode,
-  attr,
-  endEl,
-  text,
-  dynamicTag
-} from "../../../src";
+import { beginEl, attr, endEl, text, dynamicTag } from "../../../src";
 
 export const inputs = [
   {
     tag: "span"
   },
   {
-    tag: (parent: ContainerNode) => {
-      text("Hello", parent);
+    tag: () => {
+      text("Hello");
     }
   },
   {
@@ -24,23 +17,20 @@ export const inputs = [
   },
   {
     tag: Object.assign(
-      (
-        parent: ContainerNode,
-        input: { a: 1; renderBody: (p: ContainerNode) => void }
-      ) => {
-        const div = beginEl("div", parent);
-        attr(div, "a", input.a);
-        input.renderBody(div);
-        endEl(div, parent);
+      (input: { a: 1; renderBody: () => void }) => {
+        beginEl("div");
+        attr("a", input.a);
+        input.renderBody();
+        endEl();
       },
       { input: ["a", "renderBody"] }
     )
   }
 ];
 
-const renderer = (parent: ContainerNode, input: (typeof inputs)[number]) => {
-  dynamicTag(input.tag, { a: 1 }, parent, (tag: ContainerNode) => {
-    text("BODY", tag);
+const renderer = (input: (typeof inputs)[number]) => {
+  dynamicTag(input.tag, { a: 1 }, () => {
+    text("BODY");
   });
 };
 

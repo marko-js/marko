@@ -3,9 +3,7 @@ import { ComputedSignal } from "./signals";
 
 const IS_FRAGMENT = Symbol("fragment");
 
-export type ContainerNode = Fragment | ParentNode & Node;
-
-export let currentFragment: Fragment | undefined;
+export type ContainerNode = Element | Fragment | DocumentFragment;
 
 export class Fragment {
   public before: Text;
@@ -13,9 +11,9 @@ export class Fragment {
   public parent?: Fragment;
   public tracked: Set<Fragment | ComputedSignal<unknown>>;
   public [IS_FRAGMENT]: true;
-  constructor(parent: ContainerNode) {
-    this.before = text("", parent);
-    this.after = text("", parent);
+  constructor() {
+    this.before = text("");
+    this.after = text("");
     this.tracked = new Set();
     this[IS_FRAGMENT] = true;
   }
@@ -32,23 +30,6 @@ export class Fragment {
     }
     this.tracked.clear();
   }
-}
-
-export function beginFragment(
-  parent: ContainerNode,
-  fragment?: Fragment
-): Fragment {
-  const parentFragment = currentFragment;
-  currentFragment = fragment || new Fragment(parent);
-  currentFragment.parent = parentFragment;
-  if (parentFragment) {
-    parentFragment.tracked.add(currentFragment);
-  }
-  return currentFragment;
-}
-
-export function endFragment(fragment: Fragment) {
-  currentFragment = fragment.parent;
 }
 
 export function insertFragmentBefore(

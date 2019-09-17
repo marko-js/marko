@@ -1,4 +1,13 @@
-import { beginBatch, endBatch } from "./signals";
+import {
+  beginBatch,
+  endBatch,
+  MaybeSignal,
+  compute,
+  get,
+  Signal,
+  set
+} from "./signals";
+import { currentNode } from "./dom";
 
 interface DocumentWithDelegated extends Document {
   ___delegated?: Set<string>;
@@ -13,10 +22,10 @@ const eventOpts: AddEventListenerOptions = {
 };
 
 export function on<
-  E extends Element,
   T extends EventNames,
-  H extends (ev: GlobalEventHandlersEventMap[T], target: E) => void
->(el: E, type: T, handler: H | Unset) {
+  H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
+>(type: T, handler: H | Unset) {
+  const el = currentNode as Element;
   const doc = el.ownerDocument! as DocumentWithDelegated;
   const delegated = doc.___delegated || (doc.___delegated = new Set());
   if (!delegated.has(type)) {
@@ -27,17 +36,36 @@ export function on<
   el[getKey(type)] = handler;
 }
 
-export function once<
-  E extends Element,
+export function dynamicOn<
   T extends EventNames,
-  H extends (ev: GlobalEventHandlersEventMap[T], target: E) => void
->(el: E, type: T, handler: H | Unset) {
-  on(el, type, (ev, target) => {
-    if (handler) {
-      handler(ev, target);
-      handler = undefined;
-    }
-  });
+  H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
+>(type: T, handler: MaybeSignal<H | Unset>) {
+  const el = currentNode as Element;
+  const key = getKey(type);
+  on(type, null);
+  compute(() => (el[key] = get(handler)));
+}
+
+export function once<
+  T extends EventNames,
+  H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
+>(type: T, handler: MaybeSignal<H | Unset>) {
+  const calledSignal = new Signal(false);
+  dynamicOn(
+    type,
+    compute(() => {
+      const h = get(handler);
+      return (
+        !get(calledSignal) &&
+        ((ev: GlobalEventHandlersEventMap[T], target: Element) => {
+          if (h) {
+            h(ev, target);
+          }
+          set(calledSignal, true);
+        })
+      );
+    })
+  );
 }
 
 function delegateEvent(ev: GlobalEventHandlersEventMap[EventNames]) {

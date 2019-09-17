@@ -1,5 +1,4 @@
 import {
-  ContainerNode,
   dynamicText,
   once,
   compute,
@@ -20,19 +19,19 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-const renderer = (parent: ContainerNode, input: (typeof inputs)[0]) => {
-  const button = beginEl("button", parent);
-  once(button, "click", () => {
+const renderer = (input: (typeof inputs)[0]) => {
+  beginEl("button");
+  once("click", () => {
     set(message, "bye");
     set(show, false);
   });
-  endEl(button, parent);
-  const branch0 = (ifParent: ContainerNode) => {
-    const span = beginEl("span", ifParent);
-    dynamicText(message, span);
-    endEl(span, ifParent);
+  endEl();
+  const branch0 = () => {
+    beginEl("span");
+    dynamicText(message);
+    endEl();
   };
-  conditional(compute(() => (get(show) ? branch0 : undefined)), parent);
+  conditional(compute(() => (get(show) ? branch0 : undefined)));
 };
 
 renderer.input = ["value"];

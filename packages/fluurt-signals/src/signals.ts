@@ -1,4 +1,4 @@
-import { currentFragment } from "./fragments";
+import { currentFragment } from "./dom";
 
 let depTracker: Set<Signal<unknown>> | undefined;
 let sid = 0;

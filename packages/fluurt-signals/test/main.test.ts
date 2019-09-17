@@ -2,12 +2,11 @@ import fs from "fs";
 import path from "path";
 import logMutations from "./utils/log-mutations";
 import snapshot from "./utils/snapshot";
-import { ContainerNode } from "../src";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 interface Test {
   inputs: unknown[];
-  default: (parent: ContainerNode, input: { [x: string]: unknown }) => void;
+  default: (input: { [x: string]: unknown }) => void;
   run?: () => Promise<void>;
 }
 

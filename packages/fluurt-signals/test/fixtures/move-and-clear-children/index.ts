@@ -1,12 +1,4 @@
-import {
-  beginEl,
-  loop,
-  ContainerNode,
-  compute,
-  get,
-  dynamicText,
-  endEl
-} from "../../../src";
+import { beginEl, loop, compute, get, dynamicText, endEl } from "../../../src";
 
 export const inputs = [
   {
@@ -46,20 +38,16 @@ export const inputs = [
   }
 ];
 
-const renderer = (
-  parent: ContainerNode,
-  input: { children: Array<{ id: number; text: string }> }
-) => {
-  const div = beginEl("div", parent);
+const renderer = (input: { children: Array<{ id: number; text: string }> }) => {
+  beginEl("div");
   loop(
     input.children,
-    (loopParent, item) => {
-      dynamicText(compute(() => get(item).text), loopParent);
+    item => {
+      dynamicText(compute(() => get(item).text));
     },
-    div,
     i => "" + i.id
   );
-  endEl(div, parent);
+  endEl();
 };
 
 renderer.input = ["children"];

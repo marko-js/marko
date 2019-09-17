@@ -1,7 +1,6 @@
 import {
-  ContainerNode,
   dynamicText,
-  on,
+  dynamicOn,
   compute,
   get,
   Signal,
@@ -16,22 +15,21 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click, click, click] as const;
 
-const renderer = (parent: ContainerNode, input: (typeof inputs)[0]) => {
-  const button = beginEl("button", parent);
+const renderer = (input: (typeof inputs)[0]) => {
+  beginEl("button");
   const clickCount = new Signal(0);
-  compute(() => {
-    on(
-      button,
-      "click",
+  dynamicOn(
+    "click",
+    compute(() =>
       get(clickCount) <= 1
         ? () => {
             set(clickCount, get(clickCount) + 1);
           }
         : false
-    );
-  });
-  dynamicText(clickCount, button);
-  endEl(button, parent);
+    )
+  );
+  dynamicText(clickCount);
+  endEl();
 };
 
 renderer.input = ["value"];

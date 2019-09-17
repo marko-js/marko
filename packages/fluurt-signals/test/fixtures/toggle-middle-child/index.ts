@@ -1,7 +1,6 @@
 import {
   el,
   beginEl,
-  ContainerNode,
   compute,
   get,
   dynamicText,
@@ -24,20 +23,17 @@ export const inputs = [
   }
 ];
 
-const renderer = (
-  parent: ContainerNode,
-  input: { value: string | undefined }
-) => {
-  const div = beginEl("div", parent);
-  const branch0 = (ifParent: ContainerNode) => {
-    const span = beginEl("span", ifParent);
-    dynamicText(input.value, span);
-    endEl(span, ifParent);
+const renderer = (input: { value: string | undefined }) => {
+  beginEl("div");
+  const branch0 = () => {
+    beginEl("span");
+    dynamicText(input.value);
+    endEl();
   };
-  el("span", div);
-  conditional(compute(() => (get(input.value) ? branch0 : undefined)), div);
-  el("span", div);
-  endEl(div, parent);
+  el("span");
+  conditional(compute(() => (get(input.value) ? branch0 : undefined)));
+  el("span");
+  endEl();
 };
 
 renderer.input = ["value"];

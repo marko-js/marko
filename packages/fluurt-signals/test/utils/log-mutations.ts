@@ -1,7 +1,7 @@
 import diffableHTML from "diffable-html";
 import { window, document } from "./jsdom";
 import { getNodePath, getTypeName } from "./get-node-info";
-import { Signal, dynamicKeys, set, beginBatch, endBatch } from "../../src";
+import { render, Signal, set, beginBatch, endBatch } from "../../src";
 
 export default async function logMutations(renderer, updates): Promise<string> {
   let changes = [];
@@ -23,8 +23,7 @@ export default async function logMutations(renderer, updates): Promise<string> {
 
   const first = updates[0];
   const inputSignal = new Signal(first);
-
-  renderer(container, dynamicKeys(inputSignal, renderer.input));
+  render(renderer, inputSignal, container);
 
   await tick();
 

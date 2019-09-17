@@ -1,4 +1,4 @@
-import { text, dynamicText, ContainerNode } from "../../../src";
+import { text, dynamicText } from "../../../src";
 
 export const inputs = [
   {
@@ -12,9 +12,9 @@ export const inputs = [
   }
 ];
 
-const renderer = (parent: ContainerNode, input: (typeof inputs)[number]) => {
-  text("Static ", parent);
-  dynamicText(input.value, parent);
+const renderer = (input: (typeof inputs)[number]) => {
+  text("Static ");
+  dynamicText(input.value);
 };
 
 renderer.input = ["value"];

@@ -1,5 +1,4 @@
 import {
-  ContainerNode,
   dynamicText,
   once,
   compute,
@@ -19,14 +18,14 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-const renderer = (parent: ContainerNode, input: (typeof inputs)[0]) => {
-  const button = beginEl("button", parent);
-  once(button, "click", () => {
+const renderer = (input: (typeof inputs)[0]) => {
+  beginEl("button");
+  once("click", () => {
     set(a, 1);
     set(b, 1);
   });
-  dynamicText(compute(() => get(a) + get(b)), button);
-  endEl(button, parent);
+  dynamicText(compute(() => get(a) + get(b)));
+  endEl();
 };
 
 renderer.input = ["value"];

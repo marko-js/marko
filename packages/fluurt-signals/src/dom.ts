@@ -1,31 +1,82 @@
 import { MaybeSignal, Raw, compute, get, dynamicKeys } from "./signals";
 import { Fragment, ContainerNode } from "./fragments";
 import { conditional } from "./control-flow";
+export let currentFragment: Fragment | undefined;
+export let currentNode: ContainerNode | undefined;
+let docFragment: DocumentFragment;
+const parentForNode: WeakMap<
+  ContainerNode,
+  ContainerNode | undefined
+> = new WeakMap();
 
-export function el(name: string, parent: ContainerNode) {
-  const elNode = beginEl(name, parent);
-  endEl(elNode, parent);
+export function render(
+  renderer: ((input: MaybeSignal<{ [x: string]: unknown }>) => void) & {
+    input: string[];
+  },
+  input: MaybeSignal<{ [x: string]: unknown }>,
+  container: Element
+) {
+  currentNode = container;
+  docFragment = container.ownerDocument!.createDocumentFragment();
+  renderer(dynamicKeys(input, renderer.input));
+  currentNode = undefined;
+}
+
+export function el(name: string) {
+  const elNode = beginEl(name);
+  endEl();
   return elNode;
 }
 
-export function beginEl(name: string, parent: ContainerNode) {
-  return parent.ownerDocument!.createElement(name);
+export function beginEl(name: string) {
+  const parentNode = currentNode!;
+  currentNode = parentNode.ownerDocument!.createElement(name);
+  parentForNode.set(currentNode, parentNode);
+  return currentNode;
 }
 
-export function endEl(elNode: Element, parent: ContainerNode) {
-  parent.appendChild(elNode);
+export function endEl() {
+  const parentNode = parentForNode.get(currentNode!)!;
+  parentNode.appendChild(currentNode as Element);
+  currentNode = parentNode;
+}
+
+export function beginFragment(fragment?: Fragment): Fragment {
+  const parentNode = currentNode;
+  const parentFragment = currentFragment;
+
+  if (fragment) {
+    currentFragment = fragment;
+  } else {
+    currentNode = currentNode || docFragment;
+    currentFragment = new Fragment();
+  }
+
+  currentNode = currentFragment;
+  currentFragment.parent = parentFragment;
+  parentForNode.set(currentNode, parentNode);
+
+  if (parentFragment) {
+    parentFragment.tracked.add(currentFragment);
+  }
+
+  return currentFragment;
+}
+
+export function endFragment(fragment: Fragment) {
+  currentFragment = fragment.parent;
+  currentNode = parentForNode.get(fragment)!;
 }
 
 export function dynamicTag(
   tag: MaybeSignal<
     | string
-    | (((parent: ContainerNode, ...input: unknown[]) => void) & {
+    | (((...input: unknown[]) => void) & {
         input?: string[];
       })
   >,
   input: MaybeSignal<{ [x: string]: unknown }>,
-  parent: ContainerNode,
-  body: ((parent: ContainerNode) => void) | undefined
+  body: (() => void) | undefined
 ) {
   const renderFns = new Map();
 
@@ -35,23 +86,22 @@ export function dynamicTag(
       let nextRender = renderFns.get(nextTag);
       if (!nextRender) {
         if (typeof nextTag === "string") {
-          nextRender = (fragmentParent: Fragment) => {
-            const nextEl = beginEl(nextTag, fragmentParent);
-            dynamicAttrs(nextEl, input);
+          nextRender = () => {
+            beginEl(nextTag);
+            dynamicAttrs(input);
             if (body) {
-              body(nextEl);
+              body();
             }
-            endEl(nextEl, fragmentParent);
+            endEl();
           };
         } else if (nextTag) {
           if (nextTag.input) {
             const tagInput = body
               ? compute(() => ({ ...get(input), renderBody: body }))
               : input;
-            nextRender = (fragmentParent: Fragment) =>
-              nextTag(fragmentParent, dynamicKeys(tagInput, nextTag.input!));
+            nextRender = () => nextTag(dynamicKeys(tagInput, nextTag.input!));
           } else {
-            nextRender = (fragmentParent: Fragment) => nextTag(fragmentParent);
+            nextRender = nextTag;
           }
         } else {
           nextRender = body || (() => {});
@@ -59,84 +109,87 @@ export function dynamicTag(
         renderFns.set(nextTag, nextRender);
       }
       return nextRender;
-    }),
-    parent
+    })
   );
 }
 
-export function text(value: string, parent: ContainerNode) {
-  const textNode = parent.ownerDocument!.createTextNode(normalizeValue(value));
-  parent.appendChild(textNode);
+export function text(value: string) {
+  const textNode = currentNode!.ownerDocument!.createTextNode(
+    normalizeValue(value)
+  );
+  currentNode!.appendChild(textNode);
   return textNode;
 }
 
-export function dynamicText(
-  value: MaybeSignal<unknown>,
-  parent: ContainerNode
-) {
-  const textNode = text("", parent);
+export function dynamicText(value: MaybeSignal<unknown>) {
+  const textNode = text("");
   compute(() => (textNode.nodeValue = normalizeValue(get(value))));
   return textNode;
 }
 
-export function attr(element: Element, name: string, value: unknown) {
-  const normalized = normalizeAttributeValue(value);
-  if (normalized) {
-    element.setAttribute(name, normalized);
-  } else {
-    element.removeAttribute(name);
-  }
+export function attr(name: string, value: unknown) {
+  setAttr(currentNode as Element, name, value);
 }
 
-export function dynamicAttr(element: Element, name: string, value: unknown) {
-  compute(() => attr(element, name, get(value)));
+export function dynamicAttr(name: string, value: unknown) {
+  const elNode = currentNode as Element;
+  compute(() => {
+    setAttr(elNode, name, get(value));
+  });
 }
 
 export function dynamicAttrs(
-  element: Element,
   attrs: MaybeSignal<{ [x: string]: unknown } | null | undefined>
 ) {
+  const elNode = currentNode as Element;
   let previousAttrs: Raw<typeof attrs>;
   compute(() => {
     const nextAttrs = get(attrs);
     for (const name in previousAttrs) {
       if (!nextAttrs || !nextAttrs.hasOwnProperty(name)) {
-        element.removeAttribute(name);
+        elNode.removeAttribute(name);
       }
     }
     for (const name in nextAttrs) {
-      attr(element, name, get(nextAttrs[name]));
+      setAttr(elNode, name, get(nextAttrs[name]));
     }
     previousAttrs = nextAttrs;
   });
 }
 
-export function prop(element: Element, name: string, value: unknown) {
-  element[name] = value;
+export function prop(name: string, value: unknown) {
+  currentNode![name] = value;
 }
 
-export function dynamicProp(element: Element, name: string, value: unknown) {
-  compute(() => (element[name] = get(value)));
+export function dynamicProp(name: string, value: unknown) {
+  const elNode = currentNode;
+  compute(() => (elNode![name] = get(value)));
 }
 
-export function dynamicProps(element: Element, props: MaybeSignal<object>) {
+export function dynamicProps(props: MaybeSignal<object>) {
+  const elNode = currentNode;
   let previousProps: object;
   compute(() => {
     const nextProps = get(props);
     for (const name in previousProps) {
       if (!nextProps.hasOwnProperty(name)) {
-        delete element[name];
+        delete elNode![name];
       }
     }
     for (const name in nextProps) {
-      element[name] = nextProps[name];
+      elNode![name] = nextProps[name];
     }
     previousProps = nextProps;
   });
 }
 
-function normalizeAttributeValue(value: unknown) {
-  return value == null || value === false ? undefined : value + "";
+function setAttr(element: Element, name: string, value: unknown) {
+  const normalized = value == null || value === false ? undefined : value + "";
+  if (normalized) {
+    element.setAttribute(name, normalized);
+  } else {
+    element.removeAttribute(name);
+  }
 }
 
 function normalizeValue(value: unknown) {

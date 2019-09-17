@@ -2,7 +2,6 @@ import {
   el,
   beginEl,
   MaybeSignal,
-  ContainerNode,
   compute,
   get,
   dynamicText,
@@ -25,20 +24,17 @@ export const inputs = [
   }
 ];
 
-const renderer = (
-  parent: ContainerNode,
-  input: { value: MaybeSignal<string | undefined> }
-) => {
-  const div = beginEl("div", parent);
-  const branch0 = (ifParent: ContainerNode) => {
-    const span = beginEl("span", ifParent);
-    dynamicText(input.value, span);
-    endEl(span, ifParent);
+const renderer = (input: { value: MaybeSignal<string | undefined> }) => {
+  beginEl("div");
+  const branch0 = () => {
+    beginEl("span");
+    dynamicText(input.value);
+    endEl();
   };
-  conditional(compute(() => (get(input.value) ? branch0 : undefined)), div);
-  el("span", div);
-  el("span", div);
-  endEl(div, parent);
+  conditional(compute(() => (get(input.value) ? branch0 : undefined)));
+  el("span");
+  el("span");
+  endEl();
 };
 
 renderer.input = ["value"];
