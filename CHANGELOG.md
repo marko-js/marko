@@ -4,6 +4,13 @@
 
 ## 4.18.x
 
+### 4.18.14
+
+- Improve support for running multiple versions of Marko on the page. [#1418](https://github.com/marko-js/marko/pull/1418)
+- Add migration for `component.elId` when used in a place where `:scoped` is recommended. [#1413](https://github.com/marko-js/marko/pull/1413)
+- Fix issue where static regexps in the template would output differently than dynamic ones. [#1412](https://github.com/marko-js/marko/pull/1412)
+- Improve `marko.json` definitions for core/html tags [#1411](https://github.com/marko-js/marko/pull/1411)
+
 ### 4.18.13
 
 - Improve support for consuming v3 components via webpack. [#1410](https://github.com/marko-js/marko/pull/1410)
