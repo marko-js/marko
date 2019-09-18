@@ -55,15 +55,6 @@ module.exports = function assignComponentId(isRepeated) {
                 true /* user assigned key */
             );
         } else {
-            if (el.data.userAssignedKey !== false) {
-                if (context.data.hasImperativeComponentIds) {
-                    el.setAttributeValue(
-                        "id",
-                        this.buildComponentElIdFunctionCall(assignedKey)
-                    );
-                }
-            }
-
             // mark as user-assigned key (@)
             if (assignedKey.type === "Literal") {
                 idExpression = builder.literal("@" + assignedKey.value);

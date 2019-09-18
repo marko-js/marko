@@ -11,6 +11,9 @@ module.exports = function addIdScopedAttr(context, el, attrValue) {
                         node.getAttributeValue("ref").value == attrValue.value)
                 ) {
                     node.setAttributeValue("id:scoped", attrValue);
+                    context.deprecate(
+                        `Relying on the "key" attribute to output an "id" is deprecated. Please use "id:scoped" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
+                    );
                 }
             }
         }
