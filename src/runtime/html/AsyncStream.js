@@ -49,6 +49,7 @@ function AsyncStream(global, writer, parentOut, shouldBuffer) {
         state = new State(this, originalStream, writer, events);
     }
 
+    finalGlobal.runtimeId = finalGlobal.runtimeId || "M";
     this.global = finalGlobal;
     this.stream = originalStream;
     this._state = state;

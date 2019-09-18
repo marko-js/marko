@@ -137,7 +137,6 @@ function addComponentsFromContext(
 
 function getRenderedComponents(out) {
     var componentsContext = out.___components;
-    var runtimeId = out.global.runtimeId;
 
     if (componentsContext === null) {
         return;
@@ -155,7 +154,7 @@ function getRenderedComponents(out) {
     );
 
     if (componentsFinal.length !== 0) {
-        return { r: runtimeId, w: componentsFinal, t: typesArray };
+        return { r: out.global.runtimeId, w: componentsFinal, t: typesArray };
     }
 }
 
@@ -165,16 +164,25 @@ function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
         return;
     }
 
-    var cspNonce = targetOut.global.cspNonce;
+    var outGlobal = targetOut.global;
+    var cspNonce = outGlobal.cspNonce;
+    var runtimeId = outGlobal.runtimeId;
+    var componentGlobalKey =
+        "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
     var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
     targetOut.write(
         "<script" +
             nonceAttr +
             ">" +
-            "(function(){var w=window;w.$components=(w.$components||[]).concat(" +
+            componentGlobalKey +
+            "=(window." +
+            componentGlobalKey +
+            "||[]).concat(" +
             safeJSON(warp10.stringify(renderedComponents)) +
-            ")||w.$components})()</script>"
+            ")||" +
+            componentGlobalKey +
+            "</script>"
     );
 }
 
