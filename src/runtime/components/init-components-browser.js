@@ -255,8 +255,16 @@ function initClientRendered(componentDefs, doc) {
  * of the component IDs.
  */
 function initServerRendered(renderedComponents, doc) {
-    if (!renderedComponents) {
-        renderedComponents = win.$components;
+    var type = typeof renderedComponents;
+    var runtimeId;
+
+    if (type !== "object") {
+        var componentsKey =
+            "$" +
+            (type === "string"
+                ? renderedComponents + "_components"
+                : "components");
+        renderedComponents = win[componentsKey];
 
         if (renderedComponents && renderedComponents.forEach) {
             renderedComponents.forEach(function(renderedComponent) {
@@ -264,7 +272,7 @@ function initServerRendered(renderedComponents, doc) {
             });
         }
 
-        win.$components = {
+        win[componentsKey] = {
             concat: initServerRendered
         };
 
@@ -275,19 +283,20 @@ function initServerRendered(renderedComponents, doc) {
 
     renderedComponents = warp10Finalize(renderedComponents);
 
+    runtimeId = renderedComponents.r;
     var componentDefs = renderedComponents.w;
     var typesArray = renderedComponents.t;
-    var runtimeId = renderedComponents.r;
+    var markoGlobalsKey = "$" + runtimeId + "G";
 
     // Ensure that event handlers to handle delegating events are
     // always attached before initializing any components
     indexServerComponentBoundaries(doc, runtimeId);
     eventDelegation.___init(doc);
 
-    var globals = window.$MG;
+    var globals = win[markoGlobalsKey];
     if (globals) {
         serverRenderedGlobals = warp10Finalize(globals);
-        delete window.$MG;
+        delete win[markoGlobalsKey];
     }
 
     // hydrate components top down (leaf nodes last)

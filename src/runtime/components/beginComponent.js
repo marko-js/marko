@@ -49,7 +49,7 @@ module.exports = function beginComponent(
     componentsContext.___components.push(componentDef);
 
     let out = componentsContext.___out;
-    let runtimeId = (out.global.runtimeId = out.global.runtimeId || "M");
+    let runtimeId = out.global.runtimeId;
 
     componentDef.___renderBoundary = true;
 

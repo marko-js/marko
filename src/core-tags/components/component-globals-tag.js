@@ -33,12 +33,15 @@ module.exports = function render(input, out) {
         return;
     }
     var cspNonce = outGlobal.cspNonce;
+    var runtimeId = outGlobal.runtimeId;
     var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
     out.write(
         "<script" +
             nonceAttr +
-            ">$MG=" +
+            ">$" +
+            runtimeId +
+            "G=" +
             warp10
                 .stringify(serializedGlobals)
                 .replace(escapeEndingScriptTagRegExp, "\\u003C/") +
