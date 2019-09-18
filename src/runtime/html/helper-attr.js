@@ -22,7 +22,7 @@ function attr(name, value, shouldEscape) {
     } else if (value == null || value === false) {
         return "";
     } else if (type === "object") {
-        value = JSON.stringify(value);
+        value = value instanceof RegExp ? value.source : JSON.stringify(value);
         if (shouldEscape) {
             value = escapeString(
                 value,
