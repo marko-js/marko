@@ -1,21 +1,20 @@
 {
     "taglib-id": "marko-html",
     "<a>": {
+        "@download": "#html-download",
         "@href": "#html-href",
         "@hreflang": "#html-hreflang",
         "@media": "#html-media",
+        "@ping": "#html-ping",
+        "@referrerpolicy": "#html-referrerpolicy",
         "@rel": "#html-rel",
         "@target": "#html-target",
-        "@type": "#html-type",
         "html": true,
         "autocomplete": [
             {},
             {
                 "displayText": "a href=\"\"",
-                "snippet": "a href=\"${1:#}\""
-            },
-            {
-                "snippet": "a name=\"${1:name}\""
+                "snippet": "a href=\"${1:https://}\""
             },
             {
                 "displayText": "a href=\"mailto:\"",
@@ -41,22 +40,25 @@
     "<area>": {
         "@alt": "#html-alt",
         "@coords": "#html-coords",
+        "@download": "#html-download",
         "@href": "#html-href",
         "@hreflang": "#html-hreflang",
         "@media": "#html-media",
+        "@ping": "#html-ping",
+        "@referrerpolicy": "#html-referrerpolicy",
         "@rel": "#html-rel",
         "@shape": "#html-shape",
         "@target": "#html-target",
-        "@type": "#html-type",
         "html": true,
         "autocomplete": [
             {},
             {
                 "displayText": "area shape=\"\" coords=\"\" href=\"\"",
-                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:#}\"}"
+                "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:https://}\"}"
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<article>": {
         "html": true,
@@ -69,8 +71,9 @@
     "<audio>": {
         "@autoplay": "#html-autoplay",
         "@controls": "#html-controls",
+        "@crossorigin": "#html-crossorigin",
+        "@disableremoteplayback": "#html-disableremoteplayback",
         "@loop": "#html-loop",
-        "@mediagroup": "#html-mediagroup",
         "@muted": "#html-muted",
         "@preload": "#html-preload",
         "@src": "#html-src",
@@ -94,27 +97,23 @@
         "autocomplete": [
             {},
             {
-                "snippet": "base href=\"${1:#}\" target=\"${2:_blank}\""
+                "snippet": "base href=\"${1:https://}\" target=\"${2:_top}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<bdi>": {
         "html": true,
-        "autocomplete": [
-            {},
-            {
-                "snippet": "bdi dir=\"${1:auto}\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<bdo>": {
+        "@dir": "#html-dir-for-bdo",
         "html": true,
         "autocomplete": [
             {},
             {
-                "snippet": "bdo dir=\"${1:auto}\""
+                "snippet": "bdo dir=\"${1:rtl}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -125,7 +124,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "blockquote cite=\"${1:http://}\""
+                "snippet": "blockquote cite=\"${1:https://}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -135,6 +134,7 @@
         "@onbeforeprint": "#html-onbeforeprint",
         "@onbeforeunload": "#html-onbeforeunload",
         "@onhashchange": "#html-onhashchange",
+        "@onlanguagechange": "#html-onlanguagechange",
         "@onmessage": "#html-onmessage",
         "@onoffline": "#html-onoffline",
         "@ononline": "#html-ononline",
@@ -151,7 +151,8 @@
     },
     "<br>": {
         "html": true,
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<button>": {
         "@autofocus": "#html-autofocus",
@@ -202,20 +203,11 @@
     "<col>": {
         "@span": "#html-span",
         "html": true,
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<colgroup>": {
         "@span": "#html-span",
-        "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
-    "<command>": {
-        "@checked": "#html-checked",
-        "@disabled": "#html-disabled",
-        "@icon": "#html-icon",
-        "@label": "#html-label",
-        "@radiogroup": "#html-radiogroup",
-        "@type": "#html-type",
         "html": true,
         "attribute-groups": ["html-attributes"]
     },
@@ -273,10 +265,11 @@
         "autocomplete": [
             {},
             {
-                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:#}\" width=\"${3:300}\" height=\"${4:300}\""
+                "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:https://}\" width=\"${3:300}\" height=\"${4:300}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<fieldset>": {
         "@disabled": "#html-disabled",
@@ -310,7 +303,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "form class=\"$1\" action=\"${2:index.html}\" method=\"${3:post}\""
+                "snippet": "form class=\"$1\" action=\"${2:/}\" method=\"${3:post}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -353,25 +346,23 @@
     },
     "<hr>": {
         "html": true,
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<html>": {
-        "@manifest": "#html-manifest",
-        "@xml:lang": "#html-xml:lang",
-        "@xmlns": "#html-xmlns",
         "html": true,
         "autocomplete": [
             {},
             {
-                "snippet": "!DOCTYPE html"
+                "snippet": "!doctype html"
             },
             {
                 "displayText": "HTML page",
-                "snippet": "<!DOCTYPE html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"UTF-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+                "snippet": "<!doctype html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
             },
             {
                 "displayText": "HTML page (concise)",
-                "snippet": "<!DOCTYPE html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"UTF-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+                "snippet": "<!doctype html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"utf-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -381,10 +372,14 @@
         "attribute-groups": ["html-attributes"]
     },
     "<iframe>": {
+        "@allow": "#html-allow",
+        "@csp": "#html-csp",
         "@height": "#html-height",
+        "@importance": "#html-importance",
+        "@loading": "#html-loading",
         "@name": "#html-name",
+        "@referrerpolicy": "#html-referrerpolicy",
         "@sandbox": "#html-sandbox",
-        "@seamless": "#html-seamless",
         "@src": "#html-src",
         "@srcdoc": "#html-srcdoc",
         "@width": "#html-width",
@@ -399,10 +394,17 @@
     },
     "<img>": {
         "@alt": "#html-alt",
+        "@crossorigin": "#html-crossorigin",
+        "@decoding": "#html-decoding",
         "@height": "#html-height",
+        "@importance": "#html-importance",
+        "@intrinsicsize": "#html-intrinsicsize",
         "@ismap": "#html-ismap",
-        "@longdesc": "#html-longdesc",
+        "@loading": "#html-loading",
+        "@referrerpolicy": "#html-referrerpolicy",
+        "@sizes": "#html-sizes",
         "@src": "#html-src",
+        "@srcset": "#html-srcset",
         "@usemap": "#html-usemap",
         "@width": "#html-width",
         "html": true,
@@ -412,13 +414,15 @@
                 "snippet": "img src=\"$1\" alt=\"$2\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<input>": {
         "@accept": "#html-accept",
         "@alt": "#html-alt",
         "@autocomplete": "#html-autocomplete",
         "@autofocus": "#html-autofocus",
+        "@capture": "#html-capture",
         "@checked": "#html-checked",
         "@dirname": "#html-dirname",
         "@disabled": "#html-disabled",
@@ -453,7 +457,8 @@
                 "triggerAutocompleteAfterInsert": true
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<ins>": {
         "@cite": "#html-cite",
@@ -463,22 +468,6 @@
     },
     "<kbd>": {
         "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
-    "<keygen>": {
-        "@autofocus": "#html-autofocus",
-        "@challenge": "#html-challenge",
-        "@disabled": "#html-disabled",
-        "@form": "#html-form",
-        "@keytype": "#html-keytype",
-        "@name": "#html-name",
-        "html": true,
-        "autocomplete": [
-            {},
-            {
-                "snippet": "keygen name=\"${1:name}\" challenge=\"${2:string}\" keytype=\"${3:RSA}\" keyparams=\"${4:medium}\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<label>": {
@@ -503,10 +492,15 @@
         "attribute-groups": ["html-attributes"]
     },
     "<link>": {
+        "@as": "#html-as",
+        "@crossorigin": "#html-crossorigin",
         "@disabled": "#html-disabled",
         "@href": "#html-href",
         "@hreflang": "#html-hreflang",
+        "@importance": "#html-importance",
+        "@integrity": "#html-integrity",
         "@media": "#html-media",
+        "@referrerpolicy": "#html-referrerpolicy",
         "@rel": "#html-rel",
         "@sizes": "#html-sizes",
         "@type": "#html-type",
@@ -514,7 +508,7 @@
         "autocomplete": [
             {},
             {
-                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:screen}\" title=\"${4:no title}\" charset=\"${5:utf-8}\""
+                "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:all}\" title=\"${4:no title}\""
             },
             {
                 "snippet": "link rel=\"icon\" href=\"$1.ico\""
@@ -523,7 +517,8 @@
                 "snippet": "link rel=\"import\" href=\"$1\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<map>": {
         "@name": "#html-name",
@@ -535,7 +530,6 @@
         "attribute-groups": ["html-attributes"]
     },
     "<menu>": {
-        "@label": "#html-label",
         "@type": "#html-type",
         "html": true,
         "attribute-groups": ["html-attributes"]
@@ -551,7 +545,8 @@
                 "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<meter>": {
         "@form": "#html-form",
@@ -579,22 +574,17 @@
         "attribute-groups": ["html-attributes"]
     },
     "<object>": {
-        "@archive": "#html-archive",
-        "@codebase": "#html-codebase",
-        "@codetype": "#html-codetype",
         "@data": "#html-data",
-        "@declare": "#html-declare",
         "@form": "#html-form",
         "@height": "#html-height",
         "@name": "#html-name",
-        "@standby": "#html-standby",
         "@type": "#html-type",
         "@usemap": "#html-usemap",
         "@width": "#html-width",
         "html": true,
         "autocomplete": [
             {
-                "snippet": "object data=\"${1:http://}\" type=\"${2:mimetype}\""
+                "snippet": "object data=\"${1:https://}\" type=\"${2:mime/type}\""
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -650,7 +640,8 @@
                 "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<picture>": {
         "html": true,
@@ -696,6 +687,7 @@
         "attribute-groups": ["html-attributes"]
     },
     "<s>": {
+        "html": true,
         "attribute-groups": ["html-attributes"]
     },
     "<samp>": {
@@ -704,12 +696,13 @@
     },
     "<script>": {
         "preserve-whitespace": true,
-        "@*": {
-            "ignore": true
-        },
         "@async": "#html-async",
-        "@charset": "#html-charset",
+        "@crossorigin": "#html-crossorigin",
         "@defer": "#html-defer",
+        "@integrity": "#html-integrity",
+        "@nomodule": "#html-nomodule",
+        "@nonce": "#html-nonce",
+        "@referrerpolicy": "#html-referrerpolicy",
         "@src": "#html-src",
         "@type": "#html-type",
         "html": true,
@@ -720,6 +713,7 @@
         "attribute-groups": ["html-attributes"]
     },
     "<select>": {
+        "@autocomplete": "#html-autocomplete",
         "@autofocus": "#html-autofocus",
         "@disabled": "#html-disabled",
         "@form": "#html-form",
@@ -741,15 +735,18 @@
     },
     "<source>": {
         "@media": "#html-media",
+        "@sizes": "#html-sizes",
         "@src": "#html-src",
+        "@srcset": "#html-srcset",
         "@type": "#html-type",
         "html": true,
         "autocomplete": [
             {
-                "snippet": "source src=\"${1:http://}\" type=\"${2:mimetype}\""
+                "snippet": "source src=\"${1:https://}\" type=\"${2:mime/type}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<span>": {
         "html": true,
@@ -763,14 +760,9 @@
         "preserve-whitespace": true,
         "@disabled": "#html-disabled",
         "@media": "#html-media",
-        "@scoped": "#html-scoped",
+        "@nonce": "#html-nonce",
         "@type": "#html-type",
         "html": true,
-        "autocomplete": [
-            {
-                "snippet": "style media=\"screen\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<sub>": {
@@ -786,7 +778,6 @@
         "attribute-groups": ["html-attributes"]
     },
     "<table>": {
-        "@border": "#html-border",
         "html": true,
         "attribute-groups": ["html-attributes"]
     },
@@ -803,12 +794,12 @@
     },
     "<textarea>": {
         "preserve-whitespace": true,
+        "@autocomplete": "#html-autocomplete",
         "@autofocus": "#html-autofocus",
         "@cols": "#html-cols",
         "@dirname": "#html-dirname",
         "@disabled": "#html-disabled",
         "@form": "#html-form",
-        "@label": "#html-label",
         "@maxlength": "#html-maxlength",
         "@name": "#html-name",
         "@placeholder": "#html-placeholder",
@@ -842,7 +833,6 @@
     },
     "<time>": {
         "@datetime": "#html-datetime",
-        "@pubdate": "#html-pubdate",
         "html": true,
         "attribute-groups": ["html-attributes"]
     },
@@ -866,9 +856,11 @@
                 "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
             }
         ],
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "open-tag-only": true
     },
     "<u>": {
+        "html": true,
         "attribute-groups": ["html-attributes"]
     },
     "<ul>": {
@@ -878,10 +870,15 @@
     "<video>": {
         "@autoplay": "#html-autoplay",
         "@controls": "#html-controls",
+        "@controlslist": "#html-controlist",
+        "@crossorigin": "#html-crossorigin",
+        "@disablepictureinpicture": "#html-disablepictureinpicture",
+        "@disableremoteplayback": "#html-disableremoteplayback",
         "@height": "#html-height",
+        "@intrinsicsize": "#html-intrinsicsize",
         "@loop": "#html-loop",
-        "@mediagroup": "#html-mediagroup",
         "@muted": "#html-muted",
+        "@playsinline": "#html-playsinline",
         "@poster": "#html-poster",
         "@preload": "#html-preload",
         "@src": "#html-src",
@@ -889,8 +886,8 @@
         "html": true,
         "autocomplete": [
             {
-                "displayText": "video src=\"\" autoplay poster=\"\"",
-                "snippet": "video src=\"${1:videofile.ogg}\" ${2:autoplay} ${3:poster=\"${4:posterimage.jpg}\"}"
+                "displayText": "video src=\"\" controls poster=\"\"",
+                "snippet": "video src=\"${1:videofile.ogg}\" ${2:controls} ${3:poster=\"${4:posterimage.jpg}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"]
@@ -898,7 +895,7 @@
     "<wbr>": {
         "html": true,
         "attribute-groups": ["html-attributes"],
-        "openTagOnly": true
+        "open-tag-only": true
     },
     "attribute-groups": {
         "html-attributes": {
@@ -906,35 +903,79 @@
             "accesskey": {
                 "html": true
             },
+            "autocapitalize": {
+                "enum": ["none", "sentences", "words", "characters"],
+                "html": true
+            },
             "class": {
                 "type": "cssStyle",
                 "html": true
             },
             "contenteditable": {
-                "type": "boolean",
-                "html": true
-            },
-            "contextmenu": {
+                "enum": ["", "true", "false"],
                 "html": true
             },
             "dir": {
-                "enum": ["ltr", "rtl"],
+                "enum": ["ltr", "rtl", "auto"],
                 "html": true
             },
             "draggable": {
-                "enum": ["auto", "false", "true"],
+                "enum": ["false", "true"],
                 "html": true
             },
             "dropzone": {
                 "enum": ["copy", "move", "link"],
                 "html": true
             },
+            "elementtiming": {
+                "html": true
+            },
+            "enterkeyhint": {
+                "enum": [
+                    "enter",
+                    "done",
+                    "go",
+                    "next",
+                    "previous",
+                    "search",
+                    "send"
+                ],
+                "html": true
+            },
             "hidden": {
-                "enum": ["hidden"],
+                "type": "boolean",
                 "html": true
             },
             "id": {
                 "type": "cssId",
+                "html": true
+            },
+            "inputmode": {
+                "enum": [
+                    "none",
+                    "text",
+                    "tel",
+                    "url",
+                    "email",
+                    "numeric",
+                    "decimal",
+                    "search"
+                ],
+                "html": true
+            },
+            "itemid": {
+                "html": true
+            },
+            "itemprop": {
+                "html": true
+            },
+            "itemref": {
+                "html": true
+            },
+            "itemscope": {
+                "html": true
+            },
+            "itemtype": {
                 "html": true
             },
             "lang": {
@@ -1095,6 +1136,7 @@
                     "application",
                     "banner",
                     "button",
+                    "cell",
                     "checkbox",
                     "columnheader",
                     "combobox",
@@ -1104,6 +1146,8 @@
                     "directory",
                     "dialog",
                     "document",
+                    "feed",
+                    "figure",
                     "form",
                     "grid",
                     "gridcell",
@@ -1124,6 +1168,7 @@
                     "menuitemcheckbox",
                     "menuitemradio",
                     "navigation",
+                    "none",
                     "note",
                     "option",
                     "presentation",
@@ -1136,13 +1181,17 @@
                     "rowheader",
                     "scrollbar",
                     "search",
+                    "searchbox",
                     "separator",
                     "slider",
                     "spinbutton",
                     "status",
+                    "switch",
                     "tab",
+                    "table",
                     "tablist",
                     "tabpanel",
+                    "term",
                     "textbox",
                     "timer",
                     "toolbar",
@@ -1154,7 +1203,7 @@
                 "html": true
             },
             "spellcheck": {
-                "type": "boolean",
+                "enum": ["", "true", "false"],
                 "html": true
             },
             "style": {
@@ -1162,9 +1211,211 @@
                 "html": true
             },
             "tabindex": {
+                "type": "number",
                 "html": true
             },
             "title": {
+                "html": true
+            },
+            "translate": {
+                "enum": ["", "yes", "no"],
+                "html": true
+            },
+            "property": {
+                "html": true
+            },
+            "typeof": {
+                "html": true
+            },
+            "vocab": {
+                "html": true
+            },
+            "aria-activedescendant": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-atomic": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-autocomplete": {
+                "enum": ["inline", "list", "both", "none"],
+                "html": true
+            },
+            "aria-busy": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-checked": {
+                "enum": ["true", "false", "mixed"],
+                "html": true
+            },
+            "aria-colcount": {
+                "type": "number",
+                "html": true
+            },
+            "aria-colindex": {
+                "type": "number",
+                "html": true
+            },
+            "aria-colspan": {
+                "type": "number",
+                "html": true
+            },
+            "aria-controls": {
+                "html": true
+            },
+            "aria-current": {
+                "enum": [
+                    "page",
+                    "step",
+                    "location",
+                    "date",
+                    "time",
+                    "true",
+                    "false"
+                ],
+                "html": true
+            },
+            "aria-descrbedby": {
+                "html": true
+            },
+            "aria-details": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-disabled": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-errormessage": {
+                "type": "cssId",
+                "html": true
+            },
+            "aria-expanded": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-flowto": {
+                "html": true
+            },
+            "aria-haspopup": {
+                "enum": ["menu", "listbox", "tree", "grid", "dialog"],
+                "html": true
+            },
+            "aria-hidden": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-invalid": {
+                "enum": ["true", "false", "grammar", "spelling"],
+                "html": true
+            },
+            "aria-keyshortcuts": {
+                "html": true
+            },
+            "aria-label": {
+                "html": true
+            },
+            "aria-labelledby": {
+                "html": true
+            },
+            "aria-level": {
+                "type": "number",
+                "html": true
+            },
+            "aria-live": {
+                "enum": ["off", "polite", "assertive"],
+                "html": true
+            },
+            "aria-modal": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-multiline": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-multiselectable": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-orientation": {
+                "enum": ["horizontal", "vertical"],
+                "html": true
+            },
+            "aria-owns": {
+                "html": true
+            },
+            "aria-placeholder": {
+                "html": true
+            },
+            "aria-posinset": {
+                "type": "number",
+                "html": true
+            },
+            "aria-pressed": {
+                "enum": ["true", "false", "mixed"],
+                "html": true
+            },
+            "aria-readonly": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-relevant": {
+                "enum": [
+                    "additions",
+                    "additions text",
+                    "all",
+                    "removals",
+                    "text"
+                ],
+                "html": true
+            },
+            "aria-required": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-roledescription": {
+                "html": true
+            },
+            "aria-rowcount": {
+                "type": "number",
+                "html": true
+            },
+            "aria-rowindex": {
+                "type": "number",
+                "html": true
+            },
+            "aria-rowspan": {
+                "type": "number",
+                "html": true
+            },
+            "aria-selected": {
+                "enum": ["true", "false"],
+                "html": true
+            },
+            "aria-setsize": {
+                "type": "number",
+                "html": true
+            },
+            "aria-sort": {
+                "enum": ["ascending", "descending", "none"],
+                "html": true
+            },
+            "aria-valuemax": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuemin": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuenow": {
+                "type": "number",
+                "html": true
+            },
+            "aria-valuetext": {
                 "html": true
             },
             "onabort": {
@@ -1334,37 +1585,33 @@
     "attributes": {
         "html-accept": {
             "enum": [
-                "text/html",
-                "text/plain",
-                "application/msword",
-                "application/msexcel",
-                "application/postscript",
-                "application/x-zip-compressed",
-                "application/pdf",
-                "application/rtf",
-                "video/x-msvideo",
-                "video/quicktime",
-                "video/x-mpeg2",
-                "audio/x-pn/realaudio",
-                "audio/x-mpeg",
-                "audio/x-waw",
-                "audio/x-aiff",
-                "audio/basic",
-                "image/tiff",
-                "image/jpeg",
-                "image/gif",
-                "image/x-png",
-                "image/x-photo-cd",
-                "image/x-MS-bmp",
-                "image/x-rgb",
-                "image/x-portable-pixmap",
-                "image/x-portable-greymap",
-                "image/x-portablebitmap"
+                "audio/*",
+                "image/*",
+                "video/*",
+                ".html, text/html",
+                ".txt, text/plain",
+                ".doc, .docx, application/msword",
+                ".xls, .xlsx, application/msexcel",
+                ".pdf, application/postscript",
+                ".zip, application/x-zip-compressed",
+                ".pdf, application/pdf",
+                ".rtf, application/rtf",
+                ".mov, video/quicktime",
+                ".mp4, video/mp4, video/x-m4v",
+                ".avi, video/x-msvideo",
+                ".mp3, audio/mpeg, audio/mp3",
+                ".wav, audio/x-wav",
+                ".aiff, audio/x-aiff",
+                ".png, image/png",
+                ".jpg, .jpeg, image/jpeg",
+                ".tif, .tiff, image/tiff",
+                ".gif, image/gif"
             ],
             "html": true,
             "name": "accept"
         },
         "html-accept-charset": {
+            "enum": ["utf-8"],
             "html": true,
             "name": "accept-charset"
         },
@@ -1372,17 +1619,31 @@
             "html": true,
             "name": "action"
         },
-        "html-align": {
+        "html-allow": {
             "html": true,
-            "name": "align"
+            "name": "allow"
         },
         "html-alt": {
             "html": true,
             "name": "alt"
         },
-        "html-archive": {
+        "html-as": {
+            "enum": [
+                "audio",
+                "document",
+                "embed",
+                "fetch",
+                "font",
+                "image",
+                "object",
+                "script",
+                "style",
+                "track",
+                "video",
+                "worker"
+            ],
             "html": true,
-            "name": "archive"
+            "name": "as"
         },
         "html-async": {
             "type": "flag",
@@ -1390,7 +1651,62 @@
             "name": "async"
         },
         "html-autocomplete": {
-            "enum": ["off", "on"],
+            "enum": [
+                "off",
+                "on",
+                "name",
+                "honorific-prefix",
+                "given-name",
+                "additional-name",
+                "family-name",
+                "honorific-suffix",
+                "nickname",
+                "email",
+                "username",
+                "new-password",
+                "current-password",
+                "one-time-code",
+                "organization-title",
+                "organization",
+                "street-address",
+                "address-line1",
+                "address-line2",
+                "address-line3",
+                "address-level1",
+                "address-level2",
+                "address-level3",
+                "address-level4",
+                "country",
+                "country-name",
+                "postal-code",
+                "cc-name",
+                "cc-given-name",
+                "cc-additional-name",
+                "cc-family-name",
+                "cc-number",
+                "cc-exp",
+                "cc-exp-month",
+                "cc-exp-year",
+                "cc-csc",
+                "cc-type",
+                "transaction-currency",
+                "transaction-amount",
+                "language",
+                "bday",
+                "bday-day",
+                "bday-month",
+                "bday-year",
+                "sex",
+                "tel",
+                "tel-country-code",
+                "tel-national",
+                "tel-area-code",
+                "tel-local",
+                "tel-extension",
+                "impp",
+                "url",
+                "photo"
+            ],
             "html": true,
             "name": "autocomplete"
         },
@@ -1404,70 +1720,16 @@
             "html": true,
             "name": "autoplay"
         },
-        "html-behavior": {
-            "enum": ["scroll", "slide", "alternate"],
+        "html-capture": {
+            "enum": ["", "user", "environment"],
             "html": true,
-            "name": "behavior"
-        },
-        "html-bgcolor": {
-            "type": "color",
-            "html": true,
-            "name": "bgcolor"
-        },
-        "html-border": {
-            "html": true,
-            "name": "border"
-        },
-        "html-challenge": {
-            "html": true,
-            "name": "challenge"
+            "name": "capture",
+            "autocomplete": {
+                "descriptionMoreURL": "https://www.w3.org/TR/html-media-capture/#the-capture-attribute"
+            }
         },
         "html-charset": {
-            "enum": [
-                "iso-8859-1",
-                "utf-8",
-                "shift_jis",
-                "euc-jp",
-                "big5",
-                "gb2312",
-                "euc-kr",
-                "din_66003-kr",
-                "ns_4551-1-kr",
-                "sen_850200_b",
-                "csISO2022jp",
-                "hz-gb-2312",
-                "ibm852",
-                "ibm866",
-                "irv",
-                "iso-2022-kr",
-                "iso-8859-2",
-                "iso-8859-3",
-                "iso-8859-4",
-                "iso-8859-5",
-                "iso-8859-6",
-                "iso-8859-7",
-                "iso-8859-8",
-                "iso-8859-9",
-                "koi8-r",
-                "ks_c_5601",
-                "windows-1250",
-                "windows-1251",
-                "windows-1252",
-                "windows-1253",
-                "windows-1254",
-                "windows-1255",
-                "windows-1256",
-                "windows-1257",
-                "windows-1258",
-                "windows-874",
-                "x-euc",
-                "asmo-708",
-                "dos-720",
-                "dos-862",
-                "dos-874",
-                "cp866",
-                "cp1256"
-            ],
+            "enum": ["utf-8", "shift-jis", "euc-jp", "big5"],
             "html": true,
             "name": "charset"
         },
@@ -1480,19 +1742,13 @@
             "html": true,
             "name": "cite"
         },
-        "html-codebase": {
-            "html": true,
-            "name": "codebase"
-        },
-        "html-codetype": {
-            "html": true,
-            "name": "codetype"
-        },
         "html-cols": {
+            "type": "number",
             "html": true,
             "name": "cols"
         },
         "html-colspan": {
+            "type": "number",
             "html": true,
             "name": "colspan"
         },
@@ -1505,22 +1761,40 @@
             "html": true,
             "name": "controls"
         },
+        "html-controlslist": {
+            "enum": ["nodownload", "nofullscreen", "noremoteplayback"],
+            "html": true,
+            "name": "controlslist"
+        },
         "html-coords": {
             "html": true,
             "name": "coords"
+        },
+        "html-crossorigin": {
+            "enum": ["anonymous", "use-credentials"],
+            "html": true,
+            "name": "crossorigin"
+        },
+        "html-csp": {
+            "html": true,
+            "name": "csp"
         },
         "html-data": {
             "html": true,
             "name": "data"
         },
+        "html-data-*": {
+            "html": true,
+            "name": "data-*"
+        },
         "html-datetime": {
             "html": true,
             "name": "datetime"
         },
-        "html-declare": {
-            "type": "flag",
+        "html-decoding": {
+            "enum": ["sync", "async"],
             "html": true,
-            "name": "declare"
+            "name": "decoding"
         },
         "html-default": {
             "type": "flag",
@@ -1532,10 +1806,15 @@
             "html": true,
             "name": "defer"
         },
-        "html-direction": {
-            "enum": ["left", "right", "up", "down"],
+        "html-dir": {
+            "enum": ["ltr", "rtl", "auto"],
             "html": true,
-            "name": "direction"
+            "name": "dir"
+        },
+        "html-dir-for-bdo": {
+            "enum": ["ltr", "rtl"],
+            "html": true,
+            "name": "dir"
         },
         "html-dirname": {
             "html": true,
@@ -1545,6 +1824,20 @@
             "type": "flag",
             "html": true,
             "name": "disabled"
+        },
+        "html-disablepictureinpicture": {
+            "type": "flag",
+            "html": true,
+            "name": "disablepictureinpicture"
+        },
+        "html-disableremoteplayback": {
+            "type": "flag",
+            "html": true,
+            "name": "disableremoteplayback"
+        },
+        "html-download": {
+            "html": true,
+            "name": "download"
         },
         "html-enctype": {
             "enum": [
@@ -1577,7 +1870,7 @@
             "name": "formenctype"
         },
         "html-formmethod": {
-            "enum": ["get", "post"],
+            "enum": ["get", "post", "dialog"],
             "html": true,
             "name": "formmethod"
         },
@@ -1596,10 +1889,12 @@
             "name": "headers"
         },
         "html-height": {
+            "type": "number",
             "html": true,
             "name": "height"
         },
         "html-high": {
+            "type": "number",
             "html": true,
             "name": "high"
         },
@@ -1611,28 +1906,28 @@
             "html": true,
             "name": "hreflang"
         },
-        "html-hspace": {
-            "html": true,
-            "name": "hspace"
-        },
         "html-http-equiv": {
-            "enum": ["content-type", "default-style", "refresh"],
+            "enum": ["content-security-policy", "refresh"],
             "html": true,
             "name": "http-equiv"
         },
-        "html-icon": {
+        "html-importance": {
+            "enum": ["low", "high"],
             "html": true,
-            "name": "icon"
+            "name": "importance"
+        },
+        "html-integrity": {
+            "html": true,
+            "name": "integrity"
+        },
+        "html-intrinsicsize": {
+            "html": true,
+            "name": "intrinsicsize"
         },
         "html-ismap": {
             "type": "flag",
             "html": true,
             "name": "ismap"
-        },
-        "html-keytype": {
-            "enum": ["dsa", "ec", "rsa"],
-            "html": true,
-            "name": "keytype"
         },
         "html-kind": {
             "enum": [
@@ -1653,42 +1948,34 @@
             "html": true,
             "name": "list"
         },
-        "html-longdesc": {
-            "html": true,
-            "name": "longdesc"
-        },
         "html-loop": {
             "type": "flag",
             "html": true,
             "name": "loop"
         },
+        "html-loading": {
+            "enum": ["lazy", "eager"],
+            "html": true,
+            "name": "loading"
+        },
         "html-low": {
+            "type": "number",
             "html": true,
             "name": "low"
-        },
-        "html-manifest": {
-            "html": true,
-            "name": "manifest"
         },
         "html-max": {
             "html": true,
             "name": "max"
         },
         "html-maxlength": {
+            "type": "number",
             "html": true,
             "name": "maxlength"
         },
         "html-media": {
             "enum": [
                 "screen",
-                "tty",
-                "tv",
-                "projection",
-                "handheld",
                 "print",
-                "aural",
-                "braille",
-                "embossed",
                 "speech",
                 "all",
                 "width",
@@ -1697,43 +1984,32 @@
                 "height",
                 "min-height",
                 "max-height",
-                "device-width",
-                "min-device-width",
-                "max-device-width",
-                "device-height",
-                "min-device-height",
-                "max-device-height",
                 "orientation",
                 "aspect-ratio",
                 "min-aspect-ratio",
                 "max-aspect-ratio",
-                "device-aspect-ratio",
-                "min-device-aspect-ratio",
-                "max-device-aspect-ratio",
                 "color",
                 "min-color",
                 "max-color",
                 "color-index",
                 "min-color-index",
                 "max-color-index",
+                "color-gamut",
                 "monochrome",
-                "min-monochrome",
-                "max-monochrome",
                 "resolution",
                 "min-resolution",
                 "max-resolution",
                 "scan",
-                "grid"
+                "grid",
+                "update",
+                "overflow-block",
+                "overflow-inline"
             ],
             "html": true,
             "name": "media"
         },
-        "html-mediagroup": {
-            "html": true,
-            "name": "mediagroup"
-        },
         "html-method": {
-            "enum": ["get", "post"],
+            "enum": ["get", "post", "dialog"],
             "html": true,
             "name": "method"
         },
@@ -1755,6 +2031,15 @@
             "html": true,
             "name": "name"
         },
+        "html-nonce": {
+            "html": true,
+            "name": "nonce"
+        },
+        "html-nomodule": {
+            "type": "flag",
+            "html": true,
+            "name": "novalidate"
+        },
         "html-novalidate": {
             "type": "flag",
             "html": true,
@@ -1766,6 +2051,7 @@
             "name": "open"
         },
         "html-optimum": {
+            "type": "number",
             "html": true,
             "name": "optimum"
         },
@@ -1773,43 +2059,70 @@
             "html": true,
             "name": "pattern"
         },
+        "html-ping": {
+            "html": true,
+            "name": "ping"
+        },
         "html-placeholder": {
             "html": true,
             "name": "placeholder"
+        },
+        "html-playsinline": {
+            "type": "flag",
+            "html": true,
+            "name": "playsinline"
         },
         "html-poster": {
             "html": true,
             "name": "poster"
         },
         "html-preload": {
-            "enum": ["auto", "metadata", "none"],
+            "enum": ["", "auto", "metadata", "none"],
             "html": true,
             "name": "preload"
         },
-        "html-pubdate": {
+        "html-referrerpolicy": {
+            "enum": [
+                "no-referrer",
+                "no-referrer-when-downgrade",
+                "origin",
+                "origin-when-cross-origin",
+                "strict-origin-when-cross-origin",
+                "unsafe-url"
+            ],
             "html": true,
-            "name": "pubdate"
-        },
-        "html-radiogroup": {
-            "html": true,
-            "name": "radiogroup"
+            "name": "referrerpolicy"
         },
         "html-rel": {
             "enum": [
+                "apple-touch-icon",
                 "alternate",
                 "author",
                 "bookmark",
+                "canonical",
+                "dns-prefetch",
+                "external",
                 "help",
+                "icon",
                 "license",
+                "manifest",
+                "mask-icon",
+                "me",
+                "modulepreload",
                 "next",
                 "nofollow",
+                "noopener",
                 "noreferrer",
+                "opener",
+                "preconnect",
                 "prefetch",
+                "preload",
+                "prerender",
                 "prev",
                 "search",
-                "sidebar",
+                "stylesheet",
                 "tag",
-                "external"
+                "webmention"
             ],
             "html": true,
             "name": "rel"
@@ -1839,18 +2152,22 @@
         },
         "html-sandbox": {
             "enum": [
+                "allow-downloads-without-user-activation",
                 "allow-forms",
+                "allow-modals",
+                "allow-orientation-lock",
+                "allow-pointer-lock",
+                "allow-popups",
+                "allow-popups-to-escape-sandbox",
+                "allow-presentation",
                 "allow-same-origin",
                 "allow-scripts",
-                "allow-top-navigation"
+                "allow-storage-access-by-user-activation",
+                "allow-top-navigation",
+                "allow-top-navigation-by-user-activation"
             ],
             "html": true,
             "name": "sandbox"
-        },
-        "html-seamless": {
-            "type": "flag",
-            "html": true,
-            "name": "seamless"
         },
         "html-selected": {
             "type": "flag",
@@ -1862,25 +2179,13 @@
             "html": true,
             "name": "scope"
         },
-        "html-scoped": {
-            "type": "boolean",
-            "html": true,
-            "name": "scoped"
-        },
-        "html-scrollamount": {
-            "html": true,
-            "name": "scrollamount"
-        },
-        "html-scrolldelay": {
-            "html": true,
-            "name": "scrolldelay"
-        },
         "html-shape": {
             "enum": ["circle", "default", "poly", "rect"],
             "html": true,
             "name": "shape"
         },
         "html-size": {
+            "type": "number",
             "html": true,
             "name": "size"
         },
@@ -1890,6 +2195,7 @@
             "name": "sizes"
         },
         "html-span": {
+            "type": "number",
             "html": true,
             "name": "span"
         },
@@ -1905,9 +2211,9 @@
             "html": true,
             "name": "srclang"
         },
-        "html-standby": {
+        "html-srcset": {
             "html": true,
-            "name": "standby"
+            "name": "srcset"
         },
         "html-start": {
             "html": true,
@@ -1922,11 +2228,6 @@
             "html": true,
             "name": "target"
         },
-        "html-truespeed": {
-            "type": "flag",
-            "html": true,
-            "name": "truespeed"
-        },
         "html-type": {
             "html": true,
             "name": "type"
@@ -1939,11 +2240,8 @@
             "html": true,
             "name": "value"
         },
-        "html-vspace": {
-            "html": true,
-            "name": "vspace"
-        },
         "html-width": {
+            "type": "number",
             "html": true,
             "name": "width"
         },
@@ -1951,26 +2249,10 @@
             "enum": ["hard", "soft"],
             "html": true,
             "name": "wrap"
-        },
-        "html-xml:lang": {
-            "html": true,
-            "name": "xml:lang"
-        },
-        "html-xmlns": {
-            "html": true,
-            "name": "xmlns"
         }
-    },
-    "<big>": {
-        "html": true,
-        "attribute-groups": ["html-attributes"]
     },
     "<dialog>": {
         "@open": "#html-open",
-        "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
-    "<ilayer>": {
         "html": true,
         "attribute-groups": ["html-attributes"]
     },
@@ -1978,38 +2260,8 @@
         "html": true,
         "attribute-groups": ["html-attributes"]
     },
-    "<marquee>": {
-        "@align": "#html-align",
-        "@behavior": "#html-behavior",
-        "@bgcolor": "#html-bgcolor",
-        "@direction": "#html-direction",
-        "@height": "#html-height",
-        "@hspace": "#html-hspace",
-        "@loop": "#html-loop",
-        "@scrollamount": "#html-scrollamount",
-        "@scrolldelay": "#html-scrolldelay",
-        "@truespeed": "#html-truespeed",
-        "@vspace": "#html-vspace",
-        "@width": "#html-width",
-        "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
-    "<tt>": {
-        "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
     "<var>": {
         "html": true,
-        "attribute-groups": ["html-attributes"]
-    },
-    "<content>": {
-        "html": true,
-        "autocomplete": [
-            {},
-            {
-                "snippet": "content select=\"$1\""
-            }
-        ],
         "attribute-groups": ["html-attributes"]
     },
     "<data>": {
@@ -2018,25 +2270,6 @@
             {},
             {
                 "snippet": "data value=\"$1\""
-            }
-        ],
-        "attribute-groups": ["html-attributes"]
-    },
-    "<menuitem>": {
-        "html": true,
-        "autocomplete": [
-            {},
-            {
-                "snippet": "menuitem type=\"${1:command}\" label=\"${2:Save}\""
-            }
-        ],
-        "attribute-groups": ["html-attributes"]
-    },
-    "<opt>": {
-        "html": true,
-        "autocomplete": [
-            {
-                "snippet": "option${1: value=\"${2:option}\"}"
             }
         ],
         "attribute-groups": ["html-attributes"]
