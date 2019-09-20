@@ -28,13 +28,13 @@
     "dist"
   ],
   "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
-  "jsnext": "dist/index.esm.js",
+  "jsnext": "dist/main.esm.js",
   "keywords": [
     "PROJECT_KEYWORDS"
   ],
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "main": "dist/main.cjs.js",
+  "module": "dist/main.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/PROJECT_ORG/PROJECT_NAME"

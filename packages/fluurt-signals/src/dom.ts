@@ -13,10 +13,6 @@ export let currentFragment: Fragment | undefined;
 export let currentNode: ContainerNode | undefined;
 const doc = document;
 const detachedContainer = doc.createDocumentFragment();
-const parentForNode: WeakMap<
-  ContainerNode,
-  ContainerNode | undefined
-> = new WeakMap();
 
 export function render(renderer: Renderer, input: UnknownObject = {}) {
   const container = (currentNode = doc.createDocumentFragment());
@@ -34,18 +30,19 @@ export function el(name: string) {
 export function beginEl(name: string) {
   const parentNode = currentNode!;
   currentNode = doc.createElement(name);
-  parentForNode.set(currentNode, parentNode);
+  currentNode.___eventualParentNode = parentNode;
   return currentNode;
 }
 
 export function endEl() {
-  const parentNode = parentForNode.get(currentNode!)!;
+  const parentNode = currentNode!.___eventualParentNode!;
   parentNode.appendChild(currentNode as Element);
+  currentNode!.___eventualParentNode = undefined;
   currentNode = parentNode;
 }
 
 export function beginFragment(fragment?: Fragment): Fragment {
-  const parentNode = currentNode;
+  const parentNode = currentNode!;
   const parentFragment = currentFragment;
 
   if (fragment) {
@@ -55,9 +52,9 @@ export function beginFragment(fragment?: Fragment): Fragment {
     currentFragment = new Fragment();
   }
 
+  currentFragment.___parentFragment = parentFragment;
+  currentFragment.___eventualParentNode = parentNode;
   currentNode = currentFragment;
-  currentFragment.___parent = parentFragment;
-  parentForNode.set(currentNode, parentNode);
 
   if (parentFragment) {
     parentFragment.___tracked.add(currentFragment);
@@ -67,8 +64,9 @@ export function beginFragment(fragment?: Fragment): Fragment {
 }
 
 export function endFragment(fragment: Fragment) {
-  currentFragment = fragment.___parent;
-  currentNode = parentForNode.get(fragment)!;
+  currentFragment = fragment.___parentFragment;
+  currentNode = fragment.___eventualParentNode;
+  fragment.___eventualParentNode = undefined;
 }
 
 export function dynamicTag(

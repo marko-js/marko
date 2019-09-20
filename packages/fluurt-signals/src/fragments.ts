@@ -1,12 +1,24 @@
 import { text } from "./dom";
 import { ComputedSignal } from "./signals";
 
-export type ContainerNode = Element | Fragment | DocumentFragment;
+export interface DetachedElementWithParent extends Element {
+  ___eventualParentNode?: ContainerNode;
+}
+
+export interface DetachedDocumentFragmentWithParent extends DocumentFragment {
+  ___eventualParentNode?: ContainerNode;
+}
+
+export type ContainerNode =
+  | DetachedElementWithParent
+  | DetachedDocumentFragmentWithParent
+  | Fragment;
 
 export class Fragment {
   public ___before: Text;
   public ___after: Text;
-  public ___parent?: Fragment;
+  public ___parentFragment?: Fragment;
+  public ___eventualParentNode?: ContainerNode;
   public ___tracked: Set<Fragment | ComputedSignal<unknown>>;
   constructor() {
     this.___before = text("");

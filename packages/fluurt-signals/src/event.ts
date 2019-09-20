@@ -11,7 +11,7 @@ import { currentNode } from "./dom";
 const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {
-  ___delegated?: Set<string>;
+  ___delegated?: { [x: string]: 1 };
 }
 
 type EventNames = keyof GlobalEventHandlersEventMap;
@@ -27,9 +27,9 @@ export function on<
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: H | Unset) {
   const el = currentNode as Element;
-  const delegated = doc.___delegated || (doc.___delegated = new Set());
-  if (!delegated.has(type)) {
-    delegated.add(type);
+  const delegated = doc.___delegated || (doc.___delegated = {});
+  if (!delegated[type]) {
+    delegated[type] = 1;
     doc.addEventListener(type, delegateEvent, eventOpts);
   }
 
