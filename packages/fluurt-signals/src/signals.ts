@@ -1,42 +1,51 @@
 import { currentFragment } from "./dom";
 
-let depTracker: Set<Signal<unknown>> | undefined;
+let depTracker: Set<Signal> | undefined;
 let sid = 0;
-let batchedComputations: Array<ComputedSignal<unknown>> | undefined;
+let batchedComputations: ComputedSignal[] | undefined;
 let batchIndex: number;
 
 const noop = () => {};
 
-export type MaybeSignal<T> = Signal<T> | T;
+export type MaybeSignal<T = unknown> = Signal<T> | T;
 export type Raw<T> = T extends Signal<infer V> ? V : T;
 
-export class Signal<T> {
+export class Signal<T = unknown> {
   public ___sid: number = sid++;
   public ___value: T;
-  private ___listeners: Set<ComputedSignal<unknown>> = new Set();
+  private ___computations: { [x: number]: ComputedSignal } = {};
+  [x: number]: ComputedSignal;
   constructor(current: T) {
     this.___value = current;
   }
   public ___set(nextValue: T) {
     if (nextValue !== this.___value || nextValue instanceof Object) {
       this.___value = nextValue;
-      for (const l of this.___listeners) {
-        const index = getIndex(batchedComputations, l.___sid);
-        if (batchedComputations![index] !== l) {
-          batchedComputations!.splice(index, 0, l);
+      const computations = this.___computations;
+      const keys = Object.keys(computations);
+
+      for (const key of keys) {
+        const computation = computations[key];
+        const expectedBatchIndex = findIndexBySID(
+          batchedComputations!,
+          computation
+        );
+
+        if (batchedComputations![expectedBatchIndex] !== computation) {
+          batchedComputations!.splice(expectedBatchIndex, 0, computation);
         }
       }
     }
   }
-  public ___on(listener: ComputedSignal<unknown>) {
-    this.___listeners.add(listener);
+  public ___subscribe(computation: ComputedSignal) {
+    this.___computations[computation.___sid] = computation;
   }
-  public ___off(listener: ComputedSignal<unknown>) {
-    this.___listeners.delete(listener);
+  public ___unsubscribe(computation: ComputedSignal) {
+    delete this.___computations[computation.___sid]; // todo: bench using undefined
   }
 }
 
-export class ComputedSignal<T> extends Signal<T> {
+export class ComputedSignal<T = unknown> extends Signal<T> {
   public static ___create<T>(fn: () => T) {
     const signal = new ComputedSignal(fn);
 
@@ -51,7 +60,7 @@ export class ComputedSignal<T> extends Signal<T> {
   }
 
   private ___fn: () => T;
-  private ___prevDeps: Set<Signal<unknown>>;
+  private ___prevDeps: Set<Signal>;
   constructor(fn: () => T) {
     super((undefined as any) as T);
     this.___fn = fn;
@@ -65,12 +74,12 @@ export class ComputedSignal<T> extends Signal<T> {
     const nextValue = fn();
     depTracker = parentTracker;
     for (const d of nextDeps) {
-      d.___on(this);
+      d.___subscribe(this);
     }
     if (prevDeps) {
       for (const d of prevDeps) {
         if (!nextDeps.has(d)) {
-          d.___off(this);
+          d.___unsubscribe(this);
         }
       }
       this.___set(nextValue);
@@ -82,7 +91,7 @@ export class ComputedSignal<T> extends Signal<T> {
   }
   public ___cleanup() {
     for (const d of this.___prevDeps) {
-      d.___off(this);
+      d.___unsubscribe(this);
     }
     this.___compute = noop as () => T;
   }
@@ -112,7 +121,7 @@ export function get<T>(value: MaybeSignal<T>): T {
   return value;
 }
 
-export function set(value: MaybeSignal<unknown>, newValue: unknown) {
+export function set(value: MaybeSignal, newValue: unknown) {
   if (value instanceof Signal) {
     value.___set(newValue);
   }
@@ -139,13 +148,13 @@ export function endBatch(b: typeof batchedComputations) {
   }
 }
 
-function getIndex(array: typeof batchedComputations, value: number) {
+function findIndexBySID(array: ComputedSignal[], { ___sid }: ComputedSignal) {
   let low = batchIndex;
   let high = array!.length;
 
   while (low < high) {
     const mid = (low + high) >>> 1;
-    if (array![mid].___sid < value) {
+    if (array![mid].___sid < ___sid) {
       low = mid + 1;
     } else {
       high = mid;
