@@ -1,15 +1,15 @@
 import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
 
-export default {
-  input: "src/index.ts",
+export default ["dom", "html"].map(name => ({
+  input: `src/${name}/index.ts`,
   output: [
     {
-      file: "dist/main.esm.js",
+      file: `dist/${name}.esm.js`,
       format: "esm"
     },
     {
-      file: "dist/main.cjs.js",
+      file: `dist/${name}.cjs.js`,
       format: "cjs"
     }
   ],
@@ -31,4 +31,4 @@ export default {
       }
     })
   ]
-};
+}));

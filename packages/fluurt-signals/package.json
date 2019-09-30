@@ -25,16 +25,17 @@
     "typescript": "^3.6.2"
   },
   "files": [
-    "dist"
+    "dist",
+    "dom",
+    "html"
   ],
   "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
-  "jsnext": "dist/main.esm.js",
   "keywords": [
-    "PROJECT_KEYWORDS"
+    "fluurt",
+    "marko",
+    "runtime"
   ],
   "license": "MIT",
-  "main": "dist/main.cjs.js",
-  "module": "dist/main.esm.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/PROJECT_ORG/PROJECT_NAME"
@@ -47,10 +48,9 @@
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json 'src/**/*.ts'",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
-    "size": "npm run build && minified-size --json ./dist/main.esm.js",
-    "test": "jest -o ./test/main.test.ts",
-    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o ./test/main.test.ts --testTimeout=86400000",
-    "test:watch": "jest -o --watch ./test/main.test.ts"
-  },
-  "types": "dist/index.d.ts"
+    "size": "npm run build && minified-size --json ./dist/dom.esm.js",
+    "test": "jest -o",
+    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o --testTimeout=86400000",
+    "test:watch": "jest -o --watch"
+  }
 }
