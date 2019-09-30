@@ -65,15 +65,12 @@ inserted div0/#text9
 inserted div0/#text0
 inserted div0/#text1
 div0/#text2: "abc" => "a"
-div0/#text2: "" => "a"
 inserted div0/#text3
 inserted div0/#text4
 inserted div0/#text5
-div0/#text5: "" => "b"
 inserted div0/#text6
 inserted div0/#text7
 inserted div0/#text8
-div0/#text8: "" => "c"
 inserted div0/#text9
 inserted div0/#text10
 removed #comment before div0

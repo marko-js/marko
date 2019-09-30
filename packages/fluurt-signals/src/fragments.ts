@@ -20,10 +20,8 @@ export class Fragment {
   public ___parentFragment?: Fragment;
   public ___eventualParentNode?: ContainerNode;
   public ___tracked: Set<Fragment | ComputedSignal<unknown>>;
-  constructor(before: Text, after?: Text) {
+  constructor() {
     this.___tracked = new Set();
-    this.___before = before;
-    this.___after = after;
   }
   public appendChild(childNode: ChildNode & Node) {
     const after = this.___after!;

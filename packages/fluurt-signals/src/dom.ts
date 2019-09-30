@@ -20,7 +20,6 @@ export let currentNode: ContainerNode | null = null;
 const doc = document;
 const detachedContainer = doc.createDocumentFragment();
 let lastHydratedChild: Node | null = null;
-let nextNodeToHydrate: typeof nextSiblingToHydrate | typeof firstChildToHydrate;
 
 export function render(renderer: Renderer, input: UnknownObject = {}) {
   const container = (currentNode = doc.createDocumentFragment());
@@ -47,7 +46,6 @@ function originalBeginEl(name: string) {
 
 function hydrateBeginEl(name: string) {
   const node = (currentNode = nextNodeToHydrate() as DetachedElementWithParent);
-  nextNodeToHydrate = firstChildToHydrate;
   lastHydratedChild = null;
 
   if (!node || node.localName !== name) {
@@ -66,7 +64,6 @@ function originalEndEl() {
 }
 
 function hydrateEndEl() {
-  nextNodeToHydrate = nextSiblingToHydrate;
   lastHydratedChild = currentNode as Node | null;
   currentNode = (currentNode as Element)
     .parentNode as DetachedElementWithParent;
@@ -81,7 +78,9 @@ function originalBeginFragment(fragment?: Fragment): Fragment {
     currentFragment = fragment;
   } else {
     currentNode = currentNode || detachedContainer;
-    currentFragment = new Fragment(text(""), text(""));
+    currentFragment = new Fragment();
+    currentFragment.___before = text("");
+    currentFragment.___after = text("");
   }
 
   currentFragment.___parentFragment = parentFragment;
@@ -96,9 +95,9 @@ function originalBeginFragment(fragment?: Fragment): Fragment {
 }
 
 function hydrateBeginFragment() {
-  const fragment = new Fragment(insertTextAtCurrentHydratePosition(""));
+  const fragment = new Fragment();
+  fragment.___before = insertTextAtCurrentHydratePosition("");
   originalBeginFragment(fragment);
-  nextNodeToHydrate = nextSiblingToHydrate;
   return fragment;
 }
 
@@ -156,19 +155,19 @@ export function dynamicTag(
 
 export let text: typeof originalText | typeof hydrateText = originalText;
 function originalText(value: string) {
-  const textNode = doc.createTextNode(normalizeValue(value));
+  const textNode = doc.createTextNode(normalizeTextData(value));
   currentNode!.appendChild(textNode);
   return textNode;
 }
 
 function hydrateText(value: string) {
   let node = nextNodeToHydrate() as Text;
-  const normalized = normalizeValue(value);
+  const data = normalizeTextData(value);
 
   if (node && node.nodeType === 3 /** Node.TEXT_NODE */) {
-    node.data = normalized;
+    node.data = data;
   } else {
-    node = insertTextAtCurrentHydratePosition(normalized);
+    node = insertTextAtCurrentHydratePosition(data);
   }
 
   lastHydratedChild = node;
@@ -177,20 +176,28 @@ function hydrateText(value: string) {
 }
 
 export function dynamicText(value: MaybeSignal<unknown>) {
-  const textNode = text("");
-  compute(() => (textNode.data = normalizeValue(get(value))));
-  return textNode;
+  let textNode: Text;
+  const data = compute(() => normalizeTextData(get(value)));
+
+  compute(() => {
+    if (textNode) {
+      textNode.data = get(data);
+    } else {
+      textNode = text(get(data));
+    }
+  });
+
+  return textNode!;
 }
 
 export function attr(name: string, value: unknown) {
-  setAttr(currentNode as Element, name, value);
+  setAttr(currentNode as Element, name, normalizeAttrValue(value));
 }
 
 export function dynamicAttr(name: string, value: unknown) {
   const elNode = currentNode as Element;
-  compute(() => {
-    setAttr(elNode, name, get(value));
-  });
+  const data = compute(() => normalizeAttrValue(get(value)));
+  compute(() => setAttr(elNode, name, get(data)));
 }
 
 export function dynamicAttrs(
@@ -206,7 +213,7 @@ export function dynamicAttrs(
       }
     }
     for (const name in nextAttrs) {
-      setAttr(elNode, name, get(nextAttrs[name]));
+      setAttr(elNode, name, normalizeAttrValue(get(nextAttrs[name])));
     }
     previousAttrs = nextAttrs;
   });
@@ -239,7 +246,6 @@ export function dynamicProps(props: MaybeSignal<object>) {
 }
 
 export function beginHydrate(boundary: Node) {
-  nextNodeToHydrate = nextSiblingToHydrate;
   currentNode = boundary.parentNode as DetachedElementWithParent;
   lastHydratedChild = boundary;
   beginFragment = hydrateBeginFragment;
@@ -277,25 +283,27 @@ function insertTextAtCurrentHydratePosition(value: string) {
   return node;
 }
 
-function nextSiblingToHydrate() {
-  return lastHydratedChild!.nextSibling as ChildNode;
-}
+function nextNodeToHydrate() {
+  if (lastHydratedChild) {
+    return lastHydratedChild!.nextSibling as ChildNode;
+  }
 
-function firstChildToHydrate() {
   // This branch is only taken when we enter a new element (fragments won't go down this path).
-  nextNodeToHydrate = nextSiblingToHydrate;
   return (currentNode as Element).firstChild as ChildNode;
 }
 
-function setAttr(element: Element, name: string, value: unknown) {
-  const normalized = value == null || value === false ? undefined : value + "";
-  if (normalized) {
-    element.setAttribute(name, normalized);
+function setAttr(element: Element, name: string, value: string | undefined) {
+  if (value) {
+    element.setAttribute(name, value);
   } else {
     element.removeAttribute(name);
   }
 }
 
-function normalizeValue(value: unknown) {
+function normalizeAttrValue(value: unknown) {
+  return value == null || value === false ? undefined : value + "";
+}
+
+function normalizeTextData(value: unknown) {
   return value == null ? "" : value + "";
 }

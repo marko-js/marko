@@ -89,7 +89,6 @@ div0/span3/#text0: "World" => "!"
 ```
 inserted div0/#text2
 div0/span3/#text0: "Hello" => "Hello"
-div0/span3/#text0: "" => "Hello"
 inserted div0/#text4
 removed #comment before div0
 ```

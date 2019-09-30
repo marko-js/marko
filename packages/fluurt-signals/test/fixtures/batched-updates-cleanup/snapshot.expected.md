@@ -41,7 +41,6 @@ removed span after #text1
 ```
 inserted #text1
 span2/#text0: "hi" => "hi"
-span2/#text0: "" => "hi"
 inserted #text3
 removed #comment before button0
 ```
