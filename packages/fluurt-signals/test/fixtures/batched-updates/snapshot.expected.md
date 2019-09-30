@@ -36,6 +36,5 @@ button0/#text0: "0" => "2"
 
 # Mutations
 ```
-button0/#text0: "0" => "0"
 removed #comment before button0
 ```

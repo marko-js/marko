@@ -40,7 +40,6 @@ removed span after #text1
 # Mutations
 ```
 inserted #text1
-span2/#text0: "hi" => "hi"
 inserted #text3
 removed #comment before button0
 ```

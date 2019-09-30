@@ -39,7 +39,7 @@ Static Dynamic 1
 
 # Mutations
 ```
-#text0: "Static Dynamic 1" => "Static "
 inserted #text1
+#text0: "Static Dynamic 1" => "Static "
 removed #comment before #text0
 ```

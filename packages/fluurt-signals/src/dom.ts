@@ -113,6 +113,66 @@ function hydrateEndFragment(fragment: Fragment) {
   fragment.___after = insertTextAtCurrentHydratePosition("");
 }
 
+export let text: typeof originalText | typeof hydrateText = originalText;
+function originalText(value: string) {
+  const textNode = doc.createTextNode(normalizeTextData(value));
+  currentNode!.appendChild(textNode);
+  return textNode;
+}
+
+function hydrateText(value: string) {
+  const node = (lastHydratedChild = nextNodeToHydrate() as Text);
+  const data = normalizeTextData(value);
+
+  if (!node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
+    throw new HydrateError();
+  }
+
+  if (data === "") {
+    // Empty text nodes are not rendered from SSR, create them now.
+    return (lastHydratedChild = insertTextAtCurrentHydratePosition(data));
+  }
+
+  const existingData = node.data;
+  if (existingData !== data) {
+    if (existingData.indexOf(data) === 0) {
+      // We have a text node with more content in the browser than on the server.
+      // This happens when there are dynamic text nodes next to static ones.
+      // Here we split the text node so that the dynamic text also gets it's own node.
+      node.splitText(data.length);
+    } else {
+      throw new HydrateError();
+    }
+  }
+
+  return node;
+}
+
+export function dynamicText(value: MaybeSignal<unknown>) {
+  let textNode: Text;
+  const data = compute(() => normalizeTextData(get(value)));
+
+  compute(() => {
+    if (textNode) {
+      textNode.data = get(data);
+    } else {
+      textNode = text(get(data));
+    }
+  });
+
+  return textNode!;
+}
+
+export function attr(name: string, value: unknown) {
+  setAttr(currentNode as Element, name, normalizeAttrValue(value));
+}
+
+export function dynamicAttr(name: string, value: unknown) {
+  const elNode = currentNode as Element;
+  const data = compute(() => normalizeAttrValue(get(value)));
+  compute(() => setAttr(elNode, name, get(data)));
+}
+
 export function dynamicTag(
   tag: MaybeSignal<string | Renderer>,
   input: MaybeSignal<UnknownObject>,
@@ -151,53 +211,6 @@ export function dynamicTag(
       return nextRender;
     })
   );
-}
-
-export let text: typeof originalText | typeof hydrateText = originalText;
-function originalText(value: string) {
-  const textNode = doc.createTextNode(normalizeTextData(value));
-  currentNode!.appendChild(textNode);
-  return textNode;
-}
-
-function hydrateText(value: string) {
-  let node = nextNodeToHydrate() as Text;
-  const data = normalizeTextData(value);
-
-  if (node && node.nodeType === 3 /** Node.TEXT_NODE */) {
-    node.data = data;
-  } else {
-    node = insertTextAtCurrentHydratePosition(data);
-  }
-
-  lastHydratedChild = node;
-
-  return node;
-}
-
-export function dynamicText(value: MaybeSignal<unknown>) {
-  let textNode: Text;
-  const data = compute(() => normalizeTextData(get(value)));
-
-  compute(() => {
-    if (textNode) {
-      textNode.data = get(data);
-    } else {
-      textNode = text(get(data));
-    }
-  });
-
-  return textNode!;
-}
-
-export function attr(name: string, value: unknown) {
-  setAttr(currentNode as Element, name, normalizeAttrValue(value));
-}
-
-export function dynamicAttr(name: string, value: unknown) {
-  const elNode = currentNode as Element;
-  const data = compute(() => normalizeAttrValue(get(value)));
-  compute(() => setAttr(elNode, name, get(data)));
 }
 
 export function dynamicAttrs(

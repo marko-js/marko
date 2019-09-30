@@ -66,6 +66,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-button0/#text0: "0" => "0"
 removed #comment before button0
 ```

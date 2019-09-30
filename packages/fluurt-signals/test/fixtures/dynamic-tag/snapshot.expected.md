@@ -77,7 +77,6 @@ inserted div1
 ```
 inserted #text0
 span1: attr(a) "1" => "1"
-span1/#text0: "BODY" => "BODY"
 inserted #text2
 removed #comment before #text0
 ```

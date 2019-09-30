@@ -68,7 +68,6 @@ div0/span1/#text0: "World" => "!"
 # Mutations
 ```
 inserted div0/#text0
-div0/span1/#text0: "Hello" => "Hello"
 inserted div0/#text2
 removed #comment before div0
 ```
