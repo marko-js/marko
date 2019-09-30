@@ -1,23 +1,31 @@
 import { MaybeSignal, Raw, compute, get, dynamicKeys } from "./signals";
-import { Fragment, ContainerNode } from "./fragments";
+import {
+  Fragment,
+  ContainerNode,
+  DetachedElementWithParent
+} from "./fragments";
 import { conditional } from "./control-flow";
 
 interface UnknownObject {
   [x: string]: unknown;
 }
-type Renderer = ((...input: unknown[]) => void) & {
+export type Renderer = ((...input: unknown[]) => void) & {
   input?: string[];
 };
 
+export class HydrateError extends Error {}
 export let currentFragment: Fragment | undefined;
-export let currentNode: ContainerNode | undefined;
+export let currentNode: ContainerNode | null = null;
+
 const doc = document;
 const detachedContainer = doc.createDocumentFragment();
+let lastHydratedChild: Node | null = null;
+let nextNodeToHydrate: typeof nextSiblingToHydrate | typeof firstChildToHydrate;
 
 export function render(renderer: Renderer, input: UnknownObject = {}) {
   const container = (currentNode = doc.createDocumentFragment());
   renderer(input);
-  currentNode = undefined;
+  currentNode = null;
   return container;
 }
 
@@ -27,21 +35,45 @@ export function el(name: string) {
   return elNode;
 }
 
-export function beginEl(name: string) {
+export let beginEl:
+  | typeof originalBeginEl
+  | typeof hydrateBeginEl = originalBeginEl;
+function originalBeginEl(name: string) {
   const parentNode = currentNode!;
   currentNode = doc.createElement(name);
   currentNode.___eventualParentNode = parentNode;
   return currentNode;
 }
 
-export function endEl() {
+function hydrateBeginEl(name: string) {
+  const node = (currentNode = nextNodeToHydrate() as DetachedElementWithParent);
+  nextNodeToHydrate = firstChildToHydrate;
+  lastHydratedChild = null;
+
+  if (!node || node.localName !== name) {
+    throw new HydrateError();
+  }
+
+  return node;
+}
+
+export let endEl = originalEndEl;
+function originalEndEl() {
   const parentNode = currentNode!.___eventualParentNode!;
   parentNode.appendChild(currentNode as Element);
   currentNode!.___eventualParentNode = undefined;
   currentNode = parentNode;
 }
 
-export function beginFragment(fragment?: Fragment): Fragment {
+function hydrateEndEl() {
+  nextNodeToHydrate = nextSiblingToHydrate;
+  lastHydratedChild = currentNode as Node | null;
+  currentNode = (currentNode as Element)
+    .parentNode as DetachedElementWithParent;
+}
+
+export let beginFragment = originalBeginFragment;
+function originalBeginFragment(fragment?: Fragment): Fragment {
   const parentNode = currentNode!;
   const parentFragment = currentFragment;
 
@@ -49,7 +81,7 @@ export function beginFragment(fragment?: Fragment): Fragment {
     currentFragment = fragment;
   } else {
     currentNode = currentNode || detachedContainer;
-    currentFragment = new Fragment();
+    currentFragment = new Fragment(text(""), text(""));
   }
 
   currentFragment.___parentFragment = parentFragment;
@@ -63,10 +95,23 @@ export function beginFragment(fragment?: Fragment): Fragment {
   return currentFragment;
 }
 
-export function endFragment(fragment: Fragment) {
+function hydrateBeginFragment() {
+  const fragment = new Fragment(insertTextAtCurrentHydratePosition(""));
+  originalBeginFragment(fragment);
+  nextNodeToHydrate = nextSiblingToHydrate;
+  return fragment;
+}
+
+export let endFragment = originalEndFragment;
+function originalEndFragment(fragment: Fragment) {
   currentFragment = fragment.___parentFragment;
-  currentNode = fragment.___eventualParentNode;
+  currentNode = fragment.___eventualParentNode!;
   fragment.___eventualParentNode = undefined;
+}
+
+function hydrateEndFragment(fragment: Fragment) {
+  originalEndFragment(fragment);
+  fragment.___after = insertTextAtCurrentHydratePosition("");
 }
 
 export function dynamicTag(
@@ -109,15 +154,31 @@ export function dynamicTag(
   );
 }
 
-export function text(value: string) {
+export let text: typeof originalText | typeof hydrateText = originalText;
+function originalText(value: string) {
   const textNode = doc.createTextNode(normalizeValue(value));
   currentNode!.appendChild(textNode);
   return textNode;
 }
 
+function hydrateText(value: string) {
+  let node = nextNodeToHydrate() as Text;
+  const normalized = normalizeValue(value);
+
+  if (node && node.nodeType === 3 /** Node.TEXT_NODE */) {
+    node.data = normalized;
+  } else {
+    node = insertTextAtCurrentHydratePosition(normalized);
+  }
+
+  lastHydratedChild = node;
+
+  return node;
+}
+
 export function dynamicText(value: MaybeSignal<unknown>) {
   const textNode = text("");
-  compute(() => (textNode.nodeValue = normalizeValue(get(value))));
+  compute(() => (textNode.data = normalizeValue(get(value))));
   return textNode;
 }
 
@@ -175,6 +236,55 @@ export function dynamicProps(props: MaybeSignal<object>) {
     }
     previousProps = nextProps;
   });
+}
+
+export function beginHydrate(boundary: Node) {
+  nextNodeToHydrate = nextSiblingToHydrate;
+  currentNode = boundary.parentNode as DetachedElementWithParent;
+  lastHydratedChild = boundary;
+  beginFragment = hydrateBeginFragment;
+  endFragment = hydrateEndFragment;
+  beginEl = hydrateBeginEl;
+  endEl = hydrateEndEl;
+  text = hydrateText;
+}
+
+export function endHydrate() {
+  currentNode = lastHydratedChild = null;
+  beginFragment = originalBeginFragment;
+  endFragment = originalEndFragment;
+  beginEl = originalBeginEl;
+  endEl = originalEndEl;
+  text = originalText;
+}
+
+function insertTextAtCurrentHydratePosition(value: string) {
+  let parentNode: Element;
+  let ref: Node | null;
+
+  if (lastHydratedChild) {
+    parentNode = lastHydratedChild.parentNode as Element;
+    ref = lastHydratedChild.nextSibling;
+  } else {
+    // currentNode shouldn't be a fragment here, since fragment would have set lastHydratedChild.
+    parentNode = currentNode as Element;
+    ref = parentNode.firstChild;
+  }
+
+  const node = doc.createTextNode(value);
+  parentNode.insertBefore(node, ref);
+  lastHydratedChild = node;
+  return node;
+}
+
+function nextSiblingToHydrate() {
+  return lastHydratedChild!.nextSibling as ChildNode;
+}
+
+function firstChildToHydrate() {
+  // This branch is only taken when we enter a new element (fragments won't go down this path).
+  nextNodeToHydrate = nextSiblingToHydrate;
+  return (currentNode as Element).firstChild as ChildNode;
 }
 
 function setAttr(element: Element, name: string, value: unknown) {

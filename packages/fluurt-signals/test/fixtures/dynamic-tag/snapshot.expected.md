@@ -63,3 +63,21 @@ inserted a1
 removed a after #text0
 inserted div1
 ```
+
+
+--- Hydrate ---
+# Render {"tag":"span"}
+```html
+<span a="1">
+  BODY
+</span>
+```
+
+# Mutations
+```
+inserted #text0
+span1: attr(a) "1" => "1"
+span1/#text0: "BODY" => "BODY"
+inserted #text2
+removed #comment before #text0
+```

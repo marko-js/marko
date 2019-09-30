@@ -25,3 +25,23 @@ container.querySelector("button").click();
 ```
 removed span after #text1
 ```
+
+
+--- Hydrate ---
+# Render {}
+```html
+<button>
+</button>
+<span>
+  hi
+</span>
+```
+
+# Mutations
+```
+inserted #text1
+span2/#text0: "hi" => "hi"
+span2/#text0: "" => "hi"
+inserted #text3
+removed #comment before button0
+```

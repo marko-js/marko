@@ -1,13 +1,6 @@
-import {
-  dynamicText,
-  dynamicOn,
-  compute,
-  get,
-  Signal,
-  beginEl,
-  endEl,
-  set
-} from "../../../src";
+import { dynamicOn, compute, get, Signal, set, register } from "../../../src";
+
+import { beginEl, endEl, dynamicText } from "../../../src/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -15,22 +8,25 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click, click, click] as const;
 
-const renderer = (input: (typeof inputs)[0]) => {
-  beginEl("button");
-  const clickCount = new Signal(0);
-  dynamicOn(
-    "click",
-    compute(() =>
-      get(clickCount) <= 1
-        ? () => {
-            set(clickCount, get(clickCount) + 1);
-          }
-        : false
-    )
-  );
-  dynamicText(clickCount);
-  endEl();
-};
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: (typeof inputs)[0]) => {
+    beginEl("button");
+    const clickCount = new Signal(0);
+    dynamicOn(
+      "click",
+      compute(() =>
+        get(clickCount) <= 1
+          ? () => {
+              set(clickCount, get(clickCount) + 1);
+            }
+          : false
+      )
+    );
+    dynamicText(clickCount);
+    endEl();
+  }
+);
 
 renderer.input = ["value"];
 

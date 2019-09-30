@@ -26,3 +26,5 @@ export {
 } from "./dom";
 
 export { on, dynamicOn, once } from "./event";
+
+export { init, register } from "./hydrate";

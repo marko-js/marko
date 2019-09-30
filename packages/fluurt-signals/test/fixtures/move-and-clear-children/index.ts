@@ -1,4 +1,6 @@
-import { beginEl, loop, compute, get, dynamicText, endEl } from "../../../src";
+import { loop, compute, get, register } from "../../../src";
+
+import { beginEl, dynamicText, endEl } from "../../../src/dom";
 
 export const inputs = [
   {
@@ -38,17 +40,20 @@ export const inputs = [
   }
 ];
 
-const renderer = (input: { children: Array<{ id: number; text: string }> }) => {
-  beginEl("div");
-  loop(
-    input.children,
-    item => {
-      dynamicText(compute(() => get(item).text));
-    },
-    i => "" + i.id
-  );
-  endEl();
-};
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: { children: Array<{ id: number; text: string }> }) => {
+    beginEl("div");
+    loop(
+      input.children,
+      item => {
+        dynamicText(compute(() => get(item).text));
+      },
+      i => "" + i.id
+    );
+    endEl();
+  }
+);
 
 renderer.input = ["children"];
 

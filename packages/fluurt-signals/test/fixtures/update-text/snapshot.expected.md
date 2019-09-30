@@ -29,3 +29,18 @@ Static Dynamic 3
 ```
 #text1: "Dynamic 2" => "Dynamic 3"
 ```
+
+
+--- Hydrate ---
+# Render {"value":"Dynamic 1"}
+```html
+Static Dynamic 1
+```
+
+# Mutations
+```
+#text0: "Static Dynamic 1" => "Static "
+inserted #text1
+#text1: "" => "Dynamic 1"
+removed #comment before #text0
+```

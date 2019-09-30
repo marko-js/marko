@@ -49,7 +49,7 @@
     "release": "standard-version",
     "size": "npm run build && minified-size --json ./dist/main.esm.js",
     "test": "jest -o ./test/main.test.ts",
-    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o ./test/main.test.ts --testTimeout=0",
+    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o ./test/main.test.ts --testTimeout=86400000",
     "test:watch": "jest -o --watch ./test/main.test.ts"
   },
   "types": "dist/index.d.ts"

@@ -16,18 +16,18 @@ export type ContainerNode =
 
 export class Fragment {
   public ___before: Text;
-  public ___after: Text;
+  public ___after: Text | undefined;
   public ___parentFragment?: Fragment;
   public ___eventualParentNode?: ContainerNode;
   public ___tracked: Set<Fragment | ComputedSignal<unknown>>;
-  constructor() {
-    this.___before = text("");
-    this.___after = text("");
+  constructor(before: Text, after?: Text) {
     this.___tracked = new Set();
+    this.___before = before;
+    this.___after = after;
   }
   public appendChild(childNode: ChildNode & Node) {
-    const after = this.___after;
-    after.parentNode!.insertBefore(childNode, this.___after);
+    const after = this.___after!;
+    after.parentNode!.insertBefore(childNode, after);
   }
   public ___cleanup() {
     for (const tracked of this.___tracked) {
@@ -43,8 +43,8 @@ export function insertFragmentBefore(
   nextSibling: Fragment | null
 ) {
   const domParent = parent.___before.parentNode!;
-  const reference = nextSibling ? nextSibling.___before : parent.___after;
-  const stop = fragment.___after.nextSibling;
+  const reference = nextSibling ? nextSibling.___before : parent.___after!;
+  const stop = fragment.___after!.nextSibling;
   let current: Node | null = fragment.___before;
   while (current && current !== stop) {
     const next = current.nextSibling;
@@ -56,8 +56,8 @@ export function insertFragmentBefore(
 export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
   const domParent = fragment.___before.parentNode!;
   const stop = removeMarkers
-    ? fragment.___after.nextSibling
-    : fragment.___after;
+    ? fragment.___after!.nextSibling
+    : fragment.___after!;
   let current: Node | null = removeMarkers
     ? fragment.___before
     : fragment.___before.nextSibling;

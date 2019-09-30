@@ -1,4 +1,6 @@
-import { beginEl, endEl, dynamicAttrs } from "../../../src";
+import { dynamicAttrs, register } from "../../../src";
+
+import { beginEl, endEl } from "../../../src/dom";
 
 export const inputs = [
   {
@@ -18,11 +20,14 @@ export const inputs = [
   }
 ];
 
-const renderer = (input: (typeof inputs)[number]) => {
-  beginEl("div");
-  dynamicAttrs(input.value);
-  endEl();
-};
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: (typeof inputs)[number]) => {
+    beginEl("div");
+    dynamicAttrs(input.value);
+    endEl();
+  }
+);
 
 renderer.input = ["value"];
 

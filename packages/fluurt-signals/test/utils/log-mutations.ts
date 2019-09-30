@@ -6,17 +6,30 @@ import {
   set,
   beginBatch,
   endBatch,
-  dynamicKeys
+  dynamicKeys,
+  MaybeSignal,
+  init
 } from "../../src";
 
-export default async function logMutations(renderer, updates): Promise<string> {
-  let changes = [];
-  const observer = new (window as any).MutationObserver(list => {
-    changes = changes.concat(list);
+export default async function renderAndGetMutations(
+  id: string,
+  test: {
+    inputs: [{ [x: string]: unknown }, ...unknown[]];
+    default: ((input: MaybeSignal<{ [x: string]: unknown }>) => void) & {
+      input: string[];
+    };
+    html?: string;
+  }
+): Promise<string> {
+  const { inputs, default: renderer } = test;
+  const [firstInput] = inputs;
+  const container = Object.assign(document.createElement("div"), {
+    TEST_ROOT: true
   });
-
-  const container = document.createElement("div");
-  (container as any).TEST_ROOT = true;
+  const observer = new MutationObserver(() => {
+    throw new Error("Async mutation");
+  });
+  let inputSignal = new Signal(firstInput);
   document.body.appendChild(container);
   observer.observe(container, {
     attributes: true,
@@ -27,19 +40,16 @@ export default async function logMutations(renderer, updates): Promise<string> {
     subtree: true
   });
 
-  const first = updates[0];
-  const inputSignal = new Signal(first);
-
   container.appendChild(
     render(() => renderer(dynamicKeys(inputSignal, renderer.input)))
   );
 
-  await tick();
+  const initialHTML = container.innerHTML;
+  const result: string[] = [
+    getStatusString(container, observer.takeRecords(), firstInput)
+  ];
 
-  const result: string[] = [getStatusString(container, changes, first)];
-
-  for (const update of updates.slice(1)) {
-    changes = [];
+  for (const update of inputs.slice(1)) {
     if (typeof update === "function") {
       update(container);
     } else {
@@ -47,12 +57,43 @@ export default async function logMutations(renderer, updates): Promise<string> {
       set(inputSignal, update);
       endBatch(batch);
     }
-    await tick();
-    result.push(getStatusString(container, changes, update));
+    result.push(getStatusString(container, observer.takeRecords(), update));
+  }
+  inputSignal = new Signal(firstInput);
+  (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
+  container.innerHTML = `<!T:${id}>${initialHTML}`;
+  observer.takeRecords();
+
+  init();
+  result.push(
+    `--- Hydrate ---\n${getStatusString(
+      container,
+      observer.takeRecords(),
+      firstInput
+    )}`
+  );
+
+  // Hydrate should end up with the same html as client side render.
+  expect(container.innerHTML).toBe(initialHTML);
+
+  // Run the same updates after hydrate and ensure the same mutations.
+  let resultIndex = 0;
+  for (const update of inputs.slice(1)) {
+    if (typeof update === "function") {
+      update(container);
+    } else {
+      const batch = beginBatch();
+      set(inputSignal, update);
+      endBatch(batch);
+    }
+
+    expect(getStatusString(container, observer.takeRecords(), update)).toEqual(
+      result[++resultIndex]
+    );
   }
 
-  document.body.removeChild(container);
   observer.disconnect();
+  document.body.removeChild(container);
 
   return result.join("\n\n\n");
 }
@@ -121,8 +162,4 @@ function formatMutationRecord(record: MutationRecord) {
       return details.join("\n");
     }
   }
-}
-
-function tick() {
-  return new Promise(resolve => setTimeout(resolve));
 }

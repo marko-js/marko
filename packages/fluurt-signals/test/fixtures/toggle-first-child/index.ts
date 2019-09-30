@@ -1,13 +1,13 @@
 import {
   el,
-  beginEl,
   MaybeSignal,
   compute,
   get,
-  dynamicText,
-  endEl,
-  conditional
+  conditional,
+  register
 } from "../../../src";
+
+import { beginEl, dynamicText, endEl } from "../../../src/dom";
 
 export const inputs = [
   {
@@ -24,18 +24,21 @@ export const inputs = [
   }
 ];
 
-const renderer = (input: { value: MaybeSignal<string | undefined> }) => {
-  beginEl("div");
-  const branch0 = () => {
-    beginEl("span");
-    dynamicText(input.value);
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: { value: MaybeSignal<string | undefined> }) => {
+    beginEl("div");
+    const branch0 = () => {
+      beginEl("span");
+      dynamicText(input.value);
+      endEl();
+    };
+    conditional(compute(() => (get(input.value) ? branch0 : undefined)));
+    el("span");
+    el("span");
     endEl();
-  };
-  conditional(compute(() => (get(input.value) ? branch0 : undefined)));
-  el("span");
-  el("span");
-  endEl();
-};
+  }
+);
 
 renderer.input = ["value"];
 

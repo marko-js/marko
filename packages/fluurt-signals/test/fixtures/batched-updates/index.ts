@@ -1,16 +1,5 @@
-import {
-  dynamicText,
-  once,
-  compute,
-  get,
-  Signal,
-  beginEl,
-  endEl,
-  set
-} from "../../../src";
-
-const a = new Signal(0);
-const b = new Signal(0);
+import { once, compute, get, Signal, set, register } from "../../../src";
+import { dynamicText, beginEl, endEl } from "../../../src/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -18,15 +7,20 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-const renderer = (input: (typeof inputs)[0]) => {
-  beginEl("button");
-  once("click", () => {
-    set(a, 1);
-    set(b, 1);
-  });
-  dynamicText(compute(() => get(a) + get(b)));
-  endEl();
-};
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: (typeof inputs)[0]) => {
+    const a = new Signal(0);
+    const b = new Signal(0);
+    beginEl("button");
+    once("click", () => {
+      set(a, 1);
+      set(b, 1);
+    });
+    dynamicText(compute(() => get(a) + get(b)));
+    endEl();
+  }
+);
 
 renderer.input = ["value"];
 

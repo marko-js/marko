@@ -53,3 +53,23 @@ inserted div0/span1
 ```
 div0/span1/#text0: "World" => "!"
 ```
+
+
+--- Hydrate ---
+# Render {"value":"Hello"}
+```html
+<div>
+  <span>
+    Hello
+  </span>
+</div>
+```
+
+# Mutations
+```
+inserted div0/#text0
+div0/span1/#text0: "Hello" => "Hello"
+div0/span1/#text0: "" => "Hello"
+inserted div0/#text2
+removed #comment before div0
+```

@@ -76,3 +76,20 @@ div0: attr(b) null => "1"
 ```
 div0: attr(b) "1" => null
 ```
+
+
+--- Hydrate ---
+# Render {"value":1}
+```html
+<div a="0"
+     b="1"
+>
+</div>
+```
+
+# Mutations
+```
+div0: attr(a) "0" => "0"
+div0: attr(b) "1" => "1"
+removed #comment before div0
+```

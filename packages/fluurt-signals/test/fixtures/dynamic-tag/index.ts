@@ -1,4 +1,6 @@
-import { beginEl, attr, endEl, text, dynamicTag } from "../../../src";
+import { attr, dynamicTag, register } from "../../../src";
+
+import { beginEl, endEl, text } from "../../../src/dom";
 
 export const inputs = [
   {
@@ -28,11 +30,14 @@ export const inputs = [
   }
 ];
 
-const renderer = (input: (typeof inputs)[number]) => {
-  dynamicTag(input.tag, { a: 1 }, () => {
-    text("BODY");
-  });
-};
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: (typeof inputs)[number]) => {
+    dynamicTag(input.tag, { a: 1 }, () => {
+      text("BODY");
+    });
+  }
+);
 
 renderer.input = ["tag"];
 

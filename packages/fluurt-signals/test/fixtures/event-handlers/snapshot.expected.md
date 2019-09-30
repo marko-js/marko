@@ -54,3 +54,19 @@ container.querySelector("button").click();
 ```
 
 ```
+
+
+--- Hydrate ---
+# Render {}
+```html
+<button>
+  0
+</button>
+```
+
+# Mutations
+```
+button0/#text0: "0" => "0"
+button0/#text0: "" => "0"
+removed #comment before button0
+```

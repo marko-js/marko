@@ -1,11 +1,6 @@
-import {
-  beginEl,
-  compute,
-  get,
-  dynamicText,
-  endEl,
-  conditional
-} from "../../../src";
+import { compute, get, conditional, register } from "../../../src";
+
+import { beginEl, dynamicText, endEl } from "../../../src/dom";
 
 export const inputs = [
   {
@@ -22,16 +17,19 @@ export const inputs = [
   }
 ];
 
-const renderer = (input: { value: string | undefined }) => {
-  beginEl("div");
-  const branch0 = () => {
-    beginEl("span");
-    dynamicText(input.value);
+const renderer = register(
+  __dirname.split("/").pop()!,
+  (input: { value: string | undefined }) => {
+    beginEl("div");
+    const branch0 = () => {
+      beginEl("span");
+      dynamicText(input.value);
+      endEl();
+    };
+    conditional(compute(() => (get(input.value) ? branch0 : undefined)));
     endEl();
-  };
-  conditional(compute(() => (get(input.value) ? branch0 : undefined)));
-  endEl();
-};
+  }
+);
 
 renderer.input = ["value"];
 
