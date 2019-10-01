@@ -1,3 +1,7 @@
+// TO DISCUSS:
+// array.join / create vs string concat perf.
+// skip normalization?
+
 function toStringArray(
   value: unknown,
   stringify: (n: string, v: string) => string | undefined,

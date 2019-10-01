@@ -94,7 +94,7 @@ function originalBeginFragment(fragment?: Fragment): Fragment {
 
 function hydrateBeginFragment() {
   const fragment = new Fragment();
-  fragment.___before = insertTextAtCurrentHydratePosition("");
+  fragment.___before = text("");
   originalBeginFragment(fragment);
   return fragment;
 }
@@ -108,7 +108,7 @@ function originalEndFragment(fragment: Fragment) {
 
 function hydrateEndFragment(fragment: Fragment) {
   originalEndFragment(fragment);
-  fragment.___after = insertTextAtCurrentHydratePosition("");
+  fragment.___after = text("");
 }
 
 export let text: typeof originalText | typeof hydrateText = originalText;
@@ -119,19 +119,34 @@ function originalText(value: string) {
 }
 
 function hydrateText(value: string) {
-  const node = (lastHydratedChild = nextNodeToHydrate() as Text);
   const data = normalizeTextData(value);
+
+  if (data === "") {
+    // Empty text nodes are not rendered from SSR, create them now.
+    let parentNode: Element;
+    let ref: Node | null;
+
+    if (lastHydratedChild) {
+      parentNode = lastHydratedChild.parentNode as Element;
+      ref = lastHydratedChild.nextSibling;
+    } else {
+      // currentNode shouldn't be a fragment here, since fragment would have set lastHydratedChild.
+      parentNode = currentNode as Element;
+      ref = parentNode.firstChild;
+    }
+
+    lastHydratedChild = doc.createTextNode("");
+    parentNode.insertBefore(lastHydratedChild, ref);
+    return lastHydratedChild as Text;
+  }
+
+  const node = (lastHydratedChild = nextNodeToHydrate() as Text);
+  const existingData = node.data;
 
   if (!node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
     throw new HydrateError();
   }
 
-  if (data === "") {
-    // Empty text nodes are not rendered from SSR, create them now.
-    return (lastHydratedChild = insertTextAtCurrentHydratePosition(data));
-  }
-
-  const existingData = node.data;
   if (existingData !== data) {
     if (existingData.indexOf(data) === 0) {
       // We have a text node with more content in the browser than on the server.
@@ -174,7 +189,7 @@ export function dynamicAttr(name: string, value: unknown) {
 export function dynamicTag(
   tag: MaybeSignal<string | Renderer>,
   input: MaybeSignal<UnknownObject>,
-  body: (() => void) | undefined
+  renderBody: (() => void) | undefined
 ) {
   const renderFns = new Map();
 
@@ -187,22 +202,22 @@ export function dynamicTag(
           nextRender = () => {
             beginEl(nextTag);
             dynamicAttrs(input);
-            if (body) {
-              body();
+            if (renderBody) {
+              renderBody();
             }
             endEl();
           };
         } else if (nextTag) {
           if (nextTag.input) {
-            const tagInput = body
-              ? compute(() => ({ ...get(input), renderBody: body }))
+            const tagInput = renderBody
+              ? compute(() => ({ ...get(input), renderBody }))
               : input;
             nextRender = () => nextTag(dynamicKeys(tagInput, nextTag.input!));
           } else {
             nextRender = nextTag;
           }
         } else {
-          nextRender = body || (() => {});
+          nextRender = renderBody || (() => {});
         }
         renderFns.set(nextTag, nextRender);
       }
@@ -273,25 +288,6 @@ export function endHydrate() {
   beginEl = originalBeginEl;
   endEl = originalEndEl;
   text = originalText;
-}
-
-function insertTextAtCurrentHydratePosition(value: string) {
-  let parentNode: Element;
-  let ref: Node | null;
-
-  if (lastHydratedChild) {
-    parentNode = lastHydratedChild.parentNode as Element;
-    ref = lastHydratedChild.nextSibling;
-  } else {
-    // currentNode shouldn't be a fragment here, since fragment would have set lastHydratedChild.
-    parentNode = currentNode as Element;
-    ref = parentNode.firstChild;
-  }
-
-  const node = doc.createTextNode(value);
-  parentNode.insertBefore(node, ref);
-  lastHydratedChild = node;
-  return node;
 }
 
 function nextNodeToHydrate() {
