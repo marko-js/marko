@@ -4,5 +4,5 @@ package-lock.json
 CHANGELOG.md
 node_modules
 coverage
-dist
+build
 snapshot.*.md

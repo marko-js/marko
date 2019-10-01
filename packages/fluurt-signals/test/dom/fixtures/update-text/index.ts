@@ -1,6 +1,6 @@
-import { dynamicText, register } from "../../../../src/dom";
+import { dynamicText, register } from "../../../../dom/index";
 
-import { text } from "../../../../src/dom/dom";
+import { text } from "../../../../dom/dom";
 
 export const inputs = [
   {

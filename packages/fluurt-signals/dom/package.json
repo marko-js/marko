@@ -1,6 +1,6 @@
 {
-  "main": "../dist/dom.cjs.js",
-  "jsnext": "../dist/dom.esm.js",
-  "module": "../dist/dom.esm.js",
-  "types": "../dist/dom/index.d.ts"
+  "main": "../build/dom.cjs.js",
+  "jsnext": "../build/dom.esm.js",
+  "module": "../build/dom.esm.js",
+  "types": "../build/dom/index.d.ts"
 }

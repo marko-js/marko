@@ -1,5 +1,12 @@
-import { once, compute, get, Signal, set, register } from "../../../../src/dom";
-import { dynamicText, beginEl, endEl } from "../../../../src/dom/dom";
+import {
+  once,
+  compute,
+  get,
+  Signal,
+  set,
+  register
+} from "../../../../dom/index";
+import { dynamicText, beginEl, endEl } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();

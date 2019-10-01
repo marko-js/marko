@@ -1,6 +1,6 @@
-import { loop, compute, get, register } from "../../../../src/dom";
+import { loop, compute, get, register } from "../../../../dom/index";
 
-import { beginEl, dynamicText, endEl } from "../../../../src/dom/dom";
+import { beginEl, dynamicText, endEl } from "../../../../dom/dom";
 
 export const inputs = [
   {

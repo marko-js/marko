@@ -10,7 +10,7 @@ node_modules
 npm-debug.log
 
 # Build
-dist
+build
 
 # Coverage
 coverage

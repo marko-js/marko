@@ -2,14 +2,14 @@ import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
 
 export default ["dom", "html"].map(name => ({
-  input: `src/${name}/index.ts`,
+  input: `${name}/index.ts`,
   output: [
     {
-      file: `dist/${name}.esm.js`,
+      file: `build/${name}.esm.js`,
       format: "esm"
     },
     {
-      file: `dist/${name}.cjs.js`,
+      file: `build/${name}.cjs.js`,
       format: "cjs"
     }
   ],

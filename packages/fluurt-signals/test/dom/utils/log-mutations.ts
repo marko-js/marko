@@ -9,7 +9,7 @@ import {
   dynamicKeys,
   MaybeSignal,
   init
-} from "../../../src/dom";
+} from "../../../dom/index";
 
 export default async function renderAndGetMutations(
   id: string,

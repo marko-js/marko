@@ -5,9 +5,9 @@ import {
   Signal,
   set,
   register
-} from "../../../../src/dom";
+} from "../../../../dom/index";
 
-import { beginEl, endEl, dynamicText } from "../../../../src/dom/dom";
+import { beginEl, endEl, dynamicText } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();

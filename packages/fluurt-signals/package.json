@@ -25,9 +25,9 @@
     "typescript": "^3.6.2"
   },
   "files": [
-    "dist",
-    "dom",
-    "html"
+    "build",
+    "dom/package.json",
+    "html/package.json"
   ],
   "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
   "keywords": [
@@ -45,10 +45,10 @@
     "ci:report": "cat coverage/lcov.info | coveralls",
     "ci:test": "jest --ci --coverage",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
-    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json 'src/**/*.ts'",
+    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '**/*.ts'",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
-    "size": "npm run build && minified-size --json ./dist/dom.esm.js",
+    "size": "npm run build && minified-size --json ./build/dom.esm.js",
     "test": "jest -o",
     "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o --testTimeout=86400000",
     "test:watch": "jest -o --watch"

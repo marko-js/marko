@@ -1,6 +1,6 @@
 {
-  "main": "../dist/html.cjs.js",
-  "jsnext": "../dist/html.esm.js",
-  "module": "../dist/html.esm.js",
-  "types": "../dist/html/index.d.ts"
+  "main": "../build/html.cjs.js",
+  "jsnext": "../build/html.esm.js",
+  "module": "../build/html.esm.js",
+  "types": "../build/html/index.d.ts"
 }

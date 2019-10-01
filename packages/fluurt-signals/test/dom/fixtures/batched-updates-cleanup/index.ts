@@ -6,9 +6,9 @@ import {
   conditional,
   set,
   register
-} from "../../../../src/dom";
+} from "../../../../dom/index";
 
-import { dynamicText, beginEl, endEl } from "../../../../src/dom/dom";
+import { dynamicText, beginEl, endEl } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();

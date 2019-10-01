@@ -1,6 +1,6 @@
-import { attr, dynamicAttr, register } from "../../../../src/dom";
+import { attr, dynamicAttr, register } from "../../../../dom/index";
 
-import { beginEl, endEl } from "../../../../src/dom/dom";
+import { beginEl, endEl } from "../../../../dom/dom";
 
 export const inputs = [
   {
