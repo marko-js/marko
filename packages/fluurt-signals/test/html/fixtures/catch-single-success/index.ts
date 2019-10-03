@@ -1,16 +1,16 @@
-import { tryPlaceholder, write, fork } from "../../../../html/index";
+import { tryCatch, write, fork } from "../../../../html/index";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
   write("a");
-  tryPlaceholder(
+  tryCatch(
     () => {
       write("b");
       fork(resolveAfter("c", 2), write);
       write("d");
     },
     () => {
-      write("e...");
+      write("ERROR!");
     }
   );
   write("f");

@@ -1,5 +1,5 @@
 import { write, fork } from "../../../../html/index";
-import resolveAfter from "../../utils/resolve-after";
+import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
   write("a");

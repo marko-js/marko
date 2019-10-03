@@ -14,12 +14,27 @@ export function createRenderer(renderer: Renderer) {
     out = stream;
     buffer = "";
     flush = flushToStream;
-    renderer(input);
-    flush();
-    out = null;
-    flush = null;
-    await allSettled();
-    stream.end();
+
+    try {
+      let renderedPromises: typeof promises;
+      try {
+        renderer(input);
+      } finally {
+        flush();
+        renderedPromises = promises;
+        out = null;
+        flush = null;
+        promises = null;
+      }
+
+      if (renderedPromises) {
+        await Promise.all(renderedPromises);
+      }
+    } catch (err) {
+      stream.emit("error", err);
+    } finally {
+      stream.end();
+    }
   };
 }
 
@@ -29,8 +44,7 @@ export function write(data: string) {
 
 export function fork<T extends unknown>(
   promise: Promise<T>,
-  renderResult: (result: T) => void,
-  renderError?: (err: Error) => void
+  renderResult: (result: T) => void
 ) {
   const currentOut = out!;
   let currentFlush = flush!;
@@ -54,12 +68,12 @@ export function fork<T extends unknown>(
         return run(renderResult, result);
       },
       err => {
-        if (renderError) {
-          return run(renderError, err);
-        } else {
-          currentOut.emit("error", err);
-          // return allSettled();
-        }
+        out = currentOut;
+        buffer = bufferedAfter;
+        currentFlush();
+        out = null;
+        resolved = true;
+        throw err;
       }
     )
   );
@@ -81,6 +95,46 @@ export function fork<T extends unknown>(
     flush = null;
     await allSettled();
     currentFlush = previousFlush;
+  }
+}
+
+export function tryCatch(
+  renderBody: () => void,
+  renderError: (err: Error) => void
+) {
+  const currentOut = out!;
+  const currentFlush = flush!;
+  let err: Error | null = null;
+  let currentPromises = promises;
+  buffer += "<!--[ERROR_BOUNDARY]-->";
+
+  try {
+    promises = null;
+    renderBody();
+    if (promises) {
+      currentPromises = currentPromises || [];
+      currentPromises.push(
+        Promise.all(promises).catch(asyncErr => {
+          out = currentOut;
+          flush = currentFlush;
+          buffer = "";
+          promises = null;
+          renderError(asyncErr);
+          flush();
+          flush = null;
+          out = null;
+          return promises && Promise.all(promises);
+        })
+      );
+    }
+  } catch (_err) {
+    err = _err;
+  } finally {
+    buffer += "<!--[END_ERROR_BOUNDARY]-->";
+    promises = currentPromises;
+    if (err) {
+      renderError(err);
+    }
   }
 }
 
