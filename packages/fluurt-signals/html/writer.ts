@@ -84,89 +84,74 @@ export function fork<T extends unknown>(
   }
 }
 
-export function tryRender(
+export function tryPlaceholder(
   renderBody: () => void,
-  renderPlaceholder: () => void,
-  renderError?: null | (() => void)
-);
-export function tryRender(
-  renderBody: () => void,
-  renderPlaceholder: null | (() => void),
-  renderError: () => void
-);
-export function tryRender(
-  renderBody: () => void,
-  renderPlaceholder: null | (() => void),
-  renderError: null | (() => void)
+  renderPlaceholder: () => void
 ) {
-  let err: Error;
-  if (renderError) {
-    try {
-      renderBody();
-    } catch (_err) {
-      err = _err;
-    }
-  } else if (renderPlaceholder) {
-    const currentBuffer = buffer;
-    const currentFlush = flush!;
-    let tryContent = "";
-    buffer = "";
-    flush = () => {
+  const currentBuffer = buffer;
+  const currentFlush = flush!;
+  let resolved = false;
+  let tryContent = "";
+  buffer = "";
+  flush = () => {
+    if (resolved) {
+      currentFlush();
+    } else {
       tryContent += buffer;
       buffer = "";
-    };
+    }
+  };
 
-    const currentPromises = promises;
-    promises = null;
-    renderBody();
-    flush();
-    flush = currentFlush;
-    buffer = currentBuffer;
+  const currentPromises = promises;
+  promises = null;
+  renderBody();
+  flush();
+  flush = currentFlush;
+  buffer = currentBuffer;
 
-    if (promises) {
-      const contentPromises: Array<Promise<unknown>> = [];
-      const placeholderPromises: Array<
-        Promise<unknown> & { isPlaceholder: true }
-      > = [];
-      for (const promise of promises!) {
-        if (promise.isPlaceholder) {
-          placeholderPromises.push(promise as Promise<unknown> & {
-            isPlaceholder: true;
-          });
-        } else {
-          contentPromises.push(promise);
-        }
-      }
-
-      if (placeholderPromises.length) {
-        (promises = currentPromises || []).push(...placeholderPromises);
+  if (promises) {
+    const contentPromises: Array<Promise<unknown>> = [];
+    const placeholderPromises: Array<
+      Promise<unknown> & { isPlaceholder: true }
+    > = [];
+    for (const promise of promises!) {
+      if (promise.isPlaceholder) {
+        placeholderPromises.push(promise as Promise<unknown> & {
+          isPlaceholder: true;
+        });
       } else {
-        promises = currentPromises;
-      }
-
-      if (contentPromises.length) {
-        const currentOut = out;
-        promises = promises || [];
-        promises.push(
-          Object.assign(
-            Promise.all(contentPromises).then(() => {
-              out = currentOut;
-              buffer = tryContent;
-              currentFlush();
-              out = null;
-            }),
-            { isPlaceholder: true } as const
-          )
-        );
-        renderPlaceholder();
-        return;
+        contentPromises.push(promise);
       }
     }
 
-    promises = currentPromises;
-    buffer += tryContent;
-  } else {
+    if (placeholderPromises.length) {
+      (promises = currentPromises || []).push(...placeholderPromises);
+    } else {
+      promises = currentPromises;
+    }
+
+    if (contentPromises.length) {
+      const currentOut = out;
+      promises = promises || [];
+      promises.push(
+        Object.assign(
+          Promise.all(contentPromises).then(() => {
+            resolved = true;
+            out = currentOut;
+            buffer = tryContent;
+            currentFlush();
+            out = null;
+          }),
+          { isPlaceholder: true } as const
+        )
+      );
+      renderPlaceholder();
+      return;
+    }
   }
+
+  promises = currentPromises;
+  buffer += tryContent;
 }
 
 function flushToStream() {
@@ -182,16 +167,6 @@ function allSettled() {
     const promise = Promise.all(promises.map(toSuccessfulPromise));
     promises = null;
     return promise;
-  }
-}
-
-function nonPlaceholders(
-  tryPromises: Array<Promise<unknown> & { isPlaceholder?: true }> | null
-) {
-  if (tryPromises) {
-    return tryPromises.filter(p => !p.isPlaceholder);
-  } else {
-    return [];
   }
 }
 

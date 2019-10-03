@@ -1,9 +1,9 @@
-import { tryRender, write, fork } from "../../../../html/index";
+import { tryPlaceholder, write, fork } from "../../../../html/index";
 import resolveAfter from "../../utils/resolve-after";
 
 const renderer = () => {
   write("a");
-  tryRender(
+  tryPlaceholder(
     () => {
       write("b");
       fork(resolveAfter("c", 2), write);
