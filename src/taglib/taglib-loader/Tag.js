@@ -94,7 +94,7 @@ class Tag {
     }
     addAttribute(attr) {
         attr.filePath = this.filePath;
-        if (attr.name === "key") {
+        if (attr.name === "key" && this.isCustomTag()) {
             complain("@key property is deprecated", {
                 location: this.filePath
             });
@@ -271,13 +271,17 @@ class Tag {
                         '"'
                 );
             }
-        } else if (this.renderer || this.template || this.isNestedTag) {
+        } else if (this.isCustomTag()) {
             nodeFactory = createCustomTagNodeFactory(this);
         } else {
             return null;
         }
 
         return (this._nodeFactory = nodeFactory);
+    }
+
+    isCustomTag() {
+        return this.renderer || this.template || this.isNestedTag;
     }
 
     toJSON() {

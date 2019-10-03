@@ -13,5 +13,8 @@
         "type": "string",
         "description": "Additional CSS class names"
     },
-    "@*": "string"
+    "@*": {
+        "type": "string",
+        "target-property": null
+    }
 }
