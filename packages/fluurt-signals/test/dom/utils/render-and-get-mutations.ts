@@ -18,7 +18,6 @@ export default async function renderAndGetMutations(
     default: ((input: MaybeSignal<{ [x: string]: unknown }>) => void) & {
       input: string[];
     };
-    html?: string;
   }
 ): Promise<string> {
   const { inputs, default: renderer } = test;

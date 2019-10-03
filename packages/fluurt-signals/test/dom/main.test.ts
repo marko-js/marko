@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import renderAndGetMutations from "./utils/log-mutations";
-import snapshot from "./utils/snapshot";
+import snapshot from "../utils/snapshot";
+import renderAndGetMutations from "./utils/render-and-get-mutations";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 
