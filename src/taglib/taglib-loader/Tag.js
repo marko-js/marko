@@ -94,6 +94,11 @@ class Tag {
     }
     addAttribute(attr) {
         attr.filePath = this.filePath;
+        if (attr.name === "key") {
+            complain("@key property is deprecated", {
+                location: this.filePath
+            });
+        }
 
         if (attr.pattern) {
             this.patternAttributes.push(attr);
@@ -107,6 +112,12 @@ class Tag {
                 ) {
                     attr.targetProperty = null;
                 } else if (!attr.targetProperty) {
+                    complain(
+                        "@* target-property property required. The recommended value is to set target-property to null.",
+                        {
+                            location: this.filePath
+                        }
+                    );
                     attr.targetProperty = "*";
                 }
             }

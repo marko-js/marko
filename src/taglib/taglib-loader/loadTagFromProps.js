@@ -118,23 +118,6 @@ class TagLoader {
             };
         }
 
-        if (tagProps["@key"]) {
-            complain("@key property is deprecated", {
-                location: this.filePath
-            });
-        }
-        if (tagProps["@*"]) {
-            const allAttrs = tagProps["@*"]["target-property"];
-            if (!allAttrs && allAttrs !== null && allAttrs !== "") {
-                complain(
-                    "@* target-property property required. The recommended value is to set target-property to null.",
-                    {
-                        location: this.filePath
-                    }
-                );
-            }
-        }
-
         propertyHandlers(tagProps, this, this.dependencyChain.toString());
     }
 
