@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { createRenderer } from "../../../html";
+import { createRenderer } from "../../../html/index";
 import reorderRuntime from "../../../html/reorder-runtime";
 
 const reorderRuntimeString = String(reorderRuntime);
