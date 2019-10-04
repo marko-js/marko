@@ -3,8 +3,8 @@ import { Renderer } from "../common/types";
 
 type MaybeFlushable = Writable & { flush?(): void };
 
+let buffer: string = "";
 let out: MaybeFlushable | null = null;
-let buffer: string | null = null;
 let flush: typeof flushToStream | null = null;
 let promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null = null;
 
@@ -12,7 +12,6 @@ export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
   return async (input: Input, stream: MaybeFlushable) => {
     out = stream;
-    buffer = "";
     flush = flushToStream;
 
     try {
@@ -20,11 +19,8 @@ export function createRenderer(renderer: Renderer) {
       try {
         renderer(input);
       } finally {
-        flush();
         renderedPromises = promises;
-        out = null;
-        flush = null;
-        promises = null;
+        flush();
       }
 
       if (renderedPromises) {
@@ -47,9 +43,11 @@ export function fork<T extends unknown>(
   renderResult: (result: T) => void
 ) {
   const currentOut = out!;
+  const currentPromises = promises;
   let currentFlush = flush!;
   let resolved = false;
   currentFlush();
+  out = currentOut;
 
   let bufferedAfter: string = "";
   flush = () => {
@@ -57,45 +55,44 @@ export function fork<T extends unknown>(
       currentFlush();
     } else {
       bufferedAfter += buffer;
-      buffer = "";
+      cleanup();
     }
   };
 
-  promises = promises || [];
+  promises = currentPromises || [];
   promises.push(
     promise.then(
-      result => {
-        return run(renderResult, result);
+      async result => {
+        buffer = "";
+        resolved = true;
+        out = currentOut;
+        flush = currentFlush;
+
+        try {
+          renderResult(result);
+        } finally {
+          buffer += bufferedAfter;
+          const previousFlush = currentFlush;
+          const childPromises = promises;
+          currentFlush = flush;
+          flush();
+
+          if (childPromises) {
+            await Promise.all(childPromises);
+          }
+
+          currentFlush = previousFlush;
+        }
       },
       err => {
+        resolved = true;
         out = currentOut;
         buffer = bufferedAfter;
         currentFlush();
-        out = null;
-        resolved = true;
         throw err;
       }
     )
   );
-
-  async function run<Body extends (arg: unknown) => void>(
-    renderBody: Body,
-    data: Parameters<Body>[0]
-  ) {
-    resolved = true;
-    out = currentOut;
-    buffer = "";
-    flush = currentFlush;
-    renderBody(data);
-    buffer += bufferedAfter;
-    const previousFlush = currentFlush;
-    currentFlush = flush;
-    flush();
-    out = null;
-    flush = null;
-    await allSettled();
-    currentFlush = previousFlush;
-  }
 }
 
 export function tryCatch(
@@ -117,13 +114,13 @@ export function tryCatch(
         Promise.all(promises).catch(asyncErr => {
           out = currentOut;
           flush = currentFlush;
-          buffer = "";
-          promises = null;
-          renderError(asyncErr);
-          flush();
-          flush = null;
-          out = null;
-          return promises && Promise.all(promises);
+
+          try {
+            renderError(asyncErr);
+            return promises && Promise.all(promises);
+          } finally {
+            flush();
+          }
         })
       );
     }
@@ -142,33 +139,36 @@ export function tryPlaceholder(
   renderBody: () => void,
   renderPlaceholder: () => void
 ) {
+  const currentOut = out!;
   const currentBuffer = buffer;
   const currentFlush = flush!;
   let resolved = false;
   let tryContent = "";
-  buffer = "";
   flush = () => {
     if (resolved) {
       currentFlush();
     } else {
       tryContent += buffer;
-      buffer = "";
+      cleanup();
     }
   };
 
   const currentPromises = promises;
   promises = null;
+  buffer = "";
   renderBody();
+  const renderedPromises: typeof currentPromises = promises;
   flush();
+  out = currentOut;
   flush = currentFlush;
   buffer = currentBuffer;
 
-  if (promises) {
+  if (renderedPromises) {
     const contentPromises: Array<Promise<unknown>> = [];
     const placeholderPromises: Array<
       Promise<unknown> & { isPlaceholder: true }
     > = [];
-    for (const promise of promises!) {
+    for (const promise of renderedPromises!) {
       if (promise.isPlaceholder) {
         placeholderPromises.push(promise as Promise<unknown> & {
           isPlaceholder: true;
@@ -185,7 +185,6 @@ export function tryPlaceholder(
     }
 
     if (contentPromises.length) {
-      const currentOut = out;
       promises = promises || [];
       promises.push(
         Object.assign(
@@ -194,7 +193,6 @@ export function tryPlaceholder(
             out = currentOut;
             buffer = tryContent;
             currentFlush();
-            out = null;
           }),
           { isPlaceholder: true } as const
         )
@@ -213,19 +211,11 @@ function flushToStream() {
   if (out!.flush) {
     out!.flush();
   }
+
+  cleanup();
+}
+
+function cleanup() {
+  out = flush = promises = null;
   buffer = "";
 }
-
-function allSettled() {
-  if (promises) {
-    const promise = Promise.all(promises.map(toSuccessfulPromise));
-    promises = null;
-    return promise;
-  }
-}
-
-function toSuccessfulPromise(promise: Promise<unknown>): Promise<void> {
-  return promise.then(noop, noop);
-}
-
-function noop() {}
