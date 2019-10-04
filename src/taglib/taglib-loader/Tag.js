@@ -94,7 +94,7 @@ class Tag {
     }
     addAttribute(attr) {
         attr.filePath = this.filePath;
-        if (attr.name === "key" && this.isCustomTag()) {
+        if (attr.name === "key") {
             complain("@key property is deprecated", {
                 location: this.filePath
             });
@@ -113,7 +113,7 @@ class Tag {
                     attr.targetProperty = null;
                 } else if (!attr.targetProperty) {
                     complain(
-                        "@* target-property property required. The recommended value is to set target-property to null.",
+                        'The default "targetProperty" for "@*" attribute definitions is changing from "*" to "null" (merged in with the rest of the input) in a future Marko release. In order to avoid an issue upgrading, please explicitly define the "targetProperty".',
                         {
                             location: this.filePath
                         }
@@ -271,17 +271,13 @@ class Tag {
                         '"'
                 );
             }
-        } else if (this.isCustomTag()) {
+        } else if (this.renderer || this.template || this.isNestedTag) {
             nodeFactory = createCustomTagNodeFactory(this);
         } else {
             return null;
         }
 
         return (this._nodeFactory = nodeFactory);
-    }
-
-    isCustomTag() {
-        return this.renderer || this.template || this.isNestedTag;
     }
 
     toJSON() {
