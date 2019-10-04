@@ -18,14 +18,17 @@ export default async function renderAndTrackFlushes(test: {
     },
     end(data?: string) {
       output.push(`# end${data ? `\n${indent(data)}` : ""}`);
+    },
+    emit(type, ...args: unknown[]) {
+      output.push(`# emit ${type}${args.map(arg => `\n${indent(arg)}`)}`);
     }
   } as Writable & { flush(): void });
 
   return `${output.join("\n\n")}\n`;
 }
 
-function indent(str: string) {
-  return str
+function indent(data: unknown) {
+  return String(data)
     .split("\n")
     .map(line => `  ${line}`)
     .join("\n");
