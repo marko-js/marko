@@ -1,12 +1,24 @@
 import { Writable } from "stream";
 import { Renderer } from "../common/types";
+import reorderRuntime from "./reorder-runtime";
+
+const reorderRuntimeString = String(reorderRuntime);
 
 type MaybeFlushable = Writable & { flush?(): void };
 
+const runtimeId = "M";
 let buffer: string = "";
 let out: MaybeFlushable | null = null;
 let flush: typeof flushToStream | null = null;
 let promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null = null;
+
+const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
+const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
+const nextId = () => {
+  const id = uids.get(out!)! + 1 || 0;
+  uids.set(out!, id);
+  return id;
+};
 
 export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
@@ -99,11 +111,13 @@ export function tryCatch(
   renderBody: () => void,
   renderError: (err: Error) => void
 ) {
+  const id = nextId();
   const currentOut = out!;
   const currentFlush = flush!;
   let err: Error | null = null;
   let currentPromises = promises;
-  buffer += "<!--[ERROR_BOUNDARY]-->";
+
+  markReplaceStart(id);
 
   try {
     promises = null;
@@ -116,7 +130,7 @@ export function tryCatch(
           flush = currentFlush;
 
           try {
-            renderError(asyncErr);
+            renderReplacement(renderError, asyncErr, id);
             return promises && Promise.all(promises);
           } finally {
             flush();
@@ -127,10 +141,10 @@ export function tryCatch(
   } catch (_err) {
     err = _err;
   } finally {
-    buffer += "<!--[END_ERROR_BOUNDARY]-->";
+    markReplaceEnd(id);
     promises = currentPromises;
     if (err) {
-      renderError(err);
+      renderReplacement(renderError, err, id);
     }
   }
 }
@@ -185,19 +199,22 @@ export function tryPlaceholder(
     }
 
     if (contentPromises.length) {
+      const id = nextId();
       promises = promises || [];
       promises.push(
         Object.assign(
           Promise.all(contentPromises).then(() => {
             resolved = true;
             out = currentOut;
-            buffer = tryContent;
+            renderReplacement(write, tryContent, id);
             currentFlush();
           }),
           { isPlaceholder: true } as const
         )
       );
+      markReplaceStart(id);
       renderPlaceholder();
+      markReplaceEnd(id);
       return;
     }
   }
@@ -218,4 +235,27 @@ function flushToStream() {
 function cleanup() {
   out = flush = promises = null;
   buffer = "";
+}
+
+function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
+  if (!runtimeFlushed.has(out!)) {
+    buffer += `<script>R_${runtimeId} = ${reorderRuntimeString};</script>`;
+    runtimeFlushed.add(out!);
+  }
+  const m = marker(id);
+  buffer += `<noscript id="${m}">`;
+  render(data);
+  buffer += `</noscript><script>R_${runtimeId}("${m}")</script>`;
+}
+
+function markReplaceStart(id: number) {
+  return (buffer += `<!--${marker(id)}-->`);
+}
+
+function markReplaceEnd(id: number) {
+  return (buffer += `<!--/${marker(id)}-->`);
+}
+
+function marker(id: number) {
+  return `${runtimeId}:R${id}`;
 }

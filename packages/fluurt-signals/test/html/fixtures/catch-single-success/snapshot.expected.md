@@ -1,9 +1,9 @@
 # write
-  a<!--[ERROR_BOUNDARY]-->b
+  a<!--M:R0-->b
 _flush_
 
 # write
-  cd<!--[END_ERROR_BOUNDARY]-->fgh
+  cd<!--/M:R0-->fgh
 _flush_
 
 # end

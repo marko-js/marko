@@ -1,5 +1,8 @@
 import { Writable } from "stream";
 import { createRenderer } from "../../../html";
+import reorderRuntime from "../../../html/reorder-runtime";
+
+const reorderRuntimeString = String(reorderRuntime);
 
 export default async function renderAndTrackFlushes(test: {
   input: { [x: string]: unknown };
@@ -11,7 +14,11 @@ export default async function renderAndTrackFlushes(test: {
 
   await render(input, {
     write(data: string) {
-      output.push(`# write\n${indent(data)}`);
+      output.push(
+        `# write\n${indent(
+          data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+        )}`
+      );
     },
     flush() {
       output[output.length - 1] += `\n_flush_`;
