@@ -6,3 +6,14 @@ _flush_
   Error: ERROR!
 
 # end
+
+# final HTML
+  
+  <html>
+    <head>
+    </head>
+    <body>
+      a
+    </body>
+  </html>
+  

@@ -244,9 +244,9 @@ function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
     runtimeFlushed.add(out!);
   }
   const m = marker(id);
-  buffer += `<noscript id="${m}">`;
+  buffer += `<t id="${m}">`;
   render(data);
-  buffer += `</noscript><script>${runtimeCall}("${m}")</script>`;
+  buffer += `</t><script>${runtimeCall}("${m}")</script>`;
 }
 
 function markReplaceStart(id: number) {

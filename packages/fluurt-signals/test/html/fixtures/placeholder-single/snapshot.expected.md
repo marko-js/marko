@@ -7,7 +7,21 @@ _flush_
 _flush_
 
 # write
-  <noscript id="M0">bcd</noscript><script>(M$r=REORDER_RUNTIME)("M0")</script>
+  <t id="M0">bcd</t><script>(M$r=REORDER_RUNTIME)("M0")</script>
 _flush_
 
 # end
+
+# final HTML
+  
+  <html>
+    <head>
+    </head>
+    <body>
+      abcdfgh
+      <script>
+        (M$r=REORDER_RUNTIME)("M0")
+      </script>
+    </body>
+  </html>
+  

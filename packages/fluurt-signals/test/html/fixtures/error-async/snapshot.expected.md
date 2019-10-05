@@ -10,3 +10,14 @@ _flush_
   Error: ERROR!
 
 # end
+
+# final HTML
+  
+  <html>
+    <head>
+    </head>
+    <body>
+      ab
+    </body>
+  </html>
+  

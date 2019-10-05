@@ -22,9 +22,10 @@ export default function(
   replacementNode.parentNode!.removeChild(replacementNode);
 
   refNode = doc[elId]("/" + id)!;
-  do {
-    nextNode = targetNode!.nextSibling;
-    targetParent.removeChild(targetNode!);
+  while (
+    ((nextNode = targetNode!.nextSibling),
+    targetParent.removeChild(targetNode!) !== refNode)
+  ) {
     targetNode = nextNode;
-  } while (targetNode !== refNode);
+  }
 }

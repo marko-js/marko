@@ -1,4 +1,6 @@
+import { JSDOM } from "jsdom";
 import { Writable } from "stream";
+import diffableHTML from "diffable-html";
 import { createRenderer } from "../../../html/index";
 import reorderRuntime from "../../../html/reorder-runtime";
 
@@ -12,8 +14,11 @@ export default async function renderAndTrackFlushes(test: {
   const output: string[] = [];
   const render = createRenderer(test.default);
 
+  let html = "";
+
   await render(input, {
     write(data: string) {
+      html += data;
       output.push(
         `# write\n${indent(
           data.replace(reorderRuntimeString, "REORDER_RUNTIME")
@@ -30,6 +35,18 @@ export default async function renderAndTrackFlushes(test: {
       output.push(`# emit ${type}${args.map(arg => `\n${indent(arg)}`)}`);
     }
   } as Writable & { flush(): void });
+
+  const browser = new JSDOM(html, { runScripts: "dangerously" });
+  output.push(
+    `# final HTML\n${indent(
+      diffableHTML(
+        browser.window.document.documentElement.outerHTML.replace(
+          reorderRuntimeString,
+          "REORDER_RUNTIME"
+        )
+      )
+    )}`
+  );
 
   return `${output.join("\n\n")}\n`;
 }
