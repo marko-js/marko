@@ -1,5 +1,5 @@
 # write
-  a<!--M:R0-->b<!--/M:R0-->c
+  a<style id="^M0"></style>b<style id="/M0"></style>c
 _flush_
 
 # end

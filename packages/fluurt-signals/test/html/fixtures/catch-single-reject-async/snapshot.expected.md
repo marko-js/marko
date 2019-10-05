@@ -1,13 +1,13 @@
 # write
-  a<!--M:R0-->b
+  a<style id="^M0"></style>b
 _flush_
 
 # write
-  d<!--/M:R0-->efg
+  d<style id="/M0"></style>efg
 _flush_
 
 # write
-  <script>R_M = REORDER_RUNTIME;</script><noscript id="M:R0">ERROR!</noscript><script>R_M("M:R0")</script>
+  <noscript id="M0">ERROR!</noscript><script>(M$r=REORDER_RUNTIME)("M0")</script>
 _flush_
 
 # end

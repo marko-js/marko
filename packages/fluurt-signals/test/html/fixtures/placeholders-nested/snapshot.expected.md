@@ -1,5 +1,5 @@
 # write
-  a<!--M:R1-->i...<!--/M:R1-->j
+  a<style id="^M1"></style>i...<style id="/M1"></style>j
 _flush_
 
 # write
@@ -7,11 +7,11 @@ _flush_
 _flush_
 
 # write
-  <script>R_M = REORDER_RUNTIME;</script><noscript id="M:R1">bcd<!--M:R0-->h...<!--/M:R0--></noscript><script>R_M("M:R1")</script>
+  <noscript id="M1">bcd<style id="^M0"></style>h...<style id="/M0"></style></noscript><script>(M$r=REORDER_RUNTIME)("M1")</script>
 _flush_
 
 # write
-  <noscript id="M:R0">efg</noscript><script>R_M("M:R0")</script>
+  <noscript id="M0">efg</noscript><script>M$r("M0")</script>
 _flush_
 
 # end

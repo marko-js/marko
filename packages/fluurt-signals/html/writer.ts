@@ -238,24 +238,25 @@ function cleanup() {
 }
 
 function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
+  let runtimeCall = `${runtimeId}$r`;
   if (!runtimeFlushed.has(out!)) {
-    buffer += `<script>R_${runtimeId} = ${reorderRuntimeString};</script>`;
+    runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
     runtimeFlushed.add(out!);
   }
   const m = marker(id);
   buffer += `<noscript id="${m}">`;
   render(data);
-  buffer += `</noscript><script>R_${runtimeId}("${m}")</script>`;
+  buffer += `</noscript><script>${runtimeCall}("${m}")</script>`;
 }
 
 function markReplaceStart(id: number) {
-  return (buffer += `<!--${marker(id)}-->`);
+  return (buffer += `<style id="^${marker(id)}"></style>`);
 }
 
 function markReplaceEnd(id: number) {
-  return (buffer += `<!--/${marker(id)}-->`);
+  return (buffer += `<style id="/${marker(id)}"></style>`);
 }
 
 function marker(id: number) {
-  return `${runtimeId}:R${id}`;
+  return `${runtimeId}${id}`;
 }

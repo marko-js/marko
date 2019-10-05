@@ -1,9 +1,9 @@
 # write
-  a<!--M:R0-->b
+  a<style id="^M0"></style>b
 _flush_
 
 # write
-  cd<!--/M:R0-->fgh
+  cd<style id="/M0"></style>fgh
 _flush_
 
 # end
