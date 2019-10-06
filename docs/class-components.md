@@ -225,8 +225,8 @@ module.exports = {
 
 The `on-[event](methodName|function, ...args)` attributes allow event listeners to be attached for either:
 
-* A native DOM event, when used on a native DOM element such as a `<button>`
-* Or a UI component event, when used on a custom tag for a UI component such as `<my-component>`
+- A native DOM event, when used on a native DOM element such as a `<button>`
+- Or a UI component event, when used on a custom tag for a UI component such as `<my-component>`
 
 The `on-*` attributes are used to associate event handler methods with an event name. Event handlers may be specified by `'methodName'` — a string that matches a method on the component instance, or they may be a `function`. Attaching listeners for native DOM events and UI component custom events is explained in more detail in the sections below.
 
@@ -432,7 +432,7 @@ The above code will output HTML similar to the following:
 <button
    aria-describedby:scoped="closeDisclaimer"
    on-click('closeDialog')>Close</button>
-   
+
 <p id:scoped="closeDisclaimer">
    Closing this window will discard any entered information and return you to the main page.
 </p>
@@ -440,8 +440,11 @@ The above code will output HTML similar to the following:
 
 ```html
 <button aria-describedby="c0-closeDisclaimer">Close</button>
-   
-<p id="c0-closeDisclaimer">Closing this window will discard any entered information and return you to the main page.</p>
+
+<p id="c0-closeDisclaimer">
+  Closing this window will discard any entered information and return you to the
+  main page.
+</p>
 ```
 
 **`href:scoped`**
@@ -613,10 +616,10 @@ The `state` variable refers to the UI component’s `state` object, and is the _
 
 ### `destroy([options])`
 
-Option       | Type      | Default | Description
------------- | --------- | ------- | -----------
-`removeNode` | `Boolean` | `true`  | `false` will keep the component in the DOM while unsubscribing all events from it
-`recursive`  | `Boolean` | `true`  | `false` will prevent child components from being destroyed
+| Option       | Type      | Default | Description                                                                       |
+| ------------ | --------- | ------- | --------------------------------------------------------------------------------- |
+| `removeNode` | `Boolean` | `true`  | `false` will keep the component in the DOM while unsubscribing all events from it |
+| `recursive`  | `Boolean` | `true`  | `false` will prevent child components from being destroyed                        |
 
 Destroys the component by unsubscribing from all listeners made using the `subscribeTo` method, and then detaching the component’s root element from the DOM. All nested components (discovered by querying the DOM) are also destroyed.
 
@@ -636,38 +639,38 @@ Queue the component to re-render and skip all checks to see if it actually needs
 
 ### `getEl([key, index])`
 
-Signature    | Type          | Description
------------- | ------------- | -----------
-`key`        | `String`      | _optional_ — the scoped identifier for the element
-`index`      | `Number`      | _optional_ — the index of the component, if `key` references a repeated component
-return value | `HTMLElement` | The element matching the key, or `this.el` if no key is provided
+| Signature    | Type          | Description                                                                       |
+| ------------ | ------------- | --------------------------------------------------------------------------------- |
+| `key`        | `String`      | _optional_ — the scoped identifier for the element                                |
+| `index`      | `Number`      | _optional_ — the index of the component, if `key` references a repeated component |
+| return value | `HTMLElement` | The element matching the key, or `this.el` if no key is provided                  |
 
 Returns a nested DOM element by prefixing the provided `key` with the component’s ID. For Marko, nested DOM elements should be assigned an ID with the `key` attribute.
 
 ### `getEls(key)`
 
-Signature    | Type                 | Description
------------- | -------------------- | -----------------------------------------------------
-`key`        | `String`             | The scoped identifier for the element
-return value | `Array<HTMLElement>` | An array of _repeated_ DOM elements for the given key
+| Signature    | Type                 | Description                                           |
+| ------------ | -------------------- | ----------------------------------------------------- |
+| `key`        | `String`             | The scoped identifier for the element                 |
+| return value | `Array<HTMLElement>` | An array of _repeated_ DOM elements for the given key |
 
 Repeated DOM elements must have a value for the `key` attribute that ends with `[]`. For example, `key="items[]"`.
 
 ### `getElId([key, index])`
 
-Signature    | Type     | Description
------------- | -------- | --------------
-`key`        | `String` | _optional_ — The scoped identifier for the element
-`index`      | `Number` | _optional_ — The index of the component, if `key` references a repeated component
-return value | `String` | The element ID matching the key, or `this.el.id` if `key` is undefined
+| Signature    | Type     | Description                                                                       |
+| ------------ | -------- | --------------------------------------------------------------------------------- |
+| `key`        | `String` | _optional_ — The scoped identifier for the element                                |
+| `index`      | `Number` | _optional_ — The index of the component, if `key` references a repeated component |
+| return value | `String` | The element ID matching the key, or `this.el.id` if `key` is undefined            |
 
 Similar to `getEl`, but only returns the String ID of the nested DOM element instead of the actual DOM element.
 
 ### `getComponent(key[, index])`
 
-Signature    | Type        | Description                                                                                                                                                                                                      ------------ | ----------- | -----------
-`key`        | `String`    | The scoped identifier for the element
-`index`      | `Number`    | _optional_ — The index of the component, if `key` references a repeated component
+Signature | Type | Description ------------ | ----------- | -----------
+`key` | `String` | The scoped identifier for the element
+`index` | `Number` | _optional_ — The index of the component, if `key` references a repeated component
 return value | `Component` | A reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (i.e. `key="items[]"`), then the component at the given index will be returned.
 
 For example, given the following component,
@@ -686,11 +689,11 @@ const childComponent = this.getComponent("child");
 
 ### `getComponents(key, [, index])`
 
-Signature    | Type               | Description
------------- | ------------------ | -----------
-`key`        | `String`           | The scoped identifier for the element
-`index`      | `Number`           | _optional_ — The index of the component, if `key` references a repeated component
-return value | `Array<Component>` | An array of _repeated_ `Component` instances for the given key
+| Signature    | Type               | Description                                                                       |
+| ------------ | ------------------ | --------------------------------------------------------------------------------- |
+| `key`        | `String`           | The scoped identifier for the element                                             |
+| `index`      | `Number`           | _optional_ — The index of the component, if `key` references a repeated component |
+| return value | `Array<Component>` | An array of _repeated_ `Component` instances for the given key                    |
 
 Repeated components must have a value for the `key` attribute that ends with `[]`, like `key="items[]"`.
 
@@ -704,9 +707,9 @@ Returns `true` if the component needs a bath.
 
 ### `replaceState(newState)`
 
-Signature  | Type     | Description
----------- | -------- | -----------
-`newState` | `Object` | A new state object to replace the previous state
+| Signature  | Type     | Description                                      |
+| ---------- | -------- | ------------------------------------------------ |
+| `newState` | `Object` | A new state object to replace the previous state |
 
 Replaces the state with an entirely new state. Equivalent to `this.state = newState`.
 
@@ -714,18 +717,18 @@ Replaces the state with an entirely new state. Equivalent to `this.state = newSt
 
 ### `rerender([input])`
 
-Signature | Type     | Description
---------- | -------- | -----------
-`input`   | `Object` | _optional_ — New input data to use when rerendering
+| Signature | Type     | Description                                         |
+| --------- | -------- | --------------------------------------------------- |
+| `input`   | `Object` | _optional_ — New input data to use when rerendering |
 
 Rerenders the component using its `renderer`, and either supplied `input` or internal `input` and `state`.
 
 ### `setState(name, value)`
 
-Signature | Type     | Description
---------- | -------- | -----------
-`name`    | `String` | The name of the `state` property to update
-`value`   | `Any`    | The new value for the `state` property
+| Signature | Type     | Description                                |
+| --------- | -------- | ------------------------------------------ |
+| `name`    | `String` | The name of the `state` property to update |
+| `value`   | `Any`    | The new value for the `state` property     |
 
 Changes the value of a single `state` property. Equivalent to `this.state[name] = value`, except it will also work for adding new properties to the component state.
 
@@ -735,9 +738,9 @@ this.setState("disabled", true);
 
 ### `setState(newState)`
 
-Signature  | Type     | Description
----------- | -------- | -----------
-`newState` | `Object` | A new state object to merge into the previous state
+| Signature  | Type     | Description                                         |
+| ---------- | -------- | --------------------------------------------------- |
+| `newState` | `Object` | A new state object to merge into the previous state |
 
 Changes the value of multiple state properties:
 
@@ -750,10 +753,10 @@ this.setState({
 
 ### `setStateDirty(name[, value])`
 
-Signature | Type     | Description
---------- | -------- | -----------
-`name`    | `String` | The name of the `state` property to mark as dirty
-`value`   | `Any`    | _optional_ — A new value for the `state` property
+| Signature | Type     | Description                                       |
+| --------- | -------- | ------------------------------------------------- |
+| `name`    | `String` | The name of the `state` property to mark as dirty |
+| `value`   | `Any`    | _optional_ — A new value for the `state` property |
 
 Forces a state property change, even if the value is equal to the old value. This is helpful in cases where a change occurs to a complex object that would not be detected by a shallow compare. Invoking this function completely circumvents all property equality checks (shallow compares) and always rerenders the component.
 
@@ -777,10 +780,10 @@ this.setStateDirty("colors");
 
 ### `subscribeTo(emitter)`
 
-Signature    | Description
------------- | -----------
-`emitter`    | A [Node.js `EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter) or DOM object that emits events (`window`, `document`, etc.)
-return value | A tracked subscription
+| Signature    | Description                                                                                                                                           |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `emitter`    | A [Node.js `EventEmitter`](https://nodejs.org/api/events.html#events_class_eventemitter) or DOM object that emits events (`window`, `document`, etc.) |
+| return value | A tracked subscription                                                                                                                                |
 
 When a component is destroyed, it is necessary to remove any listeners that were attached by the component to prevent memory leaks. By using `subscribeTo`, Marko will automatically track and remove any listeners you attach when the component is destroyed.
 
@@ -809,28 +812,28 @@ Marko components inherit from [`EventEmitter`](https://nodejs.org/api/events.htm
 
 ### `emit(eventName, ...args)`
 
-Signature   | Type     | Description
------------ | -------- | -----------
-`eventName` | `String` | Name of the event
-`...args`   | `Any`    | All subsequent parameters are passed to the listeners
+| Signature   | Type     | Description                                           |
+| ----------- | -------- | ----------------------------------------------------- |
+| `eventName` | `String` | Name of the event                                     |
+| `...args`   | `Any`    | All subsequent parameters are passed to the listeners |
 
 Emits a UI component custom event. If a UI component attached a listener with the matching `eventName`, then the corresponding event listener method will be invoked. Event listeners can be attached using either the [`on-[event](methodName|function, ...args)`](#declarative-custom-events) attribute syntax, or `targetComponent.on()`.
 
 ### `on(eventName, handler)`
 
-Signature   | Type       | Description
------------ | ---------- | -----------
-`eventName` | `String`   | Name of the event to listen for
-`handler`   | `Function` | The function to call when the event fires
+| Signature   | Type       | Description                               |
+| ----------- | ---------- | ----------------------------------------- |
+| `eventName` | `String`   | Name of the event to listen for           |
+| `handler`   | `Function` | The function to call when the event fires |
 
 Adds the listener function to the end of the listeners array for the `eventName` event. Does not check to see if the listener has already been added. Multiple calls passing the same combination of `eventName` and `handler` will result in the listener being added and called multiple times.
 
 ### `once(eventName, handler)`
 
-Signature   | Type       | Description
------------ | ---------- | -----------
-`eventName` | `String`   | Name of the event to listen for
-`handler`   | `Function` |Tthe function to call when the event fires
+| Signature   | Type       | Description                                |
+| ----------- | ---------- | ------------------------------------------ |
+| `eventName` | `String`   | Name of the event to listen for            |
+| `handler`   | `Function` | Tthe function to call when the event fires |
 
 Adds a one-time listener function for the `eventName` event. The next time `eventName` triggers, this listener is removed and then invoked.
 
@@ -896,15 +899,14 @@ class {
 
 ### `onCreate(input, out)`
 
-Signature | Description
---------- | -----------
-`input`   | The input data used to render the component for the first time
-`out`     | The async `out` used to render the component for the first time
+| Signature | Description                                                     |
+| --------- | --------------------------------------------------------------- |
+| `input`   | The input data used to render the component for the first time  |
+| `out`     | The async `out` used to render the component for the first time |
 
 The `create` event is emitted (and `onCreate` is called) when the component is first created.
 
 `onCreate` is typically used to set the initial state for stateful components:
-
 
 ```marko
 class {
@@ -916,17 +918,17 @@ class {
 
 ### `onInput(input, out)`
 
-Signature | Description
---------- | -----------
-`input`   | The new input data
+| Signature | Description        |
+| --------- | ------------------ |
+| `input`   | The new input data |
 
 The `input` event is emitted (and `onInput` is called) when the component receives input: both the initial input, and for any subsequent updates to its input.
 
 ### `onRender(out)`
 
-Signature | Description
---------- | --------------------------------------
-`out`     | The async `out` for the current render
+| Signature | Description                            |
+| --------- | -------------------------------------- |
+| `out`     | The async `out` for the current render |
 
 The `render` event is emitted (and `onRender` is called) when the component is about to render or rerender.
 
