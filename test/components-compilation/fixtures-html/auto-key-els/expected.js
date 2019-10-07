@@ -38,11 +38,11 @@ function render(input, out, __component, component, state) {
 
   _preserve_tag({
       bodyOnly: true,
-      key: $key$0,
+      preserveKey: $key$0,
       renderBody: function(out) {
         out.w(marko_escapeXml(Date.now()));
       }
-    }, out);
+    }, out, __component, $key$0);
 
   out.w("</p></div><span>B</span>");
 
