@@ -7,8 +7,8 @@ import reorderRuntime from "../../../html/reorder-runtime";
 const reorderRuntimeString = String(reorderRuntime);
 
 export default async function renderAndTrackFlushes(test: {
-  input: { [x: string]: unknown };
-  default: (input: { [x: string]: unknown }) => void;
+  input: Record<string, unknown>;
+  default: (input: Record<string, unknown>) => void;
 }) {
   const { input } = test;
   const output: string[] = [];

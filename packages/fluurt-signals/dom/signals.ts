@@ -13,8 +13,7 @@ export type Raw<T> = T extends Signal<infer V> ? V : T;
 export class Signal<T = unknown> {
   public ___sid: number = sid++;
   public ___value: T;
-  private ___computations: { [x: number]: ComputedSignal } = {};
-  [x: number]: ComputedSignal;
+  private ___computations: Record<number, ComputedSignal> = {};
   constructor(current: T) {
     this.___value = current;
   }
@@ -104,7 +103,7 @@ export function compute<T>(fn: () => T) {
 }
 
 export function dynamicKeys(
-  object: MaybeSignal<{ [x: string]: unknown }>,
+  object: MaybeSignal<Record<string, unknown>>,
   watchedKeys: string[]
 ) {
   if (object instanceof Signal) {

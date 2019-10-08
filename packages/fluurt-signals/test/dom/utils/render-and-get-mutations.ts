@@ -14,8 +14,8 @@ import {
 export default async function renderAndGetMutations(
   id: string,
   test: {
-    inputs: [{ [x: string]: unknown }, ...unknown[]];
-    default: ((input: MaybeSignal<{ [x: string]: unknown }>) => void) & {
+    inputs: [Record<string, unknown>, ...unknown[]];
+    default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
       input: string[];
     };
   }

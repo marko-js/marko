@@ -1,6 +1,6 @@
 import { Renderer } from "./types";
 
-const renderersById: { [x: string]: Renderer } = {};
+const renderersById: Record<string, Renderer> = {};
 
 export function register(id: string, renderer: Renderer) {
   renderersById[id] = renderer;

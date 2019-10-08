@@ -7,10 +7,6 @@ import {
 } from "./fragments";
 import { conditional } from "./control-flow";
 
-interface UnknownObject {
-  [x: string]: unknown;
-}
-
 export class HydrateError extends Error {}
 export let currentFragment: Fragment | undefined;
 export let currentNode: ContainerNode | null = null;
@@ -19,7 +15,10 @@ const doc = document;
 const detachedContainer = doc.createDocumentFragment();
 let lastHydratedChild: Node | null = null;
 
-export function render(renderer: Renderer, input: UnknownObject = {}) {
+export function render(
+  renderer: Renderer,
+  input: Record<string, unknown> = {}
+) {
   const container = (currentNode = doc.createDocumentFragment());
   renderer(input);
   currentNode = null;
@@ -188,7 +187,7 @@ export function dynamicAttr(name: string, value: unknown) {
 
 export function dynamicTag(
   tag: MaybeSignal<string | Renderer>,
-  input: MaybeSignal<UnknownObject>,
+  input: MaybeSignal<Record<string, unknown>>,
   renderBody: (() => void) | undefined
 ) {
   const renderFns = new Map();
@@ -227,7 +226,7 @@ export function dynamicTag(
 }
 
 export function dynamicAttrs(
-  attrs: MaybeSignal<UnknownObject | null | undefined>
+  attrs: MaybeSignal<Record<string, unknown> | null | undefined>
 ) {
   const elNode = currentNode as Element;
   let previousAttrs: Raw<typeof attrs>;

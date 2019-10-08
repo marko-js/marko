@@ -11,7 +11,7 @@ import { currentNode } from "./dom";
 const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {
-  ___delegated?: { [x: string]: 1 };
+  ___delegated?: Record<string, 1>;
 }
 
 type EventNames = keyof GlobalEventHandlersEventMap;

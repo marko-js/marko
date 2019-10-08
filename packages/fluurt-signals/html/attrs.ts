@@ -1,8 +1,8 @@
 import { xmlAttr } from "./content";
 
 const invalidAttrNameReg = /[\s'"</=\\]/u; // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-const validAttrNames: { [x: string]: boolean } = Object.create(null);
-const invalidAttrNames: { [x: string]: boolean } = Object.create(null);
+const validAttrNames: Record<string, boolean> = Object.create(null);
+const invalidAttrNames: Record<string, boolean> = Object.create(null);
 
 export function attr(name: string, val: unknown) {
   if (val === true) {
@@ -18,7 +18,7 @@ export function attr(name: string, val: unknown) {
   return ` ${name}="${escaped}"`;
 }
 
-export function attrs(data: { [x: string]: string }) {
+export function attrs(data: Record<string, string>) {
   let result = "";
 
   for (const name in data) {
