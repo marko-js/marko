@@ -92,13 +92,36 @@ class Tag {
         }
         return false;
     }
-    addAttribute(attr) {
+
+    checkDeprecatedAttr(attr) {
         attr.filePath = this.filePath;
         if (attr.name === "key") {
             complain("@key property is deprecated", {
                 location: this.filePath
             });
         }
+        //
+        if (attr.setFlag && attr.setFlag !== "hasComponentEvents") {
+            complain(`${attr.name} - : set-flag property is deprecated`, {
+                location: this.filePath
+            });
+        }
+        if (attr.type === "template") {
+            complain(`${attr.name} - attribute template type is deprecated`, {
+                location: this.filePath
+            });
+        }
+
+        if (attr.type === "path") {
+            complain(`${attr.name} - attribute path type is deprecated`, {
+                location: this.filePath
+            });
+        }
+    }
+
+    addAttribute(attr) {
+        attr.filePath = this.filePath;
+        this.checkDeprecatedAttr(attr);
 
         if (attr.pattern) {
             this.patternAttributes.push(attr);
