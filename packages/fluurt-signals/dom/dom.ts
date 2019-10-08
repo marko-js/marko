@@ -216,7 +216,7 @@ export function dynamicTag(
             nextRender = nextTag;
           }
         } else {
-          nextRender = renderBody || (() => {});
+          nextRender = renderBody;
         }
         renderFns.set(nextTag, nextRender);
       }
