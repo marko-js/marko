@@ -18,7 +18,7 @@ export function attr(name: string, val: unknown) {
   return ` ${name}="${escaped}"`;
 }
 
-export function attrs(data: Record<string, string>) {
+export function attrs(data: Record<string, unknown>) {
   let result = "";
 
   for (const name in data) {

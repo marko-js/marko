@@ -1,58 +1,60 @@
-// TO DISCUSS:
-// array.join / create vs string concat perf.
-// skip normalization?
+const NON_DIMENSIONAL = /^(?:or|li|[az]|--)|n-c|ab|rp|[dl]o|i[mt]|hr|fi|w(?:e|$)/;
 
-function toStringArray(
+export function classAttr(value: unknown) {
+  return toDelimitedString(value, " ", stringifyClassObject);
+}
+
+export function styleAttr(value: unknown) {
+  return toDelimitedString(value, ";", stringifyStyleObject);
+}
+
+function stringifyClassObject(name: string, value: unknown) {
+  if (value) {
+    return name;
+  }
+}
+
+function stringifyStyleObject(name: string, value: unknown) {
+  if (value != null && value !== false) {
+    if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
+      (value as any) += "px";
+    }
+
+    return `${name}:${value}`;
+  }
+}
+
+function toDelimitedString(
   value: unknown,
-  stringify: (n: string, v: string) => string | undefined,
-  array: string[] = []
+  delimiter: string,
+  stringify: (n: string, v: string) => string | undefined
 ) {
   if (value) {
     if (typeof value === "string") {
-      array.push(value);
-    } else if (Array.isArray(value)) {
+      return value;
+    }
+
+    let result = "";
+    let curDelimiter = "";
+
+    if (Array.isArray(value)) {
       for (const v of value) {
-        toStringArray(v, stringify, array);
+        const string = toDelimitedString(v, delimiter, stringify);
+        if (string) {
+          result += curDelimiter + string;
+          curDelimiter = delimiter;
+        }
       }
     } else if (typeof value === "object") {
       for (const name in value) {
         const string = stringify(name, value[name]);
         if (string) {
-          array.push(string);
+          result += curDelimiter + string;
+          curDelimiter = delimiter;
         }
       }
     }
-  }
-  return array;
-}
 
-const stringifyClassObject = (name, value) => value && name;
-export function classAttr(value: unknown) {
-  const classes = toStringArray(value, stringifyClassObject);
-  if (classes.length) {
-    return classes.join(" ");
-  }
-}
-
-const dashedNames = {};
-const stringifyStyleObject = (name: string, value: unknown) => {
-  if (value != null) {
-    if (typeof value === "number" && value) {
-      (value as any) += "px";
-    }
-
-    let nameDashed = dashedNames[name];
-    if (!nameDashed) {
-      nameDashed = dashedNames[name] = name
-        .replace(/([A-Z])/g, "-$1")
-        .toLowerCase();
-    }
-    return nameDashed + ":" + value;
-  }
-};
-export function styleAttr(value: unknown) {
-  const styles = toStringArray(value, stringifyStyleObject);
-  if (styles.length) {
-    return styles.join(";");
+    return result;
   }
 }

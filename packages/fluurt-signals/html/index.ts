@@ -6,6 +6,8 @@ export { script, style, xml } from "./content";
 
 export { attr, attrs } from "./attrs";
 
+export { dynamicTag } from "./dynamic-tag";
+
 export {
   createRenderer,
   write,
