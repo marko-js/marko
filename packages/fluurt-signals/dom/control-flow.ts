@@ -8,7 +8,7 @@ type ForIterationFragment<T> = Fragment & {
   indexSignal: Signal<number>;
 };
 
-export function loop<T>(
+export function loopOf<T>(
   array: MaybeSignal<T[]>,
   render: (
     item: MaybeSignal<T>,
@@ -71,6 +71,44 @@ export function loop<T>(
   }
 }
 
+export function loopIn<T>(
+  object: MaybeSignal<Record<string, T>>,
+  render: (
+    key: MaybeSignal<string>,
+    value: MaybeSignal<T>,
+    all: typeof object
+  ) => void
+) {
+  loopOf<string>(
+    compute(() => Object.keys(get(object))),
+    key => render(key, compute(() => get(object)[get(key)]), object),
+    firstArgAsKey
+  );
+}
+
+export function loopFrom(
+  from: MaybeSignal<number>,
+  to: MaybeSignal<number>,
+  step: MaybeSignal<number>,
+  render: (i: MaybeSignal<number>) => void
+) {
+  loopOf<number>(
+    compute(() => {
+      const _to = get(to);
+      const _step = get(step);
+      const range: number[] = [];
+
+      for (let i = get(from); i <= _to; i += _step) {
+        range.push(i);
+      }
+
+      return range;
+    }),
+    render,
+    firstArgAsKey
+  );
+}
+
 export function conditional(render: MaybeSignal<(() => void) | undefined>) {
   let lastRender: Raw<typeof render> | undefined;
   let rootFragment: Fragment | undefined;
@@ -93,4 +131,8 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
   } else if (render) {
     render();
   }
+}
+
+function firstArgAsKey(key: unknown) {
+  return key + "";
 }

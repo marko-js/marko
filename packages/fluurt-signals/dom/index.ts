@@ -1,4 +1,4 @@
-export { loop, conditional } from "./control-flow";
+export { loopOf, loopIn, loopFrom, conditional } from "./control-flow";
 
 export {
   Signal,

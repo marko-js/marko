@@ -1,4 +1,4 @@
-import { loop, compute, get, register } from "../../../../dom/index";
+import { loopOf, compute, get, register } from "../../../../dom/index";
 
 import { beginEl, dynamicText, endEl } from "../../../../dom/dom";
 
@@ -49,7 +49,7 @@ const renderer = register(
   __dirname.split("/").pop()!,
   (input: { children: Array<{ id: number; text: string }> }) => {
     beginEl("div");
-    loop(
+    loopOf(
       input.children,
       item => {
         dynamicText(compute(() => get(item).text));

@@ -1,4 +1,4 @@
-const NON_DIMENSIONAL = /^(?:or|li|[az]|--)|n-c|ab|rp|[dl]o|i[mt]|hr|fi|w(?:e|$)/;
+const NON_DIMENSIONAL = /^(or|li|[az]|--)|n-c|ab|[dl]o|i[mt]|hr|fi|w(e|$)/;
 
 export function classAttr(value: unknown) {
   return toDelimitedString(value, " ", stringifyClassObject);
