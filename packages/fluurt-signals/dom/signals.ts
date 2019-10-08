@@ -46,25 +46,15 @@ export class Signal<T = unknown> {
 }
 
 export class ComputedSignal<T = unknown> extends Signal<T> {
-  public static ___create<T>(fn: () => T) {
-    const signal = new ComputedSignal(fn);
-
-    if (signal.___prevDeps.size) {
-      if (currentFragment) {
-        currentFragment.___tracked.add(signal);
-      }
-      return signal;
-    } else {
-      return signal.___value;
-    }
-  }
-
   private ___fn: () => T;
   private ___prevDeps: Set<Signal>;
-  constructor(fn: () => T) {
-    super((undefined as any) as T);
+  constructor(fn: () => T, intialValue: T, initialDeps: Set<Signal>) {
+    super(intialValue);
     this.___fn = fn;
-    this.___compute();
+    for (const d of initialDeps) {
+      d.___subscribe(this);
+    }
+    this.___prevDeps = initialDeps;
   }
   public ___compute() {
     const fn = this.___fn;
@@ -76,16 +66,12 @@ export class ComputedSignal<T = unknown> extends Signal<T> {
     for (const d of nextDeps) {
       d.___subscribe(this);
     }
-    if (prevDeps) {
-      for (const d of prevDeps) {
-        if (!nextDeps.has(d)) {
-          d.___unsubscribe(this);
-        }
+    for (const d of prevDeps) {
+      if (!nextDeps.has(d)) {
+        d.___unsubscribe(this);
       }
-      this.___set(nextValue);
-    } else {
-      this.___value = nextValue;
     }
+    this.___set(nextValue);
     this.___prevDeps = nextDeps;
     return nextValue;
   }
@@ -96,8 +82,26 @@ export class ComputedSignal<T = unknown> extends Signal<T> {
     this.___compute = noop as () => T;
   }
 }
+const emptyTrackers: Array<Set<Signal>> = [];
+export function compute<T>(fn: () => T) {
+  const parentTracker = depTracker;
+  const initialDeps = (depTracker = emptyTrackers.pop() || new Set());
+  const id = sid++;
+  const initialValue = fn();
+  depTracker = parentTracker;
 
-export const compute = ComputedSignal.___create;
+  if (initialDeps.size) {
+    const signal = new ComputedSignal(fn, initialValue, initialDeps);
+    signal.___sid = id;
+    if (currentFragment) {
+      currentFragment.___tracked.add(signal);
+    }
+    return signal;
+  } else {
+    emptyTrackers.push(initialDeps);
+    return initialValue;
+  }
+}
 
 export function dynamicKeys(
   object: MaybeSignal<{ [x: string]: unknown }>,
