@@ -102,8 +102,8 @@ export function compute<T>(fn: () => T) {
   }
 }
 
-export function dynamicKeys(
-  object: MaybeSignal<Record<string, unknown>>,
+export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
+  object: T,
   watchedKeys: string[]
 ) {
   if (object instanceof Signal) {

@@ -1,9 +1,19 @@
 import { Renderer } from "../common/types";
-import { MaybeSignal, Raw, compute, get, dynamicKeys } from "./signals";
+import {
+  MaybeSignal,
+  Raw,
+  compute,
+  get,
+  dynamicKeys,
+  Signal,
+  beginBatch,
+  endBatch
+} from "./signals";
 import {
   Fragment,
   ContainerNode,
-  DetachedElementWithParent
+  DetachedElementWithParent,
+  removeFragment
 } from "./fragments";
 import { conditional } from "./control-flow";
 
@@ -25,14 +35,28 @@ const doc = document;
 const detachedContainer = doc.createDocumentFragment();
 let lastHydratedChild: Node | null = null;
 
-export function render(
-  renderer: Renderer,
-  input: Record<string, unknown> = {}
-) {
-  const container = (currentNode = doc.createDocumentFragment());
-  renderer(input);
-  currentNode = null;
-  return container;
+export function createRenderer<T extends Renderer>(renderer: T) {
+  type Input = Raw<Parameters<T>[0]>;
+  return (input: Input) => {
+    const inputSignal = dynamicKeys(new Signal(input), renderer.input!);
+    const container = (currentNode = doc.createDocumentFragment()) as DocumentFragment & {
+      rerender: (input: Input) => void;
+      destroy: () => void;
+    };
+    const fragment = beginFragment();
+    renderer(inputSignal);
+    endFragment(fragment);
+    currentNode = null;
+
+    container.rerender = ((newInput: Input) => {
+      const batch = beginBatch();
+      inputSignal.___set(newInput);
+      endBatch(batch);
+    }) as T;
+
+    container.destroy = () => removeFragment(fragment);
+    return container;
+  };
 }
 
 export function beginElNS(tag: string) {

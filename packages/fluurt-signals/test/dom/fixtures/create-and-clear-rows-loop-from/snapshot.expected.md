@@ -7,7 +7,7 @@
 
 # Mutations
 ```
-inserted div0
+inserted #text0, div1, #text2
 ```
 
 
@@ -19,18 +19,18 @@ inserted div0
 
 # Mutations
 ```
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
-removed #text after div0/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
+removed #text after div1/#text0
 ```
 
 
@@ -43,18 +43,18 @@ removed #text after div0/#text0
 
 # Mutations
 ```
-inserted div0/#text1
-inserted div0/#text2
-inserted div0/#text3
-inserted div0/#text4
-inserted div0/#text5
-inserted div0/#text6
-inserted div0/#text7
-inserted div0/#text8
-inserted div0/#text9
-inserted div0/#text10
-inserted div0/#text11
-inserted div0/#text12
+inserted div1/#text1
+inserted div1/#text2
+inserted div1/#text3
+inserted div1/#text4
+inserted div1/#text5
+inserted div1/#text6
+inserted div1/#text7
+inserted div1/#text8
+inserted div1/#text9
+inserted div1/#text10
+inserted div1/#text11
+inserted div1/#text12
 ```
 
 
@@ -68,21 +68,21 @@ inserted div0/#text12
 
 # Mutations
 ```
-inserted div0/#text0
-inserted div0/#text1
-inserted div0/#text5
-div0/#text2: "0123" => "0"
-inserted div0/#text3
-inserted div0/#text4
-inserted div0/#text8
-div0/#text5: "123" => "1"
-inserted div0/#text6
-inserted div0/#text7
-inserted div0/#text11
-div0/#text8: "23" => "2"
-inserted div0/#text9
-inserted div0/#text10
-inserted div0/#text12
-inserted div0/#text13
-removed #comment before div0
+inserted div1/#text0
+inserted div1/#text1
+inserted div1/#text5
+div1/#text2: "0123" => "0"
+inserted div1/#text3
+inserted div1/#text4
+inserted div1/#text8
+div1/#text5: "123" => "1"
+inserted div1/#text6
+inserted div1/#text7
+inserted div1/#text11
+div1/#text8: "23" => "2"
+inserted div1/#text9
+inserted div1/#text10
+inserted div1/#text12
+inserted div1/#text13
+removed #comment after #text0
 ```

@@ -7,7 +7,7 @@
 
 # Mutations
 ```
-inserted div0
+inserted #text0, div1, #text2
 ```
 
 
@@ -20,14 +20,14 @@ inserted div0
 
 # Mutations
 ```
-removed #text after div0/#text6
-inserted div0/#text1
-removed #text after div0/#text6
-inserted div0/#text2
-removed #text after div0/#text6
-inserted div0/#text3
-div0/#text5: "a" => "d"
-div0/#text2: "b" => "c"
+removed #text after div1/#text6
+inserted div1/#text1
+removed #text after div1/#text6
+inserted div1/#text2
+removed #text after div1/#text6
+inserted div1/#text3
+div1/#text5: "a" => "d"
+div1/#text2: "b" => "c"
 ```
 
 
@@ -40,12 +40,12 @@ div0/#text2: "b" => "c"
 
 # Mutations
 ```
-removed #text after div0/#text6
-inserted div0/#text1
-removed #text after div0/#text6
-inserted div0/#text2
-removed #text after div0/#text6
-inserted div0/#text3
+removed #text after div1/#text6
+inserted div1/#text1
+removed #text after div1/#text6
+inserted div1/#text2
+removed #text after div1/#text6
+inserted div1/#text3
 ```
 
 
@@ -59,13 +59,13 @@ inserted div0/#text3
 
 # Mutations
 ```
-inserted div0/#text0
-inserted div0/#text1
-inserted div0/#text5
-div0/#text2: "ab" => "a"
-inserted div0/#text3
-inserted div0/#text4
-inserted div0/#text6
-inserted div0/#text7
-removed #comment before div0
+inserted div1/#text0
+inserted div1/#text1
+inserted div1/#text5
+div1/#text2: "ab" => "a"
+inserted div1/#text3
+inserted div1/#text4
+inserted div1/#text6
+inserted div1/#text7
+removed #comment after #text0
 ```

@@ -9,7 +9,7 @@
 
 # Mutations
 ```
-inserted div0
+inserted #text0, div1, #text2
 ```
 
 
@@ -21,7 +21,7 @@ inserted div0
 
 # Mutations
 ```
-removed span after div0/#text0
+removed span after div1/#text0
 ```
 
 
@@ -36,7 +36,7 @@ removed span after div0/#text0
 
 # Mutations
 ```
-inserted div0/span1
+inserted div1/span1
 ```
 
 
@@ -51,7 +51,7 @@ inserted div0/span1
 
 # Mutations
 ```
-div0/span1/#text0: "World" => "!"
+div1/span1/#text0: "World" => "!"
 ```
 
 
@@ -67,7 +67,7 @@ div0/span1/#text0: "World" => "!"
 
 # Mutations
 ```
-inserted div0/#text0
-inserted div0/#text2
-removed #comment before div0
+inserted div1/#text0
+inserted div1/#text2
+removed #comment after #text0
 ```

@@ -9,7 +9,7 @@
 
 # Mutations
 ```
-inserted button0, #text1, span2, #text3
+inserted #text0, button1, #text2, span3, #text4, #text5
 ```
 
 
@@ -23,7 +23,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed span after #text1
+removed span after #text2
 ```
 
 
@@ -39,7 +39,7 @@ removed span after #text1
 
 # Mutations
 ```
-inserted #text1
-inserted #text3
-removed #comment before button0
+inserted #text2
+inserted #text4
+removed #comment after #text0
 ```

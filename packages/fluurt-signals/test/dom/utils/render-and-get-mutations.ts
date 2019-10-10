@@ -1,100 +1,106 @@
 import diffableHTML from "diffable-html";
 import { getNodePath, getTypeName } from "./get-node-info";
 import {
-  render,
   Signal,
   set,
   beginBatch,
   endBatch,
   dynamicKeys,
   MaybeSignal,
-  init
+  init,
+  createRenderer
 } from "../../../dom/index";
 
 export default async function renderAndGetMutations(
   id: string,
   test: {
-    inputs: [Record<string, unknown>, ...unknown[]];
+    inputs: [
+      Record<string, unknown>,
+      ...Array<Record<string, unknown> | ((container: Element) => void)>
+    ];
     default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
       input: string[];
     };
   }
 ): Promise<string> {
   const { inputs, default: renderer } = test;
+  const render = createRenderer(renderer);
   const [firstInput] = inputs;
-  const container = Object.assign(document.createElement("div"), {
-    TEST_ROOT: true
-  });
   const observer = new MutationObserver(() => {
     throw new Error("Async mutation");
   });
-  let inputSignal = new Signal(firstInput);
-  document.body.appendChild(container);
-  observer.observe(container, {
-    attributes: true,
-    attributeOldValue: true,
-    characterData: true,
-    characterDataOldValue: true,
-    childList: true,
-    subtree: true
+  const container = Object.assign(document.createElement("div"), {
+    TEST_ROOT: true
   });
 
-  container.appendChild(
-    render(() => renderer(dynamicKeys(inputSignal, renderer.input)))
-  );
+  document.body.appendChild(container);
 
-  const initialHTML = container.innerHTML;
-  const result: string[] = [
-    getStatusString(container, observer.takeRecords(), firstInput)
-  ];
+  try {
+    const instance = render(firstInput);
 
-  for (const update of inputs.slice(1)) {
-    if (typeof update === "function") {
-      update(container);
-    } else {
-      const batch = beginBatch();
-      set(inputSignal, update);
-      endBatch(batch);
-    }
-    result.push(getStatusString(container, observer.takeRecords(), update));
-  }
-  inputSignal = new Signal(firstInput);
-  (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
-  container.innerHTML = `<!T:${id}>${initialHTML}`;
-  observer.takeRecords();
+    observer.observe(container, {
+      attributes: true,
+      attributeOldValue: true,
+      characterData: true,
+      characterDataOldValue: true,
+      childList: true,
+      subtree: true
+    });
+    container.appendChild(instance);
 
-  init();
-  result.push(
-    `--- Hydrate ---\n${getStatusString(
-      container,
-      observer.takeRecords(),
-      firstInput
-    )}`
-  );
+    const initialHTML = container.innerHTML;
+    const result: string[] = [
+      getStatusString(container, observer.takeRecords(), firstInput)
+    ];
 
-  // Hydrate should end up with the same html as client side render.
-  expect(container.innerHTML).toBe(initialHTML);
-
-  // Run the same updates after hydrate and ensure the same mutations.
-  let resultIndex = 0;
-  for (const update of inputs.slice(1)) {
-    if (typeof update === "function") {
-      update(container);
-    } else {
-      const batch = beginBatch();
-      set(inputSignal, update);
-      endBatch(batch);
+    for (const update of inputs.slice(1)) {
+      if (typeof update === "function") {
+        update(container);
+      } else {
+        instance.rerender(update);
+      }
+      result.push(getStatusString(container, observer.takeRecords(), update));
     }
 
-    expect(getStatusString(container, observer.takeRecords(), update)).toEqual(
-      result[++resultIndex]
+    const inputSignal = new Signal(firstInput);
+    (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
+    container.innerHTML = `<!T:${id}>${initialHTML}`;
+    container.insertBefore(document.createTextNode(""), container.firstChild);
+    observer.takeRecords();
+    init();
+
+    result.push(
+      `--- Hydrate ---\n${getStatusString(
+        container,
+        observer.takeRecords(),
+        firstInput
+      )}`
     );
+
+    // Hydrate should end up with the same html as client side render.
+    expect(container.innerHTML).toBe(initialHTML);
+
+    // Run the same updates after hydrate and ensure the same mutations.
+    let resultIndex = 0;
+    for (const update of inputs.slice(1)) {
+      if (typeof update === "function") {
+        update(container);
+      } else {
+        const batch = beginBatch();
+        set(inputSignal, update);
+        endBatch(batch);
+      }
+
+      expect(
+        getStatusString(container, observer.takeRecords(), update)
+      ).toEqual(result[++resultIndex]);
+    }
+
+    return result.join("\n\n\n");
+  } finally {
+    observer.disconnect();
+    document.body.removeChild(container);
   }
-
-  observer.disconnect();
-  document.body.removeChild(container);
-
-  return result.join("\n\n\n");
 }
 
 function getStatusString(container: HTMLDivElement, changes, update) {

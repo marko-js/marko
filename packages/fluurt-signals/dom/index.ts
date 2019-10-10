@@ -26,7 +26,7 @@ export {
   prop,
   dynamicProp,
   dynamicProps,
-  render
+  createRenderer
 } from "./dom";
 
 export { on, dynamicOn, once } from "./event";

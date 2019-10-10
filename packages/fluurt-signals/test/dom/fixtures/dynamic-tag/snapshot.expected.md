@@ -7,7 +7,7 @@
 
 # Mutations
 ```
-inserted #text0, span1, #text2
+inserted #text0, #text1, span2, #text3, #text4
 ```
 
 
@@ -18,8 +18,8 @@ Hello
 
 # Mutations
 ```
-removed span after #text0
-inserted #text1
+removed span after #text1
+inserted #text2
 ```
 
 
@@ -32,8 +32,8 @@ inserted #text1
 
 # Mutations
 ```
-removed #text after #text0
-inserted span1
+removed #text after #text1
+inserted span2
 ```
 
 
@@ -46,8 +46,8 @@ inserted span1
 
 # Mutations
 ```
-removed span after #text0
-inserted a1
+removed span after #text1
+inserted a2
 ```
 
 
@@ -60,8 +60,8 @@ inserted a1
 
 # Mutations
 ```
-removed a after #text0
-inserted div1
+removed a after #text1
+inserted div2
 ```
 
 
@@ -75,8 +75,8 @@ inserted div1
 
 # Mutations
 ```
-inserted #text0
-span1: attr(a) "1" => "1"
-inserted #text2
-removed #comment before #text0
+inserted #text1
+span2: attr(a) "1" => "1"
+inserted #text3
+removed #comment after #text0
 ```

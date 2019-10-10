@@ -5,7 +5,7 @@ Static Dynamic 1
 
 # Mutations
 ```
-inserted #text0, #text1
+inserted #text0, #text1, #text2, #text3
 ```
 
 
@@ -16,7 +16,7 @@ Static Dynamic 2
 
 # Mutations
 ```
-#text1: "Dynamic 1" => "Dynamic 2"
+#text2: "Dynamic 1" => "Dynamic 2"
 ```
 
 
@@ -27,7 +27,7 @@ Static Dynamic 3
 
 # Mutations
 ```
-#text1: "Dynamic 2" => "Dynamic 3"
+#text2: "Dynamic 2" => "Dynamic 3"
 ```
 
 
@@ -39,7 +39,7 @@ Static Dynamic 1
 
 # Mutations
 ```
-inserted #text1
-#text0: "Static Dynamic 1" => "Static "
-removed #comment before #text0
+inserted #text2
+#text1: "Static Dynamic 1" => "Static "
+removed #comment after #text0
 ```
