@@ -7,9 +7,19 @@ import {
 } from "./fragments";
 import { conditional } from "./control-flow";
 
+type NAMESPACES =
+  | typeof TAG_NAMESPACES[keyof typeof TAG_NAMESPACES]
+  | typeof DEFAULT_NS;
+const DEFAULT_NS = "http://www.w3.org/1999/xhtml";
+export const TAG_NAMESPACES = {
+  svg: "http://www.w3.org/2000/svg",
+  math: "http://www.w3.org/1998/Math/MathML"
+} as const;
+
 export class HydrateError extends Error {}
 export let currentFragment: Fragment | undefined;
 export let currentNode: ContainerNode | null = null;
+export let currentNS: NAMESPACES = DEFAULT_NS;
 
 const doc = document;
 const detachedContainer = doc.createDocumentFragment();
@@ -25,6 +35,14 @@ export function render(
   return container;
 }
 
+export function beginNS(ns: NAMESPACES) {
+  currentNS = ns;
+}
+
+export function endNS() {
+  currentNS = DEFAULT_NS;
+}
+
 export function el(name: string) {
   const elNode = beginEl(name);
   endEl();
@@ -36,7 +54,7 @@ export let beginEl:
   | typeof hydrateBeginEl = originalBeginEl;
 function originalBeginEl(name: string) {
   const parentNode = currentNode!;
-  currentNode = doc.createElement(name);
+  currentNode = doc.createElementNS(currentNS, name);
   currentNode.___eventualParentNode = parentNode;
   return currentNode;
 }
@@ -198,13 +216,18 @@ export function dynamicTag(
       let nextRender = renderFns.get(nextTag);
       if (!nextRender) {
         if (typeof nextTag === "string") {
+          const ns: NAMESPACES = TAG_NAMESPACES[nextTag] || DEFAULT_NS;
           nextRender = () => {
+            beginNS(ns);
             beginEl(nextTag);
             dynamicAttrs(input);
+
             if (renderBody) {
               renderBody();
             }
+
             endEl();
+            endNS();
           };
         } else if (nextTag) {
           if (nextTag.input) {
