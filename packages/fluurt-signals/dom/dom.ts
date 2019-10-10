@@ -35,7 +35,12 @@ export function render(
   return container;
 }
 
-export function beginNS(ns: NAMESPACES) {
+export function beginElNS(tag: string) {
+  currentNS = TAG_NAMESPACES[tag] || currentNS;
+  return beginEl(tag);
+}
+
+export function setNS(ns: NAMESPACES) {
   currentNS = ns;
 }
 
@@ -216,10 +221,8 @@ export function dynamicTag(
       let nextRender = renderFns.get(nextTag);
       if (!nextRender) {
         if (typeof nextTag === "string") {
-          const ns: NAMESPACES = TAG_NAMESPACES[nextTag] || DEFAULT_NS;
           nextRender = () => {
-            beginNS(ns);
-            beginEl(nextTag);
+            beginElNS(nextTag);
             dynamicAttrs(input);
 
             if (renderBody) {

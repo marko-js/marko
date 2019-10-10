@@ -14,10 +14,10 @@ export {
 export {
   el,
   TAG_NAMESPACES,
-  beginNS,
-  endNS,
   beginEl,
   endEl,
+  beginElNS,
+  endNS,
   dynamicTag,
   text,
   dynamicText,

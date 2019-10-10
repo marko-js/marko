@@ -1,7 +1,7 @@
 import { Signal, compute, get, set, MaybeSignal, Raw } from "./signals";
 import { Fragment, clearFragment } from "./fragments";
 import { reconcile } from "./reconcile";
-import { beginFragment, endFragment, currentNS, beginNS, endNS } from "./dom";
+import { beginFragment, endFragment, currentNS, setNS, endNS } from "./dom";
 
 type ForIterationFragment<T> = Fragment & {
   itemSignal: Signal<T>;
@@ -38,7 +38,7 @@ export function loopOf<T>(
           const childFragment = beginFragment() as ForIterationFragment<T>;
           const itemSignal = (childFragment.itemSignal = new Signal(item));
           const indexSignal = (childFragment.indexSignal = new Signal(index));
-          beginNS(ns);
+          setNS(ns);
           render(itemSignal, indexSignal, array);
           endNS();
           endFragment(childFragment);
@@ -126,7 +126,7 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
         }
         rootFragment = beginFragment(rootFragment);
         if (nextRender) {
-          beginNS(ns);
+          setNS(ns);
           nextRender();
           endNS();
         }
