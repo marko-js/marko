@@ -13,7 +13,6 @@ export {
 
 export {
   el,
-  TAG_NAMESPACES,
   beginEl,
   endEl,
   beginElNS,
