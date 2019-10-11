@@ -172,10 +172,6 @@ function doLoad(templatePath, templateSrc, options) {
             }
 
             template = loadSource(templatePath, compiledSrc);
-
-            if (template.default) {
-                template = template.default;
-            }
         }
     }
 

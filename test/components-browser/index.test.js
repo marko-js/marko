@@ -67,7 +67,7 @@ function runHydrateTest(fixture) {
             ($g, c) => Object.assign($g, c.$global),
             {}
         );
-        (ssrTemplate.default || ssrTemplate)
+        ssrTemplate
             .render({ components: components, $global: $global })
             .then(function(html) {
                 var browser = createBrowserWithMarko(__dirname, String(html), {
