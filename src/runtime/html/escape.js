@@ -1,14 +1,14 @@
 var elTest = /[&<]/;
 var elTestReplace = /[&<]/g;
-var attrTest = /[&<"\n]/;
-var attrReplace = /[&<"\n]/g;
+var attrTest = /[&<"]/;
+var attrReplace = /[&<"]/g;
 
 var replacements = {
     "<": "&lt;",
     "&": "&amp;",
     '"': "&quot;",
-    "'": "&#39;",
-    "\n": "&#10;" //Preserve new lines so that they don't get normalized as space
+    "'": "&#39;"
+    // "\n": "&#10;" //Preserve new lines so that they don't get normalized as space
 };
 
 function replaceChar(match) {
