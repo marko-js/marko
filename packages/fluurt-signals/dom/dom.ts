@@ -166,9 +166,11 @@ function originalText(value: string) {
 
 function hydrateText(value: string) {
   const data = normalizeTextData(value);
+  const node = nextNodeToHydrate() as Text;
 
-  if (data === "") {
-    // Empty text nodes are not rendered from SSR, create them now.
+  // Insert a new TextNode if the node to hydrate is missing, isn't text or
+  // the data is empty, since we know empty text nodes won't be rendered from the server.
+  if (data === "" || !node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
     let parentNode: Element;
     let ref: Node | null;
 
@@ -181,17 +183,12 @@ function hydrateText(value: string) {
       ref = parentNode.firstChild;
     }
 
-    lastHydratedChild = doc.createTextNode("");
+    lastHydratedChild = doc.createTextNode(data);
     parentNode.insertBefore(lastHydratedChild, ref);
     return lastHydratedChild as Text;
   }
 
-  const node = (lastHydratedChild = nextNodeToHydrate() as Text);
   const existingData = node.data;
-
-  if (!node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
-    throw new HydrateError();
-  }
 
   if (existingData !== data) {
     if (existingData.indexOf(data) === 0) {
@@ -200,9 +197,11 @@ function hydrateText(value: string) {
       // Here we split the text node so that the dynamic text also gets it's own node.
       node.splitText(data.length);
     } else {
-      throw new HydrateError();
+      node.data = data;
     }
   }
+
+  lastHydratedChild = node;
 
   return node;
 }
