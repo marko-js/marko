@@ -21,6 +21,7 @@ export default async function renderAndGetMutations(
     default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
       input: string[];
     };
+    FAILS_HYDRATE?: boolean;
   }
 ): Promise<string> {
   const { inputs, default: renderer } = test;
@@ -62,38 +63,40 @@ export default async function renderAndGetMutations(
       result.push(getStatusString(container, observer.takeRecords(), update));
     }
 
-    const inputSignal = new Signal(firstInput);
-    (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
-    container.innerHTML = `<!T:${id}>${initialHTML}`;
-    container.insertBefore(document.createTextNode(""), container.firstChild);
-    observer.takeRecords();
-    init();
+    if (!test.FAILS_HYDRATE) {
+      const inputSignal = new Signal(firstInput);
+      (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
+      container.innerHTML = `<!T:${id}>${initialHTML}`;
+      container.insertBefore(document.createTextNode(""), container.firstChild);
+      observer.takeRecords();
+      init();
 
-    result.push(
-      `--- Hydrate ---\n${getStatusString(
-        container,
-        observer.takeRecords(),
-        firstInput
-      )}`
-    );
+      result.push(
+        `--- Hydrate ---\n${getStatusString(
+          container,
+          observer.takeRecords(),
+          firstInput
+        )}`
+      );
 
-    // Hydrate should end up with the same html as client side render.
-    expect(container.innerHTML).toBe(initialHTML);
+      // Hydrate should end up with the same html as client side render.
+      expect(container.innerHTML).toBe(initialHTML);
 
-    // Run the same updates after hydrate and ensure the same mutations.
-    let resultIndex = 0;
-    for (const update of inputs.slice(1)) {
-      if (typeof update === "function") {
-        update(container);
-      } else {
-        const batch = beginBatch();
-        set(inputSignal, update);
-        endBatch(batch);
+      // Run the same updates after hydrate and ensure the same mutations.
+      let resultIndex = 0;
+      for (const update of inputs.slice(1)) {
+        if (typeof update === "function") {
+          update(container);
+        } else {
+          const batch = beginBatch();
+          set(inputSignal, update);
+          endBatch(batch);
+        }
+
+        expect(
+          getStatusString(container, observer.takeRecords(), update)
+        ).toEqual(result[++resultIndex]);
       }
-
-      expect(
-        getStatusString(container, observer.takeRecords(), update)
-      ).toEqual(result[++resultIndex]);
     }
 
     return result.join("\n\n\n");

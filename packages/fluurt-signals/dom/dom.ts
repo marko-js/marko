@@ -13,7 +13,9 @@ import {
   Fragment,
   ContainerNode,
   DetachedElementWithParent,
-  removeFragment
+  removeFragment,
+  resolveElement,
+  clearFragment
 } from "./fragments";
 import { conditional } from "./control-flow";
 
@@ -219,6 +221,37 @@ export function dynamicText(value: MaybeSignal<unknown>) {
   });
 
   return textNode!;
+}
+
+export function html(value: string) {
+  const data = normalizeTextData(value);
+
+  if (data) {
+    const parentNode = resolveElement(currentNode!);
+    const parser: Element = (parentNode.nodeType ===
+    11 /** Node.DOCUMENT_FRAGMENT_NODE */
+      ? doc.body
+      : parentNode
+    ).cloneNode() as Element;
+    parser.innerHTML = value;
+
+    while (parser.firstChild) {
+      currentNode!.appendChild(parser.firstChild);
+    }
+  }
+}
+
+export function dynamicHTML(value: MaybeSignal<string>) {
+  let fragment: Fragment;
+  compute(() => {
+    if (fragment) {
+      clearFragment(fragment);
+    }
+
+    fragment = beginFragment(fragment);
+    html(get(value));
+    endFragment(fragment);
+  });
 }
 
 export function attr(name: string, value: unknown) {

@@ -20,6 +20,8 @@ export {
   dynamicTag,
   text,
   dynamicText,
+  html,
+  dynamicHTML,
   attr,
   dynamicAttr,
   dynamicAttrs,

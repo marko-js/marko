@@ -69,3 +69,9 @@ export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
 export function removeFragment(fragment: Fragment) {
   clearFragment(fragment, true);
 }
+
+export function resolveElement(node: ContainerNode) {
+  return ((node as Fragment).___before
+    ? (node as Fragment).___before.parentNode
+    : node) as Element;
+}

@@ -51,8 +51,7 @@
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "size": "npm run build && minified-size --json ./build/dom.esm.js",
-    "test": "jest -o",
-    "test:inspect": "node --inspect-brk ./node_modules/.bin/jest --runInBand -o --testTimeout=86400000",
-    "test:watch": "jest -o --watch"
+    "test": "jest --watch",
+    "test:inspect": "node --inspect $(which jest) --watch --runInBand --testTimeout=86400000"
   }
 }
