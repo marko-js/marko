@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import snapshot from "../utils/snapshot";
-import renderAndGetMutations from "./utils/render-and-get-mutations";
+import renderAndTrackMutations from "./utils/render-and-track-mutations";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 
@@ -15,7 +15,7 @@ describe("DOM", () => {
         snapshot(
           testDir,
           "snapshot.md",
-          await renderAndGetMutations(entry, require(testFile))
+          await renderAndTrackMutations(entry, require(testFile))
         );
       });
     });
