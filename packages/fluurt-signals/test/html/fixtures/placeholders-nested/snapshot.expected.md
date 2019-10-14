@@ -1,5 +1,5 @@
 # write
-  a<style id="^M1"></style>i...<style id="/M1"></style>j
+  a<!^M1>i...<!/M1>j
 _flush_
 
 # write
@@ -7,7 +7,7 @@ _flush_
 _flush_
 
 # write
-  <t id="M1">bcd<style id="^M0"></style>h...<style id="/M0"></style></t><script>(M$r=REORDER_RUNTIME)("M1")</script>
+  <t id="M1">bcd<!^M0>h...<!/M0></t><script>(M$r=REORDER_RUNTIME)("M1")</script>
 _flush_
 
 # write
@@ -17,18 +17,9 @@ _flush_
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       abcdefgjkl
-      <script>
-        (M$r=REORDER_RUNTIME)("M1")
-      </script>
-      <script>
-        M$r("M0")
-      </script>
     </body>
   </html>
-  

@@ -1,7 +1,6 @@
 # Render {}
 ```html
-<button>
-</button>
+<button />
 <span>
   hi
 </span>
@@ -17,8 +16,7 @@ inserted #text0, button1, #text2, span3, #text4, #text5
 container.querySelector("button").click();
 
 ```html
-<button>
-</button>
+<button />
 ```
 
 # Mutations
@@ -30,8 +28,7 @@ removed span after #text2
 --- Hydrate ---
 # Render {}
 ```html
-<button>
-</button>
+<button />
 <span>
   hi
 </span>

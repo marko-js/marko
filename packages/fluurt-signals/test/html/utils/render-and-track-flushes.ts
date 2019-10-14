@@ -1,9 +1,10 @@
 import { JSDOM } from "jsdom";
 import { Writable } from "stream";
-import diffableHTML from "diffable-html";
+import format from "pretty-format";
 import { createRenderer } from "../../../html/index";
 import reorderRuntime from "../../../html/reorder-runtime";
 
+const { DOMElement, DOMCollection } = format.plugins;
 const reorderRuntimeString = String(reorderRuntime);
 
 export default async function renderAndTrackFlushes(test: {
@@ -37,14 +38,13 @@ export default async function renderAndTrackFlushes(test: {
   } as Writable & { flush(): void });
 
   const browser = new JSDOM(html, { runScripts: "dangerously" });
+  const root = browser.window.document.documentElement;
+  root.normalize();
   output.push(
     `# final HTML\n${indent(
-      diffableHTML(
-        browser.window.document.documentElement.outerHTML.replace(
-          reorderRuntimeString,
-          "REORDER_RUNTIME"
-        )
-      )
+      format(root, {
+        plugins: [DOMElement, DOMCollection]
+      })
     )}`
   );
 

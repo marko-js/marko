@@ -1,9 +1,9 @@
 # write
-  a<style id="^M0"></style>b
+  a<!^M0>b
 _flush_
 
 # write
-  d<style id="/M0"></style>efg
+  d<!/M0>efg
 _flush_
 
 # write
@@ -13,15 +13,9 @@ _flush_
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       aERROR!efg
-      <script>
-        (M$r=REORDER_RUNTIME)("M0")
-      </script>
     </body>
   </html>
-  

@@ -1,26 +1,21 @@
 # write
-  a<style id="^M0"></style>b
+  a<!^M0>b
 _flush_
 
 # write
-  cd<style id="/M0"></style>fgh
+  cd<!/M0>fgh
 _flush_
 
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       a
-      <style id="^M0">
-      </style>
+      <!--^M0-->
       bcd
-      <style id="/M0">
-      </style>
+      <!--/M0-->
       fgh
     </body>
   </html>
-  

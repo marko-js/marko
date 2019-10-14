@@ -4,10 +4,8 @@
   <span>
     Hello
   </span>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 
@@ -20,10 +18,8 @@ inserted #text0, div1, #text2
 # Render {"value":false}
 ```html
 <div>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 
@@ -39,10 +35,8 @@ removed span after div1/#text0
   <span>
     World
   </span>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 
@@ -58,10 +52,8 @@ inserted div1/span1
   <span>
     !
   </span>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 
@@ -78,10 +70,8 @@ div1/span1/#text0: "World" => "!"
   <span>
     Hello
   </span>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 

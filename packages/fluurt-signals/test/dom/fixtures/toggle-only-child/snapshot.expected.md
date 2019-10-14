@@ -15,8 +15,7 @@ inserted #text0, div1, #text2
 
 # Render {"value":false}
 ```html
-<div>
-</div>
+<div />
 ```
 
 # Mutations

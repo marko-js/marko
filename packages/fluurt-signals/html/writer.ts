@@ -250,11 +250,11 @@ function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
 }
 
 function markReplaceStart(id: number) {
-  return (buffer += `<style id="^${marker(id)}"></style>`);
+  return (buffer += `<!^${marker(id)}>`);
 }
 
 function markReplaceEnd(id: number) {
-  return (buffer += `<style id="/${marker(id)}"></style>`);
+  return (buffer += `<!/${marker(id)}>`);
 }
 
 function marker(id: number) {

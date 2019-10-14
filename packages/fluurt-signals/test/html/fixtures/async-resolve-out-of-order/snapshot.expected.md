@@ -9,12 +9,9 @@ _flush_
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       abcde
     </body>
   </html>
-  

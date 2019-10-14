@@ -13,8 +13,7 @@ inserted #text0, div1, #text2
 
 # Render {"from":0,"to":-1,"step":1}
 ```html
-<div>
-</div>
+<div />
 ```
 
 # Mutations

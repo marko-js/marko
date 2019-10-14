@@ -13,8 +13,7 @@ inserted #text0, div1, #text2
 
 # Render {"children":{}}
 ```html
-<div>
-</div>
+<div />
 ```
 
 # Mutations

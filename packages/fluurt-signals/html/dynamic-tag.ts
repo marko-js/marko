@@ -1,4 +1,3 @@
-import selfClosing from "self-closing-tags";
 import { Renderer } from "../common/types";
 import { write } from "./writer";
 import { attrs } from "./attrs";

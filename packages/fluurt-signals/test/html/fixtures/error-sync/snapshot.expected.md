@@ -8,12 +8,9 @@ _flush_
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       a
     </body>
   </html>
-  

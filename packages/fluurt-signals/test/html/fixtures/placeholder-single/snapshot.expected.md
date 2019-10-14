@@ -1,5 +1,5 @@
 # write
-  a<style id="^M0"></style>e...<style id="/M0"></style>f
+  a<!^M0>e...<!/M0>f
 _flush_
 
 # write
@@ -13,15 +13,9 @@ _flush_
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       abcdfgh
-      <script>
-        (M$r=REORDER_RUNTIME)("M0")
-      </script>
     </body>
   </html>
-  

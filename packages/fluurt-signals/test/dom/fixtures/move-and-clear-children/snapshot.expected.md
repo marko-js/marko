@@ -31,8 +31,7 @@ inserted div1/#text9
 
 # Render {"children":[]}
 ```html
-<div>
-</div>
+<div />
 ```
 
 # Mutations

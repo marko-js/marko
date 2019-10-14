@@ -36,8 +36,7 @@ inserted #text4
 <em>
   Testing
 </em>
-<div>
-</div>
+<div />
 ```
 
 # Mutations

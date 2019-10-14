@@ -1,4 +1,4 @@
-import diffableHTML from "diffable-html";
+import format from "pretty-format";
 import { getNodePath, getTypeName } from "./get-node-info";
 import {
   Signal,
@@ -10,6 +10,8 @@ import {
   init,
   createRenderer
 } from "../../../dom/index";
+
+const { DOMElement, DOMCollection } = format.plugins;
 
 export default async function renderAndGetMutations(
   id: string,
@@ -107,6 +109,9 @@ export default async function renderAndGetMutations(
 }
 
 function getStatusString(container: HTMLDivElement, changes, update) {
+  const clone = container.cloneNode(true);
+  clone.normalize();
+
   return `# Render ${
     typeof update === "function"
       ? `\n${update
@@ -114,9 +119,15 @@ function getStatusString(container: HTMLDivElement, changes, update) {
           .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
           .replace(/^    /gm, "")}\n`
       : JSON.stringify(update)
-  }\n\`\`\`html\n${diffableHTML(
-    container.innerHTML
-  ).trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${changes
+  }\n\`\`\`html\n${Array.from(clone.childNodes)
+    .map(child =>
+      format(child, {
+        plugins: [DOMElement, DOMCollection]
+      }).trim()
+    )
+    .filter(Boolean)
+    .join("\n")
+    .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${changes
     .map(formatMutationRecord)
     .join("\n")}\n\`\`\``;
 }

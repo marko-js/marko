@@ -1,22 +1,17 @@
 # write
-  a<style id="^M0"></style>b<style id="/M0"></style>c
+  a<!^M0>b<!/M0>c
 _flush_
 
 # end
 
 # final HTML
-  
   <html>
-    <head>
-    </head>
+    <head />
     <body>
       a
-      <style id="^M0">
-      </style>
+      <!--^M0-->
       b
-      <style id="/M0">
-      </style>
+      <!--/M0-->
       c
     </body>
   </html>
-  

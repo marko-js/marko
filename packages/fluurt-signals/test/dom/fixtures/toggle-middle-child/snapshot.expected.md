@@ -1,13 +1,11 @@
 # Render {"value":"Hello"}
 ```html
 <div>
-  <span>
-  </span>
+  <span />
   <span>
     Hello
   </span>
-  <span>
-  </span>
+  <span />
 </div>
 ```
 
@@ -20,10 +18,8 @@ inserted #text0, div1, #text2
 # Render {"value":false}
 ```html
 <div>
-  <span>
-  </span>
-  <span>
-  </span>
+  <span />
+  <span />
 </div>
 ```
 
@@ -36,13 +32,11 @@ removed span after div1/#text1
 # Render {"value":"World"}
 ```html
 <div>
-  <span>
-  </span>
+  <span />
   <span>
     World
   </span>
-  <span>
-  </span>
+  <span />
 </div>
 ```
 
@@ -55,13 +49,11 @@ inserted div1/span2
 # Render {"value":"!"}
 ```html
 <div>
-  <span>
-  </span>
+  <span />
   <span>
     !
   </span>
-  <span>
-  </span>
+  <span />
 </div>
 ```
 
@@ -75,13 +67,11 @@ div1/span2/#text0: "World" => "!"
 # Render {"value":"Hello"}
 ```html
 <div>
-  <span>
-  </span>
+  <span />
   <span>
     Hello
   </span>
-  <span>
-  </span>
+  <span />
 </div>
 ```
 

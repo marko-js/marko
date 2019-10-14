@@ -1,6 +1,8 @@
 # Render {"tag":"span"}
 ```html
-<span a="1">
+<span
+  a="1"
+>
   BODY
 </span>
 ```
@@ -25,7 +27,9 @@ inserted #text2
 
 # Render {"tag":"span"}
 ```html
-<span a="1">
+<span
+  a="1"
+>
   BODY
 </span>
 ```
@@ -39,7 +43,9 @@ inserted span2
 
 # Render {"tag":"a"}
 ```html
-<a a="1">
+<a
+  a="1"
+>
   BODY
 </a>
 ```
@@ -53,7 +59,9 @@ inserted a2
 
 # Render {}
 ```html
-<div a="1">
+<div
+  a="1"
+>
   BODY
 </div>
 ```
@@ -68,7 +76,9 @@ inserted div2
 --- Hydrate ---
 # Render {"tag":"span"}
 ```html
-<span a="1">
+<span
+  a="1"
+>
   BODY
 </span>
 ```
