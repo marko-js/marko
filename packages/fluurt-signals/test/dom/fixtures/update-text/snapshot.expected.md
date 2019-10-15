@@ -42,4 +42,5 @@ Static Dynamic 1
 inserted #text2
 #text1: "Static Dynamic 1" => "Static "
 removed #comment after #text0
+removed #comment after #text2
 ```

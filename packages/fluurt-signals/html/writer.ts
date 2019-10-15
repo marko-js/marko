@@ -2,11 +2,13 @@ import { Writable } from "stream";
 import { Renderer } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
-const reorderRuntimeString = String(reorderRuntime);
+const runtimeId = "M";
+const reorderRuntimeString = String(reorderRuntime).replace(
+  "RUNTIME_ID",
+  runtimeId
+);
 
 type MaybeFlushable = Writable & { flush?(): void };
-
-const runtimeId = "M";
 let buffer: string = "";
 let out: MaybeFlushable | null = null;
 let flush: typeof flushToStream | null = null;
@@ -243,20 +245,19 @@ function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
     runtimeFlushed.add(out!);
   }
-  const m = marker(id);
-  buffer += `<t id="${m}">`;
+  buffer += `<t id="${marker(id)}">`;
   render(data);
-  buffer += `</t><script>${runtimeCall}("${m}")</script>`;
+  buffer += `</t><script>${runtimeCall}(${id})</script>`;
 }
 
 function markReplaceStart(id: number) {
-  return (buffer += `<!^${marker(id)}>`);
+  return (buffer += `<!${marker(id)}>`);
 }
 
 function markReplaceEnd(id: number) {
-  return (buffer += `<!/${marker(id)}>`);
+  return (buffer += `<!${marker(id)}/>`);
 }
 
 function marker(id: number) {
-  return `${runtimeId}${id}`;
+  return `${runtimeId}$${id}`;
 }

@@ -67,4 +67,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 removed #comment after #text0
+removed #comment after button1
 ```

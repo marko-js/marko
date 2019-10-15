@@ -1,5 +1,5 @@
 # write
-  a<!^M0>b<!/M0>c
+  a<!M$0>b<!M$0/>c
 _flush_
 
 # end
@@ -9,9 +9,9 @@ _flush_
     <head />
     <body>
       a
-      <!--^M0-->
+      <!--M$0-->
       b
-      <!--/M0-->
+      <!--M$0/-->
       c
     </body>
   </html>

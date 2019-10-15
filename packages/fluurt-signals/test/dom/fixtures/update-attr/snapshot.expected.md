@@ -94,4 +94,5 @@ div1: attr(b) "1" => null
 div1: attr(a) "0" => "0"
 div1: attr(b) "1" => "1"
 removed #comment after #text0
+removed #comment after div1
 ```

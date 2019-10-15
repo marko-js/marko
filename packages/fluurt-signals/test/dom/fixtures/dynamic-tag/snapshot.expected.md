@@ -89,4 +89,5 @@ inserted #text1
 span2: attr(a) "1" => "1"
 inserted #text3
 removed #comment after #text0
+removed #comment after #text3
 ```

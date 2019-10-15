@@ -67,8 +67,8 @@ export default async function renderAndGetMutations(
 
     if (!test.FAILS_HYDRATE) {
       const inputSignal = new Signal(firstInput);
-      (window as any).$T = [dynamicKeys(inputSignal, renderer.input)];
-      container.innerHTML = `<!T:${id}>${initialHTML}`;
+      (window as any).M$i = [dynamicKeys(inputSignal, renderer.input)];
+      container.innerHTML = `<!M$${id}>${initialHTML}<!M$${id}/>`;
       container.insertBefore(document.createTextNode(""), container.firstChild);
       observer.takeRecords();
       init();

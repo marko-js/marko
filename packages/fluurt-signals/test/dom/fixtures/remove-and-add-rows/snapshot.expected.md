@@ -67,4 +67,5 @@ inserted div1/#text7
 inserted div1/#text9
 inserted div1/#text10
 removed #comment after #text0
+removed #comment after div1
 ```

@@ -6,3 +6,5 @@ export type Renderer = ((
 ) => void) & {
   input?: string[];
 };
+
+export type CommentWalker = TreeWalker & Record<string, Comment>;

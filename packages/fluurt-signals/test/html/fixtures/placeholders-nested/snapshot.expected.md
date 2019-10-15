@@ -1,5 +1,5 @@
 # write
-  a<!^M1>i...<!/M1>j
+  a<!M$1>i...<!M$1/>j
 _flush_
 
 # write
@@ -7,11 +7,11 @@ _flush_
 _flush_
 
 # write
-  <t id="M1">bcd<!^M0>h...<!/M0></t><script>(M$r=REORDER_RUNTIME)("M1")</script>
+  <t id="M$1">bcd<!M$0>h...<!M$0/></t><script>(M$r=REORDER_RUNTIME)(1)</script>
 _flush_
 
 # write
-  <t id="M0">efg</t><script>M$r("M0")</script>
+  <t id="M$0">efg</t><script>M$r(0)</script>
 _flush_
 
 # end

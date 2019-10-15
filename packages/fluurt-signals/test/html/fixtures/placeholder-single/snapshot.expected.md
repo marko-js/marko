@@ -1,5 +1,5 @@
 # write
-  a<!^M0>e...<!/M0>f
+  a<!M$0>e...<!M$0/>f
 _flush_
 
 # write
@@ -7,7 +7,7 @@ _flush_
 _flush_
 
 # write
-  <t id="M0">bcd</t><script>(M$r=REORDER_RUNTIME)("M0")</script>
+  <t id="M$0">bcd</t><script>(M$r=REORDER_RUNTIME)(0)</script>
 _flush_
 
 # end

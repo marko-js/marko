@@ -69,4 +69,5 @@ div1/span1/#text0: "World" => "!"
 inserted div1/#text0
 inserted div1/#text2
 removed #comment after #text0
+removed #comment after div1
 ```

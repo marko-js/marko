@@ -1,9 +1,9 @@
 # write
-  a<!^M0>b
+  a<!M$0>b
 _flush_
 
 # write
-  cd<!/M0>fgh
+  cd<!M$0/>fgh
 _flush_
 
 # end
@@ -13,9 +13,9 @@ _flush_
     <head />
     <body>
       a
-      <!--^M0-->
+      <!--M$0-->
       bcd
-      <!--/M0-->
+      <!--M$0/-->
       fgh
     </body>
   </html>

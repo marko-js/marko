@@ -1,5 +1,5 @@
 # write
-  a<!^M0>b<!/M0><t id="M0">ERROR!</t><script>(M$r=REORDER_RUNTIME)("M0")</script>d
+  a<!M$0>b<!M$0/><t id="M$0">ERROR!</t><script>(M$r=REORDER_RUNTIME)(0)</script>d
 _flush_
 
 # end

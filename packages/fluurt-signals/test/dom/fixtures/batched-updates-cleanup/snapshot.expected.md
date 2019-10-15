@@ -39,4 +39,5 @@ removed span after #text2
 inserted #text2
 inserted #text4
 removed #comment after #text0
+removed #comment after #text4
 ```

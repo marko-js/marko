@@ -5,7 +5,7 @@ import { createRenderer } from "../../../html/index";
 import reorderRuntime from "../../../html/reorder-runtime";
 
 const { DOMElement, DOMCollection } = format.plugins;
-const reorderRuntimeString = String(reorderRuntime);
+const reorderRuntimeString = String(reorderRuntime).replace("RUNTIME_ID", "M");
 
 export default async function renderAndTrackFlushes(test: {
   input: Record<string, unknown>;
