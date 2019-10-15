@@ -7,6 +7,7 @@ var compilerPath = nodePath.join(__dirname, "../compiler");
 var markoCompiler = require(compilerPath);
 var cwd = process.cwd();
 var fsOptions = { encoding: "utf8" };
+const banner = "// Compiled using marko";
 
 module.exports = function load(templatePath, templateSrc, options) {
     if (typeof templatePath === "string") {
@@ -21,8 +22,11 @@ module.exports = function load(templatePath, templateSrc, options) {
             let foundPrecompiled = false;
 
             try {
-                fs.accessSync(jsFilePath);
-                foundPrecompiled = true;
+                const buffer = Buffer.alloc(banner.length);
+                const fd = fs.openSync(jsFilePath);
+                fs.readSync(fd, buffer, 0, banner.length, 0);
+                fs.closeSync(fd);
+                foundPrecompiled = buffer.toString("utf-8") === banner;
             } catch (e) {
                 /* ignore error */
             }
