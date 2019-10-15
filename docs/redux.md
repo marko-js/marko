@@ -1,68 +1,61 @@
 # Redux + Marko
 
-See the [marko-redux](https://github.com/marko-js-samples/marko-redux) sample
-project for a fully-working example.
+See the [`marko-redux` sample project](https://github.com/marko-js-samples/marko-redux) for a fully-working example.
 
 ## Installation
 
+First, save the [`marko`](https://www.npmjs.com/package/marko) and [`redux`](https://www.npmjs.com/package/redux) packages to your project’s dependencies:
+
 ```bash
-npm install redux --save
-npm install marko --save
+npm i marko redux
 ```
 
 ## Usage
 
-The partial code snippet below shows how a Marko UI component can be connected
-to a Redux store using the `store.subscribe()` method and the Marko `forceUpdate()`
-method:
+The partial code below shows how a Marko UI component can connect to a Redux store, using Redux’s `store.subscribe()` method and Marko’s `forceUpdate()` method:
 
-**counter.marko**
+### `counter.marko`
 
-```javascript
+```marko
 import store from './store';
 
 class {
-    onMount () {
-        store.subscribe(() => {
-            // Force this UI component to rerender:
-            this.forceUpdate();
+  onMount () {
+    store.subscribe(() => {
+      // Force this UI component to rerender
+      this.forceUpdate();
 
-            // The UI component will be rerendered using the new
-            // state returned by `store.getState()`
-            //
-            // The following is another option to force an update:
-            // this.input = store.getState();
-        });
-    }
+      // The UI component will rerender with the new
+      // state returned by `store.getState()`
+      //
+      // You could also force an update like this:
+      // this.input = store.getState();
+    });
+  }
 }
 
-<div>
-    <counter(store.getState()) ... />
-</div>
+<counter(store.getState()) />
 ```
 
-**reducer.js**
+### `reducer.js`
 
 ```js
 module.exports = function(state, action) {
-  state = state || {
-    value: 0
-  };
+  state = state || { value: 0 };
 
-  // Additional reducer logic here...
+  // Additional reducer logic here…
 
   return state;
 };
 ```
 
-In `counter.marko`, the imported store module exports a Redux store created
-using the following code:
+### `store.js`
 
-**store.js**
+In `counter.marko`, the imported store module exports a Redux store created with the following code:
 
-```javascript
-var redux = require("redux");
-var counter = require("./reducer");
+```js
+const redux = require("redux");
+const counter = require("./reducer");
 
 module.exports = redux.createStore(counter);
 ```
