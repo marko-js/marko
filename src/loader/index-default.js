@@ -23,7 +23,7 @@ module.exports = function load(templatePath, templateSrc, options) {
 
             try {
                 const buffer = Buffer.alloc(banner.length);
-                const fd = fs.openSync(jsFilePath);
+                const fd = fs.openSync(jsFilePath, "r");
                 fs.readSync(fd, buffer, 0, banner.length, 0);
                 fs.closeSync(fd);
                 foundPrecompiled = buffer.toString("utf-8") === banner;
