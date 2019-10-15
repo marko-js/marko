@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.15
+
+- Improve support for conditional comments spanning multiple comments. [#1427](https://github.com/marko-js/marko/pull/1427)
+- Add a check for loading precompiled templates. [#1426](https://github.com/marko-js/marko/pull/1426)
+
 ### 4.18.14
 
 - Improve support for running multiple versions of Marko on the page. [#1418](https://github.com/marko-js/marko/pull/1418)
