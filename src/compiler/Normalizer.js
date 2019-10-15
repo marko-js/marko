@@ -1,7 +1,7 @@
 "use strict";
 var ok = require("assert").ok;
 
-var ieConditionalCommentRegExp = /^\[if [^]*?<!\[endif\]$/;
+var ieConditionalCommentRegExp = /^\[if |<!\[endif\]$/;
 var ROOT_TAGS = ["import", "static", "class"];
 
 function isIEConditionalComment(comment) {
