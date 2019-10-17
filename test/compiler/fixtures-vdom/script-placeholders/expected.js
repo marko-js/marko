@@ -7,13 +7,28 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
       return module.exports;
     }),
     marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c;
+    marko_defineComponent = components_helpers.c,
+    marko_helpers = require("marko/src/runtime/vdom/helpers"),
+    marko_createElement = marko_helpers.e,
+    marko_const = marko_helpers.const,
+    marko_const_nextId = marko_const("da453e"),
+    marko_node0 = marko_createElement("script", null, null, null, 0, 0, {
+        i: marko_const_nextId()
+      });
 
 function render(input, out, __component, component, state) {
   var data = input;
 
   out.e("script", null, null, null, 1)
     .t(("\n    var x = \"" + input.value) + "\";\n");
+
+  out.e("script", null, null, null, 1)
+    .t(("\n    var x = " + JSON.stringify(input.value)) + "\n");
+
+  out.e("script", null, null, null, 1)
+    .t(("" + input.a) + input.b);
+
+  out.n(marko_node0, component);
 }
 
 marko_template._ = marko_renderer(render, {
