@@ -31,6 +31,7 @@ var TEXT_NODE = 3;
 var COMMENT_NODE = 8;
 var COMPONENT_NODE = 2;
 var FRAGMENT_NODE = 12;
+var DOCTYPE_NODE = 10;
 
 // var FLAG_SIMPLE_ATTRS = 1;
 var FLAG_PRESERVE = 2;
@@ -162,6 +163,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             toNextSibling = curToNodeChild.___nextSibling;
             curToNodeType = curToNodeChild.___nodeType;
             curToNodeKey = curToNodeChild.___key;
+
+            // Skip <!doctype>
+            if (
+                curFromNodeChild &&
+                curFromNodeChild.nodeType === DOCTYPE_NODE
+            ) {
+                curFromNodeChild = nextSibling(curFromNodeChild);
+            }
 
             var ownerComponent =
                 curToNodeChild.___ownerComponent || parentComponent;
