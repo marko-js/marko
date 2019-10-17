@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.16
+
+- Fix top-level components throwing error on hydrate [#1428](https://github.com/marko-js/marko/pull/1428)
+- Ensure scripts only have one text node as a child [#1429](https://github.com/marko-js/marko/pull/1429)
+
 ### 4.18.15
 
 - Improve support for conditional comments spanning multiple comments. [#1427](https://github.com/marko-js/marko/pull/1427)
@@ -86,6 +91,8 @@
 
 - Added dynamic tags to act like body-only-if. If dynamic tags are null then the outer tag will not be rendered. However, the body will be rendered. Deprecated body-only-if [#1332](https://github.com/marko-js/marko/pull/1332)
 
+## 4.17.x
+
 ### 4.17.5
 
 - Fix issue where setting the `value` attribute of a textarea to `false` caused the string `"false"` to be used in the vdom. [#1348](https://github.com/marko-js/marko/issues/1348)
@@ -112,6 +119,8 @@
 ### 4.17.0
 
 - Element namespaces are now calculated at runtime, fixes some edge cases with the dynamic tag. [#1333](https://github.com/marko-js/marko/issues/1333)
+
+## 4.16.x
 
 ### 4.16.15
 
