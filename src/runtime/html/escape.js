@@ -8,7 +8,6 @@ var replacements = {
     "&": "&amp;",
     '"': "&quot;",
     "'": "&#39;"
-    // "\n": "&#10;" //Preserve new lines so that they don't get normalized as space
 };
 
 function replaceChar(match) {
