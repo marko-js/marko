@@ -41,7 +41,7 @@ class HtmlJsParser {
             },
 
             onCDATA(event) {
-                handlers.handleCharacters(event.value, "static-text");
+                handlers.handleCharacters(event.value, "cdata");
             },
 
             onOpenTagName(event) {
