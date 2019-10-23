@@ -668,10 +668,11 @@ Similar to `getEl`, but only returns the String ID of the nested DOM element ins
 
 ### `getComponent(key[, index])`
 
-Signature | Type | Description ------------ | ----------- | -----------
-`key` | `String` | The scoped identifier for the element
-`index` | `Number` | _optional_ — The index of the component, if `key` references a repeated component
-return value | `Component` | A reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (i.e. `key="items[]"`), then the component at the given index will be returned.
+| Signature    | Type     | Description                                                                       |
+| ------------ | -------- | --------------------------------------------------------------------------------- |
+| `key`        | `String` | The scoped identifier for the element                                             |
+| `index`      | `Number` | _optional_ — The index of the component, if `key` references a repeated component |
+| return value | `Component`  | A reference to a nested `Component` for the given key. If an `index` is provided and the target component is a repeated component (i.e. `key="items[]"`), then the component at the given index will be returned. |
 
 For example, given the following component,
 
