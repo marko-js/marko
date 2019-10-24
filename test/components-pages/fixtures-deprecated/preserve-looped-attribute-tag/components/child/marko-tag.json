@@ -1,8 +1,5 @@
 {
     "@items <item>[]": {
-        "@*": {
-            "type": "expression",
-            "target-property": null
-        }
+        "@*": "expression"
     }
 }
