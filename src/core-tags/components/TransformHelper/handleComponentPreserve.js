@@ -22,6 +22,7 @@ function addPreserve(transformHelper, bodyOnly, condition) {
 
     if (el.type === "HtmlElement") {
         preserveAttrs.key = transformHelper.getIdExpression();
+        preserveAttrs.preserveKey = preserveAttrs.key;
     } else {
         preserveAttrs.cid = transformHelper.getIdExpression();
     }

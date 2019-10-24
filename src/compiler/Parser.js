@@ -124,6 +124,10 @@ class Parser {
     handleCharacters(text, parseMode) {
         var builder = this.context.builder;
 
+        if (parseMode === "cdata") {
+            this.context.deprecate("CDATA is deprecated");
+        }
+
         var escape = parseMode !== "html";
         // NOTE: If parseMode is 'static-text' or 'parsed-text' then that means that special
         //       HTML characters may not have been escaped on the way in so we need to escape

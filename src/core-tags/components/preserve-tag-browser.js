@@ -12,7 +12,7 @@ module.exports = function render(input, out) {
         if (!("if" in input) || input["if"]) {
             var component = componentsContext.___componentDef.___component;
             var globalComponentsContext = componentsContext.___globalContext;
-            var key = input.key;
+            var key = input.preserveKey;
             var componentId;
 
             if (key) {

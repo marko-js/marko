@@ -1,6 +1,12 @@
 {
     "@items <item>[]": {
-        "@*": "expression"
+        "@*": {
+            "type": "expression",
+            "target-property": null
+        }
     },
-    "@*": "expression"
+    "@*": {
+        "type": "expression",
+        "target-property": null
+    }
 }

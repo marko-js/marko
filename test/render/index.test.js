@@ -101,6 +101,10 @@ async function runRenderTest(fixture) {
                 : marko.load(templatePath, loadOptions);
             let templateData = Object.assign({}, main.templateData || {});
 
+            if (template.default) {
+                template = template.default;
+            }
+
             let out = template.createOut();
             let asyncEventsVerifier = createAsyncVerifier(
                 main,
