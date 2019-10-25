@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.17
+
+- Fix issue with async out of order components initializing in the wrong order [#1436](https://github.com/marko-js/marko/pull/1436)
+- Improvements to the legacy compatibility layer [#1437](https://github.com/marko-js/marko/pull/1437)
+
 ### 4.18.16
 
 - Fix top-level components throwing error on hydrate [#1428](https://github.com/marko-js/marko/pull/1428)
