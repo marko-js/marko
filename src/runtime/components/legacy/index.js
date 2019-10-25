@@ -10,3 +10,6 @@ exports.makeRenderable = exports.renderable = require("../../renderable");
 exports.writeInitWidgetsCode = modernMarko.writeInitComponentsCode;
 exports.getRenderedWidgets = exports.getRenderedWidgetIds =
     modernMarko.getRenderedComponents;
+exports.getInitWidgetsCode = function(out) {
+    return modernMarko.___getInitComponentsCode(out, out);
+};
