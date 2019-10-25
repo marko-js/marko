@@ -159,32 +159,47 @@ function getRenderedComponents(out) {
 }
 
 function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
-    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
-    if (renderedComponents === undefined) {
+    var initCode = exports.___getInitComponentsCode(
+        fromOut,
+        targetOut,
+        shouldIncludeAll
+    );
+    if (initCode === "") {
         return;
     }
 
     var outGlobal = targetOut.global;
     var cspNonce = outGlobal.cspNonce;
+    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
+
+    targetOut.write("<script" + nonceAttr + ">" + initCode + "</script>");
+}
+
+exports.___getInitComponentsCode = function getInitComponentsCode(
+    fromOut,
+    targetOut,
+    shouldIncludeAll
+) {
+    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
+    if (renderedComponents === undefined) {
+        return "";
+    }
+
+    var outGlobal = targetOut.global;
     var runtimeId = outGlobal.runtimeId;
     var componentGlobalKey =
         "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
-    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
-    targetOut.write(
-        "<script" +
-            nonceAttr +
-            ">" +
-            componentGlobalKey +
-            "=(window." +
-            componentGlobalKey +
-            "||[]).concat(" +
-            safeJSON(warp10.stringify(renderedComponents)) +
-            ")||" +
-            componentGlobalKey +
-            "</script>"
+    return (
+        componentGlobalKey +
+        "=(window." +
+        componentGlobalKey +
+        "||[]).concat(" +
+        safeJSON(warp10.stringify(renderedComponents)) +
+        ")||" +
+        componentGlobalKey
     );
-}
+};
 
 exports.writeInitComponentsCode = writeInitComponentsCode;
 
