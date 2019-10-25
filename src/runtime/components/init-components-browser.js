@@ -301,39 +301,45 @@ function initServerRendered(renderedComponents, doc) {
 
     // hydrate components top down (leaf nodes last)
     // and return an array of functions to mount these components
-    var componentMountFns = componentDefs.map(function(componentDef) {
-        componentDef = ComponentDef.___deserialize(
-            componentDef,
-            typesArray,
-            serverRenderedGlobals,
-            registry
-        );
+    var deferredDefs;
+    componentDefs
+        .map(function(componentDef) {
+            componentDef = ComponentDef.___deserialize(
+                componentDef,
+                typesArray,
+                serverRenderedGlobals,
+                registry
+            );
 
-        var mount = hydrateComponentAndGetMount(componentDef, doc);
+            var mount = hydrateComponentAndGetMount(componentDef, doc);
 
-        if (!mount) {
-            // hydrateComponentAndGetMount will return false if there is not rootNode
-            // for the component.  If this is the case, we'll wait until the
-            // DOM has fully loaded to attempt to init the component again.
-            doc.addEventListener("DOMContentLoaded", function() {
-                mount = hydrateComponentAndGetMount(componentDef, doc);
-
-                if (!mount) {
-                    indexServerComponentBoundaries(doc, runtimeId);
-                    mount = hydrateComponentAndGetMount(componentDef, doc);
+            if (!mount) {
+                // hydrateComponentAndGetMount will return false if there is not rootNode
+                // for the component.  If this is the case, we'll wait until the
+                // DOM has fully loaded to attempt to init the component again.
+                if (deferredDefs) {
+                    deferredDefs.push(componentDef);
+                } else {
+                    deferredDefs = [componentDef];
+                    doc.addEventListener("DOMContentLoaded", function() {
+                        indexServerComponentBoundaries(doc, runtimeId);
+                        deferredDefs
+                            .map(function(componentDef) {
+                                return hydrateComponentAndGetMount(
+                                    componentDef,
+                                    doc
+                                );
+                            })
+                            .reverse()
+                            .forEach(tryInvoke);
+                    });
                 }
+            }
 
-                mount();
-            });
-        }
-
-        return mount;
-    });
-
-    // mount components bottom up (leaf nodes first)
-    componentMountFns.reverse().forEach(function(mount) {
-        if (mount) mount();
-    });
+            return mount;
+        })
+        .reverse()
+        .forEach(tryInvoke);
 }
 
 function hydrateComponentAndGetMount(componentDef, doc) {
@@ -374,6 +380,10 @@ function trackComponent(componentDef) {
     if (component) {
         componentLookup[component.id] = component;
     }
+}
+
+function tryInvoke(fn) {
+    if (fn) fn();
 }
 
 exports.___initClientRendered = initClientRendered;
