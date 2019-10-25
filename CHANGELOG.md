@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.18
+
+- Adds a missing method used by part of the legacy compatibility layer.
+
 ### 4.18.17
 
 - Fix issue with async out of order components initializing in the wrong order [#1436](https://github.com/marko-js/marko/pull/1436)
