@@ -1,12 +1,3 @@
-const TYPE_MAP = {
-  "1": "element",
-  "3": "text",
-  "4": "cdata",
-  "8": "comment",
-  "10": "doctype",
-  "11": "fragment"
-};
-
 export function getNodePath(node: Node) {
   const parts: string[] = [];
   let cur: Node | null = node;
@@ -26,19 +17,13 @@ export function getNodePath(node: Node) {
       name += `${index}`;
     }
 
-    parts.push(name);
+    parts.unshift(name);
     cur = parentNode;
   }
 
-  return parts.reverse().join("/");
+  return parts.join("/");
 }
 
 export function getTypeName(node: Node) {
-  const type = TYPE_MAP[node.nodeType];
-
-  if (type === "element") {
-    return `${(node as HTMLElement).tagName.toLowerCase()}`;
-  } else {
-    return `#${type}`;
-  }
+  return node.nodeName.toLowerCase();
 }
