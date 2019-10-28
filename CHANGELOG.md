@@ -4,6 +4,12 @@
 
 ## 4.18.x
 
+### 4.18.19
+
+- Deprecate `$global.widgetIdPrefix` (should using `$global.componentIdPrefix` instead). [#1439](https://github.com/marko-js/marko/pull/1439)
+- Improve support for rollup by removing usage of `require.resolve`. [#1440](https://github.com/marko-js/marko/pull/1440)
+- Update minimum version of htmljs-parser to bring in patch release for parsing css calc values.
+
 ### 4.18.18
 
 - Adds a missing method used by part of the legacy compatibility layer.
