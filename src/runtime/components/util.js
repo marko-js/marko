@@ -3,8 +3,19 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_HEAD_EL = 4;
 
 function nextComponentIdProvider(out) {
-    var prefix = out.global.componentIdPrefix || "s"; // "s" is for server (we use "b" for the browser)
+    var prefix =
+        out.global.componentIdPrefix || out.global.widgetIdPrefix || "s"; // "s" is for server (we use "b" for the browser)
     var nextId = 0;
+
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        if (out.global.widgetIdPrefix) {
+            require("complain")(
+                "$global.widgetIdPrefix is deprecated. use $global.componentIdPrefix instead.",
+                { location: false }
+            );
+        }
+    }
 
     return function nextComponentId() {
         return prefix + nextId++;
