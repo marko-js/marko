@@ -1,5 +1,6 @@
+var runtimeId = require("./util").___runtimeId;
 var counter = 0;
-var seed = require.resolve("./dom-data");
+var seed = "M" + runtimeId;
 var WeakMap =
     global.WeakMap ||
     function WeakMap() {
