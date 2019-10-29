@@ -27,8 +27,13 @@ module.exports = function render(input, out) {
             // (each `<await>` tag will have its own component initialization block)
             const asyncOut = out.beginAsync({ last: true, timeout: -1 });
             out.onLast(function(next) {
+                // Ensure we're getting init code starting from the root
+                let rootOut = out;
+                while (rootOut._parentOut) {
+                    rootOut = out._parentOut;
+                }
                 // Write out all of the component init code from the main out
-                writeInitComponentsCode(out, asyncOut, true);
+                writeInitComponentsCode(rootOut, asyncOut, true);
                 asyncOut.end();
                 next();
             });
