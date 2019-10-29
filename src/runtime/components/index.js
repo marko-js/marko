@@ -21,29 +21,11 @@ function addComponentsFromContext(
     typesLookup,
     typesArray
 ) {
-    var nestedContexts = componentsContext.___nestedContexts;
-    if (nestedContexts !== undefined) {
-        // We want to initialize any UI components nested inside an async
-        // fragment first so we will add components from nested contexts first
-        nestedContexts.forEach(function(nestedContext) {
-            addComponentsFromContext(
-                nestedContext,
-                componentsFinal,
-                typesLookup,
-                typesArray
-            );
-        });
-    }
-
     var components = componentsContext.___components;
     var len;
     if ((len = components.length) === 0) {
         return;
     }
-
-    // console.log('components:', components.map((componentDef) => {
-    //     return { id: componentDef.id, type: componentDef.type};
-    // }));
 
     for (var i = 0; i < len; i++) {
         var componentDef = components[i];
@@ -133,6 +115,19 @@ function addComponentsFromContext(
     }
 
     components.length = 0;
+
+    // Also add any components from nested contexts
+    var nestedContexts = componentsContext.___nestedContexts;
+    if (nestedContexts !== undefined) {
+        nestedContexts.forEach(function(nestedContext) {
+            addComponentsFromContext(
+                nestedContext,
+                componentsFinal,
+                typesLookup,
+                typesArray
+            );
+        });
+    }
 }
 
 function getRenderedComponents(out) {
