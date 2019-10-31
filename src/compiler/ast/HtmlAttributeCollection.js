@@ -26,7 +26,7 @@ class HtmlAttributeCollection {
                 for (var i = 0; i < this.all.length; i++) {
                     var curAttr = this.all[i];
                     if (curAttr.name === name) {
-                        this.all.splice(i, 1);
+                        this.all.splice(i, 1, newAttr);
                         this.lookup[name] = newAttr;
                         return;
                     }
