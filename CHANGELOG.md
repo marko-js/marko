@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.21
+
+- Fix issue where duplicated attributes were not being included properly in compiled templates. [#1442](https://github.com/marko-js/marko/pull/1442)
+
 ### 4.18.20
 
 - Fix initialization edge-case for top-level async components. [#1441](https://github.com/marko-js/marko/pull/1441)
