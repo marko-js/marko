@@ -3,7 +3,7 @@ const xmlAttrReg = /["\n]/g;
 const xmlReplacements = {
   "<": "&lt;",
   "&": "&amp;",
-  '"': "&quot;", // We only need double quotes since the runtime will only output double quotes.
+  '"': "&#34;", // We only need double quotes since the runtime will only output double quotes.
   "\n": "&#10;" // Preserve new lines so that they don't get normalized as space.
 } as const;
 
@@ -22,7 +22,7 @@ function replaceXMLChar(match: string) {
 
 function escapeTagEnding(tagName: string) {
   const closingTag = `</${tagName}`;
-  const replacement = `\\003c/${tagName}`;
+  const replacement = `<\\/${tagName}`;
   return escapeIfNeeded(val => val.replace(closingTag, replacement));
 }
 
