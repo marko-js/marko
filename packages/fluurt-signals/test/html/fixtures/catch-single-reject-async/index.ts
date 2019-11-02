@@ -6,7 +6,7 @@ const renderer = () => {
   tryCatch(
     () => {
       write("b");
-      fork(rejectAfter(new Error("ERROR!"), 20), write);
+      fork(rejectAfter(new Error("ERROR!"), 2), write);
       write("d");
     },
     err => {

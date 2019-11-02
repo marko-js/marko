@@ -1,6 +1,8 @@
+const TIMEOUT_MULTIPLIER = 16;
+
 export function resolveAfter<T>(value: T, timeout: number) {
   const p = new Promise(resolve =>
-    setTimeout(() => resolve(value), timeout)
+    setTimeout(() => resolve(value), timeout * TIMEOUT_MULTIPLIER)
   ) as Promise<T>;
 
   return Object.assign(p, { value });
@@ -8,7 +10,7 @@ export function resolveAfter<T>(value: T, timeout: number) {
 
 export function rejectAfter<T extends Error>(value: T, timeout: number) {
   const p = new Promise((_, reject) =>
-    setTimeout(() => reject(value), timeout)
+    setTimeout(() => reject(value), timeout * TIMEOUT_MULTIPLIER)
   ) as Promise<never>;
 
   return Object.assign(p, { value });

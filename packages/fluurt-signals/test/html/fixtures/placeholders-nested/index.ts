@@ -6,12 +6,12 @@ const renderer = () => {
   tryPlaceholder(
     () => {
       write("b");
-      fork(resolveAfter("c", 20), write);
+      fork(resolveAfter("c", 2), write);
       write("d");
       tryPlaceholder(
         () => {
           write("e");
-          fork(resolveAfter("f", 30), write);
+          fork(resolveAfter("f", 3), write);
           write("g");
         },
         () => {
