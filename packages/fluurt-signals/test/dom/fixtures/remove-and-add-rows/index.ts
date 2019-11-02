@@ -52,7 +52,7 @@ const renderer = register(
     loopOf(
       input.children,
       item => {
-        dynamicText(compute(() => get(item).text));
+        dynamicText(compute(_item => _item.text, [item]));
       },
       i => "" + i.id
     );

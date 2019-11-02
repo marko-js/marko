@@ -1,6 +1,7 @@
 import { CommentWalker } from "../common/types";
 import { getRenderer } from "../common/registry";
 import { beginHydrate, endHydrate } from "./dom";
+import { beginBatch, endBatch } from "./signals";
 
 const doc = document as Document & { $CW: CommentWalker };
 
@@ -67,7 +68,9 @@ export function init(runtimeId: string = "M") {
       beginHydrate(start);
 
       try {
+        const batch = beginBatch();
         renderer(input);
+        endBatch(batch);
       } finally {
         parentNode.removeChild(start);
         parentNode.removeChild(end);

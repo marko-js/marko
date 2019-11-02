@@ -3,7 +3,7 @@ import {
   endBatch,
   MaybeSignal,
   compute,
-  get,
+  effect,
   Signal,
   set
 } from "./signals";
@@ -43,28 +43,30 @@ export function dynamicOn<
   const el = currentNode as Element;
   const key = getKey(type);
   on(type, null);
-  compute(() => (el[key] = get(handler)));
+  effect(_handler => (el[key] = _handler), [handler]);
 }
 
 export function once<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: MaybeSignal<H | Unset>) {
-  const calledSignal = new Signal(false);
+  const called = new Signal(false);
   dynamicOn(
     type,
-    compute(() => {
-      const h = get(handler);
-      return (
-        !get(calledSignal) &&
-        ((ev: GlobalEventHandlersEventMap[T], target: Element) => {
-          if (h) {
-            h(ev, target);
-          }
-          set(calledSignal, true);
-        })
-      );
-    })
+    compute(
+      (_handler, _called) => {
+        return (
+          !_called &&
+          ((ev: GlobalEventHandlersEventMap[T], target: Element) => {
+            if (_handler) {
+              _handler(ev, target);
+            }
+            set(called, true);
+          })
+        );
+      },
+      [handler, called] as const
+    )
   );
 }
 

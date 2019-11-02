@@ -35,34 +35,53 @@ export class Fragment {
 }
 
 export function insertFragmentBefore(
+  parent: Fragment | null,
+  fragment: Fragment,
+  nextSibling: Fragment
+): void;
+export function insertFragmentBefore(
   parent: Fragment,
   fragment: Fragment,
   nextSibling: Fragment | null
+): void;
+export function insertFragmentBefore(
+  parent: Fragment | null,
+  fragment: Fragment,
+  nextSibling: Fragment | null
 ) {
-  const domParent = parent.___before.parentNode!;
-  const reference = nextSibling ? nextSibling.___before : parent.___after!;
-  const stop = fragment.___after!.nextSibling;
-  let current: Node | null = fragment.___before;
-  while (current && current !== stop) {
-    const next = current.nextSibling;
-    domParent.insertBefore(current, reference);
-    current = next;
-  }
+  const domParent = (parent || nextSibling)!.___before.parentNode!;
+  withChildren(
+    domParent,
+    fragment.___before,
+    fragment.___after!.nextSibling,
+    nextSibling ? nextSibling.___before : parent!.___after!,
+    domParent.insertBefore
+  );
+}
+
+export function replaceFragment(current: Fragment, replacement: Fragment) {
+  const domParent = current.___before.parentNode!;
+  clearFragment(current);
+  withChildren(
+    domParent,
+    replacement.___before.nextSibling,
+    replacement.___after!,
+    current.___after!,
+    domParent.insertBefore
+  );
+  replacement.___before = current.___before;
+  replacement.___after = current.___after;
 }
 
 export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
   const domParent = fragment.___before.parentNode!;
-  const stop = removeMarkers
-    ? fragment.___after!.nextSibling
-    : fragment.___after!;
-  let current: Node | null = removeMarkers
-    ? fragment.___before
-    : fragment.___before.nextSibling;
-  while (current && current !== stop) {
-    const next = current.nextSibling;
-    domParent.removeChild(current);
-    current = next;
-  }
+  withChildren(
+    domParent,
+    removeMarkers ? fragment.___before : fragment.___before.nextSibling,
+    removeMarkers ? fragment.___after!.nextSibling : fragment.___after!,
+    null,
+    domParent.removeChild
+  );
   fragment.___cleanup();
 }
 
@@ -74,4 +93,18 @@ export function resolveElement(node: ContainerNode) {
   return ((node as Fragment).___before
     ? (node as Fragment).___before.parentNode
     : node) as Element;
+}
+
+function withChildren(
+  parent: ParentNode,
+  start: Node | null,
+  stop: Node | null,
+  reference: Node | null,
+  method: (a: Node, b: Node | null) => void
+) {
+  while (start && start !== stop) {
+    const next = start.nextSibling;
+    method.call(parent, start, reference);
+    start = next;
+  }
 }

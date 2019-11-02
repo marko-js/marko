@@ -28,7 +28,7 @@ const renderer = register(
     };
     el("span");
     el("span");
-    conditional(compute(() => (get(input.value) ? branch0 : undefined)));
+    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
     endEl();
   }
 );

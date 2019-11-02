@@ -24,7 +24,7 @@ const renderer = register(
       set(a, 1);
       set(b, 1);
     });
-    dynamicText(compute(() => get(a) + get(b)));
+    dynamicText(compute((_a, _b) => _a + _b, [a, b]));
     endEl();
   }
 );

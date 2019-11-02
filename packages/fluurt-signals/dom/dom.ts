@@ -3,6 +3,7 @@ import {
   MaybeSignal,
   Raw,
   compute,
+  effect,
   get,
   dynamicKeys,
   Signal,
@@ -45,10 +46,13 @@ export function createRenderer<T extends Renderer>(renderer: T) {
       rerender: (input: Input) => void;
       destroy: () => void;
     };
+
+    const init = beginBatch();
     const fragment = beginFragment();
     renderer(inputSignal);
     endFragment(fragment);
     currentNode = null;
+    endBatch(init);
 
     container.rerender = ((newInput: Input) => {
       const batch = beginBatch();
@@ -140,9 +144,11 @@ function originalBeginFragment(fragment?: Fragment): Fragment {
   return currentFragment;
 }
 
-function hydrateBeginFragment() {
-  const fragment = new Fragment();
-  fragment.___before = text("");
+function hydrateBeginFragment(fragment?: Fragment) {
+  if (!fragment) {
+    fragment = new Fragment();
+    fragment.___before = text("");
+  }
   originalBeginFragment(fragment);
   return fragment;
 }
@@ -209,18 +215,18 @@ function hydrateText(value: string) {
 }
 
 export function dynamicText(value: MaybeSignal<unknown>) {
-  let textNode: Text;
-  const data = compute(() => normalizeTextData(get(value)));
-
-  compute(() => {
-    if (textNode) {
-      textNode.data = get(data);
-    } else {
-      textNode = text(get(data));
-    }
-  });
-
-  return textNode!;
+  let current: string;
+  const data = compute(_value => normalizeTextData(_value), [value]);
+  const textNode = text((current = get(data) || ""));
+  effect(
+    (_textNode, _data) => {
+      if (current !== _data) {
+        _textNode.data = _data;
+      }
+    },
+    [textNode, data] as const
+  );
+  return textNode;
 }
 
 export function html(value: string) {
@@ -242,16 +248,17 @@ export function html(value: string) {
 }
 
 export function dynamicHTML(value: MaybeSignal<string>) {
-  let fragment: Fragment;
-  compute(() => {
-    if (fragment) {
-      clearFragment(fragment);
-    }
-
-    fragment = beginFragment(fragment);
-    html(get(value));
-    endFragment(fragment);
-  });
+  const fragment: Fragment = beginFragment();
+  endFragment(fragment);
+  effect(
+    (_fragment, _value) => {
+      clearFragment(_fragment);
+      beginFragment(_fragment);
+      html(_value);
+      endFragment(_fragment);
+    },
+    [fragment, value] as const
+  );
 }
 
 export function attr(name: string, value: unknown) {
@@ -260,8 +267,8 @@ export function attr(name: string, value: unknown) {
 
 export function dynamicAttr(name: string, value: unknown) {
   const elNode = currentNode as Element;
-  const data = compute(() => normalizeAttrValue(get(value)));
-  compute(() => setAttr(elNode, name, get(data)));
+  const data = compute(_value => normalizeAttrValue(_value), [value]);
+  effect(setAttr, [elNode, name, data]);
 }
 
 export function dynamicTag(
@@ -272,58 +279,61 @@ export function dynamicTag(
   const renderFns = new Map();
 
   return conditional(
-    compute(() => {
-      const nextTag = get(tag);
-      let nextRender = renderFns.get(nextTag);
-      if (!nextRender) {
-        if (typeof nextTag === "string") {
-          nextRender = () => {
-            beginElNS(nextTag);
-            dynamicAttrs(input);
+    compute(
+      _tag => {
+        let nextRender = renderFns.get(_tag);
+        if (!nextRender) {
+          if (typeof _tag === "string") {
+            nextRender = () => {
+              beginElNS(_tag);
+              dynamicAttrs(input);
 
-            if (renderBody) {
-              renderBody();
+              if (renderBody) {
+                renderBody();
+              }
+
+              endEl();
+              endNS();
+            };
+          } else if (_tag) {
+            if (_tag.input) {
+              const tagInput = renderBody
+                ? compute(_input => ({ ..._input, renderBody }), [input])
+                : input;
+              nextRender = () => _tag(dynamicKeys(tagInput, _tag.input!));
+            } else {
+              nextRender = _tag;
             }
-
-            endEl();
-            endNS();
-          };
-        } else if (nextTag) {
-          if (nextTag.input) {
-            const tagInput = renderBody
-              ? compute(() => ({ ...get(input), renderBody }))
-              : input;
-            nextRender = () => nextTag(dynamicKeys(tagInput, nextTag.input!));
           } else {
-            nextRender = nextTag;
+            nextRender = renderBody;
           }
-        } else {
-          nextRender = renderBody;
+          renderFns.set(_tag, nextRender);
         }
-        renderFns.set(nextTag, nextRender);
-      }
-      return nextRender;
-    })
+        return nextRender;
+      },
+      [tag] as const
+    )
   );
 }
 
 export function dynamicAttrs(
   attrs: MaybeSignal<Record<string, unknown> | null | undefined>
 ) {
-  const elNode = currentNode as Element;
   let previousAttrs: Raw<typeof attrs>;
-  compute(() => {
-    const nextAttrs = get(attrs);
-    for (const name in previousAttrs) {
-      if (!(nextAttrs && name in nextAttrs)) {
-        elNode.removeAttribute(name);
+  effect(
+    (_elNode, _attrs) => {
+      for (const name in previousAttrs) {
+        if (!(_attrs && name in _attrs)) {
+          _elNode.removeAttribute(name);
+        }
       }
-    }
-    for (const name in nextAttrs) {
-      setAttr(elNode, name, normalizeAttrValue(get(nextAttrs[name])));
-    }
-    previousAttrs = nextAttrs;
-  });
+      for (const name in _attrs) {
+        setAttr(_elNode, name, normalizeAttrValue(_attrs[name]));
+      }
+      previousAttrs = _attrs;
+    },
+    [currentNode as Element, attrs] as const
+  );
 }
 
 export function prop(name: string, value: unknown) {
@@ -331,25 +341,29 @@ export function prop(name: string, value: unknown) {
 }
 
 export function dynamicProp(name: string, value: unknown) {
-  const elNode = currentNode;
-  compute(() => (elNode![name] = get(value)));
+  effect((_elNode, _value) => (_elNode[name] = _value), [
+    currentNode as Element,
+    value
+  ] as const);
 }
 
 export function dynamicProps(props: MaybeSignal<object>) {
-  const elNode = currentNode;
   let previousProps: object;
-  compute(() => {
-    const nextProps = get(props);
-    for (const name in previousProps) {
-      if (!(nextProps && name in nextProps)) {
-        elNode![name] = undefined;
+  effect(
+    (_elNode, _props) => {
+      const nextProps = _props;
+      for (const name in previousProps) {
+        if (!(nextProps && name in nextProps)) {
+          _elNode[name] = undefined;
+        }
       }
-    }
-    for (const name in nextProps) {
-      elNode![name] = nextProps[name];
-    }
-    previousProps = nextProps;
-  });
+      for (const name in nextProps) {
+        _elNode[name] = nextProps[name];
+      }
+      previousProps = nextProps;
+    },
+    [currentNode as Element, props] as const
+  );
 }
 
 export function beginHydrate(boundary: Node) {

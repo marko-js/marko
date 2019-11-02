@@ -1,105 +1,129 @@
 import { currentFragment } from "./dom";
 
-let depTracker: Set<Signal> | undefined;
 let sid = 0;
 let batchedComputations: ComputedSignal[] | undefined;
-let batchIndex: number;
+let batchedEffects: Effect[] | undefined;
+let computationIndex = 0;
+let effectIndex = 0;
 
 const noop = () => {};
 
 export type MaybeSignal<T = unknown> = Signal<T> | T;
 export type Raw<T> = T extends Signal<infer V> ? V : T;
+export type RawMap<T> = { [I in keyof T]: Raw<T[I]> };
 
 export class Signal<T = unknown> {
   public ___sid: number = sid++;
   public ___value: T;
-  private ___computations: Record<number, ComputedSignal> = {};
+  private ___dependents: Record<string, ComputedSignal> = {};
   constructor(current: T) {
     this.___value = current;
   }
   public ___set(nextValue: T) {
-    if (nextValue !== this.___value || nextValue instanceof Object) {
+    if (
+      nextValue !== this.___value ||
+      (nextValue instanceof Object && !(nextValue instanceof Function))
+    ) {
       this.___value = nextValue;
-      const computations = this.___computations;
-      const keys = Object.keys(computations);
+      const dependents = this.___dependents;
+      const keys = Object.keys(dependents);
 
       for (const key of keys) {
-        const computation = computations[key];
-        const expectedBatchIndex = findIndexBySID(
-          batchedComputations!,
-          computation
-        );
-
-        if (batchedComputations![expectedBatchIndex] !== computation) {
-          batchedComputations!.splice(expectedBatchIndex, 0, computation);
-        }
+        const dependent = dependents[key];
+        const isEffect = dependent instanceof Effect;
+        const batchTarget = isEffect ? batchedEffects : batchedComputations;
+        const batchIndex = isEffect ? effectIndex : computationIndex;
+        insertIntoBatch(batchTarget!, batchIndex, dependent);
       }
     }
   }
   public ___subscribe(computation: ComputedSignal) {
-    this.___computations[computation.___sid] = computation;
+    this.___dependents[computation.___sid] = computation;
   }
   public ___unsubscribe(computation: ComputedSignal) {
-    delete this.___computations[computation.___sid]; // todo: bench using undefined
+    delete this.___dependents[computation.___sid]; // todo: bench using undefined
   }
 }
 
 export class ComputedSignal<T = unknown> extends Signal<T> {
-  private ___fn: () => T;
-  private ___prevDeps: Set<Signal>;
-  constructor(fn: () => T, intialValue: T, initialDeps: Set<Signal>) {
+  private ___fn: (...args: ReadonlyArray<unknown>) => T;
+  private ___deps: ReadonlyArray<MaybeSignal>;
+  constructor(fn: () => T, intialValue: T, deps: ReadonlyArray<MaybeSignal>) {
     super(intialValue);
     this.___fn = fn;
-    for (const d of initialDeps) {
-      d.___subscribe(this);
-    }
-    this.___prevDeps = initialDeps;
-  }
-  public ___compute() {
-    const fn = this.___fn;
-    const prevDeps = this.___prevDeps;
-    const parentTracker = depTracker;
-    const nextDeps = (depTracker = new Set());
-    const nextValue = fn();
-    depTracker = parentTracker;
-    for (const d of nextDeps) {
-      d.___subscribe(this);
-    }
-    for (const d of prevDeps) {
-      if (!nextDeps.has(d)) {
-        d.___unsubscribe(this);
+    for (const dep of deps) {
+      if (dep instanceof Signal) {
+        dep.___subscribe(this);
       }
     }
+    this.___deps = deps;
+  }
+  public ___update() {
+    const fn = this.___fn;
+    const nextValue = fn(...this.___deps.map(get));
     this.___set(nextValue);
-    this.___prevDeps = nextDeps;
     return nextValue;
   }
   public ___cleanup() {
-    for (const d of this.___prevDeps) {
-      d.___unsubscribe(this);
+    for (const dep of this.___deps) {
+      if (dep instanceof Signal) {
+        dep.___unsubscribe(this);
+      }
     }
-    this.___compute = noop as () => T;
+    this.___update = noop as () => T;
   }
 }
-const emptyTrackers: Array<Set<Signal>> = [];
-export function compute<T>(fn: () => T) {
-  const parentTracker = depTracker;
-  const initialDeps = (depTracker = emptyTrackers.pop() || new Set());
-  const id = sid++;
-  const initialValue = fn();
-  depTracker = parentTracker;
 
-  if (initialDeps.size) {
-    const signal = new ComputedSignal(fn, initialValue, initialDeps);
-    signal.___sid = id;
-    if (currentFragment) {
-      currentFragment.___tracked.add(signal);
+class Effect extends ComputedSignal<void> {
+  public ___set = noop;
+}
+
+export function compute<T extends ReadonlyArray<unknown>, V>(
+  fn: (...args: RawMap<T>) => V,
+  deps: T,
+  SignalConstructor = ComputedSignal
+) {
+  const id = sid++;
+  let value: V;
+
+  if (SignalConstructor !== Effect) {
+    let isStatic = true;
+    for (const dep of deps) {
+      if (dep instanceof Signal) {
+        isStatic = false;
+        break;
+      }
     }
-    return signal;
-  } else {
-    emptyTrackers.push(initialDeps);
-    return initialValue;
+
+    if (isStatic) {
+      return fn(...(deps as any));
+    } else {
+      value = fn(...(deps.map(get) as any));
+    }
   }
+
+  const signal = new SignalConstructor(fn, value!, deps);
+  signal.___sid = id;
+  if (currentFragment) {
+    currentFragment.___tracked.add(signal);
+  }
+  return signal;
+}
+
+export function effect<T extends ReadonlyArray<unknown>>(
+  fn: (...args: RawMap<T>) => void,
+  deps: T,
+  id?: number
+) {
+  const effectInstance = compute(
+    fn,
+    deps,
+    Effect as typeof ComputedSignal
+  ) as Effect;
+  if (id) {
+    effectInstance.___sid = id;
+  }
+  insertIntoBatch(batchedEffects!, effectIndex, effectInstance);
 }
 
 export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
@@ -108,7 +132,11 @@ export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
 ) {
   if (object instanceof Signal) {
     watchedKeys.forEach(
-      key => (object[key] = compute(() => get(get(object)[key])))
+      key =>
+        (object[key] = compute((_object, _key) => get(_object[_key]), [
+          object,
+          key
+        ] as const))
     );
   }
   return object;
@@ -116,9 +144,6 @@ export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
 
 export function get<T>(value: MaybeSignal<T>): T {
   if (value instanceof Signal) {
-    if (depTracker) {
-      depTracker.add(value);
-    }
     value = value.___value;
   }
   return value;
@@ -133,6 +158,7 @@ export function set(value: MaybeSignal, newValue: unknown) {
 
 export function beginBatch() {
   if (!batchedComputations) {
+    batchedEffects = [];
     return (batchedComputations = []);
   }
 }
@@ -140,29 +166,37 @@ export function beginBatch() {
 export function endBatch(b: typeof batchedComputations) {
   if (b === batchedComputations) {
     for (
-      batchIndex = 0;
-      batchIndex < batchedComputations!.length;
-      batchIndex++
+      computationIndex = 0;
+      computationIndex < batchedComputations!.length;
+      computationIndex++
     ) {
-      batchedComputations![batchIndex].___compute();
+      batchedComputations![computationIndex].___update();
     }
-    batchedComputations = undefined;
-    batchIndex = 0;
+    for (effectIndex = 0; effectIndex < batchedEffects!.length; effectIndex++) {
+      batchedEffects![effectIndex].___update();
+    }
+    batchedComputations = batchedEffects = undefined;
+    computationIndex = effectIndex = 0;
   }
 }
 
-function findIndexBySID(array: ComputedSignal[], { ___sid }: ComputedSignal) {
-  let low = batchIndex;
-  let high = array!.length;
+function insertIntoBatch(
+  array: ComputedSignal[],
+  index: number,
+  object: ComputedSignal
+) {
+  let max = array!.length;
 
-  while (low < high) {
-    const mid = (low + high) >>> 1;
-    if (array![mid].___sid < ___sid) {
-      low = mid + 1;
+  while (index < max) {
+    const mid = (index + max) >>> 1;
+    if (array![mid].___sid < object.___sid) {
+      index = mid + 1;
     } else {
-      high = mid;
+      max = mid;
     }
   }
 
-  return low;
+  if (array![index] !== object) {
+    array!.splice(index, 0, object);
+  }
 }

@@ -38,6 +38,7 @@ inserted #text2
 ```
 removed #text after #text1
 inserted span2
+span2: attr(a) null => "1"
 ```
 
 
@@ -54,6 +55,7 @@ inserted span2
 ```
 removed span after #text1
 inserted a2
+a2: attr(a) null => "1"
 ```
 
 
@@ -86,8 +88,8 @@ inserted div2
 # Mutations
 ```
 inserted #text1
-span2: attr(a) "1" => "1"
 inserted #text3
+span2: attr(a) "1" => "1"
 removed #comment after #text0
 removed #comment after #text3
 ```

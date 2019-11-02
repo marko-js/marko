@@ -22,12 +22,14 @@ const renderer = register(
     const clickCount = new Signal(0);
     dynamicOn(
       "click",
-      compute(() =>
-        get(clickCount) <= 1
-          ? () => {
-              set(clickCount, get(clickCount) + 1);
-            }
-          : false
+      compute(
+        count =>
+          count <= 1
+            ? () => {
+                set(clickCount, count + 1);
+              }
+            : false,
+        [clickCount]
       )
     );
     dynamicText(clickCount);

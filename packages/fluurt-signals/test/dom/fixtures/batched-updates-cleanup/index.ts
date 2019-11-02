@@ -33,7 +33,7 @@ const renderer = register(
       dynamicText(message);
       endEl();
     };
-    conditional(compute(() => (get(show) ? branch0 : undefined)));
+    conditional(compute(_show => (_show ? branch0 : undefined), [show]));
   }
 );
 

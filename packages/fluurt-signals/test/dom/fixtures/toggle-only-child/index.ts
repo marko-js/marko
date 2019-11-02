@@ -26,7 +26,7 @@ const renderer = register(
       dynamicText(input.value);
       endEl();
     };
-    conditional(compute(() => (get(input.value) ? branch0 : undefined)));
+    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
     endEl();
   }
 );
