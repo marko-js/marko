@@ -2,13 +2,15 @@ import { currentFragment } from "./dom";
 
 let sid = 0;
 let bid = 0;
-let batchId: number;
-let batchedSignals: Record<string, Signal>;
-let batchedValues: Record<string, unknown>;
-let batchedPending: Record<string, Computed>;
-let batchedComputations: Computed[];
-let batchedEffects: Effect[];
-let computationIndex: number;
+let batch: {
+  ___bid: number;
+  ___signals: Record<string, Signal>;
+  ___computations: Computed[];
+  ___effects: Effect[];
+  ___values: Record<string, unknown>;
+  ___pending: Record<string, Computed>;
+  ___computationIndex: number;
+};
 
 const noop = () => {};
 
@@ -29,10 +31,10 @@ export class Signal<T = unknown> {
       nextValue !== this.___value ||
       (nextValue instanceof Object && !(nextValue instanceof Function))
     ) {
-      if (batchedValues) {
+      if (batch) {
         const id = this.___sid;
-        batchedValues[id] = nextValue;
-        batchedSignals[id] = this;
+        batch.___values[id] = nextValue;
+        batch.___signals[id] = this;
       } else {
         this.___value = nextValue;
       }
@@ -42,8 +44,8 @@ export class Signal<T = unknown> {
       for (const key of keys) {
         const dependent = dependents[key];
         const isEffect = dependent instanceof Effect;
-        const batchTarget = isEffect ? batchedEffects : batchedComputations;
-        const batchIndex = isEffect ? 0 : computationIndex;
+        const batchTarget = isEffect ? batch.___effects : batch.___computations;
+        const batchIndex = isEffect ? 0 : batch.___computationIndex;
         insertIntoBatch(batchTarget, batchIndex, dependent);
       }
     }
@@ -78,9 +80,9 @@ export class Computed<T = unknown> extends Signal<T> {
     for (let dep of deps) {
       if (dep instanceof Signal) {
         const id = dep.___sid;
-        if (batchedValues && batchedValues.hasOwnProperty(id)) {
-          dep = batchedValues[id] as T;
-          if (batchedPending[id]) {
+        if (batch && batch.___values.hasOwnProperty(id)) {
+          dep = batch.___values[id] as T;
+          if (batch.___pending[id]) {
             hasPendingDeps = true;
           }
         } else {
@@ -93,8 +95,8 @@ export class Computed<T = unknown> extends Signal<T> {
     if (hasPendingDeps || async) {
       let computed: T;
       const id = this.___sid;
-      const pending = batchedPending;
-      const values = batchedValues;
+      const pending = batch.___pending;
+      const values = batch.___values;
       pending[id] = this;
       values[id] = (hasPendingDeps
         ? Promise.all(args).then(resolved => {
@@ -148,7 +150,7 @@ export function compute<T extends ReadonlyArray<unknown>, V>(
     }
   }
 
-  const signal = new SignalConstructor(fn, undefined, deps);
+  const signal = new SignalConstructor(fn, (undefined as unknown) as V, deps);
   if (!isEffect) {
     signal.___update();
   }
@@ -175,7 +177,7 @@ export function effect<T extends ReadonlyArray<unknown>>(
   if (id) {
     effectInstance.___sid = id;
   }
-  insertIntoBatch(batchedEffects, 0, effectInstance);
+  insertIntoBatch(batch.___effects, 0, effectInstance);
 }
 
 export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
@@ -198,11 +200,11 @@ export function get<T>(value: MaybeSignal<T>): T {
   if (value instanceof Signal) {
     let id: number;
     if (
-      batchedValues &&
-      batchedValues.hasOwnProperty((id = value.___sid)) &&
-      !batchedPending[id]
+      batch &&
+      batch.___values.hasOwnProperty((id = value.___sid)) &&
+      !batch.___pending[id]
     ) {
-      value = batchedValues[id] as T;
+      value = batch.___values[id] as T;
     } else {
       value = value.___value;
     }
@@ -218,67 +220,57 @@ export function set(value: MaybeSignal, newValue: unknown) {
 }
 
 export function beginBatch() {
-  batchedSignals = {};
-  batchedValues = {};
-  batchedPending = {};
-  batchedEffects = [];
-  computationIndex = 0;
-  batchId = ++bid;
-  return (batchedComputations = [] as Computed[]);
+  return (batch = {
+    ___bid: ++bid,
+    ___signals: {},
+    ___computations: [],
+    ___effects: [],
+    ___values: {},
+    ___pending: {},
+    ___computationIndex: 0
+  });
 }
 
-export function endBatch(b: typeof batchedComputations) {
-  if (b === batchedComputations) {
-    while (computationIndex < batchedComputations.length) {
-      batchedComputations[computationIndex++].___update();
+export function endBatch(b: typeof batch) {
+  if (b === batch) {
+    while (batch.___computationIndex < batch.___computations.length) {
+      batch.___computations[batch.___computationIndex++].___update();
     }
-    const pendingIds = Object.keys(batchedPending);
+    const pendingIds = Object.keys(batch.___pending);
     if (pendingIds.length) {
       const all: Array<Promise<unknown>> = [];
-      const computations = batchedComputations;
-      const effects = batchedEffects;
-      const pending = batchedPending;
-      const values = batchedValues;
-      const signals = batchedSignals;
-      const index = computationIndex;
-      const ID = batchId;
+      const storedBatch = batch;
       for (const id of pendingIds) {
-        const promise = batchedValues[id] as Promise<unknown>;
+        const promise = batch.___values[id] as Promise<unknown>;
         all.push(promise);
       }
       Promise.all(all).then(() => {
-        batchedComputations = computations;
-        batchedEffects = effects;
-        batchedPending = pending;
-        batchedValues = values;
-        batchedSignals = signals;
-        computationIndex = index;
-        batchId = ID;
+        batch = storedBatch;
         for (const id of pendingIds) {
-          const signal = batchedPending[id];
-          const value = batchedValues[id];
-          delete batchedPending[id];
+          const signal = batch.___pending[id];
+          const value = batch.___values[id];
+          delete batch.___pending[id];
           signal.___set(value);
         }
-        endBatch(batchedComputations);
+        endBatch(batch);
       });
     } else {
-      const signalIds = Object.keys(batchedSignals);
+      const signalIds = Object.keys(batch.___signals);
       for (const id of signalIds) {
-        const signal = batchedSignals[id];
-        if (signal.___bid <= batchId) {
-          signal.___bid = batchId;
-          signal.___value = batchedValues[id];
+        const signal = batch.___signals[id];
+        if (signal.___bid <= batch.___bid) {
+          signal.___bid = batch.___bid;
+          signal.___value = batch.___values[id];
         }
       }
-      for (const _effect of batchedEffects) {
-        if (_effect.___bid <= batchId) {
-          _effect.___bid = batchId;
+      for (const _effect of batch.___effects) {
+        if (_effect.___bid <= batch.___bid) {
+          _effect.___bid = batch.___bid;
           _effect.___update();
         }
       }
     }
-    batchId = computationIndex = batchedComputations = batchedEffects = batchedPending = batchedValues = batchedSignals = undefined as any;
+    batch = undefined as any;
   }
 }
 
