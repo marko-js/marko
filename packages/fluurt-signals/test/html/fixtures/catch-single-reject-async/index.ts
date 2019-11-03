@@ -1,5 +1,5 @@
 import { tryCatch, write, fork } from "../../../../html/index";
-import { resolveAfter, rejectAfter } from "../../utils/resolve";
+import { resolveAfter, rejectAfter } from "../../../utils/resolve";
 
 const renderer = () => {
   write("a");

@@ -4,6 +4,7 @@ export {
   Signal,
   MaybeSignal,
   compute,
+  computeAsync,
   effect,
   dynamicKeys,
   get,

@@ -1,5 +1,5 @@
 import { tryPlaceholder, write, fork } from "../../../../html/index";
-import { resolveAfter } from "../../utils/resolve";
+import { resolveAfter } from "../../../utils/resolve";
 
 const renderer = () => {
   write("a");

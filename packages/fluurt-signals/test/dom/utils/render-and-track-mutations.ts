@@ -10,12 +10,14 @@ import {
   init,
   createRenderer
 } from "../../../dom/index";
+import { resolveAfter } from "../../utils/resolve";
 
 const { DOMElement, DOMCollection } = format.plugins;
 
 export default async function renderAndGetMutations(
   id: string,
   test: {
+    wait?: number;
     inputs: [
       Record<string, unknown>,
       ...Array<Record<string, unknown> | ((container: Element) => void)>
@@ -26,11 +28,12 @@ export default async function renderAndGetMutations(
     FAILS_HYDRATE?: boolean;
   }
 ): Promise<string> {
-  const { inputs, default: renderer } = test;
+  const { inputs, default: renderer, wait } = test;
   const render = createRenderer(renderer);
   const [firstInput] = inputs;
-  const observer = new MutationObserver(() => {
-    throw new Error("Async mutation");
+  const result: string[] = [];
+  const observer = new MutationObserver(records => {
+    result.push(getStatusString(container, records, "ASYNC"));
   });
   const container = Object.assign(document.createElement("div"), {
     TEST_ROOT: true
@@ -52,17 +55,22 @@ export default async function renderAndGetMutations(
     container.appendChild(instance);
 
     const initialHTML = container.innerHTML;
-    const result: string[] = [
-      getStatusString(container, observer.takeRecords(), firstInput)
-    ];
+    result.push(getStatusString(container, observer.takeRecords(), firstInput));
 
     for (const update of inputs.slice(1)) {
+      if (wait) {
+        await resolveAfter(null, wait);
+      }
       if (typeof update === "function") {
         update(container);
       } else {
         instance.rerender(update);
       }
       result.push(getStatusString(container, observer.takeRecords(), update));
+    }
+
+    if (wait) {
+      await resolveAfter(null, wait);
     }
 
     if (!test.FAILS_HYDRATE) {
@@ -87,6 +95,9 @@ export default async function renderAndGetMutations(
       // Run the same updates after hydrate and ensure the same mutations.
       let resultIndex = 0;
       for (const update of inputs.slice(1)) {
+        if (wait) {
+          await resolveAfter(null, wait);
+        }
         if (typeof update === "function") {
           update(container);
         } else {
@@ -98,6 +109,10 @@ export default async function renderAndGetMutations(
         expect(
           getStatusString(container, observer.takeRecords(), update)
         ).toEqual(result[++resultIndex]);
+      }
+
+      if (wait) {
+        await resolveAfter(null, wait);
       }
     }
 

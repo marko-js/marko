@@ -41,13 +41,12 @@ let lastHydratedChild: Node | null = null;
 export function createRenderer<T extends Renderer>(renderer: T) {
   type Input = Raw<Parameters<T>[0]>;
   return (input: Input) => {
+    const init = beginBatch();
     const inputSignal = dynamicKeys(new Signal(input), renderer.input!);
     const container = (currentNode = doc.createDocumentFragment()) as DocumentFragment & {
       rerender: (input: Input) => void;
       destroy: () => void;
     };
-
-    const init = beginBatch();
     const fragment = beginFragment();
     renderer(inputSignal);
     endFragment(fragment);
