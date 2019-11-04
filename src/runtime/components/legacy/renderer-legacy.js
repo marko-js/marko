@@ -66,8 +66,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 customEvents,
                 ownerComponentId
             );
-            if (input.___widgetProps) {
-                component.input = input.___widgetProps;
+            if (input.widgetProps) {
+                component.input = input.widgetProps;
             }
         } else {
             if (!component) {
@@ -140,8 +140,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                         customEvents,
                         ownerComponentId
                     );
-                    if (input.___widgetProps) {
-                        component.input = input.___widgetProps;
+                    if (input.widgetProps) {
+                        component.input = input.widgetProps;
                     }
                     Object.assign(component, oldComponent);
                     beginComponent(
