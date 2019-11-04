@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.22
+
+- Improve legacy compatibilty layer by exposing `widgetProps` on the `data` object. [#1443](https://github.com/marko-js/marko/pull/1443)
+- Improve getComponentByEl lookup to prefer owner components. [#1444](https://github.com/marko-js/marko/pull/1444)
+
 ### 4.18.21
 
 - Fix issue where duplicated attributes were not being included properly in compiled templates. [#1442](https://github.com/marko-js/marko/pull/1442)
