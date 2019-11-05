@@ -1,6 +1,5 @@
-var runtimeId = require("./util").___runtimeId;
 var counter = 0;
-var seed = "M" + runtimeId;
+var seed = "M" + Math.random().toFixed(5);
 var WeakMap =
     global.WeakMap ||
     function WeakMap() {
