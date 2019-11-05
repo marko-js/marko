@@ -23,6 +23,10 @@ class Macro extends Node {
         var macroDef = codegen.context.registerMacro(name);
         var functionName = macroDef.functionName;
 
+        if (this.parentNode && this.parentNode.type !== "TemplateRoot") {
+            codegen.context.disableStrictMode = true;
+        }
+
         // Walk the body after registering the macro
         var body = codegen.generateCode(this.body);
 
