@@ -1,5 +1,3 @@
-"use strict";
-
 var marko_template = module.exports = require("marko/src/vdom").t(),
     components_helpers = require("marko/src/runtime/components/helpers"),
     marko_registerComponent = components_helpers.rc,
