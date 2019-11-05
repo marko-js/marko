@@ -1,8 +1,7 @@
 import {
   once,
   compute,
-  get,
-  Signal,
+  createSignal,
   set,
   register
 } from "../../../../dom/index";
@@ -17,8 +16,8 @@ export const inputs = [{}, click] as const;
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
-    const a = new Signal(0);
-    const b = new Signal(0);
+    const a = createSignal(0);
+    const b = createSignal(0);
     beginEl("button");
     once("click", () => {
       set(a, 1);

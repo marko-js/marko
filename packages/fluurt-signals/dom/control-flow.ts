@@ -1,4 +1,13 @@
-import { Signal, compute, effect, get, set, MaybeSignal } from "./signals";
+import {
+  Signal,
+  createSignal,
+  isSignal,
+  createComputation,
+  createEffect,
+  get,
+  set,
+  MaybeSignal
+} from "./signals";
 import { Fragment, replaceFragment } from "./fragments";
 import { reconcile } from "./reconcile";
 import {
@@ -26,14 +35,14 @@ export function loopOf<T>(
   ) => void,
   getKey: (item: T, index: number) => string
 ) {
-  if (array instanceof Signal) {
+  if (isSignal(array)) {
     const rootFragment = beginFragment();
     const ns = currentNS;
     let firstRender = true;
     let oldNodes: Map<string, Fragment> = mapPool.get();
     let oldKeys: string[] = [];
 
-    const newNodes = compute(
+    const newNodes = createComputation(
       _array => {
         let index = 0;
         const _newNodes = mapPool.get();
@@ -45,8 +54,10 @@ export function loopOf<T>(
           ) as ForIterationFragment<typeof item>;
           if (!previousChildFragment) {
             const childFragment = beginFragment() as ForIterationFragment<T>;
-            const itemSignal = (childFragment.itemSignal = new Signal(item));
-            const indexSignal = (childFragment.indexSignal = new Signal(index));
+            const itemSignal = (childFragment.itemSignal = createSignal(item));
+            const indexSignal = (childFragment.indexSignal = createSignal(
+              index
+            ));
             setNS(ns);
             render(itemSignal, indexSignal, _array);
             endNS();
@@ -65,7 +76,7 @@ export function loopOf<T>(
       [array]
     ) as Signal<Map<string, Fragment>>;
 
-    effect(
+    createEffect(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
 
@@ -103,9 +114,13 @@ export function loopIn<T>(
   ) => void
 ) {
   loopOf<string>(
-    compute(_object => Object.keys(_object), [object]),
+    createComputation(_object => Object.keys(_object), [object]),
     key =>
-      render(get(key), compute(_object => _object[get(key)], [object]), object),
+      render(
+        get(key),
+        createComputation(_object => _object[get(key)], [object]),
+        object
+      ),
     firstArgAsKey
   );
 }
@@ -117,7 +132,7 @@ export function loopFrom(
   render: (i: MaybeSignal<number>) => void
 ) {
   loopOf<number>(
-    compute(
+    createComputation(
       (_from, _to, _step) => {
         const range: number[] = [];
 
@@ -135,11 +150,11 @@ export function loopFrom(
 }
 
 export function conditional(render: MaybeSignal<(() => void) | undefined>) {
-  if (render instanceof Signal) {
+  if (isSignal(render)) {
     let previousFragment = beginFragment();
     let signalRanSync = false;
 
-    const fragmentSignal = compute(
+    const fragmentSignal = createComputation(
       (_render, ns) => {
         const fragment = (currentNode || beginFragment()) as Fragment;
         if (_render) {
@@ -154,7 +169,7 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
       [render, currentNS] as const
     );
 
-    effect(
+    createEffect(
       nextFragment => {
         if (nextFragment !== previousFragment) {
           replaceFragment(previousFragment, nextFragment);

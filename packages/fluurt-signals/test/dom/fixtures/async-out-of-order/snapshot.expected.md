@@ -1,17 +1,17 @@
 # Render {"value":"Dynamic 1","delay":3}
 ```html
-Static
+
 ```
 
 # Mutations
 ```
-inserted #text0, #text1, #text2, #text3
+inserted #text0, #text1
 ```
 
 
 # Render {"value":"Dynamic 2","delay":0}
 ```html
-Static
+
 ```
 
 # Mutations
@@ -27,7 +27,8 @@ Static Dynamic 2
 
 # Mutations
 ```
-#text2: "" => "Dynamic 2"
+inserted #text1
+inserted #text2
 ```
 
 

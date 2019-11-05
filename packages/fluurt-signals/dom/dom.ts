@@ -2,11 +2,12 @@ import { Renderer } from "../common/types";
 import {
   MaybeSignal,
   Raw,
-  compute,
-  effect,
+  createSignal,
+  createComputation,
+  createEffect,
   get,
+  set,
   dynamicKeys,
-  Signal,
   beginBatch,
   endBatch
 } from "./signals";
@@ -14,6 +15,7 @@ import {
   Fragment,
   ContainerNode,
   DetachedElementWithParent,
+  replaceFragment,
   removeFragment,
   resolveElement,
   clearFragment
@@ -41,22 +43,27 @@ let lastHydratedChild: Node | null = null;
 export function createRenderer<T extends Renderer>(renderer: T) {
   type Input = Raw<Parameters<T>[0]>;
   return (input: Input) => {
-    const init = beginBatch();
-    const inputSignal = dynamicKeys(new Signal(input), renderer.input!);
+    const inputSignal = dynamicKeys(createSignal(input), renderer.input!);
     const container = (currentNode = doc.createDocumentFragment()) as DocumentFragment & {
       rerender: (input: Input) => void;
       destroy: () => void;
     };
+
+    const placeholderFragment = beginFragment();
+    endFragment(placeholderFragment);
+    currentNode = null;
+
+    const init = beginBatch();
     const fragment = beginFragment();
+    createEffect(() => replaceFragment(placeholderFragment, fragment), []);
     renderer(inputSignal);
     endFragment(fragment);
-    currentNode = null;
     endBatch(init);
 
     container.rerender = ((newInput: Input) => {
-      const batch = beginBatch();
-      inputSignal.___set(newInput);
-      endBatch(batch);
+      const update = beginBatch();
+      set(inputSignal, newInput);
+      endBatch(update);
     }) as T;
 
     container.destroy = () => removeFragment(fragment);
@@ -215,9 +222,9 @@ function hydrateText(value: string) {
 
 export function dynamicText(value: MaybeSignal<unknown>) {
   let current: string;
-  const data = compute(_value => normalizeTextData(_value), [value]);
+  const data = createComputation(_value => normalizeTextData(_value), [value]);
   const textNode = text((current = get(data) || ""));
-  effect(
+  createEffect(
     (_textNode, _data) => {
       if (current !== _data) {
         _textNode.data = _data;
@@ -249,7 +256,7 @@ export function html(value: string) {
 export function dynamicHTML(value: MaybeSignal<string>) {
   const fragment: Fragment = beginFragment();
   endFragment(fragment);
-  effect(
+  createEffect(
     (_fragment, _value) => {
       clearFragment(_fragment);
       beginFragment(_fragment);
@@ -266,8 +273,8 @@ export function attr(name: string, value: unknown) {
 
 export function dynamicAttr(name: string, value: unknown) {
   const elNode = currentNode as Element;
-  const data = compute(_value => normalizeAttrValue(_value), [value]);
-  effect(setAttr, [elNode, name, data]);
+  const data = createComputation(_value => normalizeAttrValue(_value), [value]);
+  createEffect(setAttr, [elNode, name, data]);
 }
 
 export function dynamicTag(
@@ -278,7 +285,7 @@ export function dynamicTag(
   const renderFns = new Map();
 
   return conditional(
-    compute(
+    createComputation(
       _tag => {
         let nextRender = renderFns.get(_tag);
         if (!nextRender) {
@@ -297,7 +304,9 @@ export function dynamicTag(
           } else if (_tag) {
             if (_tag.input) {
               const tagInput = renderBody
-                ? compute(_input => ({ ..._input, renderBody }), [input])
+                ? createComputation(_input => ({ ..._input, renderBody }), [
+                    input
+                  ])
                 : input;
               nextRender = () => _tag(dynamicKeys(tagInput, _tag.input!));
             } else {
@@ -319,7 +328,7 @@ export function dynamicAttrs(
   attrs: MaybeSignal<Record<string, unknown> | null | undefined>
 ) {
   let previousAttrs: Raw<typeof attrs>;
-  effect(
+  createEffect(
     (_elNode, _attrs) => {
       for (const name in previousAttrs) {
         if (!(_attrs && name in _attrs)) {
@@ -340,7 +349,7 @@ export function prop(name: string, value: unknown) {
 }
 
 export function dynamicProp(name: string, value: unknown) {
-  effect((_elNode, _value) => (_elNode[name] = _value), [
+  createEffect((_elNode, _value) => (_elNode[name] = _value), [
     currentNode as Element,
     value
   ] as const);
@@ -348,7 +357,7 @@ export function dynamicProp(name: string, value: unknown) {
 
 export function dynamicProps(props: MaybeSignal<object>) {
   let previousProps: object;
-  effect(
+  createEffect(
     (_elNode, _props) => {
       const nextProps = _props;
       for (const name in previousProps) {

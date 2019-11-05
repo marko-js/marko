@@ -2,9 +2,9 @@ import {
   beginBatch,
   endBatch,
   MaybeSignal,
-  compute,
-  effect,
-  Signal,
+  createSignal,
+  createComputation,
+  createEffect,
   set
 } from "./signals";
 import { currentNode } from "./dom";
@@ -43,17 +43,17 @@ export function dynamicOn<
   const el = currentNode as Element;
   const key = getKey(type);
   on(type, null);
-  effect(_handler => (el[key] = _handler), [handler]);
+  createEffect(_handler => (el[key] = _handler), [handler]);
 }
 
 export function once<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: MaybeSignal<H | Unset>) {
-  const called = new Signal(false);
+  const called = createSignal(false);
   dynamicOn(
     type,
-    compute(
+    createComputation(
       (_handler, _called) => {
         return (
           !_called &&

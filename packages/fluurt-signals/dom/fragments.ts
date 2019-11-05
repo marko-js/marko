@@ -1,4 +1,4 @@
-import { Computed } from "./signals";
+import { Computation } from "./signals";
 
 export interface DetachedElementWithParent extends Element {
   ___eventualParentNode?: ContainerNode;
@@ -18,7 +18,7 @@ export class Fragment {
   public ___after: Text | undefined;
   public ___parentFragment?: Fragment;
   public ___eventualParentNode?: ContainerNode;
-  public ___tracked: Set<Fragment | Computed<unknown>>;
+  public ___tracked: Set<Fragment | Computation>;
   constructor() {
     this.___tracked = new Set();
   }

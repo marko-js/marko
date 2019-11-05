@@ -1,4 +1,4 @@
-# Render {"value":"Dynamic 1"}
+# Render {"sync":"a","async":{"value":"A"}}
 ```html
 
 ```
@@ -11,20 +11,20 @@ inserted #text0, #text1
 
 # Render "ASYNC"
 ```html
-Static Dynamic 1
+aA
 ```
 
 # Mutations
 ```
 inserted #text1
 inserted #text2
-#text2: "" => "Dynamic 1"
+#text2: "" => "A"
 ```
 
 
-# Render {"value":"Dynamic 2"}
+# Render {"sync":"b","async":{"value":"B"}}
 ```html
-Static Dynamic 1
+aA
 ```
 
 # Mutations
@@ -35,18 +35,19 @@ Static Dynamic 1
 
 # Render "ASYNC"
 ```html
-Static Dynamic 2
+bB
 ```
 
 # Mutations
 ```
-#text2: "Dynamic 1" => "Dynamic 2"
+#text1: "a" => "b"
+#text2: "A" => "B"
 ```
 
 
-# Render {"value":"Dynamic 3"}
+# Render {"sync":"c","async":{"value":"C"}}
 ```html
-Static Dynamic 2
+bB
 ```
 
 # Mutations
@@ -57,10 +58,11 @@ Static Dynamic 2
 
 # Render "ASYNC"
 ```html
-Static Dynamic 3
+cC
 ```
 
 # Mutations
 ```
-#text2: "Dynamic 2" => "Dynamic 3"
+#text1: "b" => "c"
+#text2: "B" => "C"
 ```
