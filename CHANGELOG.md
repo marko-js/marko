@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.24
+
+- Remove circular dep for dom weakmaps. [#1449](https://github.com/marko-js/marko/pull/1449)
+- Fix invalid deprecation message for core-tags on windows. [#1448](https://github.com/marko-js/marko/pull/1448)
+
 ### 4.18.23
 
 - Allow `<macro>` nested under `<if>`. [#1445](https://github.com/marko-js/marko/pull/1445)
