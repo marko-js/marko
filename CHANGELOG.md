@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.23
+
+- Allow `<macro>` nested under `<if>`. [#1445](https://github.com/marko-js/marko/pull/1445)
+
 ### 4.18.22
 
 - Improve legacy compatibilty layer by exposing `widgetProps` on the `data` object. [#1443](https://github.com/marko-js/marko/pull/1443)
