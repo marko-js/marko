@@ -5,6 +5,7 @@ var CustomTag;
 var path = require("path");
 var markoModules = require("../../compiler/modules");
 var complain = require("complain");
+var coreTagsPath = path.join(__dirname, "../../core-tags");
 
 function createCustomTag(el, tagDef) {
     CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
@@ -314,7 +315,7 @@ class Tag {
     }
 
     isCoreTag() {
-        return this.filePath && this.filePath.indexOf("core-tags/") > -1;
+        return this.filePath && this.filePath.startsWith(coreTagsPath);
     }
 }
 
