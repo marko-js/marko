@@ -2,7 +2,22 @@ import { Renderer } from "../common/types";
 import { write } from "./writer";
 import { attrs } from "./attrs";
 
-const selfClosing = /^(?:polylin|ellips|sourc|(?:ba|u)s)e|p(?:olygon|a(?:ram|th))|c(?:o(?:mmand|l)|ircle)|keygen|track|input|embed|meta|area|stop|rect|lin[ek]|img|(?:wb|h)r|br$/;
+const voidElements = new Set([
+  'area',
+  'base',
+  'br',
+  'col',
+  'embed',
+  'hr',
+  'img',
+  'input',
+  'link',
+  'meta',
+  'param',
+  'source',
+  'track',
+  'wbr'
+]);
 interface RenderBodyObject {
   [x: string]: unknown;
   renderBody: Renderer;
@@ -13,7 +28,7 @@ export function dynamicTag(
   input: Record<string, unknown>,
   renderBody: (() => void) | undefined
 ) {
-  if (tag == null || tag === false) {
+  if (!tag) {
     if (renderBody) {
       renderBody();
     }
@@ -24,10 +39,10 @@ export function dynamicTag(
   if (typeof tag === "string") {
     write(`<${tag}${attrs(input)}>`);
 
-    if (selfClosing.test(tag)) {
+    if (voidElements.has(tag)) {
       if (renderBody) {
         throw new Error(
-          `A renderBody was provided for a self closing "${tag}" tag.`
+          `A renderBody was provided for a "${tag}" tag, which cannot have children.`
         );
       }
     } else {
