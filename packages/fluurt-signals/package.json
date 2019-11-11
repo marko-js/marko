@@ -24,7 +24,8 @@
     "ts-jest": "^24.0.2",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.6.2"
+    "typescript": "^3.7.2",
+    "typescript-compiler": "^1.4.1-2"
   },
   "files": [
     "build",
@@ -53,5 +54,10 @@
     "size": "npm run build && minified-size --json ./build/dom.esm.js",
     "test": "jest --watch",
     "test:inspect": "node --inspect $(which jest) --watch --runInBand --testTimeout=86400000"
+  },
+  "dependencies": {
+    "broccoli-typescript-compiler": "^4.2.0",
+    "jquery": "^3.4.1",
+    "jsdom-context-require": "^1.0.1"
   }
 }
