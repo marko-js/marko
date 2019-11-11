@@ -3,10 +3,17 @@ import { Renderer } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
 const runtimeId = "M";
+const componentMarkerId = "MC";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId
 );
+
+interface ComponentEntry {
+  markerId: number;
+  componentId: string;
+  input: Record<string, unknown>;
+}
 
 type MaybeFlushable = Writable & { flush?(): void };
 let buffer: string = "";
@@ -14,13 +21,15 @@ let out: MaybeFlushable | null = null;
 let flush: typeof flushToStream | null = null;
 let promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null = null;
 
+const componentLookup: ComponentEntry[] = [];
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
-const nextId = () => {
+
+export function nextId() {
   const id = uids.get(out!)! + 1 || 0;
   uids.set(out!, id);
   return id;
-};
+}
 
 export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
@@ -58,8 +67,11 @@ export function fork<T extends unknown>(
 ) {
   const currentOut = out!;
   const currentPromises = promises;
+  const currentComponentLookup: ComponentEntry[] = [];
   let currentFlush = flush!;
   let resolved = false;
+
+  // Child component lookup
   currentFlush();
   out = currentOut;
 
@@ -69,6 +81,12 @@ export function fork<T extends unknown>(
       currentFlush();
     } else {
       bufferedAfter += buffer;
+      if (componentLookup.length > 0) {
+        componentLookup.forEach(entry => {
+          currentComponentLookup.push(entry);
+        });
+        componentLookup.length = 0;
+      }
       cleanup();
     }
   };
@@ -86,6 +104,12 @@ export function fork<T extends unknown>(
           renderResult(result);
         } finally {
           buffer += bufferedAfter;
+          if (currentComponentLookup.length > 0) {
+            currentComponentLookup.forEach(entry => {
+              componentLookup.push(entry);
+            });
+            currentComponentLookup.length = 0;
+          }
           const previousFlush = currentFlush;
           const childPromises = promises;
           currentFlush = flush;
@@ -225,7 +249,31 @@ export function tryPlaceholder(
   buffer += tryContent;
 }
 
+export function writeStartMarker(id: number, __filename: string) {
+  return (buffer += `<!${componentMarkerId}$${id}>`);
+}
+
+export function writeEndMarker(id: number, __filename: string) {
+  return (buffer += `<!${componentMarkerId}$${id}/>`);
+}
+
+export function addComponentToInit(
+  id: number,
+  inputValue: Record<string, unknown>,
+  __filename: string
+) {
+  componentLookup.push({
+    markerId: id,
+    componentId: __filename,
+    input: inputValue
+  });
+}
+
 function flushToStream() {
+  if (componentLookup.length > 0) {
+    buffer += `<script>${JSON.stringify(componentLookup)}</script>`;
+    componentLookup.length = 0;
+  }
   out!.write(buffer);
   if (out!.flush) {
     out!.flush();

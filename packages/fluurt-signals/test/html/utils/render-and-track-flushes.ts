@@ -38,13 +38,17 @@ export default async function renderAndTrackFlushes(test: {
   } as Writable & { flush(): void });
 
   const browser = new JSDOM(html, { runScripts: "dangerously" });
-  const root = browser.window.document.documentElement;
+  const root = browser.window.document;
   root.normalize();
   output.push(
     `# final HTML\n${indent(
-      format(root, {
-        plugins: [DOMElement, DOMCollection]
-      })
+      Array.from(root.childNodes)
+        .map(child =>
+          format(child, {
+            plugins: [DOMElement, DOMCollection]
+          })
+        )
+        .join("\n")
     )}`
   );
 
