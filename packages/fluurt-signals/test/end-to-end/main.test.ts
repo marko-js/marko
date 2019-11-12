@@ -4,7 +4,6 @@ import createBrowser from "jsdom-context-require";
 import { createRenderer } from "../../html/index";
 import reorderRuntime from "../../html/reorder-runtime";
 import { Writable } from "stream";
-import tsc from "typescript-compiler";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 const output: string[] = [];
@@ -15,7 +14,7 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 );
 const input: Record<string, unknown> = {};
 
-describe("DOM", () => {
+describe("E2E", () => {
   fs.readdirSync(FIXTURES_DIR)
     .filter(entry => !/\.skip$/.test(entry))
     .map(entry => {
@@ -49,13 +48,7 @@ describe("DOM", () => {
 
         const browser = createBrowser({
           dir: __dirname,
-          html: html,
-          extensions: {
-            ".ts": (module, filename) => {
-              const compiled = tsc.compile([filename], []);
-              return (module as any)._compile(compiled, filename);
-            }
-          }
+          html
         });
 
         // browser.require(testFile);

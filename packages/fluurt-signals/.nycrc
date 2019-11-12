@@ -1,0 +1,10 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "include": [
+    "{common,dom,html}/**/*.ts"
+  ],
+  "exclude": [
+    "html/reorder-runtime.ts"
+  ],
+  "all": true
+}

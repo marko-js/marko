@@ -15,7 +15,7 @@ describe("DOM", () => {
         snapshot(
           testDir,
           "snapshot.md",
-          await renderAndTrackMutations(entry, require(testFile))
+          await renderAndTrackMutations(entry, testFile)
         );
       });
     });

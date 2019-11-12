@@ -6,26 +6,28 @@
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
-    "@types/jest": "^24.0.18",
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@types/jsdom": "^12.2.4",
     "@types/node": "^12.7.3",
     "coveralls": "^3.0.6",
     "husky": "^3.0.5",
-    "jest": "^25.0.0",
     "jsdom": "^15.1.1",
+    "jsdom-context-require": "^2.0.1",
     "lint-staged": "^9.2.5",
     "minified-size": "^2.0.3",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "pretty-format": "^24.9.0",
     "rollup": "^1.21.4",
     "rollup-plugin-terser": "^5.1.2",
     "rollup-plugin-typescript2": "^0.24.2",
+    "source-map-support": "^0.5.16",
     "standard-version": "^7.0.0",
-    "ts-jest": "^24.0.2",
+    "ts-node": "^8.5.0",
     "tslint": "^5.19.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.7.2",
-    "typescript-compiler": "^1.4.1-2"
+    "typescript": "^3.7.2"
   },
   "files": [
     "build",
@@ -46,18 +48,13 @@
   "scripts": {
     "build": "rollup -c ./rollup.config.js --sourcemap",
     "ci:report": "cat coverage/lcov.info | coveralls",
-    "ci:test": "jest --ci --coverage",
+    "ci:test": "nyc npm test",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '**/*.ts'",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "size": "npm run build && minified-size --json ./build/dom.esm.js",
-    "test": "jest --watch",
-    "test:inspect": "node --inspect $(which jest) --watch --runInBand --testTimeout=86400000"
-  },
-  "dependencies": {
-    "broccoli-typescript-compiler": "^4.2.0",
-    "jquery": "^3.4.1",
-    "jsdom-context-require": "^1.0.1"
+    "test": "mocha -r ts-node/register -r source-map-support/register \"test/*/main.test.ts\"",
+    "test:inspect": "npm test -- --inspect-brk"
   }
 }

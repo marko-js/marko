@@ -1,34 +1,52 @@
+import assert from "assert";
 import format from "pretty-format";
+import createBrowser from "jsdom-context-require";
 import { getNodePath, getTypeName } from "./get-node-info";
-import {
+import { MaybeSignal } from "../../../dom/index";
+import { resolveAfter } from "../../utils/resolve";
+import { DOMWindow } from "jsdom";
+
+const { DOMElement, DOMCollection } = format.plugins;
+
+const browser = createBrowser({
+  dir: __dirname,
+  html: ""
+});
+
+const window = browser.window as DOMWindow & { MutationObserver: any };
+const { MutationObserver, document } = window;
+
+const {
   createSignal,
   set,
   beginBatch,
   endBatch,
   dynamicKeys,
-  MaybeSignal,
   init,
   createRenderer
-} from "../../../dom/index";
-import { resolveAfter } from "../../utils/resolve";
+} = browser.require(
+  "../../../dom/index"
+) as typeof import("../../../dom/index");
 
-const { DOMElement, DOMCollection } = format.plugins;
+interface Test {
+  wait?: number;
+  inputs: [
+    Record<string, unknown>,
+    ...Array<Record<string, unknown> | ((container: Element) => void)>
+  ];
+  default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
+    input: string[];
+  };
+  FAILS_HYDRATE?: boolean;
+}
 
 export default async function renderAndGetMutations(
   id: string,
-  test: {
-    wait?: number;
-    inputs: [
-      Record<string, unknown>,
-      ...Array<Record<string, unknown> | ((container: Element) => void)>
-    ];
-    default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
-      input: string[];
-    };
-    FAILS_HYDRATE?: boolean;
-  }
+  test: string
 ): Promise<string> {
-  const { inputs, default: renderer, wait } = test;
+  const { inputs, default: renderer, wait, FAILS_HYDRATE } = browser.require(
+    test
+  ) as Test;
   const render = createRenderer(renderer);
   const [firstInput] = inputs;
   const result: string[] = [];
@@ -73,7 +91,7 @@ export default async function renderAndGetMutations(
       await resolveAfter(null, wait);
     }
 
-    if (!test.FAILS_HYDRATE) {
+    if (!FAILS_HYDRATE) {
       const inputSignal = createSignal(firstInput);
       (window as any).M$i = [dynamicKeys(inputSignal, renderer.input)];
       container.innerHTML = `<!M$${id}>${initialHTML}<!M$${id}/>`;
@@ -90,7 +108,7 @@ export default async function renderAndGetMutations(
       );
 
       // Hydrate should end up with the same html as client side render.
-      expect(container.innerHTML).toBe(initialHTML);
+      assert.equal(container.innerHTML, initialHTML);
 
       // Run the same updates after hydrate and ensure the same mutations.
       let resultIndex = 0;
@@ -106,9 +124,10 @@ export default async function renderAndGetMutations(
           endBatch(batch);
         }
 
-        expect(
-          getStatusString(container, observer.takeRecords(), update)
-        ).toEqual(result[++resultIndex]);
+        assert.equal(
+          getStatusString(container, observer.takeRecords(), update),
+          result[++resultIndex]
+        );
       }
 
       if (wait) {
