@@ -1,9 +1,9 @@
 # write
-  <!MC$0>a<!M$1>e...<!M$1/>e
+  <!M$0>a<!M$1>e...<!M$1/>e
 _flush_
 
 # write
-  fg<!MC$0/><!MC$2>v<!M$3>z...<!M$3/>z<!MC$2/><script>[{"markerId":2,"componentId":"component-markers-placeholder","input":{}}]</script>
+  fg<!M$0/><!M$2>v<!M$3>z...<!M$3/>z<!M$2/><script>[{"markerId":2,"componentId":"component-markers-placeholder","input":{}}]</script>
 _flush_
 
 # write
@@ -17,15 +17,15 @@ _flush_
 # end
 
 # final HTML
-  <!--MC$0-->
+  <!--M$0-->
   <html>
     <head />
     <body>
       abcdefg
-      <!--MC$0/-->
-      <!--MC$2-->
+      <!--M$0/-->
+      <!--M$2-->
       vwxyz
-      <!--MC$2/-->
+      <!--M$2/-->
       <script>
         [{"markerId":2,"componentId":"component-markers-placeholder","input":{}}]
       </script>

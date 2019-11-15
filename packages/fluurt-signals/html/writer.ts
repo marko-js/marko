@@ -3,7 +3,6 @@ import { Renderer } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
 const runtimeId = "M";
-const componentMarkerId = "MC";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId
@@ -249,12 +248,12 @@ export function tryPlaceholder(
   buffer += tryContent;
 }
 
-export function writeStartMarker(id: number, __filename: string) {
-  return (buffer += `<!${componentMarkerId}$${id}>`);
+export function markReplaceStart(id: number) {
+  return (buffer += `<!${marker(id)}>`);
 }
 
-export function writeEndMarker(id: number, __filename: string) {
-  return (buffer += `<!${componentMarkerId}$${id}/>`);
+export function markReplaceEnd(id: number) {
+  return (buffer += `<!${marker(id)}/>`);
 }
 
 export function addComponentToInit(
@@ -296,14 +295,6 @@ function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
   buffer += `<t id="${marker(id)}">`;
   render(data);
   buffer += `</t><script>${runtimeCall}(${id})</script>`;
-}
-
-function markReplaceStart(id: number) {
-  return (buffer += `<!${marker(id)}>`);
-}
-
-function markReplaceEnd(id: number) {
-  return (buffer += `<!${marker(id)}/>`);
 }
 
 function marker(id: number) {

@@ -1,8 +1,8 @@
 import { Renderer } from "./types";
 import {
   nextId,
-  writeStartMarker,
-  writeEndMarker,
+  markReplaceStart,
+  markReplaceEnd,
   addComponentToInit
 } from "../html/writer";
 
@@ -15,12 +15,12 @@ export function serverRegister(id: string, renderer: Renderer) {
     const isTopLevel = !isUnderComponent;
     const nextid = nextId();
     if (isTopLevel) {
-      writeStartMarker(nextid, id);
+      markReplaceStart(nextid);
       isUnderComponent = true;
     }
     renderer(input);
     if (isTopLevel) {
-      writeEndMarker(nextid, id);
+      markReplaceEnd(nextid);
       addComponentToInit(nextid, input || {}, id);
       isUnderComponent = false;
     }

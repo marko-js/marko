@@ -4,6 +4,10 @@ import createBrowser from "jsdom-context-require";
 import { createRenderer } from "../../html/index";
 import reorderRuntime from "../../html/reorder-runtime";
 import { Writable } from "stream";
+import assert from "assert";
+import format from "pretty-format";
+import createTrackMutations from "../dom/utils/track-mutations";
+const { DOMElement, DOMCollection } = format.plugins;
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 const output: string[] = [];
@@ -12,17 +16,18 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId
 );
-const input: Record<string, unknown> = {};
 
 describe("E2E", () => {
   fs.readdirSync(FIXTURES_DIR)
     .filter(entry => !/\.skip$/.test(entry))
     .map(entry => {
       const testDir = path.join(FIXTURES_DIR, entry);
-      const testFile = path.join(testDir, "index.ts");
+      const serverFile = path.join(testDir, "server.ts");
+      const browserFile = path.join(testDir, "browser.ts");
       it(entry, async () => {
-        const test = require(testFile);
-        const render = createRenderer(test.default);
+        const serverTest = require(serverFile);
+        const render = createRenderer(serverTest.default);
+        const input = serverTest.input;
 
         let html = "";
 
@@ -51,9 +56,29 @@ describe("E2E", () => {
           html
         });
 
-        // browser.require(testFile);
-        const dom = browser.require("../../dom/hydrate");
+        const document = browser.window.document;
+        const tracker = createTrackMutations(browser.window, document);
+
+        const serverOutput = document.cloneNode(true);
+        serverOutput.normalize();
+
+        output.push(
+          `# server HTML\n${indent(
+            Array.from(serverOutput.childNodes)
+              .map(child =>
+                format(child, {
+                  plugins: [DOMElement, DOMCollection]
+                })
+              )
+              .join("\n")
+          )}`
+        );
+
+        const browserTest = browser.require(browserFile);
+        const dom = browser.require("../../dom/index");
         dom.init();
+
+        tracker.logUpdate("Hydrate");
       });
     });
 });

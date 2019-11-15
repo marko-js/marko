@@ -1,5 +1,5 @@
 # write
-  <!MC$0>xyz<!MC$0/><!MC$1>a<script>[{"markerId":0,"componentId":"component-markers-async","input":{}}]</script>
+  <!M$0>xyz<!M$0/><!M$1>a<script>[{"markerId":0,"componentId":"component-markers-async","input":{}}]</script>
 _flush_
 
 # write
@@ -7,25 +7,25 @@ _flush_
 _flush_
 
 # write
-  c<!MC$1/><script>[{"markerId":1,"componentId":"component-markers-async","input":{}}]</script>
+  c<!M$1/><script>[{"markerId":1,"componentId":"component-markers-async","input":{}}]</script>
 _flush_
 
 # end
 
 # final HTML
-  <!--MC$0-->
+  <!--M$0-->
   <html>
     <head />
     <body>
       xyz
-      <!--MC$0/-->
-      <!--MC$1-->
+      <!--M$0/-->
+      <!--M$1-->
       a
       <script>
         [{"markerId":0,"componentId":"component-markers-async","input":{}}]
       </script>
       bc
-      <!--MC$1/-->
+      <!--M$1/-->
       <script>
         [{"markerId":1,"componentId":"component-markers-async","input":{}}]
       </script>
