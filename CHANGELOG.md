@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.25
+
+- Better async stack traces in dev [#1453](https://github.com/marko-js/marko/pull/1453)
+
 ### 4.18.24
 
 - Remove circular dep for dom weakmaps. [#1449](https://github.com/marko-js/marko/pull/1449)
