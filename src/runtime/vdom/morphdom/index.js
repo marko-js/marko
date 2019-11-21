@@ -771,7 +771,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         var nodeName = toEl.___nodeName;
 
         if (isHydrate === true && toElKey) {
-            ownerComponent.___keyedElements[toElKey] = fromEl;
+            var referenceComponent = isAutoKey(toElKey)
+                ? parentComponent
+                : ownerComponent;
+            referenceComponent.___keyedElements[toElKey] = fromEl;
         }
 
         var constId = toEl.___constId;
