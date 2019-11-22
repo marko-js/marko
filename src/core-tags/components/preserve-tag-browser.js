@@ -10,10 +10,25 @@ module.exports = function render(input, out) {
         // the children. We have to put a placeholder node that will get
         // replaced out if we find that the DOM node has already been rendered
         if (!("if" in input) || input["if"]) {
-            var component = componentsContext.___componentDef.___component;
+            var parentComponent =
+                componentsContext.___componentDef.___component;
+            var ownerComponent = out.___assignedComponentDef.___component;
+            var component = parentComponent;
             var globalComponentsContext = componentsContext.___globalContext;
             var key = input.preserveKey;
             var componentId;
+
+            // If the node is transcluded
+            if (ownerComponent !== parentComponent) {
+                if (isAutoKey(key)) {
+                    // autokeys are stored on the parent component
+                    // but scoped by their owner's id
+                    key += ":" + ownerComponent.id;
+                } else {
+                    // userkeys are stored on the owner component
+                    component = ownerComponent;
+                }
+            }
 
             if (key) {
                 if (component.___keyedElements[key]) {
@@ -62,3 +77,7 @@ module.exports = function render(input, out) {
         input.renderBody(out);
     }
 };
+
+function isAutoKey(key) {
+    return !/^@/.test(key);
+}
