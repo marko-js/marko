@@ -190,7 +190,9 @@ var proto = (AsyncStream.prototype = {
             timeout = AsyncStream.DEFAULT_TIMEOUT;
         }
 
-        newStream._stack = AsyncStream.INCLUDE_STACK ? new Error().stack : null;
+        newStream._stack = AsyncStream.INCLUDE_STACK
+            ? getNonMarkoStack(new Error())
+            : null;
         newStream.name = name;
 
         if (timeout > 0) {
@@ -422,21 +424,16 @@ var proto = (AsyncStream.prototype = {
     },
 
     error: function(e) {
-        var stack = this._stack;
         var name = this.name;
+        var stack = this._stack;
 
-        var message;
+        var message = e instanceof Error ? e.stack : JSON.stringify(e);
 
-        if (name) {
-            message = "Render async fragment error (" + name + ")";
-        } else {
-            message = "Render error";
-        }
-
-        message += ". Exception: " + (e.stack || e);
-
-        if (stack) {
-            message += "\nCreation stack trace: " + stack;
+        if (name || stack) {
+            message +=
+                "\nRendered by" +
+                (name ? " " + name : "") +
+                (stack ? ":\n" + stack : "");
         }
 
         e = new Error(message);
@@ -593,3 +590,12 @@ proto.___beginElementDynamic = proto.beginElement;
 proto.___endElement = proto.endElement;
 
 module.exports = AsyncStream;
+
+function getNonMarkoStack(error) {
+    return error.stack
+        .toString()
+        .split("\n")
+        .slice(1)
+        .filter(line => !/\/node_modules\/marko\//.test(line))
+        .join("\n");
+}
