@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.27
+
+- Allow empty `<@catch>` in `<await>` [#1456](https://github.com/marko-js/marko/pull/1456)
+
 ### 4.18.26
 
 - Improve errors emitted from AsyncWriter
