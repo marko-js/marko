@@ -186,8 +186,10 @@ module.exports = function awaitTag(input, out) {
         }
 
         if (err) {
-            if (errorRenderer) {
-                errorRenderer(asyncOut, err);
+            if (input.catch) {
+                if (errorRenderer) {
+                    errorRenderer(asyncOut, err);
+                }
             } else {
                 asyncOut.error(err);
             }
