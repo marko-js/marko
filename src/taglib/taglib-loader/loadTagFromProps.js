@@ -342,7 +342,7 @@ class TagLoader {
      * The path to the renderer JS module to use for this tag.
      *
      * NOTE: We use the equivalent of require.resolve to resolve the JS module
-     * 		 and use the tag directory as the "from".
+     *         and use the tag directory as the "from".
      *
      * @param {String} value The renderer path
      */
@@ -492,6 +492,7 @@ class TagLoader {
         });
         this._handleVar(value, this.dependencyChain.append("var"));
     }
+
     /**
      * DEPRECATED: use tag parameters
      * The "vars" property is equivalent to the "var" property
@@ -510,6 +511,7 @@ class TagLoader {
             });
         }
     }
+
     /**
      * DEPRECATED
      * The "body-function" property" allows the nested body content to be mapped
@@ -558,6 +560,7 @@ class TagLoader {
 
         tag.setBodyFunction(functionName, params);
     }
+
     /**
      * DEPRECATED: use transformer to add additional attributes
      * The "import-var" property can be used to add a property to the
@@ -596,6 +599,7 @@ class TagLoader {
             tag.addImportedVariable(importedVar);
         });
     }
+
     /**
      * The tag type.
      */
@@ -603,6 +607,7 @@ class TagLoader {
         var tag = this.tag;
         tag.type = value;
     }
+
     /**
      * Declare a nested tag.
      *
@@ -643,6 +648,7 @@ class TagLoader {
             }
         });
     }
+
     /**
      * DEPRECATED
      */
@@ -691,8 +697,13 @@ class TagLoader {
 
     parseOptions(value) {
         this.tag.parseOptions = value;
+        this.tag.parseOptions.openTagOnly = this.tag.openTagOnly;
     }
 
+    /**
+     * @deprecated
+     * @param value {boolean} whether or not openTagOnly is enabled
+     */
     openTagOnly(value) {
         if (!this.tag.parseOptions || !this.tag.parseOptions.openTagOnly) {
             complain(
@@ -705,7 +716,11 @@ class TagLoader {
                 }
             );
         }
-        this.tag.openTagOnly = value;
+        if (this.tag.parseOptions) {
+            this.tag.parseOptions.openTagOnly = value;
+        } else {
+            this.tag.openTagOnly = false;
+        }
     }
 
     deprecated(value) {
