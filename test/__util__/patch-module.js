@@ -11,12 +11,19 @@ var markoDir = isDebug
     ? nodePath.join(rootDir, "src")
     : nodePath.join(rootDir, "dist");
 
-var markoInstalledDir = nodePath.join(rootDir, "node_modules/marko");
-if (fs.existsSync(markoInstalledDir)) {
-    fs.renameSync(
-        markoInstalledDir,
-        nodePath.join(rootDir, "node_modules/~marko")
-    );
+try {
+    var markoInstalledDir = nodePath.dirname(require.resolve("marko"));
+    if (fs.existsSync(markoInstalledDir)) {
+        fs.renameSync(
+            markoInstalledDir,
+            markoInstalledDir.replace(
+                "node_modules/marko",
+                "node_modules/~marko"
+            )
+        );
+    }
+} catch (e) {
+    // ignore error
 }
 
 Module._resolveFilename = function(request, parent, isMain) {
