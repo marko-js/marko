@@ -671,10 +671,6 @@ class TagLoader {
         }
     }
 
-    openTagOnly(value) {
-        this.tag.openTagOnly = value;
-    }
-
     /**
      * DEPRECATED
      */
@@ -695,6 +691,21 @@ class TagLoader {
 
     parseOptions(value) {
         this.tag.parseOptions = value;
+    }
+
+    openTagOnly(value) {
+        if (!this.tag.parseOptions || !this.tag.parseOptions.openTagOnly) {
+            complain(
+                '"open-tag-only" as standalone field in marko.json is deprecated. Instead, ' +
+                    !this.tag.parseOptions.openTagOnly
+                    ? 'provide "openTagOnly" field for "parseOptions" in marko.json'
+                    : 'remove it, as it is already being provided through "parseOptions"',
+                {
+                    location: this.filePath
+                }
+            );
+        }
+        this.tag.openTagOnly = value;
     }
 
     deprecated(value) {
