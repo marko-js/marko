@@ -130,7 +130,9 @@
     },
     "<class>": {
         "node-factory": "./class-tag-node-factory.js",
-        "open-tag-only": true,
+        "parser-options": {
+            "openTagOnly": true
+        },
         "autocomplete": [
             {
                 "displayText": "class { /** lifecycle methods **/ }",

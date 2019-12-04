@@ -1,8 +1,6 @@
 {
     "<open-tag-only>": {
         "renderer": "./open-tag-only-tag.js",
-        "parseOptions": {
-            "openTagOnly": true
-        }
+        "open-tag-only": true
     }
 }

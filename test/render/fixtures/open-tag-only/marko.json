@@ -1,5 +1,8 @@
 {
     "<test-open-tag-only>": {
-        "open-tag-only": true
+        "parseOptions": {
+            "openTagOnly": true,
+            "preserveWhitespace": true
+        }
     }
 }
