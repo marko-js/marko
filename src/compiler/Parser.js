@@ -413,8 +413,13 @@ class Parser {
         return parseOptions;
     }
 
+    /**
+     * @deprecated
+     * @param tagName {string} the tag name to retrieve information about
+     * @returns {boolean} true iff openTagOnly
+     */
     isOpenTagOnly(tagName) {
-        var tagDef = this.context.getTagDef(tagName);
+        const tagDef = this.context.getTagDef(tagName);
         return tagDef && tagDef.openTagOnly;
     }
 }
