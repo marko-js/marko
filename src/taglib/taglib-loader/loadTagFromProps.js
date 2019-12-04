@@ -708,8 +708,11 @@ class TagLoader {
      */
     openTagOnly(value) {
         complain(
-            '"open-tag-only" as standalone field in marko.json is deprecated. Instead, provide "openTagOnly" only as' +
-                ' a field for "parse-options" in marko.json',
+            '"open-tag-only" as a standalone field in marko.json is deprecated. Instead, ' +
+                !this.tag.parserOptions ||
+                (this.tag.parserOptions && !this.tag.parserOptions.openTagOnly)
+                ? 'provide the "openTagOnly" field for "parse-options" in marko.json'
+                : 'remove it, as it is already being provided through "parseOptions"',
             { location: this.filePath }
         );
         const parserOptions = this.tag.parserOptions || {};
