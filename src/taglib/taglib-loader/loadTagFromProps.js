@@ -696,8 +696,8 @@ class TagLoader {
     }
 
     parseOptions(value) {
-        this.tag.parserOptions = Object.assign(
-            this.tag.parserOptions || {},
+        this.tag.parseOptions = Object.assign(
+            this.tag.parseOptions || {},
             value
         );
     }
@@ -709,15 +709,15 @@ class TagLoader {
     openTagOnly(value) {
         complain(
             '"open-tag-only" as a standalone field in marko.json is deprecated. Instead, ' +
-                !this.tag.parserOptions ||
-                (this.tag.parserOptions && !this.tag.parserOptions.openTagOnly)
+                !this.tag.parseOptions ||
+                (this.tag.parseOptions && !this.tag.parseOptions.openTagOnly)
                 ? 'provide the "openTagOnly" field for "parse-options" in marko.json'
                 : 'remove it, as it is already being provided through "parseOptions"',
             { location: this.filePath }
         );
-        const parserOptions = this.tag.parserOptions || {};
-        parserOptions.openTagOnly = value;
-        this.tag.parserOptions = parserOptions;
+        const parseOptions = this.tag.parseOptions || {};
+        parseOptions.openTagOnly = value;
+        this.tag.parseOptions = parseOptions;
     }
 
     deprecated(value) {

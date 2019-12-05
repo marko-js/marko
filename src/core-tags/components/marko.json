@@ -130,7 +130,7 @@
     },
     "<class>": {
         "node-factory": "./class-tag-node-factory.js",
-        "parser-options": {
+        "parse-options": {
             "openTagOnly": true
         },
         "autocomplete": [
