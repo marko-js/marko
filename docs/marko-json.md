@@ -14,7 +14,9 @@ The `marko-tag.json` allows you to configure various aspects about a single comp
 {
   "html": true, // Treats this tag as a native html tag, instead of a custom tag.
   "htmlType": "svg", // Adds optimizations for specific types of html tags (currently just svg and html).
-  "open-tag-only": true, // Ensures that no body content is passed to this tag.
+  "parse-options": {  
+    "open-tag-only": true // Ensures that no body content is passed to this tag.
+  },
   "featureFlags": [
     // This is used for enabling beta features.
     "feature-a"

@@ -162,7 +162,9 @@
     "<marko>": {
         "deprecated": true,
         "code-generator": "./marko-tag",
-        "open-tag-only": true,
+        "parse-options": {
+            "openTagOnly": true
+        },
         "@no-browser-rerender": "boolean",
         "@deprecated-no-create-or-input-lifecycle-for-top-level-hydrate": "boolean"
     },

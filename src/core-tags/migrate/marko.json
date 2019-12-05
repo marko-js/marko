@@ -118,7 +118,9 @@
     },
     "<assign>": {
         "migrator": "./assign-tag",
-        "open-tag-only": true,
+        "parse-options": {
+            "openTagOnly": true
+        },
         "deprecated": true
     },
     "<var>": {
@@ -220,6 +222,8 @@
     },
     "<class>": {
         "migrator": "./class-tag",
-        "open-tag-only": true
+        "parse-options": {
+            "openTagOnly": true
+        }
     }
 }
