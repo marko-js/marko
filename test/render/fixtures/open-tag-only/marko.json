@@ -3,6 +3,7 @@
         "parseOptions": {
             "openTagOnly": true,
             "preserveWhitespace": true
-        }
+        },
+        "html": true
     }
 }

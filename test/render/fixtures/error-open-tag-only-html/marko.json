@@ -2,6 +2,7 @@
     "<test-open-tag-only>": {
         "parseOptions": {
             "openTagOnly": true
-        }
+        },
+        "html": true
     }
 }
