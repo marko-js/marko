@@ -1,31 +1,32 @@
 # `marko.json` & `marko-tag.json`
 
-Marko comes with support for configuration files which add support for validation, experimental features and providing custom paths for component files.
+Marko supports for configuration files for validation, enabling experimental features, and custom paths for component files.
 
-These files are automatically found using the same [discovery mechanism](./custom-tags.md#how-tags-are-discovered) as custom tags. Currently there are two types of configuration files. `marko.json` can be used to describe an entire suite of components, and `marko-tag.json` is used to describe a single component.
+These configuration files are automatically found with [the same discovery mechanism as custom tags](./custom-tags.md#how-tags-are-discovered).
+
+There are 2 types of configuration files:
+
+1. `marko.json` describes an entire suite of components.
+2. `marko-tag.json` describes a single component.
 
 ## Single component definition
 
-The `marko-tag.json` allows you to configure various aspects about a single component. It will be automatically discovered if placed inside a [tag directory](./custom-tags.md#tag-directories).
+`marko-tag.json` configures a single component. It’s automatically discovered if placed inside a [tag directory](./custom-tags.md#tag-directories).
 
 ### Options
 
-```javascript
+```js
 {
-  "html": true, // Treats this tag as a native html tag, instead of a custom tag.
-  "htmlType": "svg", // Adds optimizations for specific types of html tags (currently just svg and html).
-  "open-tag-only": true, // Ensures that no body content is passed to this tag.
-  "featureFlags": [
-    // This is used for enabling beta features.
-    "feature-a"
-  ],
-  "nested-tags": {
-    // The nested tags section allows you to configure `attribute tags`.
+  "html": true, // Treat as a native HTML tag, not a custom tag.
+  "htmlType": "svg", // Optimizes for specific types of native tags (currently only `svg` and `html`).
+  "open-tag-only": true, // Forbids passing body content to this tag.
+  "featureFlags": [ "feature-a" ], // Enable beta features by passing feature flags.
+  "nested-tags": { // This section configures attribute tags.
     "tab": {
       "target-property": "tabs", // Puts `<@tab>` tags into `input.tabs`.
-      "is-repeated": true,  // Allow for more than one nested `<@tab>`.
+      "is-repeated": true,  // Allow more than one nested `<@tab>`.
       "attributes": {
-        // Same as "attributes" option below.
+        // Same as the “Attributes” section below.
       }
     }
   }
@@ -34,9 +35,9 @@ The `marko-tag.json` allows you to configure various aspects about a single comp
 
 ### Attributes
 
-One commonly used feature of this config file is to add compile time checks for attributes.
+One commonly-used feature of this config file is compile-time checks for attributes.
 
-```javascript
+```js
 {
   "attributes": {
     "heading": "string"
@@ -44,43 +45,45 @@ One commonly used feature of this config file is to add compile time checks for 
 }
 ```
 
-The above will ensure that the `heading` attribute is the _only_ attribute supplied to this tag. The `string` part of this can be used as documentation for the custom tag, it may also be picked up by tooling and provide hints to the user.
+The above code ensures that the `heading` attribute is the _only_ attribute supplied to this tag.
+
+The `string` value is used as documentation for the custom tag. It may be picked up by tooling, like Marko’s editor plugins, to provide hints to the user.
 
 The recommended list of attribute types are as follows:
 
-- expression (any JavaScript expression)
-- string
-- number
-- boolean
-- regexp
-- date
-- object
-- array
-- function
+- `expression` (any JavaScript expression)
+- `string`
+- `number`
+- `boolean`
+- `regexp`
+- `date`
+- `object`
+- `array`
+- `function`
 
-You can also provide an object as the value for an attribute definition which exposes some additional options:
+You can also provide an object for an attribute definition’s value for additional options:
 
-```javascript
+```js
 {
   "attributes": {
     "heading": {
       "type": "string", // Same as setting "string" above.
       "default-value": 0, // The attribute will default to this value.
-      "preserve-name": true, // By default component attributes are camelCased, this disables that feature.
-      "remove-dashes": true, // By default native tag attributes are dash-cased, this disables that feature.
-      "required": true, // Error during compilation if this attribute is undefined.
+      "required": true, // Error during compilation if this attribute is undefined. (Mutually exclusive with "default-value"
+      "preserve-name": true, // By default component attributes are camelCased; this disables that feature.
+      "remove-dashes": true, // By default native tag attributes are dash-cased; this disables that feature.
 
       // The following attributes do nothing, but are picked up by tooling.
       "deprecated": true,
-      "description": "Sets the heading for the component"
+      "description": "The component’s heading text" // Describes the attribute’s purpose.
     }
   }
 }
 ```
 
-We can also describe a pattern of attributes that should match a definition.
+We can also describe a _pattern_ of attributes to match a definition:
 
-```javascript
+```js
 {
     "attributes": {
         "data-*": "string"
@@ -88,13 +91,15 @@ We can also describe a pattern of attributes that should match a definition.
 }
 ```
 
-In the above, all attributes prefixed with `data-` are described to be a `string`.
+In the above, all attributes prefixed with `data-` are configured to be a `string`.
 
-> **Note:** Future versions of Marko will work toward describing these definitions/types within the component itself, largely reducing the need for this configuration file.
+> **Note:** Future Marko versions will describe these definitions/types in the component itself, reducing the need for this configuration file.
 
 ### Paths
 
-There are several options that provide a way to override the default discovery of certain files such as the template. Typically you should allow Marko to find these files automatically, however here is a short reference in case you encounter these in the wild.
+There are several options that override the default discovery of component files, such as the template.
+
+Typically, you should let Marko find these files automatically, but here is a reference in case you encounter these settings in the wild.
 
 ```javascript
 {
@@ -103,56 +108,55 @@ There are several options that provide a way to override the default discovery o
 
   // Compiler file hooks
   "migrator": "./migrator.js", // Hooks into the migration stage for migrating deprecated features.
-  "node-factory": "./node-factory.js", // Hooks into the parsing stage, should return a valid Marko ast.
-  "transformer": "./transformer.js", // Used to modify the ast before generating it.
-  "code-generator": "./code-generator.js" // Used to generate custom js.
+  "node-factory": "./node-factory.js", // Hooks into the parsing stage; should return a valid Marko AST.
+  "transformer": "./transformer.js", // Used to modify the AST before generating it.
+  "code-generator": "./code-generator.js" // Used to generate custom JS.
 }
 ```
 
-> **Note:** Compiler hooks are currently undocumented and it is recommended to avoid using these hooks. The compiler API is recieving a major overhaul in Marko 5 and will be documented once that transition is complete.
+> **⚠️ Note:** Compiler hooks are currently undocumented: avoid using them. The compiler API is overhauled in Marko 5, and will be documented once that transition is complete.
 
 ## Tag library definition
 
-On top of being able to provide configuration for a single file, you can also use a `marko.json` to define an entire library of components. Similar to the [`marko-tag.json`](#single-component-definition), this file will be discovered if placed within a [tag directory](./custom-tags.md#tag-directories). It will also be discovered if placed at the root directory of a project, or [within a `node_module` package](./custom-tags.md#publishing-tags-to-npm).
+Along with configuring a single component, you can use a `marko.json` file to configure an _entire library of components_. 
+
+Similar to [`marko-tag.json`](#single-component-definition), this file is discovered if placed within a [tag directory](./custom-tags.md#tag-directories). It will also be discovered at the root directory of a project, or [in a `node_module` package](./custom-tags.md#publishing-tags-to-npm).
 
 ### Options
 
-```javascript
+```js
 {
-  "taglib-id": "my-custom-tag-library", // Provides a way to name this definition for better errors.
-  "tags-dir": "./ui-modules", // By default `components` directories are automatically crawled for components. You can use this option to load the tags within an alterative folder.
-  "taglib-imports": ["./some-folder/marko.json", "./other-folder/marko.json"], // You can create a _combined_ tag library by referencing others using `taglib-imports`.
+  "taglib-id": "my-custom-tag-library", // Names the component library, for better errors.
+  "tags-dir": "./ui-modules", // What directory to crawl to autodiscover components. Default:`./components/`
+  "taglib-imports": ["./some-folder/marko.json", "./other-folder/marko.json"], // Creates a _combined_ tag library by referencing others.
 
-  "tags": {
-    // Add definitions for individial tags.
+  "tags": { // Definitions for individial tags.
     "my-tag": {
-      // Same as options for "marko-tag.json" above.
+      // Same options as “marko-tag.json”.
     }
   },
 
   "attributes": {
-    // Adds definitions for attributes on all tags.
-    // Options are the same as the "attributes" in the "marko-tag.json" above.
+    // Defines attributes on all tags.
+    // Options are the same as the “attributes” section in “marko-tag.json”.
   },
 
-  // Compiler file hooks (runs on the entire template instead of a single tag)
+  // Compiler file hooks (run on all templates)
   "migrator": "./migrator.js", // Hooks into the migration stage for migrating deprecated features.
-  "transformer": "./transformer.js", // Used to modify the ast before generating it.
+  "transformer": "./transformer.js", // Used to modify the AST before generating it.
   "text-transformer": "./text-transformer.js", // Used to transform all static text in the template.
 }
 ```
 
-> **Note:** Compiler hooks are currently undocumented and it is recommended to avoid using these hooks. The compiler API is recieving a major overhaul in Marko 5 and will be documented once that transition is complete.
+> **⚠️ Note:** Compiler hooks are currently undocumented: avoid using them. The compiler API is overhauled in Marko 5, and will be documented once that transition is complete.
 
 ## Shorthands
 
-Both configuration files support _shorthands_ for defining `tags` and `attributes`.
-
-A typical `marko.json` file would look something like:
+Both configuration files support _shorthands_ for defining `tags` and `attributes`. For example, take this `marko.json` file:
 
 _marko.json_
 
-```javascript
+```js
 {
   "taglib-id": "my-custom-tag-library",
   "tags": {
@@ -178,13 +182,15 @@ _marko.json_
 }
 ```
 
-As a shorthand, anywhere `tags` or `nested-tags` is used, you can remove the outer object and wrap the individial tags in `<angle-brackets>`. For `attributes`, you can remove the outer object and prefix the attributes with an `@`.
+As a shorthand, anywhere `tags` or `nested-tags` is used, you can remove the outer object and wrap the individual tags in `<angle-brackets>`.
 
-The above example using the shorthand syntax would become the following:
+For `attributes`, you can remove the outer object and prefix the attributes with an `@`.
+
+The above example using the shorthand syntax would become:
 
 _marko.json_
 
-```javascript
+```js
 {
   "taglib-id": "my-custom-tag-library",
   "<my-layout>": {
@@ -200,7 +206,7 @@ _marko.json_
 }
 ```
 
-For `nested-tags` there is also a shorthand available for the `is-repeated` (a postfix of `[]`) and `target-propety` (a prefix of `@newName`) properties.
+For `nested-tags`, there is also a shorthand for `is-repeated` (a postfix of `[]`) and `target-property` (a prefix of `@newName`):
 
 _marko.json_
 
