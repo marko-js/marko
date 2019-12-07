@@ -1,6 +1,6 @@
 # `marko.json` & `marko-tag.json`
 
-Marko supports for configuration files for validation, enabling experimental features, and custom paths for component files.
+Marko supports configuration files for validation, enabling experimental features, and custom paths for component files.
 
 These configuration files are automatically found with [the same discovery mechanism as custom tags](./custom-tags.md#how-tags-are-discovered).
 
