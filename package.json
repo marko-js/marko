@@ -37,7 +37,7 @@
         "deresolve": "^1.1.2",
         "escodegen": "^1.8.1",
         "esprima": "^4.0.0",
-        "estraverse": "^4.2.0",
+        "estraverse": "^4.3.0",
         "events": "^1.0.2",
         "events-light": "^1.0.0",
         "he": "^1.1.0",

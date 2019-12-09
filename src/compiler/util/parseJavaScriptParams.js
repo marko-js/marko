@@ -13,7 +13,7 @@ function parseJavaScriptParams(params, builder) {
         const paramSrc = ast.source.slice(node.range[0], node.range[1]);
         return node.type === "Identifier"
             ? builder.identifier(paramSrc)
-            : builder.expression(paramSrc);
+            : builder.expression(paramSrc, ast);
     });
 }
 

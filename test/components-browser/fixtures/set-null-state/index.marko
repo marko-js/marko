@@ -1,0 +1,9 @@
+class {}
+$ function handleClick() {
+    component.setState('initNull', true);
+}
+
+<div>
+    <span.null>${state && state.initNull}</span>
+    <button key="button" onClick(handleClick)>Update</button>
+</div>

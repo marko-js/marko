@@ -7,6 +7,7 @@ class Expression extends Node {
     constructor(def) {
         super("Expression");
         this.value = def.value;
+        this.ast = def.ast;
         ok(this.value != null, "Invalid expression");
     }
 

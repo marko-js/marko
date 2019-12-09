@@ -198,8 +198,8 @@ class Builder {
         return new ElseIf({ test, body, else: elseStatement });
     }
 
-    expression(value) {
-        return new Expression({ value });
+    expression(value, ast) {
+        return new Expression({ value, ast });
     }
 
     forEach(params, ofExpression, body) {

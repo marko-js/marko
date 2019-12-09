@@ -9,7 +9,7 @@ function parseExpression(src, builder, isExpression) {
     const ast = isExpression
         ? parseRawJavaScriptAst`(${src})`
         : parseRawJavaScriptAst`${src}`;
-    return covertRawJavaScriptAst(ast, builder) || builder.expression(src);
+    return covertRawJavaScriptAst(ast, builder) || builder.expression(src, ast);
 }
 
 module.exports = parseExpression;
