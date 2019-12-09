@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.28
+
+- Allow support for `<state>` tag and calling `setState` on null state [#1460](https://github.com/marko-js/marko/pull/1460)
+
 ### 4.18.27
 
 - Allow empty `<@catch>` in `<await>` [#1456](https://github.com/marko-js/marko/pull/1456)
