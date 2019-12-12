@@ -250,7 +250,7 @@ The output HTML would be the following:
 _HTML Output:_
 
 ```html
-<span> Hello Frank! You have 10 new messages. </span>
+<span> Hello Frank! You have 20 new messages. </span>
 ```
 
 Macros receive input similar to the root template, including a `renderBody` for displaying any provided [body content](./body-content.md).
