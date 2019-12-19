@@ -118,7 +118,7 @@ Typically, you should let Marko find these files automatically, but here is a re
 
 ## Tag library definition
 
-Along with configuring a single component, you can use a `marko.json` file to configure an _entire library of components_. 
+Along with configuring a single component, you can use a `marko.json` file to configure an _entire library of components_.
 
 Similar to [`marko-tag.json`](#single-component-definition), this file is discovered if placed within a [tag directory](./custom-tags.md#tag-directories). It will also be discovered at the root directory of a project, or [in a `node_module` package](./custom-tags.md#publishing-tags-to-npm).
 
