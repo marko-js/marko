@@ -220,7 +220,8 @@ Macros become more useful with [tag parameters](./syntax.md#parameters), allowin
 …the output HTML would be:
 
 ```html
-<p>Hello Frank!
+<p>
+  Hello Frank!
   <output>You have 20 new messages.</output>
 </p>
 ```
@@ -242,7 +243,7 @@ Macros receive input like components do, including [a `renderBody` for provided 
 …the output HTML would be:
 
 ```html
-<h1> Hello! </h1>
+<h1>Hello!</h1>
 ```
 
 > **ProTip:** You can use a macro inside itself for recursive layouts, like displaying directory contents.
@@ -282,12 +283,12 @@ $ const personRequest = new Promise((resolve, reject) => {
 
 Optional attributes for `<await>`:
 
-|        Attribute | Type    | Description |
-|-----------------:|---------|-------------|
-|        `timeout` | integer | An optional timeout. If reached, rejects the promise with a `TimeoutError`.
-|           `name` | string  | Improves debugging and ensures ordering with the `show-after` attribute.
-|     `show-after` | string  | Another `<await>` tag’s `name`. With `client-reorder`, ensures that the current `<await>` block will always show after the named `<await>`.
-| `client-reorder` | boolean | If true, anything after this `<await>` will be server-rendered before the Promise completes, then the fulfilled Promise’s result will be updated with client-side JavaScript.
+|        Attribute | Type    | Description                                                                                                                                                                   |
+| ---------------: | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|        `timeout` | integer | An optional timeout. If reached, rejects the promise with a `TimeoutError`.                                                                                                   |
+|           `name` | string  | Improves debugging and ensures ordering with the `show-after` attribute.                                                                                                      |
+|     `show-after` | string  | Another `<await>` tag’s `name`. With `client-reorder`, ensures that the current `<await>` block will always show after the named `<await>`.                                   |
+| `client-reorder` | boolean | If true, anything after this `<await>` will be server-rendered before the Promise completes, then the fulfilled Promise’s result will be updated with client-side JavaScript. |
 
 > **Pro Tip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
 >
