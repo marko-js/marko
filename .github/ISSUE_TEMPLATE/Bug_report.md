@@ -2,7 +2,7 @@
 name: "\U0001F41BBug report"
 about: Something isn't working right
 title: ""
-labels: "type:unconfirmed bug"
+labels: "type:unverified bug"
 ---
 
 ### Marko Version: x.x.x

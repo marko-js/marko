@@ -1,5 +1,5 @@
 ---
-name: Support Question
+name: "\U00002753Support Question"
 about: If you have a question, please check out our Gitter or StackOverflow!
 title: ""
 labels: "type:question"
