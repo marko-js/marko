@@ -706,7 +706,8 @@
         "@src": "#html-src",
         "@type": "#html-type",
         "html": true,
-        "attribute-groups": ["html-attributes"]
+        "attribute-groups": ["html-attributes"],
+        "code-generator": "./normalize-script-text.js"
     },
     "<section>": {
         "html": true,

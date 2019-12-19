@@ -107,6 +107,22 @@ Let's take a look at what a `package.json` for a dependency _should_ look like (
 }
 ```
 
+#### `yarn` resolutions
+
+If you don't maintain the package that needs to move `marko` and/or `marko-widgets` to `peerDependencies`, you can make use of [yarn's selective dependency resolutions](https://yarnpkg.com/lang/en/docs/selective-version-resolutions/). Add the following to your `package.json` and it will force your dependencies to use the latest version of Marko:
+
+```js{5-8}
+{
+   "name": "appname",
+   "version": "0.0.0",
+   /* ... */
+   "resolutions": {
+      "**/marko": "^4",
+      "**/marko-widgets": "^7"
+   }
+}
+```
+
 ## Step 4 - Upgrade marko
 
 Phew! With all the prep out of the way we're finally ready to upgrade `marko`!

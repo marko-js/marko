@@ -55,8 +55,13 @@ var fragmentPrototype = {
 
 function createFragmentNode(startNode, nextNode, parentNode) {
     var fragment = Object.create(fragmentPrototype);
-    fragment.startNode = document.createTextNode("");
-    fragment.endNode = document.createTextNode("");
+    var isRoot = startNode && startNode.ownerDocument === startNode.parentNode;
+    fragment.startNode = isRoot
+        ? document.createComment("")
+        : document.createTextNode("");
+    fragment.endNode = isRoot
+        ? document.createComment("")
+        : document.createTextNode("");
     fragment.startNode.fragment = fragment;
     fragment.endNode.fragment = fragment;
     var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
