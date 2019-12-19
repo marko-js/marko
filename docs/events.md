@@ -12,7 +12,7 @@ Note that **you can’t mix event targets and event types**: custom tags can onl
 Both kinds of events are received with an `on-*` attribute and the [attribute arguments syntax](./syntax.md#arguments):
 
 ```marko
-<input type="checkbox" 
+<input type="checkbox"
   on-change=(event => console.info(`Checked? ${event.target.checked}`))
 />
 ```
