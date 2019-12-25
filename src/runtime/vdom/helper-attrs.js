@@ -4,6 +4,10 @@ var complain = "MARKO_DEBUG" && require("complain");
  * Helper for processing dynamic attributes
  */
 module.exports = function(attributes) {
+    var styleAttr = require("./helper-styleAttr");
+    var classAttr = require("./helpers").ca;
+    var parseContainer;
+    
     if (typeof attributes === "string") {
         // eslint-disable-next-line no-constant-condition
         if ("MARKO_DEBUG") {
@@ -28,26 +32,24 @@ module.exports = function(attributes) {
         return newAttributes;
     }
     return attributes;
+
+    function parseAttrs(str) {
+        if (str === "") {
+            return {};
+        }
+
+        parseContainer = parseContainer || document.createElement("div");
+        parseContainer.innerHTML = "<a " + str + ">";
+        var attrs = parseContainer.firstChild.attributes;
+        var result = {};
+        var attr;
+
+        for (var len = attrs.length, i = 0; i < len; i++) {
+            attr = attrs[i];
+            result[attr.name] = attr.value;
+        }
+
+        return result;
+    }
+
 };
-
-var styleAttr = require("./helper-styleAttr");
-var classAttr = require("./helpers").ca;
-var parseContainer;
-function parseAttrs(str) {
-    if (str === "") {
-        return {};
-    }
-
-    parseContainer = parseContainer || document.createElement("div");
-    parseContainer.innerHTML = "<a " + str + ">";
-    var attrs = parseContainer.firstChild.attributes;
-    var result = {};
-    var attr;
-
-    for (var len = attrs.length, i = 0; i < len; i++) {
-        attr = attrs[i];
-        result[attr.name] = attr.value;
-    }
-
-    return result;
-}
