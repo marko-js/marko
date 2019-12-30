@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-const babel = require("babel-core");
+const babel = require("@babel/core");
 const pluginPath = require.resolve(
     "../../../../scripts/babel-plugin-marko-debug"
 );

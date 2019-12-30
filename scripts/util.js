@@ -6,16 +6,13 @@ const rm = shelljs.rm;
 const cp = shelljs.cp;
 const path = require("path");
 const fs = require("fs");
-const babel = require("babel-core");
+const babel = require("@babel/core");
 const mm = require("micromatch");
 
 const rootDir = path.join(__dirname, "..");
 
 function babelTransformFile(sourceFile, targetFile, babelOptions) {
-    babelOptions = Object.assign({}, babelOptions);
-    babelOptions.filename = sourceFile;
-    var source = fs.readFileSync(sourceFile, "utf-8");
-    var transformed = babel.transform(source, babelOptions).code;
+    var transformed = babel.transformFileSync(sourceFile, babelOptions).code;
 
     fs.writeFileSync(targetFile, transformed, { encoding: "utf8" });
 }
