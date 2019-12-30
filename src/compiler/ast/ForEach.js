@@ -15,7 +15,7 @@ class ForEach extends Node {
         var context = codegen.context;
         var builder = codegen.builder;
 
-        return builder.functionCall(context.helper("forEach"), [
+        return builder.functionCall(context.helper("forOf"), [
             this.of,
             builder.functionDeclaration(null, this.params, this.body)
         ]);

@@ -2,18 +2,17 @@
 
 var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_component = {},
-    components_helpers = require("marko/src/runtime/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
+    components_registry_browser = require("marko/src/runtime/components/registry-browser"),
+    marko_registerComponent = components_registry_browser.r,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/components-compilation/fixtures-vdom/boundary-no-output-tag-el/index.marko", function() {
       return module.exports;
     }),
-    marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c,
-    marko_helpers = require("marko/src/runtime/vdom/helpers"),
-    marko_loadTag = marko_helpers.t,
+    marko_renderer = require("marko/src/runtime/components/renderer"),
+    marko_defineComponent = require("marko/src/runtime/components/defineComponent"),
+    marko_loadTag = require("marko/src/runtime/helpers/load-tag"),
     test_no_output_tag = marko_loadTag(require("./components/test-no-output/renderer")),
-    marko_createElement = marko_helpers.e,
-    marko_const = marko_helpers.const,
+    marko_createElement = require("marko/src/runtime/vdom/helpers/v-element"),
+    marko_const = require("marko/src/runtime/vdom/helpers/const"),
     marko_const_nextId = marko_const("de2191"),
     marko_node0 = marko_createElement("div", null, "0", null, 0, 0, {
         i: marko_const_nextId()

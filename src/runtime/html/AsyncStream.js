@@ -4,8 +4,8 @@ var StringWriter = require("./StringWriter");
 var BufferedWriter = require("./BufferedWriter");
 var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
-var attrsHelper = require("./helper-attrs");
-var escapeXml = require("./escape").escapeXml;
+var attrsHelper = require("./helpers/attrs");
+var escapeXml = require("./helpers/escape-xml").x;
 
 var voidWriter = { write: function() {} };
 

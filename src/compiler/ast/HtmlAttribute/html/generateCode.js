@@ -1,8 +1,7 @@
 "use strict";
 
-var runtimeHtmlHelpers = require("../../../../runtime/html/helpers");
-var attr = runtimeHtmlHelpers.a;
-var escapeXmlAttr = runtimeHtmlHelpers.xa;
+var attr = require("../../../../runtime/html/helpers/attr");
+var escapeXmlAttr = require("../../../../runtime/html/helpers/escape-xml").d;
 
 function isStringLiteral(node) {
     return node.type === "Literal" && typeof node.value === "string";
@@ -86,7 +85,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
                 } else {
                     if (escape !== false) {
                         part = builder.functionCall(
-                            context.helper("escapeXmlAttr"),
+                            context.helper("escapeDoubleQuoteAttrValue"),
                             [part]
                         );
                     }

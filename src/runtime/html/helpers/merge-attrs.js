@@ -1,13 +1,12 @@
+"use strict";
+
 var complain = "MARKO_DEBUG" && require("complain");
-var attrsHelper = require("./helper-attrs");
+var attrsHelper = require("./attrs");
 
 /**
- * Merges attribute objects into a string
- * @param  {[type]} object [description]
- * @param  {[type]} source [description]
- * @return {[type]}        [description]
+ * Merges attribute objects into a string.
  */
-function mergeAttrs() {
+module.exports = function mergeAttrs() {
     var result = "";
     var currentAttrs = {};
     for (var i = 0; i < arguments.length; i++) {
@@ -36,6 +35,4 @@ function mergeAttrs() {
     }
 
     return result + attrsHelper(currentAttrs);
-}
-
-module.exports = mergeAttrs;
+};

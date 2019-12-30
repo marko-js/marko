@@ -3,12 +3,11 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index",
     marko_component = require("./"),
-    legacy_helpers = require("marko/src/runtime/components/legacy/helpers"),
-    marko_rendererLegacy = legacy_helpers.r,
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_dynamicTag = marko_helpers.d,
-    marko_escapeXml = marko_helpers.x,
-    marko_attr = marko_helpers.a;
+    marko_rendererLegacy = require("marko/src/runtime/components/legacy/renderer-legacy"),
+    marko_dynamicTag = require("marko/src/runtime/helpers/dynamic-tag"),
+    helpers_escape_xml = require("marko/src/runtime/html/helpers/escape-xml"),
+    marko_escapeXml = helpers_escape_xml.x,
+    marko_attr = require("marko/src/runtime/html/helpers/attr");
 
 function render(input, out, __component, widget, component) {
   var data = input;

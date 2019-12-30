@@ -1,10 +1,9 @@
+"use strict";
+
 /**
  * Merges object properties
- * @param  {[type]} object [description]
- * @param  {[type]} source [description]
- * @return {[type]}        [description]
  */
-function assign() {
+module.exports = function assign() {
     var into = arguments[0];
     for (var i = 1; i < arguments.length; i++) {
         var source = arguments[i];
@@ -17,6 +16,4 @@ function assign() {
         }
     }
     return into;
-}
-
-module.exports = assign;
+};
