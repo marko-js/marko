@@ -36,7 +36,7 @@ Prior to merging your PR, you will need to sign the [JS Foundation CLA](https://
 
 ### Running tests
 
-Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://coveralls.io/github/marko-js/marko?branch=master) has not decreased:
+Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://codecov.io/gh/marko-js/marko) has not decreased:
 
 ```
 npm run test-coverage

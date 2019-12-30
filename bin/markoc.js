@@ -37,9 +37,6 @@ var Minimatch = require("minimatch").Minimatch;
 
 var appModulePath = require("app-module-path");
 
-require("raptor-polyfill/string/startsWith");
-require("raptor-polyfill/string/endsWith");
-
 markoCompiler.defaultOptions.checkUpToDate = false;
 
 var mmOptions = {

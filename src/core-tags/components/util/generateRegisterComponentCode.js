@@ -1,7 +1,6 @@
 "use strict";
 
 const lassoModulesClientTransport = require("lasso-modules-client/transport");
-const shorthash = require("shorthash");
 const ok = require("assert").ok;
 
 function generateRegisterComponentCode(
@@ -91,13 +90,7 @@ function generateRegisterComponentCode(
 }
 
 function getComponentId(filename) {
-    let componentId = lassoModulesClientTransport.getClientPath(filename);
-    // TODO: turn on for production
-    // eslint-disable-next-line no-constant-condition
-    if (false) {
-        componentId = shorthash.unique(componentId);
-    }
-    return componentId;
+    return lassoModulesClientTransport.getClientPath(filename);
 }
 
 module.exports = generateRegisterComponentCode;
