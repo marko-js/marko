@@ -24,13 +24,15 @@ module.exports = function generateCode(node, codegen, vdomUtil) {
             }
         } else {
             if (name === "class") {
-                node.value = builder.functionCall(context.helper("classAttr"), [
-                    attrValue
-                ]);
+                node.value = builder.functionCall(
+                    context.helper("classValue"),
+                    [attrValue]
+                );
             } else if (name === "style") {
-                node.value = builder.functionCall(context.helper("styleAttr"), [
-                    attrValue
-                ]);
+                node.value = builder.functionCall(
+                    context.helper("styleValue"),
+                    [attrValue]
+                );
             }
         }
     }

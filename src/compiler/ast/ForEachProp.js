@@ -18,7 +18,7 @@ class ForEachProp extends Node {
         var body = this.body;
         var builder = codegen.builder;
 
-        return builder.functionCall(context.helper("forEachProp"), [
+        return builder.functionCall(context.helper("forIn"), [
             inExpression,
             builder.functionDeclaration(null, params, body)
         ]);

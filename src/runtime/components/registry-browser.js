@@ -1,6 +1,7 @@
 var complain = "MARKO_DEBUG" && require("complain");
 var defineComponent = require("./defineComponent");
 var loader = require("../../loader");
+require(".");
 
 var registered = {};
 var loaded = {};
@@ -103,5 +104,5 @@ function createComponent(typeName, id, isLegacy) {
     return new ComponentClass(id);
 }
 
-exports.___register = register;
+exports.r = register;
 exports.___createComponent = createComponent;

@@ -1,9 +1,9 @@
-var dashedNames = {};
+"use strict";
+
+var dashedNames = Object.create(null);
 
 /**
  * Helper for generating the string for a style attribute
- * @param  {[type]} style [description]
- * @return {[type]}       [description]
  */
 module.exports = function styleHelper(style) {
     if (!style) {

@@ -1,3 +1,5 @@
+"use strict";
+
 var complain = "MARKO_DEBUG" && require("complain");
 
 module.exports = function forRangeHelper(from, to, step, callback) {

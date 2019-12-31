@@ -1,3 +1,5 @@
+"use strict";
+
 var complain = "MARKO_DEBUG" && require("complain");
 var isArray = Array.isArray;
 
@@ -5,7 +7,7 @@ var isArray = Array.isArray;
  * Internal helper method for looping over the properties of any object
  * @private
  */
-module.exports = function forEachPropertyHelper(o, func) {
+module.exports = function forIn(o, func) {
     if (!o) {
         return;
     }

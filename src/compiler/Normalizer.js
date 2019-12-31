@@ -44,7 +44,7 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
     } else {
         el.setAttributeValue(
             "class",
-            builder.functionCall(context.helper("classList"), [
+            builder.functionCall(context.helper("classValue"), [
                 builder.literal(finalClassNames)
             ])
         );
