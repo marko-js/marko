@@ -57,6 +57,7 @@ function requireResolve(builder, path) {
 
 const helpers = {
     assign: "marko/runtime/helpers/assign",
+    merge: "marko/runtime/helpers/merge",
     attr: {
         html: "marko/runtime/html/helpers/attr",
         vdom: "marko/runtime/vdom/helpers/attr"

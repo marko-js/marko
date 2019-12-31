@@ -1,7 +1,7 @@
 "use strict";
 
 exports.d = function(value) {
-    return escape(value, '"', "&quot;");
+    return escape(value, '"', "&#34;");
 };
 
 exports.s = function(value) {
