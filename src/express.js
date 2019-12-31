@@ -1,7 +1,5 @@
 require("./");
 
-var assign = require("object-assign");
-
 var express = module.parent
     ? module.parent.require("express")
     : require("express");
@@ -44,11 +42,15 @@ function patchResponse(response) {
             var res = this;
             var req = res.req;
             var app = res.app;
-            var $global = assign({ app, req, res }, app.locals, res.locals);
+            var $global = Object.assign(
+                { app, req, res },
+                app.locals,
+                res.locals
+            );
 
             if (data) {
-                data = assign(data, {
-                    $global: assign($global, data.$global)
+                data = Object.assign(data, {
+                    $global: Object.assign($global, data.$global)
                 });
             } else {
                 data = { $global };

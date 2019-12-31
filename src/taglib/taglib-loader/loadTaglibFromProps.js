@@ -7,8 +7,7 @@ var scanTagsDir = require("./scanTagsDir");
 var markoModules = require("../../compiler/modules"); // NOTE: different implementation for browser
 var propertyHandlers = require("property-handlers");
 var jsonFileReader = require("./json-file-reader");
-var tryRequire = require("try-require");
-var resolveFrom = tryRequire("resolve-from", require);
+var resolveFrom = typeof window === "undefined" && require("resolve-from"); // Not used in the browser
 var DependencyChain = require("./DependencyChain");
 var createError = require("raptor-util/createError");
 var loaders = require("./loaders");
