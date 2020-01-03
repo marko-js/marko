@@ -4,6 +4,13 @@
 
 ## 4.18.x
 
+### 4.18.29
+
+- Fixed regression which was causing getTemplateData to be serialized.
+- Refactor helpers, fix circular deps, improve code splitting [#1468](https://github.com/marko-js/marko/pull/1468)
+- Remove unused deps, update package-lock [#1469](https://github.com/marko-js/marko/pull/1469)
+- Fixed typo in example output [#1463](https://github.com/marko-js/marko/pull/1463)
+
 ### 4.18.28
 
 - Allow support for `<state>` tag and calling `setState` on null state [#1460](https://github.com/marko-js/marko/pull/1460)
