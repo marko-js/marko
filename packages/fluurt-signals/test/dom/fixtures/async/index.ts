@@ -21,7 +21,9 @@ const renderer = register(
   (input: (typeof inputs)[number]) => {
     text("Static ");
     dynamicText(
-      computeAsync(async value => await resolveAfter(value, 1), [input.value])
+      computeAsync(async value => await resolveAfter(value, 1), [
+        input.value
+      ] as const)
     );
   }
 );
