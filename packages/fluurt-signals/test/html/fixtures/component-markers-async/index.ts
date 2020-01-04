@@ -3,17 +3,17 @@ import { resolveAfter } from "../../../utils/resolve";
 import { serverRegister } from "../../../../common/server-registry";
 
 const renderer = () => {
-  firstComponent("");
-  secondComponent("");
+  firstComponent({});
+  secondComponent({});
 };
 
-const firstComponent = serverRegister(__dirname.split("/").pop()!, () => {
+const firstComponent = serverRegister("first", () => {
   write("x");
   write("y");
   write("z");
 });
 
-const secondComponent = serverRegister(__dirname.split("/").pop()!, () => {
+const secondComponent = serverRegister("second", () => {
   write("a");
   fork(resolveAfter("b", 1), write);
   fork(resolveAfter("c", 2), write);

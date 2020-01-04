@@ -2,11 +2,11 @@ import { write } from "../../../../html/index";
 import { serverRegister } from "../../../../common/server-registry";
 
 const renderer = () => {
-  firstComponent("");
-  secondComponent("");
+  firstComponent({});
+  secondComponent({});
 };
 
-const firstComponent = serverRegister(__dirname.split("/").pop()!, () => {
+const firstComponent = serverRegister("first", () => {
   write("a");
   childComponent();
   write("d");
@@ -17,7 +17,7 @@ const childComponent = () => {
   write("c");
 };
 
-const secondComponent = serverRegister(__dirname.split("/").pop()!, () => {
+const secondComponent = serverRegister("second", () => {
   write("x");
   write("y");
   write("z");

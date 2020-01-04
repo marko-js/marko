@@ -3,11 +3,11 @@
 _flush_
 
 # write
-  fg<!M$0/><!M$2>v<!M$3>z...<!M$3/>z<!M$2/><script>[{"markerId":2,"componentId":"component-markers-placeholder","input":{}}]</script>
+  fg<!M$0/><!M$2>v<!M$3>z...<!M$3/>z<!M$2/><script>[{"markerId":0,"componentId":"first","input":{}},{"markerId":2,"componentId":"second","input":{}}]</script>
 _flush_
 
 # write
-  <t id="M$1">bcd</t><script>(M$r=REORDER_RUNTIME)(1)</script><script>[{"markerId":0,"componentId":"component-markers-placeholder","input":{}}]</script>
+  <t id="M$1">bcd</t><script>(M$r=REORDER_RUNTIME)(1)</script>
 _flush_
 
 # write
@@ -27,10 +27,7 @@ _flush_
       vwxyz
       <!--M$2/-->
       <script>
-        [{"markerId":2,"componentId":"component-markers-placeholder","input":{}}]
-      </script>
-      <script>
-        [{"markerId":0,"componentId":"component-markers-placeholder","input":{}}]
+        [{"markerId":0,"componentId":"first","input":{}},{"markerId":2,"componentId":"second","input":{}}]
       </script>
     </body>
   </html>

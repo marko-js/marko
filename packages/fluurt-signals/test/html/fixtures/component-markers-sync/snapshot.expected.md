@@ -1,5 +1,5 @@
 # write
-  <!M$0>abcd<!M$0/><!M$1>xyz<!M$1/><script>[{"markerId":0,"componentId":"component-markers-sync","input":{}},{"markerId":1,"componentId":"component-markers-sync","input":{}}]</script>
+  <!M$0>abcd<!M$0/><!M$1>xyz<!M$1/><script>[{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}}]</script>
 _flush_
 
 # end
@@ -15,7 +15,7 @@ _flush_
       xyz
       <!--M$1/-->
       <script>
-        [{"markerId":0,"componentId":"component-markers-sync","input":{}},{"markerId":1,"componentId":"component-markers-sync","input":{}}]
+        [{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}}]
       </script>
     </body>
   </html>

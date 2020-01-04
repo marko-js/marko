@@ -19,8 +19,8 @@ let buffer: string = "";
 let out: MaybeFlushable | null = null;
 let flush: typeof flushToStream | null = null;
 let promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null = null;
+let componentLookup: ComponentEntry[] = [];
 
-const componentLookup: ComponentEntry[] = [];
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
 
@@ -66,7 +66,6 @@ export function fork<T extends unknown>(
 ) {
   const currentOut = out!;
   const currentPromises = promises;
-  const currentComponentLookup: ComponentEntry[] = [];
   let currentFlush = flush!;
   let resolved = false;
 
@@ -75,6 +74,7 @@ export function fork<T extends unknown>(
   out = currentOut;
 
   let bufferedAfter: string = "";
+  const bufferedComponents: ComponentEntry[] = [];
   flush = () => {
     if (resolved) {
       currentFlush();
@@ -82,9 +82,8 @@ export function fork<T extends unknown>(
       bufferedAfter += buffer;
       if (componentLookup.length > 0) {
         componentLookup.forEach(entry => {
-          currentComponentLookup.push(entry);
+          bufferedComponents.push(entry);
         });
-        componentLookup.length = 0;
       }
       cleanup();
     }
@@ -103,11 +102,11 @@ export function fork<T extends unknown>(
           renderResult(result);
         } finally {
           buffer += bufferedAfter;
-          if (currentComponentLookup.length > 0) {
-            currentComponentLookup.forEach(entry => {
+          if (bufferedComponents.length > 0) {
+            bufferedComponents.forEach(entry => {
               componentLookup.push(entry);
             });
-            currentComponentLookup.length = 0;
+            bufferedComponents.length = 0;
           }
           const previousFlush = currentFlush;
           const childPromises = promises;
@@ -181,18 +180,26 @@ export function tryPlaceholder(
   const currentOut = out!;
   const currentBuffer = buffer;
   const currentFlush = flush!;
+  const currentComponents = componentLookup;
   let resolved = false;
   let tryContent = "";
+  const tryComponents: typeof componentLookup = [];
   flush = () => {
     if (resolved) {
       currentFlush();
     } else {
       tryContent += buffer;
+      if (componentLookup.length) {
+        componentLookup.forEach(entry => {
+          tryComponents.push(entry);
+        });
+      }
       cleanup();
     }
   };
 
   const currentPromises = promises;
+  componentLookup = [];
   promises = null;
   buffer = "";
   renderBody();
@@ -201,6 +208,7 @@ export function tryPlaceholder(
   out = currentOut;
   flush = currentFlush;
   buffer = currentBuffer;
+  componentLookup = currentComponents;
 
   if (renderedPromises) {
     const contentPromises: Array<Promise<unknown>> = [];
@@ -231,6 +239,11 @@ export function tryPlaceholder(
           Promise.all(contentPromises).then(() => {
             resolved = true;
             out = currentOut;
+            if (tryComponents.length) {
+              tryComponents.forEach(entry => {
+                componentLookup.push(entry);
+              });
+            }
             renderReplacement(write, tryContent, id);
             currentFlush();
           }),
@@ -244,6 +257,11 @@ export function tryPlaceholder(
     }
   }
 
+  if (tryComponents.length) {
+    tryComponents.forEach(entry => {
+      componentLookup.push(entry);
+    });
+  }
   promises = currentPromises;
   buffer += tryContent;
 }
@@ -271,7 +289,6 @@ export function addComponentToInit(
 function flushToStream() {
   if (componentLookup.length > 0) {
     buffer += `<script>${JSON.stringify(componentLookup)}</script>`;
-    componentLookup.length = 0;
   }
   out!.write(buffer);
   if (out!.flush) {
@@ -283,6 +300,7 @@ function flushToStream() {
 
 function cleanup() {
   out = flush = promises = null;
+  componentLookup.length = 0;
   buffer = "";
 }
 
