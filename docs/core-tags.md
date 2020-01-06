@@ -359,9 +359,10 @@ style {
   }
 }
 
-You’ll get an error with that line of Python,
-as it has one too many spaces as indentation:
-<code.lang-python marko-preserve-whitespace>    <mark> </mark>frobulate()</code>
+<p>You’ll get an error with that line of Python,
+  as it has one too many spaces as indentation:
+  <code.lang-python marko-preserve-whitespace>    <mark> </mark>frobulate()</code>
+</p>
 ```
 
 ### `marko-body`
