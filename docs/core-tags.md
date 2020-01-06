@@ -353,12 +353,15 @@ The following tags and attributes are deprecated, but you might see them in olde
 Instead, preserve whitespace with the `preserve-whitespace` attribute:
 
 ```marko
-<pre marko-preserve-whitespace>
-    who ate all the cookies??
+style {
+  .lang-python {
+    white-space: pre-wrap;
+  }
+}
 
-
-                   I      did.
-</pre>
+You’ll get an error with that line of Python,
+as it has one too many spaces as indentation:
+<code.lang-python marko-preserve-whitespace>    <mark> </mark>frobulate()</code>
 ```
 
 ### `marko-body`
