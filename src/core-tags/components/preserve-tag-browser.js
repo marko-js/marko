@@ -1,5 +1,5 @@
-var componentsUtil = require("../../runtime/components/util");
-var componentLookup = componentsUtil.___componentLookup;
+var domData = require("../../runtime/components/dom-data");
+var componentsByDOMNode = domData.___componentByDOMNode;
 
 module.exports = function render(input, out) {
     var componentsContext = out.___components;
@@ -15,8 +15,7 @@ module.exports = function render(input, out) {
             var ownerComponent = out.___assignedComponentDef.___component;
             var component = parentComponent;
             var globalComponentsContext = componentsContext.___globalContext;
-            var key = input.preserveKey;
-            var componentId;
+            var key = out.___assignedKey;
 
             // If the node is transcluded
             if (ownerComponent !== parentComponent) {
@@ -30,45 +29,37 @@ module.exports = function render(input, out) {
                 }
             }
 
-            if (key) {
-                if (component.___keyedElements[key]) {
-                    var bodyOnly = input.bodyOnly === true;
+            var existingElement = component.___keyedElements[key];
+            if (existingElement) {
+                if (input.component) {
+                    var existingComponent = componentsByDOMNode.get(
+                        existingElement
+                    );
+                    if (existingComponent) {
+                        out.___preserveComponent(existingComponent);
+                        globalComponentsContext.___renderedComponentsById[
+                            existingComponent.id
+                        ] = true;
+                    }
+                } else if (input.bodyOnly) {
                     // Don't actually render anything since the element is already in the DOM,
                     // but keep track that the node is being preserved so that we can ignore
                     // it while transforming the old DOM
-                    if (bodyOnly) {
-                        globalComponentsContext.___preservedElBodies[
-                            component.id + "-" + key
-                        ] = true;
-                    } else {
-                        // If we are preserving the entire DOM node (not just the body)
-                        // then that means that we have need to render a placeholder to
-                        // mark the target location. We can then replace the placeholder
-                        // node with the existing DOM node
-                        out.element(
-                            "",
-                            null,
-                            key,
-                            null,
-                            0,
-                            2 /* FLAG_PRESERVE */
-                        );
-                        globalComponentsContext.___preservedEls[
-                            component.id + "-" + key
-                        ] = true;
-                    }
-
-                    return;
-                }
-            } else if ((componentId = input.cid)) {
-                var existingComponent = componentLookup[componentId];
-                if (existingComponent) {
-                    out.___preserveComponent(existingComponent);
-                    globalComponentsContext.___renderedComponentsById[
-                        componentId
+                    globalComponentsContext.___preservedElBodies[
+                        component.id + "-" + key
                     ] = true;
-                    return;
+                } else {
+                    // If we are preserving the entire DOM node (not just the body)
+                    // then that means that we have need to render a placeholder to
+                    // mark the target location. We can then replace the placeholder
+                    // node with the existing DOM node
+                    out.element("", null, key, null, 0, 2 /* FLAG_PRESERVE */);
+                    globalComponentsContext.___preservedEls[
+                        component.id + "-" + key
+                    ] = true;
                 }
+
+                return;
             }
         }
     }
