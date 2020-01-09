@@ -15,34 +15,37 @@ interface ComponentEntry {
 }
 
 type MaybeFlushable = Writable & { flush?(): void };
-let buffer: string = "";
-let out: MaybeFlushable | null = null;
-let flush: typeof flushToStream | null = null;
-let promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null = null;
-let componentLookup: ComponentEntry[] = [];
+let $_buffer: Buffer | null = null;
+let $_stream: MaybeFlushable | null = null;
+let $_flush: typeof flushToStream | null = null;
+let $_promises: Array<
+  Promise<unknown> & { isPlaceholder?: true }
+> | null = null;
 
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
 
 export function nextId() {
-  const id = uids.get(out!)! + 1 || 0;
-  uids.set(out!, id);
+  const id = uids.get($_stream!)! + 1 || 0;
+  uids.set($_stream!, id);
   return id;
 }
 
 export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
   return async (input: Input, stream: MaybeFlushable) => {
-    out = stream;
-    flush = flushToStream;
+    $_buffer = createBuffer();
+    $_stream = stream;
+    $_flush = flushToStream;
 
     try {
-      let renderedPromises: typeof promises;
+      let renderedPromises: typeof $_promises;
       try {
         renderer(input);
       } finally {
-        renderedPromises = promises;
-        flush();
+        renderedPromises = $_promises;
+        $_flush();
+        clearContext();
       }
 
       if (renderedPromises) {
@@ -57,78 +60,54 @@ export function createRenderer(renderer: Renderer) {
 }
 
 export function write(data: string) {
-  buffer += data;
+  $_buffer!.content += data;
 }
 
 export function fork<T extends unknown>(
   promise: Promise<T>,
   renderResult: (result: T) => void
 ) {
-  const currentOut = out!;
-  const currentPromises = promises;
-  let currentFlush = flush!;
+  $_flush!();
+
   let resolved = false;
+  let targetFlush = $_flush!;
+  const forkedBuffer = createBuffer();
 
-  // Child component lookup
-  currentFlush();
-  out = currentOut;
-
-  let bufferedAfter: string = "";
-  const bufferedComponents: ComponentEntry[] = [];
-  flush = () => {
-    if (resolved) {
-      currentFlush();
-    } else {
-      bufferedAfter += buffer;
-      if (componentLookup.length > 0) {
-        componentLookup.forEach(entry => {
-          bufferedComponents.push(entry);
-        });
-      }
-      cleanup();
-    }
-  };
-
-  promises = currentPromises || [];
-  promises.push(
-    promise.then(
-      async result => {
-        buffer = "";
+  $_promises = $_promises || [];
+  $_promises.push(
+    resolveWithContext(
+      promise,
+      result => {
         resolved = true;
-        out = currentOut;
-        flush = currentFlush;
-
         try {
           renderResult(result);
         } finally {
-          buffer += bufferedAfter;
-          if (bufferedComponents.length > 0) {
-            bufferedComponents.forEach(entry => {
-              componentLookup.push(entry);
-            });
-            bufferedComponents.length = 0;
+          mergeBuffers(forkedBuffer, $_buffer!);
+          if ($_promises) {
+            const originalTargetFlush = targetFlush;
+            targetFlush = $_flush!;
+            Promise.all($_promises).then(
+              () => (targetFlush = originalTargetFlush)
+            );
           }
-          const previousFlush = currentFlush;
-          const childPromises = promises;
-          currentFlush = flush;
-          flush();
-
-          if (childPromises) {
-            await Promise.all(childPromises);
-          }
-
-          currentFlush = previousFlush;
         }
       },
       err => {
         resolved = true;
-        out = currentOut;
-        buffer = bufferedAfter;
-        currentFlush();
+        $_buffer = forkedBuffer;
+        $_flush = targetFlush;
         throw err;
       }
     )
   );
+
+  $_flush = () => {
+    if (resolved) {
+      targetFlush();
+    } else {
+      mergeBuffers($_buffer!, forkedBuffer);
+    }
+  };
 }
 
 export function tryCatch(
@@ -136,39 +115,47 @@ export function tryCatch(
   renderError: (err: Error) => void
 ) {
   const id = nextId();
-  const currentOut = out!;
-  const currentFlush = flush!;
   let err: Error | null = null;
-  let currentPromises = promises;
 
-  markReplaceStart(id);
+  const originalPromises = $_promises;
+  const originalBuffer = $_buffer!;
+  const originalFlush = $_flush!;
+  const tryBuffer = createBuffer();
+
+  $_flush = () => {
+    $_buffer = originalBuffer;
+    $_flush = originalFlush;
+    markReplaceStart(id);
+    mergeBuffers(tryBuffer, $_buffer);
+    $_flush();
+  };
 
   try {
-    promises = null;
+    $_buffer = tryBuffer;
+    $_promises = null;
     renderBody();
-    if (promises) {
-      currentPromises = currentPromises || [];
-      currentPromises.push(
-        Promise.all(promises).catch(asyncErr => {
-          out = currentOut;
-          flush = currentFlush;
-
-          try {
-            renderReplacement(renderError, asyncErr, id);
-            return promises && Promise.all(promises);
-          } finally {
-            flush();
-          }
-        })
-      );
-    }
   } catch (_err) {
     err = _err;
   } finally {
-    markReplaceEnd(id);
-    promises = currentPromises;
+    const childPromises = $_promises;
+    $_promises = originalPromises;
+
     if (err) {
-      renderReplacement(renderError, err, id);
+      $_buffer = originalBuffer;
+      $_flush = originalFlush;
+      renderError(err);
+    } else if (!childPromises) {
+      $_buffer = originalBuffer;
+      $_flush = originalFlush;
+      mergeBuffers(tryBuffer, $_buffer);
+    } else {
+      markReplaceEnd(id);
+      $_promises = $_promises || [];
+      $_promises.push(
+        resolveWithContext(Promise.all(childPromises), null, asyncErr => {
+          renderReplacement(renderError, asyncErr, id);
+        })
+      );
     }
   }
 }
@@ -177,45 +164,37 @@ export function tryPlaceholder(
   renderBody: () => void,
   renderPlaceholder: () => void
 ) {
-  const currentOut = out!;
-  const currentBuffer = buffer;
-  const currentFlush = flush!;
-  const currentComponents = componentLookup;
+  const originalBuffer = $_buffer!;
+  const originalPromises = $_promises;
+  const originalFlush = $_flush!;
+  const asyncBuffer = createBuffer();
+
   let resolved = false;
-  let tryContent = "";
-  const tryComponents: typeof componentLookup = [];
-  flush = () => {
+  const targetFlush = originalFlush;
+  $_flush = () => {
     if (resolved) {
-      currentFlush();
+      targetFlush();
     } else {
-      tryContent += buffer;
-      if (componentLookup.length) {
-        componentLookup.forEach(entry => {
-          tryComponents.push(entry);
-        });
-      }
-      cleanup();
+      mergeBuffers($_buffer!, asyncBuffer);
     }
   };
+  $_buffer = createBuffer();
+  $_promises = null;
 
-  const currentPromises = promises;
-  componentLookup = [];
-  promises = null;
-  buffer = "";
   renderBody();
-  const renderedPromises: typeof currentPromises = promises;
-  flush();
-  out = currentOut;
-  flush = currentFlush;
-  buffer = currentBuffer;
-  componentLookup = currentComponents;
+  $_flush();
 
-  if (renderedPromises) {
+  const childPromises = $_promises!;
+  $_buffer = originalBuffer;
+  $_promises = originalPromises;
+  $_flush = originalFlush;
+
+  if (childPromises) {
     const contentPromises: Array<Promise<unknown>> = [];
     const placeholderPromises: Array<
       Promise<unknown> & { isPlaceholder: true }
     > = [];
-    for (const promise of renderedPromises!) {
+    for (const promise of childPromises) {
       if (promise.isPlaceholder) {
         placeholderPromises.push(promise as Promise<unknown> & {
           isPlaceholder: true;
@@ -226,26 +205,19 @@ export function tryPlaceholder(
     }
 
     if (placeholderPromises.length) {
-      (promises = currentPromises || []).push(...placeholderPromises);
+      ($_promises = originalPromises || []).push(...placeholderPromises);
     } else {
-      promises = currentPromises;
+      $_promises = originalPromises;
     }
 
     if (contentPromises.length) {
       const id = nextId();
-      promises = promises || [];
-      promises.push(
+      $_promises = $_promises || [];
+      $_promises.push(
         Object.assign(
-          Promise.all(contentPromises).then(() => {
+          resolveWithContext(Promise.all(contentPromises), () => {
             resolved = true;
-            out = currentOut;
-            if (tryComponents.length) {
-              tryComponents.forEach(entry => {
-                componentLookup.push(entry);
-              });
-            }
-            renderReplacement(write, tryContent, id);
-            currentFlush();
+            renderReplacement(mergeBuffers, asyncBuffer, id);
           }),
           { isPlaceholder: true } as const
         )
@@ -257,21 +229,15 @@ export function tryPlaceholder(
     }
   }
 
-  if (tryComponents.length) {
-    tryComponents.forEach(entry => {
-      componentLookup.push(entry);
-    });
-  }
-  promises = currentPromises;
-  buffer += tryContent;
+  mergeBuffers(asyncBuffer, originalBuffer);
 }
 
 export function markReplaceStart(id: number) {
-  return (buffer += `<!${marker(id)}>`);
+  return ($_buffer!.content += `<!${marker(id)}>`);
 }
 
 export function markReplaceEnd(id: number) {
-  return (buffer += `<!${marker(id)}/>`);
+  return ($_buffer!.content += `<!${marker(id)}/>`);
 }
 
 export function addComponentToInit(
@@ -279,7 +245,8 @@ export function addComponentToInit(
   inputValue: Record<string, unknown>,
   __filename: string
 ) {
-  componentLookup.push({
+  $_buffer!.components = $_buffer!.components || [];
+  $_buffer!.components.push({
     markerId: id,
     componentId: __filename,
     input: inputValue
@@ -287,34 +254,105 @@ export function addComponentToInit(
 }
 
 function flushToStream() {
-  if (componentLookup.length > 0) {
-    buffer += `<script>${JSON.stringify(componentLookup)}</script>`;
+  if ($_buffer!.components) {
+    $_buffer!.content += `<script>${JSON.stringify(
+      $_buffer!.components
+    )}</script>`;
   }
-  out!.write(buffer);
-  if (out!.flush) {
-    out!.flush();
+  $_stream!.write($_buffer!.content);
+  if ($_stream!.flush) {
+    $_stream!.flush();
   }
-
-  cleanup();
-}
-
-function cleanup() {
-  out = flush = promises = null;
-  componentLookup.length = 0;
-  buffer = "";
+  clearBuffer($_buffer!);
 }
 
 function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
   let runtimeCall = `${runtimeId}$r`;
-  if (!runtimeFlushed.has(out!)) {
+  if (!runtimeFlushed.has($_stream!)) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
-    runtimeFlushed.add(out!);
+    runtimeFlushed.add($_stream!);
   }
-  buffer += `<t id="${marker(id)}">`;
+  $_buffer!.content += `<t id="${marker(id)}">`;
   render(data);
-  buffer += `</t><script>${runtimeCall}(${id})</script>`;
+  $_buffer!.content += `</t><script>${runtimeCall}(${id})</script>`;
 }
 
 function marker(id: number) {
   return `${runtimeId}$${id}`;
+}
+
+interface Buffer {
+  content: string;
+  components: ComponentEntry[] | null;
+}
+
+function createBuffer() {
+  return {
+    content: "",
+    components: null
+  } as Buffer;
+}
+
+function mergeBuffers(source: Buffer, target: Buffer = $_buffer!) {
+  target.content += source.content;
+  if (source.components) {
+    if (target.components) {
+      for (let i = 0, length = source.components.length; i < length; i++) {
+        target.components.push(source.components[i]);
+      }
+    } else {
+      target.components = source.components;
+    }
+  }
+  clearBuffer(source);
+}
+
+function clearBuffer(buffer: Buffer) {
+  buffer.content = "";
+  buffer.components = null;
+}
+
+function clearContext() {
+  $_buffer = $_promises = $_stream = $_flush = null;
+}
+
+function resolveWithContext<T>(
+  promise: Promise<T>,
+  onResolve: null | ((r: T) => unknown),
+  onReject?: (e: Error) => unknown
+) {
+  const originalStream = $_stream;
+  const originalBuffer = $_buffer;
+  const originalFlush = $_flush;
+
+  return promise.then(
+    onResolve &&
+      (result => {
+        $_stream = originalStream;
+        $_buffer = originalBuffer;
+        $_flush = originalFlush;
+
+        try {
+          onResolve(result);
+          return $_promises && Promise.all($_promises);
+        } finally {
+          $_flush!();
+          clearContext();
+        }
+      }),
+    onReject &&
+      (error => {
+        $_stream = originalStream;
+        $_buffer = originalBuffer;
+        $_flush = originalFlush;
+
+        try {
+          onReject(error);
+          return $_promises && Promise.all($_promises);
+        } finally {
+          $_flush!();
+          clearContext();
+        }
+      })
+  );
 }
