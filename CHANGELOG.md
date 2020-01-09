@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.30
+
+- Fix regression with browser remap for legacy widgets. [#1471](https://github.com/marko-js/marko/pull/1471)
+
 ### 4.18.29
 
 - Fixed regression which was causing getTemplateData to be serialized.
