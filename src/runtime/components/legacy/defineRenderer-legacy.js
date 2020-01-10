@@ -91,14 +91,6 @@ module.exports = function defineRenderer(renderingLogic) {
                     newProps = getInitialProps(newProps, out) || {};
                 }
 
-                if (getWidgetConfig) {
-                    // If getWidgetConfig() was implemented then use that to
-                    // get the widget config. The widget config will be passed
-                    // to the widget constructor. If rendered on the server the
-                    // widget config will be serialized.
-                    widgetConfig = getWidgetConfig(newProps, out);
-                }
-
                 if (getInitialState) {
                     // This optional method is used to derive the widget state
                     // from the input properties
@@ -161,6 +153,15 @@ module.exports = function defineRenderer(renderingLogic) {
             if (widgetBody) {
                 templateData.renderBody = widgetBody;
             }
+
+            if (isReceivingNewInput && getWidgetConfig) {
+                // If getWidgetConfig() was implemented then use that to
+                // get the widget config. The widget config will be passed
+                // to the widget constructor. If rendered on the server the
+                // widget config will be serialized.
+                widgetConfig = getWidgetConfig(newProps, out);
+            }
+
             if (widgetConfig) {
                 // eslint-disable-next-line no-constant-condition
                 if ("MARKO_DEBUG") {
