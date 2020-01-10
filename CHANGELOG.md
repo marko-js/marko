@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.31
+
+- Fix legacy render lifecycle order to match marko-widgets@6. [#1472](https://github.com/marko-js/marko/pull/1472)
+
 ### 4.18.30
 
 - Fix regression with browser remap for legacy widgets. [#1471](https://github.com/marko-js/marko/pull/1471)
