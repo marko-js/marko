@@ -1,5 +1,5 @@
 module.exports = function(helpers, done) {
-    var template = require("./template.marko");
+    var template = require("./template.marko").default;
 
     template.render({ $global: { cspNonce: "abc123" } }, function(err, html) {
         if (!/<script.*nonce="abc123".*>/.test(html)) {

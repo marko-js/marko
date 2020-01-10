@@ -1,4 +1,4 @@
-var AppHello = require("../app-hello");
+var AppHello = require("../app-hello").default;
 
 module.exports = function(input, out) {
     var asyncOut = out.beginAsync();

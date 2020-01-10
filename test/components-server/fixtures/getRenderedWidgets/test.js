@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 var markoComponents = require("marko/components");
 
 module.exports = function(helpers, done) {
-    var template = require("./index.marko");
+    var template = require("./index.marko").default;
 
     template.renderToString({}, function(err, html, out) {
         if (err) {
