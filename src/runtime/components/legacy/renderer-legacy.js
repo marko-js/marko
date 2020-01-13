@@ -43,11 +43,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
-            if (parentComponentDef) {
-                if (key != null) {
-                    key = key.toString();
-                }
-                id = id || resolveComponentKey(key, parentComponentDef);
+            if (key != null) {
+                id =
+                    id ||
+                    resolveComponentKey(key.toString(), parentComponentDef);
             } else if (parentComponentDef) {
                 id = parentComponentDef.___nextComponentId();
             } else {
