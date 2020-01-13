@@ -65,13 +65,16 @@ module.exports = function defineRenderer(renderingLogic) {
             var id;
 
             if (!component && componentLookup) {
-                if ((parentComponentDef = componentsContext.___componentDef)) {
-                    var key = out.___assignedKey;
+                var key = out.___assignedKey;
 
-                    if (key != null) {
-                        key = key.toString();
-                    }
-                    id = resolveComponentKey(key, parentComponentDef);
+                if (
+                    (parentComponentDef = componentsContext.___componentDef) &&
+                    key != null
+                ) {
+                    id = resolveComponentKey(
+                        key.toString(),
+                        parentComponentDef
+                    );
                 } else if (parentComponentDef) {
                     id = parentComponentDef.___nextComponentId();
                 } else {
