@@ -1,5 +1,5 @@
 import { Writable } from "stream";
-import { Renderer } from "../common/types";
+import { Renderer, HydrateInstance } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
 const runtimeId = "M";
@@ -7,12 +7,6 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId
 );
-
-interface ComponentEntry {
-  markerId: number;
-  componentId: string;
-  input: Record<string, unknown>;
-}
 
 type MaybeFlushable = Writable & { flush?(): void };
 let $_buffer: Buffer | null = null;
@@ -241,23 +235,19 @@ export function markReplaceEnd(id: number) {
 }
 
 export function addComponentToInit(
-  id: number,
-  inputValue: Record<string, unknown>,
-  __filename: string
+  markerId: number,
+  inputData: Record<string, unknown>,
+  componentType: string
 ) {
   $_buffer!.components = $_buffer!.components || [];
-  $_buffer!.components.push({
-    markerId: id,
-    componentId: __filename,
-    input: inputValue
-  });
+  $_buffer!.components.push([markerId, componentType, inputData]);
 }
 
 function flushToStream() {
   if ($_buffer!.components) {
-    $_buffer!.content += `<script>${JSON.stringify(
+    $_buffer!.content += `<script>${runtimeId}$c=(window.${runtimeId}$c||[]).concat(${JSON.stringify(
       $_buffer!.components
-    )}</script>`;
+    )})</script>`;
   }
   $_stream!.write($_buffer!.content);
   if ($_stream!.flush) {
@@ -283,7 +273,7 @@ function marker(id: number) {
 
 interface Buffer {
   content: string;
-  components: ComponentEntry[] | null;
+  components: HydrateInstance[] | null;
 }
 
 function createBuffer() {

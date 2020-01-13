@@ -1,5 +1,5 @@
 # write
-  <!M$0>abcd<!M$0/><!M$1>xyz<!M$1/><script>[{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}}]</script>
+  <!M$0>abcd<!M$0/><!M$1>xyz<!M$1/><script>M$c=(window.M$c||[]).concat([[0,"first",{}],[1,"second",{}]])</script>
 _flush_
 
 # end
@@ -15,7 +15,7 @@ _flush_
       xyz
       <!--M$1/-->
       <script>
-        [{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}}]
+        M$c=(window.M$c||[]).concat([[0,"first",{}],[1,"second",{}]])
       </script>
     </body>
   </html>

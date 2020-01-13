@@ -3,7 +3,7 @@
 _flush_
 
 # write
-  a<!M$0/><!M$1>b<!M$1/><!M$2>c<!M$2/><script>[{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}},{"markerId":2,"componentId":"third","input":{}}]</script>
+  a<!M$0/><!M$1>b<!M$1/><!M$2>c<!M$2/><script>M$c=(window.M$c||[]).concat([[0,"first",{}],[1,"second",{}],[2,"third",{}]])</script>
 _flush_
 
 # end
@@ -22,7 +22,7 @@ _flush_
       c
       <!--M$2/-->
       <script>
-        [{"markerId":0,"componentId":"first","input":{}},{"markerId":1,"componentId":"second","input":{}},{"markerId":2,"componentId":"third","input":{}}]
+        M$c=(window.M$c||[]).concat([[0,"first",{}],[1,"second",{}],[2,"third",{}]])
       </script>
     </body>
   </html>

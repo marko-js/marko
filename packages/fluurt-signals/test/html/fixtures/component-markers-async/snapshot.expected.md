@@ -1,5 +1,5 @@
 # write
-  <!M$0>xyz<!M$0/><!M$1>a<script>[{"markerId":0,"componentId":"first","input":{}}]</script>
+  <!M$0>xyz<!M$0/><!M$1>a<script>M$c=(window.M$c||[]).concat([[0,"first",{}]])</script>
 _flush_
 
 # write
@@ -7,7 +7,7 @@ _flush_
 _flush_
 
 # write
-  c<!M$1/><script>[{"markerId":1,"componentId":"second","input":{}}]</script>
+  c<!M$1/><script>M$c=(window.M$c||[]).concat([[1,"second",{}]])</script>
 _flush_
 
 # end
@@ -22,12 +22,12 @@ _flush_
       <!--M$1-->
       a
       <script>
-        [{"markerId":0,"componentId":"first","input":{}}]
+        M$c=(window.M$c||[]).concat([[0,"first",{}]])
       </script>
       bc
       <!--M$1/-->
       <script>
-        [{"markerId":1,"componentId":"second","input":{}}]
+        M$c=(window.M$c||[]).concat([[1,"second",{}]])
       </script>
     </body>
   </html>

@@ -8,3 +8,9 @@ export type Renderer = ((
 };
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
+
+export type HydrateInstance = [
+  number, // markerId
+  string, // componentType
+  Record<string, unknown> // inputData
+];

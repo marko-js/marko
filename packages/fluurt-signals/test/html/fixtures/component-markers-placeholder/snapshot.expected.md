@@ -3,7 +3,7 @@
 _flush_
 
 # write
-  fg<!M$0/><!M$2>v<!M$3>z...<!M$3/>z<!M$2/><script>[{"markerId":0,"componentId":"first","input":{}},{"markerId":2,"componentId":"second","input":{}}]</script>
+  fg<!M$0/><!M$2>v<!M$3>z...<!M$3/>z<!M$2/><script>M$c=(window.M$c||[]).concat([[0,"first",{}],[2,"second",{}]])</script>
 _flush_
 
 # write
@@ -27,7 +27,7 @@ _flush_
       vwxyz
       <!--M$2/-->
       <script>
-        [{"markerId":0,"componentId":"first","input":{}},{"markerId":2,"componentId":"second","input":{}}]
+        M$c=(window.M$c||[]).concat([[0,"first",{}],[2,"second",{}]])
       </script>
     </body>
   </html>
