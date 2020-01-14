@@ -16,7 +16,8 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   runtimeId
 );
 
-describe("E2E", () => {
+describe("E2E", function() {
+  this.timeout(10000);
   fs.readdirSync(FIXTURES_DIR)
     .filter(entry => !/\.skip$/.test(entry))
     .map(entry => {
