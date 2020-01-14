@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.32
+
+- Return the component id if no key is passed to getElId/elId. [#1474](https://github.com/marko-js/marko/pull/1474)
+
 ### 4.18.31
 
 - Fix legacy render lifecycle order to match marko-widgets@6. [#1472](https://github.com/marko-js/marko/pull/1472)
