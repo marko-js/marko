@@ -238,6 +238,9 @@ Component.prototype = componentProto = {
         }
     },
     getElId: function(key, index) {
+        if (!key) {
+            return this.id;
+        }
         return resolveComponentIdHelper(this, key, index);
     },
     getEl: function(key, index) {
