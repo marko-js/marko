@@ -51,7 +51,7 @@
     "ci:report": "cat coverage/lcov.info | coveralls",
     "ci:test": "nyc npm test",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
-    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '**/*.ts'",
+    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '{common,dom,html,test}'",
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "size": "npm run build && minified-size --json ./build/dom.esm.js",

@@ -13,5 +13,5 @@
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true
   },
-  "include": ["**/*.ts"]
+  "include": ["common/**/*.ts", "dom/**/*.ts", "html/**/*.ts", "test/**/*.ts"]
 }
