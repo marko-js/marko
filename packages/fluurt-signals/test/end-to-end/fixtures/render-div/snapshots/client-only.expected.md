@@ -1,5 +1,4 @@
 # Render {"start":10}
-
 ```html
 <div>
   10
@@ -10,13 +9,12 @@
 ```
 
 # Mutations
-
 ```
 inserted #text0, div1, button2, #text3
 ```
 
-# Render
 
+# Render 
 () => button.click()
 
 ```html
@@ -29,7 +27,6 @@ inserted #text0, div1, button2, #text3
 ```
 
 # Mutations
-
 ```
 div1/#text0: "10" => "11"
 ```

@@ -6,4 +6,4 @@ node_modules
 coverage
 build
 snapshot.*.md
-snapshots/*.md
+**/snapshots/*.md

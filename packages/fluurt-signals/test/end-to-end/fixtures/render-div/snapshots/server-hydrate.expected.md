@@ -1,9 +1,8 @@
 # Write
-
   <body><!M$0><div>10</div><button>increment</button><!M$0/></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
 
-# Render "Flush"
 
+# Render "Flush"
 ```html
 <html>
   <head />
@@ -17,14 +16,13 @@
     </button>
     <!--M$0/-->
     <script>
-      M$c = (window.M$c || []).concat([[0, "counter", { start: 10 }]]);
+      M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])
     </script>
   </body>
 </html>
 ```
 
 # Mutations
-
 ```
 inserted html0
 inserted html0/head0
@@ -39,8 +37,8 @@ inserted html0/body1/script4
 inserted html0/body1/script4/#text0
 ```
 
-# Render "End"
 
+# Render "End"
 ```html
 <html>
   <head />
@@ -59,13 +57,12 @@ inserted html0/body1/script4/#text0
 ```
 
 # Mutations
-
 ```
 removed #text in html0/body1/script4
 ```
 
-# Render "Hydrate"
 
+# Render "Hydrate"
 ```html
 <html>
   <head />
@@ -82,14 +79,13 @@ removed #text in html0/body1/script4
 ```
 
 # Mutations
-
 ```
 removed #comment before html0/body1/div0
 removed #comment after html0/body1/button1
 ```
 
-# Render
 
+# Render 
 () => button.click()
 
 ```html
@@ -108,7 +104,6 @@ removed #comment after html0/body1/button1
 ```
 
 # Mutations
-
 ```
 html0/body1/div0/#text0: "10" => "11"
 ```
