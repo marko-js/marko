@@ -1,7 +1,21 @@
 <!-- test/migrate/fixtures/w-on/template.marko -->
 
 <marko-migration-flags legacyWidgetAttrsWithoutBind/>
-<div onClick("handleClick")>
-    <input onChange("handleChange")/>
+<div
+    on-click("handleClick")
+    on-change("handleChange")
+    on-dash-case("...")
+    on-dash-case("...")
+    on-camelcase("...")
+    on-pascalcase("...")>
     Hello World
 </div>
+<some-tag
+    on-click("handleClick")
+    on-change("handleChange")
+    on-dash-case("...")
+    on-dash-case("...")
+    on-camelCase("...")
+    on-PascalCase("...")>
+    Hello World
+</some-tag>

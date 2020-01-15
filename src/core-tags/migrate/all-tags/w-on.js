@@ -19,9 +19,21 @@ module.exports = function migrate(el, context) {
             context.setMigrationFlag("legacyWidgetAttrsWithoutBind");
         }
 
-        name = name.substring("w-on".length);
-        if (name.startsWith("-")) name = name.substring("-".length);
-        attr.name = `on${name.charAt(0).toUpperCase() + name.slice(1)}`;
+        name = name.slice("w-on".length);
+        const isNativeTag = el.tagDef && el.tagDef.html;
+        const isCamelCase = name[0] !== "-";
+
+        if (isNativeTag) {
+            name = name.toLowerCase();
+        } else if (isCamelCase) {
+            name = name[0].toLowerCase() + name.slice(1);
+        }
+
+        if (isCamelCase) {
+            name = "-" + name;
+        }
+
+        attr.name = `on${name}`;
         attr.argument = printJS(attr.value, context);
         attr.value = null;
     });
