@@ -4,9 +4,14 @@
 
 ## 4.18.x
 
+### 4.18.33
+
+- Fix event name case normalization for legacy components with `w-on`. [#1475](https://github.com/marko-js/marko/pull/1475)
+
 ### 4.18.32
 
 - Return the component id if no key is passed to getElId/elId. [#1474](https://github.com/marko-js/marko/pull/1474)
+- Support having nullish keys in the legacy (v3) renderer. [#1473](https://github.com/marko-js/marko/pull/1473)
 
 ### 4.18.31
 
