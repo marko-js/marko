@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.34
+
+- Improve legacy widgets assigning into state causing a replace instead of merge. [#1476](https://github.com/marko-js/marko/pull/1476)
+
 ### 4.18.33
 
 - Fix event name case normalization for legacy components with `w-on`. [#1475](https://github.com/marko-js/marko/pull/1475)
