@@ -4,8 +4,7 @@ const Node = require("../../Node");
 const vdomUtil = require("../../../util/vdom");
 
 const FLAG_SIMPLE_ATTRS = 1;
-// const FLAG_PRESERVE = 2;
-// const FLAG_CUSTOM_ELEMENT = 4;
+// const FLAG_CUSTOM_ELEMENT = 2;
 
 let CREATE_ARGS_COUNT = 0;
 const INDEX_TAG_NAME = CREATE_ARGS_COUNT++;
