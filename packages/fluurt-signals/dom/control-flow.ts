@@ -151,18 +151,18 @@ export function loopFrom(
 
 export function conditional(render: MaybeSignal<(() => void) | undefined>) {
   if (isSignal(render)) {
-    let previousFragment = beginFragment();
-    let signalRanSync = false;
+    let previousFragment: Fragment;
+    let pendingRender = true;
 
     const fragmentSignal = createComputation(
+      // TODO: hoist out this function and compare benchmarks
       (_render, ns) => {
-        const fragment = (currentNode || beginFragment()) as Fragment;
+        const fragment = beginFragment();
         if (_render) {
           setNS(ns);
           _render();
-          endNS();
         }
-        signalRanSync = true;
+        pendingRender = false;
         endFragment(fragment);
         return fragment;
       },
@@ -171,17 +171,18 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
 
     createEffect(
       nextFragment => {
-        if (nextFragment !== previousFragment) {
+        if (previousFragment) {
           replaceFragment(previousFragment, nextFragment);
-          previousFragment = nextFragment;
         }
+
+        previousFragment = nextFragment;
       },
       [fragmentSignal] as const,
-      (fragmentSignal as Signal).___sid
+      (fragmentSignal as Signal).___sid // TODO: let's add a comment as to why this is needed.
     );
 
-    if (!signalRanSync) {
-      endFragment(previousFragment);
+    if (pendingRender) {
+      endFragment((previousFragment = beginFragment()));
     }
   } else if (render) {
     render();
