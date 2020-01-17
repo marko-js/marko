@@ -166,7 +166,7 @@ export function createComputation<V, T extends Deps>(
   type: typeof COMPUTED | typeof ASYNC_COMPUTED = COMPUTED
 ) {
   for (const dep of deps) {
-    if (isSignal(dep)) {
+    if (isSignal(dep) || type === ASYNC_COMPUTED) {
       // We have signal dependencies so we need a computation
       const computation = createSignal<V, T>(
         undefined!,
@@ -194,9 +194,11 @@ function originalCreateAsyncComputedValue<V, T extends Deps>(
   handlePendingDeps = _handlePendingDeps;
   handlePendingSignals = _handlePendingSignals;
   handlePendingBatches = _handlePendingBatches;
-  return (createComputation<V, T>(fn, deps, ASYNC_COMPUTED) as any) as
-    | Promise<V>
-    | AsyncComputation<V, T>;
+  return (createComputation<V, T>(
+    fn,
+    deps,
+    ASYNC_COMPUTED
+  ) as any) as AsyncComputation<V, T>;
 }
 
 export function createEffect<T extends Deps>(
