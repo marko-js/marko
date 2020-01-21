@@ -121,7 +121,7 @@ function queueDependents(dependents: Record<string, Signal>) {
 function updateSignal<V, T extends Deps>(computedValue: Computation<V, T>) {
   const fn = computedValue.___fn;
   const deps = computedValue.___deps;
-  const args = deps.map(get);
+  const args = deps.map(dep => get(dep, true));
   if (!handlePendingDeps(computedValue, deps, args)) {
     setSignalValue(computedValue, fn(...(args as any)));
   }
@@ -144,17 +144,20 @@ function _handlePendingDeps<V>(
   }
   if (hasPendingDeps || async) {
     let computed: V;
+    const storedBatch = batch;
     const id = computation.___sid;
     const values = batch.___values;
     batch.___pending[id] = batch.___signals[id] = computation;
     values[id] = (hasPendingDeps
       ? Promise.all(args).then(resolved => {
+          batch = storedBatch;
           computed = fn(...resolved) as V;
+          batch = undefined as any;
           return async && computed;
         })
       : (fn(...args) as Promise<V>)
     ).then(result => {
-      values[id] = async ? result : computed;
+      return (values[id] = async ? result : computed);
     });
     return true;
   }
@@ -248,13 +251,13 @@ export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
   return object;
 }
 
-export function get<T>(value: MaybeSignal<T>): T {
+export function get<T>(value: MaybeSignal<T>, allowPending?: true): T {
   if (isSignal(value)) {
     let id: number;
     if (
       batch &&
       batch.___values.hasOwnProperty((id = value.___sid)) &&
-      !batch.___pending[id]
+      (allowPending || !batch.___pending[id])
     ) {
       value = batch.___values[id] as T;
     } else {

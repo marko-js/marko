@@ -10,14 +10,7 @@ import {
 } from "./signals";
 import { Fragment, replaceFragment } from "./fragments";
 import { reconcile } from "./reconcile";
-import {
-  beginFragment,
-  endFragment,
-  currentNS,
-  setNS,
-  endNS,
-  currentNode
-} from "./dom";
+import { beginFragment, endFragment, currentNS, setNS, endNS } from "./dom";
 import { createPool } from "./utils";
 
 type ForIterationFragment<T> = Fragment & {
@@ -38,20 +31,22 @@ export function loopOf<T>(
   if (isSignal(array)) {
     const rootFragment = beginFragment();
     const ns = currentNS;
-    let firstRender = true;
-    let oldNodes: Map<string, Fragment> = mapPool.get();
+    let oldNodes: Map<string, Fragment> | undefined;
     let oldKeys: string[] = [];
+    let pendingRender = true;
 
     const newNodes = createComputation(
       _array => {
         let index = 0;
         const _newNodes = mapPool.get();
 
+        pendingRender = false;
+
         for (const item of _array) {
           const key = getKey ? getKey(item, index) : "" + index;
-          const previousChildFragment = oldNodes.get(
-            key
-          ) as ForIterationFragment<typeof item>;
+          const previousChildFragment =
+            oldNodes &&
+            (oldNodes.get(key) as ForIterationFragment<typeof item>);
           if (!previousChildFragment) {
             const childFragment = beginFragment() as ForIterationFragment<T>;
             const itemSignal = (childFragment.itemSignal = createSignal(item));
@@ -76,26 +71,33 @@ export function loopOf<T>(
       [array]
     ) as Signal<Map<string, Fragment>>;
 
+    rootFragment.___tracked.delete(newNodes);
+    if (rootFragment.___parentFragment) {
+      rootFragment.___parentFragment.___tracked.add(newNodes);
+    }
+
     createEffect(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
 
-        if (!firstRender) {
+        if (oldNodes) {
           reconcile(rootFragment, oldKeys, oldNodes, newKeys, _newNodes);
+          oldNodes.clear();
+          mapPool.push(oldNodes);
         }
-
-        oldNodes.clear();
-        mapPool.push(oldNodes);
 
         oldKeys = newKeys;
         oldNodes = _newNodes;
-        firstRender = false;
       },
       [newNodes],
       newNodes.___sid
     );
 
     endFragment(rootFragment);
+
+    if (pendingRender) {
+      oldNodes = mapPool.get();
+    }
   } else {
     let index = 0;
     for (const item of array) {
