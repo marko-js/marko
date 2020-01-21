@@ -1,4 +1,4 @@
-import { currentFragment } from "./dom";
+import { parentFragment } from "./dom";
 
 let sid = 0;
 let bid = 0;
@@ -178,8 +178,8 @@ export function createComputation<V, T extends Deps>(
         deps
       ) as SyncComputation<V, T>;
       updateSignal(computation);
-      if (currentFragment) {
-        currentFragment.___tracked.add(computation);
+      if (parentFragment) {
+        parentFragment.___tracked.add(computation);
       }
       return computation;
     }
@@ -215,8 +215,8 @@ export function createEffect<T extends Deps>(
   if (id) {
     effect.___sid = id;
   }
-  if (currentFragment) {
-    currentFragment.___tracked.add(effect);
+  if (parentFragment) {
+    parentFragment.___tracked.add(effect);
   }
   insertIntoBatch(batch.___effects, 0, effect);
 }

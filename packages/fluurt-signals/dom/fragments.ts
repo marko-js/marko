@@ -1,30 +1,12 @@
 import { Computation } from "./signals";
 
-export interface DetachedElementWithParent extends Element {
-  ___eventualParentNode?: ContainerNode;
-}
-
-export interface DetachedDocumentFragmentWithParent extends DocumentFragment {
-  ___eventualParentNode?: ContainerNode;
-}
-
-export type ContainerNode =
-  | DetachedElementWithParent
-  | DetachedDocumentFragmentWithParent
-  | Fragment;
-
 export class Fragment {
   public ___before: Text;
   public ___after: Text | undefined;
   public ___parentFragment?: Fragment;
-  public ___eventualParentNode?: ContainerNode;
   public ___tracked: Set<Fragment | Computation>;
   constructor() {
     this.___tracked = new Set();
-  }
-  public appendChild(childNode: ChildNode & Node) {
-    const after = this.___after!;
-    after.parentNode!.insertBefore(childNode, after);
   }
   public ___cleanup() {
     for (const tracked of this.___tracked) {
@@ -87,12 +69,6 @@ export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
 
 export function removeFragment(fragment: Fragment) {
   clearFragment(fragment, true);
-}
-
-export function resolveElement(node: ContainerNode) {
-  return ((node as Fragment).___before
-    ? (node as Fragment).___before.parentNode
-    : node) as Element;
 }
 
 function withChildren(

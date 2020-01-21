@@ -11,15 +11,7 @@ import {
   beginBatch,
   endBatch
 } from "./signals";
-import {
-  Fragment,
-  ContainerNode,
-  DetachedElementWithParent,
-  replaceFragment,
-  removeFragment,
-  resolveElement,
-  clearFragment
-} from "./fragments";
+import { Fragment, replaceFragment, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
 
 type NAMESPACES =
@@ -32,9 +24,14 @@ export const TAG_NAMESPACES = {
 } as const;
 
 export class HydrateError extends Error {}
-export let currentFragment: Fragment | undefined;
-export let currentNode: ContainerNode | null = null;
+export let parentFragment: Fragment | undefined;
+export let parentElement: Element | DocumentFragment | null = null;
 export let currentNS: NAMESPACES = DEFAULT_NS;
+
+export interface ComponentFragment<Input> extends DocumentFragment {
+  rerender: (input: Input) => void;
+  destroy: () => void;
+}
 
 const doc = document;
 const detachedContainer = doc.createDocumentFragment();
@@ -44,14 +41,13 @@ export function createRenderer<T extends Renderer>(renderer: T) {
   type Input = Raw<Parameters<T>[0]>;
   return (input: Input) => {
     const inputSignal = dynamicKeys(createSignal(input), renderer.input!);
-    const container = (currentNode = doc.createDocumentFragment()) as DocumentFragment & {
-      rerender: (input: Input) => void;
-      destroy: () => void;
-    };
+    const container = (parentElement = doc.createDocumentFragment()) as ComponentFragment<
+      Input
+    >;
 
     const placeholderFragment = beginFragment();
     endFragment(placeholderFragment);
-    currentNode = null;
+    parentElement = null;
 
     const init = beginBatch();
     const fragment = beginFragment();
@@ -94,14 +90,13 @@ export let beginEl:
   | typeof originalBeginEl
   | typeof hydrateBeginEl = originalBeginEl;
 function originalBeginEl(name: string) {
-  const parentNode = currentNode!;
-  currentNode = doc.createElementNS(currentNS, name);
-  currentNode.___eventualParentNode = parentNode;
-  return currentNode;
+  return parentElement!.appendChild(
+    (parentElement = doc.createElementNS(currentNS, name))
+  );
 }
 
 function hydrateBeginEl(name: string) {
-  const node = (currentNode = nextNodeToHydrate() as DetachedElementWithParent);
+  const node = (parentElement = nextNodeToHydrate() as Element);
   lastHydratedChild = null;
 
   if (!node || node.localName !== name) {
@@ -113,68 +108,39 @@ function hydrateBeginEl(name: string) {
 
 export let endEl = originalEndEl;
 function originalEndEl() {
-  const parentNode = currentNode!.___eventualParentNode!;
-  parentNode.appendChild(currentNode as Element);
-  currentNode!.___eventualParentNode = undefined;
-  currentNode = parentNode;
+  parentElement = parentElement!.parentNode as Element | DocumentFragment;
 }
 
 function hydrateEndEl() {
-  lastHydratedChild = currentNode as Node | null;
-  currentNode = (currentNode as Element)
-    .parentNode as DetachedElementWithParent;
+  lastHydratedChild = parentElement as Node | null;
+  parentElement = parentElement!.parentNode as Element | DocumentFragment;
 }
 
-export let beginFragment = originalBeginFragment;
-function originalBeginFragment(fragment?: Fragment): Fragment {
-  const parentNode = currentNode!;
-  const parentFragment = currentFragment;
-
-  if (fragment) {
-    currentFragment = fragment;
-  } else {
-    currentNode = currentNode || detachedContainer;
-    currentFragment = new Fragment();
-    currentFragment.___before = text("");
-    currentFragment.___after = text("");
-  }
-
-  currentFragment.___parentFragment = parentFragment;
-  currentFragment.___eventualParentNode = parentNode;
-  currentNode = currentFragment;
-
-  if (parentFragment) {
-    parentFragment.___tracked.add(currentFragment);
-  }
-
-  return currentFragment;
-}
-
-function hydrateBeginFragment(fragment?: Fragment) {
+export function beginFragment(fragment?: Fragment): Fragment {
   if (!fragment) {
+    parentElement = parentElement || detachedContainer;
     fragment = new Fragment();
     fragment.___before = text("");
   }
-  originalBeginFragment(fragment);
-  return fragment;
+
+  fragment.___parentFragment = parentFragment;
+
+  if (parentFragment) {
+    parentFragment.___tracked.add(fragment);
+  }
+
+  return (parentFragment = fragment);
 }
 
-export let endFragment = originalEndFragment;
-function originalEndFragment(fragment: Fragment) {
-  currentFragment = fragment.___parentFragment;
-  currentNode = fragment.___eventualParentNode!;
-  fragment.___eventualParentNode = undefined;
-}
-
-function hydrateEndFragment(fragment: Fragment) {
-  originalEndFragment(fragment);
+export function endFragment(fragment: Fragment) {
   fragment.___after = text("");
+  parentFragment = fragment.___parentFragment;
 }
 
 export let text: typeof originalText | typeof hydrateText = originalText;
 function originalText(value: string) {
   const textNode = doc.createTextNode(normalizeTextData(value));
-  currentNode!.appendChild(textNode);
+  parentElement!.appendChild(textNode);
   return textNode;
 }
 
@@ -185,20 +151,16 @@ function hydrateText(value: string) {
   // Insert a new TextNode if the node to hydrate is missing, isn't text or
   // the data is empty, since we know empty text nodes won't be rendered from the server.
   if (data === "" || !node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
-    let parentNode: Element;
     let ref: Node | null;
 
     if (lastHydratedChild) {
-      parentNode = lastHydratedChild.parentNode as Element;
       ref = lastHydratedChild.nextSibling;
     } else {
-      // currentNode shouldn't be a fragment here, since fragment would have set lastHydratedChild.
-      parentNode = currentNode as Element;
-      ref = parentNode.firstChild;
+      ref = parentElement!.firstChild;
     }
 
     lastHydratedChild = doc.createTextNode(data);
-    parentNode.insertBefore(lastHydratedChild, ref);
+    parentElement!.insertBefore(lastHydratedChild, ref);
     return lastHydratedChild as Text;
   }
 
@@ -239,42 +201,31 @@ export function html(value: string) {
   const data = normalizeTextData(value);
 
   if (data) {
-    const parentNode = resolveElement(currentNode!);
-    const parser: Element = (parentNode.nodeType ===
+    const parser: Element = (parentElement!.nodeType ===
     11 /** Node.DOCUMENT_FRAGMENT_NODE */
       ? doc.body
-      : parentNode
+      : parentElement!
     ).cloneNode() as Element;
     parser.innerHTML = value;
 
     while (parser.firstChild) {
-      currentNode!.appendChild(parser.firstChild);
+      parentElement!.appendChild(parser.firstChild);
     }
   }
 }
 
 export function dynamicHTML(value: MaybeSignal<string>) {
-  const fragment: Fragment = beginFragment();
-  endFragment(fragment);
-  createEffect(
-    (_fragment, _value) => {
-      clearFragment(_fragment);
-      beginFragment(_fragment);
-      html(_value);
-      endFragment(_fragment);
-    },
-    [fragment, value] as const
-  );
+  conditional(createComputation(_value => () => html(_value), [value]));
 }
 
 export function attr(name: string, value: unknown) {
-  setAttr(currentNode as Element, name, normalizeAttrValue(value));
+  setAttr(parentElement as Element, name, normalizeAttrValue(value));
 }
 
 export function dynamicAttr(name: string, value: unknown) {
-  const elNode = currentNode as Element;
+  const elNode = parentElement as Element;
   const data = createComputation(_value => normalizeAttrValue(_value), [value]);
-  createEffect(setAttr, [elNode, name, data]);
+  createEffect(setAttr, [elNode, name, data] as const);
 }
 
 export function dynamicTag(
@@ -340,17 +291,17 @@ export function dynamicAttrs(
       }
       previousAttrs = _attrs;
     },
-    [currentNode as Element, attrs] as const
+    [parentElement as Element, attrs] as const
   );
 }
 
 export function prop(name: string, value: unknown) {
-  currentNode![name] = value;
+  parentElement![name] = value;
 }
 
 export function dynamicProp(name: string, value: unknown) {
   createEffect((_elNode, _value) => (_elNode[name] = _value), [
-    currentNode as Element,
+    parentElement as Element,
     value
   ] as const);
 }
@@ -370,24 +321,20 @@ export function dynamicProps(props: MaybeSignal<object>) {
       }
       previousProps = nextProps;
     },
-    [currentNode as Element, props] as const
+    [parentElement as Element, props] as const
   );
 }
 
 export function beginHydrate(boundary: Node) {
-  currentNode = boundary.parentNode as DetachedElementWithParent;
+  parentElement = boundary.parentNode as Element;
   lastHydratedChild = boundary;
-  beginFragment = hydrateBeginFragment;
-  endFragment = hydrateEndFragment;
   beginEl = hydrateBeginEl;
   endEl = hydrateEndEl;
   text = hydrateText;
 }
 
 export function endHydrate() {
-  currentNode = lastHydratedChild = null;
-  beginFragment = originalBeginFragment;
-  endFragment = originalEndFragment;
+  parentElement = lastHydratedChild = null;
   beginEl = originalBeginEl;
   endEl = originalEndEl;
   text = originalText;
@@ -398,8 +345,7 @@ function nextNodeToHydrate() {
     return lastHydratedChild!.nextSibling as ChildNode;
   }
 
-  // This branch is only taken when we enter a new element (fragments won't go down this path).
-  return (currentNode as Element).firstChild as ChildNode;
+  return parentElement!.firstChild as ChildNode;
 }
 
 function setAttr(element: Element, name: string, value: string | undefined) {
