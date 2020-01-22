@@ -67,13 +67,14 @@ const EFFECT = 4;
 
 const pendingBatches: Record<string, Batch> = {};
 const noop = () => {};
-const empty = [];
+const emptyArray = Object.freeze([]);
+const emptyObject = Object.freeze({});
 
 export function createSignal<V extends void | unknown, T extends Deps>(
   value: V,
   type: SignalTypes = SOURCE,
   fn: (...args: RawMap<T>) => V | Promise<V> = noop as any,
-  deps: T = empty as any
+  deps: T = emptyArray as any
 ): Source<V> {
   const signal = {
     ___bid: 0,
@@ -82,7 +83,7 @@ export function createSignal<V extends void | unknown, T extends Deps>(
     ___fn: fn,
     ___deps: deps,
     ___value: value,
-    ___dependents: {},
+    ___dependents: type === EFFECT ? emptyObject : {},
     ___cleanup: cleanup
   };
 
