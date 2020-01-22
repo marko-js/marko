@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.35
+
+- Improve support for legacy split widgets. [#1477](https://github.com/marko-js/marko/pull/1477)
+
 ### 4.18.34
 
 - Improve legacy widgets assigning into state causing a replace instead of merge. [#1476](https://github.com/marko-js/marko/pull/1476)
