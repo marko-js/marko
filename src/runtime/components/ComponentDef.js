@@ -93,6 +93,8 @@ ComponentDef.prototype = {
     }
 };
 
+ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
+
 ComponentDef.___deserialize = function(o, types, global, registry) {
     var id = o[0];
     var typeName = types[o[1]];
