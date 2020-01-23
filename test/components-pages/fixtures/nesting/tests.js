@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var Component = require("./components/a/index.marko").default;
+var Component = require("./components/a/index.marko");
 
 it("should allow diffing html", function() {
     var parentNode = document.getElementById("test-result");

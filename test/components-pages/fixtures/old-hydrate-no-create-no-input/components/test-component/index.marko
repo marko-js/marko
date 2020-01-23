@@ -1,0 +1,30 @@
+class {
+    onCreate(input) {
+        if (typeof window !== 'undefined') {
+            throw new Error('onCreate should not be called in the browser');
+        }
+
+        this.state = { count:input.start }
+    }
+    
+    onInput(input) {
+        if (typeof window !== 'undefined') {
+            throw new Error('onInput should not be called in the browser');
+        }
+
+        this.state = { count:input.start }
+    }
+
+    increment() {
+        this.state.count++;
+    }
+
+    onMount() {
+        window.testComponent = this;
+    }
+}
+
+<div>
+    Hello <span.count>${state.count}</span>!
+    <child-component key="child"/>
+</div>

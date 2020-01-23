@@ -1,0 +1,19 @@
+class {
+  onCreate() {
+    if (typeof window !== 'undefined') {
+      window.childCreateCalled = true;
+    }
+  }
+  onInput() {
+    if (typeof window !== 'undefined') {
+      window.childInputCalled = true;
+    }
+  }
+  onRender() {
+    if (typeof window !== 'undefined') {
+      window.childRenderCalled = true;
+    }
+  }
+}
+
+<div/>
