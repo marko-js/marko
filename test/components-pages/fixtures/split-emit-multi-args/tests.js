@@ -1,4 +1,3 @@
-var path = require("path");
 var expect = require("chai").expect;
 
 function triggerMouseEvent(el, type) {
@@ -27,10 +26,8 @@ function triggerClick(el) {
     triggerMouseEvent(el, "click");
 }
 
-describe(path.basename(__dirname), function() {
-    it("should allow getEl() with a split component", function() {
-        var app = window.splitComponent;
-        triggerClick(app.el);
-        expect(app.clicked).to.equal(true);
-    });
+it("should allow getEl() with a split component", function() {
+    var app = window.splitComponent;
+    triggerClick(app.el);
+    expect(app.clicked).to.equal(true);
 });

@@ -2,6 +2,7 @@
 
 require("../__util__/test-init");
 
+var path = require("path");
 var autotest = require("../autotest");
 var asyncTestSuite = require("../__util__/async-test-suite");
 var createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
@@ -14,7 +15,7 @@ autotest("fixtures-deprecated", run);
  */
 function run(fixture) {
     let resolve = fixture.resolve;
-    asyncTestSuite(function() {
+    asyncTestSuite(path.basename(fixture.dir), function() {
         var testFile = resolve("tests.js");
         var templateFile = resolve("template.marko");
         var template = require(templateFile);
