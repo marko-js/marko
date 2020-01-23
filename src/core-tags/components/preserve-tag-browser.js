@@ -7,7 +7,7 @@ module.exports = function render(input, out) {
     out.___beginFragment(key, ownerComponent, isPreserved);
 
     if (!isPreserved || !ownerComponent.___keyedElements[key]) {
-        input.renderBody(out);
+        input.renderBody && input.renderBody(out);
     }
 
     out.___endFragment();
