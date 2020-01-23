@@ -10,7 +10,7 @@ export interface Batch {
   ___computations: Computation[];
   ___effects: Effect[];
   ___values: Record<string, unknown>;
-  ___pending: Record<string, Signal>;
+  ___pending: Record<string, Promise<unknown>>;
   ___computationIndex: number;
 }
 
@@ -122,43 +122,40 @@ function queueDependents(dependents: Record<string, Signal>) {
 function updateSignal<V, T extends Deps>(computedValue: Computation<V, T>) {
   const fn = computedValue.___fn;
   const deps = computedValue.___deps;
-  const args = deps.map(dep => get(dep, true));
-  if (!handlePendingDeps(computedValue, deps, args)) {
-    setSignalValue(computedValue, fn(...(args as any)));
+  if (!handlePendingDeps(computedValue, deps)) {
+    setSignalValue(computedValue, fn(...(deps.map(get) as any)));
   }
 }
 
 let handlePendingDeps: typeof _handlePendingDeps = noop as any;
-function _handlePendingDeps<V>(
-  computation: Computation<V>,
-  deps: Deps,
-  args: unknown[]
-) {
+function _handlePendingDeps<V>(computation: Computation<V>, deps: Deps) {
   const fn = computation.___fn;
   const async = computation.___type === ASYNC_COMPUTED;
-  let hasPendingDeps = false;
-  for (const dep of deps) {
-    if (batch && isSignal(dep) && batch.___pending[dep.___sid]) {
-      hasPendingDeps = true;
-      break;
+  let pendingDeps: Array<Promise<unknown>> | undefined;
+  if (batch) {
+    for (const dep of deps) {
+      let pending: Promise<unknown>;
+      if (isSignal(dep) && (pending = batch.___pending[dep.___sid])) {
+        pendingDeps = pendingDeps || [];
+        pendingDeps.push(pending);
+      }
     }
   }
-  if (hasPendingDeps || async) {
+  if (pendingDeps || async) {
     let computed: V;
     const storedBatch = batch;
     const id = computation.___sid;
-    const values = batch.___values;
-    batch.___pending[id] = batch.___signals[id] = computation;
-    values[id] = (hasPendingDeps
-      ? Promise.all(args).then(resolved => {
+    batch.___signals[id] = computation;
+    batch.___pending[id] = (pendingDeps
+      ? Promise.all(pendingDeps).then(() => {
           batch = storedBatch;
-          computed = fn(...resolved) as V;
+          computed = fn(...(deps.map(get) as any)) as V;
           batch = undefined as any;
           return async && computed;
         })
-      : (fn(...args) as Promise<V>)
+      : (fn(...(deps.map(get) as any)) as Promise<V>)
     ).then(result => {
-      return (values[id] = async ? result : computed);
+      storedBatch.___values[id] = async ? result : computed;
     });
     return true;
   }
@@ -252,14 +249,10 @@ export function dynamicKeys<T extends MaybeSignal<Record<string, unknown>>>(
   return object;
 }
 
-export function get<T>(value: MaybeSignal<T>, allowPending?: true): T {
+export function get<T>(value: MaybeSignal<T>): T {
   if (isSignal(value)) {
     let id: number;
-    if (
-      batch &&
-      batch.___values.hasOwnProperty((id = value.___sid)) &&
-      (allowPending || !batch.___pending[id])
-    ) {
+    if (batch && batch.___values.hasOwnProperty((id = value.___sid))) {
       value = batch.___values[id] as T;
     } else {
       value = value.___value!;
@@ -316,17 +309,13 @@ let handlePendingSignals: typeof _handlePendingSignals = noop as any;
 function _handlePendingSignals() {
   const pendingIds = Object.keys(batch.___pending);
   if (pendingIds.length) {
-    const all: Array<Promise<unknown>> = [];
-    const storedBatch = batch;
-    for (const id of pendingIds) {
-      all.push(batch.___values[id] as Promise<unknown>);
-    }
-    pendingBatches[batch.___bid] = batch;
+    const all = Object.values(batch.___pending);
+    const storedBatch = (pendingBatches[batch.___bid] = batch);
     Promise.all(all).then(() => {
       batch = storedBatch;
       delete pendingBatches[batch.___bid];
       for (const id of pendingIds) {
-        const signal = batch.___pending[id];
+        const signal = batch.___signals[id];
         const value = batch.___values[id];
         delete batch.___pending[id];
         setSignalValue(signal, value);
