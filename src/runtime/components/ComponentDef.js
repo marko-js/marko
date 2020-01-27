@@ -32,8 +32,6 @@ function ComponentDef(component, componentId, globalComponentsContext) {
     this.___nextIdIndex = 0; // The unique integer to use for the next scoped ID
 
     this.___keySequence = null;
-
-    this.___preservedDOMNodes = null;
 }
 
 ComponentDef.prototype = {
@@ -41,12 +39,6 @@ ComponentDef.prototype = {
         var keySequence =
             this.___keySequence || (this.___keySequence = new KeySequence());
         return keySequence.___nextKey(key);
-    },
-
-    ___preserveDOMNode: function(key, bodyOnly) {
-        var lookup =
-            this.___preservedDOMNodes || (this.___preservedDOMNodes = {});
-        lookup[key] = bodyOnly ? 2 : 1;
     },
 
     /**

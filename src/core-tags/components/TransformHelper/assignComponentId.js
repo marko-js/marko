@@ -102,47 +102,9 @@ module.exports = function assignComponentId(isRepeated) {
         }
     }
 
-    var transformHelper = this;
-
     this.componentIdInfo = {
         idExpression: idExpression,
-        nestedIdExpression: nestedIdExpression,
-        idVarNode: null,
-        createIdVarNode: function() {
-            if (this.idVarNode) {
-                return this.idVarNode;
-            }
-
-            const idVar = builder.identifier(context.nextUniqueId("key"));
-
-            this.idVarNode = builder.vars([
-                {
-                    id: idVar,
-                    init: builder.functionCall(
-                        builder.memberExpression(
-                            builder.identifier("__component"),
-                            builder.identifier("___nextKey")
-                        ),
-                        [idExpression]
-                    )
-                }
-            ]);
-
-            this.idExpression = idExpression = idVar;
-
-            this.nestedIdExpression = nestedIdExpression = builder.concat(
-                builder.literal("#"),
-                idVar
-            );
-
-            if (isCustomTag) {
-                transformHelper.getComponentArgs().setKey(nestedIdExpression);
-            } else {
-                el.setKey(idExpression);
-            }
-
-            return this.idVarNode;
-        }
+        nestedIdExpression: nestedIdExpression
     };
 
     return this.componentIdInfo;
