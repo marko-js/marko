@@ -28,19 +28,14 @@ function render(input, out, __component, component, state) {
       "</li>");
   });
 
-  out.w("</ul>");
-
-  var $key$0 = __component.___nextKey("@preservedP");
-
-  out.w("<p>");
+  out.w("</ul><p>");
 
   _preserve_tag({
       bodyOnly: true,
-      preserveKey: $key$0,
       renderBody: function(out) {
         out.w(marko_escapeXml(Date.now()));
       }
-    }, out, __component, $key$0);
+    }, out, __component, "p_preservedP");
 
   out.w("</p></div><span>B</span>");
 
