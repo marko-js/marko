@@ -58,7 +58,7 @@ module.exports = function defineRenderer(renderingLogic) {
 
             // Render the template associated with the component using the final template
             // data that we constructed
-            var newProps = input || {};
+            var newProps = input;
             var widgetConfig;
             var widgetState;
             var widgetBody;
@@ -111,6 +111,7 @@ module.exports = function defineRenderer(renderingLogic) {
                     widgetBody = newProps.renderBody;
                 }
             } else if (component) {
+                newProps = newProps || component.___widgetProps;
                 widgetBody = component.___legacyBody;
                 widgetState = component.___rawState;
                 widgetConfig = component.widgetConfig;

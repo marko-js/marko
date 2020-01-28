@@ -160,6 +160,7 @@ module.exports = function defineWidget(def, renderer) {
 
             self.___didUpdate = true;
         });
+        this.___widgetProps = this.___input;
         this.___input = null;
     };
 
@@ -167,6 +168,7 @@ module.exports = function defineWidget(def, renderer) {
         if (onUpdate) onUpdate.call(this);
         if (onRender && this.___didUpdate) onRender.call(this, {});
         this.___didUpdate = false;
+        this.___widgetProps = this.___input;
         this.___input = null;
     };
 
