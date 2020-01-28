@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.36
+
+- Fix issue for legacy widget rerenders not preserving props. [#1481](https://github.com/marko-js/marko/pull/1481)
+- `no-update` will now preserve elements rendered from the server side. [#1480](https://github.com/marko-js/marko/pull/1480)
+
 ### 4.18.35
 
 - Improve support for legacy split widgets. [#1477](https://github.com/marko-js/marko/pull/1477)
