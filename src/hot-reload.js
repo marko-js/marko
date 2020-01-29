@@ -1,7 +1,5 @@
 /* eslint-disable no-console */
 
-require("raptor-polyfill/string/endsWith");
-
 const nodePath = require("path");
 const fs = require("fs");
 const nodeRequire = require("./node-require");

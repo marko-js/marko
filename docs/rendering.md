@@ -207,7 +207,7 @@ view.stream({}).pipe(writeStream);
 
 ## Global data
 
-If you need to make data available globally to all views that are rendered as the result of a call to one of the above render methods, you can pass the data as a `$global` property on the input data object. This data will be removed from `input` and merged into the `out.global` property.
+If you need to make data available globally to all views that are rendered as the result of a call to one of the above render methods, you can pass the data as a `$global` property on the input data object. This object will be removed from `input` and merged into the `out.global` property.
 
 ```js
 view.render({
@@ -216,3 +216,34 @@ view.render({
   }
 });
 ```
+
+To prevent sensitive data to be accidentally shipped to the browser, by default **none of the keys** in `out.global` is going to be sent to the browser. If you want the data to be serialized and ship to the frontend you need to specify it in `serializedGlobals` inside the `$global` object and they persist across re-renderings.
+The values need to be serializable.
+
+```js
+app.get("/", (req, res) => {
+  const ua = req.get("User-Agent");
+  const isIos = !!ua.match(/iPad|iPhone/);
+  const isAndroid = !!ua.match(/Android/);
+
+  require("./index.marko").render(
+    {
+      $global: {
+        isIos, // isPad is serialized and available on the server and the browser in out.global.isPad
+        isAndroid, // isAndroid is serialized and available on the server and the browser in out.global.isAndroid
+        req, // req is going to be available only server side and will not be serialized because in not present in serializedGlobals below
+
+        serializedGlobals: {
+          isIos: true, // Tell marko to serialize isIos above
+          isAndroid: true // Tell marko to serialize isAndroid above
+        }
+      }
+    },
+    res
+  );
+});
+```
+
+Use `$global` with judgement. It is global and visible in any component.
+
+Check [this PR](https://github.com/marko-js/marko/pull/672) for more details.

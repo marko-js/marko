@@ -1,4 +1,5 @@
 var domInsert = require("./dom-insert");
+var complain = "MARKO_DEBUG" && require("complain");
 
 function getComponentDefs(result) {
     var componentDefs = result.___components;
@@ -60,6 +61,30 @@ var proto = (RenderResult.prototype = {
         return this.___out.toString();
     },
     document: typeof document != "undefined" && document
+});
+
+Object.defineProperty(proto, "html", {
+    get: function() {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+            complain(
+                'The "html" property is deprecated. Please use "toString" instead.'
+            );
+        }
+        return this.toString();
+    }
+});
+
+Object.defineProperty(proto, "context", {
+    get: function() {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+            complain(
+                'The "context" property is deprecated. Please use "out" instead.'
+            );
+        }
+        return this.___out;
+    }
 });
 
 // Add all of the following DOM methods to Component.prototype:

@@ -27,10 +27,6 @@ module.exports = function migrate(el, context) {
             );
             return;
         }
-
-        if (componentModule.requirePath === "./") {
-            rendererModule = componentModule;
-        }
     } else if (attr.isLiteralValue()) {
         const literalValue = attr.literalValue;
 
@@ -58,10 +54,13 @@ module.exports = function migrate(el, context) {
         componentModule = {
             legacy: true,
             filename,
-            requirePath: literalValue
+            requirePath: literalValue.replace(/\/index(\.[^.]+)?$/, "/")
         };
     }
 
+    if (componentModule && componentModule.requirePath === "./") {
+        rendererModule = componentModule;
+    }
     context.legacyComponentModule = componentModule;
     context.legacyRendererModule = rendererModule;
 

@@ -1,7 +1,6 @@
 {
     "browser": {
-        "./defineWidget-legacy.js": "./defineWidget-legacy-browser.js",
-        "./helpers.js": "./helpers-browser.js",
-        "./index.js": "./index-browser.js"
+        "./index.js": "./index-browser.js",
+        "./defineWidget-legacy.js": "./defineWidget-legacy-browser.js"
     }
 }

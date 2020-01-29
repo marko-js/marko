@@ -24,8 +24,7 @@ const rootDir = path.join(__dirname, "../");
 const isDebug = require("../build.json").isDebug;
 
 // const FLAG_SIMPLE_ATTRS = 1;
-// const FLAG_PRESERVE = 2;
-const FLAG_CUSTOM_ELEMENT = 4;
+const FLAG_CUSTOM_ELEMENT = 2;
 
 const FLAG_PRESERVE_WHITESPACE = "PRESERVE_WHITESPACE";
 
@@ -56,62 +55,74 @@ function requireResolve(builder, path) {
 }
 
 const helpers = {
-    assign: { module: "marko/runtime/helper-assign" },
-    attr: "a",
-    attrs: "as",
-    mergeAttrs: "am",
-    classAttr: "ca",
-    classList: "cl",
-    const: "const",
-    createElement: "e",
+    assign: "marko/runtime/helpers/assign",
+    merge: "marko/runtime/helpers/merge",
+    attr: {
+        html: "marko/runtime/html/helpers/attr",
+        vdom: "marko/runtime/vdom/helpers/attr"
+    },
+    attrs: {
+        html: "marko/runtime/html/helpers/attrs",
+        vdom: "marko/runtime/vdom/helpers/attrs"
+    },
+    mergeAttrs: { html: "marko/runtime/html/helpers/merge-attrs" },
+    classAttr: { html: "marko/runtime/html/helpers/class-attr" },
+    classValue: "marko/runtime/helpers/class-value",
+    const: { vdom: "marko/runtime/vdom/helpers/const" },
+    createElement: { vdom: "marko/runtime/vdom/helpers/v-element" },
+    createText: { vdom: "marko/runtime/vdom/helpers/v-text" },
     defineComponent: {
-        module: "marko/runtime/components/helpers",
-        method: "c"
+        vdom: "marko/runtime/components/defineComponent"
     },
     "defineComponent-legacy": {
-        module: "marko/runtime/components/legacy/helpers",
-        method: "c"
+        vdom: "marko/runtime/components/legacy/defineComponent-legacy",
+        html: "marko/runtime/helpers/noop"
     },
     "defineWidget-legacy": {
-        module: "marko/runtime/components/legacy/helpers",
-        method: "w"
+        html: "marko/runtime/components/legacy/defineWidget-legacy",
+        vdom: "marko/runtime/components/legacy/defineWidget-legacy-browser"
     },
-    dynamicTag: "d",
-    escapeXml: "x",
-    escapeXmlAttr: "xa",
-    escapeScript: "xs",
-    escapeStyle: "xc",
-    forEach: "f",
-    forEachProp: { module: "marko/runtime/helper-forEachProperty" },
-    forRange: { module: "marko/runtime/helper-forRange" },
-    getWidgetFromOut: {
-        module: "marko/runtime/components/legacy/helper-getWidgetFromOut"
+    dynamicTag: "marko/runtime/helpers/dynamic-tag",
+    escapeXml: {
+        html: {
+            module: "marko/runtime/html/helpers/escape-xml",
+            method: "x"
+        }
     },
-    include: "i",
-    loadNestedTag: { module: "marko/runtime/helper-loadNestedTag" },
-    loadTag: "t",
-    loadTemplate: { module: "marko/runtime/helper-loadTemplate" },
-    mergeNestedTagsHelper: { module: "marko/runtime/helper-mergeNestedTags" },
-    merge: { module: "marko/runtime/helper-merge" },
-    propsForPreviousNode: "p",
-    renderer: {
-        module: "marko/runtime/components/helpers",
-        method: "r"
+    escapeDoubleQuoteAttrValue: {
+        html: {
+            module: "marko/runtime/html/helpers/escape-xml",
+            method: "d"
+        }
     },
-    rendererLegacy: {
-        module: "marko/runtime/components/legacy/helpers",
-        method: "r"
+    escapeScript: {
+        html: "marko/runtime/html/helpers/escape-script-placeholder"
     },
+    escapeStyle: {
+        html: "marko/runtime/html/helpers/escape-style-placeholder"
+    },
+    forOf: "marko/runtime/helpers/for-of",
+    forIn: "marko/runtime/helpers/for-in",
+    forRange: "marko/runtime/helpers/for-range",
+    getWidgetFromOut: "marko/runtime/components/legacy/helper-getWidgetFromOut",
+    loadNestedTag: "marko/runtime/helpers/load-nested-tag",
+    loadTag: "marko/runtime/helpers/load-tag",
+    loadTemplate: "marko/runtime/helpers/load-template",
+    mergeNestedTagsHelper: "marko/runtime/helpers/merge-nested-tags",
+    propsForPreviousNode: { html: "marko/runtime/html/helpers/props-script" },
+    renderer: "marko/runtime/components/renderer",
+    rendererLegacy: "marko/runtime/components/legacy/renderer-legacy",
     registerComponent: {
-        module: "marko/runtime/components/helpers",
-        method: "rc"
+        vdom: {
+            module: "marko/runtime/components/registry-browser",
+            method: "r"
+        }
     },
-    str: "s",
+    str: "marko/runtime/helpers/to-string",
+    styleValue: "marko/runtime/helpers/style-value",
     styleAttr: {
-        vdom: { module: "marko/runtime/vdom/helper-styleAttr" },
-        html: "sa"
-    },
-    createText: "t"
+        html: "marko/runtime/html/helpers/style-attr"
+    }
 };
 
 class CompileContext extends EventEmitter {
@@ -897,17 +908,10 @@ class CompileContext extends EventEmitter {
             }
 
             if (typeof helperInfo === "string") {
-                let methodName = helperInfo;
-                var methodIdentifier = this.builder.identifier(methodName);
+                helperInfo = { module: helperInfo };
+            }
 
-                helperIdentifier = this.addStaticVar(
-                    "marko_" + name,
-                    this.builder.memberExpression(
-                        this.helpersIdentifier,
-                        methodIdentifier
-                    )
-                );
-            } else if (helperInfo && helperInfo.module) {
+            if (helperInfo && helperInfo.module) {
                 if (helperInfo.method) {
                     let moduleIdentifier = this.importModule(
                         "marko_" + helperInfo.module,

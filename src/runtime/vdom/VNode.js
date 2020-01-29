@@ -54,6 +54,8 @@ VNode.prototype = {
                 var childValue = child.___nodeValue;
                 this.___valueInternal =
                     (this.___valueInternal || "") + childValue;
+            } else if (child.___preserve) {
+                this.___preserveTextAreaValue = true;
             } else {
                 throw TypeError();
             }

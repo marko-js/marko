@@ -50,10 +50,19 @@ function requestData(provider, timeout) {
         timeout = 10000;
     }
 
+    var error;
+    var errorMsg = "Timed out after " + timeout + "ms";
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+        // Make sure we have a meaningful stack trace in development preparing the stacktrace upfront.
+        // If we create it inside the setTimeout, we will end up with a short, not meaningful, stack trace
+        // We only do it in development to avoid overhead in production
+        error = new Error(errorMsg);
+    }
     if (timeout > 0) {
         let timeoutId = setTimeout(function() {
             timeoutId = null;
-            var error = new Error("Timed out after " + timeout + "ms");
+            if (!error) error = new Error(errorMsg);
             error.code = "ERR_AWAIT_TIMEDOUT";
             error.name = "TimeoutError";
             asyncValue.___reject(error);
@@ -177,8 +186,10 @@ module.exports = function awaitTag(input, out) {
         }
 
         if (err) {
-            if (errorRenderer) {
-                errorRenderer(asyncOut, err);
+            if (input.catch) {
+                if (errorRenderer) {
+                    errorRenderer(asyncOut, err);
+                }
             } else {
                 asyncOut.error(err);
             }

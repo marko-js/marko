@@ -11,32 +11,31 @@ var componentLookup = {};
 var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
-function getParentComponentForEl(node) {
-    while (node && !componentsByDOMNode.get(node)) {
-        node = node.previousSibling || node.parentNode;
+function getComponentForEl(el, doc) {
+    var node =
+        typeof el == "string"
+            ? (doc || defaultDocument).getElementById(el)
+            : el;
+    var component;
+    var vElement;
+
+    while (node) {
         if (node.fragment) {
-            if (node === node.fragment.endNode) {
-                node = node.fragment.previousSibling || node.parentNode;
+            if (node.fragment.endNode === node) {
+                node = node.fragment.startNode;
             } else {
                 node = node.fragment;
+                component = componentsByDOMNode.get(node);
             }
+        } else if ((vElement = vElementsByDOMNode.get(node))) {
+            component = vElement.___ownerComponent;
         }
-    }
-    return node && componentsByDOMNode.get(node);
-}
 
-function getComponentForEl(el, doc) {
-    if (el) {
-        var node =
-            typeof el == "string"
-                ? (doc || defaultDocument).getElementById(el)
-                : el;
-        if (node) {
-            var vElement = vElementsByDOMNode.get(node);
-            return vElement
-                ? vElement.___ownerComponent
-                : getParentComponentForEl(node);
+        if (component) {
+            return component;
         }
+
+        node = node.previousSibling || node.parentNode;
     }
 }
 

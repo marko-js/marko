@@ -57,6 +57,31 @@ module.exports = function defineWidget(def, renderer) {
 
     proto.constructor = def.constructor = Component;
 
+    Object.defineProperty(proto, "state", {
+        get: function() {
+            return this.___state;
+        },
+        set: function(newState) {
+            newState = newState || {};
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                if (
+                    Object.keys(newState)
+                        .sort()
+                        .join("") !==
+                    Object.keys((this.___state && this.___state.___raw) || {})
+                        .sort()
+                        .join("")
+                )
+                    complain(
+                        "'widget.state = newState' has changed from merging the newState to replacing the old state."
+                    );
+            }
+
+            this.setState(newState);
+        }
+    });
+
     Object.defineProperty(proto, "__document", {
         get: function() {
             // eslint-disable-next-line no-constant-condition
@@ -135,6 +160,7 @@ module.exports = function defineWidget(def, renderer) {
 
             self.___didUpdate = true;
         });
+        this.___widgetProps = this.___input;
         this.___input = null;
     };
 
@@ -142,6 +168,7 @@ module.exports = function defineWidget(def, renderer) {
         if (onUpdate) onUpdate.call(this);
         if (onRender && this.___didUpdate) onRender.call(this, {});
         this.___didUpdate = false;
+        this.___widgetProps = this.___input;
         this.___input = null;
     };
 

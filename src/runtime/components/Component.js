@@ -238,6 +238,9 @@ Component.prototype = componentProto = {
         }
     },
     getElId: function(key, index) {
+        if (!key) {
+            return this.id;
+        }
         return resolveComponentIdHelper(this, key, index);
     },
     getEl: function(key, index) {
@@ -376,6 +379,9 @@ Component.prototype = componentProto = {
     setState: function(name, value) {
         var state = this.___state;
 
+        if (!state) {
+            state = this.___state = new this.___State(this);
+        }
         if (typeof name == "object") {
             // Merge in the new state with the old state
             var newState = name;

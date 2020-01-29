@@ -2,13 +2,13 @@
 
 var marko_template = module.exports = require("marko/src/vdom").t(__filename),
     marko_component = {},
-    components_helpers = require("marko/src/runtime/components/helpers"),
-    marko_registerComponent = components_helpers.rc,
+    components_registry_browser = require("marko/src/runtime/components/registry-browser"),
+    marko_registerComponent = components_registry_browser.r,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/components-compilation/fixtures-vdom/boundary-multi-root-html-els-keys-dynamic/index.marko", function() {
       return module.exports;
     }),
-    marko_renderer = components_helpers.r,
-    marko_defineComponent = components_helpers.c;
+    marko_renderer = require("marko/src/runtime/components/renderer"),
+    marko_defineComponent = require("marko/src/runtime/components/defineComponent");
 
 function render(input, out, __component, component, state) {
   var data = input;

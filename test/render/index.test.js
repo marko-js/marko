@@ -78,9 +78,11 @@ async function runRenderTest(fixture) {
             let e;
 
             try {
-                isVDOM
+                let template = isVDOM
                     ? browser.require(templatePath)
                     : marko.load(templatePath, loadOptions);
+                let templateData = Object.assign({}, main.templateData || {});
+                await template.render(templateData);
             } catch (_e) {
                 e = _e;
                 let errorFile = path.join(dir, "error.txt");
@@ -100,6 +102,10 @@ async function runRenderTest(fixture) {
                 ? browser.require(templatePath)
                 : marko.load(templatePath, loadOptions);
             let templateData = Object.assign({}, main.templateData || {});
+
+            if (template.default) {
+                template = template.default;
+            }
 
             let out = template.createOut();
             let asyncEventsVerifier = createAsyncVerifier(

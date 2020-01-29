@@ -3,10 +3,8 @@
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/bind-component/index",
     marko_component = require("./"),
-    legacy_helpers = require("marko/src/runtime/components/legacy/helpers"),
-    marko_rendererLegacy = legacy_helpers.r,
-    marko_helpers = require("marko/src/runtime/html/helpers"),
-    marko_attr = marko_helpers.a;
+    marko_rendererLegacy = require("marko/src/runtime/components/legacy/renderer-legacy"),
+    marko_attr = require("marko/src/runtime/html/helpers/attr");
 
 function render(input, out, __component, widget, component) {
   var data = input;

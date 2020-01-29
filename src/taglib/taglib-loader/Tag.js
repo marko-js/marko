@@ -5,6 +5,7 @@ var CustomTag;
 var path = require("path");
 var markoModules = require("../../compiler/modules");
 var complain = require("complain");
+var coreTagsPath = path.join(__dirname, "../../core-tags");
 
 function createCustomTag(el, tagDef) {
     CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
@@ -92,8 +93,36 @@ class Tag {
         }
         return false;
     }
+
+    checkDeprecatedAttr(attr) {
+        attr.filePath = this.filePath;
+        if (attr.name === "key" && !this.isCoreTag()) {
+            complain("@key property is deprecated", {
+                location: this.filePath
+            });
+        }
+        //
+        if (attr.setFlag && attr.setFlag !== "hasComponentEvents") {
+            complain(`${attr.name} - : set-flag property is deprecated`, {
+                location: this.filePath
+            });
+        }
+        if (attr.type === "template") {
+            complain(`${attr.name} - attribute template type is deprecated`, {
+                location: this.filePath
+            });
+        }
+
+        if (attr.type === "path") {
+            complain(`${attr.name} - attribute path type is deprecated`, {
+                location: this.filePath
+            });
+        }
+    }
+
     addAttribute(attr) {
         attr.filePath = this.filePath;
+        this.checkDeprecatedAttr(attr);
 
         if (attr.pattern) {
             this.patternAttributes.push(attr);
@@ -107,6 +136,13 @@ class Tag {
                 ) {
                     attr.targetProperty = null;
                 } else if (!attr.targetProperty) {
+                    !this.isCoreTag() &&
+                        complain(
+                            'The default "targetProperty" for "@*" attribute definitions is changing from "*" to "null" (merged in with the rest of the input) in a future Marko release. In order to avoid an issue upgrading, please explicitly define the "targetProperty".',
+                            {
+                                location: this.filePath
+                            }
+                        );
                     attr.targetProperty = "*";
                 }
             }
@@ -276,6 +312,10 @@ class Tag {
     setTaglib(taglib) {
         this.taglibId = taglib ? taglib.id : null;
         this.taglibPath = taglib ? taglib.path : null;
+    }
+
+    isCoreTag() {
+        return this.filePath && this.filePath.startsWith(coreTagsPath);
     }
 }
 

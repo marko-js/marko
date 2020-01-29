@@ -21,29 +21,11 @@ function addComponentsFromContext(
     typesLookup,
     typesArray
 ) {
-    var nestedContexts = componentsContext.___nestedContexts;
-    if (nestedContexts !== undefined) {
-        // We want to initialize any UI components nested inside an async
-        // fragment first so we will add components from nested contexts first
-        nestedContexts.forEach(function(nestedContext) {
-            addComponentsFromContext(
-                nestedContext,
-                componentsFinal,
-                typesLookup,
-                typesArray
-            );
-        });
-    }
-
     var components = componentsContext.___components;
     var len;
     if ((len = components.length) === 0) {
         return;
     }
-
-    // console.log('components:', components.map((componentDef) => {
-    //     return { id: componentDef.id, type: componentDef.type};
-    // }));
 
     for (var i = 0; i < len; i++) {
         var componentDef = components[i];
@@ -133,6 +115,19 @@ function addComponentsFromContext(
     }
 
     components.length = 0;
+
+    // Also add any components from nested contexts
+    var nestedContexts = componentsContext.___nestedContexts;
+    if (nestedContexts !== undefined) {
+        nestedContexts.forEach(function(nestedContext) {
+            addComponentsFromContext(
+                nestedContext,
+                componentsFinal,
+                typesLookup,
+                typesArray
+            );
+        });
+    }
 }
 
 function getRenderedComponents(out) {
@@ -159,32 +154,47 @@ function getRenderedComponents(out) {
 }
 
 function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
-    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
-    if (renderedComponents === undefined) {
+    var initCode = exports.___getInitComponentsCode(
+        fromOut,
+        targetOut,
+        shouldIncludeAll
+    );
+    if (initCode === "") {
         return;
     }
 
     var outGlobal = targetOut.global;
     var cspNonce = outGlobal.cspNonce;
+    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
+
+    targetOut.write("<script" + nonceAttr + ">" + initCode + "</script>");
+}
+
+exports.___getInitComponentsCode = function getInitComponentsCode(
+    fromOut,
+    targetOut,
+    shouldIncludeAll
+) {
+    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
+    if (renderedComponents === undefined) {
+        return "";
+    }
+
+    var outGlobal = targetOut.global;
     var runtimeId = outGlobal.runtimeId;
     var componentGlobalKey =
         "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
-    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
 
-    targetOut.write(
-        "<script" +
-            nonceAttr +
-            ">" +
-            componentGlobalKey +
-            "=(window." +
-            componentGlobalKey +
-            "||[]).concat(" +
-            safeJSON(warp10.stringify(renderedComponents)) +
-            ")||" +
-            componentGlobalKey +
-            "</script>"
+    return (
+        componentGlobalKey +
+        "=(window." +
+        componentGlobalKey +
+        "||[]).concat(" +
+        safeJSON(warp10.stringify(renderedComponents)) +
+        ")||" +
+        componentGlobalKey
     );
-}
+};
 
 exports.writeInitComponentsCode = writeInitComponentsCode;
 

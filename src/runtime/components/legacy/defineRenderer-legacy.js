@@ -58,20 +58,23 @@ module.exports = function defineRenderer(renderingLogic) {
 
             // Render the template associated with the component using the final template
             // data that we constructed
-            var newProps = input || {};
+            var newProps = input;
             var widgetConfig;
             var widgetState;
             var widgetBody;
             var id;
 
             if (!component && componentLookup) {
-                if ((parentComponentDef = componentsContext.___componentDef)) {
-                    var key = out.___assignedKey;
+                var key = out.___assignedKey;
 
-                    if (key != null) {
-                        key = key.toString();
-                    }
-                    id = resolveComponentKey(key, parentComponentDef);
+                if (
+                    (parentComponentDef = componentsContext.___componentDef) &&
+                    key != null
+                ) {
+                    id = resolveComponentKey(
+                        key.toString(),
+                        parentComponentDef
+                    );
                 } else if (parentComponentDef) {
                     id = parentComponentDef.___nextComponentId();
                 } else {
@@ -91,14 +94,6 @@ module.exports = function defineRenderer(renderingLogic) {
                     newProps = getInitialProps(newProps, out) || {};
                 }
 
-                if (getWidgetConfig) {
-                    // If getWidgetConfig() was implemented then use that to
-                    // get the widget config. The widget config will be passed
-                    // to the widget constructor. If rendered on the server the
-                    // widget config will be serialized.
-                    widgetConfig = getWidgetConfig(newProps, out);
-                }
-
                 if (getInitialState) {
                     // This optional method is used to derive the widget state
                     // from the input properties
@@ -116,6 +111,7 @@ module.exports = function defineRenderer(renderingLogic) {
                     widgetBody = newProps.renderBody;
                 }
             } else if (component) {
+                newProps = newProps || component.___widgetProps;
                 widgetBody = component.___legacyBody;
                 widgetState = component.___rawState;
                 widgetConfig = component.widgetConfig;
@@ -145,7 +141,7 @@ module.exports = function defineRenderer(renderingLogic) {
                 templateData = {};
             }
 
-            templateData.___widgetProps = newProps;
+            templateData.widgetProps = newProps;
 
             // If we have widget state then pass it to the template
             // so that it is available to the widget tag
@@ -161,6 +157,15 @@ module.exports = function defineRenderer(renderingLogic) {
             if (widgetBody) {
                 templateData.renderBody = widgetBody;
             }
+
+            if (isReceivingNewInput && getWidgetConfig) {
+                // If getWidgetConfig() was implemented then use that to
+                // get the widget config. The widget config will be passed
+                // to the widget constructor. If rendered on the server the
+                // widget config will be serialized.
+                widgetConfig = getWidgetConfig(newProps, out);
+            }
+
             if (widgetConfig) {
                 // eslint-disable-next-line no-constant-condition
                 if ("MARKO_DEBUG") {

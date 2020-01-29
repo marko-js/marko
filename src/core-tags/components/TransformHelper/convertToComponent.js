@@ -22,6 +22,7 @@ module.exports = function handleComponentBind(options) {
     let rootNodes = options.rootNodes;
     let isLegacyInnerBind = options.isLegacyInnerBind;
     var isImplicitComponent = options.isImplicitComponent === true;
+    var isBrowserTarget = context.outputType === "vdom";
     var hasTagParams = context.isFlagSet("hasTagParams");
     var isSplit = false;
 
@@ -137,7 +138,7 @@ module.exports = function handleComponentBind(options) {
 
     var defineComponentHelper;
 
-    if (!isSplit && !isLegacyComponent) {
+    if (!isSplit && !isLegacyComponent && isBrowserTarget) {
         defineComponentHelper = this.context.helper("defineComponent");
     }
 
@@ -180,7 +181,7 @@ module.exports = function handleComponentBind(options) {
                 )
             );
 
-            if (!isSplit && !isLegacyComponent) {
+            if (!isSplit && !isLegacyComponent && isBrowserTarget) {
                 nodes.push(
                     builder.assignment(
                         builder.memberExpression(

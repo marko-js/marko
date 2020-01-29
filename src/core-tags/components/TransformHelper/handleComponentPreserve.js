@@ -9,39 +9,28 @@ function addPreserve(transformHelper, bodyOnly, condition) {
 
     if (bodyOnly) {
         preserveAttrs["body-only"] = builder.literal(bodyOnly);
+        el.forEachChild(child => {
+            child._canBePreserved = true;
+        });
+    } else {
+        el._canBePreserved = true;
     }
 
     if (condition) {
         preserveAttrs["if"] = condition;
     }
 
-    let componentIdInfo = transformHelper.assignComponentId();
-    let idVarNode = componentIdInfo.idVarNode
-        ? null
-        : componentIdInfo.createIdVarNode();
-
-    if (el.type === "HtmlElement") {
-        preserveAttrs.key = transformHelper.getIdExpression();
-    } else {
-        preserveAttrs.cid = transformHelper.getIdExpression();
-    }
-
+    preserveAttrs.key = builder.concat(
+        builder.literal("p_"),
+        transformHelper.assignComponentId().nestedIdExpression
+    );
     let preserveNode = context.createNodeForEl("_preserve", preserveAttrs);
-    let idVarNodeTarget;
 
     if (bodyOnly) {
         el.moveChildrenTo(preserveNode);
         el.appendChild(preserveNode);
-        idVarNodeTarget = el;
     } else {
         el.wrapWith(preserveNode);
-        idVarNodeTarget = preserveNode;
-    }
-
-    if (idVarNode) {
-        idVarNodeTarget.onBeforeGenerateCode(event => {
-            event.insertCode(idVarNode);
-        });
     }
 
     return preserveNode;

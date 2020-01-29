@@ -1,6 +1,6 @@
 "use strict";
 
-var escapeXml = require("../../../../runtime/html/helpers").x;
+var escapeXml = require("../../../../runtime/html/helpers/escape-xml").x;
 var Literal = require("../../Literal");
 
 module.exports = function(node, codegen) {

@@ -9,7 +9,7 @@ exports.getComponentForEl = componentsUtil.___getComponentForEl;
 exports.init = window.$initComponents = initComponents.___initServerRendered;
 
 exports.register = function(id, component) {
-    registry.___register(id, function() {
+    registry.r(id, function() {
         return component;
     });
 };

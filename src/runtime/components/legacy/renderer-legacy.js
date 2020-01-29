@@ -43,11 +43,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             isExisting = true;
             globalComponentsContext.___rerenderComponent = null;
         } else {
-            if (parentComponentDef) {
-                if (key != null) {
-                    key = key.toString();
-                }
-                id = id || resolveComponentKey(key, parentComponentDef);
+            if (key != null) {
+                id =
+                    id ||
+                    resolveComponentKey(key.toString(), parentComponentDef);
             } else if (parentComponentDef) {
                 id = parentComponentDef.___nextComponentId();
             } else {
@@ -66,8 +65,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 customEvents,
                 ownerComponentId
             );
-            if (input.___widgetProps) {
-                component.input = input.___widgetProps;
+            if (input.widgetProps) {
+                component.input = input.widgetProps;
             }
         } else {
             if (!component) {
@@ -140,8 +139,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                         customEvents,
                         ownerComponentId
                     );
-                    if (input.___widgetProps) {
-                        component.input = input.___widgetProps;
+                    if (input.widgetProps) {
+                        component.input = input.widgetProps;
                     }
                     Object.assign(component, oldComponent);
                     beginComponent(

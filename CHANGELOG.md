@@ -4,6 +4,100 @@
 
 ## 4.18.x
 
+### 4.18.36
+
+- Fix regression with no-update-body on textarea tags. [#1482](https://github.com/marko-js/marko/pull/1482)
+
+### 4.18.36
+
+- Fix issue for legacy widget rerenders not preserving props. [#1481](https://github.com/marko-js/marko/pull/1481)
+- `no-update` will now preserve elements rendered from the server side. [#1480](https://github.com/marko-js/marko/pull/1480)
+
+### 4.18.35
+
+- Improve support for legacy split widgets. [#1477](https://github.com/marko-js/marko/pull/1477)
+
+### 4.18.34
+
+- Improve legacy widgets assigning into state causing a replace instead of merge. [#1476](https://github.com/marko-js/marko/pull/1476)
+
+### 4.18.33
+
+- Fix event name case normalization for legacy components with `w-on`. [#1475](https://github.com/marko-js/marko/pull/1475)
+
+### 4.18.32
+
+- Return the component id if no key is passed to getElId/elId. [#1474](https://github.com/marko-js/marko/pull/1474)
+- Support having nullish keys in the legacy (v3) renderer. [#1473](https://github.com/marko-js/marko/pull/1473)
+
+### 4.18.31
+
+- Fix legacy render lifecycle order to match marko-widgets@6. [#1472](https://github.com/marko-js/marko/pull/1472)
+
+### 4.18.30
+
+- Fix regression with browser remap for legacy widgets. [#1471](https://github.com/marko-js/marko/pull/1471)
+
+### 4.18.29
+
+- Fixed regression which was causing getTemplateData to be serialized.
+- Refactor helpers, fix circular deps, improve code splitting [#1468](https://github.com/marko-js/marko/pull/1468)
+- Remove unused deps, update package-lock [#1469](https://github.com/marko-js/marko/pull/1469)
+- Fixed typo in example output [#1463](https://github.com/marko-js/marko/pull/1463)
+
+### 4.18.28
+
+- Allow support for `<state>` tag and calling `setState` on null state [#1460](https://github.com/marko-js/marko/pull/1460)
+
+### 4.18.27
+
+- Allow empty `<@catch>` in `<await>` [#1456](https://github.com/marko-js/marko/pull/1456)
+
+### 4.18.26
+
+- Improve errors emitted from AsyncWriter
+
+### 4.18.25
+
+- Better async stack traces in dev [#1453](https://github.com/marko-js/marko/pull/1453)
+
+### 4.18.24
+
+- Remove circular dep for dom weakmaps. [#1449](https://github.com/marko-js/marko/pull/1449)
+- Fix invalid deprecation message for core-tags on windows. [#1448](https://github.com/marko-js/marko/pull/1448)
+
+### 4.18.23
+
+- Allow `<macro>` nested under `<if>`. [#1445](https://github.com/marko-js/marko/pull/1445)
+
+### 4.18.22
+
+- Improve legacy compatibilty layer by exposing `widgetProps` on the `data` object. [#1443](https://github.com/marko-js/marko/pull/1443)
+- Improve getComponentByEl lookup to prefer owner components. [#1444](https://github.com/marko-js/marko/pull/1444)
+
+### 4.18.21
+
+- Fix issue where duplicated attributes were not being included properly in compiled templates. [#1442](https://github.com/marko-js/marko/pull/1442)
+
+### 4.18.20
+
+- Fix initialization edge-case for top-level async components. [#1441](https://github.com/marko-js/marko/pull/1441)
+
+### 4.18.19
+
+- Deprecate `$global.widgetIdPrefix` (should use `$global.componentIdPrefix` instead). [#1439](https://github.com/marko-js/marko/pull/1439)
+- Improve support for rollup by removing usage of `require.resolve`. [#1440](https://github.com/marko-js/marko/pull/1440)
+- Update minimum version of htmljs-parser to bring in patch release for parsing css calc values.
+
+### 4.18.18
+
+- Adds a missing method used by part of the legacy compatibility layer.
+
+### 4.18.17
+
+- Fix issue with async out of order components initializing in the wrong order [#1436](https://github.com/marko-js/marko/pull/1436)
+- Improvements to the legacy compatibility layer [#1437](https://github.com/marko-js/marko/pull/1437)
+
 ### 4.18.16
 
 - Fix top-level components throwing error on hydrate [#1428](https://github.com/marko-js/marko/pull/1428)

@@ -63,7 +63,7 @@ class TransformHelper {
         if (
             !this.__keySerialized &&
             context.isServerTarget() &&
-            context.isSplitComponent
+            (context.isSplitComponent || isPreserved(el))
         ) {
             var markoKeyAttrVar = context.importModule(
                 "marko_keyAttr",
@@ -160,6 +160,20 @@ class TransformHelper {
     getTransformHelper(el) {
         return new TransformHelper(el, this.context);
     }
+}
+
+function isPreserved(el) {
+    let curNode = el;
+
+    do {
+        if (curNode._canBePreserved) {
+            return true;
+        }
+
+        curNode = curNode.parentNode;
+    } while (curNode);
+
+    return false;
 }
 
 TransformHelper.prototype.assignComponentId = require("./assignComponentId");

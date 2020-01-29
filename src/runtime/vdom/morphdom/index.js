@@ -34,8 +34,7 @@ var FRAGMENT_NODE = 12;
 var DOCTYPE_NODE = 10;
 
 // var FLAG_SIMPLE_ATTRS = 1;
-var FLAG_PRESERVE = 2;
-// var FLAG_CUSTOM_ELEMENT = 4;
+// var FLAG_CUSTOM_ELEMENT = 2;
 
 function isAutoKey(key) {
     return !/^@/.test(key);
@@ -292,10 +291,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
                 if (curFromNodeKey === curToNodeKey) {
                     // Elements line up. Now we just have to make sure they are compatible
-                    if (
-                        (curToNodeChild.___flags & FLAG_PRESERVE) === 0 &&
-                        !curToNodeChild.___preserve
-                    ) {
+                    if (!curToNodeChild.___preserve) {
                         // We just skip over the fromNode if it is preserved
 
                         if (
@@ -327,8 +323,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                 parentComponent
                             );
                         }
-                    } else {
-                        // this should be preserved.
                     }
                 } else {
                     if (
@@ -441,10 +435,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                             detachedByDOMNode.set(matchingFromEl, undefined);
                         }
 
-                        if (
-                            (curToNodeChild.___flags & FLAG_PRESERVE) === 0 &&
-                            !curToNodeChild.___preserve
-                        ) {
+                        if (!curToNodeChild.___preserve) {
                             curVFromNodeChild = vElementByDOMNode.get(
                                 matchingFromEl
                             );
@@ -523,20 +514,14 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                                     }
                                 }
 
-                                if (
-                                    (curToNodeChild.___flags &
-                                        FLAG_PRESERVE) ===
-                                    0
-                                ) {
-                                    morphEl(
-                                        matchingFromEl,
-                                        curVFromNodeChild,
-                                        curToNodeChild,
-                                        curToNodeKey,
-                                        ownerComponent,
-                                        parentComponent
-                                    );
-                                }
+                                morphEl(
+                                    matchingFromEl,
+                                    curVFromNodeChild,
+                                    curToNodeChild,
+                                    curToNodeKey,
+                                    ownerComponent,
+                                    parentComponent
+                                );
                             } else {
                                 insertVirtualNodeBefore(
                                     curToNodeChild,
@@ -681,18 +666,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                     continue outer;
                 }
 
-                if (curFromNodeKey) {
-                    if (
-                        globalComponentsContext.___preservedEls[
-                            parentComponent.id + "-" + curFromNodeKey
-                        ] === undefined
-                    ) {
-                        detachNode(curFromNodeChild, fromNode, ownerComponent);
-                    }
-                } else {
-                    detachNode(curFromNodeChild, fromNode, ownerComponent);
-                }
-
+                detachNode(curFromNodeChild, fromNode, ownerComponent);
                 curFromNodeChild = fromNextSibling;
             } // END: while (curFromNodeChild)
 
@@ -771,7 +745,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         var nodeName = toEl.___nodeName;
 
         if (isHydrate === true && toElKey) {
-            ownerComponent.___keyedElements[toElKey] = fromEl;
+            var referenceComponent = isAutoKey(toElKey)
+                ? parentComponent
+                : ownerComponent;
+            referenceComponent.___keyedElements[toElKey] = fromEl;
         }
 
         var constId = toEl.___constId;
@@ -780,16 +757,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
 
         morphAttrs(fromEl, vFromEl, toEl);
-
-        if (
-            toElKey &&
-            globalComponentsContext.___preservedElBodies[
-                parentComponent.id + "-" + toElKey
-            ] === true
-        ) {
-            // Don't morph the children since they are preserved
-            return;
-        }
 
         if (nodeName !== "textarea") {
             morphChildren(fromEl, toEl, parentComponent);
