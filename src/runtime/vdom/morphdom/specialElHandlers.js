@@ -58,6 +58,10 @@ SpecialElHandlers.prototype = {
     },
 
     textarea: function(fromEl, toEl) {
+        if (toEl.___preserveTextAreaValue) {
+            return;
+        }
+
         var newValue = toEl.___value;
         if (fromEl.value != newValue) {
             fromEl.value = newValue;
