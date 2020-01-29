@@ -6,6 +6,10 @@
 
 ### 4.18.36
 
+- Fix regression with no-update-body on textarea tags. [#1482](https://github.com/marko-js/marko/pull/1482)
+
+### 4.18.36
+
 - Fix issue for legacy widget rerenders not preserving props. [#1481](https://github.com/marko-js/marko/pull/1481)
 - `no-update` will now preserve elements rendered from the server side. [#1480](https://github.com/marko-js/marko/pull/1480)
 
