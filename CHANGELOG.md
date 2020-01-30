@@ -4,7 +4,11 @@
 
 ## 4.18.x
 
-### 4.18.36
+### 4.18.38
+
+- Fix regression with ssr'd components under 'no-update' not initializing. [#1483](https://github.com/marko-js/marko/pull/1483)
+
+### 4.18.37
 
 - Fix regression with no-update-body on textarea tags. [#1482](https://github.com/marko-js/marko/pull/1482)
 
