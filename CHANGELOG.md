@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.39
+
+- Support overriding the 'ready' method in legacy widgets. [#1484](https://github.com/marko-js/marko/pull/1484)
+
 ### 4.18.38
 
 - Fix regression with ssr'd components under 'no-update' not initializing. [#1483](https://github.com/marko-js/marko/pull/1483)
