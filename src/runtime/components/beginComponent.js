@@ -32,6 +32,7 @@ module.exports = function beginComponent(
 
     // On the server
     if (
+        !globalContext.___isPreserved &&
         ownerComponentDef &&
         ownerComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
     ) {

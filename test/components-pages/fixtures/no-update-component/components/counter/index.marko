@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = {
+            count: 0
+        };
+    }
+
+    onMount() {
+        window.counterComponent = this;
+    }
+
+    handleClick() {
+        this.state.count++;
+    }
+}
+
+<button key="button" onClick("handleClick")>
+    Count: ${state.count}
+</button>
