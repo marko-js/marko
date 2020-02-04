@@ -48,6 +48,8 @@ function addComponentsFromContext(
         component.___scope = undefined;
         component.___bubblingDomEvents = undefined;
         component.___bubblingDomEventsExtraArgsCount = undefined;
+        component.___updatedInput = undefined;
+        component.___updateQueued = undefined;
 
         if (!typeName) {
             continue;
