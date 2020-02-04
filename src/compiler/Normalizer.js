@@ -124,7 +124,8 @@ class Normalizer {
                 tagName = builder.parseExpression(elNode.rawTagNameExpression);
             } else if (
                 context.ignoreUnrecognizedTags &&
-                !elNode.parentNode.tagDef
+                !elNode.parentNode.tagDef &&
+                !elNode.parentNode.rawTagNameExpression
             ) {
                 tagName = tagName.replace(/^@/, "at_"); // escapes @tags inside unrecognized tags
             }
