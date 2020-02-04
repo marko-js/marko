@@ -1,7 +1,7 @@
 "use strict";
 
 var complain = "MARKO_DEBUG" && require("complain");
-var removeDashes = require("../../compiler/util/removeDashes");
+var changeCase = require("./_change-case");
 var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
@@ -61,14 +61,17 @@ module.exports = function dynamicTag(
                 out.___elementDynamic(tag, attrs, key, component, 0, 0, props);
             }
         } else {
-            var defaultAttrs = renderBody ? { renderBody: renderBody } : {};
             if (attrs == null) {
-                attrs = defaultAttrs;
+                attrs = {};
             } else if (typeof attrs === "object") {
                 attrs = Object.keys(attrs).reduce(function(r, key) {
-                    r[removeDashes(key)] = attrs[key];
+                    r[changeCase.___dashToCamelCase(key)] = attrs[key];
                     return r;
-                }, defaultAttrs);
+                }, {});
+            }
+
+            if (renderBody) {
+                attrs.renderBody = renderBody;
             }
 
             if (tag._ || tag.renderer || tag.render) {
