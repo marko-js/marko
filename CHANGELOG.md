@@ -4,6 +4,17 @@
 
 ## 4.18.x
 
+### 4.18.40
+
+- Fix issue with the `ignoreUnrecognizedTags` compiler option with `<@attribute>` tags inside of a `<${dynamic}>` tag. [#1491](https://github.com/marko-js/marko/pull/1491)
+- Improve support for legacy widgets by allowing for custom `init` method on prototype. [#1490](https://github.com/marko-js/marko/pull/1490)
+- Removes some unused properties that were serialized with legacy widgets [#1489](https://github.com/marko-js/marko/pull/1489)
+- Improves consistency with `...spread` attributes onto native tags. [#1488](https://github.com/marko-js/marko/pull/1488)
+  - Now turns `camelCase` properties into `dash-cash`
+  - Now omits `renderBody` properties.
+- Improves `this.el` warning for legacy widgets. [#1487](https://github.com/marko-js/marko/pull/1487)
+- Fixes an issue with nested `no-update`'s around components not initializing properly. [#1486](https://github.com/marko-js/marko/pull/1486)
+
 ### 4.18.39
 
 - Support overriding the 'ready' method in legacy widgets. [#1484](https://github.com/marko-js/marko/pull/1484)
