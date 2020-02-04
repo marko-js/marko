@@ -1,9 +1,7 @@
 module.exports = function render(input, out) {
-    var globalContext = out.___components.___globalContext;
-    var parentPreserved = globalContext.___isPreserved;
     var shouldPreserve = Boolean(!("if" in input) || input["if"]);
 
-    if (parentPreserved || !shouldPreserve) {
+    if (!shouldPreserve) {
         input.renderBody && input.renderBody(out);
         return;
     }
@@ -15,9 +13,11 @@ module.exports = function render(input, out) {
     out.___beginFragment(key, ownerComponent, true);
 
     if (input.renderBody) {
+        var globalContext = out.___components.___globalContext;
+        var parentPreserved = globalContext.___isPreserved;
         globalContext.___isPreserved = true;
         input.renderBody(out);
-        globalContext.___isPreserved = false;
+        globalContext.___isPreserved = parentPreserved;
     }
 
     out.___endFragment();
