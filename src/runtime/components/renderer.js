@@ -133,8 +133,6 @@ function createRendererFunc(
             // This is the final input after running the lifecycle methods.
             // We will be passing the input to the template for the `input` param
             input = component.___updatedInput;
-
-            component.___updatedInput = undefined; // We don't want ___updatedInput to be serialized to the browser
         } else {
             if (!component) {
                 if (
