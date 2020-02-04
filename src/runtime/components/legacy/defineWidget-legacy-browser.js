@@ -18,12 +18,14 @@ module.exports = function defineWidget(def, renderer) {
 
     var ComponentClass = function() {};
     var proto;
+    var init;
 
     if (typeof def === "function") {
         proto = def.prototype;
-        proto.init = def;
+        init = def;
     } else if (typeof def === "object") {
         proto = def;
+        init = def.init;
     } else {
         throw TypeError();
     }
@@ -108,7 +110,6 @@ module.exports = function defineWidget(def, renderer) {
     });
 
     // get legacy methods
-    var init = proto.init;
     var onRender = proto.onRender;
     var onBeforeUpdate = proto.onBeforeUpdate;
     var onUpdate = proto.onUpdate;
