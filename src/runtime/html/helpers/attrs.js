@@ -1,6 +1,7 @@
 "use strict";
 
 var complain = "MARKO_DEBUG" && require("complain");
+var changeCase = require("../../helpers/_change-case");
 var attrHelper = require("./attr");
 var classAttrHelper = require("./class-attr");
 var styleAttrHelper = require("./style-attr");
@@ -18,8 +19,11 @@ module.exports = function attrs(arg) {
                 out += styleAttrHelper(arg[attrName]);
             } else if (attrName === "class") {
                 out += classAttrHelper(arg[attrName]);
-            } else if (isValidAttrName(attrName)) {
-                out += attrHelper(attrName, arg[attrName]);
+            } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
+                out += attrHelper(
+                    changeCase.___camelToDashCase(attrName),
+                    arg[attrName]
+                );
             }
         }
         return out;

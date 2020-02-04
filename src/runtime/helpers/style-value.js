@@ -1,6 +1,6 @@
 "use strict";
 
-var dashedNames = Object.create(null);
+var changeCase = require("./_change-case");
 
 /**
  * Helper for generating the string for a style attribute
@@ -29,13 +29,8 @@ module.exports = function styleHelper(style) {
                         value += "px";
                     }
 
-                    var nameDashed = dashedNames[name];
-                    if (!nameDashed) {
-                        nameDashed = dashedNames[name] = name
-                            .replace(/([A-Z])/g, "-$1")
-                            .toLowerCase();
-                    }
-                    styles += nameDashed + ":" + value + ";";
+                    styles +=
+                        changeCase.___camelToDashCase(name) + ":" + value + ";";
                 }
             }
         }
