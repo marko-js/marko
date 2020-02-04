@@ -92,18 +92,22 @@ module.exports = function defineWidget(def, renderer) {
         }
     });
 
+    proto.___getLegacyRootElement = function(warn) {
+        var boundEl = this.getEl("_wbind");
+        var firstChild = this.___rootNode && this.___rootNode.firstChild;
+
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG" && warn && boundEl && boundEl !== firstChild) {
+            complain(
+                "this.el no longer returns the `w-bind` element and instead returns the first node in the template. Assign a key to the w-bind element and use getEl(key) instead."
+            );
+        }
+        return boundEl || firstChild;
+    };
+
     Object.defineProperty(proto, "el", {
         get: function() {
-            // eslint-disable-next-line no-constant-condition
-            if ("MARKO_DEBUG") {
-                complain(
-                    "this.el is deprecated. assign a key to the root element and use getEl(key) instead."
-                );
-            }
-            return (
-                this.getEl("_wbind") ||
-                (this.___rootNode && this.___rootNode.firstChild)
-            );
+            return this.___getLegacyRootElement(true);
         }
     });
 
@@ -137,8 +141,9 @@ module.exports = function defineWidget(def, renderer) {
     proto.onMount = function() {
         var self = this;
         var config = this.widgetConfig;
-        if (this.el) {
-            Object.defineProperty(this.el, "__widget", {
+        var el = this.___getLegacyRootElement(false);
+        if (el) {
+            Object.defineProperty(el, "__widget", {
                 configurable: true,
                 get: function() {
                     // eslint-disable-next-line no-constant-condition
