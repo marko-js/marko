@@ -249,9 +249,9 @@ Component.prototype = componentProto = {
             var keyedElement = this.___keyedElements["@" + resolvedKey];
 
             if (!keyedElement) {
-                var keyedComponent = this.getComponent(resolvedKey);
+                var keyedComponentRoot = this.___keyedElements[resolvedKey];
 
-                if (keyedComponent) {
+                if (keyedComponentRoot) {
                     // eslint-disable-next-line no-constant-condition
                     if ("MARKO_DEBUG") {
                         complain(
@@ -259,7 +259,10 @@ Component.prototype = componentProto = {
                         );
                     }
 
-                    return walkFragments(keyedComponent.___rootNode);
+                    return keyedComponentRoot.nodeType ===
+                        1 /** Node.ELEMENT_NODE */
+                        ? keyedComponentRoot
+                        : walkFragments(keyedComponentRoot);
                 }
             }
 
