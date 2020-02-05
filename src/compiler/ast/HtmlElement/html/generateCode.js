@@ -16,7 +16,10 @@ module.exports = function generateCode(node, codegen) {
 
     var properties = node.getProperties();
 
-    if (properties && !codegen.context.isStatefulComponent) {
+    if (
+        properties &&
+        (!codegen.context.isStatefulComponent || isPreserved(node))
+    ) {
         var objectProps = Object.keys(properties).map(propName => {
             return builder.property(
                 builder.literal(propName),
@@ -91,3 +94,17 @@ module.exports = function generateCode(node, codegen) {
         return [startTag, body, endTag, propertiesScript];
     }
 };
+
+function isPreserved(el) {
+    let curNode = el;
+
+    do {
+        if (curNode._canBePreserved) {
+            return true;
+        }
+
+        curNode = curNode.parentNode;
+    } while (curNode);
+
+    return false;
+}
