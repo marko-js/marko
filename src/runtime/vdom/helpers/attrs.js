@@ -24,7 +24,7 @@ module.exports = function(attributes) {
 
         for (var attrName in attributes) {
             var val = attributes[attrName];
-            if (attrName === "renderBody" || val == null || val === false) {
+            if (attrName === "renderBody") {
                 continue;
             }
 
