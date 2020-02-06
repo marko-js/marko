@@ -4,6 +4,12 @@
 
 ## 4.18.x
 
+### 4.18.41
+
+- Improve support for conditional `w-bind`. [#1494](https://github.com/marko-js/marko/pull/1494)
+- No longer delete `onBeforeDestroy` and `onBeforeUpdate` from legacy widget prototypes. [#1494](https://github.com/marko-js/marko/pull/1494)
+- Fix regression with registering event handlers for SSR content under a `no-update`. [#1493](https://github.com/marko-js/marko/pull/1493)
+
 ### 4.18.40
 
 - Fix issue with the `ignoreUnrecognizedTags` compiler option with `<@attribute>` tags inside of a `<${dynamic}>` tag. [#1491](https://github.com/marko-js/marko/pull/1491)
