@@ -121,11 +121,6 @@ module.exports = function defineWidget(def, renderer) {
     var legacyOnBeforeDestroy = proto.onBeforeDestroy || noop;
     var legacyOnDestroy = proto.onDestroy || noop;
 
-    // delete legacy methods that no longer exist
-    delete proto.init;
-    delete proto.onBeforeUpdate;
-    delete proto.onBeforeDestroy;
-
     proto.getWidget = proto.getComponent;
     proto.getWidgets = proto.getComponents;
 
