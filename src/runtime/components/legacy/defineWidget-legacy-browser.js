@@ -8,6 +8,7 @@ var jQuery = require("../jquery");
 var ready = require("../ready");
 
 var complain = "MARKO_DEBUG" && require("complain");
+function noop() {}
 
 module.exports = function defineWidget(def, renderer) {
     def = def.Widget || def;
@@ -18,14 +19,14 @@ module.exports = function defineWidget(def, renderer) {
 
     var ComponentClass = function() {};
     var proto;
-    var init;
+    var legacyInit;
 
     if (typeof def === "function") {
         proto = def.prototype;
-        init = def;
+        legacyInit = def;
     } else if (typeof def === "object") {
         proto = def;
-        init = def.init;
+        legacyInit = def.init || noop;
     } else {
         throw TypeError();
     }
@@ -94,38 +95,31 @@ module.exports = function defineWidget(def, renderer) {
         }
     });
 
-    proto.___getLegacyRootElement = function(warn) {
-        var boundEl = this.getEl("_wbind");
-        var firstChild = this.___rootNode && this.___rootNode.firstChild;
-
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG" && warn && boundEl && boundEl !== firstChild) {
-            complain(
-                "this.el no longer returns the `w-bind` element and instead returns the first node in the template. Assign a key to the w-bind element and use getEl(key) instead."
-            );
-        }
-        return boundEl || firstChild;
-    };
-
     Object.defineProperty(proto, "el", {
         get: function() {
-            return this.___getLegacyRootElement(true);
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG") {
+                if (
+                    this.___currentLegacyBindEl !==
+                    (this.___rootNode && this.___rootNode.firstChild)
+                ) {
+                    complain(
+                        "this.el no longer returns the `w-bind` element and instead returns the first node in the template. Assign a key to the w-bind element and use getEl(key) instead."
+                    );
+                }
+            }
+
+            return this.___currentLegacyBindEl;
         }
     });
 
     // get legacy methods
-    var onRender = proto.onRender;
-    var onBeforeUpdate = proto.onBeforeUpdate;
-    var onUpdate = proto.onUpdate;
-    var onBeforeDestroy = proto.onBeforeDestroy;
-    var onDestroy = proto.onDestroy;
 
-    // delete legacy methods that conflict
-    delete proto.onRender;
-    delete proto.onBeforeUpdate;
-    delete proto.onUpdate;
-    delete proto.onBeforeDestroy;
-    delete proto.onDestroy;
+    var legacyOnRender = proto.onRender || noop;
+    var legacyOnBeforeUpdate = proto.onBeforeUpdate || noop;
+    var legacyOnUpdate = proto.onUpdate || noop;
+    var legacyOnBeforeDestroy = proto.onBeforeDestroy || noop;
+    var legacyOnDestroy = proto.onDestroy || noop;
 
     proto.getWidget = proto.getComponent;
     proto.getWidgets = proto.getComponents;
@@ -134,56 +128,72 @@ module.exports = function defineWidget(def, renderer) {
     var originalUpdate = proto.update;
     proto.update = function() {
         this.___legacyExplicitUpdate = true;
-        onBeforeUpdate && onBeforeUpdate.call(this);
-        originalUpdate.apply(this, arguments);
+        if (this.___currentLegacyBindEl) {
+            legacyOnBeforeUpdate.call(this);
+        }
+
+        originalUpdate.call(this);
         this.___legacyExplicitUpdate = false;
     };
 
-    proto.onMount = function() {
+    proto.onMount = proto.onUpdate = function() {
         var self = this;
-        var config = this.widgetConfig;
-        var el = this.___getLegacyRootElement(false);
-        if (el) {
-            Object.defineProperty(el, "__widget", {
-                configurable: true,
-                get: function() {
-                    // eslint-disable-next-line no-constant-condition
-                    if ("MARKO_DEBUG") {
-                        complain("__widget is deprecated");
-                    }
-                    return self;
-                }
-            });
-        }
-        if (init) init.call(this, config || {});
-        if (onRender) {
-            onRender.call(this, { firstRender: true });
-        }
-        this.on("___legacyRender", function() {
-            if (!self.___legacyExplicitUpdate && onBeforeUpdate) {
-                onBeforeUpdate.call(this);
+        var el = this.getEl("_wbind");
+        var prevEl = this.___currentLegacyBindEl;
+
+        if (prevEl !== el) {
+            this.___currentLegacyBindEl = el;
+
+            if (prevEl) {
+                legacyOnBeforeDestroy.call(this);
+                legacyOnDestroy.call(this);
+                this.removeAllListeners();
             }
 
-            self.___didUpdate = true;
-        });
+            if (el) {
+                legacyInit.call(this, this.widgetConfig || {});
+                legacyOnRender.call(this, { firstRender: true });
+                this.on("___legacyRender", function() {
+                    if (!self.___legacyExplicitUpdate) {
+                        legacyOnBeforeUpdate.call(self);
+                    }
+
+                    self.___didUpdate = true;
+                });
+
+                Object.defineProperty(el, "__widget", {
+                    configurable: true,
+                    get: function() {
+                        // eslint-disable-next-line no-constant-condition
+                        if ("MARKO_DEBUG") {
+                            complain("__widget is deprecated");
+                        }
+                        return self;
+                    }
+                });
+            }
+        } else if (el) {
+            if (prevEl) {
+                legacyOnUpdate.call(this);
+            }
+
+            if (this.___didUpdate) {
+                legacyOnRender.call(this, { firstRender: false });
+            }
+        }
+
         this.___widgetProps = this.___input;
         this.___input = null;
-    };
-
-    proto.onUpdate = function() {
-        if (onUpdate) onUpdate.call(this);
-        if (onRender && this.___didUpdate) onRender.call(this, {});
         this.___didUpdate = false;
-        this.___widgetProps = this.___input;
-        this.___input = null;
     };
 
-    if (onBeforeDestroy || onDestroy) {
-        proto.onDestroy = function() {
-            if (onBeforeDestroy) onBeforeDestroy.call(this);
-            if (onDestroy) onDestroy.call(this);
-        };
-    }
+    proto.onDestroy = function() {
+        if (this.___currentLegacyBindEl) {
+            legacyOnBeforeDestroy.call(this);
+            legacyOnDestroy.call(this);
+            this.___currentLegacyBindEl = null;
+        }
+    };
 
     // Set a flag on the constructor function to make it clear this is
     // a component so that we can short-circuit this work later
