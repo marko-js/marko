@@ -4,7 +4,11 @@
 
 ## 4.18.x
 
-### 4.18.41
+### 4.18.43
+
+- No longer serialize input for split legacy widgets. [#1497](https://github.com/marko-js/marko/pull/1497)
+
+### 4.18.42
 
 - Fix regression for unkeyed elements with toggled spread attributes [#1496](https://github.com/marko-js/marko/pull/1496)
 - Fix regression with body-only-if migration for legacy renderers [#1495](https://github.com/marko-js/marko/pull/1495)
