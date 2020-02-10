@@ -4,6 +4,10 @@
 
 ## 4.18.x
 
+### 4.18.44
+
+- Fix issue with diffing SSR'd `no-update` section. [#1498](https://github.com/marko-js/marko/pull/1498)
+
 ### 4.18.43
 
 - No longer serialize input for split legacy widgets. [#1497](https://github.com/marko-js/marko/pull/1497)
