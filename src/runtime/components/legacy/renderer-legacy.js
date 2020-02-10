@@ -65,7 +65,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 customEvents,
                 ownerComponentId
             );
-            if (input.widgetProps) {
+            if (isSplit) {
+                component.input = null;
+            } else if (input.widgetProps) {
                 component.input = input.widgetProps;
             }
         } else {
@@ -139,7 +141,10 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                         customEvents,
                         ownerComponentId
                     );
-                    if (input.widgetProps) {
+
+                    if (isSplit) {
+                        component.input = null;
+                    } else if (input.widgetProps) {
                         component.input = input.widgetProps;
                     }
                     Object.assign(component, oldComponent);
