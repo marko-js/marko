@@ -27,6 +27,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
         var component = globalComponentsContext.___rerenderComponent;
 
+        var isStateless = isSplit; // || !widgetState;
         var isRerender = component !== undefined;
         var id = assignedId;
         var isExisting;
@@ -65,7 +66,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                 customEvents,
                 ownerComponentId
             );
-            if (input.widgetProps) {
+            if (isStateless) {
+                component.input = null;
+            } else if (input.widgetProps) {
                 component.input = input.widgetProps;
             }
         } else {
@@ -112,7 +115,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             component,
             key,
             ownerComponentDef,
-            isSplit,
+            isStateless,
             isFakeComponent
         );
         var parentLegacyComponentDef = componentsContext.___legacyComponentDef;
@@ -139,7 +142,9 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                         customEvents,
                         ownerComponentId
                     );
-                    if (input.widgetProps) {
+                    if (isStateless) {
+                        component.input = null;
+                    } else if (input.widgetProps) {
                         component.input = input.widgetProps;
                     }
                     Object.assign(component, oldComponent);
@@ -148,7 +153,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
                         component,
                         key,
                         ownerComponentDef,
-                        isSplit,
+                        isStateless,
                         false,
                         this
                     );
