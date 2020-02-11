@@ -50,15 +50,13 @@ module.exports = function dynamicTag(
                     tag,
                     attrs,
                     key,
-                    component,
-                    0,
-                    0,
+                    componentDef,
                     props
                 );
                 renderBody(out);
                 out.___endElement();
             } else {
-                out.___elementDynamic(tag, attrs, key, component, 0, 0, props);
+                out.___elementDynamic(tag, attrs, key, componentDef, props);
             }
         } else {
             if (attrs == null) {

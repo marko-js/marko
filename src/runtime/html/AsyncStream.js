@@ -5,7 +5,10 @@ var BufferedWriter = require("./BufferedWriter");
 var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
+var attrHelper = require("./helpers/attr");
+var markoKeyAttr = require("./../../core-tags/components/helpers/markoKeyAttr");
 var escapeXml = require("./helpers/escape-xml").x;
+var selfClosingTags = require("self-closing-tags");
 
 var voidWriter = { write: function() {} };
 
@@ -474,6 +477,21 @@ var proto = (AsyncStream.prototype = {
         return newOut;
     },
 
+    ___elementDynamic: function(tagName, elementAttrs, key, componentDef) {
+        var str =
+            "<" +
+            tagName +
+            attrsHelper(elementAttrs) +
+            attrHelper("data-marko-key", markoKeyAttr(key, componentDef)) +
+            ">";
+
+        if (selfClosingTags.indexOf(tagName) === -1) {
+            str += "</" + tagName + ">";
+        }
+
+        this.write(str);
+    },
+
     element: function(tagName, elementAttrs, openTagOnly) {
         var str = "<" + tagName + attrsHelper(elementAttrs) + ">";
 
@@ -482,6 +500,23 @@ var proto = (AsyncStream.prototype = {
         }
 
         this.write(str);
+    },
+
+    ___beginElementDynamic: function(name, elementAttrs, key, componentDef) {
+        var str =
+            "<" +
+            name +
+            attrsHelper(elementAttrs) +
+            attrHelper("data-marko-key", markoKeyAttr(key, componentDef)) +
+            ">";
+
+        this.write(str);
+
+        if (this._elStack) {
+            this._elStack.push(name);
+        } else {
+            this._elStack = [name];
+        }
     },
 
     beginElement: function(name, elementAttrs) {
@@ -585,8 +620,6 @@ var proto = (AsyncStream.prototype = {
 
 // alias:
 proto.w = proto.write;
-proto.___elementDynamic = proto.element;
-proto.___beginElementDynamic = proto.beginElement;
 proto.___endElement = proto.endElement;
 
 module.exports = AsyncStream;
