@@ -4,6 +4,11 @@
 
 ## 4.18.x
 
+### 4.18.45
+
+- Fixed dynamic tags to add data-marko-key [#1499](https://github.com/marko-js/marko/pull/1499)
+- Fixed dynamic tags to selfclose properly if they are selfclosing tags [#1499](https://github.com/marko-js/marko/pull/1499)
+
 ### 4.18.44
 
 - Fix issue with diffing SSR'd `no-update` section. [#1498](https://github.com/marko-js/marko/pull/1498)
