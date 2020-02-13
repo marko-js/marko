@@ -4,10 +4,14 @@
 
 ## 4.18.x
 
+### 4.18.46
+
+- Fixed issue with `<init-components>` being rendered under nested async outs. [#1500](https://github.com/marko-js/marko/pull/1500)
+
 ### 4.18.45
 
-- Fixed dynamic tags to add data-marko-key [#1499](https://github.com/marko-js/marko/pull/1499)
-- Fixed dynamic tags to selfclose properly if they are selfclosing tags [#1499](https://github.com/marko-js/marko/pull/1499)
+- Fixed dynamic tags to add data-marko-key for split components [#1499](https://github.com/marko-js/marko/pull/1499)
+- Fixed dynamic tags properly render self-closing tags on the server [#1499](https://github.com/marko-js/marko/pull/1499)
 
 ### 4.18.44
 
