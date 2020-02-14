@@ -1,12 +1,8 @@
-$ var userPromise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve({ name: 'Frank' });
-    }, 1);
-});
+import { promiseProvider } from "../../../__util__/async-helpers";
 
 <include("./layout.marko")>
     <@title>
-        <await(user from userPromise)>
+        <await(user from promiseProvider(1, { name: 'Frank' }))>
             Welcome ${user.name}
         </await>
     </@title>

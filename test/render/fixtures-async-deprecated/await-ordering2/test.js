@@ -1,45 +1,39 @@
-function delayedDataProvider(delay, value) {
-    return function(args, done) {
-        setTimeout(function() {
-            done(null, value);
-        }, delay);
-    };
-}
+const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.tests = [
     {
         templateData: {
-            D1: delayedDataProvider(100),
-            D2: delayedDataProvider(300),
-            D3: delayedDataProvider(200),
-            D4: delayedDataProvider(800),
-            D5: delayedDataProvider(900),
-            D6: delayedDataProvider(100),
-            D7: delayedDataProvider(50)
+            D1: callbackProvider(2),
+            D2: callbackProvider(4),
+            D3: callbackProvider(3),
+            D4: callbackProvider(5),
+            D5: callbackProvider(6),
+            D6: callbackProvider(2),
+            D7: callbackProvider(1)
         },
         expectedFile: require.resolve("./expected.html")
     },
     {
         templateData: {
-            D1: delayedDataProvider(100),
-            D2: delayedDataProvider(300),
-            D3: delayedDataProvider(200),
-            D4: delayedDataProvider(800),
-            D5: delayedDataProvider(900),
-            D6: delayedDataProvider(100),
-            D7: delayedDataProvider(200)
+            D1: callbackProvider(1),
+            D2: callbackProvider(3),
+            D3: callbackProvider(2),
+            D4: callbackProvider(4),
+            D5: callbackProvider(5),
+            D6: callbackProvider(1),
+            D7: callbackProvider(2)
         },
         expectedFile: require.resolve("./expected.html")
     },
     {
         templateData: {
-            D1: delayedDataProvider(900),
-            D2: delayedDataProvider(300),
-            D3: delayedDataProvider(200),
-            D4: delayedDataProvider(800),
-            D5: delayedDataProvider(100),
-            D6: delayedDataProvider(100),
-            D7: delayedDataProvider(200)
+            D1: callbackProvider(5),
+            D2: callbackProvider(3),
+            D3: callbackProvider(2),
+            D4: callbackProvider(4),
+            D5: callbackProvider(1),
+            D6: callbackProvider(1),
+            D7: callbackProvider(2)
         },
         expectedFile: require.resolve("./expected.html")
     }

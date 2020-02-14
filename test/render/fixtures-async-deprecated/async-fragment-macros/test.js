@@ -1,15 +1,9 @@
-function delayedDataProvider(delay, value) {
-    return function(args, done) {
-        setTimeout(function() {
-            done(null, value);
-        }, delay);
-    };
-}
+const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.tests = [
     {
         templateData: {
-            D1: delayedDataProvider(100)
+            D1: callbackProvider(1)
         },
         expectedFile: require.resolve("./expected.html")
     }

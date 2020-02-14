@@ -24,3 +24,5 @@ exports.checkEvents = function(events, snapshot) {
 
     snapshot(events, "-events.json");
 };
+
+exports.noFlushComment = true;

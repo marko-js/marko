@@ -1,7 +1,9 @@
-module.exports = function(input, out) {
+var promiseProvider = require("../../../../../__util__/async-helpers")
+    .promiseProvider;
+
+module.exports = async function(input, out) {
     var asyncOut = out.beginAsync();
-    setTimeout(function() {
-        asyncOut.write("[async]");
-        asyncOut.end();
-    }, 10);
+    await promiseProvider(1);
+    asyncOut.write("[async]");
+    asyncOut.end();
 };

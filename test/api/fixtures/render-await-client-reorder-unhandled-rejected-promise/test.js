@@ -1,4 +1,6 @@
 var nodePath = require("path");
+var promiseProvider = require("../../../__util__/async-helpers")
+    .promiseProvider;
 
 exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var template = marko.load(nodePath.join(__dirname, "template.marko"));
@@ -6,11 +8,10 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
 
     template.render(
         {
-            userPromise: new Promise((_, reject) => {
-                setTimeout(function() {
-                    reject(new Error("User Promise Rejected Error"));
-                }, 10);
-            })
+            userPromise: promiseProvider(
+                1,
+                new Error("User Promise Rejected Error")
+            )
         },
         out
     );

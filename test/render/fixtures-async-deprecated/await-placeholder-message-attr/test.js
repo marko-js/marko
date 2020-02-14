@@ -1,11 +1,8 @@
 var expect = require("chai").expect;
+const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
-    testDataProvider: function(done) {
-        setTimeout(function() {
-            done(null, { name: "Frank" });
-        }, 200);
-    }
+    testDataProvider: callbackProvider(1, { name: "Frank" })
 };
 
 exports.checkHtml = function(html) {

@@ -1,4 +1,4 @@
-
+import { callbackProviderWithArgs } from "../../../__util__/async-helpers";
 static var users = {
     "0": {
         name: "John B. Flowers",
@@ -22,11 +22,7 @@ static var users = {
     }
 };
 
-static function userInfo(arg, done) {
-    setTimeout(function() {
-        done(null, users[arg.userId]);
-    }, 100);
-};
+static var userInfo = callbackProviderWithArgs(1, arg => users[arg.userId]);
 
 <ul>
     <li for(userId in [0, 1, 2, 3])>

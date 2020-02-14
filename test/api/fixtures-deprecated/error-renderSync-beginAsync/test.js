@@ -1,4 +1,6 @@
 var nodePath = require("path");
+var callbackProvider = require("../../../__util__/async-helpers")
+    .callbackProvider;
 
 exports.check = function(marko, markoCompiler, expect, helpers, done) {
     var template = marko.load(nodePath.join(__dirname, "template.marko"));
@@ -7,11 +9,7 @@ exports.check = function(marko, markoCompiler, expect, helpers, done) {
 
     try {
         output = template.renderSync({
-            nameDataProvider: function(arg, callback) {
-                setTimeout(function() {
-                    callback(null, "John");
-                }, 100);
-            }
+            nameDataProvider: callbackProvider(1, "John")
         });
     } catch (_e) {
         e = _e;
