@@ -164,16 +164,7 @@ function getInitComponentsDataFromOut(out) {
 }
 
 function writeInitComponentsCode(out) {
-    var initCode = exports.___getInitComponentsCode(out);
-    if (initCode === "") {
-        return;
-    }
-
-    var outGlobal = out.global;
-    var cspNonce = outGlobal.cspNonce;
-    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
-
-    out.write("<script" + nonceAttr + ">" + initCode + "</script>");
+    out.script(exports.___getInitComponentsCode(out));
 }
 
 exports.___getInitComponentsCode = function getInitComponentsCode(

@@ -12,7 +12,9 @@ StringWriter.prototype = {
     },
 
     script: function(str) {
-        this._scripts += str;
+        if (str) {
+            this._scripts += (this._scripts ? ";" : "") + str;
+        }
     },
 
     get: function(key) {

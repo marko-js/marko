@@ -46,7 +46,7 @@ module.exports = function(input, out) {
             awaitInfo.out
                 .on("finish", function(result) {
                     if (!global._afRuntime) {
-                        asyncOut.write(clientReorder.getCode());
+                        asyncOut.script(clientReorder.getCode());
                         global._afRuntime = true;
                     }
 
@@ -55,15 +55,18 @@ module.exports = function(input, out) {
                             awaitInfo.id +
                             '" style="display:none">' +
                             result.toString() +
-                            "</div>" +
-                            '<script type="text/javascript">$af(' +
+                            "</div>"
+                    );
+
+                    asyncOut.script(
+                        "$af(" +
                             (typeof awaitInfo.id === "number"
                                 ? awaitInfo.id
                                 : '"' + awaitInfo.id + '"') +
                             (awaitInfo.after
                                 ? ',"' + awaitInfo.after + '"'
                                 : "") +
-                            ")</script>"
+                            ")"
                     );
 
                     awaitInfo.out.writer = asyncOut.writer;
