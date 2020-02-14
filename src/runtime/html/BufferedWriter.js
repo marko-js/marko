@@ -1,5 +1,7 @@
 "use strict";
 
+const StringWriter = require("./StringWriter");
+
 /**
  * Simple wrapper that can be used to wrap a stream
  * to reduce the number of write calls. In Node.js world,
@@ -7,35 +9,38 @@
  * by reducing the number of chunks by buffering the output.
  */
 function BufferedWriter(wrappedStream) {
-    this._buffer = "";
+    StringWriter.call(this);
     this._wrapped = wrappedStream;
+    this._scheduled = null;
 }
 
-BufferedWriter.prototype = {
-    write: function(str) {
-        this._buffer += str;
-    },
+BufferedWriter.prototype = Object.assign(
+    {
+        scheduleFlush() {
+            flush(this);
+        },
 
-    flush: function() {
-        if (this._buffer.length !== 0) {
-            this._wrapped.write(this._buffer);
-            this._buffer = "";
-            if (this._wrapped.flush) {
-                this._wrapped.flush();
+        end: function() {
+            flush(this);
+            if (!this._wrapped.isTTY) {
+                this._wrapped.end();
             }
         }
     },
+    StringWriter.prototype
+);
 
-    end: function() {
-        this.flush();
-        if (!this._wrapped.isTTY) {
-            this._wrapped.end();
+function flush(writer) {
+    const contents = writer.toString();
+    if (contents.length !== 0) {
+        writer._wrapped.write(contents);
+        writer.clear();
+        if (writer._wrapped.flush) {
+            writer._wrapped.flush();
         }
-    },
-
-    clear: function() {
-        this._buffer = "";
     }
-};
+    clearImmediate(writer._scheduled);
+    writer._scheduled = null;
+}
 
 module.exports = BufferedWriter;
