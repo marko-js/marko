@@ -17,7 +17,9 @@ function BufferedWriter(wrappedStream) {
 BufferedWriter.prototype = Object.assign(
     {
         scheduleFlush() {
-            flush(this);
+            if (!this._scheduled) {
+                this._scheduled = setImmediate(flush, this);
+            }
         },
 
         end: function() {
