@@ -15,10 +15,9 @@ module.exports = function attr(name, value) {
         return result;
     }
 
-    var type = typeof value;
     result += "=";
 
-    switch (type) {
+    switch (typeof value) {
         case "number":
             return result + value;
         case "object":

@@ -56,7 +56,7 @@ module.exports = function(input, out) {
                             '" style="display:none">' +
                             result.toString() +
                             "</div>" +
-                            '<script type="text/javascript">$af(' +
+                            "<script>$af(" +
                             (typeof awaitInfo.id === "number"
                                 ? awaitInfo.id
                                 : '"' + awaitInfo.id + '"') +
