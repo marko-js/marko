@@ -1,14 +1,11 @@
-$ function setTimeoutThen(timeout) {
-    return new Promise((resolve, reject) => {
-        setTimeout(resolve, timeout);
-    });
-}
+import { promiseProvider } from "../../../__util__/async-helpers";
+
 <html>
     <body>
-        <await(setTimeoutThen(10)) name="inner">
+        <await(promiseProvider(1)) name="inner">
             <@then|user|>
                 <div.inner>
-                    <await(setTimeoutThen(10)) name="inner-inner">
+                    <await(promiseProvider(1)) name="inner-inner">
                         <@then|user|>
                             <div.inner-inner>
                                 <hello name="inner-inner"/>

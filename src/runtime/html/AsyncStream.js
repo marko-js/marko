@@ -25,7 +25,7 @@ function escapeEndingComment(text) {
     return text.replace(/-->/g, "--&gt;");
 }
 
-function AsyncStream(global, writer, parentOut, shouldBuffer) {
+function AsyncStream(global, writer, parentOut) {
     if (parentOut === null) {
         throw new Error("illegal state");
     }
@@ -42,14 +42,13 @@ function AsyncStream(global, writer, parentOut, shouldBuffer) {
 
         if (writer) {
             originalStream = writer;
-            if (shouldBuffer) {
-                writer = new BufferedWriter(writer);
-            }
+            writer = new BufferedWriter(writer);
         } else {
             writer = originalStream = new StringWriter();
         }
 
         state = new State(this, originalStream, writer, events);
+        writer.state = state;
     }
 
     finalGlobal.runtimeId = finalGlobal.runtimeId || "M";
@@ -118,6 +117,13 @@ var proto = (AsyncStream.prototype = {
         return this;
     },
 
+    script: function(str) {
+        if (str != null) {
+            this.writer.script(str.toString());
+        }
+        return this;
+    },
+
     ___getOutput: function() {
         return this._state.writer.toString();
     },
@@ -153,6 +159,7 @@ var proto = (AsyncStream.prototype = {
 
         var newWriter = new StringWriter();
         var newStream = new AsyncStream(this.global, currentWriter, this);
+        newWriter.state = state;
 
         this.writer = newWriter;
         newWriter.stream = this;
@@ -314,7 +321,7 @@ var proto = (AsyncStream.prototype = {
         if (nextWriter) {
             // Flush the contents of nextWriter
             // to the currentWriter
-            currentWriter.write(nextWriter.toString());
+            currentWriter.merge(nextWriter);
 
             // Remove nextWriter from the chain.
             // It has been flushed and can now be
@@ -459,8 +466,8 @@ var proto = (AsyncStream.prototype = {
 
         if (!state.finished) {
             var writer = state.writer;
-            if (writer && writer.flush) {
-                writer.flush();
+            if (writer && writer.scheduleFlush) {
+                writer.scheduleFlush();
             }
         }
         return this;

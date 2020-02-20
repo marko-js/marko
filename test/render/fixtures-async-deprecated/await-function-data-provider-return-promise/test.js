@@ -1,11 +1,9 @@
+const { promiseProvider } = require("../../../__util__/async-helpers");
+
 exports.templateData = {
     userInfo: function() {
-        return new Promise(function(resolve) {
-            setTimeout(function() {
-                resolve({
-                    name: "John"
-                });
-            }, 100);
+        return promiseProvider(1, {
+            name: "John"
         });
     }
 };

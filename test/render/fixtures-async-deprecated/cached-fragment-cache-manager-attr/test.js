@@ -39,3 +39,5 @@ var myCacheManager = {
 exports.templateData = {
     myCacheManager: myCacheManager
 };
+
+exports.noFlushComment = true;

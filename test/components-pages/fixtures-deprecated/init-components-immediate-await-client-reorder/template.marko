@@ -36,12 +36,3 @@ html lang="en"
             window.afterInitComponents_foo = window.fooComponent;
             window.afterInitComponents_bar = window.barComponent;
             ---
-
-        await-reorderer
-
-        script
-            ---
-            // window.fooComponent should not exist yet, but's store that in a variable to verify
-            window.afterReorderer_foo = window.fooComponent;
-            window.afterReorderer_bar = window.barComponent;
-            ---

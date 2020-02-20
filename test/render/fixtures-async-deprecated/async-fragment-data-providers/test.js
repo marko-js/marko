@@ -1,16 +1,13 @@
+const {
+    promiseProvider,
+    callbackProvider
+} = require("../../../__util__/async-helpers");
+
 exports.templateData = {
     sharedData: function() {
-        return new Promise(function(resolve) {
-            setTimeout(function() {
-                resolve({ name: "testSharedData" });
-            }, 100);
-        });
+        return promiseProvider(1, { name: "testSharedData" });
     },
-    contextData: function(args, done) {
-        setTimeout(function() {
-            done(null, {
-                name: "testContextData"
-            });
-        }, 100);
-    }
+    contextData: callbackProvider(1, {
+        name: "testContextData"
+    })
 };

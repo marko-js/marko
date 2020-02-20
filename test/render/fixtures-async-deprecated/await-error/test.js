@@ -1,8 +1,5 @@
+const { callbackProvider } = require("../../../__util__/async-helpers");
+
 exports.templateData = {
-    testDataProvider: function(done) {
-        setTimeout(function() {
-            var err = new Error("Something went wrong!");
-            done(err, null);
-        }, 200);
-    }
+    testDataProvider: callbackProvider(1, new Error("Something went wrong!"))
 };

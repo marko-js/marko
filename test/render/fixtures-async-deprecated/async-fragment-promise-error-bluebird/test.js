@@ -1,8 +1,7 @@
 var deferred = require("bluebird").defer();
+const { promiseProvider } = require("../../../__util__/async-helpers");
 
-setTimeout(function() {
-    deferred.resolve({});
-}, 200);
+promiseProvider(1).then(() => deferred.resolve({}));
 
 exports.templateData = {
     promiseData: deferred.promise

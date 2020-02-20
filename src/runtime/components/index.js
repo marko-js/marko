@@ -15,13 +15,9 @@ function safeJSON(json) {
     return json.replace(safeJSONRegExp, safeJSONReplacer);
 }
 
-function addComponentsFromContext(
-    componentsContext,
-    componentsFinal,
-    typesLookup,
-    typesArray
-) {
+function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var components = componentsContext.___components;
+
     var len;
     if ((len = components.length) === 0) {
         return;
@@ -53,13 +49,6 @@ function addComponentsFromContext(
 
         if (!typeName) {
             continue;
-        }
-
-        var typeIndex = typesLookup[typeName];
-        if (typeIndex === undefined) {
-            typeIndex = typesArray.length;
-            typesArray.push(typeName);
-            typesLookup[typeName] = typeIndex;
         }
 
         var hasProps = false;
@@ -108,9 +97,9 @@ function addComponentsFromContext(
             w: hasProps ? component : undefined
         };
 
-        componentsFinal.push([
+        componentsToHydrate.push([
             id, // 0 = id
-            typeIndex, // 1 = type
+            typeName, // 1 = type
             input, // 2 = input
             extra // 3
         ]);
@@ -122,68 +111,69 @@ function addComponentsFromContext(
     var nestedContexts = componentsContext.___nestedContexts;
     if (nestedContexts !== undefined) {
         nestedContexts.forEach(function(nestedContext) {
-            addComponentsFromContext(
-                nestedContext,
-                componentsFinal,
-                typesLookup,
-                typesArray
-            );
+            addComponentsFromContext(nestedContext, componentsToHydrate);
         });
     }
 }
 
-function getRenderedComponents(out) {
+function getInitComponentsData(componentDefs, runtimeId) {
+    let len;
+    if ((len = componentDefs.length) === 0) {
+        return;
+    }
+
+    const typesLookup = {};
+    const componentTypes = [];
+    const TYPE_INDEX = 1;
+    for (let i = 0; i < len; i++) {
+        const componentDef = componentDefs[i];
+        const typeName = componentDef[TYPE_INDEX];
+        let typeIndex = typesLookup[typeName];
+        if (typeIndex === undefined) {
+            typeIndex = componentTypes.length;
+            componentTypes.push(typeName);
+            typesLookup[typeName] = typeIndex;
+        }
+        componentDef[TYPE_INDEX] = typeIndex;
+    }
+    return { r: runtimeId, w: componentDefs, t: componentTypes };
+}
+
+function getInitComponentsDataFromOut(out) {
     var componentsContext = out.___components;
 
     if (componentsContext === null) {
         return;
     }
 
-    var componentsFinal = [];
-    var typesLookup = {};
-    var typesArray = [];
+    var componentsToHydrate = [];
 
-    addComponentsFromContext(
-        componentsContext,
-        componentsFinal,
-        typesLookup,
-        typesArray
-    );
+    addComponentsFromContext(componentsContext, componentsToHydrate);
 
-    if (componentsFinal.length !== 0) {
-        return { r: out.global.runtimeId, w: componentsFinal, t: typesArray };
-    }
+    return getInitComponentsData(componentsToHydrate, out.global.runtimeId);
 }
 
-function writeInitComponentsCode(fromOut, targetOut, shouldIncludeAll) {
-    var initCode = exports.___getInitComponentsCode(
-        fromOut,
-        targetOut,
-        shouldIncludeAll
-    );
-    if (initCode === "") {
-        return;
-    }
-
-    var outGlobal = targetOut.global;
-    var cspNonce = outGlobal.cspNonce;
-    var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
-
-    targetOut.write("<script" + nonceAttr + ">" + initCode + "</script>");
+function writeInitComponentsCode(out) {
+    out.script(exports.___getInitComponentsCode(out));
 }
 
 exports.___getInitComponentsCode = function getInitComponentsCode(
-    fromOut,
-    targetOut,
-    shouldIncludeAll
+    out,
+    componentDefs
 ) {
-    var renderedComponents = getRenderedComponents(fromOut, shouldIncludeAll);
-    if (renderedComponents === undefined) {
+    var runtimeId = out.global.runtimeId;
+    var initComponentsData;
+
+    if (arguments.length === 2) {
+        initComponentsData = getInitComponentsData(componentDefs, runtimeId);
+    } else {
+        initComponentsData = getInitComponentsDataFromOut(out);
+    }
+
+    if (initComponentsData === undefined) {
         return "";
     }
 
-    var outGlobal = targetOut.global;
-    var runtimeId = outGlobal.runtimeId;
     var componentGlobalKey =
         "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
 
@@ -192,12 +182,13 @@ exports.___getInitComponentsCode = function getInitComponentsCode(
         "=(window." +
         componentGlobalKey +
         "||[]).concat(" +
-        safeJSON(warp10.stringify(renderedComponents)) +
+        safeJSON(warp10.stringify(initComponentsData)) +
         ")||" +
         componentGlobalKey
     );
 };
 
+exports.___addComponentsFromContext = addComponentsFromContext;
 exports.writeInitComponentsCode = writeInitComponentsCode;
 
 /**
@@ -208,6 +199,6 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
  * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
 exports.getRenderedComponents = function(out) {
-    var renderedComponents = getRenderedComponents(out, true);
-    return warp10.stringifyPrepare(renderedComponents);
+    var initComponentsData = getInitComponentsDataFromOut(out);
+    return warp10.stringifyPrepare(initComponentsData);
 };

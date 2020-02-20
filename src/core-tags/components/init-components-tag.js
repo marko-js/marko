@@ -2,12 +2,30 @@
 
 const INIT_COMPONENTS_KEY = Symbol();
 
-const writeInitComponentsCode = require("../../runtime/components")
-    .writeInitComponentsCode;
+const addComponentsFromContext = require("../../runtime/components")
+    .___addComponentsFromContext;
+const getInitComponentsCode = require("../../runtime/components")
+    .___getInitComponentsCode;
 
-function handleAwaitFinish(eventArgs) {
-    const asyncFragmentOut = eventArgs.out;
-    writeInitComponentsCode(asyncFragmentOut, asyncFragmentOut, false);
+function addComponentsFromOut(source, target) {
+    const sourceOut = source.out || source;
+    const targetOut = target || sourceOut;
+    const componentsContext = sourceOut.___components;
+    const componentDefs = targetOut.writer.get("componentDefs");
+    addComponentsFromContext(componentsContext, componentDefs);
+}
+
+function addInitScript(writer) {
+    const out = writer.state.root;
+    const componentDefs = writer.get("componentDefs");
+    writer.script(getInitComponentsCode(out, componentDefs));
+}
+
+function forceScriptTagAtThisPoint(out) {
+    const writer = out.writer;
+    const htmlSoFar = writer.toString();
+    writer.clear();
+    writer.write(htmlSoFar);
 }
 
 module.exports = function render(input, out) {
@@ -15,12 +33,14 @@ module.exports = function render(input, out) {
     if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
         outGlobal[INIT_COMPONENTS_KEY] = true;
 
-        out.on("await:finish", handleAwaitFinish);
+        out.on("await:finish", addComponentsFromOut);
+        out.on("___toString", addInitScript);
 
         if (out.isSync() === true) {
             // Generate initialization code for any of the UI components that were
             // rendered synchronously
-            writeInitComponentsCode(out, out, true);
+            addComponentsFromOut(out);
+            forceScriptTagAtThisPoint(out);
         } else {
             // Generate initialization code for any of the UI components that were
             // rendered asynchronously, but were outside an `<await>` tag
@@ -33,7 +53,8 @@ module.exports = function render(input, out) {
                     rootOut = rootOut._parentOut;
                 }
                 // Write out all of the component init code from the main out
-                writeInitComponentsCode(rootOut, asyncOut, true);
+                addComponentsFromOut(rootOut, asyncOut);
+                forceScriptTagAtThisPoint(asyncOut);
                 asyncOut.end();
                 next();
             });

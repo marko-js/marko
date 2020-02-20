@@ -1,16 +1,14 @@
-function delayedDataProvider(delay, value) {
-    return new Promise(resolve => setTimeout(() => resolve(value), delay));
-}
+const { promiseProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
-    getD1: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD2: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD3: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD4: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD5: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD6: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD7: () => delayedDataProvider(Math.ceil(Math.random() * 300)),
-    getD8: () => delayedDataProvider(Math.ceil(Math.random() * 300))
+    getD1: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD2: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD3: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD4: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD5: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD6: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD7: () => promiseProvider(Math.ceil(Math.random() * 10)),
+    getD8: () => promiseProvider(Math.ceil(Math.random() * 10))
 };
 
 exports.noFlushComment = true;

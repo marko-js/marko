@@ -1,10 +1,8 @@
-function delayedDataProvider(delay, value) {
-    return new Promise(resolve => setTimeout(() => resolve(value), delay));
-}
+const { promiseProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
-    getD1: () => delayedDataProvider(50),
-    getD2: () => delayedDataProvider(150),
-    getD3: () => delayedDataProvider(100),
-    getD4: () => delayedDataProvider(200)
+    getD1: () => promiseProvider(1),
+    getD2: () => promiseProvider(3),
+    getD3: () => promiseProvider(2),
+    getD4: () => promiseProvider(4)
 };

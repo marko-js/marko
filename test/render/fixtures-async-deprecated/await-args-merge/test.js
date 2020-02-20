@@ -1,3 +1,5 @@
+const { callbackProviderWithArgs } = require("../../../__util__/async-helpers");
+
 var users = {
     "0": {
         name: "John B. Flowers",
@@ -22,9 +24,8 @@ var users = {
 };
 
 exports.templateData = {
-    userInfo: function(arg, done) {
-        setTimeout(function() {
-            done(null, users[arg.userId][arg.property]);
-        }, 100);
-    }
+    userInfo: callbackProviderWithArgs(
+        1,
+        arg => users[arg.userId][arg.property]
+    )
 };

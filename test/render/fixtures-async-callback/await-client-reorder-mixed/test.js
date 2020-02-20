@@ -1,17 +1,10 @@
 var extend = require("raptor-util/extend");
 var expect = require("chai").expect;
+const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
-    outer: function(callback) {
-        setTimeout(function() {
-            callback(null, {});
-        }, 400);
-    },
-    inner1: function(callback) {
-        setTimeout(function() {
-            callback(null, {});
-        }, 500);
-    }
+    outer: callbackProvider(1, {}),
+    inner1: callbackProvider(2, {})
 };
 
 exports.checkEvents = function(events, snapshot, out) {

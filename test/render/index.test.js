@@ -107,25 +107,37 @@ async function runRenderTest(fixture) {
                 template = template.default;
             }
 
-            let out = template.createOut();
+            let html = "";
+            let out = isVDOM
+                ? template.createOut()
+                : template.createOut(
+                      {},
+                      {
+                          write: data => (html += data),
+                          flush: () => {
+                              if (!main.noFlushComment) {
+                                  html += "<!--FLUSH-->";
+                              }
+                          },
+                          end: () => {
+                              html = html.replace(/<!--FLUSH-->$/, "");
+                              out.emit("finish");
+                          }
+                      }
+                  );
             let asyncEventsVerifier = createAsyncVerifier(
                 main,
                 snapshot,
                 out,
-                main.noFlushComment,
                 isVDOM
             );
 
-            template.render(templateData, out).end();
+            await template.render(templateData, out).end();
 
             if (isVDOM) {
                 let document = browser.window.document;
                 let actualNode = document.createDocumentFragment();
-                if (out.___state.___finished) {
-                    out.___getResult().replaceChildrenOf(actualNode);
-                } else {
-                    (await out).replaceChildrenOf(actualNode);
-                }
+                out.___getResult().replaceChildrenOf(actualNode);
 
                 actualNode.normalize();
                 let vdomString = domToString(actualNode, {
@@ -139,8 +151,6 @@ async function runRenderTest(fixture) {
 
                 fixture.context.vdom = normalizeHtml(actualNode);
             } else {
-                let html = (await out).getOutput();
-
                 if (main.checkHtml) {
                     fs.writeFileSync(path.join(dir, "actual.html"), html, {
                         encoding: "utf8"
@@ -214,7 +224,7 @@ function isClientReorderFragment(node) {
     return /^af\d+$/.test(node.id);
 }
 
-function createAsyncVerifier(main, snapshot, out, noFlushComment, isVDOM) {
+function createAsyncVerifier(main, snapshot, out, isVDOM) {
     var events = [];
     var eventsByAwaitInstance = {};
 
@@ -238,20 +248,6 @@ function createAsyncVerifier(main, snapshot, out, noFlushComment, isVDOM) {
     addEventListener("await:begin");
     addEventListener("await:beforeRender");
     addEventListener("await:finish");
-
-    if (!isVDOM && !noFlushComment) {
-        var _flush = out.flush;
-        out.flush = function() {
-            try {
-                out.comment("FLUSH");
-            } catch (e) {
-                // we may try to flush after the out has ended
-                // if this is the case, trying to add a comment
-                // will throw an error.  we can safely ignore this
-            }
-            _flush && _flush.apply(out, arguments);
-        };
-    }
 
     return {
         verify() {

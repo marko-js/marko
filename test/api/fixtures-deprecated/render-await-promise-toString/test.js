@@ -1,15 +1,13 @@
 var nodePath = require("path");
+var promiseProvider = require("../../../__util__/async-helpers")
+    .promiseProvider;
 
 exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     var template = marko.load(nodePath.join(__dirname, "template.marko"));
 
     template
         .render({
-            userPromise: new Promise(resolve => {
-                setTimeout(function() {
-                    resolve({ name: "John" });
-                }, 10);
-            })
+            userPromise: promiseProvider(1, { name: "John" })
         })
         .then(result => {
             process.nextTick(() => {

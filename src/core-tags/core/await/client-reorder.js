@@ -9,7 +9,6 @@ exports.getCode = function() {
             require.resolve("./client-reorder-runtime.min.js"),
             "utf8"
         );
-        code = '<script type="text/javascript">' + code + "</script>";
     }
     return code;
 };

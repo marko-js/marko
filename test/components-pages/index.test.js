@@ -21,8 +21,9 @@ function run(fixture) {
         var template = require(templateFile);
         return template
             .render({})
-            .then(function(html) {
-                var browser = createBrowserWithMarko(__dirname, String(html), {
+            .then(function(result) {
+                const html = result.toString();
+                var browser = createBrowserWithMarko(__dirname, html, {
                     beforeParse(window, browser) {
                         browser.require("../../components");
                         browser.window.$initComponents();

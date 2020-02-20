@@ -1,7 +1,5 @@
+const { callbackProvider } = require("../../../__util__/async-helpers");
+
 exports.templateData = {
-    userProvider: function(cb) {
-        setTimeout(function() {
-            cb(null, { name: "Frank" });
-        }, 100);
-    }
+    userProvider: callbackProvider(1, { name: "Frank" })
 };
