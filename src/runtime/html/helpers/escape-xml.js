@@ -9,16 +9,16 @@ exports.s = function(value) {
 };
 
 exports.x = function(value) {
+    if (value && value.toHTML) {
+        return value.toHTML();
+    }
+
     return escape(value, "<", "&lt;");
 };
 
 function escape(str, match, escaped) {
     if (str == null) {
         return "";
-    }
-
-    if (str.toHTML) {
-        return str.toHTML();
     }
 
     str = str + "";

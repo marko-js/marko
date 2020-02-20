@@ -11,6 +11,7 @@ class StartTag extends Node {
         this.properties = def.properties;
         this.argument = def.argument;
         this.selfClosed = def.selfClosed;
+        this.includeDataMarko = def.includeDataMarko;
     }
 
     generateCode(codegen) {
@@ -23,6 +24,24 @@ class StartTag extends Node {
         var nodes = [builder.htmlLiteral("<"), builder.html(tagName)];
 
         var attributes = this.attributes;
+
+        if (this.includeDataMarko) {
+            var properties = this.properties;
+            nodes.push(
+                builder.html(
+                    builder.functionCall(context.helper("dataMarko"), [
+                        builder.objectExpression(
+                            Object.keys(properties).map(propName => {
+                                return builder.property(
+                                    builder.literal(propName),
+                                    properties[propName]
+                                );
+                            })
+                        )
+                    ])
+                )
+            );
+        }
 
         if (attributes) {
             var hasSpread = attributes.find(attr => attr.spread);

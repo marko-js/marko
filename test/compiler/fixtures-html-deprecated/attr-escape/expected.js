@@ -13,7 +13,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<div" +
     marko_classAttr(input.className) +
-    marko_attr("class2", "" + input.className) +
+    marko_attr("class2", input.className) +
     " foo=\"a" +
     marko_escapeDoubleQuoteAttrValue(input.foo) +
     "b\"" +
