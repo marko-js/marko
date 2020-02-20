@@ -4,6 +4,12 @@
 
 ## 4.18.x
 
+### 4.18.47
+
+- Deprecate implicit JSON.stringify for attributes, attr toString fix. [#1505](https://github.com/marko-js/marko/pull/1505)
+- Remove data-widget, add warning for non-split, non-stateful widgets. [#1503](https://github.com/marko-js/marko/pull/1503)
+- Flushing improvements. [#1502](https://github.com/marko-js/marko/pull/1502)
+
 ### 4.18.46
 
 - Fixed issue with `<init-components>` being rendered under nested async outs. [#1500](https://github.com/marko-js/marko/pull/1500)
