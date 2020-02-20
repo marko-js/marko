@@ -66,10 +66,13 @@ module.exports = function handleComponentBind(options) {
 
         if (isLegacyComponent) {
             let el = rootNodes[0];
-            el.setAttributeValue(
-                "data-widget",
-                builder.literal(componentType.id)
-            );
+            // eslint-disable-next-line no-constant-condition
+            if ("MARKO_DEBUG" || process.env.NODE_ENV === "test") {
+                el.setAttributeValue(
+                    "data-widget",
+                    builder.literal(componentType.id)
+                );
+            }
             if (!el.hasAttribute("id")) {
                 el.setAttributeValue(
                     "id",

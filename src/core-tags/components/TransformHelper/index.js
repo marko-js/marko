@@ -63,7 +63,10 @@ class TransformHelper {
         if (
             !this.__keySerialized &&
             context.isServerTarget() &&
-            (context.isSplitComponent || isPreserved(el))
+            (context.isSplitComponent ||
+                this.isLegacyComponent ||
+                isPreserved(el) ||
+                context.isFlagSet("legacyWidgetAttrsWithoutBind"))
         ) {
             var markoKeyAttrVar = context.importModule(
                 "marko_keyAttr",
