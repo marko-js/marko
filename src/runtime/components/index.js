@@ -15,19 +15,8 @@ function safeJSON(json) {
     return json.replace(safeJSONRegExp, safeJSONReplacer);
 }
 
-var typesLookups = new WeakMap();
-
-function addComponentsFromContext(
-    componentsContext,
-    componentsFinal,
-    typesArray
-) {
+function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var components = componentsContext.___components;
-    var typesLookup = typesLookups.get(typesArray);
-
-    if (!typesLookup) {
-        typesLookups.set(typesArray, (typesLookup = {}));
-    }
 
     var len;
     if ((len = components.length) === 0) {
@@ -60,13 +49,6 @@ function addComponentsFromContext(
 
         if (!typeName) {
             continue;
-        }
-
-        var typeIndex = typesLookup[typeName];
-        if (typeIndex === undefined) {
-            typeIndex = typesArray.length;
-            typesArray.push(typeName);
-            typesLookup[typeName] = typeIndex;
         }
 
         var hasProps = false;
@@ -115,9 +97,9 @@ function addComponentsFromContext(
             w: hasProps ? component : undefined
         };
 
-        componentsFinal.push([
+        componentsToHydrate.push([
             id, // 0 = id
-            typeIndex, // 1 = type
+            typeName, // 1 = type
             input, // 2 = input
             extra // 3
         ]);
@@ -129,19 +111,32 @@ function addComponentsFromContext(
     var nestedContexts = componentsContext.___nestedContexts;
     if (nestedContexts !== undefined) {
         nestedContexts.forEach(function(nestedContext) {
-            addComponentsFromContext(
-                nestedContext,
-                componentsFinal,
-                typesArray
-            );
+            addComponentsFromContext(nestedContext, componentsToHydrate);
         });
     }
 }
 
-function getInitComponentsData(componentDefs, componentTypes, runtimeId) {
-    if (componentDefs.length !== 0) {
-        return { r: runtimeId, w: componentDefs, t: componentTypes };
+function getInitComponentsData(componentDefs, runtimeId) {
+    let len;
+    if ((len = componentDefs.length) === 0) {
+        return;
     }
+
+    const typesLookup = {};
+    const componentTypes = [];
+    const TYPE_INDEX = 1;
+    for (let i = 0; i < len; i++) {
+        const componentDef = componentDefs[i];
+        const typeName = componentDef[TYPE_INDEX];
+        let typeIndex = typesLookup[typeName];
+        if (typeIndex === undefined) {
+            typeIndex = componentTypes.length;
+            componentTypes.push(typeName);
+            typesLookup[typeName] = typeIndex;
+        }
+        componentDef[TYPE_INDEX] = typeIndex;
+    }
+    return { r: runtimeId, w: componentDefs, t: componentTypes };
 }
 
 function getInitComponentsDataFromOut(out) {
@@ -151,16 +146,11 @@ function getInitComponentsDataFromOut(out) {
         return;
     }
 
-    var componentsFinal = [];
-    var typesArray = [];
+    var componentsToHydrate = [];
 
-    addComponentsFromContext(componentsContext, componentsFinal, typesArray);
+    addComponentsFromContext(componentsContext, componentsToHydrate);
 
-    return getInitComponentsData(
-        componentsFinal,
-        typesArray,
-        out.global.runtimeId
-    );
+    return getInitComponentsData(componentsToHydrate, out.global.runtimeId);
 }
 
 function writeInitComponentsCode(out) {
@@ -169,18 +159,13 @@ function writeInitComponentsCode(out) {
 
 exports.___getInitComponentsCode = function getInitComponentsCode(
     out,
-    componentDefs,
-    componentTypes
+    componentDefs
 ) {
     var runtimeId = out.global.runtimeId;
     var initComponentsData;
 
-    if (arguments.length === 3) {
-        initComponentsData = getInitComponentsData(
-            componentDefs,
-            componentTypes,
-            runtimeId
-        );
+    if (arguments.length === 2) {
+        initComponentsData = getInitComponentsData(componentDefs, runtimeId);
     } else {
         initComponentsData = getInitComponentsDataFromOut(out);
     }

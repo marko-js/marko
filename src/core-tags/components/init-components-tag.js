@@ -12,16 +12,13 @@ function addComponentsFromOut(source, target) {
     const targetOut = target || sourceOut;
     const componentsContext = sourceOut.___components;
     const componentDefs = targetOut.writer.get("componentDefs");
-    const componentTypes = targetOut.writer.get("componentTypes");
-
-    addComponentsFromContext(componentsContext, componentDefs, componentTypes);
+    addComponentsFromContext(componentsContext, componentDefs);
 }
 
 function addInitScript(writer) {
     const out = writer.state.root;
     const componentDefs = writer.get("componentDefs");
-    const componentTypes = writer.get("componentTypes");
-    writer.script(getInitComponentsCode(out, componentDefs, componentTypes));
+    writer.script(getInitComponentsCode(out, componentDefs));
 }
 
 function forceScriptTagAtThisPoint(out) {
