@@ -1,4 +1,6 @@
 /* jshint newcap:false */
+
+var complain = "MARKO_DEBUG" && require("complain");
 var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
@@ -14,8 +16,6 @@ var DEFAULT_NS = {
     math: NS_MATH
 };
 
-var toString = String;
-
 var FLAG_SIMPLE_ATTRS = 1;
 var FLAG_CUSTOM_ELEMENT = 2;
 
@@ -28,10 +28,22 @@ function convertAttrValue(type, value) {
     if (value === true) {
         return "";
     } else if (type == "object") {
-        return value instanceof RegExp ? value.source : JSON.stringify(value);
-    } else {
-        return toString(value);
+        switch (value.toString) {
+            case Object.prototype.toString:
+            case Array.prototype.toString:
+                // eslint-disable-next-line no-constant-condition
+                if ("MARKO_DEBUG") {
+                    complain(
+                        "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead."
+                    );
+                }
+                return JSON.stringify(value);
+            case RegExp.prototype.toString:
+                return value.source;
+        }
     }
+
+    return value + "";
 }
 
 function assign(a, b) {
@@ -216,7 +228,7 @@ defineProperty(proto, "___value", {
             value = this.___attributes.value;
         }
         return value != null && value !== false
-            ? toString(value)
+            ? value + ""
             : this.___attributes.type === "checkbox" ||
               this.___attributes.type === "radio"
             ? "on"

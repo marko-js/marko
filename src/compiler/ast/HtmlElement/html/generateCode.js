@@ -15,25 +15,6 @@ module.exports = function generateCode(node, codegen) {
     }
 
     var properties = node.getProperties();
-
-    if (
-        properties &&
-        (!codegen.context.isStatefulComponent || isPreserved(node))
-    ) {
-        var objectProps = Object.keys(properties).map(propName => {
-            return builder.property(
-                builder.literal(propName),
-                properties[propName]
-            );
-        });
-
-        node.setAttributeValue(
-            "data-marko",
-            builder.objectExpression(objectProps),
-            false
-        );
-    }
-
     var attributes = node._attributes && node._attributes.all;
 
     var body = node.body;
@@ -59,7 +40,10 @@ module.exports = function generateCode(node, codegen) {
         attributes: isCustomElement ? null : attributes,
         properties: properties,
         argument: argument,
-        selfClosed: selfClosed
+        selfClosed: selfClosed,
+        includeDataMarko:
+            properties &&
+            (!codegen.context.isStatefulComponent || isPreserved(node))
     });
 
     var endTag;
