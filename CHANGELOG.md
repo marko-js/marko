@@ -4,7 +4,24 @@
 
 ## 4.18.x
 
-### 4.18.41
+### 4.18.46
+
+- Fixed issue with `<init-components>` being rendered under nested async outs. [#1500](https://github.com/marko-js/marko/pull/1500)
+
+### 4.18.45
+
+- Fixed dynamic tags to add data-marko-key for split components [#1499](https://github.com/marko-js/marko/pull/1499)
+- Fixed dynamic tags properly render self-closing tags on the server [#1499](https://github.com/marko-js/marko/pull/1499)
+
+### 4.18.44
+
+- Fix issue with diffing SSR'd `no-update` section. [#1498](https://github.com/marko-js/marko/pull/1498)
+
+### 4.18.43
+
+- No longer serialize input for split legacy widgets. [#1497](https://github.com/marko-js/marko/pull/1497)
+
+### 4.18.42
 
 - Fix regression for unkeyed elements with toggled spread attributes [#1496](https://github.com/marko-js/marko/pull/1496)
 - Fix regression with body-only-if migration for legacy renderers [#1495](https://github.com/marko-js/marko/pull/1495)

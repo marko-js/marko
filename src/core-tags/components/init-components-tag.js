@@ -30,7 +30,7 @@ module.exports = function render(input, out) {
                 // Ensure we're getting init code starting from the root
                 let rootOut = out;
                 while (rootOut._parentOut) {
-                    rootOut = out._parentOut;
+                    rootOut = rootOut._parentOut;
                 }
                 // Write out all of the component init code from the main out
                 writeInitComponentsCode(rootOut, asyncOut, true);

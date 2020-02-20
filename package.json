@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "4.18.42",
+    "version": "4.18.46",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "scripts": {
@@ -49,6 +49,7 @@
         "raptor-regexp": "^1.0.0",
         "raptor-util": "^3.2.0",
         "resolve-from": "^2.0.0",
+        "self-closing-tags": "^1.0.1",
         "simple-sha1": "^2.1.0",
         "strip-json-comments": "^2.0.1",
         "warp10": "^2.0.1"

@@ -97,22 +97,14 @@ var proto = (AsyncVDOMBuilder.prototype = {
         return this.___beginNode(element, childCount);
     },
 
-    ___elementDynamic: function(
-        tagName,
-        attrs,
-        key,
-        component,
-        childCount,
-        flags,
-        props
-    ) {
+    ___elementDynamic: function(tagName, attrs, key, componentDef, props) {
         return this.element(
             tagName,
             attrsHelper(attrs),
             key,
-            component,
-            childCount,
-            flags,
+            componentDef.___component,
+            0,
+            0,
             props
         );
     },
@@ -190,7 +182,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
         tagName,
         attrs,
         key,
-        component,
+        componentDef,
         childCount,
         flags,
         props
@@ -199,7 +191,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
             tagName,
             attrsHelper(attrs),
             key,
-            component,
+            componentDef.___component,
             childCount,
             flags,
             props
