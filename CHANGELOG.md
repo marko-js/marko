@@ -4,6 +4,12 @@
 
 ## 4.18.x
 
+### 4.18.48
+
+- Fixes a regression from [#1499](https://github.com/marko-js/marko/pull/1499) which caused `<${dynamic}>` tags with body content to not have their events registered. [#1507](https://github.com/marko-js/marko/pull/1507)
+- Fixes issue with `getEl` being used on a keyed `<${dynamic}>` tag. [#1507](https://github.com/marko-js/marko/pull/1507)
+- Fixes registering event handlers added to a `<${dynamic}>` tag that renders a native element under a split component. [#1507](https://github.com/marko-js/marko/pull/1507)
+
 ### 4.18.47
 
 - Deprecate implicit JSON.stringify for attributes, attr toString fix. [#1505](https://github.com/marko-js/marko/pull/1505)
