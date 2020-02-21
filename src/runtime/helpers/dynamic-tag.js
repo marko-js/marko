@@ -30,6 +30,10 @@ module.exports = function dynamicTag(
         var attrs = getAttrs && getAttrs();
         var component = componentDef && componentDef.___component;
         if (typeof tag === "string") {
+            if (isNaN(key)) {
+                key = "@" + key;
+            }
+
             if (customEvents) {
                 if (!props) {
                     props = {};

@@ -1,0 +1,6 @@
+import childTemplate from "../app-button";
+
+<div>
+    <${true ? "button" : undefined} key="element" on-click("handleElClick")/>
+    <${true ? childTemplate: undefined} key="component" on-click("handleComponentClick")/>
+</div>

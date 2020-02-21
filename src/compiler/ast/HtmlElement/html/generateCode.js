@@ -5,6 +5,7 @@ var EndTag = require("./EndTag");
 
 module.exports = function generateCode(node, codegen) {
     var builder = codegen.builder;
+    var context = codegen.context;
     var tagName = node.tagName;
 
     // Convert the tag name into a Node so that we generate the code correctly
@@ -41,9 +42,12 @@ module.exports = function generateCode(node, codegen) {
         properties: properties,
         argument: argument,
         selfClosed: selfClosed,
+        userKey: node.isAutoKeyed ? undefined : node.key,
         includeDataMarko:
-            properties &&
-            (!codegen.context.isStatefulComponent || isPreserved(node))
+            context.meta.legacy ||
+            context.isFlagSet("legacyWidgetAttrsWithoutBind") ||
+            !context.isStatefulComponent ||
+            isPreserved(node)
     });
 
     var endTag;

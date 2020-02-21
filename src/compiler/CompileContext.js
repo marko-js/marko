@@ -72,6 +72,7 @@ const helpers = {
     createElement: { vdom: "marko/runtime/vdom/helpers/v-element" },
     createText: { vdom: "marko/runtime/vdom/helpers/v-text" },
     dataMarko: { html: "marko/runtime/html/helpers/data-marko" },
+    bindComponent: "marko/runtime/helpers/bind-component",
     defineComponent: {
         vdom: "marko/runtime/components/defineComponent"
     },

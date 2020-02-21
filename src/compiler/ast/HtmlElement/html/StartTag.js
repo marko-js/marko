@@ -11,6 +11,7 @@ class StartTag extends Node {
         this.properties = def.properties;
         this.argument = def.argument;
         this.selfClosed = def.selfClosed;
+        this.userKey = def.userKey;
         this.includeDataMarko = def.includeDataMarko;
     }
 
@@ -26,21 +27,47 @@ class StartTag extends Node {
         var attributes = this.attributes;
 
         if (this.includeDataMarko) {
+            var dataMarkoArgs = [];
+
             var properties = this.properties;
-            nodes.push(
-                builder.html(
-                    builder.functionCall(context.helper("dataMarko"), [
+            if (properties) {
+                var propKeys = properties && Object.keys(properties);
+
+                if (propKeys.length) {
+                    dataMarkoArgs.push(
                         builder.objectExpression(
-                            Object.keys(properties).map(propName => {
+                            propKeys.map(propName => {
                                 return builder.property(
                                     builder.literal(propName),
                                     properties[propName]
                                 );
                             })
                         )
-                    ])
-                )
-            );
+                    );
+                }
+            }
+
+            if (this.userKey) {
+                if (dataMarkoArgs.length === 0) {
+                    dataMarkoArgs.push(builder.literal(null));
+                }
+
+                dataMarkoArgs.push(
+                    this.userKey,
+                    builder.identifier("__component")
+                );
+            }
+
+            if (dataMarkoArgs.length) {
+                nodes.push(
+                    builder.html(
+                        builder.functionCall(
+                            context.helper("dataMarko"),
+                            dataMarkoArgs
+                        )
+                    )
+                );
+            }
         }
 
         if (attributes) {

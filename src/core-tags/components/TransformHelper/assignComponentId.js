@@ -67,7 +67,6 @@ module.exports = function assignComponentId(isRepeated) {
             }
 
             el.setKey(idExpression);
-            this.serializeKey();
         }
     } else {
         // Case 3 - We need to add a unique auto key
