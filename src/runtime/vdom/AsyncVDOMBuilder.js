@@ -178,22 +178,14 @@ var proto = (AsyncVDOMBuilder.prototype = {
         return this;
     },
 
-    ___beginElementDynamic: function(
-        tagName,
-        attrs,
-        key,
-        componentDef,
-        childCount,
-        flags,
-        props
-    ) {
+    ___beginElementDynamic: function(tagName, attrs, key, componentDef, props) {
         return this.beginElement(
             tagName,
             attrsHelper(attrs),
             key,
             componentDef.___component,
-            childCount,
-            flags,
+            0,
+            0,
             props
         );
     },

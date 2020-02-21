@@ -13,10 +13,7 @@ module.exports = function codeGenerator(el, codegen) {
 
     var componentProps = el.getAttributeValue("props");
 
-    var bindComponentVar = context.importModule(
-        "marko_bindComponent",
-        "marko/core-tags/components/helpers/bindComponent"
-    );
+    var bindComponentVar = context.helper("bindComponent");
 
     if (context.data[BIND_WIDGET_KEY] == null) {
         context.data[BIND_WIDGET_KEY] = 0;

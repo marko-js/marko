@@ -54,39 +54,6 @@ class TransformHelper {
         );
     }
 
-    serializeKey() {
-        var el = this.el;
-        var key = el.key;
-        var context = this.context;
-        var builder = this.builder;
-
-        if (
-            !this.__keySerialized &&
-            context.isServerTarget() &&
-            (context.isSplitComponent ||
-                this.isLegacyComponent ||
-                isPreserved(el) ||
-                context.isFlagSet("legacyWidgetAttrsWithoutBind"))
-        ) {
-            var markoKeyAttrVar = context.importModule(
-                "marko_keyAttr",
-                this.getMarkoComponentsRequirePath(
-                    "marko/core-tags/components/helpers/markoKeyAttr"
-                )
-            );
-
-            el.setAttributeValue(
-                "data-marko-key",
-                builder.functionCall(markoKeyAttrVar, [
-                    key,
-                    builder.identifier("__component")
-                ])
-            );
-
-            this.__keySerialized = true;
-        }
-    }
-
     getIdExpression() {
         this.assignComponentId();
         return this.getComponentIdInfo().idExpression;
@@ -163,20 +130,6 @@ class TransformHelper {
     getTransformHelper(el) {
         return new TransformHelper(el, this.context);
     }
-}
-
-function isPreserved(el) {
-    let curNode = el;
-
-    do {
-        if (curNode._canBePreserved) {
-            return true;
-        }
-
-        curNode = curNode.parentNode;
-    } while (curNode);
-
-    return false;
 }
 
 TransformHelper.prototype.assignComponentId = require("./assignComponentId");

@@ -5,8 +5,7 @@ var BufferedWriter = require("./BufferedWriter");
 var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
-var attrHelper = require("./helpers/attr");
-var markoKeyAttr = require("./../../core-tags/components/helpers/markoKeyAttr");
+var markoAttr = require("./helpers/data-marko");
 var escapeXml = require("./helpers/escape-xml").x;
 var selfClosingTags = require("self-closing-tags");
 
@@ -484,12 +483,18 @@ var proto = (AsyncStream.prototype = {
         return newOut;
     },
 
-    ___elementDynamic: function(tagName, elementAttrs, key, componentDef) {
+    ___elementDynamic: function(
+        tagName,
+        elementAttrs,
+        key,
+        componentDef,
+        props
+    ) {
         var str =
             "<" +
             tagName +
+            markoAttr(props, key, componentDef) +
             attrsHelper(elementAttrs) +
-            attrHelper("data-marko-key", markoKeyAttr(key, componentDef)) +
             ">";
 
         if (selfClosingTags.indexOf(tagName) === -1) {
@@ -509,12 +514,18 @@ var proto = (AsyncStream.prototype = {
         this.write(str);
     },
 
-    ___beginElementDynamic: function(name, elementAttrs, key, componentDef) {
+    ___beginElementDynamic: function(
+        name,
+        elementAttrs,
+        key,
+        componentDef,
+        props
+    ) {
         var str =
             "<" +
             name +
+            markoAttr(props, key, componentDef) +
             attrsHelper(elementAttrs) +
-            attrHelper("data-marko-key", markoKeyAttr(key, componentDef)) +
             ">";
 
         this.write(str);
