@@ -1,55 +1,49 @@
 {
-  "name": "marko",
-  "version": "4.0.0",
-  "private": true,
-  "scripts": {
-    "build": "node scripts/build.js",
-    "build-src": "node scripts/build.js src",
-    "postinstall": "cd packages/marko && npm i",
-    "precommit": "lint-staged",
-    "test": "mocha --timeout 10000 ./packages/marko/test/*/*.test.js",
-    "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
-    "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
-    "test-generate-coverage": "nyc -asc npm test",
-    "lint": "eslint .",
-    "format": "prettier \"**/*.{js,json,css,md}\" --write",
-    "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
-    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.24.1",
-    "babel-core": "^6.24.1",
-    "babel-plugin-minprops": "^2.0.1",
-    "benchmark": "^2.1.1",
-    "codecov": "^3.0.2",
-    "eslint": "^4.11.0",
-    "eslint-config-prettier": "^2.9.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.0.0",
-    "micromatch": "^3.0.4",
-    "mocha": "^5.0.1",
-    "nyc": "^13.0.0",
-    "prettier": "^1.13.5",
-    "shelljs": "^0.7.7"
-  },
-  "lint-staged": {
-      "*.js": [
-          "eslint"
-      ],
-      "*.{js,json,css,md}": [
-          "prettier --write",
-          "git add"
-      ]
-  },
-  "nyc": {
-      "exclude": [
-          "**/benchmark/**",
-          "**/scripts/**",
-          "**/coverage/**",
-          "**/test/**",
-          "**/test-dist/**",
-          "**/test-generated/**",
-          "**/dist/**"
-      ]
-  }
+    "name": "marko",
+    "version": "4.0.0",
+    "private": true,
+    "scripts": {
+        "build": "node scripts/build.js",
+        "build-src": "node scripts/build.js src",
+        "postinstall": "cd packages/marko && npm i",
+        "release": "npm run build-src && (cd ./packages/marko && standard-version && git push --follow-tags && npm publish)",
+        "test": "mocha --timeout 10000 ./packages/marko/test/*/*.test.js",
+        "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
+        "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
+        "test-generate-coverage": "nyc -asc npm test",
+        "lint": "eslint .",
+        "format": "prettier \"**/*.{js,json,css,md}\" --write",
+        "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
+        "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-conventional": "^8.3.4",
+        "babel-cli": "^6.24.1",
+        "babel-core": "^6.24.1",
+        "babel-plugin-minprops": "^2.0.1",
+        "benchmark": "^2.1.1",
+        "codecov": "^3.0.2",
+        "eslint": "^4.11.0",
+        "eslint-config-prettier": "^2.9.0",
+        "husky": "^4.2.3",
+        "lint-staged": "^7.0.0",
+        "micromatch": "^3.0.4",
+        "mocha": "^5.0.1",
+        "nyc": "^13.0.0",
+        "prettier": "^1.13.5",
+        "shelljs": "^0.7.7",
+        "standard-version": "^7.1.0"
+    },
+    "nyc": {
+        "exclude": [
+            "**/benchmark/**",
+            "**/scripts/**",
+            "**/coverage/**",
+            "**/test/**",
+            "**/test-dist/**",
+            "**/test-generated/**",
+            "**/dist/**"
+        ]
+    }
 }
