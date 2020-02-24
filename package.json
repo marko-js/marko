@@ -1,164 +1,55 @@
 {
-    "name": "marko",
-    "version": "4.18.48",
-    "license": "MIT",
-    "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
-    "scripts": {
-        "build": "node scripts/build.js",
-        "build-src": "node scripts/build.js src",
-        "prepublish": "npm run build-src",
-        "precommit": "lint-staged",
-        "test": "mocha --timeout 10000 ./test/*/*.test.js",
-        "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
-        "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
-        "test-generate-coverage": "nyc -asc npm test",
-        "lint": "eslint .",
-        "format": "prettier \"**/*.{js,json,css,md}\" --write",
-        "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
-        "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
-    },
-    "lint-staged": {
-        "*.js": [
-            "eslint"
-        ],
-        "*.{js,json,css,md}": [
-            "prettier --write",
-            "git add"
-        ]
-    },
-    "dependencies": {
-        "app-module-path": "^2.2.0",
-        "argly": "^1.0.0",
-        "browser-refresh-client": "^1.0.0",
-        "camelcase": "^5.0.0",
-        "char-props": "~0.1.5",
-        "complain": "^1.6.0",
-        "deresolve": "^1.1.2",
-        "escodegen": "^1.8.1",
-        "esprima": "^4.0.0",
-        "estraverse": "^4.3.0",
-        "events-light": "^1.0.0",
-        "he": "^1.1.0",
-        "htmljs-parser": "^2.7.1",
-        "lasso-caching-fs": "^1.0.1",
-        "lasso-modules-client": "^2.0.4",
-        "lasso-package-root": "^1.0.1",
-        "listener-tracker": "^2.0.0",
-        "minimatch": "^3.0.2",
-        "property-handlers": "^1.0.0",
-        "raptor-regexp": "^1.0.0",
-        "raptor-util": "^3.2.0",
-        "resolve-from": "^2.0.0",
-        "self-closing-tags": "^1.0.1",
-        "simple-sha1": "^2.1.0",
-        "strip-json-comments": "^2.0.1",
-        "warp10": "^2.0.1"
-    },
-    "devDependencies": {
-        "@marko/migrate": "^5.1.0",
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.24.1",
-        "babel-plugin-minprops": "^2.0.1",
-        "benchmark": "^2.1.1",
-        "bluebird": "^3.4.7",
-        "caller-path": "^2.0.0",
-        "chai": "^3.3.0",
-        "codecov": "^3.0.2",
-        "diffable-html": "^2.1.0",
-        "eslint": "^4.11.0",
-        "eslint-config-prettier": "^2.9.0",
-        "express": "^4.16.1",
-        "husky": "^0.14.3",
-        "it-fails": "^1.0.0",
-        "jquery": "^3.1.1",
-        "jsdom-context-require": "^1.0.1",
-        "lasso-resolve-from": "^1.2.0",
-        "lint-staged": "^7.0.0",
-        "marko-widgets": "^7.0.1",
-        "micromatch": "^3.0.4",
-        "mocha": "^5.0.1",
-        "nyc": "^13.0.0",
-        "prettier": "^1.13.5",
-        "request": "^2.72.0",
-        "shelljs": "^0.7.7",
-        "through": "^2.3.4",
-        "through2": "^2.0.1"
-    },
-    "main": "index.js",
-    "browser": {
-        "./compiler.js": "./compiler-browser.marko",
-        "./components.js": "./components-browser.marko",
-        "./index.js": "./index-browser.marko",
-        "./legacy-components.js": "./legacy-components-browser.marko"
-    },
-    "bin": {
-        "markoc": "bin/markoc"
-    },
-    "nyc": {
-        "exclude": [
-            "**/benchmark/**",
-            "**/scripts/**",
-            "**/coverage/**",
-            "**/test/**",
-            "**/test-dist/**",
-            "**/test-generated/**",
-            "**/dist/**"
-        ]
-    },
-    "homepage": "http://markojs.com/",
-    "logo": {
-        "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/marko-js/marko.git"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": [
-        "Patrick Steele-Idem <pnidem@gmail.com>",
-        "Michael Rawlings <ml.rawlings@gmail.com>",
-        "Phillip Gates-Idem <phillip.idem@gmail.com>",
-        "Austin Kelleher <a@alk.im>",
-        "Dylan Piercey <pierceydylan@gmail.com>",
-        "Martin Aberer"
-    ],
-    "keywords": [
-        "front-end",
-        "templating",
-        "template",
-        "async",
-        "streaming",
-        "components",
-        "ui",
-        "vdom",
-        "dom",
-        "morphdom",
-        "virtual",
-        "virtual-dom"
-    ],
-    "files": [
-        "bin",
-        "dist",
-        "docs",
-        "helpers",
-        "src",
-        "browser-refresh.js",
-        "compiler-browser.marko",
-        "compiler.js",
-        "components-browser.marko",
-        "components.js",
-        "env.js",
-        "express.js",
-        "hot-reload.js",
-        "index-browser.marko",
-        "index.js",
-        "jquery.marko",
-        "legacy-components-browser.marko",
-        "legacy-components.js",
-        "node-require.js",
-        "ready.marko"
-    ]
+  "name": "marko",
+  "version": "4.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "build-src": "node scripts/build.js src",
+    "postinstall": "cd packages/marko && npm i",
+    "precommit": "lint-staged",
+    "test": "mocha --timeout 10000 ./packages/marko/test/*/*.test.js",
+    "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
+    "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
+    "test-generate-coverage": "nyc -asc npm test",
+    "lint": "eslint .",
+    "format": "prettier \"**/*.{js,json,css,md}\" --write",
+    "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
+    "codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-plugin-minprops": "^2.0.1",
+    "benchmark": "^2.1.1",
+    "codecov": "^3.0.2",
+    "eslint": "^4.11.0",
+    "eslint-config-prettier": "^2.9.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "micromatch": "^3.0.4",
+    "mocha": "^5.0.1",
+    "nyc": "^13.0.0",
+    "prettier": "^1.13.5",
+    "shelljs": "^0.7.7"
+  },
+  "lint-staged": {
+      "*.js": [
+          "eslint"
+      ],
+      "*.{js,json,css,md}": [
+          "prettier --write",
+          "git add"
+      ]
+  },
+  "nyc": {
+      "exclude": [
+          "**/benchmark/**",
+          "**/scripts/**",
+          "**/coverage/**",
+          "**/test/**",
+          "**/test-dist/**",
+          "**/test-generated/**",
+          "**/dist/**"
+      ]
+  }
 }

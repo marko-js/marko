@@ -7,9 +7,9 @@
 input.*
 
 # generated
-/dist/
-/test-dist/
-/test-generated/
+/**/dist/
+/**/test-dist/
+/**/test-generated/
 *.marko.js
 *.html.js
 *.xml.js

@@ -9,7 +9,7 @@ const fs = require("fs");
 const babel = require("babel-core");
 const mm = require("micromatch");
 
-const rootDir = path.join(__dirname, "..");
+const rootDir = path.join(__dirname, "../packages/marko");
 
 function babelTransformFile(sourceFile, targetFile, babelOptions) {
     babelOptions = Object.assign({}, babelOptions);

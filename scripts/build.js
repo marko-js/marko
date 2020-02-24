@@ -35,7 +35,7 @@ if (shouldBuildSrc) {
 }
 
 fs.writeFileSync(
-    path.join(__dirname, "../dist/build.json"),
+    path.join(__dirname, "../packages/marko/dist/build.json"),
     JSON.stringify({ isDebug: false }, null, 4),
     { encoding: "utf8" }
 );
