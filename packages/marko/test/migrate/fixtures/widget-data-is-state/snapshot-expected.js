@@ -1,4 +1,4 @@
-// test/migrate/fixtures/widget-data-is-state/index.js
+// packages/marko/test/migrate/fixtures/widget-data-is-state/index.js
 
 module.exports = {
     onCreate(input, out) {
