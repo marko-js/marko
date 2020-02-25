@@ -1,0 +1,13 @@
+<!-- packages/marko/test/migrate/fixtures/invoke-tag/template.marko -->
+
+$ log();
+$ console.log("y");
+<${renderBody}/>
+<${input.item}/>
+<${template} x=1/>
+<${function(out) {
+    input.barRenderer({}, true, out);
+}}/>
+<if(renderBody)>
+    <${renderBody}/>
+</if>

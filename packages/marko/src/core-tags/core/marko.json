@@ -1,0 +1,267 @@
+{
+  "<html-comment>": {
+    "body": "parsed-text",
+    "code-generator": "./html-comment-tag.js",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "description": "Use to create an html comment that is not stripped from the output.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#html-comment"
+      }
+    ]
+  },
+  "<else>": {
+    "node-factory": "./else-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "description": "Use after an <if> or <else-if> tag to display content if those conditions do not match.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
+      }
+    ]
+  },
+  "<else-if>": {
+    "node-factory": "./else-if-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "snippet": "else-if(${1:condition})",
+        "description": "Use after an <if> or <else-if> tag to display content if those conditions do not match and this one does.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
+      }
+    ]
+  },
+  "<for>": {
+    "code-generator": "./for-tag",
+    "@of": {
+      "type": "expression",
+      "autocomplete": [
+        {
+          "description": "Iterates over a list of items."
+        }
+      ]
+    },
+    "@in": {
+      "type": "expression",
+      "autocomplete": [
+        {
+          "description": "Iterates over the keys and values of an object."
+        }
+      ]
+    },
+    "@to": {
+      "type": "number",
+      "autocomplete": [
+        {
+          "description": "Iterates up to the provided number (inclusive)"
+        }
+      ]
+    },
+    "@from": {
+      "type": "number",
+      "autocomplete": [
+        {
+          "description": "Iterates starting from the provided number (inclusive)"
+        }
+      ]
+    },
+    "@step": {
+      "type": "number",
+      "autocomplete": [
+        {
+          "description": "The amount to increment during each interation (with from/to)"
+        }
+      ]
+    },
+    "autocomplete": [
+      {
+        "snippet": "for|${1:value, index}| of=${3:array}",
+        "description": "Use to iterate over lists, object properties, or between ranges.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#iterating-over-a-list"
+      },
+      {
+        "snippet": "for|${1:name, value}| in=${3:object}",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties"
+      },
+      {
+        "snippet": "for|${1:index}| from=${2:number} to=${3:number} step=${4:number}",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers"
+      }
+    ]
+  },
+  "<if>": {
+    "node-factory": "./if-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "snippet": "if(${1:condition})",
+        "description": "Use to display content only if the condition is meant.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#if-else-if-else"
+      }
+    ]
+  },
+  "<import>": {
+    "code-generator": "./import-tag",
+    "no-output": true,
+    "parse-options": {
+      "relaxRequireCommas": true
+    },
+    "autocomplete": [
+      {
+        "displayText": "import <scope> from \"<path>\"",
+        "description": "Use import external modules, follows the same syntax as JavaScript imports.",
+        "snippet": "import ${2} from \"${1:path}\"",
+        "descriptionMoreURL": "https://markojs.com/docs/syntax/#importing-external-files"
+      }
+    ]
+  },
+  "<include-html>": {
+    "code-generator": "./include-html-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "displayText": "include-html(\"<path>\")",
+        "snippet": "include-html(${1:\"./foo.html\"})",
+        "description": "Allows you to inline the contents of an html file.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-html"
+      }
+    ]
+  },
+  "<include-text>": {
+    "code-generator": "./include-text-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "displayText": "include-text(\"<path>\")",
+        "description": "Allows you to inline the contents of a text file.",
+        "snippet": "include-text(${1:\"./foo.txt\"})",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#include-text"
+      }
+    ]
+  },
+  "<macro>": {
+    "node-factory": "./macro-tag",
+    "@name": {
+      "type": "string",
+      "autocomplete": [
+        {
+          "description": "The name which can be used as a tag within a template."
+        }
+      ]
+    },
+    "autocomplete": [
+      {
+        "displayText": "macro|<params>| name=\"<name>\"",
+        "description": "Creates a reusable fragment within the template.",
+        "snippet": "macro|${2:param1, param2}| name=\"${1:name}\"",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#macro"
+      }
+    ],
+    "no-output": true
+  },
+  "<marko>": {
+    "deprecated": true,
+    "code-generator": "./marko-tag",
+    "open-tag-only": true,
+    "@no-browser-rerender": "boolean",
+    "@deprecated-no-create-or-input-lifecycle-for-top-level-hydrate": "boolean"
+  },
+  "<marko-preserve-whitespace>": {
+    "deprecated": true,
+    "code-generator": "./marko-preserve-whitespace-tag",
+    "preserve-whitespace": true,
+    "autocomplete": [
+      {
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#marko-preserve-whitespace"
+      }
+    ]
+  },
+  "<module-code>": {
+    "code-generator": "./module-code-tag",
+    "deprecated": true,
+    "preserve-whitespace": true
+  },
+  "<static>": {
+    "code-generator": "./static-tag-code-generator",
+    "no-output": true,
+    "parse-options": {
+      "ignoreAttributes": true
+    },
+    "autocomplete": [
+      {
+        "displayText": "static <statement>",
+        "description": "A JavaScript statement which is only evaluated once your template is loaded.",
+        "descriptionMoreURL": "https://markojs.com/docs/syntax/#static-javascript"
+      }
+    ]
+  },
+  "<while>": {
+    "code-generator": "./while-tag",
+    "autocomplete": [
+      {
+        "snippet": "while(${1:condition})",
+        "description": "Renders the content multiple times until the condition is no longer met.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#while"
+      }
+    ]
+  },
+  "<await>": {
+    "transformer": "./await/transformer",
+    "renderer": "./await/renderer",
+    "@_provider": "expression",
+    "@_name": "string",
+    "@name": {
+      "type": "string",
+      "autocomplete": [
+        {
+          "description": "Used to improve debugging and also to ensure promise ordering with the show-after attribute.",
+          "snippet": "name=\"${1:name}\""
+        }
+      ]
+    },
+    "@timeout": {
+      "type": "number",
+      "autocomplete": [
+        {
+          "description": "An optional timeout that when reached will cause the promise to reject with a TimeoutError."
+        }
+      ]
+    },
+    "@client-reorder": {
+      "type": "boolean",
+      "autocomplete": [
+        {
+          "description": "If set anything after this promise will be sent out immediately, and reordered using JS in the browser."
+        }
+      ]
+    },
+    "@show-after": {
+      "type": "string",
+      "autocomplete": [
+        {
+          "description": "This attribute will ensure that (with client-reorder) this await tag will always show after another await tag with the provided name."
+        }
+      ]
+    },
+    "autocomplete": [
+      {
+        "displayText": "await(<promise>)",
+        "description": "Used to render a template asynchronously with the results of a Promise",
+        "snippet": "await(${1:promise})",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#await"
+      }
+    ]
+  },
+  "<await-reorderer>": {
+    "renderer": "./await/reorderer-renderer"
+  },
+  "<*>": {
+    "@marko-preserve-whitespace": {
+      "deprecated": true
+    },
+    "transformer": {
+      "path": "./core-transformer",
+      "priority": 0
+    }
+  }
+}

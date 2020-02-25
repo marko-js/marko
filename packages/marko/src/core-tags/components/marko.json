@@ -1,0 +1,144 @@
+{
+  "<*>": {
+    "@w-bind": {
+      "type": "string",
+      "preserve-name": true,
+      "autocomplete": [],
+      "deprecated": true,
+      "set-context-flag": "hasLegacyWidgetBind"
+    },
+    "@key": {
+      "type": "string",
+      "preserve-name": true,
+      "autocomplete": [
+        {
+          "displayText": "key=\"<name>\"",
+          "snippet": "key=\"${1:name}\"",
+          "description": "Used to identify loop interations and to reference the rendered tag within the component class.",
+          "descriptionMoreURL": "https://markojs.com/docs/conditionals-and-lists/#always-set-a-key"
+        }
+      ]
+    },
+    "@on*": {
+      "pattern": true,
+      "type": "statement",
+      "allow-expressions": true,
+      "preserve-name": true,
+      "set-flag": "hasComponentEvents",
+      "autocomplete": [
+        {
+          "displayText": "on<event>(\"<method>\")",
+          "description": "Used to attach an event handler to an element or component.",
+          "snippet": "on${1:Click}(\"handle${2:Button}${1:Click}\")",
+          "descriptionMoreURL": "https://markojs.com/docs/events"
+        }
+      ]
+    },
+    "@once*": {
+      "pattern": true,
+      "type": "statement",
+      "allow-expressions": true,
+      "preserve-name": true,
+      "set-flag": "hasComponentEvents",
+      "autocomplete": {
+        "displayText": "once<event>(\"<method>\")",
+        "description": "Used to attach an event handler once to an element or component.",
+        "snippet": "once${1:Click}(\"handle${2:Button}${1:Click}\")",
+        "descriptionMoreURL": "https://markojs.com/docs/events"
+      }
+    },
+    "@no-update": {
+      "type": "flag",
+      "preserve-name": true,
+      "autocomplete": [
+        {
+          "description": "Prevents updates to this tag after the initial render.",
+          "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update"
+        }
+      ]
+    },
+    "@no-update-body": {
+      "type": "flag",
+      "preserve-name": true,
+      "autocomplete": [
+        {
+          "description": "Prevents updates to the body content after the initial render.",
+          "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-body"
+        }
+      ]
+    },
+    "@no-update-if": {
+      "preserve-name": true,
+      "autocomplete": [
+        {
+          "snippet": "no-update-if(${1:condition})",
+          "description": "Prevents updates to this tag after the initial render if the condition is met.",
+          "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-if"
+        }
+      ]
+    },
+    "@no-update-body-if": {
+      "preserve-name": true,
+      "autocomplete": [
+        {
+          "snippet": "no-update-body-if(${1:condition})",
+          "description": "Prevents updates to the body content after the initial render if the condition is met.",
+          "descriptionMoreURL": "https://markojs.com/docs/class-components/#no-update-body-if"
+        }
+      ]
+    },
+    "transformer": "./components-transformer.js"
+  },
+  "<_component>": {
+    "code-generator": "./component-tag.js",
+    "autocomplete": []
+  },
+  "<component-globals>": {
+    "renderer": "./component-globals-tag.js",
+    "no-output": true,
+    "autocomplete": []
+  },
+  "<init-components>": {
+    "renderer": "./init-components-tag.js",
+    "no-output": true,
+    "@immediate": "boolean"
+  },
+  "<_preserve>": {
+    "renderer": "./preserve-tag.js",
+    "@cid": "string",
+    "@preserveKey": "string",
+    "@if": "boolean",
+    "@body-only": "boolean",
+    "autocomplete": []
+  },
+  "<no-update>": {
+    "renderer": "./preserve-tag.js",
+    "@id": "string",
+    "@if": "expression",
+    "@body-only": "expression",
+    "deprecated": true,
+    "autocomplete": []
+  },
+  "<widget-types>": {
+    "code-generator": "./widget-types-tag.js",
+    "@*": "string",
+    "autocomplete": [],
+    "deprecated": true
+  },
+  "<body>": {
+    "transformer": "./body-transformer.js"
+  },
+  "<class>": {
+    "node-factory": "./class-tag-node-factory.js",
+    "open-tag-only": true,
+    "autocomplete": [
+      {
+        "displayText": "class { /** lifecycle methods **/ }",
+        "snippet": "class {\n\t$0\n}",
+        "description": "A class containing the lifecycle methods, event handlers, and other properties for this component.",
+        "descriptionMoreURL": "https://markojs.com/docs/class-components/#single-file-components"
+      }
+    ]
+  },
+  "transformer": "./components-transformer.js"
+}

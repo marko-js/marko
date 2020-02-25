@@ -1,5 +1,0 @@
-{
-    "<div>": {
-        "transformer": "./foo-transformer.js"
-    }
-}

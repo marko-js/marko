@@ -1,6 +1,0 @@
-{
-    "<my-custom-tag>": {
-        "renderer": "./my-custom-tag.js",
-        "@short": "string"
-    }
-}

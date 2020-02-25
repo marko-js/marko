@@ -16,7 +16,7 @@ coverage
 /test/generated/
 .nyc_output
 *.swp
-/dist/
-/test-dist/
-/test-generated/
+/**/dist/
+/**/test-dist/
+/**/test-generated/
 .vs/

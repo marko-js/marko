@@ -1,7 +1,0 @@
-{
-    "renderer": "./renderer",
-    "import-var": {
-        "foo": "input.foo",
-        "bar": "input.bar"
-    }
-}

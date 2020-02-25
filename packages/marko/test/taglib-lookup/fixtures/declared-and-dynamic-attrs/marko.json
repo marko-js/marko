@@ -1,0 +1,10 @@
+{
+  "<test-dynamic-attribute>": {
+    "renderer": "./renderer.js",
+    "@foo": "string",
+    "@*": {
+      "type": "boolean",
+      "target-property": null
+    }
+  }
+}

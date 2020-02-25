@@ -1,7 +1,0 @@
-{
-    "tags-dir": "./tags",
-    "<test-hello>": {
-        "@name": "string",
-        "@age": "integer"
-    }
-}

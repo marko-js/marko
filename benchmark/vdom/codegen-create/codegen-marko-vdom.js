@@ -1,62 +1,62 @@
 function indentStr(level) {
-    var str = "";
-    for (var i = 0; i < level; i++) {
-        str += "  ";
-    }
+  var str = "";
+  for (var i = 0; i < level; i++) {
+    str += "  ";
+  }
 
-    return str;
+  return str;
 }
 module.exports = function(node) {
-    var code = "";
+  var code = "";
 
-    function codegenEl(node, level) {
-        if (level === 0) {
-            code += "createElement";
-        } else {
-            code += ".e";
-        }
-
-        var attrsMap = {};
-
-        var attributes = node.attributes;
-        for (var i = 0; i < attributes.length; i++) {
-            var attr = attributes[i];
-            attrsMap[attr.name] = attr.value;
-        }
-
-        code += `(${JSON.stringify(node.nodeName)}, ${JSON.stringify(
-            attrsMap
-        )}, ${node.childNodes.length})\n`;
-        // codegenAttrs(node.attributes, level + 1);
-
-        var curChild = node.firstChild;
-        while (curChild) {
-            codegen(curChild, level + 1);
-            curChild = curChild.nextSibling;
-        }
+  function codegenEl(node, level) {
+    if (level === 0) {
+      code += "createElement";
+    } else {
+      code += ".e";
     }
 
-    function codegenText(node) {
-        code += `.t(${JSON.stringify(node.nodeValue)})\n`;
+    var attrsMap = {};
+
+    var attributes = node.attributes;
+    for (var i = 0; i < attributes.length; i++) {
+      var attr = attributes[i];
+      attrsMap[attr.name] = attr.value;
     }
 
-    function codegen(node, level) {
-        code += indentStr(level);
+    code += `(${JSON.stringify(node.nodeName)}, ${JSON.stringify(attrsMap)}, ${
+      node.childNodes.length
+    })\n`;
+    // codegenAttrs(node.attributes, level + 1);
 
-        if (node.nodeType === 1) {
-            codegenEl(node, level);
-        } else if (node.nodeType === 3) {
-            codegenText(node, level);
-        }
+    var curChild = node.firstChild;
+    while (curChild) {
+      codegen(curChild, level + 1);
+      curChild = curChild.nextSibling;
     }
+  }
 
-    codegen(node, 0);
+  function codegenText(node) {
+    code += `.t(${JSON.stringify(node.nodeValue)})\n`;
+  }
 
-    return "return " + code + "\n";
+  function codegen(node, level) {
+    code += indentStr(level);
+
+    if (node.nodeType === 1) {
+      codegenEl(node, level);
+    } else if (node.nodeType === 3) {
+      codegenText(node, level);
+    }
+  }
+
+  codegen(node, 0);
+
+  return "return " + code + "\n";
 };
 
 module.exports.generateInitCode = function() {
-    return `
+  return `
     var MarkoVDOM = window.MarkoVDOM;
     var createElement = MarkoVDOM.createElement;
 `;

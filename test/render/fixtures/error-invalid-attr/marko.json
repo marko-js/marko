@@ -1,5 +1,0 @@
-{
-    "<test-invalid-attr>": {
-        "@foo": "string"
-    }
-}

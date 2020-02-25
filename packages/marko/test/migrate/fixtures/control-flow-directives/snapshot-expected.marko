@@ -1,0 +1,25 @@
+<!-- packages/marko/test/migrate/fixtures/control-flow-directives/template.marko -->
+
+<if(x)>
+    <for|item| of=list>
+        <div>
+            <while(true)>
+                <span/>
+            </while>
+        </div>
+    </for>
+</if>
+<else-if(y)>
+    <span>A</span>
+</else-if>
+<else(z)>
+    <span/>
+</else>
+<if(!x)>
+    <div/>
+</if>
+<if(y)>
+    <if(x)>A</if>
+</if>
+<!-- passed through -->
+<else if(x)>A</else>

@@ -1,0 +1,2259 @@
+{
+  "taglib-id": "marko-html",
+  "<a>": {
+    "@download": "#html-download",
+    "@href": "#html-href",
+    "@hreflang": "#html-hreflang",
+    "@media": "#html-media",
+    "@ping": "#html-ping",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@rel": "#html-rel",
+    "@target": "#html-target",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "displayText": "a href=\"\"",
+        "snippet": "a href=\"${1:https://}\""
+      },
+      {
+        "displayText": "a href=\"mailto:\"",
+        "snippet": "a href=\"mailto:${1:joe@example.com}?subject=${2:feedback}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<abbr>": {
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "abbr title=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<address>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<area>": {
+    "@alt": "#html-alt",
+    "@coords": "#html-coords",
+    "@download": "#html-download",
+    "@href": "#html-href",
+    "@hreflang": "#html-hreflang",
+    "@media": "#html-media",
+    "@ping": "#html-ping",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@rel": "#html-rel",
+    "@shape": "#html-shape",
+    "@target": "#html-target",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "displayText": "area shape=\"\" coords=\"\" href=\"\"",
+        "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:https://}\"}"
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<article>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<aside>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<audio>": {
+    "@autoplay": "#html-autoplay",
+    "@controls": "#html-controls",
+    "@crossorigin": "#html-crossorigin",
+    "@disableremoteplayback": "#html-disableremoteplayback",
+    "@loop": "#html-loop",
+    "@muted": "#html-muted",
+    "@preload": "#html-preload",
+    "@src": "#html-src",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "audio src=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<b>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<base>": {
+    "@href": "#html-href",
+    "@target": "#html-target",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "base href=\"${1:https://}\" target=\"${2:_top}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<bdi>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<bdo>": {
+    "@dir": "#html-dir-for-bdo",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "bdo dir=\"${1:rtl}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<blockquote>": {
+    "@cite": "#html-cite",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "blockquote cite=\"${1:https://}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<body>": {
+    "@onafterprint": "#html-onafterprint",
+    "@onbeforeprint": "#html-onbeforeprint",
+    "@onbeforeunload": "#html-onbeforeunload",
+    "@onhashchange": "#html-onhashchange",
+    "@onlanguagechange": "#html-onlanguagechange",
+    "@onmessage": "#html-onmessage",
+    "@onoffline": "#html-onoffline",
+    "@ononline": "#html-ononline",
+    "@onpagehide": "#html-onpagehide",
+    "@onpageshow": "#html-onpageshow",
+    "@onpopstate": "#html-onpopstate",
+    "@onredo": "#html-onredo",
+    "@onresize": "#html-onresize",
+    "@onstorage": "#html-onstorage",
+    "@onundo": "#html-onundo",
+    "@onunload": "#html-onunload",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<br>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<button>": {
+    "@autofocus": "#html-autofocus",
+    "@disabled": "#html-disabled",
+    "@form": "#html-form",
+    "@formaction": "#html-formaction",
+    "@formenctype": "#html-formenctype",
+    "@formmethod": "#html-formmethod",
+    "@formnovalidate": "#html-formnovalidate",
+    "@formtarget": "#html-formtarget",
+    "@name": "#html-name",
+    "@type": "#html-type",
+    "@value": "#html-value",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "displayText": "button type=\"button\"",
+        "snippet": "button type=\"${1:button}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<canvas>": {
+    "@height": "#html-height",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "canvas id=\"${1:canvas}\" width=\"${2:300}\" height=\"${3:300}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<caption>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<cite>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<code>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<col>": {
+    "@span": "#html-span",
+    "html": true,
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<colgroup>": {
+    "@span": "#html-span",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<datalist>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<dd>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<del>": {
+    "@cite": "#html-cite",
+    "@datetime": "#html-datetime",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<details>": {
+    "@open": "#html-open",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<dfn>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<div>": {
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "div class=\"$2\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<dl>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<dt>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<em>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<embed>": {
+    "@height": "#html-height",
+    "@src": "#html-src",
+    "@type": "#html-type",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:https://}\" width=\"${3:300}\" height=\"${4:300}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<fieldset>": {
+    "@disabled": "#html-disabled",
+    "@form": "#html-form",
+    "@name": "#html-name",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<figcaption>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<figure>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<footer>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<form>": {
+    "@accept-charset": "#html-accept-charset",
+    "@action": "#html-action",
+    "@autocomplete": "#html-autocomplete",
+    "@enctype": "#html-enctype",
+    "@method": "#html-method",
+    "@name": "#html-name",
+    "@novalidate": "#html-novalidate",
+    "@target": "#html-target",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "form class=\"$1\" action=\"${2:/}\" method=\"${3:post}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h1>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h2>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h3>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h4>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h5>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<h6>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<head>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<header>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<hgroup>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<hr>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<html>": {
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "!doctype html"
+      },
+      {
+        "displayText": "HTML page",
+        "snippet": "<!doctype html>\n<html lang=\"en\">\n\t<head>\n\t\t<meta charset=\"utf-8\">\n\t\t<title>${1:title}</title>\n\t</head>\n\t<body>\n\t\t$2\n\t</body>\n</html>\n"
+      },
+      {
+        "displayText": "HTML page (concise)",
+        "snippet": "<!doctype html>\nhtml lang=\"en\"\n\thead\n\t\tmeta charset=\"utf-8\"\n\t\t<title>${1:title}</title>\n\tbody\n\t\t$2\n"
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<i>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<iframe>": {
+    "@allow": "#html-allow",
+    "@csp": "#html-csp",
+    "@height": "#html-height",
+    "@importance": "#html-importance",
+    "@loading": "#html-loading",
+    "@name": "#html-name",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@sandbox": "#html-sandbox",
+    "@src": "#html-src",
+    "@srcdoc": "#html-srcdoc",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "iframe src=\"$1\" width=\"$2\" height=\"$3\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<img>": {
+    "@alt": "#html-alt",
+    "@crossorigin": "#html-crossorigin",
+    "@decoding": "#html-decoding",
+    "@height": "#html-height",
+    "@importance": "#html-importance",
+    "@intrinsicsize": "#html-intrinsicsize",
+    "@ismap": "#html-ismap",
+    "@loading": "#html-loading",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@sizes": "#html-sizes",
+    "@src": "#html-src",
+    "@srcset": "#html-srcset",
+    "@usemap": "#html-usemap",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "img src=\"$1\" alt=\"$2\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<input>": {
+    "@accept": "#html-accept",
+    "@alt": "#html-alt",
+    "@autocomplete": "#html-autocomplete",
+    "@autofocus": "#html-autofocus",
+    "@capture": "#html-capture",
+    "@checked": "#html-checked",
+    "@dirname": "#html-dirname",
+    "@disabled": "#html-disabled",
+    "@form": "#html-form",
+    "@formaction": "#html-formaction",
+    "@formenctype": "#html-formenctype",
+    "@formmethod": "#html-formmethod",
+    "@formnovalidate": "#html-formnovalidate",
+    "@formtarget": "#html-formtarget",
+    "@height": "#html-height",
+    "@list": "#html-list",
+    "@max": "#html-max",
+    "@maxlength": "#html-maxlength",
+    "@min": "#html-min",
+    "@multiple": "#html-multiple",
+    "@name": "#html-name",
+    "@pattern": "#html-pattern",
+    "@placeholder": "#html-placeholder",
+    "@readonly": "#html-readonly",
+    "@required": "#html-required",
+    "@size": "#html-size",
+    "@src": "#html-src",
+    "@step": "#html-step",
+    "@type": "#html-type",
+    "@value": "#html-value",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "input type=\"${1}\" name=\"${2:name}\" value=\"$3\"",
+        "triggerAutocompleteAfterInsert": true
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<ins>": {
+    "@cite": "#html-cite",
+    "@datetime": "#html-datetime",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<kbd>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<label>": {
+    "@for": "#html-for",
+    "@form": "#html-form",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "label${1: for=\"$2\"}"
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<legend>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<li>": {
+    "@value": "#html-value",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<link>": {
+    "@as": "#html-as",
+    "@crossorigin": "#html-crossorigin",
+    "@disabled": "#html-disabled",
+    "@href": "#html-href",
+    "@hreflang": "#html-hreflang",
+    "@importance": "#html-importance",
+    "@integrity": "#html-integrity",
+    "@media": "#html-media",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@rel": "#html-rel",
+    "@sizes": "#html-sizes",
+    "@type": "#html-type",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "link rel=\"${1:stylesheet}\" href=\"${2:/css/master.css}\" media=\"${3:all}\" title=\"${4:no title}\""
+      },
+      {
+        "snippet": "link rel=\"icon\" href=\"$1.ico\""
+      },
+      {
+        "snippet": "link rel=\"import\" href=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<map>": {
+    "@name": "#html-name",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<mark>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<menu>": {
+    "@type": "#html-type",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<meta>": {
+    "@charset": "#html-charset",
+    "@content": "#html-content",
+    "@http-equiv": "#html-http-equiv",
+    "@name": "#html-name",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<meter>": {
+    "@form": "#html-form",
+    "@high": "#html-high",
+    "@low": "#html-low",
+    "@max": "#html-max",
+    "@min": "#html-min",
+    "@optimum": "#html-optimum",
+    "@value": "#html-value",
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "meter min=\"${1:200}\" max=\"${2:500}\" value=\"${3:350}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<nav>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<noscript>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<object>": {
+    "@data": "#html-data",
+    "@form": "#html-form",
+    "@height": "#html-height",
+    "@name": "#html-name",
+    "@type": "#html-type",
+    "@usemap": "#html-usemap",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "object data=\"${1:https://}\" type=\"${2:mime/type}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<ol>": {
+    "@reversed": "#html-reversed",
+    "@start": "#html-start",
+    "@type": "#html-type",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<optgroup>": {
+    "@disabled": "#html-disabled",
+    "@label": "#html-label",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "optgroup label=\"${1:Group 1}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<option>": {
+    "@disabled": "#html-disabled",
+    "@label": "#html-label",
+    "@selected": "#html-selected",
+    "@value": "#html-value",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<output>": {
+    "@for": "#html-for",
+    "@form": "#html-form",
+    "@name": "#html-name",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "output name=\"${1:result}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<p>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<param>": {
+    "@name": "#html-name",
+    "@value": "#html-value",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<picture>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<pre>": {
+    "preserve-whitespace": true,
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<progress>": {
+    "@form": "#html-form",
+    "@max": "#html-max",
+    "@value": "#html-value",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "progress value=\"${1:50}\" max=\"${2:100}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<q>": {
+    "@cite": "#html-cite",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "q cite=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<rp>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<rt>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<ruby>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<s>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<samp>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<script>": {
+    "preserve-whitespace": true,
+    "@async": "#html-async",
+    "@crossorigin": "#html-crossorigin",
+    "@defer": "#html-defer",
+    "@integrity": "#html-integrity",
+    "@nomodule": "#html-nomodule",
+    "@nonce": "#html-nonce",
+    "@referrerpolicy": "#html-referrerpolicy",
+    "@src": "#html-src",
+    "@type": "#html-type",
+    "html": true,
+    "attribute-groups": ["html-attributes"],
+    "code-generator": "./normalize-script-text.js"
+  },
+  "<section>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<select>": {
+    "@autocomplete": "#html-autocomplete",
+    "@autofocus": "#html-autofocus",
+    "@disabled": "#html-disabled",
+    "@form": "#html-form",
+    "@multiple": "#html-multiple",
+    "@name": "#html-name",
+    "@required": "#html-required",
+    "@size": "#html-size",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "select class=\"$1\" name=\"$2\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<small>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<source>": {
+    "@media": "#html-media",
+    "@sizes": "#html-sizes",
+    "@src": "#html-src",
+    "@srcset": "#html-srcset",
+    "@type": "#html-type",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "source src=\"${1:https://}\" type=\"${2:mime/type}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<span>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<strong>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<style>": {
+    "preserve-whitespace": true,
+    "@disabled": "#html-disabled",
+    "@media": "#html-media",
+    "@nonce": "#html-nonce",
+    "@type": "#html-type",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<sub>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<summary>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<sup>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<table>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<tbody>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<td>": {
+    "@colspan": "#html-colspan",
+    "@headers": "#html-headers",
+    "@rowspan": "#html-rowspan",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<textarea>": {
+    "preserve-whitespace": true,
+    "@autocomplete": "#html-autocomplete",
+    "@autofocus": "#html-autofocus",
+    "@cols": "#html-cols",
+    "@dirname": "#html-dirname",
+    "@disabled": "#html-disabled",
+    "@form": "#html-form",
+    "@maxlength": "#html-maxlength",
+    "@name": "#html-name",
+    "@placeholder": "#html-placeholder",
+    "@readonly": "#html-readonly",
+    "@required": "#html-required",
+    "@rows": "#html-rows",
+    "@wrap": "#html-wrap",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "textarea name=\"${1:name}\" rows=\"${2:8}\" cols=\"${3:40}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<tfoot>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<th>": {
+    "@colspan": "#html-colspan",
+    "@headers": "#html-headers",
+    "@rowspan": "#html-rowspan",
+    "@scope": "#html-scope",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<thead>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<time>": {
+    "@datetime": "#html-datetime",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<title>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<tr>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<track>": {
+    "@default": "#html-default",
+    "@kind": "#html-kind",
+    "@label": "#html-label",
+    "@src": "#html-src",
+    "@srclang": "#html-srclang",
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "<u>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<ul>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<video>": {
+    "@autoplay": "#html-autoplay",
+    "@controls": "#html-controls",
+    "@controlslist": "#html-controlist",
+    "@crossorigin": "#html-crossorigin",
+    "@disablepictureinpicture": "#html-disablepictureinpicture",
+    "@disableremoteplayback": "#html-disableremoteplayback",
+    "@height": "#html-height",
+    "@intrinsicsize": "#html-intrinsicsize",
+    "@loop": "#html-loop",
+    "@muted": "#html-muted",
+    "@playsinline": "#html-playsinline",
+    "@poster": "#html-poster",
+    "@preload": "#html-preload",
+    "@src": "#html-src",
+    "@width": "#html-width",
+    "html": true,
+    "autocomplete": [
+      {
+        "displayText": "video src=\"\" controls poster=\"\"",
+        "snippet": "video src=\"${1:videofile.ogg}\" ${2:controls} ${3:poster=\"${4:posterimage.jpg}\"}"
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<wbr>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"],
+    "open-tag-only": true
+  },
+  "attribute-groups": {
+    "html-attributes": {
+      "*": "string",
+      "accesskey": {
+        "html": true
+      },
+      "autocapitalize": {
+        "enum": ["none", "sentences", "words", "characters"],
+        "html": true
+      },
+      "class": {
+        "type": "cssStyle",
+        "html": true
+      },
+      "contenteditable": {
+        "enum": ["", "true", "false"],
+        "html": true
+      },
+      "dir": {
+        "enum": ["ltr", "rtl", "auto"],
+        "html": true
+      },
+      "draggable": {
+        "enum": ["false", "true"],
+        "html": true
+      },
+      "dropzone": {
+        "enum": ["copy", "move", "link"],
+        "html": true
+      },
+      "elementtiming": {
+        "html": true
+      },
+      "enterkeyhint": {
+        "enum": ["enter", "done", "go", "next", "previous", "search", "send"],
+        "html": true
+      },
+      "hidden": {
+        "type": "boolean",
+        "html": true
+      },
+      "id": {
+        "type": "cssId",
+        "html": true
+      },
+      "inputmode": {
+        "enum": [
+          "none",
+          "text",
+          "tel",
+          "url",
+          "email",
+          "numeric",
+          "decimal",
+          "search"
+        ],
+        "html": true
+      },
+      "itemid": {
+        "html": true
+      },
+      "itemprop": {
+        "html": true
+      },
+      "itemref": {
+        "html": true
+      },
+      "itemscope": {
+        "html": true
+      },
+      "itemtype": {
+        "html": true
+      },
+      "lang": {
+        "enum": [
+          "ab",
+          "aa",
+          "af",
+          "sq",
+          "am",
+          "ar",
+          "an",
+          "hy",
+          "as",
+          "ay",
+          "az",
+          "ba",
+          "eu",
+          "bn",
+          "dz",
+          "bh",
+          "bi",
+          "br",
+          "bg",
+          "my",
+          "be",
+          "km",
+          "ca",
+          "zh",
+          "co",
+          "hr",
+          "cs",
+          "da",
+          "nl",
+          "en",
+          "eo",
+          "et",
+          "fo",
+          "fa",
+          "fi",
+          "fr",
+          "fy",
+          "gl",
+          "gd",
+          "gv",
+          "ka",
+          "de",
+          "el",
+          "kl",
+          "gn",
+          "gu",
+          "ht",
+          "ha",
+          "he",
+          "hi",
+          "hu",
+          "is",
+          "io",
+          "id",
+          "ia",
+          "ie",
+          "iu",
+          "ik",
+          "ga",
+          "it",
+          "ja",
+          "jv",
+          "kn",
+          "ks",
+          "kk",
+          "rw",
+          "ky",
+          "rn",
+          "ko",
+          "ku",
+          "lo",
+          "la",
+          "lv",
+          "li",
+          "ln",
+          "lt",
+          "mk",
+          "mg",
+          "ms",
+          "ml",
+          "mt",
+          "mi",
+          "mr",
+          "mo",
+          "mn",
+          "na",
+          "ne",
+          "no",
+          "oc",
+          "or",
+          "om",
+          "ps",
+          "pl",
+          "pt",
+          "pa",
+          "qu",
+          "rm",
+          "ro",
+          "ru",
+          "sz",
+          "sm",
+          "sg",
+          "sa",
+          "sr",
+          "sh",
+          "st",
+          "tn",
+          "sn",
+          "ii",
+          "sd",
+          "si",
+          "ss",
+          "sk",
+          "sl",
+          "so",
+          "es",
+          "su",
+          "sw",
+          "sv",
+          "tl",
+          "tg",
+          "ta",
+          "tt",
+          "te",
+          "th",
+          "bo",
+          "ti",
+          "to",
+          "ts",
+          "tr",
+          "tk",
+          "tw",
+          "ug",
+          "uk",
+          "ur",
+          "uz",
+          "vi",
+          "vo",
+          "wa",
+          "cy",
+          "wo",
+          "xh",
+          "yi",
+          "yo",
+          "zu"
+        ],
+        "html": true
+      },
+      "role": {
+        "enum": [
+          "alert",
+          "alertdialog",
+          "article",
+          "application",
+          "banner",
+          "button",
+          "cell",
+          "checkbox",
+          "columnheader",
+          "combobox",
+          "complementary",
+          "contentinfo",
+          "definition",
+          "directory",
+          "dialog",
+          "document",
+          "feed",
+          "figure",
+          "form",
+          "grid",
+          "gridcell",
+          "group",
+          "heading",
+          "img",
+          "link",
+          "list",
+          "listbox",
+          "listitem",
+          "log",
+          "main",
+          "marquee",
+          "math",
+          "menu",
+          "menubar",
+          "menuitem",
+          "menuitemcheckbox",
+          "menuitemradio",
+          "navigation",
+          "none",
+          "note",
+          "option",
+          "presentation",
+          "progressbar",
+          "radio",
+          "radiogroup",
+          "region",
+          "row",
+          "rowgroup",
+          "rowheader",
+          "scrollbar",
+          "search",
+          "searchbox",
+          "separator",
+          "slider",
+          "spinbutton",
+          "status",
+          "switch",
+          "tab",
+          "table",
+          "tablist",
+          "tabpanel",
+          "term",
+          "textbox",
+          "timer",
+          "toolbar",
+          "tooltip",
+          "tree",
+          "treegrid",
+          "treeitem"
+        ],
+        "html": true
+      },
+      "spellcheck": {
+        "enum": ["", "true", "false"],
+        "html": true
+      },
+      "style": {
+        "type": "style",
+        "html": true
+      },
+      "tabindex": {
+        "type": "number",
+        "html": true
+      },
+      "title": {
+        "html": true
+      },
+      "translate": {
+        "enum": ["", "yes", "no"],
+        "html": true
+      },
+      "property": {
+        "html": true
+      },
+      "typeof": {
+        "html": true
+      },
+      "vocab": {
+        "html": true
+      },
+      "aria-activedescendant": {
+        "type": "cssId",
+        "html": true
+      },
+      "aria-atomic": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-autocomplete": {
+        "enum": ["inline", "list", "both", "none"],
+        "html": true
+      },
+      "aria-busy": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-checked": {
+        "enum": ["true", "false", "mixed"],
+        "html": true
+      },
+      "aria-colcount": {
+        "type": "number",
+        "html": true
+      },
+      "aria-colindex": {
+        "type": "number",
+        "html": true
+      },
+      "aria-colspan": {
+        "type": "number",
+        "html": true
+      },
+      "aria-controls": {
+        "html": true
+      },
+      "aria-current": {
+        "enum": ["page", "step", "location", "date", "time", "true", "false"],
+        "html": true
+      },
+      "aria-descrbedby": {
+        "html": true
+      },
+      "aria-details": {
+        "type": "cssId",
+        "html": true
+      },
+      "aria-disabled": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-errormessage": {
+        "type": "cssId",
+        "html": true
+      },
+      "aria-expanded": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-flowto": {
+        "html": true
+      },
+      "aria-haspopup": {
+        "enum": ["menu", "listbox", "tree", "grid", "dialog"],
+        "html": true
+      },
+      "aria-hidden": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-invalid": {
+        "enum": ["true", "false", "grammar", "spelling"],
+        "html": true
+      },
+      "aria-keyshortcuts": {
+        "html": true
+      },
+      "aria-label": {
+        "html": true
+      },
+      "aria-labelledby": {
+        "html": true
+      },
+      "aria-level": {
+        "type": "number",
+        "html": true
+      },
+      "aria-live": {
+        "enum": ["off", "polite", "assertive"],
+        "html": true
+      },
+      "aria-modal": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-multiline": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-multiselectable": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-orientation": {
+        "enum": ["horizontal", "vertical"],
+        "html": true
+      },
+      "aria-owns": {
+        "html": true
+      },
+      "aria-placeholder": {
+        "html": true
+      },
+      "aria-posinset": {
+        "type": "number",
+        "html": true
+      },
+      "aria-pressed": {
+        "enum": ["true", "false", "mixed"],
+        "html": true
+      },
+      "aria-readonly": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-relevant": {
+        "enum": ["additions", "additions text", "all", "removals", "text"],
+        "html": true
+      },
+      "aria-required": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-roledescription": {
+        "html": true
+      },
+      "aria-rowcount": {
+        "type": "number",
+        "html": true
+      },
+      "aria-rowindex": {
+        "type": "number",
+        "html": true
+      },
+      "aria-rowspan": {
+        "type": "number",
+        "html": true
+      },
+      "aria-selected": {
+        "enum": ["true", "false"],
+        "html": true
+      },
+      "aria-setsize": {
+        "type": "number",
+        "html": true
+      },
+      "aria-sort": {
+        "enum": ["ascending", "descending", "none"],
+        "html": true
+      },
+      "aria-valuemax": {
+        "type": "number",
+        "html": true
+      },
+      "aria-valuemin": {
+        "type": "number",
+        "html": true
+      },
+      "aria-valuenow": {
+        "type": "number",
+        "html": true
+      },
+      "aria-valuetext": {
+        "html": true
+      },
+      "onabort": {
+        "html": true
+      },
+      "onblur": {
+        "html": true
+      },
+      "oncanplay": {
+        "html": true
+      },
+      "oncanplaythrough": {
+        "html": true
+      },
+      "onchange": {
+        "html": true
+      },
+      "onclick": {
+        "html": true
+      },
+      "oncontextmenu": {
+        "html": true
+      },
+      "oncuechange": {
+        "html": true
+      },
+      "ondblclick": {
+        "html": true
+      },
+      "ondrag": {
+        "html": true
+      },
+      "ondragend": {
+        "html": true
+      },
+      "ondragenter": {
+        "html": true
+      },
+      "ondragleave": {
+        "html": true
+      },
+      "ondragover": {
+        "html": true
+      },
+      "ondragstart": {
+        "html": true
+      },
+      "ondrop": {
+        "html": true
+      },
+      "ondurationchange": {
+        "html": true
+      },
+      "onemptied": {
+        "html": true
+      },
+      "onended": {
+        "html": true
+      },
+      "onerror": {
+        "html": true
+      },
+      "onfocus": {
+        "html": true
+      },
+      "oninput": {
+        "html": true
+      },
+      "oninvalid": {
+        "html": true
+      },
+      "onkeydown": {
+        "html": true
+      },
+      "onkeypress": {
+        "html": true
+      },
+      "onkeyup": {
+        "html": true
+      },
+      "onload": {
+        "html": true
+      },
+      "onloadeddata": {
+        "html": true
+      },
+      "onloadedmetadata": {
+        "html": true
+      },
+      "onloadstart": {
+        "html": true
+      },
+      "onmousedown": {
+        "html": true
+      },
+      "onmousemove": {
+        "html": true
+      },
+      "onmouseout": {
+        "html": true
+      },
+      "onmouseover": {
+        "html": true
+      },
+      "onmouseup": {
+        "html": true
+      },
+      "onmousewheel": {
+        "html": true
+      },
+      "onpause": {
+        "html": true
+      },
+      "onplay": {
+        "html": true
+      },
+      "onplaying": {
+        "html": true
+      },
+      "onprogress": {
+        "html": true
+      },
+      "onratechange": {
+        "html": true
+      },
+      "onreadystatechange": {
+        "html": true
+      },
+      "onreset": {
+        "html": true
+      },
+      "onscroll": {
+        "html": true
+      },
+      "onseeked": {
+        "html": true
+      },
+      "onseeking": {
+        "html": true
+      },
+      "onselect": {
+        "html": true
+      },
+      "onshow": {
+        "html": true
+      },
+      "onstalled": {
+        "html": true
+      },
+      "onsubmit": {
+        "html": true
+      },
+      "onsuspend": {
+        "html": true
+      },
+      "ontimeupdate": {
+        "html": true
+      },
+      "onvolumechange": {
+        "html": true
+      },
+      "onwaiting": {
+        "html": true
+      }
+    }
+  },
+  "attributes": {
+    "html-accept": {
+      "enum": [
+        "audio/*",
+        "image/*",
+        "video/*",
+        ".html, text/html",
+        ".txt, text/plain",
+        ".doc, .docx, application/msword",
+        ".xls, .xlsx, application/msexcel",
+        ".pdf, application/postscript",
+        ".zip, application/x-zip-compressed",
+        ".pdf, application/pdf",
+        ".rtf, application/rtf",
+        ".mov, video/quicktime",
+        ".mp4, video/mp4, video/x-m4v",
+        ".avi, video/x-msvideo",
+        ".mp3, audio/mpeg, audio/mp3",
+        ".wav, audio/x-wav",
+        ".aiff, audio/x-aiff",
+        ".png, image/png",
+        ".jpg, .jpeg, image/jpeg",
+        ".tif, .tiff, image/tiff",
+        ".gif, image/gif"
+      ],
+      "html": true,
+      "name": "accept"
+    },
+    "html-accept-charset": {
+      "enum": ["utf-8"],
+      "html": true,
+      "name": "accept-charset"
+    },
+    "html-action": {
+      "html": true,
+      "name": "action"
+    },
+    "html-allow": {
+      "html": true,
+      "name": "allow"
+    },
+    "html-alt": {
+      "html": true,
+      "name": "alt"
+    },
+    "html-as": {
+      "enum": [
+        "audio",
+        "document",
+        "embed",
+        "fetch",
+        "font",
+        "image",
+        "object",
+        "script",
+        "style",
+        "track",
+        "video",
+        "worker"
+      ],
+      "html": true,
+      "name": "as"
+    },
+    "html-async": {
+      "type": "flag",
+      "html": true,
+      "name": "async"
+    },
+    "html-autocomplete": {
+      "enum": [
+        "off",
+        "on",
+        "name",
+        "honorific-prefix",
+        "given-name",
+        "additional-name",
+        "family-name",
+        "honorific-suffix",
+        "nickname",
+        "email",
+        "username",
+        "new-password",
+        "current-password",
+        "one-time-code",
+        "organization-title",
+        "organization",
+        "street-address",
+        "address-line1",
+        "address-line2",
+        "address-line3",
+        "address-level1",
+        "address-level2",
+        "address-level3",
+        "address-level4",
+        "country",
+        "country-name",
+        "postal-code",
+        "cc-name",
+        "cc-given-name",
+        "cc-additional-name",
+        "cc-family-name",
+        "cc-number",
+        "cc-exp",
+        "cc-exp-month",
+        "cc-exp-year",
+        "cc-csc",
+        "cc-type",
+        "transaction-currency",
+        "transaction-amount",
+        "language",
+        "bday",
+        "bday-day",
+        "bday-month",
+        "bday-year",
+        "sex",
+        "tel",
+        "tel-country-code",
+        "tel-national",
+        "tel-area-code",
+        "tel-local",
+        "tel-extension",
+        "impp",
+        "url",
+        "photo"
+      ],
+      "html": true,
+      "name": "autocomplete"
+    },
+    "html-autofocus": {
+      "type": "flag",
+      "html": true,
+      "name": "autofocus"
+    },
+    "html-autoplay": {
+      "type": "flag",
+      "html": true,
+      "name": "autoplay"
+    },
+    "html-capture": {
+      "enum": ["", "user", "environment"],
+      "html": true,
+      "name": "capture",
+      "autocomplete": {
+        "descriptionMoreURL": "https://www.w3.org/TR/html-media-capture/#the-capture-attribute"
+      }
+    },
+    "html-charset": {
+      "enum": ["utf-8", "shift-jis", "euc-jp", "big5"],
+      "html": true,
+      "name": "charset"
+    },
+    "html-checked": {
+      "type": "flag",
+      "html": true,
+      "name": "checked"
+    },
+    "html-cite": {
+      "html": true,
+      "name": "cite"
+    },
+    "html-cols": {
+      "type": "number",
+      "html": true,
+      "name": "cols"
+    },
+    "html-colspan": {
+      "type": "number",
+      "html": true,
+      "name": "colspan"
+    },
+    "html-content": {
+      "html": true,
+      "name": "content"
+    },
+    "html-controls": {
+      "type": "flag",
+      "html": true,
+      "name": "controls"
+    },
+    "html-controlslist": {
+      "enum": ["nodownload", "nofullscreen", "noremoteplayback"],
+      "html": true,
+      "name": "controlslist"
+    },
+    "html-coords": {
+      "html": true,
+      "name": "coords"
+    },
+    "html-crossorigin": {
+      "enum": ["anonymous", "use-credentials"],
+      "html": true,
+      "name": "crossorigin"
+    },
+    "html-csp": {
+      "html": true,
+      "name": "csp"
+    },
+    "html-data": {
+      "html": true,
+      "name": "data"
+    },
+    "html-data-*": {
+      "html": true,
+      "name": "data-*"
+    },
+    "html-datetime": {
+      "html": true,
+      "name": "datetime"
+    },
+    "html-decoding": {
+      "enum": ["sync", "async"],
+      "html": true,
+      "name": "decoding"
+    },
+    "html-default": {
+      "type": "flag",
+      "html": true,
+      "name": "default"
+    },
+    "html-defer": {
+      "type": "flag",
+      "html": true,
+      "name": "defer"
+    },
+    "html-dir": {
+      "enum": ["ltr", "rtl", "auto"],
+      "html": true,
+      "name": "dir"
+    },
+    "html-dir-for-bdo": {
+      "enum": ["ltr", "rtl"],
+      "html": true,
+      "name": "dir"
+    },
+    "html-dirname": {
+      "html": true,
+      "name": "dirname"
+    },
+    "html-disabled": {
+      "type": "flag",
+      "html": true,
+      "name": "disabled"
+    },
+    "html-disablepictureinpicture": {
+      "type": "flag",
+      "html": true,
+      "name": "disablepictureinpicture"
+    },
+    "html-disableremoteplayback": {
+      "type": "flag",
+      "html": true,
+      "name": "disableremoteplayback"
+    },
+    "html-download": {
+      "html": true,
+      "name": "download"
+    },
+    "html-enctype": {
+      "enum": [
+        "application/x-www-form-urlencoded",
+        "multipart/form-data",
+        "text/plain"
+      ],
+      "html": true,
+      "name": "enctype"
+    },
+    "html-for": {
+      "html": true,
+      "name": "for"
+    },
+    "html-form": {
+      "html": true,
+      "name": "form"
+    },
+    "html-formaction": {
+      "html": true,
+      "name": "formaction"
+    },
+    "html-formenctype": {
+      "enum": [
+        "application/x-www-form-urlencoded",
+        "multipart/form-data",
+        "text/plain"
+      ],
+      "html": true,
+      "name": "formenctype"
+    },
+    "html-formmethod": {
+      "enum": ["get", "post", "dialog"],
+      "html": true,
+      "name": "formmethod"
+    },
+    "html-formnovalidate": {
+      "type": "flag",
+      "html": true,
+      "name": "formnovalidate"
+    },
+    "html-formtarget": {
+      "enum": ["_blank", "_parent", "_self", "_top"],
+      "html": true,
+      "name": "formtarget"
+    },
+    "html-headers": {
+      "html": true,
+      "name": "headers"
+    },
+    "html-height": {
+      "type": "number",
+      "html": true,
+      "name": "height"
+    },
+    "html-high": {
+      "type": "number",
+      "html": true,
+      "name": "high"
+    },
+    "html-href": {
+      "html": true,
+      "name": "href"
+    },
+    "html-hreflang": {
+      "html": true,
+      "name": "hreflang"
+    },
+    "html-http-equiv": {
+      "enum": ["content-security-policy", "refresh"],
+      "html": true,
+      "name": "http-equiv"
+    },
+    "html-importance": {
+      "enum": ["low", "high"],
+      "html": true,
+      "name": "importance"
+    },
+    "html-integrity": {
+      "html": true,
+      "name": "integrity"
+    },
+    "html-intrinsicsize": {
+      "html": true,
+      "name": "intrinsicsize"
+    },
+    "html-ismap": {
+      "type": "flag",
+      "html": true,
+      "name": "ismap"
+    },
+    "html-kind": {
+      "enum": ["captions", "chapters", "descriptions", "metadata", "subtitles"],
+      "html": true,
+      "name": "kind"
+    },
+    "html-label": {
+      "html": true,
+      "name": "label"
+    },
+    "html-list": {
+      "html": true,
+      "name": "list"
+    },
+    "html-loop": {
+      "type": "flag",
+      "html": true,
+      "name": "loop"
+    },
+    "html-loading": {
+      "enum": ["lazy", "eager"],
+      "html": true,
+      "name": "loading"
+    },
+    "html-low": {
+      "type": "number",
+      "html": true,
+      "name": "low"
+    },
+    "html-max": {
+      "html": true,
+      "name": "max"
+    },
+    "html-maxlength": {
+      "type": "number",
+      "html": true,
+      "name": "maxlength"
+    },
+    "html-media": {
+      "enum": [
+        "screen",
+        "print",
+        "speech",
+        "all",
+        "width",
+        "min-width",
+        "max-width",
+        "height",
+        "min-height",
+        "max-height",
+        "orientation",
+        "aspect-ratio",
+        "min-aspect-ratio",
+        "max-aspect-ratio",
+        "color",
+        "min-color",
+        "max-color",
+        "color-index",
+        "min-color-index",
+        "max-color-index",
+        "color-gamut",
+        "monochrome",
+        "resolution",
+        "min-resolution",
+        "max-resolution",
+        "scan",
+        "grid",
+        "update",
+        "overflow-block",
+        "overflow-inline"
+      ],
+      "html": true,
+      "name": "media"
+    },
+    "html-method": {
+      "enum": ["get", "post", "dialog"],
+      "html": true,
+      "name": "method"
+    },
+    "html-min": {
+      "html": true,
+      "name": "min"
+    },
+    "html-multiple": {
+      "type": "flag",
+      "html": true,
+      "name": "multiple"
+    },
+    "html-muted": {
+      "type": "flag",
+      "html": true,
+      "name": "muted"
+    },
+    "html-name": {
+      "html": true,
+      "name": "name"
+    },
+    "html-nonce": {
+      "html": true,
+      "name": "nonce"
+    },
+    "html-nomodule": {
+      "type": "flag",
+      "html": true,
+      "name": "novalidate"
+    },
+    "html-novalidate": {
+      "type": "flag",
+      "html": true,
+      "name": "novalidate"
+    },
+    "html-open": {
+      "type": "flag",
+      "html": true,
+      "name": "open"
+    },
+    "html-optimum": {
+      "type": "number",
+      "html": true,
+      "name": "optimum"
+    },
+    "html-pattern": {
+      "html": true,
+      "name": "pattern"
+    },
+    "html-ping": {
+      "html": true,
+      "name": "ping"
+    },
+    "html-placeholder": {
+      "html": true,
+      "name": "placeholder"
+    },
+    "html-playsinline": {
+      "type": "flag",
+      "html": true,
+      "name": "playsinline"
+    },
+    "html-poster": {
+      "html": true,
+      "name": "poster"
+    },
+    "html-preload": {
+      "enum": ["", "auto", "metadata", "none"],
+      "html": true,
+      "name": "preload"
+    },
+    "html-referrerpolicy": {
+      "enum": [
+        "no-referrer",
+        "no-referrer-when-downgrade",
+        "origin",
+        "origin-when-cross-origin",
+        "strict-origin-when-cross-origin",
+        "unsafe-url"
+      ],
+      "html": true,
+      "name": "referrerpolicy"
+    },
+    "html-rel": {
+      "enum": [
+        "apple-touch-icon",
+        "alternate",
+        "author",
+        "bookmark",
+        "canonical",
+        "dns-prefetch",
+        "external",
+        "help",
+        "icon",
+        "license",
+        "manifest",
+        "mask-icon",
+        "me",
+        "modulepreload",
+        "next",
+        "nofollow",
+        "noopener",
+        "noreferrer",
+        "opener",
+        "preconnect",
+        "prefetch",
+        "preload",
+        "prerender",
+        "prev",
+        "search",
+        "stylesheet",
+        "tag",
+        "webmention"
+      ],
+      "html": true,
+      "name": "rel"
+    },
+    "html-readonly": {
+      "type": "flag",
+      "html": true,
+      "name": "readonly"
+    },
+    "html-required": {
+      "type": "flag",
+      "html": true,
+      "name": "required"
+    },
+    "html-reversed": {
+      "type": "flag",
+      "html": true,
+      "name": "reversed"
+    },
+    "html-rows": {
+      "html": true,
+      "name": "rows"
+    },
+    "html-rowspan": {
+      "html": true,
+      "name": "rowspan"
+    },
+    "html-sandbox": {
+      "enum": [
+        "allow-downloads-without-user-activation",
+        "allow-forms",
+        "allow-modals",
+        "allow-orientation-lock",
+        "allow-pointer-lock",
+        "allow-popups",
+        "allow-popups-to-escape-sandbox",
+        "allow-presentation",
+        "allow-same-origin",
+        "allow-scripts",
+        "allow-storage-access-by-user-activation",
+        "allow-top-navigation",
+        "allow-top-navigation-by-user-activation"
+      ],
+      "html": true,
+      "name": "sandbox"
+    },
+    "html-selected": {
+      "type": "flag",
+      "html": true,
+      "name": "selected"
+    },
+    "html-scope": {
+      "enum": ["col", "colgroup", "row", "rowgroup"],
+      "html": true,
+      "name": "scope"
+    },
+    "html-shape": {
+      "enum": ["circle", "default", "poly", "rect"],
+      "html": true,
+      "name": "shape"
+    },
+    "html-size": {
+      "type": "number",
+      "html": true,
+      "name": "size"
+    },
+    "html-sizes": {
+      "enum": ["any"],
+      "html": true,
+      "name": "sizes"
+    },
+    "html-span": {
+      "type": "number",
+      "html": true,
+      "name": "span"
+    },
+    "html-src": {
+      "html": true,
+      "name": "src"
+    },
+    "html-srcdoc": {
+      "html": true,
+      "name": "srcdoc"
+    },
+    "html-srclang": {
+      "html": true,
+      "name": "srclang"
+    },
+    "html-srcset": {
+      "html": true,
+      "name": "srcset"
+    },
+    "html-start": {
+      "html": true,
+      "name": "start"
+    },
+    "html-step": {
+      "html": true,
+      "name": "step"
+    },
+    "html-target": {
+      "enum": ["_blank", "_parent", "_self", "_top"],
+      "html": true,
+      "name": "target"
+    },
+    "html-type": {
+      "html": true,
+      "name": "type"
+    },
+    "html-usemap": {
+      "html": true,
+      "name": "usemap"
+    },
+    "html-value": {
+      "html": true,
+      "name": "value"
+    },
+    "html-width": {
+      "type": "number",
+      "html": true,
+      "name": "width"
+    },
+    "html-wrap": {
+      "enum": ["hard", "soft"],
+      "html": true,
+      "name": "wrap"
+    }
+  },
+  "<dialog>": {
+    "@open": "#html-open",
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<main>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<var>": {
+    "html": true,
+    "attribute-groups": ["html-attributes"]
+  },
+  "<data>": {
+    "html": true,
+    "autocomplete": [
+      {},
+      {
+        "snippet": "data value=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  },
+  "<template>": {
+    "html": true,
+    "autocomplete": [
+      {
+        "snippet": "template id=\"$1\""
+      }
+    ],
+    "attribute-groups": ["html-attributes"]
+  }
+}

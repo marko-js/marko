@@ -1,9 +1,0 @@
-{
-    "dependencies": [
-        {
-            "type": "require",
-            "path": "./index-browser",
-            "run": true
-        }
-    ]
-}

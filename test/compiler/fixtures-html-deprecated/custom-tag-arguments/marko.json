@@ -1,7 +1,0 @@
-{
-    "<custom-tag-data>": {
-        "renderer": "./custom-tag-data-tag.js",
-        "@name": "string",
-        "@age": "integer"
-    }
-}

@@ -1,0 +1,10 @@
+{
+  "fileNames": {
+    "packages/marko/test/migrate/fixtures/w-bind-prompt-y/template.marko": "packages/marko/test/migrate/fixtures/w-bind-prompt-y/index.marko",
+    "packages/marko/test/migrate/fixtures/w-bind-prompt-y/index.js": "packages/marko/test/migrate/fixtures/w-bind-prompt-y/component.js"
+  },
+  "dependentPaths": {
+    "packages/marko/test/migrate/fixtures/w-bind-prompt-y/template.marko": "packages/marko/test/migrate/fixtures/w-bind-prompt-y/index.marko",
+    "packages/marko/test/migrate/fixtures/w-bind-prompt-y/index.js": "packages/marko/test/migrate/fixtures/w-bind-prompt-y/index.marko"
+  }
+}

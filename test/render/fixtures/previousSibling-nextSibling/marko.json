@@ -1,5 +1,0 @@
-{
-    "<span>": {
-        "transformer": "./span-transformer.js"
-    }
-}

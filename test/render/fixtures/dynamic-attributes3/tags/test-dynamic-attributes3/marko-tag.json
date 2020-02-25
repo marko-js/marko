@@ -1,8 +1,0 @@
-{
-    "renderer": "./renderer.js",
-    "@test": "string",
-    "@*": {
-        "type": "string",
-        "target-property": null
-    }
-}

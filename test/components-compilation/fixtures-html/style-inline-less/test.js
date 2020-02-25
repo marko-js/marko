@@ -1,3 +1,0 @@
-exports.compilerOptions = {
-    meta: true
-};

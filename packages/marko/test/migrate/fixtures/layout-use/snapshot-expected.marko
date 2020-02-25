@@ -1,0 +1,40 @@
+<!-- packages/marko/test/migrate/fixtures/layout-use/template.marko -->
+
+import ExampleA from "./example-a.marko"
+import ExampleB from "./example-b.marko"
+import ExampleC from "./example-c/index.marko"
+import ExampleD_1 from "./example-d.marko"
+
+<!-- Import: basic -->
+<${ExampleA}>
+    <div/>
+</>
+<!-- Import: with attributes -->
+<${ExampleB}
+    ...{
+        a: 1
+    }
+    b=2>
+    <div/>
+</>
+<!-- Import: index -->
+<${ExampleC}>
+    <div/>
+</>
+<!-- Import: name conflict -->
+$ const ExampleD = undefined;
+<${ExampleD_1}>
+    <div/>
+</>
+<!-- Dynamic: basic -->
+<${input.x}>
+    <div/>
+</>
+<!-- Dynamic: with attributes -->
+<${input.x}
+    ...{
+        a: 1
+    }
+    b=2>
+    <div/>
+</>

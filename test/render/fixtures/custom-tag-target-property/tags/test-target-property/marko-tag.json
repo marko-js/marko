@@ -1,6 +1,0 @@
-{
-    "renderer": "./renderer",
-    "@name-foo": {
-        "target-property": "name"
-    }
-}
