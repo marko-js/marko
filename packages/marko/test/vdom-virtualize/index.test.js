@@ -5,7 +5,7 @@ var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var fs = require("fs");
 var toHTML = require("../__util__/toHTML");
 var createBrowser = require("jsdom-context-require");
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 
 autotest("fixtures", fixture => {
   let test = fixture.test;

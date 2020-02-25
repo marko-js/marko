@@ -5,7 +5,7 @@ require("../__util__/test-init");
 var chai = require("chai");
 chai.config.includeStack = true;
 
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 const fs = require("fs");
 const path = require("path");
 const morphdom = require("marko/runtime/vdom/morphdom");

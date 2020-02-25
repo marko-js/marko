@@ -19,8 +19,6 @@
     - Fixes for IE <=10
 */
 
-/* globals window */
-
 var isReady = false;
 var readyBound = false;
 

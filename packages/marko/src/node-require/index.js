@@ -25,64 +25,10 @@ function compile(templatePath, markoCompiler, compilerOptions) {
     compilerOptions = markoCompiler.defaultOptions;
   }
 
-  var writeToDisk = compilerOptions.writeToDisk;
+  var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+  var compiledSrc = markoCompiler.compile(templateSrc, templatePath);
 
-  var templateSrc;
-  var compiledSrc;
-
-  if (writeToDisk === false) {
-    // Don't write the compiled template to disk. Instead, load it
-    // directly from the compiled source using the internals of the
-    // Node.js module loading system.
-    templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-    compiledSrc = markoCompiler.compile(templateSrc, templatePath);
-  } else {
-    var targetFile = templatePath + ".js";
-
-    if (
-      markoCompiler.defaultOptions.assumeUpToDate &&
-      fs.existsSync(targetFile)
-    ) {
-      // If the target file already exists and "assumeUpToDate" then just use the previously
-      // compiled template.
-      return fs.readFileSync(targetFile, fsReadOptions);
-    }
-
-    var targetDir = path.dirname(templatePath);
-
-    var isUpToDate = markoCompiler.checkUpToDate(targetFile);
-
-    if (isUpToDate) {
-      compiledSrc = fs.readFileSync(targetFile, fsReadOptions);
-    } else {
-      templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-      compiledSrc = markoCompiler.compile(
-        templateSrc,
-        templatePath,
-        compilerOptions
-      );
-
-      // Write to a temporary file and move it into place to avoid problems
-      // assocatiated with multiple processes write to the same file. We only
-      // write the compiled source code to disk so that stack traces will
-      // be accurate.
-      var filename = path.basename(targetFile);
-      var tempFile = path.join(
-        targetDir,
-        "." + process.pid + "." + Date.now() + "." + filename
-      );
-      fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
-      fs.renameSync(tempFile, targetFile);
-    }
-  }
-
-  // We attach a path to the compiled template so that hot reloading will work.
   return compiledSrc;
-}
-
-function getLoadedTemplate(path) {
-  var cached = require.cache[path];
-  return cached && cached.exports.render ? cached.exports : undefined;
 }
 
 function install(options) {
@@ -92,10 +38,7 @@ function install(options) {
     ? options.require.extensions
     : require.extensions;
 
-  var compilerOptions = Object.assign(
-    { requireTemplates: true },
-    options.compilerOptions
-  );
+  var compilerOptions = options.compilerOptions;
   require("../compiler").configure(compilerOptions);
 
   var extensions = [];
@@ -113,15 +56,6 @@ function install(options) {
   }
 
   function markoRequireExtension(module, filename) {
-    var targetFile = filename + ".js";
-    var cachedTemplate =
-      getLoadedTemplate(targetFile) || getLoadedTemplate(filename);
-    if (cachedTemplate) {
-      // The template has already been loaded so use the exports of the already loaded template
-      module.exports = cachedTemplate;
-      return;
-    }
-
     // Resolve the appropriate compiler relative to the location of the
     // marko template file on disk using the "resolve-from" module.
     var dirname = path.dirname(filename);
@@ -134,7 +68,7 @@ function install(options) {
 
     // Append ".js" to the filename since that is where we write the compiled
     // source code that is being loaded. This allows stack traces to match up.
-    module._compile(compiledSrc, targetFile);
+    module._compile(compiledSrc, filename);
   }
 
   requireExtensions[MARKO_EXTENSIONS] =

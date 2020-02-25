@@ -1,20 +1,5 @@
 "use strict";
 
-// the following development and legacy apis should not be included
-// when bundling the server with a tool like webpack
-if (!process.env.BUNDLE) {
-  if (process.env.MARKO_HOT_RELOAD) {
-    require("./hot-reload").enable();
-  }
-
-  // If process was launched with browser refresh then automatically
-  // enable browser-refresh
-  require("./browser-refresh").enable();
-
-  // Adds the template.getDependencies() method needed by older versions of lasso-marko
-  require("./runtime/components/legacy/dependencies/html");
-}
-
 function fixFlush() {
   try {
     var OutgoingMessage = require("http").OutgoingMessage;

@@ -1,6 +1,6 @@
 static {
     var markoComponents = require("marko/components");
-    var componentsTemplate = require("./components.marko");
+    var componentsTemplate = require("./components.marko").default;
 
     function componentsDataProvider(callback) {
         componentsTemplate.renderToString({}, function(err, html, out) {

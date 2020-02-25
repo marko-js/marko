@@ -1,6 +1,5 @@
 "use strict";
 
-var complain = "MARKO_DEBUG" && require("complain");
 var changeCase = require("../../helpers/_change-case");
 var attrHelper = require("./attr");
 var classAttrHelper = require("./class-attr");
@@ -11,31 +10,34 @@ var invalidAttrNameCharacters = /[\s'"</=\\]/u;
 var validAttrs = Object.create(null);
 var invalidAttrs = Object.create(null);
 
-module.exports = function attrs(arg) {
-  if (typeof arg === "object") {
-    var out = "";
-    for (var attrName in arg) {
-      if (attrName === "style") {
-        out += styleAttrHelper(arg[attrName]);
-      } else if (attrName === "class") {
-        out += classAttrHelper(arg[attrName]);
-      } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
-        out += attrHelper(
-          changeCase.___camelToDashCase(attrName),
-          arg[attrName]
+module.exports = function attrs(attributes) {
+  if (attributes != null) {
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      if (typeof attributes !== "object") {
+        throw new Error(
+          "A non object was passed as a dynamic attributes value."
         );
       }
     }
-    return out;
-  } else if (typeof arg === "string") {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        "Passing a string as a dynamic attribute value is deprecated - More details: https://github.com/marko-js/marko/wiki/Deprecation:-String-as-dynamic-attribute-value"
-      );
+
+    var result = "";
+
+    for (var attrName in attributes) {
+      if (attrName === "style") {
+        result += styleAttrHelper(attributes[attrName]);
+      } else if (attrName === "class") {
+        result += classAttrHelper(attributes[attrName]);
+      } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
+        result += attrHelper(
+          changeCase.___camelToDashCase(attrName),
+          attributes[attrName]
+        );
+      }
     }
-    return arg;
+    return result;
   }
+
   return "";
 };
 

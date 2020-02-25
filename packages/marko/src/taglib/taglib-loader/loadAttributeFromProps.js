@@ -5,6 +5,7 @@ var raptorRegexp = require("raptor-regexp");
 var propertyHandlers = require("property-handlers");
 var types = require("./types");
 var createError = require("raptor-util/createError");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class AttrLoader {
   constructor(attr, dependencyChain) {
@@ -236,7 +237,7 @@ function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
 }
 
 loadAttributeFromProps.isSupportedProperty = function(name) {
-  return AttrLoader.prototype.hasOwnProperty(name);
+  return hasOwnProperty.call(AttrLoader.prototype, name);
 };
 
 module.exports = loadAttributeFromProps;

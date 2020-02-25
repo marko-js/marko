@@ -1,35 +1,25 @@
 "use strict";
 
-var Compiler = require("./Compiler");
-var Walker = require("./Walker");
-var Parser = require("./Parser");
-var HtmlJsParser = require("./HtmlJsParser");
-var Builder = require("./Builder");
+var compiler = require("@marko/compiler");
 var extend = require("raptor-util/extend");
-var CompileContext = require("./CompileContext");
 var globalConfig = require("./config");
 var ok = require("assert").ok;
 var fs = require("fs");
 var taglib = require("../taglib");
 var defaults = extend({}, globalConfig);
 
-Object.defineProperty(exports, "defaultOptions", {
+var defaultOptionsExportDefinition = {
   get: function() {
     return globalConfig;
   },
   enumerable: true,
   configurable: false
-});
+};
 
-Object.defineProperty(exports, "config", {
-  get: function() {
-    return globalConfig;
-  },
-  enumerable: true,
-  configurable: false
+Object.defineProperties(exports, {
+  defaultOptions: defaultOptionsExportDefinition,
+  config: defaultOptionsExportDefinition
 });
-
-var defaultParser = new Parser(new HtmlJsParser());
 
 function configure(newConfig) {
   if (!newConfig) {
@@ -38,65 +28,36 @@ function configure(newConfig) {
 
   globalConfig = extend({}, defaults);
   extend(globalConfig, newConfig);
+
+  compiler.configure(newConfig);
 }
 
-var defaultCompiler = new Compiler({
-  parser: defaultParser,
-  builder: Builder.DEFAULT_BUILDER
-});
-
-function createBuilder(options) {
-  return new Builder(options);
+function resultCompat({ code, meta }, options = {}) {
+  if (options.sourceOnly !== false) {
+    return code;
+  } else {
+    return { code, meta };
+  }
 }
 
-function createWalker(options) {
-  return new Walker(options);
-}
-
-function isXML(path) {
-  return path.endsWith(".xml") || path.endsWith(".xml.marko");
-}
-
-function _compile(src, filename, userOptions, callback) {
-  registerCoreTaglibs();
-
+function _compile(src, filename, userConfig, callback) {
   ok(filename, '"filename" argument is required');
   ok(typeof filename === "string", '"filename" argument should be a string');
-
   var options = {};
 
   extend(options, globalConfig);
 
-  if (userOptions) {
-    extend(options, userOptions);
-  }
-
-  var compiler = defaultCompiler;
-
-  if (isXML(filename)) {
-    require("complain")("Using Marko to build XML is deprecated");
-    options.ignoreUnrecognizedTags = true;
-  }
-
-  const context = new CompileContext(src, filename, compiler.builder, options);
-
-  let result;
-
-  try {
-    const compiled = compiler.compile(src, context);
-    result = userOptions.sourceOnly ? compiled.code : compiled;
-  } catch (e) {
-    if (callback) {
-      return callback(e);
-    } else {
-      throw e;
-    }
+  if (userConfig) {
+    extend(options, userConfig);
   }
 
   if (callback) {
-    callback(null, result);
+    compiler.compile(src, filename, options).then(
+      result => callback(null, resultCompat(result, options)),
+      error => callback(error)
+    );
   } else {
-    return result;
+    return resultCompat(compiler.compileSync(src, filename, options), options);
   }
 }
 
@@ -122,7 +83,6 @@ function compileForBrowser(src, filename, options, callback) {
     {
       output: "vdom",
       meta: false,
-      browser: true,
       sourceOnly: false
     },
     options
@@ -160,144 +120,49 @@ function compileFileForBrowser(filename, options, callback) {
     options = null;
   }
 
-  options = extend(
-    { output: "vdom", meta: false, browser: true, sourceOnly: false },
-    options
-  );
+  options = extend({ output: "vdom", meta: false, sourceOnly: false }, options);
   return compileFile(filename, options, callback);
 }
 
-function checkUpToDate(/*templateFile, templateJsFile*/) {
-  return false; // TODO Implement checkUpToDate
-}
-
-function getLastModified(path, options, callback) {
-  if (typeof options === "function") {
-    callback = options;
-    options = null;
-  }
-
-  callback(null, -1); // TODO Implement getLastModified
-}
-
-function clearCaches() {
-  taglib.clearCache();
-}
-
-function parseRaw(templateSrc, filename, options) {
-  return parse(
-    templateSrc,
-    filename,
-    Object.assign(
-      {
-        raw: true,
-        ignorePlaceholders: true
-      },
-      options
-    )
-  );
-}
-
-function parse(templateSrc, filename, options) {
-  registerCoreTaglibs();
-  var context = new CompileContext(
-    templateSrc,
-    filename,
-    Builder.DEFAULT_BUILDER
-  );
-
-  if (options.onContext) {
-    options.onContext(context);
-  }
-  var parsed = defaultParser.parse(templateSrc, context, options);
-
-  if (context.hasErrors()) {
-    var errors = context.getErrors();
-
-    var message =
-      'An error occurred while trying to parse template at path "' +
-      filename +
-      '". Error(s) in template:\n';
-    for (var i = 0, len = errors.length; i < len; i++) {
-      let error = errors[i];
-      message += i + 1 + ") " + error.toString() + "\n";
-    }
-    var error = new Error(message);
-    error.errors = errors;
-    throw error;
-  }
-
-  return parsed;
-}
-
-exports.createBuilder = createBuilder;
 exports.compileFile = compileFile;
 exports.compile = compile;
 exports.compileForBrowser = compileForBrowser;
 exports.compileFileForBrowser = compileFileForBrowser;
-exports.parseRaw = parseRaw;
-exports.parse = parse;
 
-exports.checkUpToDate = checkUpToDate;
-exports.getLastModified = getLastModified;
-exports.createWalker = createWalker;
-exports.builder = Builder.DEFAULT_BUILDER;
 exports.configure = configure;
-exports.clearCaches = clearCaches;
 
-exports.taglibLookup = taglib.lookup;
-exports.taglibLoader = taglib.loader;
-exports.taglibFinder = taglib.finder;
-
-var coreTaglibsRegistered = false;
-
-function registerCoreTaglibs() {
-  if (!coreTaglibsRegistered) {
-    coreTaglibsRegistered = true;
-    taglib.register(
-      require("../core-tags/cache/marko.json"),
-      require.resolve("../core-tags/cache/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/components/marko.json"),
-      require.resolve("../core-tags/components/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/core/marko.json"),
-      require.resolve("../core-tags/core/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/html/marko.json"),
-      require.resolve("../core-tags/html/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/migrate/marko.json"),
-      require.resolve("../core-tags/migrate/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/svg/marko.json"),
-      require.resolve("../core-tags/svg/marko.json")
-    );
-    taglib.register(
-      require("../core-tags/math/marko.json"),
-      require.resolve("../core-tags/math/marko.json")
-    );
+// TODO: resolve these circular dep issues.
+Object.defineProperties(exports, {
+  taglibLookup: {
+    get() {
+      return taglib.lookup;
+    }
+  },
+  taglibLoader: {
+    get() {
+      return taglib.loader;
+    }
+  },
+  taglibFinder: {
+    get() {
+      return taglib.finder;
+    }
+  },
+  buildTaglibLookup: {
+    get() {
+      return compiler.taglib.buildLookup;
+    }
   }
-}
+});
 
-function buildTaglibLookup(dirname) {
-  registerCoreTaglibs();
-  return taglib.buildLookup(dirname);
-}
-
-exports.buildTaglibLookup = buildTaglibLookup;
+exports.clearCaches = function clearCaches() {
+  taglib.clearCache();
+};
 
 exports.registerTaglib = function(filePath) {
-  registerCoreTaglibs();
-
   ok(typeof filePath === "string", '"filePath" should be a string');
   taglib.registerFromFile(filePath);
-  clearCaches();
+  exports.clearCaches();
 };
 
 exports.isVDOMSupported = true;

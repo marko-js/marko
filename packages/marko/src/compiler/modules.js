@@ -2,7 +2,7 @@
 
 var nativeRequire = require;
 var resolveFrom = require("resolve-from");
-var deresolve = require("./util/deresolve");
+var deresolve = require("deresolve");
 
 const deresolveOptions = {
   shouldRemoveExt(ext) {

@@ -2,10 +2,9 @@
 
 require("../__util__/test-init");
 
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 
 autotest("fixtures", run);
-autotest("fixtures-deprecated", run);
 
 function run(fixture) {
   let test = fixture.test;

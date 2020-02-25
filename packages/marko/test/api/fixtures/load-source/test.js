@@ -1,5 +1,4 @@
 var nodePath = require("path");
-var fs = require("fs");
 
 exports.check = function(marko, markoCompiler, expect, snapshot, done) {
   var template;
@@ -8,28 +7,22 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
   // Make sure calling load with templatePath:String, templateSrc:String arguments works
   templatePath = nodePath.join(__dirname, "dummy.marko");
   template = marko.load(templatePath, "-- Hello $!{data.name}!");
-  snapshot(template.renderSync({ name: "Frank" }).toString());
+  snapshot(template.renderSync({ name: "Frank" }).toString(), {
+    name: "no-options"
+  });
 
   // Make sure calling load with templatePath:String, templateSrc:String, options:Object arguments works
   templatePath = nodePath.join(__dirname, "dummy.marko");
   template = marko.load(templatePath, "-- Hello $!{data.name}!", {});
-  snapshot(template.renderSync({ name: "Frank" }).toString());
+  snapshot(template.renderSync({ name: "Frank" }).toString(), {
+    name: "empty-options"
+  });
 
   // Make sure calling load with templatePath:String, options:Object arguments works
-  delete markoCompiler.defaultOptions.writeToDisk;
+  templatePath = nodePath.join(__dirname, "invalid-template.marko");
 
-  templatePath = nodePath.join(__dirname, "template.marko");
-  var compiledPath = nodePath.join(__dirname, "template.marko.js");
-
-  try {
-    fs.unlinkSync(compiledPath);
-  } catch (e) {
-    // ignore
-  }
-
-  template = marko.load(templatePath, { writeToDisk: false });
-  expect(fs.existsSync(compiledPath)).to.equal(false);
+  template = marko.load(templatePath, { ignoreUnrecognizedTags: true });
   expect(template.render).to.be.a("function");
-  snapshot(template.renderSync({ name: "Frank" }).toString());
+  snapshot(template.renderSync({}).toString(), { name: "custom-options" });
   done();
 };

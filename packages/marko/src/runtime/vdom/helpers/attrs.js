@@ -1,6 +1,5 @@
 "use strict";
 
-var complain = "MARKO_DEBUG" && require("complain");
 var changeCase = require("../../helpers/_change-case");
 var classHelper = require("../../helpers/class-value");
 var styleHelper = require("../../helpers/style-value");
@@ -9,17 +8,16 @@ var styleHelper = require("../../helpers/style-value");
  * Helper for processing dynamic attributes
  */
 module.exports = function(attributes) {
-  if (typeof attributes === "string") {
+  if (attributes != null) {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
-      complain(
-        "Passing a string as a dynamic attribute value is deprecated - More details: https://github.com/marko-js/marko/wiki/Deprecation:-String-as-dynamic-attribute-value"
-      );
+      if (typeof attributes !== "object") {
+        throw new Error(
+          "A non object was passed as a dynamic attributes value."
+        );
+      }
     }
-    return parseAttrs(attributes);
-  }
 
-  if (attributes) {
     var newAttributes = {};
 
     for (var attrName in attributes) {
@@ -44,23 +42,3 @@ module.exports = function(attributes) {
 
   return attributes;
 };
-
-var parseContainer;
-function parseAttrs(str) {
-  if (str === "") {
-    return {};
-  }
-
-  parseContainer = parseContainer || document.createElement("div");
-  parseContainer.innerHTML = "<a " + str + ">";
-  var attrs = parseContainer.firstChild.attributes;
-  var result = {};
-  var attr;
-
-  for (var len = attrs.length, i = 0; i < len; i++) {
-    attr = attrs[i];
-    result[attr.name] = attr.value;
-  }
-
-  return result;
-}

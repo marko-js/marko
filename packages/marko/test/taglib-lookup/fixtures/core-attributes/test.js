@@ -1,8 +1,7 @@
 exports.check = function(markoCompiler, expect) {
-  var taglibLookup = markoCompiler.taglibLookup;
-  var lookup = taglibLookup.buildLookup(__dirname);
+  var lookup = markoCompiler.buildTaglibLookup(__dirname);
   // console.log('LOOKUP: ', Object.keys(lookup.attributes));
-  var ifAttr = lookup.getAttribute("div", "if");
-  expect(ifAttr != null).to.equal(true);
-  expect(ifAttr.type).to.equal("statement");
+  var noupdateAttr = lookup.getAttribute("div", "no-update");
+  expect(noupdateAttr != null).to.equal(true);
+  expect(noupdateAttr.type).to.equal("flag");
 };

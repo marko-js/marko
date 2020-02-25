@@ -1,9 +1,9 @@
 "use strict";
 require("../__util__/test-init");
 
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 var createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
-var ssrTemplate = require("./template.marko");
+var ssrTemplate = require("./template.marko").default;
 var hydrateComponentPath = require.resolve("./template.component-browser.js");
 var browserHelpersPath = require.resolve("../__util__/BrowserHelpers");
 var testTargetHTML = '<div id="testsTarget"></div><div></div>';
@@ -11,11 +11,6 @@ var browser = createBrowserWithMarko(__dirname, testTargetHTML);
 var BrowserHelpers = browser.require(browserHelpersPath);
 
 autotest("fixtures", {
-  client: runClientTest,
-  hydrate: runHydrateTest
-});
-
-autotest("fixtures-deprecated", {
   client: runClientTest,
   hydrate: runHydrateTest
 });
@@ -73,18 +68,14 @@ function runHydrateTest(fixture) {
         var browser = createBrowserWithMarko(__dirname, String(html), {
           beforeParse(window, browser) {
             var marko = browser.require("marko/components");
-            var legacy = browser.require("marko/legacy-components");
-            legacy.load = type =>
-              legacy.defineWidget(
-                browser.require(
-                  type.replace(/^.*\/components-browser/, __dirname)
-                )
-              );
             var rootComponent = browser.require(hydrateComponentPath);
+            rootComponent = rootComponent.default || rootComponent;
             marko.register(ssrTemplate.meta.id, rootComponent);
             components.forEach(function(def) {
               Object.keys(def.components).forEach(type => {
-                marko.register(type, browser.require(def.components[type]));
+                var component = browser.require(def.components[type]);
+                component = component.default || component;
+                marko.register(type, component);
               });
             });
           }

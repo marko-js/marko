@@ -4,7 +4,7 @@
         $ var id = macroInput.id;
         $ var label = macroInput.label;
         $ var handler = macroInput.handler;
-        <button key=`${id}` type="button" onClick($nonstandard`${handler}`)>
+        <button key=id type="button" onClick(handler)>
             $label
         </button>
     </macro>

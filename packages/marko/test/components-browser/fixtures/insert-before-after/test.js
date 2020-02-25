@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function(helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
-  var hello = require("./components/app-hello");
+  var hello = require("./components/app-hello").default;
 
   var renderTarget = component.getEl("renderTarget");
   var referenceElement = component.getEl("referenceElement");

@@ -6,7 +6,7 @@
     <app-custom-events onTestEvent("handleTestEvent1") key="customEvents"/>
     <app-custom-events
         onTestEvent("handleTestEvent2")
-        channel=`customEvents-${__component.id}`/>
+        channel=`customEvents-${component.id}`/>
     <ul>
         <for|color| of=["red", "green", "blue"]>
             <li key="colorListItems[]">${color}</li>

@@ -11,6 +11,7 @@ var resolveFrom = typeof window === "undefined" && require("resolve-from"); // N
 var DependencyChain = require("./DependencyChain");
 var createError = require("raptor-util/createError");
 var loaders = require("./loaders");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function exists(path) {
   try {
@@ -213,7 +214,7 @@ class TaglibLoader {
     // }
 
     for (var tagName in tags) {
-      if (tags.hasOwnProperty(tagName)) {
+      if (hasOwnProperty.call(tags, tagName)) {
         this._handleTag(
           tagName,
           tags[tagName],

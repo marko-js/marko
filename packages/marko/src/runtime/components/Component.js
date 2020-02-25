@@ -22,6 +22,7 @@ var domData = require("./dom-data");
 var componentsByDOMNode = domData.___componentByDOMNode;
 var CONTEXT_KEY = "__subtree_context__";
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 var slice = Array.prototype.slice;
 
 var COMPONENT_SUBSCRIBE_TO_OPTIONS;
@@ -97,7 +98,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
   var handlers;
 
   for (var propName in stateChanges) {
-    if (stateChanges.hasOwnProperty(propName)) {
+    if (hasOwnProperty.call(stateChanges, propName)) {
       var handlerMethodName = "update_" + propName;
 
       handlerMethod = component[handlerMethodName];
@@ -245,23 +246,19 @@ Component.prototype = componentProto = {
   },
   getEl: function(key, index) {
     if (key) {
-      var resolvedKey = resolveKeyHelper(key, index);
-      var keyedElement = this.___keyedElements["@" + resolvedKey];
+      var keyedElement = this.___keyedElements[
+        "@" + resolveKeyHelper(key, index)
+      ];
 
-      if (!keyedElement) {
-        var keyedComponentRoot = this.___keyedElements[resolvedKey];
-
-        if (keyedComponentRoot) {
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            complain(
-              "Accessing the elements of a child component using 'component.getEl' is deprecated."
-            );
-          }
-
-          return keyedComponentRoot.nodeType === 1 /** Node.ELEMENT_NODE */
-            ? keyedComponentRoot
-            : walkFragments(keyedComponentRoot);
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        if (
+          keyedElement &&
+          keyedElement.nodeType !== 1 /* Node.ELEMENT_NODE */
+        ) {
+          throw new Error(
+            "Using 'getEl(key)' to get a component instance is not supported, did you mean 'getComponent(key)'?"
+          );
         }
       }
 
@@ -283,20 +280,20 @@ Component.prototype = componentProto = {
     return els;
   },
   getComponent: function(key, index) {
-    var rootNode = this.___keyedElements[resolveKeyHelper(key, index)];
-    if (/\[\]$/.test(key)) {
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        complain(
+    var rootNode = this.___keyedElements["@" + resolveKeyHelper(key, index)];
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      if (/\[\]$/.test(key)) {
+        throw new Error(
           "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
         );
       }
-      rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
     }
+
     return rootNode && componentsByDOMNode.get(rootNode);
   },
   getComponents: function(key) {
-    var lookup = this.___keyedElements[key + "[]"];
+    var lookup = this.___keyedElements["@" + key + "[]"];
     return lookup
       ? Object.keys(lookup)
           .map(function(key) {
@@ -388,7 +385,7 @@ Component.prototype = componentProto = {
       // Merge in the new state with the old state
       var newState = name;
       for (var k in newState) {
-        if (newState.hasOwnProperty(k)) {
+        if (hasOwnProperty.call(newState, k)) {
           state.___set(k, newState[k], true /* ensure:true */);
         }
       }

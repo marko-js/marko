@@ -1,5 +1,3 @@
-/* globals window */
-
 var win = window;
 var setImmediate = win.setImmediate;
 

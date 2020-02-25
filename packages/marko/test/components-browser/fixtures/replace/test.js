@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function(helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
-  var hello = require("./components/hello");
+  var hello = require("./components/hello").default;
 
   var targetEl = component.getEl("target");
   hello.renderSync({ name: "John" }).replace(targetEl);

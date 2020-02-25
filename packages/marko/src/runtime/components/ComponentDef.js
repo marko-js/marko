@@ -93,21 +93,17 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   var input = o[2];
   var extra = o[3];
 
-  var isLegacy = extra.l;
   var state = extra.s;
   var componentProps = extra.w;
   var flags = extra.f;
 
-  var component =
-    typeName /* legacy */ &&
-    registry.___createComponent(typeName, id, isLegacy);
+  var component = registry.___createComponent(typeName, id);
 
   // Prevent newly created component from being queued for update since we area
   // just building it from the server info
   component.___updateQueued = true;
 
   if (
-    !isLegacy &&
     flags & FLAG_WILL_RERENDER_IN_BROWSER &&
     !(flags & FLAG_OLD_HYDRATE_NO_CREATE)
   ) {

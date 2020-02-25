@@ -2,8 +2,8 @@
 
 var ok = require("assert").ok;
 var taglibTypes = require("../taglib-loader/types");
-var Text = require("../../compiler/ast/Text");
 var extend = require("raptor-util/extend");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function transformerComparator(a, b) {
   a = a.priority;
@@ -28,7 +28,7 @@ function TAG_COMPARATOR(a, b) {
 
 function merge(target, source) {
   for (var k in source) {
-    if (source.hasOwnProperty(k)) {
+    if (hasOwnProperty.call(source, k)) {
       if (
         target[k] &&
         typeof target[k] === "object" &&
@@ -85,7 +85,7 @@ class TaglibLookup {
   }
 
   hasTaglib(taglib) {
-    return this.taglibsById.hasOwnProperty(taglib.id);
+    return hasOwnProperty.call(this.taglibsById, taglib.id);
   }
 
   _mergeNestedTags(taglib) {
@@ -120,7 +120,7 @@ class TaglibLookup {
     ok(taglib, '"taglib" is required');
     ok(taglib.id, '"taglib.id" expected');
 
-    if (this.taglibsById.hasOwnProperty(taglib.id)) {
+    if (hasOwnProperty.call(this.taglibsById, taglib.id)) {
       return;
     }
 
@@ -160,7 +160,7 @@ class TaglibLookup {
     var tags = this.merged.tags;
     if (tags) {
       for (var tagName in tags) {
-        if (tags.hasOwnProperty(tagName)) {
+        if (hasOwnProperty.call(tags, tagName)) {
           var tag = tags[tagName];
           var result = callback(tag);
           if (result === false) {
@@ -199,7 +199,7 @@ class TaglibLookup {
       }
 
       for (var attrName in attributes) {
-        if (attributes.hasOwnProperty(attrName)) {
+        if (hasOwnProperty.call(attributes, attrName)) {
           handleAttr(attributes[attrName], tag);
         }
       }
@@ -380,17 +380,6 @@ class TaglibLookup {
     }
   }
 
-  forEachNodeTransformer(node, callback, thisObj) {
-    /*
-     * Based on the type of node we have to choose how to transform it
-     */
-    if (node.tagName || node.tagNameExpression) {
-      this.forEachTagTransformer(node, callback, thisObj);
-    } else if (node instanceof Text) {
-      this.forEachTextTransformer(callback, thisObj);
-    }
-  }
-
   forEachTagTransformer(element, callback, thisObj) {
     if (typeof element === "string") {
       element = {
@@ -449,7 +438,7 @@ class TaglibLookup {
       var inputFilesSet = {};
 
       for (var taglibId in this.taglibsById) {
-        if (this.taglibsById.hasOwnProperty(taglibId)) {
+        if (hasOwnProperty.call(this.taglibsById, taglibId)) {
           var taglibInputFiles = this.taglibsById[taglibId].getInputFiles();
           var len = taglibInputFiles.length;
           if (len) {

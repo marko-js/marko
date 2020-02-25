@@ -1,4 +1,4 @@
-var template = require("./template.marko");
+var template = require("./template.marko").default;
 
 exports.renderer = function(input, out) {
   var header = input.header;

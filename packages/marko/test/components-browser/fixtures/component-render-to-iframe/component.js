@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-var iframeContentComponent = require("./components/app-iframe-content");
+var iframeContentComponent = require("./components/app-iframe-content").default;
 
 module.exports = {
   renderIntoIframe: function() {

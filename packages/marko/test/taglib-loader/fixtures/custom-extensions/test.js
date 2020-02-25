@@ -7,6 +7,8 @@ exports.check = function(taglibLoader, expect) {
 
   expect(taglib != null).to.equal(true);
   expect(taglib)
-    .to.have.deep.property("tags.test-declared-attributes.renderer")
-    .to.have.string("renderer.js");
+    .to.have.property("tags")
+    .with.property("test-declared-attributes")
+    .with.property("renderer")
+    .to.contain("renderer.js");
 };

@@ -5,7 +5,7 @@ require("../__util__/test-init");
 const fs = require("fs");
 const path = require("path");
 const marko = require("marko");
-const autotest = require("../autotest");
+const autotest = require("mocha-autotest").default;
 const domToString = require("../__util__/domToString");
 const createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
 const expect = require("chai").expect;
@@ -18,17 +18,7 @@ autotest("fixtures", {
   "html ≅ vdom": compareNormalized
 });
 
-autotest("fixtures-deprecated", {
-  html: testRunner,
-  vdom: testRunner,
-  "html ≅ vdom": compareNormalized
-});
-
 autotest("fixtures-async-callback", {
-  html: testRunner
-});
-
-autotest("fixtures-async-deprecated", {
   html: testRunner
 });
 
@@ -38,7 +28,7 @@ function testRunner(fixture) {
 
 function compareNormalized({ test, context }) {
   test(function() {
-    if (!context.hasOwnProperty("html") || !context.hasOwnProperty("vdom")) {
+    if (!("html" in context) || !("vdom" in context)) {
       this.skip();
     } else {
       expect(context.html).to.equal(context.vdom);
@@ -79,6 +69,11 @@ async function runRenderTest(fixture) {
           ? browser.require(templatePath)
           : marko.load(templatePath, loadOptions);
         let templateData = Object.assign({}, main.templateData || {});
+
+        if (template.default) {
+          template = template.default;
+        }
+
         await template.render(templateData);
       } catch (_e) {
         e = _e;
@@ -146,7 +141,9 @@ async function runRenderTest(fixture) {
           ext: ".html"
         });
 
-        fixture.context.vdom = normalizeHtml(actualNode);
+        (fixture.context || (fixture.context = {})).vdom = normalizeHtml(
+          actualNode
+        );
       } else {
         if (main.checkHtml) {
           fs.writeFileSync(path.join(dir, "actual.html"), html, {
@@ -160,7 +157,7 @@ async function runRenderTest(fixture) {
           });
         }
 
-        fixture.context.html = normalizeHtml(html);
+        (fixture.context || (fixture.context = {})).html = normalizeHtml(html);
       }
 
       asyncEventsVerifier.verify();
@@ -199,7 +196,7 @@ function normalizeHtml(htmlOrNode) {
   }
 
   nodesToRemove.forEach(n => n.remove());
-  document.body.innerHTML = document.body.innerHTML;
+  document.body.innerHTML += "";
   document.body.normalize();
 
   return document.body.innerHTML.trim();

@@ -5,14 +5,11 @@ var propertyHandlers = require("property-handlers");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
 var markoModules = require("../../compiler/modules"); // NOTE: different implementation for browser
-var bodyFunctionRegExp = /^([A-Za-z_$][A-Za-z0-9_]*)(?:\(([^)]*)\))?$/;
-var safeVarName = /^[A-Za-z_$][A-Za-z0-9_]*$/;
 var forEachEntry = require("raptor-util/forEachEntry");
-var markoCompiler = require("../../compiler");
 var createError = require("raptor-util/createError");
 var types = require("./types");
 var loaders = require("./loaders");
-var complain = require("complain");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function exists(path) {
   try {
@@ -35,7 +32,7 @@ function hasAttributes(tagProps) {
   }
 
   for (var name in tagProps) {
-    if (tagProps.hasOwnProperty(name) && name.startsWith("@")) {
+    if (hasOwnProperty.call(tagProps, name) && name.startsWith("@")) {
       return true;
     }
   }
@@ -74,7 +71,7 @@ function addTransformer(tagLoader, value) {
         var properties =
           transformer.properties || (transformer.properties = {});
         for (var k in value) {
-          if (value.hasOwnProperty(k)) {
+          if (hasOwnProperty.call(value, k)) {
             properties[k] = value[k];
           }
         }
@@ -203,7 +200,7 @@ class TagLoader {
 
     if (value != null && typeof value === "object") {
       for (k in value) {
-        if (value.hasOwnProperty(k)) {
+        if (hasOwnProperty.call(value, k)) {
           if (k.startsWith("@") || k.startsWith("<")) {
             // Move over all of the attributes and nested tags
             // to the tag definition.
@@ -422,18 +419,6 @@ class TagLoader {
   }
 
   /**
-   * DEPRECATED: use parse-options.preserveWhitespace
-   * If the "preserve-whitespace" property is set to true then
-   * all whitespace nested below the custom tag in a template
-   * will be stripped instead of going through the normal whitespace
-   * removal rules.
-   */
-  preserveWhitespace(value) {
-    var tag = this.tag;
-    tag.preserveWhitespace = !!value;
-  }
-
-  /**
    * If a custom tag has an associated transformer then the transformer
    * will be called on the compile-time Node. The transformer can manipulate
    * the AST using the DOM-like API to change how the code gets generated.
@@ -461,128 +446,6 @@ class TagLoader {
     }
   }
 
-  /**
-   * DEPRECATED: use tag parameters
-   * The "var" property is used to declared nested variables that get
-   * added as JavaScript variables at compile time.
-   *
-   * Examples:
-   *
-   * "var": "myScopedVariable",
-   *
-   * "var": {
-   *     "name": "myScopedVariable"
-   * }
-   *
-   * "var": {
-   *     "name-from-attribute": "var"
-   * }
-   */
-  var(value) {
-    complain("var is deprecated. Use tag parameters instead.", {
-      location: this.filePath
-    });
-    this._handleVar(value, this.dependencyChain.append("var"));
-  }
-  /**
-   * DEPRECATED: use tag parameters
-   * The "vars" property is equivalent to the "var" property
-   * except that it expects an array of nested variables.
-   */
-  vars(value) {
-    complain("vars is deprecated. Use tag parameters instead.", {
-      location: this.filePath
-    });
-    if (value) {
-      value.forEach((v, i) => {
-        this._handleVar(v, this.dependencyChain.append("vars[" + i + "]"));
-      });
-    }
-  }
-  /**
-   * DEPRECATED
-   * The "body-function" property" allows the nested body content to be mapped
-   * to a function at compile time. The body function gets mapped to a property
-   * of the tag renderer at render time. The body function can have any number
-   * of parameters.
-   *
-   * Example:
-   * - "body-function": "_handleBody(param1, param2, param3)"
-   */
-  bodyFunction(value) {
-    var tag = this.tag;
-    var parts = bodyFunctionRegExp.exec(value);
-    if (!parts) {
-      throw new Error(
-        'Invalid value of "' +
-          value +
-          '" for "body-function". Expected value to be of the following form: <function-name>([param1, param2, ...])'
-      );
-    }
-
-    var functionName = parts[1];
-    var params = parts[2];
-    if (params) {
-      params = params.trim().split(/\s*,\s*/);
-      for (var i = 0; i < params.length; i++) {
-        if (params[i].length === 0) {
-          throw new Error(
-            'Invalid parameters for body-function with value of "' + value + '"'
-          );
-        } else if (!safeVarName.test(params[i])) {
-          throw new Error(
-            'Invalid parameter name of "' +
-              params[i] +
-              '" for body-function with value of "' +
-              value +
-              '"'
-          );
-        }
-      }
-    } else {
-      params = [];
-    }
-
-    tag.setBodyFunction(functionName, params);
-  }
-  /**
-   * DEPRECATED: use transformer to add additional attributes
-   * The "import-var" property can be used to add a property to the
-   * input object of the tag renderer whose value is determined by
-   * a JavaScript expression.
-   *
-   * Example:
-   * "import-var": {
-   *     "myTargetProperty": "data.myCompileTimeJavaScriptExpression",
-   * }
-   */
-  importVar(value) {
-    var tag = this.tag;
-    forEachEntry(value, (varName, varValue) => {
-      var importedVar = {
-        targetProperty: varName
-      };
-
-      var expression = varValue;
-
-      if (!expression) {
-        expression = varName;
-      } else if (typeof expression === "object") {
-        expression = expression.expression;
-      }
-
-      if (!expression) {
-        throw new Error(
-          'Invalid "import-var": ' + require("util").inspect(varValue)
-        );
-      }
-
-      importedVar.expression = markoCompiler.builder.parseExpression(
-        expression
-      );
-      tag.addImportedVariable(importedVar);
-    });
-  }
   /**
    * The tag type.
    */
@@ -630,43 +493,9 @@ class TagLoader {
       }
     });
   }
-  /**
-   * DEPRECATED
-   */
-  escapeXmlBody(value) {
-    if (value === false) {
-      this.tag.escapeXmlBody = false;
-    }
-  }
-
-  /**
-   * DEPRECATED: use parse-options.state instead
-   * Sends the body content type. This is used to control how the body
-   * content is parsed.
-   */
-  body(value) {
-    if (
-      value === "static-text" ||
-      value === "parsed-text" ||
-      value === "html"
-    ) {
-      this.tag.body = value;
-    } else {
-      throw new Error(
-        'Invalid value for "body". Allowed: "static-text", "parsed-text" or "html"'
-      );
-    }
-  }
 
   openTagOnly(value) {
     this.tag.openTagOnly = value;
-  }
-
-  /**
-   * DEPRECATED
-   */
-  noOutput(value) {
-    this.tag.noOutput = value;
   }
 
   /**
@@ -686,13 +515,6 @@ class TagLoader {
 
   deprecated(value) {
     this.tag.deprecated = value;
-  }
-
-  /**
-   * DEPRECATED: use parse-options.ignoreAttributes instead
-   */
-  parseAttributes(value) {
-    this.tag.parseAttributes = value;
   }
 
   attributeGroups(value) {
@@ -719,7 +541,7 @@ class TagLoader {
 }
 
 function isSupportedProperty(name) {
-  return TagLoader.prototype.hasOwnProperty(name);
+  return hasOwnProperty.call(TagLoader.prototype, name);
 }
 
 function loadTagFromProps(tag, tagProps, dependencyChain) {

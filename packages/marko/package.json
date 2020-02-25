@@ -1,50 +1,35 @@
 {
     "name": "marko",
-    "version": "4.18.48",
+    "version": "5.0.0",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "dependencies": {
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
-        "browser-refresh-client": "^1.0.0",
-        "camelcase": "^5.0.0",
-        "char-props": "~0.1.5",
         "complain": "^1.6.0",
         "deresolve": "^1.1.2",
-        "escodegen": "^1.8.1",
-        "esprima": "^4.0.0",
-        "estraverse": "^4.3.0",
         "events-light": "^1.0.0",
-        "he": "^1.1.0",
         "htmljs-parser": "^2.7.1",
         "lasso-caching-fs": "^1.0.1",
-        "lasso-modules-client": "^2.0.4",
         "lasso-package-root": "^1.0.1",
         "listener-tracker": "^2.0.0",
         "minimatch": "^3.0.2",
         "property-handlers": "^1.0.0",
         "raptor-regexp": "^1.0.0",
         "raptor-util": "^3.2.0",
-        "resolve-from": "^2.0.0",
+        "resolve-from": "^5.0.0",
         "self-closing-tags": "^1.0.1",
-        "simple-sha1": "^2.1.0",
         "strip-json-comments": "^2.0.1",
         "warp10": "^2.0.1"
     },
     "devDependencies": {
-        "@marko/migrate": "^5.1.0",
+        "@marko/compiler": "^5.0.0",
         "bluebird": "^3.4.7",
-        "caller-path": "^2.0.0",
-        "chai": "^3.3.0",
+        "chai": "^4.2.0",
         "diffable-html": "^2.1.0",
         "express": "^4.16.1",
-        "it-fails": "^1.0.0",
-        "jquery": "^3.1.1",
+        "it-fails": "^1.0.4",
         "jsdom-context-require": "^1.0.1",
-        "lasso-resolve-from": "^1.2.0",
-        "marko-widgets": "^7.0.1",
-        "micromatch": "^3.0.4",
-        "request": "^2.72.0",
         "through": "^2.3.4",
         "through2": "^2.0.1"
     },
@@ -52,8 +37,7 @@
     "browser": {
         "./compiler.js": "./compiler-browser.marko",
         "./components.js": "./components-browser.marko",
-        "./index.js": "./index-browser.marko",
-        "./legacy-components.js": "./legacy-components-browser.marko"
+        "./index.js": "./index-browser.marko"
     },
     "bin": {
         "markoc": "bin/markoc"
@@ -65,9 +49,6 @@
     "repository": {
         "type": "git",
         "url": "https://github.com/marko-js/marko.git"
-    },
-    "publishConfig": {
-        "registry": "https://registry.npmjs.org/"
     },
     "author": "Patrick Steele-Idem <pnidem@gmail.com>",
     "maintainers": [
@@ -96,22 +77,14 @@
         "bin",
         "dist",
         "docs",
-        "helpers",
         "src",
-        "browser-refresh.js",
         "compiler-browser.marko",
         "compiler.js",
         "components-browser.marko",
         "components.js",
         "env.js",
-        "express.js",
-        "hot-reload.js",
         "index-browser.marko",
         "index.js",
-        "jquery.marko",
-        "legacy-components-browser.marko",
-        "legacy-components.js",
-        "node-require.js",
-        "ready.marko"
+        "node-require.js"
     ]
 }

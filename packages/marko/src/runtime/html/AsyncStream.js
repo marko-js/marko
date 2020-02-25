@@ -219,8 +219,6 @@ var proto = (AsyncStream.prototype = {
     }
 
     state.events.emit("beginAsync", {
-      writer: newStream, // Legacy
-      parentWriter: this, // Legacy
       out: newStream,
       parentOut: this
     });

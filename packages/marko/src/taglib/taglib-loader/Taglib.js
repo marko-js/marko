@@ -4,10 +4,11 @@ var ok = require("assert").ok;
 var path = require("path");
 var loaders = require("./loaders");
 var markoModules = require("../../compiler/modules");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function handleImport(taglib, importedTaglib) {
   var importsLookup = taglib.importsLookup || (taglib.importsLookup = {});
-  if (importsLookup.hasOwnProperty(importedTaglib.path)) {
+  if (hasOwnProperty.call(importsLookup, importedTaglib.path)) {
     return;
   }
 

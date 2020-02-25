@@ -221,7 +221,3 @@ function createRendererFunc(
 }
 
 module.exports = createRendererFunc;
-
-// exports used by the legacy renderer
-createRendererFunc.___resolveComponentKey = resolveComponentKey;
-createRendererFunc.___trackAsyncComponents = trackAsyncComponents;

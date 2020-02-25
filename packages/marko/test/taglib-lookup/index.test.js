@@ -6,10 +6,8 @@ var chai = require("chai");
 chai.config.includeStack = true;
 
 var expect = require("chai").expect;
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 var markoCompiler = require("../../compiler");
-
-markoCompiler.buildTaglibLookup(__dirname);
 
 autotest("fixtures", fixture => {
   let test = fixture.test;

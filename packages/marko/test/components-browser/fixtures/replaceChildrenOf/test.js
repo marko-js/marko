@@ -5,7 +5,7 @@ module.exports = function(helpers) {
 
   var initialCounter = component.getComponent("initialCounter");
 
-  var counter = require("./components/app-counter");
+  var counter = require("./components/app-counter").default;
 
   var renderTarget = component.getEl("renderTarget");
   expect(renderTarget.innerHTML).to.contain("Count: 0");

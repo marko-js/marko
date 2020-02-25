@@ -7,5 +7,5 @@ module.exports = function(helpers) {
 
   expect(function() {
     component.state.foo = "bar";
-  }).to.throw(TypeError);
+  }).to.throw("Cannot add property foo");
 };

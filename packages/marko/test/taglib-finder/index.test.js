@@ -6,7 +6,7 @@ var chai = require("chai");
 chai.config.includeStack = true;
 require("chai").should();
 require("marko/compiler");
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 
 var taglibFinder = require("marko/taglib").finder;
 

@@ -54,6 +54,7 @@ BrowserHelpers.prototype = {
   mount: function(templatePath, input) {
     var $global = input && input.$global;
     var template = require(templatePath);
+    template = template.default || template;
     var renderResult = template.renderSync(input).appendTo(this.targetEl);
     var instance;
 

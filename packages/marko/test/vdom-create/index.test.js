@@ -5,7 +5,7 @@ require("../__util__/test-init");
 var fs = require("fs");
 var domToString = require("../__util__/domToString");
 var createBrowser = require("jsdom-context-require");
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 
 var document = createBrowser({
   dir: __dirname,

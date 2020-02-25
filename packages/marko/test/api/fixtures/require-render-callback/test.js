@@ -2,7 +2,7 @@ var nodePath = require("path");
 
 exports.check = function(marko, markoCompiler, expect, snapshot, done) {
   var templatePath = nodePath.join(__dirname, "template.marko");
-  var template = require(templatePath);
+  var template = require(templatePath).default;
   template.render(
     {
       name: "John"

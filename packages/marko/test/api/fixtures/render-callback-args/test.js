@@ -1,5 +1,5 @@
 exports.check = function(marko, markoCompiler, expect, snapshot, done) {
-  var template = require("./template.marko");
+  var template = require("./template.marko").default;
   var data = {
     name: "John"
   };

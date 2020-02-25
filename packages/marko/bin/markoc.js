@@ -5,39 +5,22 @@
 var fs = require("fs");
 var nodePath = require("path");
 var cwd = process.cwd();
-var resolveFrom = require("resolve-from");
+var resolveFrom = require("resolve-from").silent;
 
 // Try to use the Marko compiler installed with the project
-var markoCompilerPath;
+var markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
 const markocPkgVersion = require("../package.json").version;
 
-var markoPkgVersion;
-try {
-  var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
-  markoPkgVersion = require(markoPkgPath).version;
-} catch (e) {
-  /* ignore error */
-}
+var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
+var markoPkgVersion = markoPkgPath && require(markoPkgPath).version;
 
-try {
-  markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
-} catch (e) {
-  /* ignore error */
-}
-
-var markoCompiler;
-
-if (markoCompilerPath) {
-  markoCompiler = require(markoCompilerPath);
-} else {
-  markoCompiler = require("../compiler");
-}
+var markoCompiler = markoCompilerPath
+  ? require(markoCompilerPath)
+  : require("../compiler");
 
 var Minimatch = require("minimatch").Minimatch;
 
 var appModulePath = require("app-module-path");
-
-markoCompiler.defaultOptions.checkUpToDate = false;
 
 var mmOptions = {
   matchBase: true,
@@ -84,7 +67,16 @@ var args = require("argly")
     },
     "--vdom -V": {
       type: "boolean",
-      description: "VDOM output"
+      description: "VDOM output (deprecated, prefer --browser)"
+    },
+    "--browser -b": {
+      type: "boolean",
+      description: "Browser output"
+    },
+    "--source-maps -s": {
+      type: "string",
+      description:
+        "Output a sourcemap beside the compiled file. (use --source-maps inline for an inline source map)"
     },
     "--version -v": {
       type: "boolean",
@@ -132,7 +124,7 @@ var output = "html";
 
 var isForBrowser = false;
 
-if (args.vdom) {
+if (args.vdom || args.browser) {
   output = "vdom";
   isForBrowser = true;
 }
@@ -140,6 +132,8 @@ if (args.vdom) {
 var compileOptions = {
   output: output,
   browser: isForBrowser,
+  sourceOnly: false,
+  sourceMaps: args.sourceMaps || false,
   compilerType: "markoc",
   compilerVersion: markoPkgVersion || markocPkgVersion
 };
@@ -348,7 +342,7 @@ if (args.clean) {
 
     context.beginAsync();
 
-    markoCompiler.compileFile(path, compileOptions, function(err, src) {
+    markoCompiler.compileFile(path, compileOptions, function(err, result) {
       if (err) {
         failed.push(
           'Failed to compile "' +
@@ -360,13 +354,39 @@ if (args.clean) {
         return;
       }
 
+      var src = result.code;
       context.beginAsync();
-      fs.writeFile(outPath, src, { encoding: "utf8" }, function(err) {
+      fs.writeFile(outPath, src, "utf8", function(err) {
         if (err) {
           failed.push(
             'Failed to write "' + path + '". Error: ' + (err.stack || err)
           );
           context.endAsync(err);
+          return;
+        }
+
+        if (result.map) {
+          fs.writeFile(
+            outPath + ".map",
+            JSON.stringify(result.map),
+            "utf-8",
+            function(err) {
+              if (err) {
+                failed.push(
+                  'Failed to write sourcemap"' +
+                    path +
+                    '". Error: ' +
+                    (err.stack || err)
+                );
+                context.endAsync(err);
+                return;
+              }
+
+              compileCount++;
+              context.endAsync();
+            }
+          );
+
           return;
         }
 

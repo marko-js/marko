@@ -1,6 +1,5 @@
 exports.check = function(markoCompiler, expect) {
-  var taglibLookup = markoCompiler.taglibLookup;
-  var lookup = taglibLookup.buildLookup(__dirname);
+  var lookup = markoCompiler.buildTaglibLookup(__dirname);
 
   var hasHrefAttr = false;
 

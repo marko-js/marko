@@ -2,10 +2,11 @@
 var taglibLoader = require("../taglib-loader");
 var nodePath = require("path");
 var lassoPackageRoot = require("lasso-package-root");
-var resolveFrom = require("resolve-from");
+var resolveFrom = require("resolve-from").silent;
 var scanTagsDir = require("../taglib-loader/scanTagsDir");
 var DependencyChain = require("../taglib-loader/DependencyChain");
 var lassoCachingFS = require("lasso-caching-fs");
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var findCache = {};
 var excludedDirs = {};
@@ -70,7 +71,7 @@ function find(dirname, registeredTaglibs) {
 
   var helper = {
     alreadyAdded: function(taglibPath) {
-      return added.hasOwnProperty(taglibPath);
+      return hasOwnProperty.call(added, taglibPath);
     },
     addTaglib: function(taglib) {
       if (added[taglib.path]) {

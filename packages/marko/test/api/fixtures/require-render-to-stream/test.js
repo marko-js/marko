@@ -11,7 +11,7 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
     done();
   });
 
-  var template = require("./template.marko");
+  var template = require("./template.marko").default;
   template
     .stream({
       name: "John"

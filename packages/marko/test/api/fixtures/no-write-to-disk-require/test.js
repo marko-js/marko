@@ -6,7 +6,7 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
   try {
     var templatePath = nodePath.join(__dirname, "template.marko");
     var compiledPath = nodePath.join(__dirname, "template.marko.js");
-    var template = require(templatePath);
+    var template = require(templatePath).default;
     expect(fs.existsSync(compiledPath)).to.equal(false);
     expect(template.render).to.be.a("function");
     snapshot(template.renderSync({ name: "Frank" }).toString());

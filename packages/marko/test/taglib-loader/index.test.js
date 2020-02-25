@@ -7,7 +7,7 @@ chai.config.includeStack = true;
 
 var expect = require("chai").expect;
 require("../../compiler");
-var autotest = require("../autotest");
+var autotest = require("mocha-autotest").default;
 var taglibLoader = require("../../compiler").taglibLoader;
 
 autotest("fixtures", fixture => {

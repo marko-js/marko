@@ -1,8 +1,4 @@
 {
     "name": "marko-test",
-    "version": "1.0.0",
-    "dependencies": {
-        "browser-refresh-taglib": "*",
-        "marko-widgets": "*"
-    }
+    "version": "1.0.0"
 }

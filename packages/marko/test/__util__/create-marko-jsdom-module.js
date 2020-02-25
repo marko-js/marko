@@ -1,6 +1,5 @@
 "use strict";
 
-const jQuery = require("jquery");
 const createBrowser = require("jsdom-context-require");
 const compiler = require("../../compiler");
 const globals = [
@@ -30,7 +29,6 @@ module.exports = function(dir, html, options) {
     beforeParse(window, browser) {
       window.global = window;
       window.alert = () => {};
-      jQuery(window);
       browser.require("complain").log = (...args) =>
         require("complain").log(...args);
       globals.forEach(function(k) {

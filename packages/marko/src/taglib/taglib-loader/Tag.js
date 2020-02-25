@@ -1,22 +1,10 @@
 "use strict";
 var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
-var CustomTag;
 var path = require("path");
 var markoModules = require("../../compiler/modules");
 var complain = require("complain");
-var coreTagsPath = path.join(__dirname, "../../core-tags");
-
-function createCustomTag(el, tagDef) {
-  CustomTag = CustomTag || require("../../compiler/ast/CustomTag");
-  return new CustomTag(el, tagDef);
-}
-
-function createCustomTagNodeFactory(tagDef) {
-  return function nodeFactory(el) {
-    return createCustomTag(el, tagDef);
-  };
-}
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class Tag {
   constructor(filePath) {
@@ -55,30 +43,6 @@ class Tag {
     // this._nodeFactory = undefined;
   }
 
-  /**
-   * DEPRECATED
-   */
-  forEachVariable(callback, thisObj) {
-    if (!this.nestedVariables) {
-      return;
-    }
-
-    this.nestedVariables.vars.forEach(callback, thisObj);
-  }
-
-  /**
-   * DEPRECATED
-   */
-  forEachImportedVariable(callback, thisObj) {
-    if (!this.importedVariables) {
-      return;
-    }
-
-    forEachEntry(this.importedVariables, function(key, importedVariable) {
-      callback.call(thisObj, importedVariable);
-    });
-  }
-
   forEachTransformer(callback, thisObj) {
     forEachEntry(this.transformers, function(key, transformer) {
       callback.call(thisObj, transformer);
@@ -87,7 +51,7 @@ class Tag {
   hasTransformers() {
     /*jshint unused:false */
     for (var k in this.transformers) {
-      if (this.transformers.hasOwnProperty(k)) {
+      if (hasOwnProperty.call(this.transformers, k)) {
         return true;
       }
     }
@@ -96,12 +60,6 @@ class Tag {
 
   checkDeprecatedAttr(attr) {
     attr.filePath = this.filePath;
-    if (attr.name === "key" && !this.isCoreTag()) {
-      complain("@key property is deprecated", {
-        location: this.filePath
-      });
-    }
-    //
     if (attr.setFlag && attr.setFlag !== "hasComponentEvents") {
       complain(`${attr.name} - : set-flag property is deprecated`, {
         location: this.filePath
@@ -130,17 +88,8 @@ class Tag {
       if (attr.name === "*") {
         attr.dynamicAttribute = true;
 
-        if (attr.targetProperty === null || attr.targetProperty === "") {
+        if (attr.targetProperty === undefined || attr.targetProperty === "") {
           attr.targetProperty = null;
-        } else if (!attr.targetProperty) {
-          !this.isCoreTag() &&
-            complain(
-              'The default "targetProperty" for "@*" attribute definitions is changing from "*" to "null" (merged in with the rest of the input) in a future Marko release. In order to avoid an issue upgrading, please explicitly define the "targetProperty".',
-              {
-                location: this.filePath
-              }
-            );
-          attr.targetProperty = "*";
         }
       }
 
@@ -152,7 +101,7 @@ class Tag {
   }
   forEachAttribute(callback, thisObj) {
     for (var attrName in this.attributes) {
-      if (this.attributes.hasOwnProperty(attrName)) {
+      if (hasOwnProperty.call(this.attributes, attrName)) {
         callback.call(thisObj, this.attributes[attrName]);
       }
     }
@@ -178,57 +127,15 @@ class Tag {
   }
 
   hasAttribute(attrName) {
-    return this.attributes.hasOwnProperty(attrName);
+    return hasOwnProperty.call(this.attributes, attrName);
   }
 
-  /**
-   * DEPRECATED
-   */
-  addNestedVariable(nestedVariable) {
-    complain("addNestedVariable is deprecated. Use tag parameters instead.", {
-      location: this.filePath
-    });
-
-    if (!this.nestedVariables) {
-      this.nestedVariables = {
-        __noMerge: true,
-        vars: []
-      };
-    }
-
-    this.nestedVariables.vars.push(nestedVariable);
-  }
-  /**
-   * DEPRECATED
-   */
-  addImportedVariable(importedVariable) {
-    if (!this.importedVariables) {
-      this.importedVariables = {};
-    }
-    var key = importedVariable.targetProperty;
-    this.importedVariables[key] = importedVariable;
-  }
   addTransformer(transformer) {
     var key = transformer.path;
     transformer.taglibId = this.taglibId;
     this.transformers[key] = transformer;
   }
-  /**
-   * DEPRECATED
-   */
-  setBodyFunction(name, params) {
-    this.bodyFunction = {
-      __noMerge: true,
-      name: name,
-      params: params
-    };
-  }
-  /**
-   * DEPRECATED
-   */
-  setBodyProperty(propertyName) {
-    this.bodyProperty = propertyName;
-  }
+
   addNestedTag(nestedTag) {
     ok(nestedTag.name, '"nestedTag.name" is required');
 
@@ -266,41 +173,6 @@ class Tag {
       .forEach(callback, thisObj);
   }
 
-  getNodeFactory() {
-    var nodeFactory = this._nodeFactory;
-    if (nodeFactory !== undefined) {
-      return nodeFactory;
-    }
-
-    let codeGeneratorModulePath = this.codeGeneratorModulePath;
-
-    if (this.codeGeneratorModulePath) {
-      var loadedCodeGenerator = markoModules.require(
-        this.codeGeneratorModulePath
-      );
-      nodeFactory = function(elNode) {
-        elNode.setType(codeGeneratorModulePath);
-        elNode.setCodeGenerator(loadedCodeGenerator);
-        return elNode;
-      };
-    } else if (this.nodeFactoryPath) {
-      nodeFactory = markoModules.require(this.nodeFactoryPath);
-      if (typeof nodeFactory !== "function") {
-        throw new Error(
-          'Invalid node factory exported by module at path "' +
-            this.nodeFactoryPath +
-            '"'
-        );
-      }
-    } else if (this.renderer || this.template || this.isNestedTag) {
-      nodeFactory = createCustomTagNodeFactory(this);
-    } else {
-      return null;
-    }
-
-    return (this._nodeFactory = nodeFactory);
-  }
-
   toJSON() {
     return this;
   }
@@ -308,10 +180,6 @@ class Tag {
   setTaglib(taglib) {
     this.taglibId = taglib ? taglib.id : null;
     this.taglibPath = taglib ? taglib.path : null;
-  }
-
-  isCoreTag() {
-    return this.filePath && this.filePath.startsWith(coreTagsPath);
   }
 }
 

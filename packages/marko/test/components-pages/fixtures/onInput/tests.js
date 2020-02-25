@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should allow return", function() {
+it.skip("should allow return", function() {
   var component = window.components["onInput-return"];
 
   expect(component.input.name).to.equal("FRANK");
@@ -16,7 +16,7 @@ it("should allow return", function() {
   expect(component.el.querySelector(".name").innerHTML).to.equal("JOHN");
 });
 
-it("should allow input to be assigned to null", function() {
+it.skip("should allow input to be assigned to null", function() {
   var component = window.components["onInput-assign-null"];
 
   expect(component.input).to.equal(null);
@@ -41,7 +41,7 @@ it("should allow input to be assigned to null", function() {
   expect(component.el.querySelector(".name").innerHTML).to.equal("Henry");
 });
 
-it("should allow input to be assigned to null with return", function() {
+it.skip("should allow input to be assigned to null with return", function() {
   var component = window.components["onInput-assign-null-and-return"];
 
   expect(component.input).to.equal(null);
@@ -66,7 +66,7 @@ it("should allow input to be assigned to null with return", function() {
   expect(component.el.querySelector(".name").innerHTML).to.equal("HENRY");
 });
 
-it("should allow input to be assigned to a new object", function() {
+it.skip("should allow input to be assigned to a new object", function() {
   var component = window.components["onInput-assign-object"];
 
   expect(component.input.name).to.equal("FRANK");
@@ -91,7 +91,7 @@ it("should allow input to be assigned to a new object", function() {
   expect(component.el.querySelector(".name").innerHTML).to.equal("Henry");
 });
 
-it("should allow input to be assigned to a new object with return", function() {
+it.skip("should allow input to be assigned to a new object with return", function() {
   var component = window.components["onInput-assign-object-and-return"];
 
   expect(component.input.name).to.equal("HEATHER");

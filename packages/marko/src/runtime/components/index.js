@@ -89,7 +89,6 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       d: componentDef.___domEvents,
       e: customEvents,
       f: flags ? flags : undefined,
-      l: componentDef.___isLegacy,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
       r: componentDef.___boundary,
       s: state,

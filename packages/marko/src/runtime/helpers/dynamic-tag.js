@@ -27,13 +27,13 @@ module.exports = function dynamicTag(
   customEvents
 ) {
   if (tag) {
+    if (tag.default) {
+      tag = tag.default;
+    }
+
     var attrs = getAttrs && getAttrs();
     var component = componentDef && componentDef.___component;
     if (typeof tag === "string") {
-      if (isNaN(key)) {
-        key = "@" + key;
-      }
-
       if (customEvents) {
         if (!props) {
           props = {};
@@ -93,18 +93,14 @@ module.exports = function dynamicTag(
         var render = (tag && tag.renderBody) || tag;
         var isFn = typeof render === "function";
 
-        if (render.safeHTML) {
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            complain(
-              "Using `<include(x)/>` or the `<${dynamic}/>` tags with a `{ safeHTML: ... }` object is deprecated. Use the unescaped text placeholder syntax instead."
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+          if (render.safeHTML || render.toHTML) {
+            throw new Error(
+              "Using `<include(x)/>` or the `<${dynamic}/>` tags with a `{ safeHTML: ... }` object is no longer supported. Use the unescaped text placeholder syntax instead."
             );
           }
-
-          out.write(tag.safeHTML);
-          return;
         }
-
         if (isFn) {
           var flags = componentDef ? componentDef.___flags : 0;
           var willRerender = flags & FLAG_WILL_RERENDER_IN_BROWSER;

@@ -1,4 +1,4 @@
-var helloComponent = require("./components/hello");
+var helloComponent = require("./components/hello").default;
 
 module.exports = {
   onMount: function() {

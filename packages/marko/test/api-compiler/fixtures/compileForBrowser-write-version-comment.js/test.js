@@ -3,7 +3,7 @@ var path = require("path");
 var markoVersion = require("../../../../package.json").version;
 
 function getMarkoVersionComment() {
-  return "// Compiled using marko@" + markoVersion + " - DO NOT EDIT\n";
+  return "Compiled using marko@" + markoVersion + " - DO NOT EDIT";
 }
 
 exports.check = function(marko, markoCompiler, expect, helpers, done) {
