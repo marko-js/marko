@@ -31,6 +31,8 @@ function ComponentsContext(out, parentComponentsContext) {
   this.___out = out;
   this.___componentDef = componentDef;
   this.___nestedContexts = undefined;
+  this.___isPreserved =
+    parentComponentsContext && parentComponentsContext.___isPreserved;
 }
 
 ComponentsContext.prototype = {
