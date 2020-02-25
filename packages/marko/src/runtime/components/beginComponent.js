@@ -16,8 +16,6 @@ module.exports = function beginComponent(
   isImplicitComponent,
   existingComponentDef
 ) {
-  var globalContext = componentsContext.___globalContext;
-
   var componentId = component.id;
 
   // existingComponentDef is only here to allow binding a conditional
@@ -27,12 +25,12 @@ module.exports = function beginComponent(
     (componentsContext.___componentDef = new ComponentDef(
       component,
       componentId,
-      globalContext
+      componentsContext
     ));
 
   // On the server
   if (
-    !globalContext.___isPreserved &&
+    !componentsContext.___isPreserved &&
     ownerComponentDef &&
     ownerComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
   ) {
@@ -56,6 +54,8 @@ module.exports = function beginComponent(
 
   if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
+    componentDef.___parentPreserved = componentsContext.___isPreserved;
+    componentsContext.___isPreserved = false;
   }
 
   if (out.global.oldHydrateNoCreate === true) {

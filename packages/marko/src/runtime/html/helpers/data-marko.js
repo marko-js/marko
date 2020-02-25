@@ -13,7 +13,7 @@ module.exports = function dataMarko(props, key, componentDef) {
     !componentDef ||
     (componentDef.___renderBoundary &&
       (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0) ||
-    componentDef.___globalComponentsContext.___isPreserved;
+    componentDef.___componentsContext.___isPreserved;
 
   if (willNotRerender) {
     if (props) {

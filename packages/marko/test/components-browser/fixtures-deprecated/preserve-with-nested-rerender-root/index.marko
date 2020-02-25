@@ -1,0 +1,12 @@
+class {}
+
+$ const isServer = typeof window === "undefined";
+$ const message = isServer ? "Server" : "Browser";
+
+<div>
+    <div no-update>
+        <span key="preserved">${message}</span>
+        <counter key="counter" count=(isServer ? 0 : 10)/>
+    </div>
+    <span key="unpreserved">${message}</span>
+</div>

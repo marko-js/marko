@@ -7,14 +7,14 @@ module.exports = function beginComponent(
   ownerComponentDef
 ) {
   var componentId = component.id;
-
-  var globalContext = componentsContext.___globalContext;
   var componentDef = (componentsContext.___componentDef = new ComponentDef(
     component,
     componentId,
-    globalContext
+    componentsContext
   ));
-  globalContext.___renderedComponentsById[componentId] = true;
+  componentsContext.___globalContext.___renderedComponentsById[
+    componentId
+  ] = true;
   componentsContext.___components.push(componentDef);
 
   var out = componentsContext.___out;
