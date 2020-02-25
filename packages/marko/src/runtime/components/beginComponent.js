@@ -54,7 +54,7 @@ module.exports = function beginComponent(
 
   if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
-    componentDef.__parentPreserved = componentsContext.___isPreserved;
+    componentDef.___parentPreserved = componentsContext.___isPreserved;
     componentsContext.___isPreserved = false;
   }
 
