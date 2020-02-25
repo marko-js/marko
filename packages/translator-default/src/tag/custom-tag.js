@@ -2,6 +2,7 @@ import { types as t } from "@marko/babel-types";
 import { assertNoArgs, getTagDef } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import nativeTag from "./native-tag";
+import withPreviousLocation from "../util/with-previous-location";
 
 // TODO: support transform and other entries.
 const TAG_FILE_ENTRIES = ["template", "renderer"];
@@ -74,7 +75,7 @@ export default function(path) {
     ])
   );
 
-  path.replaceWith(customTagRenderCall);
+  path.replaceWith(withPreviousLocation(customTagRenderCall, node));
 }
 
 function resolveRelativePath(hub, tagDef) {

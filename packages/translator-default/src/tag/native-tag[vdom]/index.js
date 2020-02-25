@@ -5,6 +5,7 @@ import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
 import { getAttrs, evaluateAttr } from "../util";
 import { getTagDef } from "@marko/babel-utils";
+import withPreviousLocation from "../../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
 const SIMPLE_ATTRS = ["id", "class", "style"];
@@ -136,7 +137,7 @@ export default function(path) {
     writeArgs.push(t.objectExpression(tagProperties));
   }
 
-  const writeStartNode = write(...writeArgs);
+  const writeStartNode = withPreviousLocation(write(...writeArgs), node.name);
 
   if (isSelfClosing) {
     path.replaceWith(writeStartNode);
