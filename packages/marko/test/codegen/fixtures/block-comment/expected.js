@@ -1,4 +1,0 @@
-/*
-This is a comment
-on multiple lines
-*/

@@ -1,7 +1,0 @@
-{
-  "dependencies": [
-    "../core-tags/compiler.browser.json",
-    "../runtime/components/compiler.browser.json",
-    "../runtime/compiler.browser.json"
-  ]
-}

@@ -1,9 +1,0 @@
-{
-    "env": {
-        "mocha":true,
-        "browser":true
-    },
-    "parserOptions": {
-        "ecmaVersion": 2017
-    }
-}

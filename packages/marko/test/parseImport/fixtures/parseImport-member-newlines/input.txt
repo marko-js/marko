@@ -1,3 +1,0 @@
-import {
-  fn
-} from "jquery"

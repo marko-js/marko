@@ -1,1 +1,0 @@
-color in [(({a} in test | 0))]

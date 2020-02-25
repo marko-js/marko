@@ -1,9 +1,0 @@
-{
-  "type": "UpdateExpression",
-  "argument": {
-    "type": "Identifier",
-    "name": "foo"
-  },
-  "operator": "--",
-  "prefix": true
-}
