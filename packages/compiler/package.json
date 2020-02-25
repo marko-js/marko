@@ -1,7 +1,7 @@
 {
   "name": "@marko/compiler",
   "description": "Marko template to JS compiler.",
-  "version": "5.0.0-next.1",
+  "version": "5.0.0-next.2",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -12,15 +12,15 @@
     "@babel/runtime": "^7.7.7",
     "@babel/traverse": "^7.7.4",
     "@babel/types": "^7.7.4",
-    "@marko/babel-types": "^5.0.0-next.1",
-    "@marko/babel-utils": "^5.0.0-next.1",
-    "@marko/translator-default": "^5.0.0-next.1",
+    "@marko/babel-types": "^5.0.0-next.2",
+    "@marko/babel-utils": "^5.0.0-next.2",
+    "@marko/translator-default": "^5.0.0-next.2",
     "complain": "^1.6.0",
     "he": "^1.1.0",
     "htmljs-parser": "^2.7.1",
     "jsesc": "^2.5.2",
     "lasso-modules-client": "^2.0.4",
-    "marko": "^5.0.0-next.1",
+    "marko": "^5.0.0-next.2",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "strip-ansi": "^5.2.0"
