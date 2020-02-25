@@ -4,6 +4,7 @@ import {
   assertNoAttributes,
   assertNoParams
 } from "@marko/babel-utils";
+import withPreviousLocation from "../../util/with-previous-location";
 
 export function exit(path) {
   assertNoParams(path);
@@ -19,9 +20,12 @@ export function exit(path) {
   }
 
   path.replaceWith(
-    t.whileStatement(
-      getArgOrSequence(path),
-      t.blockStatement(path.node.body.body)
+    withPreviousLocation(
+      t.whileStatement(
+        getArgOrSequence(path),
+        t.blockStatement(path.node.body.body)
+      ),
+      path.node
     )
   );
 }

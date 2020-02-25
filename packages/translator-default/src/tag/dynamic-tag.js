@@ -1,5 +1,6 @@
 import { types as t } from "@marko/babel-types";
 import { getAttrs, buildEventHandlerArray } from "./util";
+import withPreviousLocation from "../util/with-previous-location";
 
 export default function(path) {
   const { node, hub } = path;
@@ -49,5 +50,5 @@ export default function(path) {
     ]
   );
 
-  path.replaceWith(dynamicTagRenderCall);
+  path.replaceWith(withPreviousLocation(dynamicTagRenderCall, node));
 }

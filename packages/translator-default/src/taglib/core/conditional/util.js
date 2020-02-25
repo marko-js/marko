@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import withPreviousLocation from "../../../util/with-previous-location";
 
 export function buildIfStatement(path, args) {
   if (!args || !args.length) {
@@ -26,5 +27,5 @@ export function buildIfStatement(path, args) {
     }
   }
 
-  return ifStatement;
+  return withPreviousLocation(ifStatement, path.node);
 }

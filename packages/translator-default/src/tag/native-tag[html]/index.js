@@ -6,6 +6,7 @@ import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import translateAttributes from "./attributes";
 import getComponentFiles from "../../util/get-component-files";
+import withPreviousLocation from "../../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
 
@@ -103,10 +104,13 @@ export default function(path) {
     }
   }
 
-  const writeStartNode = write`<${tagName}${dataMarko}${translateAttributes(
-    path,
-    path.get("attributes")
-  )}>`;
+  const writeStartNode = withPreviousLocation(
+    write`<${tagName}${dataMarko}${translateAttributes(
+      path,
+      path.get("attributes")
+    )}>`,
+    node.name
+  );
 
   if (SELF_CLOSING.indexOf(tagName) !== -1) {
     path.replaceWith(writeStartNode);

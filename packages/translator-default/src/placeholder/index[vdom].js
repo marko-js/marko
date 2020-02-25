@@ -1,4 +1,5 @@
 import write from "../util/vdom-out-write";
+import withPreviousLocation from "../util/with-previous-location";
 
 export default function(path) {
   const { node } = path;
@@ -9,6 +10,6 @@ export default function(path) {
   if (confident && !computed) {
     path.remove();
   } else {
-    path.replaceWith(write(method, value));
+    path.replaceWith(withPreviousLocation(write(method, value), node));
   }
 }

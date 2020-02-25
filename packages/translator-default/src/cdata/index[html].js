@@ -1,8 +1,14 @@
 import { types as t } from "@marko/babel-types";
 import write from "../util/html-out-write";
+import withPreviousLocation from "../util/with-previous-location";
 
 export default function(path) {
   const { node } = path;
 
-  path.replaceWith(write`<![CDATA[${t.stringLiteral(node.value)}]]>`);
+  path.replaceWith(
+    withPreviousLocation(
+      write`<![CDATA[${t.stringLiteral(node.value)}]]>`,
+      node
+    )
+  );
 }

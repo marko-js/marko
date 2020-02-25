@@ -32,11 +32,11 @@ function configure(newConfig) {
   compiler.configure(newConfig);
 }
 
-function resultCompat({ code, meta }, options = {}) {
+function resultCompat({ code, meta, map }, options = {}) {
   if (options.sourceOnly !== false) {
     return code;
   } else {
-    return { code, meta };
+    return { code, meta, map };
   }
 }
 

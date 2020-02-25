@@ -1,6 +1,7 @@
 import { types as t } from "@marko/babel-types";
 import { findParentTag, assertNoArgs, getTagDef } from "@marko/babel-utils";
 import { getAttrs } from "./util";
+import withPreviousLocation from "../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
 const parentIdentifierLookup = new WeakMap();
@@ -80,16 +81,23 @@ export default function(path) {
 
   if (isRepeated) {
     path.replaceWith(
-      t.expressionStatement(
-        t.callExpression(t.memberExpression(identifier, t.identifier("push")), [
-          getAttrs(path)
-        ])
+      withPreviousLocation(
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(identifier, t.identifier("push")),
+            [getAttrs(path)]
+          )
+        ),
+        node
       )
     );
   } else {
     path.replaceWith(
-      t.expressionStatement(
-        t.assignmentExpression("=", identifier, getAttrs(path))
+      withPreviousLocation(
+        t.expressionStatement(
+          t.assignmentExpression("=", identifier, getAttrs(path))
+        ),
+        node
       )
     );
   }
