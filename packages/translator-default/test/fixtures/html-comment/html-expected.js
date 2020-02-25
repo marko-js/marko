@@ -8,6 +8,6 @@ const _marko_componentType = "Q0sT_tOR",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<!--test-->");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

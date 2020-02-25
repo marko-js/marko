@@ -9,6 +9,6 @@ const _marko_componentType = "Q1n_G5T-",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div></div>");
 }, {
-  ___type: _marko_componentType,
-  ___split: true
+  t: _marko_componentType,
+  s: true
 }, _marko_component2);

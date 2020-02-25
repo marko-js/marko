@@ -8,6 +8,6 @@ const _marko_componentType = "YGIRzvLP",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<?xml version=\"1.0\" encoding=\"utf-8\"?><contact-info><name>Hello World</name></contact-info>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

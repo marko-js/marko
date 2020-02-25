@@ -9,6 +9,6 @@ const _marko_componentType = "nma4wliZ",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<div id="shorthand"></div><div${_marko_attr("id", dynamic)}></div><div${_marko_attr("id", "partial-" + dynamic)}></div>`);
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

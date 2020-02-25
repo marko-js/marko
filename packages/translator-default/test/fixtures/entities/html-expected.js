@@ -8,6 +8,6 @@ const _marko_componentType = "UkPdJEa2",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("Hello John &amp; Suzy Invalid Entity: &b ; Valid Numeric Entity: &#34; Valid Hexadecimal Entity: &#x00A2;");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

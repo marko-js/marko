@@ -8,6 +8,6 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "pCZWm9oa",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {}, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

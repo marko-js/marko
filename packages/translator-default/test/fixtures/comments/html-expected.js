@@ -8,6 +8,6 @@ const _marko_componentType = "qE1CXc-I",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div><!--abc--><!--[if lt IE 9]><script src=\"...\"></script><![endif]--><!--[if lt IE 9]><script src=\"...\"></script><![endif]--></div>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

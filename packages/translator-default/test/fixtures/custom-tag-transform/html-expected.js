@@ -8,6 +8,6 @@ const _marko_componentType = "9TlcnyhF",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<span style=\"display:block\"></span>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);
