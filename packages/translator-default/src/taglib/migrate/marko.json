@@ -1,0 +1,4 @@
+{
+  "taglib-id": "marko-default-migrate",
+  "migrator": "./all-templates.js"
+}

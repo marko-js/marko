@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-missing-component-missing-file/template.marko(1,2): Unable to find entry point for custom tag <thing>.
+> 1 | <thing/>
+    |  ^^^^^

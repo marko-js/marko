@@ -1,0 +1,6 @@
+packages/translator-default/test/fixtures/error-static-tag-nested-content/template.marko(2,2): The "static" tag does not allow nested body content
+  1 | static { console.log(x); }
+> 2 |  <div/>
+    |  ^^^^^^
+> 3 | 
+    | ^

@@ -1,0 +1,37 @@
+{
+  "name": "@marko/translator-default",
+  "description": "Translates Marko templates to the default Marko runtime.",
+  "version": "5.0.0",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "@marko/babel-types": "^5.0.0",
+    "@marko/babel-utils": "^5.0.0",
+    "marko": "^5.0.0",
+    "self-closing-tags": "^1.0.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
+  "keywords": [
+    "htmljs",
+    "parser",
+    "babel",
+    "plugin",
+    "parse",
+    "marko"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

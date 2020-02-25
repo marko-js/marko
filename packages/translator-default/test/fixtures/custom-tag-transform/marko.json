@@ -1,0 +1,5 @@
+{
+  "<div>": {
+    "transformer": "./div.transformer.js"
+  }
+}

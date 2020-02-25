@@ -1,0 +1,29 @@
+<hello>
+    <@list>
+        <for|color| of=input.colors>
+            <if(x)>
+                <@item style={ color }>foo</@item>
+            </if>
+            <else>
+                <@item style={ color }>bar</@item>
+            </else>
+        </for>
+
+        $ let i = 10;
+        <while(i--)>
+            <@item>${i}</@item>
+        </while>
+    </@list>
+
+    <for|col| of=input.table>
+        <@col x=y>
+            <for|row| of=col>
+                <@row row=row>${row}</@row>
+            </for>
+        </@col>
+    </for>
+
+    <@col outside>
+        <@row row=-1>Outside</@row>
+    </@col>
+</hello>

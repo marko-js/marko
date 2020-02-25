@@ -1,11 +1,19 @@
 {
   "extends": ["eslint:recommended", "prettier"],
-  "env": {
-    "node": true,
-    "es6": true
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": false
+    }
   },
-  "globals": {
-    "document": true,
-    "ShadowRoot": true
+  "rules": {
+    "no-console": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
   }
 }

@@ -1,10 +1,8 @@
 sudo: false
 node_js:
-- "8"
 - "10"
 - "12"
 language: node_js
-before_install: "npm i -g npm@latest"
 install: "npm ci"
-script: "npm run test-ci"
-after_success: "npm run codecov"
+script: "npm run ci:test"
+after_success: "npm run ci:codecov"

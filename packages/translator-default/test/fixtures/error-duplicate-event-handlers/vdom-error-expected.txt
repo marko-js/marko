@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-duplicate-event-handlers/template.marko(1,19): Duplicate event handlers are not supported.
+> 1 | <div onClick('a') onClick('b')/>
+    |                   ^^^^^^^^^^^^

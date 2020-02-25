@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-native-tag-params/template.marko(1,6): Tag does not support parameters.
+> 1 | <div|x|>
+    |      ^
+  2 |   <div/>
+  3 | </div>

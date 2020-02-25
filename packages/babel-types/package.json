@@ -1,0 +1,39 @@
+{
+  "name": "@marko/babel-types",
+  "description": "Extend babels built in AST with Marko nodes.",
+  "version": "5.0.0",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "peerDependencies": {
+    "@babel/generator": "^7",
+    "@babel/traverse": "^7",
+    "@babel/types": "^7"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "self-closing-tags": "^1.0.1"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-types/README.md",
+  "keywords": [
+    "htmljs",
+    "parser",
+    "babel",
+    "plugin",
+    "parse",
+    "marko"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/babel-types"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

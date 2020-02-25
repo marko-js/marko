@@ -1,0 +1,36 @@
+<hello no-update>
+  <hello/>
+  <div/>
+</hello>
+<hello no-update-if(x)>
+  <hello no-update-if(a, b)/>
+  <div/>
+</hello>
+<hello no-update-body>
+  <hello/>
+  <div/>
+</hello>
+<hello no-update-body-if(x)>
+  <hello no-update-body-if(a, b)>
+    Again
+  </hello>
+  <div/>
+</hello>
+<hello key="a" no-update>
+  <hello/>
+  <div/>
+</hello>
+<hello key="b" no-update-if(x)>
+  <hello key="c" no-update-if(a, b)/>
+  <div/>
+</hello>
+<hello key="d" no-update-body>
+  <hello/>
+  <div/>
+</hello>
+<hello key="e" no-update-body-if(x)>
+  <hello key="f" no-update-body-if(a, b)>
+    Again
+  </hello>
+  <div/>
+</hello>

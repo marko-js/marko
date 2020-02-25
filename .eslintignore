@@ -1,18 +1,13 @@
-# minified
 *.min.js
-
-# test
+*.html.js
+*.marko.js
 *actual*
 *expected*
-input.js
-
-# generated
-*dist*
-*generated*
-*.marko.js
-*.marko.*.js
-*.html.js
+.cache/
+.nyc_output/
+node_modules/
+coverage/
+*dist/
+*generated/
 ~vdom.skip
-coverage
-
-node_modules
+**/test/**/input.js

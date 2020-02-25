@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-html-element-arguments/template.marko(1,6): Tag does not support arguments.
+> 1 | <div(a, b, { c })/>
+    |      ^^^^^^^^^^^

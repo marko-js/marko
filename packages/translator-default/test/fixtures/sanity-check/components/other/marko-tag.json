@@ -1,0 +1,13 @@
+{
+  "@*": "expression",
+  "@a <item>[]": {
+    "@b <thing>[]": {
+      "@*": "expression"
+    }
+  },
+  "@c": {
+    "@d": {
+      "@*": "expression"
+    }
+  }
+}

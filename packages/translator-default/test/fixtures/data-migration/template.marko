@@ -1,0 +1,15 @@
+<test|data| class=data.class>
+  Hello ${data.name}
+</test>
+<div>
+  Hello ${data.name}
+  <span>
+    $ () => { data; const data = "foo"; console.log(data); }
+    Hello ${data}
+  </span>
+  <if(true)>
+    $ const data = "bar";
+    Hello ${data}
+  </if>
+</div>
+

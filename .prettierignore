@@ -7,17 +7,20 @@
 input.*
 
 # generated
-/**/dist/
-/**/test-dist/
-/**/test-generated/
+dist/
 *.marko.js
 *.html.js
 *.xml.js
 *.generated.js
 .nyc_output
+.cache/
 coverage
 ~*
 
 # controlled by npm's formatter
 package-lock.json
 package.json
+
+# controlled by lerna
+CHANGELOG.md
+lerna.json

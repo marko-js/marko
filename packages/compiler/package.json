@@ -1,0 +1,51 @@
+{
+  "name": "@marko/compiler",
+  "description": "Marko template to JS compiler.",
+  "version": "5.0.0",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "dependencies": {
+    "@marko/babel-types": "^5.0.0",
+    "@marko/babel-utils": "^5.0.0",
+    "@marko/translator-default": "^5.0.0",
+    "@babel/core": "^7.7.7",
+    "@babel/code-frame": "^7.5.5",
+    "@babel/runtime": "^7.7.7",
+    "@babel/traverse": "^7.7.4",
+    "@babel/types": "^7.7.4",
+    "@babel/parser": "^7.7.7",
+    "@babel/generator": "^7.7.7",
+    "complain": "^1.6.0",
+    "he": "^1.1.0",
+    "htmljs-parser": "^2.7.1",
+    "jsesc": "^2.5.2",
+    "lasso-modules-client": "^2.0.4",
+    "marko": "^5.0.0",
+    "resolve-from": "^5.0.0",
+    "self-closing-tags": "^1.0.1",
+    "strip-ansi": "^5.2.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/compiler/README.md",
+  "keywords": [
+    "htmljs",
+    "parser",
+    "babel",
+    "plugin",
+    "parse",
+    "marko"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/compiler"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

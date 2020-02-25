@@ -1,22 +1,117 @@
-/work
-/build
-.idea/
-npm-debug.log
-node_modules
-*.sublime-workspace
-*.orig
-.DS_Store
-.vscode
-coverage
-.nvmrc
-~*
-/.cache
+### Project ###
+
 *.marko.js
-*.marko.xml.js
-/test/generated/
+*actual.*
+dist
+
+### Node ###
+
+# Logs
+logs
+*.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+*.lcov
+
+# nyc test coverage
 .nyc_output
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn
+.yarn-integrity
+yarn.lock
+
+# dotenv environment variables file
+.env
+.env.test
+
+### Git ###
+
+# Created by git for backups. To disable backups in Git:
+# $ git config --global mergetool.keepBackup false
+*.orig
+
+# Created by git when using merge tools for conflicts
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+*.REMOTE.*
+*_BACKUP_*.txt
+*_BASE_*.txt
+*_LOCAL_*.txt
+*_REMOTE_*.txt
+
+### OS ###
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Icon
+
+# Windows
+*[Tt]humbs*.db*
+[Dd]esktop.ini
+*.stackdump
+*.lnk
+
+### EDITOR ###
+
+# VisualStudioCode
+.vscode
+.history
+
+# JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
+*.iml
+*.ipr
+*.iws
+modules.xml
+.idea
+
+# SublimeText
+*.cache
+*.sublime-*
+Package Control.*
+oscrypto-ca-bundle.crt
+
+# TextMate
+*.tmproj
+*.tmproject
+tmtags
+
+# Vim
 *.swp
-/**/dist/
-/**/test-dist/
-/**/test-generated/
-.vs/
+*.vim
+.netrwhist

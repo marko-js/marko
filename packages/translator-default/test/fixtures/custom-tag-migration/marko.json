@@ -1,0 +1,8 @@
+{
+  "<new>": {
+    "template": "./new.marko"
+  },
+  "<old>": {
+    "migrator": "./old.migrator.js"
+  }
+}

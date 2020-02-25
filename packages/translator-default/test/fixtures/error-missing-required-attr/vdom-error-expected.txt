@@ -1,0 +1,4 @@
+packages/translator-default/test/fixtures/error-missing-required-attr/template.marko(1,2): The "name" attribute is required.
+> 1 | <custom-tag/>
+    |  ^^^^^^^^^^
+  2 | 

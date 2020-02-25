@@ -1,0 +1,35 @@
+{
+  "name": "@marko/babel-utils",
+  "description": "Utilities for use with Marko babel plugins.",
+  "version": "5.0.0",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "dependencies": {
+    "@babel/runtime": "^7.7.7",
+    "@marko/babel-types": "^5.0.0",
+    "jsesc": "^2.5.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-utils/README.md",
+  "keywords": [
+    "htmljs",
+    "parser",
+    "babel",
+    "plugin",
+    "parse",
+    "marko"
+  ],
+  "license": "MIT",
+  "main": "src/index.js",
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/babel-utils"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
