@@ -74,6 +74,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.w(`<div${_marko_props(null, _keyValue6, _component)}>${_marko_escapeXml(i)}</div><div></div><div${_marko_props(null, `@other-${i}`, _component)}></div>`);
   }
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

@@ -10,6 +10,6 @@ const _marko_componentType = "5nWTrVOu",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`Hello ${_marko_escapeXml(input.name)}! Hello ${_marko_to_string(input.name)}! Hello ${_marko_to_string(input.missing)}!`);
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

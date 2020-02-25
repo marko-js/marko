@@ -8,6 +8,6 @@ const _marko_componentType = "exzxXYhB",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<textarea>\n  hello world\n</textarea>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

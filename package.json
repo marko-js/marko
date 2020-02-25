@@ -18,7 +18,7 @@
     "ci:codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "report": "nyc report --reporter=html && open ./coverage/index.html",
     "set-entry": "lerna exec -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)"
-  }, 
+  },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",

@@ -8,6 +8,6 @@ const _marko_componentType = "rFQb-wzZ",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div></div>");
 }, {
-  ___type: _marko_componentType,
-  ___split: true
+  t: _marko_componentType,
+  s: true
 }, _marko_component);

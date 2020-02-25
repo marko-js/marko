@@ -8,6 +8,6 @@ const _marko_componentType = "OrWAJ3ye",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div d=\"0\" y=\"1\"></div>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

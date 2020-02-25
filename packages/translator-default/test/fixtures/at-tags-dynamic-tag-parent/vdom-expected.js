@@ -27,8 +27,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t("Body content");
   }, null, null, _component, "0");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

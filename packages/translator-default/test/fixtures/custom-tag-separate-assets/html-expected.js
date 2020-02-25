@@ -9,5 +9,5 @@ const _marko_componentType = "R7o4vS6k",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div></div>");
 }, {
-  ___type: _marko_componentType
+  t: _marko_componentType
 }, _marko_component2);

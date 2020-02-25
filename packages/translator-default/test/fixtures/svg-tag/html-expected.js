@@ -8,6 +8,6 @@ const _marko_componentType = "hdShPuzM",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<svg height=\"100\" width=\"100\"><circle cx=\"50\" cy=\"50\" r=\"40\" stroke=\"black\" stroke-width=\"3\" fill=\"red\"><a></a><style>div { color: green }</style><script>alert(\"Hello\");</script><title>Test</title></svg><a></a>");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);

@@ -11,8 +11,8 @@ const _marko_componentType = _marko_registerComponent("UkPdJEa2", () => _marko_t
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.t("Hello John & Suzy Invalid Entity: &b ; Valid Numeric Entity: \" Valid Hexadecimal Entity: \xA2");
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

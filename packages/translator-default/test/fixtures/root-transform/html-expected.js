@@ -9,6 +9,6 @@ const _marko_componentType = "yTIiM99f",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<div${_marko_attr("a", after)}></div>`);
 }, {
-  ___type: _marko_componentType,
-  ___implicit: true
+  t: _marko_componentType,
+  i: true
 }, _marko_component);
