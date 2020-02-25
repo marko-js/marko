@@ -2,7 +2,7 @@
   "command": {
     "publish": {
       "conventionalCommits": true,
-      "message": "chore(release): publish"
+      "message": "chore: publish"
     }
   },
   "packages": [
