@@ -9,7 +9,7 @@ exports.makeRenderable = exports.renderable = require("../../renderable");
 // server only
 exports.writeInitWidgetsCode = modernMarko.writeInitComponentsCode;
 exports.getRenderedWidgets = exports.getRenderedWidgetIds =
-    modernMarko.getRenderedComponents;
+  modernMarko.getRenderedComponents;
 exports.getInitWidgetsCode = function(out) {
-    return modernMarko.___getInitComponentsCode(out);
+  return modernMarko.___getInitComponentsCode(out);
 };

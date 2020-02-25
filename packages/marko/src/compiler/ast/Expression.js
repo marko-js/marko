@@ -4,28 +4,28 @@ var Node = require("./Node");
 var ok = require("assert").ok;
 
 class Expression extends Node {
-    constructor(def) {
-        super("Expression");
-        this.value = def.value;
-        this.ast = def.ast;
-        ok(this.value != null, "Invalid expression");
-    }
+  constructor(def) {
+    super("Expression");
+    this.value = def.value;
+    this.ast = def.ast;
+    ok(this.value != null, "Invalid expression");
+  }
 
-    generateCode() {
-        return this;
-    }
+  generateCode() {
+    return this;
+  }
 
-    writeCode(writer) {
-        writer.write(this.value);
-    }
+  writeCode(writer) {
+    writer.write(this.value);
+  }
 
-    isCompoundExpression() {
-        return true;
-    }
+  isCompoundExpression() {
+    return true;
+  }
 
-    toString() {
-        return this.value;
-    }
+  toString() {
+    return this.value;
+  }
 }
 
 module.exports = Expression;

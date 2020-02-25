@@ -10,78 +10,78 @@ var fsOptions = { encoding: "utf8" };
 const banner = "// Compiled using marko";
 
 module.exports = function load(templatePath, templateSrc, options) {
-    if (typeof templatePath === "string") {
-        const parsed = nodePath.parse(templatePath);
+  if (typeof templatePath === "string") {
+    const parsed = nodePath.parse(templatePath);
 
-        if (parsed.ext === ".js") {
-            // assume compiled template
-            return require(templatePath);
-        } else if (parsed.ext === ".marko") {
-            // Check if precompiled js file already exists.
-            const jsFilePath = nodePath.join(parsed.dir, parsed.name + ".js");
-            let foundPrecompiled = false;
+    if (parsed.ext === ".js") {
+      // assume compiled template
+      return require(templatePath);
+    } else if (parsed.ext === ".marko") {
+      // Check if precompiled js file already exists.
+      const jsFilePath = nodePath.join(parsed.dir, parsed.name + ".js");
+      let foundPrecompiled = false;
 
-            try {
-                const buffer = Buffer.alloc(banner.length);
-                const fd = fs.openSync(jsFilePath, "r");
-                fs.readSync(fd, buffer, 0, banner.length, 0);
-                fs.closeSync(fd);
-                foundPrecompiled = buffer.toString("utf-8") === banner;
-            } catch (e) {
-                /* ignore error */
-            }
+      try {
+        const buffer = Buffer.alloc(banner.length);
+        const fd = fs.openSync(jsFilePath, "r");
+        fs.readSync(fd, buffer, 0, banner.length, 0);
+        fs.closeSync(fd);
+        foundPrecompiled = buffer.toString("utf-8") === banner;
+      } catch (e) {
+        /* ignore error */
+      }
 
-            if (foundPrecompiled) {
-                return require(jsFilePath);
-            }
-        }
+      if (foundPrecompiled) {
+        return require(jsFilePath);
+      }
     }
+  }
 
-    if (arguments.length === 1) {
-        return doLoad(templatePath);
-    } else if (arguments.length === 2) {
-        // see if second argument is templateSrc (a String)
-        // or options (an Object)
-        var lastArg = arguments[arguments.length - 1];
-        if (typeof lastArg === "string") {
-            return doLoad(templatePath, templateSrc);
-        } else {
-            var finalOptions = templateSrc;
-            return doLoad(templatePath, null, finalOptions);
-        }
-    } else if (arguments.length === 3) {
-        // assume function called according to function signature
-        return doLoad(templatePath, templateSrc, options);
+  if (arguments.length === 1) {
+    return doLoad(templatePath);
+  } else if (arguments.length === 2) {
+    // see if second argument is templateSrc (a String)
+    // or options (an Object)
+    var lastArg = arguments[arguments.length - 1];
+    if (typeof lastArg === "string") {
+      return doLoad(templatePath, templateSrc);
     } else {
-        throw new Error("Illegal arguments");
+      var finalOptions = templateSrc;
+      return doLoad(templatePath, null, finalOptions);
     }
+  } else if (arguments.length === 3) {
+    // assume function called according to function signature
+    return doLoad(templatePath, templateSrc, options);
+  } else {
+    throw new Error("Illegal arguments");
+  }
 };
 
 function loadSource(templatePath, compiledSrc) {
-    templatePath += ".js";
+  templatePath += ".js";
 
-    // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cached = require.cache[templatePath];
-    if (cached) {
-        return cached.exports;
-    }
+  // Short-circuit loading if the template has already been cached in the Node.js require cache
+  var cached = require.cache[templatePath];
+  if (cached) {
+    return cached.exports;
+  }
 
-    var templateModule = new Module(templatePath, module);
-    templateModule.paths = Module._nodeModulePaths(
-        nodePath.dirname(templatePath)
-    );
-    templateModule.filename = templatePath;
+  var templateModule = new Module(templatePath, module);
+  templateModule.paths = Module._nodeModulePaths(
+    nodePath.dirname(templatePath)
+  );
+  templateModule.filename = templatePath;
 
-    Module._cache[templatePath] = templateModule;
+  Module._cache[templatePath] = templateModule;
 
-    templateModule._compile(compiledSrc, templatePath);
+  templateModule._compile(compiledSrc, templatePath);
 
-    return templateModule.exports;
+  return templateModule.exports;
 }
 
 function getCachedTemplate(path) {
-    var cached = require.cache[path];
-    return cached && cached.exports.render ? cached.exports : undefined;
+  var cached = require.cache[path];
+  return cached && cached.exports.render ? cached.exports : undefined;
 }
 
 /**
@@ -94,7 +94,7 @@ function getCachedTemplate(path) {
  * @return {Template}            The loaded template or undefined
  */
 function getPreviousTemplate(templatePath, options) {
-    /*
+  /*
     The require.cache is search in the following order:
     1) /path/to/my-template.js
     2) /path/to/my-template.marko.js
@@ -106,88 +106,88 @@ function getPreviousTemplate(templatePath, options) {
     1) /path/to/my-template.js
     2) /path/to/my-template.marko.js
     */
-    var ext = nodePath.extname(templatePath);
-    var targetFilePrecompiled = templatePath.slice(0, 0 - ext.length) + ".js";
-    var targetFileDebug = templatePath + ".js";
+  var ext = nodePath.extname(templatePath);
+  var targetFilePrecompiled = templatePath.slice(0, 0 - ext.length) + ".js";
+  var targetFileDebug = templatePath + ".js";
 
-    // Short-circuit loading if the template has already been cached in the Node.js require cache
-    var cachedTemplate =
-        getCachedTemplate(targetFilePrecompiled) ||
-        getCachedTemplate(targetFileDebug) ||
-        getCachedTemplate(templatePath);
+  // Short-circuit loading if the template has already been cached in the Node.js require cache
+  var cachedTemplate =
+    getCachedTemplate(targetFilePrecompiled) ||
+    getCachedTemplate(targetFileDebug) ||
+    getCachedTemplate(templatePath);
 
-    if (cachedTemplate) {
-        return cachedTemplate;
+  if (cachedTemplate) {
+    return cachedTemplate;
+  }
+
+  // Just in case the the path wasn't a fully resolved file system path...
+  templatePath = nodePath.resolve(cwd, templatePath);
+
+  if (options.assumeUpToDate) {
+    if (fs.existsSync(targetFilePrecompiled)) {
+      return require(targetFilePrecompiled);
     }
 
-    // Just in case the the path wasn't a fully resolved file system path...
-    templatePath = nodePath.resolve(cwd, templatePath);
-
-    if (options.assumeUpToDate) {
-        if (fs.existsSync(targetFilePrecompiled)) {
-            return require(targetFilePrecompiled);
-        }
-
-        if (fs.existsSync(targetFileDebug)) {
-            return require(targetFileDebug);
-        }
+    if (fs.existsSync(targetFileDebug)) {
+      return require(targetFileDebug);
     }
+  }
 
-    return undefined;
+  return undefined;
 }
 
 function createRenderProxy(template) {
-    return function(data, out) {
-        template._(data, out);
-    };
+  return function(data, out) {
+    template._(data, out);
+  };
 }
 
 function doLoad(templatePath, templateSrc, options) {
-    options = Object.assign({}, markoCompiler.defaultOptions, options);
+  options = Object.assign({}, markoCompiler.defaultOptions, options);
 
-    var template;
-    if (typeof templatePath.render === "function") {
-        template = templatePath;
-    } else {
-        templatePath = nodePath.resolve(cwd, templatePath);
+  var template;
+  if (typeof templatePath.render === "function") {
+    template = templatePath;
+  } else {
+    templatePath = nodePath.resolve(cwd, templatePath);
 
-        template = getPreviousTemplate(templatePath, options);
-        if (!template) {
-            var writeToDisk = options.writeToDisk;
+    template = getPreviousTemplate(templatePath, options);
+    if (!template) {
+      var writeToDisk = options.writeToDisk;
 
-            if (templateSrc == null) {
-                templateSrc = fs.readFileSync(templatePath, fsOptions);
-            }
+      if (templateSrc == null) {
+        templateSrc = fs.readFileSync(templatePath, fsOptions);
+      }
 
-            var compiledSrc = markoCompiler.compile(
-                templateSrc,
-                templatePath,
-                options
-            );
+      var compiledSrc = markoCompiler.compile(
+        templateSrc,
+        templatePath,
+        options
+      );
 
-            if (writeToDisk === true) {
-                var targetFile = templatePath + ".js";
-                try {
-                    fs.writeFileSync(targetFile, compiledSrc, fsOptions);
-                } catch (e) {
-                    // if this fails, that's okay.
-                    // writing to file is nice for debugging and not much else
-                }
-            }
-
-            template = loadSource(templatePath, compiledSrc);
+      if (writeToDisk === true) {
+        var targetFile = templatePath + ".js";
+        try {
+          fs.writeFileSync(targetFile, compiledSrc, fsOptions);
+        } catch (e) {
+          // if this fails, that's okay.
+          // writing to file is nice for debugging and not much else
         }
+      }
+
+      template = loadSource(templatePath, compiledSrc);
     }
+  }
 
-    if (options.buffer === false) {
-        var Template = template.constructor;
+  if (options.buffer === false) {
+    var Template = template.constructor;
 
-        template = new Template(
-            template.path,
-            createRenderProxy(template),
-            options
-        );
-    }
+    template = new Template(
+      template.path,
+      createRenderProxy(template),
+      options
+    );
+  }
 
-    return template;
+  return template;
 }

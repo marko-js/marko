@@ -1,15 +1,15 @@
 var types = require("./types");
 
 function isSupportedAttributeProperty(propertyName) {
-    return exports.loadAttributeFromProps.isSupportedProperty(propertyName);
+  return exports.loadAttributeFromProps.isSupportedProperty(propertyName);
 }
 
 function isSupportedTagProperty(propertyName) {
-    return exports.loadTagFromProps.isSupportedProperty(propertyName);
+  return exports.loadTagFromProps.isSupportedProperty(propertyName);
 }
 
 function createTaglib(taglibPath) {
-    return new types.Taglib(taglibPath);
+  return new types.Taglib(taglibPath);
 }
 
 exports.createTaglib = createTaglib;

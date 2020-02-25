@@ -7,7 +7,7 @@ var complain = "MARKO_DEBUG" && require("complain");
 // expose legacy
 window.$markoLegacy = exports;
 exports.load = function(typeName) {
-    return exports.defineWidget(loader(typeName));
+  return exports.defineWidget(loader(typeName));
 };
 
 // legacy api
@@ -24,38 +24,38 @@ exports.initWidgets = modernMarko.init;
 
 // monkey patch Widget
 if (Widget) {
-    var WidgetProto = Widget.prototype;
-    WidgetProto.setProps = function(newInput) {
-        this.___isReceivingNewInput = true;
-        this.___setInput(newInput);
-    };
-    WidgetProto.rerender = function(newInput) {
-        if (newInput) {
-            this.setProps(newInput);
-        }
+  var WidgetProto = Widget.prototype;
+  WidgetProto.setProps = function(newInput) {
+    this.___isReceivingNewInput = true;
+    this.___setInput(newInput);
+  };
+  WidgetProto.rerender = function(newInput) {
+    if (newInput) {
+      this.setProps(newInput);
+    }
 
-        this.forceUpdate();
-        this.update();
-    };
+    this.forceUpdate();
+    this.update();
+  };
 }
 
 var RenderResult = require("../../RenderResult");
 
 RenderResult.prototype.getWidget = function() {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-        complain("getWidget is deprecated. use getComponent instead.");
-    }
-    return this.getWidgets()[0];
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    complain("getWidget is deprecated. use getComponent instead.");
+  }
+  return this.getWidgets()[0];
 };
 RenderResult.prototype.getWidgets = function() {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-        complain("getWidgets is deprecated. use getComponents instead.");
-    }
-    return RenderResult.prototype.getComponents
-        .apply(this, arguments)
-        .filter(function(component) {
-            return component.___isLegacy;
-        });
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    complain("getWidgets is deprecated. use getComponents instead.");
+  }
+  return RenderResult.prototype.getComponents
+    .apply(this, arguments)
+    .filter(function(component) {
+      return component.___isLegacy;
+    });
 };

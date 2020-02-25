@@ -3,21 +3,21 @@
 var Node = require("./Node");
 
 class ThisExpression extends Node {
-    constructor() {
-        super("ThisExpression");
-    }
+  constructor() {
+    super("ThisExpression");
+  }
 
-    generateCode() {
-        return this;
-    }
+  generateCode() {
+    return this;
+  }
 
-    writeCode(writer) {
-        writer.write("this");
-    }
+  writeCode(writer) {
+    writer.write("this");
+  }
 
-    toString() {
-        return "this";
-    }
+  toString() {
+    return "this";
+  }
 }
 
 module.exports = ThisExpression;

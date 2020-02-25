@@ -1,17 +1,17 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {
-        name: "Frank"
-    });
+  var widget = helpers.mount(require.resolve("./index"), {
+    name: "Frank"
+  });
 
-    expect(widget.config).to.deep.equal({
-        string: "Frank",
-        number: 12,
-        boolean: true,
-        complex: {
-            a: '<"hello">',
-            b: "test"
-        }
-    });
+  expect(widget.config).to.deep.equal({
+    string: "Frank",
+    number: 12,
+    boolean: true,
+    complex: {
+      a: '<"hello">',
+      b: "test"
+    }
+  });
 };

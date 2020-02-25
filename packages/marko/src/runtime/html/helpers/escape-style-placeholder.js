@@ -15,7 +15,7 @@
  */
 var escapeEndingStyleTagRegExp = /<\/style/g;
 module.exports = function escapeScriptHelper(val) {
-    return typeof val === "string"
-        ? val.replace(escapeEndingStyleTagRegExp, "\\003C/style")
-        : val + "";
+  return typeof val === "string"
+    ? val.replace(escapeEndingStyleTagRegExp, "\\003C/style")
+    : val + "";
 };

@@ -8,24 +8,24 @@ var defineRenderer;
 var defineWidget;
 
 module.exports = function defineComponent(def) {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-        require("complain")("defineComponent is deprecated");
-    }
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    require("complain")("defineComponent is deprecated");
+  }
 
-    if (def.___isComponent) {
-        return def;
-    }
+  if (def.___isComponent) {
+    return def;
+  }
 
-    var renderer;
+  var renderer;
 
-    if (def.template || def.renderer) {
-        renderer = defineRenderer(def);
-    } else {
-        throw new Error('Expected "template" or "renderer"');
-    }
+  if (def.template || def.renderer) {
+    renderer = defineRenderer(def);
+  } else {
+    throw new Error('Expected "template" or "renderer"');
+  }
 
-    return defineWidget(def, renderer);
+  return defineWidget(def, renderer);
 };
 
 defineRenderer = require("./defineRenderer-legacy");

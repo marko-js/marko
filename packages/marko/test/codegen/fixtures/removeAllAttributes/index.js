@@ -1,15 +1,15 @@
 "use strict";
 
 module.exports = function(builder) {
-    var div = builder.htmlElement(
-        "div",
-        {
-            class: builder.literal("foo")
-        },
-        [builder.text(builder.literal("Hello World"))]
-    );
+  var div = builder.htmlElement(
+    "div",
+    {
+      class: builder.literal("foo")
+    },
+    [builder.text(builder.literal("Hello World"))]
+  );
 
-    div.removeAllAttributes();
+  div.removeAllAttributes();
 
-    return builder.program([div]);
+  return builder.program([div]);
 };

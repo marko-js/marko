@@ -1,5 +1,5 @@
 {
-    "@items <item>[]": {
-        "@*": "expression"
-    }
+  "@items <item>[]": {
+    "@*": "expression"
+  }
 }

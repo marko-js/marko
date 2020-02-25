@@ -1,5 +1,5 @@
 exports.templateData = {
-    userInfo: {
-        name: "John"
-    }
+  userInfo: {
+    name: "John"
+  }
 };

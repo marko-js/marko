@@ -3,34 +3,34 @@
 const Node = require("./Node");
 
 function _isMultilineComment(comment) {
-    return comment && comment.indexOf("\n") !== -1;
+  return comment && comment.indexOf("\n") !== -1;
 }
 
 class Comment extends Node {
-    constructor(def) {
-        super("Comment");
+  constructor(def) {
+    super("Comment");
 
-        const comment = def.comment;
+    const comment = def.comment;
 
-        if (_isMultilineComment(comment)) {
-            this.comment = `/*\n${comment}\n*/`;
-        } else {
-            this.comment = `// ${comment}`;
-        }
+    if (_isMultilineComment(comment)) {
+      this.comment = `/*\n${comment}\n*/`;
+    } else {
+      this.comment = `// ${comment}`;
     }
+  }
 
-    generateCode() {
-        return this;
-    }
+  generateCode() {
+    return this;
+  }
 
-    writeCode(writer) {
-        var name = this.comment;
-        writer.write(name);
-    }
+  writeCode(writer) {
+    var name = this.comment;
+    writer.write(name);
+  }
 
-    toString() {
-        return this.comment;
-    }
+  toString() {
+    return this.comment;
+  }
 }
 
 module.exports = Comment;

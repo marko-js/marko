@@ -1,16 +1,16 @@
 {
-    "<foo>": {
-        "@cat": "boolean",
-        "attribute-groups": ["my-attribute-group"]
-    },
-    "<bar>": {
-        "@dog": "boolean",
-        "attribute-groups": ["my-attribute-group"]
-    },
+  "<foo>": {
+    "@cat": "boolean",
+    "attribute-groups": ["my-attribute-group"]
+  },
+  "<bar>": {
+    "@dog": "boolean",
+    "attribute-groups": ["my-attribute-group"]
+  },
 
-    "attribute-groups": {
-        "my-attribute-group": {
-            "age": "integer"
-        }
+  "attribute-groups": {
+    "my-attribute-group": {
+      "age": "integer"
     }
+  }
 }

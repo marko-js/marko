@@ -9,7 +9,7 @@ var Template;
  * @private
  */
 exports.t = function createTemplate(path) {
-    return new Template(path);
+  return new Template(path);
 };
 
 require("../../");
@@ -18,11 +18,11 @@ var AsyncStream = require("./AsyncStream");
 Template = require("./Template");
 
 function createOut(globalData, parent, state, buffer) {
-    return new AsyncStream(globalData, parent, state, buffer);
+  return new AsyncStream(globalData, parent, state, buffer);
 }
 
 exports.createWriter = function(writer) {
-    return new AsyncStream(null, writer);
+  return new AsyncStream(null, writer);
 };
 
 exports.Template = Template;

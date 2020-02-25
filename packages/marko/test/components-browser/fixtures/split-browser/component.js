@@ -1,7 +1,7 @@
 module.exports = {
-    onCreate: function() {
-        this.state = {
-            clicked: false
-        };
-    }
+  onCreate: function() {
+    this.state = {
+      clicked: false
+    };
+  }
 };

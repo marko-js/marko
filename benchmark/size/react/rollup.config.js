@@ -10,25 +10,25 @@ process.env.NODE_ENV = "production";
 // NODE_ENV=production browserify -t envify -t markoify --extension='.marko' --global-transform minprops/browserify -o build/bundles/marko.js marko/client.js
 
 export default {
-    entry: path.join(__dirname, "client.jsx"),
-    format: "iife",
-    moduleName: "app",
-    plugins: [
-        babelPlugin({
-            exclude: "node_modules/**"
-        }),
-        browserifyPlugin(envify),
-        nodeResolvePlugin({
-            jsnext: true, // Default: false
-            main: true, // Default: true
-            browser: true, // Default: false
-            preferBuiltins: false,
-            extensions: [".js", ".jsx"]
-        }),
-        commonjsPlugin({
-            include: [],
-            extensions: [".js", ".jsx"]
-        })
-    ],
-    dest: path.join(__dirname, "../build/bundles/react.js")
+  entry: path.join(__dirname, "client.jsx"),
+  format: "iife",
+  moduleName: "app",
+  plugins: [
+    babelPlugin({
+      exclude: "node_modules/**"
+    }),
+    browserifyPlugin(envify),
+    nodeResolvePlugin({
+      jsnext: true, // Default: false
+      main: true, // Default: true
+      browser: true, // Default: false
+      preferBuiltins: false,
+      extensions: [".js", ".jsx"]
+    }),
+    commonjsPlugin({
+      include: [],
+      extensions: [".js", ".jsx"]
+    })
+  ],
+  dest: path.join(__dirname, "../build/bundles/react.js")
 };

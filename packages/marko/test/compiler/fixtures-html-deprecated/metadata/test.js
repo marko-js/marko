@@ -4,8 +4,8 @@ var oldMeta = config.meta;
 config.meta = true;
 
 exports.checkTemplate = function(template, snapshot) {
-    var dependencies = template.getDependencies();
-    config.meta = oldMeta;
+  var dependencies = template.getDependencies();
+  config.meta = oldMeta;
 
-    snapshot(JSON.stringify(dependencies, null, 4), ".json");
+  snapshot(JSON.stringify(dependencies, null, 4), ".json");
 };

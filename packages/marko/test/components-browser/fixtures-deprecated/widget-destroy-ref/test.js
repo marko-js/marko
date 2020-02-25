@@ -1,14 +1,14 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {});
+  var widget = helpers.mount(require.resolve("./index"), {});
 
-    var button1Widget = widget.getButton1();
-    expect(button1Widget != null).to.equal(true);
+  var button1Widget = widget.getButton1();
+  expect(button1Widget != null).to.equal(true);
 
-    widget.destroyButton1();
+  widget.destroyButton1();
 
-    button1Widget = widget.getButton1();
-    expect(button1Widget === undefined).to.equal(true);
-    expect(widget.getWidget("simple") == null).to.equal(true);
+  button1Widget = widget.getButton1();
+  expect(button1Widget === undefined).to.equal(true);
+  expect(widget.getWidget("simple") == null).to.equal(true);
 };

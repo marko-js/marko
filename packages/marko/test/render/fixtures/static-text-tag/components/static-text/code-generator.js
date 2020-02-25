@@ -1,3 +1,3 @@
 module.exports = function codeGenerator(el) {
-    return el.body;
+  return el.body;
 };

@@ -1,5 +1,5 @@
 {
-    "renderer": "./renderer.js",
-    "@test": "string",
-    "@*": "string"
+  "renderer": "./renderer.js",
+  "@test": "string",
+  "@*": "string"
 }

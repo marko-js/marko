@@ -1,3 +1,3 @@
 module.exports = require("marko-widgets").defineComponent({
-    template: require("./template")
+  template: require("./template")
 });

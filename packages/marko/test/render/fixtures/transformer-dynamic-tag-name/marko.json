@@ -1,6 +1,6 @@
 {
-    "<*>": {
-        "@foo": "string",
-        "transformer": "./transformer.js"
-    }
+  "<*>": {
+    "@foo": "string",
+    "transformer": "./transformer.js"
+  }
 }

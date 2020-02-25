@@ -1,5 +1,5 @@
 {
-    "<span>": {
-        "transformer": ["./transformer-1", "./transformer-2"]
-    }
+  "<span>": {
+    "transformer": ["./transformer-1", "./transformer-2"]
+  }
 }

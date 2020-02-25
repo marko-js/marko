@@ -4,125 +4,121 @@ var Node = require("./Node");
 var isCompoundExpression = require("../util/isCompoundExpression");
 
 function writeCodeForOperand(node, writer) {
-    var wrap = isCompoundExpression(node);
+  var wrap = isCompoundExpression(node);
 
-    if (wrap) {
-        writer.write("(");
-    }
+  if (wrap) {
+    writer.write("(");
+  }
 
-    writer.write(node);
+  writer.write(node);
 
-    if (wrap) {
-        writer.write(")");
-    }
+  if (wrap) {
+    writer.write(")");
+  }
 }
 
 function operandToString(node) {
-    var wrap = isCompoundExpression(node);
+  var wrap = isCompoundExpression(node);
 
-    var result = "";
+  var result = "";
 
-    if (wrap) {
-        result += "(";
-    }
+  if (wrap) {
+    result += "(";
+  }
 
-    result += node.toString();
+  result += node.toString();
 
-    if (wrap) {
-        result += ")";
-    }
+  if (wrap) {
+    result += ")";
+  }
 
-    return result;
+  return result;
 }
 
 class BinaryExpression extends Node {
-    constructor(def) {
-        super("BinaryExpression");
-        this.left = def.left;
-        this.operator = def.operator;
-        this.right = def.right;
+  constructor(def) {
+    super("BinaryExpression");
+    this.left = def.left;
+    this.operator = def.operator;
+    this.right = def.right;
+  }
+
+  generateCode(codegen) {
+    this.left = codegen.generateCode(this.left);
+    this.right = codegen.generateCode(this.right);
+
+    var left = this.left;
+    var right = this.right;
+    var operator = this.operator;
+
+    if (!left || !right) {
+      throw new Error("Invalid BinaryExpression: " + this);
     }
 
-    generateCode(codegen) {
-        this.left = codegen.generateCode(this.left);
-        this.right = codegen.generateCode(this.right);
+    var builder = codegen.builder;
 
-        var left = this.left;
-        var right = this.right;
-        var operator = this.operator;
-
-        if (!left || !right) {
-            throw new Error("Invalid BinaryExpression: " + this);
-        }
-
-        var builder = codegen.builder;
-
-        if (left.type === "Literal" && right.type === "Literal") {
-            if (operator === "+") {
-                return builder.literal(left.value + right.value);
-            } else if (operator === "-") {
-                return builder.literal(left.value - right.value);
-            } else if (operator === "*") {
-                return builder.literal(left.value * right.value);
-            } else if (operator === "/") {
-                return builder.literal(left.value / right.value);
-            }
-        }
-
-        return this;
+    if (left.type === "Literal" && right.type === "Literal") {
+      if (operator === "+") {
+        return builder.literal(left.value + right.value);
+      } else if (operator === "-") {
+        return builder.literal(left.value - right.value);
+      } else if (operator === "*") {
+        return builder.literal(left.value * right.value);
+      } else if (operator === "/") {
+        return builder.literal(left.value / right.value);
+      }
     }
 
-    writeCode(writer) {
-        var left = this.left;
-        var operator = this.operator;
-        var right = this.right;
+    return this;
+  }
 
-        if (!left || !right) {
-            throw new Error("Invalid BinaryExpression: " + this);
-        }
+  writeCode(writer) {
+    var left = this.left;
+    var operator = this.operator;
+    var right = this.right;
 
-        writeCodeForOperand(left, writer);
-        writer.write(" ");
-        writer.write(operator);
-        writer.write(" ");
-        writeCodeForOperand(right, writer);
+    if (!left || !right) {
+      throw new Error("Invalid BinaryExpression: " + this);
     }
 
-    isCompoundExpression() {
-        return true;
+    writeCodeForOperand(left, writer);
+    writer.write(" ");
+    writer.write(operator);
+    writer.write(" ");
+    writeCodeForOperand(right, writer);
+  }
+
+  isCompoundExpression() {
+    return true;
+  }
+
+  toJSON() {
+    return {
+      type: "BinaryExpression",
+      left: this.left,
+      operator: this.operator,
+      right: this.right
+    };
+  }
+
+  walk(walker) {
+    this.left = walker.walk(this.left);
+    this.right = walker.walk(this.right);
+  }
+
+  toString() {
+    var left = this.left;
+    var operator = this.operator;
+    var right = this.right;
+
+    if (!left || !right) {
+      throw new Error("Invalid BinaryExpression: " + this);
     }
 
-    toJSON() {
-        return {
-            type: "BinaryExpression",
-            left: this.left,
-            operator: this.operator,
-            right: this.right
-        };
-    }
-
-    walk(walker) {
-        this.left = walker.walk(this.left);
-        this.right = walker.walk(this.right);
-    }
-
-    toString() {
-        var left = this.left;
-        var operator = this.operator;
-        var right = this.right;
-
-        if (!left || !right) {
-            throw new Error("Invalid BinaryExpression: " + this);
-        }
-
-        return (
-            operandToString(left) +
-            " " +
-            operator +
-            " " +
-            operandToString(right)
-        );
-    }
+    return (
+      operandToString(left) + " " + operator + " " + operandToString(right)
+    );
+  }
 }
 
 module.exports = BinaryExpression;

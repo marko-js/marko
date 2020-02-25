@@ -1,4 +1,4 @@
 {
-    "renderer": "./renderer.js",
-    "transformer": "./transformer.js"
+  "renderer": "./renderer.js",
+  "transformer": "./transformer.js"
 }

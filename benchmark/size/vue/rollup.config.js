@@ -9,24 +9,24 @@ import path from "path";
 process.env.NODE_ENV = "production";
 
 export default {
-    entry: path.join(__dirname, "client.js"),
-    format: "iife",
-    moduleName: "app",
-    plugins: [
-        browserifyPlugin(vueify),
-        browserifyPlugin(envify),
-        browserifyPlugin(minpropsify),
-        nodeResolvePlugin({
-            jsnext: true, // Default: false
-            main: true, // Default: true
-            browser: true, // Default: false
-            preferBuiltins: false,
-            extensions: [".js", ".vue"]
-        }),
-        commonjsPlugin({
-            include: [],
-            extensions: [".js", ".vue"]
-        })
-    ],
-    dest: path.join(__dirname, "../build/bundles/vue.js")
+  entry: path.join(__dirname, "client.js"),
+  format: "iife",
+  moduleName: "app",
+  plugins: [
+    browserifyPlugin(vueify),
+    browserifyPlugin(envify),
+    browserifyPlugin(minpropsify),
+    nodeResolvePlugin({
+      jsnext: true, // Default: false
+      main: true, // Default: true
+      browser: true, // Default: false
+      preferBuiltins: false,
+      extensions: [".js", ".vue"]
+    }),
+    commonjsPlugin({
+      include: [],
+      extensions: [".js", ".vue"]
+    })
+  ],
+  dest: path.join(__dirname, "../build/bundles/vue.js")
 };

@@ -1,14 +1,14 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {
-        interactive: true
-    });
+  var widget = helpers.mount(require.resolve("./index"), {
+    interactive: true
+  });
 
-    expect(widget.el).to.be.instanceOf(HTMLButtonElement);
+  expect(widget.el).to.be.instanceOf(HTMLButtonElement);
 
-    widget.setState("interactive", false);
-    widget.update();
+  widget.setState("interactive", false);
+  widget.update();
 
-    expect(widget.el).to.be.instanceOf(HTMLDivElement);
+  expect(widget.el).to.be.instanceOf(HTMLDivElement);
 };

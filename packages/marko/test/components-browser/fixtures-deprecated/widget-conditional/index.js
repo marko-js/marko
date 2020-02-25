@@ -1,11 +1,11 @@
 module.exports = require("marko/legacy-components").defineComponent({
-    template: require("./template.marko"),
+  template: require("./template.marko"),
 
-    getTemplateData: function(state, input) {
-        return {
-            includeWidget: input.includeWidget
-        };
-    },
+  getTemplateData: function(state, input) {
+    return {
+      includeWidget: input.includeWidget
+    };
+  },
 
-    init: function() {}
+  init: function() {}
 });

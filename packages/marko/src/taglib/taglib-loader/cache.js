@@ -1,15 +1,15 @@
 var cache = {};
 
 function get(key) {
-    return cache[key];
+  return cache[key];
 }
 
 function put(key, value) {
-    cache[key] = value;
+  cache[key] = value;
 }
 
 function clear() {
-    cache = {};
+  cache = {};
 }
 
 exports.get = get;

@@ -1,3 +1,3 @@
 exports.templateData = {
-    myAlt: null
+  myAlt: null
 };

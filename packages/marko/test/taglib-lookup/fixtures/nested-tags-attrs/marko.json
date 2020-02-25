@@ -1,10 +1,10 @@
 {
-    "tags": {
-        "nested-foo": {
-            "renderer": "./foo-renderer.js",
-            "attributes": {
-                "attr1": "string"
-            }
-        }
+  "tags": {
+    "nested-foo": {
+      "renderer": "./foo-renderer.js",
+      "attributes": {
+        "attr1": "string"
+      }
     }
+  }
 }

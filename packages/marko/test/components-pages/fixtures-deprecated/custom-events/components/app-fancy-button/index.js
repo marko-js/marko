@@ -1,13 +1,13 @@
 module.exports = require("marko-widgets").defineComponent({
-    template: require.resolve("./template.marko"),
+  template: require.resolve("./template.marko"),
 
-    getTemplateData: function(state, input) {
-        return {
-            label: input.label
-        };
-    },
+  getTemplateData: function(state, input) {
+    return {
+      label: input.label
+    };
+  },
 
-    emitPressEvent: function() {
-        this.emit("press", { widget: this });
-    }
+  emitPressEvent: function() {
+    this.emit("press", { widget: this });
+  }
 });

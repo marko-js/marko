@@ -1,6 +1,6 @@
 {
-    "import-var": {
-        "tabs": "tabs"
-    },
-    "@title": "string"
+  "import-var": {
+    "tabs": "tabs"
+  },
+  "@title": "string"
 }

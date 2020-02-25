@@ -1,5 +1,5 @@
 module.exports = {
-    onMount: function() {
-        window.splitComponent = this;
-    }
+  onMount: function() {
+    window.splitComponent = this;
+  }
 };

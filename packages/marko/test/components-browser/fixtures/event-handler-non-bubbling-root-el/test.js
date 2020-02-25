@@ -1,13 +1,13 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {});
+  var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(component.mouseMoveEvent).to.equal(undefined);
+  expect(component.mouseMoveEvent).to.equal(undefined);
 
-    var rootEl = helpers.targetEl.querySelector("div");
+  var rootEl = helpers.targetEl.querySelector("div");
 
-    helpers.triggerMouseMove(rootEl);
+  helpers.triggerMouseMove(rootEl);
 
-    expect(component.mouseMoveEvent).to.equal(true);
+  expect(component.mouseMoveEvent).to.equal(true);
 };

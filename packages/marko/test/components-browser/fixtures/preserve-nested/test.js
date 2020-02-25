@@ -1,12 +1,12 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {});
+  var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
+  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
 
-    component.forceUpdate();
-    component.update();
+  component.forceUpdate();
+  component.update();
 
-    expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
+  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
 };

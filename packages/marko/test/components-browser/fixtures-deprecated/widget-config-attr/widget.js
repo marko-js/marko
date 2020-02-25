@@ -1,6 +1,6 @@
 function Widget(config) {
-    this.name = "app-widget-config";
-    this.config = config;
+  this.name = "app-widget-config";
+  this.config = config;
 }
 
 Widget.prototype = {};

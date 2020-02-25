@@ -6,21 +6,21 @@ var loaders = require("./loaders");
 var ok = require("assert").ok;
 
 function loadFromFile(filePath) {
-    ok(filePath, '"filePath" is required');
+  ok(filePath, '"filePath" is required');
 
-    var taglib = cache.get(filePath);
+  var taglib = cache.get(filePath);
 
-    // Only load a taglib once by caching the loaded taglibs using the file
-    // system file path as the key
-    if (!taglib) {
-        taglib = new types.Taglib(filePath);
-        cache.put(filePath, taglib);
+  // Only load a taglib once by caching the loaded taglibs using the file
+  // system file path as the key
+  if (!taglib) {
+    taglib = new types.Taglib(filePath);
+    cache.put(filePath, taglib);
 
-        var taglibProps = jsonFileReader.readFileSync(filePath);
-        loaders.loadTaglibFromProps(taglib, taglibProps);
-    }
+    var taglibProps = jsonFileReader.readFileSync(filePath);
+    loaders.loadTaglibFromProps(taglib, taglibProps);
+  }
 
-    return taglib;
+  return taglib;
 }
 
 module.exports = loadFromFile;

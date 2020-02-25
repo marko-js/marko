@@ -58,21 +58,21 @@ var isValidJavaScriptIdentifier = require("./util/isValidJavaScriptIdentifier");
 var DEFAULT_BUILDER;
 
 function makeNode(arg) {
-    if (typeof arg === "string") {
-        return parseExpression(arg, DEFAULT_BUILDER);
-    } else if (arg instanceof Node) {
-        return arg;
-    } else if (arg == null) {
-        return undefined;
-    } else if (Array.isArray(arg)) {
-        return arg.map(arg => {
-            return makeNode(arg);
-        });
-    } else {
-        throw new Error(
-            "Argument should be a string or Node or null. Actual: " + arg
-        );
-    }
+  if (typeof arg === "string") {
+    return parseExpression(arg, DEFAULT_BUILDER);
+  } else if (arg instanceof Node) {
+    return arg;
+  } else if (arg == null) {
+    return undefined;
+  } else if (Array.isArray(arg)) {
+    return arg.map(arg => {
+      return makeNode(arg);
+    });
+  } else {
+    throw new Error(
+      "Argument should be a string or Node or null. Actual: " + arg
+    );
+  }
 }
 
 var literalNull = new Literal({ value: null });
@@ -83,584 +83,584 @@ var identifierOut = new Identifier({ name: "out" });
 var identifierRequire = new Identifier({ name: "require" });
 
 class Builder {
-    arrayExpression(elements) {
-        if (elements) {
-            if (!isArray(elements)) {
-                elements = [elements];
-            }
+  arrayExpression(elements) {
+    if (elements) {
+      if (!isArray(elements)) {
+        elements = [elements];
+      }
 
-            for (var i = 0; i < elements.length; i++) {
-                elements[i] = makeNode(elements[i]);
-            }
-        } else {
-            elements = [];
+      for (var i = 0; i < elements.length; i++) {
+        elements[i] = makeNode(elements[i]);
+      }
+    } else {
+      elements = [];
+    }
+
+    return new ArrayExpression({ elements });
+  }
+
+  assignment(left, right, operator) {
+    if (operator == null) {
+      operator = "=";
+    }
+    left = makeNode(left);
+    right = makeNode(right);
+    return new Assignment({ left, right, operator });
+  }
+
+  binaryExpression(left, operator, right) {
+    left = makeNode(left);
+    right = makeNode(right);
+    return new BinaryExpression({ left, operator, right });
+  }
+
+  sequenceExpression(expressions) {
+    expressions = makeNode(expressions);
+    return new SequenceExpression({ expressions });
+  }
+
+  code(value) {
+    return new Code({ value });
+  }
+
+  computedMemberExpression(object, property) {
+    object = makeNode(object);
+    property = makeNode(property);
+    let computed = true;
+
+    return new MemberExpression({ object, property, computed });
+  }
+
+  /**
+   * Generates code that joins all of the arguments using `+` (BinaryExpression)
+   *
+   * @param  {Array} args If the args object is not an array then `arguments` is used
+   * @return {Node} The resulting Node
+   */
+  concat(args) {
+    var prev;
+    let operator = "+";
+    args = Array.isArray(args)
+      ? args
+      : Array.prototype.slice.call(arguments, 0);
+
+    for (var i = 1; i < args.length; i++) {
+      var left;
+      var right = makeNode(args[i]);
+      if (i === 1) {
+        left = makeNode(args[i - 1]);
+      } else {
+        left = prev;
+      }
+
+      prev = new BinaryExpression({ left, operator, right });
+    }
+
+    return prev;
+  }
+
+  conditionalExpression(test, consequent, alternate) {
+    return new ConditionalExpression({ test, consequent, alternate });
+  }
+
+  containerNode(type, codeGenerator) {
+    if (typeof type === "function") {
+      codeGenerator = arguments[0];
+      type = "ContainerNode";
+    }
+
+    var node = new ContainerNode(type);
+    if (codeGenerator) {
+      node.setCodeGenerator(codeGenerator);
+    }
+    return node;
+  }
+
+  customTag(el, tagDef) {
+    return new CustomTag(el, tagDef);
+  }
+
+  declaration(declaration) {
+    return new Declaration({ declaration });
+  }
+
+  documentType(documentType) {
+    return new DocumentType({ documentType });
+  }
+
+  elseStatement(body) {
+    return new Else({ body });
+  }
+
+  elseIfStatement(test, body, elseStatement) {
+    test = makeNode(test);
+
+    return new ElseIf({ test, body, else: elseStatement });
+  }
+
+  expression(value, ast) {
+    return new Expression({ value, ast });
+  }
+
+  forEach(params, ofExpression, body) {
+    return new ForEach(
+      arguments.length === 1
+        ? params
+        : {
+            params: makeNode(params),
+            of: makeNode(ofExpression),
+            body
+          }
+    );
+  }
+
+  forEachProp(params, inExpression, body) {
+    return new ForEachProp(
+      arguments.length === 1
+        ? params
+        : {
+            params: makeNode(params),
+            in: makeNode(inExpression),
+            body
+          }
+    );
+  }
+
+  forRange(params, from, to, step, body) {
+    return new ForRange(
+      arguments.length === 1
+        ? params
+        : {
+            params: makeNode(params),
+            from: makeNode(from),
+            to: makeNode(to),
+            step: makeNode(step),
+            body
+          }
+    );
+  }
+
+  forStatement(init, test, update, body) {
+    if (arguments.length === 1) {
+      var def = arguments[0];
+      return new ForStatement(def);
+    } else {
+      init = makeNode(init);
+      test = makeNode(test);
+      update = makeNode(update);
+      return new ForStatement({ init, test, update, body });
+    }
+  }
+
+  functionCall(callee, args) {
+    callee = makeNode(callee);
+
+    if (args) {
+      if (!isArray(args)) {
+        throw new Error('"args" should be an array');
+      }
+
+      for (var i = 0; i < args.length; i++) {
+        args[i] = makeNode(args[i]);
+      }
+    } else {
+      args = [];
+    }
+
+    return new FunctionCall({ callee, args });
+  }
+
+  functionDeclaration(name, params, body) {
+    return new FunctionDeclaration({ name, params, body });
+  }
+
+  html(argument) {
+    argument = makeNode(argument);
+
+    return new Html({ argument });
+  }
+
+  htmlComment(comment) {
+    return new HtmlComment({ comment });
+  }
+
+  comment(comment) {
+    return new Comment({ comment });
+  }
+
+  htmlElement(tagName, attributes, body, argument, openTagOnly, selfClosed) {
+    if (typeof tagName === "object" && !(tagName instanceof Node)) {
+      let def = arguments[0];
+      return new HtmlElement(def);
+    } else {
+      return new HtmlElement({
+        tagName,
+        attributes,
+        body,
+        argument,
+        openTagOnly,
+        selfClosed
+      });
+    }
+  }
+
+  htmlLiteral(htmlCode) {
+    var argument = new Literal({ value: htmlCode });
+    return new Html({ argument });
+  }
+
+  identifier(name) {
+    ok(typeof name === "string", '"name" should be a string');
+
+    if (!isValidJavaScriptIdentifier(name)) {
+      var error = new Error("Invalid JavaScript identifier: " + name);
+      error.code = "INVALID_IDENTIFIER";
+      throw error;
+    }
+    return new Identifier({ name });
+  }
+
+  identifierOut() {
+    return identifierOut;
+  }
+
+  ifStatement(test, body, elseStatement) {
+    test = makeNode(test);
+
+    return new If({ test, body, else: elseStatement });
+  }
+
+  literal(value) {
+    return new Literal({ value });
+  }
+
+  literalFalse() {
+    return literalFalse;
+  }
+
+  literalNull() {
+    return literalNull;
+  }
+
+  literalTrue() {
+    return literalTrue;
+  }
+
+  literalUndefined() {
+    return literalUndefined;
+  }
+
+  logicalExpression(left, operator, right) {
+    left = makeNode(left);
+    right = makeNode(right);
+    return new LogicalExpression({ left, operator, right });
+  }
+
+  macro(name, params, body) {
+    return new Macro({ name, params, body });
+  }
+
+  memberExpression(object, property, computed) {
+    object = makeNode(object);
+    property = makeNode(property);
+
+    return new MemberExpression({ object, property, computed });
+  }
+
+  moduleExports(value) {
+    let object = new Identifier({ name: "module" });
+    let property = new Identifier({ name: "exports" });
+
+    var moduleExports = new MemberExpression({ object, property });
+
+    if (value) {
+      return new Assignment({
+        left: moduleExports,
+        right: value,
+        operator: "="
+      });
+    } else {
+      return moduleExports;
+    }
+  }
+
+  negate(argument) {
+    argument = makeNode(argument);
+
+    var operator = "!";
+    var prefix = true;
+    return new UnaryExpression({ argument, operator, prefix });
+  }
+
+  newExpression(callee, args) {
+    callee = makeNode(callee);
+
+    if (args) {
+      if (!isArray(args)) {
+        args = [args];
+      }
+
+      for (var i = 0; i < args.length; i++) {
+        args[i] = makeNode(args[i]);
+      }
+    } else {
+      args = [];
+    }
+
+    return new NewExpression({ callee, args });
+  }
+
+  node(type, generateCode) {
+    if (typeof type === "function") {
+      generateCode = arguments[0];
+      type = "Node";
+    }
+
+    var node = new Node(type);
+    if (generateCode) {
+      node.setCodeGenerator(generateCode);
+    }
+    return node;
+  }
+
+  objectExpression(properties) {
+    if (properties) {
+      if (isArray(properties)) {
+        for (var i = 0; i < properties.length; i++) {
+          let prop = properties[i];
+          prop.value = makeNode(prop.value);
         }
-
-        return new ArrayExpression({ elements });
-    }
-
-    assignment(left, right, operator) {
-        if (operator == null) {
-            operator = "=";
-        }
-        left = makeNode(left);
-        right = makeNode(right);
-        return new Assignment({ left, right, operator });
-    }
-
-    binaryExpression(left, operator, right) {
-        left = makeNode(left);
-        right = makeNode(right);
-        return new BinaryExpression({ left, operator, right });
-    }
-
-    sequenceExpression(expressions) {
-        expressions = makeNode(expressions);
-        return new SequenceExpression({ expressions });
-    }
-
-    code(value) {
-        return new Code({ value });
-    }
-
-    computedMemberExpression(object, property) {
-        object = makeNode(object);
-        property = makeNode(property);
-        let computed = true;
-
-        return new MemberExpression({ object, property, computed });
-    }
-
-    /**
-     * Generates code that joins all of the arguments using `+` (BinaryExpression)
-     *
-     * @param  {Array} args If the args object is not an array then `arguments` is used
-     * @return {Node} The resulting Node
-     */
-    concat(args) {
-        var prev;
-        let operator = "+";
-        args = Array.isArray(args)
-            ? args
-            : Array.prototype.slice.call(arguments, 0);
-
-        for (var i = 1; i < args.length; i++) {
-            var left;
-            var right = makeNode(args[i]);
-            if (i === 1) {
-                left = makeNode(args[i - 1]);
-            } else {
-                left = prev;
-            }
-
-            prev = new BinaryExpression({ left, operator, right });
-        }
-
-        return prev;
-    }
-
-    conditionalExpression(test, consequent, alternate) {
-        return new ConditionalExpression({ test, consequent, alternate });
-    }
-
-    containerNode(type, codeGenerator) {
-        if (typeof type === "function") {
-            codeGenerator = arguments[0];
-            type = "ContainerNode";
-        }
-
-        var node = new ContainerNode(type);
-        if (codeGenerator) {
-            node.setCodeGenerator(codeGenerator);
-        }
-        return node;
-    }
-
-    customTag(el, tagDef) {
-        return new CustomTag(el, tagDef);
-    }
-
-    declaration(declaration) {
-        return new Declaration({ declaration });
-    }
-
-    documentType(documentType) {
-        return new DocumentType({ documentType });
-    }
-
-    elseStatement(body) {
-        return new Else({ body });
-    }
-
-    elseIfStatement(test, body, elseStatement) {
-        test = makeNode(test);
-
-        return new ElseIf({ test, body, else: elseStatement });
-    }
-
-    expression(value, ast) {
-        return new Expression({ value, ast });
-    }
-
-    forEach(params, ofExpression, body) {
-        return new ForEach(
-            arguments.length === 1
-                ? params
-                : {
-                      params: makeNode(params),
-                      of: makeNode(ofExpression),
-                      body
-                  }
-        );
-    }
-
-    forEachProp(params, inExpression, body) {
-        return new ForEachProp(
-            arguments.length === 1
-                ? params
-                : {
-                      params: makeNode(params),
-                      in: makeNode(inExpression),
-                      body
-                  }
-        );
-    }
-
-    forRange(params, from, to, step, body) {
-        return new ForRange(
-            arguments.length === 1
-                ? params
-                : {
-                      params: makeNode(params),
-                      from: makeNode(from),
-                      to: makeNode(to),
-                      step: makeNode(step),
-                      body
-                  }
-        );
-    }
-
-    forStatement(init, test, update, body) {
-        if (arguments.length === 1) {
-            var def = arguments[0];
-            return new ForStatement(def);
-        } else {
-            init = makeNode(init);
-            test = makeNode(test);
-            update = makeNode(update);
-            return new ForStatement({ init, test, update, body });
-        }
-    }
-
-    functionCall(callee, args) {
-        callee = makeNode(callee);
-
-        if (args) {
-            if (!isArray(args)) {
-                throw new Error('"args" should be an array');
-            }
-
-            for (var i = 0; i < args.length; i++) {
-                args[i] = makeNode(args[i]);
-            }
-        } else {
-            args = [];
-        }
-
-        return new FunctionCall({ callee, args });
-    }
-
-    functionDeclaration(name, params, body) {
-        return new FunctionDeclaration({ name, params, body });
-    }
-
-    html(argument) {
-        argument = makeNode(argument);
-
-        return new Html({ argument });
-    }
-
-    htmlComment(comment) {
-        return new HtmlComment({ comment });
-    }
-
-    comment(comment) {
-        return new Comment({ comment });
-    }
-
-    htmlElement(tagName, attributes, body, argument, openTagOnly, selfClosed) {
-        if (typeof tagName === "object" && !(tagName instanceof Node)) {
-            let def = arguments[0];
-            return new HtmlElement(def);
-        } else {
-            return new HtmlElement({
-                tagName,
-                attributes,
-                body,
-                argument,
-                openTagOnly,
-                selfClosed
-            });
-        }
-    }
-
-    htmlLiteral(htmlCode) {
-        var argument = new Literal({ value: htmlCode });
-        return new Html({ argument });
-    }
-
-    identifier(name) {
-        ok(typeof name === "string", '"name" should be a string');
-
-        if (!isValidJavaScriptIdentifier(name)) {
-            var error = new Error("Invalid JavaScript identifier: " + name);
-            error.code = "INVALID_IDENTIFIER";
-            throw error;
-        }
-        return new Identifier({ name });
-    }
-
-    identifierOut() {
-        return identifierOut;
-    }
-
-    ifStatement(test, body, elseStatement) {
-        test = makeNode(test);
-
-        return new If({ test, body, else: elseStatement });
-    }
-
-    literal(value) {
-        return new Literal({ value });
-    }
-
-    literalFalse() {
-        return literalFalse;
-    }
-
-    literalNull() {
-        return literalNull;
-    }
-
-    literalTrue() {
-        return literalTrue;
-    }
-
-    literalUndefined() {
-        return literalUndefined;
-    }
-
-    logicalExpression(left, operator, right) {
-        left = makeNode(left);
-        right = makeNode(right);
-        return new LogicalExpression({ left, operator, right });
-    }
-
-    macro(name, params, body) {
-        return new Macro({ name, params, body });
-    }
-
-    memberExpression(object, property, computed) {
-        object = makeNode(object);
-        property = makeNode(property);
-
-        return new MemberExpression({ object, property, computed });
-    }
-
-    moduleExports(value) {
-        let object = new Identifier({ name: "module" });
-        let property = new Identifier({ name: "exports" });
-
-        var moduleExports = new MemberExpression({ object, property });
-
-        if (value) {
-            return new Assignment({
-                left: moduleExports,
-                right: value,
-                operator: "="
-            });
-        } else {
-            return moduleExports;
-        }
-    }
-
-    negate(argument) {
-        argument = makeNode(argument);
-
-        var operator = "!";
-        var prefix = true;
-        return new UnaryExpression({ argument, operator, prefix });
-    }
-
-    newExpression(callee, args) {
-        callee = makeNode(callee);
-
-        if (args) {
-            if (!isArray(args)) {
-                args = [args];
-            }
-
-            for (var i = 0; i < args.length; i++) {
-                args[i] = makeNode(args[i]);
-            }
-        } else {
-            args = [];
-        }
-
-        return new NewExpression({ callee, args });
-    }
-
-    node(type, generateCode) {
-        if (typeof type === "function") {
-            generateCode = arguments[0];
-            type = "Node";
-        }
-
-        var node = new Node(type);
-        if (generateCode) {
-            node.setCodeGenerator(generateCode);
-        }
-        return node;
-    }
-
-    objectExpression(properties) {
-        if (properties) {
-            if (isArray(properties)) {
-                for (var i = 0; i < properties.length; i++) {
-                    let prop = properties[i];
-                    prop.value = makeNode(prop.value);
-                }
-            } else {
-                let propertiesObject = properties;
-                properties = Object.keys(propertiesObject).map(key => {
-                    let value = propertiesObject[key];
-                    if (!(value instanceof Node)) {
-                        value = value = new Literal({ value });
-                    }
-
-                    key = new Literal({ value: key });
-
-                    let property = new Property({ key, value });
-                    return property;
-                });
-            }
-        } else {
-            properties = [];
-        }
-
-        return new ObjectExpression({ properties });
-    }
-
-    parseExpression(str) {
-        ok(typeof str === "string", '"str" should be a string expression');
-        var parsed = parseExpression(str, DEFAULT_BUILDER);
-        return parsed;
-    }
-
-    parseJavaScriptArgs(args) {
-        ok(typeof args === "string", '"args" should be a string');
-        return parseJavaScriptArgs(args, DEFAULT_BUILDER);
-    }
-
-    parseJavaScriptParams(params) {
-        ok(typeof params === "string", '"params" should be a string');
-        return parseJavaScriptParams(params, DEFAULT_BUILDER);
-    }
-
-    parseStatement(str) {
-        ok(typeof str === "string", '"str" should be a string expression');
-        var parsed = parseStatement(str, DEFAULT_BUILDER);
-        return parsed;
-    }
-
-    replacePlaceholderEscapeFuncs(node) {
-        return node;
-    }
-
-    program(body) {
-        return new Program({ body });
-    }
-
-    property(key, value, computed) {
-        key = makeNode(key);
-        value = makeNode(value);
-        computed = computed === true;
-
-        return new Property({ key, value, computed });
-    }
-
-    renderBodyFunction(body, params) {
-        if (!params) {
-            params = [new Identifier({ name: "out" })];
-        }
-        return new FunctionDeclaration({ name: null, params, body });
-    }
-
-    require(path) {
-        path = makeNode(path);
-
-        let callee = identifierRequire;
-        let args = [path];
-        return new FunctionCall({ callee, args });
-    }
-
-    requireResolve(path) {
-        path = makeNode(path);
-
-        let callee = new MemberExpression({
-            object: new Identifier({ name: "require" }),
-            property: new Identifier({ name: "resolve" })
+      } else {
+        let propertiesObject = properties;
+        properties = Object.keys(propertiesObject).map(key => {
+          let value = propertiesObject[key];
+          if (!(value instanceof Node)) {
+            value = value = new Literal({ value });
+          }
+
+          key = new Literal({ value: key });
+
+          let property = new Property({ key, value });
+          return property;
         });
-
-        let args = [path];
-        return new FunctionCall({ callee, args });
+      }
+    } else {
+      properties = [];
     }
 
-    returnStatement(argument) {
-        argument = makeNode(argument);
+    return new ObjectExpression({ properties });
+  }
 
-        return new Return({ argument });
+  parseExpression(str) {
+    ok(typeof str === "string", '"str" should be a string expression');
+    var parsed = parseExpression(str, DEFAULT_BUILDER);
+    return parsed;
+  }
+
+  parseJavaScriptArgs(args) {
+    ok(typeof args === "string", '"args" should be a string');
+    return parseJavaScriptArgs(args, DEFAULT_BUILDER);
+  }
+
+  parseJavaScriptParams(params) {
+    ok(typeof params === "string", '"params" should be a string');
+    return parseJavaScriptParams(params, DEFAULT_BUILDER);
+  }
+
+  parseStatement(str) {
+    ok(typeof str === "string", '"str" should be a string expression');
+    var parsed = parseStatement(str, DEFAULT_BUILDER);
+    return parsed;
+  }
+
+  replacePlaceholderEscapeFuncs(node) {
+    return node;
+  }
+
+  program(body) {
+    return new Program({ body });
+  }
+
+  property(key, value, computed) {
+    key = makeNode(key);
+    value = makeNode(value);
+    computed = computed === true;
+
+    return new Property({ key, value, computed });
+  }
+
+  renderBodyFunction(body, params) {
+    if (!params) {
+      params = [new Identifier({ name: "out" })];
+    }
+    return new FunctionDeclaration({ name: null, params, body });
+  }
+
+  require(path) {
+    path = makeNode(path);
+
+    let callee = identifierRequire;
+    let args = [path];
+    return new FunctionCall({ callee, args });
+  }
+
+  requireResolve(path) {
+    path = makeNode(path);
+
+    let callee = new MemberExpression({
+      object: new Identifier({ name: "require" }),
+      property: new Identifier({ name: "resolve" })
+    });
+
+    let args = [path];
+    return new FunctionCall({ callee, args });
+  }
+
+  returnStatement(argument) {
+    argument = makeNode(argument);
+
+    return new Return({ argument });
+  }
+
+  scriptlet(scriptlet) {
+    return new Scriptlet({
+      code: scriptlet.value,
+      tag: scriptlet.tag,
+      block: scriptlet.block
+    });
+  }
+
+  selfInvokingFunction(params, args, body) {
+    if (arguments.length === 1) {
+      body = arguments[0];
+      params = null;
+      args = null;
     }
 
-    scriptlet(scriptlet) {
-        return new Scriptlet({
-            code: scriptlet.value,
-            tag: scriptlet.tag,
-            block: scriptlet.block
-        });
+    return new SelfInvokingFunction({ params, args, body });
+  }
+
+  strictEquality(left, right) {
+    left = makeNode(left);
+    right = makeNode(right);
+
+    var operator = "===";
+    return new BinaryExpression({ left, right, operator });
+  }
+
+  templateLiteral(quasis, expressions) {
+    return new TemplateLiteral({ quasis, expressions });
+  }
+
+  templateRoot(body) {
+    return new TemplateRoot({ body });
+  }
+
+  text(argument, escape, preserveWhitespace) {
+    if (typeof argument === "object" && !(argument instanceof Node)) {
+      var def = arguments[0];
+      return new Text(def);
+    }
+    argument = makeNode(argument);
+
+    return new Text({ argument, escape, preserveWhitespace });
+  }
+
+  thisExpression() {
+    return new ThisExpression();
+  }
+
+  unaryExpression(argument, operator, prefix) {
+    argument = makeNode(argument);
+
+    return new UnaryExpression({ argument, operator, prefix });
+  }
+
+  updateExpression(argument, operator, prefix) {
+    argument = makeNode(argument);
+    return new UpdateExpression({ argument, operator, prefix });
+  }
+
+  variableDeclarator(id, init) {
+    if (typeof id === "string") {
+      id = new Identifier({ name: id });
+    }
+    if (init) {
+      init = makeNode(init);
     }
 
-    selfInvokingFunction(params, args, body) {
-        if (arguments.length === 1) {
-            body = arguments[0];
-            params = null;
-            args = null;
-        }
+    return new VariableDeclarator({ id, init });
+  }
 
-        return new SelfInvokingFunction({ params, args, body });
+  var(id, init, kind) {
+    if (!kind) {
+      kind = "var";
     }
 
-    strictEquality(left, right) {
-        left = makeNode(left);
-        right = makeNode(right);
+    id = makeNode(id);
+    init = makeNode(init);
 
-        var operator = "===";
-        return new BinaryExpression({ left, right, operator });
-    }
+    var declarations = [new VariableDeclarator({ id, init })];
 
-    templateLiteral(quasis, expressions) {
-        return new TemplateLiteral({ quasis, expressions });
-    }
+    return new Vars({ declarations, kind });
+  }
 
-    templateRoot(body) {
-        return new TemplateRoot({ body });
-    }
+  vars(declarations, kind) {
+    if (declarations) {
+      if (Array.isArray(declarations)) {
+        for (let i = 0; i < declarations.length; i++) {
+          var declaration = declarations[i];
+          if (!declaration) {
+            throw new Error("Invalid variable declaration");
+          }
+          if (typeof declaration === "string") {
+            declarations[i] = new VariableDeclarator({
+              id: new Identifier({ name: declaration })
+            });
+          } else if (declaration instanceof Identifier) {
+            declarations[i] = new VariableDeclarator({
+              id: declaration
+            });
+          } else if (typeof declaration === "object") {
+            if (!(declaration instanceof VariableDeclarator)) {
+              let id = declaration.id;
+              let init = declaration.init;
 
-    text(argument, escape, preserveWhitespace) {
-        if (typeof argument === "object" && !(argument instanceof Node)) {
-            var def = arguments[0];
-            return new Text(def);
-        }
-        argument = makeNode(argument);
+              if (typeof id === "string") {
+                id = new Identifier({ name: id });
+              }
 
-        return new Text({ argument, escape, preserveWhitespace });
-    }
+              if (!id) {
+                throw new Error("Invalid variable declaration");
+              }
 
-    thisExpression() {
-        return new ThisExpression();
-    }
+              if (init) {
+                init = makeNode(init);
+              }
 
-    unaryExpression(argument, operator, prefix) {
-        argument = makeNode(argument);
-
-        return new UnaryExpression({ argument, operator, prefix });
-    }
-
-    updateExpression(argument, operator, prefix) {
-        argument = makeNode(argument);
-        return new UpdateExpression({ argument, operator, prefix });
-    }
-
-    variableDeclarator(id, init) {
-        if (typeof id === "string") {
-            id = new Identifier({ name: id });
-        }
-        if (init) {
-            init = makeNode(init);
-        }
-
-        return new VariableDeclarator({ id, init });
-    }
-
-    var(id, init, kind) {
-        if (!kind) {
-            kind = "var";
-        }
-
-        id = makeNode(id);
-        init = makeNode(init);
-
-        var declarations = [new VariableDeclarator({ id, init })];
-
-        return new Vars({ declarations, kind });
-    }
-
-    vars(declarations, kind) {
-        if (declarations) {
-            if (Array.isArray(declarations)) {
-                for (let i = 0; i < declarations.length; i++) {
-                    var declaration = declarations[i];
-                    if (!declaration) {
-                        throw new Error("Invalid variable declaration");
-                    }
-                    if (typeof declaration === "string") {
-                        declarations[i] = new VariableDeclarator({
-                            id: new Identifier({ name: declaration })
-                        });
-                    } else if (declaration instanceof Identifier) {
-                        declarations[i] = new VariableDeclarator({
-                            id: declaration
-                        });
-                    } else if (typeof declaration === "object") {
-                        if (!(declaration instanceof VariableDeclarator)) {
-                            let id = declaration.id;
-                            let init = declaration.init;
-
-                            if (typeof id === "string") {
-                                id = new Identifier({ name: id });
-                            }
-
-                            if (!id) {
-                                throw new Error("Invalid variable declaration");
-                            }
-
-                            if (init) {
-                                init = makeNode(init);
-                            }
-
-                            declarations[i] = new VariableDeclarator({
-                                id,
-                                init
-                            });
-                        }
-                    }
-                }
-            } else if (typeof declarations === "object") {
-                // Convert the object into an array of variables
-                declarations = Object.keys(declarations).map(key => {
-                    let id = new Identifier({ name: key });
-                    let init = makeNode(declarations[key]);
-                    return new VariableDeclarator({ id, init });
-                });
+              declarations[i] = new VariableDeclarator({
+                id,
+                init
+              });
             }
+          }
         }
-
-        return new Vars({ declarations, kind });
+      } else if (typeof declarations === "object") {
+        // Convert the object into an array of variables
+        declarations = Object.keys(declarations).map(key => {
+          let id = new Identifier({ name: key });
+          let init = makeNode(declarations[key]);
+          return new VariableDeclarator({ id, init });
+        });
+      }
     }
 
-    whileStatement(test, body) {
-        return new WhileStatement({ test, body });
-    }
+    return new Vars({ declarations, kind });
+  }
+
+  whileStatement(test, body) {
+    return new WhileStatement({ test, body });
+  }
 }
 
 DEFAULT_BUILDER = new Builder();

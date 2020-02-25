@@ -1,5 +1,5 @@
 exports.templateData = {
-    message: {
-        safeHTML: "<span>Hello World</span>"
-    }
+  message: {
+    safeHTML: "<span>Hello World</span>"
+  }
 };

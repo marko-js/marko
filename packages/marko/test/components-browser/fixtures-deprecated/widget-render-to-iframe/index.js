@@ -1,17 +1,17 @@
 var iframeContentComponent = require("./components/app-iframe-content");
 
 module.exports = require("marko/legacy-components").defineComponent({
-    template: require.resolve("./template.marko"),
+  template: require.resolve("./template.marko"),
 
-    renderIntoIframe: function() {
-        var frameEl = this.getFrameEl();
-        return iframeContentComponent
-            .renderSync({})
-            .appendTo(frameEl.contentWindow.document.body)
-            .getWidget();
-    },
+  renderIntoIframe: function() {
+    var frameEl = this.getFrameEl();
+    return iframeContentComponent
+      .renderSync({})
+      .appendTo(frameEl.contentWindow.document.body)
+      .getWidget();
+  },
 
-    getFrameEl: function() {
-        return this.getEl("frame");
-    }
+  getFrameEl: function() {
+    return this.getEl("frame");
+  }
 });

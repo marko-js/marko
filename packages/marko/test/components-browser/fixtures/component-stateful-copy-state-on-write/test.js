@@ -1,14 +1,14 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./"), {});
+  var component = helpers.mount(require.resolve("./"), {});
 
-    var oldState = component.state.toJSON();
-    component.setState("foo", "bar");
+  var oldState = component.state.toJSON();
+  component.setState("foo", "bar");
 
-    expect(component.state.toJSON()).to.not.equal(oldState);
+  expect(component.state.toJSON()).to.not.equal(oldState);
 
-    oldState = component.state.toJSON();
-    component.setState("hello", "world");
-    expect(component.state.toJSON()).to.equal(oldState);
+  oldState = component.state.toJSON();
+  component.setState("hello", "world");
+  expect(component.state.toJSON()).to.equal(oldState);
 };

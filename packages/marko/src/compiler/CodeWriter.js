@@ -10,263 +10,263 @@ const Comment = require("./ast/Comment");
 const isValidJavaScriptVarName = require("./util/isValidJavaScriptVarName");
 
 class CodeWriter {
-    constructor(options, builder) {
-        ok(builder, '"builder" is required');
-        options = options || {};
-        this.builder = builder;
-        this.root = null;
-        this._indentStr = options.indent != null ? options.indent : "  ";
-        this._indentSize = this._indentStr.length;
+  constructor(options, builder) {
+    ok(builder, '"builder" is required');
+    options = options || {};
+    this.builder = builder;
+    this.root = null;
+    this._indentStr = options.indent != null ? options.indent : "  ";
+    this._indentSize = this._indentStr.length;
 
-        this._code = "";
-        this.currentIndent = "";
+    this._code = "";
+    this.currentIndent = "";
+  }
+
+  getCode() {
+    return this._code;
+  }
+
+  writeBlock(body) {
+    if (!body) {
+      this.write("{}");
+      return;
     }
 
-    getCode() {
-        return this._code;
+    if (typeof body === "function") {
+      body = body();
     }
 
-    writeBlock(body) {
-        if (!body) {
-            this.write("{}");
-            return;
+    if (
+      !body ||
+      (Array.isArray(body) && body.length === 0) ||
+      (body instanceof Container && body.length === 0)
+    ) {
+      this.write("{}");
+      return;
+    }
+
+    this.write("{\n").incIndent();
+
+    this.writeStatements(body);
+
+    this.decIndent()
+      .writeLineIndent()
+      .write("}");
+  }
+
+  writeStatements(nodes) {
+    if (!nodes) {
+      return;
+    }
+
+    ok(nodes, '"nodes" expected');
+    let firstStatement = true;
+
+    var writeNode = node => {
+      if (Array.isArray(node) || node instanceof Container) {
+        node.forEach(writeNode);
+        return;
+      } else {
+        if (firstStatement) {
+          firstStatement = false;
+        } else {
+          this._write("\n");
         }
 
-        if (typeof body === "function") {
-            body = body();
+        this.writeLineIndent();
+
+        if (typeof node === "string") {
+          this._write(node);
+        } else {
+          node.statement = true;
+          this.write(node);
         }
 
-        if (
-            !body ||
-            (Array.isArray(body) && body.length === 0) ||
-            (body instanceof Container && body.length === 0)
+        if (this._code.endsWith("\n")) {
+          // Do nothing
+        } else if (this._code.endsWith(";")) {
+          this._code += "\n";
+        } else if (
+          this._code.endsWith("\n" + this.currentIndent) ||
+          node instanceof Comment
         ) {
-            this.write("{}");
-            return;
-        }
-
-        this.write("{\n").incIndent();
-
-        this.writeStatements(body);
-
-        this.decIndent()
-            .writeLineIndent()
-            .write("}");
-    }
-
-    writeStatements(nodes) {
-        if (!nodes) {
-            return;
-        }
-
-        ok(nodes, '"nodes" expected');
-        let firstStatement = true;
-
-        var writeNode = node => {
-            if (Array.isArray(node) || node instanceof Container) {
-                node.forEach(writeNode);
-                return;
-            } else {
-                if (firstStatement) {
-                    firstStatement = false;
-                } else {
-                    this._write("\n");
-                }
-
-                this.writeLineIndent();
-
-                if (typeof node === "string") {
-                    this._write(node);
-                } else {
-                    node.statement = true;
-                    this.write(node);
-                }
-
-                if (this._code.endsWith("\n")) {
-                    // Do nothing
-                } else if (this._code.endsWith(";")) {
-                    this._code += "\n";
-                } else if (
-                    this._code.endsWith("\n" + this.currentIndent) ||
-                    node instanceof Comment
-                ) {
-                    // Do nothing
-                } else {
-                    this._code += ";\n";
-                }
-            }
-        };
-
-        if (nodes instanceof Node) {
-            writeNode(nodes);
+          // Do nothing
         } else {
-            nodes.forEach(writeNode);
+          this._code += ";\n";
         }
+      }
+    };
+
+    if (nodes instanceof Node) {
+      writeNode(nodes);
+    } else {
+      nodes.forEach(writeNode);
+    }
+  }
+
+  write(code) {
+    if (code == null || code === "") {
+      return;
     }
 
-    write(code) {
-        if (code == null || code === "") {
-            return;
-        }
-
-        if (code instanceof Node) {
-            let node = code;
-            if (!node.writeCode) {
-                throw new Error(
-                    "Node does not have a `writeCode` method: " +
-                        JSON.stringify(node, null, 4)
-                );
-            }
-            node.writeCode(this);
-        } else if (isArray(code) || code instanceof Container) {
-            code.forEach(this.write, this);
-            return;
-        } else if (typeof code === "string") {
-            this._code += code;
-        } else if (typeof code === "boolean" || typeof code === "number") {
-            this._code += code.toString();
-        } else {
-            throw new Error("Illegal argument: " + JSON.stringify(code));
-        }
-
-        return this;
-    }
-
-    _write(code) {
-        this._code += code;
-        return this;
-    }
-
-    incIndent(count) {
-        if (count != null) {
-            for (let i = 0; i < count; i++) {
-                this.currentIndent += " ";
-            }
-        } else {
-            this.currentIndent += this._indentStr;
-        }
-
-        return this;
-    }
-
-    decIndent(count) {
-        if (count == null) {
-            count = this._indentSize;
-        }
-
-        this.currentIndent = this.currentIndent.substring(
-            0,
-            this.currentIndent.length - count
+    if (code instanceof Node) {
+      let node = code;
+      if (!node.writeCode) {
+        throw new Error(
+          "Node does not have a `writeCode` method: " +
+            JSON.stringify(node, null, 4)
         );
-
-        return this;
+      }
+      node.writeCode(this);
+    } else if (isArray(code) || code instanceof Container) {
+      code.forEach(this.write, this);
+      return;
+    } else if (typeof code === "string") {
+      this._code += code;
+    } else if (typeof code === "boolean" || typeof code === "number") {
+      this._code += code.toString();
+    } else {
+      throw new Error("Illegal argument: " + JSON.stringify(code));
     }
 
-    writeLineIndent() {
-        this._code += this.currentIndent;
-        return this;
+    return this;
+  }
+
+  _write(code) {
+    this._code += code;
+    return this;
+  }
+
+  incIndent(count) {
+    if (count != null) {
+      for (let i = 0; i < count; i++) {
+        this.currentIndent += " ";
+      }
+    } else {
+      this.currentIndent += this._indentStr;
     }
 
-    writeIndent() {
-        this._code += this._indentStr;
-        return this;
+    return this;
+  }
+
+  decIndent(count) {
+    if (count == null) {
+      count = this._indentSize;
     }
 
-    isLiteralNode(node) {
-        return node instanceof Literal;
-    }
+    this.currentIndent = this.currentIndent.substring(
+      0,
+      this.currentIndent.length - count
+    );
 
-    isIdentifierNode(node) {
-        return node instanceof Identifier;
-    }
+    return this;
+  }
 
-    writeLiteral(value) {
-        if (value === null) {
-            this.write("null");
-        } else if (value === undefined) {
-            this.write("undefined");
-        } else if (typeof value === "string") {
-            this.write(JSON.stringify(value));
-        } else if (value === true) {
-            this.write("true");
-        } else if (value === false) {
-            this.write("false");
-        } else if (isArray(value)) {
-            if (value.length === 0) {
-                this.write("[]");
-                return;
-            }
+  writeLineIndent() {
+    this._code += this.currentIndent;
+    return this;
+  }
 
-            this.write("[\n");
-            this.incIndent();
+  writeIndent() {
+    this._code += this._indentStr;
+    return this;
+  }
 
-            for (let i = 0; i < value.length; i++) {
-                let v = value[i];
+  isLiteralNode(node) {
+    return node instanceof Literal;
+  }
 
-                this.writeLineIndent();
+  isIdentifierNode(node) {
+    return node instanceof Identifier;
+  }
 
-                if (v instanceof Node) {
-                    this.write(v);
-                } else {
-                    this.writeLiteral(v);
-                }
+  writeLiteral(value) {
+    if (value === null) {
+      this.write("null");
+    } else if (value === undefined) {
+      this.write("undefined");
+    } else if (typeof value === "string") {
+      this.write(JSON.stringify(value));
+    } else if (value === true) {
+      this.write("true");
+    } else if (value === false) {
+      this.write("false");
+    } else if (isArray(value)) {
+      if (value.length === 0) {
+        this.write("[]");
+        return;
+      }
 
-                if (i < value.length - 1) {
-                    this.write(",\n");
-                } else {
-                    this.write("\n");
-                }
-            }
+      this.write("[\n");
+      this.incIndent();
 
-            this.decIndent();
-            this.writeLineIndent();
-            this.write("]");
-        } else if (typeof value === "number") {
-            this.write(value.toString());
-        } else if (value instanceof RegExp) {
-            this.write(value.toString());
-        } else if (typeof value === "object") {
-            let keys = Object.keys(value);
-            if (keys.length === 0) {
-                this.write("{}");
-                return;
-            }
+      for (let i = 0; i < value.length; i++) {
+        let v = value[i];
 
-            this.incIndent();
-            this.write("{\n");
-            this.incIndent();
+        this.writeLineIndent();
 
-            for (let i = 0; i < keys.length; i++) {
-                let k = keys[i];
-                let v = value[k];
-
-                this.writeLineIndent();
-
-                if (isValidJavaScriptVarName(k)) {
-                    this.write(k + ": ");
-                } else {
-                    this.write(JSON.stringify(k) + ": ");
-                }
-
-                if (v instanceof Node) {
-                    this.write(v);
-                } else {
-                    this.writeLiteral(v);
-                }
-
-                if (i < keys.length - 1) {
-                    this.write(",\n");
-                } else {
-                    this.write("\n");
-                }
-            }
-
-            this.decIndent();
-            this.writeLineIndent();
-            this.write("}");
-            this.decIndent();
+        if (v instanceof Node) {
+          this.write(v);
+        } else {
+          this.writeLiteral(v);
         }
+
+        if (i < value.length - 1) {
+          this.write(",\n");
+        } else {
+          this.write("\n");
+        }
+      }
+
+      this.decIndent();
+      this.writeLineIndent();
+      this.write("]");
+    } else if (typeof value === "number") {
+      this.write(value.toString());
+    } else if (value instanceof RegExp) {
+      this.write(value.toString());
+    } else if (typeof value === "object") {
+      let keys = Object.keys(value);
+      if (keys.length === 0) {
+        this.write("{}");
+        return;
+      }
+
+      this.incIndent();
+      this.write("{\n");
+      this.incIndent();
+
+      for (let i = 0; i < keys.length; i++) {
+        let k = keys[i];
+        let v = value[k];
+
+        this.writeLineIndent();
+
+        if (isValidJavaScriptVarName(k)) {
+          this.write(k + ": ");
+        } else {
+          this.write(JSON.stringify(k) + ": ");
+        }
+
+        if (v instanceof Node) {
+          this.write(v);
+        } else {
+          this.writeLiteral(v);
+        }
+
+        if (i < keys.length - 1) {
+          this.write(",\n");
+        } else {
+          this.write("\n");
+        }
+      }
+
+      this.decIndent();
+      this.writeLineIndent();
+      this.write("}");
+      this.decIndent();
     }
+  }
 }
 
 module.exports = CodeWriter;

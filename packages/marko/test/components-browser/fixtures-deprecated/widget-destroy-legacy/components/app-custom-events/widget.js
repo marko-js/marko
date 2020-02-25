@@ -1,5 +1,5 @@
 function Widget(config) {
-    this.name = config.name;
+  this.name = config.name;
 }
 
 Widget.prototype = {};

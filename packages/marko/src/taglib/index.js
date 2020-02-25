@@ -5,20 +5,20 @@ const taglibLookup = require("./taglib-lookup");
 const taglibLoader = require("./taglib-loader");
 
 function clearCache() {
-    taglibLookup.clearCache();
-    taglibFinder.clearCache();
-    taglibLoader.clearCache();
+  taglibLookup.clearCache();
+  taglibFinder.clearCache();
+  taglibLoader.clearCache();
 }
 
 function register(taglibProps, taglibPath) {
-    const taglib = taglibLoader.createTaglib(taglibPath);
-    taglibLoader.loadTaglibFromProps(taglib, taglibProps);
-    taglibLookup.registerTaglib(taglib);
+  const taglib = taglibLoader.createTaglib(taglibPath);
+  taglibLoader.loadTaglibFromProps(taglib, taglibProps);
+  taglibLookup.registerTaglib(taglib);
 }
 
 function registerFromFile(taglibPath) {
-    const taglib = taglibLoader.loadTaglibFromFile(taglibPath);
-    taglibLookup.registerTaglib(taglib);
+  const taglib = taglibLoader.loadTaglibFromFile(taglibPath);
+  taglibLookup.registerTaglib(taglib);
 }
 
 exports.clearCache = clearCache;

@@ -1,8 +1,8 @@
 {
-    "attributes": {
-        "name": {
-            "type": "string",
-            "target-property": "NAME"
-        }
+  "attributes": {
+    "name": {
+      "type": "string",
+      "target-property": "NAME"
     }
+  }
 }

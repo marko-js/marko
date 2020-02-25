@@ -1,19 +1,19 @@
 var expect = require("chai").expect;
 
 it("should allow component to be split from renderer", function() {
-    var component = window.appButtonSplit;
-    expect(component.el.innerHTML).to.equal("Test Button");
-    component.setLabel("New Label");
-    expect(component.el.innerHTML).to.equal("New Label");
+  var component = window.appButtonSplit;
+  expect(component.el.innerHTML).to.equal("Test Button");
+  component.setLabel("New Label");
+  expect(component.el.innerHTML).to.equal("New Label");
 });
 
 it("should allow component to be split from renderer and for browser file to export class", function() {
-    var component = window.appButtonSplitExportClass;
-    expect(component.el.innerHTML).to.equal("Test Button");
-    component.setLabel("New Label");
-    expect(component.el.innerHTML).to.equal("New Label");
+  var component = window.appButtonSplitExportClass;
+  expect(component.el.innerHTML).to.equal("Test Button");
+  component.setLabel("New Label");
+  expect(component.el.innerHTML).to.equal("New Label");
 });
 
 it("should allow UI component to only have a component and an index.marko", function() {
-    expect(window.componentOnly).to.be.an("object");
+  expect(window.componentOnly).to.be.an("object");
 });

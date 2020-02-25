@@ -5,52 +5,52 @@ const generateRegisterComponentCode = require("./util/generateRegisterComponentC
 const resolveFrom = require("resolve-from");
 
 module.exports = function codeGenerator(el, codegen) {
-    var context = codegen.context;
-    var transformHelper = getTransformHelper(el, context);
+  var context = codegen.context;
+  var transformHelper = getTransformHelper(el, context);
 
-    context.setMeta("legacy", true);
+  context.setMeta("legacy", true);
 
-    var builder = codegen.builder;
+  var builder = codegen.builder;
 
-    var attrs = el.getAttributes();
+  var attrs = el.getAttributes();
 
-    var typesObject = {};
+  var typesObject = {};
 
-    attrs.forEach(attr => {
-        if (!attr.isLiteralString()) {
-            codegen.addError("Component type should be a string");
-            return;
-        }
+  attrs.forEach(attr => {
+    if (!attr.isLiteralString()) {
+      codegen.addError("Component type should be a string");
+      return;
+    }
 
-        let requirePath = attr.literalValue;
+    let requirePath = attr.literalValue;
 
-        let filename = resolveFrom(transformHelper.dirname, requirePath);
+    let filename = resolveFrom(transformHelper.dirname, requirePath);
 
-        if (!filename) {
-            transformHelper.addError(
-                "Target file not found: " +
-                    requirePath +
-                    " (from: " +
-                    transformHelper.dirname +
-                    ")"
-            );
-            return;
-        }
+    if (!filename) {
+      transformHelper.addError(
+        "Target file not found: " +
+          requirePath +
+          " (from: " +
+          transformHelper.dirname +
+          ")"
+      );
+      return;
+    }
 
-        let componentModule = {
-            legacy: true,
-            filename: filename,
-            requirePath: requirePath
-        };
+    let componentModule = {
+      legacy: true,
+      filename: filename,
+      requirePath: requirePath
+    };
 
-        typesObject[attr.name] = generateRegisterComponentCode(
-            componentModule,
-            transformHelper,
-            false
-        ).node;
-    });
+    typesObject[attr.name] = generateRegisterComponentCode(
+      componentModule,
+      transformHelper,
+      false
+    ).node;
+  });
 
-    codegen.addStaticVar("marko_componentTypes", builder.literal(typesObject));
+  codegen.addStaticVar("marko_componentTypes", builder.literal(typesObject));
 
-    return null;
+  return null;
 };

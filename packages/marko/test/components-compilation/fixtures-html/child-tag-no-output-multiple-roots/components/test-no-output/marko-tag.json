@@ -1,4 +1,4 @@
 {
-    "renderer": "./renderer",
-    "noOutput": true
+  "renderer": "./renderer",
+  "noOutput": true
 }

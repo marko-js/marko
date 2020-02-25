@@ -1,7 +1,7 @@
 module.exports = {
-    onInput: function(input) {
-        this.name = input.name;
-    },
+  onInput: function(input) {
+    this.name = input.name;
+  },
 
-    onMount: function() {}
+  onMount: function() {}
 };

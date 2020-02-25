@@ -1,16 +1,16 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {});
+  var component = helpers.mount(require.resolve("./index"), {});
 
-    var children;
+  var children;
 
-    children = component.getEl("root").children;
-    expect(children.length).to.equal(3);
+  children = component.getEl("root").children;
+  expect(children.length).to.equal(3);
 
-    component.state.count++;
-    component.update();
+  component.state.count++;
+  component.update();
 
-    children = component.getEl("root").children;
-    expect(children.length).to.equal(2);
+  children = component.getEl("root").children;
+  expect(children.length).to.equal(2);
 };

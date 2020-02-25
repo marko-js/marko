@@ -3,87 +3,87 @@ var fs = require("fs");
 var requireHook = require("../../../../node-require");
 
 function compileAndCheck(path, shouldWriteToDisk) {
-    var resolved = require.resolve(path);
-    var compiledFile = resolved + ".js";
+  var resolved = require.resolve(path);
+  var compiledFile = resolved + ".js";
 
-    try {
-        fs.unlinkSync(compiledFile);
-    } catch (e) {
-        /* ignore error */
-    }
+  try {
+    fs.unlinkSync(compiledFile);
+  } catch (e) {
+    /* ignore error */
+  }
 
-    require(resolved);
+  require(resolved);
 
-    expect(fs.existsSync(compiledFile)).to.equal(shouldWriteToDisk);
+  expect(fs.existsSync(compiledFile)).to.equal(shouldWriteToDisk);
 }
 
 exports.check = function(marko, markoCompiler, expect, helpers, done) {
-    try {
-        requireHook.install({
-            compilerOptions: {
-                writeToDisk: true,
-                preserveWhitespace: true
-            }
-        }); // Reconfigure for testing
+  try {
+    requireHook.install({
+      compilerOptions: {
+        writeToDisk: true,
+        preserveWhitespace: true
+      }
+    }); // Reconfigure for testing
 
-        expect(markoCompiler.config.writeToDisk).to.equal(true);
-        expect(markoCompiler.config.preserveWhitespace).to.equal(true);
+    expect(markoCompiler.config.writeToDisk).to.equal(true);
+    expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
-        compileAndCheck("./a.marko", true /* should write to disk */);
+    compileAndCheck("./a.marko", true /* should write to disk */);
 
-        requireHook.install({
-            compilerOptions: {
-                writeToDisk: false,
-                preserveWhitespace: false
-            }
-        });
+    requireHook.install({
+      compilerOptions: {
+        writeToDisk: false,
+        preserveWhitespace: false
+      }
+    });
 
-        expect(markoCompiler.config.writeToDisk).to.equal(false);
-        expect(markoCompiler.config.preserveWhitespace).to.equal(false);
+    expect(markoCompiler.config.writeToDisk).to.equal(false);
+    expect(markoCompiler.config.preserveWhitespace).to.equal(false);
 
-        markoCompiler.configure({
-            writeToDisk: true,
-            preserveWhitespace: true
-        });
+    markoCompiler.configure({
+      writeToDisk: true,
+      preserveWhitespace: true
+    });
 
-        expect(markoCompiler.config.writeToDisk).to.equal(true);
-        expect(markoCompiler.config.preserveWhitespace).to.equal(true);
+    expect(markoCompiler.config.writeToDisk).to.equal(true);
+    expect(markoCompiler.config.preserveWhitespace).to.equal(true);
 
-        compileAndCheck("./b.marko", false /* should write to disk */);
+    compileAndCheck("./b.marko", false /* should write to disk */);
 
-        markoCompiler.configure(); // Reset to defaults
-        expect(markoCompiler.config.writeToDisk).to.equal(true);
-        expect(markoCompiler.config.preserveWhitespace).to.equal(false);
+    markoCompiler.configure(); // Reset to defaults
+    expect(markoCompiler.config.writeToDisk).to.equal(true);
+    expect(markoCompiler.config.preserveWhitespace).to.equal(false);
 
-        requireHook.install({
-            compilerOptions: {
-                writeToDisk: true,
-                preserveWhitespace: false
-            }
-        });
+    requireHook.install({
+      compilerOptions: {
+        writeToDisk: true,
+        preserveWhitespace: false
+      }
+    });
 
-        compileAndCheck("./c.marko", true /* should write to disk */);
+    compileAndCheck("./c.marko", true /* should write to disk */);
 
-        requireHook.install({
-            compilerOptions: {
-                preserveWhitespace: false
-            }
-        });
+    requireHook.install({
+      compilerOptions: {
+        preserveWhitespace: false
+      }
+    });
 
-        markoCompiler.configure({
-            writeToDisk: false,
-            preserveWhitespace: true
-        });
+    markoCompiler.configure({
+      writeToDisk: false,
+      preserveWhitespace: true
+    });
 
-        compileAndCheck("./d.marko", false /* should write to disk */);
+    compileAndCheck("./d.marko", false /* should write to disk */);
 
-        done();
-    } finally {
-        // Reset require hook.
-        requireHook.install({
-            compilerOptions: {
-                writeToDisk: false
-            }
-        });
-    }
+    done();
+  } finally {
+    // Reset require hook.
+    requireHook.install({
+      compilerOptions: {
+        writeToDisk: false
+      }
+    });
+  }
 };

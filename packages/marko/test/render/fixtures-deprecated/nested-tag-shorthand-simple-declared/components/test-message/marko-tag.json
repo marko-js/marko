@@ -1,8 +1,8 @@
 {
-    "<header>": {
-        "@label": "string"
-    },
-    "<body>": {
-        "@label": "string"
-    }
+  "<header>": {
+    "@label": "string"
+  },
+  "<body>": {
+    "@label": "string"
+  }
 }

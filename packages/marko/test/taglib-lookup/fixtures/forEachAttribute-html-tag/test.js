@@ -1,14 +1,14 @@
 exports.check = function(markoCompiler, expect) {
-    var taglibLookup = markoCompiler.taglibLookup;
-    var lookup = taglibLookup.buildLookup(__dirname);
+  var taglibLookup = markoCompiler.taglibLookup;
+  var lookup = taglibLookup.buildLookup(__dirname);
 
-    var hasHrefAttr = false;
+  var hasHrefAttr = false;
 
-    lookup.forEachAttribute("a", attr => {
-        if (attr.name === "href") {
-            hasHrefAttr = true;
-        }
-    });
+  lookup.forEachAttribute("a", attr => {
+    if (attr.name === "href") {
+      hasHrefAttr = true;
+    }
+  });
 
-    expect(hasHrefAttr).to.equal(true);
+  expect(hasHrefAttr).to.equal(true);
 };

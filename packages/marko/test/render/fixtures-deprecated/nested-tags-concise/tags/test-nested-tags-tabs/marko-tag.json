@@ -1,7 +1,7 @@
 {
-    "renderer": "./renderer",
-    "@orientation": "string",
-    "@tabs <tab>[]": {
-        "@title": "string"
-    }
+  "renderer": "./renderer",
+  "@orientation": "string",
+  "@tabs <tab>[]": {
+    "@title": "string"
+  }
 }

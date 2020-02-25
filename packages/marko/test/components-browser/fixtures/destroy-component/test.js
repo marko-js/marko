@@ -1,27 +1,27 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {
-        showSimple: true
-    });
+  var component = helpers.mount(require.resolve("./index"), {
+    showSimple: true
+  });
 
-    var simple = component.getComponent("simple");
-    var simpleDestroyed = false;
+  var simple = component.getComponent("simple");
+  var simpleDestroyed = false;
 
-    simple.onDestroy = function() {
-        simpleDestroyed = true;
-    };
+  simple.onDestroy = function() {
+    simpleDestroyed = true;
+  };
 
-    expect(simple != null).to.equal(true);
+  expect(simple != null).to.equal(true);
 
-    component.input = {
-        showSimple: false
-    };
+  component.input = {
+    showSimple: false
+  };
 
-    component.update();
+  component.update();
 
-    expect(simpleDestroyed).to.equal(true);
-    expect(simple.isDestroyed()).to.equal(true);
+  expect(simpleDestroyed).to.equal(true);
+  expect(simple.isDestroyed()).to.equal(true);
 
-    expect(component.getComponent("simple") == null).to.equal(true);
+  expect(component.getComponent("simple") == null).to.equal(true);
 };

@@ -2,11 +2,11 @@ var expect = require("chai").expect;
 var hooks = require("./hooks");
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {
-        name: "Frank"
-    });
+  var component = helpers.mount(require.resolve("./index"), {
+    name: "Frank"
+  });
 
-    component.destroy();
+  component.destroy();
 
-    expect(hooks.getHookNames()).deep.equal(["root:destroy", "foo:destroy"]);
+  expect(hooks.getHookNames()).deep.equal(["root:destroy", "foo:destroy"]);
 };

@@ -1,7 +1,7 @@
 module.exports = {
-    onInput: function(input) {
-        return {
-            name: input.name.toUpperCase()
-        };
-    }
+  onInput: function(input) {
+    return {
+      name: input.name.toUpperCase()
+    };
+  }
 };

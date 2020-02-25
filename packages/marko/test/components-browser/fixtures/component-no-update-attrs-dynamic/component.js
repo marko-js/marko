@@ -1,11 +1,11 @@
 module.exports = {
-    onInput: function(input) {
-        this.state = {
-            className: input.className
-        };
-    },
+  onInput: function(input) {
+    this.state = {
+      className: input.className
+    };
+  },
 
-    getTemplateData: function(state) {
-        return state;
-    }
+  getTemplateData: function(state) {
+    return state;
+  }
 };

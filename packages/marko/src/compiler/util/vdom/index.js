@@ -6,12 +6,12 @@ const isStaticValue = require("./isStaticValue");
 const OPTIMIZER_ADDED_KEY = Symbol();
 
 function registerOptimizer(context) {
-    var data = context.data;
-    if (!data[OPTIMIZER_ADDED_KEY]) {
-        data[OPTIMIZER_ADDED_KEY] = true;
+  var data = context.data;
+  if (!data[OPTIMIZER_ADDED_KEY]) {
+    data[OPTIMIZER_ADDED_KEY] = true;
 
-        context.addOptimizer(new VDOMOptimizer());
-    }
+    context.addOptimizer(new VDOMOptimizer());
+  }
 }
 
 exports.registerOptimizer = registerOptimizer;

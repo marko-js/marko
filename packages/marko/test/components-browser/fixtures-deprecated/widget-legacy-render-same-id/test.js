@@ -1,17 +1,17 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {
-        label: "Foo"
-    });
+  var widget = helpers.mount(require.resolve("./index"), {
+    label: "Foo"
+  });
 
-    var oldId = widget.id;
+  var oldId = widget.id;
 
-    widget.rerender({
-        label: "Bar"
-    });
+  widget.rerender({
+    label: "Bar"
+  });
 
-    expect(widget.id).to.equal(oldId);
+  expect(widget.id).to.equal(oldId);
 };
 
 module.exports.skip_hydrate = "a split widget cannot re-render when hydrated";

@@ -1,5 +1,5 @@
 module.exports = {
-    onMount: function() {
-        window.fooComponent = this;
-    }
+  onMount: function() {
+    window.fooComponent = this;
+  }
 };

@@ -1,7 +1,7 @@
 module.exports = {
-    onInput: function() {
-        this.state = {
-            buttonLabel: "Initial Button Label"
-        };
-    }
+  onInput: function() {
+    this.state = {
+      buttonLabel: "Initial Button Label"
+    };
+  }
 };

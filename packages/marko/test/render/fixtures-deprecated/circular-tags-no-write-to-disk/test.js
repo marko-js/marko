@@ -1,20 +1,20 @@
 exports.templateData = {
-    items: [
+  items: [
+    {
+      label: "a"
+    },
+    {
+      label: "b",
+      children: [
         {
-            label: "a"
+          label: "b1"
         },
         {
-            label: "b",
-            children: [
-                {
-                    label: "b1"
-                },
-                {
-                    label: "b2"
-                }
-            ]
+          label: "b2"
         }
-    ]
+      ]
+    }
+  ]
 };
 
 exports.writeToDisk = false;

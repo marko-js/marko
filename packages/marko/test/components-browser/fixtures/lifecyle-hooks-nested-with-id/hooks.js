@@ -1,27 +1,27 @@
 module.exports = {
-    record: function(component, name, args, thisObj) {
-        var hooksByComponent =
-            this.hooksByComponent || (this.hooksByComponent = {});
+  record: function(component, name, args, thisObj) {
+    var hooksByComponent =
+      this.hooksByComponent || (this.hooksByComponent = {});
 
-        var hooksArray =
-            hooksByComponent[component] || (hooksByComponent[component] = []);
+    var hooksArray =
+      hooksByComponent[component] || (hooksByComponent[component] = []);
 
-        hooksArray.push({
-            name: name,
-            args: args,
-            thisObject: thisObj
-        });
-    },
+    hooksArray.push({
+      name: name,
+      args: args,
+      thisObject: thisObj
+    });
+  },
 
-    reset: function() {
-        this.hooksByComponent = {};
-    },
+  reset: function() {
+    this.hooksByComponent = {};
+  },
 
-    getHookNames: function(component) {
-        var hooksArray = this.hooksByComponent[component];
+  getHookNames: function(component) {
+    var hooksArray = this.hooksByComponent[component];
 
-        return hooksArray.map(function(hook) {
-            return hook.name;
-        });
-    }
+    return hooksArray.map(function(hook) {
+      return hook.name;
+    });
+  }
 };

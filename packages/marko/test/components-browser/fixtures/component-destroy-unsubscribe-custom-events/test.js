@@ -1,21 +1,21 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {});
-    var customEventsComponent = helpers.mount(
-        require.resolve("./components/app-custom-events"),
-        {}
-    );
+  var component = helpers.mount(require.resolve("./index"), {});
+  var customEventsComponent = helpers.mount(
+    require.resolve("./components/app-custom-events"),
+    {}
+  );
 
-    var receivedEvents = [];
+  var receivedEvents = [];
 
-    component.subscribeTo(customEventsComponent).on("testEvent", function() {
-        receivedEvents.push(arguments);
-    });
+  component.subscribeTo(customEventsComponent).on("testEvent", function() {
+    receivedEvents.push(arguments);
+  });
 
-    customEventsComponent.emitTestEvent1();
-    expect(receivedEvents.length).to.equal(1);
-    customEventsComponent.destroy();
-    customEventsComponent.emitTestEvent2();
-    expect(receivedEvents.length).to.equal(1);
+  customEventsComponent.emitTestEvent1();
+  expect(receivedEvents.length).to.equal(1);
+  customEventsComponent.destroy();
+  customEventsComponent.emitTestEvent2();
+  expect(receivedEvents.length).to.equal(1);
 };

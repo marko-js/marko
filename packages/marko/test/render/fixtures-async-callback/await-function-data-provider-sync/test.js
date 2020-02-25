@@ -1,7 +1,7 @@
 exports.templateData = {
-    userInfo: function() {
-        return {
-            name: "John"
-        };
-    }
+  userInfo: function() {
+    return {
+      name: "John"
+    };
+  }
 };

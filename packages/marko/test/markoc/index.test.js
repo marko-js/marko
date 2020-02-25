@@ -12,35 +12,35 @@ var childProcess = require("child_process");
 var fs = require("fs");
 
 autotest("fixtures", fixture => {
-    let test = fixture.test;
-    let dir = fixture.dir;
-    let resolve = fixture.resolve;
-    test(
-        done => {
-            const testModule = require(resolve("test.js"));
-            const helpers = {};
+  let test = fixture.test;
+  let dir = fixture.dir;
+  let resolve = fixture.resolve;
+  test(
+    done => {
+      const testModule = require(resolve("test.js"));
+      const helpers = {};
 
-            helpers.existsSync = function(filename) {
-                return fs.existsSync(resolve(filename));
-            };
+      helpers.existsSync = function(filename) {
+        return fs.existsSync(resolve(filename));
+      };
 
-            helpers.readSync = function(filename) {
-                return fs.readFileSync(resolve(filename));
-            };
+      helpers.readSync = function(filename) {
+        return fs.readFileSync(resolve(filename));
+      };
 
-            helpers.spawnSync = function(args, options) {
-                options = options || {};
-                if (!options.cwd) {
-                    options.cwd = dir;
-                }
-                return childProcess.spawnSync(markocPath, args, options);
-            };
+      helpers.spawnSync = function(args, options) {
+        options = options || {};
+        if (!options.cwd) {
+          options.cwd = dir;
+        }
+        return childProcess.spawnSync(markocPath, args, options);
+      };
 
-            helpers.spawnSync([".", "--clean"]);
+      helpers.spawnSync([".", "--clean"]);
 
-            testModule.test(helpers);
-            done();
-        },
-        { timeout: 20000 }
-    );
+      testModule.test(helpers);
+      done();
+    },
+    { timeout: 20000 }
+  );
 });

@@ -1,18 +1,18 @@
 function Widget(config) {
-    this.label = config.label;
-    this.name = "app-bar";
+  this.label = config.label;
+  this.name = "app-bar";
 
-    var $el = this.$();
+  var $el = this.$();
 
-    this.appendHtml = function(html) {
-        $el.append(html);
-    };
+  this.appendHtml = function(html) {
+    $el.append(html);
+  };
 }
 
 Widget.prototype = {
-    emitTestEvent: function() {
-        this.emit("testEvent", "a", "b");
-    }
+  emitTestEvent: function() {
+    this.emit("testEvent", "a", "b");
+  }
 };
 
 exports.Widget = Widget;

@@ -16,14 +16,14 @@ var parser = new Parser(new HtmlJsParser());
 compiler.buildTaglibLookup(__dirname);
 
 autotest("fixtures-deprecated", fixture => {
-    let test = fixture.test;
-    let resolve = fixture.resolve;
-    let snapshot = fixture.snapshot;
-    test(() => {
-        var templatePath = resolve("template.marko");
-        var src = fs.readFileSync(templatePath, { encoding: "utf8" });
-        var context = new CompileContext(src, templatePath, builder);
-        var ast = parser.parse(src, context);
-        snapshot(ast, ".json");
-    });
+  let test = fixture.test;
+  let resolve = fixture.resolve;
+  let snapshot = fixture.snapshot;
+  test(() => {
+    var templatePath = resolve("template.marko");
+    var src = fs.readFileSync(templatePath, { encoding: "utf8" });
+    var context = new CompileContext(src, templatePath, builder);
+    var ast = parser.parse(src, context);
+    snapshot(ast, ".json");
+  });
 });

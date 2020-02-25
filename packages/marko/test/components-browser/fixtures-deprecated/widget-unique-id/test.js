@@ -1,22 +1,22 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widgets = [];
+  var widgets = [];
 
-    function renderWidget() {
-        var widget = helpers.mount(require.resolve("./index"), {});
-        widgets.push(widget);
-    }
+  function renderWidget() {
+    var widget = helpers.mount(require.resolve("./index"), {});
+    widgets.push(widget);
+  }
 
-    renderWidget();
-    renderWidget();
-    renderWidget();
+  renderWidget();
+  renderWidget();
+  renderWidget();
 
-    var ids = {};
-    widgets.forEach(function(widget) {
-        ids[widget.id] = true;
-    });
+  var ids = {};
+  widgets.forEach(function(widget) {
+    ids[widget.id] = true;
+  });
 
-    expect(widgets.length).to.equal(3);
-    expect(Object.keys(ids).length).to.equal(widgets.length);
+  expect(widgets.length).to.equal(3);
+  expect(Object.keys(ids).length).to.equal(widgets.length);
 };

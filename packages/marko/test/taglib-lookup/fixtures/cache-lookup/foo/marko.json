@@ -1,5 +1,5 @@
 {
-    "<foo>": {
-        "renderer": "./foo-tag.js"
-    }
+  "<foo>": {
+    "renderer": "./foo-tag.js"
+  }
 }

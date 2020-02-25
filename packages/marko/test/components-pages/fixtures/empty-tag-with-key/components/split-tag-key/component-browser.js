@@ -1,5 +1,5 @@
 module.exports = class {
-    onMount() {
-        window.splitDynamic = this;
-    }
+  onMount() {
+    window.splitDynamic = this;
+  }
 };

@@ -1,7 +1,7 @@
 var myTextNodeComponent = require("./components/my-text-node");
 
 module.exports = {
-    onMount: function() {
-        this.renderedHtml = myTextNodeComponent.renderToString();
-    }
+  onMount: function() {
+    this.renderedHtml = myTextNodeComponent.renderToString();
+  }
 };

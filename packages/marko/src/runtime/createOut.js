@@ -1,11 +1,11 @@
 var actualCreateOut;
 
 function setCreateOut(createOutFunc) {
-    actualCreateOut = createOutFunc;
+  actualCreateOut = createOutFunc;
 }
 
 function createOut(globalData) {
-    return actualCreateOut(globalData);
+  return actualCreateOut(globalData);
 }
 
 createOut.___setCreateOut = setCreateOut;

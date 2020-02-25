@@ -13,21 +13,21 @@ var makeRenderable = require("../renderable");
  * @private
  */
 exports.t = function createTemplate(path) {
-    return new Template(path);
+  return new Template(path);
 };
 
 function Template(path, func) {
-    this.path = path;
-    this._ = func;
-    this.meta = undefined;
+  this.path = path;
+  this._ = func;
+  this.meta = undefined;
 }
 
 function createOut(globalData, parent, parentOut) {
-    return new AsyncVDOMBuilder(globalData, parent, parentOut);
+  return new AsyncVDOMBuilder(globalData, parent, parentOut);
 }
 
 var Template_prototype = (Template.prototype = {
-    createOut: createOut
+  createOut: createOut
 });
 
 makeRenderable(Template_prototype);

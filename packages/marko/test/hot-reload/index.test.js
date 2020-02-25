@@ -14,16 +14,16 @@ var hotReload = require("marko/hot-reload");
 hotReload.enable();
 
 autotest("fixtures", fixture => {
-    let test = fixture.test;
-    let resolve = fixture.resolve;
-    let snapshot = fixture.snapshot;
-    test(() => {
-        require("marko/compiler").configure({
-            assumeUpToDate: false
-        });
-
-        var main = require(resolve("test.js"));
-
-        main.check(marko, hotReload, expect, snapshot);
+  let test = fixture.test;
+  let resolve = fixture.resolve;
+  let snapshot = fixture.snapshot;
+  test(() => {
+    require("marko/compiler").configure({
+      assumeUpToDate: false
     });
+
+    var main = require(resolve("test.js"));
+
+    main.check(marko, hotReload, expect, snapshot);
+  });
 });

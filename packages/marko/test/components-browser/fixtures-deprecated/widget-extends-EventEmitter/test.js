@@ -1,29 +1,29 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {});
-    var fooEvent = null;
-    var fooEventThis = null;
+  var widget = helpers.mount(require.resolve("./index"), {});
+  var fooEvent = null;
+  var fooEventThis = null;
 
-    function fooListener() {
-        fooEvent = arguments;
-        fooEventThis = this;
-    }
+  function fooListener() {
+    fooEvent = arguments;
+    fooEventThis = this;
+  }
 
-    widget.on("foo", fooListener);
+  widget.on("foo", fooListener);
 
-    widget.emit("foo", "a", "b");
+  widget.emit("foo", "a", "b");
 
-    expect(fooEvent[0]).to.equal("a");
+  expect(fooEvent[0]).to.equal("a");
 
-    expect(fooEvent[1]).to.equal("b");
-    expect(fooEventThis).to.equal(widget);
+  expect(fooEvent[1]).to.equal("b");
+  expect(fooEventThis).to.equal(widget);
 
-    fooEvent = null;
+  fooEvent = null;
 
-    widget.removeListener("foo", fooListener);
+  widget.removeListener("foo", fooListener);
 
-    widget.emit("foo", "a", "b");
+  widget.emit("foo", "a", "b");
 
-    expect(fooEvent).to.equal(null);
+  expect(fooEvent).to.equal(null);
 };

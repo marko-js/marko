@@ -1,5 +1,5 @@
 exports.templateData = {
-    $global: {
-        foo: "bar"
-    }
+  $global: {
+    foo: "bar"
+  }
 };

@@ -1,5 +1,5 @@
 module.exports = {
-    onMount() {
-        this.inner = this.getEl("item");
-    }
+  onMount() {
+    this.inner = this.getEl("item");
+  }
 };

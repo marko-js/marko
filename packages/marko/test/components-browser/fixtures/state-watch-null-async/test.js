@@ -2,14 +2,14 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers, done) {
-    var component = helpers.mount(require.resolve("./index"), {});
+  var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(component.el.innerHTML).to.not.contain("FATAL ERROR");
+  expect(component.el.innerHTML).to.not.contain("FATAL ERROR");
 
-    helpers.triggerEvent(component.getEl(), "submit");
+  helpers.triggerEvent(component.getEl(), "submit");
 
-    setTimeout(function() {
-        expect(component.el.innerHTML).to.contain("FATAL ERROR");
-        done();
-    }, 100);
+  setTimeout(function() {
+    expect(component.el.innerHTML).to.contain("FATAL ERROR");
+    done();
+  }, 100);
 };

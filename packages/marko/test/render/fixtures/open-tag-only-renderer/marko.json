@@ -1,6 +1,6 @@
 {
-    "<test-open-tag-only>": {
-        "renderer": "./renderer.js",
-        "open-tag-only": true
-    }
+  "<test-open-tag-only>": {
+    "renderer": "./renderer.js",
+    "open-tag-only": true
+  }
 }

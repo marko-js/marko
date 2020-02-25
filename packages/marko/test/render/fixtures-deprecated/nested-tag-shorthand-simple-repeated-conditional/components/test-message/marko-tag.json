@@ -1,5 +1,5 @@
 {
-    "@items <item>[]": {
-        "@title": "string"
-    }
+  "@items <item>[]": {
+    "@title": "string"
+  }
 }

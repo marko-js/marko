@@ -1,21 +1,21 @@
 module.exports = {
-    onInput: function() {
-        var parent = {
-            child: {}
-        };
+  onInput: function() {
+    var parent = {
+      child: {}
+    };
 
-        parent.child.parent = parent;
+    parent.child.parent = parent;
 
-        this.state = {
-            name: "app-foo",
-            parent: parent
-        };
-    },
+    this.state = {
+      name: "app-foo",
+      parent: parent
+    };
+  },
 
-    onMount: function() {
-        if (!window.fooComponents) {
-            window.fooComponents = [];
-        }
-        window.fooComponents.push(this);
+  onMount: function() {
+    if (!window.fooComponents) {
+      window.fooComponents = [];
     }
+    window.fooComponents.push(this);
+  }
 };

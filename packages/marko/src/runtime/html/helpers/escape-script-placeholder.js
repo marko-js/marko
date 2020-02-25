@@ -17,7 +17,7 @@
  */
 var escapeEndingScriptTagRegExp = /<\/script/g;
 module.exports = function escapeScriptHelper(val) {
-    return typeof val === "string"
-        ? val.replace(escapeEndingScriptTagRegExp, "\\u003C/script")
-        : val + "";
+  return typeof val === "string"
+    ? val.replace(escapeEndingScriptTagRegExp, "\\u003C/script")
+    : val + "";
 };

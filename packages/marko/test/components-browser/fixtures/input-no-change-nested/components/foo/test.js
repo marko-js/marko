@@ -1,30 +1,30 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index.marko"), {
-        name: "Frank"
-    });
+  var component = helpers.mount(require.resolve("./index.marko"), {
+    name: "Frank"
+  });
 
-    expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
-    expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
+  expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
 
-    // Rerender with a new props object that has the shallow properties
-    component.input = {
-        name: "Frank"
-    };
+  // Rerender with a new props object that has the shallow properties
+  component.input = {
+    name: "Frank"
+  };
 
-    component.update();
+  component.update();
 
-    expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
-    expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
+  expect(component.el.querySelector(".render-count").innerHTML).to.equal("0");
+  expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
 
-    // Rerender with a new props object that has the shallow properties
-    component.input = {
-        name: "John"
-    };
+  // Rerender with a new props object that has the shallow properties
+  component.input = {
+    name: "John"
+  };
 
-    component.update();
+  component.update();
 
-    expect(component.el.querySelector(".render-count").innerHTML).to.equal("1");
-    expect(component.el.querySelector(".name").innerHTML).to.equal("John");
+  expect(component.el.querySelector(".render-count").innerHTML).to.equal("1");
+  expect(component.el.querySelector(".name").innerHTML).to.equal("John");
 };

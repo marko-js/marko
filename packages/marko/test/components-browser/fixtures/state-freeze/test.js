@@ -3,9 +3,9 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var component = helpers.mount(require.resolve("./index"), {});
+  var component = helpers.mount(require.resolve("./index"), {});
 
-    expect(function() {
-        component.state.foo = "bar";
-    }).to.throw(TypeError);
+  expect(function() {
+    component.state.foo = "bar";
+  }).to.throw(TypeError);
 };

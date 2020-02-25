@@ -1,5 +1,5 @@
 module.exports = {
-    onCreate: function() {
-        this.state = { attrs: {} };
-    }
+  onCreate: function() {
+    this.state = { attrs: {} };
+  }
 };

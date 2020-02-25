@@ -9,13 +9,13 @@ var fs = require("fs");
 var compiler = require("../../compiler");
 
 autotest("fixtures", fixture => {
-    let test = fixture.test;
-    let resolve = fixture.resolve;
-    let snapshot = fixture.snapshot;
-    test(() => {
-        var inputPath = resolve("input.txt");
-        var input = fs.readFileSync(inputPath, { encoding: "utf8" });
-        var parsed = compiler.builder.parseExpression(input);
-        snapshot(parsed, ".json");
-    });
+  let test = fixture.test;
+  let resolve = fixture.resolve;
+  let snapshot = fixture.snapshot;
+  test(() => {
+    var inputPath = resolve("input.txt");
+    var input = fs.readFileSync(inputPath, { encoding: "utf8" });
+    var parsed = compiler.builder.parseExpression(input);
+    snapshot(parsed, ".json");
+  });
 });

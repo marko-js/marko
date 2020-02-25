@@ -1,8 +1,8 @@
 {
-    "rules": {
-        "no-console": 0
-    },
-    "parserOptions": {
-        "sourceType": "module"
-    }
+  "rules": {
+    "no-console": 0
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  }
 }

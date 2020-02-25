@@ -1,5 +1,5 @@
 module.exports = {
-    emitPressEvent: function() {
-        this.emit("press", { component: this });
-    }
+  emitPressEvent: function() {
+    this.emit("press", { component: this });
+  }
 };

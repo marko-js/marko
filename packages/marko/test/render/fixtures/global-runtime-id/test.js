@@ -1,5 +1,5 @@
 exports.templateData = {
-    $global: {
-        runtimeId: "FOO"
-    }
+  $global: {
+    runtimeId: "FOO"
+  }
 };

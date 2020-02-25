@@ -4,26 +4,26 @@ var Node = require("./Node");
 var adjustIndent = require("../util/adjustIndent");
 
 class Code extends Node {
-    constructor(def) {
-        super("Code");
-        this.value = def.value;
+  constructor(def) {
+    super("Code");
+    this.value = def.value;
+  }
+
+  generateCode() {
+    return this;
+  }
+
+  writeCode(writer) {
+    var code = this.value;
+
+    if (!code) {
+      return;
     }
 
-    generateCode() {
-        return this;
-    }
+    code = adjustIndent(code, writer.currentIndent);
 
-    writeCode(writer) {
-        var code = this.value;
-
-        if (!code) {
-            return;
-        }
-
-        code = adjustIndent(code, writer.currentIndent);
-
-        writer.write(code);
-    }
+    writer.write(code);
+  }
 }
 
 module.exports = Code;

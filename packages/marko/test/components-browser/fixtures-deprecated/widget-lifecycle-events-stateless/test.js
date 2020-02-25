@@ -1,58 +1,58 @@
 var expect = require("chai").expect;
 
 module.exports = function(helpers) {
-    var widget = helpers.mount(require.resolve("./index"), {
-        name: "Frank",
-        messageCount: 10
-    });
+  var widget = helpers.mount(require.resolve("./index"), {
+    name: "Frank",
+    messageCount: 10
+  });
 
-    var targetEl = helpers.targetEl;
+  var targetEl = helpers.targetEl;
 
-    expect(targetEl.innerHTML).to.contain(
-        "Hello Frank! You have 10 new messages."
-    );
+  expect(targetEl.innerHTML).to.contain(
+    "Hello Frank! You have 10 new messages."
+  );
 
-    expect(widget.lifecycleEvents).to.deep.equal([
-        "init",
-        "onRender:firstRender"
-    ]);
+  expect(widget.lifecycleEvents).to.deep.equal([
+    "init",
+    "onRender:firstRender"
+  ]);
 
-    widget.setProps({
-        name: "Jane",
-        messageCount: 30
-    });
-    expect(targetEl.innerHTML).to.contain(
-        "Hello Frank! You have 10 new messages."
-    );
+  widget.setProps({
+    name: "Jane",
+    messageCount: 30
+  });
+  expect(targetEl.innerHTML).to.contain(
+    "Hello Frank! You have 10 new messages."
+  );
 
-    expect(widget.lifecycleEvents).to.deep.equal([
-        "init",
-        "onRender:firstRender"
-    ]);
+  expect(widget.lifecycleEvents).to.deep.equal([
+    "init",
+    "onRender:firstRender"
+  ]);
 
-    widget.update();
+  widget.update();
 
-    expect(targetEl.innerHTML).to.contain(
-        "Hello Jane! You have 30 new messages."
-    );
+  expect(targetEl.innerHTML).to.contain(
+    "Hello Jane! You have 30 new messages."
+  );
 
-    expect(widget.lifecycleEvents).to.deep.equal([
-        "init",
-        "onRender:firstRender",
-        "onBeforeUpdate",
-        "onUpdate",
-        "onRender"
-    ]);
+  expect(widget.lifecycleEvents).to.deep.equal([
+    "init",
+    "onRender:firstRender",
+    "onBeforeUpdate",
+    "onUpdate",
+    "onRender"
+  ]);
 
-    widget.destroy();
+  widget.destroy();
 
-    expect(widget.lifecycleEvents).to.deep.equal([
-        "init",
-        "onRender:firstRender",
-        "onBeforeUpdate",
-        "onUpdate",
-        "onRender",
-        "onBeforeDestroy",
-        "onDestroy"
-    ]);
+  expect(widget.lifecycleEvents).to.deep.equal([
+    "init",
+    "onRender:firstRender",
+    "onBeforeUpdate",
+    "onUpdate",
+    "onRender",
+    "onBeforeDestroy",
+    "onDestroy"
+  ]);
 };

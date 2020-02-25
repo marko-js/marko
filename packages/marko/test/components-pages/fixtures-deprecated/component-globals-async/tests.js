@@ -1,26 +1,22 @@
 var expect = require("chai").expect;
 
 it("should allow attributes to not be updated", function() {
-    function testHelloComponent(helloComponent) {
-        expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-            "Frank"
-        );
-        expect(helloComponent.el.querySelector(".count").innerHTML).to.equal(
-            "1"
-        );
+  function testHelloComponent(helloComponent) {
+    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
+      "Frank"
+    );
+    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("1");
 
-        helloComponent.state.count++;
-        helloComponent.update();
+    helloComponent.state.count++;
+    helloComponent.update();
 
-        expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-            "Frank"
-        );
-        expect(helloComponent.el.querySelector(".count").innerHTML).to.equal(
-            "2"
-        );
-    }
+    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
+      "Frank"
+    );
+    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
+  }
 
-    testHelloComponent(window.hello1);
-    testHelloComponent(window.hello2);
-    testHelloComponent(window.hello3);
+  testHelloComponent(window.hello1);
+  testHelloComponent(window.hello2);
+  testHelloComponent(window.hello3);
 });

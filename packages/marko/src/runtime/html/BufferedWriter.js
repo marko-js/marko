@@ -9,40 +9,40 @@ const StringWriter = require("./StringWriter");
  * by reducing the number of chunks by buffering the output.
  */
 function BufferedWriter(wrappedStream) {
-    StringWriter.call(this);
-    this._wrapped = wrappedStream;
-    this._scheduled = null;
+  StringWriter.call(this);
+  this._wrapped = wrappedStream;
+  this._scheduled = null;
 }
 
 BufferedWriter.prototype = Object.assign(
-    {
-        scheduleFlush() {
-            if (!this._scheduled) {
-                this._scheduled = setImmediate(flush, this);
-            }
-        },
-
-        end: function() {
-            flush(this);
-            if (!this._wrapped.isTTY) {
-                this._wrapped.end();
-            }
-        }
+  {
+    scheduleFlush() {
+      if (!this._scheduled) {
+        this._scheduled = setImmediate(flush, this);
+      }
     },
-    StringWriter.prototype
+
+    end: function() {
+      flush(this);
+      if (!this._wrapped.isTTY) {
+        this._wrapped.end();
+      }
+    }
+  },
+  StringWriter.prototype
 );
 
 function flush(writer) {
-    const contents = writer.toString();
-    if (contents.length !== 0) {
-        writer._wrapped.write(contents);
-        writer.clear();
-        if (writer._wrapped.flush) {
-            writer._wrapped.flush();
-        }
+  const contents = writer.toString();
+  if (contents.length !== 0) {
+    writer._wrapped.write(contents);
+    writer.clear();
+    if (writer._wrapped.flush) {
+      writer._wrapped.flush();
     }
-    clearImmediate(writer._scheduled);
-    writer._scheduled = null;
+  }
+  clearImmediate(writer._scheduled);
+  writer._scheduled = null;
 }
 
 module.exports = BufferedWriter;

@@ -5,29 +5,29 @@ var loaders = require("./loaders");
 var DependencyChain = require("./DependencyChain");
 
 function loadTaglibFromProps(taglib, taglibProps) {
-    return loaders.loadTaglibFromProps(taglib, taglibProps);
+  return loaders.loadTaglibFromProps(taglib, taglibProps);
 }
 
 function loadTaglibFromFile(filePath) {
-    return loaders.loadTaglibFromFile(filePath);
+  return loaders.loadTaglibFromFile(filePath);
 }
 
 function clearCache() {
-    cache.clear();
+  cache.clear();
 }
 
 function createTaglib(filePath) {
-    return new types.Taglib(filePath);
+  return new types.Taglib(filePath);
 }
 
 function loadTag(tagProps, filePath) {
-    var tag = new types.Tag(filePath);
-    loaders.loadTagFromProps(
-        tag,
-        tagProps,
-        new DependencyChain(filePath ? [filePath] : [])
-    );
-    return tag;
+  var tag = new types.Tag(filePath);
+  loaders.loadTagFromProps(
+    tag,
+    tagProps,
+    new DependencyChain(filePath ? [filePath] : [])
+  );
+  return tag;
 }
 
 exports.clearCache = clearCache;

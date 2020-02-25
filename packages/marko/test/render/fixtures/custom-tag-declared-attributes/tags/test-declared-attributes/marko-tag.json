@@ -1,4 +1,4 @@
 {
-    "renderer": "./renderer.js",
-    "@name": "string"
+  "renderer": "./renderer.js",
+  "@name": "string"
 }

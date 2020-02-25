@@ -3,28 +3,28 @@ var inherit = require("raptor-util/inherit");
 var extend = require("raptor-util/extend");
 
 function VDocumentFragmentClone(other) {
-    extend(this, other);
-    this.___parentNode = null;
-    this.___nextSiblingInternal = null;
+  extend(this, other);
+  this.___parentNode = null;
+  this.___nextSiblingInternal = null;
 }
 
 function VDocumentFragment(out) {
-    this.___VNode(null /* childCount */);
-    this.___out = out;
+  this.___VNode(null /* childCount */);
+  this.___out = out;
 }
 
 VDocumentFragment.prototype = {
-    ___nodeType: 11,
+  ___nodeType: 11,
 
-    ___DocumentFragment: true,
+  ___DocumentFragment: true,
 
-    ___cloneNode: function() {
-        return new VDocumentFragmentClone(this);
-    },
+  ___cloneNode: function() {
+    return new VDocumentFragmentClone(this);
+  },
 
-    ___actualize: function(doc) {
-        return doc.createDocumentFragment();
-    }
+  ___actualize: function(doc) {
+    return doc.createDocumentFragment();
+  }
 };
 
 inherit(VDocumentFragment, VNode);

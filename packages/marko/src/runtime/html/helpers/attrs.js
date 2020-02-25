@@ -12,42 +12,42 @@ var validAttrs = Object.create(null);
 var invalidAttrs = Object.create(null);
 
 module.exports = function attrs(arg) {
-    if (typeof arg === "object") {
-        var out = "";
-        for (var attrName in arg) {
-            if (attrName === "style") {
-                out += styleAttrHelper(arg[attrName]);
-            } else if (attrName === "class") {
-                out += classAttrHelper(arg[attrName]);
-            } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
-                out += attrHelper(
-                    changeCase.___camelToDashCase(attrName),
-                    arg[attrName]
-                );
-            }
-        }
-        return out;
-    } else if (typeof arg === "string") {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-            complain(
-                "Passing a string as a dynamic attribute value is deprecated - More details: https://github.com/marko-js/marko/wiki/Deprecation:-String-as-dynamic-attribute-value"
-            );
-        }
-        return arg;
+  if (typeof arg === "object") {
+    var out = "";
+    for (var attrName in arg) {
+      if (attrName === "style") {
+        out += styleAttrHelper(arg[attrName]);
+      } else if (attrName === "class") {
+        out += classAttrHelper(arg[attrName]);
+      } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
+        out += attrHelper(
+          changeCase.___camelToDashCase(attrName),
+          arg[attrName]
+        );
+      }
     }
-    return "";
+    return out;
+  } else if (typeof arg === "string") {
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      complain(
+        "Passing a string as a dynamic attribute value is deprecated - More details: https://github.com/marko-js/marko/wiki/Deprecation:-String-as-dynamic-attribute-value"
+      );
+    }
+    return arg;
+  }
+  return "";
 };
 
 function isValidAttrName(attrName) {
-    if (validAttrs[attrName]) return true;
-    if (invalidAttrs[attrName]) return false;
+  if (validAttrs[attrName]) return true;
+  if (invalidAttrs[attrName]) return false;
 
-    if (!invalidAttrNameCharacters.test(attrName)) {
-        validAttrs[attrName] = true;
-        return true;
-    } else {
-        invalidAttrs[attrName] = true;
-        return false;
-    }
+  if (!invalidAttrNameCharacters.test(attrName)) {
+    validAttrs[attrName] = true;
+    return true;
+  } else {
+    invalidAttrs[attrName] = true;
+    return false;
+  }
 }

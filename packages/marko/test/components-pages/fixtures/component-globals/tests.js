@@ -1,28 +1,22 @@
 var expect = require("chai").expect;
 
 it("should allow attributes to not be updated", function() {
-    var app = window.app;
-    var helloComponent = app.getComponent("hello");
+  var app = window.app;
+  var helloComponent = app.getComponent("hello");
 
-    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-        "Frank"
-    );
-    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("1");
+  expect(helloComponent.el.querySelector(".name").innerHTML).to.equal("Frank");
+  expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("1");
 
-    helloComponent.state.count++;
-    helloComponent.update();
+  helloComponent.state.count++;
+  helloComponent.update();
 
-    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-        "Frank"
-    );
-    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
+  expect(helloComponent.el.querySelector(".name").innerHTML).to.equal("Frank");
+  expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
 
-    app.forceUpdate();
-    app.update();
+  app.forceUpdate();
+  app.update();
 
-    helloComponent = app.getComponent("hello");
-    expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-        "Frank"
-    );
-    expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
+  helloComponent = app.getComponent("hello");
+  expect(helloComponent.el.querySelector(".name").innerHTML).to.equal("Frank");
+  expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
 });

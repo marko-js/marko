@@ -1,5 +1,5 @@
 module.exports = class {
-    onMount() {
-        window.cls = this;
-    }
+  onMount() {
+    window.cls = this;
+  }
 };

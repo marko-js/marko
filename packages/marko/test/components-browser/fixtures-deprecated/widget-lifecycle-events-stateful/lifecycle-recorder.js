@@ -1,17 +1,16 @@
 var widgetLifecycleEvents = {};
 
 function recordWidgetLifecycleEvent(key, eventType) {
-    var events =
-        widgetLifecycleEvents[key] || (widgetLifecycleEvents[key] = []);
-    events.push(eventType);
+  var events = widgetLifecycleEvents[key] || (widgetLifecycleEvents[key] = []);
+  events.push(eventType);
 }
 
 function resetWidgetLifecycleEvents() {
-    widgetLifecycleEvents = {};
+  widgetLifecycleEvents = {};
 }
 
 module.exports = {
-    events: widgetLifecycleEvents,
-    reset: resetWidgetLifecycleEvents,
-    record: recordWidgetLifecycleEvent
+  events: widgetLifecycleEvents,
+  reset: resetWidgetLifecycleEvents,
+  record: recordWidgetLifecycleEvent
 };
