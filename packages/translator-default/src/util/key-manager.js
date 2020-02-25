@@ -15,11 +15,11 @@ export function getKeyManager(path) {
 
 export function hasAutoKey(path) {
   const key = path.get("key").node;
-  return Boolean(key && key.___isAutoKey);
+  return Boolean(key && key._isAutoKey);
 }
 
 export function hasUserKey(path) {
-  return path.node.___hasUserKey;
+  return path.node._hasUserKey;
 }
 
 class KeyManager {
@@ -29,7 +29,7 @@ class KeyManager {
 
   nextKey() {
     return Object.assign(t.stringLiteral(String(this._nextKey++)), {
-      ___isAutoKey: true
+      _isAutoKey: true
     });
   }
 
@@ -158,7 +158,7 @@ function getUserKey(path) {
 
     if (keyAttr) {
       key = normalizeTemplateString`@${keyAttr.get("value").node}`;
-      path.node.___hasUserKey = true;
+      path.node._hasUserKey = true;
       keyAttr.remove();
     } else {
       key = null;

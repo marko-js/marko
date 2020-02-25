@@ -179,18 +179,18 @@ export const visitor = {
       );
 
       const templateRenderOptionsProps = [
-        t.objectProperty(t.identifier("___type"), componentTypeIdentifier)
+        t.objectProperty(t.identifier("t"), componentTypeIdentifier)
       ];
 
       if (isImplicit) {
         templateRenderOptionsProps.push(
-          t.objectProperty(t.identifier("___implicit"), t.booleanLiteral(true))
+          t.objectProperty(t.identifier("i"), t.booleanLiteral(true))
         );
       }
 
       if (isSplit) {
         templateRenderOptionsProps.push(
-          t.objectProperty(t.identifier("___split"), t.booleanLiteral(true))
+          t.objectProperty(t.identifier("s"), t.booleanLiteral(true))
         );
       }
 

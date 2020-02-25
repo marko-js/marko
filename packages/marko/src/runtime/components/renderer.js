@@ -61,9 +61,9 @@ function createRendererFunc(
 ) {
   renderingLogic = renderingLogic || {};
   var onInput = renderingLogic.onInput;
-  var typeName = componentProps.___type;
-  var isSplit = componentProps.___split === true;
-  var isImplicitComponent = componentProps.___implicit === true;
+  var typeName = componentProps.t;
+  var isSplit = componentProps.s === true;
+  var isImplicitComponent = componentProps.i === true;
 
   var shouldApplySplitMixins = isSplit;
 

@@ -18,7 +18,7 @@ module.exports = api => ({
   ],
   overrides: [
     {
-      test: "./packages/*/src/**/*",
+      test: "./packages/marko/src/**/*",
       plugins: api.env("production")
         ? [
             ["babel-plugin-minprops", { matchPrefix: "___", context: "marko" }],
