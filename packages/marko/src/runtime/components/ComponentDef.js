@@ -17,8 +17,8 @@ var FLAG_OLD_HYDRATE_NO_CREATE = 8;
  * a single component and this information is used to instantiate the component
  * later (after the rendered HTML has been added to the DOM)
  */
-function ComponentDef(component, componentId, globalComponentsContext) {
-  this.___globalComponentsContext = globalComponentsContext; // The AsyncWriter that this component is associated with
+function ComponentDef(component, componentId, componentsContext) {
+  this.___componentsContext = componentsContext; // The AsyncWriter that this component is associated with
   this.___component = component;
   this.id = componentId;
 
