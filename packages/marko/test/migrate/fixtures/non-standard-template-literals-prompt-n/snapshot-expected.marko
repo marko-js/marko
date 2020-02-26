@@ -1,0 +1,21 @@
+<!-- packages/marko/test/migrate/fixtures/non-standard-template-literals-prompt-n/template.marko -->
+
+<div class=a/>
+<div class=`${a == null ? "" : a} ${b == null ? "" : b}`/>
+<div class={
+    a: b
+}/>
+<div class={
+    a: `${b == null ? "" : b} ${c == null ? "" : c}`
+}/>
+<test value=a/>
+<test value=`${a == null ? "" : a} ${b == null ? "" : b}`/>
+<test value={
+    a: b
+}/>
+<test value={
+    a: `${b == null ? "" : b} ${c == null ? "" : c}`
+}/>
+<test class=`something\n  ${
+    (data.first ? " first" : "") == null ? "" : data.first ? " first" : ""
+}\n  ${(data.last ? " last" : "") == null ? "" : data.last ? " last" : ""}`/>
