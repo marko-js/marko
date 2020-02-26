@@ -18,10 +18,7 @@ function safeJSON(json) {
 function addComponentsFromContext(componentsContext, componentsToHydrate) {
   var components = componentsContext.___components;
 
-  var len;
-  if ((len = components.length) === 0) {
-    return;
-  }
+  var len = components.length;
 
   for (var i = 0; i < len; i++) {
     var componentDef = components[i];
