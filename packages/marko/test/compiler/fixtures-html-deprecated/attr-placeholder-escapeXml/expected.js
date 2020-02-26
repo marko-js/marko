@@ -9,10 +9,10 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   out.w("<div" +
-    marko_attr("foo", "Hello " + input.name) +
+    marko_attr("foo", "Hello " + (input.name == null ? "" : input.name)) +
     "></div>");
 
-  var foo = "Hello " + input.name;
+  var foo = "Hello " + (input.name == null ? "" : input.name);
 }
 
 marko_template._ = marko_renderer(render, {
