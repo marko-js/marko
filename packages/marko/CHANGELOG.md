@@ -1,8 +1,8 @@
 # Changelog
 
-# 4.x
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## 4.18.x
+### [4.18.49](https://github.com/marko-js/marko/compare/v4.18.48...v4.18.49) (2020-02-26)
 
 ### 4.18.48
 
