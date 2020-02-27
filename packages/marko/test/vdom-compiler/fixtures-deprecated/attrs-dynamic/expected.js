@@ -20,7 +20,7 @@ function render(input, out, __component, component, state) {
 
   out.e("div", marko_attrs(attrs), null, null, 3)
     .t("Hello ")
-    .t(name)
+    .t(name, component)
     .t("!");
 }
 

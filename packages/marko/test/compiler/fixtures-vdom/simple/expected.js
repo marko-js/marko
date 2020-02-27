@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   out.t("Hello ");
 
-  out.t(input.name);
+  out.t(input.name, component);
 
   out.t("! ");
 
@@ -35,7 +35,7 @@ function render(input, out, __component, component, state) {
       var $keyScope$0 = "[" + (($for$0++) + "]");
 
       out.e("li", null, "1" + $keyScope$0, component, 1)
-        .t(color);
+        .t(color, component);
     });
 
     out.ee();

@@ -23,7 +23,7 @@ function render(input, out, __component, component, state) {
       ]))
     }, null, null, 3, 1)
     .t("Hello ")
-    .t(name)
+    .t(name, component)
     .t("!");
 }
 

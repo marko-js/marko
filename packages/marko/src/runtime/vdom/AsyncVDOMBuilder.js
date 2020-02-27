@@ -116,7 +116,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     return this;
   },
 
-  text: function(text) {
+  text: function(text, ownerComponent) {
     var type = typeof text;
 
     if (type != "string") {
@@ -124,24 +124,28 @@ var proto = (AsyncVDOMBuilder.prototype = {
         return;
       } else if (type === "object") {
         if (text.toHTML) {
-          return this.h(text.toHTML());
+          return this.h(text.toHTML(), ownerComponent);
         }
       }
 
       text = text.toString();
     }
 
-    this.___parent.___appendChild(new VText(text));
+    this.___parent.___appendChild(new VText(text, ownerComponent));
     return this;
   },
 
-  comment: function(comment) {
-    return this.node(new VComment(comment));
+  comment: function(comment, ownerComponent) {
+    return this.node(new VComment(comment, ownerComponent));
   },
 
-  html: function(html) {
+  html: function(html, ownerComponent) {
     if (html != null) {
-      var vdomNode = virtualizeHTML(html, this.___document || document);
+      var vdomNode = virtualizeHTML(
+        html,
+        this.___document || document,
+        ownerComponent
+      );
       this.node(vdomNode);
     }
 
