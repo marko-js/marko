@@ -122,13 +122,12 @@ describe("AsyncVDOMBuilder", function() {
     out.end();
   });
 
-  it("staticNode, text, comment", function(done) {
+  it("staticNode, comment", function(done) {
     var staticNode = new VElement("div", {}, 0, "f891ea3");
     var out = new AsyncVDOMBuilder();
 
     out.node(staticNode);
     out.text("Hello <em>World</em>");
-    out.comment("TODO: make this work");
     out.end();
 
     out.once("finish", function(result) {
@@ -136,7 +135,6 @@ describe("AsyncVDOMBuilder", function() {
       var childNodes = getChildNodes(tree);
       expect(childNodes[0].___nodeName).to.equal("div");
       expect(childNodes[1].___nodeValue).to.equal("Hello <em>World</em>");
-      expect(childNodes[2].___nodeValue).to.equal("TODO: make this work");
       done();
     });
   });
