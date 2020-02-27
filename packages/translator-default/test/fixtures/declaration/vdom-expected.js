@@ -11,7 +11,7 @@ const _marko_componentType = _marko_registerComponent("YGIRzvLP", () => _marko_t
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.be("contact-info", null, "0", component, null, 0);
   out.be("name", null, "1", component, null, 0);
-  out.t("Hello World");
+  out.t("Hello World", component);
   out.ee();
   out.ee();
 }, {

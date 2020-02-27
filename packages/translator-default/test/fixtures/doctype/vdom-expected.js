@@ -25,14 +25,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("html", null, "0", component, null, 0);
   out.be("head", null, "1", component, null, 0);
   out.be("title", null, "2", component, null, 0);
-  out.t("Title of the document");
+  out.t("Title of the document", component);
   out.ee();
   out.ee();
   out.be("body", null, "3", component, null, 0);
 
   _componentGlobals_tag({}, out, _component, "4");
 
-  out.t("The content of the document......");
+  out.t("The content of the document......", component);
 
   _initComponents_tag({}, out, _component, "5");
 

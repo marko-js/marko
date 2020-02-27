@@ -9,13 +9,13 @@ const _marko_componentType = _marko_registerComponent("5nWTrVOu", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.t("Hello ");
+  out.t("Hello ", component);
   out.t(input.name);
-  out.t("! Hello ");
+  out.t("! Hello ", component);
   out.h(input.name);
-  out.t("! Hello ");
+  out.t("! Hello ", component);
   out.h(input.missing);
-  out.t("!");
+  out.t("!", component);
 }, {
   t: _marko_componentType,
   i: true

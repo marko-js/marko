@@ -24,13 +24,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("a", null, "2", component, 0, 0);
   out.ee();
   out.be("style", null, "3", component, null, 0);
-  out.t("div { color: green }");
+  out.t("div { color: green }", component);
   out.ee();
   out.be("script", null, "4", component, null, 0);
-  out.t("alert(\"Hello\");");
+  out.t("alert(\"Hello\");", component);
   out.ee();
   out.be("title", null, "5", component, null, 0);
-  out.t("Test");
+  out.t("Test", component);
   out.ee();
   out.ee();
   out.be("a", null, "6", component, 0, 0);

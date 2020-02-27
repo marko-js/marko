@@ -16,7 +16,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope = `[${i}]`;
     out.be("div", null, "0" + _keyScope, component, null, 0);
     out.t(i);
-    out.t(": ");
+    out.t(": ", component);
     out.t(val);
     out.ee();
     out.be("div", null, "1" + _keyScope, component, 0, 0);
@@ -30,7 +30,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope2 = `[${key}]`;
     out.be("div", null, "3" + _keyScope2, component, null, 0);
     out.t(key);
-    out.t(": ");
+    out.t(": ", component);
     out.t(val);
     out.ee();
     out.be("div", null, "4" + _keyScope2, component, 0, 0);
@@ -59,7 +59,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           _keyScope4 = `[${_keyValue}]`;
     out.be("div", null, _keyValue, component, null, 0);
     out.t(i);
-    out.t(": ");
+    out.t(": ", component);
     out.t(val);
     out.ee();
     out.be("div", null, "9" + _keyScope4, component, 0, 0);
@@ -76,7 +76,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyValue2 = `@${i}`;
     out.be("div", null, _keyValue2, component, null, 0);
     out.t(list.length);
-    out.t(": ");
+    out.t(": ", component);
     out.t(val);
     out.ee();
   }
@@ -87,7 +87,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           _keyScope5 = `[${_keyValue3}]`;
     out.be("div", null, _keyValue3, component, null, 0);
     out.t(key);
-    out.t(": ");
+    out.t(": ", component);
     out.t(val);
     out.ee();
     out.be("div", null, "10" + _keyScope5, component, 0, 0);

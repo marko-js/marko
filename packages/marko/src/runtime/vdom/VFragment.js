@@ -6,9 +6,8 @@ var inherit = require("raptor-util/inherit");
 var createFragmentNode = require("./morphdom/fragment").___createFragmentNode;
 
 function VFragment(key, ownerComponent, preserve) {
-  this.___VNode(null /* childCount */);
+  this.___VNode(null /* childCount */, ownerComponent);
   this.___key = key;
-  this.___ownerComponent = ownerComponent;
   this.___preserve = preserve;
 }
 

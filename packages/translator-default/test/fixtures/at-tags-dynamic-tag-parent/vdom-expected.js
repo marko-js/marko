@@ -14,17 +14,17 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "header": {
       "class": "my-header",
       "renderBody": out => {
-        out.t("Header content");
+        out.t("Header content", component);
       }
     },
     "footer": {
       "class": "my-footer",
       "renderBody": out => {
-        out.t("Footer content");
+        out.t("Footer content", component);
       }
     }
   }), out => {
-    out.t("Body content");
+    out.t("Body content", component);
   }, null, null, _component, "0");
 }, {
   t: _marko_componentType,

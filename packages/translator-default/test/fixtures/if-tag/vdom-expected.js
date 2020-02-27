@@ -10,21 +10,21 @@ const _marko_componentType = _marko_registerComponent("HCe_Baop", () => _marko_t
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   if (a + b) {
-    out.t("Hello");
+    out.t("Hello", component);
   }
 
   if (a, b) {
-    out.t("World");
+    out.t("World", component);
   }
 
   out.be("div", null, "0", component, null, 0);
 
   if (x) {
-    out.t("A");
+    out.t("A", component);
   } else if (y) {
-    out.t("B");
+    out.t("B", component);
   } else {
-    out.t("C");
+    out.t("C", component);
   }
 
   out.ee();

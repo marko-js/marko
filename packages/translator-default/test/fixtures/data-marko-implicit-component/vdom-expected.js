@@ -15,7 +15,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }, "0", component, null, 0, {
     noupdate: ["class"]
   });
-  out.t("Hello ");
+  out.t("Hello ", component);
   out.t(input.name);
   out.ee();
 }, {

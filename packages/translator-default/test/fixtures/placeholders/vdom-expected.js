@@ -15,14 +15,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.h(input.x);
   out.h("Hello world <a/>");
   out.be("script", null, "1", component, null, 0);
-  out.t("\n    ");
+  out.t("\n    ", component);
   out.t("Hello <b> </script>");
-  out.t("\n  ");
+  out.t("\n  ", component);
   out.ee();
   out.be("style", null, "2", component, null, 0);
-  out.t("\n    ");
+  out.t("\n    ", component);
   out.t("Hello <b> </style>");
-  out.t("\n  ");
+  out.t("\n  ", component);
   out.ee();
   out.ee();
 }, {

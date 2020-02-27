@@ -73,7 +73,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
               _preserve_tag({
                 "if": (a, b),
                 "renderBody": out => {
-                  out.t("Again");
+                  out.t("Again", component);
                 }
               }, out, _component, "p_10");
             }
@@ -141,7 +141,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
               _preserve_tag({
                 "if": (a, b),
                 "renderBody": out => {
-                  out.t("Again");
+                  out.t("Again", component);
                 }
               }, out, _component, "p_@f");
             }

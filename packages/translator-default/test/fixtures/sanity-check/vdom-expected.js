@@ -33,14 +33,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("style", {
     "id": "css"
   }, "1", component, null, 1);
-  out.t("\n  div {\n    color: ");
+  out.t("\n  div {\n    color: ", component);
   out.t(x);
-  out.t(";\n  }\n");
+  out.t(";\n  }\n", component);
   out.ee();
   out.be("script", null, "2", component, null, 0);
-  out.t("\n  var y = ");
+  out.t("\n  var y = ", component);
   out.t(x);
-  out.t(";\n");
+  out.t(";\n", component);
   out.ee();
 
   function _thing(out, stuff) {
@@ -148,12 +148,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.ee();
 
   if (x === a) {
-    out.t("a ");
+    out.t("a ", component);
     out.t(b);
   } else if (x === 2) {
-    out.t("b");
+    out.t("b", component);
   } else {
-    out.t("c");
+    out.t("c", component);
   }
 
   out.ee();
@@ -162,13 +162,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }, "25", component, 0, 0);
   out.ee();
   out.be("div", null, "26", component, null, 0);
-  out.t("123 abc 123");
+  out.t("123 abc 123", component);
   out.ee();
   out.be("span", _marko_attrs(abc), "27", component, 0, 0);
   out.ee();
 
   if (cond) {
-    out.t("Hello ");
+    out.t("Hello ", component);
     out.t(planet);
   }
 

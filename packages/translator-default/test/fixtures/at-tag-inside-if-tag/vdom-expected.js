@@ -20,7 +20,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     _thing = {
       "x": 1,
       "renderBody": out => {
-        out.t("Hello");
+        out.t("Hello", component);
       }
     };
   }

@@ -27,7 +27,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           color
         },
         "renderBody": out => {
-          out.t("foo");
+          out.t("foo", component);
         }
       });
     } else {
@@ -36,7 +36,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           color
         },
         "renderBody": out => {
-          out.t("bar");
+          out.t("bar", component);
         }
       });
     }
@@ -84,7 +84,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _rows2.push({
     "row": -1,
     "renderBody": out => {
-      out.t("Outside");
+      out.t("Outside", component);
     }
   });
 

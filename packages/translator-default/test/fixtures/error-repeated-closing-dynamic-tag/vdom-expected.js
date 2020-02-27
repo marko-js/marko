@@ -11,7 +11,7 @@ const _marko_componentType = _marko_registerComponent("bnC1CPSF", () => _marko_t
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_dynamic_tag(out, input.x, null, out => {
-    out.t("Hello");
+    out.t("Hello", component);
   }, null, null, _component, "0");
 }, {
   t: _marko_componentType,

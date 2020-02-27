@@ -54,7 +54,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         d
       }],
       "renderBody": out => {
-        out.t("Hello");
+        out.t("Hello", component);
       }
     }
   }), null, null, null, _component, "5");

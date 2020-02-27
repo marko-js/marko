@@ -9,9 +9,9 @@ const _marko_componentType = _marko_registerComponent("Bvz2is5Z", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.t("Hello ");
+  out.t("Hello ", component);
   out.t(input.name);
-  out.t("! ");
+  out.t("! ", component);
 
   if (input.colors.length) {
     out.be("ul", null, "0", component, null, 0);
@@ -28,7 +28,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.ee();
   } else {
     out.be("div", null, "2", component, null, 0);
-    out.t("No colors!");
+    out.t("No colors!", component);
     out.ee();
   }
 }, {

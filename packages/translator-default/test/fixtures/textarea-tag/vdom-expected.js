@@ -10,7 +10,7 @@ const _marko_componentType = _marko_registerComponent("exzxXYhB", () => _marko_t
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.be("textarea", null, "0", component, null, 0);
-  out.t("\n  hello world\n");
+  out.t("\n  hello world\n", component);
   out.ee();
 }, {
   t: _marko_componentType,

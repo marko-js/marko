@@ -83,7 +83,7 @@ function VElement(
   flags,
   props
 ) {
-  this.___VNode(childCount);
+  this.___VNode(childCount, ownerComponent);
 
   var constId;
 
@@ -93,7 +93,6 @@ function VElement(
 
   this.___key = key;
   this.___flags = flags || 0;
-  this.___ownerComponent = ownerComponent;
   this.___attributes = attrs || EMPTY_OBJECT;
   this.___properties = props || EMPTY_OBJECT;
   this.___nodeName = tagName;
@@ -234,7 +233,7 @@ VElement.___removePreservedAttributes = function(attrs) {
   return attrs;
 };
 
-function virtualizeElement(node, virtualizeChildNodes) {
+function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
   var attributes = node.attributes;
   var attrCount = attributes.length;
 
@@ -266,7 +265,7 @@ function virtualizeElement(node, virtualizeChildNodes) {
     tagName,
     attrs,
     null /*key*/,
-    null /*ownerComponent*/,
+    ownerComponent,
     0 /*child count*/,
     0 /*flags*/,
     null /*props*/
@@ -275,7 +274,7 @@ function virtualizeElement(node, virtualizeChildNodes) {
   if (vdomEl.___nodeName === "textarea") {
     vdomEl.___valueInternal = node.value;
   } else if (virtualizeChildNodes) {
-    virtualizeChildNodes(node, vdomEl);
+    virtualizeChildNodes(node, vdomEl, ownerComponent);
   }
 
   return vdomEl;

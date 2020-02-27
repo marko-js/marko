@@ -17,7 +17,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _testBodyFunction_tag({
     "name": "World",
     "renderBody": out => {
-      out.t("This is the body content");
+      out.t("This is the body content", component);
     }
   }, out, _component, "0");
 }, {
