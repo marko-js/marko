@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.19.0](https://github.com/marko-js/marko/compare/v4.18.51...v4.19.0) (2020-02-27)
+
+
+### Features
+
+* all vnodes have owner components ([#1517](https://github.com/marko-js/marko/issues/1517)) ([cb42609](https://github.com/marko-js/marko/commit/cb426099ea83638f5feba85562ba7b56083dac4c))
+
 ### [4.18.51](https://github.com/marko-js/marko/compare/v4.18.50...v4.18.51) (2020-02-26)
 
 
