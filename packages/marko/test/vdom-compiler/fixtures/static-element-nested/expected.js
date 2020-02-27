@@ -25,7 +25,7 @@ function render(input, out, __component, component, state) {
   out.e("span", null, null, null, 2)
     .e("h1", null, null, null, 3)
       .t("Hello ")
-      .t(input.name)
+      .t(input.name, component)
       .t("!")
     .n(marko_node0, component);
 }

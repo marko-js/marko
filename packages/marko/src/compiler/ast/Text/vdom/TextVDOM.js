@@ -58,6 +58,7 @@ class TextVDOM extends Node {
     let builder = writer.builder;
     let args = this.arguments;
     let escape = this.escape;
+    let isStatic = this.isStatic;
 
     var funcName = escape ? "t" : "h";
 
@@ -74,6 +75,10 @@ class TextVDOM extends Node {
         }
 
         writer.write(arg);
+      }
+
+      if (!isStatic) {
+        writer.write(", component");
       }
 
       writer.write(")");

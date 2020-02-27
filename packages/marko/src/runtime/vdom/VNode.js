@@ -2,16 +2,15 @@
 function VNode() {}
 
 VNode.prototype = {
-  ___VNode: function(finalChildCount) {
+  ___VNode: function(finalChildCount, ownerComponent) {
     this.___finalChildCount = finalChildCount;
     this.___childCount = 0;
     this.___firstChildInternal = null;
     this.___lastChild = null;
     this.___parentNode = null;
     this.___nextSiblingInternal = null;
+    this.___ownerComponent = ownerComponent;
   },
-
-  ___ownerComponent: null,
 
   get ___firstChild() {
     var firstChild = this.___firstChildInternal;

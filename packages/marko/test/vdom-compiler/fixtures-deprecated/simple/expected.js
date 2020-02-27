@@ -22,7 +22,7 @@ function render(input, out, __component, component, state) {
 
   out.e("h1", null, null, null, 3)
     .t("Hello ")
-    .t(input.name)
+    .t(input.name, component)
     .t("!");
 
   if (input.colors.length) {
@@ -30,7 +30,7 @@ function render(input, out, __component, component, state) {
 
     marko_forOf(input.colors, function(color) {
       out.e("li", null, null, null, 1)
-        .t(color);
+        .t(color, component);
     });
 
     out.ee();

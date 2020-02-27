@@ -19,13 +19,13 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   out.e("script", null, null, null, 1)
-    .t(("\n    var x = \"" + input.value) + "\";\n");
+    .t(("\n    var x = \"" + input.value) + "\";\n", component);
 
   out.e("script", null, null, null, 1)
-    .t(("\n    var x = " + JSON.stringify(input.value)) + "\n");
+    .t(("\n    var x = " + JSON.stringify(input.value)) + "\n", component);
 
   out.e("script", null, null, null, 1)
-    .t(("" + input.a) + input.b);
+    .t(("" + input.a) + input.b, component);
 
   out.n(marko_node0, component);
 }

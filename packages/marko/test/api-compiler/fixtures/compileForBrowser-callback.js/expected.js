@@ -14,7 +14,7 @@ function render(input, out, __component, component, state) {
 
   out.t("Hello ");
 
-  out.t(data.name);
+  out.t(data.name, component);
 
   out.t("!");
 }

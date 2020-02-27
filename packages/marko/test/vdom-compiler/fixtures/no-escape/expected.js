@@ -14,11 +14,11 @@ function render(input, out, __component, component, state) {
 
   out.t("Hello ");
 
-  out.t(name);
+  out.t(name, component);
 
   out.t("! ");
 
-  out.h(message);
+  out.h(message, component);
 }
 
 marko_template._ = marko_renderer(render, {

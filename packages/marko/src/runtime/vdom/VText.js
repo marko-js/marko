@@ -1,8 +1,8 @@
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
 
-function VText(value) {
-  this.___VNode(-1 /* no children */);
+function VText(value, ownerComponent) {
+  this.___VNode(-1 /* no children */, ownerComponent);
   this.___nodeValue = value;
 }
 

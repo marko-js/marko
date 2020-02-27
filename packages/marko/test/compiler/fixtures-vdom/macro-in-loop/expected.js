@@ -19,12 +19,12 @@ function render(input, out, __component, component, state) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     out.e("div", null, "0" + $keyScope$0, component, 1)
-      .t(i);
+      .t(i, component);
 
     function macro_renderTree(out, node) {
       out.t("Name: ");
 
-      out.t(node.name);
+      out.t(node.name, component);
 
       out.t(" Children: ");
 

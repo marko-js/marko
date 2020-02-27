@@ -19,7 +19,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   out.e("div", null, "0", component, 1)
-    .t(counter++);
+    .t(counter++, component);
 }
 
 marko_template._ = marko_renderer(render, {
