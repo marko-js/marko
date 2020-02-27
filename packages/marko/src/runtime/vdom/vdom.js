@@ -1,5 +1,4 @@
 var VNode = require("./VNode");
-var VComment = require("./VComment");
 var VDocumentFragment = require("./VDocumentFragment");
 var VElement = require("./VElement");
 var VText = require("./VText");
@@ -23,8 +22,6 @@ function virtualize(node, ownerComponent) {
       return VElement.___virtualize(node, virtualizeChildNodes, ownerComponent);
     case 3:
       return new VText(node.nodeValue, ownerComponent);
-    case 8:
-      return new VComment(node.nodeValue, ownerComponent);
     case 11:
       var vdomDocFragment = new VDocumentFragment();
       virtualizeChildNodes(node, vdomDocFragment, ownerComponent);
@@ -74,20 +71,10 @@ Node_prototype.t = function(value) {
   return this.___finishChild();
 };
 
-/**
- * Shorthand method for creating and appending a Comment node with a given value
- * @param  {String} value The value for the new Comment node
- */
-Node_prototype.c = function(value) {
-  this.___appendChild(new VComment(value));
-  return this.___finishChild();
-};
-
 Node_prototype.___appendDocumentFragment = function() {
   return this.___appendChild(new VDocumentFragment());
 };
 
-exports.___VComment = VComment;
 exports.___VDocumentFragment = VDocumentFragment;
 exports.___VElement = VElement;
 exports.___VText = VText;

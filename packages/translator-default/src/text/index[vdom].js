@@ -7,6 +7,13 @@ export default function(path) {
   const { node } = path;
 
   path.replaceWith(
-    withPreviousLocation(write("t", t.stringLiteral(decode(node.value)), t.identifier("component")), node)
+    withPreviousLocation(
+      write(
+        "t",
+        t.stringLiteral(decode(node.value)),
+        t.identifier("component")
+      ),
+      node
+    )
   );
 }

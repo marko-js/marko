@@ -15,7 +15,6 @@ var document = createBrowser({
 var vdom = require("marko/runtime/vdom/vdom");
 var VElement = vdom.___VElement;
 var VText = vdom.___VText;
-var VComment = vdom.___VComment;
 var VDocumentFragment = vdom.___VDocumentFragment;
 
 var vdomHelpers = {
@@ -40,9 +39,6 @@ var vdomHelpers = {
   },
   createText: function(value) {
     return new VText(value);
-  },
-  createComment: function(value) {
-    return new VComment(value);
   },
   createDocumentFragment: function() {
     return new VDocumentFragment();

@@ -2,7 +2,6 @@ var EventEmitter = require("events-light");
 var vdom = require("./vdom");
 var VElement = vdom.___VElement;
 var VDocumentFragment = vdom.___VDocumentFragment;
-var VComment = vdom.___VComment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
 var VFragment = vdom.___VFragment;
@@ -133,10 +132,6 @@ var proto = (AsyncVDOMBuilder.prototype = {
 
     this.___parent.___appendChild(new VText(text, ownerComponent));
     return this;
-  },
-
-  comment: function(comment, ownerComponent) {
-    return this.node(new VComment(comment, ownerComponent));
   },
 
   html: function(html, ownerComponent) {
