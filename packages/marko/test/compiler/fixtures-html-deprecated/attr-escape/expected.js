@@ -17,9 +17,9 @@ function render(input, out, __component, component, state) {
     " foo=\"a" +
     marko_escapeDoubleQuoteAttrValue(input.foo) +
     "b\"" +
-    marko_attr("bar", ("a " + input.foo) + " b") +
-    marko_attr("baz", ("a " + input.foo) + " b") +
-    marko_attr("nested", ("a " + (input.foo + ("nested " + input.bar))) + " b") +
+    marko_attr("bar", ("a " + (input.foo == null ? "" : input.foo)) + " b") +
+    marko_attr("baz", ("a " + (input.foo == null ? "" : input.foo)) + " b") +
+    marko_attr("nested", ("a " + ((input.foo + ("nested " + (input.bar == null ? "" : input.bar))) == null ? "" : input.foo + ("nested " + (input.bar == null ? "" : input.bar)))) + " b") +
     "></div>");
 }
 

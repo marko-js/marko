@@ -21,3 +21,6 @@ coverage
 # controlled by npm's formatter
 package-lock.json
 package.json
+
+# handled by standard version
+CHANGELOG.md

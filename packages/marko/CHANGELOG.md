@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.51](https://github.com/marko-js/marko/compare/v4.18.50...v4.18.51) (2020-02-26)
+
+
+### Bug Fixes
+
+* always include nested contexts when serializing ([#1515](https://github.com/marko-js/marko/issues/1515)) ([c4f28e4](https://github.com/marko-js/marko/commit/c4f28e433cee13f206736c85431975e62b8ceed2))
+
+### [4.18.50](https://github.com/marko-js/marko/compare/v4.18.48...v4.18.50) (2020-02-26)
+
+### Bug Fixes
+
+- non standard template literals filter out null & undefined ([#1514](https://github.com/marko-js/marko/issues/1514)) ([d5fa202](https://github.com/marko-js/marko/commit/d5fa20267b0b0bfc5c835ebdda1c6cb61955c9c7))
+
 ### [4.18.49](https://github.com/marko-js/marko/compare/v4.18.48...v4.18.49) (2020-02-26)
 
 ### 4.18.48
