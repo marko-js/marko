@@ -115,28 +115,60 @@ module.exports = function defineWidget(def, renderer) {
 
   // get legacy methods
 
-  var legacyOnRender = proto.onRender || noop;
-  var legacyOnBeforeUpdate = proto.onBeforeUpdate || noop;
-  var legacyOnUpdate = proto.onUpdate || noop;
-  var legacyOnBeforeDestroy = proto.onBeforeDestroy || noop;
-  var legacyOnDestroy = proto.onDestroy || noop;
+  Object.defineProperty(proto, "init", {
+    get: function() {
+      return legacyInit;
+    },
+    set: function(v) {
+      legacyInit = v;
+    }
+  });
+
+  var legacyOnRender = proto.onRender;
+  Object.defineProperty(proto, "onRender", {
+    get: noop,
+    set: function(v) {
+      legacyOnRender = v;
+    }
+  });
+
+  var legacyOnUpdate = proto.onUpdate;
+  Object.defineProperty(proto, "onUpdate", {
+    get: function() {
+      return modernMountOrUpdate;
+    },
+    set: function(v) {
+      legacyOnUpdate = v;
+    }
+  });
+
+  var legacyOnDestroy = proto.onDestroy;
+  Object.defineProperty(proto, "onDestroy", {
+    get: function() {
+      return modernOnDestory;
+    },
+    set: function(v) {
+      legacyOnDestroy = v;
+    }
+  });
 
   proto.getWidget = proto.getComponent;
   proto.getWidgets = proto.getComponents;
+  proto.onMount = modernMountOrUpdate;
 
   // convert legacy to modern
   var originalUpdate = proto.update;
   proto.update = function() {
     this.___legacyExplicitUpdate = true;
     if (this.___currentLegacyBindEl) {
-      legacyOnBeforeUpdate.call(this);
+      this.onBeforeUpdate && this.onBeforeUpdate();
     }
 
     originalUpdate.call(this);
     this.___legacyExplicitUpdate = false;
   };
 
-  proto.onMount = proto.onUpdate = function() {
+  function modernMountOrUpdate() {
     var self = this;
     var el = this.getEl("_wbind");
     var prevEl = this.___currentLegacyBindEl;
@@ -145,17 +177,17 @@ module.exports = function defineWidget(def, renderer) {
       this.___currentLegacyBindEl = el;
 
       if (prevEl) {
-        legacyOnBeforeDestroy.call(this);
-        legacyOnDestroy.call(this);
+        this.onBeforeDestroy && this.onBeforeDestroy();
+        legacyOnDestroy && legacyOnDestroy.call(this);
         this.removeAllListeners();
       }
 
       if (el) {
-        legacyInit.call(this, this.widgetConfig || {});
-        legacyOnRender.call(this, { firstRender: true });
+        legacyInit && legacyInit.call(this, this.widgetConfig || {});
+        legacyOnRender && legacyOnRender.call(this, { firstRender: true });
         this.on("___legacyRender", function() {
           if (!self.___legacyExplicitUpdate) {
-            legacyOnBeforeUpdate.call(self);
+            self.onBeforeUpdate && self.onBeforeUpdate();
           }
 
           self.___didUpdate = true;
@@ -174,26 +206,26 @@ module.exports = function defineWidget(def, renderer) {
       }
     } else if (el) {
       if (prevEl) {
-        legacyOnUpdate.call(this);
+        legacyOnUpdate && legacyOnUpdate.call(this);
       }
 
       if (this.___didUpdate) {
-        legacyOnRender.call(this, { firstRender: false });
+        legacyOnRender && legacyOnRender.call(this, { firstRender: false });
       }
     }
 
     this.___widgetProps = this.___input;
     this.___input = null;
     this.___didUpdate = false;
-  };
+  }
 
-  proto.onDestroy = function() {
+  function modernOnDestory() {
     if (this.___currentLegacyBindEl) {
-      legacyOnBeforeDestroy.call(this);
-      legacyOnDestroy.call(this);
+      this.onBeforeDestroy && this.onBeforeDestroy();
+      legacyOnDestroy && legacyOnDestroy.call(this);
       this.___currentLegacyBindEl = null;
     }
-  };
+  }
 
   // Set a flag on the constructor function to make it clear this is
   // a component so that we can short-circuit this work later
