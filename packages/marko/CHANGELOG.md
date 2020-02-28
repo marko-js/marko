@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.1](https://github.com/marko-js/marko/compare/v4.19.0...v4.19.1) (2020-02-28)
+
+
+### Bug Fixes
+
+* support monkey patching lifecycle methods for legacy widgets ([#1521](https://github.com/marko-js/marko/issues/1521)) ([3056bd1](https://github.com/marko-js/marko/commit/3056bd11a63e2bf36d44657dc8d2ccf2381cfc92))
+
 ## [4.19.0](https://github.com/marko-js/marko/compare/v4.18.51...v4.19.0) (2020-02-27)
 
 
