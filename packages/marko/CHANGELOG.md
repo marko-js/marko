@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.2](https://github.com/marko-js/marko/compare/v4.19.1...v4.19.2) (2020-03-04)
+
+
+### Bug Fixes
+
+* don't serialize input for stateful widgets ([#1522](https://github.com/marko-js/marko/issues/1522)) ([3a14f62](https://github.com/marko-js/marko/commit/3a14f629688645d11b11678bd149a77cadfe745e))
+
 ### [4.19.1](https://github.com/marko-js/marko/compare/v4.19.0...v4.19.1) (2020-02-28)
 
 
