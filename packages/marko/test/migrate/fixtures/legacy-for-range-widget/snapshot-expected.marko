@@ -1,0 +1,11 @@
+<!-- packages/marko/test/migrate/fixtures/legacy-for-range-widget/template.marko -->
+
+<marko-migration-flags legacyWidgetAttrsWithoutBind/>
+<div key="hi" id:scoped="hi"/>
+<for|i| from=0 to=-1 step=1>
+    <li>${i}</li>
+</for>
+$ var last = -1;
+<for|i| from=0 to=last step=1>
+    <li>${i}</li>
+</for>

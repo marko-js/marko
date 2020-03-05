@@ -11,6 +11,10 @@ module.exports = function migrator(elNode, context) {
 
 function migrateForLoop(elNode, context) {
   const builder = context.builder;
+  const isLegacyTemplate =
+    context.meta.legacy ||
+    context.hasMigrationFlag("legacyWidgetAttrsWithoutBind");
+
   let parsed;
 
   if (!elNode.argument) {
@@ -192,6 +196,8 @@ function migrateForLoop(elNode, context) {
 
       if (parsed.step) {
         elNode.setAttributeValue("step", parsed.step);
+      } else if (isLegacyTemplate) {
+        elNode.setAttributeValue("step", builder.literal(1));
       }
 
       break;
