@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.3](https://github.com/marko-js/marko/compare/v4.19.2...v4.19.3) (2020-03-05)
+
+
+### Bug Fixes
+
+* add 'get' API for marko-widgets compat ([#1524](https://github.com/marko-js/marko/issues/1524)) ([095459f](https://github.com/marko-js/marko/commit/095459f43947b8f4be380286bd1f720109a3d86a))
+* improve support for legacy widget for range ([#1523](https://github.com/marko-js/marko/issues/1523)) ([ca4afb9](https://github.com/marko-js/marko/commit/ca4afb98165a063b0b5f85255235b87f332ddf92))
+
 ### [4.19.2](https://github.com/marko-js/marko/compare/v4.19.1...v4.19.2) (2020-03-04)
 
 
