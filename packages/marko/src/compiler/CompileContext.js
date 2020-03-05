@@ -244,6 +244,14 @@ class CompileContext extends EventEmitter {
     }
   }
 
+  hasMigrationFlag(name) {
+    if (this._mfe) {
+      return this._mfe.hasAttribute(name);
+    }
+
+    return false;
+  }
+
   get migrationFlagEl() {
     if (!this._mfe) {
       this._mfe = this.builder.htmlElement("marko-migration-flags");
