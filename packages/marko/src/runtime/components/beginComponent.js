@@ -57,7 +57,7 @@ module.exports = function beginComponent(
     componentDef.___flags |= FLAG_OLD_HYDRATE_NO_CREATE;
   }
 
-  if (ownerComponentDef && key != null) {
+  if (ownerComponentDef && ownerComponentDef.___renderBoundary && key != null) {
     out.w(
       "<!--" +
         runtimeId +
