@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.4](https://github.com/marko-js/marko/compare/v4.19.3...v4.19.4) (2020-03-09)
+
+
+### Bug Fixes
+
+* don't serialize component boundary keys if the owner isn't hydrated ([#1525](https://github.com/marko-js/marko/issues/1525)) ([9bf16b8](https://github.com/marko-js/marko/commit/9bf16b81f46abda06e42cbbd9341dd023fdcadc0))
+
 ### [4.19.3](https://github.com/marko-js/marko/compare/v4.19.2...v4.19.3) (2020-03-05)
 
 
