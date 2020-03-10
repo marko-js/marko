@@ -20,6 +20,7 @@ var morphdom = require("../vdom/morphdom");
 var eventDelegation = require("./event-delegation");
 var domData = require("./dom-data");
 var componentsByDOMNode = domData.___componentByDOMNode;
+var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var CONTEXT_KEY = "__subtree_context__";
 
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -181,16 +182,21 @@ function Component(id) {
   this.___input = undefined;
   this.___mounted = false;
   this.___global = undefined;
-
   this.___destroyed = false;
   this.___updateQueued = false;
   this.___dirty = false;
   this.___settingInput = false;
-
   this.___document = undefined;
-
-  this.___keyedElements = {};
   this.___keySequence = undefined;
+
+  var ssrKeyedElements = keyedElementsByComponentId[id];
+
+  if (ssrKeyedElements) {
+    this.___keyedElements = ssrKeyedElements;
+    delete keyedElementsByComponentId[id];
+  } else {
+    this.___keyedElements = {};
+  }
 }
 
 Component.prototype = componentProto = {
