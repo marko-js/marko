@@ -12,10 +12,10 @@ var addComponentRootToKeyedElements =
 var ComponentDef = require("./ComponentDef");
 var registry = require("./registry");
 var domData = require("./dom-data");
+var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var componentsByDOMNode = domData.___componentByDOMNode;
 var serverRenderedGlobals = {};
 var serverComponentRootNodes = {};
-var keyedElementsByComponentId = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 
@@ -341,9 +341,6 @@ function hydrateComponentAndGetMount(componentDef, doc) {
 
     component.___rootNode = rootNode;
     componentsByDOMNode.set(rootNode, component);
-    component.___keyedElements = keyedElementsByComponentId[componentId] || {};
-
-    delete keyedElementsByComponentId[componentId];
 
     if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
       component.___document = doc;
