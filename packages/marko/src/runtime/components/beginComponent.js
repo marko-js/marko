@@ -23,12 +23,13 @@ module.exports = function beginComponent(
     componentsContext
   ));
 
-  // On the server
-  if (
-    !componentsContext.___isPreserved &&
+  var ownerIsRenderBoundary =
+    ownerComponentDef && ownerComponentDef.___renderBoundary;
+  var ownerWillRerender =
     ownerComponentDef &&
-    ownerComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
-  ) {
+    ownerComponentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER;
+  // On the server
+  if (!componentsContext.___isPreserved && ownerWillRerender) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
     return componentDef;
   }
@@ -57,7 +58,7 @@ module.exports = function beginComponent(
     componentDef.___flags |= FLAG_OLD_HYDRATE_NO_CREATE;
   }
 
-  if (ownerComponentDef && ownerComponentDef.___renderBoundary && key != null) {
+  if ((ownerIsRenderBoundary || ownerWillRerender) && key != null) {
     out.w(
       "<!--" +
         runtimeId +
