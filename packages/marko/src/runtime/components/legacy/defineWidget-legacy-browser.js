@@ -8,6 +8,12 @@ var jQuery = require("../jquery");
 var ready = require("../ready");
 
 var complain = "MARKO_DEBUG" && require("complain");
+var stateToJSONDef = {
+  enumerable: false,
+  value: function returnSelf() {
+    return this;
+  }
+};
 function noop() {}
 
 module.exports = function defineWidget(def, renderer) {
@@ -62,7 +68,13 @@ module.exports = function defineWidget(def, renderer) {
 
   Object.defineProperty(proto, "state", {
     get: function() {
-      return this.___state;
+      var raw = this.___state && this.___state.___raw;
+
+      if (raw && !raw.toJSON) {
+        Object.defineProperty(this.___state.___raw, "toJSON", stateToJSONDef);
+      }
+
+      return raw;
     },
     set: function(newState) {
       newState = newState || {};
@@ -288,6 +300,6 @@ module.exports = function defineWidget(def, renderer) {
   return Component;
 };
 
-BaseState = require("./State-legacy");
+BaseState = require("../State");
 BaseComponent = require("../Component");
 inherit = require("raptor-util/inherit");
