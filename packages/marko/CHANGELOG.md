@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.5](https://github.com/marko-js/marko/compare/v4.19.4...v4.19.5) (2020-03-10)
+
+
+### Bug Fixes
+
+* issue with keys under ssr no-update root ([#1527](https://github.com/marko-js/marko/issues/1527)) ([fd03031](https://github.com/marko-js/marko/commit/fd03031c47881bf5dd7b311dd1fec843c98a1c06))
+* return raw state for legacy widgets ([#1526](https://github.com/marko-js/marko/issues/1526)) ([6905521](https://github.com/marko-js/marko/commit/6905521c875a1ecc18d7afbdfd0ef53df31831c5))
+
 ### [4.19.4](https://github.com/marko-js/marko/compare/v4.19.3...v4.19.4) (2020-03-09)
 
 
