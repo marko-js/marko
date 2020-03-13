@@ -325,12 +325,6 @@ function normalizeParts(parsed, builder) {
     return;
   }
 
-  if (step) {
-    if (step.type === "Literal" && step.value === 1) {
-      step = undefined;
-    }
-  }
-
   return {
     varName: varName,
     from: from,
