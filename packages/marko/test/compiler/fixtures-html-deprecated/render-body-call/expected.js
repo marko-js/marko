@@ -57,7 +57,7 @@ function render(input, out, __component, component, state) {
 
   var $for$0 = 0;
 
-  marko_forRange(0, 9, null, function(i) {
+  marko_forRange(0, 9, 1, function(i) {
     var $keyScope$0 = "[" + (($for$0++) + "]");
 
     marko_dynamicTag(out, input.items[i], null, null, null, null, __component, "13" + $keyScope$0);
