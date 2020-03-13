@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.7](https://github.com/marko-js/marko/compare/v4.19.6...v4.19.7) (2020-03-13)
+
+
+### Bug Fixes
+
+* prevent issue with range loop iterating in reverse ([#1531](https://github.com/marko-js/marko/issues/1531)) ([cd6459d](https://github.com/marko-js/marko/commit/cd6459dc8d057de0eb88040c81dcf034ae7ca5ad))
+
 ### [4.19.6](https://github.com/marko-js/marko/compare/v4.19.5...v4.19.6) (2020-03-13)
 
 
