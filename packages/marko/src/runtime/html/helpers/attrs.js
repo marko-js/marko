@@ -1,6 +1,5 @@
 "use strict";
 
-var changeCase = require("../../helpers/_change-case");
 var attrHelper = require("./attr");
 var classAttrHelper = require("./class-attr");
 var styleAttrHelper = require("./style-attr");
@@ -29,10 +28,7 @@ module.exports = function attrs(attributes) {
       } else if (attrName === "class") {
         result += classAttrHelper(attributes[attrName]);
       } else if (attrName !== "renderBody" && isValidAttrName(attrName)) {
-        result += attrHelper(
-          changeCase.___camelToDashCase(attrName),
-          attributes[attrName]
-        );
+        result += attrHelper(attrName, attributes[attrName]);
       }
     }
     return result;

@@ -1,6 +1,5 @@
 "use strict";
 
-var changeCase = require("../../helpers/_change-case");
 var classHelper = require("../../helpers/class-value");
 var styleHelper = require("../../helpers/style-value");
 
@@ -30,8 +29,6 @@ module.exports = function(attributes) {
         val = classHelper(val);
       } else if (attrName === "style") {
         val = styleHelper(val);
-      } else {
-        attrName = changeCase.___camelToDashCase(attrName);
       }
 
       newAttributes[attrName] = val;
