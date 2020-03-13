@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.6](https://github.com/marko-js/marko/compare/v4.19.5...v4.19.6) (2020-03-13)
+
+
+### Bug Fixes
+
+* spread attrs for native tag preserves case ([#1530](https://github.com/marko-js/marko/issues/1530)) ([f972707](https://github.com/marko-js/marko/commit/f97270746e7580d0d38e3a2a43e585721a256baf))
+
 ### [4.19.5](https://github.com/marko-js/marko/compare/v4.19.4...v4.19.5) (2020-03-10)
 
 
