@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.6](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.5...v5.0.0-next.6) (2020-03-16)
+
+
+### Bug Fixes
+
+* make Marko a peerDependency ([2eac257](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/2eac2572bec0986b2ac3903b1d43bef11d0bd437))
+
+
+### Features
+
+* all vnodes have owner components ([#1517](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1517)) ([585b2f1](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/585b2f1de7797f909f1204f7c52c4b6891f8e156))
+
+
+
+
+
 # [5.0.0-next.5](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.4...v5.0.0-next.5) (2020-02-26)
 
 **Note:** Version bump only for package @marko/translator-default

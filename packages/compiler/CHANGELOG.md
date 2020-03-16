@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.6](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.5...v5.0.0-next.6) (2020-03-16)
+
+
+### Bug Fixes
+
+* make Marko a peerDependency ([2eac257](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/2eac2572bec0986b2ac3903b1d43bef11d0bd437))
+
+
+
+
+
 # [5.0.0-next.5](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.4...v5.0.0-next.5) (2020-02-26)
 
 **Note:** Version bump only for package @marko/compiler
