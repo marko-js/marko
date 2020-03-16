@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.8](https://github.com/marko-js/marko/compare/v4.19.7...v4.19.8) (2020-03-16)
+
+
+### Bug Fixes
+
+* improve legacy compatibility with getWidgetForEl api ([#1533](https://github.com/marko-js/marko/issues/1533)) ([d5e3a27](https://github.com/marko-js/marko/commit/d5e3a272ae3c02ad48860d5ccddd8a6e2bcba3c9))
+
 ### [4.19.7](https://github.com/marko-js/marko/compare/v4.19.6...v4.19.7) (2020-03-13)
 
 
