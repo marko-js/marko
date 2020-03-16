@@ -11,27 +11,33 @@
     "marko": "^5.0.0-next.5",
     "self-closing-tags": "^1.0.1"
   },
+  "devDependencies": {
+    "marko": "^5.0.0-next.5"
+  },
   "files": [
     "dist"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
   "keywords": [
-    "htmljs",
-    "parser",
     "babel",
-    "plugin",
+    "htmljs",
+    "marko",
     "parse",
-    "marko"
+    "parser",
+    "plugin"
   ],
   "license": "MIT",
   "main": "src/index.js",
   "main:dev": "src/index.js",
   "main:npm": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
+  "peerDependencies": {
+    "marko": "^5.0.0-next.5"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
   }
 }
