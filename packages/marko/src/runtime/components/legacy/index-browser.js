@@ -19,7 +19,19 @@ exports.makeRenderable = exports.renderable = require("../../renderable");
 // browser only
 var Widget = (exports.Widget = Component);
 exports.onInitWidget = modernMarko.onInitComponent;
-exports.getWidgetForEl = exports.get = modernMarko.getComponentForEl;
+exports.getWidgetForEl = exports.get = function(elOrId) {
+  var el = elOrId;
+
+  if (typeof elOrId === "string") {
+    el = document.getElementById(elOrId);
+  }
+
+  if (el && el.__widget) {
+    return el.__widget;
+  }
+
+  return modernMarko.getComponentForEl(el);
+};
 exports.initWidgets = modernMarko.init;
 
 // monkey patch Widget
