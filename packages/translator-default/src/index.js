@@ -57,7 +57,7 @@ export const visitor = {
       } = getComponentFiles(path);
       const isHTML = options.output === "html";
       let isSplit = false;
-      let isImplicit = !inlineComponentClass && !hub._hasTagParams;
+      let isImplicit = !hub._hasTagParams;
 
       if (packageFile) {
         meta.deps.unshift(packageFile);
@@ -67,7 +67,7 @@ export const visitor = {
         meta.deps.unshift(styleFile);
       }
 
-      if (componentFile) {
+      if (componentFile || inlineComponentClass) {
         isImplicit = false;
         meta.component = ".";
       }
