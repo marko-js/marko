@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.8](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.7...v5.0.0-next.8) (2020-03-17)
+
+
+### Bug Fixes
+
+* **translator-default:** include full filename in meta.component ([bc0bc69](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/bc0bc69b3179b7ffbbe44046cb84933af3db095c))
+
+
+
+
+
 # [5.0.0-next.7](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.6...v5.0.0-next.7) (2020-03-17)
 
 
