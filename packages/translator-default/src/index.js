@@ -69,7 +69,7 @@ export const visitor = {
 
       if (componentFile || inlineComponentClass) {
         isImplicit = false;
-        meta.component = ".";
+        meta.component = hub.filename;
       }
 
       if (componentBrowserFile) {
