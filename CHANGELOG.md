@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.7](https://github.com/marko-js/marko/compare/v5.0.0-next.6...v5.0.0-next.7) (2020-03-17)
+
+
+### Bug Fixes
+
+* **translator-default:** set meta component for inline component ([bd21c79](https://github.com/marko-js/marko/commit/bd21c79449f4e082ad17d297ba3c4d1e87e3421b))
+
+
+
+
+
 # [5.0.0-next.6](https://github.com/marko-js/marko/compare/v5.0.0-next.5...v5.0.0-next.6) (2020-03-16)
 
 
