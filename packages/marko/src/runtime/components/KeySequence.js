@@ -1,25 +1,21 @@
-function KeySequence() {
-  this.___lookup = {};
-}
+var WeakMap = require("../helpers/_weak-map");
+var keySequenceLookup = new WeakMap();
+module.exports = function nextKey(obj, key) {
+  var lookup = keySequenceLookup.get(obj);
 
-KeySequence.prototype = {
-  ___nextKey: function(key) {
-    // var len = key.length;
-    // var lastChar = key[len-1];
-    // if (lastChar === ']') {
-    //     key = key.substring(0, len-2);
-    // }
-    var lookup = this.___lookup;
-
-    var currentIndex = lookup[key]++;
-    if (!currentIndex) {
-      lookup[key] = 1;
-      currentIndex = 0;
-      return key;
-    } else {
-      return key + "_" + currentIndex;
+  if (lookup) {
+    if (lookup[key]) {
+      return key + "_" + lookup[key]++;
     }
+  } else {
+    lookup = Object.create(null);
+    keySequenceLookup.set(obj, lookup);
   }
+
+  lookup[key] = 1;
+  return key;
 };
 
-module.exports = KeySequence;
+module.exports.___reset = function() {
+  keySequenceLookup = new WeakMap();
+};

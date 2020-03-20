@@ -1,5 +1,6 @@
 "use strict";
 var specialElHandlers = require("./specialElHandlers");
+var nextKey = require("../../components/KeySequence");
 var componentsUtil = require("../../components/util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
@@ -57,7 +58,7 @@ function onNodeAdded(node, componentsContext) {
 function morphdom(fromNode, toNode, doc, componentsContext) {
   var globalComponentsContext;
   var isHydrate = false;
-  var keySequences = {};
+  nextKey.___reset();
 
   if (componentsContext) {
     globalComponentsContext = componentsContext.___globalContext;
@@ -259,15 +260,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
           referenceComponent = ownerComponent;
         }
 
-        var keySequence =
-          keySequences[referenceComponent.id] ||
-          (keySequences[
-            referenceComponent.id
-          ] = globalComponentsContext.___createKeySequence());
-
         // We have a keyed element. This is the fast path for matching
         // up elements
-        curToNodeKey = keySequence.___nextKey(curToNodeKey);
+        curToNodeKey = nextKey(referenceComponent, curToNodeKey);
 
         if (curFromNodeChild) {
           curFromNodeKey = keysByDOMNode.get(curFromNodeChild);

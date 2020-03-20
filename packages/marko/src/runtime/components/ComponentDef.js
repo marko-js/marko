@@ -5,7 +5,7 @@ var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
   .___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
-var KeySequence = require("./KeySequence");
+var nextKey = require("./KeySequence");
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_BODY_EL = 2;
@@ -30,15 +30,11 @@ function ComponentDef(component, componentId, componentsContext) {
   this.___flags = 0;
 
   this.___nextIdIndex = 0; // The unique integer to use for the next scoped ID
-
-  this.___keySequence = null;
 }
 
 ComponentDef.prototype = {
   ___nextKey: function(key) {
-    var keySequence =
-      this.___keySequence || (this.___keySequence = new KeySequence());
-    return keySequence.___nextKey(key);
+    return nextKey(this, key);
   },
 
   /**
