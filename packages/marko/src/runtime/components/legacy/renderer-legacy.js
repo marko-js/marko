@@ -10,6 +10,7 @@ var beginComponent = require("../beginComponent");
 var endComponent = require("../endComponent");
 var w10NOOP = require("warp10/constants").NOOP;
 var complain = "MARKO_DEBUG" && require("complain");
+var noop = function() {};
 
 function createRendererFunc(templateRenderFunc, componentProps) {
   var typeName = componentProps.___type;
@@ -54,7 +55,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
     }
 
     if (registry.___isServer && typeName) {
-      if (renderingLogic) delete renderingLogic.onRender;
+      if (renderingLogic) renderingLogic.onRender = noop;
       component = registry.___createComponent(
         renderingLogic || {},
         id,
@@ -136,7 +137,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       if (typeName) {
         if (registry.___isServer) {
           var oldComponent = component;
-          if (renderingLogic) delete renderingLogic.onRender;
+          if (renderingLogic) renderingLogic.onRender = noop;
           component = registry.___createComponent(
             renderingLogic || {},
             id,
