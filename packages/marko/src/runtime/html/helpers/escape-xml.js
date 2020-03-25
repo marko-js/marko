@@ -16,12 +16,12 @@ exports.x = function(value) {
   return escape(value, "<", "&lt;");
 };
 
-function escape(str, match, escaped) {
-  if (str == null) {
+function escape(input, match, escaped) {
+  if (input == null) {
     return "";
   }
 
-  str = str + "";
+  var str = input + "";
   var len = str.length;
   var result = "";
   var lastPos = 0;

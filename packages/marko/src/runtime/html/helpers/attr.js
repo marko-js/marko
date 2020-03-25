@@ -17,10 +17,9 @@ module.exports = function attr(name, value) {
   }
 
   var type = typeof value;
-  result += "=";
 
   if (type === "number") {
-    return result + value;
+    return result + "=" + value;
   }
 
   if (type == "object") {
@@ -44,9 +43,9 @@ module.exports = function attr(name, value) {
 };
 
 function doubleQuote(value) {
-  return '"' + escapeDoubleQuotes(value) + '"';
+  return '="' + escapeDoubleQuotes(value) + '"';
 }
 
 function singleQuote(value) {
-  return "'" + escapeSingleQuotes(value) + "'";
+  return "='" + escapeSingleQuotes(value) + "'";
 }
