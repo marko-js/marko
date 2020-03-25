@@ -34,40 +34,33 @@ module.exports = function dynamicTag(
         key = "@" + key;
       }
 
-      if (customEvents) {
-        if (!props) {
-          props = {};
-        }
-
-        customEvents.forEach(function(eventArray) {
-          props["on" + eventArray[0]] = componentDef.d(
-            eventArray[0],
-            eventArray[1],
-            eventArray[2],
-            eventArray[3]
-          );
-        });
-      }
-
       if (renderBody) {
-        out.___beginElementDynamic(tag, attrs, key, componentDef, props);
+        out.___beginElementDynamic(
+          tag,
+          attrs,
+          key,
+          componentDef,
+          addEvents(componentDef, customEvents, props)
+        );
         renderBody(out);
         out.___endElement();
       } else {
-        out.___elementDynamic(tag, attrs, key, componentDef, props);
+        out.___elementDynamic(
+          tag,
+          attrs,
+          key,
+          componentDef,
+          addEvents(componentDef, customEvents, props)
+        );
       }
     } else {
       if (attrs == null) {
-        attrs = {};
+        attrs = { renderBody: renderBody };
       } else if (typeof attrs === "object") {
-        attrs = Object.keys(attrs).reduce(function(r, key) {
-          r[changeCase.___dashToCamelCase(key)] = attrs[key];
-          return r;
-        }, {});
-      }
-
-      if (renderBody) {
-        attrs.renderBody = renderBody;
+        attrs = attrsToCamelCase(attrs);
+        if (renderBody) {
+          attrs.renderBody = renderBody;
+        }
       }
 
       var renderer =
@@ -147,3 +140,36 @@ module.exports = function dynamicTag(
     out.___endFragment();
   }
 };
+
+function attrsToCamelCase(attrs) {
+  var result = {};
+
+  for (var key in attrs) {
+    result[changeCase.___dashToCamelCase(key)] = attrs[key];
+  }
+
+  return result;
+}
+
+function addEvents(componentDef, customEvents, props) {
+  var len = customEvents ? customEvents.length : 0;
+
+  if (len === 0) {
+    return props;
+  }
+
+  var result = props || {};
+  var event;
+
+  for (var i = len; i--; ) {
+    event = customEvents[i];
+    result["on" + event[0]] = componentDef.d(
+      event[0],
+      event[1],
+      event[2],
+      event[3]
+    );
+  }
+
+  return result;
+}
