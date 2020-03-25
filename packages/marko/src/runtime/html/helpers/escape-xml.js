@@ -9,19 +9,18 @@ exports.s = function(value) {
 };
 
 exports.x = function(value) {
-  if (value && value.toHTML) {
-    return value.toHTML();
-  }
-
-  return escape(value, "<", "&lt;");
-};
-
-function escape(input, match, escaped) {
-  if (input == null) {
+  if (value == null) {
     return "";
   }
 
-  var str = input + "";
+  if (value.toHTML) {
+    return value.toHTML();
+  }
+
+  return escape(value + "", "<", "&lt;");
+};
+
+function escape(str, match, escaped) {
   var len = str.length;
   var result = "";
   var lastPos = 0;
