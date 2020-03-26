@@ -10,7 +10,7 @@ var RENDER_BODY_TO_JSON = function() {
   return w10NOOP;
 };
 
-var autoKeyReg = /^\d[\d[\]]+$/;
+var autoKeyReg = /^\d[\d[\]]*$/;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var IS_SERVER = typeof window === "undefined";
 
