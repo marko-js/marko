@@ -26,6 +26,7 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
+    var isLegacy = componentDef.___isLegacy;
 
     var state = component.state;
     var input = component.input || 0;
@@ -34,23 +35,28 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
 
-    component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.typeName = undefined;
-    component.id = undefined;
-    component.___customEvents = undefined;
-    component.___scope = undefined;
-    component.___bubblingDomEvents = undefined;
-    component.___bubblingDomEventsExtraArgsCount = undefined;
-    component.___updatedInput = undefined;
-    component.___updateQueued = undefined;
-
     var hasProps = false;
 
-    for (let key in component) {
-      if (hasOwnProperty.call(component, key) && component[key] !== undefined) {
-        hasProps = true;
-        break;
+    if (!isLegacy) {
+      component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.typeName = undefined;
+      component.id = undefined;
+      component.___customEvents = undefined;
+      component.___scope = undefined;
+      component.___bubblingDomEvents = undefined;
+      component.___bubblingDomEventsExtraArgsCount = undefined;
+      component.___updatedInput = undefined;
+      component.___updateQueued = undefined;
+
+      for (let key in component) {
+        if (
+          hasOwnProperty.call(component, key) &&
+          component[key] !== undefined
+        ) {
+          hasProps = true;
+          break;
+        }
       }
     }
 
@@ -84,12 +90,10 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       w: hasProps ? component : undefined
     };
 
-    if (componentDef.___isLegacy) {
+    if (isLegacy) {
       extra.l = 1;
       extra.c = component.widgetConfig;
       extra.a = component.___legacyBody;
-      component.widgetConfig = undefined;
-      component.___legacyBody = undefined;
     }
 
     componentsToHydrate.push([
