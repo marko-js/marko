@@ -58,7 +58,6 @@ function onNodeAdded(node, componentsContext) {
 function morphdom(fromNode, toNode, doc, componentsContext) {
   var globalComponentsContext;
   var isHydrate = false;
-  nextKey.___reset();
 
   if (componentsContext) {
     globalComponentsContext = componentsContext.___globalContext;
@@ -668,6 +667,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
   } // END: morphEl(...)
 
   morphChildren(fromNode, toNode, toNode.___component);
+  nextKey.___reset();
 
   detachedNodes.forEach(function(node) {
     var detachedFromComponent = detachedByDOMNode.get(node);
