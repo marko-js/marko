@@ -1,21 +1,16 @@
-var WeakMap = require("../helpers/_weak-map");
-var keySequenceLookup = new WeakMap();
-module.exports = function nextKey(obj, key) {
-  var lookup = keySequenceLookup.get(obj);
+function KeySequence() {
+  this.___lookup = Object.create(null);
+}
 
-  if (lookup) {
-    if (lookup[key]) {
-      return key + "_" + lookup[key]++;
-    }
-  } else {
-    lookup = Object.create(null);
-    keySequenceLookup.set(obj, lookup);
+KeySequence.prototype.___nextKey = function(key) {
+  var lookup = this.___lookup;
+
+  if (lookup[key]) {
+    return key + "_" + lookup[key]++;
   }
 
   lookup[key] = 1;
   return key;
 };
 
-module.exports.___reset = function() {
-  keySequenceLookup = new WeakMap();
-};
+module.exports = KeySequence;
