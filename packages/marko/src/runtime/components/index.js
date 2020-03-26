@@ -26,11 +26,9 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
-    var isLegacy = componentDef.___isLegacy;
-    var legacyWidgetConfig, legacyWidgetBody;
 
     var state = component.state;
-    var input = component.input;
+    var input = component.input || 0;
     var typeName = component.typeName;
     var customEvents = component.___customEvents;
     var scope = component.___scope;
@@ -46,13 +44,6 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     component.___bubblingDomEventsExtraArgsCount = undefined;
     component.___updatedInput = undefined;
     component.___updateQueued = undefined;
-
-    if (isLegacy) {
-      legacyWidgetConfig = component.widgetConfig;
-      legacyWidgetBody = component.___legacyBody;
-      component.widgetConfig = undefined;
-      component.___legacyBody = undefined;
-    }
 
     var hasProps = false;
 
@@ -93,16 +84,18 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       w: hasProps ? component : undefined
     };
 
-    if (isLegacy) {
+    if (componentDef.___isLegacy) {
       extra.l = 1;
-      extra.c = legacyWidgetConfig;
-      extra.a = legacyWidgetBody;
+      extra.c = component.widgetConfig;
+      extra.a = component.___legacyBody;
+      component.widgetConfig = undefined;
+      component.___legacyBody = undefined;
     }
 
     componentsToHydrate.push([
       id, // 0 = id
       typeName, // 1 = type
-      input || 0, // 2 = input
+      input, // 2 = input
       extra // 3
     ]);
   }
