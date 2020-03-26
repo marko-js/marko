@@ -1,11 +1,11 @@
 "use strict";
 
 exports.d = function(value) {
-  return escape(value, '"', "&#34;");
+  return escapeQuote(value, '"', "&#34;");
 };
 
 exports.s = function(value) {
-  return escape(value, "'", "&#39;");
+  return escapeQuote(value, "'", "&#39;");
 };
 
 exports.x = function(value) {
@@ -17,10 +17,28 @@ exports.x = function(value) {
     return value.toHTML();
   }
 
-  return escape(value + "", "<", "&lt;");
+  return escapeBody(value + "");
 };
 
-function escape(str, match, escaped) {
+function escapeQuote(str, quote, escaped) {
+  var result = "";
+  var lastPos = 0;
+
+  for (var i = 0, len = str.length; i < len; i++) {
+    if (str[i] === quote) {
+      result += str.slice(lastPos, i) + escaped;
+      lastPos = i + 1;
+    }
+  }
+
+  if (lastPos) {
+    return result + str.slice(lastPos);
+  }
+
+  return str;
+}
+
+function escapeBody(str) {
   var len = str.length;
   var result = "";
   var lastPos = 0;
@@ -29,16 +47,12 @@ function escape(str, match, escaped) {
 
   for (; i < len; i++) {
     switch (str[i]) {
-      case match:
-        replacement = escaped;
+      case "<":
+        replacement = "&lt;";
         break;
       case "&":
         replacement = "&amp;";
         break;
-      //   case "\n":
-      //       // Preserve new lines so that they don't get normalized as space.
-      //       replacement = "&#10;";
-      //       break;
       default:
         continue;
     }

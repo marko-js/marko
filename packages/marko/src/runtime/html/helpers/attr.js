@@ -48,9 +48,14 @@ function singleQuote(value) {
 }
 
 function guessQuotes(value) {
-  if (value[0] === '"') {
-    return singleQuote(value);
+  if (value.length) {
+    if (value[0] === "{") {
+      // Assume json.
+      return singleQuote(value);
+    }
+
+    return doubleQuote(value);
   }
 
-  return doubleQuote(value);
+  return "";
 }
