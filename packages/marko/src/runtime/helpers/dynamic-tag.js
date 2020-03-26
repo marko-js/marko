@@ -9,6 +9,8 @@ var w10NOOP = require("warp10/constants").NOOP;
 var RENDER_BODY_TO_JSON = function() {
   return w10NOOP;
 };
+
+var autoKeyReg = /^\d[\d[\]]+$/;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var IS_SERVER = typeof window === "undefined";
 
@@ -30,7 +32,7 @@ module.exports = function dynamicTag(
     var attrs = getAttrs && getAttrs();
     var component = componentDef && componentDef.___component;
     if (typeof tag === "string") {
-      if (isNaN(key)) {
+      if (!autoKeyReg.test(key)) {
         key = "@" + key;
       }
 
@@ -130,12 +132,7 @@ module.exports = function dynamicTag(
       }
     }
   } else if (renderBody) {
-    var compFlags = componentDef ? componentDef.___flags : 0;
-    out.___beginFragment(
-      key,
-      component,
-      IS_SERVER ? compFlags & FLAG_WILL_RERENDER_IN_BROWSER : render === w10NOOP
-    );
+    out.___beginFragment(key, component);
     renderBody(out);
     out.___endFragment();
   }

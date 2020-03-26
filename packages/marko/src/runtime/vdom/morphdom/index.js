@@ -38,7 +38,7 @@ var DOCTYPE_NODE = 10;
 // var FLAG_CUSTOM_ELEMENT = 2;
 
 function isAutoKey(key) {
-  return !/^@/.test(key);
+  return key[0] !== "@";
 }
 
 function compareNodeNames(fromEl, toEl) {
@@ -615,10 +615,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
 
         curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
+        curFromNodeKey = keysByDOMNode.get(fromNode);
 
         // For transcluded content, we need to check if the element belongs to a different component
         // context than the current component and ensure it gets removed from its key index.
-        if (isAutoKey(keysByDOMNode.get(fromNode))) {
+        if (!curFromNodeKey || isAutoKey(curFromNodeKey)) {
           referenceComponent = parentComponent;
         } else {
           referenceComponent =

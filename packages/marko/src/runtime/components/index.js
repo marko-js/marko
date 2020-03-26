@@ -2,6 +2,7 @@
 
 var warp10 = require("warp10");
 var safeJSONRegExp = /<\/|\u2028|\u2029/g;
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function safeJSONReplacer(match) {
   if (match === "</") {
@@ -25,6 +26,8 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
+    var isLegacy = componentDef.___isLegacy;
+    var legacyWidgetConfig, legacyWidgetBody;
 
     var state = component.state;
     var input = component.input;
@@ -44,17 +47,17 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     component.___updatedInput = undefined;
     component.___updateQueued = undefined;
 
-    if (!typeName) {
-      continue;
+    if (isLegacy) {
+      legacyWidgetConfig = component.widgetConfig;
+      legacyWidgetBody = component.___legacyBody;
+      component.widgetConfig = undefined;
+      component.___legacyBody = undefined;
     }
 
     var hasProps = false;
 
-    let componentKeys = Object.keys(component);
-    for (let i = 0, len = componentKeys.length; i < len; i++) {
-      let key = componentKeys[i];
-
-      if (component[key] !== undefined) {
+    for (let key in component) {
+      if (hasOwnProperty.call(component, key) && component[key] !== undefined) {
         hasProps = true;
         break;
       }
@@ -67,11 +70,8 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       // value so that the property name will be serialized down to the browser.
       // This ensures that we add the proper getter/setter for the state property.
 
-      let stateKeys = Object.keys(state);
-      for (let i = 0, len = stateKeys.length; i < len; i++) {
-        let key = stateKeys[i];
-
-        if (state[key] === undefined) {
+      for (let key in state) {
+        if (hasOwnProperty.call(state, key) && state[key] === undefined) {
           if (undefinedPropNames) {
             undefinedPropNames.push(key);
           } else {
@@ -86,18 +86,23 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       d: componentDef.___domEvents,
       e: customEvents,
       f: flags ? flags : undefined,
-      l: componentDef.___isLegacy,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      r: componentDef.___boundary,
+      r: componentDef.___boundary && 1,
       s: state,
       u: undefinedPropNames,
       w: hasProps ? component : undefined
     };
 
+    if (isLegacy) {
+      extra.l = 1;
+      extra.c = legacyWidgetConfig;
+      extra.a = legacyWidgetBody;
+    }
+
     componentsToHydrate.push([
       id, // 0 = id
       typeName, // 1 = type
-      input, // 2 = input
+      input || 0, // 2 = input
       extra // 3
     ]);
   }

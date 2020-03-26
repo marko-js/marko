@@ -86,7 +86,7 @@ ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
-  var input = o[2];
+  var input = o[2] || null;
   var extra = o[3];
 
   var isLegacy = extra.l;
@@ -128,6 +128,11 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
 
     if (componentProps) {
       extend(component, componentProps);
+    }
+
+    if (isLegacy) {
+      component.widgetConfig = extra.c;
+      component.___legacyBody = extra.a;
     }
   }
 
