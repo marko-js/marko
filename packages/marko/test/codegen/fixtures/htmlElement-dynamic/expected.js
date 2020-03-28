@@ -1,5 +1,5 @@
-out.w("<" +
-  data.tagName +
+var tagName = data.tagNameout.w("<" +
+  tagName +
   " class=\"greeting\">Hello World</" +
-  data.tagName +
+  tagName +
   ">")

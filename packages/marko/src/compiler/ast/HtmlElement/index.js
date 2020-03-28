@@ -5,7 +5,6 @@ var Literal = require("../Literal");
 var HtmlAttributeCollection = require("../HtmlAttributeCollection");
 var generateHTMLCode = require("./html/generateCode");
 var generateVDOMCode = require("./vdom/generateCode");
-var vdomUtil = require("../../util/vdom");
 
 function beforeGenerateCode(event) {
   var tagName = event.node.tagName;
@@ -70,7 +69,7 @@ class HtmlElement extends Node {
   }
 
   generateVDOMCode(codegen) {
-    return generateVDOMCode(this, codegen, vdomUtil);
+    return generateVDOMCode(this, codegen);
   }
 
   getAttribute(name) {
