@@ -11,15 +11,17 @@ module.exports = function(input, out) {
 
   var global = out.global;
 
-  out.flush();
-
-  // We have already invoked an <await-reorderer. We do not need to do this
+  // We have already invoked an <await-reorderer>. We do not need to do this
   // work again.
   if (global.__awaitReordererInvoked) {
     return;
   }
 
   global.__awaitReordererInvoked = true;
+
+  if (out.global.___clientReorderContext) {
+    out.flush();
+  }
 
   var asyncOut = out.beginAsync({
     last: true,

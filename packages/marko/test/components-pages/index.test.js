@@ -19,25 +19,38 @@ function run(fixture) {
     var testFile = resolve("tests.js");
     var templateFile = resolve("template.marko");
     var template = require(templateFile);
-    return template
-      .render({})
-      .then(function(result) {
-        const html = result.toString();
-        var browser = createBrowserWithMarko(__dirname, html, {
-          beforeParse(window, browser) {
-            browser.require("../../components");
-            browser.window.$initComponents();
-            browser.require(templateFile);
+    var pendingHtml = new Promise(function(resolve, reject) {
+      var html = "";
+      template
+        .render(
+          {},
+          {
+            write(data) {
+              html += data;
+            },
+            flush() {},
+            end() {
+              resolve(html);
+            }
           }
-        });
-        after(function() {
-          browser.window.close();
-        });
-        return browser;
-      })
-      .then(function(browser) {
-        browser.window.document.close();
-        browser.require(testFile);
+        )
+        .once("error", reject);
+    });
+
+    return pendingHtml.then(function(html) {
+      var browser = createBrowserWithMarko(__dirname, html, {
+        beforeParse(window, browser) {
+          browser.require("../../components");
+          browser.window.$initComponents();
+          browser.require(templateFile);
+        }
       });
+      after(function() {
+        browser.window.close();
+      });
+
+      browser.window.document.close();
+      browser.require(testFile);
+    });
   });
 }

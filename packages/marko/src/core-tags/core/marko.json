@@ -253,6 +253,7 @@
     ]
   },
   "<await-reorderer>": {
+    "transformer": "../components/add-preferred-script-location-transformer.js",
     "renderer": "./await/reorderer-renderer"
   },
   "<*>": {

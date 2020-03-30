@@ -2,6 +2,8 @@
 
 var warp10 = require("warp10");
 var safeJSONRegExp = /<\/|\u2028|\u2029/g;
+var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
+var DEFAULT_RUNTIME_ID = "M";
 
 // var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var FLAG_HAS_RENDER_BODY = 2;
@@ -26,9 +28,33 @@ function isNotEmpty(obj) {
 
   return false;
 }
+function safeStringify(data) {
+  return JSON.stringify(warp10.stringifyPrepare(data)).replace(
+    safeJSONRegExp,
+    safeJSONReplacer
+  );
+}
 
-function safeJSON(json) {
-  return json.replace(safeJSONRegExp, safeJSONReplacer);
+function getSerializedGlobals($global) {
+  let serializedGlobalsLookup = $global.serializedGlobals;
+  if (serializedGlobalsLookup) {
+    let serializedGlobals;
+    let keys = Object.keys(serializedGlobalsLookup);
+    for (let i = keys.length; i--; ) {
+      let key = keys[i];
+      if (serializedGlobalsLookup[key]) {
+        let value = $global[key];
+        if (!IGNORE_GLOBAL_TYPES.has(typeof value)) {
+          if (serializedGlobals === undefined) {
+            serializedGlobals = {};
+          }
+          serializedGlobals[key] = value;
+        }
+      }
+    }
+
+    return serializedGlobals;
+  }
 }
 
 function addComponentsFromContext(componentsContext, componentsToHydrate) {
@@ -139,41 +165,83 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
   }
 }
 
-function getInitComponentsData(componentDefs, runtimeId) {
-  let len;
-  if ((len = componentDefs.length) === 0) {
+function getInitComponentsData(out, componentDefs) {
+  const len = componentDefs.length;
+  const $global = out.global;
+  const isLast = $global.___isLastFlush;
+  const didSerializeComponents = $global.___didSerializeComponents;
+  const prefix = $global.componentIdPrefix || $global.widgetIdPrefix;
+
+  if (len === 0) {
+    if (isLast && didSerializeComponents) {
+      return { p: prefix, l: 1 };
+    }
+
     return;
   }
 
-  const typesLookup = {};
-  const componentTypes = [];
   const TYPE_INDEX = 1;
+  const typesLookup =
+    $global.___typesLookup || ($global.___typesLookup = new Map());
+  let newTypes;
+
   for (let i = 0; i < len; i++) {
     const componentDef = componentDefs[i];
     const typeName = componentDef[TYPE_INDEX];
-    let typeIndex = typesLookup[typeName];
+    let typeIndex = typesLookup.get(typeName);
+
     if (typeIndex === undefined) {
-      typeIndex = componentTypes.length;
-      componentTypes.push(typeName);
-      typesLookup[typeName] = typeIndex;
+      typeIndex = typesLookup.size;
+      typesLookup.set(typeName, typeIndex);
+
+      if (newTypes) {
+        newTypes.push(typeName);
+      } else {
+        newTypes = [typeName];
+      }
     }
+
     componentDef[TYPE_INDEX] = typeIndex;
   }
-  return { r: runtimeId, w: componentDefs, t: componentTypes };
+
+  let serializedGlobals;
+
+  if (!didSerializeComponents) {
+    $global.___didSerializeComponents = true;
+    serializedGlobals = getSerializedGlobals($global);
+  }
+
+  return {
+    p: prefix,
+    l: isLast && 1,
+    g: serializedGlobals,
+    w: componentDefs,
+    t: newTypes
+  };
 }
 
 function getInitComponentsDataFromOut(out) {
-  var componentsContext = out.___components;
+  const componentsContext = out.___components;
 
   if (componentsContext === null) {
     return;
   }
 
-  var componentsToHydrate = [];
-
+  const $global = out.global;
+  const runtimeId = $global.runtimeId;
+  const componentsToHydrate = [];
+  $global.___isLastFlush = true;
   addComponentsFromContext(componentsContext, componentsToHydrate);
 
-  return getInitComponentsData(componentsToHydrate, out.global.runtimeId);
+  const data = getInitComponentsData(out, componentsToHydrate);
+
+  if (runtimeId !== DEFAULT_RUNTIME_ID) {
+    data.r = runtimeId;
+  }
+
+  $global.___isLastFlush = undefined;
+
+  return data;
 }
 
 function writeInitComponentsCode(out) {
@@ -184,31 +252,22 @@ exports.___getInitComponentsCode = function getInitComponentsCode(
   out,
   componentDefs
 ) {
-  var runtimeId = out.global.runtimeId;
-  var initComponentsData;
-
-  if (arguments.length === 2) {
-    initComponentsData = getInitComponentsData(componentDefs, runtimeId);
-  } else {
-    initComponentsData = getInitComponentsDataFromOut(out);
-  }
+  const initComponentsData =
+    arguments.length === 2
+      ? getInitComponentsData(out, componentDefs)
+      : getInitComponentsDataFromOut(out);
 
   if (initComponentsData === undefined) {
     return "";
   }
 
-  var componentGlobalKey =
-    "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
+  const runtimeId = out.global.runtimeId;
+  const componentGlobalKey =
+    runtimeId === DEFAULT_RUNTIME_ID ? "MC" : runtimeId + "_C";
 
-  return (
-    componentGlobalKey +
-    "=(window." +
-    componentGlobalKey +
-    "||[]).concat(" +
-    safeJSON(warp10.stringify(initComponentsData)) +
-    ")||" +
-    componentGlobalKey
-  );
+  return `$${componentGlobalKey}=(window.$${componentGlobalKey}||[]).concat(${safeStringify(
+    initComponentsData
+  )})`;
 };
 
 exports.___addComponentsFromContext = addComponentsFromContext;
@@ -222,6 +281,5 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
  * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
 exports.getRenderedComponents = function(out) {
-  var initComponentsData = getInitComponentsDataFromOut(out);
-  return warp10.stringifyPrepare(initComponentsData);
+  return warp10.stringifyPrepare(getInitComponentsDataFromOut(out));
 };
