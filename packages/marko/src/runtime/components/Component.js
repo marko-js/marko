@@ -187,7 +187,6 @@ function Component(id) {
   this.___dirty = false;
   this.___settingInput = false;
   this.___document = undefined;
-  this.___keySequence = undefined;
 
   var ssrKeyedElements = keyedElementsByComponentId[id];
 

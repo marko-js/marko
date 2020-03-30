@@ -6,8 +6,8 @@ var styleAttrHelper = require("./style-attr");
 
 // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
 var invalidAttrNameCharacters = /[\s'"</=\\]/u;
-var validAttrs = Object.create(null);
-var invalidAttrs = Object.create(null);
+var validAttrs = new Set();
+var invalidAttrs = new Set();
 
 module.exports = function attrs(attributes) {
   if (attributes != null) {
@@ -38,14 +38,14 @@ module.exports = function attrs(attributes) {
 };
 
 function isValidAttrName(attrName) {
-  if (validAttrs[attrName]) return true;
-  if (invalidAttrs[attrName]) return false;
+  if (validAttrs.has(attrName)) return true;
+  if (invalidAttrs.has(attrName)) return false;
 
-  if (!invalidAttrNameCharacters.test(attrName)) {
-    validAttrs[attrName] = true;
-    return true;
-  } else {
-    invalidAttrs[attrName] = true;
+  if (invalidAttrNameCharacters.test(attrName)) {
+    invalidAttrs.add(attrName);
     return false;
   }
+
+  validAttrs.add(attrName);
+  return true;
 }
