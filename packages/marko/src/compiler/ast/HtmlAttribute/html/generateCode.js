@@ -1,7 +1,8 @@
 "use strict";
 
 var attr = require("../../../../runtime/html/helpers/attr");
-var escapeXmlAttr = require("../../../../runtime/html/helpers/escape-xml").d;
+var escapeDoubleQuotes = require("../../../../runtime/html/helpers/escape-xml")
+  .d;
 
 function isStringLiteral(node) {
   return node.type === "Literal" && typeof node.value === "string";
@@ -75,7 +76,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
     for (let i = 0; i < flattenedConcats.length; i++) {
       var part = flattenedConcats[i];
       if (isStringLiteral(part)) {
-        part.value = escapeXmlAttr(part.value);
+        part.value = escapeDoubleQuotes(part.value);
       } else if (part.type !== "Literal") {
         if (isNoEscapeXml(part)) {
           part = codegen.builder.functionCall(context.helper("str"), [part]);

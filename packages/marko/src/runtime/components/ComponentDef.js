@@ -30,15 +30,14 @@ function ComponentDef(component, componentId, componentsContext) {
   this.___flags = 0;
 
   this.___nextIdIndex = 0; // The unique integer to use for the next scoped ID
-
   this.___keySequence = null;
 }
 
 ComponentDef.prototype = {
   ___nextKey: function(key) {
-    var keySequence =
-      this.___keySequence || (this.___keySequence = new KeySequence());
-    return keySequence.___nextKey(key);
+    return (
+      this.___keySequence || (this.___keySequence = new KeySequence())
+    ).___nextKey(key);
   },
 
   /**
@@ -90,7 +89,7 @@ ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
-  var input = o[2];
+  var input = o[2] || null;
   var extra = o[3];
 
   var isLegacy = extra.l;
@@ -132,6 +131,11 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
 
     if (componentProps) {
       extend(component, componentProps);
+    }
+
+    if (isLegacy) {
+      component.widgetConfig = extra.c;
+      component.___legacyBody = extra.a;
     }
   }
 

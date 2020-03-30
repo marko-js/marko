@@ -1,5 +1,6 @@
 "use strict";
 
+var escapeDoubleQuotes = require("./escape-xml").d;
 var escapeScript = require("./escape-script-placeholder");
 var assignPropsFunction = `
     function ap_(p) {
@@ -16,7 +17,9 @@ var assignPropsFunction = `
 
 module.exports = function propsForPreviousNode(props, out) {
   var cspNonce = out.global.cspNonce;
-  var nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
+  var nonceAttr = cspNonce
+    ? ' nonce="' + escapeDoubleQuotes(cspNonce) + '"'
+    : "";
 
   out.w("<script" + nonceAttr + ">");
 

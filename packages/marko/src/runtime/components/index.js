@@ -25,38 +25,37 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
+    var isLegacy = componentDef.___isLegacy;
 
     var state = component.state;
-    var input = component.input;
+    var input = component.input || 0;
     var typeName = component.typeName;
     var customEvents = component.___customEvents;
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
 
-    component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.typeName = undefined;
-    component.id = undefined;
-    component.___customEvents = undefined;
-    component.___scope = undefined;
-    component.___bubblingDomEvents = undefined;
-    component.___bubblingDomEventsExtraArgsCount = undefined;
-    component.___updatedInput = undefined;
-    component.___updateQueued = undefined;
-
-    if (!typeName) {
-      continue;
-    }
-
     var hasProps = false;
 
-    let componentKeys = Object.keys(component);
-    for (let i = 0, len = componentKeys.length; i < len; i++) {
-      let key = componentKeys[i];
+    if (!isLegacy) {
+      component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.typeName = undefined;
+      component.id = undefined;
+      component.___customEvents = undefined;
+      component.___scope = undefined;
+      component.___bubblingDomEvents = undefined;
+      component.___bubblingDomEventsExtraArgsCount = undefined;
+      component.___updatedInput = undefined;
+      component.___updateQueued = undefined;
 
-      if (component[key] !== undefined) {
-        hasProps = true;
-        break;
+      const componentKeys = Object.keys(component);
+      for (let i = componentKeys.length; i--; ) {
+        const componentKey = componentKeys[i];
+
+        if (component[componentKey] !== undefined) {
+          hasProps = true;
+          break;
+        }
       }
     }
 
@@ -66,16 +65,15 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       // Update state properties with an `undefined` value to have a `null`
       // value so that the property name will be serialized down to the browser.
       // This ensures that we add the proper getter/setter for the state property.
+      const stateKeys = Object.keys(state);
+      for (let i = stateKeys.length; i--; ) {
+        const stateKey = stateKeys[i];
 
-      let stateKeys = Object.keys(state);
-      for (let i = 0, len = stateKeys.length; i < len; i++) {
-        let key = stateKeys[i];
-
-        if (state[key] === undefined) {
+        if (state[stateKey] === undefined) {
           if (undefinedPropNames) {
-            undefinedPropNames.push(key);
+            undefinedPropNames.push(stateKey);
           } else {
-            undefinedPropNames = [key];
+            undefinedPropNames = [stateKey];
           }
         }
       }
@@ -86,13 +84,18 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       d: componentDef.___domEvents,
       e: customEvents,
       f: flags ? flags : undefined,
-      l: componentDef.___isLegacy,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      r: componentDef.___boundary,
+      r: componentDef.___boundary && 1,
       s: state,
       u: undefinedPropNames,
       w: hasProps ? component : undefined
     };
+
+    if (isLegacy) {
+      extra.l = 1;
+      extra.c = component.widgetConfig;
+      extra.a = component.___legacyBody;
+    }
 
     componentsToHydrate.push([
       id, // 0 = id
