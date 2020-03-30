@@ -56,7 +56,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
     if (registry.___isServer && typeName) {
       if (renderingLogic) delete renderingLogic.onRender;
       component = registry.___createComponent(
-        renderingLogic || {},
+        renderingLogic,
         id,
         input,
         out,

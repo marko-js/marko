@@ -1,6 +1,6 @@
 "use strict";
 const copyProps = require("raptor-util/copyProps");
-const SERVER_WIDGET_KEY = Symbol();
+const constructorCache = new Map();
 const BaseServerComponent = require("./ServerComponent");
 
 function createServerComponentClass(renderingLogic) {
@@ -24,22 +24,20 @@ function createComponent(
   customEvents,
   scope
 ) {
-  var ServerComponent = renderingLogic[SERVER_WIDGET_KEY];
-  if (!ServerComponent) {
-    ServerComponent = renderingLogic[
-      SERVER_WIDGET_KEY
-    ] = createServerComponentClass(renderingLogic);
+  let ServerComponent;
+
+  if (renderingLogic) {
+    ServerComponent = constructorCache.get(renderingLogic);
+
+    if (!ServerComponent) {
+      ServerComponent = createServerComponentClass(renderingLogic);
+      constructorCache.set(renderingLogic, ServerComponent);
+    }
+  } else {
+    ServerComponent = BaseServerComponent;
   }
 
-  var component = new ServerComponent(
-    id,
-    input,
-    out,
-    typeName,
-    customEvents,
-    scope
-  );
-  return component;
+  return new ServerComponent(id, input, out, typeName, customEvents, scope);
 }
 
 exports.___isServer = true;
