@@ -59,13 +59,12 @@ function createRendererFunc(
   componentProps,
   renderingLogic
 ) {
-  renderingLogic = renderingLogic || {};
-  var onInput = renderingLogic.onInput;
+  var onInput = renderingLogic && renderingLogic.onInput;
   var typeName = componentProps.t;
   var isSplit = componentProps.s === true;
   var isImplicitComponent = componentProps.i === true;
 
-  var shouldApplySplitMixins = isSplit;
+  var shouldApplySplitMixins = renderingLogic && isSplit;
 
   return function renderer(input, out) {
     trackAsyncComponents(out);

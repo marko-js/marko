@@ -1,7 +1,3 @@
 {
-  "dependencies": [
-    "require: ./*.js",
-    "require: ./vdom/*.js",
-    "require-run: ./components/legacy/dependencies/vdom"
-  ]
+  "dependencies": ["require: ./*.js", "require: ./vdom/*.js"]
 }

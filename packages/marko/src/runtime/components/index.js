@@ -25,13 +25,14 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
-
     var state = component.state;
-    var input = component.input;
+    var input = component.input || 0;
     var typeName = component.typeName;
     var customEvents = component.___customEvents;
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
+
+    var hasProps = false;
 
     component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
     component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
@@ -44,17 +45,11 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     component.___updatedInput = undefined;
     component.___updateQueued = undefined;
 
-    if (!typeName) {
-      continue;
-    }
+    const componentKeys = Object.keys(component);
+    for (let i = componentKeys.length; i--; ) {
+      const componentKey = componentKeys[i];
 
-    var hasProps = false;
-
-    let componentKeys = Object.keys(component);
-    for (let i = 0, len = componentKeys.length; i < len; i++) {
-      let key = componentKeys[i];
-
-      if (component[key] !== undefined) {
+      if (component[componentKey] !== undefined) {
         hasProps = true;
         break;
       }
@@ -66,16 +61,15 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       // Update state properties with an `undefined` value to have a `null`
       // value so that the property name will be serialized down to the browser.
       // This ensures that we add the proper getter/setter for the state property.
+      const stateKeys = Object.keys(state);
+      for (let i = stateKeys.length; i--; ) {
+        const stateKey = stateKeys[i];
 
-      let stateKeys = Object.keys(state);
-      for (let i = 0, len = stateKeys.length; i < len; i++) {
-        let key = stateKeys[i];
-
-        if (state[key] === undefined) {
+        if (state[stateKey] === undefined) {
           if (undefinedPropNames) {
-            undefinedPropNames.push(key);
+            undefinedPropNames.push(stateKey);
           } else {
-            undefinedPropNames = [key];
+            undefinedPropNames = [stateKey];
           }
         }
       }
@@ -87,7 +81,7 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       e: customEvents,
       f: flags ? flags : undefined,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      r: componentDef.___boundary,
+      r: componentDef.___boundary && 1,
       s: state,
       u: undefinedPropNames,
       w: hasProps ? component : undefined

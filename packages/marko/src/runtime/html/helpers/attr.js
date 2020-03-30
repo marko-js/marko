@@ -2,31 +2,48 @@
 
 var escape = require("./escape-xml");
 var escapeDoubleQuotes = escape.d;
+var escapeSingleQuotes = escape.s;
 
 module.exports = function attr(name, value) {
-  if (value == null || value === false) {
-    return "";
+  switch (typeof value) {
+    case "string":
+      return " " + name + guessQuotes(value);
+    case "boolean":
+      return value ? " " + name : "";
+    case "number":
+      return " " + name + "=" + value;
+    case "undefined":
+      return "";
+    case "object":
+      if (value === null) {
+        return "";
+      }
+
+      if (value instanceof RegExp) {
+        return " " + name + doubleQuote(value.source);
+      }
   }
 
-  var result = " " + name;
-
-  if (value === true) {
-    return result;
-  }
-
-  result += "=";
-
-  if (typeof value === "number") {
-    return result + value;
-  }
-
-  if (value instanceof RegExp) {
-    return result + doubleQuote(value.source);
-  }
-
-  return result + doubleQuote(value);
+  return " " + name + guessQuotes(value + "");
 };
 
 function doubleQuote(value) {
-  return '"' + escapeDoubleQuotes(value) + '"';
+  return '="' + escapeDoubleQuotes(value) + '"';
+}
+
+function singleQuote(value) {
+  return "='" + escapeSingleQuotes(value) + "'";
+}
+
+function guessQuotes(value) {
+  if (value.length) {
+    if (value[0] === "{") {
+      // Assume json.
+      return singleQuote(value);
+    }
+
+    return doubleQuote(value);
+  }
+
+  return "";
 }
