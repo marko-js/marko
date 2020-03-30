@@ -18,6 +18,7 @@ var utilFingerprint = require("./util/finger-print");
 var safeVarName = require("./util/safeVarName");
 var htmlElements = require("./util/html-elements");
 var markoModules = require("./modules");
+var discoverBranchTypes = require("./util/discover-branch-types");
 
 const markoPkgVersion = require("../../package.json").version;
 const rootDir = path.join(__dirname, "../");
@@ -540,8 +541,12 @@ class CompileContext extends EventEmitter {
     var tagDef;
 
     var taglibLookup = this.taglibLookup;
+    var isDynamic = tagName instanceof Node;
+    var branchTypes = isDynamic && discoverBranchTypes(tagName);
+    var isNativeDynamic = branchTypes && !branchTypes.expression;
+    var isNullable = branchTypes && branchTypes.empty;
 
-    if (isAtTag || tagName instanceof Node) {
+    if (isAtTag || (isDynamic && !isNativeDynamic)) {
       // NOTE: The tag definition can't be determined now
       //       For @tags it will be determined by the parent
       //       For dynamic tags we cannot know at compile time
@@ -614,6 +619,7 @@ class CompileContext extends EventEmitter {
     }
 
     node.pos = elDef.pos;
+    node.isNullable = isNullable;
 
     var foundAttrs = {};
 

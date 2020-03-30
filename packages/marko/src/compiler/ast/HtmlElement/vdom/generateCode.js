@@ -1,6 +1,7 @@
 "use strict";
 var HtmlElementVDOM = require("./HtmlElementVDOM");
 var EndElementVDOM = require("./EndElementVDOM");
+var vdomUtil = require("../../../util/vdom");
 
 function checkAttributesStatic(attributes) {
   if (attributes) {
@@ -16,7 +17,7 @@ function checkAttributesStatic(attributes) {
   return true;
 }
 
-function checkPropertiesStatic(properties, vdomUtil) {
+function checkPropertiesStatic(properties) {
   if (properties) {
     var keys = Object.keys(properties);
     for (var i = 0; i < keys.length; i++) {
@@ -32,7 +33,9 @@ function checkPropertiesStatic(properties, vdomUtil) {
   return true;
 }
 
-module.exports = function(node, codegen, vdomUtil) {
+module.exports = function(node, codegen) {
+  var builder = codegen.builder;
+  var context = codegen.context;
   var body = codegen.generateCode(node.body);
   var tagName = codegen.generateCode(node.tagNameExpression);
   var attributes = codegen.generateCode(node.getAttributes());
@@ -41,6 +44,8 @@ module.exports = function(node, codegen, vdomUtil) {
   var isAutoKeyed = node.isAutoKeyed;
   var runtimeFlags = node.runtimeFlags;
   var nextConstId = node.nextConstId;
+  var isNullable = node.isNullable;
+  var tagNameVar;
 
   if (properties) {
     Object.keys(properties).forEach(
@@ -50,10 +55,10 @@ module.exports = function(node, codegen, vdomUtil) {
 
   var isKeyStatic = vdomUtil.isStaticValue(key);
   var isAttrsStatic = checkAttributesStatic(attributes);
-  var isPropsStatic = checkPropertiesStatic(properties, vdomUtil);
+  var isPropsStatic = checkPropertiesStatic(properties);
   var isStatic =
     isKeyStatic && isAttrsStatic && isPropsStatic && node.isLiteralTagName();
-  var isHtmlOnly = true;
+  var isHtmlOnly = !isNullable;
 
   if (body && body.length) {
     for (var i = 0; i < body.length; i++) {
@@ -76,6 +81,14 @@ module.exports = function(node, codegen, vdomUtil) {
     }
   }
 
+  if (isNullable && tagName.type !== "Identifier") {
+    const tagNameIdentifier = builder.identifier(
+      context._uniqueVars.addVar("tagName", tagName)
+    );
+    tagNameVar = builder.var(tagNameIdentifier, tagName);
+    tagName = tagNameIdentifier;
+  }
+
   var htmlElVDOM = new HtmlElementVDOM({
     key,
     tagName,
@@ -93,7 +106,12 @@ module.exports = function(node, codegen, vdomUtil) {
   if (isHtmlOnly) {
     return htmlElVDOM;
   } else {
+    var endElVDOM = new EndElementVDOM();
     htmlElVDOM.body = null;
-    return [htmlElVDOM].concat(body, new EndElementVDOM());
+    if (isNullable) {
+      htmlElVDOM = builder.ifStatement(tagName, htmlElVDOM);
+      endElVDOM = builder.ifStatement(tagName, endElVDOM);
+    }
+    return [tagNameVar, htmlElVDOM, body, endElVDOM];
   }
 };

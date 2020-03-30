@@ -47,7 +47,6 @@ class TemplateLiteral extends Node {
       if (expr) code += "${" + expr.toString() + "}";
     }
     writer.write(quote + code + quote);
-    writer.write("\n");
   }
 
   walk(walker) {

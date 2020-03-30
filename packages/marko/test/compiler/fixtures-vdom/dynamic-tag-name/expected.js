@@ -7,13 +7,12 @@ var marko_template = module.exports = require("marko/src/vdom").t(),
       return module.exports;
     }),
     marko_renderer = require("marko/src/runtime/components/renderer"),
-    marko_defineComponent = require("marko/src/runtime/components/defineComponent"),
-    marko_dynamicTag = require("marko/src/runtime/helpers/dynamic-tag");
+    marko_defineComponent = require("marko/src/runtime/components/defineComponent");
 
 function render(input, out, __component, component, state) {
   var data = input;
 
-  marko_dynamicTag(out, foo ? "foo" : "bar", null, null, null, null, __component, "0");
+  out.e(foo ? "foo" : "bar", null, "0", component, 0);
 }
 
 marko_template._ = marko_renderer(render, {

@@ -119,8 +119,7 @@ class CodeWriter {
       }
       node.writeCode(this);
     } else if (isArray(code) || code instanceof Container) {
-      code.forEach(this.write, this);
-      return;
+      this.writeStatements(code);
     } else if (typeof code === "string") {
       this._code += code;
     } else if (typeof code === "boolean" || typeof code === "number") {
