@@ -193,8 +193,19 @@ function normalizeHtml(htmlOrNode) {
       isClientReorderFragment(node)
     ) {
       nodesToRemove.push(node);
-    } else if (node.tagName === "TEXTAREA") {
-      node.textContent = node.value;
+    }
+    if (node.nodeType === 1) {
+      if (node.tagName === "TEXTAREA") {
+        node.textContent = node.value;
+      }
+
+      // sort attrs by name.
+      Array.from(node.attributes)
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .forEach(attr => {
+          node.removeAttributeNode(attr);
+          node.setAttributeNode(attr);
+        });
     }
   }
 

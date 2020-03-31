@@ -5,28 +5,36 @@ var escapeDoubleQuotes = escape.d;
 var escapeSingleQuotes = escape.s;
 var complain = "MARKO_DEBUG" && require("complain");
 
-module.exports = function attr(name, value) {
+module.exports = maybeEmptyAttr;
+
+maybeEmptyAttr.___notEmptyAttr = notEmptyAttr;
+maybeEmptyAttr.___isEmptyAttrValue = isEmpty;
+
+function maybeEmptyAttr(name, value) {
+  if (isEmpty(value)) {
+    return "";
+  }
+
+  return notEmptyAttr(name, value);
+}
+
+function notEmptyAttr(name, value) {
   switch (typeof value) {
     case "string":
       return " " + name + guessQuotes(value);
     case "boolean":
-      return value === false ? "" : " " + name;
+      return " " + name;
     case "number":
       return " " + name + "=" + value;
-    case "undefined":
-      return "";
     case "object":
-      if (value === null) {
-        return "";
-      }
-
       switch (value.toString) {
         case Object.prototype.toString:
         case Array.prototype.toString:
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
             complain(
-              "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead."
+              "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
+              { locationIndex: 2 }
             );
           }
 
@@ -37,7 +45,11 @@ module.exports = function attr(name, value) {
   }
 
   return " " + name + guessQuotes(value + "");
-};
+}
+
+function isEmpty(value) {
+  return value == null || value === false;
+}
 
 function doubleQuote(value) {
   return '="' + escapeDoubleQuotes(value) + '"';
