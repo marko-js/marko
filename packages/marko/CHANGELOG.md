@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.10](https://github.com/marko-js/marko/compare/v4.19.9...v4.19.10) (2020-04-03)
+
+
+### Bug Fixes
+
+* regression with nullish values in partial string attribute values ([#1537](https://github.com/marko-js/marko/issues/1537)) ([a469e02](https://github.com/marko-js/marko/commit/a469e020cc60089bae73bf1a311a8e6919bc0ce0))
+
 ### [4.19.9](https://github.com/marko-js/marko/compare/v4.19.8...v4.19.9) (2020-03-30)
 
 ### [4.19.8](https://github.com/marko-js/marko/compare/v4.19.7...v4.19.8) (2020-03-16)
