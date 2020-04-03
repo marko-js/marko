@@ -1,6 +1,6 @@
 "use strict";
 
-var escapeDoubleQuotes = require("./escape-xml").d;
+var escapeDoubleQuotes = require("./escape-quotes").___escapeDoubleQuotes;
 var escapeScript = require("./escape-script-placeholder");
 var assignPropsFunction = `
     function ap_(p) {

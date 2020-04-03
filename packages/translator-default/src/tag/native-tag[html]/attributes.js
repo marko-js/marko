@@ -1,9 +1,6 @@
 import { types as t } from "@marko/babel-types";
 import { normalizeTemplateString } from "@marko/babel-utils";
-import {
-  d as escapeDoubleQuoteAttr,
-  s as escapeSingleQuoteAttr
-} from "marko/src/runtime/html/helpers/escape-xml";
+import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { evaluateAttr } from "../util";
 
 export default function(path, attrs) {
@@ -40,19 +37,10 @@ export default function(path, attrs) {
         continue;
       }
 
-      curString += ` ${name}`;
+      const attrString = attrHelper(name, computed);
+      curString += attrString;
 
-      if (computed === "") {
-        attrsObject.properties.push(
-          t.objectProperty(t.stringLiteral(name), t.booleanLiteral(true))
-        );
-      } else {
-        curString +=
-          attr.get("value").isObjectExpression() ||
-          attr.get("value").isArrayExpression()
-            ? `='${escapeSingleQuoteAttr(computed)}'`
-            : `="${escapeDoubleQuoteAttr(computed)}"`;
-
+      if (attrString) {
         attrsObject.properties.push(
           t.objectProperty(t.stringLiteral(name), value)
         );
