@@ -6,7 +6,6 @@ class AttributePlaceholder extends Node {
   constructor(def) {
     super("AttributePlaceholder");
     this.value = def.value;
-    this.escape = def.escape;
   }
 
   generateCode(codegen) {

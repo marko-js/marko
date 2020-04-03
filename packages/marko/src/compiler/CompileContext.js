@@ -94,7 +94,7 @@ const helpers = {
   },
   escapeDoubleQuoteAttrValue: {
     html: {
-      module: "marko/runtime/html/helpers/escape-xml",
+      module: "marko/runtime/html/helpers/escape-quotes",
       method: "d"
     }
   },

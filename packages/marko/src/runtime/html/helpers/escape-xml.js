@@ -1,14 +1,6 @@
 "use strict";
 
-exports.d = function(value) {
-  return escapeQuote(value, '"', "&#34;");
-};
-
-exports.s = function(value) {
-  return escapeQuote(value, "'", "&#39;");
-};
-
-exports.x = function(value) {
+module.exports.x = function(value) {
   if (value == null) {
     return "";
   }
@@ -17,28 +9,12 @@ exports.x = function(value) {
     return value.toHTML();
   }
 
-  return escapeBody(value + "");
+  return escapeXML(value + "");
 };
 
-function escapeQuote(str, quote, escaped) {
-  var result = "";
-  var lastPos = 0;
+exports.___escapeXML = escapeXML;
 
-  for (var i = 0, len = str.length; i < len; i++) {
-    if (str[i] === quote) {
-      result += str.slice(lastPos, i) + escaped;
-      lastPos = i + 1;
-    }
-  }
-
-  if (lastPos) {
-    return result + str.slice(lastPos);
-  }
-
-  return str;
-}
-
-function escapeBody(str) {
+function escapeXML(str) {
   var len = str.length;
   var result = "";
   var lastPos = 0;

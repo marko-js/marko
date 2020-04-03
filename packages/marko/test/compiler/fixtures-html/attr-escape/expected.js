@@ -5,8 +5,8 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = require("marko/src/runtime/components/renderer"),
     marko_classAttr = require("marko/src/runtime/html/helpers/class-attr"),
     marko_attr = require("marko/src/runtime/html/helpers/attr"),
-    helpers_escape_xml = require("marko/src/runtime/html/helpers/escape-xml"),
-    marko_escapeDoubleQuoteAttrValue = helpers_escape_xml.d;
+    helpers_escape_quotes = require("marko/src/runtime/html/helpers/escape-quotes"),
+    marko_escapeDoubleQuoteAttrValue = helpers_escape_quotes.d;
 
 function render(input, out, __component, component, state) {
   var data = input;

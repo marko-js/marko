@@ -1,8 +1,8 @@
 "use strict";
 
-var escape = require("./escape-xml");
-var escapeDoubleQuotes = escape.d;
-var escapeSingleQuotes = escape.s;
+var escapeQuoteHelpers = require("./escape-quotes");
+var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
+var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 var complain = "MARKO_DEBUG" && require("complain");
 
 module.exports = function attr(name, value) {
