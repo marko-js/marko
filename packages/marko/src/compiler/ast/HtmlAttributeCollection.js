@@ -89,18 +89,14 @@ class HtmlAttributeCollection {
     return this.lookup[name];
   }
 
-  setAttributeValue(name, value, escape) {
+  setAttributeValue(name, value) {
     var attr = this.getAttribute(name);
     if (attr) {
       attr.value = value;
-      if (typeof escape === "boolean") {
-        attr.escape = escape;
-      }
     } else {
       this.addAttribute({
         name: name,
-        value: value,
-        escape: escape
+        value: value
       });
     }
   }

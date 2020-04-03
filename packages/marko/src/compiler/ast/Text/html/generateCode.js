@@ -1,6 +1,7 @@
 "use strict";
 
-var escapeXml = require("../../../../runtime/html/helpers/escape-xml").x;
+var escapeXmlOrNullish = require("../../../../runtime/html/helpers/escape-xml")
+  .x;
 var Literal = require("../../Literal");
 
 module.exports = function(node, codegen) {
@@ -21,7 +22,7 @@ module.exports = function(node, codegen) {
       }
 
       if (escape === true) {
-        argument.value = escapeXml(argument.value.toString());
+        argument.value = escapeXmlOrNullish(argument.value.toString());
       }
 
       htmlArray.push(argument);
