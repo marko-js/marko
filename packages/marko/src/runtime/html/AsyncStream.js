@@ -6,7 +6,9 @@ var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
-var escapeXml = require("./helpers/escape-xml").x;
+var escapeXmlHelper = require("./helpers/escape-xml");
+var escapeXmlOrNullish = escapeXmlHelper.x;
+var escapeXmlString = escapeXmlHelper.___escapeXML;
 var selfClosingTags = require("self-closing-tags");
 
 var voidWriter = { write: function() {} };
@@ -553,12 +555,12 @@ var proto = (AsyncStream.prototype = {
   },
 
   text: function(str) {
-    this.write(escapeXml(str));
+    this.write(escapeXmlOrNullish(str));
   },
 
   ___beginFragment: function(key, component, preserve) {
     if (preserve) {
-      this.write("<!--F#" + escapeXml(key) + "-->");
+      this.write("<!--F#" + escapeXmlString(key) + "-->");
     }
     if (this._elStack) {
       this._elStack.push(preserve);

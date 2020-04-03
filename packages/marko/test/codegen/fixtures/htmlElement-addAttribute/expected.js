@@ -1,3 +1,3 @@
 out.w("<div class=\"foo" +
-  className +
+  marko_escapeDoubleQuoteAttrValue(className) +
   "\">Hello World</div>")

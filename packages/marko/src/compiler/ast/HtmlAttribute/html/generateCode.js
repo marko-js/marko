@@ -1,20 +1,14 @@
 "use strict";
 
 var attr = require("../../../../runtime/html/helpers/attr");
-var escapeDoubleQuotes = require("../../../../runtime/html/helpers/escape-xml")
+var escapeDoubleQuoteAttrValue = require("../../../../runtime/html/helpers/escape-quotes")
   .d;
 
 function isStringLiteral(node) {
   return node.type === "Literal" && typeof node.value === "string";
 }
 
-function isNoEscapeXml(node) {
-  return node.type === "AttributePlaceholder" && node.escape === false;
-}
-
 function flattenAttrConcats(node) {
-  // return [node];
-
   function flattenHelper(node) {
     if (node.type === "BinaryExpression" && node.operator === "+") {
       let left = flattenHelper(node.left);
@@ -45,7 +39,7 @@ function flattenAttrConcats(node) {
   return final.concats;
 }
 
-function generateCodeForExpressionAttr(name, value, escape, codegen) {
+function generateCodeForExpressionAttr(name, value, codegen) {
   var flattenedConcats = flattenAttrConcats(value);
 
   var hasLiteral = false;
@@ -75,19 +69,13 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
     addHtmlLiteral(" " + name + '="');
     for (let i = 0; i < flattenedConcats.length; i++) {
       var part = flattenedConcats[i];
-      if (isStringLiteral(part)) {
-        part.value = escapeDoubleQuotes(part.value);
-      } else if (part.type !== "Literal") {
-        if (isNoEscapeXml(part)) {
-          part = codegen.builder.functionCall(context.helper("str"), [part]);
-        } else {
-          if (escape !== false) {
-            part = builder.functionCall(
-              context.helper("escapeDoubleQuoteAttrValue"),
-              [part]
-            );
-          }
-        }
+      if (part.type === "Literal") {
+        part.value = escapeDoubleQuoteAttrValue(part.value);
+      } else {
+        part = builder.functionCall(
+          context.helper("escapeDoubleQuoteAttrValue"),
+          [part]
+        );
       }
       addHtml(part);
     }
@@ -102,16 +90,7 @@ function generateCodeForExpressionAttr(name, value, escape, codegen) {
         codegen.builder.functionCall(context.helper("styleAttr"), [value])
       );
     } else {
-      if (escape === false || isNoEscapeXml(value)) {
-        escape = false;
-      }
-
       let attrArgs = [codegen.builder.literal(name), value];
-
-      if (escape === false) {
-        attrArgs.push(codegen.builder.literal(false));
-      }
-
       addHtml(codegen.builder.functionCall(context.helper("attr"), attrArgs));
     }
   }
@@ -123,7 +102,6 @@ module.exports = function generateCode(node, codegen) {
   let name = node.name;
   let value = node.value;
   let argument = node.argument;
-  let escape = node.escape !== false;
   var builder = codegen.builder;
 
   if (!name) {
@@ -142,7 +120,7 @@ module.exports = function generateCode(node, codegen) {
     if (value.type === "TemplateLiteral") {
       value.nonstandard = false;
     }
-    return generateCodeForExpressionAttr(name, value, escape, codegen);
+    return generateCodeForExpressionAttr(name, value, codegen);
   } else if (argument) {
     return [
       builder.htmlLiteral(" " + name + "("),

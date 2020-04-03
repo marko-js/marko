@@ -1,8 +1,8 @@
 "use strict";
 
-var escapeXml = require("./escape-xml");
-var escapeSingleQuotes = escapeXml.s;
-var escapeDoubleQuotes = escapeXml.d;
+var escapeQuoteHelpers = require("./escape-quotes");
+var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
+var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_BODY_EL = 2;
 // var FLAG_HAS_HEAD_EL = 4;

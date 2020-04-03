@@ -102,10 +102,6 @@ class CodeGenerator {
     this.context.setMeta(key, value);
   }
 
-  getEscapeXmlAttrVar() {
-    return this.context.getEscapeXmlAttrVar();
-  }
-
   importModule(varName, path) {
     return this.context.importModule(varName, path);
   }
