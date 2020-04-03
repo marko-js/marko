@@ -1,8 +1,8 @@
 "use strict";
 
-var escape = require("./escape-xml");
-var escapeDoubleQuotes = escape.d;
-var escapeSingleQuotes = escape.s;
+var escapeQuoteHelpers = require("./escape-quotes");
+var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
+var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 
 module.exports = function attr(name, value) {
   switch (typeof value) {
