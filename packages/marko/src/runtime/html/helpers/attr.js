@@ -4,28 +4,39 @@ var escapeQuoteHelpers = require("./escape-quotes");
 var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 
-module.exports = function attr(name, value) {
+module.exports = maybeEmptyAttr;
+
+maybeEmptyAttr.___notEmptyAttr = notEmptyAttr;
+maybeEmptyAttr.___isEmptyAttrValue = isEmpty;
+
+function maybeEmptyAttr(name, value) {
+  if (isEmpty(value)) {
+    return "";
+  }
+
+  return notEmptyAttr(name, value);
+}
+
+function notEmptyAttr(name, value) {
   switch (typeof value) {
     case "string":
       return " " + name + guessQuotes(value);
     case "boolean":
-      return value ? " " + name : "";
+      return " " + name;
     case "number":
       return " " + name + "=" + value;
-    case "undefined":
-      return "";
     case "object":
-      if (value === null) {
-        return "";
-      }
-
       if (value instanceof RegExp) {
         return " " + name + doubleQuote(value.source);
       }
   }
 
   return " " + name + guessQuotes(value + "");
-};
+}
+
+function isEmpty(value) {
+  return value == null || value === false;
+}
 
 function doubleQuote(value) {
   return '="' + escapeDoubleQuotes(value) + '"';
