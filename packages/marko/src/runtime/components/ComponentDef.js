@@ -1,16 +1,16 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
+var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
   .___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
+var EMPTY_OBJECT = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-// var FLAG_HAS_BODY_EL = 2;
-// var FLAG_HAS_HEAD_EL = 4;
-var FLAG_OLD_HYDRATE_NO_CREATE = 8;
+var FLAG_HAS_RENDER_BODY = 2;
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
@@ -90,11 +90,12 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
   var input = o[2] || null;
-  var extra = o[3];
+  var extra = o[3] || EMPTY_OBJECT;
 
   var state = extra.s;
   var componentProps = extra.w;
   var flags = extra.f;
+  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
 
   var component = registry.___createComponent(typeName, id);
 
@@ -102,10 +103,11 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   // just building it from the server info
   component.___updateQueued = true;
 
-  if (
-    flags & FLAG_WILL_RERENDER_IN_BROWSER &&
-    !(flags & FLAG_OLD_HYDRATE_NO_CREATE)
-  ) {
+  if (renderBody) {
+    input.renderBody = renderBody;
+  }
+
+  if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
     if (component.onCreate) {
       component.onCreate(input, { global: global });
     }
@@ -147,7 +149,6 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   return {
     id: id,
     ___component: component,
-    ___boundary: extra.r,
     ___domEvents: extra.d,
     ___flags: extra.f || 0
   };
