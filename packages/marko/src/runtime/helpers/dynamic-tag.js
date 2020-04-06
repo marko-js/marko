@@ -12,6 +12,9 @@ var RENDER_BODY_TO_JSON = function() {
 
 var autoKeyReg = /^\d[\d[\]]*$/;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+// var FLAG_HAS_RENDER_BODY = 2;
+// var FLAG_IS_LEGACY = 4;
+// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 var IS_SERVER = typeof window === "undefined";
 
 /**

@@ -8,7 +8,6 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var trackAsyncComponents = modernRenderer.___trackAsyncComponents;
 var beginComponent = require("../beginComponent");
 var endComponent = require("../endComponent");
-var w10NOOP = require("warp10/constants").NOOP;
 var complain = "MARKO_DEBUG" && require("complain");
 
 function createRendererFunc(templateRenderFunc, componentProps) {
@@ -112,7 +111,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
 
     component.state = widgetState;
     component.widgetConfig = widgetConfig;
-    component.___legacyBody = widgetBody || component.___legacyBody || w10NOOP;
+    component.___widgetBody = widgetBody || component.___widgetBody;
 
     var componentDef = beginComponent(
       componentsContext,
