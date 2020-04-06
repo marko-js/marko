@@ -108,7 +108,7 @@ module.exports = function defineRenderer(renderingLogic) {
         }
       } else if (component) {
         newProps = newProps || component.___widgetProps;
-        widgetBody = component.___legacyBody;
+        widgetBody = component.___widgetBody;
         widgetState = component.___rawState;
         widgetConfig = component.widgetConfig;
       }

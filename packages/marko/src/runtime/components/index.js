@@ -3,12 +3,28 @@
 var warp10 = require("warp10");
 var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 
+// var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_HAS_RENDER_BODY = 2;
+var FLAG_IS_LEGACY = 4;
+// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
+
 function safeJSONReplacer(match) {
   if (match === "</") {
     return "\\u003C/";
   } else {
     return "\\u" + match.charCodeAt(0).toString(16);
   }
+}
+
+function isNotEmpty(obj) {
+  var keys = Object.keys(obj);
+  for (var i = keys.length; i--; ) {
+    if (obj[keys[i]] !== undefined) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function safeJSON(json) {
@@ -35,8 +51,17 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var bubblingDomEvents = component.___bubblingDomEvents;
 
     var hasProps = false;
+    var renderBody;
 
-    if (!isLegacy) {
+    if (isLegacy) {
+      flags |= FLAG_IS_LEGACY;
+      renderBody = component.___widgetBody;
+    } else {
+      if (input && input.renderBody) {
+        renderBody = input.renderBody;
+        input.renderBody = undefined;
+      }
+
       component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
       component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
       component.typeName = undefined;
@@ -47,16 +72,7 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       component.___bubblingDomEventsExtraArgsCount = undefined;
       component.___updatedInput = undefined;
       component.___updateQueued = undefined;
-
-      const componentKeys = Object.keys(component);
-      for (let i = componentKeys.length; i--; ) {
-        const componentKey = componentKeys[i];
-
-        if (component[componentKey] !== undefined) {
-          hasProps = true;
-          break;
-        }
-      }
+      hasProps = isNotEmpty(component);
     }
 
     var undefinedPropNames = undefined;
@@ -79,30 +95,37 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       }
     }
 
+    if (typeof renderBody === "function") {
+      flags |= FLAG_HAS_RENDER_BODY;
+      renderBody = undefined;
+    }
+
     var extra = {
       b: bubblingDomEvents,
       d: componentDef.___domEvents,
       e: customEvents,
       f: flags ? flags : undefined,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      r: componentDef.___boundary && 1,
       s: state,
       u: undefinedPropNames,
-      w: hasProps ? component : undefined
+      w: isLegacy ? component.widgetConfig : hasProps ? component : undefined,
+      r: renderBody
     };
 
-    if (isLegacy) {
-      extra.l = 1;
-      extra.c = component.widgetConfig;
-      extra.a = component.___legacyBody;
+    var parts = [id, typeName];
+    var hasExtra = isNotEmpty(extra);
+
+    if (input) {
+      parts.push(input);
+
+      if (hasExtra) {
+        parts.push(extra);
+      }
+    } else if (hasExtra) {
+      parts.push(0, extra); // empty input;
     }
 
-    componentsToHydrate.push([
-      id, // 0 = id
-      typeName, // 1 = type
-      input, // 2 = input
-      extra // 3
-    ]);
+    componentsToHydrate.push(parts);
   }
 
   components.length = 0;
