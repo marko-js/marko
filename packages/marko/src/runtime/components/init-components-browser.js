@@ -18,6 +18,7 @@ var serverRenderedGlobals = {};
 var serverComponentRootNodes = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+// var FLAG_HAS_RENDER_BODY = 2;
 
 function indexServerComponentBoundaries(node, runtimeId, stack) {
   var componentId;

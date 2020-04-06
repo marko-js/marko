@@ -3,9 +3,7 @@
 const ComponentDef = require("./ComponentDef");
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-// var FLAG_HAS_BODY_EL = 2;
-// var FLAG_HAS_HEAD_EL = 4;
-var FLAG_OLD_HYDRATE_NO_CREATE = 8;
+// var FLAG_HAS_RENDER_BODY = 2;
 
 module.exports = function beginComponent(
   componentsContext,
@@ -52,10 +50,6 @@ module.exports = function beginComponent(
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
     componentDef.___parentPreserved = componentsContext.___isPreserved;
     componentsContext.___isPreserved = false;
-  }
-
-  if (out.global.oldHydrateNoCreate === true) {
-    componentDef.___flags |= FLAG_OLD_HYDRATE_NO_CREATE;
   }
 
   if ((ownerIsRenderBoundary || ownerWillRerender) && key != null) {

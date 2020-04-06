@@ -1,6 +1,5 @@
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-// var FLAG_HAS_BODY_EL = 2;
-// var FLAG_HAS_HEAD_EL = 4;
+// var FLAG_HAS_RENDER_BODY = 2;
 
 function nextComponentIdProvider(out) {
   var prefix = out.global.componentIdPrefix || out.global.widgetIdPrefix || "s"; // "s" is for server (we use "b" for the browser)
