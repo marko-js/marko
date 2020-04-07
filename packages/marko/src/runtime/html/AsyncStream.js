@@ -11,7 +11,20 @@ var escapeXmlOrNullish = escapeXmlHelper.x;
 var escapeXmlString = escapeXmlHelper.___escapeXML;
 var selfClosingTags = require("self-closing-tags");
 
-var voidWriter = { write: function() {} };
+function noop() {}
+
+var voidWriter = {
+  write: noop,
+  script: noop,
+  merge: noop,
+  clear: noop,
+  get: function() {
+    return [];
+  },
+  toString: function() {
+    return "";
+  }
+};
 
 function State(root, stream, writer, events) {
   this.root = root;
