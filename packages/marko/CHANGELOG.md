@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.12](https://github.com/marko-js/marko/compare/v4.19.11...v4.19.12) (2020-04-07)
+
+
+### Bug Fixes
+
+* implement missing methods for void-writer ([#1540](https://github.com/marko-js/marko/issues/1540)) ([2806066](https://github.com/marko-js/marko/commit/28060669a421837cec19f35f307f35c0ef636b0e))
+
 ### [4.19.11](https://github.com/marko-js/marko/compare/v4.19.10...v4.19.11) (2020-04-06)
 
 ### [4.19.10](https://github.com/marko-js/marko/compare/v4.19.9...v4.19.10) (2020-04-03)
