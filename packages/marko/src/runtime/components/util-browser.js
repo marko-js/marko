@@ -170,6 +170,33 @@ function addComponentRootToKeyedElements(
   }
 }
 
+// eslint-disable-next-line no-constant-condition
+if ("MARKO_DEBUG") {
+  var warnNodeRemoved = function(event) {
+    var fragment = event.target.fragment;
+    if (fragment) {
+      var baseError = new Error(
+        "Fragment boundary marker removed.  This will cause an error when the fragment is updated."
+      );
+      fragment.___markersRemovedError = function(message) {
+        var error = new Error(message + " Boundary markers missing.");
+
+        baseError.stack = baseError.stack.replace(/.*warnNodeRemoved.*\n/, "");
+
+        // eslint-disable-next-line no-console
+        console.warn(baseError);
+        return error;
+      };
+    }
+  };
+  exports.___startDOMManipulationWarning = function() {
+    document.addEventListener("DOMNodeRemoved", warnNodeRemoved);
+  };
+  exports.___stopDOMManipulationWarning = function() {
+    document.removeEventListener("DOMNodeRemoved", warnNodeRemoved);
+  };
+}
+
 exports.___runtimeId = runtimeId;
 exports.___componentLookup = componentLookup;
 exports.___getComponentForEl = getComponentForEl;
