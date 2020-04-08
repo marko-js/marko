@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.13](https://github.com/marko-js/marko/compare/v4.19.12...v4.19.13) (2020-04-08)
+
+
+### Bug Fixes
+
+* add devmode warning for removing fragment markers ([#1541](https://github.com/marko-js/marko/issues/1541)) ([1c3852f](https://github.com/marko-js/marko/commit/1c3852f2c7938a689c249b6d59b6280becda216e))
+
 ### [4.19.12](https://github.com/marko-js/marko/compare/v4.19.11...v4.19.12) (2020-04-07)
 
 
