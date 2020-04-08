@@ -22,6 +22,12 @@ var fragmentPrototype = {
     return this.endNode.nextSibling;
   },
   get nodes() {
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      if (this.___markersRemovedError) {
+        throw this.___markersRemovedError("Cannot get fragment nodes.");
+      }
+    }
     var nodes = [];
     var current = this.startNode;
     while (current !== this.endNode) {
