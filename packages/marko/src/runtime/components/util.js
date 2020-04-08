@@ -69,3 +69,9 @@ exports.___isServer = true;
 exports.___attachBubblingEvent = attachBubblingEvent;
 exports.___destroyComponentForNode = function noop() {};
 exports.___destroyNodeRecursive = function noop() {};
+
+// eslint-disable-next-line no-constant-condition
+if ("MARKO_DEBUG") {
+  exports.___startDOMManipulationWarning = function noop() {};
+  exports.___stopDOMManipulationWarning = function noop() {};
+}
