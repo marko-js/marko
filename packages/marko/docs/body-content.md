@@ -68,7 +68,7 @@ _components/random-value.marko:_
 <${input.renderBody} number=1337 />
 ```
 
-These attribute values can be recieved as a [tag parameter](./syntax.md#parameters):
+These attribute values can be received as a [tag parameter](./syntax.md#parameters):
 
 ```marko
 <random-value|{ number }|>
@@ -94,7 +94,7 @@ You can also pass named content sections to a tag using [attribute tags](./synta
 </layout>
 ```
 
-Like attributes, these attribute tags are recieved as `input.heading` and `input.content`, but they each have a `renderBody` property which we can now use:
+Like attributes, these attribute tags are received as `input.heading` and `input.content`, but they each have a `renderBody` property which we can now use:
 
 _components/layout.marko_
 
