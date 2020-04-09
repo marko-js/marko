@@ -12,16 +12,14 @@ html lang="en"
         app-foo
         app-bar
 
-        init-components immediate
-
         script
             ---
             window.$initComponents();
             ---
 
-        script
-            ---
-            // window.fooComponent should, but's store that in a variable to verify
-            window.afterInitComponentsFooComponent = window.fooComponent;
-            window.afterInitComponentsBarComponent = window.barComponent;
-            ---
+script
+    ---
+    // window.fooComponent should, but's store that in a variable to verify
+    window.afterInitComponentsFooComponent = window.fooComponent;
+    window.afterInitComponentsBarComponent = window.barComponent;
+    ---

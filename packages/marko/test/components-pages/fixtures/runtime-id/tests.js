@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 it("should serialize component input down to the browser", function() {
-  expect(window.$test_components).to.not.equal(undefined);
+  expect(window.$test_C).to.not.equal(undefined);
   expect(window.fooComponent).equal(undefined);
   window.$initComponents("test");
 

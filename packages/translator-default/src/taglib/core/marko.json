@@ -240,13 +240,14 @@
     "@body-only": "boolean",
     "autocomplete": []
   },
-  "<component-globals>": {
-    "renderer": "marko/src/core-tags/components/component-globals-tag.js",
-    "autocomplete": []
-  },
   "<init-components>": {
+    "transformer": "./transform-server-only.js",
     "renderer": "marko/src/core-tags/components/init-components-tag.js",
     "@immediate": "boolean"
+  },
+  "<_preferred-script-location>": {
+    "transformer": "./transform-server-only.js",
+    "renderer": "marko/src/core-tags/components/preferred-script-location-tag.js"
   },
   "<body>": {
     "transformer": "./transform-body.js"
@@ -327,6 +328,7 @@
     ]
   },
   "<await-reorderer>": {
+    "transformer": "./transform-server-only.js",
     "renderer": "marko/src/core-tags/core/await/reorderer-renderer.js",
     "autocomplete": [
       {

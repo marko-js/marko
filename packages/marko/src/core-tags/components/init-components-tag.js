@@ -21,17 +21,10 @@ function addInitScript(writer) {
   writer.script(getInitComponentsCode(out, componentDefs));
 }
 
-function forceScriptTagAtThisPoint(out) {
-  const writer = out.writer;
-  const htmlSoFar = writer.toString();
-  writer.clear();
-  writer.write(htmlSoFar);
-}
-
 module.exports = function render(input, out) {
-  const outGlobal = out.global;
-  if (outGlobal[INIT_COMPONENTS_KEY] === undefined) {
-    outGlobal[INIT_COMPONENTS_KEY] = true;
+  const $global = out.global;
+  if ($global[INIT_COMPONENTS_KEY] === undefined) {
+    $global[INIT_COMPONENTS_KEY] = true;
 
     out.on("await:finish", addComponentsFromOut);
     out.on("___toString", addInitScript);
@@ -40,7 +33,6 @@ module.exports = function render(input, out) {
       // Generate initialization code for any of the UI components that were
       // rendered synchronously
       addComponentsFromOut(out);
-      forceScriptTagAtThisPoint(out);
     } else {
       // Generate initialization code for any of the UI components that were
       // rendered asynchronously, but were outside an `<await>` tag
@@ -54,7 +46,6 @@ module.exports = function render(input, out) {
         }
         // Write out all of the component init code from the main out
         addComponentsFromOut(rootOut, asyncOut);
-        forceScriptTagAtThisPoint(asyncOut);
         asyncOut.end();
         next();
       });

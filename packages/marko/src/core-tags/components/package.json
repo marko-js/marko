@@ -1,6 +1,5 @@
 {
     "browser": {
-        "./component-globals-tag.js": "./component-globals-tag-browser.js",
         "./init-components-tag.js": "./init-components-tag-browser.js",
         "./preserve-tag.js": "./preserve-tag-browser.js"
     }
