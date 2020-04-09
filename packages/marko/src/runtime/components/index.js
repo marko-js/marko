@@ -2,6 +2,13 @@
 
 var warp10 = require("warp10");
 var safeJSONRegExp = /<\/|\u2028|\u2029/g;
+var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
+var DEFAULT_RUNTIME_ID = "M";
+
+// var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_HAS_RENDER_BODY = 2;
+var FLAG_IS_LEGACY = 4;
+// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 function safeJSONReplacer(match) {
   if (match === "</") {
@@ -11,8 +18,43 @@ function safeJSONReplacer(match) {
   }
 }
 
-function safeJSON(json) {
-  return json.replace(safeJSONRegExp, safeJSONReplacer);
+function isNotEmpty(obj) {
+  var keys = Object.keys(obj);
+  for (var i = keys.length; i--; ) {
+    if (obj[keys[i]] !== undefined) {
+      return true;
+    }
+  }
+
+  return false;
+}
+function safeStringify(data) {
+  return JSON.stringify(warp10.stringifyPrepare(data)).replace(
+    safeJSONRegExp,
+    safeJSONReplacer
+  );
+}
+
+function getSerializedGlobals($global) {
+  let serializedGlobalsLookup = $global.serializedGlobals;
+  if (serializedGlobalsLookup) {
+    let serializedGlobals;
+    let keys = Object.keys(serializedGlobalsLookup);
+    for (let i = keys.length; i--; ) {
+      let key = keys[i];
+      if (serializedGlobalsLookup[key]) {
+        let value = $global[key];
+        if (!IGNORE_GLOBAL_TYPES.has(typeof value)) {
+          if (serializedGlobals === undefined) {
+            serializedGlobals = {};
+          }
+          serializedGlobals[key] = value;
+        }
+      }
+    }
+
+    return serializedGlobals;
+  }
 }
 
 function addComponentsFromContext(componentsContext, componentsToHydrate) {
@@ -25,39 +67,38 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
+    var isLegacy = componentDef.___isLegacy;
 
     var state = component.state;
-    var input = component.input;
+    var input = component.input || 0;
     var typeName = component.typeName;
     var customEvents = component.___customEvents;
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
 
-    component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.typeName = undefined;
-    component.id = undefined;
-    component.___customEvents = undefined;
-    component.___scope = undefined;
-    component.___bubblingDomEvents = undefined;
-    component.___bubblingDomEventsExtraArgsCount = undefined;
-    component.___updatedInput = undefined;
-    component.___updateQueued = undefined;
-
-    if (!typeName) {
-      continue;
-    }
-
     var hasProps = false;
+    var renderBody;
 
-    let componentKeys = Object.keys(component);
-    for (let i = 0, len = componentKeys.length; i < len; i++) {
-      let key = componentKeys[i];
-
-      if (component[key] !== undefined) {
-        hasProps = true;
-        break;
+    if (isLegacy) {
+      flags |= FLAG_IS_LEGACY;
+      renderBody = component.___widgetBody;
+    } else {
+      if (input && input.renderBody) {
+        renderBody = input.renderBody;
+        input.renderBody = undefined;
       }
+
+      component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.typeName = undefined;
+      component.id = undefined;
+      component.___customEvents = undefined;
+      component.___scope = undefined;
+      component.___bubblingDomEvents = undefined;
+      component.___bubblingDomEventsExtraArgsCount = undefined;
+      component.___updatedInput = undefined;
+      component.___updateQueued = undefined;
+      hasProps = isNotEmpty(component);
     }
 
     var undefinedPropNames = undefined;
@@ -66,19 +107,23 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       // Update state properties with an `undefined` value to have a `null`
       // value so that the property name will be serialized down to the browser.
       // This ensures that we add the proper getter/setter for the state property.
+      const stateKeys = Object.keys(state);
+      for (let i = stateKeys.length; i--; ) {
+        const stateKey = stateKeys[i];
 
-      let stateKeys = Object.keys(state);
-      for (let i = 0, len = stateKeys.length; i < len; i++) {
-        let key = stateKeys[i];
-
-        if (state[key] === undefined) {
+        if (state[stateKey] === undefined) {
           if (undefinedPropNames) {
-            undefinedPropNames.push(key);
+            undefinedPropNames.push(stateKey);
           } else {
-            undefinedPropNames = [key];
+            undefinedPropNames = [stateKey];
           }
         }
       }
+    }
+
+    if (typeof renderBody === "function") {
+      flags |= FLAG_HAS_RENDER_BODY;
+      renderBody = undefined;
     }
 
     var extra = {
@@ -86,20 +131,27 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       d: componentDef.___domEvents,
       e: customEvents,
       f: flags ? flags : undefined,
-      l: componentDef.___isLegacy,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      r: componentDef.___boundary,
       s: state,
       u: undefinedPropNames,
-      w: hasProps ? component : undefined
+      w: isLegacy ? component.widgetConfig : hasProps ? component : undefined,
+      r: renderBody
     };
 
-    componentsToHydrate.push([
-      id, // 0 = id
-      typeName, // 1 = type
-      input, // 2 = input
-      extra // 3
-    ]);
+    var parts = [id, typeName];
+    var hasExtra = isNotEmpty(extra);
+
+    if (input) {
+      parts.push(input);
+
+      if (hasExtra) {
+        parts.push(extra);
+      }
+    } else if (hasExtra) {
+      parts.push(0, extra); // empty input;
+    }
+
+    componentsToHydrate.push(parts);
   }
 
   components.length = 0;
@@ -113,41 +165,82 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
   }
 }
 
-function getInitComponentsData(componentDefs, runtimeId) {
-  let len;
-  if ((len = componentDefs.length) === 0) {
+function getInitComponentsData(out, componentDefs) {
+  const len = componentDefs.length;
+  const $global = out.global;
+  const isLast = $global.___isLastFlush;
+  const didSerializeComponents = $global.___didSerializeComponents;
+  const prefix = $global.componentIdPrefix || $global.widgetIdPrefix;
+
+  if (len === 0) {
+    if (isLast && didSerializeComponents) {
+      return { p: prefix, l: 1 };
+    }
+
     return;
   }
 
-  const typesLookup = {};
-  const componentTypes = [];
   const TYPE_INDEX = 1;
+  const typesLookup =
+    $global.___typesLookup || ($global.___typesLookup = new Map());
+  let newTypes;
+
   for (let i = 0; i < len; i++) {
     const componentDef = componentDefs[i];
     const typeName = componentDef[TYPE_INDEX];
-    let typeIndex = typesLookup[typeName];
+    let typeIndex = typesLookup.get(typeName);
+
     if (typeIndex === undefined) {
-      typeIndex = componentTypes.length;
-      componentTypes.push(typeName);
-      typesLookup[typeName] = typeIndex;
+      typeIndex = typesLookup.size;
+      typesLookup.set(typeName, typeIndex);
+
+      if (newTypes) {
+        newTypes.push(typeName);
+      } else {
+        newTypes = [typeName];
+      }
     }
+
     componentDef[TYPE_INDEX] = typeIndex;
   }
-  return { r: runtimeId, w: componentDefs, t: componentTypes };
+
+  let serializedGlobals;
+
+  if (!didSerializeComponents) {
+    $global.___didSerializeComponents = true;
+    serializedGlobals = getSerializedGlobals($global);
+  }
+
+  return {
+    p: prefix,
+    l: isLast && 1,
+    g: serializedGlobals,
+    w: componentDefs,
+    t: newTypes
+  };
 }
 
 function getInitComponentsDataFromOut(out) {
-  var componentsContext = out.___components;
+  const componentsContext = out.___components;
 
   if (componentsContext === null) {
     return;
   }
 
-  var componentsToHydrate = [];
-
+  const $global = out.global;
+  const runtimeId = $global.runtimeId;
+  const componentsToHydrate = [];
   addComponentsFromContext(componentsContext, componentsToHydrate);
 
-  return getInitComponentsData(componentsToHydrate, out.global.runtimeId);
+  $global.___isLastFlush = true;
+  const data = getInitComponentsData(out, componentsToHydrate);
+  $global.___isLastFlush = undefined;
+
+  if (runtimeId !== DEFAULT_RUNTIME_ID) {
+    data.r = runtimeId;
+  }
+
+  return data;
 }
 
 function writeInitComponentsCode(out) {
@@ -158,31 +251,22 @@ exports.___getInitComponentsCode = function getInitComponentsCode(
   out,
   componentDefs
 ) {
-  var runtimeId = out.global.runtimeId;
-  var initComponentsData;
-
-  if (arguments.length === 2) {
-    initComponentsData = getInitComponentsData(componentDefs, runtimeId);
-  } else {
-    initComponentsData = getInitComponentsDataFromOut(out);
-  }
+  const initComponentsData =
+    arguments.length === 2
+      ? getInitComponentsData(out, componentDefs)
+      : getInitComponentsDataFromOut(out);
 
   if (initComponentsData === undefined) {
     return "";
   }
 
-  var componentGlobalKey =
-    "$" + (runtimeId === "M" ? "components" : runtimeId + "_components");
+  const runtimeId = out.global.runtimeId;
+  const componentGlobalKey =
+    runtimeId === DEFAULT_RUNTIME_ID ? "MC" : runtimeId + "_C";
 
-  return (
-    componentGlobalKey +
-    "=(window." +
-    componentGlobalKey +
-    "||[]).concat(" +
-    safeJSON(warp10.stringify(initComponentsData)) +
-    ")||" +
-    componentGlobalKey
-  );
+  return `$${componentGlobalKey}=(window.$${componentGlobalKey}||[]).concat(${safeStringify(
+    initComponentsData
+  )})`;
 };
 
 exports.___addComponentsFromContext = addComponentsFromContext;
@@ -196,6 +280,5 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
  * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
 exports.getRenderedComponents = function(out) {
-  var initComponentsData = getInitComponentsDataFromOut(out);
-  return warp10.stringifyPrepare(initComponentsData);
+  return warp10.stringifyPrepare(getInitComponentsDataFromOut(out));
 };

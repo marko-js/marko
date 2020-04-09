@@ -149,9 +149,9 @@ function checkInputChanged(existingComponent, oldInput, newInput) {
       return true;
     }
 
-    for (var i = 0; i < len; i++) {
+    for (var i = len; i--; ) {
       var key = oldKeys[i];
-      if (oldInput[key] !== newInput[key]) {
+      if (!(key in newInput && oldInput[key] === newInput[key])) {
         return true;
       }
     }
@@ -186,7 +186,6 @@ function Component(id) {
   this.___dirty = false;
   this.___settingInput = false;
   this.___document = undefined;
-  this.___keySequence = undefined;
 
   var ssrKeyedElements = keyedElementsByComponentId[id];
 

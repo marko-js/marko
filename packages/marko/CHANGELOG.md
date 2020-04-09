@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.13](https://github.com/marko-js/marko/compare/v4.19.12...v4.19.13) (2020-04-08)
+
+
+### Bug Fixes
+
+* add devmode warning for removing fragment markers ([#1541](https://github.com/marko-js/marko/issues/1541)) ([1c3852f](https://github.com/marko-js/marko/commit/1c3852f2c7938a689c249b6d59b6280becda216e))
+
+### [4.19.12](https://github.com/marko-js/marko/compare/v4.19.11...v4.19.12) (2020-04-07)
+
+
+### Bug Fixes
+
+* implement missing methods for void-writer ([#1540](https://github.com/marko-js/marko/issues/1540)) ([2806066](https://github.com/marko-js/marko/commit/28060669a421837cec19f35f307f35c0ef636b0e))
+
+### [4.19.11](https://github.com/marko-js/marko/compare/v4.19.10...v4.19.11) (2020-04-06)
+
+### [4.19.10](https://github.com/marko-js/marko/compare/v4.19.9...v4.19.10) (2020-04-03)
+
+
+### Bug Fixes
+
+* regression with nullish values in partial string attribute values ([#1537](https://github.com/marko-js/marko/issues/1537)) ([a469e02](https://github.com/marko-js/marko/commit/a469e020cc60089bae73bf1a311a8e6919bc0ce0))
+
+### [4.19.9](https://github.com/marko-js/marko/compare/v4.19.8...v4.19.9) (2020-03-30)
+
 ### [4.19.8](https://github.com/marko-js/marko/compare/v4.19.7...v4.19.8) (2020-03-16)
 
 

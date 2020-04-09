@@ -78,9 +78,8 @@ class StartTag extends Node {
         for (let i = 0; i < attributes.length; i++) {
           let attr = attributes[i];
           if (attr.spread) {
-            let isFirstOfMany = i === 0 && attributes.length !== 1;
-            if (explicitAttrs || isFirstOfMany) {
-              attrs.push(builder.objectExpression(explicitAttrs || {}));
+            if (explicitAttrs) {
+              attrs.push(builder.objectExpression(explicitAttrs));
             }
             attrs.push(attr.value);
             explicitAttrs = null;

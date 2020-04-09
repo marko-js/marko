@@ -1,5 +1,6 @@
 "use strict";
 var specialElHandlers = require("./specialElHandlers");
+var KeySequence = require("../../components/KeySequence");
 var componentsUtil = require("../../components/util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
@@ -37,7 +38,7 @@ var DOCTYPE_NODE = 10;
 // var FLAG_CUSTOM_ELEMENT = 2;
 
 function isAutoKey(key) {
-  return !/^@/.test(key);
+  return key[0] !== "@";
 }
 
 function compareNodeNames(fromEl, toEl) {
@@ -57,7 +58,7 @@ function onNodeAdded(node, componentsContext) {
 function morphdom(fromNode, toNode, doc, componentsContext) {
   var globalComponentsContext;
   var isHydrate = false;
-  var keySequences = {};
+  var keySequences = Object.create(null);
 
   if (componentsContext) {
     globalComponentsContext = componentsContext.___globalContext;
@@ -259,15 +260,12 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
           referenceComponent = ownerComponent;
         }
 
-        var keySequence =
-          keySequences[referenceComponent.id] ||
-          (keySequences[
-            referenceComponent.id
-          ] = globalComponentsContext.___createKeySequence());
-
         // We have a keyed element. This is the fast path for matching
         // up elements
-        curToNodeKey = keySequence.___nextKey(curToNodeKey);
+        curToNodeKey = (
+          keySequences[referenceComponent.id] ||
+          (keySequences[referenceComponent.id] = new KeySequence())
+        ).___nextKey(curToNodeKey);
 
         if (curFromNodeChild) {
           curFromNodeKey = keysByDOMNode.get(curFromNodeChild);
@@ -620,10 +618,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
         }
 
         curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
+        curFromNodeKey = keysByDOMNode.get(fromNode);
 
         // For transcluded content, we need to check if the element belongs to a different component
         // context than the current component and ensure it gets removed from its key index.
-        if (isAutoKey(keysByDOMNode.get(fromNode))) {
+        if (!curFromNodeKey || isAutoKey(curFromNodeKey)) {
           referenceComponent = parentComponent;
         } else {
           referenceComponent =
@@ -671,6 +670,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
   } // END: morphEl(...)
 
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    componentsUtil.___stopDOMManipulationWarning();
+  }
+
   morphChildren(fromNode, toNode, toNode.___component);
 
   detachedNodes.forEach(function(node) {
@@ -694,6 +698,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
       }
     }
   });
+
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    componentsUtil.___startDOMManipulationWarning();
+  }
 }
 
 module.exports = morphdom;

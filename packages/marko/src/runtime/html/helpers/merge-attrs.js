@@ -1,15 +1,16 @@
 "use strict";
 
 var complain = "MARKO_DEBUG" && require("complain");
-var attrsHelper = require("./attrs");
+var dynamicAttrHelper = require("./_dynamic-attr");
 
 /**
  * Merges attribute objects into a string.
  */
 module.exports = function mergeAttrs() {
   var result = "";
-  var currentAttrs = {};
-  for (var i = 0; i < arguments.length; i++) {
+  var seen = new Set();
+
+  for (var i = arguments.length, last = i - 1; i--; ) {
     var source = arguments[i];
     if (typeof source === "string") {
       // eslint-disable-next-line no-constant-condition
@@ -20,19 +21,19 @@ module.exports = function mergeAttrs() {
       }
 
       if (source[0] !== " ") {
-        source = " " + source;
+        result += " " + source;
+      } else {
+        result += source;
       }
-
-      result += attrsHelper(currentAttrs) + source;
-      currentAttrs = {};
-    } else if (source != null) {
+    } else {
       for (var k in source) {
-        if (source.hasOwnProperty(k)) {
-          currentAttrs[k] = source[k];
+        if (i === last || !seen.has(k)) {
+          result += dynamicAttrHelper(k, source[k]);
+          seen.add(k);
         }
       }
     }
   }
 
-  return result + attrsHelper(currentAttrs);
+  return result;
 };

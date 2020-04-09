@@ -7,12 +7,22 @@ module.exports = function generateCode(node, codegen) {
   var builder = codegen.builder;
   var context = codegen.context;
   var tagName = node.tagName;
+  var openTagOnly = node.openTagOnly;
+  var isNullable = node.isNullable;
+  var tagNameVar;
 
   // Convert the tag name into a Node so that we generate the code correctly
   if (tagName) {
     tagName = codegen.builder.literal(tagName);
   } else {
     tagName = node.tagNameExpression;
+    if (!openTagOnly && tagName.type !== "Identifier") {
+      const tagNameIdentifier = builder.identifier(
+        context._uniqueVars.addVar("tagName", tagName)
+      );
+      tagNameVar = builder.var(tagNameIdentifier, tagName);
+      tagName = tagNameIdentifier;
+    }
   }
 
   var properties = node.getProperties();
@@ -21,7 +31,6 @@ module.exports = function generateCode(node, codegen) {
   var body = node.body;
   var argument = node.argument;
   var hasBody = body && body.length;
-  var openTagOnly = node.openTagOnly;
   var selfClosed = node.selfClosed === true;
   var isCustomElement = node.customElement;
 
@@ -59,6 +68,11 @@ module.exports = function generateCode(node, codegen) {
     });
   }
 
+  if (isNullable) {
+    startTag = builder.ifStatement(tagName, startTag);
+    endTag = endTag && builder.ifStatement(tagName, endTag);
+  }
+
   if (isCustomElement && attributes && attributes.length) {
     propertiesScript = builder.functionCall(
       codegen.context.helper("propsForPreviousNode"),
@@ -76,7 +90,7 @@ module.exports = function generateCode(node, codegen) {
   if (openTagOnly) {
     return [codegen.generateCode(startTag), propertiesScript];
   } else {
-    return [startTag, body, endTag, propertiesScript];
+    return [tagNameVar, startTag, body, endTag, propertiesScript];
   }
 };
 

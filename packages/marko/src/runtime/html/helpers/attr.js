@@ -1,52 +1,73 @@
 "use strict";
 
-var escape = require("./escape-xml");
-var escapeDoubleQuotes = escape.d;
-var escapeSingleQuotes = escape.s;
+var escapeQuoteHelpers = require("./escape-quotes");
+var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
+var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 var complain = "MARKO_DEBUG" && require("complain");
 
-module.exports = function attr(name, value) {
-  if (value == null || value === false) {
+module.exports = maybeEmptyAttr;
+
+maybeEmptyAttr.___notEmptyAttr = notEmptyAttr;
+maybeEmptyAttr.___isEmptyAttrValue = isEmpty;
+
+function maybeEmptyAttr(name, value) {
+  if (isEmpty(value)) {
     return "";
   }
 
-  var result = " " + name;
+  return notEmptyAttr(name, value);
+}
 
-  if (value === true) {
-    return result;
+function notEmptyAttr(name, value) {
+  switch (typeof value) {
+    case "string":
+      return " " + name + guessQuotes(value);
+    case "boolean":
+      return " " + name;
+    case "number":
+      return " " + name + "=" + value;
+    case "object":
+      switch (value.toString) {
+        case Object.prototype.toString:
+        case Array.prototype.toString:
+          // eslint-disable-next-line no-constant-condition
+          if ("MARKO_DEBUG") {
+            complain(
+              "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
+              { locationIndex: 2 }
+            );
+          }
+
+          return " " + name + singleQuote(JSON.stringify(value));
+        case RegExp.prototype.toString:
+          return " " + name + doubleQuote(value.source);
+      }
   }
 
-  var type = typeof value;
-  result += "=";
+  return " " + name + guessQuotes(value + "");
+}
 
-  if (type === "number") {
-    return result + value;
-  }
-
-  if (type == "object") {
-    switch (value.toString) {
-      case Object.prototype.toString:
-      case Array.prototype.toString:
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          complain(
-            "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead."
-          );
-        }
-
-        return result + singleQuote(JSON.stringify(value));
-      case RegExp.prototype.toString:
-        return result + doubleQuote(value.source);
-    }
-  }
-
-  return result + doubleQuote(value);
-};
+function isEmpty(value) {
+  return value == null || value === false;
+}
 
 function doubleQuote(value) {
-  return '"' + escapeDoubleQuotes(value) + '"';
+  return '="' + escapeDoubleQuotes(value) + '"';
 }
 
 function singleQuote(value) {
-  return "'" + escapeSingleQuotes(value) + "'";
+  return "='" + escapeSingleQuotes(value) + "'";
+}
+
+function guessQuotes(value) {
+  if (value.length) {
+    if (value[0] === "{") {
+      // Assume json.
+      return singleQuote(value);
+    }
+
+    return doubleQuote(value);
+  }
+
+  return "";
 }

@@ -1,5 +1,7 @@
+var tagName = data.tagName;
+
 out.w("<" +
-  data.tagName +
+  tagName +
   " class=\"greeting\">Hello World</" +
-  data.tagName +
-  ">")
+  tagName +
+  ">");

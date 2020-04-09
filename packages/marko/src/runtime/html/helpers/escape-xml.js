@@ -1,27 +1,20 @@
 "use strict";
 
-exports.d = function(value) {
-  return escape(value, '"', "&#34;");
-};
-
-exports.s = function(value) {
-  return escape(value, "'", "&#39;");
-};
-
-exports.x = function(value) {
-  if (value && value.toHTML) {
-    return value.toHTML();
-  }
-
-  return escape(value, "<", "&lt;");
-};
-
-function escape(str, match, escaped) {
-  if (str == null) {
+module.exports.x = function(value) {
+  if (value == null) {
     return "";
   }
 
-  str = str + "";
+  if (value.toHTML) {
+    return value.toHTML();
+  }
+
+  return escapeXML(value + "");
+};
+
+exports.___escapeXML = escapeXML;
+
+function escapeXML(str) {
   var len = str.length;
   var result = "";
   var lastPos = 0;
@@ -30,16 +23,12 @@ function escape(str, match, escaped) {
 
   for (; i < len; i++) {
     switch (str[i]) {
-      case match:
-        replacement = escaped;
+      case "<":
+        replacement = "&lt;";
         break;
       case "&":
         replacement = "&amp;";
         break;
-      //   case "\n":
-      //       // Preserve new lines so that they don't get normalized as space.
-      //       replacement = "&#10;";
-      //       break;
       default:
         continue;
     }

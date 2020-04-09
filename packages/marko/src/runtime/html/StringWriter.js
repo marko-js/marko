@@ -1,5 +1,8 @@
 "use strict";
 
+var escapeDoubleQuotes = require("./helpers/escape-quotes")
+  .___escapeDoubleQuotes;
+
 function StringWriter() {
   this._content = "";
   this._scripts = "";
@@ -52,7 +55,9 @@ StringWriter.prototype = {
     if (this._scripts) {
       const outGlobal = this.state.root.global;
       const cspNonce = outGlobal.cspNonce;
-      const nonceAttr = cspNonce ? " nonce=" + JSON.stringify(cspNonce) : "";
+      const nonceAttr = cspNonce
+        ? ' nonce="' + escapeDoubleQuotes(cspNonce) + '"'
+        : "";
       str += `<script${nonceAttr}>${this._scripts}</script>`;
     }
     return str;

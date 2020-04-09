@@ -1,15 +1,17 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
+var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler = require("./event-delegation")
   .___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
+var EMPTY_OBJECT = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-// var FLAG_HAS_BODY_EL = 2;
-// var FLAG_HAS_HEAD_EL = 4;
+var FLAG_HAS_RENDER_BODY = 2;
+var FLAG_IS_LEGACY = 4;
 var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 /**
@@ -30,15 +32,14 @@ function ComponentDef(component, componentId, componentsContext) {
   this.___flags = 0;
 
   this.___nextIdIndex = 0; // The unique integer to use for the next scoped ID
-
   this.___keySequence = null;
 }
 
 ComponentDef.prototype = {
   ___nextKey: function(key) {
-    var keySequence =
-      this.___keySequence || (this.___keySequence = new KeySequence());
-    return keySequence.___nextKey(key);
+    return (
+      this.___keySequence || (this.___keySequence = new KeySequence())
+    ).___nextKey(key);
   },
 
   /**
@@ -90,13 +91,14 @@ ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
-  var input = o[2];
-  var extra = o[3];
+  var input = o[2] || null;
+  var extra = o[3] || EMPTY_OBJECT;
 
-  var isLegacy = extra.l;
   var state = extra.s;
   var componentProps = extra.w;
   var flags = extra.f;
+  var isLegacy = flags & FLAG_IS_LEGACY;
+  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
 
   var component =
     typeName /* legacy */ &&
@@ -105,6 +107,13 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   // Prevent newly created component from being queued for update since we area
   // just building it from the server info
   component.___updateQueued = true;
+
+  if (isLegacy) {
+    component.widgetConfig = componentProps;
+    component.___widgetBody = renderBody;
+  } else if (renderBody) {
+    input.renderBody = renderBody;
+  }
 
   if (
     !isLegacy &&
@@ -152,7 +161,6 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   return {
     id: id,
     ___component: component,
-    ___boundary: extra.r,
     ___domEvents: extra.d,
     ___flags: extra.f || 0
   };

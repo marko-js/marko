@@ -1,6 +1,7 @@
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
-// var FLAG_HAS_BODY_EL = 2;
-// var FLAG_HAS_HEAD_EL = 4;
+// var FLAG_HAS_RENDER_BODY = 2;
+// var FLAG_IS_LEGACY = 4;
+// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 function nextComponentIdProvider(out) {
   var prefix = out.global.componentIdPrefix || out.global.widgetIdPrefix || "s"; // "s" is for server (we use "b" for the browser)
@@ -68,3 +69,9 @@ exports.___isServer = true;
 exports.___attachBubblingEvent = attachBubblingEvent;
 exports.___destroyComponentForNode = function noop() {};
 exports.___destroyNodeRecursive = function noop() {};
+
+// eslint-disable-next-line no-constant-condition
+if ("MARKO_DEBUG") {
+  exports.___startDOMManipulationWarning = function noop() {};
+  exports.___stopDOMManipulationWarning = function noop() {};
+}
