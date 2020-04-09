@@ -221,5 +221,9 @@
   "<class>": {
     "migrator": "./class-tag",
     "open-tag-only": true
+  },
+  "<component-globals>": {
+    "migrator": "./component-globals-tag.js",
+    "deprecated": true
   }
 }

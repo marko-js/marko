@@ -93,15 +93,14 @@
     "code-generator": "./component-tag.js",
     "autocomplete": []
   },
-  "<component-globals>": {
-    "renderer": "./component-globals-tag.js",
-    "no-output": true,
-    "autocomplete": []
-  },
   "<init-components>": {
     "renderer": "./init-components-tag.js",
     "no-output": true,
     "@immediate": "boolean"
+  },
+  "<_preferred-script-location>": {
+    "renderer": "./preferred-script-location-tag.js",
+    "no-output": true
   },
   "<_preserve>": {
     "renderer": "./preserve-tag.js",

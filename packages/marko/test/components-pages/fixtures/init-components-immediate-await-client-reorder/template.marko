@@ -17,13 +17,14 @@ static function nameDataProvider(callback) {
         <app-foo/>
         <await(nameDataProvider) client-reorder>
             <@then|name|>
+                <script>
+                    // window.barComponent should not exist yet, but's store that in a variable to verify
+                    window.afterInitComponents_foo = window.fooComponent;
+                    window.afterInitComponents_bar = window.barComponent;
+                </script>
                 <app-bar/>
             </@then>
         </await>
         <init-components/>
-        <script>window.$initComponents();</script>
-        <script>// window.barComponent should not exist yet, but's store that in a variable to verify
-window.afterInitComponents_foo = window.fooComponent;
-window.afterInitComponents_bar = window.barComponent;</script>
     </body>
 </html>
