@@ -230,16 +230,15 @@ function getInitComponentsDataFromOut(out) {
   const $global = out.global;
   const runtimeId = $global.runtimeId;
   const componentsToHydrate = [];
-  $global.___isLastFlush = true;
   addComponentsFromContext(componentsContext, componentsToHydrate);
 
+  $global.___isLastFlush = true;
   const data = getInitComponentsData(out, componentsToHydrate);
+  $global.___isLastFlush = undefined;
 
   if (runtimeId !== DEFAULT_RUNTIME_ID) {
     data.r = runtimeId;
   }
-
-  $global.___isLastFlush = undefined;
 
   return data;
 }

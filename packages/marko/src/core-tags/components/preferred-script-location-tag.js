@@ -1,15 +1,14 @@
 "use strict";
 
 function forceScriptTagAtThisPoint(out) {
-  out.global.___isLastFlush = true;
-
   const writer = out.writer;
+
+  out.global.___isLastFlush = true;
   const htmlSoFar = writer.toString();
+  out.global.___isLastFlush = undefined;
 
   writer.clear();
   writer.write(htmlSoFar);
-
-  out.global.___isLastFlush = undefined;
 }
 
 module.exports = function render(input, out) {

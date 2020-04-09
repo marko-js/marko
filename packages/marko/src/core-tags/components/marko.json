@@ -94,7 +94,6 @@
     "autocomplete": []
   },
   "<init-components>": {
-    "transformer": "./add-preferred-script-location-transformer.js",
     "renderer": "./init-components-tag.js",
     "no-output": true,
     "@immediate": "boolean"
