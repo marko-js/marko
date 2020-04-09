@@ -670,6 +670,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
   } // END: morphEl(...)
 
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    componentsUtil.___stopDOMManipulationWarning();
+  }
+
   morphChildren(fromNode, toNode, toNode.___component);
 
   detachedNodes.forEach(function(node) {
@@ -693,6 +698,11 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
       }
     }
   });
+
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    componentsUtil.___startDOMManipulationWarning();
+  }
 }
 
 module.exports = morphdom;

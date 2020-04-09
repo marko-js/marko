@@ -1,4 +1,5 @@
 "use strict";
+var complain = "MARKO_DEBUG" && require("complain");
 var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
 var win = window;
@@ -14,9 +15,10 @@ var registry = require("./registry");
 var domData = require("./dom-data");
 var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var componentsByDOMNode = domData.___componentByDOMNode;
-var serverRenderedGlobals = {};
 var serverComponentRootNodes = {};
+var serverRenderedMeta = {};
 
+var DEFAULT_RUNTIME_ID = "M";
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
 // var FLAG_IS_LEGACY = 4;
@@ -252,56 +254,101 @@ function initClientRendered(componentDefs, doc) {
  */
 function initServerRendered(renderedComponents, doc) {
   var type = typeof renderedComponents;
+  var globalKey = "$";
   var runtimeId;
 
   if (type !== "object") {
-    var componentsKey =
-      "$" +
-      (type === "string" ? renderedComponents + "_components" : "components");
-    renderedComponents = win[componentsKey];
+    if (type === "string") {
+      runtimeId = renderedComponents;
+      globalKey += runtimeId + "_C";
+    } else {
+      globalKey += (runtimeId = DEFAULT_RUNTIME_ID) + "C";
+    }
+
+    renderedComponents = win[globalKey];
+
+    var fakeArray = (win[globalKey] = {
+      r: runtimeId,
+      concat: initServerRendered
+    });
 
     if (renderedComponents && renderedComponents.forEach) {
       renderedComponents.forEach(function(renderedComponent) {
-        initServerRendered(renderedComponent, doc);
+        fakeArray.concat(renderedComponent);
       });
     }
 
-    win[componentsKey] = {
-      concat: initServerRendered
-    };
+    return fakeArray;
+  }
 
-    return;
+  var isFromSerializedGlobals = this.concat === initServerRendered;
+
+  if (isFromSerializedGlobals) {
+    runtimeId = this.r;
+    doc = defaultDocument;
+  } else {
+    runtimeId = renderedComponents.r || DEFAULT_RUNTIME_ID;
+
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      complain(
+        "Passing serialized data to `require('marko/components).init` is deprecated. Instead set '$global.runtimeId' and provide the 'runtimeId' option to your Marko bundler plugin."
+      );
+    }
   }
 
   doc = doc || defaultDocument;
-
   renderedComponents = warp10Finalize(renderedComponents);
 
-  runtimeId = renderedComponents.r;
-  var componentDefs = renderedComponents.w;
-  var typesArray = renderedComponents.t;
-  var markoGlobalsKey = "$" + runtimeId + "G";
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    if (doc !== defaultDocument) {
+      complain(
+        "Passing a document other than the current document to `require('marko/components).init` is deprecated."
+      );
+    }
+  }
+
+  var prefix = renderedComponents.p || "";
+  var meta = serverRenderedMeta[prefix];
+  var isLast = renderedComponents.l;
+
+  if (meta) {
+    if (isLast) {
+      delete serverRenderedMeta[prefix];
+    }
+  } else {
+    meta = {};
+
+    if (!isLast) {
+      serverRenderedMeta[prefix] = meta;
+    }
+  }
 
   // Ensure that event handlers to handle delegating events are
   // always attached before initializing any components
   indexServerComponentBoundaries(doc, runtimeId);
   eventDelegation.___init(doc);
 
-  var globals = win[markoGlobalsKey];
-  if (globals) {
-    serverRenderedGlobals = warp10Finalize(globals);
-    delete win[markoGlobalsKey];
+  if (renderedComponents.g) {
+    meta.___globals = renderedComponents.g;
+  }
+
+  if (renderedComponents.t) {
+    meta.___types = meta.___types
+      ? meta.___types.concat(renderedComponents.t)
+      : renderedComponents.t;
   }
 
   // hydrate components top down (leaf nodes last)
   // and return an array of functions to mount these components
   var deferredDefs;
-  componentDefs
+  (renderedComponents.w || [])
     .map(function(componentDef) {
       componentDef = ComponentDef.___deserialize(
         componentDef,
-        typesArray,
-        serverRenderedGlobals,
+        meta.___types,
+        meta.___globals,
         registry
       );
 
@@ -331,6 +378,8 @@ function initServerRendered(renderedComponents, doc) {
     })
     .reverse()
     .forEach(tryInvoke);
+
+  return this;
 }
 
 function hydrateComponentAndGetMount(componentDef, doc) {

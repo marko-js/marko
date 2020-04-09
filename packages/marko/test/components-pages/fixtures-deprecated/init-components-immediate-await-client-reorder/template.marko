@@ -21,18 +21,10 @@ html lang="en"
         app-foo
 
         await(name from nameDataProvider) client-reorder
+            script
+                ---
+                // window.barComponent should not exist yet, but's store that in a variable to verify
+                window.afterInitComponents_foo = window.fooComponent;
+                window.afterInitComponents_bar = window.barComponent;
+                ---
             app-bar
-
-        init-components
-
-        script
-            ---
-            window.$initComponents();
-            ---
-
-        script
-            ---
-            // window.barComponent should not exist yet, but's store that in a variable to verify
-            window.afterInitComponents_foo = window.fooComponent;
-            window.afterInitComponents_bar = window.barComponent;
-            ---
