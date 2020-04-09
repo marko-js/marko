@@ -1,4 +1,5 @@
 [
+    "_preferred-script-location",
     "_preserve",
     "*",
     "a",
@@ -35,7 +36,6 @@
     "code",
     "col",
     "colgroup",
-    "component-globals",
     "data",
     "datalist",
     "dd",
