@@ -10,24 +10,17 @@ module.exports = function(helpers) {
   var targetEl = helpers.targetEl;
 
   expect(targetEl.innerHTML).to.contain("Hello Frank!");
-  expect(lifecycle.events[widget.id]).to.deep.equal([
-    "init",
-    "onRender:firstRender"
-  ]);
+  expect(lifecycle.events[widget.id]).to.deep.equal(["onRender:firstRender"]);
 
   widget.setState("name", "Jane");
 
   expect(targetEl.innerHTML).to.contain("Hello Frank!");
-  expect(lifecycle.events[widget.id]).to.deep.equal([
-    "init",
-    "onRender:firstRender"
-  ]);
+  expect(lifecycle.events[widget.id]).to.deep.equal(["onRender:firstRender"]);
 
   widget.update();
 
   expect(targetEl.innerHTML).to.contain("Hello Jane!");
   expect(lifecycle.events[widget.id]).to.deep.equal([
-    "init",
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
@@ -38,7 +31,6 @@ module.exports = function(helpers) {
   widget.update();
 
   expect(lifecycle.events[widget.id]).to.deep.equal([
-    "init",
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
@@ -52,7 +44,6 @@ module.exports = function(helpers) {
   widget.update();
 
   expect(lifecycle.events[widget.id]).to.deep.equal([
-    "init",
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
@@ -60,7 +51,6 @@ module.exports = function(helpers) {
     "onBeforeUpdate",
     "onBeforeDestroy",
     "onDestroy",
-    "init",
     "onRender:firstRender"
   ]);
 

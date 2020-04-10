@@ -84,7 +84,12 @@ function runHydrateTest(fixture) {
             marko.register(ssrTemplate.meta.id, rootComponent);
             components.forEach(function(def) {
               Object.keys(def.components).forEach(type => {
-                marko.register(type, browser.require(def.components[type]));
+                const componentPath = def.components[type];
+                let component = browser.require(componentPath);
+                if (/widget$/.test(type)) {
+                  component = legacy.defineWidget(component);
+                }
+                marko.register(type, component);
               });
             });
           }
