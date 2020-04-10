@@ -19,11 +19,6 @@ module.exports = require("marko/legacy-components").defineComponent({
 
 if (typeof window === "object") {
   Object.assign(module.exports.prototype, {
-    init: function() {
-      this.lifecycleEvents = [];
-      lifecycle.record(this.id, "init");
-    },
-
     onRender: function(eventArg) {
       lifecycle.record(
         this.id,
