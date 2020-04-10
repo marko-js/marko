@@ -127,15 +127,6 @@ module.exports = function defineWidget(def, renderer) {
 
   // get legacy methods
 
-  Object.defineProperty(proto, "init", {
-    get: function() {
-      return legacyInit;
-    },
-    set: function(v) {
-      legacyInit = v;
-    }
-  });
-
   var legacyOnRender = proto.onRender;
   Object.defineProperty(proto, "onRender", {
     get: noop,
