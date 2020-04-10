@@ -95,16 +95,14 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   var state = extra.s;
   var componentProps = extra.w;
   var flags = extra.f;
-  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
-
   var component = registry.___createComponent(typeName, id);
 
   // Prevent newly created component from being queued for update since we area
   // just building it from the server info
   component.___updateQueued = true;
 
-  if (renderBody) {
-    input.renderBody = renderBody;
+  if (flags & FLAG_HAS_RENDER_BODY) {
+    input.renderBody = w10Noop;
   }
 
   if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
