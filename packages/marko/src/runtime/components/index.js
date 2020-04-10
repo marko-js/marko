@@ -5,10 +5,10 @@ var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
 var DEFAULT_RUNTIME_ID = "M";
 
-// var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var FLAG_HAS_RENDER_BODY = 2;
 var FLAG_IS_LEGACY = 4;
-// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
+var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 function safeJSONReplacer(match) {
   if (match === "</") {
@@ -76,34 +76,47 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
 
-    var hasProps = false;
+    var needsState;
+    var serializedProps;
     var renderBody;
 
     if (isLegacy) {
       flags |= FLAG_IS_LEGACY;
       renderBody = component.___widgetBody;
+      serializedProps = component.widgetConfig;
+      needsState = true;
     } else {
       if (input && input.renderBody) {
         renderBody = input.renderBody;
         input.renderBody = undefined;
       }
 
-      component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
-      component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
-      component.typeName = undefined;
-      component.id = undefined;
-      component.___customEvents = undefined;
-      component.___scope = undefined;
-      component.___bubblingDomEvents = undefined;
-      component.___bubblingDomEventsExtraArgsCount = undefined;
-      component.___updatedInput = undefined;
-      component.___updateQueued = undefined;
-      hasProps = isNotEmpty(component);
+      if (
+        !(flags & FLAG_WILL_RERENDER_IN_BROWSER) ||
+        flags & FLAG_OLD_HYDRATE_NO_CREATE
+      ) {
+        component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
+        component.typeName = undefined;
+        component.id = undefined;
+        component.___customEvents = undefined;
+        component.___scope = undefined;
+        component.___bubblingDomEvents = undefined;
+        component.___bubblingDomEventsExtraArgsCount = undefined;
+        component.___updatedInput = undefined;
+        component.___updateQueued = undefined;
+
+        needsState = true;
+
+        if (isNotEmpty(component)) {
+          serializedProps = component;
+        }
+      }
     }
 
     var undefinedPropNames = undefined;
 
-    if (state) {
+    if (needsState && state) {
       // Update state properties with an `undefined` value to have a `null`
       // value so that the property name will be serialized down to the browser.
       // This ensures that we add the proper getter/setter for the state property.
@@ -130,11 +143,11 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
       b: bubblingDomEvents,
       d: componentDef.___domEvents,
       e: customEvents,
-      f: flags ? flags : undefined,
+      f: flags || undefined,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
-      s: state,
+      s: needsState && state,
       u: undefinedPropNames,
-      w: isLegacy ? component.widgetConfig : hasProps ? component : undefined,
+      w: serializedProps,
       r: renderBody
     };
 
