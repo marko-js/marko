@@ -41,7 +41,7 @@ module.exports = function migrate(el, context) {
     const filename = resolveFrom(context.dirname, literalValue);
 
     if (!filename) {
-      this.addError(
+      context.addError(
         "Target file not found: " +
           literalValue +
           " (from: " +
@@ -54,11 +54,14 @@ module.exports = function migrate(el, context) {
     componentModule = {
       legacy: true,
       filename,
-      requirePath: literalValue.replace(/\/index(\.[^.]+)?$/, "/")
+      requirePath: literalValue
     };
   }
 
-  if (componentModule && componentModule.requirePath === "./") {
+  if (
+    componentModule &&
+    componentModule.requirePath.replace(/\/index(\.[^.]+)?$/, "/") === "./"
+  ) {
     rendererModule = componentModule;
   }
   context.legacyComponentModule = componentModule;

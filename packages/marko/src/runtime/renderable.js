@@ -126,7 +126,7 @@ module.exports = function(target, renderer) {
       if (callback) {
         finalOut
           .on("finish", function() {
-            callback(null, finalOut.___getResult());
+            callback(null, finalOut.___getResult(), finalOut);
           })
           .once("error", callback);
       }

@@ -139,7 +139,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
       component.state = state;
     }
 
-    if (componentProps) {
+    if (!isLegacy && componentProps) {
       extend(component, componentProps);
     }
   }
