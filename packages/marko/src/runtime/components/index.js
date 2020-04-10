@@ -5,7 +5,7 @@ var safeJSONRegExp = /<\/|\u2028|\u2029/g;
 var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
 var DEFAULT_RUNTIME_ID = "M";
 
-// var FLAG_WILL_RERENDER_IN_BROWSER = 1;
+var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var FLAG_HAS_RENDER_BODY = 2;
 
 function safeJSONReplacer(match) {
@@ -65,68 +65,66 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     var id = componentDef.id;
     var component = componentDef.___component;
     var flags = componentDef.___flags;
-    var state = component.state;
     var input = component.input || 0;
     var typeName = component.typeName;
     var customEvents = component.___customEvents;
     var scope = component.___scope;
     var bubblingDomEvents = component.___bubblingDomEvents;
 
-    var hasProps = false;
-    var renderBody;
+    var state;
+    var serializedProps;
+    var undefinedPropNames;
 
-    if (input && input.renderBody) {
-      renderBody = input.renderBody;
-      input.renderBody = undefined;
-    }
+    if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+      if (typeof input.renderBody === "function") {
+        flags |= FLAG_HAS_RENDER_BODY;
+        input.renderBody = undefined;
+      }
+    } else {
+      if (component.state) {
+        state = component.state;
+        // Update state properties with an `undefined` value to have a `null`
+        // value so that the property name will be serialized down to the browser.
+        // This ensures that we add the proper getter/setter for the state property.
+        const stateKeys = Object.keys(state);
+        for (let i = stateKeys.length; i--; ) {
+          const stateKey = stateKeys[i];
 
-    component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
-    component.typeName = undefined;
-    component.id = undefined;
-    component.___customEvents = undefined;
-    component.___scope = undefined;
-    component.___bubblingDomEvents = undefined;
-    component.___bubblingDomEventsExtraArgsCount = undefined;
-    component.___updatedInput = undefined;
-    component.___updateQueued = undefined;
-    hasProps = isNotEmpty(component);
-
-    var undefinedPropNames = undefined;
-
-    if (state) {
-      // Update state properties with an `undefined` value to have a `null`
-      // value so that the property name will be serialized down to the browser.
-      // This ensures that we add the proper getter/setter for the state property.
-      const stateKeys = Object.keys(state);
-      for (let i = stateKeys.length; i--; ) {
-        const stateKey = stateKeys[i];
-
-        if (state[stateKey] === undefined) {
-          if (undefinedPropNames) {
-            undefinedPropNames.push(stateKey);
-          } else {
-            undefinedPropNames = [stateKey];
+          if (state[stateKey] === undefined) {
+            if (undefinedPropNames) {
+              undefinedPropNames.push(stateKey);
+            } else {
+              undefinedPropNames = [stateKey];
+            }
           }
         }
       }
-    }
 
-    if (typeof renderBody === "function") {
-      flags |= FLAG_HAS_RENDER_BODY;
-      renderBody = undefined;
+      component.___state = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.___input = undefined; // We don't use `delete` to avoid V8 deoptimization
+      component.typeName = undefined;
+      component.id = undefined;
+      component.___customEvents = undefined;
+      component.___scope = undefined;
+      component.___bubblingDomEvents = undefined;
+      component.___bubblingDomEventsExtraArgsCount = undefined;
+      component.___updatedInput = undefined;
+      component.___updateQueued = undefined;
+
+      if (isNotEmpty(component)) {
+        serializedProps = component;
+      }
     }
 
     var extra = {
       b: bubblingDomEvents,
       d: componentDef.___domEvents,
       e: customEvents,
-      f: flags ? flags : undefined,
+      f: flags || undefined,
       p: customEvents && scope, // Only serialize scope if we need to attach custom events
       s: state,
       u: undefinedPropNames,
-      w: hasProps ? component : undefined,
-      r: renderBody
+      w: serializedProps
     };
 
     var parts = [id, typeName];
