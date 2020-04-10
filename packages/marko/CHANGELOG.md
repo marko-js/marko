@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0](https://github.com/marko-js/marko/compare/v4.19.13...v4.20.0) (2020-04-10)
+
+
+### Features
+
+* improve serialization across multiple writes ([#1542](https://github.com/marko-js/marko/issues/1542)) ([81c4da7](https://github.com/marko-js/marko/commit/81c4da75c8e272d6b2d145e225078695c931dfd3))
+
+
+### Bug Fixes
+
+* don't modify proto.init when creating a widget ([#1544](https://github.com/marko-js/marko/issues/1544)) ([f694a6b](https://github.com/marko-js/marko/commit/f694a6bee2ffd7d39ed651649e248499804144ff))
+* improve a few small things legacy compatibility ([#1545](https://github.com/marko-js/marko/issues/1545)) ([72e716e](https://github.com/marko-js/marko/commit/72e716e42e264e8ee3c88220e0ebd96bcc1430f7))
+
 ### [4.19.13](https://github.com/marko-js/marko/compare/v4.19.12...v4.19.13) (2020-04-08)
 
 
