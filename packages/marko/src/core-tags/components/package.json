@@ -1,6 +1,5 @@
 {
     "browser": {
-        "./init-components-tag.js": "./init-components-tag-browser.js",
         "./preserve-tag.js": "./preserve-tag-browser.js"
     }
 }
