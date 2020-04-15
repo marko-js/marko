@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.1](https://github.com/marko-js/marko/compare/v4.20.0...v4.20.1) (2020-04-15)
+
+
+### Bug Fixes
+
+* improve micro task helper ([76e2ab9](https://github.com/marko-js/marko/commit/76e2ab910dcdec1af750ca40bc287d147ec82e3f))
+
 ## [4.20.0](https://github.com/marko-js/marko/compare/v4.19.13...v4.20.0) (2020-04-10)
 
 
