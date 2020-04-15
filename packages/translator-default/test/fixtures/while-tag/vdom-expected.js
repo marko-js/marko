@@ -15,8 +15,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   while (i < 10) {
     const _keyScope = `[${_keyValue++}]`;
     i++;
-    out.be("div", null, "0" + _keyScope, component, 0, 0);
-    out.ee();
+    out.e("div", null, "0" + _keyScope, component, 0, 0);
   }
 }, {
   t: _marko_componentType,

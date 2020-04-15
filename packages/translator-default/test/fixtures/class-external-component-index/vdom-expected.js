@@ -10,8 +10,7 @@ const _marko_componentType = _marko_registerComponent("oD6hwYUT", () => _marko_t
       _marko_component2 = _marko_component;
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", null, "0", component, 0, 0);
-  out.ee();
+  out.e("div", null, "0", component, 0, 0);
 }, {
   t: _marko_componentType
 }, _marko_component2);

@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import SELF_CLOSING from "self-closing-tags";
 import { types as t } from "@marko/babel-types";
-import { getTagDef } from "@marko/babel-utils";
+import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import translateAttributes from "./attributes";
@@ -16,8 +16,9 @@ const EMPTY_OBJECT = {};
 export default function(path) {
   const { hub, node } = path;
   const {
-    name: { value: tagName },
+    name,
     body: { body },
+    isNullable,
     properties,
     handlers
   } = node;
@@ -104,15 +105,27 @@ export default function(path) {
     }
   }
 
-  const writeStartNode = withPreviousLocation(
-    write`<${tagName}${dataMarko}${translateAttributes(
-      path,
-      path.get("attributes")
-    )}>`,
-    node.name
+  const isEmpty = !body.length;
+  const isSelfClosing =
+    t.isStringLiteral(name) && SELF_CLOSING.indexOf(name.value) !== -1;
+
+  let writeStartNode = normalizeTemplateString`<${name}${dataMarko}${translateAttributes(
+    path,
+    path.get("attributes")
+  )}>`;
+
+  writeStartNode = withPreviousLocation(
+    isEmpty && !isSelfClosing
+      ? write`${writeStartNode}</${name}>`
+      : write`${writeStartNode}`,
+    name
   );
 
-  if (SELF_CLOSING.indexOf(tagName) !== -1) {
+  if (isNullable) {
+    writeStartNode = t.ifStatement(name, writeStartNode);
+  }
+
+  if (isEmpty) {
     path.replaceWith(writeStartNode);
     return;
   }
@@ -127,10 +140,16 @@ export default function(path) {
     }
   }
 
+  let writeEndNode = write`</${name}>`;
+
+  if (isNullable) {
+    writeEndNode = t.ifStatement(name, writeEndNode);
+  }
+
   path.replaceWithMultiple(
     [writeStartNode]
       .concat(needsBlock ? t.blockStatement(body) : body)
-      .concat(write`</${tagName}>`)
+      .concat(writeEndNode)
   );
 }
 

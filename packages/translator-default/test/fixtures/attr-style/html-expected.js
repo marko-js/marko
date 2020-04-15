@@ -4,10 +4,7 @@ export default _marko_template;
 import _marko_style_merge from "marko/src/runtime/helpers/style-value";
 import _marko_attr from "marko/src/runtime/html/helpers/attr";
 import _customTag from "./components/custom-tag.marko";
-import _marko_load_tag from "marko/src/runtime/helpers/load-tag";
-
-const _customTag_tag = _marko_load_tag(_customTag);
-
+import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/html";
@@ -18,19 +15,19 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     color: input.color
   }))}></div><div style="width:100px;"></div><div style="color: green"></div>`);
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": {
       color: input.color
     }
   }, out, _component, "3");
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": {
       width: 100
     }
   }, out, _component, "4");
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": "color: green"
   }, out, _component, "5");
 

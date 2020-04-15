@@ -1,5 +1,4 @@
 import { resolve } from "path";
-import SELF_CLOSING from "self-closing-tags";
 import { types as t } from "@marko/babel-types";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
@@ -25,10 +24,10 @@ export default function(path) {
     name,
     key,
     body: { body },
+    isNullable,
     properties,
     handlers
   } = node;
-  const { value: tagName } = name;
 
   path.get("attributes").forEach(attr => {
     const { confident, computed } = evaluateAttr(attr);
@@ -43,7 +42,7 @@ export default function(path) {
   });
 
   const tagProperties = properties.slice();
-  const isSelfClosing = SELF_CLOSING.indexOf(tagName) !== -1;
+  const isEmpty = !body.length;
   let attrsObj = getAttrs(path, true, true);
 
   if (!t.isNullLiteral(attrsObj)) {
@@ -63,7 +62,7 @@ export default function(path) {
   }
 
   const writeArgs = [
-    isSelfClosing ? "e" : "be",
+    isEmpty ? "e" : "be",
     name,
     attrsObj,
     key,
@@ -137,11 +136,20 @@ export default function(path) {
     writeArgs.push(t.objectExpression(tagProperties));
   }
 
-  const writeStartNode = withPreviousLocation(write(...writeArgs), node.name);
+  let writeStartNode = withPreviousLocation(write(...writeArgs), node.name);
 
-  if (isSelfClosing) {
+  if (isNullable) {
+    writeStartNode = t.ifStatement(name, writeStartNode);
+  }
+
+  if (isEmpty) {
     path.replaceWith(writeStartNode);
     return;
+  }
+
+  let writeEndNode = write("ee");
+  if (isNullable) {
+    writeEndNode = t.ifStatement(name, writeEndNode);
   }
 
   let needsBlock;
@@ -157,7 +165,7 @@ export default function(path) {
   path.replaceWithMultiple(
     [writeStartNode]
       .concat(needsBlock ? t.blockStatement(body) : body)
-      .concat(write("ee"))
+      .concat(writeEndNode)
   );
 }
 

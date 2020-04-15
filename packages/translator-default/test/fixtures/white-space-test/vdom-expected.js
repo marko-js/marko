@@ -40,8 +40,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.t(" Hello World! ", component);
   out.t(a);
   out.t(b);
-  out.be("div", null, "8", component, 0, 0);
-  out.ee();
+  out.e("div", null, "8", component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true

@@ -9,10 +9,9 @@ const _marko_componentType = _marko_registerComponent("9TlcnyhF", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("span", {
+  out.e("span", {
     "style": "display:block"
   }, "0", component, 0, 1);
-  out.ee();
 }, {
   t: _marko_componentType,
   i: true

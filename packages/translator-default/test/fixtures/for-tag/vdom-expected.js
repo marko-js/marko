@@ -19,10 +19,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val);
     out.ee();
-    out.be("div", null, "1" + _keyScope, component, 0, 0);
-    out.ee();
-    out.be("div", null, "2" + _keyScope, component, 0, 0);
-    out.ee();
+    out.e("div", null, "1" + _keyScope, component, 0, 0);
+    out.e("div", null, "2" + _keyScope, component, 0, 0);
   }
 
   for (const key in obj) {
@@ -33,10 +31,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val);
     out.ee();
-    out.be("div", null, "4" + _keyScope2, component, 0, 0);
-    out.ee();
-    out.be("div", null, "5" + _keyScope2, component, 0, 0);
-    out.ee();
+    out.e("div", null, "4" + _keyScope2, component, 0, 0);
+    out.e("div", null, "5" + _keyScope2, component, 0, 0);
   }
 
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
@@ -45,10 +41,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, "6" + _keyScope3, component, null, 0);
     out.t(i);
     out.ee();
-    out.be("div", null, "7" + _keyScope3, component, 0, 0);
-    out.ee();
-    out.be("div", null, "8" + _keyScope3, component, 0, 0);
-    out.ee();
+    out.e("div", null, "7" + _keyScope3, component, 0, 0);
+    out.e("div", null, "8" + _keyScope3, component, 0, 0);
   }
 
   let _i2 = 0;
@@ -62,10 +56,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val);
     out.ee();
-    out.be("div", null, "9" + _keyScope4, component, 0, 0);
-    out.ee();
-    out.be("div", null, `@other-${i}`, component, 0, 0);
-    out.ee();
+    out.e("div", null, "9" + _keyScope4, component, 0, 0);
+    out.e("div", null, `@other-${i}`, component, 0, 0);
   }
 
   let _i3 = 0;
@@ -90,10 +82,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val);
     out.ee();
-    out.be("div", null, "10" + _keyScope5, component, 0, 0);
-    out.ee();
-    out.be("div", null, `@other-${key}`, component, 0, 0);
-    out.ee();
+    out.e("div", null, "10" + _keyScope5, component, 0, 0);
+    out.e("div", null, `@other-${key}`, component, 0, 0);
   }
 
   for (let _steps3 = (10 - 0) / 2, _step3 = 0; _step3 <= _steps3; _step3++) {
@@ -103,10 +93,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, _keyValue4, component, null, 0);
     out.t(i);
     out.ee();
-    out.be("div", null, "11" + _keyScope6, component, 0, 0);
-    out.ee();
-    out.be("div", null, `@other-${i}`, component, 0, 0);
-    out.ee();
+    out.e("div", null, "11" + _keyScope6, component, 0, 0);
+    out.e("div", null, `@other-${i}`, component, 0, 0);
 
     for (let _steps2 = (10 - 0) / 2, _step2 = 0; _step2 <= _steps2; _step2++) {
       const i = 0 + _step2 * 2;
@@ -115,10 +103,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       out.be("div", null, _keyValue5, component, null, 0);
       out.t(i);
       out.ee();
-      out.be("div", null, "12" + _keyScope7, component, 0, 0);
-      out.ee();
-      out.be("div", null, `@other-${i}`, component, 0, 0);
-      out.ee();
+      out.e("div", null, "12" + _keyScope7, component, 0, 0);
+      out.e("div", null, `@other-${i}`, component, 0, 0);
     }
   }
 
@@ -129,10 +115,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, _keyValue6, component, null, 0);
     out.t(i);
     out.ee();
-    out.be("div", null, "13" + _keyScope8, component, 0, 0);
-    out.ee();
-    out.be("div", null, `@other-${i}`, component, 0, 0);
-    out.ee();
+    out.e("div", null, "13" + _keyScope8, component, 0, 0);
+    out.e("div", null, `@other-${i}`, component, 0, 0);
   }
 }, {
   t: _marko_componentType,

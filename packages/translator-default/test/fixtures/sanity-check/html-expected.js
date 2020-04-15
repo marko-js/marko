@@ -15,10 +15,7 @@ import _marko_attr from "marko/src/runtime/html/helpers/attr";
 import _marko_class_merge from "marko/src/runtime/helpers/class-value";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _other from "./components/other/index.marko";
-import _marko_load_tag from "marko/src/runtime/helpers/load-tag";
-
-const _other_tag = _marko_load_tag(_other);
-
+import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml";
 import _marko_attrs from "marko/src/runtime/html/helpers/attrs";
 import _marko_renderer from "marko/src/runtime/components/renderer";
@@ -58,13 +55,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "x": 1
   }), null, null, null, _component, "12");
 
-  _other_tag({
+  _marko_tag(_other, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
   }, out, _component, "13", [["click", "handleClick", false, [a, b, ...d]]]);
 
-  _other_tag({
+  _marko_tag(_other, {
     "x": 1,
     ...thing,
     "b": {

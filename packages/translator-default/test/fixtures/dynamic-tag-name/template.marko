@@ -1,0 +1,39 @@
+import tagA from "./components/tag-a/index.marko";
+import tagB from "./components/tag-b/index.marko";
+
+<${input}/>
+<${input.x}/>
+
+<${input.show ? "div" : null}/>
+<${input.show && "div"}/>
+
+<${input.large ? "h1" : "h2"}/>
+
+<${input.showTagA ? tagA : tagB}/>
+<${input.showTagA && tagA}/>
+<${input.showTagA && tagA}>
+  Body content
+</>
+
+<${input.tag || tagA}/>
+
+$ const largeHeading = input.isLarge && "h1";
+<${largeHeading || "h2"}/>
+
+<${global.x = "a" + "b"}/>
+<${"h" + input.level}/>
+<${`h${input.level}`}/>
+
+$ const tagConstA = "a";
+<${tagConstA}/>
+
+$ const tagConstB = input.show ? "div" : null;
+<${tagConstB}/>
+
+$ let tagLazyAssign;
+
+$ tagLazyAssign = "a";
+<${tagLazyAssign}/>
+
+$ tagLazyAssign = input.show ? "div" : null;
+<${tagLazyAssign}/>

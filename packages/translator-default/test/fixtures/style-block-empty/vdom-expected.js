@@ -9,10 +9,9 @@ const _marko_componentType = _marko_registerComponent("ZEzG2kfv", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", {
+  out.e("div", {
     "class": "test"
   }, "1", component, 0, 1);
-  out.ee();
 }, {
   t: _marko_componentType,
   i: true

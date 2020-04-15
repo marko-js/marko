@@ -1,0 +1,18 @@
+import helloComponent from './components/hello.marko';
+import goodbyeComponent from './components/goodbye.marko';
+
+class {
+    onCreate() {
+        this.helloReceived = false;
+        this.goodByeReceived = false;
+        this.state = { isHello: true };
+    }
+
+    toggle() {
+        this.state.isHello = !this.state.isHello;
+    }
+}
+
+<${state.isHello ? helloComponent : goodbyeComponent}
+    on-hello(() => component.helloReceived = true)
+    on-goodbye(() => component.goodByeReceived = true)/>

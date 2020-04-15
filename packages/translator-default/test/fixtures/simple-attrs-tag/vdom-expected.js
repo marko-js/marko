@@ -10,32 +10,27 @@ const _marko_componentType = _marko_registerComponent("YBWmqrQ3", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", {
+  out.e("div", {
     "style": "c:1px;",
     "class": "b",
     "id": "a"
   }, "0", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "style": "c:1px;",
     "id": "a"
   }, "1", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "style": "c:1px;"
   }, "2", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "style": "c:1px;"
   }, "3", component, 0, 0, {
     noupdate: ["style"]
   });
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "a": "1",
     "style": "c:1px;"
   }, "4", component, 0, 0);
-  out.ee();
 }, {
   t: _marko_componentType,
   i: true
