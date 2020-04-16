@@ -9,18 +9,15 @@ const _marko_componentType = _marko_registerComponent("nma4wliZ", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", {
+  out.e("div", {
     "id": "shorthand"
   }, "0", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "id": dynamic
   }, "1", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "id": "partial-" + dynamic
   }, "2", component, 0, 1);
-  out.ee();
 }, {
   t: _marko_componentType,
   i: true

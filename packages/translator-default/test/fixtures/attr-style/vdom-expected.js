@@ -3,10 +3,7 @@ const _marko_template = _t(__filename);
 export default _marko_template;
 import _marko_style_merge from "marko/src/runtime/helpers/style-value";
 import _customTag from "./components/custom-tag.marko";
-import _marko_load_tag from "marko/src/runtime/helpers/load-tag";
-
-const _customTag_tag = _marko_load_tag(_customTag);
-
+import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
@@ -16,34 +13,31 @@ const _marko_componentType = _marko_registerComponent("iougQjrT", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", {
+  out.e("div", {
     "style": _marko_style_merge({
       color: input.color
     })
   }, "0", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "style": "width:100px;"
   }, "1", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "style": "color: green"
   }, "2", component, 0, 1);
-  out.ee();
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": {
       color: input.color
     }
   }, out, _component, "3");
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": {
       width: 100
     }
   }, out, _component, "4");
 
-  _customTag_tag({
+  _marko_tag(_customTag, {
     "style": "color: green"
   }, out, _component, "5");
 

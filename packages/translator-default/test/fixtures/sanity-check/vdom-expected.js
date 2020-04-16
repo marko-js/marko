@@ -12,10 +12,7 @@ function more() {
 import _marko_class_merge from "marko/src/runtime/helpers/class-value";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _other from "./components/other/index.marko";
-import _marko_load_tag from "marko/src/runtime/helpers/load-tag";
-
-const _other_tag = _marko_load_tag(_other);
-
+import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
@@ -44,10 +41,9 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.ee();
 
   function _thing(out, stuff) {
-    out.be("div", {
+    out.e("div", {
       "x": stuff.x
     }, "4", component, 0, 0);
-    out.ee();
   }
 
   var b = thing;
@@ -59,50 +55,44 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   {
     var d = thing;
     let e = thing;
-    out.be("div", {
+    out.e("div", {
       "d": d,
       "e": e
     }, "6", component, 0, 0);
-    out.ee();
   }
   out.ee();
-  out.be("div", null, "7", component, 0, 0, {
+  out.e("div", null, "7", component, 0, 0, {
     "onclick": _component.d("click", "handleClick", false, [a, b, ...d])
   });
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "id": _component.elId("1")
   }, "8", component, 0, 1);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "class": _marko_class_merge(["a", {
       b: c,
       d
     }]),
     "style": "a:b;"
   }, "9", component, 0, 1);
-  out.ee();
   out.e("input", {
     "type": "text"
   }, "10", component, 0, 0);
 
   _marko_dynamic_tag(out, a, null, out => {
-    out.be("div", null, "11", component, 0, 0);
-    out.ee();
+    out.e("div", null, "11", component, 0, 0);
   }, null, null, _component, "@x");
 
   _marko_dynamic_tag(out, _thing, () => ({
     "x": 1
   }), null, null, null, _component, "12");
 
-  _other_tag({
+  _marko_tag(_other, {
     "renderBody": (out, a) => {
-      out.be("div", null, "14", component, 0, 0);
-      out.ee();
+      out.e("div", null, "14", component, 0, 0);
     }
   }, out, _component, "13", [["click", "handleClick", false, [a, b, ...d]]]);
 
-  _other_tag({
+  _marko_tag(_other, {
     "x": 1,
     ...thing,
     "b": {
@@ -114,18 +104,15 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       "d": {
         "d": 1,
         "renderBody": out => {
-          out.be("div", null, "20", component, 0, 0);
-          out.ee();
+          out.e("div", null, "20", component, 0, 0);
         }
       },
       "renderBody": out => {
-        out.be("div", null, "18", component, 0, 0);
-        out.ee();
+        out.e("div", null, "18", component, 0, 0);
       }
     },
     "renderBody": (out, b) => {
-      out.be("div", null, "16", component, 0, 0);
-      out.ee();
+      out.e("div", null, "16", component, 0, 0);
     }
   }, out, _component, "15");
 
@@ -138,14 +125,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "id": "a"
   }), "21", component, null, 0);
   out.t(a);
-  out.be("div", {
+  out.e("div", {
     "c": "1"
   }, "22", component, 0, 0);
-  out.ee();
-  out.be("div", {
+  out.e("div", {
     "d": "1"
   }, "23", component, 0, 0);
-  out.ee();
 
   if (x === a) {
     out.t("a ", component);
@@ -157,15 +142,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }
 
   out.ee();
-  out.be("div", {
+  out.e("div", {
     "b": "1"
   }, "25", component, 0, 0);
-  out.ee();
   out.be("div", null, "26", component, null, 0);
   out.t("123 abc 123", component);
   out.ee();
-  out.be("span", _marko_attrs(abc), "27", component, 0, 0);
-  out.ee();
+  out.e("span", _marko_attrs(abc), "27", component, 0, 0);
 
   if (cond) {
     out.t("Hello ", component);
@@ -175,19 +158,17 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
     const i = 0 + _step * 2;
     const _keyScope = `[${i}]`;
-    out.be("div", {
+    out.e("div", {
       "c": "1"
     }, "28" + _keyScope, component, 0, 0);
-    out.ee();
   }
 
   for (const key in obj) {
     const val = obj[key];
     const _keyScope2 = `[${key}]`;
-    out.be("div", {
+    out.e("div", {
       "c": "1"
     }, "29" + _keyScope2, component, 0, 0);
-    out.ee();
   }
 }, {
   t: _marko_componentType

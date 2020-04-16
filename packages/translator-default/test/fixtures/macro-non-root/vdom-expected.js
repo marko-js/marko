@@ -12,8 +12,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("div", null, "0", component, null, 0);
 
   function _stuff(out, x) {
-    out.be("div", null, "2", component, 0, 0);
-    out.ee();
+    out.e("div", null, "2", component, 0, 0);
   }
 
   out.ee();

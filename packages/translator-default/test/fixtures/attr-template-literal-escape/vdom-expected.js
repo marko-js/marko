@@ -9,10 +9,9 @@ const _marko_componentType = _marko_registerComponent("kMyNIV8M", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", {
+  out.e("div", {
     "foo": `Hello ${input.name}`
   }, "0", component, 0, 0);
-  out.ee();
 }, {
   t: _marko_componentType,
   i: true

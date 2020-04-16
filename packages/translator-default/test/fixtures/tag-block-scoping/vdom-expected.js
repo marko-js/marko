@@ -18,11 +18,10 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   {
     var d = thing;
     let e = thing;
-    out.be("div", {
+    out.e("div", {
       "d": d,
       "e": e
     }, "1", component, 0, 0);
-    out.ee();
   }
   out.ee();
 }, {

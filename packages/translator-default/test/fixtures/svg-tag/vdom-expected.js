@@ -21,8 +21,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "stroke-width": "3",
     "fill": "red"
   }, "1", component, 0, 0);
-  out.be("a", null, "2", component, 0, 0);
-  out.ee();
+  out.e("a", null, "2", component, 0, 0);
   out.be("style", null, "3", component, null, 0);
   out.t("div { color: green }", component);
   out.ee();
@@ -33,8 +32,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.t("Test", component);
   out.ee();
   out.ee();
-  out.be("a", null, "6", component, 0, 0);
-  out.ee();
+  out.e("a", null, "6", component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true

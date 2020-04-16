@@ -2,24 +2,18 @@ const _marko_template = _t(__filename);
 
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
-import _marko_load_tag from "marko/src/runtime/helpers/load-tag";
-
-const _hello_tag = _marko_load_tag(_hello);
-
+import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _preserve from "../../../../marko/src/core-tags/components/preserve-tag.js";
-
-const _preserve_tag = _marko_load_tag(_preserve);
-
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "rVSetn_I",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  _preserve_tag({
+  _marko_tag(_preserve, {
     "renderBody": out => {
-      _hello_tag({
+      _marko_tag(_hello, {
         "renderBody": out => {
-          _hello_tag({}, out, _component, "1");
+          _marko_tag(_hello, {}, out, _component, "1");
 
           out.w("<div></div>");
         }
@@ -27,15 +21,15 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "p_0");
 
-  _preserve_tag({
+  _marko_tag(_preserve, {
     "if": x,
     "renderBody": out => {
-      _hello_tag({
+      _marko_tag(_hello, {
         "renderBody": out => {
-          _preserve_tag({
+          _marko_tag(_preserve, {
             "if": (a, b),
             "renderBody": out => {
-              _hello_tag({}, out, _component, "4");
+              _marko_tag(_hello, {}, out, _component, "4");
             }
           }, out, _component, "p_4");
 
@@ -45,11 +39,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "p_3");
 
-  _hello_tag({
+  _marko_tag(_hello, {
     "renderBody": out => {
-      _preserve_tag({
+      _marko_tag(_preserve, {
         "renderBody": out => {
-          _hello_tag({}, out, _component, "7");
+          _marko_tag(_hello, {}, out, _component, "7");
 
           out.w("<div></div>");
         }
@@ -57,14 +51,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "6");
 
-  _hello_tag({
+  _marko_tag(_hello, {
     "renderBody": out => {
-      _preserve_tag({
+      _marko_tag(_preserve, {
         "if": x,
         "renderBody": out => {
-          _hello_tag({
+          _marko_tag(_hello, {
             "renderBody": out => {
-              _preserve_tag({
+              _marko_tag(_preserve, {
                 "if": (a, b),
                 "renderBody": out => {
                   out.w("Again");
@@ -79,11 +73,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "9");
 
-  _preserve_tag({
+  _marko_tag(_preserve, {
     "renderBody": out => {
-      _hello_tag({
+      _marko_tag(_hello, {
         "renderBody": out => {
-          _hello_tag({}, out, _component, "12");
+          _marko_tag(_hello, {}, out, _component, "12");
 
           out.w("<div></div>");
         }
@@ -91,15 +85,15 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "p_@a");
 
-  _preserve_tag({
+  _marko_tag(_preserve, {
     "if": x,
     "renderBody": out => {
-      _hello_tag({
+      _marko_tag(_hello, {
         "renderBody": out => {
-          _preserve_tag({
+          _marko_tag(_preserve, {
             "if": (a, b),
             "renderBody": out => {
-              _hello_tag({}, out, _component, "@c");
+              _marko_tag(_hello, {}, out, _component, "@c");
             }
           }, out, _component, "p_@c");
 
@@ -109,11 +103,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "p_@b");
 
-  _hello_tag({
+  _marko_tag(_hello, {
     "renderBody": out => {
-      _preserve_tag({
+      _marko_tag(_preserve, {
         "renderBody": out => {
-          _hello_tag({}, out, _component, "15");
+          _marko_tag(_hello, {}, out, _component, "15");
 
           out.w("<div></div>");
         }
@@ -121,14 +115,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
   }, out, _component, "@d");
 
-  _hello_tag({
+  _marko_tag(_hello, {
     "renderBody": out => {
-      _preserve_tag({
+      _marko_tag(_preserve, {
         "if": x,
         "renderBody": out => {
-          _hello_tag({
+          _marko_tag(_hello, {
             "renderBody": out => {
-              _preserve_tag({
+              _marko_tag(_preserve, {
                 "if": (a, b),
                 "renderBody": out => {
                   out.w("Again");
