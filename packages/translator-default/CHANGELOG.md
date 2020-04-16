@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.9](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.8...v5.0.0-next.9) (2020-04-16)
+
+
+### Bug Fixes
+
+* regression with nullish values in partial string attribute values ([#1537](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1537)) ([144c352](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/144c352863b75b75d513c8f080b8b19881e5dbde))
+
+
+### Features
+
+* improve serialization across multiple writes ([#1542](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1542)) ([45e42df](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/45e42dfd84a86dd3377a4d2968191b7dde8388d2))
+
+
+### Performance Improvements
+
+* optimize dynamic tag when types are statically known ([#1550](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1550)) ([4719405](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/47194054de15eeb19247a8f50926ac81c6d03671))
+
+
+
+
+
 # [5.0.0-next.8](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.7...v5.0.0-next.8) (2020-03-17)
 
 
