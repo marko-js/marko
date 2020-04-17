@@ -2,7 +2,6 @@
 var complain = "MARKO_DEBUG" && require("complain");
 var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("./event-delegation");
-var win = window;
 var defaultDocument = document;
 var createFragmentNode = require("../vdom/morphdom/fragment")
   .___createFragmentNode;
@@ -252,41 +251,38 @@ function initClientRendered(componentDefs, doc) {
  * This method initializes all components that were rendered on the server by iterating over all
  * of the component IDs.
  */
-function initServerRendered(renderedComponents, doc) {
+function initServerRendered(renderedComponents, doc, runtimeId) {
   var type = typeof renderedComponents;
-  var globalKey = "$";
-  var runtimeId;
+  var globalKey;
 
   if (type !== "object") {
     if (type === "string") {
       runtimeId = renderedComponents;
-      globalKey += runtimeId + "_C";
+      globalKey = runtimeId;
     } else {
-      globalKey += (runtimeId = DEFAULT_RUNTIME_ID) + "C";
+      globalKey = runtimeId = DEFAULT_RUNTIME_ID;
     }
 
-    renderedComponents = win[globalKey];
-
-    var fakeArray = (win[globalKey] = {
-      r: runtimeId,
-      concat: initServerRendered
+    renderedComponents = JSON[globalKey];
+    Object.defineProperty(JSON, globalKey, {
+      configurable: true,
+      set: function(v) {
+        initServerRendered(JSON.parse(v.slice(10)), doc, runtimeId);
+      }
     });
 
-    if (renderedComponents && renderedComponents.forEach) {
-      renderedComponents.forEach(function(renderedComponent) {
-        fakeArray.concat(renderedComponent);
+    if (renderedComponents) {
+      JSON.parse("[" + renderedComponents.slice(10) + "]").forEach(function(
+        renderedComponent
+      ) {
+        initServerRendered(renderedComponent, doc, runtimeId);
       });
     }
 
-    return fakeArray;
+    return;
   }
 
-  var isFromSerializedGlobals = this.concat === initServerRendered;
-
-  if (isFromSerializedGlobals) {
-    runtimeId = this.r;
-    doc = defaultDocument;
-  } else {
+  if (!runtimeId) {
     runtimeId = renderedComponents.r || DEFAULT_RUNTIME_ID;
 
     // eslint-disable-next-line no-constant-condition

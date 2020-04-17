@@ -1,7 +1,7 @@
 "use strict";
 
 var warp10 = require("warp10");
-var safeJSONRegExp = /<\/|\u2028|\u2029/g;
+var safeJSONStringRegExp = /<\/script|'|\\|\u2028|\u2029/g;
 var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
 var DEFAULT_RUNTIME_ID = "M";
 
@@ -10,11 +10,16 @@ var FLAG_HAS_RENDER_BODY = 2;
 var FLAG_IS_LEGACY = 4;
 var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
-function safeJSONReplacer(match) {
-  if (match === "</") {
-    return "\\u003C/";
-  } else {
-    return "\\u" + match.charCodeAt(0).toString(16);
+function safeStringJSONReplacer(match) {
+  switch (match) {
+    case "'":
+      return "\\'";
+    case "\\":
+      return "\\\\";
+    case "</script":
+      return "\\u003C/script";
+    default:
+      return "\\u" + match.charCodeAt(0).toString(16);
   }
 }
 
@@ -30,8 +35,8 @@ function isNotEmpty(obj) {
 }
 function safeStringify(data) {
   return JSON.stringify(warp10.stringifyPrepare(data)).replace(
-    safeJSONRegExp,
-    safeJSONReplacer
+    safeJSONStringRegExp,
+    safeStringJSONReplacer
   );
 }
 
@@ -273,13 +278,9 @@ exports.___getInitComponentsCode = function getInitComponentsCode(
     return "";
   }
 
-  const runtimeId = out.global.runtimeId;
-  const componentGlobalKey =
-    runtimeId === DEFAULT_RUNTIME_ID ? "MC" : runtimeId + "_C";
-
-  return `$${componentGlobalKey}=(window.$${componentGlobalKey}||[]).concat(${safeStringify(
+  return `JSON.${out.global.runtimeId}+=',${safeStringify(
     initComponentsData
-  )})`;
+  )}'`;
 };
 
 exports.___addComponentsFromContext = addComponentsFromContext;
