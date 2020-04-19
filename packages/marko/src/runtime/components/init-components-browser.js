@@ -253,18 +253,11 @@ function initClientRendered(componentDefs, doc) {
  */
 function initServerRendered(renderedComponents, doc, runtimeId) {
   var type = typeof renderedComponents;
-  var globalKey;
 
   if (type !== "object") {
-    if (type === "string") {
-      runtimeId = renderedComponents;
-      globalKey = runtimeId;
-    } else {
-      globalKey = runtimeId = DEFAULT_RUNTIME_ID;
-    }
-
-    renderedComponents = JSON[globalKey];
-    Object.defineProperty(JSON, globalKey, {
+    runtimeId = renderedComponents || DEFAULT_RUNTIME_ID;
+    renderedComponents = JSON[runtimeId];
+    Object.defineProperty(JSON, runtimeId, {
       configurable: true,
       set: function(v) {
         initServerRendered(JSON.parse(v.slice(10)), doc, runtimeId);

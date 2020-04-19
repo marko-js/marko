@@ -1,7 +1,7 @@
 "use strict";
 
 var warp10 = require("warp10");
-var safeJSONStringRegExp = /<\/script|'|\\|\u2028|\u2029/g;
+var safeJSONStringRegExp = /'|\\|<\/script|\u2028|\u2029/g;
 var IGNORE_GLOBAL_TYPES = new Set(["undefined", "function", "symbol"]);
 var DEFAULT_RUNTIME_ID = "M";
 
@@ -17,9 +17,11 @@ function safeStringJSONReplacer(match) {
     case "\\":
       return "\\\\";
     case "</script":
-      return "\\u003C/script";
-    default:
-      return "\\u" + match.charCodeAt(0).toString(16);
+      return "<\\/script";
+    case "\u2028":
+      return "\\u2028";
+    case "\u2029":
+      return "\\u2029";
   }
 }
 
