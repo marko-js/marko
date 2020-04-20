@@ -5,7 +5,9 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_renderer = require("marko/src/runtime/components/renderer"),
     module_bar = require("./bar"),
     bar = module_bar.default || module_bar,
-    foo = module_bar.f;
+    foo = module_bar.f,
+    module_testHello = require("./tags/test-hello/renderer"),
+    testHello = module_testHello.default || module_testHello;
 
 require("./foo");
 
