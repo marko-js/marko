@@ -15,8 +15,10 @@ module.exports = function codeGenerator(el, codegen) {
     if (arg.value[0] === "<") {
       const tagName = arg.value.slice(1, -1);
       const tagDef = context.taglibLookup.getTag(tagName);
-      const requirePath = context.getRequirePath(tagDef.renderer || tagDef.template);
-      arg.value = requirePath
+      const requirePath = context.getRequirePath(
+        tagDef.renderer || tagDef.template
+      );
+      arg.value = requirePath;
     }
 
     if (!isValidJavaScriptVarName(varName)) {
