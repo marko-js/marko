@@ -567,6 +567,42 @@ import sum from './utils/sum';
 <div>The sum of 2 + 3 is ${sum(2, 3)}</div>
 ```
 
+The `from` can also be wrapped in `<angle-brackets>` which will resolve the tag inside the angle brackets using Marko's [tag discovery](./custom-tags.md#how-tags-are-discovered).
+This can be useful when rendering a [dynamic component](#dynamic-components).
+
+```marko
+import FancyLink from '<fancy-link>';
+
+<${input.isFancy ? FancyLink : "a"} href=input.href>
+  Open Link
+</>
+```
+
+> **ProTip:**
+> As a s
+>
+> _Marko Source:_
+>
+> ```marko
+> <div class=(active && "tab-active")>Hello</div>
+> ```
+>
+> With a value of `true` for `active`, the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> <div class="tab-active">Hello</div>
+> ```
+>
+> With a value of `false` for `active`, the output would be the following:
+>
+> _HTML Output:_
+>
+> ```html
+> <div>Hello</div>
+> ```
+
 ## Comments
 
 Standard HTML comments can be used and will be stripped out of the rendered output.
