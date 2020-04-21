@@ -1,4 +1,4 @@
-var path = require("path");
+var nodePath = require("path");
 var defaultResolveFrom = require("resolve-from");
 var env = process.env.NODE_ENV;
 var production = !env || env !== "development";
@@ -56,7 +56,7 @@ function attachDepsAndComponentsToTemplate(target, context) {
   }
 
   var meta = template.meta;
-  var root = path.dirname(template.path);
+  var root = nodePath.dirname(template.path);
 
   if (meta.deps) {
     meta.deps.forEach(dep => {
@@ -77,7 +77,7 @@ function attachDepsAndComponentsToTemplate(target, context) {
     meta.tags.forEach(tagPath => {
       var resolveFrom = context.resolveFrom || defaultResolveFrom;
       var tag = resolveFrom(root, tagPath);
-      var ext = path.extname(tag);
+      var ext = nodePath.extname(tag);
       var req = context.require || require;
 
       try {
@@ -103,10 +103,14 @@ function getInitModule(path, components) {
     components = Object.keys(components).map(key => components[key]);
 
     if (components.length) {
+      var root = nodePath.dirname(path);
       var virtualPath = path + ".init.js";
       var registrations = components.map(
         component =>
-          `components.register('${component.id}', require('${component.path}'));`
+          `components.register('${component.id}', require('${nodePath.relative(
+            root,
+            component.path
+          )}'));`
       );
       var code = `
                 var components = require('marko/components');
@@ -149,7 +153,7 @@ function resolveDep(dep, root, context) {
   }
 
   if (dep.virtualPath) {
-    dep.virtualPath = path.resolve(root, dep.virtualPath);
+    dep.virtualPath = nodePath.resolve(root, dep.virtualPath);
   }
 
   if (dep.type === "js") {
