@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.21.0](https://github.com/marko-js/marko/compare/v4.20.2...v4.21.0) (2020-04-21)
+
+
+### Features
+
+* short hand syntax for component imports ([#1552](https://github.com/marko-js/marko/issues/1552)) ([b5453cc](https://github.com/marko-js/marko/commit/b5453cce8bbc3b96a406bf0cbd926ee7123d158a))
+
 ### [4.20.2](https://github.com/marko-js/marko/compare/v4.20.1...v4.20.2) (2020-04-21)
 
 
