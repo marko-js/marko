@@ -12,6 +12,15 @@ module.exports = function codeGenerator(el, codegen) {
   args.forEach(arg => {
     var varName = arg.name;
 
+    if (arg.value[0] === "<") {
+      const tagName = arg.value.slice(1, -1);
+      const tagDef = context.taglibLookup.getTag(tagName);
+      const requirePath = context.getRequirePath(
+        tagDef.renderer || tagDef.template
+      );
+      arg.value = requirePath;
+    }
+
     if (!isValidJavaScriptVarName(varName)) {
       codegen.addError(
         "Invalid JavaScript variable name: " + varName,
