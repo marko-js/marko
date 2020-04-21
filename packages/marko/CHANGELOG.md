@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.2](https://github.com/marko-js/marko/compare/v4.20.1...v4.20.2) (2020-04-21)
+
+
+### Bug Fixes
+
+* prevent lasso 2 from inlining full system paths ([#1555](https://github.com/marko-js/marko/issues/1555)) ([50750b4](https://github.com/marko-js/marko/commit/50750b4b9ec61210081e318175a5e8a746fe2069))
+* switch safe renderer to use nextTick for errors ([#1554](https://github.com/marko-js/marko/issues/1554)) ([6ea9fe3](https://github.com/marko-js/marko/commit/6ea9fe330b499f9fdb125eaf0f25f2ee1553ef4e))
+
 ### [4.20.1](https://github.com/marko-js/marko/compare/v4.20.0...v4.20.1) (2020-04-15)
 
 
