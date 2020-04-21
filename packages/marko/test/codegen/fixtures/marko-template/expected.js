@@ -12,10 +12,10 @@ function render(input, out) {
     "!");
 
   if (notEmpty(data.colors)) {
-    out.w("<ul class=\"colors\">");
+    out.w("<ul class=colors>");
 
     forEach(data.colors, function(color) {
-      out.w("<li class=\"color\">" +
+      out.w("<li class=color>" +
         marko_escapeXml(color) +
         "</li>");
     });

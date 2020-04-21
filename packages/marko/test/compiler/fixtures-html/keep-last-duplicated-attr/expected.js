@@ -16,7 +16,7 @@ function render(input, out, __component, component, state) {
       b: "2"
     }, out, __component, "0");
 
-  out.w("<input a=\"3\" b=\"2\">");
+  out.w("<input a=3 b=2>");
 }
 
 marko_template._ = marko_renderer(render, {

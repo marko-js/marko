@@ -65,7 +65,7 @@ module.exports = function beginComponent(
 
   if ((ownerIsRenderBoundary || ownerWillRerender) && key != null) {
     out.w(
-      "<!--" +
+      "<!" +
         runtimeId +
         "^" +
         componentId +
@@ -73,10 +73,10 @@ module.exports = function beginComponent(
         ownerComponentDef.id +
         " " +
         key +
-        "-->"
+        ">"
     );
   } else {
-    out.w("<!--" + runtimeId + "#" + componentId + "-->");
+    out.w("<!" + runtimeId + "#" + componentId + ">");
   }
 
   return componentDef;

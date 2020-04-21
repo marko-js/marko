@@ -1,7 +1,7 @@
 if (true) {
-  out.w("<div class=\"greeting\">");
+  out.w("<div class=greeting>");
 
   var newVar = "Hello World";
 
-  out.w("<span class=\"foo\"></span>Hello World</div>");
+  out.w("<span class=foo></span>Hello World</div>");
 }

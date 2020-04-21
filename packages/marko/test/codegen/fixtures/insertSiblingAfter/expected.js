@@ -1,5 +1,5 @@
 if (true) {
-  out.w("<div class=\"greeting\"><span class=\"foo\"></span>");
+  out.w("<div class=greeting><span class=foo></span>");
 
   var newVar = "Hello World";
 
