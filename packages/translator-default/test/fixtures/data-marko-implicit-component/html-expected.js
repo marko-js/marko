@@ -10,7 +10,7 @@ const _marko_componentType = "PGtLNOSk",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<div${_marko_props({
     noupdate: ["class"]
-  })} class="test">Hello ${_marko_escapeXml(input.name)}</div>`);
+  })} class=test>Hello ${_marko_escapeXml(input.name)}</div>`);
 }, {
   t: _marko_componentType,
   i: true

@@ -28,7 +28,7 @@ const _marko_componentType = "sWzbPUpL",
 
 };
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<style id="css">\n  div {\n    color: ${_marko_escapeStyle(x)};\n  }\n</style><script>\n  var y = ${_marko_escapeScript(x)};\n</script>`);
+  out.w(`<style id=css>\n  div {\n    color: ${_marko_escapeStyle(x)};\n  }\n</style><script>\n  var y = ${_marko_escapeScript(x)};\n</script>`);
 
   function _thing(out, stuff) {
     out.w(`<div${_marko_attr("x", stuff.x)}></div>`);
@@ -45,7 +45,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.w(`</div><div></div><div${_marko_attr("id", _component.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
-  }]))} style="a:b;"></div><input type="text">`);
+  }]))} style=a:b;></div><input type=text>`);
 
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");
@@ -94,7 +94,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     ...e,
     ...f(),
     "id": "a"
-  })}>${_marko_escapeXml(a)}<!--abc--><div c="1"></div><div d="1"></div>`);
+  })}>${_marko_escapeXml(a)}<!--abc--><div c=1></div><div d=1></div>`);
 
   if (x === a) {
     out.w(`a ${_marko_escapeXml(b)}`);
@@ -104,7 +104,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.w("c");
   }
 
-  out.w(`</div><div b="1"></div><div>123 abc 123</div><span${_marko_attrs(abc)}></span>`);
+  out.w(`</div><div b=1></div><div>123 abc 123</div><span${_marko_attrs(abc)}></span>`);
 
   if (cond) {
     out.w(`Hello ${_marko_escapeXml(planet)}`);
@@ -113,13 +113,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
     const i = 0 + _step * 2;
     const _keyScope = `[${i}]`;
-    out.w("<div c=\"1\"></div>");
+    out.w("<div c=1></div>");
   }
 
   for (const key in obj) {
     const val = obj[key];
     const _keyScope2 = `[${key}]`;
-    out.w("<div c=\"1\"></div>");
+    out.w("<div c=1></div>");
   }
 }, {
   t: _marko_componentType

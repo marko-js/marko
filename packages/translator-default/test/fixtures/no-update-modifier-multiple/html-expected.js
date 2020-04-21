@@ -12,7 +12,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     noupdate: ["value"]
   })}${_marko_attr("value", input.defaultValue)}><input${_marko_props({
     noupdate: ["value", "checked"]
-  })} type="checkbox"${_marko_attr("value", input.defaultValue)}${_marko_attr("checked", input.checked)}></div>`);
+  })} type=checkbox${_marko_attr("value", input.defaultValue)}${_marko_attr("checked", input.checked)}></div>`);
 }, {
   t: _marko_componentType,
   i: true

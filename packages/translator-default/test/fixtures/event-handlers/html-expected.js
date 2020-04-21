@@ -15,7 +15,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "onDashed-cased-Event": _component.d("Dashed-cased-Event", "handle", false)
   })}></div><div${_marko_props({
     "oncamelcasedevent": _component.d("camelcasedevent", "handle", false)
-  })} onmouseout="someStringHandler"></div>`);
+  })} onmouseout=someStringHandler></div>`);
 
   _marko_tag(_customTag, {}, out, _component, "3", [["thing", "handleThing", false, [a, b, ...d]]]);
 
