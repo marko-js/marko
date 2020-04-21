@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.1](https://github.com/marko-js/marko/compare/v4.21.0...v4.21.1) (2020-04-21)
+
+
+### Bug Fixes
+
+* **legacy dependencies:** relative path should begin with ./ ([#1558](https://github.com/marko-js/marko/issues/1558)) ([a01b644](https://github.com/marko-js/marko/commit/a01b644b8f3511777f9bda8d93f4ae93e5745b02))
+
 ## [4.21.0](https://github.com/marko-js/marko/compare/v4.20.2...v4.21.0) (2020-04-21)
 
 
