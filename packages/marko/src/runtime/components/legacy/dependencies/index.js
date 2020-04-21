@@ -107,10 +107,9 @@ function getInitModule(path, components) {
       var virtualPath = path + ".init.js";
       var registrations = components.map(
         component =>
-          `components.register('${component.id}', require('${nodePath.relative(
-            root,
-            component.path
-          )}'));`
+          `components.register('${component.id}', require('.${
+            nodePath.sep
+          }${nodePath.relative(root, component.path)}'));`
       );
       var code = `
                 var components = require('marko/components');
