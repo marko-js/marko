@@ -1,6 +1,6 @@
 # Custom tags
 
-Custom tags allow you to break up your application UI into encapsulated, resuable components.
+Custom tags allow you to break up your application UI into encapsulated, reusable components.
 
 ## Your first custom tag
 
