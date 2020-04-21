@@ -8,7 +8,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div id=\"foo\"></div>");
+  out.w("<div id=foo></div>");
 }
 
 marko_template._ = marko_renderer(render, {

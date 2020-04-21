@@ -14,11 +14,11 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div class=\"root\">");
+  out.w("<div class=root>");
 
   app_foo_tag({}, out, __component, "foo");
 
-  out.w("<a href=\"ebay.com\">eBay</a></div>");
+  out.w("<a href=ebay.com>eBay</a></div>");
 }
 
 marko_template._ = marko_renderer(render, {

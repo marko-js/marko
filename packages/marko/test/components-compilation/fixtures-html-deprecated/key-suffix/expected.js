@@ -11,7 +11,7 @@ var marko_template = module.exports = require("marko/src/html").t(__filename),
 function render(input, out, __component, component, state) {
   var data = input;
 
-  out.w("<div class=\"root\"><label" +
+  out.w("<div class=root><label" +
     marko_attr("for", __component.elId("name")) +
     ">Name</label><input" +
     marko_attr("id", __component.elId("name")) +

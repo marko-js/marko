@@ -12,7 +12,7 @@ function render(input, out, __component, widget, component) {
 
   out.w("<div" +
     marko_dataMarko(null, "@_wbind", __component) +
-    " data-widget=\"/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/bind-component/index\"" +
+    " data-widget=/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/bind-component/index" +
     marko_attr("id", __component.elId()) +
     "></div>");
 }

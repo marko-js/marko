@@ -38,9 +38,9 @@ function notEmptyAttr(name, value) {
             );
           }
 
-          return " " + name + singleQuote(JSON.stringify(value));
+          return " " + name + singleQuote(JSON.stringify(value), 2);
         case RegExp.prototype.toString:
-          return " " + name + doubleQuote(value.source);
+          return " " + name + guessQuotes(value.source);
       }
   }
 
@@ -51,23 +51,29 @@ function isEmpty(value) {
   return value == null || value === false;
 }
 
-function doubleQuote(value) {
-  return '="' + escapeDoubleQuotes(value) + '"';
+function doubleQuote(value, startPos) {
+  return '="' + escapeDoubleQuotes(value, startPos) + '"';
 }
 
-function singleQuote(value) {
-  return "='" + escapeSingleQuotes(value) + "'";
+function singleQuote(value, startPos) {
+  return "='" + escapeSingleQuotes(value, startPos) + "'";
 }
 
 function guessQuotes(value) {
-  if (value.length) {
-    if (value[0] === "{") {
-      // Assume json.
-      return singleQuote(value);
+  for (var i = 0, len = value.length; i < len; i++) {
+    switch (value[i]) {
+      case '"':
+        return singleQuote(value, i + 1);
+      case "'":
+      case ">":
+      case " ":
+      case "\t":
+      case "\n":
+      case "\r":
+      case "\f":
+        return doubleQuote(value, i + 1);
     }
-
-    return doubleQuote(value);
   }
 
-  return "";
+  return value && "=" + value;
 }
