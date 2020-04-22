@@ -36,7 +36,7 @@ export {
 
 export { on, dynamicOn, once } from "./event";
 
-export { classAttr, styleAttr } from "../common/helpers";
+export { classValue, styleValue } from "../common/helpers";
 
 export { register } from "../common/registry";
 

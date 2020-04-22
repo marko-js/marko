@@ -1,29 +1,55 @@
-const xmlCharReg = /[&<]/g;
-const xmlAttrReg = /["\n]/g;
-const xmlReplacements = {
-  "<": "&lt;",
-  "&": "&amp;",
-  '"': "&#34;", // We only need double quotes since the runtime will only output double quotes.
-  "\n": "&#10;" // Preserve new lines so that they don't get normalized as space.
-} as const;
+export const escapeXML = escapeIfNeeded((val: string) => {
+  let result = "";
+  let lastPos = 0;
 
-export const script = escapeTagEnding("script");
-export const style = escapeTagEnding("style");
-export const xml = escapeIfNeeded(val =>
-  val.replace(xmlCharReg, replaceXMLChar)
-);
-export const xmlAttr = escapeIfNeeded(val =>
-  val.replace(xmlAttrReg, replaceXMLChar)
-);
+  for (let i = 0, len = val.length; i < len; i++) {
+    let replacement: string;
 
-function replaceXMLChar(match: string) {
-  return xmlReplacements[match];
-}
+    switch (val[i]) {
+      case "<":
+        replacement = "&lt;";
+        break;
+      case "&":
+        replacement = "&amp;";
+        break;
+      default:
+        continue;
+    }
 
+    result += val.slice(lastPos, i) + replacement;
+    lastPos = i + 1;
+  }
+
+  if (lastPos) {
+    return result + val.slice(lastPos);
+  }
+
+  return val;
+});
+
+export const escapeScript = escapeIfNeeded(escapeTagEnding("script"));
+export const escapeStyle = escapeIfNeeded(escapeTagEnding("style"));
 function escapeTagEnding(tagName: string) {
-  const closingTag = `</${tagName}`;
-  const replacement = `<\\/${tagName}`;
-  return escapeIfNeeded(val => val.replace(closingTag, replacement));
+  const openTag = `</${tagName}`;
+  const escaped = `<\\/${tagName}`;
+
+  return (val: string) => {
+    let result = "";
+    let lastPos = 0;
+    let i = val.indexOf(openTag, lastPos);
+
+    while (i !== -1) {
+      result += val.slice(lastPos, i) + escaped;
+      lastPos = i + 1;
+      i = val.indexOf(openTag, lastPos);
+    }
+
+    if (lastPos) {
+      return result + val.slice(lastPos);
+    }
+
+    return val;
+  };
 }
 
 function escapeIfNeeded(escape: (val: string) => string) {
@@ -32,17 +58,14 @@ function escapeIfNeeded(escape: (val: string) => string) {
       return "";
     }
 
-    const type = typeof val;
-    const result = val + "";
-
-    if (type === "boolean" || type === "number") {
-      return result;
+    switch (typeof val) {
+      case "string":
+        return escape(val);
+      case "boolean":
+      case "number":
+        return val + "";
+      default:
+        return escape(val + "");
     }
-
-    if (type === "object" && val instanceof RegExp) {
-      return val.source;
-    }
-
-    return escape(result);
   };
 }

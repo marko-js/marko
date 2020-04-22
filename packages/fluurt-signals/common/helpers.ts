@@ -1,60 +1,71 @@
-const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
-
-export function classAttr(value: unknown) {
+export function classValue(value: unknown) {
   return toDelimitedString(value, " ", stringifyClassObject);
 }
 
-export function styleAttr(value: unknown) {
+function stringifyClassObject(name: string, value: unknown) {
+  if (isVoid(value)) {
+    return "";
+  }
+
+  return name;
+}
+
+export function styleValue(value: unknown) {
   return toDelimitedString(value, ";", stringifyStyleObject);
 }
 
-function stringifyClassObject(name: string, value: unknown) {
-  if (value) {
-    return name;
-  }
-}
-
+const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name: string, value: unknown) {
-  if (value != null && value !== false) {
-    if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
-      (value as any) += "px";
-    }
-
-    return `${name}:${value}`;
+  if (isVoid(value)) {
+    return "";
   }
+
+  if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
+    ((value as unknown) as string) += "px";
+  }
+
+  return `${name}:${value}`;
 }
 
 function toDelimitedString(
-  value: unknown,
+  val: unknown,
   delimiter: string,
   stringify: (n: string, v: string) => string | undefined
 ) {
-  if (value) {
-    if (typeof value === "string") {
-      return value;
-    }
+  switch (typeof val) {
+    case "string":
+      return val;
+    case "object":
+      if (val !== null) {
+        let result = "";
+        let curDelimiter = "";
 
-    let result = "";
-    let curDelimiter = "";
-
-    if (Array.isArray(value)) {
-      for (const v of value) {
-        const string = toDelimitedString(v, delimiter, stringify);
-        if (string) {
-          result += curDelimiter + string;
-          curDelimiter = delimiter;
+        if (Array.isArray(val)) {
+          for (const v of val) {
+            const part = toDelimitedString(v, delimiter, stringify);
+            if (part !== "") {
+              result += curDelimiter + part;
+              curDelimiter = delimiter;
+            }
+          }
+        } else {
+          for (const name in val) {
+            const v = val[name];
+            const part = stringify(name, v);
+            if (part !== "") {
+              result += curDelimiter + part;
+              curDelimiter = delimiter;
+            }
+          }
         }
-      }
-    } else if (typeof value === "object") {
-      for (const name in value) {
-        const string = stringify(name, value[name]);
-        if (string) {
-          result += curDelimiter + string;
-          curDelimiter = delimiter;
-        }
-      }
-    }
 
-    return result;
+        return result;
+      }
   }
+
+  return "";
+}
+
+export function isVoid(value: unknown) {
+  return value == null || value === false;
 }

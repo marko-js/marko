@@ -1,10 +1,8 @@
 export { register } from "../common/registry";
 
-export { classAttr, styleAttr } from "../common/helpers";
+export { escapeScript, escapeStyle, escapeXML } from "./content";
 
-export { script, style, xml } from "./content";
-
-export { attr, attrs } from "./attrs";
+export { attr, attrs, classAttr, styleAttr } from "./attrs";
 
 export { dynamicTag } from "./dynamic-tag";
 

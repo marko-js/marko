@@ -3,20 +3,20 @@ import { write } from "./writer";
 import { attrs } from "./attrs";
 
 const voidElements = new Set([
-  'area',
-  'base',
-  'br',
-  'col',
-  'embed',
-  'hr',
-  'img',
-  'input',
-  'link',
-  'meta',
-  'param',
-  'source',
-  'track',
-  'wbr'
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr"
 ]);
 interface RenderBodyObject {
   [x: string]: unknown;
