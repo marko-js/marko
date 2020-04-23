@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.10](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.9...v5.0.0-next.10) (2020-04-23)
+
+
+### Performance Improvements
+
+* minify runtime comments, remove unnecessary attr quotes ([#1557](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1557)) ([2882626](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/28826265f88c9f038886945471584f1b4b3b9be6))
+
+
+
+
+
 # [5.0.0-next.9](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.8...v5.0.0-next.9) (2020-04-16)
 
 
