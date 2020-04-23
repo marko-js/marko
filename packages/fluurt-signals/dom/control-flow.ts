@@ -10,7 +10,15 @@ import {
 } from "./signals";
 import { Fragment, replaceFragment } from "./fragments";
 import { reconcile } from "./reconcile";
-import { beginFragment, endFragment, currentNS, setNS, endNS } from "./dom";
+import {
+  beginFragment,
+  endFragment,
+  text,
+  currentNS,
+  setNS,
+  endNS,
+  parentElement
+} from "./dom";
 import { createPool } from "./utils";
 
 type ForIterationFragment<T> = Fragment & {
@@ -29,11 +37,12 @@ export function loopOf<T>(
   getKey: (item: T, index: number) => string
 ) {
   if (isSignal(array)) {
-    const rootFragment = beginFragment();
+    const rootElement = parentElement!;
     const ns = currentNS;
     let oldNodes: Map<string, Fragment> | undefined;
     let oldKeys: string[] = [];
     let pendingRender = true;
+    let afterMarker: Text;
 
     const newNodes = createComputation(
       _array => {
@@ -71,17 +80,19 @@ export function loopOf<T>(
       [array]
     ) as Signal<Map<string, Fragment>>;
 
-    rootFragment.___tracked.delete(newNodes);
-    if (rootFragment.___parentFragment) {
-      rootFragment.___parentFragment.___tracked.add(newNodes);
-    }
-
     createEffect(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
 
         if (oldNodes) {
-          reconcile(rootFragment, oldKeys, oldNodes, newKeys, _newNodes);
+          reconcile(
+            rootElement,
+            oldKeys,
+            oldNodes,
+            newKeys,
+            _newNodes,
+            afterMarker
+          );
           oldNodes.clear();
           mapPool.push(oldNodes);
         }
@@ -93,7 +104,8 @@ export function loopOf<T>(
       newNodes.___sid
     );
 
-    endFragment(rootFragment);
+    // TODO: we should be able to do this lazily, only if the loop is empty
+    afterMarker = text("");
 
     if (pendingRender) {
       oldNodes = mapPool.get();

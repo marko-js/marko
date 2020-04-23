@@ -25,9 +25,13 @@ Some content
 
 # Mutations
 ```
-removed #text after #text3
-removed strong after #text3
+inserted #text3
 inserted #text4
+inserted #text5
+removed #text after #text5
+removed #text after #text5
+removed strong after #text5
+removed #text after #text5
 ```
 
 
@@ -41,6 +45,10 @@ inserted #text4
 
 # Mutations
 ```
-removed #text after #text3
+inserted #text3
 inserted div4
+inserted #text5
+removed #text after #text5
+removed #text after #text5
+removed #text after #text5
 ```

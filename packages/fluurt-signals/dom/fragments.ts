@@ -1,8 +1,8 @@
 import { Computation } from "./signals";
 
 export class Fragment {
-  public ___before: Text;
-  public ___after: Text | undefined;
+  public ___firstChild: Node;
+  public ___lastChild?: Node;
   public ___parentFragment?: Fragment;
   public ___tracked: Set<Fragment | Computation>;
   constructor() {
@@ -17,70 +17,68 @@ export class Fragment {
 }
 
 export function insertFragmentBefore(
-  parent: Fragment | null,
+  parent: Node & ParentNode | null,
   fragment: Fragment,
-  nextSibling: Fragment
+  nextSibling: Node
 ): void;
 export function insertFragmentBefore(
-  parent: Fragment,
+  parent: Node & ParentNode,
   fragment: Fragment,
-  nextSibling: Fragment | null
+  nextSibling: Node | null
 ): void;
 export function insertFragmentBefore(
-  parent: Fragment | null,
+  parent: Node & ParentNode | null,
   fragment: Fragment,
-  nextSibling: Fragment | null
+  nextSibling: Node | null
 ) {
-  const domParent = (parent || nextSibling)!.___before.parentNode!;
+  const domParent = parent || nextSibling!.parentNode!;
   withChildren(
     domParent,
-    fragment.___before,
-    fragment.___after!.nextSibling,
-    nextSibling ? nextSibling.___before : parent!.___after!,
+    fragment.___firstChild,
+    fragment.___lastChild!,
+    nextSibling,
     domParent.insertBefore
   );
 }
 
 export function replaceFragment(current: Fragment, replacement: Fragment) {
-  const domParent = current.___before.parentNode!;
-  clearFragment(current);
-  withChildren(
-    domParent,
-    replacement.___before.nextSibling,
-    replacement.___after!,
-    current.___after!,
-    domParent.insertBefore
-  );
-  replacement.___before = current.___before;
-  replacement.___after = current.___after;
+  insertFragmentBefore(null, replacement, current.___firstChild);
+  removeFragment(current);
 }
 
-export function clearFragment(fragment: Fragment, removeMarkers?: boolean) {
-  const domParent = fragment.___before.parentNode!;
+export function removeFragment(fragment: Fragment) {
+  const domParent = fragment.___firstChild.parentNode!;
   withChildren(
     domParent,
-    removeMarkers ? fragment.___before : fragment.___before.nextSibling,
-    removeMarkers ? fragment.___after!.nextSibling : fragment.___after!,
+    fragment.___firstChild,
+    fragment.___lastChild!,
     null,
     domParent.removeChild
   );
   fragment.___cleanup();
 }
 
-export function removeFragment(fragment: Fragment) {
-  clearFragment(fragment, true);
+export function referenceStart(fragment: Fragment) {
+  return fragment.___firstChild;
+}
+
+export function referenceAfter(fragment: Fragment) {
+  return fragment.___lastChild!.nextSibling;
 }
 
 function withChildren(
   parent: ParentNode,
-  start: Node | null,
-  stop: Node | null,
+  start: Node,
+  stop: Node,
   reference: Node | null,
   method: (a: Node, b: Node | null) => void
 ) {
-  while (start && start !== stop) {
+  while (start) {
     const next = start.nextSibling;
     method.call(parent, start, reference);
-    start = next;
+    if (start === stop) {
+      break;
+    }
+    start = next!;
   }
 }

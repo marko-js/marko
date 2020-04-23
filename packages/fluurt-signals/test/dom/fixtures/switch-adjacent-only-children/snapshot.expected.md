@@ -20,14 +20,14 @@ inserted #text0, div1, #text2
 
 # Mutations
 ```
-removed #text after div1/#text6
+removed #text after div1/#text5
+inserted div1/#text0
+removed #text after div1/#text5
 inserted div1/#text1
-removed #text after div1/#text6
+removed #text after div1/#text5
 inserted div1/#text2
-removed #text after div1/#text6
-inserted div1/#text3
-div1/#text5: "a" => "d"
-div1/#text2: "b" => "c"
+div1/#text4: "a" => "d"
+div1/#text1: "b" => "c"
 ```
 
 
@@ -40,12 +40,12 @@ div1/#text2: "b" => "c"
 
 # Mutations
 ```
-removed #text after div1/#text6
+removed #text after div1/#text5
+inserted div1/#text0
+removed #text after div1/#text5
 inserted div1/#text1
-removed #text after div1/#text6
+removed #text after div1/#text5
 inserted div1/#text2
-removed #text after div1/#text6
-inserted div1/#text3
 ```
 
 
@@ -60,13 +60,12 @@ inserted div1/#text3
 # Mutations
 ```
 inserted div1/#text0
-inserted div1/#text1
-inserted div1/#text5
-div1/#text2: "ab" => "a"
-inserted div1/#text3
 inserted div1/#text4
+div1/#text1: "ab" => "a"
+inserted div1/#text2
+inserted div1/#text3
+inserted div1/#text5
 inserted div1/#text6
-inserted div1/#text7
 removed #comment after #text0
 removed #comment after div1
 ```

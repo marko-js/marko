@@ -120,7 +120,7 @@ export function beginFragment(fragment?: Fragment): Fragment {
   if (!fragment) {
     parentElement = parentElement || detachedContainer;
     fragment = new Fragment();
-    fragment.___before = text("");
+    fragment.___firstChild = text("");
   }
 
   fragment.___parentFragment = parentFragment;
@@ -133,7 +133,7 @@ export function beginFragment(fragment?: Fragment): Fragment {
 }
 
 export function endFragment(fragment: Fragment) {
-  fragment.___after = text("");
+  fragment.___lastChild = text("");
   parentFragment = fragment.___parentFragment;
 }
 

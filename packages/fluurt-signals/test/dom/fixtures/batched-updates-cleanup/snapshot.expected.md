@@ -21,7 +21,11 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed span after #text2
+inserted #text2
+inserted #text3
+removed #text after #text3
+removed span after #text3
+removed #text after #text3
 ```
 
 

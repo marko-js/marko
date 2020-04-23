@@ -25,7 +25,11 @@ inserted #text0, div1, #text2
 
 # Mutations
 ```
-removed span after div1/#text2
+inserted div1/#text2
+inserted div1/#text3
+removed #text after div1/#text3
+removed span after div1/#text3
+removed #text after div1/#text3
 ```
 
 
@@ -42,7 +46,11 @@ removed span after div1/#text2
 
 # Mutations
 ```
+inserted div1/#text2
 inserted div1/span3
+inserted div1/#text4
+removed #text after div1/#text4
+removed #text after div1/#text4
 ```
 
 

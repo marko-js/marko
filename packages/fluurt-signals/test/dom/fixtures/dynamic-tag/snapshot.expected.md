@@ -20,8 +20,12 @@ Hello
 
 # Mutations
 ```
-removed span after #text1
+inserted #text1
 inserted #text2
+inserted #text3
+removed #text after #text3
+removed span after #text3
+removed #text after #text3
 ```
 
 
@@ -36,8 +40,12 @@ inserted #text2
 
 # Mutations
 ```
-removed #text after #text1
+inserted #text1
 inserted span2
+inserted #text3
+removed #text after #text3
+removed #text after #text3
+removed #text after #text3
 span2: attr(a) null => "1"
 ```
 
@@ -53,8 +61,12 @@ span2: attr(a) null => "1"
 
 # Mutations
 ```
-removed span after #text1
+inserted #text1
 inserted a2
+inserted #text3
+removed #text after #text3
+removed span after #text3
+removed #text after #text3
 a2: attr(a) null => "1"
 ```
 
@@ -70,8 +82,12 @@ a2: attr(a) null => "1"
 
 # Mutations
 ```
-removed a after #text1
+inserted #text1
 inserted div2
+inserted #text3
+removed #text after #text3
+removed a after #text3
+removed #text after #text3
 ```
 
 

@@ -16,8 +16,12 @@ aA
 
 # Mutations
 ```
+inserted #text0
 inserted #text1
 inserted #text2
+inserted #text3
+removed #text after #text3
+removed #text after #text3
 #text2: "" => "A"
 ```
 

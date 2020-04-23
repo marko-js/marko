@@ -26,10 +26,14 @@ number0
 
 # Mutations
 ```
+inserted #text0
 inserted button1
 inserted button2
 inserted #text3
 inserted #text4
+inserted #text5
+removed #text after #text5
+removed #text after #text5
 #text4: "" => "0"
 ```
 
