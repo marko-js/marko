@@ -75,5 +75,5 @@ function guessQuotes(value) {
     }
   }
 
-  return value && "=" + value;
+  return value && "=" + (value[len - 1] === "/" ? value + " " : value);
 }
