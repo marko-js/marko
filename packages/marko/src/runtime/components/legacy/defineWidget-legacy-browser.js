@@ -162,6 +162,20 @@ module.exports = function defineWidget(def, renderer) {
   // convert legacy to modern
   var originalUpdate = proto.update;
   proto.update = function() {
+    if (this.___destroyed) {
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        complain(
+          "widget was updated after it was destroyed, if this widget is migrated to a modern component this will become a noop.",
+          {
+            location: this.___type
+          }
+        );
+      }
+
+      this.destroy = modernOnDestory;
+      this.___destroyed = false;
+    }
     this.___legacyExplicitUpdate = true;
     if (this.___currentLegacyBindEl) {
       this.onBeforeUpdate && this.onBeforeUpdate();
