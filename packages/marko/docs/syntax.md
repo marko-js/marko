@@ -400,7 +400,7 @@ import componentB from "<component-b>";
 > You can also switch between a normal HTML tag and a component:
 >
 > ```marko
-> import FancyButton from "./path/to/fancy-button.marko";
+> import FancyButton from "<fancy-button>";
 >
 > <${isFancy ? FancyButton : 'button'}>
 >     Button text

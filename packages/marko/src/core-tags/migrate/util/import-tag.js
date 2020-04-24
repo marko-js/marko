@@ -1,25 +1,38 @@
 const camelCase = require("camelcase");
 const nameReg = /\/([^/]+?)(?:\/index)?(?:\.[^/]+)?$/;
 
-module.exports = function importTag(baseImportPath, context) {
+module.exports = function importTag(importIdentifier, context) {
   const builder = context.builder;
   const migrateImports = (context._migrateImports = context._migrateImports || {
     identifiers: {},
     paths: {}
   });
-  const importPath = context.getRelativePath(baseImportPath);
-
-  if (migrateImports.paths[importPath]) {
-    return migrateImports.paths[importPath];
-  }
-
-  const match = nameReg.exec(importPath);
+  const isImportedAsTag = importIdentifier[0] === "<";
 
   // Create a camelcased tagName identifier based off of the matched file name.
   // Replace any invalid JS chars (We don't need to worry about reserved words because of camelcase).
-  const requestedTagName = camelCase((match && match[1]) || "Template", {
-    pascalCase: true
-  }).replace(/^[^$A-Z_]|[^0-9A-Z_$]/gi, "_");
+  const createTagName = fileName =>
+    camelCase(fileName, {
+      pascalCase: true
+    }).replace(/^[^$A-Z_]|[^0-9A-Z_$]/gi, "_");
+
+  const getIdentifierName = importIdentifier => {
+    let fileName;
+    if (isImportedAsTag) fileName = importIdentifier.slice(1, -1);
+    else {
+      const importPath = context.getRelativePath(importIdentifier);
+      const match = nameReg.exec(importPath);
+      fileName = (match && match[1]) || "template";
+    }
+    return createTagName(fileName);
+  };
+
+  const requestedTagName = getIdentifierName(importIdentifier);
+
+  if (migrateImports.paths[importIdentifier]) {
+    return migrateImports.paths[importIdentifier];
+  }
+
   const symbols = [];
   const walker = context.createWalker({
     enter(node) {
@@ -48,7 +61,7 @@ module.exports = function importTag(baseImportPath, context) {
 
   const importTag = builder.htmlElement("import");
   importTag.tagString = `import ${identifier} from ${JSON.stringify(
-    importPath
+    importIdentifier
   )}`;
 
   // Ensure imports are in order of use.
@@ -59,7 +72,7 @@ module.exports = function importTag(baseImportPath, context) {
   }
 
   migrateImports.identifiers[identifier] = true;
-  migrateImports.paths[importPath] = identifier;
+  migrateImports.paths[importIdentifier] = identifier;
   context._lastMigrateImport = importTag;
   return identifier;
 };
