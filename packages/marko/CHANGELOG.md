@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.2](https://github.com/marko-js/marko/compare/v4.21.1...v4.21.2) (2020-04-23)
+
+
+### Bug Fixes
+
+* split components under preserved root resetting ___isPreserved ([#1559](https://github.com/marko-js/marko/issues/1559)) ([03bb099](https://github.com/marko-js/marko/commit/03bb0991c571b182949d79ee0c42aee92f867f25))
+
 ### [4.21.1](https://github.com/marko-js/marko/compare/v4.21.0...v4.21.1) (2020-04-21)
 
 

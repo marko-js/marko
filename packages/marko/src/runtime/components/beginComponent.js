@@ -52,10 +52,10 @@ module.exports = function beginComponent(
   let runtimeId = out.global.runtimeId;
 
   componentDef.___renderBoundary = true;
+  componentDef.___parentPreserved = componentsContext.___isPreserved;
 
   if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
-    componentDef.___parentPreserved = componentsContext.___isPreserved;
     componentsContext.___isPreserved = false;
   }
 
