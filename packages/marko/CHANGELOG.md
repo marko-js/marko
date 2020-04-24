@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.5](https://github.com/marko-js/marko/compare/v4.21.4...v4.21.5) (2020-04-24)
+
+
+### Bug Fixes
+
+* regression with unquoted attribute with trailing slash ([#1561](https://github.com/marko-js/marko/issues/1561)) ([5c26b9b](https://github.com/marko-js/marko/commit/5c26b9b3ec6f5e8847ffe43e99f7593da806932a))
+
 ### [4.21.4](https://github.com/marko-js/marko/compare/v4.21.3...v4.21.4) (2020-04-24)
 
 ### [4.21.3](https://github.com/marko-js/marko/compare/v4.21.2...v4.21.3) (2020-04-24)
