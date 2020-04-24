@@ -573,7 +573,7 @@ var proto = (AsyncStream.prototype = {
 
   ___beginFragment: function(key, component, preserve) {
     if (preserve) {
-      this.write("<!F#" + escapeXmlString(key) + ">");
+      this.write("<!--F#" + escapeXmlString(key) + "-->");
     }
     if (this._elStack) {
       this._elStack.push(preserve);
@@ -585,7 +585,7 @@ var proto = (AsyncStream.prototype = {
   ___endFragment: function() {
     var preserve = this._elStack.pop();
     if (preserve) {
-      this.write("<!F/>");
+      this.write("<!--F/-->");
     }
   },
 
