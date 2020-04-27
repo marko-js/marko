@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.5](https://github.com/marko-js/marko/compare/v4.21.4...v4.21.5) (2020-04-24)
+
+
+### Bug Fixes
+
+* regression with unquoted attribute with trailing slash ([#1561](https://github.com/marko-js/marko/issues/1561)) ([5c26b9b](https://github.com/marko-js/marko/commit/5c26b9b3ec6f5e8847ffe43e99f7593da806932a))
+
+### [4.21.4](https://github.com/marko-js/marko/compare/v4.21.3...v4.21.4) (2020-04-24)
+
+### [4.21.3](https://github.com/marko-js/marko/compare/v4.21.2...v4.21.3) (2020-04-24)
+
+
+### Bug Fixes
+
+* allow legacy widgets to update after being destroyed ([#1560](https://github.com/marko-js/marko/issues/1560)) ([5bb800e](https://github.com/marko-js/marko/commit/5bb800e088455a03ccd951c9fcc582da062b499c))
+
+### [4.21.2](https://github.com/marko-js/marko/compare/v4.21.1...v4.21.2) (2020-04-23)
+
+
+### Bug Fixes
+
+* split components under preserved root resetting ___isPreserved ([#1559](https://github.com/marko-js/marko/issues/1559)) ([03bb099](https://github.com/marko-js/marko/commit/03bb0991c571b182949d79ee0c42aee92f867f25))
+
 ### [4.21.1](https://github.com/marko-js/marko/compare/v4.21.0...v4.21.1) (2020-04-21)
 
 
