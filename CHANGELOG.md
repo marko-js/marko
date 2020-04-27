@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.11](https://github.com/marko-js/marko/compare/v5.0.0-next.10...v5.0.0-next.11) (2020-04-27)
+
+
+### Bug Fixes
+
+* regression with unquoted attribute with trailing slash ([#1561](https://github.com/marko-js/marko/issues/1561)) ([128b68a](https://github.com/marko-js/marko/commit/128b68aefcec8d99b7c508e4cea2336207f574da))
+* split components under preserved root resetting ___isPreserved ([#1559](https://github.com/marko-js/marko/issues/1559)) ([dd9f7ac](https://github.com/marko-js/marko/commit/dd9f7aca848df88e46cf5087d932966eaaaa1681))
+
+
+
+
+
 # [5.0.0-next.10](https://github.com/marko-js/marko/compare/v5.0.0-next.9...v5.0.0-next.10) (2020-04-23)
 
 
