@@ -116,13 +116,10 @@ function hydrateEndEl() {
   parentElement = parentElement!.parentNode as Element | DocumentFragment;
 }
 
-export function beginFragment(fragment?: Fragment): Fragment {
-  if (!fragment) {
-    parentElement = parentElement || detachedContainer;
-    fragment = new Fragment();
-    fragment.___firstChild = text("");
-  }
-
+export function beginFragment(): Fragment {
+  parentElement = parentElement || detachedContainer;
+  const fragment = new Fragment();
+  fragment.___firstChild = text("");
   fragment.___parentFragment = parentFragment;
 
   if (parentFragment) {
