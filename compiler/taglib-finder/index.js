@@ -16,7 +16,7 @@
 'use strict';
 
 var taglibLoader = require('../taglib-loader');
-var nodePath = require('path');
+var nodePath = require('upath');
 var fs = require('fs');
 var lassoPackageRoot = require('lasso-package-root');
 var resolveFrom = require('resolve-from');
