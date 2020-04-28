@@ -1,9 +1,13 @@
 import { Computation } from "./signals";
 
 export class Fragment {
-  public ___firstChild: Node;
+  public ___firstRef: Fragment & { ___firstChild: Node };
+  public ___lastRef: Fragment & { ___lastChild: Node };
+  public ___nextNode?: Node;
+  public ___firstChild?: Node;
   public ___lastChild?: Node;
   public ___parentFragment?: Fragment;
+  public ___dom?: Node;
   public ___tracked: Set<Fragment | Computation>;
   constructor() {
     this.___tracked = new Set();
@@ -34,24 +38,24 @@ export function insertFragmentBefore(
   const domParent = parent || nextSibling!.parentNode!;
   withChildren(
     domParent,
-    fragment.___firstChild,
-    fragment.___lastChild!,
+    fragment.___firstRef.___firstChild,
+    fragment.___lastRef.___lastChild,
     nextSibling,
     domParent.insertBefore
   );
 }
 
 export function replaceFragment(current: Fragment, replacement: Fragment) {
-  insertFragmentBefore(null, replacement, current.___firstChild);
+  insertFragmentBefore(null, replacement, referenceStart(current));
   removeFragment(current);
 }
 
 export function removeFragment(fragment: Fragment) {
-  const domParent = fragment.___firstChild.parentNode!;
+  const domParent = referenceStart(fragment).parentNode!;
   withChildren(
     domParent,
-    fragment.___firstChild,
-    fragment.___lastChild!,
+    fragment.___firstRef.___firstChild,
+    fragment.___lastRef.___lastChild!,
     null,
     domParent.removeChild
   );
@@ -59,14 +63,14 @@ export function removeFragment(fragment: Fragment) {
 }
 
 export function referenceStart(fragment: Fragment) {
-  return fragment.___firstChild;
+  return fragment.___firstRef.___firstChild;
 }
 
 export function referenceAfter(fragment: Fragment) {
   return fragment.___lastChild!.nextSibling;
 }
 
-function withChildren(
+export function withChildren(
   parent: ParentNode,
   start: Node,
   stop: Node,

@@ -20,7 +20,8 @@ const {
   endBatch,
   dynamicKeys,
   init,
-  createRenderer
+  createRenderer,
+  createTemplate
 } = browser.require(
   "../../../dom/index"
 ) as typeof import("../../../dom/index");
@@ -34,6 +35,7 @@ interface Test {
   default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
     input: string[];
   };
+  html: string;
   FAILS_HYDRATE?: boolean;
 }
 
@@ -41,10 +43,10 @@ export default async function renderAndGetMutations(
   id: string,
   test: string
 ): Promise<string> {
-  const { inputs, default: renderer, wait, FAILS_HYDRATE } = browser.require(
+  const { inputs, html, default: renderer, wait, FAILS_HYDRATE } = browser.require(
     test
   ) as Test;
-  const render = createRenderer(renderer);
+  const render = createRenderer(renderer, createTemplate(html));
   const [firstInput] = inputs;
   const container = Object.assign(document.createElement("div"), {
     TEST_ROOT: true
@@ -76,45 +78,45 @@ export default async function renderAndGetMutations(
       await resolveAfter(null, wait);
     }
 
-    if (!FAILS_HYDRATE) {
-      const inputSignal = createSignal(firstInput);
-      (window as any).M$c = [[0, id, dynamicKeys(inputSignal, renderer.input)]];
-      container.innerHTML = `<!M$0>${initialHTML}<!M$0/>`;
-      container.insertBefore(document.createTextNode(""), container.firstChild);
-      tracker.dropUpdate();
-      init();
+    // if (!FAILS_HYDRATE) {
+    //   const inputSignal = createSignal(firstInput);
+    //   (window as any).M$c = [[0, id, dynamicKeys(inputSignal, renderer.input)]];
+    //   container.innerHTML = `<!M$0>${initialHTML}<!M$0/>`;
+    //   container.insertBefore(document.createTextNode(""), container.firstChild);
+    //   tracker.dropUpdate();
+    //   init();
 
-      tracker.logUpdate(firstInput);
-      const logs = tracker.getRawLogs();
-      logs[logs.length - 1] = "--- Hydrate ---\n" + logs[logs.length - 1];
+    //   tracker.logUpdate(firstInput);
+    //   const logs = tracker.getRawLogs();
+    //   logs[logs.length - 1] = "--- Hydrate ---\n" + logs[logs.length - 1];
 
-      // Hydrate should end up with the same html as client side render.
-      assert.equal(container.innerHTML, initialHTML);
+    //   // Hydrate should end up with the same html as client side render.
+    //   assert.equal(container.innerHTML, initialHTML);
 
-      // Run the same updates after hydrate and ensure the same mutations.
-      let resultIndex = 0;
-      for (const update of inputs.slice(1)) {
-        if (wait) {
-          await resolveAfter(null, wait);
-        }
-        if (typeof update === "function") {
-          update(container);
-        } else {
-          const batch = beginBatch();
-          set(inputSignal, update);
-          endBatch(batch);
-        }
+    //   // Run the same updates after hydrate and ensure the same mutations.
+    //   let resultIndex = 0;
+    //   for (const update of inputs.slice(1)) {
+    //     if (wait) {
+    //       await resolveAfter(null, wait);
+    //     }
+    //     if (typeof update === "function") {
+    //       update(container);
+    //     } else {
+    //       const batch = beginBatch();
+    //       set(inputSignal, update);
+    //       endBatch(batch);
+    //     }
 
-        assert.equal(
-          tracker.getUpdate(update),
-          tracker.getRawLogs()[++resultIndex]
-        );
-      }
+    //     assert.equal(
+    //       tracker.getUpdate(update),
+    //       tracker.getRawLogs()[++resultIndex]
+    //     );
+    //   }
 
-      if (wait) {
-        await resolveAfter(null, wait);
-      }
-    }
+    //   if (wait) {
+    //     await resolveAfter(null, wait);
+    //   }
+    // }
 
     return tracker.getLogs();
   } finally {

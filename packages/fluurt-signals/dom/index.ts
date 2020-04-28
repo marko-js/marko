@@ -31,7 +31,9 @@ export {
   prop,
   dynamicProp,
   dynamicProps,
-  createRenderer
+  createRenderer,
+  createTemplate,
+  empty,
 } from "./dom";
 
 export { on, dynamicOn, once } from "./event";

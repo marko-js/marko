@@ -1,6 +1,6 @@
-import { attr, dynamicAttr, register } from "../../../../dom/index";
+import { dynamicAttr, register } from "../../../../dom/index";
 
-import { beginEl, endEl } from "../../../../dom/dom";
+import { nextElementRef } from "../../../../dom/dom";
 
 export const inputs = [
   {
@@ -26,13 +26,12 @@ export const inputs = [
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    beginEl("div");
-    attr("a", "0");
+    nextElementRef();
     dynamicAttr("b", input.value);
-    endEl();
   }
 );
 
 renderer.input = ["value"];
 
+export const html = `<div a=0 #></div>`;
 export default renderer;

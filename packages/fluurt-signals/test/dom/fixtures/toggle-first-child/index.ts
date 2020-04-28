@@ -1,13 +1,6 @@
-import {
-  el,
-  MaybeSignal,
-  compute,
-  get,
-  conditional,
-  register
-} from "../../../../dom/index";
+import { compute, empty, conditional, register } from "../../../../dom/index";
 
-import { beginEl, dynamicText, endEl } from "../../../../dom/dom";
+import { withTemplate, createTemplate, dynamicText } from "../../../../dom/dom";
 
 export const inputs = [
   {
@@ -26,20 +19,17 @@ export const inputs = [
 
 const renderer = register(
   __dirname.split("/").pop()!,
-  (input: { value: MaybeSignal<string | undefined> }) => {
-    beginEl("div");
-    const branch0 = () => {
-      beginEl("span");
+  (input: { value: string | undefined }) => {
+    const branch0 = withTemplate(() => {
       dynamicText(input.value);
-      endEl();
-    };
-    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
-    el("span");
-    el("span");
-    endEl();
+    }, branch0_template);
+    conditional(compute(value => (value ? branch0 : empty), [input.value]));
   }
 );
 
+const branch0_template = createTemplate("<span><!#T></span>");
+
 renderer.input = ["value"];
 
+export const html = `<div><!#F><span></span><span></span></div>`;
 export default renderer;

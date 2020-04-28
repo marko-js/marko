@@ -13,13 +13,13 @@ import { reconcile } from "./reconcile";
 import {
   beginFragment,
   endFragment,
-  text,
-  currentNS,
-  setNS,
-  endNS,
-  parentElement
+  RendererWithTemplate,
+  withTemplate,
+  nextFragmentRef,
+  parentFragment
 } from "./dom";
 import { createPool } from "./utils";
+import { Renderer } from '../common/types';
 
 type ForIterationFragment<T> = Fragment & {
   itemSignal: Signal<T>;
@@ -29,20 +29,25 @@ type ForIterationFragment<T> = Fragment & {
 const mapPool = createPool(() => new Map());
 export function loopOf<T>(
   array: MaybeSignal<T[]>,
-  render: (
+  render: RendererWithTemplate<(
     item: MaybeSignal<T>,
     index: MaybeSignal<number>,
     all: typeof array
-  ) => void,
+  ) => void>,
   getKey: (item: T, index: number) => string
 ) {
   if (isSignal(array)) {
-    const rootElement = parentElement!;
-    const ns = currentNS;
+    const loopMarker = nextFragmentRef();
     let oldNodes: Map<string, Fragment> | undefined;
     let oldKeys: string[] = [];
     let pendingRender = true;
-    let afterMarker: Text;
+
+    if (parentFragment!.___firstRef.___firstChild === loopMarker) {
+      setRefGetter(parentFragment!.___firstRef, "___firstChild", () => oldNodes!.get(oldKeys[0])!.___firstRef.___firstChild);
+    }
+    if (parentFragment!.___lastRef.___lastChild === loopMarker) {
+      setRefGetter(parentFragment!.___lastRef, "___lastChild", () => oldNodes!.get(oldKeys[oldKeys.length - 1])!.___lastRef.___lastChild);
+    }
 
     const newNodes = createComputation(
       _array => {
@@ -57,15 +62,13 @@ export function loopOf<T>(
             oldNodes &&
             (oldNodes.get(key) as ForIterationFragment<typeof item>);
           if (!previousChildFragment) {
-            const childFragment = beginFragment() as ForIterationFragment<T>;
+            const childFragment = beginFragment(render.___template) as ForIterationFragment<T>;
             const itemSignal = (childFragment.itemSignal = createSignal(item));
             const indexSignal = (childFragment.indexSignal = createSignal(
               index
             ));
-            setNS(ns);
             render(itemSignal, indexSignal, _array);
-            endNS();
-            endFragment(childFragment);
+            endFragment();
             _newNodes.set(key, childFragment);
           } else {
             set(previousChildFragment.itemSignal, item);
@@ -83,19 +86,21 @@ export function loopOf<T>(
     createEffect(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
-
         if (oldNodes) {
           reconcile(
-            rootElement,
+            loopMarker.parentNode!,
             oldKeys,
             oldNodes,
             newKeys,
             _newNodes,
-            afterMarker
+            loopMarker
           );
           oldNodes.clear();
           mapPool.push(oldNodes);
         }
+
+        // TODO: we should be able to remove the loopMarker if the loop was not empty
+        // But we'll need to track the last fragment and ensure the marker is added if the loop becomes empty
 
         oldKeys = newKeys;
         oldNodes = _newNodes;
@@ -103,9 +108,6 @@ export function loopOf<T>(
       [newNodes],
       newNodes.___sid
     );
-
-    // TODO: we should be able to do this lazily, only if the loop is empty
-    afterMarker = text("");
 
     if (pendingRender) {
       oldNodes = mapPool.get();
@@ -121,20 +123,22 @@ export function loopOf<T>(
 
 export function loopIn<T>(
   object: MaybeSignal<Record<string, T>>,
-  render: (
+  render: RendererWithTemplate<(
     key: MaybeSignal<string>,
     value: MaybeSignal<T>,
     all: typeof object
-  ) => void
+  ) => void>
 ) {
   loopOf<string>(
     createComputation(_object => Object.keys(_object), [object]),
-    key =>
+    withTemplate(key =>
       render(
         get(key),
         createComputation(_object => _object[get(key)], [object]),
         object
       ),
+      render.___template
+    ),
     firstArgAsKey
   );
 }
@@ -143,7 +147,7 @@ export function loopFrom(
   from: MaybeSignal<number>,
   to: MaybeSignal<number>,
   step: MaybeSignal<number>,
-  render: (i: MaybeSignal<number>) => void
+  render: RendererWithTemplate<(i: MaybeSignal<number>) => void>
 ) {
   loopOf<number>(
     createComputation(
@@ -163,30 +167,30 @@ export function loopFrom(
   );
 }
 
-export function conditional(render: MaybeSignal<(() => void) | undefined>) {
+export function conditional(render: MaybeSignal<RendererWithTemplate<Renderer> | undefined>) {
   if (isSignal(render)) {
     let previousFragment: Fragment;
-    let pendingRender = true;
+
 
     const fragmentSignal = createComputation(
       // TODO: hoist out this function and compare benchmarks
-      (_render, ns) => {
-        const fragment = beginFragment();
+      (_render) => {
+        const fragment = beginFragment(_render!.___template);
         if (_render) {
-          setNS(ns);
           _render();
         }
-        pendingRender = false;
-        endFragment(fragment);
+        endFragment();
         return fragment;
       },
-      [render, currentNS] as const
+      [render] as const
     );
 
     createEffect(
       nextFragment => {
         if (previousFragment) {
           replaceFragment(previousFragment, nextFragment);
+        } else {
+
         }
 
         previousFragment = nextFragment;
@@ -194,10 +198,6 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
       [fragmentSignal] as const,
       (fragmentSignal as Signal).___sid // TODO: let's add a comment as to why this is needed.
     );
-
-    if (pendingRender) {
-      endFragment((previousFragment = beginFragment()));
-    }
   } else if (render) {
     render();
   }
@@ -205,4 +205,18 @@ export function conditional(render: MaybeSignal<(() => void) | undefined>) {
 
 function firstArgAsKey(key: unknown) {
   return key + "";
+}
+
+function setRefGetter(object, key, get) {
+  Object.defineProperty(object, key, {
+    get,
+    set(value) {
+      Object.defineProperty(object, key, {
+        value,
+        writable: true,
+        configurable: true
+      });
+    },
+    configurable: true
+  });
 }

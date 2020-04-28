@@ -1,6 +1,6 @@
 import { dynamicText, register } from "../../../../dom/index";
 
-import { html, dynamicHTML } from "../../../../dom/dom";
+import { dynamicHTML } from "../../../../dom/dom";
 
 export const inputs = [
   {
@@ -19,11 +19,11 @@ export const FAILS_HYDRATE = true;
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    html("<em>Testing</em> ");
     dynamicHTML(input.value);
   }
 );
 
 renderer.input = ["value"];
 
+export const html = "<em>Testing</em> <!#F>";
 export default renderer;

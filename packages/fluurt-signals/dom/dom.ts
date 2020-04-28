@@ -11,7 +11,7 @@ import {
   beginBatch,
   endBatch
 } from "./signals";
-import { Fragment, replaceFragment, removeFragment } from "./fragments";
+import { Fragment, removeFragment, withChildren } from "./fragments";
 import { conditional } from "./control-flow";
 
 type NAMESPACES =
@@ -22,6 +22,19 @@ export const TAG_NAMESPACES = {
   svg: "http://www.w3.org/2000/svg",
   math: "http://www.w3.org/1998/Math/MathML"
 } as const;
+
+const enum NodeType {
+  Element = 1,
+  Text = 3,
+  Comment = 8,
+  DocumentFragment = 11
+};
+
+const enum Markers {
+  Fragment = "#F",
+  Text = "#T",
+  Element = "#"
+};
 
 export class HydrateError extends Error {}
 export let parentFragment: Fragment | undefined;
@@ -34,27 +47,118 @@ export interface ComponentFragment<Input> extends DocumentFragment {
 }
 
 const doc = document;
-const detachedContainer = doc.createDocumentFragment();
+const parser = doc.createElement("template");
+const walker = document.createTreeWalker(
+  document.body,
+  129, // NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT
+  null,
+  false
+);
+
 let lastHydratedChild: Node | null = null;
 
-export function createRenderer<T extends Renderer>(renderer: T) {
+type Template = [Node | null, string];
+export type RendererWithTemplate<T extends Renderer> = T & { ___template: Template };
+
+export function withTemplate<T extends Renderer>(renderer: T, template: Template) {
+  (renderer as RendererWithTemplate<T>).___template = template;
+  return renderer as RendererWithTemplate<T>;
+}
+
+export function createTemplate(html: string): Template {
+  return [null, html];
+}
+
+export const empty = withTemplate(() => {}, createTemplate(""));
+
+function cloneTemplate(template: Template) {
+  let source = template[0];
+  if (source === null) {
+    parser.innerHTML = template[1];
+    const content = parser.content;
+
+    if ((source = content.firstChild) !== content.lastChild) {
+      source = doc.createDocumentFragment();
+      source.appendChild(content);
+    } else if (!source) {
+      source = doc.createTextNode("");
+    }
+
+    template[0] = source;
+  }
+  return source!.cloneNode(true);
+}
+
+export function nextFragmentRef() {
+  let current: Node | null = walker.currentNode;
+  let next: Node | null;
+
+  do {
+    next = walker.nextNode();
+    if (current.nodeValue === Markers.Fragment) {
+      return current as Comment;
+    }
+  } while (current = next);
+
+  throw new Error("Debug Error");
+}
+
+export function nextTextRef() {
+  let current: Node | null = walker.currentNode;
+  let next: Node | null;
+
+  do {
+    next = walker.nextNode();
+    if (current.nodeValue === Markers.Text) {
+      (current as ChildNode).replaceWith(current = doc.createTextNode(""));
+      return current as Text;
+    }
+  } while (current = next);
+
+  throw new Error("Debug Error");
+}
+
+export function nextElementRef() {
+  let current: Node | null = walker.currentNode;
+  let next: Node | null;
+
+  do {
+    next = walker.nextNode();
+    if (current.nodeType === NodeType.Element && (current as Element).hasAttribute(Markers.Element)) {
+      (current as Element).removeAttribute(Markers.Element);
+      return current as Element;
+    }
+  } while (current = next);
+
+  throw new Error("Debug Error");
+}
+
+export function createRenderer<T extends Renderer>(renderer: T, template: Template) {
   type Input = Raw<Parameters<T>[0]>;
   return (input: Input) => {
-    const inputSignal = dynamicKeys(createSignal(input), renderer.input!);
-    const container = (parentElement = doc.createDocumentFragment()) as ComponentFragment<
-      Input
-    >;
+    let container: ComponentFragment<Input> | null = null;
+    let asyncPlaceholder: Text;
 
-    const placeholderFragment = beginFragment();
-    endFragment(placeholderFragment);
-    parentElement = null;
-
+    const inputSignal = dynamicKeys(createSignal(input) as any, renderer.input!);
     const init = beginBatch();
-    const fragment = beginFragment();
-    createEffect(() => replaceFragment(placeholderFragment, fragment), []);
+    const fragment = beginFragment(template);
+    
+    createEffect(() => {
+      if (container) {
+        asyncPlaceholder.replaceWith(fragment.___dom!);
+      } else {
+        container = fragment.___dom as ComponentFragment<Input>;
+      }
+    }, []);
+
     renderer(inputSignal);
-    endFragment(fragment);
+    endFragment();
     endBatch(init);
+
+    if (!container) {
+      container = doc.createDocumentFragment() as ComponentFragment<Input>;
+      container.appendChild(asyncPlaceholder = doc.createTextNode(""));
+    }
 
     container.rerender = ((newInput: Input) => {
       const update = beginBatch();
@@ -116,22 +220,39 @@ function hydrateEndEl() {
   parentElement = parentElement!.parentNode as Element | DocumentFragment;
 }
 
-export function beginFragment(): Fragment {
-  parentElement = parentElement || detachedContainer;
+export function beginFragment(template: Template): Fragment {
   const fragment = new Fragment();
-  fragment.___firstChild = text("");
-  fragment.___parentFragment = parentFragment;
+  const node = cloneTemplate(template);
+  const isFragment = node.nodeType === NodeType.DocumentFragment;
+  let firstRef: Fragment;
+  let lastRef: Fragment;
 
   if (parentFragment) {
+    const targetNode = nextFragmentRef();
+    firstRef = parentFragment.___firstRef.___firstChild === targetNode ? parentFragment.___firstRef : fragment;
+    lastRef = parentFragment.___lastRef.___lastChild === targetNode ? parentFragment.___lastRef : fragment;
+    fragment.___parentFragment = parentFragment;
+    fragment.___nextNode = walker.currentNode;
     parentFragment.___tracked.add(fragment);
+    targetNode.replaceWith(node);
+  } else {
+    fragment.___dom = node;
+    firstRef = lastRef = fragment;
   }
+
+  fragment.___firstRef = firstRef as Fragment & { ___firstChild: Node };
+  fragment.___lastRef = lastRef as Fragment & { ___lastChild: Node };
+  firstRef.___firstChild = walker.currentNode = isFragment ? node.firstChild! : node;
+  lastRef.___lastChild = isFragment ? node.lastChild! : node;
 
   return (parentFragment = fragment);
 }
 
-export function endFragment(fragment: Fragment) {
-  fragment.___lastChild = text("");
-  parentFragment = fragment.___parentFragment;
+export function endFragment() {
+  if (parentFragment!.___nextNode) {
+    walker.currentNode = parentFragment!.___nextNode;
+  }
+  parentFragment = parentFragment!.___parentFragment;
 }
 
 export let text: typeof originalText | typeof hydrateText = originalText;
@@ -182,7 +303,7 @@ function hydrateText(value: string) {
 export function dynamicText(value: MaybeSignal<unknown>) {
   let current: string;
   const data = createComputation(_value => normalizeTextData(_value), [value]);
-  const textNode = text((current = get(data) || ""));
+  const textNode = nextTextRef();
   createEffect(
     (_textNode, _data) => {
       if (current !== _data) {
@@ -212,7 +333,30 @@ export function html(value: string) {
 }
 
 export function dynamicHTML(value: MaybeSignal<string>) {
-  conditional(createComputation(_value => () => html(_value), [value]));
+  const emptyMarker = nextFragmentRef();
+  let firstChild: Node = emptyMarker;
+  let lastChild: Node = emptyMarker;
+
+  createEffect(html => {
+    parser.innerHTML = html;
+    const content = parser.content;
+    const parent = firstChild.parentNode!;
+    const oldFirstChild = firstChild;
+    const oldLastChild = lastChild;
+    if (!content.firstChild) {
+      content.appendChild(emptyMarker);
+    }
+    firstChild = content.firstChild!;
+    lastChild = content.lastChild!;
+    parent.insertBefore(content, oldFirstChild);
+    withChildren(
+      parent,
+      oldFirstChild,
+      oldLastChild,
+      null,
+      parent.removeChild
+    );
+  }, [value]);
 }
 
 export function attr(name: string, value: unknown) {
@@ -220,7 +364,7 @@ export function attr(name: string, value: unknown) {
 }
 
 export function dynamicAttr(name: string, value: unknown) {
-  const elNode = parentElement as Element;
+  const elNode = walker.currentNode as Element;
   const data = createComputation(_value => normalizeAttrValue(_value), [value]);
   createEffect(setAttr, [elNode, name, data] as const);
 }
@@ -288,7 +432,7 @@ export function dynamicAttrs(
       }
       previousAttrs = _attrs;
     },
-    [parentElement as Element, attrs] as const
+    [walker.currentNode as Element, attrs] as const
   );
 }
 

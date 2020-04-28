@@ -1,6 +1,6 @@
-import { dynamicText, register } from "../../../../dom/index";
+import { register } from "../../../../dom/index";
 
-import { text } from "../../../../dom/dom";
+import { dynamicText } from "../../../../dom/dom";
 
 export const inputs = [
   {
@@ -17,11 +17,11 @@ export const inputs = [
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    text("Static ");
     dynamicText(input.value);
   }
 );
 
 renderer.input = ["value"];
 
+export const html = "Static <!#T>";
 export default renderer;

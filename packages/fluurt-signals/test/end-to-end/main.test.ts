@@ -96,11 +96,11 @@ describe("E2E", function() {
           const serverTest = require(serverFile);
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
-          const { createRenderer: createBrowserRenderer } = browser.require(
+          const { createRenderer: createBrowserRenderer, createTemplate } = browser.require(
             "../../dom/index"
           ) as typeof import("../../dom/index");
           const browserTest = browser.require(browserFile);
-          const render = createBrowserRenderer(browserTest.default);
+          const render = createBrowserRenderer(browserTest.default, createTemplate(browserTest.html));
           const container = Object.assign(document.createElement("div"), {
             TEST_ROOT: true
           });
