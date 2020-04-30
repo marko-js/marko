@@ -12,14 +12,14 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   out.w("<div><input" +
-    marko_dataMarko({
+    marko_dataMarko(out, __component, {
       noupdate: [
         "value"
       ]
     }) +
     marko_attr("value", input.defaultValue) +
     "><input" +
-    marko_dataMarko({
+    marko_dataMarko(out, __component, {
       noupdate: [
         "value"
       ]
