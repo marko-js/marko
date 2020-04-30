@@ -12,7 +12,7 @@ function render(input, out, __component, component, state) {
   var data = input;
 
   out.w("<input" +
-    marko_dataMarko({
+    marko_dataMarko(out, __component, {
       noupdate: [
         "value"
       ]
