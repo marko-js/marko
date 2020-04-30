@@ -6,13 +6,12 @@ var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
 
-module.exports = function dataMarko(props, key, componentDef) {
+module.exports = function dataMarko(out, componentDef, props, key) {
   var result = "";
   var willNotRerender =
-    !componentDef ||
+    out.___components.___isPreserved ||
     (componentDef.___renderBoundary &&
-      (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0) ||
-    componentDef.___componentsContext.___isPreserved;
+      (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0);
 
   if (willNotRerender) {
     if (props) {

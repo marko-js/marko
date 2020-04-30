@@ -8,7 +8,7 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "jmf6k77l",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<input${_marko_props({
+  out.w(`<input${_marko_props(out, _component, {
     noupdate: ["value"]
   })}${_marko_attr("value", input.defaultValue)}>`);
 }, {

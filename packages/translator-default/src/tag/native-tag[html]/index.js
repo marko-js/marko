@@ -77,7 +77,10 @@ export default function(path) {
     const needsDataMarkoAttr = isSplit || isImplicit || isPreserved(path);
 
     if (needsDataMarkoAttr) {
-      const dataMarkoArgs = [];
+      const dataMarkoArgs = [
+        t.identifier("out"),
+        hub._componentDefIdentifier
+      ];
 
       if (tagProperties.length) {
         // TODO we should pre evaluate this if it is static.
@@ -85,14 +88,14 @@ export default function(path) {
       }
 
       if (hasUserKey(path)) {
-        if (dataMarkoArgs.length === 0) {
-          dataMarkoArgs.push(t.nullLiteral());
+        if (dataMarkoArgs.length === 2) {
+          dataMarkoArgs.push(t.numericLiteral(0));
         }
 
         dataMarkoArgs.push(path.get("key").node, hub._componentDefIdentifier);
       }
 
-      if (dataMarkoArgs.length) {
+      if (dataMarkoArgs.length > 2) {
         dataMarko = t.callExpression(
           hub.importDefault(
             path,
