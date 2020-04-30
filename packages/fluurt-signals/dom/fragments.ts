@@ -4,8 +4,8 @@ export class Fragment {
   public ___firstRef: Fragment & { ___firstChild: Node };
   public ___lastRef: Fragment & { ___lastChild: Node };
   public ___nextNode?: Node;
-  public ___firstChild?: Node;
-  public ___lastChild?: Node;
+  public ___firstChild: Node;
+  public ___lastChild: Node;
   public ___parentFragment?: Fragment;
   public ___dom?: Node;
   public ___tracked: Set<Fragment | Computation>;
@@ -43,6 +43,7 @@ export function insertFragmentBefore(
     nextSibling,
     domParent.insertBefore
   );
+  fragment.___parentFragment!.___tracked.add(fragment);
 }
 
 export function replaceFragment(current: Fragment, replacement: Fragment) {
@@ -60,6 +61,9 @@ export function removeFragment(fragment: Fragment) {
     domParent.removeChild
   );
   fragment.___cleanup();
+  if (fragment.___parentFragment) {
+    fragment.___parentFragment.___tracked.delete(fragment);
+  }
 }
 
 export function referenceStart(fragment: Fragment) {

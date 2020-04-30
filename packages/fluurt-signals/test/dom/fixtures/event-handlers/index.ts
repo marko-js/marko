@@ -6,7 +6,7 @@ import {
   register
 } from "../../../../dom/index";
 
-import { beginEl, endEl, dynamicText } from "../../../../dom/dom";
+import { dynamicText, nextElementRef } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -17,7 +17,7 @@ export const inputs = [{}, click, click, click] as const;
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
-    beginEl("button");
+    nextElementRef();
     const clickCount = createSignal(0);
     dynamicOn(
       "click",
@@ -32,10 +32,10 @@ const renderer = register(
       )
     );
     dynamicText(clickCount);
-    endEl();
   }
 );
 
 renderer.input = ["value"];
 
+export const html = `<button #><!#T></button>`;
 export default renderer;

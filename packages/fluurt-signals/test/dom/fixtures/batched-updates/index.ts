@@ -5,7 +5,7 @@ import {
   set,
   register
 } from "../../../../dom/index";
-import { dynamicText, beginEl, endEl } from "../../../../dom/dom";
+import { dynamicText, nextElementRef } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -18,16 +18,16 @@ const renderer = register(
   (input: (typeof inputs)[0]) => {
     const a = createSignal(0);
     const b = createSignal(0);
-    beginEl("button");
+    nextElementRef();
     once("click", () => {
       set(a, 1);
       set(b, 1);
     });
     dynamicText(compute((_a, _b) => _a + _b, [a, b]));
-    endEl();
   }
 );
 
 renderer.input = ["value"];
 
+export const html = `<button #><!#T></button>`;
 export default renderer;

@@ -39,9 +39,8 @@ export default function snapshot(
     } catch (err) {
       err.snapshot = true;
       err.name = err.name.replace(" [ERR_ASSERTION]", "");
-      err.message = `${path.relative(process.cwd(), actualFile)}\n\n${
-        err.message
-      }`;
+      err.stack = "";
+      err.message = path.relative(process.cwd(), actualFile);
 
       throw originalError || err;
     }

@@ -7,7 +7,7 @@ import {
   register
 } from "../../../../dom/index";
 
-import { dynamicText, beginEl, endEl } from "../../../../dom/dom";
+import { dynamicText, nextElementRef, createTemplate, withTemplate, empty } from "../../../../dom/dom";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -20,22 +20,21 @@ const renderer = register(
   (input: (typeof inputs)[0]) => {
     const show = createSignal(true);
     const message = createSignal("hi");
-
-    beginEl("button");
+    nextElementRef();
     once("click", () => {
       set(message, "bye");
       set(show, false);
     });
-    endEl();
-    const branch0 = () => {
-      beginEl("span");
+    const branch0 = withTemplate(() => {
       dynamicText(message);
-      endEl();
-    };
-    conditional(compute(_show => (_show ? branch0 : undefined), [show]));
+    }, branch0_template);
+    conditional(compute(_show => (_show ? branch0 : empty), [show]));
   }
 );
 
+const branch0_template = createTemplate(`<span><!#T></span>`);
+
 renderer.input = ["value"];
 
+export const html = `<button #></button><!#F>`
 export default renderer;

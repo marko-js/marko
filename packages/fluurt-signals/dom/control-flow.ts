@@ -8,7 +8,7 @@ import {
   set,
   MaybeSignal
 } from "./signals";
-import { Fragment, replaceFragment } from "./fragments";
+import { Fragment, replaceFragment, insertFragmentBefore, removeFragment } from "./fragments";
 import { reconcile } from "./reconcile";
 import {
   beginFragment,
@@ -38,14 +38,14 @@ export function loopOf<T>(
 ) {
   if (isSignal(array)) {
     const loopMarker = nextFragmentRef();
-    let oldNodes: Map<string, Fragment> | undefined;
+    const rootFragment = parentFragment;
+    let oldNodes: Map<string, Fragment> = mapPool.get();
     let oldKeys: string[] = [];
-    let pendingRender = true;
 
-    if (parentFragment!.___firstRef.___firstChild === loopMarker) {
+    if (parentFragment!.___firstChild === loopMarker) {
       setRefGetter(parentFragment!.___firstRef, "___firstChild", () => oldNodes!.get(oldKeys[0])!.___firstRef.___firstChild);
     }
-    if (parentFragment!.___lastRef.___lastChild === loopMarker) {
+    if (parentFragment!.___lastChild === loopMarker) {
       setRefGetter(parentFragment!.___lastRef, "___lastChild", () => oldNodes!.get(oldKeys[oldKeys.length - 1])!.___lastRef.___lastChild);
     }
 
@@ -54,15 +54,11 @@ export function loopOf<T>(
         let index = 0;
         const _newNodes = mapPool.get();
 
-        pendingRender = false;
-
         for (const item of _array) {
           const key = getKey ? getKey(item, index) : "" + index;
-          const previousChildFragment =
-            oldNodes &&
-            (oldNodes.get(key) as ForIterationFragment<typeof item>);
+          const previousChildFragment = oldNodes.get(key) as ForIterationFragment<typeof item>;
           if (!previousChildFragment) {
-            const childFragment = beginFragment(render.___template) as ForIterationFragment<T>;
+            const childFragment = beginFragment(render.___template, rootFragment) as ForIterationFragment<T>;
             const itemSignal = (childFragment.itemSignal = createSignal(item));
             const indexSignal = (childFragment.indexSignal = createSignal(
               index
@@ -86,18 +82,16 @@ export function loopOf<T>(
     createEffect(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
-        if (oldNodes) {
-          reconcile(
-            loopMarker.parentNode!,
-            oldKeys,
-            oldNodes,
-            newKeys,
-            _newNodes,
-            loopMarker
-          );
-          oldNodes.clear();
-          mapPool.push(oldNodes);
-        }
+        reconcile(
+          loopMarker.parentNode!,
+          oldKeys,
+          oldNodes,
+          newKeys,
+          _newNodes,
+          loopMarker
+        );
+        oldNodes.clear();
+        mapPool.push(oldNodes);
 
         // TODO: we should be able to remove the loopMarker if the loop was not empty
         // But we'll need to track the last fragment and ensure the marker is added if the loop becomes empty
@@ -108,10 +102,6 @@ export function loopOf<T>(
       [newNodes],
       newNodes.___sid
     );
-
-    if (pendingRender) {
-      oldNodes = mapPool.get();
-    }
   } else {
     let index = 0;
     for (const item of array) {
@@ -170,12 +160,15 @@ export function loopFrom(
 export function conditional(render: MaybeSignal<RendererWithTemplate<Renderer> | undefined>) {
   if (isSignal(render)) {
     let previousFragment: Fragment;
-
+    const marker = nextFragmentRef();
+    const rootFragment = parentFragment!;
+    const trackFirstRef = rootFragment.___firstRef.___firstChild === marker;
+    const trackLastRef = rootFragment.___lastRef.___lastChild === marker;
 
     const fragmentSignal = createComputation(
       // TODO: hoist out this function and compare benchmarks
       (_render) => {
-        const fragment = beginFragment(_render!.___template);
+        const fragment = beginFragment(_render!.___template, rootFragment);
         if (_render) {
           _render();
         }
@@ -187,10 +180,20 @@ export function conditional(render: MaybeSignal<RendererWithTemplate<Renderer> |
 
     createEffect(
       nextFragment => {
-        if (previousFragment) {
-          replaceFragment(previousFragment, nextFragment);
-        } else {
+        insertFragmentBefore(null, nextFragment, marker);
 
+        if (previousFragment) {
+          removeFragment(previousFragment);
+        }
+
+        if (trackFirstRef) {
+          nextFragment.___firstRef = rootFragment.___firstRef;
+          nextFragment.___firstRef.___firstChild = nextFragment.___firstChild;
+        }
+
+        if (trackLastRef) {
+          nextFragment.___lastRef = rootFragment.___lastRef;
+          nextFragment.___lastRef.___lastChild = nextFragment.___lastChild;
         }
 
         previousFragment = nextFragment;

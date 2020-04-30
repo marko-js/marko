@@ -1,5 +1,4 @@
 import { dynamicText, register, computeAsync } from "../../../../dom/index";
-import { text } from "../../../../dom/dom";
 import { resolveAfter } from "../../../utils/resolve";
 
 export const wait = 2;
@@ -31,4 +30,5 @@ const renderer = register(
 
 renderer.input = ["sync", "async"];
 
+export const html = `<!#T><!#T>`;
 export default renderer;

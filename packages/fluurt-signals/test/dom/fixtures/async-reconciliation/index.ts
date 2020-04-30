@@ -10,6 +10,7 @@ import {
   endEl
 } from "../../../../dom/index";
 import { resolveAfter } from "../../../utils/resolve";
+import { nextElementRef } from '../../../../dom/dom';
 
 const clickA = (container: Element) => {
   (container.querySelector("#a") as HTMLElement).click();
@@ -33,20 +34,16 @@ const renderer = register(
   (input: (typeof inputs)[0]) => {
     const a = createSignal(0);
     const b = createSignal(0);
-    beginEl("button");
-    attr("id", "a");
+    nextElementRef();
     on("click", () => {
       set(a, 1);
     });
     dynamicText(a);
-    endEl();
-    beginEl("button");
-    attr("id", "b");
+    nextElementRef();
     on("click", () => {
       set(b, 2);
     });
     dynamicText(b);
-    endEl();
     dynamicText(input.label);
     dynamicText(
       computeAsync(async (_a, _b) => resolveAfter(_a + _b, _a || _b ? 3 : 1), [
@@ -59,4 +56,5 @@ const renderer = register(
 
 renderer.input = ["label"];
 
+export const html = `<button id=a #><!#T></button><button id=b #><!#T></button><!#T><!#T>`;
 export default renderer;

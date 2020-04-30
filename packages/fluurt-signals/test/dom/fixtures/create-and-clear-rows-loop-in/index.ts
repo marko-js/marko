@@ -1,6 +1,6 @@
 import { loopIn, compute, get, register } from "../../../../dom/index";
 
-import { beginEl, dynamicText, endEl } from "../../../../dom/dom";
+import { withTemplate, createTemplate, dynamicText } from "../../../../dom/dom";
 
 export const inputs = [
   {
@@ -25,14 +25,15 @@ export const inputs = [
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: { children: { [x: string]: string } }) => {
-    beginEl("div");
-    loopIn(input.children, (_, text) => {
+    loopIn(input.children, withTemplate((_, text) => {
       dynamicText(text);
-    });
-    endEl();
+    }, loop_template));
   }
 );
 
+const loop_template = createTemplate("<!#T>");
+
 renderer.input = ["children"];
 
+export const html = `<div><!#F></div>`;
 export default renderer;

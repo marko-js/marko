@@ -1,15 +1,13 @@
 import { attr, dynamicTag, register } from "../../../../dom/index";
 
-import { beginEl, endEl, text } from "../../../../dom/dom";
+import { beginEl, endEl, text, withTemplate, createTemplate, dynamicAttr, nextElementRef } from "../../../../dom/dom";
 
 export const inputs = [
   {
     tag: "span"
   },
   {
-    tag: () => {
-      text("Hello");
-    }
+    tag: withTemplate(() => {}, createTemplate("Hello"))
   },
   {
     tag: "span"
@@ -18,27 +16,27 @@ export const inputs = [
     tag: "a"
   },
   {
-    tag: Object.assign(
+    tag: withTemplate(Object.assign(
       (input: { a: 1; renderBody: () => void }) => {
-        beginEl("div");
-        attr("a", input.a);
+        nextElementRef();
+        dynamicAttr("a", input.a);
         input.renderBody();
-        endEl();
       },
       { input: ["a", "renderBody"] }
-    )
+    ), createTemplate(`<div #><!#F></div>`))
   }
 ];
 
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    dynamicTag(input.tag, { a: 1 }, () => {
-      text("BODY");
-    });
+    dynamicTag(input.tag, { a: 1 }, withTemplate(() => {}, renderBody_template));
   }
 );
 
+const renderBody_template = createTemplate("BODY");
+
 renderer.input = ["tag"];
 
+export const html = `<!#F>`;
 export default renderer;

@@ -176,9 +176,7 @@ export function createComputation<V, T extends Deps>(
         deps
       ) as SyncComputation<V, T>;
       updateSignal(computation);
-      if (parentFragment) {
-        parentFragment.___tracked.add(computation);
-      }
+      parentFragment!.___tracked.add(computation);
       return computation;
     }
   }
@@ -213,9 +211,7 @@ export function createEffect<T extends Deps>(
   if (id) {
     effect.___sid = id;
   }
-  if (parentFragment) {
-    parentFragment.___tracked.add(effect);
-  }
+  parentFragment!.___tracked.add(effect);
   insertIntoBatch(batch.___effects, 0, effect);
 }
 

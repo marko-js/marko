@@ -1,5 +1,4 @@
 import { dynamicText, register, computeAsync } from "../../../../dom/index";
-import { text } from "../../../../dom/dom";
 import { resolveAfter } from "../../../utils/resolve";
 
 export const wait = 2;
@@ -22,7 +21,6 @@ export const inputs = [
 const renderer = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    text("Static ");
     dynamicText(
       computeAsync(async (value, delay) => await resolveAfter(value, delay), [
         input.value,
@@ -34,4 +32,5 @@ const renderer = register(
 
 renderer.input = ["value", "delay"];
 
+export const html = `Static <!#T>`;
 export default renderer;
