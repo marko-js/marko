@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.6](https://github.com/marko-js/marko/compare/v4.21.5...v4.21.6) (2020-04-30)
+
+
+### Bug Fixes
+
+* issue with data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/issues/1564)) ([211a8a3](https://github.com/marko-js/marko/commit/211a8a334b58af035347cb4f91f4e6a625c35d82))
+
 ### [4.21.5](https://github.com/marko-js/marko/compare/v4.21.4...v4.21.5) (2020-04-24)
 
 
