@@ -390,8 +390,8 @@ _HTML Output:_
 Instead of just strings, the dynamic tagname can also be a component:
 
 ```marko
-import componentA from "./path/to/component-a.marko";
-import componentB from "./path/to/component-b.marko";
+import componentA from "<component-a>";
+import componentB from "<component-b>";
 
 <${useA ? componentA : componentB}/>
 ```
@@ -400,7 +400,7 @@ import componentB from "./path/to/component-b.marko";
 > You can also switch between a normal HTML tag and a component:
 >
 > ```marko
-> import FancyButton from "./path/to/fancy-button.marko";
+> import FancyButton from "<fancy-button>";
 >
 > <${isFancy ? FancyButton : 'button'}>
 >     Button text
