@@ -2,6 +2,7 @@
   "taglib-id": "marko-default-core",
   "<import>": {
     "node-factory": "./parse-import.js",
+    "code-generator": "./translate-import.js",
     "parse-options": {
       "rootOnly": true,
       "rawOpenTag": true,
