@@ -1,4 +1,6 @@
 import { normalizeTemplateString } from "@marko/babel-utils";
+import { enter } from "./util/plugin-hooks";
+import { types as t } from "@marko/babel-types";
 
 export const visitor = {
   ExpressionStatement(path) {
@@ -21,6 +23,17 @@ export const visitor = {
       path
         .get("expression.arguments.0")
         .replaceWith(normalizeTemplateString(quasis, ...expressions));
+    }
+  },
+  ImportDeclaration: {
+    enter(path) {
+      const { hub } = path;
+      const importDef = hub.lookup.getTag("import");
+
+      if (importDef && importDef.codeGeneratorModulePath) {
+        const codeGenerator = require(importDef.codeGeneratorModulePath);
+        enter(codeGenerator, path, t);
+      }
     }
   }
 };
