@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.7](https://github.com/marko-js/marko/compare/v4.21.6...v4.21.7) (2020-05-04)
+
+
+### Bug Fixes
+
+* components not always initializing inside client-reorder await ([#1566](https://github.com/marko-js/marko/issues/1566)) ([28b3b7f](https://github.com/marko-js/marko/commit/28b3b7f728b9aa42e035e00b37e811dbcce1c79a))
+
 ### [4.21.6](https://github.com/marko-js/marko/compare/v4.21.5...v4.21.6) (2020-04-30)
 
 
