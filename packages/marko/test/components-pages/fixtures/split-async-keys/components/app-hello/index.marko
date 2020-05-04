@@ -1,7 +1,22 @@
-$ var promise = new Promise(resolve => setTimeout(resolve, 100));
-<await(promise) client-reorder>
+<div key="div0"/>
+<app-child key="child0"/>
+
+<await(new Promise(resolve => setTimeout(resolve, 100))) client-reorder>
     <@then>
-        <div key="div"/>
-        <app-child key="child"/>
+        <div key="div1"/>
+        <app-child key="child1"/>
+
+        <await(new Promise(resolve => setTimeout(resolve, 200)))>
+            <@then>
+                <div key="div2"/>
+                <app-child key="child2"/>
+            </@then>
+        </await>
+
+        <div key="div3"/>
+        <app-child key="child3"/>
     </@then>
 </await>
+
+<div key="div4"/>
+<app-child key="child4"/>
