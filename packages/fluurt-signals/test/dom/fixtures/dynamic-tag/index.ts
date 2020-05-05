@@ -1,13 +1,21 @@
-import { attr, dynamicTag, register } from "../../../../dom/index";
-
-import { beginEl, endEl, text, withTemplate, createTemplate, dynamicAttr, nextElementRef } from "../../../../dom/dom";
+import {
+  dynamicTag,
+  walk,
+  attr,
+  register,
+  render,
+  createRenderer,
+  createRenderFn
+} from "../../../../dom/index";
+import { get, over, inside, replace } from "../../utils/walks";
+import { Renderer } from "../../../../dom/dom";
 
 export const inputs = [
   {
     tag: "span"
   },
   {
-    tag: withTemplate(() => {}, createTemplate("Hello"))
+    tag: createRenderer("Hello")
   },
   {
     tag: "span"
@@ -16,27 +24,29 @@ export const inputs = [
     tag: "a"
   },
   {
-    tag: withTemplate(Object.assign(
-      (input: { a: 1; renderBody: () => void }) => {
-        nextElementRef();
-        dynamicAttr("a", input.a);
-        input.renderBody();
-      },
-      { input: ["a", "renderBody"] }
-    ), createTemplate(`<div #><!#F></div>`))
+    tag: createRenderer(
+      "<div></div>",
+      get + inside + over(1),
+      ["a", "renderBody"],
+      (input: { a: 1; renderBody: Renderer }) => {
+        walk();
+        attr("a", input.a);
+        render(input.renderBody);
+      }
+    )
   }
 ];
 
-const renderer = register(
+export const template = `<!>`;
+export const walks = replace + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    dynamicTag(input.tag, { a: 1 }, withTemplate(() => {}, renderBody_template));
+    dynamicTag(input.tag, { a: 1, renderBody }, renderBody);
   }
 );
 
-const renderBody_template = createTemplate("BODY");
+const renderBody_template = "BODY";
+const renderBody = createRenderer(renderBody_template);
 
-renderer.input = ["tag"];
-
-export const html = `<!#F>`;
-export default renderer;
+export default createRenderFn(template, walks, ["tag"], hydrate);

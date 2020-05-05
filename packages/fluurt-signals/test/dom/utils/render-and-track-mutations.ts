@@ -20,8 +20,7 @@ const {
   endBatch,
   dynamicKeys,
   init,
-  createRenderer,
-  createTemplate
+  createRenderFn
 } = browser.require(
   "../../../dom/index"
 ) as typeof import("../../../dom/index");
@@ -32,9 +31,7 @@ interface Test {
     Record<string, unknown>,
     ...Array<Record<string, unknown> | ((container: Element) => void)>
   ];
-  default: ((input: MaybeSignal<Record<string, unknown>>) => void) & {
-    input: string[];
-  };
+  default: ReturnType<typeof createRenderFn>;
   html: string;
   FAILS_HYDRATE?: boolean;
 }
@@ -43,10 +40,9 @@ export default async function renderAndGetMutations(
   id: string,
   test: string
 ): Promise<string> {
-  const { inputs, html, default: renderer, wait, FAILS_HYDRATE } = browser.require(
+  const { default: render, inputs, wait, FAILS_HYDRATE } = browser.require(
     test
   ) as Test;
-  const render = createRenderer(renderer, createTemplate(html));
   const [firstInput] = inputs;
   const container = Object.assign(document.createElement("div"), {
     TEST_ROOT: true

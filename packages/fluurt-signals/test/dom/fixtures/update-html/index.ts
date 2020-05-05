@@ -1,6 +1,5 @@
-import { dynamicText, register } from "../../../../dom/index";
-
-import { dynamicHTML } from "../../../../dom/dom";
+import { html, register, createRenderFn } from "../../../../dom/index";
+import { over, after } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -16,14 +15,14 @@ export const inputs = [
 
 export const FAILS_HYDRATE = true;
 
-const renderer = register(
+// <em>Testing</em> $!{input.value}
+export const template = "<em>Testing</em> ";
+export const walks = over(1) + after + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    dynamicHTML(input.value);
+    html(input.value);
   }
 );
 
-renderer.input = ["value"];
-
-export const html = "<em>Testing</em> <!#F>";
-export default renderer;
+export default createRenderFn(template, walks, ["value"], hydrate);

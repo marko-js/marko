@@ -7,7 +7,7 @@ import {
   createEffect,
   set
 } from "./signals";
-import { lastElementRef } from "./dom";
+import { walker } from "./walker";
 const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {
@@ -26,7 +26,7 @@ export function on<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: H | Unset) {
-  const el = lastElementRef;
+  const el = walker.currentNode as Element;
   const delegated = doc.___delegated || (doc.___delegated = {});
   if (!delegated[type]) {
     delegated[type] = 1;
@@ -40,7 +40,7 @@ export function dynamicOn<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(type: T, handler: MaybeSignal<H | Unset>) {
-  const el = lastElementRef;
+  const el = walker.currentNode as Element;
   const key = getKey(type);
   on(type, null);
   createEffect(_handler => (el[key] = _handler), [handler]);

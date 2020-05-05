@@ -1,46 +1,42 @@
-import { Renderer } from "../common/types";
 import {
   MaybeSignal,
   Raw,
   createSignal,
   createComputation,
   createEffect,
-  get,
   set,
   dynamicKeys,
   beginBatch,
   endBatch
 } from "./signals";
-import { Fragment, removeFragment, withChildren } from "./fragments";
+import { Fragment, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
-
-type NAMESPACES =
-  | typeof TAG_NAMESPACES[keyof typeof TAG_NAMESPACES]
-  | typeof DEFAULT_NS;
-const DEFAULT_NS = "http://www.w3.org/1999/xhtml";
-export const TAG_NAMESPACES = {
-  svg: "http://www.w3.org/2000/svg",
-  math: "http://www.w3.org/1998/Math/MathML"
-} as const;
+import {
+  walker,
+  walk,
+  walkAndGetText,
+  detachedWalk,
+  WalkCodes
+} from "./walker";
 
 const enum NodeType {
   Element = 1,
   Text = 3,
   Comment = 8,
   DocumentFragment = 11
-};
+}
 
-const enum Markers {
-  Fragment = "#F",
-  Text = "#T",
-  Element = "#"
-};
+type HydrateFunction = (...args: MaybeSignal[]) => void;
+export interface Renderer<H extends HydrateFunction = HydrateFunction> {
+  ___input?: string[];
+  ___clone: () => Node;
+  ___hydrate?: H;
+  ___walks?: string;
+  ___template?: string;
+  ___sourceNode?: Node;
+}
 
-export class HydrateError extends Error {}
-export let parentFragment: Fragment | undefined;
-export let parentElement: Element | DocumentFragment | null = null;
-export let currentNS: NAMESPACES = DEFAULT_NS;
-
+export let currentFragment: Fragment | undefined;
 export interface ComponentFragment<Input> extends DocumentFragment {
   rerender: (input: Input) => void;
   destroy: () => void;
@@ -48,432 +44,294 @@ export interface ComponentFragment<Input> extends DocumentFragment {
 
 const doc = document;
 const parser = doc.createElement("template");
-export let lastElementRef: Element;
-export const walker = document.createTreeWalker(
-  document.body,
-  129, // NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT
-  null,
-  false
-);
 
-let lastHydratedChild: Node | null = null;
+export function createRenderFn<H extends HydrateFunction>(
+  template: Renderer["___template"],
+  walks: Renderer["___walks"],
+  inputProps?: Renderer["___input"],
+  hydrate?: H
+) {
+  type Input = Raw<Parameters<H>[0]>;
+  const renderer = createRenderer(
+    template!,
+    walks,
+    inputProps,
+    hydrate,
+    (input: Input) => {
+      let container: ComponentFragment<Input> | null = null;
+      let asyncPlaceholder: Text;
 
-type Template = [Node | null, string];
-export type RendererWithTemplate<T extends Renderer> = T & { ___template: Template };
+      const init = beginBatch();
+      const fragment = beginFragment(renderer);
+      const inputSignal = dynamicKeys(
+        createSignal(input) as any,
+        renderer.___input!
+      );
+      createEffect(() => {
+        if (container) {
+          asyncPlaceholder.replaceWith(fragment.___dom!);
+        } else {
+          container = fragment.___dom as ComponentFragment<Input>;
+        }
+      }, []);
+      finishFragment(fragment, renderer, inputSignal);
+      endBatch(init);
 
-export function withTemplate<T extends Renderer>(renderer: T, template: Template) {
-  (renderer as RendererWithTemplate<T>).___template = template;
-  return renderer as RendererWithTemplate<T>;
-}
-
-export function createTemplate(html: string): Template {
-  return [null, html];
-}
-
-export const empty = withTemplate(() => {}, createTemplate(""));
-
-function cloneTemplate(template: Template) {
-  let source = template[0];
-  if (source === null) {
-    parser.innerHTML = template[1];
-    const content = parser.content;
-
-    if ((source = content.firstChild) !== content.lastChild || source?.nodeType === NodeType.Comment) {
-      source = doc.createDocumentFragment();
-      source.appendChild(content);
-    } else if (!source) {
-      source = doc.createTextNode("");
-    }
-
-    template[0] = source;
-  }
-  return source!.cloneNode(true);
-}
-
-export function nextFragmentRef() {
-  let current: Node | null = walker.currentNode;
-  let next: Node | null;
-
-  do {
-    next = walker.nextNode();
-    if (current.nodeValue === Markers.Fragment) {
-      return current as Comment;
-    }
-  } while (current = next);
-
-  throw new Error("Debug Error");
-}
-
-export function nextTextRef() {
-  let current: Node | null = walker.currentNode;
-  let next: Node | null;
-
-  do {
-    next = walker.nextNode();
-    if (current.nodeValue === Markers.Text) {
-      (current as ChildNode).replaceWith(next = doc.createTextNode(""));
-      if (parentFragment!.___firstChild === current) {
-        parentFragment!.___firstChild = next;
+      if (!container) {
+        container = doc.createDocumentFragment() as ComponentFragment<Input>;
+        container.appendChild((asyncPlaceholder = doc.createTextNode("")));
       }
-      if (parentFragment!.___lastChild === current) {
-        parentFragment!.___lastChild = next;
-      }
-      return next as Text;
+
+      container.rerender = (newInput: Input) => {
+        const update = beginBatch();
+        set(inputSignal, newInput);
+        endBatch(update);
+      };
+
+      container.destroy = () => removeFragment(fragment);
+
+      return container;
     }
-  } while (current = next);
-
-  throw new Error("Debug Error");
-}
-
-export function nextElementRef() {
-  let current: Node | null = walker.currentNode;
-  let next: Node | null;
-
-  do {
-    next = walker.nextNode();
-    if (current.nodeType === NodeType.Element && (current as Element).hasAttribute(Markers.Element)) {
-      (current as Element).removeAttribute(Markers.Element);
-      return lastElementRef = current as Element;
-    }
-  } while (current = next);
-
-  throw new Error("Debug Error");
-}
-
-export function createRenderer<T extends Renderer>(renderer: T, template: Template) {
-  type Input = Raw<Parameters<T>[0]>;
-  return (input: Input) => {
-    let container: ComponentFragment<Input> | null = null;
-    let asyncPlaceholder: Text;
-
-    const init = beginBatch();
-    const fragment = beginFragment(template);
-    const inputSignal = dynamicKeys(createSignal(input) as any, renderer.input!);
-    
-    createEffect(() => {
-      if (container) {
-        asyncPlaceholder.replaceWith(fragment.___dom!);
-      } else {
-        container = fragment.___dom as ComponentFragment<Input>;
-      }
-    }, []);
-
-    renderer(inputSignal);
-    endFragment();
-    endBatch(init);
-
-    if (!container) {
-      container = doc.createDocumentFragment() as ComponentFragment<Input>;
-      container.appendChild(asyncPlaceholder = doc.createTextNode(""));
-    }
-
-    container.rerender = ((newInput: Input) => {
-      const update = beginBatch();
-      set(inputSignal, newInput);
-      endBatch(update);
-    }) as T;
-
-    container.destroy = () => removeFragment(fragment);
-
-    return container;
-  };
-}
-
-export function beginElNS(tag: string) {
-  currentNS = TAG_NAMESPACES[tag] || currentNS;
-  return beginEl(tag);
-}
-
-export function setNS(ns: NAMESPACES) {
-  currentNS = ns;
-}
-
-export function endNS() {
-  currentNS = DEFAULT_NS;
-}
-
-export function el(name: string) {
-  const elNode = beginEl(name);
-  endEl();
-  return elNode;
-}
-
-export let beginEl:
-  | typeof originalBeginEl
-  | typeof hydrateBeginEl = originalBeginEl;
-function originalBeginEl(name: string) {
-  return parentElement!.appendChild(
-    (parentElement = doc.createElementNS(currentNS, name))
   );
+  return renderer;
 }
 
-function hydrateBeginEl(name: string) {
-  const node = (parentElement = nextNodeToHydrate() as Element);
-  lastHydratedChild = null;
+export function createRenderer<T, H extends HydrateFunction>(
+  template: string,
+  walks?: Renderer["___walks"],
+  input?: Renderer["___input"],
+  hydrate?: H,
+  target: T = hydrate || walks || ({} as any)
+) {
+  const renderer = target as T & Renderer<H>;
+  renderer.___template = template;
+  renderer.___walks = walks;
+  renderer.___input = input;
+  renderer.___hydrate = hydrate;
+  renderer.___clone = _clone;
+  return renderer;
+}
 
-  if (!node || node.localName !== name) {
-    throw new HydrateError();
+function _clone(this: Renderer) {
+  let sourceNode: Node | null | undefined = this.___sourceNode;
+  if (!sourceNode) {
+    if (this.___template === undefined) {
+      throw new Error("Debug Error");
+    }
+    const walks = this.___walks;
+    // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
+    // and therefore we need to put it in a document fragment, even though only a single nodee is parts
+    const ensureFragment =
+        !!walks &&
+        (walks.charCodeAt(0) === WalkCodes.Before ||
+          walks.charCodeAt(0) === WalkCodes.Replace ||
+          walks.charCodeAt(walks.length - 2) ===
+            WalkCodes.After) /* 2nd to last because last will be Over */;
+    this.___sourceNode = sourceNode = parse(this.___template, ensureFragment);
+  }
+  return sourceNode.cloneNode(true);
+}
+
+function parse(template: string, ensureFragment?: boolean) {
+  let node: Node | null;
+  parser.innerHTML = template;
+  const content = parser.content;
+
+  if (ensureFragment || (node = content.firstChild) !== content.lastChild) {
+    node = doc.createDocumentFragment();
+    node.appendChild(content);
+  } else if (!node) {
+    node = doc.createTextNode("");
   }
 
-  return node;
+  return node as Node & { firstChild: ChildNode; lastChild: ChildNode };
 }
 
-export let endEl = originalEndEl;
-function originalEndEl() {
-  parentElement = parentElement!.parentNode as Element | DocumentFragment;
+export function createFragment(
+  renderer: Renderer,
+  parentFragment = currentFragment,
+  ...input: MaybeSignal[]
+) {
+  const fragment = beginFragment(renderer, parentFragment);
+  finishFragment(fragment, renderer, ...input);
+  return fragment;
 }
 
-function hydrateEndEl() {
-  lastHydratedChild = parentElement as Node | null;
-  parentElement = parentElement!.parentNode as Element | DocumentFragment;
-}
-
-export function beginFragment(template: Template, rootFragment?: Fragment): Fragment {
+function beginFragment(renderer: Renderer, parentFragment = currentFragment) {
   const fragment = new Fragment();
-  const node = cloneTemplate(template);
-  const isFragment = node.nodeType === NodeType.DocumentFragment;
-  fragment.___dom = node;
-  fragment.___parentFragment = rootFragment;
+  const clone = renderer.___clone();
+  const isFragment = isDocumentFragment(clone);
+
   fragment.___firstRef = fragment.___lastRef = fragment;
-  fragment.___firstChild = walker.currentNode = isFragment ? node.firstChild! : node;
-  fragment.___lastChild = isFragment ? node.lastChild! : node;
+  fragment.___firstChild = isFragment ? clone.firstChild! : clone;
+  fragment.___lastChild = isFragment ? clone.lastChild! : clone;
+  fragment.___parentFragment = parentFragment;
+  fragment.___cachedFragment = currentFragment;
+  fragment.___dom = clone;
 
-  return (parentFragment = fragment);
+  return (currentFragment = fragment);
 }
 
-export function endFragment() {
-  if (parentFragment!.___nextNode) {
-    walker.currentNode = parentFragment!.___nextNode;
+function finishFragment(
+  fragment: Fragment,
+  renderer: Renderer,
+  ...input: MaybeSignal[]
+) {
+  detachedWalk(fragment.___firstChild, renderer, ...input);
+  currentFragment = fragment.___cachedFragment;
+}
+
+export function isDocumentFragment(node: Node): node is DocumentFragment {
+  return node.nodeType === NodeType.DocumentFragment;
+}
+
+export function render(renderer: Renderer, ...input: MaybeSignal[]) {
+  const clone = renderer.___clone();
+  detachedWalk(clone, renderer, ...input);
+  walk(clone);
+}
+
+export function attr(name: string, value: MaybeSignal) {
+  const data = createComputation(normalizeAttrValue, [value] as const);
+  const el = walker.currentNode as Element;
+  if (el.nodeType !== NodeType.Element) {
+    throw new Error("Debug Error");
   }
-  parentFragment = parentFragment!.___parentFragment;
+  createEffect(setAttr, [el, name, data] as const);
 }
 
-export let text: typeof originalText | typeof hydrateText = originalText;
-function originalText(value: string) {
-  const textNode = doc.createTextNode(normalizeTextData(value));
-  parentElement!.appendChild(textNode);
-  return textNode;
-}
-
-function hydrateText(value: string) {
-  const data = normalizeTextData(value);
-  const node = nextNodeToHydrate() as Text;
-
-  // Insert a new TextNode if the node to hydrate is missing, isn't text or
-  // the data is empty, since we know empty text nodes won't be rendered from the server.
-  if (data === "" || !node || node.nodeType !== 3 /** Node.TEXT_NODE */) {
-    let ref: Node | null;
-
-    if (lastHydratedChild) {
-      ref = lastHydratedChild.nextSibling;
-    } else {
-      ref = parentElement!.firstChild;
-    }
-
-    lastHydratedChild = doc.createTextNode(data);
-    parentElement!.insertBefore(lastHydratedChild, ref);
-    return lastHydratedChild as Text;
+export function attrs(
+  attributes: MaybeSignal<Record<string, unknown> | null | undefined>
+) {
+  let previousAttrs: Raw<typeof attributes>;
+  const el = walker.currentNode as Element;
+  if (el.nodeType !== NodeType.Element) {
+    throw new Error("Debug Error");
   }
-
-  const existingData = node.data;
-
-  if (existingData !== data) {
-    if (existingData.indexOf(data) === 0) {
-      // We have a text node with more content in the browser than on the server.
-      // This happens when there are dynamic text nodes next to static ones.
-      // Here we split the text node so that the dynamic text also gets it's own node.
-      node.splitText(data.length);
-    } else {
-      node.data = data;
-    }
-  }
-
-  lastHydratedChild = node;
-
-  return node;
-}
-
-export function dynamicText(value: MaybeSignal<unknown>) {
-  const data = createComputation(_value => normalizeTextData(_value), [value]);
-  const textNode = nextTextRef();
   createEffect(
-    (_textNode, _data) => {
-      _textNode.data = _data;
+    nextAttrs => {
+      if (previousAttrs) {
+        for (const name in previousAttrs) {
+          if (!(nextAttrs && name in nextAttrs)) {
+            el.removeAttribute(name);
+          }
+        }
+      }
+      // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+      for (const name in nextAttrs) {
+        if (!(previousAttrs && nextAttrs[name] === previousAttrs[name])) {
+          if (name !== "renderBody") {
+            setAttr(el, name, normalizeAttrValue(nextAttrs[name]));
+          }
+        }
+      }
+      previousAttrs = nextAttrs;
     },
-    [textNode, data] as const
+    [attributes] as const
   );
-  return textNode;
 }
 
-export function html(value: string) {
-  const data = normalizeTextData(value);
-
-  if (data) {
-    const parser: Element = (parentElement!.nodeType ===
-    11 /** Node.DOCUMENT_FRAGMENT_NODE */
-      ? doc.body
-      : parentElement!
-    ).cloneNode() as Element;
-    parser.innerHTML = value;
-
-    while (parser.firstChild) {
-      parentElement!.appendChild(parser.firstChild);
-    }
-  }
+export function html(value: MaybeSignal<string>) {
+  conditional(
+    createComputation(
+      _value => {
+        const node = parse(_value);
+        return {
+          ___clone: () => node
+        };
+      },
+      [value]
+    )
+  );
 }
 
-export function dynamicHTML(value: MaybeSignal<string>) {
-  const emptyMarker = nextFragmentRef();
-  let firstChild: Node = emptyMarker;
-  let lastChild: Node = emptyMarker;
-
-  createEffect(html => {
-    parser.innerHTML = html;
-    const content = parser.content;
-    const parent = firstChild.parentNode!;
-    const oldFirstChild = firstChild;
-    const oldLastChild = lastChild;
-    if (!content.firstChild) {
-      content.appendChild(emptyMarker);
-    }
-    firstChild = content.firstChild!;
-    lastChild = content.lastChild!;
-    parent.insertBefore(content, oldFirstChild);
-    withChildren(
-      parent,
-      oldFirstChild,
-      oldLastChild,
-      null,
-      parent.removeChild
-    );
-  }, [value]);
+export function prop(name: string, value: MaybeSignal, node?: Node) {
+  createEffect((_node, _name, _value) => (_node[name] = _value), [
+    node || walker.currentNode,
+    name,
+    value
+  ] as const);
 }
 
-export function attr(name: string, value: unknown) {
-  setAttr(parentElement as Element, name, normalizeAttrValue(value));
+export function props(properties) {
+  let previousProps: Raw<typeof properties>;
+  createEffect(
+    (node, nextProps) => {
+      if (nextProps) {
+        for (const name in previousProps) {
+          if (!(name in nextProps)) {
+            node[name] = undefined;
+          }
+        }
+      }
+      // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+      for (const name in nextProps) {
+        node[name] = nextProps[name];
+      }
+      previousProps = nextProps;
+    },
+    [walker.currentNode, properties] as const
+  );
 }
 
-export function dynamicAttr(name: string, value: unknown) {
-  const elNode = lastElementRef;
-  const data = createComputation(_value => normalizeAttrValue(_value), [value]);
-  createEffect(setAttr, [elNode, name, data] as const);
+export function text(value: MaybeSignal) {
+  prop("data", createComputation(normalizeTextData, [value]), walkAndGetText());
+}
+
+export function textContent(value: MaybeSignal) {
+  prop("textContent", createComputation(normalizeTextData, [value]));
+}
+
+export function innerHTML(value: MaybeSignal) {
+  prop("innerHTML", value);
 }
 
 export function dynamicTag(
-  tag: MaybeSignal<string | RendererWithTemplate<Renderer>>,
+  tag: MaybeSignal<string | Renderer>,
   input: MaybeSignal<Record<string, unknown>>,
-  renderBody: RendererWithTemplate<() => void> | undefined
+  renderBody?: Renderer
 ) {
   const renderFns = new Map();
 
   return conditional(
     createComputation(
       _tag => {
-        let nextRender = renderFns.get(_tag);
-        if (!nextRender) {
+        let nextRenderer = renderFns.get(_tag);
+        if (!nextRenderer) {
           if (typeof _tag === "string") {
-            nextRender = withTemplate(() => {
-              nextElementRef();
-              dynamicAttrs(input);
-
-              if (renderBody) {
-                renderBody();
-              }
-            }, createTemplate(`<${_tag} #>${renderBody ? renderBody.___template[1] : ""}</${_tag}>`));
+            nextRenderer = {
+              ___clone: () => doc.createElement(_tag),
+              ___walks: dynamicElWalks,
+              ___hydrate: dynamicElHydrate
+            };
           } else if (_tag) {
-            if (_tag.input) {
-              const tagInput = renderBody
-                ? createComputation(_input => ({ ..._input, renderBody }), [
-                    input
-                  ])
-                : input;
-              nextRender = withTemplate(() => _tag(dynamicKeys(tagInput, _tag.input!)), _tag.___template);
-            } else {
-              nextRender = _tag;
-            }
+            nextRenderer = _tag;
           } else {
-            nextRender = renderBody;
+            nextRenderer = renderBody;
           }
-          renderFns.set(_tag, nextRender);
+          renderFns.set(_tag, nextRenderer);
         }
-        return nextRender;
+        return nextRenderer;
       },
       [tag] as const
-    )
+    ),
+    input
   );
 }
 
-export function dynamicAttrs(
-  attrs: MaybeSignal<Record<string, unknown> | null | undefined>
-) {
-  let previousAttrs: Raw<typeof attrs>;
-  createEffect(
-    (_elNode, _attrs) => {
-      for (const name in previousAttrs) {
-        if (!(_attrs && name in _attrs)) {
-          _elNode.removeAttribute(name);
-        }
-      }
-      for (const name in _attrs) {
-        setAttr(_elNode, name, normalizeAttrValue(_attrs[name]));
-      }
-      previousAttrs = _attrs;
-    },
-    [lastElementRef, attrs] as const
+// TODO: we don't want String.fromCharCode in the actual code.
+// Need to determine best way to keep this readable, but becomes a string literal on build
+const dynamicElWalks =
+  String.fromCharCode(WalkCodes.Get) +
+  String.fromCharCode(WalkCodes.Inside) +
+  String.fromCharCode(WalkCodes.Over);
+function dynamicElHydrate(input: MaybeSignal<Record<string, unknown>>) {
+  walk();
+  attrs(input);
+  dynamicTag(
+    createComputation(_input => _input.renderBody as Renderer, [input]),
+    {}
   );
-}
-
-export function prop(name: string, value: unknown) {
-  parentElement![name] = value;
-}
-
-export function dynamicProp(name: string, value: unknown) {
-  createEffect((_elNode, _value) => (_elNode[name] = _value), [
-    parentElement as Element,
-    value
-  ] as const);
-}
-
-export function dynamicProps(props: MaybeSignal<object>) {
-  let previousProps: object;
-  createEffect(
-    (_elNode, _props) => {
-      const nextProps = _props;
-      for (const name in previousProps) {
-        if (!(nextProps && name in nextProps)) {
-          _elNode[name] = undefined;
-        }
-      }
-      for (const name in nextProps) {
-        _elNode[name] = nextProps[name];
-      }
-      previousProps = nextProps;
-    },
-    [parentElement as Element, props] as const
-  );
-}
-
-export function beginHydrate(boundary: Node) {
-  parentElement = boundary.parentNode as Element;
-  lastHydratedChild = boundary;
-  beginEl = hydrateBeginEl;
-  endEl = hydrateEndEl;
-  text = hydrateText;
-}
-
-export function endHydrate() {
-  parentElement = lastHydratedChild = null;
-  beginEl = originalBeginEl;
-  endEl = originalEndEl;
-  text = originalText;
-}
-
-function nextNodeToHydrate() {
-  if (lastHydratedChild) {
-    return lastHydratedChild!.nextSibling as ChildNode;
-  }
-
-  return parentElement!.firstChild as ChildNode;
 }
 
 function setAttr(element: Element, name: string, value: string | undefined) {

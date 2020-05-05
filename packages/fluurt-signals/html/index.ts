@@ -1,5 +1,3 @@
-export { register } from "../common/registry";
-
 export { escapeScript, escapeStyle, escapeXML } from "./content";
 
 export { attr, attrs, classAttr, styleAttr } from "./attrs";

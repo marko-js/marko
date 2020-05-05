@@ -2,10 +2,11 @@ import {
   computeAsync,
   conditional,
   register,
-  createTemplate
+  createRenderer,
+  createRenderFn
 } from "../../../../dom/index";
 import { resolveAfter } from "../../../utils/resolve";
-import { withTemplate, empty } from '../../../../dom/dom';
+import { inside, over } from "../../utils/walks";
 
 export const wait = 2;
 export const FAILS_HYDRATE = true;
@@ -15,22 +16,21 @@ export const inputs = [
   { show: true }
 ] as const;
 
-const renderer = register(
+export const template = `<div></div>`;
+export const walks = inside + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
-    const branch0 = withTemplate(() => {}, branch0_template);
     conditional(
       computeAsync(
-        async show => (show ? resolveAfter(branch0, 1) : empty),
+        async show => (show ? resolveAfter(branch0, 1) : undefined),
         [input.show]
       )
     );
   }
 );
 
-const branch0_template = createTemplate(`<span>hi</span>`);
+const branch0_template = `<span>hi</span>`;
+const branch0 = createRenderer(branch0_template);
 
-renderer.input = ["show"];
-
-export const html = `<div><!#F></div>`;
-export default renderer;
+export default createRenderFn(template, walks, ["show"], hydrate);

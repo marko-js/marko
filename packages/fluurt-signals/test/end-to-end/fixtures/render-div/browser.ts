@@ -9,9 +9,7 @@ const renderer = input => {
   counter(input);
 };
 
-renderer.input = [];
-
-export default renderer;
+export default createRenderFn(template, walks, [], hydrate);
 
 const counter = register("counter", input => {
   const count = createSignal(get(input).start as number);

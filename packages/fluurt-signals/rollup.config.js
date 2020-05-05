@@ -21,10 +21,10 @@ export default ["dom", "html"].map(name => ({
         eval: false,
         keep_classnames: true,
         keep_fnames: true,
-        module: true,
-        properties: {
-          regex: /^___/
-        }
+        module: true
+        // properties: {
+        //   regex: /^___/
+        // }
       },
       output: {
         beautify: true

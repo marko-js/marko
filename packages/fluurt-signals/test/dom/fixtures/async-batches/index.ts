@@ -1,5 +1,11 @@
-import { dynamicText, register, computeAsync } from "../../../../dom/index";
+import {
+  text,
+  computeAsync,
+  register,
+  createRenderFn
+} from "../../../../dom/index";
 import { resolveAfter } from "../../../utils/resolve";
+import { before, get, over } from "../../utils/walks";
 
 export const wait = 2;
 export const FAILS_HYDRATE = true;
@@ -18,17 +24,14 @@ export const inputs = [
   }
 ];
 
-const renderer = register(
+export const template = ` `;
+export const walks = before + get + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    dynamicText(input.sync);
-    dynamicText(
-      computeAsync(async value => await value, [input.async] as const)
-    );
+    text(input.sync);
+    text(computeAsync(async value => await value, [input.async] as const));
   }
 );
 
-renderer.input = ["sync", "async"];
-
-export const html = `<!#T><!#T>`;
-export default renderer;
+export default createRenderFn(template, walks, ["sync", "async"], hydrate);

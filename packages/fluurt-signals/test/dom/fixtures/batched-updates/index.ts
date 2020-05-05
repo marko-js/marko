@@ -1,11 +1,14 @@
 import {
   once,
+  textContent,
+  walk,
   compute,
   createSignal,
   set,
-  register
+  register,
+  createRenderFn
 } from "../../../../dom/index";
-import { dynamicText, nextElementRef } from "../../../../dom/dom";
+import { get, over } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -13,21 +16,20 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-const renderer = register(
+export const template = `<button></button>`;
+export const walks = get + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
     const a = createSignal(0);
     const b = createSignal(0);
-    nextElementRef();
+    walk();
     once("click", () => {
       set(a, 1);
       set(b, 1);
     });
-    dynamicText(compute((_a, _b) => _a + _b, [a, b]));
+    textContent(compute((_a, _b) => _a + _b, [a, b]));
   }
 );
 
-renderer.input = ["value"];
-
-export const html = `<button #><!#T></button>`;
-export default renderer;
+export default createRenderFn(template, walks, ["value"], hydrate);

@@ -7,6 +7,7 @@ export class Fragment {
   public ___firstChild: Node;
   public ___lastChild: Node;
   public ___parentFragment?: Fragment;
+  public ___cachedFragment?: Fragment;
   public ___dom?: Node;
   public ___tracked: Set<Fragment | Computation>;
   constructor() {

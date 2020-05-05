@@ -15,31 +15,24 @@ export {
 } from "./signals";
 
 export {
-  el,
-  beginEl,
-  endEl,
-  beginElNS,
-  endNS,
-  dynamicTag,
   text,
-  dynamicText,
+  textContent,
   html,
-  dynamicHTML,
+  innerHTML,
   attr,
-  dynamicAttr,
-  dynamicAttrs,
+  attrs,
   prop,
-  dynamicProp,
-  dynamicProps,
+  props,
+  dynamicTag,
+  render,
   createRenderer,
-  createTemplate,
-  empty,
+  createRenderFn
 } from "./dom";
+
+export { walk } from "./walker";
 
 export { on, dynamicOn, once } from "./event";
 
 export { classValue, styleValue } from "../common/helpers";
 
-export { register } from "../common/registry";
-
-export { init } from "./hydrate";
+export { init, register } from "./hydrate";

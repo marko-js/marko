@@ -1,6 +1,11 @@
-import { loopIn, compute, get, register } from "../../../../dom/index";
-
-import { withTemplate, createTemplate, dynamicText } from "../../../../dom/dom";
+import {
+  loopIn,
+  text,
+  register,
+  createRenderer,
+  createRenderFn
+} from "../../../../dom/index";
+import { over, inside, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -22,18 +27,21 @@ export const inputs = [
   }
 ];
 
-const renderer = register(
+export const template = `<div></div>`;
+export const walks = inside + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: { children: { [x: string]: string } }) => {
-    loopIn(input.children, withTemplate((_, text) => {
-      dynamicText(text);
-    }, loop_template));
+    loopIn(
+      input.children,
+      createRenderer(loop_template, loop_walks, undefined, (_, value) => {
+        text(value);
+      })
+    );
   }
 );
 
-const loop_template = createTemplate("<!#T>");
+const loop_template = " ";
+const loop_walks = get + over(1);
 
-renderer.input = ["children"];
-
-export const html = `<div><!#F></div>`;
-export default renderer;
+export default createRenderFn(template, walks, ["children"], hydrate);

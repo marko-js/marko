@@ -1,6 +1,13 @@
-import { compute, empty, conditional, register } from "../../../../dom/index";
-
-import { withTemplate, createTemplate, dynamicText } from "../../../../dom/dom";
+import {
+  compute,
+  walk,
+  textContent,
+  conditional,
+  register,
+  createRenderer,
+  createRenderFn
+} from "../../../../dom/index";
+import { next, over, before, inside } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -17,19 +24,25 @@ export const inputs = [
   }
 ];
 
-const renderer = register(
+export const template = `<div><span></span><span></span></div>`;
+export const walks = next(1) + before;
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: { value: string | undefined }) => {
-    const branch0 = withTemplate(() => {
-      dynamicText(input.value);
-    }, branch0_template);
-    conditional(compute(value => (value ? branch0 : empty), [input.value]));
+    const branch0 = createRenderer(
+      branch0_template,
+      branch0_walks,
+      undefined,
+      () => {
+        walk();
+        textContent(input.value);
+      }
+    );
+    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
   }
 );
 
-const branch0_template = createTemplate("<span><!#T></span>");
+const branch0_template = "<span></span>";
+const branch0_walks = inside + over(1);
 
-renderer.input = ["value"];
-
-export const html = `<div><!#F><span></span><span></span></div>`;
-export default renderer;
+export default createRenderFn(template, walks, ["value"], hydrate);

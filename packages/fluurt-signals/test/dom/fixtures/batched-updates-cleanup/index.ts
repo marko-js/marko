@@ -1,13 +1,17 @@
 import {
   once,
+  textContent,
+  walk,
   compute,
   createSignal,
   conditional,
   set,
-  register
+  register,
+  createRenderer,
+  createRenderFn
 } from "../../../../dom/index";
 
-import { dynamicText, nextElementRef, createTemplate, withTemplate, empty } from "../../../../dom/dom";
+import { get, after, over } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -15,26 +19,29 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-const renderer = register(
+export const template = `<button></button>`;
+export const walks = get + after + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
     const show = createSignal(true);
     const message = createSignal("hi");
-    nextElementRef();
+    walk();
     once("click", () => {
       set(message, "bye");
       set(show, false);
     });
-    const branch0 = withTemplate(() => {
-      dynamicText(message);
-    }, branch0_template);
-    conditional(compute(_show => (_show ? branch0 : empty), [show]));
+    const branch0 = createRenderer(
+      branch0_template,
+      branch0_walks,
+      undefined,
+      () => textContent(message)
+    );
+    conditional(compute(_show => (_show ? branch0 : undefined), [show]));
   }
 );
 
-const branch0_template = createTemplate(`<span><!#T></span>`);
+const branch0_template = `<span></span>`;
+const branch0_walks = get + over(1);
 
-renderer.input = ["value"];
-
-export const html = `<button #></button><!#F>`
-export default renderer;
+export default createRenderFn(template, walks, [], hydrate);

@@ -1,6 +1,5 @@
-import { dynamicAttrs, register } from "../../../../dom/index";
-
-import { beginEl, endEl, nextElementRef } from "../../../../dom/dom";
+import { attrs, walk, register, createRenderFn } from "../../../../dom/index";
+import { get, over } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -20,15 +19,15 @@ export const inputs = [
   }
 ];
 
-const renderer = register(
+// <div ...input.value/>
+export const template = `<div></div>`;
+export const walks = get + over(1);
+export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
-    nextElementRef();
-    dynamicAttrs(input.value);
+    walk();
+    attrs(input.value);
   }
 );
 
-renderer.input = ["value"];
-
-export const html = `<div #></div>`;
-export default renderer;
+export default createRenderFn(template, walks, ["value"], hydrate);
