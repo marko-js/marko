@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.8](https://github.com/marko-js/marko/compare/v4.21.7...v4.21.8) (2020-05-07)
+
+
+### Bug Fixes
+
+* support empty w-config ([#1570](https://github.com/marko-js/marko/issues/1570)) ([b62ff6a](https://github.com/marko-js/marko/commit/b62ff6a3ba1565ecfde5b8114682e3ac6d753903))
+
 ### [4.21.7](https://github.com/marko-js/marko/compare/v4.21.6...v4.21.7) (2020-05-04)
 
 
