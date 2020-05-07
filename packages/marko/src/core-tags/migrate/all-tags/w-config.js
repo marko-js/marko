@@ -11,20 +11,23 @@ module.exports = function migrate(el, context) {
     'The "w-config" attribute is deprecated. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐config'
   );
 
-  el.insertSiblingBefore(
-    builder.scriptlet({
-      value: printJS(
-        builder.assignment(
-          builder.memberExpression(
-            builder.identifier("component"),
-            builder.identifier("widgetConfig")
+  if (attr.value) {
+    el.insertSiblingBefore(
+      builder.scriptlet({
+        value: printJS(
+          builder.assignment(
+            builder.memberExpression(
+              builder.identifier("component"),
+              builder.identifier("widgetConfig")
+            ),
+            attr.value,
+            "="
           ),
-          attr.value,
-          "="
-        ),
-        context
-      )
-    })
-  );
+          context
+        )
+      })
+    );
+  }
+
   el.removeAttribute("w-config");
 };
