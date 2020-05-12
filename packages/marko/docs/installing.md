@@ -6,14 +6,10 @@ If you just want to play around with Marko in the browser, head on over to our [
 
 ## Creating new apps
 
-If you're starting from scratch, [`marko-cli`](https://github.com/marko-js/cli) provides a starter app to
-get you going quickly. To get started:
+If you're starting from scratch, you can use Marko's [cli](https://github.com/marko-js/cli) commands to quickly create a starter app:
 
 ```bash
-npm install marko-cli --global
-marko create hello-world
-cd hello-world
-npm start
+npx @marko/create
 ```
 
 ## Direct usage
