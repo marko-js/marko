@@ -34,7 +34,7 @@ In the browser, when the data representing your UI changes, Marko will automatic
 
 ## A simple component
 
-Let's say we have a `<button>` that we want to assign some behavior to when it is clicked:
+Let's say we want to perform an action once a `<button>` is clicked:
 
 _button.marko_
 
@@ -49,11 +49,11 @@ _button.marko_
 ```marko
 class {
     sayHi() {
-        alert(`Hi!`);
+        alert("Hi!");
     }
 }
 
-<button on-click('sayHi')>Click me!</button>
+<button on-click("sayHi")>Click me!</button>
 ```
 
 ### Adding state
@@ -66,7 +66,7 @@ _counter.marko_
 class {
     onCreate() {
         this.state = {
-            count:0
+            count: 0
         };
     }
     increment() {
@@ -75,5 +75,5 @@ class {
 }
 
 <div>The current count is ${state.count}</div>
-<button on-click('increment')>Click me!</button>
+<button on-click("increment")>Click me!</button>
 ```
