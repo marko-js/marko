@@ -1,15 +1,19 @@
-var promise;
 module.exports =
-  typeof queueMicrotask === "function"
-    ? queueMicrotask
-    : typeof Promise === "function" && (promise = Promise.resolve())
-    ? function(cb) {
-        promise.then(cb).catch(rethrow);
-      }
-    : setTimeout;
-
-function rethrow(err) {
-  setTimeout(function() {
-    throw err;
-  });
-}
+  typeof setImmediate === "function"
+    ? setImmediate
+    : (function() {
+        var queue = [];
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function() {
+          var callbacks = queue;
+          queue = [];
+          for (let i = 0; i < callbacks.length; i++) {
+            callbacks[i]();
+          }
+        };
+        return function(callback) {
+          if (queue.push(callback) === 1) {
+            channel.port2.postMessage(0);
+          }
+        };
+      })();
