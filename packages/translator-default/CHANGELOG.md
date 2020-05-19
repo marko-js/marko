@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.12](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
+
+
+### Bug Fixes
+
+* data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1564)) ([0a227d0](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/0a227d0c7c27821df551c1367e160793dc9e234e))
+
+
+
+
+
 # [5.0.0-next.11](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.10...v5.0.0-next.11) (2020-04-27)
 
 **Note:** Version bump only for package @marko/translator-default

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.12](https://github.com/marko-js/marko/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
+
+
+### Bug Fixes
+
+* components not always initializing inside client-reorder await ([#1566](https://github.com/marko-js/marko/issues/1566)) ([da31ead](https://github.com/marko-js/marko/commit/da31ead17959e0e4bbbd806690d368127636b094))
+* data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/issues/1564)) ([0a227d0](https://github.com/marko-js/marko/commit/0a227d0c7c27821df551c1367e160793dc9e234e))
+
+
+
+
+
 # [5.0.0-next.11](https://github.com/marko-js/marko/compare/v5.0.0-next.10...v5.0.0-next.11) (2020-04-27)
 
 

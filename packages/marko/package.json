@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "5.0.0-next.11",
+    "version": "5.0.0-next.12",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "dependencies": {
@@ -23,7 +23,7 @@
         "warp10": "^2.0.1"
     },
     "devDependencies": {
-        "@marko/compiler": "^5.0.0-next.11",
+        "@marko/compiler": "^5.0.0-next.12",
         "bluebird": "^3.4.7",
         "chai": "^4.2.0",
         "diffable-html": "^2.1.0",
