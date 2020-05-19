@@ -50,10 +50,11 @@ function loadBabelConfig(filename, options) {
 
   if (markoConfig.babelConfig) {
     Object.assign(baseBabelConfig, markoConfig.babelConfig);
-    baseBabelConfig.plugins = requiredPlugins.concat(
-      baseBabelConfig.plugins || []
-    );
   }
+
+  baseBabelConfig.plugins = requiredPlugins.concat(
+    baseBabelConfig.plugins || []
+  );
 
   return loadPartialConfig(baseBabelConfig).options;
 }
