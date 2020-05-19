@@ -118,6 +118,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.e("div", null, "13" + _keyScope8, component, 0, 0);
     out.e("div", null, `@other-${i}`, component, 0, 0);
   }
+
+  for (let _steps5 = (10 - 0) / 1, _step5 = 0; _step5 <= _steps5; _step5++) {
+    out.t("Hello", component);
+  }
+
+  for (let _steps6 = (10 - 0) / 1, _step6 = 0; _step6 <= _steps6; _step6++) {
+    out.t("Hello", component);
+  }
 }, {
   t: _marko_componentType,
   i: true

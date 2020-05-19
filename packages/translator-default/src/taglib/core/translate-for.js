@@ -19,7 +19,7 @@ export function exit(path) {
   if (inAttr) {
     allowedAttributes.push("in");
 
-    const [keyParam, valParam] = node.params;
+    const [keyParam, valParam] = node.params || [];
 
     if (!keyParam) {
       throw namePath.buildCodeFrameError(
@@ -47,7 +47,7 @@ export function exit(path) {
     let ofAttrValue = ofAttr.value;
     allowedAttributes.push("of");
 
-    const [valParam, keyParam, loopParam] = node.params;
+    const [valParam, keyParam, loopParam] = node.params || [];
 
     if (!valParam) {
       throw namePath.buildCodeFrameError(
@@ -95,7 +95,7 @@ export function exit(path) {
       value: t.numericLiteral(1)
     };
     const stepValue = stepAttr ? stepAttr.value : t.numericLiteral(1);
-    const [indexParam] = node.params;
+    const [indexParam] = node.params || [];
     const stepsName = path.scope.generateUidIdentifier("steps");
     const stepName = path.scope.generateUidIdentifier("step");
 

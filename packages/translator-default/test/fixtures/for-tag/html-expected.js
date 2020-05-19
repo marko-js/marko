@@ -73,6 +73,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           _keyScope8 = `[${_keyValue6}]`;
     out.w(`<div${_marko_props(out, _component, 0, _keyValue6, _component)}>${_marko_escapeXml(i)}</div><div></div><div${_marko_props(out, _component, 0, `@other-${i}`, _component)}></div>`);
   }
+
+  for (let _steps5 = (10 - 0) / 1, _step5 = 0; _step5 <= _steps5; _step5++) {
+    out.w("Hello");
+  }
+
+  for (let _steps6 = (10 - 0) / 1, _step6 = 0; _step6 <= _steps6; _step6++) {
+    out.w("Hello");
+  }
 }, {
   t: _marko_componentType,
   i: true
