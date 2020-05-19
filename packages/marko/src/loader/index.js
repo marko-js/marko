@@ -3,8 +3,7 @@
 var nodePath = require("path");
 var fs = require("fs");
 var Module = require("module").Module;
-var compilerPath = nodePath.join(__dirname, "../compiler");
-var markoCompiler = require(compilerPath);
+var markoCompiler = require("../compiler");
 var cwd = process.cwd();
 var fsOptions = { encoding: "utf8" };
 

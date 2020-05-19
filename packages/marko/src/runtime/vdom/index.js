@@ -1,5 +1,4 @@
 "use strict";
-require("../../");
 
 // helpers provide a core set of various utility methods
 // that are available in every template
