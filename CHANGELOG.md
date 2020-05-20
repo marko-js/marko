@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.13](https://github.com/marko-js/marko/compare/v5.0.0-next.12...v5.0.0-next.13) (2020-05-20)
+
+
+### Bug Fixes
+
+* nextTick timing regression ([#1573](https://github.com/marko-js/marko/issues/1573)) ([7f35078](https://github.com/marko-js/marko/commit/7f35078dda057c6f83282d37edea6044f02657f3))
+* **compiler:** ensure marko babel plugin not overwritten ([ac9a4c5](https://github.com/marko-js/marko/commit/ac9a4c58bdedd1cd3ce762e1b5ce744d77719e3c))
+* **compiler:** regression causing marko plugin to not load ([a08b55a](https://github.com/marko-js/marko/commit/a08b55ac8d34f3031834dc76a7936ebb8964d01d))
+* **marko:** prevent loading main entry by default ([61c954e](https://github.com/marko-js/marko/commit/61c954ef0ed1fc1d3b44b878ea1dbb0f79a9b718))
+* **translator-default:** optional params on for tag ([b550417](https://github.com/marko-js/marko/commit/b55041728d9f4e45196c1d7e07abd770e4af68be))
+
+
+
+
+
 # [5.0.0-next.12](https://github.com/marko-js/marko/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
 
 

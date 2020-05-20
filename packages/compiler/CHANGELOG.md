@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.13](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.12...v5.0.0-next.13) (2020-05-20)
+
+
+### Bug Fixes
+
+* **compiler:** ensure marko babel plugin not overwritten ([ac9a4c5](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/ac9a4c58bdedd1cd3ce762e1b5ce744d77719e3c))
+* **compiler:** regression causing marko plugin to not load ([a08b55a](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/a08b55ac8d34f3031834dc76a7936ebb8964d01d))
+
+
+
+
+
 # [5.0.0-next.12](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
 
 **Note:** Version bump only for package @marko/compiler
