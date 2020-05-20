@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.10](https://github.com/marko-js/marko/compare/v4.21.9...v4.21.10) (2020-05-20)
+
+
+### Bug Fixes
+
+* nextTick timing regression ([#1573](https://github.com/marko-js/marko/issues/1573)) ([65ecb6f](https://github.com/marko-js/marko/commit/65ecb6fa334c5bf533a1de54d7820f89dbf2081a))
+
 ### [4.21.9](https://github.com/marko-js/marko/compare/v4.21.8...v4.21.9) (2020-05-12)
 
 ### [4.21.8](https://github.com/marko-js/marko/compare/v4.21.7...v4.21.8) (2020-05-07)
