@@ -7,7 +7,6 @@ module.exports =
         promise.then(cb).catch(rethrow);
       }
     : setTimeout;
-
 function rethrow(err) {
   setTimeout(function() {
     throw err;

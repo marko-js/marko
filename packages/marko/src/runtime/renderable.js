@@ -1,5 +1,5 @@
 var defaultCreateOut = require("./createOut");
-var nextTick = require("./nextTick");
+var setImmediate = require("./setImmediate");
 var extend = require("raptor-util/extend");
 
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
@@ -13,7 +13,7 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
     var actualEnd = finalOut.end;
     finalOut.end = function() {};
 
-    nextTick(function() {
+    setImmediate(function() {
       finalOut.end = actualEnd;
       finalOut.error(err);
     });
