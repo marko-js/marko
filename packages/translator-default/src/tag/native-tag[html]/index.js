@@ -77,10 +77,7 @@ export default function(path) {
     const needsDataMarkoAttr = isSplit || isImplicit || isPreserved(path);
 
     if (needsDataMarkoAttr) {
-      const dataMarkoArgs = [
-        t.identifier("out"),
-        hub._componentDefIdentifier
-      ];
+      const dataMarkoArgs = [t.identifier("out"), hub._componentDefIdentifier];
 
       if (tagProperties.length) {
         // TODO we should pre evaluate this if it is static.

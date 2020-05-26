@@ -1,26 +1,17 @@
 "use strict";
 
 var ok = require("assert").ok;
+var resolveFrom = require("resolve-from").silent;
+var lassoCachingFS = require("lasso-caching-fs");
 var types = require("./types");
 var nodePath = require("path");
 var scanTagsDir = require("./scanTagsDir");
-var markoModules = require("../../compiler/modules"); // NOTE: different implementation for browser
 var propertyHandlers = require("property-handlers");
 var jsonFileReader = require("./json-file-reader");
-var resolveFrom = typeof window === "undefined" && require("resolve-from"); // Not used in the browser
 var DependencyChain = require("./DependencyChain");
 var createError = require("raptor-util/createError");
 var loaders = require("./loaders");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function exists(path) {
-  try {
-    markoModules.resolve(path);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
 
 function addTransformer(taglibLoader, value) {
   // Marko allows a "text-transformer" to be registered. The provided
@@ -34,7 +25,7 @@ function addTransformer(taglibLoader, value) {
     value,
     {
       path(value) {
-        const path = markoModules.resolveFrom(dirname, value);
+        const path = resolveFrom(dirname, value);
         transformer.path = path;
       }
     },
@@ -112,7 +103,7 @@ class TaglibLoader {
     if (typeof value === "string") {
       tagFilePath = nodePath.resolve(this.dirname, value);
 
-      if (!exists(tagFilePath)) {
+      if (!lassoCachingFS.existsSync(tagFilePath)) {
         throw new Error(
           'Tag at path "' +
             tagFilePath +
@@ -260,9 +251,6 @@ class TaglibLoader {
   }
 
   taglibImports(imports) {
-    if (!resolveFrom) {
-      return;
-    }
     // The "taglib-imports" property allows another taglib to be imported
     // into this taglib so that the tags defined in the imported taglib
     // will be part of this taglib.
@@ -281,7 +269,7 @@ class TaglibLoader {
         if (typeof curImport === "string") {
           var basename = nodePath.basename(curImport);
           if (basename === "package.json") {
-            var packagePath = markoModules.resolveFrom(dirname, curImport);
+            var packagePath = resolveFrom(dirname, curImport);
             var packageDir = nodePath.dirname(packagePath);
             var pkg = jsonFileReader.readFileSync(packagePath);
             var dependencies = pkg.dependencies;
@@ -292,7 +280,7 @@ class TaglibLoader {
 
                 importPath = resolveFrom(
                   packageDir,
-                  dependencyName + "/marko.json"
+                  nodePath.join(dependencyName, "marko.json")
                 );
 
                 if (importPath) {
@@ -323,7 +311,7 @@ class TaglibLoader {
     var taglib = this.taglib;
     var dirname = this.dirname;
 
-    var path = markoModules.resolveFrom(dirname, value);
+    var path = resolveFrom(dirname, value);
     taglib.migratorPath = path;
   }
 
@@ -345,7 +333,7 @@ class TaglibLoader {
       value,
       {
         path(value) {
-          var path = markoModules.resolveFrom(dirname, value);
+          var path = resolveFrom(dirname, value);
           transformer.path = path;
         }
       },

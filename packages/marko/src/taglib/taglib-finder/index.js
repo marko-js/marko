@@ -1,11 +1,11 @@
 "use strict";
-var taglibLoader = require("../taglib-loader");
 var nodePath = require("path");
-var lassoPackageRoot = require("lasso-package-root");
+var lassoCachingFS = require("lasso-caching-fs");
 var resolveFrom = require("resolve-from").silent;
+var taglibLoader = require("../taglib-loader");
+var lassoPackageRoot = require("lasso-package-root");
 var scanTagsDir = require("../taglib-loader/scanTagsDir");
 var DependencyChain = require("../taglib-loader/DependencyChain");
-var lassoCachingFS = require("lasso-caching-fs");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var findCache = {};
@@ -17,14 +17,9 @@ var excludedPackages = {};
  * was added for testing purposes.
  */
 function reset() {
-  lassoCachingFS.clearCaches();
-  findCache = {};
+  clearCache();
   excludedDirs = {};
   excludedPackages = {};
-}
-
-function existsCached(path) {
-  return lassoCachingFS.existsSync(path);
 }
 
 function getModuleRootPackage(dirname) {
@@ -98,7 +93,7 @@ function find(dirname, registeredTaglibs) {
       let taglibPath = nodePath.join(curDirname, "marko.json");
       let taglib;
 
-      if (existsCached(taglibPath)) {
+      if (lassoCachingFS.existsSync(taglibPath)) {
         taglib = taglibLoader.loadTaglibFromFile(taglibPath);
         helper.addTaglib(taglib);
       }
@@ -107,7 +102,7 @@ function find(dirname, registeredTaglibs) {
         let componentsPath = nodePath.join(curDirname, "components");
 
         if (
-          existsCached(componentsPath) &&
+          lassoCachingFS.existsSync(componentsPath) &&
           !excludedDirs[componentsPath] &&
           !helper.alreadyAdded(componentsPath)
         ) {
@@ -139,7 +134,10 @@ function find(dirname, registeredTaglibs) {
     // Now look for `marko.json` from installed packages
     getAllDependencyNames(rootPkg).forEach(name => {
       if (!excludedPackages[name]) {
-        let taglibPath = resolveFrom(rootPkg.__dirname, name + "/marko.json");
+        let taglibPath = resolveFrom(
+          rootPkg.__dirname,
+          nodePath.join(name, "marko.json")
+        );
         if (taglibPath) {
           var taglib = taglibLoader.loadTaglibFromFile(taglibPath);
           helper.addTaglib(taglib);

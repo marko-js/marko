@@ -1,4 +1,3 @@
-import path from "path";
 import loader from "marko/src/taglib/taglib-loader";
 import finder from "marko/src/taglib/taglib-finder";
 import TaglibLookup from "marko/src/taglib/taglib-lookup/TaglibLookup";
@@ -6,9 +5,21 @@ import TaglibLookup from "marko/src/taglib/taglib-lookup/TaglibLookup";
 export { excludeDir, excludePackage } from "marko/src/taglib/taglib-finder";
 
 let lookupCache = Object.create(null);
-const coreTaglibs = ["html", "svg", "math"].map(name =>
-  loader.loadTaglibFromFile(path.join(__dirname, name, "marko.json"))
-);
+
+const coreTaglibs = [
+  loader.loadTaglibFromProps(
+    loader.createTaglib(require.resolve("./html/marko.json")),
+    require("./html/marko.json")
+  ),
+  loader.loadTaglibFromProps(
+    loader.createTaglib(require.resolve("./svg/marko.json")),
+    require("./svg/marko.json")
+  ),
+  loader.loadTaglibFromProps(
+    loader.createTaglib(require.resolve("./math/marko.json")),
+    require("./math/marko.json")
+  )
+];
 
 export function buildLookup(dirname, translator = "default") {
   const translatorTaglibs = Array.isArray(translator)

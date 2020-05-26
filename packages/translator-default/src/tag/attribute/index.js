@@ -1,9 +1,7 @@
-import fs from "fs";
-import { join, basename } from "path";
 import { isNativeTag, getTagDef } from "@marko/babel-utils";
+import directives from "./directives";
+import modifiers from "./modifiers";
 
-const directives = requireDir(join(__dirname, "directives"));
-const modifiers = requireDir(join(__dirname, "modifiers"));
 const EMPTY_ARRAY = [];
 const EVENT_REG = /^(on(?:ce)?)(-)?(.*)$/;
 const attachedDetachedLoaded = new WeakSet();
@@ -132,15 +130,4 @@ function execModifiersAndDirectives(type, tag, attr, value) {
       if (tag.node !== tagNode || attr.node !== attrNode) return true;
     }
   }
-}
-
-function requireDir(dir) {
-  return fs
-    .readdirSync(dir)
-    .filter(entry => /\.js$/.test(entry))
-    .map(entry => join(dir, entry))
-    .reduce((r, file) => {
-      r[basename(file).replace(/\.js$/, "")] = require(file).default;
-      return r;
-    }, {});
 }

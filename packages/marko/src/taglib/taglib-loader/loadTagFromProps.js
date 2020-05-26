@@ -1,24 +1,16 @@
 "use strict";
 
 var ok = require("assert").ok;
+var resolveFrom = require("resolve-from").silent;
+var lassoCachingFS = require("lasso-caching-fs");
 var propertyHandlers = require("property-handlers");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
-var markoModules = require("../../compiler/modules"); // NOTE: different implementation for browser
 var forEachEntry = require("raptor-util/forEachEntry");
 var createError = require("raptor-util/createError");
 var types = require("./types");
 var loaders = require("./loaders");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function exists(path) {
-  try {
-    markoModules.resolve(path);
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
 
 function removeDashes(str) {
   return str.replace(/-([a-z])/g, function(match, lower) {
@@ -55,7 +47,7 @@ function addTransformer(tagLoader, value) {
     value,
     {
       path(value) {
-        const path = markoModules.resolveFrom(dirname, value);
+        const path = resolveFrom(dirname, value);
         transformer.path = path;
       },
 
@@ -338,7 +330,7 @@ class TagLoader {
   renderer(value) {
     var tag = this.tag;
     var dirname = this.dirname;
-    var path = markoModules.resolveFrom(dirname, value);
+    var path = resolveFrom(dirname, value);
     tag.renderer = path;
   }
 
@@ -352,7 +344,7 @@ class TagLoader {
     var dirname = this.dirname;
 
     var path = nodePath.resolve(dirname, value);
-    if (!exists(path)) {
+    if (!lassoCachingFS.existsSync(path)) {
       throw new Error('Template at path "' + path + '" does not exist.');
     }
     tag.template = path;
@@ -386,7 +378,7 @@ class TagLoader {
   migrator(value) {
     var tag = this.tag;
     var dirname = this.dirname;
-    tag.migratorPaths.push(markoModules.resolveFrom(dirname, value));
+    tag.migratorPaths.push(resolveFrom(dirname, value));
   }
 
   /**
@@ -399,7 +391,7 @@ class TagLoader {
     var tag = this.tag;
     var dirname = this.dirname;
 
-    var path = markoModules.resolveFrom(dirname, value);
+    var path = resolveFrom(dirname, value);
     tag.codeGeneratorModulePath = path;
   }
 
@@ -414,7 +406,7 @@ class TagLoader {
     var tag = this.tag;
     var dirname = this.dirname;
 
-    var path = markoModules.resolveFrom(dirname, value);
+    var path = resolveFrom(dirname, value);
     tag.nodeFactoryPath = path;
   }
 
