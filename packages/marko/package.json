@@ -7,7 +7,6 @@
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
         "complain": "^1.6.0",
-        "deresolve": "^1.1.2",
         "events-light": "^1.0.0",
         "htmljs-parser": "^2.7.1",
         "lasso-caching-fs": "^1.0.1",

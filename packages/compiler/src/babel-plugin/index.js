@@ -12,7 +12,19 @@ export default (api, options) => {
   options.translator = options.translator || "default";
 
   const isProduction = api.env("production");
-  const translator = require(`@marko/translator-${options.translator}`);
+  let translator;
+
+  if (typeof window === "undefined") {
+    translator = require(`@marko/translator-${options.translator}`);
+  } else {
+    if (translator !== "default") {
+      throw new Error(
+        "@marko/compiler: only the default translator can be used in the browser."
+      );
+    }
+
+    translator = require("@marko/translator-default");
+  }
 
   return {
     name: "marko",
