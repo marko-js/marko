@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.15](https://github.com/marko-js/marko/compare/v5.0.0-next.14...v5.0.0-next.15) (2020-05-26)
+
+
+### Features
+
+* **compiler:** require passing custom translator directly ([b9d4c46](https://github.com/marko-js/marko/commit/b9d4c46ff3b6d3685c01f7b82e591f3f90d4c02b))
+
+
+
+
+
 # [5.0.0-next.14](https://github.com/marko-js/marko/compare/v5.0.0-next.13...v5.0.0-next.14) (2020-05-26)
 
 
