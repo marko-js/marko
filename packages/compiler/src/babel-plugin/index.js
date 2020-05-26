@@ -9,21 +9,14 @@ import { buildLookup } from "../taglib";
 export default (api, options) => {
   api.assertVersion(7);
   options.output = options.output || "html";
-  options.translator = options.translator || "default";
 
   const isProduction = api.env("production");
-  let translator;
+  const translator = options.translator;
 
-  if (typeof window === "undefined") {
-    translator = require(`@marko/translator-${options.translator}`);
-  } else {
-    if (translator !== "default") {
-      throw new Error(
-        "@marko/compiler: only the default translator can be used in the browser."
-      );
-    }
-
-    translator = require("@marko/translator-default");
+  if (!translator || !translator.visitor) {
+    throw new Error(
+      "@marko/compiler: translator must provide a visitor object"
+    );
   }
 
   return {
