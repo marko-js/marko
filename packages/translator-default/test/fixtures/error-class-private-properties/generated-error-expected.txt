@@ -1,6 +1,6 @@
-packages/translator-default/test/fixtures/error-class-private-properties/template.marko(2,3): Unexpected character '#'
+packages/translator-default/test/fixtures/error-class-private-properties/template.marko: packages/translator-default/test/fixtures/error-class-private-properties/template.marko(2,3): Unknown PrivateName "#x"
   1 | class {
 > 2 |   #x = 1;
-    |   ^
+    |   ^^
   3 | }
   4 | <div/>
