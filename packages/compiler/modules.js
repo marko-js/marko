@@ -1,3 +1,4 @@
 "use strict";
 
-exports.require = require;
+exports.require =
+  process.env.BUNDLE || typeof window === "object" ? undefined : require;
