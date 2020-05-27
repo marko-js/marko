@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.18](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.17...v5.0.0-next.18) (2020-05-27)
+
+
+### Bug Fixes
+
+* **compiler:** modules override warning when compiled with webpack ([af28bac](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/af28bac6f60b268c88ebe28ab7d74807487cf3b1))
+
+
+
+
+
 # [5.0.0-next.17](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.16...v5.0.0-next.17) (2020-05-27)
 
 
