@@ -2,7 +2,7 @@
 var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
-var markoModules = require("../../compiler/modules");
+var markoModules = require("@marko/compiler/modules");
 var complain = require("complain");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 

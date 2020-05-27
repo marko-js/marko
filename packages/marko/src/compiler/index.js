@@ -1,5 +1,6 @@
 "use strict";
 
+var complain = "MARKO_DEBUG" && require("complain");
 var compiler = require("@marko/compiler");
 var extend = require("raptor-util/extend");
 var globalConfig = require("./config");
@@ -150,7 +151,19 @@ Object.defineProperties(exports, {
   },
   buildTaglibLookup: {
     get() {
-      return compiler.taglib.buildLookup;
+      return (dir, translator) => {
+        if (!translator || !Array.isArray(translator.taglibs)) {
+          translator = require("@marko/translator-default");
+          // eslint-disable-next-line no-constant-condition
+          if ("MARKO_DEBUG") {
+            complain(
+              "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`."
+            );
+          }
+        }
+
+        return compiler.taglib.buildLookup(dir, translator);
+      };
     }
   }
 });
@@ -166,4 +179,3 @@ exports.registerTaglib = function(filePath) {
 };
 
 exports.isVDOMSupported = true;
-exports.modules = require("./modules");

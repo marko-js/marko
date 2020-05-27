@@ -5,6 +5,7 @@ import parseParams from "./util/parse-params";
 import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
 import { getLocRange } from "./util/get-loc";
+import markoModules from "../../modules";
 import { types as t } from "@marko/babel-types";
 
 const EMPTY_OBJECT = {};
@@ -291,7 +292,7 @@ export function parse(fileNodePath) {
       }
 
       if (tagDef && tagDef.nodeFactoryPath) {
-        const module = require(tagDef.nodeFactoryPath);
+        const module = markoModules.require(tagDef.nodeFactoryPath);
         /* istanbul ignore next */
         const { default: fn = module } = module;
         fn(tag, t);

@@ -5,6 +5,7 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 import { NodePath, visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";
+import markoModules from "../../modules";
 
 export default (api, options) => {
   api.assertVersion(7);
@@ -27,7 +28,7 @@ export default (api, options) => {
         ...options,
         jsParseOptions,
         isProduction,
-        lookup: buildLookup(dirname(filename), translator.taglibs)
+        lookup: buildLookup(dirname(filename), translator)
       });
 
       // Only run on Marko files.
@@ -59,7 +60,7 @@ export default (api, options) => {
         );
         if (!options._migrateOnly) {
           const rootTransformers = hub.lookup.merged.transformers
-            .map(t => require(t.path))
+            .map(t => markoModules.require(t.path))
             .map(t => t.default || t)
             .map(t => t(api, options));
           nodePath.traverse(

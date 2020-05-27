@@ -3,7 +3,7 @@ var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
 var loaders = require("./loaders");
-var markoModules = require("../../compiler/modules");
+var markoModules = require("@marko/compiler/modules");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function handleImport(taglib, importedTaglib) {

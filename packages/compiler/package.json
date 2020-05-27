@@ -28,7 +28,8 @@
     "marko": "^5.0.0-next.15"
   },
   "files": [
-    "dist"
+    "dist",
+    "modules.js"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/compiler/README.md",
   "keywords": [

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
+import markoModules from "../../../modules";
 import { enter, exit } from "../util/plugin-hooks";
 
 /**
@@ -53,7 +54,7 @@ function getTransformersForTag(path) {
         Object.values((lookup.getTag("*") || { transformers: [] }).transformers)
       )
       .sort(comparePriority)
-      .map(({ path }) => require(path));
+      .map(({ path }) => markoModules.require(path));
   }
 
   return transformers;

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
+import markoModules from "../../../modules";
 import { enter, exit } from "../util/plugin-hooks";
 
 /**
@@ -40,7 +41,7 @@ function getMigratorsForTag(path) {
     migrators = MIGRATOR_CACHE[tagName] = [
       ...(tagDef ? tagDef.migratorPaths : []),
       ...(lookup.getTag("*") || { migratorPaths: [] }).migratorPaths
-    ].map(path => require(path));
+    ].map(path => markoModules.require(path));
   }
 
   return migrators;

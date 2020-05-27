@@ -21,13 +21,15 @@ const coreTaglibs = [
   )
 ];
 
-export function buildLookup(dirname, translator = "default") {
-  const translatorTaglibs = Array.isArray(translator)
-    ? translator
-    : require(`@marko/translator-${translator}`).taglibs;
+export function buildLookup(dirname, translator) {
+  if (!translator || !Array.isArray(translator.taglibs)) {
+    throw new Error(
+      "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)"
+    );
+  }
   const taglibsForDir = finder.find(
     dirname,
-    coreTaglibs.concat(translatorTaglibs)
+    coreTaglibs.concat(translator.taglibs)
   );
 
   const cacheKey = taglibsForDir.map(it => it.id).join();
