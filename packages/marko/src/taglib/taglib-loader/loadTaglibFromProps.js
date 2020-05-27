@@ -315,36 +315,6 @@ class TaglibLoader {
     taglib.migratorPath = path;
   }
 
-  textTransformer(value) {
-    // Marko allows a "text-transformer" to be registered. The provided
-    // text transformer will be called for any static text found in a template.
-    var taglib = this.taglib;
-    var dirname = this.dirname;
-
-    var transformer = new types.Transformer();
-
-    if (typeof value === "string") {
-      value = {
-        path: value
-      };
-    }
-
-    propertyHandlers(
-      value,
-      {
-        path(value) {
-          var path = resolveFrom(dirname, value);
-          transformer.path = path;
-        }
-      },
-      this.dependencyChain.append("textTransformer").toString()
-    );
-
-    ok(transformer.path, '"path" is required for transformer');
-
-    taglib.addTextTransformer(transformer);
-  }
-
   /**
    * Allows an ID to be explicitly assigned to a taglib.
    * The taglib ID is used to prevent the same taglib  (even if different versions)

@@ -21,9 +21,7 @@ function transformerComparator(a, b) {
 }
 
 function TAG_COMPARATOR(a, b) {
-  a = a.name;
-  b = b.name;
-  return a.localeCompare(b);
+  return a.name.localeCompare(b.name);
 }
 
 function merge(target, source) {
@@ -133,7 +131,6 @@ class TaglibLookup {
     merge(this.merged, {
       tags: taglib.tags,
       transformers: taglib.transformers,
-      textTransformers: taglib.textTransformers,
       attributes: taglib.attributes,
       patternAttributes: taglib.patternAttributes,
       attributeGroups: taglib.attributeGroups || {}
@@ -322,7 +319,7 @@ class TaglibLookup {
 
   forEachTemplateMigrator(callback, thisObj) {
     for (var key in this.taglibsById) {
-      var migration = this.taglibsById[key].getMigrator();
+      var migration = this.taglibsById[key].migratorPath;
       if (migration) {
         callback.call(thisObj, migration);
       }
@@ -396,7 +393,7 @@ class TaglibLookup {
     var transformers = [];
 
     function addTransformer(transformer) {
-      if (!transformer || !transformer.getFunc) {
+      if (!transformer || !transformer.path) {
         throw new Error("Invalid transformer");
       }
 
@@ -431,28 +428,6 @@ class TaglibLookup {
       this.merged.textTransformers.sort(transformerComparator);
       this.merged.textTransformers.forEach(callback, thisObj);
     }
-  }
-
-  getInputFiles() {
-    if (!this._inputFiles) {
-      var inputFilesSet = {};
-
-      for (var taglibId in this.taglibsById) {
-        if (hasOwnProperty.call(this.taglibsById, taglibId)) {
-          var taglibInputFiles = this.taglibsById[taglibId].getInputFiles();
-          var len = taglibInputFiles.length;
-          if (len) {
-            for (var i = 0; i < len; i++) {
-              inputFilesSet[taglibInputFiles[i]] = true;
-            }
-          }
-        }
-      }
-
-      this._inputFiles = Object.keys(inputFilesSet);
-    }
-
-    return this._inputFiles;
   }
 
   toString() {

@@ -49,10 +49,10 @@ export default (api, options) => {
       if (!options._parseOnly) {
         nodePath.get("program").scope.crawl(); // Initialize bindings.
         const rootMigrators = Object.values(hub.lookup.taglibsById)
-          .map(taglib => taglib.getMigrator())
-          .filter(m => m)
-          .map(m => m.default || m)
-          .map(m => m(api, options));
+          .map(it => it.migratorPath)
+          .filter(Boolean)
+          .map(it => markoModules.require(it))
+          .map(it => (it.default || it)(api, options));
         nodePath.traverse(
           rootMigrators.length
             ? visitors.merge(rootMigrators.concat(migrate))
@@ -60,9 +60,8 @@ export default (api, options) => {
         );
         if (!options._migrateOnly) {
           const rootTransformers = hub.lookup.merged.transformers
-            .map(t => markoModules.require(t.path))
-            .map(t => t.default || t)
-            .map(t => t(api, options));
+            .map(it => markoModules.require(it.path))
+            .map(it => (it.default || it)(api, options));
           nodePath.traverse(
             rootTransformers.length
               ? visitors.merge(rootTransformers.concat(transform))

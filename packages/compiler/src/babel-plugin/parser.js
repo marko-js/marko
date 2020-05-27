@@ -294,8 +294,7 @@ export function parse(fileNodePath) {
       if (tagDef && tagDef.nodeFactoryPath) {
         const module = markoModules.require(tagDef.nodeFactoryPath);
         /* istanbul ignore next */
-        const { default: fn = module } = module;
-        fn(tag, t);
+        (module.default || module)(tag, t);
       }
 
       currentTag = currentTag.parentPath.parentPath;
