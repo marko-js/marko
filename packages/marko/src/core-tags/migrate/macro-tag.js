@@ -81,9 +81,10 @@ module.exports = function migrator(elNode, context) {
         child.argument
       ) {
         const childArgs = builder.parseJavaScriptArgs(child.argument);
+        const childArgsLength = Math.min(params.length, childArgs.length);
         child.argument = undefined;
 
-        for (let i = 0; i < params.length; i++) {
+        for (let i = 0; i < childArgsLength; i++) {
           const name = params[i].name;
           const value = childArgs[i];
           child.addAttribute({ name: name, value: value });
