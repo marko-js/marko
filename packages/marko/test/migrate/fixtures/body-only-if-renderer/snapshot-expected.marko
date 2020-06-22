@@ -1,13 +1,13 @@
 <!-- packages/marko/test/migrate/fixtures/body-only-if-renderer/template.marko -->
 
-import NormalComponent from "./components/NormalComponent.marko"
-import Renderer from "./components/RendererComponent/renderer.js"
+import NormalComponent from "<NormalComponent>"
+import RendererComponent from "<RendererComponent>"
 
 <div>
     <${input.test ? null : NormalComponent}>Hello</>
     <${input.test
         ? null
         : {
-              renderer: Renderer
+              renderer: RendererComponent
           }}>World</>
 </div>

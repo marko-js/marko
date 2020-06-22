@@ -29,7 +29,7 @@ module.exports = function migrator(node, context) {
     let tagName =
       node.rawTagNameExpression ||
       (!tagDef.html
-        ? importTag(tagDef.renderer || tagDef.template, context)
+        ? importTag(`<${tagDef.name}>`, context)
         : builder.literal(node.tagName));
 
     if (!tagDef.html && tagDef.renderer) {
