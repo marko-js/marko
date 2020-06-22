@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.22.0](https://github.com/marko-js/marko/compare/v4.21.10...v4.22.0) (2020-06-22)
+
+
+### Features
+
+* add new import dynamic tag syntax to migrations ([#1562](https://github.com/marko-js/marko/issues/1562)) ([755ffd6](https://github.com/marko-js/marko/commit/755ffd6e15bfdf1769eae64946c40651e6d729a9))
+
+
+### Bug Fixes
+
+* issue with optional arguments for legacy macro migration ([#1577](https://github.com/marko-js/marko/issues/1577)) ([df556df](https://github.com/marko-js/marko/commit/df556df106c473a78fb5c10c02089754835929da))
+
 ### [4.21.10](https://github.com/marko-js/marko/compare/v4.21.9...v4.21.10) (2020-05-20)
 
 
