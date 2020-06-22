@@ -8,13 +8,12 @@ var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_IS_LEGACY = 4;
 // var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
-module.exports = function dataMarko(props, key, componentDef) {
+module.exports = function dataMarko(out, componentDef, props, key) {
   var result = "";
   var willNotRerender =
-    !componentDef ||
+    out.___components.___isPreserved ||
     (componentDef.___renderBoundary &&
-      (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0) ||
-    componentDef.___componentsContext.___isPreserved;
+      (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) === 0);
 
   if (willNotRerender) {
     if (props) {

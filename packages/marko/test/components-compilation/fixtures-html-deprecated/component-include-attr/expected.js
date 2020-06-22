@@ -14,7 +14,7 @@ function render(input, out, __component, widget, component) {
   var data = input;
 
   out.w("<div" +
-    marko_dataMarko(null, "@_wbind", __component) +
+    marko_dataMarko(out, __component, 0, "@_wbind") +
     " data-widget=/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index" +
     marko_attr("id", __component.elId()) +
     "><h1>Header</h1><div>");

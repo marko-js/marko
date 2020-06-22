@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.10](https://github.com/marko-js/marko/compare/v4.21.9...v4.21.10) (2020-05-20)
+
+
+### Bug Fixes
+
+* nextTick timing regression ([#1573](https://github.com/marko-js/marko/issues/1573)) ([65ecb6f](https://github.com/marko-js/marko/commit/65ecb6fa334c5bf533a1de54d7820f89dbf2081a))
+
+### [4.21.9](https://github.com/marko-js/marko/compare/v4.21.8...v4.21.9) (2020-05-12)
+
+### [4.21.8](https://github.com/marko-js/marko/compare/v4.21.7...v4.21.8) (2020-05-07)
+
+
+### Bug Fixes
+
+* support empty w-config ([#1570](https://github.com/marko-js/marko/issues/1570)) ([b62ff6a](https://github.com/marko-js/marko/commit/b62ff6a3ba1565ecfde5b8114682e3ac6d753903))
+
+### [4.21.7](https://github.com/marko-js/marko/compare/v4.21.6...v4.21.7) (2020-05-04)
+
+
+### Bug Fixes
+
+* components not always initializing inside client-reorder await ([#1566](https://github.com/marko-js/marko/issues/1566)) ([28b3b7f](https://github.com/marko-js/marko/commit/28b3b7f728b9aa42e035e00b37e811dbcce1c79a))
+
+### [4.21.6](https://github.com/marko-js/marko/compare/v4.21.5...v4.21.6) (2020-04-30)
+
+
+### Bug Fixes
+
+* issue with data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/issues/1564)) ([211a8a3](https://github.com/marko-js/marko/commit/211a8a334b58af035347cb4f91f4e6a625c35d82))
+
 ### [4.21.5](https://github.com/marko-js/marko/compare/v4.21.4...v4.21.5) (2020-04-24)
 
 

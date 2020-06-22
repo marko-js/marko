@@ -4,7 +4,7 @@ var updatesScheduled = false;
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
 
-var nextTick = require("../nextTick");
+var setImmediate = require("../setImmediate");
 
 /**
  * This function is called when we schedule the update of "unbatched"
@@ -26,13 +26,13 @@ function updateUnbatchedComponents() {
 function scheduleUpdates() {
   if (updatesScheduled) {
     // We have already scheduled a batched update for the
-    // process.nextTick so nothing to do
+    // nextTick so nothing to do
     return;
   }
 
   updatesScheduled = true;
 
-  nextTick(updateUnbatchedComponents);
+  setImmediate(updateUnbatchedComponents);
 }
 
 function updateComponents(queue) {
@@ -96,7 +96,7 @@ function queueComponentUpdate(component) {
     }
   } else {
     // We are not within a batched update. We need to schedule a batch update
-    // for the process.nextTick (if that hasn't been done already) and we will
+    // for the nextTick (if that hasn't been done already) and we will
     // add the component to the unbatched queued
     scheduleUpdates();
     unbatchedQueue.push(component);

@@ -27,7 +27,10 @@ class StartTag extends Node {
     var attributes = this.attributes;
 
     if (this.includeDataMarko) {
-      var dataMarkoArgs = [];
+      var dataMarkoArgs = [
+        builder.identifier("out"),
+        builder.identifier("__component")
+      ];
 
       var properties = this.properties;
       if (properties) {
@@ -48,14 +51,14 @@ class StartTag extends Node {
       }
 
       if (this.userKey) {
-        if (dataMarkoArgs.length === 0) {
-          dataMarkoArgs.push(builder.literal(null));
+        if (dataMarkoArgs.length === 2) {
+          dataMarkoArgs.push(builder.literal(0));
         }
 
-        dataMarkoArgs.push(this.userKey, builder.identifier("__component"));
+        dataMarkoArgs.push(this.userKey);
       }
 
-      if (dataMarkoArgs.length) {
+      if (dataMarkoArgs.length > 2) {
         nodes.push(
           builder.html(
             builder.functionCall(context.helper("dataMarko"), dataMarkoArgs)

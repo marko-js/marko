@@ -14,7 +14,7 @@ function render(input, out, __component, widget, component) {
   __component.t(marko_componentTypes[data.isMobile ? "default" : "mobile"]);
 
   out.w("<div" +
-    marko_dataMarko(null, "@_wbind", __component) +
+    marko_dataMarko(out, __component, 0, "@_wbind") +
     "></div>");
 }
 
