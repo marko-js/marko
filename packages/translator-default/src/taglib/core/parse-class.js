@@ -4,7 +4,10 @@ import getComponentFiles from "../../util/get-component-files";
 const SEEN_INLINE_CLASS = new WeakSet();
 
 export default function(path) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const { rawValue: code, start } = node;
 
   if (getComponentFiles(path).componentFile) {
@@ -15,7 +18,7 @@ export default function(path) {
       );
   }
 
-  if (SEEN_INLINE_CLASS.has(hub)) {
+  if (SEEN_INLINE_CLASS.has(file)) {
     throw path
       .get("name")
       .buildCodeFrameError(
@@ -23,14 +26,17 @@ export default function(path) {
       );
   }
 
-  const parsed = hub.parseExpression(code, start);
+  const parsed = file.parseExpression(code, start);
 
   if (parsed.id) {
-    throw hub.buildError(parsed.id, "Component class cannot have a name.");
+    throw file.buildCodeFrameError(
+      parsed.id,
+      "Component class cannot have a name."
+    );
   }
 
   if (parsed.superClass) {
-    throw hub.buildError(
+    throw file.buildCodeFrameError(
       parsed.superClass,
       "Component class cannot have a super class."
     );
@@ -40,12 +46,12 @@ export default function(path) {
     prop => t.isClassMethod(prop) && prop.kind === "constructor"
   );
   if (constructorProp) {
-    throw hub.buildError(
+    throw file.buildCodeFrameError(
       constructorProp.key,
       "The constructor method should not be used for a component, use onCreate instead."
     );
   }
 
-  SEEN_INLINE_CLASS.add(hub);
+  SEEN_INLINE_CLASS.add(file);
   path.replaceWith(t.markoClass(parsed.body));
 }

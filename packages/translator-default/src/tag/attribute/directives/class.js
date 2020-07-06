@@ -5,7 +5,9 @@ import withPreviousLocation from "../../../util/with-previous-location";
 
 export default {
   exit(tag, _, value) {
-    const { hub } = tag;
+    const {
+      hub: { file }
+    } = tag;
     if (!isNativeTag(tag)) return;
     if (value.isStringLiteral()) return;
 
@@ -16,7 +18,7 @@ export default {
         ? t.stringLiteral(classToString(computed) || "")
         : withPreviousLocation(
             t.callExpression(
-              hub.importDefault(
+              file.importDefault(
                 tag,
                 "marko/src/runtime/helpers/class-value",
                 "marko_class_merge"

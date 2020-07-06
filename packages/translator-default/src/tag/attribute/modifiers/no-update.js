@@ -7,18 +7,21 @@ const hasMonkeyPatch = new WeakSet();
  */
 export default {
   exit(tag, attr) {
-    const { node, hub } = tag;
+    const {
+      node,
+      hub: { file }
+    } = tag;
     const { properties } = node;
-    const isVDOM = hub.options.output !== "html";
+    const isVDOM = file._markoOptions.output !== "html";
     let prop = properties.find(({ key: { name } }) => name === "noupdate");
 
     if (!prop) {
       prop = t.objectProperty(t.identifier("noupdate"), t.arrayExpression([]));
       properties.push(prop);
 
-      if (isVDOM && !hasMonkeyPatch.has(hub)) {
-        hasMonkeyPatch.add(hub);
-        hub.importDefault(tag, "marko/src/runtime/vdom/preserve-attrs");
+      if (isVDOM && !hasMonkeyPatch.has(file)) {
+        hasMonkeyPatch.add(file);
+        file.importDefault(tag, "marko/src/runtime/vdom/preserve-attrs");
       }
     }
 

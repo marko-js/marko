@@ -3,9 +3,11 @@ import translateVDOM from "./index[vdom]";
 
 export default function(path) {
   const {
-    hub: { options }
+    hub: {
+      file: { _markoOptions }
+    }
   } = path;
-  if (options.output === "html") {
+  if (_markoOptions.output === "html") {
     translateHTML(path);
   } else {
     translateVDOM(path);

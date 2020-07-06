@@ -8,8 +8,11 @@ import withPreviousLocation from "../util/with-previous-location";
 const TAG_FILE_ENTRIES = ["template", "renderer"];
 
 export default function(path) {
-  const { hub, node } = path;
-  const { meta, options } = hub;
+  const {
+    hub: { file },
+    node
+  } = path;
+  const { _meta, _markoOptions } = file;
   const { name, key, isNullable } = node;
 
   assertNoArgs(path);
@@ -19,10 +22,10 @@ export default function(path) {
   if (t.isStringLiteral(name)) {
     const tagDef = getTagDef(path);
     const tagName = name.value;
-    const relativePath = tagDef && resolveRelativePath(hub, tagDef);
+    const relativePath = tagDef && resolveRelativePath(file, tagDef);
 
     if (!relativePath) {
-      if (options.ignoreUnrecognizedTags) {
+      if (_markoOptions.ignoreUnrecognizedTags) {
         return nativeTag(path);
       }
 
@@ -33,10 +36,10 @@ export default function(path) {
         );
     }
 
-    tagIdentifier = hub.importDefault(path, relativePath, tagName);
+    tagIdentifier = file.importDefault(path, relativePath, tagName);
 
-    if (!meta.tags.includes(relativePath)) {
-      meta.tags.push(relativePath);
+    if (!_meta.tags.includes(relativePath)) {
+      _meta.tags.push(relativePath);
     }
   } else {
     tagIdentifier = name;
@@ -46,7 +49,7 @@ export default function(path) {
   const customTagRenderCall = withPreviousLocation(
     t.expressionStatement(
       t.callExpression(
-        hub.importDefault(
+        file.importDefault(
           path,
           "marko/src/runtime/helpers/render-tag",
           "marko_tag"
@@ -56,7 +59,7 @@ export default function(path) {
           // TODO: this could be left as null if we froze input mutations and used a default object in the runtime.
           t.isNullLiteral(foundAttrs) ? t.objectExpression([]) : foundAttrs,
           t.identifier("out"),
-          hub._componentDefIdentifier,
+          file._componentDefIdentifier,
           key,
           ...buildEventHandlerArray(path)
         ]
@@ -99,9 +102,9 @@ export default function(path) {
   }
 }
 
-function resolveRelativePath(hub, tagDef) {
+function resolveRelativePath(file, tagDef) {
   for (const entry of TAG_FILE_ENTRIES) {
     if (!tagDef[entry]) continue;
-    return hub.resolveRelativePath(tagDef[entry]);
+    return file.resolveRelativePath(tagDef[entry]);
   }
 }

@@ -30,7 +30,9 @@ export function isMacroTag(path) {
 }
 
 export function getMacroIdentifier(path) {
-  return !isDynamicTag(path) && path.hub.macros[path.get("name.value").node];
+  return (
+    !isDynamicTag(path) && path.hub.file._macros[path.get("name.value").node]
+  );
 }
 
 export function getTagDef(path) {
@@ -40,8 +42,10 @@ export function getTagDef(path) {
     return cached.node;
   }
 
-  const { hub } = path;
-  const { lookup } = hub;
+  const {
+    hub: { file }
+  } = path;
+  const { _lookup } = file;
   let tagName;
 
   if (!(isMacroTag(path) || isDynamicTag(path))) {
@@ -50,7 +54,7 @@ export function getTagDef(path) {
       : path.get("name.value").node;
   }
 
-  const tagDef = (tagName && lookup.getTag(tagName)) || null;
+  const tagDef = (tagName && _lookup.getTag(tagName)) || null;
   path.set("tagDef", tagDef);
   return tagDef;
 }

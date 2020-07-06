@@ -8,11 +8,13 @@ const attachedDetachedLoaded = new WeakSet();
 
 export default {
   enter(attr) {
-    const { hub } = attr;
+    const {
+      hub: { file }
+    } = attr;
     const tag = attr.parentPath;
     const value = attr.get("value");
     const { name, arguments: args } = attr.node;
-    const isVDOM = hub.options.output !== "html";
+    const isVDOM = file._markoOptions.output !== "html";
 
     if (execModifiersAndDirectives("enter", tag, attr, value)) {
       return;
@@ -60,10 +62,10 @@ export default {
 
       if (isVDOM) {
         if (eventName === "attach" || eventName === "detach") {
-          if (!attachedDetachedLoaded.has(hub)) {
+          if (!attachedDetachedLoaded.has(file)) {
             // Pull in helper for element attach/detach;
-            attachedDetachedLoaded.add(hub);
-            hub.importDefault(
+            attachedDetachedLoaded.add(file);
+            file.importDefault(
               tag,
               "marko/src/runtime/components/attach-detach"
             );

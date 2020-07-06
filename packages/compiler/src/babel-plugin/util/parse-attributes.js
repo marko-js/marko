@@ -1,8 +1,8 @@
 import { types as t } from "@marko/babel-types";
 import parseArguments from "./parse-arguments";
 
-export default (hub, attributes, startPos) => {
-  const code = hub.getCode();
+export default (file, attributes, startPos) => {
+  const code = file.code;
   let attrEndPos = startPos;
 
   return attributes.map(attr => {
@@ -17,10 +17,10 @@ export default (hub, attributes, startPos) => {
 
       attrEndPos = attrStartPos + attrExpression.length;
 
-      const value = hub.parseExpression(attrExpression, attrStartPos + 3);
+      const value = file.parseExpression(attrExpression, attrStartPos + 3);
 
       // TODO: Inline merge object literals.
-      return hub.createNode(
+      return file.createNode(
         "markoSpreadAttribute",
         attrStartPos,
         attrEndPos,
@@ -41,20 +41,20 @@ export default (hub, attributes, startPos) => {
       attrEndPos = attr.endPos;
       const valueStart = attr.pos + 1; // Add one to account for "=".
       const rawValue = code.slice(valueStart, attrEndPos); // We use the raw value to ignore things like non standard placeholders.
-      value = hub.parseExpression(rawValue, valueStart);
+      value = file.parseExpression(rawValue, valueStart);
     } else {
       attrEndPos = attr.argument ? attr.argument.endPos + 1 : attr.endPos;
       value = t.booleanLiteral(true);
     }
 
-    return hub.createNode(
+    return file.createNode(
       "markoAttribute",
       attrStartPos,
       attrEndPos,
       name,
       value,
       modifier,
-      parseArguments(hub, attr.argument)
+      parseArguments(file, attr.argument)
     );
   });
 };

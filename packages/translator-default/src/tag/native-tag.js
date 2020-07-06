@@ -7,16 +7,18 @@ import {
 } from "@marko/babel-utils";
 
 export default function(path) {
-  const { hub } = path;
-  const { options } = hub;
+  const {
+    hub: { file }
+  } = path;
+  const { _markoOptions } = file;
 
-  if (!options.ignoreUnrecognizedTags) {
+  if (!_markoOptions.ignoreUnrecognizedTags) {
     assertNoArgs(path);
     assertNoParams(path);
     assertNoAttributeTags(path);
   }
 
-  if (options.output === "html") {
+  if (_markoOptions.output === "html") {
     nativeTagHtml(path);
   } else {
     nativeTagVdom(path);

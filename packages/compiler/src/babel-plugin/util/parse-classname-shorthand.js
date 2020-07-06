@@ -1,6 +1,6 @@
 import { types as t } from "@marko/babel-types";
 
-export default (hub, shorthands, attributes) => {
+export default (file, shorthands, attributes) => {
   if (!shorthands) {
     return attributes;
   }
@@ -9,8 +9,8 @@ export default (hub, shorthands, attributes) => {
   const classParts = shorthands.map(({ rawParts }) => {
     const nodes = rawParts.map(part =>
       part.expression
-        ? hub.parseExpression(part.expression, part.pos)
-        : hub.createNode("stringLiteral", part.pos, part.endPos, part.text)
+        ? file.parseExpression(part.expression, part.pos)
+        : file.createNode("stringLiteral", part.pos, part.endPos, part.text)
     );
 
     if (nodes.length === 1) {
@@ -27,7 +27,7 @@ export default (hub, shorthands, attributes) => {
     const combinedStartPos = shorthands[0].rawParts[0].pos;
     const lastParts = shorthands[shorthands.length - 1].rawParts;
     const combinedEndPos = lastParts[lastParts.length - 1].endPos;
-    shorthandNode = hub.createNode(
+    shorthandNode = file.createNode(
       "stringLiteral",
       combinedStartPos,
       combinedEndPos,

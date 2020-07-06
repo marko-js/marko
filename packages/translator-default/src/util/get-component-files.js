@@ -8,7 +8,7 @@ export default function getComponentFiles({ hub }) {
     return CACHE.get(hub);
   }
 
-  const { filename } = hub;
+  const { filename } = hub.file.opts;
   const ext = path.extname(filename);
   const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
