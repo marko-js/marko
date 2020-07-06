@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.19](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.18...v5.0.0-next.19) (2020-07-06)
+
+
+### Bug Fixes
+
+* support manually registered taglibs ([9dc4d07](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/9dc4d07d1bfe4bb1c898e16a28289f021917c75f))
+
+
+
+
+
 # [5.0.0-next.18](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.17...v5.0.0-next.18) (2020-05-27)
 
 
