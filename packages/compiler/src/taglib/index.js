@@ -1,12 +1,13 @@
 import loader from "marko/src/taglib/taglib-loader";
 import finder from "marko/src/taglib/taglib-finder";
+import { registeredTaglibs } from "marko/src/taglib/taglib-lookup";
 import TaglibLookup from "marko/src/taglib/taglib-lookup/TaglibLookup";
 
 export { excludeDir, excludePackage } from "marko/src/taglib/taglib-finder";
 
 let lookupCache = Object.create(null);
 
-const coreTaglibs = [
+registeredTaglibs.push(
   loader.loadTaglibFromProps(
     loader.createTaglib(require.resolve("./html/marko.json")),
     require("./html/marko.json")
@@ -19,7 +20,7 @@ const coreTaglibs = [
     loader.createTaglib(require.resolve("./math/marko.json")),
     require("./math/marko.json")
   )
-];
+);
 
 export function buildLookup(dirname, translator) {
   if (!translator || !Array.isArray(translator.taglibs)) {
@@ -29,7 +30,7 @@ export function buildLookup(dirname, translator) {
   }
   const taglibsForDir = finder.find(
     dirname,
-    coreTaglibs.concat(translator.taglibs)
+    registeredTaglibs.concat(translator.taglibs)
   );
 
   const cacheKey = taglibsForDir.map(it => it.id).join();
