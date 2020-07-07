@@ -51,6 +51,7 @@
     "mocha": "^5.2.0",
     "mocha-autotest": "^1.0.3",
     "nyc": "^15.0.0",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "shell-quote": "^1.7.2"
   }
 }
