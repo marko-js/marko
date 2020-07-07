@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.21](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.20...v5.0.0-next.21) (2020-07-07)
+
+
+### Features
+
+* switch to storing marko meta on babels metadata ([ee6ad38](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/ee6ad38d9f31fe1d1314350ddd011a39c6c2ab9a))
+
+
+
+
+
 # [5.0.0-next.20](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.19...v5.0.0-next.20) (2020-07-07)
 
 **Note:** Version bump only for package @marko/translator-default
