@@ -18,7 +18,7 @@ export default function(path, attrs) {
   for (let i = 0; i < attrs.length; i++) {
     const attr = attrs[i];
     const {
-      hub,
+      hub: { file },
       node: { name, value }
     } = attr;
 
@@ -56,7 +56,7 @@ export default function(path, attrs) {
 
       expressions.push(
         t.callExpression(
-          hub.importDefault(
+          file.importDefault(
             attr,
             "marko/src/runtime/html/helpers/attr",
             "marko_attr"
@@ -69,7 +69,7 @@ export default function(path, attrs) {
   quasis.push(curString);
   if (hasSpread) {
     return t.callExpression(
-      path.hub.importDefault(
+      path.hub.file.importDefault(
         path,
         "marko/src/runtime/html/helpers/attrs",
         "marko_attrs"

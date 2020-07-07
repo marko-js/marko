@@ -6,14 +6,14 @@ const startOffset = "module-code".length;
 
 export default function parse(path) {
   const {
-    hub,
+    hub: { file },
     node: { rawValue, start }
   } = path;
-  const dirname = nodePath.dirname(hub.filename);
+  const dirname = nodePath.dirname(file.opts.filename);
   const relativeRequire = entry =>
     markoModules.require(resolveFrom(dirname, entry));
   const fn = eval(rawValue.slice(startOffset));
   const source = fn(relativeRequire);
-  const program = hub.parse(source, start + startOffset);
-  hub.moduleCode = program.body;
+  const program = file.parse(source, start + startOffset);
+  file._moduleCode = program.body;
 }

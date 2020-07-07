@@ -8,7 +8,7 @@ import { enter, exit } from "../util/plugin-hooks";
  */
 export const visitor = {
   Program(path) {
-    path.hub._componentDefIdentifier = path.scope.generateUidIdentifier(
+    path.hub.file._componentDefIdentifier = path.scope.generateUidIdentifier(
       "component"
     );
   },
@@ -35,11 +35,13 @@ export const visitor = {
 };
 
 function getTransformersForTag(path) {
-  const { hub } = path;
-  const { lookup } = hub;
+  const {
+    hub: { file }
+  } = path;
+  const { _lookup } = file;
   const tagName = path.get("name.value").node || "*";
-  const TRANSFORMER_CACHE = (lookup.TRANSFORMER_CACHE =
-    lookup.TRANSFORMER_CACHE || {});
+  const TRANSFORMER_CACHE = (_lookup.TRANSFORMER_CACHE =
+    _lookup.TRANSFORMER_CACHE || {});
 
   let transformers = TRANSFORMER_CACHE[tagName];
 
@@ -51,7 +53,9 @@ function getTransformersForTag(path) {
       : []
     )
       .concat(
-        Object.values((lookup.getTag("*") || { transformers: [] }).transformers)
+        Object.values(
+          (_lookup.getTag("*") || { transformers: [] }).transformers
+        )
       )
       .sort(comparePriority)
       .map(({ path }) => markoModules.require(path));

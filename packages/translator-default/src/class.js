@@ -2,7 +2,7 @@ import { types as t } from "@marko/babel-types";
 
 export default function(path) {
   const {
-    hub,
+    hub: { file },
     node: {
       body: { body }
     }
@@ -36,7 +36,10 @@ export default function(path) {
         return undefined;
       }
 
-      throw hub.buildError(prop, "Unsupported class property on component.");
+      throw file.buildCodeFrameError(
+        prop,
+        "Unsupported class property on component."
+      );
     })
     .filter(Boolean);
 
@@ -55,6 +58,6 @@ export default function(path) {
     onCreateMethod.body.body.unshift(...classProperties);
   }
 
-  hub.inlineComponentClass = t.objectExpression(objectProperties);
+  file._inlineComponentClass = t.objectExpression(objectProperties);
   path.remove();
 }

@@ -27,7 +27,10 @@ const ESCAPE_TYPES = {
 };
 
 export default function(path) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const { confident, value: computed } = path.get("value").evaluate();
   let { escape, value } = node;
 
@@ -39,20 +42,20 @@ export default function(path) {
       ? t.stringLiteral(escapeType.fn(computed))
       : t.callExpression(
           escapeType.name
-            ? hub.importNamed(
+            ? file.importNamed(
                 path,
                 escapeType.module,
                 escapeType.name,
                 escapeType.alias
               )
-            : hub.importDefault(path, escapeType.module, escapeType.alias),
+            : file.importDefault(path, escapeType.module, escapeType.alias),
           [value]
         );
   } else {
     value = confident
       ? t.stringLiteral(toString(computed))
       : t.callExpression(
-          hub.importDefault(
+          file.importDefault(
             path,
             "marko/src/runtime/helpers/to-string",
             "marko_to_string"

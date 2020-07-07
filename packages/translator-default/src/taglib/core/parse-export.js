@@ -1,6 +1,9 @@
 export default function(path) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const { rawValue, start } = node;
-  const [exportNode] = hub.parse(rawValue, start).body;
+  const [exportNode] = file.parse(rawValue, start).body;
   path.replaceWith(exportNode);
 }

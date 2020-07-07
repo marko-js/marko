@@ -28,10 +28,13 @@ export const visitor = {
 };
 
 function getMigratorsForTag(path) {
-  const { hub } = path;
-  const { lookup } = hub;
+  const {
+    hub: { file }
+  } = path;
+  const { _lookup } = file;
   const tagName = path.get("name.value").node;
-  const MIGRATOR_CACHE = (lookup.MIGRATOR_CACHE = lookup.MIGRATOR_CACHE || {});
+  const MIGRATOR_CACHE = (_lookup.MIGRATOR_CACHE =
+    _lookup.MIGRATOR_CACHE || {});
 
   let migrators = MIGRATOR_CACHE[tagName];
 
@@ -40,7 +43,7 @@ function getMigratorsForTag(path) {
 
     migrators = MIGRATOR_CACHE[tagName] = [
       ...(tagDef ? tagDef.migratorPaths : []),
-      ...(lookup.getTag("*") || { migratorPaths: [] }).migratorPaths
+      ...(_lookup.getTag("*") || { migratorPaths: [] }).migratorPaths
     ].map(path => markoModules.require(path));
   }
 

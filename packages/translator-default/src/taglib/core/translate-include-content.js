@@ -4,7 +4,9 @@ import { types as t } from "@marko/babel-types";
 import { assertNoParams, assertNoAttributes } from "@marko/babel-utils";
 
 export function enter(path) {
-  const { hub } = path;
+  const {
+    hub: { file }
+  } = path;
   assertNoParams(path);
   assertNoAttributes(path);
 
@@ -26,7 +28,7 @@ export function enter(path) {
     );
   }
 
-  const dir = nodePath.dirname(hub.filename);
+  const dir = nodePath.dirname(file.opts.filename);
   const fullPath = nodePath.resolve(dir, content.node.value);
 
   try {

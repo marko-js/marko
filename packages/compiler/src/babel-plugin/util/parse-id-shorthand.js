@@ -1,19 +1,22 @@
 import { types as t } from "@marko/babel-types";
 
-export default (hub, shorthand, attributes) => {
+export default (file, shorthand, attributes) => {
   if (!shorthand) {
     return attributes;
   }
 
   const idAttr = attributes.find(({ name }) => name === "id");
   if (idAttr) {
-    throw hub.buildError(idAttr, "Cannot have shorthand id and id attribute.");
+    throw file.buildCodeFrameError(
+      idAttr,
+      "Cannot have shorthand id and id attribute."
+    );
   }
 
   const idParts = shorthand.rawParts.map(part =>
     part.expression
-      ? hub.parseExpression(part.expression, part.pos)
-      : hub.createNode("stringLiteral", part.pos, part.endPos, part.text)
+      ? file.parseExpression(part.expression, part.pos)
+      : file.createNode("stringLiteral", part.pos, part.endPos, part.text)
   );
 
   attributes.push(

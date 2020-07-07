@@ -45,7 +45,7 @@ export default {
       }
     }
 
-    if (path.hub.options.ignoreUnrecognizedTags && !tagDef) {
+    if (path.hub.file._markoOptions.ignoreUnrecognizedTags && !tagDef) {
       findAttributeTags(path).forEach(child => {
         child.set(
           "name",

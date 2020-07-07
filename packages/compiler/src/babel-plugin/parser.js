@@ -16,15 +16,14 @@ const htmlTrim = t => htmlTrimStart(htmlTrimEnd(t));
 const isAttributeTag = node =>
   t.isStringLiteral(node.name) && node.name.value[0] === "@";
 
-export function parse(fileNodePath) {
-  const { hub } = fileNodePath;
-  const { filename, htmlParseOptions = {} } = hub;
-  const { preserveWhitespace } = htmlParseOptions;
-  const code = hub.getCode();
-  const getTagBody = () =>
-    currentTag.get(currentTag.isFile() ? "program" : "body");
+export function parse(file) {
+  const { code } = file;
+  const { htmlParseOptions = {} } = file._markoOptions;
   const pushTagBody = node => getTagBody().pushContainer("body", node);
-  let currentTag = fileNodePath;
+  const getTagBody = () =>
+    currentTag.isProgram() ? currentTag : currentTag.get("body");
+  let { preserveWhitespace } = htmlParseOptions;
+  let currentTag = file.path;
   let preservingWhitespaceUntil = preserveWhitespace;
   let wasSelfClosing = false;
   let handledTagName = false;
@@ -32,27 +31,27 @@ export function parse(fileNodePath) {
 
   const handlers = {
     onDocumentType({ value, pos, endPos }) {
-      const node = hub.createNode("markoDocumentType", pos, endPos, value);
+      const node = file.createNode("markoDocumentType", pos, endPos, value);
       pushTagBody(node);
       /* istanbul ignore next */
       onNext = onNext && onNext(node);
     },
 
     onDeclaration({ value, pos, endPos }) {
-      const node = hub.createNode("markoDeclaration", pos, endPos, value);
+      const node = file.createNode("markoDeclaration", pos, endPos, value);
       pushTagBody(node);
       /* istanbul ignore next */
       onNext = onNext && onNext(node);
     },
 
     onComment({ value, pos, endPos }) {
-      const node = hub.createNode("markoComment", pos, endPos, value);
+      const node = file.createNode("markoComment", pos, endPos, value);
       pushTagBody(node);
       onNext = onNext && onNext(node);
     },
 
     onCDATA({ value, pos, endPos }) {
-      const node = hub.createNode("markoCDATA", pos, endPos, value);
+      const node = file.createNode("markoCDATA", pos, endPos, value);
       pushTagBody(node);
       onNext = onNext && onNext(node);
     },
@@ -99,7 +98,7 @@ export function parse(fileNodePath) {
       }
 
       const endPos = pos + value.length;
-      const node = hub.createNode("markoText", pos, endPos, value);
+      const node = file.createNode("markoText", pos, endPos, value);
       const prevBody = getTagBody().node.body;
       pushTagBody(node);
       onNext && onNext(node);
@@ -116,11 +115,14 @@ export function parse(fileNodePath) {
 
     onPlaceholder({ escape, value, withinBody, pos, endPos }) {
       if (withinBody) {
-        const node = hub.createNode(
+        const node = file.createNode(
           "markoPlaceholder",
           pos,
           endPos,
-          hub.parseExpression(value, pos + (escape ? 2 /* ${ */ : 3) /* $!{ */),
+          file.parseExpression(
+            value,
+            pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
+          ),
           escape
         );
 
@@ -131,7 +133,7 @@ export function parse(fileNodePath) {
 
     onScriptlet({ value, line, block, pos, endPos }) {
       if (!line && !block) {
-        throw hub.buildError(
+        throw file.buildCodeFrameError(
           { start: pos, end: endPos },
           "<% scriptlets %> are no longer supported."
         );
@@ -140,11 +142,11 @@ export function parse(fileNodePath) {
       pos -= 1; // Include $.
       // Scriptlets are ignored as content and don't call `onNext`.
       pushTagBody(
-        hub.createNode(
+        file.createNode(
           "markoScriptlet",
           pos,
           endPos,
-          hub.parse(value, pos + 2 /** Ignores leading `$ ` */).body
+          file.parse(value, pos + 2 /** Ignores leading `$ ` */).body
         )
       );
     },
@@ -154,25 +156,28 @@ export function parse(fileNodePath) {
       const tagName = event.tagName || "div";
       const [, tagNameExpression] =
         /^\$\{([\s\S]*)\}/.exec(tagName) || EMPTY_ARRAY;
-      const tagDef = !tagNameExpression && hub.lookup.getTag(tagName);
+      const tagDef = !tagNameExpression && file._lookup.getTag(tagName);
       const tagNameStartPos = pos + (event.concise ? 0 : 1); // Account for leading `<`.
 
       handledTagName = true;
 
       if (tagNameExpression === "") {
-        throw hub.buildError(
+        throw file.buildCodeFrameError(
           { start: tagNameStartPos + 1, end: tagNameStartPos + 3 },
           "Missing expression for <${dynamic}> tag."
         );
       }
 
-      const node = hub.createNode(
+      const node = file.createNode(
         "markoTag",
         pos,
         endPos,
         tagNameExpression
-          ? hub.parseExpression(tagNameExpression, tagNameStartPos + 2 /* ${ */)
-          : hub.createNode(
+          ? file.parseExpression(
+              tagNameExpression,
+              tagNameStartPos + 2 /* ${ */
+            )
+          : file.createNode(
               "stringLiteral",
               tagNameStartPos,
               tagNameStartPos + tagName.length,
@@ -189,8 +194,8 @@ export function parse(fileNodePath) {
         if (parseOptions) {
           event.setParseOptions(parseOptions);
 
-          if (parseOptions.rootOnly && !currentTag.isFile()) {
-            throw hub.buildError(
+          if (parseOptions.rootOnly && !currentTag.isProgram()) {
+            throw file.buildCodeFrameError(
               { start: pos, end: endPos },
               `"${tagName}" tags must be at the root of your Marko template.`
             );
@@ -233,17 +238,17 @@ export function parse(fileNodePath) {
       }
 
       if (!parseOptions.ignoreAttributes) {
-        currentTag.set("params", parseParams(hub, event.params));
-        currentTag.set("arguments", parseArguments(hub, event.argument));
+        currentTag.set("params", parseParams(file, event.params));
+        currentTag.set("arguments", parseArguments(file, event.argument));
         currentTag.set(
           "attributes",
           parseIDShorthand(
-            hub,
+            file,
             event.shorthandId,
             parseClassnameShorthand(
-              hub,
+              file,
               event.shorthandClassNames,
-              parseAttributes(hub, event.attributes, tagNameEndPos)
+              parseAttributes(file, event.attributes, tagNameEndPos)
             )
           )
         );
@@ -285,7 +290,7 @@ export function parse(fileNodePath) {
         code[pos + 1] !== "/" &&
         !currentTag.get("name").isStringLiteral()
       ) {
-        throw hub.buildError(
+        throw file.buildCodeFrameError(
           { start: pos, end: endPos },
           `Invalid ending for dynamic tag, expected "</>".`
         );
@@ -297,7 +302,7 @@ export function parse(fileNodePath) {
         (module.default || module)(tag, t);
       }
 
-      currentTag = currentTag.parentPath.parentPath;
+      currentTag = currentTag.parentPath.parentPath || file.path;
     },
 
     onfinish() {
@@ -306,17 +311,17 @@ export function parse(fileNodePath) {
 
     onError({ message, pos, endPos }) {
       if (message.includes("EOF")) endPos = pos;
-      throw hub.buildError({ start: pos, end: endPos }, message);
+      throw file.buildCodeFrameError({ start: pos, end: endPos }, message);
     }
   };
 
   createParser(handlers, {
     isOpenTagOnly(name) {
       const { parseOptions = EMPTY_OBJECT } =
-        hub.lookup.getTag(name) || EMPTY_OBJECT;
+        file._lookup.getTag(name) || EMPTY_OBJECT;
       return parseOptions.openTagOnly;
     },
     ignoreNonstandardStringPlaceholders: true,
     ...htmlParseOptions
-  }).parse(code, filename);
+  }).parse(code, file.opts.filename);
 }
