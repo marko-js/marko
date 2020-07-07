@@ -40,7 +40,7 @@ export class MarkoFile extends File {
     this._lookup = buildLookup(path.dirname(filename), markoOptions.translator);
     this._imports = Object.create(null);
     this._macros = Object.create(null);
-    this._meta = {
+    this.metadata.marko = {
       id: checksum(this.getClientPath(filename)),
       deps: [],
       tags: []

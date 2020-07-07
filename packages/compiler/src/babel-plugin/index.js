@@ -71,12 +71,14 @@ export default (api, markoOptions) => {
         }
       }
 
-      file.ast.markoMeta = file._meta;
-      return t.cloneDeep(file.ast);
+      const result = t.cloneDeep(file.ast);
+      result._meta = file.metadata.marko;
+      return result;
     },
     pre(file) {
-      // Attach marko metadata to babel metadata.
-      file.metadata.marko = file.ast.markoMeta;
+      // Copy over the Marko specific metadata.
+      file.metadata.marko = file.ast._meta;
+      delete file.ast._meta;
     }
   };
 };

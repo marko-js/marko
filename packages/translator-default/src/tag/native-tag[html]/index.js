@@ -32,7 +32,7 @@ export default function(path) {
     const { parseOptions = EMPTY_OBJECT } = tagDef;
     if (parseOptions.import) {
       // TODO: the taglib should be updated to support this as a top level option.
-      file._meta.deps.push(resolve(tagDef.dir, parseOptions.import));
+      file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
     }
   }
 

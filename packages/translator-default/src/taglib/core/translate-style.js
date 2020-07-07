@@ -12,7 +12,7 @@ export function exit(path) {
   }
 
   const base = basename(file.opts.filename);
-  file._meta.deps.push({
+  file.metadata.marko.deps.push({
     type,
     code: code.trim(),
     path: `./${base}`,

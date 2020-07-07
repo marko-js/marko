@@ -119,7 +119,7 @@ export default function(path) {
       node.runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
       if (parseOptions.import) {
         // TODO: the taglib should be updated to support this as a top level option.
-        file._meta.deps.push(resolve(tagDef.dir, parseOptions.import));
+        file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
       }
     } else if (
       htmlType === "svg" ||

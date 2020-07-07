@@ -52,7 +52,8 @@ export const visitor = {
       const {
         hub: { file }
       } = path;
-      const { _markoOptions, _meta, _inlineComponentClass } = file;
+      const { _markoOptions, _inlineComponentClass } = file;
+      const meta = file.metadata.marko;
       const {
         styleFile,
         packageFile,
@@ -64,27 +65,27 @@ export const visitor = {
       let isImplicit = !file._hasTagParams;
 
       if (packageFile) {
-        _meta.deps.unshift(packageFile);
+        meta.deps.unshift(packageFile);
       }
 
       if (styleFile) {
-        _meta.deps.unshift(styleFile);
+        meta.deps.unshift(styleFile);
       }
 
       if (componentFile || _inlineComponentClass) {
         isImplicit = false;
-        _meta.component = file.opts.filename;
+        meta.component = file.opts.filename;
       }
 
       if (componentBrowserFile) {
         isImplicit = false;
         isSplit = true;
-        _meta.component = componentBrowserFile;
+        meta.component = componentBrowserFile;
       }
 
-      _meta.component =
-        _meta.component && file.resolveRelativePath(_meta.component);
-      _meta.deps = _meta.deps.map(filename =>
+      meta.component =
+        meta.component && file.resolveRelativePath(meta.component);
+      meta.deps = meta.deps.map(filename =>
         typeof filename === "string"
           ? file.resolveRelativePath(filename)
           : filename
@@ -123,7 +124,7 @@ export const visitor = {
         templateIdentifier,
         t.identifier("meta")
       );
-      const componentId = _meta.id;
+      const componentId = meta.id;
 
       if (_markoOptions.writeVersionComment) {
         path.addComment(
@@ -255,29 +256,29 @@ export const visitor = {
           t.objectProperty(t.identifier("id"), componentTypeIdentifier)
         ]);
 
-        if (_meta.component) {
+        if (meta.component) {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("component"),
-              t.stringLiteral(_meta.component)
+              t.stringLiteral(meta.component)
             )
           );
         }
 
-        if (_meta.deps.length) {
+        if (meta.deps.length) {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("deps"),
-              file.parseExpression(JSON.stringify(_meta.deps), file.code.length)
+              file.parseExpression(JSON.stringify(meta.deps), file.code.length)
             )
           );
         }
 
-        if (_meta.tags.length) {
+        if (meta.tags.length) {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("tags"),
-              t.arrayExpression(_meta.tags.map(tag => t.stringLiteral(tag)))
+              t.arrayExpression(meta.tags.map(tag => t.stringLiteral(tag)))
             )
           );
         }

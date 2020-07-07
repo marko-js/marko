@@ -12,7 +12,7 @@ export default function(path) {
     hub: { file },
     node
   } = path;
-  const { _meta, _markoOptions } = file;
+  const { metadata, _markoOptions } = file;
   const { name, key, isNullable } = node;
 
   assertNoArgs(path);
@@ -38,8 +38,8 @@ export default function(path) {
 
     tagIdentifier = file.importDefault(path, relativePath, tagName);
 
-    if (!_meta.tags.includes(relativePath)) {
-      _meta.tags.push(relativePath);
+    if (!metadata.marko.tags.includes(relativePath)) {
+      metadata.marko.tags.push(relativePath);
     }
   } else {
     tagIdentifier = name;
