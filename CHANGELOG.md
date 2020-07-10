@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.22](https://github.com/marko-js/marko/compare/v5.0.0-next.21...v5.0.0-next.22) (2020-07-10)
+
+
+### Bug Fixes
+
+* **translator-default:** mixing repeated and non-repeated attributes ([f93534f](https://github.com/marko-js/marko/commit/f93534faf1da8254cf1a1cfe3284da35468be7d5))
+
+
+
+
+
 # [5.0.0-next.21](https://github.com/marko-js/marko/compare/v5.0.0-next.20...v5.0.0-next.21) (2020-07-07)
 
 
