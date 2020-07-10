@@ -28,10 +28,10 @@ export default function(path) {
     tagDef || EMPTY_OBJECT;
   const isDynamic = isRepeated || parentPath !== path.parentPath.parentPath;
   parentPath.node.exampleAttributeTag = node;
-  parentPath.node.hasDynamicAttributeTags =
-    isDynamic || node.hasDynamicAttributeTags;
 
-  if (!isDynamic) {
+  if (isDynamic) {
+    parentPath.node.hasDynamicAttributeTags = true;
+  } else {
     if (
       parentAttributes.some(attr => attr.get("name").node === targetProperty)
     ) {
