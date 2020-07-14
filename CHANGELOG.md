@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.23](https://github.com/marko-js/marko/compare/v5.0.0-next.22...v5.0.0-next.23) (2020-07-14)
+
+
+### Features
+
+* expose inline style block position for better sourcemaps ([83e6dca](https://github.com/marko-js/marko/commit/83e6dcaf5ca7d30e64493ddc95b22cb05a2ecc54))
+
+
+
+
+
 # [5.0.0-next.22](https://github.com/marko-js/marko/compare/v5.0.0-next.21...v5.0.0-next.22) (2020-07-10)
 
 
