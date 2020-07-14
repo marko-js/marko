@@ -5,7 +5,7 @@ export function exit(path) {
     hub: { file },
     node
   } = path;
-  const { _styleType: type, _styleCode: code } = node;
+  const { _styleType: type } = node;
 
   if (!type) {
     return;
@@ -14,7 +14,9 @@ export function exit(path) {
   const base = basename(file.opts.filename);
   file.metadata.marko.deps.push({
     type,
-    code: code.trim(),
+    code: node._styleCode,
+    startPos: node._styleCodeStart,
+    endPos: node._styleCodeEnd,
     path: `./${base}`,
     virtualPath: `./${base}.${type}`
   });
