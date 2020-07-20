@@ -10,11 +10,11 @@ module.exports = function render(input, out) {
     shouldPreserve && (isHydrate || ownerComponent.___keyedElements[key])
   );
 
-  out.___beginFragment(key, ownerComponent, shouldPreserve);
+  out.bf(key, ownerComponent, shouldPreserve);
 
   if (!isPreserved && input.renderBody) {
     input.renderBody(out);
   }
 
-  out.___endFragment();
+  out.ef();
 };

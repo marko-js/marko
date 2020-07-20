@@ -69,8 +69,38 @@ module.exports = function generateCode(node, codegen) {
   }
 
   if (isNullable) {
-    startTag = builder.ifStatement(tagName, startTag);
-    endTag = endTag && builder.ifStatement(tagName, endTag);
+    startTag = builder.ifStatement(
+      tagName,
+      startTag,
+      builder.elseStatement(
+        builder.functionCall(
+          builder.memberExpression(
+            builder.identifier("out"),
+            builder.identifier("bf")
+          ),
+          [
+            builder.concat(builder.literal("f_"), node.key),
+            builder.identifier("component"),
+            builder.literal(1)
+          ]
+        )
+      )
+    );
+    endTag =
+      endTag &&
+      builder.ifStatement(
+        tagName,
+        endTag,
+        builder.elseStatement(
+          builder.functionCall(
+            builder.memberExpression(
+              builder.identifier("out"),
+              builder.identifier("ef")
+            ),
+            []
+          )
+        )
+      );
   }
 
   if (isCustomElement && attributes && attributes.length) {

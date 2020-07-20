@@ -571,7 +571,7 @@ var proto = (AsyncStream.prototype = {
     this.write(escapeXmlOrNullish(str));
   },
 
-  ___beginFragment: function(key, component, preserve) {
+  bf: function(key, component, preserve) {
     if (preserve) {
       this.write("<!--F#" + escapeXmlString(key) + "-->");
     }
@@ -582,7 +582,7 @@ var proto = (AsyncStream.prototype = {
     }
   },
 
-  ___endFragment: function() {
+  ef: function() {
     var preserve = this._elStack.pop();
     if (preserve) {
       this.write("<!--F/-->");
