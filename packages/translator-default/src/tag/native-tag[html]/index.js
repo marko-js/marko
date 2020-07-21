@@ -19,6 +19,7 @@ export default function(path) {
     node
   } = path;
   const {
+    key,
     name,
     body: { body },
     isNullable,
@@ -92,7 +93,7 @@ export default function(path) {
           dataMarkoArgs.push(t.numericLiteral(0));
         }
 
-        dataMarkoArgs.push(path.get("key").node, file._componentDefIdentifier);
+        dataMarkoArgs.push(key, file._componentDefIdentifier);
       }
 
       if (dataMarkoArgs.length > 2) {
@@ -125,7 +126,20 @@ export default function(path) {
   );
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(name, writeStartNode);
+    writeStartNode = t.ifStatement(
+      name,
+      writeStartNode,
+      t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.identifier("out"), t.identifier("bf")),
+          [
+            normalizeTemplateString`f_${key}`,
+            t.identifier("component"),
+            t.numericLiteral(1)
+          ]
+        )
+      )
+    );
   }
 
   if (isEmpty) {
@@ -146,7 +160,16 @@ export default function(path) {
   let writeEndNode = write`</${name}>`;
 
   if (isNullable) {
-    writeEndNode = t.ifStatement(name, writeEndNode);
+    writeEndNode = t.ifStatement(
+      name,
+      writeEndNode,
+      t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.identifier("out"), t.identifier("ef")),
+          []
+        )
+      )
+    );
   }
 
   path.replaceWithMultiple(

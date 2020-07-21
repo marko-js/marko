@@ -181,13 +181,13 @@ var proto = (AsyncVDOMBuilder.prototype = {
     );
   },
 
-  ___beginFragment: function(key, component, preserve) {
+  bf: function(key, component, preserve) {
     var fragment = new VFragment(key, component, preserve);
     this.___beginNode(fragment, null, true);
     return this;
   },
 
-  ___endFragment: function() {
+  ef: function() {
     this.endElement();
   },
 

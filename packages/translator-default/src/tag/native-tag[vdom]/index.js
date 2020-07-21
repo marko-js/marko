@@ -3,7 +3,7 @@ import { types as t } from "@marko/babel-types";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
 import { getAttrs, evaluateAttr } from "../util";
-import { getTagDef } from "@marko/babel-utils";
+import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
@@ -143,7 +143,20 @@ export default function(path) {
   let writeStartNode = withPreviousLocation(write(...writeArgs), node.name);
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(name, writeStartNode);
+    writeStartNode = t.ifStatement(
+      name,
+      writeStartNode,
+      t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.identifier("out"), t.identifier("bf")),
+          [
+            normalizeTemplateString`f_${key}`,
+            t.identifier("component"),
+            t.numericLiteral(1)
+          ]
+        )
+      )
+    );
   }
 
   if (isEmpty) {
@@ -153,7 +166,16 @@ export default function(path) {
 
   let writeEndNode = write("ee");
   if (isNullable) {
-    writeEndNode = t.ifStatement(name, writeEndNode);
+    writeEndNode = t.ifStatement(
+      name,
+      writeEndNode,
+      t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.identifier("out"), t.identifier("ef")),
+          []
+        )
+      )
+    );
   }
 
   let needsBlock;

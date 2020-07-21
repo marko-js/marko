@@ -7,7 +7,7 @@ module.exports = function render(input, out) {
   var ownerComponent = ownerComponentDef.___component;
   var key = out.___assignedKey;
 
-  out.___beginFragment(key, ownerComponent, true);
+  out.bf(key, ownerComponent, true);
 
   if (input.renderBody) {
     var componentsContext = getComponentsContext(out);
@@ -17,5 +17,5 @@ module.exports = function render(input, out) {
     componentsContext.___isPreserved = parentPreserved;
   }
 
-  out.___endFragment();
+  out.ef();
 };

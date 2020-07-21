@@ -101,7 +101,7 @@ module.exports = function dynamicTag(
           var willRerender = flags & FLAG_WILL_RERENDER_IN_BROWSER;
           var isW10NOOP = render === w10NOOP;
           var preserve = IS_SERVER ? willRerender : isW10NOOP;
-          out.___beginFragment(key, component, preserve);
+          out.bf(key, component, preserve);
           if (!isW10NOOP && isFn) {
             var componentsContext = getComponentsContext(out);
             var parentComponentDef = componentsContext.___componentDef;
@@ -121,16 +121,16 @@ module.exports = function dynamicTag(
 
             componentsContext.___componentDef = parentComponentDef;
           }
-          out.___endFragment();
+          out.ef();
         } else {
           out.error("Invalid dynamic tag value");
         }
       }
     }
   } else if (renderBody) {
-    out.___beginFragment(key, component);
+    out.bf(key, component);
     renderBody(out);
-    out.___endFragment();
+    out.ef();
   }
 };
 

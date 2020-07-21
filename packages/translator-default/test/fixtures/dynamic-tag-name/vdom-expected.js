@@ -19,11 +19,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   const _tagName = input.show ? "div" : null;
 
-  if (_tagName) out.e(_tagName, null, "2", component, 0, 0);
+  if (_tagName) out.e(_tagName, null, "2", component, 0, 0);else out.bf("f_2", component, 1);
 
   const _tagName2 = input.show && "div";
 
-  if (_tagName2) out.e(_tagName2, null, "3", component, 0, 0);
+  if (_tagName2) out.e(_tagName2, null, "3", component, 0, 0);else out.bf("f_3", component, 1);
 
   const _tagName3 = input.large ? "h1" : "h2";
 
@@ -53,7 +53,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   const _tagName7 = largeHeading || "h2";
 
-  if (_tagName7) out.e(_tagName7, null, "9", component, 0, 0);
+  if (_tagName7) out.e(_tagName7, null, "9", component, 0, 0);else out.bf("f_9", component, 1);
 
   const _tagName8 = global.x = "a" + "b";
 
@@ -67,12 +67,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   const tagConstA = "a";
   out.e(tagConstA, null, "13", component, 0, 0);
   const tagConstB = input.show ? "div" : null;
-  if (tagConstB) out.e(tagConstB, null, "14", component, 0, 0);
+  if (tagConstB) out.e(tagConstB, null, "14", component, 0, 0);else out.bf("f_14", component, 1);
   let tagLazyAssign;
   tagLazyAssign = "a";
-  if (tagLazyAssign) out.e(tagLazyAssign, null, "15", component, 0, 0);
+  if (tagLazyAssign) out.e(tagLazyAssign, null, "15", component, 0, 0);else out.bf("f_15", component, 1);
   tagLazyAssign = input.show ? "div" : null;
-  if (tagLazyAssign) out.e(tagLazyAssign, null, "16", component, 0, 0);
+  if (tagLazyAssign) out.e(tagLazyAssign, null, "16", component, 0, 0);else out.bf("f_16", component, 1);
 }, {
   t: _marko_componentType,
   i: true
