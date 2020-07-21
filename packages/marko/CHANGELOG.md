@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.1](https://github.com/marko-js/marko/compare/v4.22.0...v4.22.1) (2020-07-21)
+
+
+### Bug Fixes
+
+* issue with hydrating no-update-if content ([#1581](https://github.com/marko-js/marko/issues/1581)) ([82b500e](https://github.com/marko-js/marko/commit/82b500e95b35af47565ace5e16e2812fc3b0353c))
+
 ## [4.22.0](https://github.com/marko-js/marko/compare/v4.21.10...v4.22.0) (2020-06-22)
 
 
