@@ -109,8 +109,35 @@ module.exports = function(node, codegen) {
     var endElVDOM = new EndElementVDOM();
     htmlElVDOM.body = null;
     if (isNullable) {
-      htmlElVDOM = builder.ifStatement(tagName, htmlElVDOM);
-      endElVDOM = builder.ifStatement(tagName, endElVDOM);
+      htmlElVDOM = builder.ifStatement(
+        tagName,
+        htmlElVDOM,
+        builder.elseStatement(
+          builder.functionCall(
+            builder.memberExpression(
+              builder.identifier("out"),
+              builder.identifier("bf")
+            ),
+            [
+              builder.concat(builder.literal("f_"), node.key),
+              builder.identifier("component")
+            ]
+          )
+        )
+      );
+      endElVDOM = builder.ifStatement(
+        tagName,
+        endElVDOM,
+        builder.elseStatement(
+          builder.functionCall(
+            builder.memberExpression(
+              builder.identifier("out"),
+              builder.identifier("ef")
+            ),
+            []
+          )
+        )
+      );
     }
     return [tagNameVar, htmlElVDOM, body, endElVDOM];
   }
