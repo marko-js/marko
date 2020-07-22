@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.24](https://github.com/marko-js/marko/compare/v5.0.0-next.23...v5.0.0-next.24) (2020-07-22)
+
+
+### Features
+
+* **compiler:** expose register taglib api ([#1583](https://github.com/marko-js/marko/issues/1583)) ([c45c082](https://github.com/marko-js/marko/commit/c45c082b8f4b4a3548271b4526231e22b6d24222))
+
+
+
+
+
 # [5.0.0-next.23](https://github.com/marko-js/marko/compare/v5.0.0-next.22...v5.0.0-next.23) (2020-07-14)
 
 
