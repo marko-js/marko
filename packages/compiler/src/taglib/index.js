@@ -7,20 +7,9 @@ export { excludeDir, excludePackage } from "marko/src/taglib/taglib-finder";
 
 let lookupCache = Object.create(null);
 
-registeredTaglibs.push(
-  loader.loadTaglibFromProps(
-    loader.createTaglib(require.resolve("./html/marko.json")),
-    require("./html/marko.json")
-  ),
-  loader.loadTaglibFromProps(
-    loader.createTaglib(require.resolve("./svg/marko.json")),
-    require("./svg/marko.json")
-  ),
-  loader.loadTaglibFromProps(
-    loader.createTaglib(require.resolve("./math/marko.json")),
-    require("./math/marko.json")
-  )
-);
+register(require.resolve("./html/marko.json"), require("./html/marko.json"));
+register(require.resolve("./svg/marko.json"), require("./svg/marko.json"));
+register(require.resolve("./math/marko.json"), require("./math/marko.json"));
 
 export function buildLookup(dirname, translator) {
   if (!translator || !Array.isArray(translator.taglibs)) {
@@ -51,6 +40,12 @@ export function buildLookup(dirname, translator) {
   }
 
   return lookup;
+}
+
+export function register(id, props) {
+  registeredTaglibs.push(
+    loader.loadTaglibFromProps(loader.createTaglib(id), props)
+  );
 }
 
 export function clearCaches() {
