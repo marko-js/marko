@@ -1,4 +1,3 @@
-import { extname } from "path";
 import { types as t } from "@marko/babel-types";
 import { parse } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
@@ -28,11 +27,6 @@ export default (api, markoOptions) => {
         ...markoOptions,
         isProduction
       });
-
-      // Only run on Marko files.
-      if (!(extname(filename) === ".marko" || markoOptions.allExtensions)) {
-        return file.parse(code, 0);
-      }
 
       parse(file);
 
