@@ -13,5 +13,5 @@
     "packages/*/test/**",
     "**/*.md"
   ],
-  "version": "5.0.0-next.24"
+  "version": "5.0.0-next.25"
 }

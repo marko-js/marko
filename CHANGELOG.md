@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.25](https://github.com/marko-js/marko/compare/v5.0.0-next.24...v5.0.0-next.25) (2020-07-23)
+
+
+### Bug Fixes
+
+* remove unecessary allExtensions api ([9a2c439](https://github.com/marko-js/marko/commit/9a2c439b740fd3431e2d07f3112a8dfe8c734d74))
+
+
+
+
+
 # [5.0.0-next.24](https://github.com/marko-js/marko/compare/v5.0.0-next.23...v5.0.0-next.24) (2020-07-22)
 
 
