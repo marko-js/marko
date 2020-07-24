@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.27](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.26...v5.0.0-next.27) (2020-07-24)
+
+
+### Bug Fixes
+
+* **compiler:** make taglib entry more bundler friendly ([1e89380](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/1e8938085a815b5d9485c3a38b7b643770566282))
+
+
+
+
+
 # [5.0.0-next.26](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.25...v5.0.0-next.26) (2020-07-24)
 
 
