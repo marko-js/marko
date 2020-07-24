@@ -1,10 +1,14 @@
-import loader from "marko/src/taglib/taglib-loader";
-import finder from "marko/src/taglib/taglib-finder";
-import { registeredTaglibs } from "marko/src/taglib/taglib-lookup";
-import TaglibLookup from "marko/src/taglib/taglib-lookup/TaglibLookup";
+const markoPath = `marko/${require("marko/env").isDebug ? "src" : "dist"}`;
 
-export { excludeDir, excludePackage } from "marko/src/taglib/taglib-finder";
+const loader = require(`${markoPath}/taglib/taglib-loader`);
+const finder = require(`${markoPath}/taglib/taglib-finder`);
+const { registeredTaglibs } = require(`${markoPath}/taglib/taglib-lookup`);
+const TaglibLookup = require(`${markoPath}/taglib/taglib-lookup/TaglibLookup`);
 
+export const excludeDir = finder.excludeDir;
+export const excludePackage = finder.excludePackage;
+
+const loadedTranslatorsTaglibs = new Map();
 let lookupCache = Object.create(null);
 
 register(require.resolve("./html/marko.json"), require("./html/marko.json"));
@@ -17,9 +21,17 @@ export function buildLookup(dirname, translator) {
       "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)"
     );
   }
+
+  if (!loadedTranslatorsTaglibs.has(translator)) {
+    loadedTranslatorsTaglibs.set(
+      translator,
+      translator.taglibs.map(([id, props]) => loadTaglib(id, props))
+    );
+  }
+
   const taglibsForDir = finder.find(
     dirname,
-    registeredTaglibs.concat(translator.taglibs)
+    registeredTaglibs.concat(loadedTranslatorsTaglibs.get(translator))
   );
 
   const cacheKey = taglibsForDir.map(it => it.id).join();
@@ -43,13 +55,15 @@ export function buildLookup(dirname, translator) {
 }
 
 export function register(id, props) {
-  registeredTaglibs.push(
-    loader.loadTaglibFromProps(loader.createTaglib(id), props)
-  );
+  registeredTaglibs.push(loadTaglib(id, props));
 }
 
 export function clearCaches() {
   loader.clearCache();
   finder.clearCache();
   lookupCache = Object.create(null);
+}
+
+function loadTaglib(id, props) {
+  return loader.loadTaglibFromProps(loader.createTaglib(id), props);
 }
