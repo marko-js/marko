@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.26](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.25...v5.0.0-next.26) (2020-07-24)
+
+
+### Bug Fixes
+
+* load correct taglib utils based on env ([#1585](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1585)) ([af2bc2a](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/af2bc2a11c45cab380e9698af2d1329b4d4eb8d6))
+
+
+
+
+
 # [5.0.0-next.25](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.24...v5.0.0-next.25) (2020-07-23)
 
 **Note:** Version bump only for package @marko/translator-default

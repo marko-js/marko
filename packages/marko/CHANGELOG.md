@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.26](https://github.com/marko-js/marko/compare/v5.0.0-next.25...v5.0.0-next.26) (2020-07-24)
+
+
+### Bug Fixes
+
+* docs paths ([583197e](https://github.com/marko-js/marko/commit/583197e2555258e101bb7e5e14134117cbd072e2))
+
+
+
+
+
 # [5.0.0-next.25](https://github.com/marko-js/marko/compare/v5.0.0-next.24...v5.0.0-next.25) (2020-07-23)
 
 **Note:** Version bump only for package marko
