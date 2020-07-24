@@ -1,9 +1,22 @@
-const markoPath = `marko/${require("marko/env").isDebug ? "src" : "dist"}`;
+let loader, finder, registeredTaglibs, TaglibLookup;
 
-const loader = require(`${markoPath}/taglib/taglib-loader`);
-const finder = require(`${markoPath}/taglib/taglib-finder`);
-const { registeredTaglibs } = require(`${markoPath}/taglib/taglib-lookup`);
-const TaglibLookup = require(`${markoPath}/taglib/taglib-lookup/TaglibLookup`);
+if (
+  process.env.NODE_ENV == null ||
+  process.env.NODE_ENV === "development" ||
+  process.env.NODE_ENV === "dev"
+) {
+  loader = require("marko/src/taglib/taglib-loader");
+  finder = require("marko/src/taglib/taglib-finder");
+  registeredTaglibs = require("marko/src/taglib/taglib-lookup")
+    .registeredTaglibs;
+  TaglibLookup = require("marko/src/taglib/taglib-lookup/TaglibLookup");
+} else {
+  loader = require("marko/dist/taglib/taglib-loader");
+  finder = require("marko/dist/taglib/taglib-finder");
+  registeredTaglibs = require("marko/dist/taglib/taglib-lookup")
+    .registeredTaglibs;
+  TaglibLookup = require("marko/dist/taglib/taglib-lookup/TaglibLookup");
+}
 
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
