@@ -7,7 +7,7 @@ export default function(path) {
   } = path;
   const { rawValue } = node;
   const code = rawValue.replace(/^static\s*/, "").trim();
-  const start = node.start + (rawValue.length - code.length);
+  const start = node.name.start + (rawValue.length - code.length);
   let { body } = file.parse(code, start);
   if (body.length === 1 && t.isBlockStatement(body[0])) {
     body = body[0].body;

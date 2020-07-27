@@ -7,7 +7,10 @@ const startOffset = "module-code".length;
 export default function parse(path) {
   const {
     hub: { file },
-    node: { rawValue, start }
+    node: {
+      rawValue,
+      name: { start }
+    }
   } = path;
   const dirname = nodePath.dirname(file.opts.filename);
   const relativeRequire = entry =>

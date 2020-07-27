@@ -8,7 +8,10 @@ export default function(path) {
     node,
     hub: { file }
   } = path;
-  const { rawValue: code, start } = node;
+  const {
+    rawValue: code,
+    name: { start }
+  } = node;
 
   if (getComponentFiles(path).componentFile) {
     throw path
