@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-import-tag-component-missing/template.marko(1,31): Unable to find entry point for custom tag <missing-component>.
+> 1 | <import MissingComponent from "<missing-component>"/>
+    |                               ^^^^^^^^^^^^^^^^^^^^^
