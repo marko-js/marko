@@ -1,5 +1,5 @@
-export default (hub, details) => {
+export default (file, details) => {
   if (details) {
-    return hub.parseExpression(`(${details.value})=>{}`, details.pos).params;
+    return file.parseExpression(`(${details.value})=>{}`, details.pos).params;
   }
 };

@@ -1,4 +1,4 @@
-var nextTick = require("../../../runtime/nextTick");
+var queueMicrotask = require("../../../runtime/queueMicrotask");
 
 function AsyncValue() {
   /**
@@ -94,10 +94,10 @@ AsyncValue.prototype = {
 
       var finalPromise = value.then(
         function onFulfilled(value) {
-          nextTick(asyncValue.___resolve.bind(asyncValue, value));
+          queueMicrotask(asyncValue.___resolve.bind(asyncValue, value));
         },
         function onRejected(err) {
-          nextTick(asyncValue.___reject.bind(asyncValue, err));
+          queueMicrotask(asyncValue.___reject.bind(asyncValue, err));
         }
       );
 

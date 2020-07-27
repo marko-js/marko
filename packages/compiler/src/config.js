@@ -1,3 +1,5 @@
+import * as translator from "@marko/translator-default";
+
 let config;
 const globalThis = typeof window === "undefined" ? global : window;
 const MARKO_CONFIG_KEY = Symbol("Default Marko Compiler Config");
@@ -34,7 +36,12 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      * You can also access this metadata via `compile(...).meta`.
      * This API is sticking around for compatibility purposes.
      */
-    meta: false
+    meta: false,
+
+    /**
+     * Allows configuring Marko to compile to different runtimes.
+     */
+    translator
   };
 
   if (process.env.MARKO_CONFIG) {

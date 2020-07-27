@@ -1,18 +1,13 @@
 # Marko + Rollup
 
-The [markoify](https://github.com/marko-js/markoify) transform can be used in conjunction with [rollup](https://github.com/rollup/rollup) to automatically compile Marko templates that are required by other modules. An official Rollup plugin will be coming soon.
+The [@marko/rollup](https://github.com/marko-js/rollup) transform can be used in conjunction with [rollup](https://github.com/rollup/rollup) to automatically compile Marko templates that are required by other modules. An official Rollup plugin will be coming soon.
 
-The [marko-rollup](https://github.com/marko-js-samples/marko-rollup) sample app is a great starting point if you would like to use Marko with Rollup.
+The [rollup](https://github.com/marko-js/examples/tree/master/examples/rollup) sample app demonstrates how to use Marko with Rollup. Run `npx @marko/create --template rollup` to use this sample as a starting point for a new app.
 
-## Installation
+## Manual Installation
 
 ```bash
-npm install envify --save-dev
-npm install markoify --save-dev
-npm install rollup --save-dev
-npm install rollup-plugin-browserify-transform --save-dev
-npm install rollup-plugin-commonjs --save-dev
-npm install rollup-plugin-node-resolve --save-dev
+npm install rollup rollup-plugin-commonjs rollup-plugin-node-resolve @marko/rollup --save-dev
 ```
 
 ## Configuration
@@ -22,33 +17,27 @@ The following is the minimal recommend configuration to use Rollup with Marko:
 _rollup.config.js_
 
 ```js
-import commonjsPlugin from "rollup-plugin-commonjs";
-import browserifyPlugin from "rollup-plugin-browserify-transform";
-import nodeResolvePlugin from "rollup-plugin-node-resolve";
-import markoify from "markoify";
-import envify from "envify";
-import path from "path";
+import nodeResolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import marko from "@marko/rollup";
 
 export default {
-  entry: path.join(__dirname, "client.js"),
-  format: "iife",
-  moduleName: "app",
+  ...,
   plugins: [
-    browserifyPlugin(markoify),
-    browserifyPlugin(envify),
-    nodeResolvePlugin({
-      jsnext: true, // Default: false
-      main: true, // Default: true
-      browser: true, // Default: false
-      preferBuiltins: false,
+    marko(),
+    nodeResolve({
+      browser: true,
       extensions: [".js", ".marko"]
     }),
-    commonjsPlugin({
-      include: ["node_modules/**", "**/*.marko", "**/*.js"],
+    // NOTE: Marko 4 compiles to commonjs, this plugin is also required.
+    commonjs({
       extensions: [".js", ".marko"]
+    }),
+    // If using `style` blocks with Marko you must use an appropriate plugin.
+    postcss({
+      external: true
     })
-  ],
-  dest: path.join(__dirname, "./dist/bundle.js")
+  ]
 };
 ```
 

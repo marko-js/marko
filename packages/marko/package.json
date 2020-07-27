@@ -1,13 +1,14 @@
 {
     "name": "marko",
-    "version": "5.0.0-next.11",
+    "version": "5.0.0-next.27",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "dependencies": {
+        "@marko/compiler": "^5.0.0-next.27",
+        "@marko/translator-default": "^5.0.0-next.27",
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
         "complain": "^1.6.0",
-        "deresolve": "^1.1.2",
         "events-light": "^1.0.0",
         "htmljs-parser": "^2.7.1",
         "lasso-caching-fs": "^1.0.1",
@@ -23,7 +24,6 @@
         "warp10": "^2.0.1"
     },
     "devDependencies": {
-        "@marko/compiler": "^5.0.0-next.11",
         "bluebird": "^3.4.7",
         "chai": "^4.2.0",
         "diffable-html": "^2.1.0",

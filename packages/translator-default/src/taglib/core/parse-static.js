@@ -1,11 +1,14 @@
 import { types as t } from "@marko/babel-types";
 
 export default function(path) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const { rawValue } = node;
   const code = rawValue.replace(/^static\s*/, "").trim();
   const start = node.start + (rawValue.length - code.length);
-  let { body } = hub.parse(code, start);
+  let { body } = file.parse(code, start);
   if (body.length === 1 && t.isBlockStatement(body[0])) {
     body = body[0].body;
   }

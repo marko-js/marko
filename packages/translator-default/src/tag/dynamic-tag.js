@@ -8,7 +8,10 @@ import customTag from "./custom-tag";
 const HANDLE_BINDINGS = ["module", "var", "let", "const"];
 
 export default function(path) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const { key, arguments: args, properties: tagProperties } = node;
 
   const name = path.get("name");
@@ -59,7 +62,7 @@ export default function(path) {
   }
 
   const dynamicTagRenderCall = t.callExpression(
-    hub.importDefault(
+    file.importDefault(
       path,
       `marko/src/runtime/helpers/dynamic-tag`,
       "marko_dynamic_tag"
@@ -73,7 +76,7 @@ export default function(path) {
       tagProperties.length
         ? t.objectExpression(tagProperties)
         : t.nullLiteral(),
-      hub._componentDefIdentifier,
+      file._componentDefIdentifier,
       key,
       ...buildEventHandlerArray(path)
     ]

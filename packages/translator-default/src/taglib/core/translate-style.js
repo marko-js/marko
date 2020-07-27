@@ -1,17 +1,22 @@
 import { basename } from "path";
 
 export function exit(path) {
-  const { hub, node } = path;
-  const { _styleType: type, _styleCode: code } = node;
+  const {
+    hub: { file },
+    node
+  } = path;
+  const { _styleType: type } = node;
 
   if (!type) {
     return;
   }
 
-  const base = basename(hub.filename);
-  hub.meta.deps.push({
+  const base = basename(file.opts.filename);
+  file.metadata.marko.deps.push({
     type,
-    code: code.trim(),
+    code: node._styleCode,
+    startPos: node._styleCodeStart,
+    endPos: node._styleCodeEnd,
     path: `./${base}`,
     virtualPath: `./${base}.${type}`
   });

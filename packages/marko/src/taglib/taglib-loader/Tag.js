@@ -2,8 +2,6 @@
 var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
-var markoModules = require("../../compiler/modules");
-var complain = require("complain");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class Tag {
@@ -13,7 +11,6 @@ class Tag {
       this.dir = path.dirname(filePath);
     }
 
-    this.migrators = {};
     this.migratorPaths = [];
     this.attributes = {};
     this.transformers = {};
@@ -58,29 +55,8 @@ class Tag {
     return false;
   }
 
-  checkDeprecatedAttr(attr) {
-    attr.filePath = this.filePath;
-    if (attr.setFlag && attr.setFlag !== "hasComponentEvents") {
-      complain(`${attr.name} - : set-flag property is deprecated`, {
-        location: this.filePath
-      });
-    }
-    if (attr.type === "template") {
-      complain(`${attr.name} - attribute template type is deprecated`, {
-        location: this.filePath
-      });
-    }
-
-    if (attr.type === "path") {
-      complain(`${attr.name} - attribute path type is deprecated`, {
-        location: this.filePath
-      });
-    }
-  }
-
   addAttribute(attr) {
     attr.filePath = this.filePath;
-    this.checkDeprecatedAttr(attr);
 
     if (attr.pattern) {
       this.patternAttributes.push(attr);
@@ -165,12 +141,7 @@ class Tag {
   }
 
   forEachMigrator(callback, thisObj) {
-    this.migratorPaths
-      .map(function(path) {
-        return (this.migrators[path] =
-          this.migrators[path] || markoModules.require(path));
-      }, this)
-      .forEach(callback, thisObj);
+    this.migratorPaths.forEach(callback, thisObj);
   }
 
   toJSON() {

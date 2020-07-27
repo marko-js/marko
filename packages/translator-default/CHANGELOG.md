@@ -3,6 +3,150 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.27](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.26...v5.0.0-next.27) (2020-07-24)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.26](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.25...v5.0.0-next.26) (2020-07-24)
+
+
+### Bug Fixes
+
+* load correct taglib utils based on env ([#1585](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1585)) ([af2bc2a](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/af2bc2a11c45cab380e9698af2d1329b4d4eb8d6))
+
+
+
+
+
+# [5.0.0-next.25](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.24...v5.0.0-next.25) (2020-07-23)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.24](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.23...v5.0.0-next.24) (2020-07-22)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.23](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.22...v5.0.0-next.23) (2020-07-14)
+
+
+### Features
+
+* expose inline style block position for better sourcemaps ([83e6dca](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/83e6dcaf5ca7d30e64493ddc95b22cb05a2ecc54))
+
+
+
+
+
+# [5.0.0-next.22](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.21...v5.0.0-next.22) (2020-07-10)
+
+
+### Bug Fixes
+
+* **translator-default:** mixing repeated and non-repeated attributes ([f93534f](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/f93534faf1da8254cf1a1cfe3284da35468be7d5))
+
+
+
+
+
+# [5.0.0-next.21](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.20...v5.0.0-next.21) (2020-07-07)
+
+
+### Features
+
+* switch to storing marko meta on babels metadata ([ee6ad38](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/ee6ad38d9f31fe1d1314350ddd011a39c6c2ab9a))
+
+
+
+
+
+# [5.0.0-next.20](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.19...v5.0.0-next.20) (2020-07-07)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.19](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.18...v5.0.0-next.19) (2020-07-06)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.18](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.17...v5.0.0-next.18) (2020-05-27)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.17](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.16...v5.0.0-next.17) (2020-05-27)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
+# [5.0.0-next.16](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.15...v5.0.0-next.16) (2020-05-27)
+
+
+### Features
+
+* website compatibility fixes ([4390fd1](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/4390fd1654d7b2753d2af899917ced7b3a395bc2))
+
+
+
+
+
+# [5.0.0-next.14](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.13...v5.0.0-next.14) (2020-05-26)
+
+
+### Bug Fixes
+
+* improve browser support for website ([#1574](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1574)) ([9df798a](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/9df798af5e71b71881995b6e06a9fb1b30b6fac2))
+
+
+
+
+
+# [5.0.0-next.13](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.12...v5.0.0-next.13) (2020-05-20)
+
+
+### Bug Fixes
+
+* **translator-default:** optional params on for tag ([b550417](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/b55041728d9f4e45196c1d7e07abd770e4af68be))
+
+
+
+
+
+# [5.0.0-next.12](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
+
+
+### Bug Fixes
+
+* data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1564)) ([0a227d0](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/0a227d0c7c27821df551c1367e160793dc9e234e))
+
+
+
+
+
 # [5.0.0-next.11](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.10...v5.0.0-next.11) (2020-04-27)
 
 **Note:** Version bump only for package @marko/translator-default

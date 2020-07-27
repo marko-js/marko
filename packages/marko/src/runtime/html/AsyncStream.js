@@ -500,7 +500,7 @@ var proto = (AsyncStream.prototype = {
     var str =
       "<" +
       tagName +
-      markoAttr(props, key, componentDef) +
+      markoAttr(this, componentDef, props, key) +
       attrsHelper(elementAttrs) +
       ">";
 
@@ -531,7 +531,7 @@ var proto = (AsyncStream.prototype = {
     var str =
       "<" +
       name +
-      markoAttr(props, key, componentDef) +
+      markoAttr(this, componentDef, props, key) +
       attrsHelper(elementAttrs) +
       ">";
 

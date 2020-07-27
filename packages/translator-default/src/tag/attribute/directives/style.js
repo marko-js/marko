@@ -5,7 +5,9 @@ import withPreviousLocation from "../../../util/with-previous-location";
 
 export default {
   exit(tag, _, value) {
-    const { hub } = tag;
+    const {
+      hub: { file }
+    } = tag;
     if (value.isStringLiteral()) return;
     if (!isNativeTag(tag)) return;
 
@@ -15,7 +17,7 @@ export default {
         confident
           ? t.stringLiteral(styleToString(computed) || "")
           : t.callExpression(
-              hub.importDefault(
+              file.importDefault(
                 tag,
                 "marko/src/runtime/helpers/style-value",
                 "marko_style_merge"

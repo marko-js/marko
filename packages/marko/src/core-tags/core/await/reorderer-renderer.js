@@ -46,6 +46,7 @@ module.exports = function(input, out) {
 
     function handleAwait(awaitInfo) {
       awaitInfo.out
+        .on("___toString", out.emit.bind(out, "___toString"))
         .on("finish", function(result) {
           if (!global._afRuntime) {
             asyncOut.script(clientReorder.getCode());

@@ -1,20 +1,20 @@
-import fs from "fs";
-import { join, basename } from "path";
 import { isNativeTag, getTagDef } from "@marko/babel-utils";
+import directives from "./directives";
+import modifiers from "./modifiers";
 
-const directives = requireDir(join(__dirname, "directives"));
-const modifiers = requireDir(join(__dirname, "modifiers"));
 const EMPTY_ARRAY = [];
 const EVENT_REG = /^(on(?:ce)?)(-)?(.*)$/;
 const attachedDetachedLoaded = new WeakSet();
 
 export default {
   enter(attr) {
-    const { hub } = attr;
+    const {
+      hub: { file }
+    } = attr;
     const tag = attr.parentPath;
     const value = attr.get("value");
     const { name, arguments: args } = attr.node;
-    const isVDOM = hub.options.output !== "html";
+    const isVDOM = file._markoOptions.output !== "html";
 
     if (execModifiersAndDirectives("enter", tag, attr, value)) {
       return;
@@ -62,10 +62,10 @@ export default {
 
       if (isVDOM) {
         if (eventName === "attach" || eventName === "detach") {
-          if (!attachedDetachedLoaded.has(hub)) {
+          if (!attachedDetachedLoaded.has(file)) {
             // Pull in helper for element attach/detach;
-            attachedDetachedLoaded.add(hub);
-            hub.importDefault(
+            attachedDetachedLoaded.add(file);
+            file.importDefault(
               tag,
               "marko/src/runtime/components/attach-detach"
             );
@@ -132,15 +132,4 @@ function execModifiersAndDirectives(type, tag, attr, value) {
       if (tag.node !== tagNode || attr.node !== attrNode) return true;
     }
   }
-}
-
-function requireDir(dir) {
-  return fs
-    .readdirSync(dir)
-    .filter(entry => /\.js$/.test(entry))
-    .map(entry => join(dir, entry))
-    .reduce((r, file) => {
-      r[basename(file).replace(/\.js$/, "")] = require(file).default;
-      return r;
-    }, {});
 }

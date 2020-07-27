@@ -4,7 +4,7 @@ The [lasso-marko](https://github.com/lasso-js/lasso-marko) plugin for [Lasso.js]
 
 Lasso.js provides Marko custom tags for injecting JavaScript and CSS bundles, images and other resources.
 
-The sample [marko-lasso](https://github.com/marko-js-samples/marko-lasso) app demonstrates how to build a production-ready web application using Marko and Lasso.
+The sample [lasso-express](https://github.com/marko-js/examples/tree/master/examples/lasso-express) app demonstrates how to build a production-ready web application using Marko and Lasso. Run `npx @marko/create --template lasso-express` to use this sample as a starting point for a new app.
 
 ## Installation
 

@@ -40,17 +40,21 @@ function loadBabelConfig(filename, options) {
     Object.assign(markoConfig, options);
   }
 
+  const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
     filename: filename,
     sourceFileName: filename,
     sourceType: "module",
-    sourceMaps: markoConfig.sourceMaps,
-    plugins: [[corePlugin, markoConfig]]
+    sourceMaps: markoConfig.sourceMaps
   };
 
   if (markoConfig.babelConfig) {
     Object.assign(baseBabelConfig, markoConfig.babelConfig);
   }
+
+  baseBabelConfig.plugins = requiredPlugins.concat(
+    baseBabelConfig.plugins || []
+  );
 
   return loadPartialConfig(baseBabelConfig).options;
 }

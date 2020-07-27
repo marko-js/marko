@@ -1,6 +1,4 @@
-import path from "path";
-import { loader } from "marko/src/taglib";
-
-export default ["core", "migrate"].map(name =>
-  loader.loadTaglibFromFile(path.join(__dirname, name, "marko.json"))
-);
+export default [
+  [require.resolve("./core/marko.json"), require("./core/marko.json")],
+  [require.resolve("./migrate/marko.json"), require("./migrate/marko.json")]
+];

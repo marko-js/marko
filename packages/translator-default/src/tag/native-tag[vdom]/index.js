@@ -19,7 +19,11 @@ const MAYBE_SVG = {
  * Translates the html streaming version of a standard html element.
  */
 export default function(path) {
-  const { hub, node, parent } = path;
+  const {
+    hub: { file },
+    node,
+    parent
+  } = path;
   const {
     name,
     key,
@@ -51,7 +55,7 @@ export default function(path) {
       attrsObj.properties.some(t.isSpreadElement)
     ) {
       attrsObj = t.callExpression(
-        hub.importDefault(
+        file.importDefault(
           path,
           "marko/src/runtime/vdom/helpers/attrs",
           "marko_attrs"
@@ -88,7 +92,7 @@ export default function(path) {
             t.stringLiteral(`on${eventName}`),
             t.callExpression(
               t.memberExpression(
-                hub._componentDefIdentifier,
+                file._componentDefIdentifier,
                 t.identifier("d")
               ),
               delegateArgs
@@ -115,7 +119,7 @@ export default function(path) {
       node.runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
       if (parseOptions.import) {
         // TODO: the taglib should be updated to support this as a top level option.
-        hub.meta.deps.push(resolve(tagDef.dir, parseOptions.import));
+        file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
       }
     } else if (
       htmlType === "svg" ||

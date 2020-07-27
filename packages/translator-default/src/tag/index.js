@@ -7,6 +7,7 @@ import {
   isNativeTag,
   findAttributeTags
 } from "@marko/babel-utils";
+import markoModules from "@marko/compiler/modules";
 import nativeTag from "./native-tag";
 import dynamicTag from "./dynamic-tag";
 import attributeTag from "./attribute-tag";
@@ -23,7 +24,9 @@ export default {
     if (tagDef) {
       if (tagDef.codeGeneratorModulePath) {
         const { node } = path;
-        tagDef.codeGenerator = require(tagDef.codeGeneratorModulePath);
+        tagDef.codeGenerator = markoModules.require(
+          tagDef.codeGeneratorModulePath
+        );
         enter(tagDef.codeGenerator, path, t);
 
         if (path.node !== node) {
@@ -42,7 +45,7 @@ export default {
       }
     }
 
-    if (path.hub.options.ignoreUnrecognizedTags && !tagDef) {
+    if (path.hub.file._markoOptions.ignoreUnrecognizedTags && !tagDef) {
       findAttributeTags(path).forEach(child => {
         child.set(
           "name",

@@ -1,6 +1,8 @@
 export function enter(path) {
   const {
-    hub: { macros },
+    hub: {
+      file: { _macros }
+    },
     node
   } = path;
   const attributes = path.get("attributes");
@@ -28,11 +30,11 @@ export function enter(path) {
 
   const name = nameAttrValue.node.value;
 
-  if (macros[name]) {
+  if (_macros[name]) {
     throw nameAttr.buildCodeFrameError(
       `A macro with the name "${name}" already exists.`
     );
   }
 
-  node._macroId = macros[name] = path.scope.generateUidIdentifier(name);
+  node._macroId = _macros[name] = path.scope.generateUidIdentifier(name);
 }

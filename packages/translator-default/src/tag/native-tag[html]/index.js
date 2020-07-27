@@ -14,7 +14,10 @@ const EMPTY_OBJECT = {};
  * Translates the html streaming version of a standard html element.
  */
 export default function(path) {
-  const { hub, node } = path;
+  const {
+    hub: { file },
+    node
+  } = path;
   const {
     name,
     body: { body },
@@ -29,7 +32,7 @@ export default function(path) {
     const { parseOptions = EMPTY_OBJECT } = tagDef;
     if (parseOptions.import) {
       // TODO: the taglib should be updated to support this as a top level option.
-      hub.meta.deps.push(resolve(tagDef.dir, parseOptions.import));
+      file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
     }
   }
 
@@ -51,7 +54,7 @@ export default function(path) {
             t.stringLiteral(`on${eventName}`),
             t.callExpression(
               t.memberExpression(
-                hub._componentDefIdentifier,
+                file._componentDefIdentifier,
                 t.identifier("d")
               ),
               delegateArgs
@@ -62,22 +65,22 @@ export default function(path) {
     );
   }
 
-  const isHTML = hub.options.output === "html";
+  const isHTML = file._markoOptions.output === "html";
   let dataMarko = t.stringLiteral("");
 
   if (isHTML) {
     const componentFiles = getComponentFiles(path);
     const isSplit = Boolean(componentFiles.componentBrowserFile);
     const isImplicit = Boolean(
-      !hub.inlineComponentClass &&
+      !file._inlineComponentClass &&
         !componentFiles.componentFile &&
-        !hub._hasTagParams
+        !file._hasTagParams
     );
 
     const needsDataMarkoAttr = isSplit || isImplicit || isPreserved(path);
 
     if (needsDataMarkoAttr) {
-      const dataMarkoArgs = [];
+      const dataMarkoArgs = [t.identifier("out"), file._componentDefIdentifier];
 
       if (tagProperties.length) {
         // TODO we should pre evaluate this if it is static.
@@ -85,16 +88,16 @@ export default function(path) {
       }
 
       if (hasUserKey(path)) {
-        if (dataMarkoArgs.length === 0) {
-          dataMarkoArgs.push(t.nullLiteral());
+        if (dataMarkoArgs.length === 2) {
+          dataMarkoArgs.push(t.numericLiteral(0));
         }
 
-        dataMarkoArgs.push(path.get("key").node, hub._componentDefIdentifier);
+        dataMarkoArgs.push(path.get("key").node, file._componentDefIdentifier);
       }
 
-      if (dataMarkoArgs.length) {
+      if (dataMarkoArgs.length > 2) {
         dataMarko = t.callExpression(
-          hub.importDefault(
+          file.importDefault(
             path,
             "marko/src/runtime/html/helpers/data-marko",
             "marko_props"

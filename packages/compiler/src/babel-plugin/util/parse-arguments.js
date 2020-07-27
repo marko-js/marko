@@ -1,6 +1,6 @@
-export default (hub, details) => {
+export default (file, details) => {
   if (details) {
-    return hub.parseExpression(`_(${details.value})`, details.pos - 1)
+    return file.parseExpression(`_(${details.value})`, details.pos - 1)
       .arguments;
   }
 };

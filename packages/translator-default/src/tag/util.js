@@ -4,7 +4,10 @@ import { getTagDef } from "@marko/babel-utils";
 const EMPTY_ARR = [];
 
 export function getAttrs(path, noCamel, skipRenderBody) {
-  const { node, hub } = path;
+  const {
+    node,
+    hub: { file }
+  } = path;
   const {
     attributes,
     body: { body },
@@ -66,8 +69,8 @@ export function getAttrs(path, noCamel, skipRenderBody) {
       path.insertBefore(body);
     } else {
       if (node.params) {
-        if (!hub._hasTagParams && !isIgnoredTagParams(path)) {
-          hub._hasTagParams = true;
+        if (!file._hasTagParams && !isIgnoredTagParams(path)) {
+          file._hasTagParams = true;
         }
       }
 

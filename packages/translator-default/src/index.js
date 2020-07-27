@@ -26,11 +26,13 @@ export const visitor = {
   MarkoComment,
   Program: {
     enter(path) {
-      const { hub } = path;
+      const {
+        hub: { file }
+      } = path;
 
-      if (hub.moduleCode) {
+      if (file._moduleCode) {
         path.get("body").forEach(bodyItemPath => bodyItemPath.remove());
-        hub.moduleCode.forEach(node => path.pushContainer("body", node));
+        file._moduleCode.forEach(node => path.pushContainer("body", node));
         return path.skip();
       }
 
@@ -44,20 +46,23 @@ export const visitor = {
           childPath.remove();
         });
 
-      hub._renderBlock = renderBlock;
+      file._renderBlock = renderBlock;
     },
     exit(path) {
-      const { hub } = path;
-      const { options, meta, inlineComponentClass } = hub;
+      const {
+        hub: { file }
+      } = path;
+      const { _markoOptions, _inlineComponentClass } = file;
+      const meta = file.metadata.marko;
       const {
         styleFile,
         packageFile,
         componentFile,
         componentBrowserFile
       } = getComponentFiles(path);
-      const isHTML = options.output === "html";
+      const isHTML = _markoOptions.output === "html";
       let isSplit = false;
-      let isImplicit = !hub._hasTagParams;
+      let isImplicit = !file._hasTagParams;
 
       if (packageFile) {
         meta.deps.unshift(packageFile);
@@ -67,9 +72,9 @@ export const visitor = {
         meta.deps.unshift(styleFile);
       }
 
-      if (componentFile || inlineComponentClass) {
+      if (componentFile || _inlineComponentClass) {
         isImplicit = false;
-        meta.component = hub.filename;
+        meta.component = file.opts.filename;
       }
 
       if (componentBrowserFile) {
@@ -79,20 +84,22 @@ export const visitor = {
       }
 
       meta.component =
-        meta.component && hub.resolveRelativePath(meta.component);
-      meta.deps = meta.deps.map(file =>
-        typeof file === "string" ? hub.resolveRelativePath(file) : file
+        meta.component && file.resolveRelativePath(meta.component);
+      meta.deps = meta.deps.map(filename =>
+        typeof filename === "string"
+          ? file.resolveRelativePath(filename)
+          : filename
       );
 
-      const renderBlock = hub._renderBlock;
+      const renderBlock = file._renderBlock;
       const componentClass =
         (componentFile &&
-          hub.importDefault(
+          file.importDefault(
             path,
-            hub.resolveRelativePath(componentFile),
+            file.resolveRelativePath(componentFile),
             "marko_component"
           )) ||
-        inlineComponentClass ||
+        _inlineComponentClass ||
         t.objectExpression([]);
 
       const componentIdentifier = path.scope.generateUidIdentifier(
@@ -104,7 +111,7 @@ export const visitor = {
       const templateIdentifier = path.scope.generateUidIdentifier(
         "marko_template"
       );
-      const rendererIdentifier = hub.importDefault(
+      const rendererIdentifier = file.importDefault(
         path,
         "marko/src/runtime/components/renderer",
         "marko_renderer"
@@ -119,7 +126,7 @@ export const visitor = {
       );
       const componentId = meta.id;
 
-      if (options.writeVersionComment) {
+      if (_markoOptions.writeVersionComment) {
         path.addComment(
           "leading",
           ` Compiled using marko@${version} - DO NOT EDIT`,
@@ -137,7 +144,11 @@ export const visitor = {
           t.variableDeclarator(
             templateIdentifier,
             t.callExpression(
-              hub.importNamed(path, `marko/src/runtime/${options.output}`, "t"),
+              file.importNamed(
+                path,
+                `marko/src/runtime/${_markoOptions.output}`,
+                "t"
+              ),
               [t.identifier("__filename")]
             )
           )
@@ -153,7 +164,7 @@ export const visitor = {
             isHTML
               ? componentIdString
               : t.callExpression(
-                  hub.importNamed(
+                  file.importNamed(
                     path,
                     "marko/src/runtime/components/registry-browser",
                     "r",
@@ -164,9 +175,9 @@ export const visitor = {
                     t.arrowFunctionExpression(
                       [],
                       isSplit
-                        ? hub.importDefault(
+                        ? file.importDefault(
                             path,
-                            hub.resolveRelativePath(componentBrowserFile),
+                            file.resolveRelativePath(componentBrowserFile),
                             "marko_split_component"
                           )
                         : templateIdentifier
@@ -206,7 +217,7 @@ export const visitor = {
                 [
                   t.identifier("input"),
                   t.identifier("out"),
-                  hub._componentDefIdentifier,
+                  file._componentDefIdentifier,
                   t.identifier("component"),
                   t.identifier("state")
                 ],
@@ -228,7 +239,7 @@ export const visitor = {
               "=",
               t.memberExpression(templateIdentifier, t.identifier("Component")),
               t.callExpression(
-                hub.importDefault(
+                file.importDefault(
                   path,
                   "marko/src/runtime/components/defineComponent",
                   "marko_defineComponent"
@@ -240,7 +251,7 @@ export const visitor = {
         );
       }
 
-      if (options.meta !== false) {
+      if (_markoOptions.meta !== false) {
         const metaObject = t.objectExpression([
           t.objectProperty(t.identifier("id"), componentTypeIdentifier)
         ]);
@@ -258,10 +269,7 @@ export const visitor = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("deps"),
-              hub.parseExpression(
-                JSON.stringify(meta.deps),
-                hub.getCode().length
-              )
+              file.parseExpression(JSON.stringify(meta.deps), file.code.length)
             )
           );
         }
