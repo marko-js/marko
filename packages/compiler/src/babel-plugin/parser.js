@@ -264,7 +264,7 @@ export function parse(file) {
       const tag = currentTag;
       const { node } = tag;
       const { tagDef } = node;
-      const isConcise = code[pos] !== "<";
+      const isConcise = code[node.start - 1] !== "<";
 
       if (preservingWhitespaceUntil === currentTag) {
         preservingWhitespaceUntil = undefined;
