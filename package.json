@@ -2,7 +2,7 @@
   "name": "marko-project",
   "private": true,
   "scripts": {
-    "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps=inline --env-name=production",
+    "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps --env-name=production",
     "build:watch": "npm run build -- --watch",
     "postinstall": "lerna bootstrap --hoist --no-ci",
     "prepack": "ENTRY=main:npm npm run set-entry",
@@ -14,7 +14,7 @@
     "lint": "eslint -f visualstudio .",
     "format": "prettier \"**/*.{json,md,js}\" --write",
     "check-format": "prettier \"**/*.{js,json,css,md}\" -l",
-    "ci:test": "npm run lint && npm run check-format && cross-env MARKO_DEBUG=1 NODE_ENV=test nyc --reporter=text npm test",
+    "ci:test": "npm run lint && npm run check-format && npm run build && cross-env MARKO_DEBUG=1 NODE_ENV=test nyc --reporter=text npm test",
     "ci:codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "report": "nyc report --reporter=html && open ./coverage/index.html",
     "set-entry": "lerna exec -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)"
