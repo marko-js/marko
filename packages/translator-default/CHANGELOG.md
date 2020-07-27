@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.28](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.27...v5.0.0-next.28) (2020-07-27)
+
+
+### Bug Fixes
+
+* **translator-default:** improve source maps for non concise root tags ([571b4fa](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/571b4faf0925db4290e15b8b9b4d284c0ee49f0b))
+* better errors, track deps and cleanup for import shorthand ([00464f2](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/00464f27b2fef2a454745b424e3cce18c76ae33f))
+
+
+### Features
+
+* add new syntax for dynamic component import ([e9b4cd6](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/e9b4cd61acff70d7d0d0d49cab7034e000493346))
+
+
+
+
+
 # [5.0.0-next.27](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.26...v5.0.0-next.27) (2020-07-24)
 
 **Note:** Version bump only for package @marko/translator-default

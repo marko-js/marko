@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.28](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.27...v5.0.0-next.28) (2020-07-27)
+
+
+### Bug Fixes
+
+* **compiler:** false positive for concise mode dynamic tag error ([94c41ca](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/94c41ca8f18dfcc50e1ecb23bdc25b3231e7b790))
+
+
+
+
+
 # [5.0.0-next.27](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.26...v5.0.0-next.27) (2020-07-24)
 
 
