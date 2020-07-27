@@ -567,6 +567,14 @@ import sum from './utils/sum';
 <div>The sum of 2 + 3 is ${sum(2, 3)}</div>
 ```
 
+As a shorthand you can also import components by providing it's html tag name wrapped in angle brackets, eg:
+
+```marko
+import MyComponent from "<my-component>"
+```
+
+This is especially useful with the [dynamic tag name syntax]("#dynamic-tagname") and uses the same [component discovery](./custom-tags.md#how-tags-are-discovered) as if the tag was used in the template.
+
 ## Comments
 
 Standard HTML comments can be used and will be stripped out of the rendered output.

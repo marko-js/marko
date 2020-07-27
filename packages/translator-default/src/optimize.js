@@ -1,6 +1,4 @@
 import { normalizeTemplateString } from "@marko/babel-utils";
-import { enter } from "./util/plugin-hooks";
-import { types as t } from "@marko/babel-types";
 
 export const visitor = {
   ExpressionStatement(path) {
@@ -26,13 +24,35 @@ export const visitor = {
     }
   },
   ImportDeclaration: {
-    enter(path) {
-      const { hub } = path;
-      const importDef = hub.lookup.getTag("import");
+    exit(path) {
+      const {
+        node,
+        hub: { file }
+      } = path;
+      const { source } = node;
 
-      if (importDef && importDef.codeGeneratorModulePath) {
-        const codeGenerator = require(importDef.codeGeneratorModulePath);
-        enter(codeGenerator, path, t);
+      if (source.value[0] === "<") {
+        const tagName = source.value.slice(1, -1);
+        const tagDef = file._lookup.getTag(tagName);
+        const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
+        const relativePath = tagEntry && file.resolveRelativePath(tagEntry);
+
+        if (!relativePath) {
+          throw path
+            .get("source")
+            .buildCodeFrameError(
+              `Unable to find entry point for custom tag <${tagName}>.`
+            );
+        }
+
+        source.value = relativePath;
+      }
+
+      if (
+        source.value.endsWith(".marko") &&
+        !file.metadata.marko.tags.includes(source.value)
+      ) {
+        file.metadata.marko.tags.push(source.value);
       }
     }
   }
