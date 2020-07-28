@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.2](https://github.com/marko-js/marko/compare/v4.22.1...v4.22.2) (2020-07-28)
+
+
+### Bug Fixes
+
+* diffing dynamic attributes with mismatched keys ([#1587](https://github.com/marko-js/marko/issues/1587)) ([3832cfe](https://github.com/marko-js/marko/commit/3832cfea72efadb1bfcf9de7a83ba8b1fddf14f4))
+* doc paths ([f5a4721](https://github.com/marko-js/marko/commit/f5a472133dbf7cc2b909bc9bb8ca24285d6ee08e))
+
 ### [4.22.1](https://github.com/marko-js/marko/compare/v4.22.0...v4.22.1) (2020-07-21)
 
 
