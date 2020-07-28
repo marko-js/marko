@@ -123,7 +123,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     ...e,
     ...f(),
     "id": "a"
-  }), "21", component, null, 0);
+  }), "21", component, null, 4);
   out.t(a);
   out.e("div", {
     "c": "1"
@@ -148,7 +148,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("div", null, "26", component, null, 0);
   out.t("123 abc 123", component);
   out.ee();
-  out.e("span", _marko_attrs(abc), "27", component, 0, 0);
+  out.e("span", _marko_attrs(abc), "27", component, 0, 4);
 
   if (cond) {
     out.t("Hello ", component);

@@ -54,6 +54,7 @@ export default function(path) {
       !t.isObjectExpression(attrsObj) ||
       attrsObj.properties.some(t.isSpreadElement)
     ) {
+      node.runtimeFlags |= FLAGS.SPREAD_ATTRS;
       attrsObj = t.callExpression(
         file.importDefault(
           path,

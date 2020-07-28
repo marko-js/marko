@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = { test: true };
+    }
+    toggleTest() {
+        this.state.test = !this.state.test;
+    }
+}
+
+$ {
+	const attrs = {};
+	if(state.test) {
+		attrs.href = "https://example.com"
+	} else {
+		attrs["aria-disabled"] = true
+	}
+}
+
+<a ...attrs>some text</a>

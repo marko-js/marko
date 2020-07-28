@@ -9,7 +9,7 @@ const _marko_componentType = _marko_registerComponent("mYjWb94U", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.e("hello", null, "0", component, 0, 4);
+  out.e("hello", null, "0", component, 0, 2);
 }, {
   t: _marko_componentType,
   i: true
