@@ -16,7 +16,7 @@ function render(input, out, __component, component, state) {
   out.e("div", marko_attrs({
       foo: "bar",
       hello: "world"
-    }), null, null, 3)
+    }), null, null, 3, 4)
     .t("Hello ")
     .t(name, component)
     .t("!");

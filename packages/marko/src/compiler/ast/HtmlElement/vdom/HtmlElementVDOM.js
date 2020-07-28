@@ -5,6 +5,7 @@ const vdomUtil = require("../../../util/vdom");
 
 const FLAG_SIMPLE_ATTRS = 1;
 // const FLAG_CUSTOM_ELEMENT = 2;
+const FLAG_SPREAD_ATTRS = 4;
 
 let CREATE_ARGS_COUNT = 0;
 const INDEX_TAG_NAME = CREATE_ARGS_COUNT++;
@@ -189,6 +190,8 @@ class HtmlElementVDOM extends Node {
       this.hasSimpleAttrs = true;
     }
 
+    this.hasSpreadAttributes = hasSpreadAttributes;
+
     this.hasAttributes = hasNamedAttributes;
 
     this.attributesArg = attributesArg;
@@ -240,6 +243,10 @@ class HtmlElementVDOM extends Node {
 
     if (this.hasSimpleAttrs) {
       flags |= FLAG_SIMPLE_ATTRS;
+    }
+
+    if (this.hasSpreadAttributes) {
+      flags |= FLAG_SPREAD_ATTRS;
     }
 
     if (this.runtimeFlags) {

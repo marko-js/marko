@@ -18,7 +18,7 @@ function render(input, out, __component, component, state) {
     hello: "world"
 };
 
-  out.e("div", marko_attrs(attrs), null, null, 3)
+  out.e("div", marko_attrs(attrs), null, null, 3, 4)
     .t("Hello ")
     .t(name, component)
     .t("!");

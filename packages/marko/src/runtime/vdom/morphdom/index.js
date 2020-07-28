@@ -36,6 +36,7 @@ var DOCTYPE_NODE = 10;
 
 // var FLAG_SIMPLE_ATTRS = 1;
 // var FLAG_CUSTOM_ELEMENT = 2;
+// var FLAG_SPREAD_ATTRS = 4;
 
 function isAutoKey(key) {
   return key[0] !== "@";
