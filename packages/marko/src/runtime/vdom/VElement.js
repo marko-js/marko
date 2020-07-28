@@ -18,6 +18,7 @@ var DEFAULT_NS = {
 
 var FLAG_SIMPLE_ATTRS = 1;
 var FLAG_CUSTOM_ELEMENT = 2;
+var FLAG_SPREAD_ATTRS = 4;
 
 var defineProperty = Object.defineProperty;
 
@@ -382,14 +383,14 @@ VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
   // If there are any old attributes that are not in the new set of attributes
   // then we need to remove those attributes from the target node
   //
-  // NOTE: We can skip this if the the element is keyed because if the element
-  //       is keyed then we know we already processed all of the attributes for
+  // NOTE: We can skip this if the the element is keyed and didn't have spread attributes
+  //       because we know we already processed all of the attributes for
   //       both the target and original element since target VElement nodes will
   //       have all attributes declared. However, we can only skip if the node
   //       was not a virtualized node (i.e., a node that was not rendered by a
   //       Marko template, but rather a node that was created from an HTML
   //       string or a real DOM node).
-  if (toEl.___key === null) {
+  if (toEl.___key === null || fromFlags & FLAG_SPREAD_ATTRS) {
     for (attrName in oldAttrs) {
       if (!(attrName in attrs)) {
         if (attrName === ATTR_XLINK_HREF) {

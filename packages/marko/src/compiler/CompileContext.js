@@ -26,6 +26,7 @@ const isDebug = require("../build.json").isDebug;
 
 // const FLAG_SIMPLE_ATTRS = 1;
 const FLAG_CUSTOM_ELEMENT = 2;
+// const FLAG_SPREAD_ATTRS = 4;
 
 const FLAG_PRESERVE_WHITESPACE = "PRESERVE_WHITESPACE";
 
