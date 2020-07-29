@@ -1,6 +1,6 @@
 # Redux + Marko
 
-See the [`marko-redux` sample project](https://github.com/marko-js-samples/marko-redux) for a fully-working example.
+See the [`marko-redux` sample project](https://github.com/marko-js/examples/tree/master/examples/redux) for a fully-working example.
 
 ## Installation
 

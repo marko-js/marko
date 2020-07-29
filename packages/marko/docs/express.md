@@ -1,6 +1,6 @@
 # Express + Marko
 
-See the [marko-express](https://github.com/marko-js-samples/marko-express) sample
+See the [marko-express](https://github.com/marko-js/examples/tree/master/examples/lasso-express) sample
 project for a working example.
 
 ## Installation

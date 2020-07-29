@@ -1,6 +1,6 @@
 # Marko + HTTP Server
 
-See the [marko-http](https://github.com/marko-js-samples/marko-http) sample
+See the [marko-http](https://github.com/marko-js/examples/tree/master/examples/http) sample
 project for a working example.
 
 ## Installation

@@ -1,6 +1,6 @@
 # Hapi + Marko
 
-See the [marko-hapi](https://github.com/marko-js-samples/marko-hapi) sample
+See the [marko-hapi](https://github.com/marko-js/examples/tree/master/examples/hapi) sample
 project for a working example.
 
 ## Installation

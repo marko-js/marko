@@ -232,4 +232,4 @@ const serve = require("koa-static");
 app.use(mount("/static", serve(__dirname + "/static")));
 ```
 
-For the full application code for the Koa and assets bundling, please see the sample: [Marko + Koa](https://github.com/marko-js-samples/marko-koa).
+For the full application code for the Koa and assets bundling, please see the sample: [Marko + Koa](https://github.com/marko-js/examples/tree/master/examples/koa).

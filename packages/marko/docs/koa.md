@@ -1,6 +1,6 @@
 # Koa + Marko
 
-See the [marko-koa](https://github.com/marko-js-samples/marko-koa) sample
+See the [marko-koa](https://github.com/marko-js/examples/tree/master/examples/koa) sample
 project for a fully-working example.
 
 ## Installation

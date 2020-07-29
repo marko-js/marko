@@ -67,8 +67,8 @@ _routes/index/template.marko_
 
 > **ProTip:** We have provided some sample apps to help you get started with Marko + Lasso
 >
-> - [marko-lasso](https://github.com/marko-js-samples/marko-lasso)
-> - [ui-components-playground](https://github.com/marko-js-samples/ui-components-playground)
+> - [marko-lasso](https://github.com/marko-js/examples/tree/master/examples/lasso-express)
+> - [ui-components-playground](https://github.com/marko-js/examples/tree/master/examples/ui-components-playground)
 
 ### Bootstrapping: Non-Lasso
 
@@ -94,9 +94,8 @@ require("marko/components").init();
 
 > **ProTip:** We have provided some sample apps to help you get started:
 >
-> - [marko-webpack](https://github.com/marko-js-samples/marko-webpack)
-> - [marko-browserify](https://github.com/marko-js-samples/marko-browserify)
-> - [marko-rollup](https://github.com/marko-js-samples/marko-rollup)
+> - [marko-webpack](https://github.com/marko-js/examples/tree/master/examples/webpack)
+> - [marko-rollup](https://github.com/marko-js/examples/tree/master/examples/rollup)
 
 # Serialization
 
