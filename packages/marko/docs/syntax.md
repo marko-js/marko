@@ -81,8 +81,8 @@ Attributes that are passed to a custom tag are received as it's [`input`](https:
 >
 > _HTML Output:_
 >
-> ```marko
-> <input pattern="\w+" type="text"/>
+> ```html
+> <input pattern="\w+" type="text" />
 > ```
 
 ### Complex expressions
@@ -138,8 +138,8 @@ Similarly, when only an attribute name is defined, it is equivalent to specifyin
 
 ```marko
 <!-- These are equivalent -->
-<custom-menu expanded>
-<custom-menu expanded=true>
+<custom-menu expanded/>
+<custom-menu expanded=true/>
 ```
 
 > **ProTip:**

@@ -49,9 +49,11 @@ You can also use an inline arrow function:
 …or anything that evaluates to a function:
 
 ```marko
-const handler = input.dontBreakMyApp ?
-  () => console.error("Clicked!") :
-  () => { throw Error("Clicked!") }
+$ const handler = (
+  input.dontBreakMyApp ?
+    () => console.error("Clicked!") :
+    () => { throw Error("Clicked!") }
+);
 
 <button on-click(handler)>
   Do not click
