@@ -421,7 +421,7 @@ import componentB from "<component-b>";
 >
 > _HTML Output:_
 >
-> ```marko
+> ```html
 > <fancy-button>Button text</fancy-button>
 > ```
 
