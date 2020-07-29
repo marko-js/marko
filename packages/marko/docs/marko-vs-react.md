@@ -248,8 +248,7 @@ At a high level here are some differences:
 - **Marko limitation:** Marko requires a JavaScript module bundler (such as
   [Lasso](http://markojs.com/docs/lasso/),
   [Webpack](http://markojs.com/docs/webpack/),
-  [Rollup](http://markojs.com/docs/rollup/) or
-  [Browserify](http://markojs.com/docs/browserify/)) to be used in the browser
+  [Rollup](http://markojs.com/docs/rollup/)
   since Marko UI components compile down to JavaScript modules. (we consider using
   a JavaScript module bundler a best practice)
 

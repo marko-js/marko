@@ -89,7 +89,7 @@ Do you see references to “Marko” in the snippet above? Yeah, me neither.
 
 Is your component becoming too large? Do you prefer separating your CSS,
 JavaScript, and markup code? No problem. You can easily [rip out your code into
-multiple files](http://markojs.com/docs/components/#multi-file-components):
+multiple files](http://markojs.com/docs/class-components/#multi-file-components):
 
 ```
 components/
