@@ -10,10 +10,14 @@ export function exit(path) {
         'You must provide a promise argument to the "<await>" tag, eg: "<await(promise)>".'
       );
   } else if (args.length > 1) {
-    const { start } = args[1].node;
-    const { end } = args[args.length - 1].node;
+    const {
+      loc: { start }
+    } = args[1].node;
+    const {
+      loc: { end }
+    } = args[args.length - 1].node;
     throw path.hub.file.buildCodeFrameError(
-      { start, end },
+      { loc: { start, end } },
       'You can only pass one argument to the "<await>" tag.'
     );
   }

@@ -19,9 +19,12 @@ export function assertNoParams(path) {
   const { hub } = path;
   const params = path.get("params");
   if (params.length) {
-    const start = params[0].node.start;
-    const end = params[params.length - 1].node.end;
-    throw hub.buildError({ start, end }, "Tag does not support parameters.");
+    const start = params[0].node.loc.start;
+    const end = params[params.length - 1].node.loc.end;
+    throw hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support parameters."
+    );
   }
 }
 
@@ -38,8 +41,11 @@ export function assertNoArgs(path) {
   const { hub } = path;
   const args = path.get("arguments");
   if (args.length) {
-    const start = args[0].node.start;
-    const end = args[args.length - 1].node.end;
-    throw hub.buildError({ start, end }, "Tag does not support arguments.");
+    const start = args[0].node.loc.start;
+    const end = args[args.length - 1].node.loc.end;
+    throw hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support arguments."
+    );
   }
 }
