@@ -4,9 +4,9 @@ import parseArguments from "./util/parse-arguments";
 import parseParams from "./util/parse-params";
 import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
-import { getLocRange } from "./util/get-loc";
 import markoModules from "../../modules";
 import { types as t } from "@marko/babel-types";
+import posToLoc from "./util/pos-to-loc";
 
 const EMPTY_OBJECT = {};
 const EMPTY_ARRAY = [];
@@ -56,9 +56,10 @@ export function parse(file) {
       onNext = onNext && onNext(node);
     },
 
-    onText({ value }, { pos }) {
+    onText({ value }, parser) {
       const shouldTrim = !preservingWhitespaceUntil;
       const { body } = getTagBody().node;
+      let pos = parser.pos - value.length;
 
       if (shouldTrim) {
         if (htmlTrim(value) === "") {
@@ -134,7 +135,7 @@ export function parse(file) {
     onScriptlet({ value, line, block, pos, endPos }) {
       if (!line && !block) {
         throw file.buildCodeFrameError(
-          { start: pos, end: endPos },
+          { loc: posToLoc(file, pos, endPos) },
           "<% scriptlets %> are no longer supported."
         );
       }
@@ -163,7 +164,7 @@ export function parse(file) {
 
       if (tagNameExpression === "") {
         throw file.buildCodeFrameError(
-          { start: tagNameStartPos + 1, end: tagNameStartPos + 3 },
+          { loc: posToLoc(file, tagNameStartPos + 1, tagNameStartPos + 3) },
           "Missing expression for <${dynamic}> tag."
         );
       }
@@ -196,7 +197,7 @@ export function parse(file) {
 
           if (parseOptions.rootOnly && !currentTag.isProgram()) {
             throw file.buildCodeFrameError(
-              { start: pos, end: endPos },
+              { loc: posToLoc(file, pos, endPos) },
               `"${tagName}" tags must be at the root of your Marko template.`
             );
           }
@@ -282,7 +283,8 @@ export function parse(file) {
         }
       }
 
-      Object.assign(node, getLocRange(code, node.start, endPos));
+      node.end = endPos;
+      node.loc = posToLoc(file, node.start, endPos);
 
       if (
         !isConcise &&
@@ -291,7 +293,7 @@ export function parse(file) {
         !currentTag.get("name").isStringLiteral()
       ) {
         throw file.buildCodeFrameError(
-          { start: pos, end: endPos },
+          { loc: posToLoc(file, pos, endPos) },
           `Invalid ending for dynamic tag, expected "</>".`
         );
       }
@@ -311,7 +313,10 @@ export function parse(file) {
 
     onError({ message, pos, endPos }) {
       if (message.includes("EOF")) endPos = pos;
-      throw file.buildCodeFrameError({ start: pos, end: endPos }, message);
+      throw file.buildCodeFrameError(
+        { loc: posToLoc(file, pos, endPos) },
+        message
+      );
     }
   };
 

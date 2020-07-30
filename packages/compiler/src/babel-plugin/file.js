@@ -5,15 +5,12 @@ import { parse, parseExpression } from "@babel/parser";
 import { codeFrameColumns } from "@babel/code-frame";
 import { getClientPath } from "lasso-modules-client/transport";
 import { buildLookup } from "../taglib";
-import { getLoc, getLocRange } from "./util/get-loc";
+import posToLoc from "./util/pos-to-loc";
 import checksum from "./util/checksum";
 const CWD = process.cwd();
 
 export class MarkoFile extends File {
   constructor(filename, code, jsParseOptions, markoOptions) {
-    const start = { line: 0, column: 0 };
-    const end = getLoc(code, code.length);
-    const loc = { start, end, loc: { start, end } };
     super(
       {
         filename,
@@ -23,11 +20,9 @@ export class MarkoFile extends File {
         code,
         ast: {
           type: "File",
-          ...loc,
           program: {
             type: "Program",
             sourceType: "module",
-            ...loc,
             body: [],
             directives: []
           }
@@ -35,6 +30,13 @@ export class MarkoFile extends File {
       }
     );
 
+    this.ast.start = this.ast.program.start = 0;
+    this.ast.end = this.ast.program.end = code.length - 1;
+    this.ast.loc = this.ast.program.loc = posToLoc(
+      this,
+      this.ast.start,
+      this.ast.end
+    );
     this._jsParseOptions = jsParseOptions;
     this._markoOptions = markoOptions;
     this._lookup = buildLookup(path.dirname(filename), markoOptions.translator);
@@ -52,16 +54,26 @@ export class MarkoFile extends File {
   }
 
   buildCodeFrameError(node, msg, Error = SyntaxError) {
-    const start = getLoc(this.code, node.start);
-    const end = node.end != null && getLoc(this.code, node.end);
+    const { loc } = node;
     const frame = codeFrameColumns(
       this.code,
-      { start, end },
+      loc && {
+        start: {
+          line: loc.start.line,
+          column: loc.start.column + 1
+        },
+        end:
+          loc.end && loc.start.line === loc.end.line
+            ? {
+                line: loc.end.line,
+                column: loc.end.column + 1
+              }
+            : undefined
+      },
       { highlightCode: true }
     );
-    const position = start.column
-      ? `(${start.line},${start.column})`
-      : `:${start.line || 0}`;
+
+    const position = loc ? `(${loc.start.line},${loc.start.column + 1})` : "";
     return new Error(
       `${path.relative(CWD, this.opts.filename)}${position}: ${msg}\n${frame}`
     );
@@ -71,7 +83,7 @@ export class MarkoFile extends File {
   getWhitespaceBefore(pos) {
     return (
       this._codeAsWhitespace ||
-      (this._codeAsWhitespace = this.code.replace(/[^\n\r ]/g, " "))
+      (this._codeAsWhitespace = this.code.replace(/[^\s]/g, " "))
     ).slice(0, pos);
   }
 
@@ -156,10 +168,11 @@ export class MarkoFile extends File {
   }
 
   createNode(type, start, end, ...args) {
-    return {
-      ...t[type](...args),
-      ...getLocRange(this.code, start, end)
-    };
+    const node = t[type](...args);
+    node.loc = posToLoc(this, start, end);
+    node.start = start;
+    node.end = end;
+    return node;
   }
 
   parse(str, start) {
@@ -179,10 +192,10 @@ export class MarkoFile extends File {
         ? parseExpression(str, opts)
         : parse(str, opts).program;
     } catch (err) {
-      let { pos, message } = err;
-      if (pos) {
+      let { loc, message } = err;
+      if (loc) {
         throw this.buildCodeFrameError(
-          { start: pos },
+          { loc: { start: loc } },
           message.replace(/ *\(\d+:\d+\)$/, "")
         );
       } else {
