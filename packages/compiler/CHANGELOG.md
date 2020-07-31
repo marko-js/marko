@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.31](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.30...v5.0.0-next.31) (2020-07-31)
+
+
+### Features
+
+* improve index position to line, column perf ([680dad6](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/680dad65dafdb4300d3f86ea2be6bb322ecd7de9))
+
+
+
+
+
 # [5.0.0-next.30](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.29...v5.0.0-next.30) (2020-07-29)
 
 **Note:** Version bump only for package @marko/compiler
