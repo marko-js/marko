@@ -48,6 +48,6 @@ function getLoc(linePositions, startLine, pos) {
 
   return {
     line: line + 1,
-    column: pos - linePos - (line === 0 ? 0 : 1)
+    column: pos === linePos ? 0 : pos - linePos - (line === 0 ? 0 : 1)
   };
 }
