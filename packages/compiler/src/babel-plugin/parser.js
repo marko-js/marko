@@ -6,7 +6,7 @@ import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
 import markoModules from "../../modules";
 import { types as t } from "@marko/babel-types";
-import { getLocRange } from "./util/pos-to-loc";
+import { getLoc, getLocRange } from "./util/pos-to-loc";
 
 const EMPTY_OBJECT = {};
 const EMPTY_ARRAY = [];
@@ -284,7 +284,7 @@ export function parse(file) {
       }
 
       node.end = endPos;
-      node.loc = getLocRange(file, node.start, endPos);
+      node.loc.end = getLoc(file, endPos);
 
       if (
         !isConcise &&

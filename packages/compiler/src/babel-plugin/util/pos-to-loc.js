@@ -1,6 +1,25 @@
 const LINE_POS_CACHE = new WeakMap();
 
 export function getLocRange(file, start, end) {
+  const linePositions = getLinePositions(file);
+  const startLoc = findLoc(linePositions, 0, start);
+
+  if (startLoc) {
+    const endLoc =
+      start === end ? startLoc : findLoc(linePositions, startLoc.line - 1, end);
+
+    return {
+      start: startLoc,
+      end: endLoc
+    };
+  }
+}
+
+export function getLoc(file, pos) {
+  return findLoc(getLinePositions(file), 0, pos);
+}
+
+function getLinePositions(file) {
   let linePositions = LINE_POS_CACHE.get(file);
 
   if (!linePositions) {
@@ -14,20 +33,10 @@ export function getLocRange(file, start, end) {
     LINE_POS_CACHE.set(file, linePositions);
   }
 
-  const startLoc = getLoc(linePositions, 0, start);
-
-  if (startLoc) {
-    const endLoc =
-      start === end ? startLoc : getLoc(linePositions, startLoc.line - 1, end);
-
-    return {
-      start: startLoc,
-      end: endLoc
-    };
-  }
+  return linePositions;
 }
 
-function getLoc(linePositions, startLine, pos) {
+function findLoc(linePositions, startLine, pos) {
   const endLine = linePositions.length - 1;
   let max = endLine;
   let line = startLine;
