@@ -1,6 +1,6 @@
 const LINE_POS_CACHE = new WeakMap();
 
-export default (file, start, end) => {
+export function getLocRange(file, start, end) {
   let linePositions = LINE_POS_CACHE.get(file);
 
   if (!linePositions) {
@@ -25,7 +25,7 @@ export default (file, start, end) => {
       end: endLoc
     };
   }
-};
+}
 
 function getLoc(linePositions, startLine, pos) {
   const endLine = linePositions.length - 1;

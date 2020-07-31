@@ -5,7 +5,7 @@ import { parse, parseExpression } from "@babel/parser";
 import { codeFrameColumns } from "@babel/code-frame";
 import { getClientPath } from "lasso-modules-client/transport";
 import { buildLookup } from "../taglib";
-import posToLoc from "./util/pos-to-loc";
+import { getLocRange } from "./util/pos-to-loc";
 import checksum from "./util/checksum";
 const CWD = process.cwd();
 
@@ -32,7 +32,7 @@ export class MarkoFile extends File {
 
     this.ast.start = this.ast.program.start = 0;
     this.ast.end = this.ast.program.end = code.length - 1;
-    this.ast.loc = this.ast.program.loc = posToLoc(
+    this.ast.loc = this.ast.program.loc = getLocRange(
       this,
       this.ast.start,
       this.ast.end
@@ -169,7 +169,7 @@ export class MarkoFile extends File {
 
   createNode(type, start, end, ...args) {
     const node = t[type](...args);
-    node.loc = posToLoc(this, start, end);
+    node.loc = getLocRange(this, start, end);
     node.start = start;
     node.end = end;
     return node;
