@@ -89,13 +89,10 @@ module.exports = function awaitTag(input, out) {
   var provider = input._provider;
   var asyncValue = requestData(provider, timeout);
   var placeholderRenderer = input.placeholder && input.placeholder.renderBody;
-  var resultRenderer = input.then && input.then.renderBody;
-  var errorRenderer = input.catch && input.catch.renderBody;
 
   if (asyncValue.___settled) {
-    // No point in using client-reordering if the data was fetched
-    // synchronously
-    clientReorder = false;
+    renderContents(asyncValue.___error, asyncValue.___value, input, out);
+    return;
   }
 
   var asyncOut;
@@ -183,23 +180,7 @@ module.exports = function awaitTag(input, out) {
       out.emit("await:beforeRender", awaitInfo);
     }
 
-    if (err) {
-      if (input.catch) {
-        if (errorRenderer) {
-          errorRenderer(asyncOut, err);
-        }
-      } else {
-        asyncOut.error(err);
-      }
-    } else {
-      if (resultRenderer) {
-        var renderBodyErr = safeRenderBody(resultRenderer, asyncOut, data);
-
-        if (renderBodyErr) {
-          return renderBody(renderBodyErr);
-        }
-      }
-    }
+    renderContents(err, data, input, asyncOut);
 
     awaitInfo.finished = true;
 
@@ -230,3 +211,26 @@ module.exports = function awaitTag(input, out) {
 
   asyncValue.___done(renderBody);
 };
+
+function renderContents(err, data, input, out) {
+  var resultRenderer = input.then && input.then.renderBody;
+  var errorRenderer = input.catch && input.catch.renderBody;
+
+  if (err) {
+    if (input.catch) {
+      if (errorRenderer) {
+        errorRenderer(out, err);
+      }
+    } else {
+      out.error(err);
+    }
+  } else {
+    if (resultRenderer) {
+      var renderBodyErr = safeRenderBody(resultRenderer, out, data);
+
+      if (renderBodyErr) {
+        return renderContents(renderBodyErr, data, input, out);
+      }
+    }
+  }
+}
