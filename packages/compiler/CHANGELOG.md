@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.32](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.31...v5.0.0-next.32) (2020-07-31)
+
+
+### Bug Fixes
+
+* **compiler:** regression with sourcemaps ([bb818c8](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/bb818c8423e1d1cc4528c951b08ddab1579f25a9))
+
+
+
+
+
 # [5.0.0-next.31](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.30...v5.0.0-next.31) (2020-07-31)
 
 
