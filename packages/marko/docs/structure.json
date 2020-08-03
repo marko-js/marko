@@ -14,6 +14,10 @@
     ]
   },
   {
+    "title": "Tutorials",
+    "docs": ["Color Picker"]
+  },
+  {
     "title": "Reference",
     "docs": [
       "Rendering",
@@ -25,7 +29,7 @@
   },
   {
     "title": "Bundler Integrations",
-    "docs": ["Lasso", "Webpack", "Rollup"]
+    "docs": ["Webpack", "Rollup", "Lasso"]
   },
   {
     "title": "Server Integrations",
@@ -41,16 +45,8 @@
     ]
   },
   {
-    "title": "Framework Integrations",
-    "docs": ["Redux"]
-  },
-  {
     "title": "Tooling",
     "docs": ["Editor plugins"]
-  },
-  {
-    "title": "Tutorials",
-    "docs": ["Color Picker"]
   },
   {
     "title": "Articles",
