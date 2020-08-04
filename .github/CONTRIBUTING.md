@@ -10,9 +10,9 @@
 
 ## I just have a question
 
-Before you ask, check our [existing questions](https://github.com/marko-js/marko/issues?page=2&q=is%3Aissue+label%3Atype%3Aquestion&utf8=%E2%9C%93) to see if your question has already been answered. If not, go ahead an open an issue or join us in [gitter](https://gitter.im/marko-js/marko) to ask a question.
+Before you ask, check our [existing questions](https://github.com/marko-js/marko/issues?page=2&q=is%3Aissue+label%3Atype%3Aquestion&utf8=%E2%9C%93) to see if your question has already been answered. If not, go ahead an open an issue or join us in [Discord](https://discord.gg/RFGxYGs) to ask a question.
 
-Please be sure to use [markdown code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks/) when posting code on GitHub or Gitter:
+Please be sure to use [markdown code blocks](https://help.github.com/articles/creating-and-highlighting-code-blocks/) when posting code on GitHub or Discord:
 
 ````
 ```marko
@@ -132,7 +132,7 @@ Please provide as much detail as possible.
 
 ### Reporting security issues
 
-If you discover a security issue, please **DO NOT** file a public issue, instead send your report [privately](https://gitter.im/mlrawlings).
+If you discover a security issue, please **DO NOT** file a public issue, instead **privately** send your report to one of the members with the `core team` role in the [Discord](https://discord.gg/RFGxYGs).
 
 Security reports are greatly appreciated and we will publicly thank you for it. We currently do not offer a paid security bounty program.
 
