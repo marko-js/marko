@@ -1,4 +1,3 @@
-import fs from "fs";
 import path from "path";
 
 const CACHE = new WeakMap();
@@ -9,6 +8,7 @@ export default function getComponentFiles({ hub }) {
   }
 
   const { filename } = hub.file.opts;
+  const fs = hub.file._fs;
   const ext = path.extname(filename);
   const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
