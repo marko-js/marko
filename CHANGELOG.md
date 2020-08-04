@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.35](https://github.com/marko-js/marko/compare/v5.0.0-next.34...v5.0.0-next.35) (2020-08-04)
+
+
+### Bug Fixes
+
+* lint and format scripts ([57b66ef](https://github.com/marko-js/marko/commit/57b66ef39782ea249d3cf7913ec8242d0baf5535))
+* lint script ([c11c0e0](https://github.com/marko-js/marko/commit/c11c0e080bdca99c469107f56280168162915a8e))
+
+
+### Features
+
+* add custom fileSystem config option ([#1590](https://github.com/marko-js/marko/issues/1590)) ([212dda9](https://github.com/marko-js/marko/commit/212dda9c004af1958feacf5c9be9ac381feb2708))
+
+
+
+
+
 # [5.0.0-next.34](https://github.com/marko-js/marko/compare/v5.0.0-next.33...v5.0.0-next.34) (2020-08-04)
 
 

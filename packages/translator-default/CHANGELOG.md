@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.35](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.34...v5.0.0-next.35) (2020-08-04)
+
+
+### Features
+
+* add custom fileSystem config option ([#1590](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1590)) ([212dda9](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/212dda9c004af1958feacf5c9be9ac381feb2708))
+
+
+
+
+
 # [5.0.0-next.34](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.33...v5.0.0-next.34) (2020-08-04)
 
 

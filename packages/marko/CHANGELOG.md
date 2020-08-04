@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.35](https://github.com/marko-js/marko/compare/v5.0.0-next.34...v5.0.0-next.35) (2020-08-04)
+
+
+### Bug Fixes
+
+* lint and format scripts ([57b66ef](https://github.com/marko-js/marko/commit/57b66ef39782ea249d3cf7913ec8242d0baf5535))
+
+
+
+
+
 # [5.0.0-next.34](https://github.com/marko-js/marko/compare/v5.0.0-next.33...v5.0.0-next.34) (2020-08-04)
 
 
