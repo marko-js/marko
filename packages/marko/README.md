@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/marko"><img alt="NPM" src="https://img.shields.io/npm/v/marko.svg"/></a>
-  <a href="https://gitter.im/marko-js/marko"><img alt="Gitter" src="https://badges.gitter.im/Join%20Chat.svg"/></a>
+  <a href="https://discord.gg/RFGxYGs"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-7188da.svg"/></a>
   <a href="https://travis-ci.org/marko-js/marko"><img alt="Build Status" src="https://travis-ci.org/marko-js/marko.svg?branch=master"/></a>
   <a href="https://codecov.io/gh/marko-js/marko"><img alt="Coverage Status" src="https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg"/></a>
   <a href="http://npm-stat.com/charts.html?package=marko"><img alt="Downloads" src="https://img.shields.io/npm/dm/marko.svg"/></a>
@@ -134,9 +134,9 @@ ul.example-list
 
 # Community & Support
 
-| <a href="https://stackoverflow.com/questions/tagged/marko"><img src="https://user-images.githubusercontent.com/1958812/56055468-619b3e00-5d0e-11e9-92ae-200c212cafb8.png" height="50px"/></a> | <a href="https://gitter.im/marko-js/marko"><img src="https://user-images.githubusercontent.com/1958812/56055573-9c04db00-5d0e-11e9-9fd3-0395edf631a0.png" height="60px"/></a> | <a href="https://twitter.com/intent/tweet?hashtags=markojs"><img src="https://user-images.githubusercontent.com/1958812/56055707-07e74380-5d0f-11e9-8a59-d529fbb5a81e.png" height="40px"/></a> |
+| <a alt="See Marko questions on Stack Overflow" href="https://stackoverflow.com/questions/tagged/marko"><img src="https://user-images.githubusercontent.com/1958812/56055468-619b3e00-5d0e-11e9-92ae-200c212cafb8.png" height="50px"/></a> | <a alt="Chat with us on Discord" href="https://discord.gg/RFGxYGs"><img src="https://user-images.githubusercontent.com/4985201/89313514-6edbea80-d62d-11ea-8447-ca2fd8983661.png" height="55px"/></a> | <a alt="Tweet about Marko" href="https://twitter.com/intent/tweet?hashtags=markojs"><img src="https://user-images.githubusercontent.com/1958812/56055707-07e74380-5d0f-11e9-8a59-d529fbb5a81e.png" height="40px"/></a> |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ask and answer StackOverflow questions with the [`marko` tag](https://stackoverflow.com/questions/tagged/marko)                                                                               | Come hang out in our Gitter chat room, ask questions, and discuss project direction                                                                                           | Tweet to [`@MarkoDevTeam`](https://twitter.com/MarkoDevTeam) or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)                                                  |
+| Ask and answer StackOverflow questions with the [`marko` tag](https://stackoverflow.com/questions/tagged/marko)                                                                               | Come hang out in our Discord chat room, ask questions, and discuss project direction                                                                                           | Tweet to [`@MarkoDevTeam`](https://twitter.com/MarkoDevTeam) or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)                                                  |
 
 # Contributors
 

@@ -851,7 +851,7 @@ Here are just a few reasons you should consider using
   the mobile web).
 - Marko has a strong and growing community on
   [GitHub](https://github.com/marko-js/marko) and in
-  [Gitter](https://gitter.im/marko-js/marko).
+  [Discord](https://discord.gg/RFGxYGs).
 
 Interested in learning more about Marko? If so, you can get additional
 information on the [Marko website](http://markojs.com/). Join the conversation
