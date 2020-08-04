@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.34](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.33...v5.0.0-next.34) (2020-08-04)
+
+
+### Bug Fixes
+
+* diffing dynamic attributes with mismatched keys ([#1587](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1587)) ([4b8cce4](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/4b8cce41c7f3a020142e2d3e3d1e194ab64ffe65))
+* issue with hydrating no-update-if content ([#1581](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1581)) ([457f3d4](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/457f3d4acb480e5382fdfa30d0c1d4ea0062c4cc))
+
+
+
+
+
 # [5.0.0-next.33](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.32...v5.0.0-next.33) (2020-08-03)
 
 **Note:** Version bump only for package @marko/translator-default
