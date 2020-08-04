@@ -1,4 +1,3 @@
-import fs from "fs";
 import nodePath from "path";
 import { types as t } from "@marko/babel-types";
 import { assertNoParams, assertNoAttributes } from "@marko/babel-utils";
@@ -10,6 +9,7 @@ export function enter(path) {
   assertNoParams(path);
   assertNoAttributes(path);
 
+  const fs = file._fs;
   const tagName = path.get("name").node.value;
   const tagExample = `<${tagName}("./path-to-file.ext")>`;
   const args = path.get("arguments");

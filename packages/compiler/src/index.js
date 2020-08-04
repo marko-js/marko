@@ -50,6 +50,7 @@ function loadBabelConfig(filename, options) {
 
   if (markoConfig.babelConfig) {
     Object.assign(baseBabelConfig, markoConfig.babelConfig);
+    delete markoConfig.babelConfig;
   }
 
   baseBabelConfig.plugins = requiredPlugins.concat(

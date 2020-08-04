@@ -1,3 +1,4 @@
+import fs from "fs";
 import * as translator from "@marko/translator-default";
 
 let config;
@@ -41,7 +42,12 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     /**
      * Allows configuring Marko to compile to different runtimes.
      */
-    translator
+    translator,
+
+    /**
+     * Use a different file system object, eg webpacks CachedInputFileSystem or lasso-caching-fs
+     */
+    fileSystem: fs
   };
 
   if (process.env.MARKO_CONFIG) {

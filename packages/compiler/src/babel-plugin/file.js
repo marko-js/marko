@@ -38,6 +38,7 @@ export class MarkoFile extends File {
     };
     this._jsParseOptions = jsParseOptions;
     this._markoOptions = markoOptions;
+    this._fs = markoOptions.fileSystem;
     this._lookup = buildLookup(path.dirname(filename), markoOptions.translator);
     this._imports = Object.create(null);
     this._macros = Object.create(null);
