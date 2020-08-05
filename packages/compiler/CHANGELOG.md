@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.37](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.36...v5.0.0-next.37) (2020-08-05)
+
+
+### Features
+
+* only enable optimization stage for production mode ([ee16e96](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/ee16e96580b67e0cacb87a78001be940dc0324df))
+
+
+
+
+
 # [5.0.0-next.36](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.35...v5.0.0-next.36) (2020-08-05)
 
 
