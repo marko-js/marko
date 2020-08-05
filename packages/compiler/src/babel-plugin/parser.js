@@ -157,7 +157,7 @@ export function parse(file) {
       const tagName = event.tagName || "div";
       const [, tagNameExpression] =
         /^\$\{([\s\S]*)\}/.exec(tagName) || EMPTY_ARRAY;
-      const tagDef = !tagNameExpression && file._lookup.getTag(tagName);
+      const tagDef = !tagNameExpression && file.getTagDef(tagName);
       const tagNameStartPos = pos + (event.concise ? 0 : 1); // Account for leading `<`.
 
       handledTagName = true;
@@ -300,6 +300,7 @@ export function parse(file) {
 
       if (tagDef && tagDef.nodeFactoryPath) {
         const module = markoModules.require(tagDef.nodeFactoryPath);
+        file._watchFiles.add(tagDef.nodeFactoryPath);
         /* istanbul ignore next */
         (module.default || module)(tag, t);
       }

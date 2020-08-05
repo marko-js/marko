@@ -23,7 +23,11 @@ export default {
 
     if (tagDef) {
       if (tagDef.codeGeneratorModulePath) {
-        const { node } = path;
+        const {
+          node,
+          hub: { file }
+        } = path;
+        file._watchFiles.add(tagDef.codeGeneratorModulePath);
         tagDef.codeGenerator = markoModules.require(
           tagDef.codeGeneratorModulePath
         );

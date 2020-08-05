@@ -38,10 +38,14 @@ export default (api, markoOptions) => {
       if (!markoOptions._parseOnly) {
         file.path.scope.crawl(); // Initialize bindings.
         const rootMigrators = Object.values(file._lookup.taglibsById)
-          .map(it => it.migratorPath)
-          .filter(Boolean)
-          .map(it => markoModules.require(it))
-          .map(it => (it.default || it)(api, markoOptions));
+          .map(({ migratorPath }) => {
+            if (migratorPath) {
+              const mod = markoModules.require(migratorPath);
+              file._watchFiles.add(migratorPath);
+              return (mod.default || mod)(api, markoOptions);
+            }
+          })
+          .filter(Boolean);
         traverse(
           file.ast,
           rootMigrators.length
@@ -50,9 +54,13 @@ export default (api, markoOptions) => {
           file.scope
         );
         if (!markoOptions._migrateOnly) {
-          const rootTransformers = file._lookup.merged.transformers
-            .map(it => markoModules.require(it.path))
-            .map(it => (it.default || it)(api, markoOptions));
+          const rootTransformers = file._lookup.merged.transformers.map(
+            ({ path: transformerPath }) => {
+              const mod = markoModules.require(transformerPath);
+              file._watchFiles.add(transformerPath);
+              return (mod.default || mod)(api, markoOptions);
+            }
+          );
           traverse(
             file.ast,
             rootTransformers.length
@@ -66,7 +74,21 @@ export default (api, markoOptions) => {
       }
 
       const result = t.cloneDeep(file.ast);
+
+      for (const id in file._lookup.taglibsById) {
+        const { filePath } = file._lookup.taglibsById[id];
+
+        if (
+          filePath[filePath.length - 5] === "." &&
+          filePath.endsWith("marko.json")
+        ) {
+          file._watchFiles.add(filePath);
+        }
+      }
+
       result._meta = file.metadata.marko;
+      result._meta.watchFiles = Array.from(file._watchFiles);
+
       return result;
     },
     pre(file) {

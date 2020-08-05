@@ -42,6 +42,8 @@ export class MarkoFile extends File {
     this._lookup = buildLookup(path.dirname(filename), markoOptions.translator);
     this._imports = Object.create(null);
     this._macros = Object.create(null);
+    this._seenTagDefs = new Set();
+    this._watchFiles = new Set();
     this.metadata.marko = {
       id: checksum(this.getClientPath(filename)),
       deps: [],
@@ -85,6 +87,23 @@ export class MarkoFile extends File {
       this._codeAsWhitespace ||
       (this._codeAsWhitespace = this.code.replace(/[^\s]/g, " "))
     ).slice(0, pos);
+  }
+
+  getTagDef(tagName) {
+    const tagDef = this._lookup.getTag(tagName);
+
+    if (tagDef) {
+      if (!this._seenTagDefs.has(tagDef)) {
+        this._seenTagDefs.add(tagName);
+        const { filePath } = tagDef;
+        const len = filePath.length;
+
+        if (filePath[len - 14] === "m" && filePath.endsWith("marko-tag.json")) {
+          this._watchFiles.add(filePath);
+        }
+      }
+    }
+    return tagDef;
   }
 
   getClientPath(filename) {

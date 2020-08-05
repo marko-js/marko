@@ -33,7 +33,7 @@ export const visitor = {
 
       if (source.value[0] === "<") {
         const tagName = source.value.slice(1, -1);
-        const tagDef = file._lookup.getTag(tagName);
+        const tagDef = file.getTagDef(tagName);
         const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
         const relativePath = tagEntry && file.resolveRelativePath(tagEntry);
 

@@ -77,7 +77,6 @@ class TaglibLookup {
       attributeGroups: {}
     };
     this.taglibsById = {};
-    this._inputFiles = null;
 
     this._sortedTags = undefined;
   }
@@ -223,18 +222,12 @@ class TaglibLookup {
   }
 
   getTag(element) {
-    if (typeof element === "string") {
-      element = {
-        tagName: element
-      };
-    }
     var tags = this.merged.tags;
     if (!tags) {
       return;
     }
 
-    var tagName = element.tagName;
-    return tags[tagName];
+    return tags[element.tagName || element];
   }
 
   getAttribute(element, attr) {
@@ -431,7 +424,7 @@ class TaglibLookup {
   }
 
   toString() {
-    return "lookup: " + this.getInputFiles().join(", ");
+    return "lookup: " + Object.keys(this.taglibsById).join(", ");
   }
 }
 

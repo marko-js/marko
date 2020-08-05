@@ -31,20 +31,29 @@ function getMigratorsForTag(path) {
   const {
     hub: { file }
   } = path;
-  const { _lookup } = file;
-  const tagName = path.get("name.value").node;
-  const MIGRATOR_CACHE = (_lookup.MIGRATOR_CACHE =
-    _lookup.MIGRATOR_CACHE || {});
+  const tagName = path.get("name.value").node || "*";
+  const MIGRATOR_CACHE = (file.MIGRATOR_CACHE =
+    file.MIGRATOR_CACHE || Object.create(null));
 
   let migrators = MIGRATOR_CACHE[tagName];
 
   if (!migrators) {
-    const tagDef = getTagDef(path);
+    migrators = MIGRATOR_CACHE[tagName] = [];
+    const addMigrators = tagDef => {
+      if (tagDef && tagDef.migratorPaths) {
+        for (let i = 0; i < tagDef.migratorPaths.length; i++) {
+          const migratorPath = tagDef.migratorPaths[i];
+          file._watchFiles.add(migratorPath);
+          migrators.push(markoModules.require(migratorPath));
+        }
+      }
+    };
 
-    migrators = MIGRATOR_CACHE[tagName] = [
-      ...(tagDef ? tagDef.migratorPaths : []),
-      ...(_lookup.getTag("*") || { migratorPaths: [] }).migratorPaths
-    ].map(path => markoModules.require(path));
+    addMigrators(getTagDef(path));
+
+    if (tagName !== "*") {
+      addMigrators(file.getTagDef("*"));
+    }
   }
 
   return migrators;

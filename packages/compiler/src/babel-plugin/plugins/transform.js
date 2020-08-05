@@ -38,27 +38,34 @@ function getTransformersForTag(path) {
   const {
     hub: { file }
   } = path;
-  const { _lookup } = file;
   const tagName = path.get("name.value").node || "*";
-  const TRANSFORMER_CACHE = (_lookup.TRANSFORMER_CACHE =
-    _lookup.TRANSFORMER_CACHE || {});
+  const TRANSFORMER_CACHE = (file.TRANSFORMER_CACHE =
+    file.TRANSFORMER_CACHE || Object.create(null));
 
   let transformers = TRANSFORMER_CACHE[tagName];
 
   if (!transformers) {
-    const tagDef = getTagDef(path);
+    transformers = TRANSFORMER_CACHE[tagName] = [];
+    const addTransformers = tagDef => {
+      if (tagDef) {
+        for (const transformerPath in tagDef.transformers) {
+          file._watchFiles.add(transformerPath);
+          transformers.push(tagDef.transformers[transformerPath]);
+        }
+      }
+    };
 
-    transformers = TRANSFORMER_CACHE[tagName] = (tagDef
-      ? Object.values(tagDef.transformers)
-      : []
-    )
-      .concat(
-        Object.values(
-          (_lookup.getTag("*") || { transformers: [] }).transformers
-        )
-      )
-      .sort(comparePriority)
-      .map(({ path }) => markoModules.require(path));
+    addTransformers(getTagDef(path));
+
+    if (tagName !== "*") {
+      addTransformers(file.getTagDef("*"));
+    }
+
+    for (let i = 0; i < transformers.length; i++) {
+      transformers[i] = markoModules.require(transformers[i].path);
+    }
+
+    transformers.sort(comparePriority);
   }
 
   return transformers;
