@@ -35,7 +35,6 @@ class Taglib {
     this.transformers = [];
     this.attributes = {};
     this.patternAttributes = [];
-    this.inputFilesLookup = {};
     this.imports = null;
     this.importsLookup = null;
   }

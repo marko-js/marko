@@ -36,27 +36,23 @@ export function getMacroIdentifier(path) {
 }
 
 export function getTagDef(path) {
-  const cached = path.get("tagDef");
-
-  if (cached.node !== undefined) {
-    return cached.node;
-  }
-
   const {
+    node,
     hub: { file }
   } = path;
-  const { _lookup } = file;
-  let tagName;
 
-  if (!(isMacroTag(path) || isDynamicTag(path))) {
-    tagName = isAttributeTag(path)
-      ? getFullyResolvedTagName(path)
-      : path.get("name.value").node;
+  if (!node.tagDef) {
+    if (isDynamicTag(path) || isMacroTag(path)) {
+      node.tagDef = null;
+    } else {
+      node.tagDef =
+        file.getTagDef(
+          isAttributeTag(path) ? getFullyResolvedTagName(path) : node.name.value
+        ) || null;
+    }
   }
 
-  const tagDef = (tagName && _lookup.getTag(tagName)) || null;
-  path.set("tagDef", tagDef);
-  return tagDef;
+  return node.tagDef;
 }
 
 export function getFullyResolvedTagName(path) {

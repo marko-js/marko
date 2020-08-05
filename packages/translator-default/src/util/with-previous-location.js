@@ -1,4 +1,6 @@
 export default function withPreviousLocation(newNode, originalNode) {
-  const { start, end, loc } = originalNode;
-  return Object.assign(newNode, { start, end, loc });
+  newNode.start = originalNode.start;
+  newNode.loc = originalNode.loc;
+  newNode.end = originalNode.end;
+  return newNode;
 }
