@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.36](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.35...v5.0.0-next.36) (2020-08-05)
+
+
+### Features
+
+* expose watch file meta data ([#1591](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1591)) ([f14e46a](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/f14e46a1f3ddd01f659a0f86678773fb12a7f1a5))
+
+
+
+
+
 # [5.0.0-next.35](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.34...v5.0.0-next.35) (2020-08-04)
 
 
