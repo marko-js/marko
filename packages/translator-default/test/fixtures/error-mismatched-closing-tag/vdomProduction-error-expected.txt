@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-mismatched-closing-tag/template.marko(4,1): The closing "div" tag does not match the corresponding opening "span" tag
+  2 |   <span>
+  3 |   <span>
+> 4 | </div>
+    | ^^^^^^

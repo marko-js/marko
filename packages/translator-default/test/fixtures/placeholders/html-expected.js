@@ -8,7 +8,22 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "eeAe9IyY",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<div>${_marko_escapeXml(input.x)}Hello world &lt;a/>${_marko_to_string(input.x)}Hello world <a/><script>\n    Hello <b> \\u003C/script>\n  </script><style>\n    Hello <b> \\003C/style>\n  </style></div>`);
+  out.w("<div>");
+  out.w(_marko_escapeXml(input.x));
+  out.w("Hello world &lt;a/>");
+  out.w(_marko_to_string(input.x));
+  out.w("Hello world <a/>");
+  out.w("<script>");
+  out.w("\n    ");
+  out.w("Hello <b> \\u003C/script>");
+  out.w("\n  ");
+  out.w("</script>");
+  out.w("<style>");
+  out.w("\n    ");
+  out.w("Hello <b> \\003C/style>");
+  out.w("\n  ");
+  out.w("</style>");
+  out.w("</div>");
 }, {
   t: _marko_componentType,
   i: true

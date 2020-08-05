@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-for-invalid-attribute/template.marko(1,25): <for> does not support the "x" attribute.
+> 1 | <for|key, value| in=obj x=1>
+    |                         ^^^
+  2 |   <div/>
+  3 | </for>

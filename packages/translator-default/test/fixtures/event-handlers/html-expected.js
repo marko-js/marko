@@ -11,9 +11,11 @@ const _marko_componentType = "BaPp2UaD",
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<div${_marko_props(out, _component, {
     "onclick": _component.d("click", "handleClick", false, [a, b, ...d])
-  })}></div><div${_marko_props(out, _component, {
+  })}></div>`);
+  out.w(`<div${_marko_props(out, _component, {
     "onDashed-cased-Event": _component.d("Dashed-cased-Event", "handle", false)
-  })}></div><div${_marko_props(out, _component, {
+  })}></div>`);
+  out.w(`<div${_marko_props(out, _component, {
     "oncamelcasedevent": _component.d("camelcasedevent", "handle", false)
   })} onmouseout=someStringHandler></div>`);
 

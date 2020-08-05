@@ -14,7 +14,9 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   var baz = 456;
   out.w("<div>");
   console.log('foo');
-  out.w(`Hello there ${_marko_escapeXml(name)}</div>`);
+  out.w("Hello there ");
+  out.w(_marko_escapeXml(name));
+  out.w("</div>");
 }, {
   t: _marko_componentType,
   i: true

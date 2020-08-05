@@ -10,7 +10,15 @@ fs.readdirSync(path.join(__dirname, "../../"))
   .forEach(translator => {
     autotest(path.normalize(`../../translator-${translator}/test/fixtures`), {
       html: runTest({ output: "html" }),
+      htmlProduction: runTest({
+        output: "html",
+        babelConfig: { envName: "production" }
+      }),
       vdom: runTest({ output: "dom" }),
+      vdomProduction: runTest({
+        output: "dom",
+        babelConfig: { envName: "production" }
+      }),
       generated: runTest({ _parseOnly: true })
     });
 
@@ -27,6 +35,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
         const compilerConfig = {
           ...config,
           babelConfig: {
+            ...config.babelConfig,
             babelrc: false,
             configFile: false,
             plugins: [

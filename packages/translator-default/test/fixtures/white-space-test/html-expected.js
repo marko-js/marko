@@ -7,14 +7,38 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "01WxYw7m",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w("<div><div>Hello <div> </div> World</div><div> Hello</div><pre>\n    This should  \n      be preserved\n  </pre><div><div>Hello </div></div></div><div>");
+  out.w("<div>");
+  out.w("<div>");
+  out.w("Hello ");
+  out.w("<div>");
+  out.w(" ");
+  out.w("</div>");
+  out.w(" World");
+  out.w("</div>");
+  out.w("<div>");
+  out.w(" Hello");
+  out.w("</div>");
+  out.w("<pre>");
+  out.w("\n    This should  \n      be preserved\n  ");
+  out.w("</pre>");
+  out.w("<div>");
+  out.w("<div>");
+  out.w("Hello ");
+  out.w("</div>");
+  out.w("</div>");
+  out.w("</div>");
+  out.w("<div>");
   scriptletA();
   scriptletB();
   out.w("Hello ");
   scriptletC();
   out.w("World");
   scriptletD();
-  out.w(`</div> Hello World! ${_marko_escapeXml(a)}${_marko_escapeXml(b)}<div></div>`);
+  out.w("</div>");
+  out.w(" Hello World! ");
+  out.w(_marko_escapeXml(a));
+  out.w(_marko_escapeXml(b));
+  out.w("<div></div>");
 }, {
   t: _marko_componentType,
   i: true

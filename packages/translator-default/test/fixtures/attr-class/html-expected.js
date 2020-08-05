@@ -14,7 +14,9 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.w(`<div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
-  }]))}></div><div class="a b"></div><div class="a b c"></div>`);
+  }]))}></div>`);
+  out.w("<div class=\"a b\"></div>");
+  out.w("<div class=\"a b c\"></div>");
 
   _marko_tag(_customTag, {
     "class": ["a", {

@@ -9,7 +9,9 @@ const _marko_componentType = "uRMbWunz",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   function _renderTree(out, node) {
-    out.w(`Name: ${_marko_escapeXml(node.name)} Children: `);
+    out.w("Name: ");
+    out.w(_marko_escapeXml(node.name));
+    out.w(" Children: ");
 
     if (node.children) {
       out.w("<ul>");

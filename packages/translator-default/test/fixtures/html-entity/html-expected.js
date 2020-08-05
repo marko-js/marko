@@ -6,7 +6,9 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "w5F2RVUv",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w("<div>&lt;div&gt;</div>");
+  out.w("<div>");
+  out.w("&lt;div&gt;");
+  out.w("</div>");
 }, {
   t: _marko_componentType,
   i: true

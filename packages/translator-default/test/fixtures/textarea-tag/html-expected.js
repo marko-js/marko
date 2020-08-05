@@ -6,7 +6,9 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "exzxXYhB",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w("<textarea>\n  hello world\n</textarea>");
+  out.w("<textarea>");
+  out.w("\n  hello world\n");
+  out.w("</textarea>");
 }, {
   t: _marko_componentType,
   i: true

@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-unknown-tag/template.marko(1,2): Unable to find entry point for custom tag <some-tag>.
+> 1 | <some-tag/>
+    |  ^^^^^^^^

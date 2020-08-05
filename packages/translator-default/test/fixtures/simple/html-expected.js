@@ -7,7 +7,9 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "Bvz2is5Z",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`Hello ${_marko_escapeXml(input.name)}! `);
+  out.w("Hello ");
+  out.w(_marko_escapeXml(input.name));
+  out.w("! ");
 
   if (input.colors.length) {
     out.w("<ul>");
@@ -16,12 +18,16 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
       for (const color of input.colors) {
         const _keyScope = `[${_keyValue++}]`;
-        out.w(`<li>${_marko_escapeXml(color)}</li>`);
+        out.w("<li>");
+        out.w(_marko_escapeXml(color));
+        out.w("</li>");
       }
     }
     out.w("</ul>");
   } else {
-    out.w("<div>No colors!</div>");
+    out.w("<div>");
+    out.w("No colors!");
+    out.w("</div>");
   }
 }, {
   t: _marko_componentType,

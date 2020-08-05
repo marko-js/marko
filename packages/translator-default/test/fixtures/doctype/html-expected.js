@@ -10,7 +10,15 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "m6h-ggcc",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w("<!DOCTYPE html><html><head><title>Title of the document</title></head><body>The content of the document......");
+  out.w("<!DOCTYPE html>");
+  out.w("<html>");
+  out.w("<head>");
+  out.w("<title>");
+  out.w("Title of the document");
+  out.w("</title>");
+  out.w("</head>");
+  out.w("<body>");
+  out.w("The content of the document......");
 
   _marko_tag(_initComponents, {}, out, _component, "4");
 
@@ -18,7 +26,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   _marko_tag(_preferredScriptLocation, {}, out, _component, "6");
 
-  out.w("</body></html>");
+  out.w("</body>");
+  out.w("</html>");
 }, {
   t: _marko_componentType,
   i: true

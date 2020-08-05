@@ -8,11 +8,14 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "jWznNrMq",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<div><input${_marko_props(out, _component, {
+  out.w("<div>");
+  out.w(`<input${_marko_props(out, _component, {
     noupdate: ["value"]
-  })}${_marko_attr("value", input.defaultValue)}><input${_marko_props(out, _component, {
+  })}${_marko_attr("value", input.defaultValue)}>`);
+  out.w(`<input${_marko_props(out, _component, {
     noupdate: ["value", "checked"]
-  })} type=checkbox${_marko_attr("value", input.defaultValue)}${_marko_attr("checked", input.checked)}></div>`);
+  })} type=checkbox${_marko_attr("value", input.defaultValue)}${_marko_attr("checked", input.checked)}>`);
+  out.w("</div>");
 }, {
   t: _marko_componentType,
   i: true

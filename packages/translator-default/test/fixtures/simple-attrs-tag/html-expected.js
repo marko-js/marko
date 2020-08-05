@@ -7,9 +7,13 @@ import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "YBWmqrQ3",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<div style=c:1px; class=b id=a></div><div style=c:1px; id=a></div><div style=c:1px;></div><div${_marko_props(out, _component, {
+  out.w("<div style=c:1px; class=b id=a></div>");
+  out.w("<div style=c:1px; id=a></div>");
+  out.w("<div style=c:1px;></div>");
+  out.w(`<div${_marko_props(out, _component, {
     noupdate: ["style"]
-  })} style=c:1px;></div><div a=1 style=c:1px;></div>`);
+  })} style=c:1px;></div>`);
+  out.w("<div a=1 style=c:1px;></div>");
 }, {
   t: _marko_componentType,
   i: true

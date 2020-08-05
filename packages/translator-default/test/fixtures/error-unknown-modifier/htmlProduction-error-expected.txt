@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-unknown-modifier/template.marko(1,6): Unsupported modifier "n-update".
+> 1 | <div value:n-update=1/>
+    |      ^^^^^^^^^^^^^^^^

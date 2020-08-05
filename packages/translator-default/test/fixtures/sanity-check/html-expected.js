@@ -28,7 +28,16 @@ const _marko_componentType = "sWzbPUpL",
 
 };
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.w(`<style id=css>\n  div {\n    color: ${_marko_escapeStyle(x)};\n  }\n</style><script>\n  var y = ${_marko_escapeScript(x)};\n</script>`);
+  out.w("<style id=css>");
+  out.w("\n  div {\n    color: ");
+  out.w(_marko_escapeStyle(x));
+  out.w(";\n  }\n");
+  out.w("</style>");
+  out.w("<script>");
+  out.w("\n  var y = ");
+  out.w(_marko_escapeScript(x));
+  out.w(";\n");
+  out.w("</script>");
 
   function _thing(out, stuff) {
     out.w(`<div${_marko_attr("x", stuff.x)}></div>`);
@@ -42,10 +51,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     let e = thing;
     out.w(`<div${_marko_attr("d", d)}${_marko_attr("e", e)}></div>`);
   }
-  out.w(`</div><div></div><div${_marko_attr("id", _component.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
+  out.w("</div>");
+  out.w("<div></div>");
+  out.w(`<div${_marko_attr("id", _component.elId("1"))}></div>`);
+  out.w(`<div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
-  }]))} style=a:b;></div><input type=text>`);
+  }]))} style=a:b;></div>`);
+  out.w("<input type=text>");
 
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");
@@ -94,20 +107,33 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     ...e,
     ...f(),
     "id": "a"
-  })}>${_marko_escapeXml(a)}<!--abc--><div c=1></div><div d=1></div>`);
+  })}>`);
+  out.w(_marko_escapeXml(a));
+  out.w("<!--");
+  out.w("abc");
+  out.w("-->");
+  out.w("<div c=1></div>");
+  out.w("<div d=1></div>");
 
   if (x === a) {
-    out.w(`a ${_marko_escapeXml(b)}`);
+    out.w("a ");
+    out.w(_marko_escapeXml(b));
   } else if (x === 2) {
     out.w("b");
   } else {
     out.w("c");
   }
 
-  out.w(`</div><div b=1></div><div>123 abc 123</div><span${_marko_attrs(abc)}></span>`);
+  out.w("</div>");
+  out.w("<div b=1></div>");
+  out.w("<div>");
+  out.w("123 abc 123");
+  out.w("</div>");
+  out.w(`<span${_marko_attrs(abc)}></span>`);
 
   if (cond) {
-    out.w(`Hello ${_marko_escapeXml(planet)}`);
+    out.w("Hello ");
+    out.w(_marko_escapeXml(planet));
   }
 
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
