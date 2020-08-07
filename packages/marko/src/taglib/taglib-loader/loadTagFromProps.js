@@ -299,7 +299,7 @@ class TagLoader {
 
         var nestedTagName = part.substring(1, part.length - 1);
         nestedTag.name = nestedTagName;
-        nestedTag.isRepeated = isNestedTagRepeated;
+        nestedTag.isRepeated = nestedTag.isRepeated || isNestedTagRepeated;
         // Use the name of the attribute as the target property unless
         // this target property was explicitly provided
         nestedTag.targetProperty =
@@ -590,6 +590,17 @@ class TagLoader {
     var tag = this.tag;
     tag.type = value;
   }
+
+  isRepeated(value) {
+    var tag = this.tag;
+    tag.isRepeated = value;
+  }
+
+  targetProperty(value) {
+    var tag = this.tag;
+    tag.targetProperty = value;
+  }
+
   /**
    * Declare a nested tag.
    *
@@ -599,7 +610,7 @@ class TagLoader {
    *     "nested-tags": {
    *        "tab": {
    *            "target-property": "tabs",
-   *            "isRepeated": true
+   *            "is-repeated": true
    *        }
    *     }
    * }
@@ -610,7 +621,7 @@ class TagLoader {
 
     forEachEntry(value, (nestedTagName, nestedTagDef) => {
       var dependencyChain = this.dependencyChain.append(
-        `nestedTags["${nestedTagName}]`
+        `nestedTags["${nestedTagName}"]`
       );
       var nestedTag = new types.Tag(filePath);
 
