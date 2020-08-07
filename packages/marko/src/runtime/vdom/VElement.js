@@ -190,7 +190,7 @@ VElement.prototype = {
       }
 
       if (tagName === "textarea") {
-        el.value = this.___value;
+        el.defaultValue = el.value = this.___value;
       }
     }
 
