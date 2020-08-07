@@ -1,0 +1,22 @@
+{
+  "tags": {
+    "longhand-tabs": {
+      "nested-tags": {
+        "tab": {
+          "target-property": "tabs",
+          "is-repeated": true,
+          "attributes": {
+            "label": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "attributes": {
+        "orientation": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
