@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.5](https://github.com/marko-js/marko/compare/v4.22.4...v4.22.5) (2020-08-07)
+
+
+### Bug Fixes
+
+* add support for nested tag long hand properties ([#1592](https://github.com/marko-js/marko/issues/1592)) ([8f595fd](https://github.com/marko-js/marko/commit/8f595fd493d4462f8cc2b103d8ea77e04616edea))
+
 ### [4.22.4](https://github.com/marko-js/marko/compare/v4.22.3...v4.22.4) (2020-08-04)
 
 ### [4.22.3](https://github.com/marko-js/marko/compare/v4.22.1...v4.22.3) (2020-07-31)
