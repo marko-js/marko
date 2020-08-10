@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.38](https://github.com/marko-js/marko/compare/v5.0.0-next.37...v5.0.0-next.38) (2020-08-10)
+
+
+### Bug Fixes
+
+* add support for nested tag long hand properties ([#1592](https://github.com/marko-js/marko/issues/1592)) ([36c501c](https://github.com/marko-js/marko/commit/36c501ce440f90f6409394b38ed49e185e82d239))
+* set default value for textarea when created ([#1593](https://github.com/marko-js/marko/issues/1593)) ([00a0a55](https://github.com/marko-js/marko/commit/00a0a5527d19e7e145b367a415677dc9d41474cd))
+
+
+
+
+
 # [5.0.0-next.37](https://github.com/marko-js/marko/compare/v5.0.0-next.36...v5.0.0-next.37) (2020-08-05)
 
 
