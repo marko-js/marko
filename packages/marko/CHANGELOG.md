@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.6](https://github.com/marko-js/marko/compare/v4.22.5...v4.22.6) (2020-08-10)
+
+
+### Bug Fixes
+
+* set default value for textarea when created ([#1593](https://github.com/marko-js/marko/issues/1593)) ([1efae18](https://github.com/marko-js/marko/commit/1efae18402df3a236410794fc3d4f6a2076d1d64))
+
 ### [4.22.5](https://github.com/marko-js/marko/compare/v4.22.4...v4.22.5) (2020-08-07)
 
 
