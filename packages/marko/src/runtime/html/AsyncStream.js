@@ -501,10 +501,13 @@ var proto = (AsyncStream.prototype = {
       "<" +
       tagName +
       markoAttr(this, componentDef, props, key) +
-      attrsHelper(elementAttrs) +
-      ">";
+      attrsHelper(elementAttrs);
 
-    if (selfClosingTags.indexOf(tagName) === -1) {
+    if (selfClosingTags.voidElements.indexOf(tagName) !== -1) {
+      str += ">";
+    } else if (selfClosingTags.svgElements.indexOf(tagName) !== -1) {
+      str += " />";
+    } else {
       str += "</" + tagName + ">";
     }
 

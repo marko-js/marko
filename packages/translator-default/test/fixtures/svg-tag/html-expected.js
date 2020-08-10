@@ -7,7 +7,7 @@ const _marko_componentType = "hdShPuzM",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<svg height=100 width=100>");
-  out.w("<circle cx=50 cy=50 r=40 stroke=black stroke-width=3 fill=red>");
+  out.w("<circle cx=50 cy=50 r=40 stroke=black stroke-width=3 fill=red />");
   out.w("<a></a>");
   out.w("<style>");
   out.w("div { color: green }");

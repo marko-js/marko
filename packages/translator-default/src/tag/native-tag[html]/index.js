@@ -109,14 +109,27 @@ export default function(path) {
     }
   }
 
-  const isEmpty = !body.length;
-  const isSelfClosing =
-    t.isStringLiteral(name) && SELF_CLOSING.indexOf(name.value) !== -1;
+  const translatedAttrs = translateAttributes(path, path.get("attributes"));
+  let isSelfClosing = false;
+  let openTagEnding = ">";
 
-  let writeStartNode = normalizeTemplateString`<${name}${dataMarko}${translateAttributes(
-    path,
-    path.get("attributes")
-  )}>`;
+  if (t.isStringLiteral(name)) {
+    if (
+      tagDef &&
+      tagDef.htmlType &&
+      (tagDef.htmlType === "svg" || tagDef.htmlType === "math")
+    ) {
+      if (!body.length) {
+        isSelfClosing = true;
+        openTagEnding = " />";
+      }
+    } else if (SELF_CLOSING.voidElements.indexOf(name.value) !== -1) {
+      isSelfClosing = true;
+    }
+  }
+
+  const isEmpty = isSelfClosing || !body.length;
+  let writeStartNode = normalizeTemplateString`<${name}${dataMarko}${translatedAttrs}${openTagEnding}`;
 
   writeStartNode = withPreviousLocation(
     isEmpty && !isSelfClosing
