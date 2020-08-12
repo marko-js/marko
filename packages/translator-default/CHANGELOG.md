@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.40](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.39...v5.0.0-next.40) (2020-08-12)
+
+
+### Bug Fixes
+
+* component type use relative path in dev mode ([7b7a4f9](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/7b7a4f9637648c7ded113fd132ce3ce5f2785e0a))
+* **translator-default:** component meta not set on tag params ([da2eb18](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/da2eb187072b1e766509da1d4a2eab2a92798111))
+
+
+
+
+
 # [5.0.0-next.39](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.38...v5.0.0-next.39) (2020-08-10)
 
 
