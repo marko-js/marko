@@ -6,7 +6,7 @@ import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
 import _marko_split_component from "./template.component-browser.js";
 
-const _marko_componentType = _marko_registerComponent("rFQb-wzZ", () => _marko_split_component),
+const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/split-component/template.marko", () => _marko_split_component),
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {

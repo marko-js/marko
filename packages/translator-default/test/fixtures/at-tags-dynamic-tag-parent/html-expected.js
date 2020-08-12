@@ -4,7 +4,7 @@ export default _marko_template;
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/html";
-const _marko_componentType = "F7IQjQ3o",
+const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-dynamic-tag-parent/template.marko",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_dynamic_tag(out, input.x, () => ({

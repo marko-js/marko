@@ -45,7 +45,9 @@ export class MarkoFile extends File {
     this._seenTagDefs = new Set();
     this._watchFiles = new Set();
     this.metadata.marko = {
-      id: checksum(this.getClientPath(filename)),
+      id: markoOptions.isProduction
+        ? checksum(this.getClientPath(filename))
+        : path.relative(CWD, filename),
       deps: [],
       tags: []
     };

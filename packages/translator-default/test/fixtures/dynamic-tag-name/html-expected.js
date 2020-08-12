@@ -7,7 +7,7 @@ import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/html";
-const _marko_componentType = "8WGjziPr",
+const _marko_componentType = "packages/translator-default/test/fixtures/dynamic-tag-name/template.marko",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_dynamic_tag(out, input, null, null, null, null, _component, "0");
