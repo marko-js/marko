@@ -62,7 +62,7 @@ export const visitor = {
       } = getComponentFiles(path);
       const isHTML = _markoOptions.output === "html";
       let isSplit = false;
-      let isImplicit = !file._hasTagParams;
+      let isImplicit = true;
 
       if (packageFile) {
         meta.deps.unshift(packageFile);
@@ -72,7 +72,7 @@ export const visitor = {
         meta.deps.unshift(styleFile);
       }
 
-      if (componentFile || _inlineComponentClass) {
+      if (componentFile || _inlineComponentClass || file._hasTagParams) {
         isImplicit = false;
         meta.component = file.opts.filename;
       }
