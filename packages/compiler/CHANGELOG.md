@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.41](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.40...v5.0.0-next.41) (2020-08-18)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
 # [5.0.0-next.40](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.39...v5.0.0-next.40) (2020-08-12)
 
 
