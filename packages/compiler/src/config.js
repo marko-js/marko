@@ -47,7 +47,13 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     /**
      * Use a different file system object, eg webpacks CachedInputFileSystem or lasso-caching-fs
      */
-    fileSystem: fs
+    fileSystem: fs,
+    /**
+     * By default Marko 5 outputs esm, you can optionally specify commonjs.
+     *
+     * Valid options: esm | cjs
+     */
+    modules: "esm"
   };
 
   if (process.env.MARKO_CONFIG) {

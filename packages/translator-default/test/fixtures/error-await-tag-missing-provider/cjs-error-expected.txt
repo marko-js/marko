@@ -1,0 +1,6 @@
+packages/translator-default/test/fixtures/error-await-tag-missing-provider/template.marko(1,2): You must provide a promise argument to the "<await>" tag, eg: "<await(promise)>".
+> 1 | <await>
+    |  ^^^^^
+  2 |   <@then|result|>
+  3 |     ${result}
+  4 |   </@then>

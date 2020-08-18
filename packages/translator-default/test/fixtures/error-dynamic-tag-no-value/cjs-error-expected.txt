@@ -1,0 +1,4 @@
+packages/translator-default/test/fixtures/error-dynamic-tag-no-value/template.marko(1,3): Missing expression for <${dynamic}> tag.
+> 1 | <${}/>
+    |   ^^
+  2 | 

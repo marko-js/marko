@@ -9,6 +9,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
   .filter(Boolean)
   .forEach(translator => {
     autotest(path.normalize(`../../translator-${translator}/test/fixtures`), {
+      cjs: runTest({ output: "html", modules: "cjs" }),
       html: runTest({ output: "html" }),
       htmlProduction: runTest({
         output: "html",

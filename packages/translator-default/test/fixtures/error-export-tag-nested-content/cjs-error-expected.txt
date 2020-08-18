@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-export-tag-nested-content/template.marko(2,2): The "export" tag does not allow nested body content
+  1 | export a from "b";
+> 2 |  <div/>
+    |  ^
+  3 | 

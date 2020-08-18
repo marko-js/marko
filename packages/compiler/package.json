@@ -9,6 +9,7 @@
     "@babel/core": "^7.7.7",
     "@babel/generator": "^7.7.7",
     "@babel/parser": "^7.7.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.7.7",
     "@babel/runtime": "^7.7.7",
     "@babel/traverse": "^7.7.4",
     "@babel/types": "^7.7.4",
