@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.42](https://github.com/marko-js/marko/compare/v5.0.0-next.41...v5.0.0-next.42) (2020-08-18)
+
+
+### Bug Fixes
+
+* escape filename regexps for multi file components ([eb0cfb7](https://github.com/marko-js/marko/commit/eb0cfb71346ce3bec329cc562122f67a0ab86dd8))
+* pass through xlink:href ([2e7e3dd](https://github.com/marko-js/marko/commit/2e7e3dd98671869348403c8098bf5b2c016a0afa))
+
+
+
+
+
 # [5.0.0-next.41](https://github.com/marko-js/marko/compare/v5.0.0-next.40...v5.0.0-next.41) (2020-08-18)
 
 **Note:** Version bump only for package marko-project
