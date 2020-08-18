@@ -28,6 +28,11 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w("<title>");
   out.w("Test");
   out.w("</title>");
+  out.w("<a xlink:href=https://developer.mozilla.org/ >");
+  out.w("<text x=10 y=25>");
+  out.w("MDN Web Docs");
+  out.w("</text>");
+  out.w("</a>");
   out.w("</svg>");
   out.w("<a></a>");
 }, {

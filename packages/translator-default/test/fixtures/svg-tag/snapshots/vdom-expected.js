@@ -31,8 +31,18 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("title", null, "5", component, null, 0);
   out.t("Test", component);
   out.ee();
+  out.be("a", {
+    "xlink:href": "https://developer.mozilla.org/"
+  }, "6", component, null, 0);
+  out.be("text", {
+    "x": "10",
+    "y": "25"
+  }, "7", component, null, 0);
+  out.t("MDN Web Docs", component);
   out.ee();
-  out.e("a", null, "6", component, 0, 0);
+  out.ee();
+  out.ee();
+  out.e("a", null, "8", component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true

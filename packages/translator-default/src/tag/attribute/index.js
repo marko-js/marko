@@ -107,7 +107,8 @@ export default {
 };
 
 function execModifiersAndDirectives(type, tag, attr, value) {
-  const { name, modifier } = attr.node;
+  const { node } = attr;
+  const { name, modifier } = node;
 
   if (modifier) {
     const modifierTranslate = modifiers[modifier];
@@ -118,6 +119,9 @@ function execModifiersAndDirectives(type, tag, attr, value) {
         modifierTranslate[type](tag, attr, value);
         if (tag.node !== tagNode || attr.node !== attrNode) return true;
       }
+    } else if (name === "xlink" && modifier === "href" && isNativeTag(tag)) {
+      node.name += `:${modifier}`;
+      node.modifier = undefined;
     } else {
       throw attr.buildCodeFrameError(`Unsupported modifier "${modifier}".`);
     }
