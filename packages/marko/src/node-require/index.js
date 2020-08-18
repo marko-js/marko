@@ -5,6 +5,7 @@ const path = require("path");
 const resolveFrom = require("resolve-from");
 const fs = require("fs");
 const fsReadOptions = { encoding: "utf8" };
+const requiredCompilerOptions = { modules: "cjs" };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
 function normalizeExtension(extension) {
@@ -14,21 +15,18 @@ function normalizeExtension(extension) {
   return extension;
 }
 
-function compile(templatePath, markoCompiler, compilerOptions) {
-  if (compilerOptions) {
-    compilerOptions = Object.assign(
+function compile(templatePath, markoCompiler, userCompilerOptions) {
+  var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
+  return markoCompiler.compile(
+    templateSrc,
+    templatePath,
+    Object.assign(
       {},
       markoCompiler.defaultOptions,
-      compilerOptions
-    );
-  } else {
-    compilerOptions = markoCompiler.defaultOptions;
-  }
-
-  var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-  var compiledSrc = markoCompiler.compile(templateSrc, templatePath);
-
-  return compiledSrc;
+      userCompilerOptions,
+      requiredCompilerOptions
+    )
+  );
 }
 
 function install(options) {

@@ -1,0 +1,4 @@
+packages/translator-default/test/fixtures/error-invalid-js/template.marko(1,5): Unexpected token
+> 1 | $ x..y();
+    |     ^
+  2 | <div/>

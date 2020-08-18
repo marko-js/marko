@@ -1,0 +1,6 @@
+packages/translator-default/test/fixtures/error-class-with-name/template.marko(1,7): Component class cannot have a name.
+> 1 | class Test {
+    |       ^^^^
+  2 |   onCreate() {
+  3 | 
+  4 |   }

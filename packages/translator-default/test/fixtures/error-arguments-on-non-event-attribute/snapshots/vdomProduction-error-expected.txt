@@ -1,0 +1,3 @@
+packages/translator-default/test/fixtures/error-arguments-on-non-event-attribute/template.marko(1,6): Unsupported arguments on the "hello" attribute.
+> 1 | <div hello('a')/>
+    |      ^^^^^^^^^^

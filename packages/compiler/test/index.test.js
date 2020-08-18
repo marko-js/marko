@@ -9,6 +9,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
   .filter(Boolean)
   .forEach(translator => {
     autotest(path.normalize(`../../translator-${translator}/test/fixtures`), {
+      cjs: runTest({ output: "html", modules: "cjs" }),
       html: runTest({ output: "html" }),
       htmlProduction: runTest({
         output: "html",
@@ -46,6 +47,13 @@ fs.readdirSync(path.join(__dirname, "../../"))
           writeVersionComment: false
         };
 
+        const snapshotsDir = resolve("snapshots");
+        const name = `snapshots${path.sep + mode}`;
+
+        if (!fs.existsSync(snapshotsDir)) {
+          fs.mkdirSync(snapshotsDir);
+        }
+
         test(() => {
           let output;
           try {
@@ -53,7 +61,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
           } catch (err) {
             try {
               snapshot(stripCwd(stripAnsi(err.message)), {
-                name: `${mode}-error`,
+                name: `${name}-error`,
                 ext: ".txt"
               });
               return;
@@ -63,7 +71,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
           }
 
           snapshot(output, {
-            name: mode,
+            name,
             ext: mode === "generated" ? ".marko" : ".js"
           });
         });

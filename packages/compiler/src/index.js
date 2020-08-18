@@ -48,6 +48,13 @@ function loadBabelConfig(filename, options) {
     sourceMaps: markoConfig.sourceMaps
   };
 
+  if (markoConfig.modules === "cjs") {
+    requiredPlugins.push([
+      require.resolve("@babel/plugin-transform-modules-commonjs"),
+      { loose: true }
+    ]);
+  }
+
   if (markoConfig.babelConfig) {
     Object.assign(baseBabelConfig, markoConfig.babelConfig);
     delete markoConfig.babelConfig;

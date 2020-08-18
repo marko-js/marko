@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-if-missing-condition/template.marko(1,2): Invalid '<if>' tag, expected arguments like '<if(test)>'.
+> 1 | <if>
+    |  ^^
+  2 |   Test
+  3 | </if>
