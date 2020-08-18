@@ -1,4 +1,5 @@
 import path from "path";
+import escapeRegExp from "escape-string-regexp";
 
 const CACHE = new WeakMap();
 
@@ -14,9 +15,7 @@ export default function getComponentFiles({ hub }) {
   const dirFiles = fs.readdirSync(dirname).sort();
   const nameNoExt = path.basename(filename, ext);
   const isEntry = "index" === nameNoExt;
-  const fileMatch = `(${nameNoExt.replace(/\./g, "\\.")}\\.${
-    isEntry ? "|" : ""
-  })`;
+  const fileMatch = `(${escapeRegExp(nameNoExt)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
   const splitComponentMatch = new RegExp(
