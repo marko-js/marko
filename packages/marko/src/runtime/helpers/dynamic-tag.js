@@ -135,7 +135,13 @@ module.exports = function dynamicTag(
       }
     }
   } else if (renderBody) {
-    out.bf(key, component);
+    out.bf(
+      key,
+      component,
+      IS_SERVER &&
+        componentDef &&
+        componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
+    );
     renderBody(out);
     out.ef();
   }
