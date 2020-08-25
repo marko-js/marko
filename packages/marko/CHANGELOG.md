@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.23.0](https://github.com/marko-js/marko/compare/v4.22.8...v4.23.0) (2020-08-25)
+
+
+### Features
+
+* switch to espree from esprima ([#1596](https://github.com/marko-js/marko/issues/1596)) ([8c318cc](https://github.com/marko-js/marko/commit/8c318cc6f29f645026a97375cd5cbba53908a354))
+
 ### [4.22.8](https://github.com/marko-js/marko/compare/v4.22.7...v4.22.8) (2020-08-20)
 
 
