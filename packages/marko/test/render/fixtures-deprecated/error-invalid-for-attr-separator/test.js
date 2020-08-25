@@ -8,5 +8,5 @@ exports.checkError = function(e) {
     "An error occurred while trying to compile template at path"
   );
   expect(message).to.contain('Invalid "separator" expression:');
-  expect(message).to.contain("Unexpected identifier");
+  expect(message).to.contain("Unexpected token foo");
 };

@@ -3,9 +3,13 @@
 let path = require("path");
 let getComponentFiles = require("./getComponentFiles");
 
-const esprima = require("esprima");
+const espree = require("espree");
 const escodegen = require("escodegen");
 const FLAG_COMPONENT_STYLE = Symbol("COMPONENT_STYLE");
+const espreeOptions = {
+  sourceType: "script",
+  ecmaVersion: espree.latestEcmaVersion
+};
 
 function handleStyleElement(styleEl, transformHelper) {
   if (styleEl.bodyText) {
@@ -109,13 +113,13 @@ function handleClassDeclaration(classEl, transformHelper) {
   let wrappedSrc = "(" + classEl.tagString + "\n)";
 
   try {
-    tree = esprima.parseScript(wrappedSrc);
+    tree = espree.parse(wrappedSrc, espreeOptions);
   } catch (err) {
     let message = "Unable to parse JavaScript for component class. " + err;
 
     if (err.index != null) {
       let errorIndex = err.index;
-      // message += '\n' + err.description;
+      // message += '\n' + err.message;
       if (errorIndex != null && errorIndex >= 0) {
         transformHelper.context.addError({
           pos: classEl.pos + errorIndex,
