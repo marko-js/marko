@@ -1,7 +1,12 @@
 "use strict";
 var ok = require("assert").ok;
 
-const esprima = require("esprima");
+const espree = require("espree");
+const espreeOptions = {
+  range: true,
+  sourceType: "script",
+  ecmaVersion: espree.latestEcmaVersion
+};
 
 module.exports = function parseRawJavaScriptAst(parts, src) {
   ok(
@@ -18,14 +23,14 @@ module.exports = function parseRawJavaScriptAst(parts, src) {
   let jsAST;
 
   try {
-    jsAST = esprima.parseScript(parseSrc, { range: true });
+    jsAST = espree.parse(parseSrc, espreeOptions);
     jsAST.source = parseSrc;
   } catch (e) {
     var errorIndex = e.index;
-    var errorMessage = "\n" + e.description;
+    var errorMessage = e.message;
 
     if (errorIndex == null) {
-      // Doesn't look like an Esprima parse error... just rethrow the exception
+      // Doesn't look like an espree parse error... just rethrow the exception
       throw e;
     }
 
@@ -33,15 +38,15 @@ module.exports = function parseRawJavaScriptAst(parts, src) {
       errorIndex -= startOffset;
     }
 
-    errorMessage += ": ";
+    errorMessage += ":\n\n";
     errorMessage +=
       parseSrc.slice(startOffset, endOffset) +
       "\n" +
-      new Array(errorMessage.length + errorIndex + 1).join(" ") +
+      new Array(e.column - 1).join(" ") +
       "^";
 
     var wrappedError = new Error(errorMessage);
-    wrappedError.index = errorIndex;
+    wrappedError.index = e.index;
     wrappedError.src = src;
     wrappedError.code = "ERR_INVALID_JAVASCRIPT_EXPRESSION";
     throw wrappedError;

@@ -12,7 +12,7 @@
         "complain": "^1.6.0",
         "deresolve": "^1.1.2",
         "escodegen": "^1.8.1",
-        "esprima": "^4.0.0",
+        "espree": "^7.3.0",
         "estraverse": "^4.3.0",
         "events-light": "^1.0.0",
         "he": "^1.1.0",
