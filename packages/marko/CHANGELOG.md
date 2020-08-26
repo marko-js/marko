@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.1](https://github.com/marko-js/marko/compare/v4.23.0...v4.23.1) (2020-08-26)
+
+
+### Bug Fixes
+
+* typo with aria-describedby autocomplete ([cd12a3a](https://github.com/marko-js/marko/commit/cd12a3a68873c9ce72a3d94d861fe2f48b6a2228))
+
 ## [4.23.0](https://github.com/marko-js/marko/compare/v4.22.8...v4.23.0) (2020-08-25)
 
 
