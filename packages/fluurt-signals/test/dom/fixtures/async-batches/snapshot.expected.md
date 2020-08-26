@@ -5,7 +5,7 @@
 
 # Mutations
 ```
-inserted #text0, #text1
+inserted #text0
 ```
 
 
@@ -16,13 +16,10 @@ aA
 
 # Mutations
 ```
-inserted #text0
-inserted #text1
-inserted #text2
-inserted #text3
-removed #text after #text3
-removed #text after #text3
-#text2: "" => "A"
+removed #text in 
+inserted #text0, #text1
+#text0: "" => "a"
+#text1: " " => "A"
 ```
 
 
@@ -44,8 +41,8 @@ bB
 
 # Mutations
 ```
-#text1: "a" => "b"
-#text2: "A" => "B"
+#text0: "a" => "b"
+#text1: "A" => "B"
 ```
 
 
@@ -67,6 +64,6 @@ cC
 
 # Mutations
 ```
-#text1: "b" => "c"
-#text2: "B" => "C"
+#text0: "b" => "c"
+#text1: "B" => "C"
 ```

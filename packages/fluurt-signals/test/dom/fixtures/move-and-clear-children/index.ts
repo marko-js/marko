@@ -1,6 +1,6 @@
 import {
   loopOf,
-  compute,
+  computeProperty,
   text,
   register,
   createRenderer,
@@ -54,7 +54,7 @@ export const hydrate = register(
     loopOf(
       input.children,
       createRenderer(loop_template, loop_walks, undefined, item => {
-        text(compute(_item => _item.text, [item]));
+        text(computeProperty("text", item));
       }),
       i => "" + i.id
     );

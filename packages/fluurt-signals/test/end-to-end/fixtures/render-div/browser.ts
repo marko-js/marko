@@ -1,23 +1,28 @@
-import { register, set, get, on, createSignal } from "../../../../dom/index";
-import { text, dynamicText, beginEl, endEl } from "../../../../dom/dom";
+import {
+  register,
+  set,
+  get,
+  on,
+  createRenderFn,
+  walk,
+  source
+} from "../../../../dom/index";
+import { textContent } from "../../../../dom/dom";
+import { next, over, get as getNode } from "../../../dom/utils/walks";
 
 let button: HTMLButtonElement;
 
 export const updates = [() => button.click()];
 
-const renderer = input => {
-  counter(input);
+export const template = "<div></div><button>Increment</button>";
+export const walks = getNode + next(1) + getNode + over(1);
+export const hydrate = (input: { start: number }) => {
+  const count = source(get(input).start as number);
+  walk();
+  textContent(count);
+  button = walk() as HTMLButtonElement;
+  on("click", () => set(count, get(count) + 1));
 };
 
 export default createRenderFn(template, walks, [], hydrate);
-
-const counter = register("counter", input => {
-  const count = createSignal(get(input).start as number);
-  beginEl("div");
-  dynamicText(count);
-  endEl();
-  button = beginEl("button") as HTMLButtonElement;
-  on("click", () => set(count, get(count) + 1));
-  text("increment");
-  endEl();
-});
+register(__dirname.split("/").pop()!, hydrate);

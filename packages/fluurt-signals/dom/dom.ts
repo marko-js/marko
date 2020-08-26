@@ -1,8 +1,10 @@
 import {
-  MaybeSignal,
-  Raw,
-  createSignal,
+  UpstreamSignalOrValue,
+  UpstreamRawValue,
+  createSource,
   createComputation,
+  createPropertyComputation,
+  createPropertyEffect,
   createEffect,
   set,
   dynamicKeys,
@@ -26,7 +28,7 @@ const enum NodeType {
   DocumentFragment = 11
 }
 
-type HydrateFunction = (...args: MaybeSignal[]) => void;
+type HydrateFunction = (...args: UpstreamSignalOrValue[]) => void;
 export interface Renderer<H extends HydrateFunction = HydrateFunction> {
   ___input?: string[];
   ___clone: () => Node;
@@ -51,7 +53,7 @@ export function createRenderFn<H extends HydrateFunction>(
   inputProps?: Renderer["___input"],
   hydrate?: H
 ) {
-  type Input = Raw<Parameters<H>[0]>;
+  type Input = UpstreamRawValue<Parameters<H>[0]>;
   const renderer = createRenderer(
     template!,
     walks,
@@ -63,18 +65,22 @@ export function createRenderFn<H extends HydrateFunction>(
 
       const init = beginBatch();
       const fragment = beginFragment(renderer);
-      const inputSignal = dynamicKeys(
-        createSignal(input) as any,
+      const inputSource = dynamicKeys(
+        createSource(input) as any,
         renderer.___input!
       );
-      createEffect(() => {
-        if (container) {
-          asyncPlaceholder.replaceWith(fragment.___dom!);
-        } else {
-          container = fragment.___dom as ComponentFragment<Input>;
-        }
-      }, []);
-      finishFragment(fragment, renderer, inputSignal);
+      createEffect(
+        () => {
+          if (container) {
+            asyncPlaceholder.replaceWith(fragment.___dom!);
+          } else {
+            container = fragment.___dom as ComponentFragment<Input>;
+          }
+        },
+        0,
+        1
+      );
+      finishFragment(fragment, renderer, inputSource);
       endBatch(init);
 
       if (!container) {
@@ -84,7 +90,7 @@ export function createRenderFn<H extends HydrateFunction>(
 
       container.rerender = (newInput: Input) => {
         const update = beginBatch();
-        set(inputSignal, newInput);
+        set(inputSource, newInput);
         endBatch(update);
       };
 
@@ -150,7 +156,7 @@ function parse(template: string, ensureFragment?: boolean) {
 export function createFragment(
   renderer: Renderer,
   parentFragment = currentFragment,
-  ...input: MaybeSignal[]
+  ...input: UpstreamSignalOrValue[]
 ) {
   const fragment = beginFragment(renderer, parentFragment);
   finishFragment(fragment, renderer, ...input);
@@ -175,7 +181,7 @@ function beginFragment(renderer: Renderer, parentFragment = currentFragment) {
 function finishFragment(
   fragment: Fragment,
   renderer: Renderer,
-  ...input: MaybeSignal[]
+  ...input: UpstreamSignalOrValue[]
 ) {
   detachedWalk(fragment.___firstChild, renderer, ...input);
   currentFragment = fragment.___cachedFragment;
@@ -185,25 +191,25 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
-export function render(renderer: Renderer, ...input: MaybeSignal[]) {
+export function render(renderer: Renderer, ...input: UpstreamSignalOrValue[]) {
   const clone = renderer.___clone();
   detachedWalk(clone, renderer, ...input);
   walk(clone);
 }
 
-export function attr(name: string, value: MaybeSignal) {
-  const data = createComputation(normalizeAttrValue, [value] as const);
+export function attr(name: string, value: UpstreamSignalOrValue) {
+  const data = createComputation(normalizeAttrValue, value, 1);
   const el = walker.currentNode as Element;
   if (el.nodeType !== NodeType.Element) {
     throw new Error("Debug Error");
   }
-  createEffect(setAttr, [el, name, data] as const);
+  createEffect(_data => setAttr(el, name, _data), data, 1);
 }
 
 export function attrs(
-  attributes: MaybeSignal<Record<string, unknown> | null | undefined>
+  attributes: UpstreamSignalOrValue<Record<string, unknown> | null | undefined>
 ) {
-  let previousAttrs: Raw<typeof attributes>;
+  let previousAttrs: UpstreamRawValue<typeof attributes>;
   const el = walker.currentNode as Element;
   if (el.nodeType !== NodeType.Element) {
     throw new Error("Debug Error");
@@ -227,11 +233,12 @@ export function attrs(
       }
       previousAttrs = nextAttrs;
     },
-    [attributes] as const
+    attributes,
+    1
   );
 }
 
-export function html(value: MaybeSignal<string>) {
+export function html(value: UpstreamSignalOrValue<string>) {
   conditional(
     createComputation(
       _value => {
@@ -240,23 +247,21 @@ export function html(value: MaybeSignal<string>) {
           ___clone: () => node
         };
       },
-      [value]
+      value,
+      1
     )
   );
 }
 
-export function prop(name: string, value: MaybeSignal, node?: Node) {
-  createEffect((_node, _name, _value) => (_node[name] = _value), [
-    node || walker.currentNode,
-    name,
-    value
-  ] as const);
+export function prop(name: string, value: UpstreamSignalOrValue, node?: Node) {
+  createPropertyEffect(node || walker.currentNode, name, value);
 }
 
 export function props(properties) {
-  let previousProps: Raw<typeof properties>;
+  let previousProps: UpstreamRawValue<typeof properties>;
+  const node = walker.currentNode;
   createEffect(
-    (node, nextProps) => {
+    nextProps => {
       if (nextProps) {
         for (const name in previousProps) {
           if (!(name in nextProps)) {
@@ -270,25 +275,30 @@ export function props(properties) {
       }
       previousProps = nextProps;
     },
-    [walker.currentNode, properties] as const
+    properties,
+    1
   );
 }
 
-export function text(value: MaybeSignal) {
-  prop("data", createComputation(normalizeTextData, [value]), walkAndGetText());
+export function text(value: UpstreamSignalOrValue) {
+  prop(
+    "data",
+    createComputation(normalizeTextData, value, 1),
+    walkAndGetText()
+  );
 }
 
-export function textContent(value: MaybeSignal) {
-  prop("textContent", createComputation(normalizeTextData, [value]));
+export function textContent(value: UpstreamSignalOrValue) {
+  prop("textContent", createComputation(normalizeTextData, value, 1));
 }
 
-export function innerHTML(value: MaybeSignal) {
+export function innerHTML(value: UpstreamSignalOrValue) {
   prop("innerHTML", value);
 }
 
 export function dynamicTag(
-  tag: MaybeSignal<string | Renderer>,
-  input: MaybeSignal<Record<string, unknown>>,
+  tag: UpstreamSignalOrValue<string | Renderer>,
+  input: UpstreamSignalOrValue<Record<string, unknown>>,
   renderBody?: Renderer
 ) {
   const renderFns = new Map();
@@ -313,7 +323,8 @@ export function dynamicTag(
         }
         return nextRenderer;
       },
-      [tag] as const
+      tag,
+      1
     ),
     input
   );
@@ -325,11 +336,15 @@ const dynamicElWalks =
   String.fromCharCode(WalkCodes.Get) +
   String.fromCharCode(WalkCodes.Inside) +
   String.fromCharCode(WalkCodes.Over);
-function dynamicElHydrate(input: MaybeSignal<Record<string, unknown>>) {
+function dynamicElHydrate(
+  input: UpstreamSignalOrValue<Record<string, unknown>>
+) {
   walk();
   attrs(input);
   dynamicTag(
-    createComputation(_input => _input.renderBody as Renderer, [input]),
+    createPropertyComputation("renderBody", input) as UpstreamSignalOrValue<
+      Renderer
+    >,
     {}
   );
 }

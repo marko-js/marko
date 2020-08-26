@@ -11,7 +11,7 @@
 
 # Mutations
 ```
-inserted #text0, div1, #text2
+inserted div0
 ```
 
 
@@ -25,11 +25,7 @@ inserted #text0, div1, #text2
 
 # Mutations
 ```
-inserted div1/#text1
-inserted div1/#text2
-removed #text after div1/#text2
-removed span after div1/#text2
-removed #text after div1/#text2
+removed span after div0/span0
 ```
 
 
@@ -46,11 +42,8 @@ removed #text after div1/#text2
 
 # Mutations
 ```
-inserted div1/#text1
-inserted div1/span2
-inserted div1/#text3
-removed #text after div1/#text3
-removed #text after div1/#text3
+inserted div0/span1
+inserted div0/span1/#text0
 ```
 
 
@@ -67,26 +60,6 @@ removed #text after div1/#text3
 
 # Mutations
 ```
-div1/span2/#text0: "World" => "!"
-```
-
-
---- Hydrate ---
-# Render {"value":"Hello"}
-```html
-<div>
-  <span />
-  <span>
-    Hello
-  </span>
-  <span />
-</div>
-```
-
-# Mutations
-```
-inserted div1/#text1
-inserted div1/#text3
-removed #comment after #text0
-removed #comment after div1
+removed #text in div0/span1
+inserted div0/span1/#text0
 ```

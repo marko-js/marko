@@ -1,31 +1,29 @@
 import {
-  Signal,
-  createSignal,
+  Source,
+  createSource,
   isSignal,
   createComputation,
   createEffect,
   get,
   set,
-  MaybeSignal
+  UpstreamSignalOrValue
 } from "./signals";
 import { Fragment, insertFragmentBefore, removeFragment } from "./fragments";
 import { reconcile } from "./reconcile";
 import { createFragment, currentFragment, render, Renderer } from "./dom";
 import { walkAndGetText } from "./walker";
-import { createPool } from "./utils";
 
 type ForIterationFragment<T> = Fragment & {
-  ___itemSignal: Signal<T>;
-  ___indexSignal: Signal<number>;
+  ___itemSignal: Source<T>;
+  ___indexSignal: Source<number>;
 };
 
-const mapPool = createPool(() => new Map());
 export function loopOf<T>(
-  array: MaybeSignal<T[]>,
+  array: UpstreamSignalOrValue<T[]>,
   renderer: Renderer<
     (
-      item: MaybeSignal<T>,
-      index: MaybeSignal<number>,
+      item: UpstreamSignalOrValue<T>,
+      index: UpstreamSignalOrValue<number>,
       all: typeof array
     ) => void
   >,
@@ -34,7 +32,7 @@ export function loopOf<T>(
   if (isSignal(array)) {
     const marker = walkAndGetText();
     const rootFragment = currentFragment;
-    let oldNodes: Map<string, Fragment> = mapPool.get();
+    let oldNodes: Map<string, Fragment> = new Map();
     let oldKeys: string[] = [];
 
     if (currentFragment!.___firstChild === marker) {
@@ -56,7 +54,7 @@ export function loopOf<T>(
     const newNodes = createComputation(
       _array => {
         let index = 0;
-        const _newNodes = mapPool.get();
+        const _newNodes: Map<string, Fragment> = new Map();
 
         for (const item of _array) {
           const key = getKey ? getKey(item, index) : "" + index;
@@ -64,8 +62,8 @@ export function loopOf<T>(
             key
           ) as ForIterationFragment<typeof item>;
           if (!previousChildFragment) {
-            const itemSignal = createSignal(item);
-            const indexSignal = createSignal(index);
+            const itemSignal = createSource(item);
+            const indexSignal = createSource(index);
             const childFragment = createFragment(
               renderer,
               rootFragment,
@@ -86,8 +84,9 @@ export function loopOf<T>(
 
         return _newNodes;
       },
-      [array]
-    ) as Signal<Map<string, Fragment>>;
+      array,
+      1
+    );
 
     createEffect(
       _newNodes => {
@@ -101,16 +100,14 @@ export function loopOf<T>(
           marker
         );
 
-        oldNodes.clear();
-        mapPool.push(oldNodes);
-
         // TODO: we should be able to remove the marker if the loop was not empty
         // But we'll need to track the last fragment and ensure the marker is added if the loop becomes empty
 
         oldKeys = newKeys;
         oldNodes = _newNodes;
       },
-      [newNodes]
+      newNodes,
+      1
     );
   } else {
     let index = 0;
@@ -121,11 +118,11 @@ export function loopOf<T>(
 }
 
 export function loopIn<T>(
-  object: MaybeSignal<Record<string, T>>,
+  object: UpstreamSignalOrValue<Record<string, T>>,
   renderer: Renderer<
     (
-      key: MaybeSignal<string>,
-      value: MaybeSignal<T>,
+      key: UpstreamSignalOrValue<string>,
+      value: UpstreamSignalOrValue<T>,
       all: typeof object
     ) => void
   >
@@ -133,10 +130,10 @@ export function loopIn<T>(
   let keyRenderer: Renderer;
   const originalHydrate = renderer.___hydrate;
   if (originalHydrate) {
-    const newHydrate = (key: string) =>
+    const newHydrate = (key: Source<string>) =>
       originalHydrate(
         get(key),
-        createComputation(_object => _object[get(key)], [object]),
+        createComputation(_object => _object[get(key)], object, 1),
         object
       );
     keyRenderer = Object.assign(newHydrate, renderer);
@@ -145,21 +142,21 @@ export function loopIn<T>(
     keyRenderer = renderer;
   }
   loopOf<string>(
-    createComputation(_object => Object.keys(_object), [object]),
+    createComputation(_object => Object.keys(_object), object, 1),
     keyRenderer,
     firstArgAsKey
   );
 }
 
 export function loopFrom(
-  from: MaybeSignal<number>,
-  to: MaybeSignal<number>,
-  step: MaybeSignal<number>,
-  renderer: Renderer<(i: MaybeSignal<number>) => void>
+  from: UpstreamSignalOrValue<number>,
+  to: UpstreamSignalOrValue<number>,
+  step: UpstreamSignalOrValue<number>,
+  renderer: Renderer<(i: UpstreamSignalOrValue<number>) => void>
 ) {
   loopOf<number>(
     createComputation(
-      (_from, _to, _step) => {
+      ([_from, _to, _step]) => {
         const range: number[] = [];
 
         for (let i = _from; i <= _to; i += _step) {
@@ -168,7 +165,8 @@ export function loopFrom(
 
         return range;
       },
-      [from, to, step]
+      [from, to, step] as const,
+      0
     ),
     renderer,
     firstArgAsKey
@@ -176,8 +174,8 @@ export function loopFrom(
 }
 
 export function conditional(
-  renderer: MaybeSignal<Renderer | undefined>,
-  ...input: MaybeSignal[]
+  renderer: UpstreamSignalOrValue<Renderer | undefined>,
+  ...input: UpstreamSignalOrValue[]
 ) {
   if (isSignal(renderer)) {
     let previousFragment: Fragment | undefined;
@@ -190,7 +188,8 @@ export function conditional(
       // TODO: hoist out this function and compare benchmarks
       _renderer =>
         _renderer && createFragment(_renderer, rootFragment, ...input),
-      [renderer] as const
+      renderer,
+      1
     );
 
     createEffect(
@@ -214,8 +213,9 @@ export function conditional(
 
         previousFragment = nextFragment;
       },
-      [fragmentSignal] as const,
-      (fragmentSignal as Signal).___sid // TODO: let's add a comment as to why this is needed.
+      fragmentSignal,
+      1
+      // (fragmentSignal as Signal).___sid // TODO: let's add a comment as to why this is needed.
     );
   } else if (!isSignal(renderer) && renderer) {
     render(renderer, ...input);

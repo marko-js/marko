@@ -55,7 +55,7 @@
     "prepublishOnly": "npm run build",
     "release": "standard-version",
     "size": "npm run build && minified-size --json ./build/dom.esm.js",
-    "test": "mocha -r ts-node/register -r source-map-support/register \"test/*/main.test.ts\"",
+    "test": "mocha -r ts-node/register --timeout 5000 -r source-map-support/register \"test/*/main.test.ts\"",
     "test:inspect": "npm test -- --inspect-brk"
   }
 }

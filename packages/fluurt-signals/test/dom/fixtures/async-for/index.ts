@@ -1,7 +1,7 @@
 import {
   loopOf,
   text,
-  compute,
+  computeProperty,
   computeAsync,
   register,
   createRenderer,
@@ -56,11 +56,13 @@ export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: { children: Array<{ id: number; text: string }> }) => {
     loopOf(
-      computeAsync(async children => await resolveAfter(children, 1), [
-        input.children
-      ]),
+      computeAsync(
+        async children => await resolveAfter(children, 1),
+        input.children,
+        1
+      ),
       createRenderer(loop_template, loop_walks, undefined, item => {
-        text(compute(_item => _item.text, [item]));
+        text(computeProperty("text", item));
       }),
       i => "" + i.id
     );

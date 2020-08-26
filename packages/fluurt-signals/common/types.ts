@@ -1,5 +1,3 @@
-import { MaybeSignal } from "../dom/index";
-
 export type Renderer = (...args: unknown[]) => void;
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;

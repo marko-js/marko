@@ -9,23 +9,19 @@
 
 # Mutations
 ```
-inserted #text0, #text1, span2, #text3, #text4
+inserted span0, #text1
 ```
 
 
-# Render {}
+# Render {"tag":{"___template":"Hello","___sourceNode":{}}}
 ```html
 Hello
 ```
 
 # Mutations
 ```
-inserted #text1
-inserted #text2
-inserted #text3
-removed #text after #text3
-removed span after #text3
-removed #text after #text3
+inserted #text0
+removed span before #text0
 ```
 
 
@@ -40,13 +36,9 @@ removed #text after #text3
 
 # Mutations
 ```
-inserted #text1
-inserted span2
-inserted #text3
-removed #text after #text3
-removed #text after #text3
-removed #text after #text3
-span2: attr(a) null => "1"
+inserted span0
+removed #text before span0
+span0: attr(a) null => "1"
 ```
 
 
@@ -61,13 +53,9 @@ span2: attr(a) null => "1"
 
 # Mutations
 ```
-inserted #text1
-inserted a2
-inserted #text3
-removed #text after #text3
-removed span after #text3
-removed #text after #text3
-a2: attr(a) null => "1"
+inserted a0
+removed span before a0
+a0: attr(a) null => "1"
 ```
 
 
@@ -82,30 +70,7 @@ a2: attr(a) null => "1"
 
 # Mutations
 ```
-inserted #text1
-inserted div2
-inserted #text3
-removed #text after #text3
-removed a after #text3
-removed #text after #text3
-```
-
-
---- Hydrate ---
-# Render {"tag":"span"}
-```html
-<span
-  a="1"
->
-  BODY
-</span>
-```
-
-# Mutations
-```
-inserted #text1
-inserted #text3
-span2: attr(a) "1" => "1"
-removed #comment after #text0
-removed #comment after #text3
+inserted div0
+removed a before div0
+div0: attr(a) null => "1"
 ```

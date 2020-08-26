@@ -1,13 +1,8 @@
 import { Renderer, isDocumentFragment } from "./dom";
-import { MaybeSignal } from "./signals";
+import { UpstreamSignalOrValue } from "./signals";
 
 const doc = document;
-export const walker = doc.createTreeWalker(
-  doc.body,
-  129, // NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT
-  null,
-  false
-);
+export const walker = doc.createTreeWalker(doc.body, -1, null, false);
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, Inside, or Replace
@@ -119,7 +114,7 @@ export function walkAndGetText() {
 export function detachedWalk(
   firstChild: Node,
   renderer: Renderer,
-  ...input: MaybeSignal[]
+  ...input: UpstreamSignalOrValue[]
 ) {
   if (renderer.___hydrate) {
     const cachedWalks = currentWalks;

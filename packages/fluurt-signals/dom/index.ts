@@ -1,12 +1,13 @@
 export { loopOf, loopIn, loopFrom, conditional } from "./control-flow";
 
 export {
-  Signal,
-  MaybeSignal,
-  createSignal,
+  UpstreamSignalOrValue,
+  createSource as source,
   createComputation as compute,
   createAsyncComputation as computeAsync,
   createEffect as effect,
+  createPropertyComputation as computeProperty,
+  createPropertyEffect as propertyEffect,
   dynamicKeys,
   get,
   set,

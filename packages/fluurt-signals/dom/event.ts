@@ -1,10 +1,10 @@
 import {
   beginBatch,
   endBatch,
-  MaybeSignal,
-  createSignal,
+  UpstreamSignalOrValue,
+  createSource,
   createComputation,
-  createEffect,
+  createPropertyEffect,
   set
 } from "./signals";
 import { walker } from "./walker";
@@ -39,22 +39,22 @@ export function on<
 export function dynamicOn<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
->(type: T, handler: MaybeSignal<H | Unset>) {
+>(type: T, handler: UpstreamSignalOrValue<H | Unset>) {
   const el = walker.currentNode as Element;
   const key = getKey(type);
   on(type, null);
-  createEffect(_handler => (el[key] = _handler), [handler]);
+  createPropertyEffect(el, key, handler);
 }
 
 export function once<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
->(type: T, handler: MaybeSignal<H | Unset>) {
-  const called = createSignal(false);
+>(type: T, handler: UpstreamSignalOrValue<H | Unset>) {
+  const called = createSource(false);
   dynamicOn(
     type,
     createComputation(
-      (_handler, _called) => {
+      ([_handler, _called]) => {
         return (
           !_called &&
           ((ev: GlobalEventHandlersEventMap[T], target: Element) => {
@@ -65,7 +65,8 @@ export function once<
           })
         );
       },
-      [handler, called] as const
+      [handler, called] as const,
+      0
     )
   );
 }

@@ -5,7 +5,7 @@ Static Dynamic 1
 
 # Mutations
 ```
-inserted #text0, #text1, #text2, #text3
+inserted #text0, #text1
 ```
 
 
@@ -16,7 +16,7 @@ Static Dynamic 2
 
 # Mutations
 ```
-#text2: "Dynamic 1" => "Dynamic 2"
+#text1: "Dynamic 1" => "Dynamic 2"
 ```
 
 
@@ -27,20 +27,5 @@ Static Dynamic 3
 
 # Mutations
 ```
-#text2: "Dynamic 2" => "Dynamic 3"
-```
-
-
---- Hydrate ---
-# Render {"value":"Dynamic 1"}
-```html
-Static Dynamic 1
-```
-
-# Mutations
-```
-inserted #text2
-#text1: "Static Dynamic 1" => "Static "
-removed #comment after #text0
-removed #comment after #text2
+#text1: "Dynamic 2" => "Dynamic 3"
 ```

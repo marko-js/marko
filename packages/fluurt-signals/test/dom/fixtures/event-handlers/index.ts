@@ -2,7 +2,7 @@ import {
   dynamicOn,
   textContent,
   walk,
-  createSignal,
+  source,
   compute,
   set,
   register,
@@ -22,7 +22,7 @@ export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
     walk();
-    const clickCount = createSignal(0);
+    const clickCount = source(0);
     dynamicOn(
       "click",
       compute(
@@ -32,7 +32,8 @@ export const hydrate = register(
                 set(clickCount, count + 1);
               }
             : false,
-        [clickCount]
+        clickCount,
+        1
       )
     );
     textContent(clickCount);

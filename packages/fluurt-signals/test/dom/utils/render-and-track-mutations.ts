@@ -1,7 +1,6 @@
 import assert from "assert";
 import createBrowser from "jsdom-context-require";
 import createMutationTracker from "./track-mutations";
-import { MaybeSignal } from "../../../dom/index";
 import { resolveAfter } from "../../utils/resolve";
 import { DOMWindow } from "jsdom";
 
@@ -14,7 +13,7 @@ const window = browser.window as DOMWindow;
 const document = window.document;
 
 const {
-  createSignal,
+  source,
   set,
   beginBatch,
   endBatch,
@@ -75,7 +74,7 @@ export default async function renderAndGetMutations(
     }
 
     // if (!FAILS_HYDRATE) {
-    //   const inputSignal = createSignal(firstInput);
+    //   const inputSignal = source(firstInput);
     //   (window as any).M$c = [[0, id, dynamicKeys(inputSignal, renderer.input)]];
     //   container.innerHTML = `<!M$0>${initialHTML}<!M$0/>`;
     //   container.insertBefore(document.createTextNode(""), container.firstChild);

@@ -5,7 +5,7 @@
 
 # Mutations
 ```
-inserted #text0, #text1
+inserted #text0
 ```
 
 
@@ -20,16 +20,9 @@ inserted #text0, #text1
 
 # Mutations
 ```
-inserted #text0
-inserted div1
-inserted #text2
-removed #text after #text2
-removed #text after #text2
-inserted div1/#text0
-inserted div1/span1
-inserted div1/#text2
-removed #text after div1/#text2
-removed #text after div1/#text2
+removed #text in 
+inserted div0
+inserted div0/span0
 ```
 
 
@@ -55,11 +48,7 @@ removed #text after div1/#text2
 
 # Mutations
 ```
-inserted div1/#text0
-inserted div1/#text1
-removed #text after div1/#text1
-removed span after div1/#text1
-removed #text after div1/#text1
+removed span before div0/#text0
 ```
 
 
@@ -85,9 +74,5 @@ removed #text after div1/#text1
 
 # Mutations
 ```
-inserted div1/#text0
-inserted div1/span1
-inserted div1/#text2
-removed #text after div1/#text2
-removed #text after div1/#text2
+inserted div0/span0
 ```

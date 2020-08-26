@@ -3,7 +3,7 @@ import {
   textContent,
   walk,
   compute,
-  createSignal,
+  source,
   conditional,
   set,
   register,
@@ -24,8 +24,8 @@ export const walks = get + after + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
-    const show = createSignal(true);
-    const message = createSignal("hi");
+    const show = source(true);
+    const message = source("hi");
     walk();
     once("click", () => {
       set(message, "bye");
@@ -37,7 +37,7 @@ export const hydrate = register(
       undefined,
       () => textContent(message)
     );
-    conditional(compute(_show => (_show ? branch0 : undefined), [show]));
+    conditional(compute(_show => (_show ? branch0 : undefined), show, 1));
   }
 );
 

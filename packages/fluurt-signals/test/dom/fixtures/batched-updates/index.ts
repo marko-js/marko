@@ -3,7 +3,7 @@ import {
   textContent,
   walk,
   compute,
-  createSignal,
+  source,
   set,
   register,
   createRenderFn
@@ -21,14 +21,14 @@ export const walks = get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[0]) => {
-    const a = createSignal(0);
-    const b = createSignal(0);
+    const a = source(0);
+    const b = source(0);
     walk();
     once("click", () => {
       set(a, 1);
       set(b, 1);
     });
-    textContent(compute((_a, _b) => _a + _b, [a, b]));
+    textContent(compute(([_a, _b]) => _a + _b, [a, b], 0));
   }
 );
 

@@ -9,7 +9,9 @@ export class Fragment {
   public ___parentFragment?: Fragment;
   public ___cachedFragment?: Fragment;
   public ___dom?: Node;
-  public ___tracked: Set<Fragment | Computation>;
+  public ___tracked: Set<
+    Fragment | (Computation<unknown> & { ___cleanup: () => void })
+  >;
   constructor() {
     this.___tracked = new Set();
   }

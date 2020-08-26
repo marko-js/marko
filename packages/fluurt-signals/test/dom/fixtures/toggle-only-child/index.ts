@@ -38,7 +38,9 @@ export const hydrate = register(
         textContent(input.value);
       }
     );
-    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
+    conditional(
+      compute(value => (value ? branch0 : undefined), input.value, 1)
+    );
   }
 );
 

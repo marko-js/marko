@@ -27,9 +27,7 @@ export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: (typeof inputs)[number]) => {
     text(
-      computeAsync(async value => await resolveAfter(value, 1), [
-        input.value
-      ] as const)
+      computeAsync(async value => await resolveAfter(value, 1), input.value, 1)
     );
   }
 );

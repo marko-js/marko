@@ -8,7 +8,7 @@
 
 # Mutations
 ```
-inserted #text0, div1, #text2
+inserted div0
 ```
 
 
@@ -36,7 +36,7 @@ inserted #text0, div1, #text2
 
 # Mutations
 ```
-div1: attr(b) "1" => "2"
+div0: attr(b) "1" => "2"
 ```
 
 
@@ -49,7 +49,7 @@ div1: attr(b) "1" => "2"
 
 # Mutations
 ```
-div1: attr(b) "2" => null
+div0: attr(b) "2" => null
 ```
 
 
@@ -63,7 +63,7 @@ div1: attr(b) "2" => null
 
 # Mutations
 ```
-div1: attr(b) null => "1"
+div0: attr(b) null => "1"
 ```
 
 
@@ -76,23 +76,5 @@ div1: attr(b) null => "1"
 
 # Mutations
 ```
-div1: attr(b) "1" => null
-```
-
-
---- Hydrate ---
-# Render {"value":1}
-```html
-<div
-  a="0"
-  b="1"
-/>
-```
-
-# Mutations
-```
-div1: attr(a) "0" => "0"
-div1: attr(b) "1" => "1"
-removed #comment after #text0
-removed #comment after div1
+div0: attr(b) "1" => null
 ```

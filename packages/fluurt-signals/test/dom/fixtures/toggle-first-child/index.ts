@@ -7,7 +7,7 @@ import {
   createRenderer,
   createRenderFn
 } from "../../../../dom/index";
-import { next, over, before, inside } from "../../utils/walks";
+import { next, over, before, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -38,11 +38,13 @@ export const hydrate = register(
         textContent(input.value);
       }
     );
-    conditional(compute(value => (value ? branch0 : undefined), [input.value]));
+    conditional(
+      compute(value => (value ? branch0 : undefined), input.value, 1)
+    );
   }
 );
 
 const branch0_template = "<span></span>";
-const branch0_walks = inside + over(1);
+const branch0_walks = get + over(1);
 
 export default createRenderFn(template, walks, ["value"], hydrate);

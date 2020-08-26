@@ -24,7 +24,8 @@ export const hydrate = register(
     conditional(
       computeAsync(
         async show => (show ? resolveAfter(branch0, 1) : undefined),
-        [input.show]
+        input.show,
+        1
       )
     );
   }

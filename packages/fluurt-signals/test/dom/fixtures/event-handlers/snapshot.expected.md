@@ -7,7 +7,7 @@
 
 # Mutations
 ```
-inserted #text0, button1, #text2
+inserted button0
 ```
 
 
@@ -22,7 +22,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-button1/#text0: "0" => "1"
+removed #text in button0
+inserted button0/#text0
 ```
 
 
@@ -37,7 +38,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-button1/#text0: "1" => "2"
+removed #text in button0
+inserted button0/#text0
 ```
 
 
@@ -53,19 +55,4 @@ container.querySelector("button").click();
 # Mutations
 ```
 
-```
-
-
---- Hydrate ---
-# Render {}
-```html
-<button>
-  0
-</button>
-```
-
-# Mutations
-```
-removed #comment after #text0
-removed #comment after button1
 ```
