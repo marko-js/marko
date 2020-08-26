@@ -1297,7 +1297,7 @@
         "enum": ["page", "step", "location", "date", "time", "true", "false"],
         "html": true
       },
-      "aria-descrbedby": {
+      "aria-describedby": {
         "html": true
       },
       "aria-details": {
