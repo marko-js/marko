@@ -534,7 +534,7 @@ function _reconcilePendingBatches() {
         // they may compute differently now that this upstream value has changed.
         // We need to ensure that if any of these computations have already been computed
         // that they will re-compute.
-        forEachDownstream(signal, downstream => {
+        forEachDownstream(batch.___signals[signalId], downstream => {
           if (pendingBatch.___signals[downstream.___sid]) {
             insertIntoBatch(
               pendingBatch.___computations,
@@ -568,16 +568,14 @@ function forEachDownstream<V>(
   signal: UpstreamSignal<V>,
   fn: (arg: DownstreamSignal) => void
 ) {
-  if (signal) {
-    if (isSingleDownstream(signal)) {
-      if (signal.___downstream) {
-        fn(signal.___downstream);
-      }
-    } else {
-      const downstream = signal.___downstream;
-      for (let i = downstream.length - 1; i >= 0; i--) {
-        fn(downstream[i]);
-      }
+  if (isSingleDownstream(signal)) {
+    if (signal.___downstream) {
+      fn(signal.___downstream);
+    }
+  } else {
+    const downstream = signal.___downstream;
+    for (let i = downstream.length - 1; i >= 0; i--) {
+      fn(downstream[i]);
     }
   }
 }

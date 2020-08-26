@@ -5,7 +5,7 @@
 
 # Mutations
 ```
-inserted #text0, #text1
+inserted #text0
 ```
 
 
@@ -26,15 +26,12 @@ number0
 
 # Mutations
 ```
-inserted #text0
-inserted button1
-inserted button2
-inserted #text3
-inserted #text4
-inserted #text5
-removed #text after #text5
-removed #text after #text5
-#text4: "" => "0"
+removed #text in 
+inserted button0, button1, #text2, #text3
+inserted button0/#text0
+inserted button1/#text0
+#text2: "" => "number"
+#text3: "" => "0"
 ```
 
 
@@ -101,8 +98,9 @@ number1
 
 # Mutations
 ```
-button1/#text0: "0" => "1"
-#text4: "0" => "1"
+removed #text in button0
+inserted button0/#text0
+#text3: "0" => "1"
 ```
 
 
@@ -123,7 +121,7 @@ num1
 
 # Mutations
 ```
-#text3: "number" => "num"
+#text2: "number" => "num"
 ```
 
 
@@ -144,7 +142,7 @@ count1
 
 # Mutations
 ```
-#text3: "num" => "count"
+#text2: "num" => "count"
 ```
 
 
@@ -165,6 +163,7 @@ count3
 
 # Mutations
 ```
-button2/#text0: "0" => "2"
-#text4: "1" => "3"
+removed #text in button1
+inserted button1/#text0
+#text3: "1" => "3"
 ```
