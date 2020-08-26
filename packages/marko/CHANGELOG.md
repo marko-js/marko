@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.2](https://github.com/marko-js/marko/compare/v4.23.1...v4.23.2) (2020-08-26)
+
+
+### Bug Fixes
+
+* regression with manual component init with custom runtimeid ([f08a60a](https://github.com/marko-js/marko/commit/f08a60a3f64ab53fa387575a7658990c145c0fdd))
+
 ### [4.23.1](https://github.com/marko-js/marko/compare/v4.23.0...v4.23.1) (2020-08-26)
 
 
