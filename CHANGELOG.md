@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.45](https://github.com/marko-js/marko/compare/v5.0.0-next.44...v5.0.0-next.45) (2020-08-26)
+
+
+### Bug Fixes
+
+* regression with manual component init with custom runtimeid ([ec6e670](https://github.com/marko-js/marko/commit/ec6e670dbca30116947372198203b9c72c46a714))
+
+
+
+
+
 # [5.0.0-next.44](https://github.com/marko-js/marko/compare/v5.0.0-next.43...v5.0.0-next.44) (2020-08-26)
 
 
