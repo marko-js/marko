@@ -282,12 +282,14 @@ function initServerRendered(renderedComponents, doc) {
   }
 
   var isFromSerializedGlobals = this.concat === initServerRendered;
+  renderedComponents = warp10Finalize(renderedComponents);
 
   if (isFromSerializedGlobals) {
     runtimeId = this.r;
     doc = defaultDocument;
   } else {
     runtimeId = renderedComponents.r || DEFAULT_RUNTIME_ID;
+    doc = doc || defaultDocument;
 
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
@@ -296,9 +298,6 @@ function initServerRendered(renderedComponents, doc) {
       );
     }
   }
-
-  doc = doc || defaultDocument;
-  renderedComponents = warp10Finalize(renderedComponents);
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
