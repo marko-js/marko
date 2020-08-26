@@ -1,16 +1,16 @@
 {
   "name": "@marko/translator-default",
   "description": "Translates Marko templates to the default Marko runtime.",
-  "version": "5.0.0-next.43",
+  "version": "5.0.0-next.44",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
     "@marko/babel-types": "^5.0.0-next.39",
     "@marko/babel-utils": "^5.0.0-next.39",
-    "@marko/compiler": "^5.0.0-next.43",
+    "@marko/compiler": "^5.0.0-next.44",
     "escape-string-regexp": "^4.0.0",
-    "marko": "^5.0.0-next.43",
+    "marko": "^5.0.0-next.44",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {

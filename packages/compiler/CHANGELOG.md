@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.44](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.43...v5.0.0-next.44) (2020-08-26)
+
+
+### Bug Fixes
+
+* typo with aria-describedby autocomplete ([f499634](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/f499634679eb97003e45e1a9923590abc9190f06))
+
+
+
+
+
 # [5.0.0-next.43](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.42...v5.0.0-next.43) (2020-08-20)
 
 **Note:** Version bump only for package @marko/compiler
