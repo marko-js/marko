@@ -10,7 +10,8 @@ export {
   findParentTag,
   findAttributeTags,
   getArgOrSequence,
-  ___addMacro
+  ___addMacro,
+  isLoopTag
 } from "./tags";
 export {
   assertAllowedAttributes,

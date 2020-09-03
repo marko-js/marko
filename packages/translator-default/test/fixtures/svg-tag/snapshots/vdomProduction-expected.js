@@ -1,6 +1,18 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("a", null, "2", null, 0, 0);
+
+const _marko_node2 = _marko_createElement("style", null, "3", null, 1, 0).t("div { color: green }");
+
+const _marko_node3 = _marko_createElement("script", null, "4", null, 1, 0).t("alert(\"Hello\");");
+
+const _marko_node4 = _marko_createElement("title", null, "5", null, 1, 0).t("Test");
+
+const _marko_node5 = _marko_createElement("a", null, "8", null, 0, 0);
+
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
@@ -21,16 +33,10 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "stroke-width": "3",
     "fill": "red"
   }, "1", component, 0, 0);
-  out.e("a", null, "2", component, 0, 0);
-  out.be("style", null, "3", component, null, 0);
-  out.t("div { color: green }", component);
-  out.ee();
-  out.be("script", null, "4", component, null, 0);
-  out.t("alert(\"Hello\");", component);
-  out.ee();
-  out.be("title", null, "5", component, null, 0);
-  out.t("Test", component);
-  out.ee();
+  out.n(_marko_node, component);
+  out.n(_marko_node2, component);
+  out.n(_marko_node3, component);
+  out.n(_marko_node4, component);
   out.be("a", {
     "xlink:href": "https://developer.mozilla.org/"
   }, "6", component, null, 0);
@@ -42,7 +48,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.ee();
   out.ee();
   out.ee();
-  out.e("a", null, "8", component, 0, 0);
+  out.n(_marko_node5, component);
 }, {
   t: _marko_componentType,
   i: true

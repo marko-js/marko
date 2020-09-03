@@ -9,11 +9,31 @@ function more() {
   abc();
 }
 
+import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("style", null, "0", null, 0, 0);
+
 import _marko_class_merge from "marko/src/runtime/helpers/class-value";
+
+const _marko_node2 = _marko_createElement("div", null, "11", null, 0, 0);
+
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
+
+const _marko_node3 = _marko_createElement("div", null, "14", null, 0, 0);
+
 import _other from "./components/other/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
+
+const _marko_node4 = _marko_createElement("div", null, "16", null, 0, 0);
+
+const _marko_node5 = _marko_createElement("div", null, "18", null, 0, 0);
+
+const _marko_node6 = _marko_createElement("div", null, "20", null, 0, 0);
+
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs";
+
+const _marko_node7 = _marko_createElement("div", null, "26", null, 1, 0).t("123 abc 123");
+
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -27,6 +47,7 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 };
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+  out.n(_marko_node, component);
   out.be("style", {
     "id": "css"
   }, "1", component, null, 1);
@@ -79,7 +100,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }, "10", component, 0, 0);
 
   _marko_dynamic_tag(out, a, null, out => {
-    out.e("div", null, "11", component, 0, 0);
+    out.n(_marko_node2, component);
   }, null, null, _component, "@x");
 
   _marko_dynamic_tag(out, _thing, () => ({
@@ -88,7 +109,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   _marko_tag(_other, {
     "renderBody": (out, a) => {
-      out.e("div", null, "14", component, 0, 0);
+      out.n(_marko_node3, component);
     }
   }, out, _component, "13", [["click", "handleClick", false, [a, b, ...d]]]);
 
@@ -104,15 +125,15 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       "d": {
         "d": 1,
         "renderBody": out => {
-          out.e("div", null, "20", component, 0, 0);
+          out.n(_marko_node6, component);
         }
       },
       "renderBody": out => {
-        out.e("div", null, "18", component, 0, 0);
+        out.n(_marko_node5, component);
       }
     },
     "renderBody": (out, b) => {
-      out.e("div", null, "16", component, 0, 0);
+      out.n(_marko_node4, component);
     }
   }, out, _component, "15");
 
@@ -145,9 +166,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("div", {
     "b": "1"
   }, "25", component, 0, 0);
-  out.be("div", null, "26", component, null, 0);
-  out.t("123 abc 123", component);
-  out.ee();
+  out.n(_marko_node7, component);
   out.e("span", _marko_attrs(abc), "27", component, 0, 4);
 
   if (cond) {

@@ -1,6 +1,10 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("div", null, "0", null, 0, 0);
+
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -10,7 +14,7 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 
 _marko_template._ = _marko_renderer(function (input, out, _component2, component, state) {
   const _component = "test";
-  out.e("div", null, "0", component, 0, 0);
+  out.n(_marko_node, component);
 }, {
   t: _marko_componentType,
   i: true

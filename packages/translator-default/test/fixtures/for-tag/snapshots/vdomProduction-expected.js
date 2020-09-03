@@ -1,6 +1,30 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("div", null, "1" + _keyScope, null, 0, 0);
+
+const _marko_node2 = _marko_createElement("div", null, "2" + _keyScope, null, 0, 0);
+
+const _marko_node3 = _marko_createElement("div", null, "4" + _keyScope2, null, 0, 0);
+
+const _marko_node4 = _marko_createElement("div", null, "5" + _keyScope2, null, 0, 0);
+
+const _marko_node5 = _marko_createElement("div", null, "7" + _keyScope3, null, 0, 0);
+
+const _marko_node6 = _marko_createElement("div", null, "8" + _keyScope3, null, 0, 0);
+
+const _marko_node7 = _marko_createElement("div", null, "9" + _keyScope4, null, 0, 0);
+
+const _marko_node8 = _marko_createElement("div", null, "10" + _keyScope5, null, 0, 0);
+
+const _marko_node9 = _marko_createElement("div", null, "11" + _keyScope6, null, 0, 0);
+
+const _marko_node10 = _marko_createElement("div", null, "12" + _keyScope7, null, 0, 0);
+
+const _marko_node11 = _marko_createElement("div", null, "13" + _keyScope8, null, 0, 0);
+
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
@@ -19,8 +43,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val, component);
     out.ee();
-    out.e("div", null, "1" + _keyScope, component, 0, 0);
-    out.e("div", null, "2" + _keyScope, component, 0, 0);
+    out.n(_marko_node, component);
+    out.n(_marko_node2, component);
   }
 
   for (const key in obj) {
@@ -31,8 +55,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val, component);
     out.ee();
-    out.e("div", null, "4" + _keyScope2, component, 0, 0);
-    out.e("div", null, "5" + _keyScope2, component, 0, 0);
+    out.n(_marko_node3, component);
+    out.n(_marko_node4, component);
   }
 
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
@@ -41,8 +65,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, "6" + _keyScope3, component, null, 0);
     out.t(i, component);
     out.ee();
-    out.e("div", null, "7" + _keyScope3, component, 0, 0);
-    out.e("div", null, "8" + _keyScope3, component, 0, 0);
+    out.n(_marko_node5, component);
+    out.n(_marko_node6, component);
   }
 
   let _i2 = 0;
@@ -56,7 +80,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val, component);
     out.ee();
-    out.e("div", null, "9" + _keyScope4, component, 0, 0);
+    out.n(_marko_node7, component);
     out.e("div", null, `@other-${i}`, component, 0, 0);
   }
 
@@ -82,7 +106,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.t(": ", component);
     out.t(val, component);
     out.ee();
-    out.e("div", null, "10" + _keyScope5, component, 0, 0);
+    out.n(_marko_node8, component);
     out.e("div", null, `@other-${key}`, component, 0, 0);
   }
 
@@ -93,7 +117,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, _keyValue4, component, null, 0);
     out.t(i, component);
     out.ee();
-    out.e("div", null, "11" + _keyScope6, component, 0, 0);
+    out.n(_marko_node9, component);
     out.e("div", null, `@other-${i}`, component, 0, 0);
 
     for (let _steps2 = (10 - 0) / 2, _step2 = 0; _step2 <= _steps2; _step2++) {
@@ -103,7 +127,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       out.be("div", null, _keyValue5, component, null, 0);
       out.t(i, component);
       out.ee();
-      out.e("div", null, "12" + _keyScope7, component, 0, 0);
+      out.n(_marko_node10, component);
       out.e("div", null, `@other-${i}`, component, 0, 0);
     }
   }
@@ -115,7 +139,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.be("div", null, _keyValue6, component, null, 0);
     out.t(i, component);
     out.ee();
-    out.e("div", null, "13" + _keyScope8, component, 0, 0);
+    out.n(_marko_node11, component);
     out.e("div", null, `@other-${i}`, component, 0, 0);
   }
 

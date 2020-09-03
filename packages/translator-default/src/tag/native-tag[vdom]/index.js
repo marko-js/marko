@@ -19,10 +19,7 @@ const MAYBE_SVG = {
   title: true
 };
 
-/**
- * Translates the html streaming version of a standard html element.
- */
-export default function(path, isNullable) {
+export function tagArguments(path, isStatic) {
   const {
     hub: { file },
     node,
@@ -49,7 +46,6 @@ export default function(path, isNullable) {
   });
 
   const tagProperties = properties.slice();
-  const isEmpty = !body.length;
   let attrsObj = getAttrs(path, true, true);
 
   if (!t.isNullLiteral(attrsObj)) {
@@ -70,12 +66,15 @@ export default function(path, isNullable) {
   }
 
   const writeArgs = [
-    isEmpty ? "e" : "be",
     name,
     attrsObj,
-    key,
-    t.identifier("component"),
-    body.length ? t.nullLiteral() : t.numericLiteral(0)
+    !key && isStatic ? t.nullLiteral() : key,
+    isStatic ? t.nullLiteral() : t.identifier("component"),
+    isStatic
+      ? t.numericLiteral(body.length)
+      : body.length
+      ? t.nullLiteral()
+      : t.numericLiteral(0)
   ];
 
   if (handlers) {
@@ -143,8 +142,26 @@ export default function(path, isNullable) {
   if (tagProperties.length) {
     writeArgs.push(t.objectExpression(tagProperties));
   }
+  return writeArgs;
+}
 
-  let writeStartNode = withPreviousLocation(write(...writeArgs), node.name);
+/**
+ * Translates the html streaming version of a standard html element.
+ */
+export default function(path, isNullable) {
+  const { node } = path;
+  const {
+    name,
+    key,
+    body: { body }
+  } = node;
+
+  const isEmpty = !body.length;
+  const writeArgs = tagArguments(path, false);
+  let writeStartNode = withPreviousLocation(
+    write(isEmpty ? "e" : "be", ...writeArgs),
+    node.name
+  );
 
   if (isNullable) {
     writeStartNode = t.ifStatement(

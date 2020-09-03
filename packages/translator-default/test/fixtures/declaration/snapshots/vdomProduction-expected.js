@@ -1,6 +1,10 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("contact-info", null, "0", null, 1, 0).e("name", null, null, null, 1, 0).t("Hello World");
+
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
@@ -9,11 +13,7 @@ const _marko_componentType = _marko_registerComponent("p0+/pj8a", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("contact-info", null, "0", component, null, 0);
-  out.be("name", null, "1", component, null, 0);
-  out.t("Hello World", component);
-  out.ee();
-  out.ee();
+  out.n(_marko_node, component);
 }, {
   t: _marko_componentType,
   i: true
