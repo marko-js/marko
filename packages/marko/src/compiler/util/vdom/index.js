@@ -16,4 +16,3 @@ function registerOptimizer(context) {
 
 exports.registerOptimizer = registerOptimizer;
 exports.isStaticValue = isStaticValue;
-exports.registerOptimizer = registerOptimizer;
