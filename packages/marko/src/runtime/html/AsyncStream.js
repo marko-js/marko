@@ -451,15 +451,15 @@ var proto = (AsyncStream.prototype = {
     var name = this.name;
     var stack = this._stack;
 
-    if(!(e instanceof Error)){
-      e = new Error(JSON.stringify(e))
+    if (!(e instanceof Error)) {
+      e = new Error(JSON.stringify(e));
     }
 
     if (name || stack) {
       e.message +=
-          "\nRendered by" +
-          (name ? " " + name : "") +
-          (stack ? ":\n" + stack : "");
+        "\nRendered by" +
+        (name ? " " + name : "") +
+        (stack ? ":\n" + stack : "");
     }
     try {
       this.emit("error", e);
