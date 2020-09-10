@@ -5,6 +5,10 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 
 const _marko_node = _marko_createElement("style", null, "0", null, 0, 0);
 
+const _marko_node2 = _marko_createElement("div", {
+  "class": "test"
+}, "1", null, 0, 1);
+
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
@@ -14,9 +18,7 @@ const _marko_componentType = _marko_registerComponent("ZsW3uNOB", () => _marko_t
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.n(_marko_node, component);
-  out.e("div", {
-    "class": "test"
-  }, "1", component, 0, 1);
+  out.n(_marko_node2, component);
 }, {
   t: _marko_componentType,
   i: true
