@@ -53,18 +53,24 @@ function nonVoidUntypedAttr(name: string, val: unknown) {
       if (val instanceof RegExp) {
         return nonVoidStringAttr(name, val.source);
       }
+    default:
+      return nonVoidStringAttr(name, val + "");
   }
-
-  return nonVoidStringAttr(name, val + "");
 }
 
 function nonVoidStringAttr(name: string, val: string) {
-  let result = val;
-  for (let i = 0, len = val.length; i < len; i++) {
+  const len = val.length;
+
+  if (len === 0) {
+    return ` ${name}`;
+  }
+
+  const result = ` ${name}=`;
+  let i = 0;
+  do {
     switch (val[i]) {
       case '"':
-        result = quoteValue(val, i + 1, "'", "&#39;");
-        break;
+        return result + quoteValue(val, i + 1, "'", "&#39;");
       case "'":
       case ">":
       case " ":
@@ -72,12 +78,14 @@ function nonVoidStringAttr(name: string, val: string) {
       case "\n":
       case "\r":
       case "\f":
-        result = quoteValue(val, i + 1, '"', "&#34;");
+        return result + quoteValue(val, i + 1, '"', "&#34;");
+      default:
+        i++;
         break;
     }
-  }
+  } while (i < len);
 
-  return ` ${name + (result && "=" + result)}`;
+  return result + val;
 }
 
 function quoteValue(
