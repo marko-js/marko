@@ -3,9 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 
-const _marko_node = _marko_createElement("style", null, "0", null, 0, 0);
-
-const _marko_node2 = _marko_createElement("div", {
+const _marko_node = _marko_createElement("div", {
   "class": "test"
 }, "1", null, 0, 1);
 
@@ -18,7 +16,6 @@ const _marko_componentType = _marko_registerComponent("iTWeM9Hv", () => _marko_t
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.n(_marko_node, component);
-  out.n(_marko_node2, component);
 }, {
   t: _marko_componentType,
   i: true
