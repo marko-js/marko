@@ -13,9 +13,12 @@ export default {
 
     const { confident, value: computed } = value.evaluate();
 
+    const s = classToString(computed);
     value.replaceWith(
       confident
-        ? t.stringLiteral(classToString(computed) || "")
+        ? s
+          ? t.stringLiteral(s)
+          : t.nullLiteral()
         : withPreviousLocation(
             t.callExpression(
               importDefault(
