@@ -36,6 +36,7 @@ export const visitor = {
             attr.node.modifier
           )
             return false;
+
           const attrValue = attr.get("value");
           const exclude =
             t.isObjectExpression(attrValue) ||

@@ -4,6 +4,7 @@ export {
   isDynamicTag,
   isAttributeTag,
   isTransparentTag,
+  isLoopTag,
   getMacroIdentifier,
   getTagDef,
   getFullyResolvedTagName,

@@ -1,5 +1,9 @@
 import { types as t } from "@marko/babel-types";
-import { normalizeTemplateString, isTransparentTag } from "@marko/babel-utils";
+import {
+  normalizeTemplateString,
+  isTransparentTag,
+  isLoopTag
+} from "@marko/babel-utils";
 const KeyManagerLookup = new WeakMap();
 
 /**
@@ -168,13 +172,4 @@ function getUserKey(path) {
   }
 
   return key;
-}
-
-function isLoopTag(path) {
-  if (!path.isMarkoTag()) {
-    return false;
-  }
-
-  const tagName = path.node.name.value;
-  return tagName === "while" || tagName === "for";
 }

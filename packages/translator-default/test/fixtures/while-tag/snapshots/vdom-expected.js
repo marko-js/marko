@@ -1,10 +1,6 @@
 const _marko_template = _t();
 
 export default _marko_template;
-import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
-
-const _marko_node = _marko_createElement("div", null, "0" + _keyScope, null, 0, 0);
-
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -19,7 +15,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   while (i < 10) {
     const _keyScope = `[${_keyValue++}]`;
     i++;
-    out.n(_marko_node, component);
+    out.e("div", null, "0" + _keyScope, component, 0, 0);
   }
 }, {
   t: _marko_componentType,
