@@ -1,8 +1,0 @@
-{
-  "*.ts": [
-    "tslint -t codeFrame -c tslint.json",
-    "prettier --write",
-    "git add"
-  ],
-  "*.{js,json,md}": ["prettier --write", "git add"]
-}

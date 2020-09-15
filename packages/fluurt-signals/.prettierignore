@@ -1,9 +1,0 @@
-.vscode
-package.json
-package-lock.json
-CHANGELOG.md
-node_modules
-coverage
-build
-snapshot.*.md
-**/snapshots/*.md

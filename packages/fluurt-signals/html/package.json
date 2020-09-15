@@ -1,6 +1,0 @@
-{
-  "main": "../build/html.cjs.js",
-  "jsnext": "../build/html.esm.js",
-  "module": "../build/html.esm.js",
-  "types": "../build/html/index.d.ts"
-}

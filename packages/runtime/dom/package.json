@@ -1,0 +1,8 @@
+{
+  "main": "../dist/dom.cjs.js",
+  "main:dev": "./index.ts",
+  "main:npm": "../dist/dom.cjs.js",
+  "jsnext": "../dist/dom.esm.js",
+  "module": "../dist/dom.esm.js",
+  "types": "../dist/dom/index.d.ts"
+}

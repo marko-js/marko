@@ -1,5 +1,12 @@
 {
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
@@ -8,7 +15,16 @@
     }
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    // from @typescript-eslint/eslint-recommended
+    "no-prototype-builtins": "off",
+    "no-constant-condition": "off",
+    // from @typescript-eslint/recommended
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-var-requires": "off"
   },
   "env": {
     "browser": true,
