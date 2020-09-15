@@ -1,0 +1,16 @@
+{
+    "all": true,
+    "cache": true,
+    "include": [
+      "packages/*/src/**/*.js"
+    ],
+    "instrument": false,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [
+      "@babel/register"
+    ],
+    "sourceMap": false
+}
