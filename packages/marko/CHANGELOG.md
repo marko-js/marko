@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.3](https://github.com/marko-js/marko/compare/v4.23.2...v4.23.3) (2020-09-15)
+
+
+### Bug Fixes
+
+* duplicate export 'registerOptimizer' ([#1601](https://github.com/marko-js/marko/issues/1601)) ([ac20e50](https://github.com/marko-js/marko/commit/ac20e5040f71d35901ecce1e847d41a8ce53145e))
+* prevent loading complain module in prod for legacy helpers ([e394ff0](https://github.com/marko-js/marko/commit/e394ff089bc56aafad4f6e73ba97b3a7fd4a63b8))
+
 ### [4.23.2](https://github.com/marko-js/marko/compare/v4.23.1...v4.23.2) (2020-08-26)
 
 
