@@ -52,7 +52,7 @@ module.exports = function defineRenderer(renderingLogic) {
       var parentComponentDef;
 
       if (component) {
-        delete component.___isReceivingNewInput;
+        component.___isReceivingNewInput = false;
       }
 
       // Render the template associated with the component using the final template
