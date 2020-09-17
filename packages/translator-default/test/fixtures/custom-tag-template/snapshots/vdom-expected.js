@@ -1,4 +1,4 @@
-const _marko_template = _t(__filename);
+const _marko_template = _t();
 
 export default _marko_template;
 import _hello from "./hello.marko";

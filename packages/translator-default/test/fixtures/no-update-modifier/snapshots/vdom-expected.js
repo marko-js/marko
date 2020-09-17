@@ -1,4 +1,4 @@
-const _marko_template = _t(__filename);
+const _marko_template = _t();
 
 export default _marko_template;
 import "marko/src/runtime/vdom/preserve-attrs";
