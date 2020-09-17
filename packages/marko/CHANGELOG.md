@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.46](https://github.com/marko-js/marko/compare/v5.0.0-next.45...v5.0.0-next.46) (2020-09-17)
+
+
+### Bug Fixes
+
+* only include template path with meta option enabled ([e1b39e1](https://github.com/marko-js/marko/commit/e1b39e18c430b86e2406187958d5503d83a7d79a))
+
+
+### Performance Improvements
+
+* prevent bundlers from pulling in setImmediate shim ([585d6be](https://github.com/marko-js/marko/commit/585d6be9c288b2a0306d2ffcd36d15e8e17a03d9))
+* remove unecessary function for template load api ([33ae635](https://github.com/marko-js/marko/commit/33ae635fec6ad4383347c7ce9e640251937a8d64))
+
+
+
+
+
 # [5.0.0-next.45](https://github.com/marko-js/marko/compare/v5.0.0-next.44...v5.0.0-next.45) (2020-08-26)
 
 
