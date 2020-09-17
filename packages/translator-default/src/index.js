@@ -53,6 +53,7 @@ export const visitor = {
         hub: { file }
       } = path;
       const { _markoOptions, _inlineComponentClass } = file;
+      const includeMetaInSource = _markoOptions.meta !== false;
       const meta = file.metadata.marko;
       const {
         styleFile,
@@ -149,7 +150,7 @@ export const visitor = {
                 `marko/src/runtime/${_markoOptions.output}`,
                 "t"
               ),
-              [t.identifier("__filename")]
+              includeMetaInSource ? [t.identifier("__filename")] : []
             )
           )
         ])
@@ -251,7 +252,7 @@ export const visitor = {
         );
       }
 
-      if (_markoOptions.meta !== false) {
+      if (includeMetaInSource) {
         const metaObject = t.objectExpression([
           t.objectProperty(t.identifier("id"), componentTypeIdentifier)
         ]);

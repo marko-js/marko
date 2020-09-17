@@ -17,7 +17,7 @@ var _html = require("marko/src/runtime/html");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const _marko_template = (0, _html.t)(__filename);
+const _marko_template = (0, _html.t)();
 
 var _default = _marko_template;
 exports.default = _default;
