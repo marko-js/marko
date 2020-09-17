@@ -83,7 +83,11 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
     if (isLegacy) {
       flags |= FLAG_IS_LEGACY;
       renderBody = component.___widgetBody;
-      serializedProps = component.widgetConfig;
+
+      if (component.widgetConfig && isNotEmpty(component.widgetConfig)) {
+        serializedProps = component.widgetConfig;
+      }
+
       needsState = true;
     } else {
       if (input && input.renderBody) {

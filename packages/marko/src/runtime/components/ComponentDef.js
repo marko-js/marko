@@ -95,7 +95,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   var extra = o[3] || EMPTY_OBJECT;
 
   var state = extra.s;
-  var componentProps = extra.w;
+  var componentProps = extra.w || EMPTY_OBJECT;
   var flags = extra.f;
   var isLegacy = flags & FLAG_IS_LEGACY;
   var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
