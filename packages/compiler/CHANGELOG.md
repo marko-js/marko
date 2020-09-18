@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.48](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.47...v5.0.0-next.48) (2020-09-18)
+
+
+### Bug Fixes
+
+* **compiler:** improve hash template id performance and consistency ([d111748](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/d11174853f02b4edf25cb4b1b3cf0b687ca2bf4e))
+
+
+
+
+
 # [5.0.0-next.47](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.46...v5.0.0-next.47) (2020-09-18)
 
 
