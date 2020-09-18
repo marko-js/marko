@@ -20,7 +20,7 @@ import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xm
 import _marko_attrs from "marko/dist/runtime/html/helpers/attrs";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/html";
-const _marko_componentType = "sWzbPUpL",
+const _marko_componentType = "OLFRWJ/R",
       _marko_component = {
   onCreate() {
     this.stuff();

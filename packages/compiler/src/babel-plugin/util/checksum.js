@@ -1,11 +1,8 @@
 import { createHash } from "crypto";
 
 export default function checksum(filename) {
-  const hash = createHash("sha1");
-  hash.update(filename);
-  return hash
+  return createHash("MD5")
+    .update(filename)
     .digest("base64")
-    .slice(0, 8)
-    .replace(/\//g, "-")
-    .replace(/\+/g, "_");
+    .slice(0, 8);
 }

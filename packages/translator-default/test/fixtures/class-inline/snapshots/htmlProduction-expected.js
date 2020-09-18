@@ -3,7 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/html";
-const _marko_componentType = "xn-IEZ41",
+const _marko_componentType = "F7GLatBK",
       _marko_component = {
   onCreate() {
     this.x = 1

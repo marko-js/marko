@@ -5,7 +5,7 @@ import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
-const _marko_componentType = _marko_registerComponent("jFgP9tKb", () => _marko_template),
+const _marko_componentType = _marko_registerComponent("rmgp0gbX", () => _marko_template),
       _marko_component = {
   onCreate() {
     this.x = 1

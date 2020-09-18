@@ -5,7 +5,7 @@ import _testHello from "./tags/test-hello/renderer.js";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/html";
-const _marko_componentType = "IDRAzWdx",
+const _marko_componentType = "gHRccTPG",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_tag(_testHello, {

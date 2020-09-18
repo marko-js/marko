@@ -6,7 +6,7 @@ import "./foo";
 import baz from "./components/baz.marko";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/html";
-const _marko_componentType = "pCZWm9oa",
+const _marko_componentType = "aVPzDB9L",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {}, {
   t: _marko_componentType,

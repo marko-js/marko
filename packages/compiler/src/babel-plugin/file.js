@@ -3,11 +3,19 @@ import { types as t } from "@marko/babel-types";
 import { File } from "@babel/core";
 import { parse, parseExpression } from "@babel/parser";
 import { codeFrameColumns } from "@babel/code-frame";
-import { getClientPath } from "lasso-modules-client/transport";
+import { getRootDir } from "lasso-package-root";
 import { buildLookup } from "../taglib";
 import { getLoc, getLocRange } from "./util/pos-to-loc";
 import checksum from "./util/checksum";
 const CWD = process.cwd();
+let ROOT;
+
+try {
+  ROOT = getRootDir(CWD);
+} catch {
+  ROOT = CWD;
+}
+
 const toPosix =
   path.sep === "/"
     ? v => v
@@ -42,6 +50,7 @@ export class MarkoFile extends File {
       }
     );
 
+    const id = path.relative(ROOT, filename);
     this.ast.start = this.ast.program.start = 0;
     this.ast.end = this.ast.program.end = code.length - 1;
     this.ast.loc = this.ast.program.loc = {
@@ -57,9 +66,7 @@ export class MarkoFile extends File {
     this._seenTagDefs = new Set();
     this._watchFiles = new Set();
     this.metadata.marko = {
-      id: markoOptions.isProduction
-        ? checksum(this.getClientPath(filename))
-        : path.relative(CWD, filename),
+      id: markoOptions.isProduction ? checksum(id) : id,
       deps: [],
       tags: []
     };
@@ -118,10 +125,6 @@ export class MarkoFile extends File {
       }
     }
     return tagDef;
-  }
-
-  getClientPath(filename) {
-    return getClientPath(filename);
   }
 
   resolveRelativePath(request) {

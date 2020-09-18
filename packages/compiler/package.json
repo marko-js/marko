@@ -20,7 +20,7 @@
     "he": "^1.1.0",
     "htmljs-parser": "^2.7.1",
     "jsesc": "^2.5.2",
-    "lasso-modules-client": "^2.0.4",
+    "lasso-package-root": "^1.0.1",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "strip-ansi": "^5.2.0"

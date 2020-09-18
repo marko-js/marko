@@ -5,7 +5,7 @@ import _customTag from "./components/custom-tag/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/html";
-const _marko_componentType = "bDkB18_l",
+const _marko_componentType = "cY5vQoUJ",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   let _thing = null;
