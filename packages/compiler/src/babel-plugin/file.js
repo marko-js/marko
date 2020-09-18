@@ -8,6 +8,18 @@ import { buildLookup } from "../taglib";
 import { getLoc, getLocRange } from "./util/pos-to-loc";
 import checksum from "./util/checksum";
 const CWD = process.cwd();
+const toPosix =
+  path.sep === "/"
+    ? v => v
+    : v => {
+        let result = "";
+        for (let i = v.length; i--; ) {
+          const c = v[i];
+          result = (c === path.sep ? "/" : c) + result;
+        }
+
+        return result;
+      };
 
 export class MarkoFile extends File {
   constructor(filename, code, jsParseOptions, markoOptions) {
@@ -112,24 +124,26 @@ export class MarkoFile extends File {
     return getClientPath(filename);
   }
 
-  resolveRelativePath(filename) {
-    const dir = path.dirname(this.opts.filename);
-    let relativePath = path.isAbsolute(filename)
-      ? path.relative(dir, filename)
-      : filename;
-    if (/^[^./]/.test(relativePath)) relativePath = `./${relativePath}`;
+  resolveRelativePath(request) {
+    if (request[0] === ".") {
+      return request;
+    }
+
+    const { filename } = this.opts;
+    let relativePath = toPosix(path.relative(path.dirname(filename), request));
+    if (relativePath[0] !== ".") relativePath = `./${relativePath}`;
     return relativePath.replace(/^(?:\.{1,2}\/)+node_modules\//, "");
   }
 
-  importDefault(path, filename, nameHint) {
-    filename = remapProductionMarkoBuild(path, filename);
+  importDefault(path, request, nameHint) {
+    request = remapProductionMarkoBuild(path, request);
     const { _imports } = this;
-    let importDeclaration = _imports[filename];
+    let importDeclaration = _imports[request];
 
     if (!importDeclaration) {
-      importDeclaration = _imports[filename] = this.path.pushContainer(
+      importDeclaration = _imports[request] = this.path.pushContainer(
         "body",
-        t.importDeclaration([], t.stringLiteral(filename))
+        t.importDeclaration([], t.stringLiteral(request))
       )[0];
     }
 
@@ -154,15 +168,15 @@ export class MarkoFile extends File {
     return t.identifier(specifier.node.local.name);
   }
 
-  importNamed(path, filename, name, nameHint = name) {
-    filename = remapProductionMarkoBuild(path, filename);
+  importNamed(path, request, name, nameHint = name) {
+    request = remapProductionMarkoBuild(path, request);
     const { _imports } = this;
-    let importDeclaration = _imports[filename];
+    let importDeclaration = _imports[request];
 
     if (!importDeclaration) {
-      importDeclaration = _imports[filename] = this.path.pushContainer(
+      importDeclaration = _imports[request] = this.path.pushContainer(
         "body",
-        t.importDeclaration([], t.stringLiteral(filename))
+        t.importDeclaration([], t.stringLiteral(request))
       )[0];
     }
 
@@ -182,10 +196,6 @@ export class MarkoFile extends File {
     }
 
     return t.identifier(specifier.node.local.name);
-  }
-
-  addStaticNode(node) {
-    this.path.pushContainer("body", node);
   }
 
   createNode(type, start, end, ...args) {
@@ -226,7 +236,7 @@ export class MarkoFile extends File {
   }
 }
 
-function remapProductionMarkoBuild(path, filename) {
+function remapProductionMarkoBuild(path, request) {
   const {
     hub: {
       file: {
@@ -234,6 +244,6 @@ function remapProductionMarkoBuild(path, filename) {
       }
     }
   } = path;
-  if (!isProduction) return filename;
-  return filename.replace(/^marko\/src\//, "marko/dist/");
+  if (!isProduction) return request;
+  return request.replace(/^marko\/src\//, "marko/dist/");
 }
