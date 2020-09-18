@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.47](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.46...v5.0.0-next.47) (2020-09-18)
+
+
+### Bug Fixes
+
+* **compiler:** normalize windows paths when creating relative requires ([daf2b1a](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/daf2b1af37d1c14175b69b52373d7d36ad115c59))
+
+
+
+
+
 # [5.0.0-next.46](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.45...v5.0.0-next.46) (2020-09-17)
 
 **Note:** Version bump only for package @marko/compiler
