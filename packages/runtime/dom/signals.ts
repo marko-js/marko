@@ -194,7 +194,7 @@ export function createAsyncComputation<V, U>(
     upstreamSingle,
     SignalTypes.ASYNC_COMPUTATION,
     true
-  ) as AsyncComputation<V>;
+  ) as unknown as AsyncComputation<V>;
 }
 
 export function createEffect<U>(
@@ -209,7 +209,7 @@ export function createEffect<U>(
     upstreamSingle,
     SignalTypes.EFFECT,
     true
-  ) as Effect;
+  ) as unknown as Effect;
 }
 
 export function createPropertyComputation<
@@ -239,7 +239,7 @@ export function createPropertyEffect<
     1,
     SignalTypes.EFFECT,
     true
-  ) as Effect;
+  ) as unknown as Effect;
   effect.___execObject = object;
   effect.___execProperty = property;
   return effect;
