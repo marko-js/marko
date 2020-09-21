@@ -19,6 +19,8 @@
     "@types/jsdom": "^12.2.4",
     "@types/mocha": "^5.2.7",
     "@types/node": "^12.7.3",
+    "@types/babel__core": "^7.1.9",
+    "@types/babel__traverse": "^7.0.14",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "babel-plugin-istanbul": "^6.0.0",
