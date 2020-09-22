@@ -4,10 +4,10 @@ import translateVDOM from "./index[vdom]";
 export default function(path) {
   const {
     hub: {
-      file: { _markoOptions }
+      file: { markoOpts }
     }
   } = path;
-  if (_markoOptions.output === "html") {
+  if (markoOpts.output === "html") {
     translateHTML(path);
   } else {
     translateVDOM(path);

@@ -1,4 +1,4 @@
-import { isNativeTag, getTagDef } from "@marko/babel-utils";
+import { isNativeTag, getTagDef, importDefault } from "@marko/babel-utils";
 import directives from "./directives";
 import modifiers from "./modifiers";
 
@@ -14,7 +14,7 @@ export default {
     const tag = attr.parentPath;
     const value = attr.get("value");
     const { name, arguments: args } = attr.node;
-    const isVDOM = file._markoOptions.output !== "html";
+    const isVDOM = file.markoOpts.output !== "html";
 
     if (execModifiersAndDirectives("enter", tag, attr, value)) {
       return;
@@ -65,10 +65,7 @@ export default {
           if (!attachedDetachedLoaded.has(file)) {
             // Pull in helper for element attach/detach;
             attachedDetachedLoaded.add(file);
-            file.importDefault(
-              tag,
-              "marko/src/runtime/components/attach-detach"
-            );
+            importDefault(file, "marko/src/runtime/components/attach-detach");
           }
         }
       }

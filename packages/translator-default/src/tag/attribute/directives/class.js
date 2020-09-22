@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { isNativeTag } from "@marko/babel-utils";
+import { isNativeTag, importDefault } from "@marko/babel-utils";
 import classToString from "marko/src/runtime/helpers/class-value";
 import withPreviousLocation from "../../../util/with-previous-location";
 
@@ -18,8 +18,8 @@ export default {
         ? t.stringLiteral(classToString(computed) || "")
         : withPreviousLocation(
             t.callExpression(
-              file.importDefault(
-                tag,
+              importDefault(
+                file,
                 "marko/src/runtime/helpers/class-value",
                 "marko_class_merge"
               ),

@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import { importDefault } from "@marko/babel-utils";
 
 const hasMonkeyPatch = new WeakSet();
 
@@ -12,7 +13,7 @@ export default {
       hub: { file }
     } = tag;
     const { properties } = node;
-    const isVDOM = file._markoOptions.output !== "html";
+    const isVDOM = file.markoOpts.output !== "html";
     let prop = properties.find(({ key: { name } }) => name === "noupdate");
 
     if (!prop) {
@@ -21,7 +22,7 @@ export default {
 
       if (isVDOM && !hasMonkeyPatch.has(file)) {
         hasMonkeyPatch.add(file);
-        file.importDefault(tag, "marko/src/runtime/vdom/preserve-attrs");
+        importDefault(file, "marko/src/runtime/vdom/preserve-attrs");
       }
     }
 

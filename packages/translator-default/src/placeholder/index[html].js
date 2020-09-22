@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { getTagDef } from "@marko/babel-utils";
+import { getTagDef, importNamed, importDefault } from "@marko/babel-utils";
 import toString from "marko/src/runtime/helpers/to-string";
 import { x as escapeXML } from "marko/src/runtime/html/helpers/escape-xml";
 import escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder";
@@ -42,21 +42,21 @@ export default function(path) {
       ? t.stringLiteral(escapeType.fn(computed))
       : t.callExpression(
           escapeType.name
-            ? file.importNamed(
-                path,
+            ? importNamed(
+                file,
                 escapeType.module,
                 escapeType.name,
                 escapeType.alias
               )
-            : file.importDefault(path, escapeType.module, escapeType.alias),
+            : importDefault(file, escapeType.module, escapeType.alias),
           [value]
         );
   } else {
     value = confident
       ? t.stringLiteral(toString(computed))
       : t.callExpression(
-          file.importDefault(
-            path,
+          importDefault(
+            file,
             "marko/src/runtime/helpers/to-string",
             "marko_to_string"
           ),

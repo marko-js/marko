@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import { parseExpression } from "@marko/babel-utils";
 import getComponentFiles from "../../util/get-component-files";
 
 const SEEN_INLINE_CLASS = new WeakSet();
@@ -29,7 +30,7 @@ export default function(path) {
       );
   }
 
-  const parsed = file.parseExpression(code, start);
+  const parsed = parseExpression(file, code, start);
 
   if (parsed.id) {
     throw file.buildCodeFrameError(

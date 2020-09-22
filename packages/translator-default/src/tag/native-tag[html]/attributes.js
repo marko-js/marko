@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { normalizeTemplateString } from "@marko/babel-utils";
+import { normalizeTemplateString, importDefault } from "@marko/babel-utils";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { evaluateAttr } from "../util";
 
@@ -56,8 +56,8 @@ export default function(path, attrs) {
 
       expressions.push(
         t.callExpression(
-          file.importDefault(
-            attr,
+          importDefault(
+            file,
             "marko/src/runtime/html/helpers/attr",
             "marko_attr"
           ),
@@ -69,8 +69,8 @@ export default function(path, attrs) {
   quasis.push(curString);
   if (hasSpread) {
     return t.callExpression(
-      path.hub.file.importDefault(
-        path,
+      importDefault(
+        path.hub.file,
         "marko/src/runtime/html/helpers/attrs",
         "marko_attrs"
       ),

@@ -3,7 +3,11 @@ import { types as t } from "@marko/babel-types";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
 import { getAttrs, evaluateAttr } from "../util";
-import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
+import {
+  getTagDef,
+  normalizeTemplateString,
+  importDefault
+} from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
@@ -56,8 +60,8 @@ export default function(path) {
     ) {
       node.runtimeFlags |= FLAGS.SPREAD_ATTRS;
       attrsObj = t.callExpression(
-        file.importDefault(
-          path,
+        importDefault(
+          file,
           "marko/src/runtime/vdom/helpers/attrs",
           "marko_attrs"
         ),

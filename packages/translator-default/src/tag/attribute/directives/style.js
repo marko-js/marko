@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { isNativeTag } from "@marko/babel-utils";
+import { isNativeTag, importDefault } from "@marko/babel-utils";
 import styleToString from "marko/src/runtime/helpers/style-value";
 import withPreviousLocation from "../../../util/with-previous-location";
 
@@ -17,8 +17,8 @@ export default {
         confident
           ? t.stringLiteral(styleToString(computed) || "")
           : t.callExpression(
-              file.importDefault(
-                tag,
+              importDefault(
+                file,
                 "marko/src/runtime/helpers/style-value",
                 "marko_style_merge"
               ),

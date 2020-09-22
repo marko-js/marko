@@ -27,7 +27,7 @@ export default {
           node,
           hub: { file }
         } = path;
-        file._watchFiles.add(tagDef.codeGeneratorModulePath);
+        file.metadata.marko.watchFiles.add(tagDef.codeGeneratorModulePath);
         tagDef.codeGenerator = markoModules.require(
           tagDef.codeGeneratorModulePath
         );
@@ -49,7 +49,7 @@ export default {
       }
     }
 
-    if (path.hub.file._markoOptions.ignoreUnrecognizedTags && !tagDef) {
+    if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
       findAttributeTags(path).forEach(child => {
         child.set(
           "name",

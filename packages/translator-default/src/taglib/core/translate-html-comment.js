@@ -10,7 +10,7 @@ export function enter(path) {
   assertNoParams(path);
   assertNoAttributes(path);
 
-  if (path.hub.file._markoOptions.output === "html") {
+  if (path.hub.file.markoOpts.output === "html") {
     path.replaceWithMultiple([write`<!--`, ...path.node.body.body, write`-->`]);
   } else {
     path.remove();

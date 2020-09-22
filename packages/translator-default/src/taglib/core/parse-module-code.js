@@ -1,6 +1,7 @@
 import nodePath from "path";
 import resolveFrom from "resolve-from";
 import markoModules from "@marko/compiler/modules";
+import { parseScript } from "@marko/babel-utils";
 
 const startOffset = "module-code".length;
 
@@ -12,11 +13,11 @@ export default function parse(path) {
       name: { start }
     }
   } = path;
-  const dirname = nodePath.dirname(file.opts.filename);
+  const dirname = nodePath.dirname(file.opts.sourceFileName);
   const relativeRequire = entry =>
     markoModules.require(resolveFrom(dirname, entry));
   const fn = eval(rawValue.slice(startOffset));
   const source = fn(relativeRequire);
-  const program = file.parse(source, start + startOffset);
+  const program = parseScript(file, source, start + startOffset);
   file._moduleCode = program.body;
 }

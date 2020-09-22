@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import { withLoc, parseExpression } from "@marko/babel-utils";
 
 export default (file, shorthand, attributes) => {
   if (!shorthand) {
@@ -15,8 +16,8 @@ export default (file, shorthand, attributes) => {
 
   const idParts = shorthand.rawParts.map(part =>
     part.expression
-      ? file.parseExpression(part.expression, part.pos)
-      : file.createNode("stringLiteral", part.pos, part.endPos, part.text)
+      ? parseExpression(file, part.expression, part.pos)
+      : withLoc(file, t.stringLiteral(part.text), part.pos, part.endPos)
   );
 
   attributes.push(

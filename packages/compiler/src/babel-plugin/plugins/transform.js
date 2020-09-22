@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { getTagDef } from "@marko/babel-utils";
+import { getTagDef, getTagDefForTagName } from "@marko/babel-utils";
 import markoModules from "../../../modules";
 import { enter, exit } from "../util/plugin-hooks";
 
@@ -49,7 +49,7 @@ function getTransformersForTag(path) {
     const addTransformers = tagDef => {
       if (tagDef) {
         for (const transformerPath in tagDef.transformers) {
-          file._watchFiles.add(transformerPath);
+          file.metadata.marko.watchFiles.add(transformerPath);
           transformers.push(tagDef.transformers[transformerPath]);
         }
       }
@@ -58,7 +58,7 @@ function getTransformersForTag(path) {
     addTransformers(getTagDef(path));
 
     if (tagName !== "*") {
-      addTransformers(file.getTagDef("*"));
+      addTransformers(getTagDefForTagName(file, "*"));
     }
 
     for (let i = 0; i < transformers.length; i++) {

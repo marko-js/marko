@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { getTagDef } from "@marko/babel-utils";
+import { getTagDef, getTagDefForTagName } from "@marko/babel-utils";
 import markoModules from "../../../modules";
 import { enter, exit } from "../util/plugin-hooks";
 
@@ -43,7 +43,7 @@ function getMigratorsForTag(path) {
       if (tagDef && tagDef.migratorPaths) {
         for (let i = 0; i < tagDef.migratorPaths.length; i++) {
           const migratorPath = tagDef.migratorPaths[i];
-          file._watchFiles.add(migratorPath);
+          file.metadata.marko.watchFiles.add(migratorPath);
           migrators.push(markoModules.require(migratorPath));
         }
       }
@@ -52,7 +52,7 @@ function getMigratorsForTag(path) {
     addMigrators(getTagDef(path));
 
     if (tagName !== "*") {
-      addMigrators(file.getTagDef("*"));
+      addMigrators(getTagDefForTagName(file, "*"));
     }
   }
 

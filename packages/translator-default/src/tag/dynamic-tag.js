@@ -1,5 +1,6 @@
 import nodePath from "path";
 import { types as t } from "@marko/babel-types";
+import { importDefault } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
 import nativeTag from "./native-tag";
@@ -62,8 +63,8 @@ export default function(path) {
   }
 
   const dynamicTagRenderCall = t.callExpression(
-    file.importDefault(
-      path,
+    importDefault(
+      file,
       `marko/src/runtime/helpers/dynamic-tag`,
       "marko_dynamic_tag"
     ),
