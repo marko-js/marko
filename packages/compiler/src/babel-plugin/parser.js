@@ -6,7 +6,14 @@ import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
 import markoModules from "../../modules";
 import { types as t } from "@marko/babel-types";
-import { getLoc, getLocRange } from "./util/pos-to-loc";
+import {
+  withLoc,
+  getLoc,
+  getLocRange,
+  parseScript,
+  parseExpression,
+  getTagDefForTagName
+} from "@marko/babel-utils";
 
 const EMPTY_OBJECT = {};
 const EMPTY_ARRAY = [];
@@ -16,9 +23,9 @@ const htmlTrim = t => htmlTrimStart(htmlTrimEnd(t));
 const isAttributeTag = node =>
   t.isStringLiteral(node.name) && node.name.value[0] === "@";
 
-export function parse(file) {
+export function parseMarko(file) {
   const { code } = file;
-  const { htmlParseOptions = {} } = file._markoOptions;
+  const { htmlParseOptions = {} } = file.markoOpts;
   const pushTagBody = node => getTagBody().pushContainer("body", node);
   const getTagBody = () =>
     currentTag.isProgram() ? currentTag : currentTag.get("body");
@@ -31,27 +38,27 @@ export function parse(file) {
 
   const handlers = {
     onDocumentType({ value, pos, endPos }) {
-      const node = file.createNode("markoDocumentType", pos, endPos, value);
+      const node = withLoc(file, t.markoDocumentType(value), pos, endPos);
       pushTagBody(node);
       /* istanbul ignore next */
       onNext = onNext && onNext(node);
     },
 
     onDeclaration({ value, pos, endPos }) {
-      const node = file.createNode("markoDeclaration", pos, endPos, value);
+      const node = withLoc(file, t.markoDeclaration(value), pos, endPos);
       pushTagBody(node);
       /* istanbul ignore next */
       onNext = onNext && onNext(node);
     },
 
     onComment({ value, pos, endPos }) {
-      const node = file.createNode("markoComment", pos, endPos, value);
+      const node = withLoc(file, t.markoComment(value), pos, endPos);
       pushTagBody(node);
       onNext = onNext && onNext(node);
     },
 
     onCDATA({ value, pos, endPos }) {
-      const node = file.createNode("markoCDATA", pos, endPos, value);
+      const node = withLoc(file, t.markoCDATA(value), pos, endPos);
       pushTagBody(node);
       onNext = onNext && onNext(node);
     },
@@ -99,7 +106,7 @@ export function parse(file) {
       }
 
       const endPos = pos + value.length;
-      const node = file.createNode("markoText", pos, endPos, value);
+      const node = withLoc(file, t.markoText(value), pos, endPos);
       const prevBody = getTagBody().node.body;
       pushTagBody(node);
       onNext && onNext(node);
@@ -116,15 +123,18 @@ export function parse(file) {
 
     onPlaceholder({ escape, value, withinBody, pos, endPos }) {
       if (withinBody) {
-        const node = file.createNode(
-          "markoPlaceholder",
-          pos,
-          endPos,
-          file.parseExpression(
-            value,
-            pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
+        const node = withLoc(
+          file,
+          t.markoPlaceholder(
+            parseExpression(
+              file,
+              value,
+              pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
+            ),
+            escape
           ),
-          escape
+          pos,
+          endPos
         );
 
         pushTagBody(node);
@@ -143,11 +153,13 @@ export function parse(file) {
       pos -= 1; // Include $.
       // Scriptlets are ignored as content and don't call `onNext`.
       pushTagBody(
-        file.createNode(
-          "markoScriptlet",
+        withLoc(
+          file,
+          t.markoScriptlet(
+            parseScript(file, value, pos + 2 /** Ignores leading `$ ` */).body
+          ),
           pos,
-          endPos,
-          file.parse(value, pos + 2 /** Ignores leading `$ ` */).body
+          endPos
         )
       );
     },
@@ -157,7 +169,7 @@ export function parse(file) {
       const tagName = event.tagName || "div";
       const [, tagNameExpression] =
         /^\$\{([\s\S]*)\}/.exec(tagName) || EMPTY_ARRAY;
-      const tagDef = !tagNameExpression && file.getTagDef(tagName);
+      const tagDef = !tagNameExpression && getTagDefForTagName(file, tagName);
       const tagNameStartPos = pos + (event.concise ? 0 : 1); // Account for leading `<`.
 
       handledTagName = true;
@@ -169,23 +181,26 @@ export function parse(file) {
         );
       }
 
-      const node = file.createNode(
-        "markoTag",
+      const node = withLoc(
+        file,
+        t.markoTag(
+          tagNameExpression
+            ? parseExpression(
+                file,
+                tagNameExpression,
+                tagNameStartPos + 2 /* ${ */
+              )
+            : withLoc(
+                file,
+                t.stringLiteral(tagName),
+                tagNameStartPos,
+                tagNameStartPos + tagName.length
+              ),
+          [],
+          t.markoTagBody()
+        ),
         pos,
-        endPos,
-        tagNameExpression
-          ? file.parseExpression(
-              tagNameExpression,
-              tagNameStartPos + 2 /* ${ */
-            )
-          : file.createNode(
-              "stringLiteral",
-              tagNameStartPos,
-              tagNameStartPos + tagName.length,
-              tagName
-            ),
-        [],
-        t.markoTagBody()
+        endPos
       );
 
       if (tagDef) {
@@ -300,7 +315,7 @@ export function parse(file) {
 
       if (tagDef && tagDef.nodeFactoryPath) {
         const module = markoModules.require(tagDef.nodeFactoryPath);
-        file._watchFiles.add(tagDef.nodeFactoryPath);
+        file.metadata.marko.watchFiles.add(tagDef.nodeFactoryPath);
         /* istanbul ignore next */
         (module.default || module)(tag, t);
       }
@@ -324,10 +339,10 @@ export function parse(file) {
   createParser(handlers, {
     isOpenTagOnly(name) {
       const { parseOptions = EMPTY_OBJECT } =
-        file._lookup.getTag(name) || EMPTY_OBJECT;
+        getTagDefForTagName(file, name) || EMPTY_OBJECT;
       return parseOptions.openTagOnly;
     },
     ignoreNonstandardStringPlaceholders: true,
     ...htmlParseOptions
-  }).parse(code, file.opts.filename);
+  }).parse(code, file.opts.sourceFileName);
 }

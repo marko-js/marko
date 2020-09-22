@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import { withLoc, parseExpression } from "@marko/babel-utils";
 import parseArguments from "./parse-arguments";
 
 export default (file, attributes, startPos) => {
@@ -17,14 +18,14 @@ export default (file, attributes, startPos) => {
 
       attrEndPos = attrStartPos + attrExpression.length;
 
-      const value = file.parseExpression(attrExpression, attrStartPos + 3);
+      const value = parseExpression(file, attrExpression, attrStartPos + 3);
 
       // TODO: Inline merge object literals.
-      return file.createNode(
-        "markoSpreadAttribute",
+      return withLoc(
+        file,
+        t.markoSpreadAttribute(value),
         attrStartPos,
-        attrEndPos,
-        value
+        attrEndPos
       );
     }
 
@@ -41,20 +42,22 @@ export default (file, attributes, startPos) => {
       attrEndPos = attr.endPos;
       const valueStart = attr.pos + 1; // Add one to account for "=".
       const rawValue = code.slice(valueStart, attrEndPos); // We use the raw value to ignore things like non standard placeholders.
-      value = file.parseExpression(rawValue, valueStart);
+      value = parseExpression(file, rawValue, valueStart);
     } else {
       attrEndPos = attr.argument ? attr.argument.endPos + 1 : attr.endPos;
       value = t.booleanLiteral(true);
     }
 
-    return file.createNode(
-      "markoAttribute",
+    return withLoc(
+      file,
+      t.markoAttribute(
+        name,
+        value,
+        modifier,
+        parseArguments(file, attr.argument)
+      ),
       attrStartPos,
-      attrEndPos,
-      name,
-      value,
-      modifier,
-      parseArguments(file, attr.argument)
+      attrEndPos
     );
   });
 };

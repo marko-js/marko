@@ -1,4 +1,11 @@
 import { types as t } from "@marko/babel-types";
+import {
+  parseExpression,
+  getTagDefForTagName,
+  resolveRelativePath,
+  importNamed,
+  importDefault
+} from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
 import MarkoDeclaration from "./declaration";
@@ -9,7 +16,7 @@ import MarkoPlaceholder from "./placeholder";
 import MarkoComment from "./comment";
 import MarkoScriptlet from "./scriptlet";
 import MarkoClass from "./class";
-import { visitor as optimize } from "./optimize";
+import { visitor as optimizeVisitor } from "./optimize";
 import getComponentFiles from "./util/get-component-files";
 
 export { default as taglibs } from "./taglib";
@@ -52,8 +59,8 @@ export const visitor = {
       const {
         hub: { file }
       } = path;
-      const { _markoOptions, _inlineComponentClass } = file;
-      const includeMetaInSource = _markoOptions.meta !== false;
+      const { markoOpts, _inlineComponentClass } = file;
+      const includeMetaInSource = markoOpts.meta !== false;
       const meta = file.metadata.marko;
       const {
         styleFile,
@@ -61,7 +68,7 @@ export const visitor = {
         componentFile,
         componentBrowserFile
       } = getComponentFiles(path);
-      const isHTML = _markoOptions.output === "html";
+      const isHTML = markoOpts.output === "html";
       let isSplit = false;
       let isImplicit = true;
 
@@ -75,7 +82,7 @@ export const visitor = {
 
       if (componentFile || _inlineComponentClass || file._hasTagParams) {
         isImplicit = false;
-        meta.component = file.opts.filename;
+        meta.component = file.opts.sourceFileName;
       }
 
       if (componentBrowserFile) {
@@ -85,19 +92,19 @@ export const visitor = {
       }
 
       meta.component =
-        meta.component && file.resolveRelativePath(meta.component);
+        meta.component && resolveRelativePath(file, meta.component);
       meta.deps = meta.deps.map(filename =>
         typeof filename === "string"
-          ? file.resolveRelativePath(filename)
+          ? resolveRelativePath(file, filename)
           : filename
       );
 
       const renderBlock = file._renderBlock;
       const componentClass =
         (componentFile &&
-          file.importDefault(
-            path,
-            file.resolveRelativePath(componentFile),
+          importDefault(
+            file,
+            resolveRelativePath(file, componentFile),
             "marko_component"
           )) ||
         _inlineComponentClass ||
@@ -112,8 +119,8 @@ export const visitor = {
       const templateIdentifier = path.scope.generateUidIdentifier(
         "marko_template"
       );
-      const rendererIdentifier = file.importDefault(
-        path,
+      const rendererIdentifier = importDefault(
+        file,
         "marko/src/runtime/components/renderer",
         "marko_renderer"
       );
@@ -127,7 +134,7 @@ export const visitor = {
       );
       const componentId = meta.id;
 
-      if (_markoOptions.writeVersionComment) {
+      if (markoOpts.writeVersionComment) {
         path.addComment(
           "leading",
           ` Compiled using marko@${version} - DO NOT EDIT`,
@@ -145,11 +152,7 @@ export const visitor = {
           t.variableDeclarator(
             templateIdentifier,
             t.callExpression(
-              file.importNamed(
-                path,
-                `marko/src/runtime/${_markoOptions.output}`,
-                "t"
-              ),
+              importNamed(file, `marko/src/runtime/${markoOpts.output}`, "t"),
               includeMetaInSource ? [t.identifier("__filename")] : []
             )
           )
@@ -165,8 +168,8 @@ export const visitor = {
             isHTML
               ? componentIdString
               : t.callExpression(
-                  file.importNamed(
-                    path,
+                  importNamed(
+                    file,
                     "marko/src/runtime/components/registry-browser",
                     "r",
                     "marko_registerComponent"
@@ -176,9 +179,9 @@ export const visitor = {
                     t.arrowFunctionExpression(
                       [],
                       isSplit
-                        ? file.importDefault(
-                            path,
-                            file.resolveRelativePath(componentBrowserFile),
+                        ? importDefault(
+                            file,
+                            resolveRelativePath(file, componentBrowserFile),
                             "marko_split_component"
                           )
                         : templateIdentifier
@@ -240,8 +243,8 @@ export const visitor = {
               "=",
               t.memberExpression(templateIdentifier, t.identifier("Component")),
               t.callExpression(
-                file.importDefault(
-                  path,
+                importDefault(
+                  file,
                   "marko/src/runtime/components/defineComponent",
                   "marko_defineComponent"
                 ),
@@ -270,7 +273,7 @@ export const visitor = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("deps"),
-              file.parseExpression(JSON.stringify(meta.deps), file.code.length)
+              parseExpression(file, JSON.stringify(meta.deps), file.code.length)
             )
           );
         }
@@ -292,8 +295,8 @@ export const visitor = {
         );
       }
 
-      if (file._markoOptions.isProduction) {
-        path.traverse(optimize);
+      if (file.markoOpts.optimize) {
+        path.traverse(optimizeVisitor);
       }
     }
   },
@@ -307,9 +310,9 @@ export const visitor = {
 
       if (source.value[0] === "<") {
         const tagName = source.value.slice(1, -1);
-        const tagDef = file.getTagDef(tagName);
+        const tagDef = getTagDefForTagName(file, tagName);
         const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
-        const relativePath = tagEntry && file.resolveRelativePath(tagEntry);
+        const relativePath = tagEntry && resolveRelativePath(file, tagEntry);
 
         if (!relativePath) {
           throw path

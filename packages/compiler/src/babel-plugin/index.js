@@ -1,17 +1,30 @@
+import path from "path";
 import { types as t } from "@marko/babel-types";
-import { parse } from "./parser";
+import { getLoc, ___setTaglibLookup } from "@marko/babel-utils";
+import { buildLookup } from "../taglib";
+import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 import traverse, { visitors } from "@babel/traverse";
+import { getRootDir } from "lasso-package-root";
 import markoModules from "../../modules";
 import { MarkoFile } from "./file";
+import checksum from "./util/checksum";
 
-export default (api, markoOptions) => {
+let ROOT = process.cwd();
+try {
+  ROOT = getRootDir(ROOT);
+  // eslint-disable-next-line no-empty
+} catch {}
+
+export default (api, markoOpts) => {
   api.assertVersion(7);
-  markoOptions.output = markoOptions.output || "html";
-
-  const isProduction = api.env("production");
-  const translator = markoOptions.translator;
+  const translator = markoOpts.translator;
+  const optimize = (markoOpts.optimize =
+    markoOpts.optimize === undefined
+      ? api.env("production")
+      : markoOpts.optimize);
+  markoOpts.output = markoOpts.output || "html";
 
   if (!translator || !translator.visitor) {
     throw new Error(
@@ -22,27 +35,52 @@ export default (api, markoOptions) => {
   return {
     name: "marko",
     parserOverride(code, jsParseOptions) {
+      const watchFiles = new Set();
       const filename = jsParseOptions.sourceFileName;
-      const file = new MarkoFile(filename, code, jsParseOptions, {
-        ...markoOptions,
-        isProduction
+      const componentId = path.relative(ROOT, filename);
+      const taglibLookup = buildLookup(
+        path.dirname(filename),
+        markoOpts.translator
+      );
+      const file = new MarkoFile(jsParseOptions, {
+        code,
+        ast: {
+          type: "File",
+          program: {
+            type: "Program",
+            sourceType: "module",
+            body: [],
+            directives: []
+          }
+        }
       });
+      file.ast.start = file.ast.program.start = 0;
+      file.ast.end = file.ast.program.end = code.length - 1;
+      file.ast.loc = file.ast.program.loc = {
+        start: { line: 0, column: 0 },
+        end: getLoc(file, file.ast.end)
+      };
 
-      parse(file);
+      file.metadata.marko = {
+        id: optimize ? checksum(componentId) : componentId,
+        deps: [],
+        tags: [],
+        watchFiles
+      };
 
-      // TODO: this package should be split into 4:
-      // 1. babel-syntax-marko (removes the need for the _parseOnly option)
-      // 2. babel-plugin-migrate-marko (removes the need for the _migrateOnly option)
-      // 3. babel-plugin-transform-marko (only runs transformers without converting Marko nodes to js)
-      // 4. babel-plugin-translate-marko (runs final translations)
-      if (!markoOptions._parseOnly) {
+      file.markoOpts = markoOpts;
+
+      ___setTaglibLookup(file, taglibLookup);
+      parseMarko(file);
+
+      if (!markoOpts._parseOnly) {
         file.path.scope.crawl(); // Initialize bindings.
-        const rootMigrators = Object.values(file._lookup.taglibsById)
+        const rootMigrators = Object.values(taglibLookup.taglibsById)
           .map(({ migratorPath }) => {
             if (migratorPath) {
               const mod = markoModules.require(migratorPath);
-              file._watchFiles.add(migratorPath);
-              return (mod.default || mod)(api, markoOptions);
+              watchFiles.add(migratorPath);
+              return (mod.default || mod)(api, markoOpts);
             }
           })
           .filter(Boolean);
@@ -53,12 +91,12 @@ export default (api, markoOptions) => {
             : migrate,
           file.scope
         );
-        if (!markoOptions._migrateOnly) {
-          const rootTransformers = file._lookup.merged.transformers.map(
+        if (!markoOpts._migrateOnly) {
+          const rootTransformers = taglibLookup.merged.transformers.map(
             ({ path: transformerPath }) => {
               const mod = markoModules.require(transformerPath);
-              file._watchFiles.add(transformerPath);
-              return (mod.default || mod)(api, markoOptions);
+              watchFiles.add(transformerPath);
+              return (mod.default || mod)(api, markoOpts);
             }
           );
           traverse(
@@ -75,19 +113,21 @@ export default (api, markoOptions) => {
 
       const result = t.cloneDeep(file.ast);
 
-      for (const id in file._lookup.taglibsById) {
-        const { filePath } = file._lookup.taglibsById[id];
+      for (const taglibId in taglibLookup.taglibsById) {
+        const { filePath } = taglibLookup.taglibsById[taglibId];
 
         if (
           filePath[filePath.length - 5] === "." &&
           filePath.endsWith("marko.json")
         ) {
-          file._watchFiles.add(filePath);
+          watchFiles.add(filePath);
         }
       }
 
+      file.metadata.marko.watchFiles = Array.from(
+        file.metadata.marko.watchFiles
+      );
       result._meta = file.metadata.marko;
-      result._meta.watchFiles = Array.from(file._watchFiles);
 
       return result;
     },

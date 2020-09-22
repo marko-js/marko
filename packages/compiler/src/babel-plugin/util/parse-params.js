@@ -1,5 +1,7 @@
+import { parseExpression } from "@marko/babel-utils";
+
 export default (file, details) => {
   if (details) {
-    return file.parseExpression(`(${details.value})=>{}`, details.pos).params;
+    return parseExpression(file, `(${details.value})=>{}`, details.pos).params;
   }
 };

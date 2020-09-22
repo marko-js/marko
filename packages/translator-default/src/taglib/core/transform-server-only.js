@@ -1,5 +1,5 @@
 export function exit(path) {
-  if (path.hub.file._markoOptions.output !== "html") {
+  if (path.hub.file.markoOpts.output !== "html") {
     path.remove();
   }
 }

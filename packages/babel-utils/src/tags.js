@@ -1,8 +1,10 @@
 import { types as t } from "@marko/babel-types";
-const transparentTags = new Set(["for", "while", "if", "else", "_no-update"]);
+import { getTagDefForTagName } from "./taglib";
+const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
+const MACROS = new WeakMap();
 
 export function isNativeTag(path) {
-  const tagDef = path.node.tagDef;
+  const tagDef = getTagDef(path);
   return (
     tagDef &&
     tagDef.html &&
@@ -12,17 +14,21 @@ export function isNativeTag(path) {
 }
 
 export function isDynamicTag(path) {
-  return !path.get("name").isStringLiteral();
+  return !t.isStringLiteral(path.node.name);
 }
 
 export function isAttributeTag(path) {
-  return !isDynamicTag(path) && path.get("name.value").node[0] === "@";
+  const {
+    node: { name }
+  } = path;
+  return t.isStringLiteral(name) && name.value[0] === "@";
 }
 
 export function isTransparentTag(path) {
-  return (
-    !isDynamicTag(path) && transparentTags.has(path.get("name.value").node)
-  );
+  const {
+    node: { name }
+  } = path;
+  return t.isStringLiteral(name) && TRANSPARENT_TAGS.has(name.value);
 }
 
 export function isMacroTag(path) {
@@ -30,9 +36,29 @@ export function isMacroTag(path) {
 }
 
 export function getMacroIdentifier(path) {
-  return (
-    !isDynamicTag(path) && path.hub.file._macros[path.get("name.value").node]
-  );
+  const macros = MACROS.get(path.hub.file);
+
+  if (macros) {
+    const {
+      node: { name }
+    } = path;
+    return t.isStringLiteral(name) && macros.get(name.value);
+  }
+}
+
+export function ___addMacro(file, name) {
+  const id = file.scope.generateUidIdentifier(name);
+  let macros = MACROS.get(file);
+  if (macros) {
+    if (macros.get(name)) {
+      return false;
+    }
+  } else {
+    MACROS.set(file, (macros = new Map()));
+  }
+
+  macros.set(name, id);
+  return id;
 }
 
 export function getTagDef(path) {
@@ -46,7 +72,8 @@ export function getTagDef(path) {
       node.tagDef = null;
     } else {
       node.tagDef =
-        file.getTagDef(
+        getTagDefForTagName(
+          file,
           isAttributeTag(path) ? getFullyResolvedTagName(path) : node.name.value
         ) || null;
     }

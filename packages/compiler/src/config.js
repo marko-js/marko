@@ -53,7 +53,13 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      *
      * Valid options: esm | cjs
      */
-    modules: "esm"
+    modules: "esm",
+
+    /**
+     * Enables production mode optimizations if true, or not if false.
+     * If left as undefined checks for env === "production".
+     */
+    optimize: undefined
   };
 
   if (process.env.MARKO_CONFIG) {

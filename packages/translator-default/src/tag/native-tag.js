@@ -10,15 +10,15 @@ export default function(path) {
   const {
     hub: { file }
   } = path;
-  const { _markoOptions } = file;
+  const { markoOpts } = file;
 
-  if (!_markoOptions.ignoreUnrecognizedTags) {
+  if (!markoOpts.ignoreUnrecognizedTags) {
     assertNoArgs(path);
     assertNoParams(path);
     assertNoAttributeTags(path);
   }
 
-  if (_markoOptions.output === "html") {
+  if (markoOpts.output === "html") {
     nativeTagHtml(path);
   } else {
     nativeTagVdom(path);

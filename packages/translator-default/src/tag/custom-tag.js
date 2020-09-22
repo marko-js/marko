@@ -1,5 +1,10 @@
 import { types as t } from "@marko/babel-types";
-import { assertNoArgs, getTagDef } from "@marko/babel-utils";
+import {
+  assertNoArgs,
+  getTagDef,
+  resolveRelativePath,
+  importDefault
+} from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import nativeTag from "./native-tag";
 import withPreviousLocation from "../util/with-previous-location";
@@ -12,7 +17,7 @@ export default function(path) {
     hub: { file },
     node
   } = path;
-  const { metadata, _markoOptions } = file;
+  const { metadata, markoOpts } = file;
   const { name, key, isNullable } = node;
 
   assertNoArgs(path);
@@ -22,10 +27,10 @@ export default function(path) {
   if (t.isStringLiteral(name)) {
     const tagDef = getTagDef(path);
     const tagName = name.value;
-    const relativePath = tagDef && resolveRelativePath(file, tagDef);
+    const relativePath = tagDef && resolveRelativeTagEntry(file, tagDef);
 
     if (!relativePath) {
-      if (_markoOptions.ignoreUnrecognizedTags) {
+      if (markoOpts.ignoreUnrecognizedTags) {
         return nativeTag(path);
       }
 
@@ -36,7 +41,7 @@ export default function(path) {
         );
     }
 
-    tagIdentifier = file.importDefault(path, relativePath, tagName);
+    tagIdentifier = importDefault(file, relativePath, tagName);
 
     if (!metadata.marko.tags.includes(relativePath)) {
       metadata.marko.tags.push(relativePath);
@@ -49,8 +54,8 @@ export default function(path) {
   const customTagRenderCall = withPreviousLocation(
     t.expressionStatement(
       t.callExpression(
-        file.importDefault(
-          path,
+        importDefault(
+          file,
           "marko/src/runtime/helpers/render-tag",
           "marko_tag"
         ),
@@ -102,9 +107,9 @@ export default function(path) {
   }
 }
 
-function resolveRelativePath(file, tagDef) {
+function resolveRelativeTagEntry(file, tagDef) {
   for (const entry of TAG_FILE_ENTRIES) {
     if (!tagDef[entry]) continue;
-    return file.resolveRelativePath(tagDef[entry]);
+    return resolveRelativePath(file, tagDef[entry]);
   }
 }

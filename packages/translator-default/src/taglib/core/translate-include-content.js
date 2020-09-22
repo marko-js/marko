@@ -9,7 +9,7 @@ export function enter(path) {
   assertNoParams(path);
   assertNoAttributes(path);
 
-  const fs = file._fs;
+  const fs = file.markoOpts.fileSystem;
   const tagName = path.get("name").node.value;
   const tagExample = `<${tagName}("./path-to-file.ext")>`;
   const args = path.get("arguments");
@@ -28,7 +28,7 @@ export function enter(path) {
     );
   }
 
-  const dir = nodePath.dirname(file.opts.filename);
+  const dir = nodePath.dirname(file.opts.sourceFileName);
   const fullPath = nodePath.resolve(dir, content.node.value);
 
   try {

@@ -1,4 +1,5 @@
 import { types as t } from "@marko/babel-types";
+import { parseScript } from "@marko/babel-utils";
 
 export default function(path) {
   const {
@@ -8,7 +9,7 @@ export default function(path) {
   const { rawValue } = node;
   const code = rawValue.replace(/^static\s*/, "").trim();
   const start = node.name.start + (rawValue.length - code.length);
-  let { body } = file.parse(code, start);
+  let { body } = parseScript(file, code, start);
   if (body.length === 1 && t.isBlockStatement(body[0])) {
     body = body[0].body;
   }

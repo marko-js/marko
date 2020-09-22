@@ -11,7 +11,7 @@ export function exit(path) {
     return;
   }
 
-  const base = basename(file.opts.filename);
+  const base = basename(file.opts.sourceFileName);
   file.metadata.marko.deps.push({
     type,
     code: node._styleCode,

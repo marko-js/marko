@@ -1,7 +1,11 @@
 import { resolve } from "path";
 import SELF_CLOSING from "self-closing-tags";
 import { types as t } from "@marko/babel-types";
-import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
+import {
+  getTagDef,
+  normalizeTemplateString,
+  importDefault
+} from "@marko/babel-utils";
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import translateAttributes from "./attributes";
@@ -66,7 +70,7 @@ export default function(path) {
     );
   }
 
-  const isHTML = file._markoOptions.output === "html";
+  const isHTML = file.markoOpts.output === "html";
   let dataMarko = t.stringLiteral("");
 
   if (isHTML) {
@@ -98,8 +102,8 @@ export default function(path) {
 
       if (dataMarkoArgs.length > 2) {
         dataMarko = t.callExpression(
-          file.importDefault(
-            path,
+          importDefault(
+            file,
             "marko/src/runtime/html/helpers/data-marko",
             "marko_props"
           ),
