@@ -13,7 +13,7 @@ Both kinds of events are received with an `on-*` attribute and the [attribute ar
 
 ```marko
 <input type="checkbox"
-  on-change=(event => console.info(`Checked? ${event.target.checked}`))
+  on-change(event => console.info(`Checked? ${event.target.checked}`))
 />
 ```
 

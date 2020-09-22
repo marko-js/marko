@@ -56,7 +56,7 @@ A key should be a string or number that uniquely identifies an item in the list 
 </for>
 ```
 
-> **ProTip:** If you have multiple tags underneath `<for>`, you can key only the first tag and that is enough to properly identify its sibilings as well
+> **ProTip:** If you have multiple tags underneath `<for>`, you can key only the first tag and that is enough to properly identify its siblings as well
 >
 > ```marko
 > <dl>
