@@ -1,6 +1,6 @@
 import createBrowser from "jsdom-context-require";
 import createMutationTracker from "./track-mutations";
-import { resolveAfter } from "../../utils/resolve";
+import { wait, isWait } from "../../utils/resolve";
 import { DOMWindow } from "jsdom";
 
 const browser = createBrowser({
@@ -21,7 +21,7 @@ interface Test {
   wait?: number;
   inputs: [
     Record<string, unknown>,
-    ...Array<Record<string, unknown> | ((container: Element) => void)>
+    ...Array<Record<string, unknown> | ((container: Element) => void) | ReturnType<typeof wait>>
   ];
   default: ReturnType<typeof createRenderFn>;
   html: string;
@@ -32,7 +32,7 @@ export default async function renderAndGetMutations(
   id: string,
   test: string
 ): Promise<string> {
-  const { default: render, inputs, wait } = browser.require(
+  const { default: render, inputs } = browser.require(
     test
   ) as Test;
   const [firstInput] = inputs;
@@ -51,19 +51,16 @@ export default async function renderAndGetMutations(
     tracker.logUpdate(firstInput);
 
     for (const update of inputs.slice(1)) {
-      if (wait) {
-        await resolveAfter(null, wait);
-      }
-      if (typeof update === "function") {
-        update(container);
+      if (isWait(update)) {
+        await update();
       } else {
-        instance.rerender(update);
+        if (typeof update === "function") { 
+          update(container);
+        } else {
+          instance.rerender(update);
+        }
+        tracker.logUpdate(update);
       }
-      tracker.logUpdate(update);
-    }
-
-    if (wait) {
-      await resolveAfter(null, wait);
     }
 
     // if (!FAILS_HYDRATE) {

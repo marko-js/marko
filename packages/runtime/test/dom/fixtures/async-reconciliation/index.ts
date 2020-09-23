@@ -9,8 +9,9 @@ import {
   register,
   createRenderFn
 } from "../../../../dom/index";
-import { resolveAfter } from "../../../utils/resolve";
+import { wait, resolveAfter } from "../../../utils/resolve";
 import { get, after, over } from "../../utils/walks";
+import { InputValue } from "../../utils/types";
 
 const clickA = (container: Element) => {
   (container.querySelector("#a") as HTMLElement).click();
@@ -19,21 +20,25 @@ const clickB = (container: Element) => {
   (container.querySelector("#b") as HTMLElement).click();
 };
 
-export const wait = 2;
 export const FAILS_HYDRATE = true;
 export const inputs = [
   { label: "number" },
+  wait(2),
   clickA,
+  wait(2),
   clickB,
+  wait(2),
   { label: "num" },
-  { label: "count" }
-] as const;
+  wait(2),
+  { label: "count" },
+  wait(2)
+];
 
 export const template = `<button id=a></button><button id=b></button>`;
 export const walks = get + over(1) + get + after + after + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
-  (input: (typeof inputs)[0]) => {
+  (input: InputValue<typeof inputs>) => {
     const a = source(0);
     const b = source(0);
     walk();

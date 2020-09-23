@@ -7,10 +7,10 @@ import {
   createRenderer,
   createRenderFn
 } from "../../../../dom/index";
-import { resolveAfter } from "../../../utils/resolve";
+import { wait, resolveAfter } from "../../../utils/resolve";
 import { get, over, inside } from "../../utils/walks";
+import { InputValue } from "../../utils/types";
 
-export const wait = 2;
 export const FAILS_HYDRATE = true;
 export const inputs = [
   {
@@ -29,6 +29,7 @@ export const inputs = [
       }
     ]
   },
+  wait(2),
   {
     children: [
       {
@@ -45,16 +46,18 @@ export const inputs = [
       }
     ]
   },
+  wait(2),
   {
     children: []
-  }
+  },
+  wait(2)
 ];
 
 export const template = `<div></div>`;
 export const walks = inside + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
-  (input: { children: Array<{ id: number; text: string }> }) => {
+  (input: InputValue<typeof inputs>) => {
     loopOf(
       computeAsync(
         async children => await resolveAfter(children, 1),

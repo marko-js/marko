@@ -1,0 +1,1 @@
+export type InputValue<T extends unknown[]> = Exclude<T[number], Function>;
