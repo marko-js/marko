@@ -5,8 +5,7 @@ import {
   createComputation,
   createEffect,
   get,
-  set,
-  UpstreamSignalOrValue
+  UpstreamSignalOrValue, setSignalValue
 } from "./signals";
 import { Fragment, insertFragmentBefore, removeFragment } from "./fragments";
 import { reconcile } from "./reconcile";
@@ -75,8 +74,8 @@ export function loopOf<T>(
             childFragment.___indexSignal = indexSignal;
             _newNodes.set(key, childFragment);
           } else {
-            set(previousChildFragment.___itemSignal, item);
-            set(previousChildFragment.___indexSignal, index);
+            setSignalValue(previousChildFragment.___itemSignal, item);
+            setSignalValue(previousChildFragment.___indexSignal, index);
             _newNodes.set(key, previousChildFragment);
           }
           index++;

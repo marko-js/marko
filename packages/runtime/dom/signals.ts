@@ -319,7 +319,7 @@ function isSingleUpstream<V>(
   return signal.___upstreamSingle === 1;
 }
 
-function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {
+export function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {
   if (signal.___value !== nextValue) {
     if (batch) {
       const id = signal.___sid;
