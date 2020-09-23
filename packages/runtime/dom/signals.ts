@@ -444,15 +444,30 @@ export function get<T>(value: UpstreamSignalOrValue<T>): T {
   return value;
 }
 
-export function set(value: UpstreamSignalOrValue, newValue: unknown) {
+export let set = setAndBeginBatch;
+
+function setAndBeginBatch(value: UpstreamSignalOrValue, newValue: unknown) {
+  if (isSignal(value)) {
+    batch = beginBatch();
+    set = setInBatch;
+    setSignalValue(value, newValue);
+  }
+  return newValue;
+}
+
+function setInBatch(value: UpstreamSignalOrValue, newValue: unknown) {
   if (isSignal(value)) {
     setSignalValue(value, newValue);
   }
   return newValue;
 }
 
+function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
+  throw new Error("You are attempting to set a signal in a pure computation");
+}
+
 export function beginBatch() {
-  return (batch = {
+  batch = ({
     ___bid: ++bid,
     ___signals: {},
     ___computations: [],
@@ -461,31 +476,37 @@ export function beginBatch() {
     ___pending: {},
     ___computationIndex: 0
   });
+  queueMicrotask(() => endBatch(batch))
+  return batch;
 }
 
-export function endBatch(b: Batch) {
-  if (b === batch) {
-    while (batch.___computationIndex < batch.___computations.length) {
-      updateComputation(batch.___computations[batch.___computationIndex++]);
+function endBatch(b: Batch) {
+  if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
+  set = setInComputation;
+  while (batch.___computationIndex < batch.___computations.length) {
+    updateComputation(batch.___computations[batch.___computationIndex++]);
+  }
+  if (!awaitPendingComputations()) {
+    for (const id in batch.___signals) {
+      const signal = batch.___signals[id];
+      if (signal.___bid <= batch.___bid) {
+        signal.___bid = batch.___bid;
+        signal.___value = batch.___values[id];
+      }
     }
-    if (!awaitPendingComputations()) {
-      for (const _effect of batch.___effects) {
-        if (_effect.___bid <= batch.___bid) {
-          _effect.___bid = batch.___bid;
+    reconcilePendingBatches();
+    const bt = batch;
+    requestAnimationFrame(() => {
+      for (const _effect of bt.___effects) {
+        if (_effect.___bid <= bt.___bid) {
+          _effect.___bid = bt.___bid;
           execDownstreamSignal(_effect);
         }
       }
-      for (const id in batch.___signals) {
-        const signal = batch.___signals[id];
-        if (signal.___bid <= batch.___bid) {
-          signal.___bid = batch.___bid;
-          signal.___value = batch.___values[id];
-        }
-      }
-      reconcilePendingBatches();
-    }
-    batch = undefined as any;
+    })
   }
+  set = setAndBeginBatch;
+  batch = undefined as any;
 }
 
 let awaitPendingComputations: typeof _awaitPendingComputations = noop as any;

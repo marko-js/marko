@@ -10,6 +10,8 @@ const browser = createBrowser({
 
 const window = browser.window as DOMWindow;
 const document = window.document;
+window.queueMicrotask = queueMicrotask;
+window.requestAnimationFrame = (fn) => setTimeout(fn);
 
 const {
   createRenderFn

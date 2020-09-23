@@ -1,6 +1,6 @@
 import { CommentWalker, HydrateInstance } from "../common/types";
 import { Renderer } from "./dom";
-import { beginBatch, endBatch } from "./signals";
+import { beginBatch } from "./signals";
 import { beginHydrate, endHydrate } from "./walker";
 
 const hydrateById: Record<string, Renderer["___hydrate"]> = {};
@@ -58,9 +58,8 @@ export function init(runtimeId = "M") {
       beginHydrate(start);
 
       try {
-        const batch = beginBatch();
+        beginBatch();
         hydrate(input);
-        endBatch(batch);
       } finally {
         parentNode.removeChild(start);
         parentNode.removeChild(end);

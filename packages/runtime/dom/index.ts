@@ -11,8 +11,7 @@ export {
   dynamicKeys,
   get,
   set,
-  beginBatch,
-  endBatch
+  beginBatch
 } from "./signals";
 
 export {

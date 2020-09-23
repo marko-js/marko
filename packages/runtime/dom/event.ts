@@ -1,6 +1,4 @@
 import {
-  beginBatch,
-  endBatch,
   UpstreamSignalOrValue,
   createSource,
   createComputation,
@@ -85,9 +83,7 @@ function delegateEvent(ev: GlobalEventHandlersEventMap[EventNames]) {
     }
 
     if (handler) {
-      const batch = beginBatch();
       handler(ev, target);
-      endBatch(batch);
     }
   }
 }

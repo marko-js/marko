@@ -8,8 +8,7 @@ import {
   createEffect,
   set,
   dynamicKeys,
-  beginBatch,
-  endBatch
+  beginBatch
 } from "./signals";
 import { Fragment, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
@@ -63,7 +62,7 @@ export function createRenderFn<H extends HydrateFunction>(
       let container: ComponentFragment<Input> | null = null;
       let asyncPlaceholder: Text;
 
-      const init = beginBatch();
+      beginBatch();
       const fragment = beginFragment(renderer);
       const inputSource = dynamicKeys(
         createSource(input) as any,
@@ -81,7 +80,6 @@ export function createRenderFn<H extends HydrateFunction>(
         1
       );
       finishFragment(fragment, renderer, inputSource);
-      endBatch(init);
 
       if (!container) {
         container = doc.createDocumentFragment() as ComponentFragment<Input>;
@@ -89,9 +87,7 @@ export function createRenderFn<H extends HydrateFunction>(
       }
 
       container.rerender = (newInput: Input) => {
-        const update = beginBatch();
         set(inputSource, newInput);
-        endBatch(update);
       };
 
       container.destroy = () => removeFragment(fragment);
