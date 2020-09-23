@@ -8,7 +8,7 @@ import {
   createEffect,
   set,
   dynamicKeys,
-  beginBatch
+  runInBatch
 } from "./signals";
 import { Fragment, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
@@ -39,7 +39,7 @@ export interface Renderer<H extends HydrateFunction = HydrateFunction> {
 
 export let currentFragment: Fragment | undefined;
 export interface ComponentFragment<Input> extends DocumentFragment {
-  rerender: (input: Input) => void;
+  rerender: (input: Input) => Promise<void>;
   destroy: () => void;
 }
 
@@ -62,37 +62,40 @@ export function createRenderFn<H extends HydrateFunction>(
       let container: ComponentFragment<Input> | null = null;
       let asyncPlaceholder: Text;
 
-      beginBatch();
-      const fragment = beginFragment(renderer);
-      const inputSource = dynamicKeys(
-        createSource(input) as any,
-        renderer.___input!
-      );
-      createEffect(
-        () => {
-          if (container) {
-            asyncPlaceholder.replaceWith(fragment.___dom!);
-          } else {
-            container = fragment.___dom as ComponentFragment<Input>;
-          }
-        },
-        0,
-        1
-      );
-      finishFragment(fragment, renderer, inputSource);
+      return runInBatch(() => {
+        const fragment = beginFragment(renderer);
+        const inputSource = dynamicKeys(
+          createSource(input) as any,
+          renderer.___input!
+        );
+        createEffect(
+          () => {
+            if (container) {
+              asyncPlaceholder.replaceWith(fragment.___dom!);
+            } else {
+              container = fragment.___dom as ComponentFragment<Input>;
+            }
+          },
+          0,
+          1
+        );
+        finishFragment(fragment, renderer, inputSource);
 
-      if (!container) {
-        container = doc.createDocumentFragment() as ComponentFragment<Input>;
-        container.appendChild((asyncPlaceholder = doc.createTextNode("")));
-      }
+        if (!container) {
+          container = doc.createDocumentFragment() as ComponentFragment<Input>;
+          container.appendChild((asyncPlaceholder = doc.createTextNode("")));
+        }
 
-      container.rerender = (newInput: Input) => {
-        set(inputSource, newInput);
-      };
+        container.rerender = (newInput: Input) => {
+          return runInBatch(() => {
+            set(inputSource, newInput);
+          });
+        };
 
-      container.destroy = () => removeFragment(fragment);
+        container.destroy = () => removeFragment(fragment);
 
-      return container;
+        return container;
+      });
     }
   );
   return renderer;

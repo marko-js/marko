@@ -108,7 +108,7 @@ describe.skip("E2E", function() {
           const input = serverTest.input;
           document.body.appendChild(container);
 
-          const instance = render(input);
+          const instance = await render(input);
           container.appendChild(instance);
 
           initialHTML = getNormalizedHtml(container);

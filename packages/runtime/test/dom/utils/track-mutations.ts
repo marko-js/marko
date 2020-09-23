@@ -5,8 +5,13 @@ const { DOMElement, DOMCollection } = format.plugins;
 
 export default function createMutationTracker(window, container) {
   const result: string[] = [];
+  let currentRecords: unknown[] | null = null;
   const observer = new window.MutationObserver(records => {
-    result.push(getStatusString(container, records, "ASYNC"));
+    if (currentRecords) {
+      currentRecords = currentRecords.concat(records);
+    } else {
+      result.push(getStatusString(container, records, "ASYNC"));
+    }
   });
   observer.observe(container, {
     attributes: true,
@@ -17,17 +22,28 @@ export default function createMutationTracker(window, container) {
     subtree: true
   });
   return {
+    beginUpdate() {
+      currentRecords = [];
+    },
     dropUpdate() {
       observer.takeRecords();
+      currentRecords = null;
     },
     getUpdate(update) {
-      return getStatusString(container, observer.takeRecords(), update);
+      if (currentRecords) {
+        currentRecords = currentRecords.concat(observer.takeRecords());
+      } else {
+        currentRecords = observer.takeRecords();
+      }
+      const updateString = getStatusString(container, currentRecords, update);
+      currentRecords = null;
+      return updateString;
     },
     log(message) {
       result.push(message);
     },
     logUpdate(update) {
-      result.push(getStatusString(container, observer.takeRecords(), update));
+      result.push(this.getUpdate(update));
     },
     getRawLogs() {
       return result;

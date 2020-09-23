@@ -448,8 +448,8 @@ export let set = setAndBeginBatch;
 
 function setAndBeginBatch(value: UpstreamSignalOrValue, newValue: unknown) {
   if (isSignal(value)) {
-    batch = beginBatch();
-    set = setInBatch;
+    const localBatch = beginBatch();
+    queueMicrotask(() => endBatch(localBatch));
     setSignalValue(value, newValue);
   }
   return newValue;
@@ -467,7 +467,8 @@ function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
 }
 
 export function beginBatch() {
-  batch = ({
+  set = setInBatch;
+  return batch = ({
     ___bid: ++bid,
     ___signals: {},
     ___computations: [],
@@ -476,37 +477,54 @@ export function beginBatch() {
     ___pending: {},
     ___computationIndex: 0
   });
-  queueMicrotask(() => endBatch(batch))
-  return batch;
 }
 
-function endBatch(b: Batch) {
-  if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
-  set = setInComputation;
-  while (batch.___computationIndex < batch.___computations.length) {
-    updateComputation(batch.___computations[batch.___computationIndex++]);
-  }
-  if (!awaitPendingComputations()) {
-    for (const id in batch.___signals) {
-      const signal = batch.___signals[id];
-      if (signal.___bid <= batch.___bid) {
-        signal.___bid = batch.___bid;
-        signal.___value = batch.___values[id];
-      }
+function endBatch(b: Batch, fn?: (err?: Error) => void) {
+  try {
+    if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
+    set = setInComputation;
+    
+    while (batch.___computationIndex < batch.___computations.length) {
+      updateComputation(batch.___computations[batch.___computationIndex++]);
     }
-    reconcilePendingBatches();
-    const bt = batch;
-    requestAnimationFrame(() => {
-      for (const _effect of bt.___effects) {
-        if (_effect.___bid <= bt.___bid) {
-          _effect.___bid = bt.___bid;
-          execDownstreamSignal(_effect);
+    if (!awaitPendingComputations()) {
+      for (const id in batch.___signals) {
+        const signal = batch.___signals[id];
+        if (signal.___bid <= batch.___bid) {
+          signal.___bid = batch.___bid;
+          signal.___value = batch.___values[id];
         }
       }
-    })
+      reconcilePendingBatches();
+      const bt = batch;
+      requestAnimationFrame(() => {
+        for (const _effect of bt.___effects) {
+          if (_effect.___bid <= bt.___bid) {
+            _effect.___bid = bt.___bid;
+            execDownstreamSignal(_effect);
+          }
+        }
+        fn && fn();
+      })
+    } else {
+      fn && fn();
+    }
+  } finally {
+    set = setAndBeginBatch;
+    batch = undefined as any;
   }
-  set = setAndBeginBatch;
-  batch = undefined as any;
+}
+
+export function runInBatch<T extends (...args: any) => any>(fn: T): Promise<ReturnType<T>> {
+  return new Promise((resolve, reject) => {
+    try {
+      const batch = beginBatch();
+      const result = fn();
+      endBatch(batch, (err) => err ? reject(err) : resolve(result));
+    } catch(e) {
+      reject(e);
+    }
+  })
 }
 
 let awaitPendingComputations: typeof _awaitPendingComputations = noop as any;

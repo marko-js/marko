@@ -14,7 +14,8 @@ window.queueMicrotask = queueMicrotask;
 window.requestAnimationFrame = (fn) => setTimeout(fn);
 
 const {
-  createRenderFn
+  createRenderFn,
+  runInBatch
 } = browser.require(
   "../../../dom/index"
 ) as typeof import("../../../dom/index");
@@ -46,7 +47,9 @@ export default async function renderAndGetMutations(
   document.body.appendChild(container);
 
   try {
-    const instance = render(firstInput);
+    tracker.beginUpdate();
+    
+    const instance = await render(firstInput);
     container.appendChild(instance);
 
     // const initialHTML = container.innerHTML;
@@ -56,10 +59,11 @@ export default async function renderAndGetMutations(
       if (isWait(update)) {
         await update();
       } else {
+        tracker.beginUpdate();
         if (typeof update === "function") { 
-          update(container);
+          await runInBatch(() => update(container));
         } else {
-          instance.rerender(update);
+          await instance.rerender(update);
         }
         tracker.logUpdate(update);
       }

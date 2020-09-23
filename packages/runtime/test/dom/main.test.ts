@@ -5,6 +5,10 @@ import renderAndTrackMutations from "./utils/render-and-track-mutations";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 
+process.on('unhandledRejection', (reason, p) => {
+  console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
+});
+
 describe("DOM", () => {
   fs.readdirSync(FIXTURES_DIR)
     .filter(entry => !/\.skip$/.test(entry))
