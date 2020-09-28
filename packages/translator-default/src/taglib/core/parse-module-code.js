@@ -17,7 +17,7 @@ export default function parse(path) {
   const relativeRequire = entry =>
     markoModules.require(resolveFrom(dirname, entry));
   const fn = eval(rawValue.slice(startOffset));
-  const source = fn(relativeRequire);
+  const source = fn(relativeRequire, file.markoOpts);
   const program = parseScript(file, source, start + startOffset);
   file._moduleCode = program.body;
 }

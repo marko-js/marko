@@ -1,6 +1,12 @@
-<module-code(function(require) {
+<module-code(function(require, opts) {
     var isDebug = require('./env').isDebug;
-    return `module.exports = require("./${isDebug ? 'src' : 'dist'}/runtime/components");\n`;
+    var file = `"./${isDebug ? 'src' : 'dist'}/runtime/components"`;
+
+    if (opts.module === "cjs") {
+        return `module.exports = require(${file});\n`;
+    } else {
+        return `export * from ${file};\n`;
+    }
 })/>
 
 // What's going on here? We are using Marko to do JavaScript code generation
