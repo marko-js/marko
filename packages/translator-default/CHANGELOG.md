@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.49](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.48...v5.0.0-next.49) (2020-09-28)
+
+
+### Bug Fixes
+
+* **marko:** output esm for module-code ([db4793d](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/db4793df11c08b7d8f8b3cf5591528f35fd643d9))
+
+
+
+
+
 # [5.0.0-next.48](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.47...v5.0.0-next.48) (2020-09-18)
 
 

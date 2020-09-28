@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.49](https://github.com/marko-js/marko/compare/v5.0.0-next.48...v5.0.0-next.49) (2020-09-28)
+
+
+### Bug Fixes
+
+* **marko:** output esm for module-code ([db4793d](https://github.com/marko-js/marko/commit/db4793df11c08b7d8f8b3cf5591528f35fd643d9))
+
+
+### Performance Improvements
+
+* misc optimizations ([#1610](https://github.com/marko-js/marko/issues/1610)) ([bf393c8](https://github.com/marko-js/marko/commit/bf393c85ad8ed663db8daad64afdcd423e668c46))
+
+
+
+
+
 # [5.0.0-next.48](https://github.com/marko-js/marko/compare/v5.0.0-next.47...v5.0.0-next.48) (2020-09-18)
 
 **Note:** Version bump only for package marko
