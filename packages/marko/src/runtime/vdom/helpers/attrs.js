@@ -3,6 +3,7 @@
 var complain = "MARKO_DEBUG" && require("complain");
 var classHelper = require("../../helpers/class-value");
 var styleHelper = require("../../helpers/style-value");
+var parseHTML = require("../parse-html");
 
 /**
  * Helper for processing dynamic attributes
@@ -42,15 +43,12 @@ module.exports = function(attributes) {
   return attributes;
 };
 
-var parseContainer;
 function parseAttrs(str) {
   if (str === "") {
     return {};
   }
 
-  parseContainer = parseContainer || document.createElement("div");
-  parseContainer.innerHTML = "<a " + str + ">";
-  var attrs = parseContainer.firstChild.attributes;
+  var attrs = parseHTML("<a " + str + ">").attributes;
   var result = {};
   var attr;
 

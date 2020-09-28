@@ -1,6 +1,5 @@
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
-var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 
 var ComponentsContext = require("./ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
@@ -167,7 +166,7 @@ function createRendererFunc(
         }
 
         if (isExisting === false) {
-          emitLifecycleEvent(component, "create", input, out);
+          component.___emitCreate(input, out);
         }
 
         input = component.___setInput(input, onInput, out);
@@ -189,8 +188,7 @@ function createRendererFunc(
       }
 
       component.___global = out.global;
-
-      emitLifecycleEvent(component, "render", out);
+      component.___emitRender(out);
     }
 
     var componentDef = beginComponent(
