@@ -5,6 +5,7 @@ var VElement = require("./VElement");
 var VText = require("./VText");
 var VComponent = require("./VComponent");
 var VFragment = require("./VFragment");
+var parseHTML = require("./parse-html");
 
 var defaultDocument = typeof document != "undefined" && document;
 var specialHtmlRegexp = /[&<]/;
@@ -37,11 +38,9 @@ function virtualizeHTML(html, doc, ownerComponent) {
     return new VText(html, ownerComponent);
   }
 
-  var container = doc.createElement("body");
-  container.innerHTML = html;
   var vdomFragment = new VDocumentFragment();
+  var curChild = parseHTML(html);
 
-  var curChild = container.firstChild;
   while (curChild) {
     vdomFragment.___appendChild(virtualize(curChild, ownerComponent));
     curChild = curChild.nextSibling;

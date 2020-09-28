@@ -37,37 +37,6 @@ function getComponentForEl(el, doc) {
   }
 }
 
-var lifecycleEventMethods = {};
-
-["create", "render", "update", "mount", "destroy"].forEach(function(eventName) {
-  lifecycleEventMethods[eventName] =
-    "on" + eventName[0].toUpperCase() + eventName.substring(1);
-});
-
-/**
- * This method handles invoking a component's event handler method
- * (if present) while also emitting the event through
- * the standard EventEmitter.prototype.emit method.
- *
- * Special events and their corresponding handler methods
- * include the following:
- *
- * beforeDestroy --> onBeforeDestroy
- * destroy       --> onDestroy
- * beforeUpdate  --> onBeforeUpdate
- * update        --> onUpdate
- * render        --> onRender
- */
-function emitLifecycleEvent(component, eventType, eventArg1, eventArg2) {
-  var listenerMethod = component[lifecycleEventMethods[eventType]];
-
-  if (listenerMethod !== undefined) {
-    listenerMethod.call(component, eventArg1, eventArg2);
-  }
-
-  component.emit(eventType, eventArg1, eventArg2);
-}
-
 function destroyComponentForNode(node) {
   var componentToDestroy = componentsByDOMNode.get(node.fragment || node);
   if (componentToDestroy) {
@@ -200,7 +169,6 @@ if ("MARKO_DEBUG") {
 exports.___runtimeId = runtimeId;
 exports.___componentLookup = componentLookup;
 exports.___getComponentForEl = getComponentForEl;
-exports.___emitLifecycleEvent = emitLifecycleEvent;
 exports.___destroyComponentForNode = destroyComponentForNode;
 exports.___destroyNodeRecursive = destroyNodeRecursive;
 exports.___nextComponentIdProvider = nextComponentIdProvider;

@@ -7,6 +7,7 @@ var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
 var escapeXmlHelper = require("./helpers/escape-xml");
+var parseHTML = require("../vdom/parse-html");
 var escapeXmlOrNullish = escapeXmlHelper.x;
 var escapeXmlString = escapeXmlHelper.___escapeXML;
 var selfClosingTags = require("self-closing-tags");
@@ -590,8 +591,8 @@ var proto = (AsyncStream.prototype = {
 
   ___getNode: function(doc) {
     var node = this._node;
-    var curEl;
-    var newBodyEl;
+    var nextEl;
+    var fragment;
     var html = this.___getOutput();
 
     if (!doc) {
@@ -600,23 +601,23 @@ var proto = (AsyncStream.prototype = {
 
     if (!node) {
       if (html) {
-        newBodyEl = doc.createElement("body");
-        newBodyEl.innerHTML = html;
-        if (newBodyEl.childNodes.length == 1) {
-          // If the rendered component resulted in a single node then just use that node
-          node = newBodyEl.childNodes[0];
-        } else {
-          // Otherwise, wrap the nodes in a document fragment node
-          node = doc.createDocumentFragment();
-          while ((curEl = newBodyEl.firstChild)) {
-            node.appendChild(curEl);
-          }
+        node = parseHTML(html);
+
+        if (node && node.nextSibling) {
+          // If there are multiple nodes, turn it into a document fragment.
+          fragment = doc.createDocumentFragment();
+
+          do {
+            nextEl = node.nextSibling;
+            fragment.appendChild(node);
+          } while ((node = nextEl));
+
+          node = fragment;
         }
-      } else {
-        // empty HTML so use empty document fragment (so that we're returning a valid DOM node)
-        node = doc.createDocumentFragment();
       }
-      this._node = node;
+
+      // if HTML is empty use empty document fragment (so that we're returning a valid DOM node)
+      this._node = node || doc.createDocumentFragment();
     }
     return node;
   },

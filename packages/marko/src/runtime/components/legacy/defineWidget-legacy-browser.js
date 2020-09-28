@@ -32,7 +32,7 @@ module.exports = function defineWidget(def, renderer) {
     legacyInit = def;
   } else if (typeof def === "object") {
     proto = def;
-    legacyInit = def.init || noop;
+    legacyInit = def.init;
   } else {
     throw TypeError();
   }
@@ -127,31 +127,31 @@ module.exports = function defineWidget(def, renderer) {
 
   // get legacy methods
 
-  var legacyOnRender = proto.onRender;
+  proto.___legacyOnRender = proto.onRender;
   Object.defineProperty(proto, "onRender", {
     get: noop,
     set: function(v) {
-      legacyOnRender = v;
+      proto.___legacyOnRender = v;
     }
   });
 
-  var legacyOnUpdate = proto.onUpdate;
+  proto.___legacyOnUpdate = proto.onUpdate;
   Object.defineProperty(proto, "onUpdate", {
     get: function() {
       return modernMountOrUpdate;
     },
     set: function(v) {
-      legacyOnUpdate = v;
+      proto.___legacyOnUpdate = v;
     }
   });
 
-  var legacyOnDestroy = proto.onDestroy;
+  proto.___legacyOnDestroy = proto.onDestroy;
   Object.defineProperty(proto, "onDestroy", {
     get: function() {
       return modernOnDestory;
     },
     set: function(v) {
-      legacyOnDestroy = v;
+      proto.___legacyOnDestroy = v;
     }
   });
 
@@ -159,8 +159,12 @@ module.exports = function defineWidget(def, renderer) {
   proto.getWidgets = proto.getComponents;
   proto.onMount = modernMountOrUpdate;
 
+  if (legacyInit) {
+    proto.___legacyInit = legacyInit;
+  }
+
   // convert legacy to modern
-  var originalUpdate = proto.update;
+  proto.___modernUpdate = proto.update;
   proto.update = function() {
     if (this.___destroyed) {
       // eslint-disable-next-line no-constant-condition
@@ -181,13 +185,13 @@ module.exports = function defineWidget(def, renderer) {
       this.onBeforeUpdate && this.onBeforeUpdate();
     }
 
-    originalUpdate.call(this);
+    this.___modernUpdate();
     this.___legacyExplicitUpdate = false;
   };
 
   function modernMountOrUpdate() {
     var self = this;
-    var el = this.getEl("_wbind");
+    var el = this.___keyedElements["@_wbind"];
     var prevEl = this.___currentLegacyBindEl;
 
     if (prevEl !== el) {
@@ -195,39 +199,37 @@ module.exports = function defineWidget(def, renderer) {
 
       if (prevEl) {
         this.onBeforeDestroy && this.onBeforeDestroy();
-        legacyOnDestroy && legacyOnDestroy.call(this);
+        this.___legacyOnDestroy && this.___legacyOnDestroy();
+        this.___legacyRender = undefined;
         this.removeAllListeners();
       }
 
       if (el) {
-        legacyInit && legacyInit.call(this, this.widgetConfig || {});
-        legacyOnRender && legacyOnRender.call(this, { firstRender: true });
-        this.on("___legacyRender", function() {
-          if (!self.___legacyExplicitUpdate) {
-            self.onBeforeUpdate && self.onBeforeUpdate();
-          }
+        this.___legacyInit && this.___legacyInit(this.widgetConfig || {});
+        this.___legacyOnRender && this.___legacyOnRender({ firstRender: true });
+        this.___legacyRender = legacyRender;
 
-          self.___didUpdate = true;
-        });
-
-        Object.defineProperty(el, "__widget", {
-          configurable: true,
-          get: function() {
-            // eslint-disable-next-line no-constant-condition
-            if ("MARKO_DEBUG") {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+          Object.defineProperty(el, "__widget", {
+            configurable: true,
+            get: function() {
               complain("__widget is deprecated");
+              return self;
             }
-            return self;
-          }
-        });
+          });
+        } else {
+          el.__widget = this;
+        }
       }
     } else if (el) {
       if (prevEl) {
-        legacyOnUpdate && legacyOnUpdate.call(this);
+        this.___legacyOnUpdate && this.___legacyOnUpdate();
       }
 
       if (this.___didUpdate) {
-        legacyOnRender && legacyOnRender.call(this, { firstRender: false });
+        this.___legacyOnRender &&
+          this.___legacyOnRender({ firstRender: false });
       }
     }
 
@@ -236,10 +238,18 @@ module.exports = function defineWidget(def, renderer) {
     this.___didUpdate = false;
   }
 
+  function legacyRender() {
+    if (!this.___legacyExplicitUpdate) {
+      this.onBeforeUpdate && this.onBeforeUpdate();
+    }
+
+    this.___didUpdate = true;
+  }
+
   function modernOnDestory() {
     if (this.___currentLegacyBindEl) {
       this.onBeforeDestroy && this.onBeforeDestroy();
-      legacyOnDestroy && legacyOnDestroy.call(this);
+      this.___legacyOnDestroy && this.___legacyOnDestroy();
       this.___currentLegacyBindEl = null;
     }
   }
@@ -292,15 +302,17 @@ module.exports = function defineWidget(def, renderer) {
     Component.renderSync = renderer.renderSync;
   }
 
-  Object.defineProperty(Component, "_isWidget", {
-    get: function() {
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    Object.defineProperty(Component, "_isWidget", {
+      get: function() {
         complain("_isWidget is deprecated");
+        return true;
       }
-      return true;
-    }
-  });
+    });
+  } else {
+    Component._isWidget = true;
+  }
 
   return Component;
 };

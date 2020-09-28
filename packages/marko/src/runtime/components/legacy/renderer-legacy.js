@@ -107,9 +107,12 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       };
     } else {
       component.___updateQueued = true;
+
+      if (widgetState) {
+        component.state = widgetState;
+      }
     }
 
-    component.state = widgetState;
     component.widgetConfig = widgetConfig;
     component.___widgetBody = widgetBody || component.___widgetBody;
 
@@ -177,8 +180,8 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       }
     };
 
-    if (!isFakeComponent && !registry.___isServer) {
-      component.___emitLifecycleEvent("___legacyRender");
+    if (!registry.___isServer) {
+      component.___legacyRender && component.___legacyRender();
     }
 
     // Render the template associated with the component using the final template

@@ -116,39 +116,11 @@ module.exports = function defineRenderer(renderingLogic) {
       // Use getTemplateData(state, props, out) to get the template
       // data. If that method is not provided then just use the
       // the state (if provided) or the input data.
-      var templateData = getTemplateData
-        ? getTemplateData(widgetState, newProps, out)
-        : widgetState || newProps;
-
-      if (templateData) {
-        // We are going to be modifying the template data so we need to
-        // make a shallow clone of the object so that we don't
-        // mutate user provided data.
-        templateData = Object.keys(templateData).reduce(function(copy, key) {
-          copy[key] = templateData[key];
-          return copy;
-        }, {});
-      } else {
-        // We always should have some template data
-        templateData = {};
-      }
-
-      templateData.widgetProps = newProps;
-
-      // If we have widget state then pass it to the template
-      // so that it is available to the widget tag
-      if (widgetState) {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          if ("widgetState" in templateData) {
-            complain("Passing widgetState as input is deprecated.");
-          }
-        }
-        templateData.widgetState = widgetState;
-      }
-      if (widgetBody) {
-        templateData.renderBody = widgetBody;
-      }
+      var templateData = clone(
+        getTemplateData
+          ? getTemplateData(widgetState, newProps, out)
+          : widgetState || newProps
+      );
 
       if (isReceivingNewInput && getWidgetConfig) {
         // If getWidgetConfig() was implemented then use that to
@@ -157,16 +129,21 @@ module.exports = function defineRenderer(renderingLogic) {
         // widget config will be serialized.
         widgetConfig = getWidgetConfig(newProps, out);
       }
-
-      if (widgetConfig) {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          if ("widgetConfig" in templateData) {
-            complain("Passing widgetConfig as input is deprecated.");
-          }
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        if (widgetState && "widgetState" in templateData) {
+          complain("Passing widgetState as input is deprecated.");
         }
-        templateData.widgetConfig = widgetConfig;
+
+        if (widgetConfig && "widgetConfig" in templateData) {
+          complain("Passing widgetConfig as input is deprecated.");
+        }
       }
+
+      templateData.widgetProps = newProps;
+      widgetBody && (templateData.renderBody = widgetBody);
+      widgetState && (templateData.widgetState = widgetState);
+      widgetConfig && (templateData.widgetConfig = widgetConfig);
 
       template._(templateData, out, id, renderingLogic);
     };
@@ -180,3 +157,15 @@ module.exports = function defineRenderer(renderingLogic) {
 
   return renderer;
 };
+
+function clone(src) {
+  var result = {};
+
+  if (src) {
+    for (var key in src) {
+      result[key] = src[key];
+    }
+  }
+
+  return result;
+}
