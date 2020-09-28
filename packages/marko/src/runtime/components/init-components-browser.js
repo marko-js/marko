@@ -206,10 +206,10 @@ function initComponent(componentDef, doc) {
   }
 
   if (component.___mounted) {
-    component.___emitLifecycleEvent("update");
+    component.___emitUpdate();
   } else {
     component.___mounted = true;
-    component.___emitLifecycleEvent("mount");
+    component.___emitMount();
   }
 }
 

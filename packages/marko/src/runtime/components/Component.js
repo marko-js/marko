@@ -9,7 +9,6 @@ var getComponentsContext = require("./ComponentsContext")
   .___getComponentsContext;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
-var emitLifecycleEvent = componentsUtil.___emitLifecycleEvent;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var EventEmitter = require("events-light");
 var RenderResult = require("../RenderResult");
@@ -129,8 +128,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
       handlerMethod.call(component, newValue, oldValue);
     });
 
-    emitLifecycleEvent(component, "update");
-
+    component.___emitUpdate();
     component.___reset();
   }
 
@@ -239,9 +237,7 @@ Component.prototype = componentProto = {
       }
     }
 
-    if (this.listenerCount(eventType)) {
-      return emit.apply(this, arguments);
-    }
+    return emit.apply(this, arguments);
   },
   getElId: function(key, index) {
     if (!key) {
@@ -337,7 +333,7 @@ Component.prototype = componentProto = {
       return;
     }
 
-    emitLifecycleEvent(this, "destroy");
+    this.___emitDestroy();
     this.___destroyed = true;
 
     componentsByDOMNode.set(this.___rootNode, undefined);
@@ -520,10 +516,6 @@ Component.prototype = componentProto = {
     return true;
   },
 
-  ___emitLifecycleEvent: function(eventType, eventArg1, eventArg2) {
-    emitLifecycleEvent(this, eventType, eventArg1, eventArg2);
-  },
-
   ___scheduleRerender: function() {
     var self = this;
     var renderer = self.___renderer;
@@ -617,6 +609,32 @@ Component.prototype = componentProto = {
     ) {
       return el.nodeType === ELEMENT_NODE;
     });
+  },
+
+  ___emit: emit,
+  ___emitCreate(input, out) {
+    this.onCreate && this.onCreate(input, out);
+    this.___emit("create", input, out);
+  },
+
+  ___emitRender(out) {
+    this.onRender && this.onRender(out);
+    this.___emit("render", out);
+  },
+
+  ___emitUpdate() {
+    this.onUpdate && this.onUpdate();
+    this.___emit("update");
+  },
+
+  ___emitMount() {
+    this.onMount && this.onMount();
+    this.___emit("mount");
+  },
+
+  ___emitDestroy() {
+    this.onDestroy && this.onDestroy();
+    this.___emit("destroy");
   }
 };
 
