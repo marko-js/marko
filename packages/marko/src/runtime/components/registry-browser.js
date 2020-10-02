@@ -22,7 +22,7 @@ function load(typeName, isLegacy) {
     if (target) {
       target = target();
     } else if (isLegacy) {
-      target = window.$markoLegacy.load(typeName);
+      target = exports.___legacy.load(typeName);
     } else {
       target = loader(typeName);
       // eslint-disable-next-line no-constant-condition
