@@ -253,7 +253,7 @@ function getInitComponentsDataFromOut(out) {
   const data = getInitComponentsData(out, componentsToHydrate);
   $global.___isLastFlush = undefined;
 
-  if (runtimeId !== DEFAULT_RUNTIME_ID) {
+  if (runtimeId !== DEFAULT_RUNTIME_ID && data) {
     data.r = runtimeId;
   }
 
