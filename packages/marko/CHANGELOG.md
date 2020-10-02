@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.7](https://github.com/marko-js/marko/compare/v4.23.6...v4.23.7) (2020-10-02)
+
+
+### Bug Fixes
+
+* prevent adding new global for legacy runtime ([0ec1497](https://github.com/marko-js/marko/commit/0ec1497bbbbc5430188c12d5ad37d3d0b04aafe1))
+
 ### [4.23.6](https://github.com/marko-js/marko/compare/v4.23.5...v4.23.6) (2020-10-02)
 
 
