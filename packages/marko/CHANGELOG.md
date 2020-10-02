@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.6](https://github.com/marko-js/marko/compare/v4.23.5...v4.23.6) (2020-10-02)
+
+
+### Bug Fixes
+
+* regression serializing empty component data with custom runtimeid ([d589737](https://github.com/marko-js/marko/commit/d5897375e4b95d587c307612050f8e0d8144e996))
+
 ### [4.23.5](https://github.com/marko-js/marko/compare/v4.23.4...v4.23.5) (2020-09-28)
 
 ### [4.23.4](https://github.com/marko-js/marko/compare/v4.23.3...v4.23.4) (2020-09-17)
