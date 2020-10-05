@@ -16,7 +16,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "_name": "promise",
     "then": {
       "renderBody": (out, result) => {
-        out.t(result);
+        out.t(result, component);
       }
     }
   }, out, _component, "0");

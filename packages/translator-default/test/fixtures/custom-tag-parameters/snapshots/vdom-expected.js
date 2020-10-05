@@ -16,11 +16,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       c
     }) => {
       out.be("div", null, "1", component, null, 0);
-      out.t(a);
+      out.t(a, component);
       out.t(" ", component);
-      out.t(b);
+      out.t(b, component);
       out.t(" ", component);
-      out.t(c);
+      out.t(c, component);
       out.ee();
     }
   }, out, _component, "0");

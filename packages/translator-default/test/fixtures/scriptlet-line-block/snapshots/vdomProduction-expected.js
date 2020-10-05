@@ -17,7 +17,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("div", null, "0", component, null, 0);
   console.log('foo');
   out.t("Hello there ", component);
-  out.t(name);
+  out.t(name, component);
   out.ee();
 }, {
   t: _marko_componentType,

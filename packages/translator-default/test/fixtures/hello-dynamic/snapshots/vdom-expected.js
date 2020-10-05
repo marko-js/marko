@@ -10,11 +10,11 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.t("Hello ", component);
-  out.t(input.name);
+  out.t(input.name, component);
   out.t("! Hello ", component);
-  out.h(input.name);
+  out.h(input.name, component);
   out.t("! Hello ", component);
-  out.h(input.missing);
+  out.h(input.missing, component);
   out.t("!", component);
 }, {
   t: _marko_componentType,
