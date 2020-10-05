@@ -1,3 +1,4 @@
+import { types as t } from "@marko/babel-types";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -10,6 +11,11 @@ export default function(path) {
   if (confident && !computed) {
     path.remove();
   } else {
-    path.replaceWith(withPreviousLocation(write(method, value), node));
+    path.replaceWith(
+      withPreviousLocation(
+        write(method, value, t.identifier("component")),
+        node
+      )
+    );
   }
 }

@@ -15,13 +15,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "class": input.class,
     "renderBody": (out, data) => {
       out.t("Hello ", component);
-      out.t(data.name);
+      out.t(data.name, component);
     }
   }, out, _component, "0");
 
   out.be("div", null, "1", component, null, 0);
   out.t("Hello ", component);
-  out.t(input.name);
+  out.t(input.name, component);
   out.be("span", null, "2", component, null, 0);
 
   () => {
@@ -31,13 +31,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   };
 
   out.t("Hello ", component);
-  out.t(input);
+  out.t(input, component);
   out.ee();
 
   if (true) {
     const data = "bar";
     out.t("Hello ", component);
-    out.t(data);
+    out.t(data, component);
   }
 
   out.ee();

@@ -12,7 +12,7 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   function _renderTree(out, node) {
     out.t("Name: ", component);
-    out.t(node.name);
+    out.t(node.name, component);
     out.t(" Children: ", component);
 
     if (node.children) {

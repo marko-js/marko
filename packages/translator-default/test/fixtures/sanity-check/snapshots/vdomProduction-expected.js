@@ -31,12 +31,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "id": "css"
   }, "1", component, null, 1);
   out.t("\n  div {\n    color: ", component);
-  out.t(x);
+  out.t(x, component);
   out.t(";\n  }\n", component);
   out.ee();
   out.be("script", null, "2", component, null, 0);
   out.t("\n  var y = ", component);
-  out.t(x);
+  out.t(x, component);
   out.t(";\n", component);
   out.ee();
 
@@ -124,7 +124,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     ...f(),
     "id": "a"
   }), "21", component, null, 4);
-  out.t(a);
+  out.t(a, component);
   out.e("div", {
     "c": "1"
   }, "22", component, 0, 0);
@@ -134,7 +134,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   if (x === a) {
     out.t("a ", component);
-    out.t(b);
+    out.t(b, component);
   } else if (x === 2) {
     out.t("b", component);
   } else {
@@ -152,7 +152,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   if (cond) {
     out.t("Hello ", component);
-    out.t(planet);
+    out.t(planet, component);
   }
 
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {

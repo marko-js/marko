@@ -47,7 +47,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
     _items.push({
       "renderBody": out => {
-        out.t(i);
+        out.t(i, component);
       }
     });
   }
@@ -65,7 +65,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       _rows.push({
         "row": row,
         "renderBody": out => {
-          out.t(row);
+          out.t(row, component);
         }
       });
     }

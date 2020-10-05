@@ -10,7 +10,7 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.t("Hello ", component);
-  out.t(input.name);
+  out.t(input.name, component);
   out.t("! ", component);
 
   if (input.colors.length) {
@@ -21,7 +21,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       for (const color of input.colors) {
         const _keyScope = `[${_keyValue++}]`;
         out.be("li", null, "1" + _keyScope, component, null, 0);
-        out.t(color);
+        out.t(color, component);
         out.ee();
       }
     }
