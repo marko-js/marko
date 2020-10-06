@@ -23,6 +23,43 @@ export class Fragment {
   }
 }
 
+// interface Fragmentj {
+//   ___firstRef: Fragment & { ___firstChild: Node };
+//   ___lastRef: Fragment & { ___lastChild: Node };
+//   ___nextNode: Node | undefined;
+//   ___firstChild: Node;
+//   ___lastChild: Node;
+//   ___parentFragment: Fragment | undefined;
+//   ___cachedFragment?: Fragment;
+//   ___dom?: Node;
+//   ___tracked: Set<
+//     Fragment | (Computation<unknown> & { ___cleanup: () => void })
+//   >;
+//   ___cleanup(): () => void
+// }
+
+// export function createFragment(): Fragmentj {
+//   return {
+//     ___firstRef: undefined,
+//     ___lastRef: undefined,
+//     ___nextNode: undefined,
+//     ___firstChild: undefined,
+//     ___lastChild: undefined,
+//     ___parentFragment: undefined,
+//     ___cachedFragment: undefined,
+//     ___dom: undefined,
+//     ___tracked: new Set(),
+//     ___cleanup: cleanup
+//   }
+// }
+
+// function cleanup() {
+//   for (const tracked of this.___tracked) {
+//     tracked.___cleanup();
+//   }
+//   this.___tracked.clear();
+// }
+
 export function insertFragmentBefore(
   parent: Node & ParentNode | null,
   fragment: Fragment,

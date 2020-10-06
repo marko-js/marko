@@ -34,9 +34,14 @@ export interface BaseSignal<V> {
   ___execFn: ((arg: unknown) => unknown) | undefined;
   ___execObject: Record<string, unknown> | undefined;
   ___execProperty: string | undefined;
+  ___execStart: ExecChain | undefined;
+  ___execEnd: ExecChain | undefined;
+  ___consumable: boolean;
   ___cleanup: (() => void) | undefined;
   ___root: Fragment;
 }
+
+type ExecChain = ((...args:  unknown[]) => unknown) & { next?: ExecChain };
 
 interface SignalSingleDownstream<V> extends BaseSignal<V> {
   ___downstream: DownstreamSignal | undefined;
@@ -55,30 +60,28 @@ interface SignalMultipleUpstream<V> extends BaseSignal<V> {
   ___upstreamSingle: 0;
 }
 
-export type Source<V> = (
-  | SignalSingleDownstream<V>
-  | SignalMultipleDownstream<V>) & {
+type SignalWithUpstream<V> = SignalSingleUpstream<V> | SignalMultipleUpstream<V>;
+type SignalWithDownstream<V> = SignalSingleDownstream<V> | SignalMultipleDownstream<V>;
+
+export type Source<V> = SignalWithDownstream<V> & {
   ___type: SignalTypes.SOURCE;
   ___execFn: undefined;
   ___upstream: undefined;
 };
-export type SyncComputation<V> = (
-  | SignalSingleDownstream<V>
-  | SignalMultipleDownstream<V>) &
-  (SignalMultipleUpstream<V> | SignalSingleUpstream<V>) & {
-    ___type: SignalTypes.COMPUTATION;
-    ___execFn: (arg: unknown) => V;
-  };
-export type AsyncComputation<V> = (
-  | SignalSingleDownstream<V>
-  | SignalMultipleDownstream<V>) &
-  (SignalMultipleUpstream<V> | SignalSingleUpstream<V>) & {
-    ___type: SignalTypes.ASYNC_COMPUTATION;
-    ___execFn: (arg: unknown) => Promise<V>;
-  };
-export type Effect = (
-  | SignalMultipleUpstream<undefined>
-  | SignalSingleUpstream<undefined>) & {
+export type SyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
+  ___type: SignalTypes.COMPUTATION;
+  ___execFn: (arg: unknown) => V;
+};
+export type ConsumableComputation<V> = SyncComputation<V> & {
+  ___execFn: typeof execConsumable;
+  ___execStart: ExecChain;
+  ___execEnd: ExecChain;
+};
+export type AsyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
+  ___type: SignalTypes.ASYNC_COMPUTATION;
+  ___execFn: (arg: unknown) => Promise<V>;
+};
+export type Effect = SignalWithUpstream<undefined> & {
   ___type: SignalTypes.EFFECT;
   ___execFn: (arg: unknown) => void;
   ___downstream: undefined;
@@ -109,6 +112,9 @@ function createSignal(type: SignalTypes): BaseSignal<unknown> {
     ___execFn: undefined,
     ___execObject: undefined,
     ___execProperty: undefined,
+    ___execStart: undefined,
+    ___execEnd: undefined,
+    ___consumable: false,
     ___cleanup: undefined,
     ___root: currentFragment!
   };
@@ -127,18 +133,29 @@ export function createComputation<
   fn: (arg: UpstreamRawValues<U>) => V,
   upstream: U,
   upstreamSingle: 0 | 1,
+  consumable = false,
   type = SignalTypes.COMPUTATION,
   ensureComputation = false
 ) {
-  let computation: SyncComputation<V> | undefined = ensureComputation
-    ? (createSignal(type) as SyncComputation<V>)
-    : undefined;
+  let computation: SyncComputation<V> | undefined;
   let hasUpstreamFromAnotherRoot = false;
 
   if (upstreamSingle) {
     if (isSignal(upstream)) {
-      //
-      computation = computation || (createSignal(type) as SyncComputation<V>);
+      if (isConsumableComputation(upstream)) {
+        if (!consumable) {
+          if (type === SignalTypes.EFFECT) {
+            batch.___effects.push((upstream as unknown) as Effect);
+          } else {
+            batch.___computations.push(upstream);
+          }
+        }
+        upstream.___type = type as any;
+        upstream.___consumable = consumable;
+        upstream.___execEnd = upstream.___execEnd.next = fn;
+        return upstream as SyncComputation<V>;
+      }
+      computation = createSignal(type) as SyncComputation<V>;
       hasUpstreamFromAnotherRoot = upstream.___root !== currentFragment;
       subscribe(upstream, computation);
     }
@@ -156,10 +173,24 @@ export function createComputation<
     }
   }
 
-  if (computation) {
-    computation.___execFn = fn;
+  if (ensureComputation || computation) {
+    computation = computation || (createSignal(type) as SyncComputation<V>);
     computation.___upstream = upstream;
     computation.___upstreamSingle = upstreamSingle;
+
+    if (consumable) {
+      computation.___consumable = consumable;
+      computation.___execFn = execConsumable;
+      computation.___execStart = computation.___execEnd = fn;
+    } else {
+      computation.___execFn = fn;
+      if (type === SignalTypes.EFFECT) {
+        batch.___effects.push((computation as unknown) as Effect);
+      } else {
+        batch.___computations.push(computation);
+      }
+    }
+
     if (hasUpstreamFromAnotherRoot) {
       // only computations that depend on an upstream signal
       // owned by a different root fragment need manual cleanup
@@ -169,15 +200,30 @@ export function createComputation<
         ___cleanup: () => void;
       }));
     }
-    if (type === SignalTypes.EFFECT) {
-      batch.___effects.push((computation as unknown) as Effect);
-    } else {
-      batch.___computations.push(computation);
-    }
+    
     return computation;
   }
 
   return fn(upstream as UpstreamRawValues<U>);
+}
+
+function execConsumable<V>(
+  this: ConsumableComputation<V>,
+  originalInput: unknown
+): V {
+  let fn: ExecChain | undefined = this.___execStart;
+  let inputValue: unknown = originalInput;
+  let isEffect = (this as any).___type === SignalTypes.EFFECT;
+  while (fn) {
+    const next = fn.next;
+    if (isEffect && !next) {
+      if (inputValue === this.___value) return undefined as any as V;
+      else this.___value = inputValue as V;
+    }
+    inputValue = fn.call(this, inputValue);
+    fn = next;
+  }
+  return inputValue as V;
 }
 
 export function createAsyncComputation<V, U>(
@@ -192,6 +238,7 @@ export function createAsyncComputation<V, U>(
     fn as any,
     upstream,
     upstreamSingle,
+    false,
     SignalTypes.ASYNC_COMPUTATION,
     true
   ) as unknown as AsyncComputation<V>;
@@ -207,6 +254,7 @@ export function createEffect<U>(
     fn,
     upstream,
     upstreamSingle,
+    false,
     SignalTypes.EFFECT,
     true
   ) as unknown as Effect;
@@ -215,12 +263,13 @@ export function createEffect<U>(
 export function createPropertyComputation<
   P extends string,
   O extends Record<string, unknown>
->(property: P, upstream: UpstreamSignalOrValue<O>) {
+>(property: P, upstream: UpstreamSignalOrValue<O>, consumable = false) {
   if (isSignal(upstream)) {
     const computation = createComputation(
       execComputeProperty as any,
       upstream,
-      1
+      1,
+      false && consumable
     ) as SyncComputation<O[P]>;
     computation.___execProperty = property;
     return computation;
@@ -237,6 +286,7 @@ export function createPropertyEffect<
     execSetProperty,
     upstream,
     1,
+    false,
     SignalTypes.EFFECT,
     true
   ) as unknown as Effect;
@@ -317,6 +367,12 @@ function isSingleUpstream<V>(
   signal: BaseSignal<V>
 ): signal is SignalSingleUpstream<V> {
   return signal.___upstreamSingle === 1;
+}
+
+function isConsumableComputation<V>(
+  signal: BaseSignal<V>
+): signal is ConsumableComputation<V> {
+  return signal.___consumable;
 }
 
 export function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {

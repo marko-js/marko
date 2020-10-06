@@ -197,7 +197,7 @@ export function render(renderer: Renderer, ...input: UpstreamSignalOrValue[]) {
 }
 
 export function attr(name: string, value: UpstreamSignalOrValue) {
-  const data = createComputation(normalizeAttrValue, value, 1);
+  const data = createComputation(normalizeAttrValue, value, 1, true);
   const el = walker.currentNode as Element;
   if (el.nodeType !== NodeType.Element) {
     throw new Error("Debug Error");
@@ -247,7 +247,8 @@ export function html(value: UpstreamSignalOrValue<string>) {
         };
       },
       value,
-      1
+      1,
+      true
     )
   );
 }
@@ -282,13 +283,13 @@ export function props(properties) {
 export function text(value: UpstreamSignalOrValue) {
   prop(
     "data",
-    createComputation(normalizeTextData, value, 1),
+    createComputation(normalizeTextData, value, 1, true),
     walkAndGetText()
   );
 }
 
 export function textContent(value: UpstreamSignalOrValue) {
-  prop("textContent", createComputation(normalizeTextData, value, 1));
+  prop("textContent", createComputation(normalizeTextData, value, 1, true));
 }
 
 export function innerHTML(value: UpstreamSignalOrValue) {
@@ -323,7 +324,8 @@ export function dynamicTag(
         return nextRenderer;
       },
       tag,
-      1
+      1,
+      true
     ),
     input
   );
