@@ -115,7 +115,7 @@ class HtmlElementVDOM extends Node {
 
     var hasSimpleAttrs = true;
 
-    if (properties && properties.noupdate) {
+    if (properties && properties.pa) {
       // Preserving attributes requires extra logic that we cannot
       // shortcircuit
       hasSimpleAttrs = false;

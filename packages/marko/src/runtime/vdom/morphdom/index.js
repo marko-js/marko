@@ -51,7 +51,7 @@ function caseInsensitiveCompare(a, b) {
 }
 
 function onNodeAdded(node, componentsContext) {
-  if (node.nodeType === 1) {
+  if (node.nodeType === ELEMENT_NODE) {
     eventDelegation.___handleNodeAttach(node, componentsContext);
   }
 }
@@ -91,9 +91,9 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
       if (vNode.___nodeName !== "textarea") {
         morphChildren(realNode, vNode, parentComponent);
       }
-    }
 
-    onNodeAdded(realNode, componentsContext);
+      onNodeAdded(realNode, componentsContext);
+    }
   }
 
   function insertVirtualComponentBefore(
@@ -286,8 +286,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curFromNodeChild,
                 curVFromNodeChild,
                 curToNodeChild,
-                curToNodeKey,
-                ownerComponent,
                 parentComponent
               );
             } else {
@@ -306,29 +304,38 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             }
           }
         } else {
+          matchingFromEl = referenceComponent.___keyedElements[curToNodeKey];
           if (
-            (matchingFromEl =
-              referenceComponent.___keyedElements[curToNodeKey]) === undefined
+            matchingFromEl === undefined ||
+            matchingFromEl === curFromNodeChild
           ) {
             if (isHydrate === true && curFromNodeChild) {
               if (
                 curFromNodeChild.nodeType === ELEMENT_NODE &&
-                caseInsensitiveCompare(
-                  curFromNodeChild.nodeName,
-                  curToNodeChild.___nodeName || ""
-                )
+                (curToNodeChild.___preserve ||
+                  caseInsensitiveCompare(
+                    curFromNodeChild.nodeName,
+                    curToNodeChild.___nodeName || ""
+                  ))
               ) {
                 curVFromNodeChild = virtualizeElement(curFromNodeChild);
                 curVFromNodeChild.___nodeName = curToNodeChild.___nodeName;
                 keysByDOMNode.set(curFromNodeChild, curToNodeKey);
-                morphEl(
-                  curFromNodeChild,
-                  curVFromNodeChild,
-                  curToNodeChild,
-                  curToNodeKey,
-                  ownerComponent,
-                  parentComponent
-                );
+                referenceComponent.___keyedElements[
+                  curToNodeKey
+                ] = curFromNodeChild;
+
+                if (curToNodeChild.___preserve) {
+                  vElementByDOMNode.set(curFromNodeChild, curVFromNodeChild);
+                } else {
+                  morphEl(
+                    curFromNodeChild,
+                    curVFromNodeChild,
+                    curToNodeChild,
+                    parentComponent
+                  );
+                }
+
                 curToNodeChild = toNextSibling;
                 curFromNodeChild = fromNextSibling;
                 continue;
@@ -453,8 +460,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                   matchingFromEl,
                   curVFromNodeChild,
                   curToNodeChild,
-                  curToNodeKey,
-                  ownerComponent,
                   parentComponent
                 );
               } else {
@@ -549,8 +554,6 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curFromNodeChild,
                 curVFromNodeChild,
                 curToNodeChild,
-                curToNodeKey,
-                ownerComponent,
                 parentComponent
               );
             }
@@ -639,22 +642,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
   }
 
-  function morphEl(
-    fromEl,
-    vFromEl,
-    toEl,
-    toElKey,
-    ownerComponent,
-    parentComponent
-  ) {
+  function morphEl(fromEl, vFromEl, toEl, parentComponent) {
     var nodeName = toEl.___nodeName;
-
-    if (isHydrate === true && toElKey) {
-      var referenceComponent = isAutoKey(toElKey)
-        ? parentComponent
-        : ownerComponent;
-      referenceComponent.___keyedElements[toElKey] = fromEl;
-    }
 
     var constId = toEl.___constId;
     if (constId !== undefined && vFromEl.___constId === constId) {
@@ -662,6 +651,10 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     }
 
     morphAttrs(fromEl, vFromEl, toEl);
+
+    if (toEl.___preserveBody) {
+      return;
+    }
 
     if (nodeName !== "textarea") {
       morphChildren(fromEl, toEl, parentComponent);
