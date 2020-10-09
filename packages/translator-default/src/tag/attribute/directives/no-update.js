@@ -1,5 +1,5 @@
 import { types as t } from "@marko/babel-types";
-import { normalizeTemplateString } from "@marko/babel-utils";
+import { normalizeTemplateString, isNativeTag } from "@marko/babel-utils";
 const EMPTY_OBJECT = {};
 
 export default {
@@ -12,11 +12,25 @@ export default {
       opts.bodyOnly ? node.body : t.markoTagBody([node])
     );
 
-    replacement.key = normalizeTemplateString`p_${node.key}`;
+    if (isNativeTag(tag)) {
+      replacement.key = node.key;
+      replacement.attributes.push(
+        t.markoAttribute("n", t.booleanLiteral(true))
+      );
+
+      if (opts.bodyOnly) {
+        replacement.attributes.push(
+          t.markoAttribute("b", t.booleanLiteral(true))
+        );
+      }
+    } else {
+      replacement.key = normalizeTemplateString`p_${node.key}`;
+    }
+
     replacement.isPreserved = true;
 
     if (opts.if) {
-      replacement.attributes.push(t.markoAttribute("if", opts.if));
+      replacement.attributes.push(t.markoAttribute("i", opts.if));
     }
 
     if (opts.bodyOnly) {

@@ -25,7 +25,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("div", {
     "style": "c:1px;"
   }, "3", component, 0, 0, {
-    noupdate: ["style"]
+    pa: ["style"]
   });
   out.e("div", {
     "a": "1",

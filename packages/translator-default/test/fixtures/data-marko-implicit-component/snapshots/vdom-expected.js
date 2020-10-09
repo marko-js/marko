@@ -13,7 +13,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.be("div", {
     "class": "test"
   }, "0", component, null, 0, {
-    noupdate: ["class"]
+    pa: ["class"]
   });
   out.t("Hello ", component);
   out.t(input.name, component);

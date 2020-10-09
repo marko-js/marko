@@ -110,7 +110,7 @@ export default function(path, isNullable) {
   if (
     t.isObjectExpression(attrsObj) &&
     attrsObj.properties.every(n => isPropertyName(n, SIMPLE_ATTRS)) &&
-    !tagProperties.some(n => isPropertyName(n, ["noupdate"]))
+    !tagProperties.some(n => isPropertyName(n, ["pa"]))
   ) {
     node.runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
   }

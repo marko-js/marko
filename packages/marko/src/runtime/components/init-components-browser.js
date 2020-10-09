@@ -6,7 +6,7 @@ var win = window;
 var defaultDocument = document;
 var createFragmentNode = require("../vdom/morphdom/fragment")
   .___createFragmentNode;
-var componentsUtil = require("./util");
+var componentsUtil = require("./util-browser");
 var componentLookup = componentsUtil.___componentLookup;
 var addComponentRootToKeyedElements =
   componentsUtil.___addComponentRootToKeyedElements;
@@ -88,7 +88,7 @@ function indexServerComponentBoundaries(node, runtimeId, stack) {
     } else if (node.nodeType === 1) {
       // HTML element node
       var markoKey = node.getAttribute("data-marko-key");
-      var markoProps = node.getAttribute("data-marko");
+      var markoProps = componentsUtil.___getMarkoPropsFromEl(node);
       if (markoKey) {
         var separatorIndex = markoKey.indexOf(" ");
         ownerId = markoKey.substring(separatorIndex + 1);
@@ -103,7 +103,6 @@ function indexServerComponentBoundaries(node, runtimeId, stack) {
         keyedElements[markoKey] = node;
       }
       if (markoProps) {
-        markoProps = JSON.parse(markoProps);
         Object.keys(markoProps).forEach(function(key) {
           if (key.slice(0, 2) === "on") {
             eventDelegation.___addDelegatedEventHandler(key.slice(2));

@@ -11,7 +11,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.w("<div style=c:1px; id=a></div>");
   out.w("<div style=c:1px;></div>");
   out.w(`<div${_marko_props(out, _component, {
-    noupdate: ["style"]
+    pa: ["style"]
   })} style=c:1px;></div>`);
   out.w("<div a=1 style=c:1px;></div>");
 }, {

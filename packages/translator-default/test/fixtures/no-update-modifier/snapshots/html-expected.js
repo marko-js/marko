@@ -9,7 +9,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/no-updat
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<input${_marko_props(out, _component, {
-    noupdate: ["value"]
+    pa: ["value"]
   })}${_marko_attr("value", input.defaultValue)}>`);
 }, {
   t: _marko_componentType,

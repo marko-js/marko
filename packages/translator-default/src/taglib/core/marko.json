@@ -235,9 +235,9 @@
   },
   "<_preserve>": {
     "renderer": "marko/src/core-tags/components/preserve-tag.js",
-    "@component": "boolean",
-    "@if": "boolean",
-    "@body-only": "boolean",
+    "@n": "boolean",
+    "@i": "boolean",
+    "@b": "boolean",
     "autocomplete": []
   },
   "<init-components>": {

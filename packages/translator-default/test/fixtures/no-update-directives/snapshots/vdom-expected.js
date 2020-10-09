@@ -25,12 +25,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }, out, _component, "p_0");
 
   _marko_tag(_preserve, {
-    "if": x,
+    "i": x,
     "renderBody": out => {
       _marko_tag(_hello, {
         "renderBody": out => {
           _marko_tag(_preserve, {
-            "if": (a, b),
+            "i": (a, b),
             "renderBody": out => {
               _marko_tag(_hello, {}, out, _component, "4");
             }
@@ -57,12 +57,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _marko_tag(_hello, {
     "renderBody": out => {
       _marko_tag(_preserve, {
-        "if": x,
+        "i": x,
         "renderBody": out => {
           _marko_tag(_hello, {
             "renderBody": out => {
               _marko_tag(_preserve, {
-                "if": (a, b),
+                "i": (a, b),
                 "renderBody": out => {
                   out.t("Again", component);
                 }
@@ -89,12 +89,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }, out, _component, "p_@a");
 
   _marko_tag(_preserve, {
-    "if": x,
+    "i": x,
     "renderBody": out => {
       _marko_tag(_hello, {
         "renderBody": out => {
           _marko_tag(_preserve, {
-            "if": (a, b),
+            "i": (a, b),
             "renderBody": out => {
               _marko_tag(_hello, {}, out, _component, "@c");
             }
@@ -121,12 +121,12 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _marko_tag(_hello, {
     "renderBody": out => {
       _marko_tag(_preserve, {
-        "if": x,
+        "i": x,
         "renderBody": out => {
           _marko_tag(_hello, {
             "renderBody": out => {
               _marko_tag(_preserve, {
-                "if": (a, b),
+                "i": (a, b),
                 "renderBody": out => {
                   out.t("Again", component);
                 }

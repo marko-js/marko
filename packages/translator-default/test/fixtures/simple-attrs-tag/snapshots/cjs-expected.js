@@ -22,7 +22,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w("<div style=c:1px; id=a></div>");
   out.w("<div style=c:1px;></div>");
   out.w(`<div${(0, _dataMarko.default)(out, _component, {
-    noupdate: ["style"]
+    pa: ["style"]
   })} style=c:1px;></div>`);
   out.w("<div a=1 style=c:1px;></div>");
 }, {

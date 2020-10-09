@@ -21,7 +21,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/data-mar
       _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
   out.w(`<div${(0, _dataMarko.default)(out, _component, {
-    noupdate: ["class"]
+    pa: ["class"]
   })} class=test>`);
   out.w("Hello ");
   out.w((0, _escapeXml.x)(input.name));

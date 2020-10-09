@@ -14,14 +14,14 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("input", {
     "value": input.defaultValue
   }, "1", component, 0, 0, {
-    noupdate: ["value"]
+    pa: ["value"]
   });
   out.e("input", {
     "type": "checkbox",
     "value": input.defaultValue,
     "checked": input.checked
   }, "2", component, 0, 0, {
-    noupdate: ["value", "checked"]
+    pa: ["value", "checked"]
   });
   out.ee();
 }, {

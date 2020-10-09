@@ -14,10 +14,10 @@ export default {
     } = tag;
     const { properties } = node;
     const isVDOM = file.markoOpts.output !== "html";
-    let prop = properties.find(({ key: { name } }) => name === "noupdate");
+    let prop = properties.find(({ key: { name } }) => name === "pa");
 
     if (!prop) {
-      prop = t.objectProperty(t.identifier("noupdate"), t.arrayExpression([]));
+      prop = t.objectProperty(t.identifier("pa"), t.arrayExpression([]));
       properties.push(prop);
 
       if (isVDOM && !hasMonkeyPatch.has(file)) {

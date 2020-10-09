@@ -2,19 +2,44 @@ module.exports = function render(input, out) {
   var componentsContext = out.___components;
   var isHydrate =
     componentsContext && componentsContext.___globalContext.___isHydrate;
-  var ownerComponentDef = out.___assignedComponentDef;
-  var ownerComponent = ownerComponentDef.___component;
+  var ownerComponent = out.___assignedComponentDef.___component;
+  var shouldPreserve = !("i" in input) || input.i;
+  var referenceComponent = ownerComponent;
   var key = out.___assignedKey;
-  var shouldPreserve = !("if" in input) || input["if"];
-  var isPreserved = Boolean(
-    shouldPreserve && (isHydrate || ownerComponent.___keyedElements[key])
-  );
+  var checkKey = key;
 
-  out.bf(key, ownerComponent, shouldPreserve);
-
-  if (!isPreserved && input.renderBody) {
-    input.renderBody(out);
+  if (key[0] !== "@") {
+    var parentComponent = componentsContext.___componentDef.___component;
+    if (ownerComponent !== parentComponent) {
+      referenceComponent = parentComponent;
+      checkKey += ":" + ownerComponent.id;
+    }
   }
 
-  out.ef();
+  var isPreserved = Boolean(
+    shouldPreserve &&
+      (isHydrate || referenceComponent.___keyedElements[checkKey])
+  );
+
+  if (input.n) {
+    if (isPreserved) {
+      if (input.b) {
+        out.___parent.___preserveBody = true;
+      } else {
+        out.beginElement("", null, key, ownerComponent);
+        out.___parent.___preserve = true;
+        out.endElement();
+      }
+    } else {
+      input.renderBody(out);
+    }
+  } else {
+    out.bf(key, ownerComponent, shouldPreserve);
+
+    if (!isPreserved) {
+      input.renderBody(out);
+    }
+
+    out.ef();
+  }
 };

@@ -33,12 +33,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     }
   }, out, _component, "p_0");
   (0, _renderTag.default)(_preserveTag.default, {
-    "if": x,
+    "i": x,
     "renderBody": out => {
       (0, _renderTag.default)(_index.default, {
         "renderBody": out => {
           (0, _renderTag.default)(_preserveTag.default, {
-            "if": (a, b),
+            "i": (a, b),
             "renderBody": out => {
               (0, _renderTag.default)(_index.default, {}, out, _component, "4");
             }
@@ -61,12 +61,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   (0, _renderTag.default)(_index.default, {
     "renderBody": out => {
       (0, _renderTag.default)(_preserveTag.default, {
-        "if": x,
+        "i": x,
         "renderBody": out => {
           (0, _renderTag.default)(_index.default, {
             "renderBody": out => {
               (0, _renderTag.default)(_preserveTag.default, {
-                "if": (a, b),
+                "i": (a, b),
                 "renderBody": out => {
                   out.w("Again");
                 }
@@ -89,12 +89,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     }
   }, out, _component, "p_@a");
   (0, _renderTag.default)(_preserveTag.default, {
-    "if": x,
+    "i": x,
     "renderBody": out => {
       (0, _renderTag.default)(_index.default, {
         "renderBody": out => {
           (0, _renderTag.default)(_preserveTag.default, {
-            "if": (a, b),
+            "i": (a, b),
             "renderBody": out => {
               (0, _renderTag.default)(_index.default, {}, out, _component, "@c");
             }
@@ -117,12 +117,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   (0, _renderTag.default)(_index.default, {
     "renderBody": out => {
       (0, _renderTag.default)(_preserveTag.default, {
-        "if": x,
+        "i": x,
         "renderBody": out => {
           (0, _renderTag.default)(_index.default, {
             "renderBody": out => {
               (0, _renderTag.default)(_preserveTag.default, {
-                "if": (a, b),
+                "i": (a, b),
                 "renderBody": out => {
                   out.w("Again");
                 }

@@ -22,10 +22,10 @@ const _marko_componentType = "packages/translator-default/test/fixtures/no-updat
 _marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
   out.w("<div>");
   out.w(`<input${(0, _dataMarko.default)(out, _component, {
-    noupdate: ["value"]
+    pa: ["value"]
   })}${(0, _attr.default)("value", input.defaultValue)}>`);
   out.w(`<input${(0, _dataMarko.default)(out, _component, {
-    noupdate: ["value", "checked"]
+    pa: ["value", "checked"]
   })} type=checkbox${(0, _attr.default)("value", input.defaultValue)}${(0, _attr.default)("checked", input.checked)}>`);
   out.w("</div>");
 }, {

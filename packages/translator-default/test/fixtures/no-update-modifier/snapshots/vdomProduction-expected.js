@@ -13,7 +13,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("input", {
     "value": input.defaultValue
   }, "0", component, 0, 0, {
-    noupdate: ["value"]
+    pa: ["value"]
   });
 }, {
   t: _marko_componentType,

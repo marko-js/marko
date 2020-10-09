@@ -2,20 +2,24 @@ var ComponentsContext = require("../../runtime/components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 
 module.exports = function render(input, out) {
-  var shouldPreserve = Boolean(!("if" in input) || input["if"]);
-  var ownerComponentDef = out.___assignedComponentDef;
-  var ownerComponent = ownerComponentDef.___component;
-  var key = out.___assignedKey;
+  var shouldPreserve = Boolean(!("i" in input) || input.i);
+  var isComponent = !input.n;
 
-  out.bf(key, ownerComponent, true);
-
-  if (input.renderBody) {
-    var componentsContext = getComponentsContext(out);
-    var parentPreserved = componentsContext.___isPreserved;
-    componentsContext.___isPreserved = parentPreserved || shouldPreserve;
-    input.renderBody(out);
-    componentsContext.___isPreserved = parentPreserved;
+  if (isComponent) {
+    out.bf(out.___assignedKey, out.___assignedComponentDef.___component, true);
   }
 
-  out.ef();
+  if (shouldPreserve) {
+    var componentsContext = getComponentsContext(out);
+    var parentPreserved = componentsContext.___isPreserved;
+    componentsContext.___isPreserved = true;
+    input.renderBody(out);
+    componentsContext.___isPreserved = parentPreserved;
+  } else {
+    input.renderBody(out);
+  }
+
+  if (isComponent) {
+    out.ef();
+  }
 };
