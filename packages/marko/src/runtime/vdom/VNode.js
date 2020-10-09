@@ -52,7 +52,7 @@ VNode.prototype = {
       if (child.___Text) {
         var childValue = child.___nodeValue;
         this.___valueInternal = (this.___valueInternal || "") + childValue;
-      } else if (child.___preserve) {
+      } else if (child.___preserve || child.___preserveBody) {
         this.___preserveTextAreaValue = true;
       } else {
         throw TypeError();

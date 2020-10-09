@@ -29,7 +29,7 @@ module.exports = function handleComponentPreserveAttrs() {
   });
 
   if (noUpdateAttrs.length) {
-    el.setPropertyValue("noupdate", builder.literal(noUpdateAttrs));
+    el.setPropertyValue("pa", builder.literal(noUpdateAttrs));
 
     if (!context.isFlagSet(PRESERVE_ATTRS_HELPER_ADDED)) {
       context.setFlag(PRESERVE_ATTRS_HELPER_ADDED);

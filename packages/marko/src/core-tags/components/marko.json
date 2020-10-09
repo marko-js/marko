@@ -104,10 +104,9 @@
   },
   "<_preserve>": {
     "renderer": "./preserve-tag.js",
-    "@cid": "string",
-    "@preserveKey": "string",
-    "@if": "boolean",
-    "@body-only": "boolean",
+    "@n": "boolean",
+    "@i": "boolean",
+    "@b": "boolean",
     "autocomplete": []
   },
   "<no-update>": {

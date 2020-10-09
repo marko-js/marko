@@ -13,14 +13,14 @@ function render(input, out, __component, component, state) {
 
   out.w("<div><input" +
     marko_dataMarko(out, __component, {
-      noupdate: [
+      pa: [
         "value"
       ]
     }) +
     marko_attr("value", input.defaultValue) +
     "><input" +
     marko_dataMarko(out, __component, {
-      noupdate: [
+      pa: [
         "value"
       ]
     }) +

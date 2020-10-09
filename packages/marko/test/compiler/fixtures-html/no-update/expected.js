@@ -13,7 +13,7 @@ function render(input, out, __component, component, state) {
 
   out.w("<input" +
     marko_dataMarko(out, __component, {
-      noupdate: [
+      pa: [
         "value"
       ]
     }) +

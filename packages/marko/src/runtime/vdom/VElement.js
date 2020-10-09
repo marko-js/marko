@@ -2,6 +2,7 @@
 
 var complain = "MARKO_DEBUG" && require("complain");
 var domData = require("../components/dom-data");
+var componentsUtil = require("../components/util");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
 var inherit = require("raptor-util/inherit");
@@ -109,6 +110,8 @@ function VElement(
   this.___nodeName = tagName;
   this.___valueInternal = null;
   this.___constId = constId;
+  this.___preserve = false;
+  this.___preserveBody = false;
 }
 
 VElement.prototype = {
@@ -248,16 +251,18 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
   var attributes = node.attributes;
   var attrCount = attributes.length;
 
-  var attrs;
+  var attrs = null;
+  var props = null;
 
   if (attrCount) {
     attrs = {};
     for (var i = 0; i < attrCount; i++) {
       var attr = attributes[i];
       var attrName = attr.name;
-      if (!xmlnsRegExp.test(attrName) && attrName !== "data-marko") {
-        var attrNamespaceURI = attr.namespaceURI;
-        if (attrNamespaceURI === NS_XLINK) {
+      if (!xmlnsRegExp.test(attrName)) {
+        if (attrName === "data-marko") {
+          props = componentsUtil.___getMarkoPropsFromEl(node);
+        } else if (attr.namespaceURI === NS_XLINK) {
           attrs[ATTR_XLINK_HREF] = attr.value;
         } else {
           attrs[attrName] = attr.value;
@@ -279,7 +284,7 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
     ownerComponent,
     0 /*child count*/,
     0 /*flags*/,
-    null /*props*/
+    props
   );
 
   if (vdomEl.___nodeName === "textarea") {
