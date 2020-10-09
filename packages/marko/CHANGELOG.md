@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.8](https://github.com/marko-js/marko/compare/v4.23.7...v4.23.8) (2020-10-09)
+
+
+### Bug Fixes
+
+* no longer use fragments for preserved native els ([c167cfa](https://github.com/marko-js/marko/commit/c167cfa1ab0d9d6db3aecc264fd830d804456f25))
+
 ### [4.23.7](https://github.com/marko-js/marko/compare/v4.23.6...v4.23.7) (2020-10-02)
 
 
