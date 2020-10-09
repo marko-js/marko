@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-    <a href="https://markojs.com/docs/">Docs</a> ∙ <a href="https://markojs.com/try-online/">Try Online</a> ∙ <a href="#contributors">Contribute</a> ∙ <a href="#community--support">Get Support</a>
+    <a href="https://markojs.com/docs/getting-started/">Docs</a> ∙ <a href="https://markojs.com/try-online/">Try Online</a> ∙ <a href="#contributors">Contribute</a> ∙ <a href="#community--support">Get Support</a>
 </p>
 
 # Intro
