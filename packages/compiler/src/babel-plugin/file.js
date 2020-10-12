@@ -30,12 +30,19 @@ export class MarkoFile extends File {
         { highlightCode: true }
       );
 
-    const position = loc ? `(${loc.start.line},${loc.start.column + 1})` : "";
-    return new Error(
-      `${path.relative(
-        CWD,
-        this.opts.sourceFileName
-      )}${position}: ${msg}\n${frame || ""}`
-    );
+    const finalMsg = `${path.relative(CWD, this.opts.sourceFileName)}${
+      loc ? `(${loc.start.line},${loc.start.column + 1})` : ""
+    }: ${msg}\n${frame || ""}`;
+
+    const err = new Error();
+
+    // Prevent babel from changing our error message.
+    Object.defineProperty(err, "message", {
+      get() {
+        return finalMsg;
+      },
+      set() {}
+    });
+    return err;
   }
 }

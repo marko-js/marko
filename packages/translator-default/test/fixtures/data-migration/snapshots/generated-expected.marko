@@ -1,15 +1,15 @@
-<test|data| class=data.class>
+<test|data| class=input.class>
   Hello ${data.name}
 </test>
 <div>
-  Hello ${data.name}
+  Hello ${input.name}
   <span>
     $ () => {
       data;
       const data = "foo";
       console.log(data);
     };
-    Hello ${data}
+    Hello ${input}
   </span>
   <if(true)>
     $ const data = "bar";

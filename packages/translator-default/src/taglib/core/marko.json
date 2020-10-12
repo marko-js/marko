@@ -70,14 +70,13 @@
     ]
   },
   "<style>": {
-    "node-factory": "./parse-style.js",
     "code-generator": "./translate-style.js",
     "parse-options": {
       "rawOpenTag": true
     }
   },
   "<macro>": {
-    "transformer": "./macro/transform.js",
+    "node-factory": "./macro/parse.js",
     "code-generator": "./macro/translate.js",
     "@name": {
       "type": "string",
@@ -241,20 +240,20 @@
     "autocomplete": []
   },
   "<init-components>": {
-    "transformer": "./transform-server-only.js",
+    "code-generator": "./translate-server-only.js",
     "renderer": "marko/src/core-tags/components/init-components-tag.js",
     "@immediate": "boolean"
   },
   "<_preferred-script-location>": {
-    "transformer": "./transform-server-only.js",
+    "code-generator": "./translate-server-only.js",
     "renderer": "marko/src/core-tags/components/preferred-script-location-tag.js"
   },
   "<body>": {
-    "transformer": "./transform-body.js"
+    "code-generator": "./translate-body.js"
   },
   "<await>": {
     "renderer": "marko/src/core-tags/core/await/renderer.js",
-    "transformer": "./transform-await.js",
+    "code-generator": "./translate-await.js",
     "@_provider": "expression",
     "@_name": "string",
     "@name": {
@@ -328,7 +327,7 @@
     ]
   },
   "<await-reorderer>": {
-    "transformer": "./transform-server-only.js",
+    "code-generator": "./translate-server-only.js",
     "renderer": "marko/src/core-tags/core/await/reorderer-renderer.js",
     "autocomplete": [
       {

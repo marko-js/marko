@@ -1,6 +1,4 @@
-import { ___addMacro } from "@marko/babel-utils";
-
-export function enter(path) {
+export default function(path) {
   const attributes = path.get("attributes");
   const nameAttr = attributes.find(attr => attr.get("name").node === "name");
 
@@ -25,11 +23,13 @@ export function enter(path) {
   }
 
   const name = nameAttrValue.node.value;
-  path.node._macroId = ___addMacro(path.hub.file, name);
+  const { file } = path.hub;
 
-  if (!path.node._macroId) {
+  if (file.metadata.marko.macros[name]) {
     throw nameAttr.buildCodeFrameError(
       `A macro with the name "${name}" already exists.`
     );
   }
+
+  file.metadata.marko.macros[name] = file.scope.generateUid(name);
 }

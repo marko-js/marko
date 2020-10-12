@@ -1,7 +1,7 @@
 import { types as t } from "@marko/babel-types";
+import { ___getMarkoFile } from "@marko/compiler";
 import { getTagDefForTagName } from "./taglib";
 const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
-const MACROS = new WeakMap();
 
 export function isNativeTag(path) {
   if (path.node._isDynamicString) {
@@ -40,29 +40,16 @@ export function isMacroTag(path) {
 }
 
 export function getMacroIdentifier(path) {
-  const macros = MACROS.get(path.hub.file);
+  const macros = path.hub.file.metadata.marko.macros;
+  const { name } = path.node;
 
-  if (macros) {
-    const {
-      node: { name }
-    } = path;
-    return t.isStringLiteral(name) && macros.get(name.value);
-  }
-}
+  if (t.isStringLiteral(name)) {
+    const id = macros[name.value];
 
-export function ___addMacro(file, name) {
-  const id = file.scope.generateUidIdentifier(name);
-  let macros = MACROS.get(file);
-  if (macros) {
-    if (macros.get(name)) {
-      return false;
+    if (id) {
+      return t.identifier(id);
     }
-  } else {
-    MACROS.set(file, (macros = new Map()));
   }
-
-  macros.set(name, id);
-  return id;
 }
 
 export function getTagDef(path) {
@@ -160,4 +147,19 @@ export function isLoopTag(path) {
 
   const tagName = path.node.name.value;
   return tagName === "while" || tagName === "for";
+}
+
+export function loadFileForTag(tag) {
+  const def = getTagDef(tag);
+  const { file } = tag.hub;
+  const fs = file.markoOpts.fileSystem;
+  const sourceFileName = def && def.template;
+
+  if (sourceFileName) {
+    return ___getMarkoFile(
+      fs.readFileSync(sourceFileName, "utf-8"),
+      { ...file.opts, sourceFileName, filename: sourceFileName },
+      file.markoOpts
+    );
+  }
 }

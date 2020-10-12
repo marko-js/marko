@@ -1,7 +1,7 @@
 import path from "path";
 import { types as t } from "@marko/babel-types";
 
-const IMPORTS = new WeakMap();
+const IMPORTS_KEY = Symbol();
 
 const toPosix =
   path.sep === "/"
@@ -99,10 +99,10 @@ export function importNamed(file, request, name, nameHint = name) {
 }
 
 function getImports(file) {
-  let imports = IMPORTS.get(file);
+  let imports = file.metadata.marko[IMPORTS_KEY];
 
   if (!imports) {
-    IMPORTS.set(file, (imports = new Map()));
+    imports = file.metadata.marko[IMPORTS_KEY] = new Map();
   }
 
   return imports;

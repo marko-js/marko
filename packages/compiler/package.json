@@ -17,6 +17,7 @@
     "@marko/babel-utils": "^5.0.0-next.50",
     "@marko/translator-default": "^5.0.0-next.50",
     "complain": "^1.6.0",
+    "enhanced-resolve": "5.0.0",
     "he": "^1.1.0",
     "htmljs-parser": "^2.7.1",
     "jsesc": "^2.5.2",

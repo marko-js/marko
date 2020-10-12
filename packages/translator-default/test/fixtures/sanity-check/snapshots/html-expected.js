@@ -66,13 +66,13 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   _marko_dynamic_tag(out, _thing, () => ({
     "x": 1
-  }), null, null, null, _component, "12");
+  }), null, null, null, _component, "11");
 
   _marko_tag(_other, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
-  }, out, _component, "13", [["click", "handleClick", false, [a, b, ...d]]]);
+  }, out, _component, "12", [["click", "handleClick", false, [a, b, ...d]]]);
 
   _marko_tag(_other, {
     "x": 1,
@@ -96,7 +96,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "renderBody": (out, b) => {
       out.w("<div></div>");
     }
-  }, out, _component, "15");
+  }, out, _component, "14");
 
   out.w(`<div${_marko_attrs({
     "class": "b c",

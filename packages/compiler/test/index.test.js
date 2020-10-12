@@ -20,7 +20,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
         output: "dom",
         babelConfig: { envName: "production" }
       }),
-      generated: runTest({ _parseOnly: true })
+      generated: runTest({ _translate: false })
     });
 
     function runTest(config) {

@@ -84,12 +84,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   }, null, null, _component, "@x");
   (0, _dynamicTag.default)(out, _thing, () => ({
     "x": 1
-  }), null, null, null, _component, "12");
+  }), null, null, null, _component, "11");
   (0, _renderTag.default)(_index.default, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
-  }, out, _component, "13", [["click", "handleClick", false, [_b.default, b, ...d]]]);
+  }, out, _component, "12", [["click", "handleClick", false, [_b.default, b, ...d]]]);
   (0, _renderTag.default)(_index.default, {
     "x": 1,
     ...thing,
@@ -112,7 +112,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     "renderBody": (out, b) => {
       out.w("<div></div>");
     }
-  }, out, _component, "15");
+  }, out, _component, "14");
   out.w(`<div${(0, _attrs.default)({
     "class": "b c",
     "a": {

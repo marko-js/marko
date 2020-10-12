@@ -1,4 +1,4 @@
-const LINE_POS_CACHE = new WeakMap();
+const LINE_POS_KEY = Symbol();
 
 export function getLoc(file, pos) {
   return findLoc(getLinePositions(file), 0, pos);
@@ -27,7 +27,7 @@ export function withLoc(file, node, start, end) {
 }
 
 function getLinePositions(file) {
-  let linePositions = LINE_POS_CACHE.get(file);
+  let linePositions = file.metadata.marko[LINE_POS_KEY];
 
   if (!linePositions) {
     linePositions = [0];
@@ -37,7 +37,7 @@ function getLinePositions(file) {
       }
     }
 
-    LINE_POS_CACHE.set(file, linePositions);
+    file.metadata.marko[LINE_POS_KEY] = linePositions;
   }
 
   return linePositions;

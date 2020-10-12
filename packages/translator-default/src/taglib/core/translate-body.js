@@ -1,6 +1,6 @@
 import { types as t } from "@marko/babel-types";
 
-export function exit(path) {
+export function enter(path) {
   if (path.hub.file.markoOpts.output === "html") {
     const body = path.get("body");
 
