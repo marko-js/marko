@@ -149,11 +149,7 @@ export default function(path) {
       t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
-          [
-            normalizeTemplateString`f_${key}`,
-            t.identifier("component"),
-            t.numericLiteral(1)
-          ]
+          [normalizeTemplateString`f_${key}`, t.identifier("component")]
         )
       )
     );
