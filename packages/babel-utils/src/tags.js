@@ -4,6 +4,10 @@ const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
 const MACROS = new WeakMap();
 
 export function isNativeTag(path) {
+  if (path.node._isDynamicString) {
+    return true;
+  }
+
   const tagDef = getTagDef(path);
   return (
     tagDef &&

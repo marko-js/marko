@@ -12,13 +12,13 @@ import withPreviousLocation from "../util/with-previous-location";
 // TODO: support transform and other entries.
 const TAG_FILE_ENTRIES = ["template", "renderer"];
 
-export default function(path) {
+export default function(path, isNullable) {
   const {
     hub: { file },
     node
   } = path;
   const { metadata, markoOpts } = file;
-  const { name, key, isNullable } = node;
+  const { name, key } = node;
 
   assertNoArgs(path);
 

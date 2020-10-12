@@ -6,7 +6,7 @@ import {
   assertNoArgs
 } from "@marko/babel-utils";
 
-export default function(path) {
+export default function(path, isNullable) {
   const {
     hub: { file }
   } = path;
@@ -19,8 +19,8 @@ export default function(path) {
   }
 
   if (markoOpts.output === "html") {
-    nativeTagHtml(path);
+    nativeTagHtml(path, isNullable);
   } else {
-    nativeTagVdom(path);
+    nativeTagVdom(path, isNullable);
   }
 }
