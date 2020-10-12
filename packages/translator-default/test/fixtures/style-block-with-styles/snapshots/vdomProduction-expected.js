@@ -5,7 +5,7 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 
 const _marko_node = _marko_createElement("div", {
   "class": "test"
-}, "1", null, 0, 1);
+}, "0", null, 0, 1);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";

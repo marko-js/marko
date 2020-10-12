@@ -1,10 +1,12 @@
+import { createHash } from "crypto";
 import { types as t } from "@marko/babel-types";
 import {
   parseExpression,
   getTagDefForTagName,
   resolveRelativePath,
   importNamed,
-  importDefault
+  importDefault,
+  parseScript
 } from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
@@ -38,11 +40,16 @@ export const visitor = {
         hub: { file }
       } = path;
 
-      if (file._moduleCode) {
-        path.get("body").forEach(bodyItemPath => bodyItemPath.remove());
-        file._moduleCode.forEach(node => path.pushContainer("body", node));
-        return path.skip();
+      if (file.metadata.marko.moduleCode) {
+        path
+          .replaceWith(parseScript(file, file.metadata.marko.moduleCode))[0]
+          .skip();
+        return;
       }
+
+      file._componentDefIdentifier = path.scope.generateUidIdentifier(
+        "component"
+      );
 
       // Move non static content into the renderBody.
       const [renderBlock] = path.pushContainer("body", t.blockStatement([]));
@@ -136,7 +143,13 @@ export const visitor = {
         templateIdentifier,
         t.identifier("meta")
       );
-      const componentId = meta.id;
+
+      const componentId = markoOpts.optimize
+        ? createHash("MD5")
+            .update(meta.id)
+            .digest("base64")
+            .slice(0, 8)
+        : meta.id;
 
       if (markoOpts.writeVersionComment) {
         path.addComment(

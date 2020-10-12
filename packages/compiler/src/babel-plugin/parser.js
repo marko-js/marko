@@ -26,6 +26,7 @@ const isAttributeTag = node =>
 export function parseMarko(file) {
   const { code } = file;
   const { htmlParseOptions = {} } = file.markoOpts;
+  const { watchFiles } = file.metadata.marko;
   const pushTagBody = node => getTagBody().pushContainer("body", node);
   const getTagBody = () =>
     currentTag.isProgram() ? currentTag : currentTag.get("body");
@@ -315,7 +316,7 @@ export function parseMarko(file) {
 
       if (tagDef && tagDef.nodeFactoryPath) {
         const module = markoModules.require(tagDef.nodeFactoryPath);
-        file.metadata.marko.watchFiles.add(tagDef.nodeFactoryPath);
+        watchFiles.push(tagDef.nodeFactoryPath);
         /* istanbul ignore next */
         (module.default || module)(tag, t);
       }

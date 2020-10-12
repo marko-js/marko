@@ -11,7 +11,7 @@ export {
   findParentTag,
   findAttributeTags,
   getArgOrSequence,
-  ___addMacro
+  loadFileForTag
 } from "./tags";
 export {
   assertAllowedAttributes,
@@ -28,8 +28,4 @@ export { parseScript, parseExpression } from "./parse";
 
 export { resolveRelativePath, importDefault, importNamed } from "./imports";
 
-export {
-  getTaglibLookup,
-  getTagDefForTagName,
-  ___setTaglibLookup
-} from "./taglib";
+export { getTaglibLookup, getTagDefForTagName } from "./taglib";

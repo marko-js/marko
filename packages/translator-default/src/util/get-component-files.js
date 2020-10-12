@@ -1,14 +1,15 @@
 import path from "path";
 import escapeRegExp from "escape-string-regexp";
 
-const CACHE = new WeakMap();
+const COMPONENT_FILES_KEY = Symbol();
 
-export default function getComponentFiles({ hub }) {
-  if (CACHE.has(hub)) {
-    return CACHE.get(hub);
+export default function getComponentFiles({ hub: { file } }) {
+  const meta = file.metadata.marko;
+
+  if (meta[COMPONENT_FILES_KEY]) {
+    return meta[COMPONENT_FILES_KEY];
   }
 
-  const { file } = hub;
   const { sourceFileName } = file.opts;
   const fs = file.markoOpts.fileSystem;
   const ext = path.extname(sourceFileName);
@@ -40,10 +41,10 @@ export default function getComponentFiles({ hub }) {
     }
   }
 
-  return {
+  return (meta[COMPONENT_FILES_KEY] = {
     styleFile,
     packageFile,
     componentFile,
     componentBrowserFile
-  };
+  });
 }

@@ -1,20 +1,17 @@
-const LOOKUPS = new WeakMap();
-const SEEN_TAG_DEFS = new WeakMap();
-
-export function ___setTaglibLookup(file, lookup) {
-  LOOKUPS.set(file, lookup);
-  SEEN_TAG_DEFS.set(file, new Set());
-}
+const SEEN_TAGS_KEY = Symbol();
 
 export function getTaglibLookup(file) {
-  return LOOKUPS.get(file);
+  return file.___taglibLookup;
 }
 
 export function getTagDefForTagName(file, tagName) {
   const tagDef = getTaglibLookup(file).getTag(tagName);
 
   if (tagDef) {
-    const seen = SEEN_TAG_DEFS.get(file);
+    let seen = file.metadata.marko[SEEN_TAGS_KEY];
+    if (!seen) {
+      seen = file.metadata.marko[SEEN_TAGS_KEY] = new Set();
+    }
 
     if (!seen.has(tagDef)) {
       seen.add(tagName);
@@ -22,7 +19,7 @@ export function getTagDefForTagName(file, tagName) {
       const len = filePath.length;
 
       if (filePath[len - 14] === "m" && filePath.endsWith("marko-tag.json")) {
-        file.metadata.marko.watchFiles.add(filePath);
+        file.metadata.marko.watchFiles.push(filePath);
       }
     }
   }

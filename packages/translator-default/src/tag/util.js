@@ -180,7 +180,7 @@ function isIgnoredTagParams(path) {
   const tagNamePath = path.get("name");
 
   if (!tagNamePath.isStringLiteral()) {
-    return path.get("_isMacroTagCall").node || false;
+    return path.node._isMacroTagCall || false;
   }
 
   const tagName = tagNamePath.get("value").node;

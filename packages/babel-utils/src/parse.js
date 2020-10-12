@@ -1,6 +1,6 @@
 import * as babelParser from "@babel/parser";
 
-const CODE_AS_WHITESPACE = new WeakMap();
+const CODE_AS_WHITE_SPACE_KEY = Symbol();
 
 export function parseScript(file, str, start) {
   return tryParse(file, false, str, start);
@@ -12,13 +12,12 @@ export function parseExpression(file, str, start) {
 
 function tryParse(file, isExpression, str, start) {
   if (start) {
-    let whitespace = CODE_AS_WHITESPACE.get(file);
+    let whitespace = file.metadata.marko[CODE_AS_WHITE_SPACE_KEY];
 
     if (whitespace === undefined) {
-      CODE_AS_WHITESPACE.set(
-        file,
-        (whitespace = file.code.replace(/[^\s]/g, " "))
-      );
+      file.metadata.marko[
+        CODE_AS_WHITE_SPACE_KEY
+      ] = whitespace = file.code.replace(/[^\s]/g, " ");
     }
 
     str = whitespace.slice(0, start) + str;

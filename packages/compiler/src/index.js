@@ -1,51 +1,55 @@
-import fs from "fs";
-import { loadPartialConfig, transformAsync, transformSync } from "@babel/core";
-import corePlugin from "./babel-plugin";
+import * as babel from "@babel/core";
+import corePlugin, { getMarkoFile } from "./babel-plugin";
 import defaultOptions from "./config";
 import * as taglib from "./taglib";
 
-export { taglib };
+export { taglib, getMarkoFile as ___getMarkoFile };
 
-let globalConfig = Object.assign({}, defaultOptions);
-export function configure(newConfig = {}) {
-  globalConfig = Object.assign({}, defaultOptions, newConfig);
+let globalConfig = { ...defaultOptions };
+export function configure(newConfig) {
+  globalConfig = { ...defaultOptions, ...newConfig };
 }
 
 export async function compile(src, filename, options) {
   const babelConfig = loadBabelConfig(filename, options);
-  const babelResult = await transformAsync(src, babelConfig);
+  const babelResult = await babel.transformAsync(src, babelConfig);
+  scheduleDefaultClear(options);
   return buildResult(babelResult);
 }
 
 export function compileSync(src, filename, options) {
   const babelConfig = loadBabelConfig(filename, options);
-  const babelResult = transformSync(src, babelConfig);
+  const babelResult = babel.transformSync(src, babelConfig);
+  scheduleDefaultClear(options);
   return buildResult(babelResult);
 }
 
 export async function compileFile(filename, options) {
-  const src = await fs.promises.readFile(filename, "utf-8");
-  return compile(src, filename, options);
+  return new Promise((resolve, reject) => {
+    getFs(options).readFile(filename, "utf-8", (err, src) => {
+      if (err) {
+        return reject(err);
+      }
+
+      return resolve(compile(src, filename, options));
+    });
+  });
 }
 
 export function compileFileSync(filename, options) {
-  const src = fs.readFileSync(filename, "utf-8");
+  const src = getFs(options).readFileSync(filename, "utf-8");
   return compileSync(src, filename, options);
 }
 
 function loadBabelConfig(filename, options) {
-  const markoConfig = Object.assign({}, globalConfig);
-
-  if (options) {
-    Object.assign(markoConfig, options);
-  }
-
+  const markoConfig = { ...globalConfig, ...options, babelConfig: undefined };
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
     filename: filename,
     sourceFileName: filename,
     sourceType: "module",
-    sourceMaps: markoConfig.sourceMaps
+    sourceMaps: markoConfig.sourceMaps,
+    ...(options && options.babelConfig)
   };
 
   if (markoConfig.modules === "cjs") {
@@ -55,16 +59,11 @@ function loadBabelConfig(filename, options) {
     ]);
   }
 
-  if (markoConfig.babelConfig) {
-    Object.assign(baseBabelConfig, markoConfig.babelConfig);
-    delete markoConfig.babelConfig;
-  }
-
   baseBabelConfig.plugins = requiredPlugins.concat(
     baseBabelConfig.plugins || []
   );
 
-  return loadPartialConfig(baseBabelConfig).options;
+  return babel.loadPartialConfig(baseBabelConfig).options;
 }
 
 function buildResult(babelResult) {
@@ -74,4 +73,44 @@ function buildResult(babelResult) {
     metadata: { marko: meta }
   } = babelResult;
   return { map, code, meta };
+}
+
+let scheduledClear = false;
+let clearingDefaultFs = false;
+let clearingDefaultCache = false;
+function scheduleDefaultClear(options) {
+  if (!scheduledClear) {
+    clearingDefaultCache = isDefaultCache(options);
+    clearingDefaultFs = isDefaultFS(options);
+
+    if (clearingDefaultCache || clearingDefaultFs) {
+      scheduledClear = true;
+      setImmediate(clearDefaults);
+    }
+  }
+}
+
+function clearDefaults() {
+  if (clearingDefaultCache) {
+    clearingDefaultCache = false;
+    globalConfig.cache.clear();
+  }
+
+  if (clearingDefaultFs) {
+    clearingDefaultFs = false;
+    globalConfig.fileSystem.purge();
+  }
+  scheduledClear = false;
+}
+
+function isDefaultCache(options) {
+  return !options.cache || options.cache === globalConfig.cache;
+}
+
+function isDefaultFS(options) {
+  return getFs(options) === globalConfig.fileSystem;
+}
+
+function getFs(options) {
+  return options.fileSystem || globalConfig.fileSystem;
 }

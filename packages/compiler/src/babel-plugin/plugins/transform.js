@@ -7,11 +7,6 @@ import { enter, exit } from "../util/plugin-hooks";
  * Applies custom transformers on tags.
  */
 export const visitor = {
-  Program(path) {
-    path.hub.file._componentDefIdentifier = path.scope.generateUidIdentifier(
-      "component"
-    );
-  },
   MarkoTag: {
     enter(path) {
       const transformers = getTransformersForTag(path);
@@ -38,6 +33,7 @@ function getTransformersForTag(path) {
   const {
     hub: { file }
   } = path;
+  const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
   const TRANSFORMER_CACHE = (file.TRANSFORMER_CACHE =
     file.TRANSFORMER_CACHE || Object.create(null));
@@ -49,7 +45,7 @@ function getTransformersForTag(path) {
     const addTransformers = tagDef => {
       if (tagDef) {
         for (const transformerPath in tagDef.transformers) {
-          file.metadata.marko.watchFiles.add(transformerPath);
+          watchFiles.push(transformerPath);
           transformers.push(tagDef.transformers[transformerPath]);
         }
       }

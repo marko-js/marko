@@ -1,6 +1,6 @@
 import { types as t } from "@marko/babel-types";
 
-export function exit(path) {
+export function enter(path) {
   const args = path.get("arguments");
 
   if (!args.length) {
@@ -22,12 +22,18 @@ export function exit(path) {
     );
   }
 
-  const provider = args[0].node;
-  const defaultName = t.stringLiteral(
-    path.hub.file.code.slice(provider.start, provider.end)
+  const [provider] = args;
+  path.pushContainer(
+    "attributes",
+    t.markoAttribute("_provider", provider.node)
   );
 
-  path.pushContainer("attributes", t.markoAttribute("_provider", provider));
-  path.pushContainer("attributes", t.markoAttribute("_name", defaultName));
+  if (!path.get("attributes").some(attr => attr.get("name").node === "name")) {
+    path.pushContainer(
+      "attributes",
+      t.markoAttribute("_name", t.stringLiteral(provider.toString()))
+    );
+  }
+
   path.set("arguments", undefined);
 }

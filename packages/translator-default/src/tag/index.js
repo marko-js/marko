@@ -30,7 +30,7 @@ export default {
           node,
           hub: { file }
         } = path;
-        file.metadata.marko.watchFiles.add(tagDef.codeGeneratorModulePath);
+        file.metadata.marko.watchFiles.push(tagDef.codeGeneratorModulePath);
         tagDef.codeGenerator = markoModules.require(
           tagDef.codeGeneratorModulePath
         );

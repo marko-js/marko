@@ -31,6 +31,7 @@ function getMigratorsForTag(path) {
   const {
     hub: { file }
   } = path;
+  const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
   const MIGRATOR_CACHE = (file.MIGRATOR_CACHE =
     file.MIGRATOR_CACHE || Object.create(null));
@@ -43,7 +44,7 @@ function getMigratorsForTag(path) {
       if (tagDef && tagDef.migratorPaths) {
         for (let i = 0; i < tagDef.migratorPaths.length; i++) {
           const migratorPath = tagDef.migratorPaths[i];
-          file.metadata.marko.watchFiles.add(migratorPath);
+          watchFiles.push(migratorPath);
           migrators.push(markoModules.require(migratorPath));
         }
       }
