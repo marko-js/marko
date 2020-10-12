@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.50](https://github.com/marko-js/marko/compare/v5.0.0-next.49...v5.0.0-next.50) (2020-10-12)
+
+
+### Bug Fixes
+
+* dynamic tag html attr normalize ([bae4a3d](https://github.com/marko-js/marko/commit/bae4a3d388412e387514ce11416f4e6cbddecd28))
+* no longer use fragments for preserved native els ([22e9322](https://github.com/marko-js/marko/commit/22e9322a7e72b50812ab223f70bf9e68aee2208d))
+* regression serializing empty component data with custom runtimeid ([7ee0cd1](https://github.com/marko-js/marko/commit/7ee0cd1f0aacda8c9b04b583320951ce406a9143))
+* **translator-default:** body only if being preserved incorrectly ([aa1ef05](https://github.com/marko-js/marko/commit/aa1ef05f965df21879f1a6bcca566a2b9851a720))
+* **translator-default:** owner component missing for text nodes ([50b4e97](https://github.com/marko-js/marko/commit/50b4e9746b4fc5158d35ba78110199de4a4e7956))
+
+
+
+
+
 # [5.0.0-next.49](https://github.com/marko-js/marko/compare/v5.0.0-next.48...v5.0.0-next.49) (2020-09-28)
 
 

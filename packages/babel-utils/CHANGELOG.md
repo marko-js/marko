@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.50](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.49...v5.0.0-next.50) (2020-10-12)
+
+
+### Bug Fixes
+
+* dynamic tag html attr normalize ([bae4a3d](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/bae4a3d388412e387514ce11416f4e6cbddecd28))
+
+
+
+
+
 # [5.0.0-next.49](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.48...v5.0.0-next.49) (2020-09-28)
 
 **Note:** Version bump only for package @marko/babel-utils
