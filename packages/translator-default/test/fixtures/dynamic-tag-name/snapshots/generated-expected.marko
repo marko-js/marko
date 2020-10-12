@@ -1,27 +1,27 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-<${input}/>
-<${input.x}/>
-<${input.show ? "div" : null}/>
-<${input.show && "div"}/>
-<${input.large ? "h1" : "h2"}/>
-<${input.showTagA ? tagA : tagB}/>
-<${input.showTagA && tagA}/>
-<${input.showTagA && tagA}>
+<${input} class=["a", "b"] other=input.other/>
+<${input.x} class=["a", "b"] other=input.other/>
+<${input.show ? "div" : null} class=["a", "b"] other=input.other/>
+<${input.show && "div"} class=["a", "b"] other=input.other/>
+<${input.large ? "h1" : "h2"} class=["a", "b"] other=input.other/>
+<${input.showTagA ? tagA : tagB} class=["a", "b"] other=input.other class=["a", "b"] other=input.other/>
+<${input.showTagA && tagA} class=["a", "b"] other=input.other/>
+<${input.showTagA && tagA} class=["a", "b"] other=input.other>
   Body content
 </>
-<${input.tag || tagA}/>
+<${input.tag || tagA} class=["a", "b"] other=input.other/>
 $ const largeHeading = input.isLarge && "h1";
-<${largeHeading || "h2"}/>
-<${global.x = "a" + "b"}/>
-<${"h" + input.level}/>
-<${`h${input.level}`}/>
+<${largeHeading || "h2"} class=["a", "b"] other=input.other/>
+<${global.x = "a" + "b"} class=["a", "b"] other=input.other/>
+<${"h" + input.level} class=["a", "b"] other=input.other/>
+<${`h${input.level}`} class=["a", "b"] other=input.other/>
 $ const tagConstA = "a";
-<${tagConstA}/>
+<${tagConstA} class=["a", "b"] other=input.other/>
 $ const tagConstB = input.show ? "div" : null;
-<${tagConstB}/>
+<${tagConstB} class=["a", "b"] other=input.other/>
 $ let tagLazyAssign;
 $ tagLazyAssign = "a";
-<${tagLazyAssign}/>
+<${tagLazyAssign} class=["a", "b"] other=input.other/>
 $ tagLazyAssign = input.show ? "div" : null;
-<${tagLazyAssign}/>
+<${tagLazyAssign} class=["a", "b"] other=input.other/>

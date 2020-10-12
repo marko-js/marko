@@ -17,7 +17,7 @@ const EMPTY_OBJECT = {};
 /**
  * Translates the html streaming version of a standard html element.
  */
-export default function(path) {
+export default function(path, isNullable) {
   const {
     hub: { file },
     node
@@ -26,7 +26,6 @@ export default function(path) {
     key,
     name,
     body: { body },
-    isNullable,
     properties,
     handlers
   } = node;
