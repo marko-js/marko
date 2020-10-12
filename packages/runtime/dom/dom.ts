@@ -197,12 +197,11 @@ export function render(renderer: Renderer, ...input: UpstreamSignalOrValue[]) {
 }
 
 export function attr(name: string, value: UpstreamSignalOrValue) {
-  const data = createComputation(normalizeAttrValue, value, 1, true);
   const el = walker.currentNode as Element;
   if (el.nodeType !== NodeType.Element) {
     throw new Error("Debug Error");
   }
-  createEffect(_data => setAttr(el, name, _data), data, 1);
+  createEffect(_value => setAttr(el, name, normalizeAttrValue(_value)), value, 1);
 }
 
 export function attrs(
@@ -289,7 +288,7 @@ export function text(value: UpstreamSignalOrValue) {
 }
 
 export function textContent(value: UpstreamSignalOrValue) {
-  prop("textContent", createComputation(normalizeTextData, value, 1, true));
+  prop("textContent", createComputation(normalizeTextContent, value, 1, true));
 }
 
 export function innerHTML(value: UpstreamSignalOrValue) {
@@ -363,5 +362,9 @@ function normalizeAttrValue(value: unknown) {
 }
 
 function normalizeTextData(value: unknown) {
+  return value == null ? "" : value + "";
+}
+
+function normalizeTextContent(value: unknown) {
   return value == null ? "" : value + "";
 }
