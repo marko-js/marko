@@ -30,13 +30,13 @@ module.exports = function render(input, out) {
         out.___parent.___preserve = true;
         out.endElement();
       }
-    } else {
+    } else if (input.renderBody) {
       input.renderBody(out);
     }
   } else {
     out.bf(key, ownerComponent, shouldPreserve);
 
-    if (!isPreserved) {
+    if (!isPreserved && input.renderBody) {
       input.renderBody(out);
     }
 
