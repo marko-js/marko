@@ -460,7 +460,10 @@ function insertIntoBatch<T extends DownstreamSignal>(
   index = findBatchIndex(array, index, object);
 
   if (array[index] !== object) {
-    array.splice(index, 0, object);
+    for (let i = array.length-1; i >= index; i--) {
+      array[i+1] = array[i];
+    }
+    array[index] = object;
   }
 }
 
