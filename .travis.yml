@@ -4,5 +4,5 @@ node_js:
 - "12"
 language: node_js
 install: "npm ci"
-script: "npm run test:ci"
-after_success: "npm run test:codecov"
+script: "npm run ci:test"
+after_success: "npm run ci:codecov"
