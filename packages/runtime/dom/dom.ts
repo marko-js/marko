@@ -39,7 +39,7 @@ export interface Renderer<H extends HydrateFunction = HydrateFunction> {
 
 export let currentFragment: Fragment | undefined;
 export interface ComponentFragment<Input> extends DocumentFragment {
-  rerender: (input: Input) => Promise<void>;
+  rerender: (input: Input) => void;
   destroy: () => void;
 }
 

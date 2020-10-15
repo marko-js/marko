@@ -49,7 +49,7 @@ export default async function renderAndGetMutations(
   try {
     tracker.beginUpdate();
     
-    const instance = await render(firstInput);
+    const instance = render(firstInput);
     container.appendChild(instance);
 
     // const initialHTML = container.innerHTML;
@@ -61,9 +61,9 @@ export default async function renderAndGetMutations(
       } else {
         tracker.beginUpdate();
         if (typeof update === "function") { 
-          await runInBatch(() => update(container));
+          runInBatch(() => update(container));
         } else {
-          await instance.rerender(update);
+          instance.rerender(update);
         }
         tracker.logUpdate(update);
       }

@@ -4,7 +4,6 @@ export {
   UpstreamSignalOrValue,
   createSource as source,
   createComputation as compute,
-  createAsyncComputation as computeAsync,
   createEffect as effect,
   createPropertyComputation as computeProperty,
   createPropertyEffect as propertyEffect,

@@ -63,6 +63,7 @@
     "postinstall": "lerna bootstrap --hoist --no-ci",
     "release": "npm run build && lerna publish",
     "report": "open ./coverage/lcov-report/index.html",
+    "size": "npm run build && minified-size --json ./packages/runtime/dist/dom.esm.js",
     "test": "mocha -r ts-node/register packages/*/test/{*.test.ts,*/*.test.ts}",
     "test:watch": "npm run mocha -- --recursive --watch"
   }
