@@ -1,5 +1,4 @@
-import { currentFragment } from "./dom";
-import { Fragment } from "./fragments";
+import { Fragment, currentFragment } from "./fragments";
 
 let sid = 0;
 let bid = 0;

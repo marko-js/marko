@@ -7,9 +7,9 @@ import {
   get,
   UpstreamSignalOrValue, setSignalValue
 } from "./signals";
-import { Fragment, insertFragmentBefore, removeFragment } from "./fragments";
+import { Fragment, createFragment, currentFragment, insertFragmentBefore, removeFragment } from "./fragments";
 import { reconcile } from "./reconcile";
-import { createFragment, currentFragment, render, Renderer } from "./dom";
+import { render, Renderer } from "./dom";
 import { walkAndGetText } from "./walker";
 
 type ForIterationFragment<T> = Fragment & {

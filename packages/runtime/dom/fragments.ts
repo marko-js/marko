@@ -1,64 +1,57 @@
-import { Computation } from "./signals";
+import { Computation, UpstreamSignalOrValue } from "./signals";
+import { detachedWalk } from "./walker";
+import { Renderer, isDocumentFragment } from "./dom";
 
-export class Fragment {
-  public ___firstRef: Fragment & { ___firstChild: Node };
-  public ___lastRef: Fragment & { ___lastChild: Node };
-  public ___nextNode?: Node;
-  public ___firstChild: Node;
-  public ___lastChild: Node;
-  public ___parentFragment?: Fragment;
-  public ___cachedFragment?: Fragment;
-  public ___dom?: Node;
-  public ___tracked: Set<
+export interface Fragment {
+  ___firstRef: Fragment & { ___firstChild: Node };
+  ___lastRef: Fragment & { ___lastChild: Node };
+  ___nextNode?: Node;
+  ___firstChild: Node;
+  ___lastChild: Node;
+  ___parentFragment?: Fragment;
+  ___dom?: Node;
+  ___tracked: Set<
     Fragment | (Computation<unknown> & { ___cleanup: () => void })
   >;
-  constructor() {
-    this.___tracked = new Set();
-  }
-  public ___cleanup() {
-    for (const tracked of this.___tracked) {
-      tracked.___cleanup();
-    }
-    this.___tracked.clear();
-  }
+  ___cleanup: () => void
 }
 
-// interface Fragmentj {
-//   ___firstRef: Fragment & { ___firstChild: Node };
-//   ___lastRef: Fragment & { ___lastChild: Node };
-//   ___nextNode: Node | undefined;
-//   ___firstChild: Node;
-//   ___lastChild: Node;
-//   ___parentFragment: Fragment | undefined;
-//   ___cachedFragment?: Fragment;
-//   ___dom?: Node;
-//   ___tracked: Set<
-//     Fragment | (Computation<unknown> & { ___cleanup: () => void })
-//   >;
-//   ___cleanup(): () => void
-// }
+export let currentFragment: Fragment | undefined;
 
-// export function createFragment(): Fragmentj {
-//   return {
-//     ___firstRef: undefined,
-//     ___lastRef: undefined,
-//     ___nextNode: undefined,
-//     ___firstChild: undefined,
-//     ___lastChild: undefined,
-//     ___parentFragment: undefined,
-//     ___cachedFragment: undefined,
-//     ___dom: undefined,
-//     ___tracked: new Set(),
-//     ___cleanup: cleanup
-//   }
-// }
+export function createFragment(
+  renderer: Renderer,
+  parentFragment = currentFragment,
+  ...input: UpstreamSignalOrValue[]
+): Fragment {
+  const clone = renderer.___clone();
+  const isFragment = isDocumentFragment(clone);
+  const cachedFragment = currentFragment;
+  const fragment = {
+    ___firstRef: undefined,
+    ___lastRef: undefined,
+    ___nextNode: undefined,
+    ___firstChild: isFragment ? clone.firstChild! : clone,
+    ___lastChild: isFragment ? clone.lastChild! : clone,
+    ___parentFragment: parentFragment,
+    ___dom: clone,
+    ___tracked: new Set(),
+    ___cleanup: cleanup
+  } as any as Fragment;
+  fragment.___firstRef = fragment.___lastRef = fragment;
 
-// function cleanup() {
-//   for (const tracked of this.___tracked) {
-//     tracked.___cleanup();
-//   }
-//   this.___tracked.clear();
-// }
+  currentFragment = fragment;
+  detachedWalk(fragment.___firstChild, renderer, ...input);
+  currentFragment = cachedFragment;
+  
+  return fragment;
+}
+
+function cleanup() {
+  for (const tracked of this.___tracked) {
+    tracked.___cleanup();
+  }
+  this.___tracked.clear();
+}
 
 export function insertFragmentBefore(
   parent: Node & ParentNode | null,

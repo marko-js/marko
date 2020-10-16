@@ -10,7 +10,7 @@ import {
   dynamicKeys,
   runInBatch
 } from "./signals";
-import { Fragment, removeFragment } from "./fragments";
+import { createFragment, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
 import {
   walker,
@@ -37,7 +37,6 @@ export interface Renderer<H extends HydrateFunction = HydrateFunction> {
   ___sourceNode?: Node;
 }
 
-export let currentFragment: Fragment | undefined;
 export interface ComponentFragment<Input> extends DocumentFragment {
   rerender: (input: Input) => void;
   destroy: () => void;
@@ -57,46 +56,23 @@ export function createRenderFn<H extends HydrateFunction>(
     template!,
     walks,
     inputProps,
-    hydrate,
-    (input: Input) => {
-      let container: ComponentFragment<Input> | null = null;
-      let asyncPlaceholder: Text;
+    input => {
+      dynamicKeys(input as any, renderer.___input!);
+      hydrate && hydrate(input)
+    },
+    (input: Input) => runInBatch(() => {
+      const inputSource = createSource(input);
+      const fragment = createFragment(renderer, undefined, inputSource);
+      const container = fragment.___dom as ComponentFragment<Input>;
 
-      return runInBatch(() => {
-        const fragment = beginFragment(renderer);
-        const inputSource = dynamicKeys(
-          createSource(input) as any,
-          renderer.___input!
-        );
-        createEffect(
-          () => {
-            if (container) {
-              asyncPlaceholder.replaceWith(fragment.___dom!);
-            } else {
-              container = fragment.___dom as ComponentFragment<Input>;
-            }
-          },
-          0,
-          1
-        );
-        finishFragment(fragment, renderer, inputSource);
-
-        if (!container) {
-          container = doc.createDocumentFragment() as ComponentFragment<Input>;
-          container.appendChild((asyncPlaceholder = doc.createTextNode("")));
-        }
-
-        container.rerender = (newInput: Input) => {
-          return runInBatch(() => {
-            set(inputSource, newInput);
-          });
-        };
-
-        container.destroy = () => removeFragment(fragment);
-
-        return container;
+      container.rerender = (newInput: Input) => runInBatch(() => {
+        set(inputSource, newInput);
       });
-    }
+
+      container.destroy = () => removeFragment(fragment);
+
+      return container;
+    })
   );
   return renderer;
 }
@@ -150,40 +126,6 @@ function parse(template: string, ensureFragment?: boolean) {
   }
 
   return node as Node & { firstChild: ChildNode; lastChild: ChildNode };
-}
-
-export function createFragment(
-  renderer: Renderer,
-  parentFragment = currentFragment,
-  ...input: UpstreamSignalOrValue[]
-) {
-  const fragment = beginFragment(renderer, parentFragment);
-  finishFragment(fragment, renderer, ...input);
-  return fragment;
-}
-
-function beginFragment(renderer: Renderer, parentFragment = currentFragment) {
-  const fragment = new Fragment();
-  const clone = renderer.___clone();
-  const isFragment = isDocumentFragment(clone);
-
-  fragment.___firstRef = fragment.___lastRef = fragment;
-  fragment.___firstChild = isFragment ? clone.firstChild! : clone;
-  fragment.___lastChild = isFragment ? clone.lastChild! : clone;
-  fragment.___parentFragment = parentFragment;
-  fragment.___cachedFragment = currentFragment;
-  fragment.___dom = clone;
-
-  return (currentFragment = fragment);
-}
-
-function finishFragment(
-  fragment: Fragment,
-  renderer: Renderer,
-  ...input: UpstreamSignalOrValue[]
-) {
-  detachedWalk(fragment.___firstChild, renderer, ...input);
-  currentFragment = fragment.___cachedFragment;
 }
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
