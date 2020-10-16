@@ -7,11 +7,10 @@ let batch: Batch;
 
 export interface Batch {
   ___bid: number;
-  ___signals: Record<string, UpstreamSignal<unknown>>;
-  ___computations: Array<Computation<unknown>>;
+  ___computations: Computation[];
   ___effects: Effect[];
   ___values: Record<string, unknown>;
-  ___pending: Record<string, Promise<unknown>>;
+  ___signals: Record<string, UpstreamSignal<unknown>>;
   ___computationIndex: number;
 }
 
@@ -80,8 +79,8 @@ export type Effect = SignalWithUpstream<undefined> & {
   ___downstream: undefined;
 };
 
-export type Computation<V> = SyncComputation<V> | AsyncComputation<V>;
-type UpstreamSignal<V> = Source<V> | Computation<V>;
+export type Computation<V = unknown> = SyncComputation<V> | AsyncComputation<V>;
+type UpstreamSignal<V = unknown> = Source<V> | Computation<V>;
 export type UpstreamSignalOrValue<V = unknown> = UpstreamSignal<V> | V;
 export type UpstreamRawValue<T> = T extends UpstreamSignal<infer V> ? V : T;
 type UpstreamRawValues<T> = T extends readonly UpstreamSignalOrValue[]
@@ -328,14 +327,10 @@ function isConsumableComputation<V>(
 
 export function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {
   if (signal.___value !== nextValue) {
-    if (batch) {
-      const id = signal.___sid;
-      batch.___values[id] = nextValue;
-      batch.___signals[id] = signal;
-    } else {
-      signal.___value = nextValue;
-    }
+    const id = signal.___sid;
     const downstream = signal.___downstream;
+    batch.___values[id] = nextValue;
+    batch.___signals[id] = signal;
     for (let i = downstream.length - 1; i >= 0; i--) {
       queueDownstream(downstream[i]);
     }
@@ -417,11 +412,10 @@ export function beginBatch() {
   set = setInBatch;
   return batch = ({
     ___bid: ++bid,
-    ___signals: {},
     ___computations: [],
     ___effects: [],
     ___values: {},
-    ___pending: {},
+    ___signals: {},
     ___computationIndex: 0
   });
 }
