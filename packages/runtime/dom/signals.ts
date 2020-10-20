@@ -11,6 +11,7 @@ export interface Batch {
   ___values: Record<string, unknown>;
   ___signals: Record<string, UpstreamSignal<unknown>>;
   ___computationIndex: number;
+  ___executing: boolean;
 }
 
 export const enum SignalTypes {
@@ -187,7 +188,6 @@ export function createComputation<
         ___cleanup: () => void;
       }));
     }
-    
     return computation;
   }
 
@@ -376,7 +376,7 @@ export function dynamicKeys<
 export function get<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
     let id: number;
-    if (batch && batch.___values.hasOwnProperty((id = value.___sid))) {
+    if (batch && batch.___executing && batch.___values.hasOwnProperty((id = value.___sid))) {
       value = batch.___values[id] as T;
     } else {
       value = value.___value!;
@@ -415,7 +415,8 @@ export function beginBatch() {
     ___effects: [],
     ___values: {},
     ___signals: {},
-    ___computationIndex: 0
+    ___computationIndex: 0,
+    ___executing: false
   });
 }
 
@@ -423,6 +424,7 @@ function endBatch(b: Batch) {
   try {
     if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
     set = setInComputation;
+    batch.___executing = true;
     while (batch.___computationIndex < batch.___computations.length) {
       updateComputation(batch.___computations[batch.___computationIndex++]);
     }
