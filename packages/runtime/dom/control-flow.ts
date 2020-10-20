@@ -10,11 +10,11 @@ import {
 import { Fragment, createFragment, currentFragment, insertFragmentBefore, removeFragment } from "./fragments";
 import { reconcile } from "./reconcile";
 import { render, Renderer } from "./dom";
-import { walkAndGetText } from "./walker";
+import { walk, walkAndGetText } from "./walker";
 
 type ForIterationFragment<T> = Fragment & {
   ___itemSignal: Source<T>;
-  ___indexSignal: Source<number>;
+  ___indexSignal?: Source<number> | false;
 };
 
 export function loopOf<T>(
@@ -22,14 +22,17 @@ export function loopOf<T>(
   renderer: Renderer<
     (
       item: UpstreamSignalOrValue<T>,
-      index: UpstreamSignalOrValue<number>,
+      index: UpstreamSignalOrValue<number> | boolean,
       all: typeof array
     ) => void
   >,
-  getKey: (item: T, index: number) => string
+  getKey: (item: T, index: number) => string,
+  hasIndex = false,
+  onlyChild = false
 ) {
   if (isSignal(array)) {
-    const marker = walkAndGetText();
+    const marker = !onlyChild ? walkAndGetText() : null;
+    const parent = onlyChild ? (walk() as Node & ParentNode) : marker!.parentNode!;
     const rootFragment = currentFragment;
     let oldNodes: Map<string, Fragment> = new Map();
     let oldKeys: string[] = [];
@@ -62,7 +65,7 @@ export function loopOf<T>(
           ) as ForIterationFragment<typeof item>;
           if (!previousChildFragment) {
             const itemSignal = createSource(item);
-            const indexSignal = createSource(index);
+            const indexSignal = hasIndex && createSource(index);
             const childFragment = createFragment(
               renderer,
               rootFragment,
@@ -75,7 +78,7 @@ export function loopOf<T>(
             _newNodes.set(key, childFragment);
           } else {
             setSignalValue(previousChildFragment.___itemSignal, item);
-            setSignalValue(previousChildFragment.___indexSignal, index);
+            previousChildFragment.___indexSignal && setSignalValue(previousChildFragment.___indexSignal, index);
             _newNodes.set(key, previousChildFragment);
           }
           index++;
@@ -91,7 +94,7 @@ export function loopOf<T>(
       _newNodes => {
         const newKeys = Array.from(_newNodes.keys());
         reconcile(
-          marker.parentNode!,
+          parent,
           oldKeys,
           oldNodes,
           newKeys,
@@ -124,7 +127,8 @@ export function loopIn<T>(
       value: UpstreamSignalOrValue<T>,
       all: typeof object
     ) => void
-  >
+  >,
+  onlyChild?: boolean
 ) {
   let keyRenderer: Renderer;
   const originalHydrate = renderer.___hydrate;
@@ -143,7 +147,9 @@ export function loopIn<T>(
   loopOf<string>(
     createComputation(_object => Object.keys(_object), object, 1),
     keyRenderer,
-    firstArgAsKey
+    firstArgAsKey,
+    false,
+    onlyChild
   );
 }
 
@@ -151,7 +157,8 @@ export function loopFrom(
   from: UpstreamSignalOrValue<number>,
   to: UpstreamSignalOrValue<number>,
   step: UpstreamSignalOrValue<number>,
-  renderer: Renderer<(i: UpstreamSignalOrValue<number>) => void>
+  renderer: Renderer<(i: UpstreamSignalOrValue<number>) => void>,
+  onlyChild?: boolean
 ) {
   loopOf<number>(
     createComputation(
@@ -168,7 +175,9 @@ export function loopFrom(
       0
     ),
     renderer,
-    firstArgAsKey
+    firstArgAsKey,
+    false,
+    onlyChild
   );
 }
 

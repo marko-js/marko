@@ -42,7 +42,7 @@ export function createFragment(
   currentFragment = fragment;
   detachedWalk(fragment.___firstChild, renderer, ...input);
   currentFragment = cachedFragment;
-  
+
   return fragment;
 }
 
@@ -84,9 +84,9 @@ export function replaceFragment(current: Fragment, replacement: Fragment) {
   removeFragment(current);
 }
 
-export function removeFragment(fragment: Fragment) {
+export function removeFragment(fragment: Fragment, keepNodes?: boolean) {
   const domParent = referenceStart(fragment).parentNode!;
-  withChildren(
+  !keepNodes && withChildren(
     domParent,
     fragment.___firstRef.___firstChild,
     fragment.___lastRef.___lastChild!,

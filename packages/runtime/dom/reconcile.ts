@@ -30,6 +30,13 @@ export function reconcile(
   let oldKey: string | null;
   let newKey: string;
 
+  if (!newKeys.length && !afterReference) {
+    for (i = 0; i < oldKeys.length; i++)
+      removeFragment(oldNodes.get(oldKeys[i])!, true);
+    parent.textContent = "";
+    return;
+  }
+
   // Step 1
   // tslint:disable-next-line: label-position
   outer: {
