@@ -40,7 +40,7 @@ export interface BaseSignal<V> {
   ___root: Fragment;
 }
 
-type ExecChain = ((...args:  unknown[]) => unknown) & { next?: ExecChain };
+type ExecChain = ((...args: unknown[]) => unknown) & { next?: ExecChain };
 
 interface SignalWithDownstream<V> extends BaseSignal<V> {
   ___downstream: DownstreamSignal[];
@@ -54,26 +54,30 @@ interface SignalMultipleUpstream<V> extends BaseSignal<V> {
   ___upstreamSingle: 0;
 }
 
-type SignalWithUpstream<V> = SignalSingleUpstream<V> | SignalMultipleUpstream<V>;
+type SignalWithUpstream<V> =
+  | SignalSingleUpstream<V>
+  | SignalMultipleUpstream<V>;
 
 export type Source<V> = SignalWithDownstream<V> & {
   ___type: SignalTypes.SOURCE;
   ___execFn: undefined;
   ___upstream: undefined;
 };
-export type SyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
-  ___type: SignalTypes.COMPUTATION;
-  ___execFn: (arg: unknown) => V;
-};
+export type SyncComputation<V> = SignalWithUpstream<V> &
+  SignalWithDownstream<V> & {
+    ___type: SignalTypes.COMPUTATION;
+    ___execFn: (arg: unknown) => V;
+  };
 export type ConsumableComputation<V> = SyncComputation<V> & {
   ___execFn: typeof execConsumable;
   ___execStart: ExecChain;
   ___execEnd: ExecChain;
 };
-export type AsyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
-  ___type: SignalTypes.ASYNC_COMPUTATION;
-  ___execFn: (arg: unknown) => Promise<V>;
-};
+export type AsyncComputation<V> = SignalWithUpstream<V> &
+  SignalWithDownstream<V> & {
+    ___type: SignalTypes.ASYNC_COMPUTATION;
+    ___execFn: (arg: unknown) => Promise<V>;
+  };
 export type Effect = SignalWithUpstream<undefined> & {
   ___type: SignalTypes.EFFECT;
   ___execFn: (arg: unknown) => void;
@@ -190,9 +194,11 @@ export function createComputation<
       // owned by a different root fragment need manual cleanup
       // GC is sufficient otherwise
       computation.___cleanup = cleanup;
-      currentFragment!.___tracked.add(computation as (typeof computation & {
-        ___cleanup: () => void;
-      }));
+      currentFragment!.___tracked.add(
+        computation as typeof computation & {
+          ___cleanup: () => void;
+        }
+      );
     }
     return computation;
   }
@@ -210,7 +216,7 @@ function execConsumable<V>(
   while (fn) {
     const next = fn.next;
     if (isEffect && !next) {
-      if (inputValue === this.___value) return undefined as any as V;
+      if (inputValue === this.___value) return (undefined as any) as V;
       else this.___value = inputValue as V;
     }
     inputValue = fn.call(this, inputValue);
@@ -226,14 +232,14 @@ export function createEffect<U>(
   type = SignalTypes.EFFECT
 ) {
   // TODO: will need to allow user-defined cleanup
-  return createComputation(
+  return (createComputation(
     fn,
     upstream,
     upstreamSingle,
     false,
     type,
     true
-  ) as unknown as Effect;
+  ) as unknown) as Effect;
 }
 
 export function createPropertyComputation<
@@ -258,14 +264,14 @@ export function createPropertyEffect<
   P extends string,
   U extends UpstreamSignalOrValue
 >(object: Record<string, unknown>, property: P, upstream: U) {
-  const effect = createComputation(
+  const effect = (createComputation(
     execSetProperty,
     upstream,
     1,
     false,
     SignalTypes.EFFECT,
     true
-  ) as unknown as Effect;
+  ) as unknown) as Effect;
   effect.___execObject = object;
   effect.___execProperty = property;
   return effect;
@@ -370,7 +376,7 @@ export function isSignal<T>(
 }
 
 function isEffectType(type: SignalTypes) {
-  return type === SignalTypes.EFFECT || type === SignalTypes.USER_EFFECT
+  return type === SignalTypes.EFFECT || type === SignalTypes.USER_EFFECT;
 }
 
 export function dynamicKeys<
@@ -387,7 +393,11 @@ export function dynamicKeys<
 export function get<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
     let id: number;
-    if (batch && batch.___executing && batch.___values.hasOwnProperty((id = value.___sid))) {
+    if (
+      batch &&
+      batch.___executing &&
+      batch.___values.hasOwnProperty((id = value.___sid))
+    ) {
       value = batch.___values[id] as T;
     } else {
       value = value.___value!;
@@ -420,7 +430,7 @@ function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
 
 export function beginBatch() {
   set = setInBatch;
-  return batch = ({
+  return (batch = {
     ___bid: ++bid,
     ___computations: [],
     ___effects: [],
@@ -449,7 +459,9 @@ function endBatch(b: Batch) {
   }
 }
 
-export function runInBatch<T extends (...args: any) => any>(fn: T): ReturnType<T> {
+export function runInBatch<T extends (...args: any) => any>(
+  fn: T
+): ReturnType<T> {
   const batch = beginBatch();
   const result = fn();
   endBatch(batch);
@@ -460,14 +472,14 @@ function runEffects(effects: (Effect | UserEffect)[]) {
   let i: number;
   let len = effects.length;
   let userLength = 0;
-  for(i = 0; i < len; i++) {
+  for (i = 0; i < len; i++) {
     const v = effects[i];
     if (v.___type === SignalTypes.USER_EFFECT) {
       effects[userLength++] = v;
     } else execDownstreamSignal(v);
   }
 
-  for(i = 0; i < userLength; i++) {
+  for (i = 0; i < userLength; i++) {
     const v = effects[i];
     if (v.___bid <= bid) {
       v.___bid = bid;
@@ -484,8 +496,8 @@ function insertIntoBatch<T extends DownstreamSignal>(
   index = findBatchIndex(array, index, object);
 
   if (array[index] !== object) {
-    for (let i = array.length-1; i >= index; i--) {
-      array[i+1] = array[i];
+    for (let i = array.length - 1; i >= index; i--) {
+      array[i + 1] = array[i];
     }
     array[index] = object;
   }
@@ -508,4 +520,12 @@ function findBatchIndex<T extends DownstreamSignal>(
   }
 
   return index;
+}
+
+export function tick() {
+  return batch
+    ? new Promise<void>(resolve => {
+        createEffect(resolve, undefined, 1, SignalTypes.USER_EFFECT);
+      })
+    : Promise.resolve();
 }
