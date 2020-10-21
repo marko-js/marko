@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.9](https://github.com/marko-js/marko/compare/v4.23.8...v4.23.9) (2020-10-13)
+
+
+### Bug Fixes
+
+* regression with no-update-body with no renderBody ([5bd753b](https://github.com/marko-js/marko/commit/5bd753b3798315a62ac6a0b44e1a2cffa7797adc))
+
 ### [4.23.8](https://github.com/marko-js/marko/compare/v4.23.7...v4.23.8) (2020-10-09)
 
 

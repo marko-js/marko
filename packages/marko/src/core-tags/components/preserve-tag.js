@@ -9,14 +9,16 @@ module.exports = function render(input, out) {
     out.bf(out.___assignedKey, out.___assignedComponentDef.___component, true);
   }
 
-  if (shouldPreserve) {
-    var componentsContext = getComponentsContext(out);
-    var parentPreserved = componentsContext.___isPreserved;
-    componentsContext.___isPreserved = true;
-    input.renderBody(out);
-    componentsContext.___isPreserved = parentPreserved;
-  } else {
-    input.renderBody(out);
+  if (input.renderBody) {
+    if (shouldPreserve) {
+      var componentsContext = getComponentsContext(out);
+      var parentPreserved = componentsContext.___isPreserved;
+      componentsContext.___isPreserved = true;
+      input.renderBody(out);
+      componentsContext.___isPreserved = parentPreserved;
+    } else {
+      input.renderBody(out);
+    }
   }
 
   if (isComponent) {
