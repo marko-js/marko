@@ -1,4 +1,4 @@
-import { Fragment, currentFragment } from "./fragments";
+import { Fragment, currentFragment, isMarkedDestroyed } from "./fragments";
 
 let sid = 0;
 let bid = 0;
@@ -361,6 +361,7 @@ function updateComputation<V>(computation: Computation<V>) {
 }
 
 function execDownstreamSignal(downstream: DownstreamSignal) {
+  if (isMarkedDestroyed(downstream.___root)) return;
   const upstream = downstream.___upstream;
   return downstream.___execFn(
     downstream.___upstreamSingle

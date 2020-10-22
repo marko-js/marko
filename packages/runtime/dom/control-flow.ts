@@ -36,6 +36,7 @@ export function loopOf<T>(
     const rootFragment = currentFragment;
     let oldNodes: Map<string, Fragment> = new Map();
     let oldKeys: string[] = [];
+    let skipReconcile = false;
 
     if (currentFragment!.___firstChild === marker) {
       setRefGetter(
@@ -55,15 +56,19 @@ export function loopOf<T>(
 
     const newNodes = createComputation(
       _array => {
-        let index = 0;
         const _newNodes: Map<string, Fragment> = new Map();
+        let newItems = 0;
+        let moved = false;
 
-        for (const item of _array) {
+        for (let index = 0, len = _array.length; index < len; index++) {
+          const item = _array[index];
           const key = getKey ? getKey(item, index) : "" + index;
           const previousChildFragment = oldNodes.get(
             key
           ) as ForIterationFragment<typeof item>;
+          moved = moved || (key !== oldKeys[index]);
           if (!previousChildFragment) {
+            newItems++;
             const itemSignal = createSource(item);
             const indexSignal = hasIndex && createSource(index);
             const childFragment = createFragment(
@@ -81,8 +86,14 @@ export function loopOf<T>(
             previousChildFragment.___indexSignal && setSignalValue(previousChildFragment.___indexSignal, index);
             _newNodes.set(key, previousChildFragment);
           }
-          index++;
         }
+        const removals = _newNodes.size - oldNodes.size - newItems < 0;
+        if (removals) {
+          for (const k of oldNodes.keys()) {
+            if (!_newNodes.has(k)) oldNodes.get(k)!.___markedDestroyed = true;
+          }
+        }
+        skipReconcile = !newItems && !removals && !moved;
 
         return _newNodes;
       },
@@ -92,6 +103,7 @@ export function loopOf<T>(
 
     createEffect(
       _newNodes => {
+        if (skipReconcile) return;
         const newKeys = Array.from(_newNodes.keys());
         reconcile(
           parent,
@@ -192,10 +204,13 @@ export function conditional(
     const trackFirstRef = rootFragment.___firstRef.___firstChild === marker;
     const trackLastRef = rootFragment.___lastRef.___lastChild === marker;
 
+    let frag: Fragment;
     const fragmentSignal = createComputation(
       // TODO: hoist out this function and compare benchmarks
-      _renderer =>
-        _renderer && createFragment(_renderer, rootFragment, ...input),
+      _renderer => {
+        if (!_renderer && frag) frag.___markedDestroyed = true;
+        return _renderer && (frag = createFragment(_renderer, rootFragment, ...input))
+      },
       renderer,
       1
     );

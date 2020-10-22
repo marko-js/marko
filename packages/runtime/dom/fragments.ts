@@ -13,7 +13,8 @@ export interface Fragment {
   ___tracked: Set<
     Fragment | (Computation<unknown> & { ___cleanup: () => void })
   >;
-  ___cleanup: () => void
+  ___markedDestroyed: boolean;
+  ___cleanup: () => void;
 }
 
 export let currentFragment: Fragment | undefined;
@@ -26,7 +27,7 @@ export function createFragment(
   const clone = renderer.___clone();
   const isFragment = isDocumentFragment(clone);
   const cachedFragment = currentFragment;
-  const fragment = {
+  const fragment = ({
     ___firstRef: undefined,
     ___lastRef: undefined,
     ___nextNode: undefined,
@@ -35,8 +36,9 @@ export function createFragment(
     ___parentFragment: parentFragment,
     ___dom: clone,
     ___tracked: new Set(),
+    ___markedDestroyed: false,
     ___cleanup: cleanup
-  } as any as Fragment;
+  } as any) as Fragment;
   fragment.___firstRef = fragment.___lastRef = fragment;
 
   currentFragment = fragment;
@@ -54,7 +56,7 @@ function cleanup() {
 }
 
 export function insertFragmentBefore(
-  parent: Node & ParentNode | null,
+  parent: (Node & ParentNode) | null,
   fragment: Fragment,
   nextSibling: Node
 ): void;
@@ -64,7 +66,7 @@ export function insertFragmentBefore(
   nextSibling: Node | null
 ): void;
 export function insertFragmentBefore(
-  parent: Node & ParentNode | null,
+  parent: (Node & ParentNode) | null,
   fragment: Fragment,
   nextSibling: Node | null
 ) {
@@ -86,13 +88,14 @@ export function replaceFragment(current: Fragment, replacement: Fragment) {
 
 export function removeFragment(fragment: Fragment, keepNodes?: boolean) {
   const domParent = referenceStart(fragment).parentNode!;
-  !keepNodes && withChildren(
-    domParent,
-    fragment.___firstRef.___firstChild,
-    fragment.___lastRef.___lastChild!,
-    null,
-    domParent.removeChild
-  );
+  !keepNodes &&
+    withChildren(
+      domParent,
+      fragment.___firstRef.___firstChild,
+      fragment.___lastRef.___lastChild!,
+      null,
+      domParent.removeChild
+    );
   fragment.___cleanup();
   if (fragment.___parentFragment) {
     fragment.___parentFragment.___tracked.delete(fragment);
@@ -122,4 +125,9 @@ export function withChildren(
     }
     start = next!;
   }
+}
+
+export function isMarkedDestroyed(f: Fragment | undefined) {
+  while(f && !f.___markedDestroyed) f = f.___parentFragment;
+  return f && f.___markedDestroyed;
 }
