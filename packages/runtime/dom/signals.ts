@@ -1,4 +1,4 @@
-import { Fragment, currentFragment, isMarkedDestroyed } from "./fragments";
+import { Fragment, currentFragment } from "./fragments";
 
 let sid = 0;
 let bid = 0;
@@ -11,7 +11,7 @@ export interface Batch {
   ___values: Record<string, unknown>;
   ___signals: Record<string, UpstreamSignal<unknown>>;
   ___computationIndex: number;
-  ___executing: boolean;
+  ___fragments: Map<Fragment, boolean> | undefined;
 }
 
 export const enum SignalTypes {
@@ -78,7 +78,7 @@ export type AsyncComputation<V> = SignalWithUpstream<V> &
     ___type: SignalTypes.ASYNC_COMPUTATION;
     ___execFn: (arg: unknown) => Promise<V>;
   };
-export type Effect = SignalWithUpstream<undefined> & {
+export type InternalEffect = SignalWithUpstream<undefined> & {
   ___type: SignalTypes.EFFECT;
   ___execFn: (arg: unknown) => void;
   ___downstream: undefined;
@@ -90,13 +90,14 @@ export type UserEffect = SignalWithUpstream<undefined> & {
 };
 
 export type Computation<V = unknown> = SyncComputation<V> | AsyncComputation<V>;
+export type Effect = InternalEffect | UserEffect;
 type UpstreamSignal<V = unknown> = Source<V> | Computation<V>;
 export type UpstreamSignalOrValue<V = unknown> = UpstreamSignal<V> | V;
 export type UpstreamRawValue<T> = T extends UpstreamSignal<infer V> ? V : T;
 type UpstreamRawValues<T> = T extends readonly UpstreamSignalOrValue[]
   ? { [I in keyof T]: UpstreamRawValue<T[I]> }
   : UpstreamRawValue<T>;
-type DownstreamSignal = Computation<unknown> | Effect | UserEffect;
+type DownstreamSignal = Computation<unknown> | Effect;
 
 function createSignal(type: SignalTypes): BaseSignal<unknown> {
   return {
@@ -212,7 +213,7 @@ function execConsumable<V>(
 ): V {
   let fn: ExecChain | undefined = this.___execStart;
   let inputValue: unknown = originalInput;
-  let isEffect = isEffectType((this as any).___type);
+  let isEffect = isEffectType(this.___type);
   while (fn) {
     const next = fn.next;
     if (isEffect && !next) {
@@ -357,17 +358,26 @@ function queueDownstream(downstream: DownstreamSignal) {
 }
 
 function updateComputation<V>(computation: Computation<V>) {
+  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, computation.___root)) return;
   setSignalValue(computation, execDownstreamSignal(computation));
 }
 
 function execDownstreamSignal(downstream: DownstreamSignal) {
-  if (isMarkedDestroyed(downstream.___root)) return;
   const upstream = downstream.___upstream;
   return downstream.___execFn(
     downstream.___upstreamSingle
-      ? get(upstream)
-      : (upstream as UpstreamSignalOrValue[]).map(get)
+      ? getInBatch(upstream)
+      : (upstream as UpstreamSignalOrValue[]).map(getInBatch)
   );
+}
+
+function isMarkedDestroyed(frags: Map<Fragment, boolean>, f: Fragment): boolean {
+  let destroyed = frags.get(f);
+  if (destroyed === undefined) {
+    destroyed = !!f.___parentFragment && isMarkedDestroyed(frags, f.___parentFragment);
+    frags.set(f, destroyed)
+  }
+  return destroyed;
 }
 
 export function isSignal<T>(
@@ -393,16 +403,17 @@ export function dynamicKeys<
 
 export function get<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
+    value = value.___value!;
+  }
+  return value;
+}
+
+function getInBatch<T>(value: UpstreamSignalOrValue<T>): T {
+  if (isSignal(value)) {
     let id: number;
-    if (
-      batch &&
-      batch.___executing &&
-      batch.___values.hasOwnProperty((id = value.___sid))
-    ) {
+    if (batch.___values.hasOwnProperty((id = value.___sid))) {
       value = batch.___values[id] as T;
-    } else {
-      value = value.___value!;
-    }
+    } else value = value.___value!;
   }
   return value;
 }
@@ -438,7 +449,7 @@ export function beginBatch() {
     ___values: {},
     ___signals: {},
     ___computationIndex: 0,
-    ___executing: false
+    ___fragments: undefined
   });
 }
 
@@ -446,7 +457,6 @@ function endBatch(b: Batch) {
   try {
     if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
     set = setInComputation;
-    batch.___executing = true;
     while (batch.___computationIndex < batch.___computations.length) {
       updateComputation(batch.___computations[batch.___computationIndex++]);
     }
@@ -469,7 +479,12 @@ export function runInBatch<T extends (...args: any) => any>(
   return result;
 }
 
-function runEffects(effects: (Effect | UserEffect)[]) {
+function runEffect(effect: Effect) {
+  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, effect.___root)) return;
+  execDownstreamSignal(effect);
+}
+
+function runEffects(effects: Effect[]) {
   let i: number;
   let len = effects.length;
   let userLength = 0;
@@ -477,14 +492,14 @@ function runEffects(effects: (Effect | UserEffect)[]) {
     const v = effects[i];
     if (v.___type === SignalTypes.USER_EFFECT) {
       effects[userLength++] = v;
-    } else execDownstreamSignal(v);
+    } else runEffect(v);
   }
 
   for (i = 0; i < userLength; i++) {
     const v = effects[i];
     if (v.___bid <= bid) {
       v.___bid = bid;
-      execDownstreamSignal(v);
+      runEffect(v);
     }
   }
 }
@@ -521,6 +536,11 @@ function findBatchIndex<T extends DownstreamSignal>(
   }
 
   return index;
+}
+
+export function markFragmentDestroyed(f: Fragment) {
+  if (!batch.___fragments) batch.___fragments = new Map<Fragment, boolean>();
+  batch.___fragments.set(f, true);
 }
 
 export function tick() {

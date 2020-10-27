@@ -32,7 +32,7 @@ export function reconcile(
 
   if (!newKeys.length && !afterReference) {
     for (i = 0; i < oldKeys.length; i++)
-      removeFragment(oldNodes.get(oldKeys[i])!, true);
+      oldNodes.get(oldKeys[i])!.___cleanup(true);
     parent.textContent = "";
     return;
   }

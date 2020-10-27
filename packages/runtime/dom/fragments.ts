@@ -13,8 +13,7 @@ export interface Fragment {
   ___tracked: Set<
     Fragment | (Computation<unknown> & { ___cleanup: () => void })
   >;
-  ___markedDestroyed: boolean;
-  ___cleanup: () => void;
+  ___cleanup: (toplevel?: boolean) => void;
 }
 
 export let currentFragment: Fragment | undefined;
@@ -36,7 +35,6 @@ export function createFragment(
     ___parentFragment: parentFragment,
     ___dom: clone,
     ___tracked: new Set(),
-    ___markedDestroyed: false,
     ___cleanup: cleanup
   } as any) as Fragment;
   fragment.___firstRef = fragment.___lastRef = fragment;
@@ -48,11 +46,13 @@ export function createFragment(
   return fragment;
 }
 
-function cleanup() {
+function cleanup(toplevel = false) {
+  if (toplevel && this.___parentFragment) {
+    this.___parentFragment.___tracked.delete(this);
+  }
   for (const tracked of this.___tracked) {
     tracked.___cleanup();
   }
-  this.___tracked.clear();
 }
 
 export function insertFragmentBefore(
@@ -86,9 +86,8 @@ export function replaceFragment(current: Fragment, replacement: Fragment) {
   removeFragment(current);
 }
 
-export function removeFragment(fragment: Fragment, keepNodes?: boolean) {
+export function removeFragment(fragment: Fragment) {
   const domParent = referenceStart(fragment).parentNode!;
-  !keepNodes &&
     withChildren(
       domParent,
       fragment.___firstRef.___firstChild,
@@ -96,10 +95,7 @@ export function removeFragment(fragment: Fragment, keepNodes?: boolean) {
       null,
       domParent.removeChild
     );
-  fragment.___cleanup();
-  if (fragment.___parentFragment) {
-    fragment.___parentFragment.___tracked.delete(fragment);
-  }
+  fragment.___cleanup(true);
 }
 
 export function referenceStart(fragment: Fragment) {
@@ -125,9 +121,4 @@ export function withChildren(
     }
     start = next!;
   }
-}
-
-export function isMarkedDestroyed(f: Fragment | undefined) {
-  while(f && !f.___markedDestroyed) f = f.___parentFragment;
-  return f && f.___markedDestroyed;
 }

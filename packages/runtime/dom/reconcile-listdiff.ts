@@ -15,17 +15,18 @@ export function reconcile(
   newNodes: Map<string, Fragment>,
   afterReference: Node | null
 ): void {
-  const aIdx = new Map();
-  const bIdx = new Map();
   let i: number;
   let j: number;
 
   if (!newKeys.length && !afterReference) {
     for (i = 0; i < oldKeys.length; i++)
-      removeFragment(oldNodes.get(oldKeys[i])!, true);
+      oldNodes.get(oldKeys[i])!.___cleanup(true);
     parent.textContent = "";
     return;
   }
+
+  const aIdx = new Map();
+  const bIdx = new Map();
 
   // Create a mapping from keys to their position in the old list
   for (i = 0; i < oldKeys.length; i++) {
