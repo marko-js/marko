@@ -10,7 +10,8 @@ export {
   dynamicKeys,
   get,
   set,
-  runInBatch
+  runInBatch,
+  tick
 } from "./signals";
 
 export {

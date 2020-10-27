@@ -11,13 +11,15 @@ export interface Batch {
   ___values: Record<string, unknown>;
   ___signals: Record<string, UpstreamSignal<unknown>>;
   ___computationIndex: number;
+  ___fragments: Map<Fragment, boolean> | undefined;
 }
 
 export const enum SignalTypes {
   SOURCE,
   COMPUTATION,
   ASYNC_COMPUTATION,
-  EFFECT
+  EFFECT,
+  USER_EFFECT
 }
 
 export interface BaseSignal<V> {
@@ -38,7 +40,7 @@ export interface BaseSignal<V> {
   ___root: Fragment;
 }
 
-type ExecChain = ((...args:  unknown[]) => unknown) & { next?: ExecChain };
+type ExecChain = ((...args: unknown[]) => unknown) & { next?: ExecChain };
 
 interface SignalWithDownstream<V> extends BaseSignal<V> {
   ___downstream: DownstreamSignal[];
@@ -52,33 +54,43 @@ interface SignalMultipleUpstream<V> extends BaseSignal<V> {
   ___upstreamSingle: 0;
 }
 
-type SignalWithUpstream<V> = SignalSingleUpstream<V> | SignalMultipleUpstream<V>;
+type SignalWithUpstream<V> =
+  | SignalSingleUpstream<V>
+  | SignalMultipleUpstream<V>;
 
 export type Source<V> = SignalWithDownstream<V> & {
   ___type: SignalTypes.SOURCE;
   ___execFn: undefined;
   ___upstream: undefined;
 };
-export type SyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
-  ___type: SignalTypes.COMPUTATION;
-  ___execFn: (arg: unknown) => V;
-};
+export type SyncComputation<V> = SignalWithUpstream<V> &
+  SignalWithDownstream<V> & {
+    ___type: SignalTypes.COMPUTATION;
+    ___execFn: (arg: unknown) => V;
+  };
 export type ConsumableComputation<V> = SyncComputation<V> & {
   ___execFn: typeof execConsumable;
   ___execStart: ExecChain;
   ___execEnd: ExecChain;
 };
-export type AsyncComputation<V> = SignalWithUpstream<V> & SignalWithDownstream<V> & {
-  ___type: SignalTypes.ASYNC_COMPUTATION;
-  ___execFn: (arg: unknown) => Promise<V>;
-};
-export type Effect = SignalWithUpstream<undefined> & {
+export type AsyncComputation<V> = SignalWithUpstream<V> &
+  SignalWithDownstream<V> & {
+    ___type: SignalTypes.ASYNC_COMPUTATION;
+    ___execFn: (arg: unknown) => Promise<V>;
+  };
+export type InternalEffect = SignalWithUpstream<undefined> & {
   ___type: SignalTypes.EFFECT;
+  ___execFn: (arg: unknown) => void;
+  ___downstream: undefined;
+};
+export type UserEffect = SignalWithUpstream<undefined> & {
+  ___type: SignalTypes.USER_EFFECT;
   ___execFn: (arg: unknown) => void;
   ___downstream: undefined;
 };
 
 export type Computation<V = unknown> = SyncComputation<V> | AsyncComputation<V>;
+export type Effect = InternalEffect | UserEffect;
 type UpstreamSignal<V = unknown> = Source<V> | Computation<V>;
 export type UpstreamSignalOrValue<V = unknown> = UpstreamSignal<V> | V;
 export type UpstreamRawValue<T> = T extends UpstreamSignal<infer V> ? V : T;
@@ -95,7 +107,7 @@ function createSignal(type: SignalTypes): BaseSignal<unknown> {
     ___value: undefined,
     ___upstream: undefined,
     ___upstreamSingle: 1,
-    ___downstream: type === SignalTypes.EFFECT ? undefined : [],
+    ___downstream: isEffectType(type) ? undefined : [],
     ___execFn: undefined,
     ___execObject: undefined,
     ___execProperty: undefined,
@@ -131,7 +143,7 @@ export function createComputation<
     if (isSignal(upstream)) {
       if (isConsumableComputation(upstream)) {
         if (!consumable) {
-          if (type === SignalTypes.EFFECT) {
+          if (isEffectType(type)) {
             batch.___effects.push((upstream as unknown) as Effect);
           } else {
             batch.___computations.push(upstream);
@@ -171,7 +183,7 @@ export function createComputation<
       computation.___execStart = computation.___execEnd = fn;
     } else {
       computation.___execFn = fn;
-      if (type === SignalTypes.EFFECT) {
+      if (isEffectType(type)) {
         batch.___effects.push((computation as unknown) as Effect);
       } else {
         batch.___computations.push(computation);
@@ -183,11 +195,12 @@ export function createComputation<
       // owned by a different root fragment need manual cleanup
       // GC is sufficient otherwise
       computation.___cleanup = cleanup;
-      currentFragment!.___tracked.add(computation as (typeof computation & {
-        ___cleanup: () => void;
-      }));
+      currentFragment!.___tracked.add(
+        computation as typeof computation & {
+          ___cleanup: () => void;
+        }
+      );
     }
-    
     return computation;
   }
 
@@ -200,11 +213,11 @@ function execConsumable<V>(
 ): V {
   let fn: ExecChain | undefined = this.___execStart;
   let inputValue: unknown = originalInput;
-  let isEffect = (this as any).___type === SignalTypes.EFFECT;
+  let isEffect = isEffectType(this.___type);
   while (fn) {
     const next = fn.next;
     if (isEffect && !next) {
-      if (inputValue === this.___value) return undefined as any as V;
+      if (inputValue === this.___value) return (undefined as any) as V;
       else this.___value = inputValue as V;
     }
     inputValue = fn.call(this, inputValue);
@@ -216,17 +229,18 @@ function execConsumable<V>(
 export function createEffect<U>(
   fn: (arg: UpstreamRawValues<U>) => void,
   upstream: U,
-  upstreamSingle: 0 | 1
+  upstreamSingle: 0 | 1,
+  type = SignalTypes.EFFECT
 ) {
   // TODO: will need to allow user-defined cleanup
-  return createComputation(
+  return (createComputation(
     fn,
     upstream,
     upstreamSingle,
     false,
-    SignalTypes.EFFECT,
+    type,
     true
-  ) as unknown as Effect;
+  ) as unknown) as Effect;
 }
 
 export function createPropertyComputation<
@@ -251,14 +265,14 @@ export function createPropertyEffect<
   P extends string,
   U extends UpstreamSignalOrValue
 >(object: Record<string, unknown>, property: P, upstream: U) {
-  const effect = createComputation(
+  const effect = (createComputation(
     execSetProperty,
     upstream,
     1,
     false,
     SignalTypes.EFFECT,
     true
-  ) as unknown as Effect;
+  ) as unknown) as Effect;
   effect.___execObject = object;
   effect.___execProperty = property;
   return effect;
@@ -337,13 +351,14 @@ export function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {
 }
 
 function queueDownstream(downstream: DownstreamSignal) {
-  const isEffect = downstream.___type === SignalTypes.EFFECT;
+  const isEffect = isEffectType(downstream.___type);
   const batchTarget = isEffect ? batch.___effects : batch.___computations;
   const batchIndex = isEffect ? 0 : batch.___computationIndex;
   insertIntoBatch(batchTarget, batchIndex, downstream);
 }
 
 function updateComputation<V>(computation: Computation<V>) {
+  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, computation.___root)) return;
   setSignalValue(computation, execDownstreamSignal(computation));
 }
 
@@ -351,15 +366,28 @@ function execDownstreamSignal(downstream: DownstreamSignal) {
   const upstream = downstream.___upstream;
   return downstream.___execFn(
     downstream.___upstreamSingle
-      ? get(upstream)
-      : (upstream as UpstreamSignalOrValue[]).map(get)
+      ? getInBatch(upstream)
+      : (upstream as UpstreamSignalOrValue[]).map(getInBatch)
   );
+}
+
+function isMarkedDestroyed(frags: Map<Fragment, boolean>, f: Fragment): boolean {
+  let destroyed = frags.get(f);
+  if (destroyed === undefined) {
+    destroyed = !!f.___parentFragment && isMarkedDestroyed(frags, f.___parentFragment);
+    frags.set(f, destroyed)
+  }
+  return destroyed;
 }
 
 export function isSignal<T>(
   signalOrValue: UpstreamSignalOrValue<T>
 ): signalOrValue is UpstreamSignal<T> {
   return signalOrValue && (signalOrValue as UpstreamSignal<T>).___type >= 0;
+}
+
+function isEffectType(type: SignalTypes) {
+  return type === SignalTypes.EFFECT || type === SignalTypes.USER_EFFECT;
 }
 
 export function dynamicKeys<
@@ -375,12 +403,17 @@ export function dynamicKeys<
 
 export function get<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
+    value = value.___value!;
+  }
+  return value;
+}
+
+function getInBatch<T>(value: UpstreamSignalOrValue<T>): T {
+  if (isSignal(value)) {
     let id: number;
-    if (batch && batch.___values.hasOwnProperty((id = value.___sid))) {
+    if (batch.___values.hasOwnProperty((id = value.___sid))) {
       value = batch.___values[id] as T;
-    } else {
-      value = value.___value!;
-    }
+    } else value = value.___value!;
   }
   return value;
 }
@@ -409,13 +442,14 @@ function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
 
 export function beginBatch() {
   set = setInBatch;
-  return batch = ({
+  return (batch = {
     ___bid: ++bid,
     ___computations: [],
     ___effects: [],
     ___values: {},
     ___signals: {},
-    ___computationIndex: 0
+    ___computationIndex: 0,
+    ___fragments: undefined
   });
 }
 
@@ -429,20 +463,45 @@ function endBatch(b: Batch) {
     for (const id in batch.___signals) {
       batch.___signals[id].___value = batch.___values[id];
     }
-    for (const _effect of batch.___effects) {
-      execDownstreamSignal(_effect);
-    }
+    runEffects(batch.___effects);
   } finally {
     set = setAndBeginBatch;
     batch = undefined as any;
   }
 }
 
-export function runInBatch<T extends (...args: any) => any>(fn: T): ReturnType<T> {
+export function runInBatch<T extends (...args: any) => any>(
+  fn: T
+): ReturnType<T> {
   const batch = beginBatch();
   const result = fn();
   endBatch(batch);
   return result;
+}
+
+function runEffect(effect: Effect) {
+  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, effect.___root)) return;
+  execDownstreamSignal(effect);
+}
+
+function runEffects(effects: Effect[]) {
+  let i: number;
+  let len = effects.length;
+  let userLength = 0;
+  for (i = 0; i < len; i++) {
+    const v = effects[i];
+    if (v.___type === SignalTypes.USER_EFFECT) {
+      effects[userLength++] = v;
+    } else runEffect(v);
+  }
+
+  for (i = 0; i < userLength; i++) {
+    const v = effects[i];
+    if (v.___bid <= bid) {
+      v.___bid = bid;
+      runEffect(v);
+    }
+  }
 }
 
 function insertIntoBatch<T extends DownstreamSignal>(
@@ -453,8 +512,8 @@ function insertIntoBatch<T extends DownstreamSignal>(
   index = findBatchIndex(array, index, object);
 
   if (array[index] !== object) {
-    for (let i = array.length-1; i >= index; i--) {
-      array[i+1] = array[i];
+    for (let i = array.length - 1; i >= index; i--) {
+      array[i + 1] = array[i];
     }
     array[index] = object;
   }
@@ -477,4 +536,17 @@ function findBatchIndex<T extends DownstreamSignal>(
   }
 
   return index;
+}
+
+export function markFragmentDestroyed(f: Fragment) {
+  if (!batch.___fragments) batch.___fragments = new Map<Fragment, boolean>();
+  batch.___fragments.set(f, true);
+}
+
+export function tick() {
+  return batch
+    ? new Promise<void>(resolve => {
+        createEffect(resolve, undefined, 1, SignalTypes.USER_EFFECT);
+      })
+    : Promise.resolve();
 }
