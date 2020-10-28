@@ -31,7 +31,6 @@
     "chai": "^4.2.0",
     "codecov": "^3.7.2",
     "cross-env": "^7.0.2",
-    "dot-json": "^1.2.1",
     "eslint": "^7.9.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",

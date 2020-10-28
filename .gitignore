@@ -2,6 +2,8 @@
 *.marko.js
 *actual*
 dist
+debug
+types
 
 ### Node ###
 # Logs

@@ -1,4 +1,4 @@
-import { html, register, createRenderFn } from "../../../../dom/index";
+import { html, register, createRenderFn } from "../../../../src/dom/index";
 import { over, after } from "../../utils/walks";
 
 export const inputs = [

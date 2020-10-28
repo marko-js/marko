@@ -1,4 +1,4 @@
-import { tryPlaceholder, write, fork } from "../../../../html/index";
+import { tryPlaceholder, write, fork } from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
 
 const renderer = () => {

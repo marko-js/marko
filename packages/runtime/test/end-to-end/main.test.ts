@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import createBrowser from "jsdom-context-require";
-import { createRenderer } from "../../html/index";
-import reorderRuntime from "../../html/reorder-runtime";
+import { createRenderer } from "../../src/html/index";
+import reorderRuntime from "../../src/html/reorder-runtime";
 import { Writable } from "stream";
 import assert from "assert";
 import createTrackMutations from "../dom/utils/track-mutations";
@@ -97,8 +97,8 @@ describe.skip("E2E", function() {
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
           const { createRenderFn } = browser.require(
-            "../../dom/index"
-          ) as typeof import("../../dom/index");
+            "../../src/dom/index"
+          ) as typeof import("../../src/dom/index");
           const browserTest = browser.require(browserFile);
           const render = createRenderFn(browserTest.default, browserTest.html);
           const container = Object.assign(document.createElement("div"), {

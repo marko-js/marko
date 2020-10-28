@@ -1,4 +1,4 @@
-import { tryCatch, write, fork } from "../../../../html/index";
+import { tryCatch, write, fork } from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
 
 const renderer = () => {

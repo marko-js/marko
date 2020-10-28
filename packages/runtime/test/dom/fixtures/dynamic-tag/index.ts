@@ -6,9 +6,9 @@ import {
   render,
   createRenderer,
   createRenderFn
-} from "../../../../dom/index";
+} from "../../../../src/dom/index";
 import { get, over, inside, replace } from "../../utils/walks";
-import { Renderer } from "../../../../dom/dom";
+import { Renderer } from "../../../../src/dom/dom";
 
 export const inputs = [
   {

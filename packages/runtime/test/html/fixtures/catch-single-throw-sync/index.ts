@@ -1,4 +1,4 @@
-import { tryCatch, write } from "../../../../html/index";
+import { tryCatch, write } from "../../../../src/html/index";
 
 const renderer = () => {
   write("a");

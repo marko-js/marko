@@ -6,7 +6,7 @@ import {
   register,
   createRenderer,
   createRenderFn
-} from "../../../../dom/index";
+} from "../../../../src/dom/index";
 import { next, over, after, get } from "../../utils/walks";
 
 export const inputs = [

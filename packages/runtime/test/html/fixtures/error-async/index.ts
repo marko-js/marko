@@ -1,4 +1,4 @@
-import { write, fork } from "../../../../html/index";
+import { write, fork } from "../../../../src/html/index";
 import { rejectAfter } from "../../../utils/resolve";
 
 const renderer = () => {

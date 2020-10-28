@@ -1,4 +1,4 @@
-import { write } from "../../../../html/index";
+import { write } from "../../../../src/html/index";
 
 const renderer = () => {
   write("a");

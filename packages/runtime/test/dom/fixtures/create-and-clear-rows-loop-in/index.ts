@@ -4,7 +4,7 @@ import {
   register,
   createRenderer,
   createRenderFn
-} from "../../../../dom/index";
+} from "../../../../src/dom/index";
 import { over, inside, get } from "../../utils/walks";
 
 export const inputs = [

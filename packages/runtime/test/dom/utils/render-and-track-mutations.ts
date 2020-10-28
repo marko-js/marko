@@ -17,8 +17,8 @@ const {
   createRenderFn,
   runInBatch
 } = browser.require(
-  "../../../dom/index"
-) as typeof import("../../../dom/index");
+  "../../../src/dom/index"
+) as typeof import("../../../src/dom/index");
 
 interface Test {
   wait?: number;

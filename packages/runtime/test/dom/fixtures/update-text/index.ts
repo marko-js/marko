@@ -1,4 +1,4 @@
-import { createRenderFn, register, text } from "../../../../dom/index";
+import { createRenderFn, register, text } from "../../../../src/dom/index";
 import { after, over } from "../../utils/walks";
 
 export const inputs = [

@@ -1,4 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["common/**/*.ts", "dom/**/*.ts", "html/**/*.ts", "test/**/*.ts"]
+  "compilerOptions": {
+    "rootDir": "./src/",
+    "outDir": "./types/",
+    "emitDeclarationOnly": true
+  },
+  "include": ["src/**/*.ts"]
 }

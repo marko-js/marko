@@ -20,13 +20,10 @@
     "url": "https://github.com/PROJECT_ORG/PROJECT_NAME"
   },
   "scripts": {
-    "build": "rollup -c ./rollup.config.js --sourcemap",
-    "prepack": "ENTRY=main:npm npm run set-entry",
-    "postpack": "ENTRY=main:dev npm run set-entry",
+    "build": "rollup -c ./rollup.config.js --sourcemap && tsc",
     "format": "prettier \"**/*.{json,md,js,ts}\" --write",
     "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '{common,dom,html,test}'",
     "prepublishOnly": "npm run build",
-    "set-entry": "dot-json dom/package.json main $\\(dot-json package.json $ENTRY\\) && dot-json html/package.json main $\\(dot-json package.json $ENTRY\\)",
     "size": "npm run build && minified-size --json ./dist/dom.esm.js",
     "test": "mocha -r ts-node/register --timeout 5000 -r source-map-support/register \"test/*/main.test.ts\"",
     "test:inspect": "npm test -- --inspect-brk"

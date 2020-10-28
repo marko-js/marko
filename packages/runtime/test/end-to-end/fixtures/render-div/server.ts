@@ -1,4 +1,4 @@
-import { write } from "../../../../html/index";
+import { write } from "../../../../src/html/index";
 import { serverRegister } from "../../../../common/server-registry";
 
 export const input = { start: 10 };

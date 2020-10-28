@@ -1,4 +1,4 @@
-import { WalkCodes } from "../../../dom/walker";
+import { WalkCodes } from "../../../src/dom/walker";
 
 export const get = String.fromCharCode(WalkCodes.Get);
 export const before = String.fromCharCode(WalkCodes.Before);

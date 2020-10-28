@@ -1,8 +1,0 @@
-{
-  "main": "../dist/html.cjs.js",
-  "main:dev": "./index.ts",
-  "main:npm": "../dist/html.cjs.js",
-  "jsnext": "../dist/html.esm.js",
-  "module": "../dist/html.esm.js",
-  "types": "../dist/html/index.d.ts"
-}

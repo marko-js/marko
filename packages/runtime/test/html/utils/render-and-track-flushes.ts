@@ -1,8 +1,8 @@
 import { JSDOM } from "jsdom";
 import { Writable } from "stream";
 import format from "pretty-format";
-import { createRenderer } from "../../../html/index";
-import reorderRuntime from "../../../html/reorder-runtime";
+import { createRenderer } from "../../../src/html/index";
+import reorderRuntime from "../../../src/html/reorder-runtime";
 
 const { DOMElement, DOMCollection } = format.plugins;
 const reorderRuntimeString = String(reorderRuntime).replace("RUNTIME_ID", "M");

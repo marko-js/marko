@@ -9,7 +9,7 @@ import {
   register,
   createRenderer,
   createRenderFn
-} from "../../../../dom/index";
+} from "../../../../src/dom/index";
 
 import { get, after, over } from "../../utils/walks";
 

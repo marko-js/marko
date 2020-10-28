@@ -7,7 +7,7 @@ import {
   set,
   register,
   createRenderFn
-} from "../../../../dom/index";
+} from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
 
 const click = (container: Element) => {

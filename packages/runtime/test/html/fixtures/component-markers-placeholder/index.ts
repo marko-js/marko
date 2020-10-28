@@ -1,6 +1,6 @@
-import { write, fork, tryPlaceholder } from "../../../../html/index";
+import { write, fork, tryPlaceholder } from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
-import { serverRegister } from "../../../../common/server-registry";
+import { serverRegister } from "../../../../src/common/server-registry";
 
 const renderer = () => {
   firstComponent({});

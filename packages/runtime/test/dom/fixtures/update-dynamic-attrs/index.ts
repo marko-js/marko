@@ -1,4 +1,4 @@
-import { attrs, walk, register, createRenderFn } from "../../../../dom/index";
+import { attrs, walk, register, createRenderFn } from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
 
 export const inputs = [
