@@ -41,6 +41,7 @@
     "jsdom-context-require": "^2.0.1",
     "lerna": "^3.22.1",
     "lint-staged": "^10.3.0",
+    "magic-string": "^0.25.7",
     "minified-size": "^2.0.3",
     "mocha": "^8.1.3",
     "mocha-autotest": "^1.0.3",
