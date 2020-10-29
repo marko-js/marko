@@ -2,8 +2,12 @@ import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
 import fs from "fs";
 
-export default ["debug", "dist"].flatMap(env =>
-  ["dom", "html"].map(name => ({
+const sizeOnly = process.env.SIZE;
+const envs = sizeOnly ? ["dist"] : ["debug", "dist"];
+const targets = sizeOnly ? ["dom"] : ["dom", "html"];
+
+export default envs.flatMap(env =>
+  targets.map(name => ({
     input: `src/${name}/index.ts`,
     output: [
       {
