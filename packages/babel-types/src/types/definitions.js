@@ -208,5 +208,7 @@ const MarkoDefinitions = {
 export default MarkoDefinitions;
 export const MARKO_TYPES = Object.keys(MarkoDefinitions);
 export const MARKO_ALIAS_TYPES = Array.from(
-  new Set(MARKO_TYPES.flatMap(t => MarkoDefinitions[t].aliases))
+  new Set(
+    MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), [])
+  )
 );
