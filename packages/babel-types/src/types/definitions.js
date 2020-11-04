@@ -13,7 +13,7 @@ const valueFieldCommon = {
   }
 };
 
-export default {
+const MarkoDefinitions = {
   MarkoDocumentType: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
@@ -204,3 +204,11 @@ export default {
     }
   }
 };
+
+export default MarkoDefinitions;
+export const MARKO_TYPES = Object.keys(MarkoDefinitions);
+export const MARKO_ALIAS_TYPES = Array.from(
+  new Set(
+    MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), [])
+  )
+);
