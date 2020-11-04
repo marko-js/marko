@@ -3,6 +3,7 @@
 *.marko.js
 *actual.*
 dist
+packages/babel-types/traverse.d.ts
 
 ### Node ###
 

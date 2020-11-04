@@ -2,8 +2,9 @@
   "name": "marko-project",
   "private": true,
   "scripts": {
-    "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps --env-name=production",
+    "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps --env-name=production && npm run build:types",
     "build:watch": "npm run build -- --watch",
+    "build:types": "node scripts/types-babel-types.js > packages/babel-types/dist/types.d.ts && node scripts/types-babel-traverse.js",
     "postinstall": "lerna bootstrap --hoist --no-ci",
     "prepack": "ENTRY=main:npm npm run set-entry",
     "postpack": "ENTRY=main:dev npm run set-entry",
@@ -35,6 +36,7 @@
     "@commitlint/config-conventional": "^8.2.0",
     "@commitlint/config-lerna-scopes": "^8.2.0",
     "@ebay/browserslist-config": "^1.0.1",
+    "@types/babel__traverse": "^7.0.15",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-minprops": "^2.0.1",
     "chai": "^4.2.0",
