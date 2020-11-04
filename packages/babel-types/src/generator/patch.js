@@ -1,4 +1,6 @@
-import * as t from "../definitions";
+import "../types/patch";
+
+import * as t from "@babel/types";
 import SELF_CLOSING from "self-closing-tags";
 import Printer from "@babel/generator/lib/printer";
 
