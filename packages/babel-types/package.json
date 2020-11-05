@@ -14,7 +14,8 @@
     "self-closing-tags": "^1.0.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-types/README.md",
   "keywords": [
@@ -29,6 +30,7 @@
   "main": "src/index.js",
   "main:dev": "src/index.js",
   "main:npm": "dist/index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/marko/tree/master/packages/babel-types"
