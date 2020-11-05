@@ -4,7 +4,7 @@
   "scripts": {
     "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps --env-name=production && npm run build:types",
     "build:watch": "npm run build -- --watch",
-    "build:types": "node scripts/types-babel-types.js > packages/babel-types/dist/types.d.ts && node scripts/types-babel-traverse.js",
+    "build:types": "node scripts/types-babel-types.js > packages/babel-types/dist/types.d.ts && node scripts/types-babel-traverse.js > packages/babel-types/dist/traverse.d.ts",
     "postinstall": "lerna bootstrap --hoist --no-ci",
     "prepack": "ENTRY=main:npm npm run set-entry",
     "postpack": "ENTRY=main:dev npm run set-entry",

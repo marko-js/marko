@@ -46,13 +46,6 @@ fs.readFile(
           )
       );
 
-    fs.writeFile(
-      path.join(__dirname, "../packages/babel-types/traverse.d.ts"),
-      result,
-      "utf8",
-      err => {
-        if (err) return console.error(err);
-      }
-    );
+    process.stdout.write(result);
   }
 );
