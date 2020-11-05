@@ -15,8 +15,7 @@
   },
   "files": [
     "dist",
-    "index.d.ts",
-    "traverse.d.ts"
+    "index.d.ts"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-types/README.md",
   "keywords": [
