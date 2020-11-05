@@ -12,6 +12,7 @@ export interface Batch {
   ___signals: Record<string, UpstreamSignal<unknown>>;
   ___computationIndex: number;
   ___fragments: Map<Fragment, boolean> | undefined;
+  ___mutated?: Set<UpstreamSignal<unknown>>;
 }
 
 export const enum SignalTypes {
@@ -344,9 +345,21 @@ export function setSignalValue<V>(signal: UpstreamSignal<V>, nextValue: V) {
     const downstream = signal.___downstream;
     batch.___values[id] = nextValue;
     batch.___signals[id] = signal;
+    if ("MARKO_DEBUG" && !batch.___mutated!.has(signal))
+      markPossiblyMutated(signal);
     for (let i = downstream.length - 1; i >= 0; i--) {
       queueDownstream(downstream[i]);
     }
+  }
+}
+
+function markPossiblyMutated<V>(signal: UpstreamSignal<V>) {
+  batch.___mutated!.add(signal);
+  const downstream = signal.___downstream;
+  for (let i = downstream.length - 1; i >= 0; i--) {
+    const s = downstream[i];
+    if (!isEffectType(s.___type) && !batch.___mutated!.has(s as UpstreamSignal<V>))
+      markPossiblyMutated(s as UpstreamSignal<V>);
   }
 }
 
@@ -358,7 +371,11 @@ function queueDownstream(downstream: DownstreamSignal) {
 }
 
 function updateComputation<V>(computation: Computation<V>) {
-  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, computation.___root)) return;
+  if (
+    batch.___fragments &&
+    isMarkedDestroyed(batch.___fragments, computation.___root)
+  )
+    return;
   setSignalValue(computation, execDownstreamSignal(computation));
 }
 
@@ -371,11 +388,15 @@ function execDownstreamSignal(downstream: DownstreamSignal) {
   );
 }
 
-function isMarkedDestroyed(frags: Map<Fragment, boolean>, f: Fragment): boolean {
+function isMarkedDestroyed(
+  frags: Map<Fragment, boolean>,
+  f: Fragment
+): boolean {
   let destroyed = frags.get(f);
   if (destroyed === undefined) {
-    destroyed = !!f.___parentFragment && isMarkedDestroyed(frags, f.___parentFragment);
-    frags.set(f, destroyed)
+    destroyed =
+      !!f.___parentFragment && isMarkedDestroyed(frags, f.___parentFragment);
+    frags.set(f, destroyed);
   }
   return destroyed;
 }
@@ -403,6 +424,11 @@ export function dynamicKeys<
 
 export function get<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
+    if ("MARKO_DEBUG" && batch && batch.___mutated!.has(value)) {
+      throw new Error(
+        "Reading a mutated value or value derived from a mutated value is not permitted."
+      );
+    }
     value = value.___value!;
   }
   return value;
@@ -442,7 +468,7 @@ function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
 
 export function beginBatch() {
   set = setInBatch;
-  return (batch = {
+  batch = {
     ___bid: ++bid,
     ___computations: [],
     ___effects: [],
@@ -450,7 +476,9 @@ export function beginBatch() {
     ___signals: {},
     ___computationIndex: 0,
     ___fragments: undefined
-  });
+  };
+  if ("MARKO_DEBUG") batch.___mutated = new Set();
+  return batch;
 }
 
 function endBatch(b: Batch) {
@@ -480,7 +508,11 @@ export function runInBatch<T extends (...args: any) => any>(
 }
 
 function runEffect(effect: Effect) {
-  if (batch.___fragments && isMarkedDestroyed(batch.___fragments, effect.___root)) return;
+  if (
+    batch.___fragments &&
+    isMarkedDestroyed(batch.___fragments, effect.___root)
+  )
+    return;
   execDownstreamSignal(effect);
 }
 
