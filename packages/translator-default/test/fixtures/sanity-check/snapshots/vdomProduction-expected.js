@@ -156,12 +156,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "id": "a"
   }), "21", component, null, 4);
   out.t(a, component);
-  out.e("div", {
-    "c": "1"
-  }, "22", component, 0, 0);
-  out.e("div", {
-    "d": "1"
-  }, "23", component, 0, 0);
+  out.n(_marko_node7, component);
+  out.n(_marko_node8, component);
 
   if (x === a) {
     out.t("a ", component);

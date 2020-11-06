@@ -21,7 +21,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.n(_marko_node, component);
   out.be("style", null, "2", component, null, 0);
   out.t("\n    ", component);
-  out.t("Hello <b> </style>");
+  out.t("Hello <b> </style>", component);
   out.t("\n  ", component);
   out.ee();
   out.ee();
