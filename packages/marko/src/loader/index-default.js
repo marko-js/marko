@@ -9,6 +9,8 @@ var cwd = process.cwd();
 var fsOptions = { encoding: "utf8" };
 const banner = "// Compiled using marko";
 
+// options.forceRecompile - if true, skip checking cache
+
 module.exports = function load(templatePath, templateSrc, options) {
   if (typeof templatePath === "string") {
     const parsed = nodePath.parse(templatePath);
@@ -57,11 +59,14 @@ module.exports = function load(templatePath, templateSrc, options) {
   }
 };
 
-function loadSource(templatePath, compiledSrc) {
+function loadSource(templatePath, compiledSrc, options) {
   templatePath += ".js";
 
+
   // Short-circuit loading if the template has already been cached in the Node.js require cache
-  var cached = require.cache[templatePath];
+  // However, if forceRecompile, then no short-circuit
+  var cached = options.forceRecompile ? undefined : require.cache[templatePath];
+
   if (cached) {
     return cached.exports;
   }
@@ -137,7 +142,7 @@ function getPreviousTemplate(templatePath, options) {
 }
 
 function createRenderProxy(template) {
-  return function(data, out) {
+  return function (data, out) {
     template._(data, out);
   };
 }
@@ -146,12 +151,16 @@ function doLoad(templatePath, templateSrc, options) {
   options = Object.assign({}, markoCompiler.defaultOptions, options);
 
   var template;
+
+
   if (typeof templatePath.render === "function") {
     template = templatePath;
   } else {
     templatePath = nodePath.resolve(cwd, templatePath);
 
-    template = getPreviousTemplate(templatePath, options);
+    // Skip getting previous template if forceCompile
+    template = options.forceRecompile ? undefined : getPreviousTemplate(templatePath, options);
+
     if (!template) {
       var writeToDisk = options.writeToDisk;
 
@@ -175,7 +184,7 @@ function doLoad(templatePath, templateSrc, options) {
         }
       }
 
-      template = loadSource(templatePath, compiledSrc);
+      template = loadSource(templatePath, compiledSrc, options);
     }
   }
 
