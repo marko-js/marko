@@ -1,4 +1,5 @@
 import { Fragment, currentFragment } from "./fragments";
+import queueNonPaintBlockingTask from "./queueNonPaintBlockingTask"
 
 let sid = 0;
 let bid = 0;
@@ -24,7 +25,6 @@ export const enum SignalTypes {
 }
 
 export interface BaseSignal<V> {
-  ___bid: number;
   ___sid: number;
   ___type: SignalTypes;
   ___value: V;
@@ -102,7 +102,6 @@ type DownstreamSignal = Computation<unknown> | Effect;
 
 function createSignal(type: SignalTypes): BaseSignal<unknown> {
   return {
-    ___bid: 0,
     ___sid: sid++,
     ___type: type,
     ___value: undefined,
@@ -358,7 +357,10 @@ function markPossiblyMutated<V>(signal: UpstreamSignal<V>) {
   const downstream = signal.___downstream;
   for (let i = downstream.length - 1; i >= 0; i--) {
     const s = downstream[i];
-    if (!isEffectType(s.___type) && !batch.___mutated!.has(s as UpstreamSignal<V>))
+    if (
+      !isEffectType(s.___type) &&
+      !batch.___mutated!.has(s as UpstreamSignal<V>)
+    )
       markPossiblyMutated(s as UpstreamSignal<V>);
   }
 }
@@ -437,7 +439,7 @@ export function get<T>(value: UpstreamSignalOrValue<T>): T {
 function getInBatch<T>(value: UpstreamSignalOrValue<T>): T {
   if (isSignal(value)) {
     let id: number;
-    if (batch.___values.hasOwnProperty((id = value.___sid))) {
+    if (batch && batch.___values.hasOwnProperty((id = value.___sid))) {
       value = batch.___values[id] as T;
     } else value = value.___value!;
   }
@@ -449,7 +451,7 @@ export let set = setAndBeginBatch;
 function setAndBeginBatch(value: UpstreamSignalOrValue, newValue: unknown) {
   if (isSignal(value)) {
     const localBatch = beginBatch();
-    queueMicrotask(() => endBatch(localBatch));
+    queueNonPaintBlockingTask(() => endBatch(localBatch));
     setSignalValue(value, newValue);
   }
   return newValue;
@@ -491,11 +493,11 @@ function endBatch(b: Batch) {
     for (const id in batch.___signals) {
       batch.___signals[id].___value = batch.___values[id];
     }
-    runEffects(batch.___effects);
   } finally {
     set = setAndBeginBatch;
     batch = undefined as any;
   }
+  runEffects(b);
 }
 
 export function runInBatch<T extends (...args: any) => any>(
@@ -507,7 +509,7 @@ export function runInBatch<T extends (...args: any) => any>(
   return result;
 }
 
-function runEffect(effect: Effect) {
+function runEffect(effect: Effect, batch: Batch) {
   if (
     batch.___fragments &&
     isMarkedDestroyed(batch.___fragments, effect.___root)
@@ -516,24 +518,18 @@ function runEffect(effect: Effect) {
   execDownstreamSignal(effect);
 }
 
-function runEffects(effects: Effect[]) {
+function runEffects(batch: Batch) {
   let i: number;
+  let effects = batch.___effects;
   let len = effects.length;
   let userLength = 0;
   for (i = 0; i < len; i++) {
     const v = effects[i];
     if (v.___type === SignalTypes.USER_EFFECT) {
       effects[userLength++] = v;
-    } else runEffect(v);
+    } else runEffect(v, batch);
   }
-
-  for (i = 0; i < userLength; i++) {
-    const v = effects[i];
-    if (v.___bid <= bid) {
-      v.___bid = bid;
-      runEffect(v);
-    }
-  }
+  for (i = 0; i < userLength; i++) runEffect(effects[i], batch);
 }
 
 function insertIntoBatch<T extends DownstreamSignal>(

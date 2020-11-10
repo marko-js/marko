@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "bugs": "https://github.com/PROJECT_ORG/PROJECT_NAME/issues",
   "files": [
-    "build",
-    "dom/package.json",
-    "html/package.json"
+    "dist",
+    "debug",
+    "types"
   ],
   "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
   "keywords": [

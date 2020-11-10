@@ -8,9 +8,21 @@ const browser = createBrowser({
   html: ""
 });
 
-const window = browser.window as DOMWindow;
+const window = browser.window as DOMWindow & { MessageChannel: any };
 const document = window.document;
 window.queueMicrotask = queueMicrotask;
+window.MessageChannel = (window as any).MessageChannel = class MessageChannel {
+  port1: any;
+  port2: any;
+  constructor() {
+    this.port1 = { onmessage() {} };
+    this.port2 = {
+      postMessage: () => {
+        setImmediate(this.port1.onmessage);
+      }
+    }
+  }
+}
 window.requestAnimationFrame = (fn) => setTimeout(fn);
 
 const {
