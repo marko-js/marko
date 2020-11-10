@@ -1,6 +1,12 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("div", null, "0", null, 4, 0).e("div", null, null, null, 3, 0).t("Hello ").e("div", null, null, null, 1, 0).t(" ").t(" World").e("div", null, null, null, 1, 0).t(" Hello").e("pre", null, null, null, 1, 0).t("\n    This should  \n      be preserved\n  ").e("div", null, null, null, 1, 0).e("div", null, null, null, 1, 0).t("Hello ");
+
+const _marko_node2 = _marko_createElement("div", null, "2", null, 0, 0);
+
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
@@ -9,27 +15,8 @@ const _marko_componentType = _marko_registerComponent("TRrwGTtp", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", null, "0", component, null, 0);
+  out.n(_marko_node, component);
   out.be("div", null, "1", component, null, 0);
-  out.t("Hello ", component);
-  out.be("div", null, "2", component, null, 0);
-  out.t(" ", component);
-  out.ee();
-  out.t(" World", component);
-  out.ee();
-  out.be("div", null, "3", component, null, 0);
-  out.t(" Hello", component);
-  out.ee();
-  out.be("pre", null, "4", component, null, 0);
-  out.t("\n    This should  \n      be preserved\n  ", component);
-  out.ee();
-  out.be("div", null, "5", component, null, 0);
-  out.be("div", null, "6", component, null, 0);
-  out.t("Hello ", component);
-  out.ee();
-  out.ee();
-  out.ee();
-  out.be("div", null, "7", component, null, 0);
   scriptletA();
   scriptletB();
   out.t("Hello ", component);
@@ -40,7 +27,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.t(" Hello World! ", component);
   out.t(a, component);
   out.t(b, component);
-  out.e("div", null, "8", component, 0, 0);
+  out.n(_marko_node2, component);
 }, {
   t: _marko_componentType,
   i: true

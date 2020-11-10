@@ -152,3 +152,12 @@ export function getArgOrSequence(path) {
     }
   }
 }
+
+export function isLoopTag(path) {
+  if (!path.isMarkoTag()) {
+    return false;
+  }
+
+  const tagName = path.node.name.value;
+  return tagName === "while" || tagName === "for";
+}

@@ -1,6 +1,10 @@
 const _marko_template = _t();
 
 export default _marko_template;
+import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
+
+const _marko_node = _marko_createElement("script", null, "1", null, 3, 0).t("\n    ").t("Hello <b> </script>").t("\n  ");
+
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -14,11 +18,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.t("Hello world <a/>", component);
   out.h(input.x, component);
   out.h("Hello world <a/>", component);
-  out.be("script", null, "1", component, null, 0);
-  out.t("\n    ", component);
-  out.t("Hello <b> </script>", component);
-  out.t("\n  ", component);
-  out.ee();
+  out.n(_marko_node, component);
   out.be("style", null, "2", component, null, 0);
   out.t("\n    ", component);
   out.t("Hello <b> </style>", component);

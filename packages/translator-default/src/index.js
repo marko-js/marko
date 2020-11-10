@@ -16,6 +16,7 @@ import MarkoPlaceholder from "./placeholder";
 import MarkoComment from "./comment";
 import MarkoScriptlet from "./scriptlet";
 import MarkoClass from "./class";
+import { visitor as analyze } from "./analyze";
 import { visitor as optimizeVisitor } from "./optimize";
 import getComponentFiles from "./util/get-component-files";
 
@@ -54,6 +55,9 @@ export const visitor = {
         });
 
       file._renderBlock = renderBlock;
+
+      // Pre-Analyze tree
+      if (file.markoOpts.output !== "html") path.traverse(analyze);
     },
     exit(path) {
       const {
