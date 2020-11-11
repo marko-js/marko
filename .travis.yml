@@ -3,5 +3,5 @@ node_js:
 - "14"
 language: node_js
 before_script: npm run lint
-script: npm run ci:test && npm run ci:check-size
+script: npm run ci:test && npm run size:check
 after_success: npm run ci:codecov
