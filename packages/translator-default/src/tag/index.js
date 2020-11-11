@@ -17,8 +17,7 @@ import macroTag from "./macro-tag";
 import attributeTranslators from "./attribute";
 import { getKeyManager } from "../util/key-manager";
 import { enter, exit } from "../util/plugin-hooks";
-import { staticNodes } from "../analyze";
-import optimize from "./vdom-optimizer";
+import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 
 export default {
   enter(path) {
@@ -62,14 +61,7 @@ export default {
     }
 
     getKeyManager(path).resolveKey(path);
-
-    // do static hoisting
-    if (
-      staticNodes.has(path.node) &&
-      !staticNodes.has(path.parentPath.parentPath.node)
-    ) {
-      optimize(path);
-    }
+    optimizeStaticVDOM(path);
   },
   exit(path) {
     let isUnknownDynamic = false;

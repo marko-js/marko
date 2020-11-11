@@ -1,10 +1,6 @@
 const _marko_template = _t();
 
 export default _marko_template;
-import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
-
-const _marko_node = _marko_createElement("div", null, "2", null, 1, 0).t("No colors!");
-
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -31,7 +27,9 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }
     out.ee();
   } else {
-    out.n(_marko_node, component);
+    out.be("div", null, "2", component, null, 0);
+    out.t("No colors!", component);
+    out.ee();
   }
 }, {
   t: _marko_componentType,

@@ -1,6 +1,6 @@
 import { normalizeTemplateString } from "@marko/babel-utils";
 
-export const visitor = {
+const mergeWriteCallsVisitor = {
   ExpressionStatement(path) {
     let curPath = path;
     const quasis = [""];
@@ -24,6 +24,18 @@ export const visitor = {
     }
   }
 };
+
+export function optimizeHTMLWrites(path) {
+  const {
+    hub: {
+      file: { markoOpts }
+    }
+  } = path;
+
+  if (markoOpts.optimize && markoOpts.output === "html") {
+    path.traverse(mergeWriteCallsVisitor);
+  }
+}
 
 function getOutContent(path) {
   if (path.isExpressionStatement()) {
