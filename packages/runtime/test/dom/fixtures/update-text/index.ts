@@ -16,7 +16,7 @@ export const inputs = [
 // Static ${input.value}
 export const template = "Static ";
 export const walks = after + over(1);
-export const hydrate = (input: (typeof inputs)[number]) => {
+export const hydrate = (input: typeof inputs[number]) => {
   text(input.value);
 };
 

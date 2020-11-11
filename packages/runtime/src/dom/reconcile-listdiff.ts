@@ -38,8 +38,9 @@ export function reconcile(
     bIdx.set(newKeys[i], i);
   }
 
-  for (i = j = 0; i !== oldKeys.length || j !== newKeys.length;) {
-    var a = oldKeys[i], b = newKeys[j];
+  for (i = j = 0; i !== oldKeys.length || j !== newKeys.length; ) {
+    const a = oldKeys[i],
+      b = newKeys[j];
     if (a === null) {
       // This is a element that has been moved to earlier in the list
       i++;
@@ -57,12 +58,13 @@ export function reconcile(
       j++;
     } else if (a === b) {
       // No difference, we move on
-      i++; j++;
+      i++;
+      j++;
     } else {
       // This gives us the idx of where this element should be
-      var curElmInNew = bIdx.get(a);
+      const curElmInNew = bIdx.get(a);
       // This gives us the idx of where the wanted element is now
-      var wantedElmInOld = aIdx.get(b);
+      const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
         removeFragment(oldNodes.get(a)!);
@@ -83,7 +85,7 @@ export function reconcile(
           a ? referenceStart(oldNodes.get(a)!) : afterReference
         );
         aIdx.delete(wantedElmInOld);
-        oldKeys[wantedElmInOld] = null as unknown as string;
+        oldKeys[wantedElmInOld] = (null as unknown) as string;
         if (wantedElmInOld > i + 1) i++;
         j++;
       }

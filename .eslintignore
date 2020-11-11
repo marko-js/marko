@@ -1,12 +1,7 @@
-*.min.js
-*.html.js
-*.marko.js
 *actual*
 *expected*
-.cache/
-.nyc_output/
-node_modules/
-coverage/
-*dist/
-*generated/
-~vdom.skip
+.nyc_output
+node_modules
+coverage
+dist
+debug

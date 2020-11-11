@@ -40,7 +40,7 @@ export default async function renderAndTrackFlushes(test: {
   const browser = new JSDOM(html, { runScripts: "dangerously" });
   const root = browser.window.document;
   browser.window.queueMicrotask = queueMicrotask;
-  browser.window.requestAnimationFrame = (fn) => setTimeout(fn);
+  browser.window.requestAnimationFrame = fn => setTimeout(fn);
   root.normalize();
   output.push(
     `# final HTML\n${indent(

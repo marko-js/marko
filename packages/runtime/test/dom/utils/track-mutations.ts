@@ -121,9 +121,7 @@ function formatMutationRecord(record: MutationRecord) {
 
       if (addedNodes.length) {
         details.push(
-          `inserted ${Array.from(addedNodes)
-            .map(getNodePath)
-            .join(", ")}`
+          `inserted ${Array.from(addedNodes).map(getNodePath).join(", ")}`
         );
       }
 

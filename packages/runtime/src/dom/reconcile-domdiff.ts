@@ -132,13 +132,20 @@ export function reconcile(
           if (sequence > index - bStart) {
             const node = referenceStart(oldNodes.get(oldKeys[aStart])!);
             while (bStart < index)
-              insertFragmentBefore(parent, newNodes.get(newKeys[bStart++])!, node);
+              insertFragmentBefore(
+                parent,
+                newNodes.get(newKeys[bStart++])!,
+                node
+              );
           }
           // if the effort wasn't good enough, fallback to oldKeys replace,
           // moving both source and target indexes forward, hoping that some
           // similar node will be found later on, to go back to the fast path
           else {
-            replaceFragment(oldNodes.get(oldKeys[aStart++])!, newNodes.get(newKeys[bStart++])!)
+            replaceFragment(
+              oldNodes.get(oldKeys[aStart++])!,
+              newNodes.get(newKeys[bStart++])!
+            );
           }
         }
         // otherwise move the source forward, 'cause there's nothing to do

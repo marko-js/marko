@@ -1,4 +1,9 @@
-import { attrs, walk, register, createRenderFn } from "../../../../src/dom/index";
+import {
+  attrs,
+  walk,
+  register,
+  createRenderFn
+} from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
 
 export const inputs = [
@@ -24,7 +29,7 @@ export const template = `<div></div>`;
 export const walks = get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
-  (input: (typeof inputs)[number]) => {
+  (input: typeof inputs[number]) => {
     walk();
     attrs(input.value);
   }

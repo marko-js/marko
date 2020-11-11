@@ -1,7 +1,9 @@
 const TIMEOUT_MULTIPLIER = 16;
 
 export function wait(timeout: number) {
-  return Object.assign(() => resolveAfter(`wait:${timeout}`, timeout), { wait: true });
+  return Object.assign(() => resolveAfter(`wait:${timeout}`, timeout), {
+    wait: true
+  });
 }
 
 export function isWait(value: any): value is ReturnType<typeof wait> {

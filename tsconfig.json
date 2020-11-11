@@ -12,5 +12,6 @@
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true
-  }
+  },
+  "include": ["./packages/*/src/**/*"]
 }

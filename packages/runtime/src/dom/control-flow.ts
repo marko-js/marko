@@ -6,9 +6,16 @@ import {
   createEffect,
   get,
   markFragmentDestroyed,
-  UpstreamSignalOrValue, setSignalValue
+  UpstreamSignalOrValue,
+  setSignalValue
 } from "./signals";
-import { Fragment, createFragment, currentFragment, insertFragmentBefore, removeFragment } from "./fragments";
+import {
+  Fragment,
+  createFragment,
+  currentFragment,
+  insertFragmentBefore,
+  removeFragment
+} from "./fragments";
 import { reconcile } from "./reconcile";
 import { render, Renderer } from "./dom";
 import { walk, walkAndGetText } from "./walker";
@@ -33,7 +40,9 @@ export function loopOf<T>(
 ) {
   if (isSignal(array)) {
     const marker = !onlyChild ? walkAndGetText() : null;
-    const parent = onlyChild ? (walk() as Node & ParentNode) : marker!.parentNode!;
+    const parent = onlyChild
+      ? (walk() as Node & ParentNode)
+      : marker!.parentNode!;
     const rootFragment = currentFragment;
     let oldNodes: Map<string, Fragment> = new Map();
     let oldKeys: string[] = [];
@@ -56,7 +65,9 @@ export function loopOf<T>(
 
     const newNodes = createComputation(
       _array => {
-        const _newNodes: Map<string, Fragment> & { skipReconcile?: boolean } = new Map();
+        const _newNodes: Map<string, Fragment> & {
+          skipReconcile?: boolean;
+        } = new Map();
         let newItems = 0;
         let moved = false;
 
@@ -66,7 +77,7 @@ export function loopOf<T>(
           const previousChildFragment = oldNodes.get(
             key
           ) as ForIterationFragment<typeof item>;
-          moved = moved || (key !== oldKeys[index]);
+          moved = moved || key !== oldKeys[index];
           if (!previousChildFragment) {
             newItems++;
             const itemSignal = createSource(item);
@@ -83,7 +94,8 @@ export function loopOf<T>(
             _newNodes.set(key, childFragment);
           } else {
             setSignalValue(previousChildFragment.___itemSignal, item);
-            previousChildFragment.___indexSignal && setSignalValue(previousChildFragment.___indexSignal, index);
+            previousChildFragment.___indexSignal &&
+              setSignalValue(previousChildFragment.___indexSignal, index);
             _newNodes.set(key, previousChildFragment);
           }
         }
@@ -105,14 +117,7 @@ export function loopOf<T>(
       _newNodes => {
         if (_newNodes.skipReconcile) return;
         const newKeys = Array.from(_newNodes.keys());
-        reconcile(
-          parent,
-          oldKeys,
-          oldNodes,
-          newKeys,
-          _newNodes,
-          marker
-        );
+        reconcile(parent, oldKeys, oldNodes, newKeys, _newNodes, marker);
 
         // TODO: we should be able to remove the marker if the loop was not empty
         // But we'll need to track the last fragment and ensure the marker is added if the loop becomes empty
@@ -209,7 +214,7 @@ export function conditional(
       _renderer => {
         if (!_renderer && previousFragment)
           markFragmentDestroyed(previousFragment);
-        return _renderer && createFragment(_renderer, rootFragment, ...input)
+        return _renderer && createFragment(_renderer, rootFragment, ...input);
       },
       renderer,
       1

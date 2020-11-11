@@ -1,4 +1,0 @@
-[submodule "packages/marko"]
-	path = packages/marko
-	url = git@github.com:marko-js/marko.git
-	branch = new-compiler-integration

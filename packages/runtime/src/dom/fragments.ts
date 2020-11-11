@@ -88,13 +88,13 @@ export function replaceFragment(current: Fragment, replacement: Fragment) {
 
 export function removeFragment(fragment: Fragment) {
   const domParent = referenceStart(fragment).parentNode!;
-    withChildren(
-      domParent,
-      fragment.___firstRef.___firstChild,
-      fragment.___lastRef.___lastChild!,
-      null,
-      domParent.removeChild
-    );
+  withChildren(
+    domParent,
+    fragment.___firstRef.___firstChild,
+    fragment.___lastRef.___lastChild!,
+    null,
+    domParent.removeChild
+  );
   fragment.___cleanup(true);
 }
 

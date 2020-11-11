@@ -1,5 +1,5 @@
 import { Fragment, currentFragment } from "./fragments";
-import queueNonPaintBlockingTask from "./queueNonPaintBlockingTask"
+import queueNonPaintBlockingTask from "./queue-non-paint-blocking-task";
 
 let sid = 0;
 let bid = 0;
@@ -213,7 +213,7 @@ function execConsumable<V>(
 ): V {
   let fn: ExecChain | undefined = this.___execStart;
   let inputValue: unknown = originalInput;
-  let isEffect = isEffectType(this.___type);
+  const isEffect = isEffectType(this.___type);
   while (fn) {
     const next = fn.next;
     if (isEffect && !next) {
@@ -464,7 +464,7 @@ function setInBatch(value: UpstreamSignalOrValue, newValue: unknown) {
   return newValue;
 }
 
-function setInComputation(value: UpstreamSignalOrValue, newValue: unknown) {
+function setInComputation() {
   throw new Error("You are attempting to set a signal in a pure computation");
 }
 
@@ -520,8 +520,8 @@ function runEffect(effect: Effect, batch: Batch) {
 
 function runEffects(batch: Batch) {
   let i: number;
-  let effects = batch.___effects;
-  let len = effects.length;
+  const effects = batch.___effects;
+  const len = effects.length;
   let userLength = 0;
   for (i = 0; i < len; i++) {
     const v = effects[i];

@@ -6,7 +6,7 @@ let queued: boolean;
 port1.onmessage = () => {
   queued = false;
   flush();
-}
+};
 
 export default function queueNonPaintBlockingTask(fn: Task) {
   if (!queued) {
@@ -23,7 +23,7 @@ function flushAndWaitFrame() {
 }
 
 function flush() {
-  for (let i = queue.length; i--;) {
+  for (let i = queue.length; i--; ) {
     queue[i]();
   }
 

@@ -2,7 +2,7 @@
 
 import { CommentWalker } from "../common/types";
 
-export default function(
+export default function (
   id: string,
   doc: Document,
   walker: TreeWalker,
@@ -22,7 +22,7 @@ export default function(
     (doc[runtimePrefix + "w"] = doc.createTreeWalker(
       doc,
       128 /** NodeFilter.SHOW_COMMENT */,
-      function() {
+      function () {
         return 1; /** NodeFilter.FILTER_ACCEPT */
       } as any,
       false

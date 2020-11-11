@@ -1,14 +1,14 @@
 {
   "name": "@marko/runtime-fluurt",
-  "description": "PROJECT_DESCRIPTION",
-  "version": "1.0.0",
-  "bugs": "https://github.com/PROJECT_ORG/PROJECT_NAME/issues",
+  "description": "Optimized runtime for Marko templates.",
+  "version": "0.0.1",
+  "bugs": "https://github.com/marko-js/x/issues",
   "files": [
     "dist",
     "debug",
     "types"
   ],
-  "homepage": "https://github.com/PROJECT_ORG/PROJECT_NAME",
+  "homepage": "https://github.com/marko-js/x",
   "keywords": [
     "fluurt",
     "marko",
@@ -17,15 +17,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/PROJECT_ORG/PROJECT_NAME"
+    "url": "https://github.com/marko-js/x"
   },
   "scripts": {
     "build": "rollup -c ./rollup.config.js --sourcemap && tsc",
-    "format": "prettier \"**/*.{json,md,js,ts}\" --write",
-    "lint": "tsc --noEmit && tslint -t codeFrame -c tslint.json '{common,dom,html,test}'",
-    "prepublishOnly": "npm run build",
-    "size": "npm run build && minified-size --json ./dist/dom.esm.js",
-    "test": "mocha -r ts-node/register --timeout 5000 -r source-map-support/register \"test/*/main.test.ts\"",
-    "test:inspect": "npm test -- --inspect-brk"
+    "prepublishOnly": "npm run build"
   }
 }

@@ -41,7 +41,11 @@ export function dynamicOn<
   const el = walker.currentNode as Element;
   const key = getKey(type);
   on(type, null);
-  createPropertyEffect(el as unknown as Record<string, unknown>, key, handler);
+  createPropertyEffect(
+    (el as unknown) as Record<string, unknown>,
+    key,
+    handler
+  );
 }
 
 export function once<

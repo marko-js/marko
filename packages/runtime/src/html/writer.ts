@@ -190,9 +190,11 @@ export function tryPlaceholder(
     > = [];
     for (const promise of childPromises) {
       if (promise.isPlaceholder) {
-        placeholderPromises.push(promise as Promise<unknown> & {
-          isPlaceholder: true;
-        });
+        placeholderPromises.push(
+          promise as Promise<unknown> & {
+            isPlaceholder: true;
+          }
+        );
       } else {
         contentPromises.push(promise);
       }

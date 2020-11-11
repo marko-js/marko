@@ -41,7 +41,7 @@ export const template = `<!>`;
 export const walks = replace + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
-  (input: (typeof inputs)[number]) => {
+  (input: typeof inputs[number]) => {
     dynamicTag(input.tag, { a: 1, renderBody }, renderBody);
   }
 );

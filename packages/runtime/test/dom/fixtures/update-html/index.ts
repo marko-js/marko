@@ -20,7 +20,7 @@ export const template = "<em>Testing</em> ";
 export const walks = over(1) + after + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
-  (input: (typeof inputs)[number]) => {
+  (input: typeof inputs[number]) => {
     html(input.value);
   }
 );

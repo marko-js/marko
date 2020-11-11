@@ -5,7 +5,7 @@ import assert from "assert";
 export default function snapshot(
   dir: string,
   file: string,
-  data: unknown,
+  data: string,
   originalError?: Error
 ) {
   const parsed = path.parse(file);

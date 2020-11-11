@@ -20,15 +20,12 @@ window.MessageChannel = (window as any).MessageChannel = class MessageChannel {
       postMessage: () => {
         setImmediate(this.port1.onmessage);
       }
-    }
+    };
   }
-}
-window.requestAnimationFrame = (fn) => setTimeout(fn);
+};
+window.requestAnimationFrame = fn => setTimeout(fn);
 
-const {
-  createRenderFn,
-  runInBatch
-} = browser.require(
+const { createRenderFn, runInBatch } = browser.require(
   "../../../src/dom/index"
 ) as typeof import("../../../src/dom/index");
 
@@ -36,7 +33,11 @@ interface Test {
   wait?: number;
   inputs: [
     Record<string, unknown>,
-    ...Array<Record<string, unknown> | ((container: Element) => void) | ReturnType<typeof wait>>
+    ...Array<
+      | Record<string, unknown>
+      | ((container: Element) => void)
+      | ReturnType<typeof wait>
+    >
   ];
   default: ReturnType<typeof createRenderFn>;
   html: string;
@@ -47,9 +48,7 @@ export default async function renderAndGetMutations(
   id: string,
   test: string
 ): Promise<string> {
-  const { default: render, inputs } = browser.require(
-    test
-  ) as Test;
+  const { default: render, inputs } = browser.require(test) as Test;
   const [firstInput] = inputs;
   const container = Object.assign(document.createElement("div"), {
     TEST_ROOT: true
@@ -60,7 +59,7 @@ export default async function renderAndGetMutations(
 
   try {
     tracker.beginUpdate();
-    
+
     const instance = render(firstInput);
     container.appendChild(instance);
 
@@ -72,7 +71,7 @@ export default async function renderAndGetMutations(
         await update();
       } else {
         tracker.beginUpdate();
-        if (typeof update === "function") { 
+        if (typeof update === "function") {
           runInBatch(() => update(container));
         } else {
           instance.rerender(update);

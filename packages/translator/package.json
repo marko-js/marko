@@ -1,36 +1,29 @@
 {
   "name": "@marko/translator-fluurt",
-  "private": true,
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
-  "version": "1.0.0",
-  "author": "Dylan Piercey <dpiercey@ebay.com>",
-  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "version": "0.0.1",
+  "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
   "dependencies": {
-    "@marko/babel-types": "^5.0.0-next.0",
-    "@marko/babel-utils": "^5.0.0-next.0"
+    "@marko/babel-types": "^5.0.0-next.51",
+    "@marko/babel-utils": "^5.0.0-next.51"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-fluurt/README.md",
+  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator-fluurt/README.md",
   "keywords": [
-    "htmljs",
-    "parser",
     "babel",
-    "plugin",
-    "parse",
+    "fluurt",
+    "htmljs",
     "marko",
-    "fluurt"
+    "parse",
+    "parser",
+    "plugin"
   ],
   "license": "MIT",
-  "main": "src/index.ts",
-  "main:dev": "src/index.ts",
-  "main:npm": "dist/index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-fluurt"
-  },
-  "publishConfig": {
-    "access": "public"
+    "url": "https://github.com/marko-js/x/tree/master/packages/translator-fluurt"
   }
 }

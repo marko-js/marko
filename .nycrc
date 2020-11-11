@@ -1,16 +1,8 @@
 {
-    "all": true,
-    "cache": true,
-    "include": [
-      "packages/*/src/**/*.js"
-    ],
-    "instrument": false,
-    "reporter": [
-      "lcov",
-      "text-summary"
-    ],
-    "require": [
-      "@babel/register"
-    ],
-    "sourceMap": false
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "reporter": ["lcov"],
+    "exclude": [
+      "packages/runtime/src/html/reorder-runtime.ts",
+      "packages/**/test"
+    ]
 }

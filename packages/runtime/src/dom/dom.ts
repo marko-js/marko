@@ -58,21 +58,23 @@ export function createRenderFn<H extends HydrateFunction>(
     inputProps,
     input => {
       dynamicKeys(input as any, renderer.___input!);
-      hydrate && hydrate(input)
+      hydrate && hydrate(input);
     },
-    (input: Input) => runInBatch(() => {
-      const inputSource = createSource(input);
-      const fragment = createFragment(renderer, undefined, inputSource);
-      const container = fragment.___dom as ComponentFragment<Input>;
+    (input: Input) =>
+      runInBatch(() => {
+        const inputSource = createSource(input);
+        const fragment = createFragment(renderer, undefined, inputSource);
+        const container = fragment.___dom as ComponentFragment<Input>;
 
-      container.rerender = (newInput: Input) => runInBatch(() => {
-        set(inputSource, newInput);
-      });
+        container.rerender = (newInput: Input) =>
+          runInBatch(() => {
+            set(inputSource, newInput);
+          });
 
-      container.destroy = () => removeFragment(fragment);
+        container.destroy = () => removeFragment(fragment);
 
-      return container;
-    })
+        return container;
+      })
   );
   return renderer;
 }
@@ -103,11 +105,11 @@ function _clone(this: Renderer) {
     // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
     // and therefore we need to put it in a document fragment, even though only a single nodee is parts
     const ensureFragment =
-        !!walks &&
-        (walks.charCodeAt(0) === WalkCodes.Before ||
-          walks.charCodeAt(0) === WalkCodes.Replace ||
-          walks.charCodeAt(walks.length - 2) ===
-            WalkCodes.After) /* 2nd to last because last will be Over */;
+      !!walks &&
+      (walks.charCodeAt(0) === WalkCodes.Before ||
+        walks.charCodeAt(0) === WalkCodes.Replace ||
+        walks.charCodeAt(walks.length - 2) ===
+          WalkCodes.After); /* 2nd to last because last will be Over */
     this.___sourceNode = sourceNode = parse(this.___template, ensureFragment);
   }
   return sourceNode.cloneNode(true);
@@ -143,7 +145,11 @@ export function attr(name: string, value: UpstreamSignalOrValue) {
   if (el.nodeType !== NodeType.Element) {
     throw new Error("Debug Error");
   }
-  createEffect(_value => setAttr(el, name, normalizeAttrValue(_value)), value, 1);
+  createEffect(
+    _value => setAttr(el, name, normalizeAttrValue(_value)),
+    value,
+    1
+  );
 }
 
 export function attrs(
@@ -195,7 +201,11 @@ export function html(value: UpstreamSignalOrValue<string>) {
 }
 
 export function prop(name: string, value: UpstreamSignalOrValue, node?: Node) {
-  createPropertyEffect((node || walker.currentNode) as unknown as Record<string, unknown>, name, value);
+  createPropertyEffect(
+    ((node || walker.currentNode) as unknown) as Record<string, unknown>,
+    name,
+    value
+  );
 }
 
 export function props(properties) {

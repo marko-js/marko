@@ -23,18 +23,25 @@ export const hydrate = register(__dirname.split("/").pop()!, () => {
   walk();
   const clickCount = source(0);
   const error = source("");
-  const doubleClick = compute((click) => click * 2, clickCount, 1);
+  const doubleClick = compute(click => click * 2, clickCount, 1);
   on("click", () => {
     const prev = get(clickCount);
     set(clickCount, prev + 1);
     // TODO: figure out how to have failing tests
     try {
       if (prev) get(doubleClick);
-    } catch(err) {
+    } catch (err) {
       set(error, err);
     }
   });
-  textContent(compute(([clickCount, error]) => String(clickCount) + error, [clickCount, error], 0, true));
+  textContent(
+    compute(
+      ([clickCount, error]) => String(clickCount) + error,
+      [clickCount, error],
+      0,
+      true
+    )
+  );
 });
 
 export default createRenderFn(template, walks, [], hydrate);
