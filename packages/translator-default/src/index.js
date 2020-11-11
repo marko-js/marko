@@ -18,8 +18,8 @@ import MarkoPlaceholder from "./placeholder";
 import MarkoComment from "./comment";
 import MarkoScriptlet from "./scriptlet";
 import MarkoClass from "./class";
-import { visitor as analyze } from "./analyze";
-import { visitor as optimizeVisitor } from "./optimize";
+import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
+import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import getComponentFiles from "./util/get-component-files";
 
 export { default as taglibs } from "./taglib";
@@ -51,6 +51,9 @@ export const visitor = {
         "component"
       );
 
+      // Pre-Analyze tree
+      analyzeStaticVDOM(path);
+
       // Move non static content into the renderBody.
       const [renderBlock] = path.pushContainer("body", t.blockStatement([]));
       path
@@ -62,9 +65,6 @@ export const visitor = {
         });
 
       file._renderBlock = renderBlock;
-
-      // Pre-Analyze tree
-      if (file.markoOpts.output !== "html") path.traverse(analyze);
     },
     exit(path) {
       const {
@@ -312,9 +312,7 @@ export const visitor = {
         );
       }
 
-      if (file.markoOpts.optimize) {
-        path.traverse(optimizeVisitor);
-      }
+      optimizeHTMLWrites(path);
     }
   },
   ImportDeclaration: {

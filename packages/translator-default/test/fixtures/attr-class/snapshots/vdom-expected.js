@@ -2,12 +2,6 @@ const _marko_template = _t();
 
 export default _marko_template;
 import _marko_class_merge from "marko/src/runtime/helpers/class-value";
-import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
-
-const _marko_node = _marko_createElement("div", {
-  "class": "a b c"
-}, "2", null, 0, 1);
-
 import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
@@ -28,7 +22,9 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("div", {
     "class": "a b"
   }, "1", component, 0, 1);
-  out.n(_marko_node, component);
+  out.e("div", {
+    "class": "a b c"
+  }, "2", component, 0, 1);
 
   _marko_tag(_customTag, {
     "class": ["a", {

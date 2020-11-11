@@ -3,26 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
-import _marko_createElement from "marko/src/runtime/vdom/helpers/v-element";
-
-const _marko_node = _marko_createElement("div", null, "2", null, 0, 0);
-
 import _preserve from "../../../../marko/src/core-tags/components/preserve-tag.js";
-
-const _marko_node2 = _marko_createElement("div", null, "5", null, 0, 0);
-
-const _marko_node3 = _marko_createElement("div", null, "8", null, 0, 0);
-
-const _marko_node4 = _marko_createElement("div", null, "11", null, 0, 0);
-
-const _marko_node5 = _marko_createElement("div", null, "13", null, 0, 0);
-
-const _marko_node6 = _marko_createElement("div", null, "14", null, 0, 0);
-
-const _marko_node7 = _marko_createElement("div", null, "16", null, 0, 0);
-
-const _marko_node8 = _marko_createElement("div", null, "17", null, 0, 0);
-
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/dom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
@@ -37,7 +18,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         "renderBody": out => {
           _marko_tag(_hello, {}, out, _component, "1");
 
-          out.n(_marko_node, component);
+          out.e("div", null, "2", component, 0, 0);
         }
       }, out, _component, "0");
     }
@@ -55,7 +36,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
             }
           }, out, _component, "p_4");
 
-          out.n(_marko_node2, component);
+          out.e("div", null, "5", component, 0, 0);
         }
       }, out, _component, "3");
     }
@@ -67,7 +48,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         "renderBody": out => {
           _marko_tag(_hello, {}, out, _component, "7");
 
-          out.n(_marko_node3, component);
+          out.e("div", null, "8", component, 0, 0);
         }
       }, out, _component, "p_6");
     }
@@ -89,7 +70,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
             }
           }, out, _component, "10");
 
-          out.n(_marko_node4, component);
+          out.e("div", null, "11", component, 0, 0);
         }
       }, out, _component, "p_9");
     }
@@ -101,7 +82,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         "renderBody": out => {
           _marko_tag(_hello, {}, out, _component, "12");
 
-          out.n(_marko_node5, component);
+          out.e("div", null, "13", component, 0, 0);
         }
       }, out, _component, "@a");
     }
@@ -119,7 +100,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
             }
           }, out, _component, "p_@c");
 
-          out.n(_marko_node6, component);
+          out.e("div", null, "14", component, 0, 0);
         }
       }, out, _component, "@b");
     }
@@ -131,7 +112,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         "renderBody": out => {
           _marko_tag(_hello, {}, out, _component, "15");
 
-          out.n(_marko_node7, component);
+          out.e("div", null, "16", component, 0, 0);
         }
       }, out, _component, "p_@d");
     }
@@ -153,7 +134,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
             }
           }, out, _component, "@f");
 
-          out.n(_marko_node8, component);
+          out.e("div", null, "17", component, 0, 0);
         }
       }, out, _component, "p_@e");
     }
