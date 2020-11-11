@@ -1,8 +1,3 @@
 {
-  "quiet": true,
-  "files": [
-    "package.json",
-    "packages/runtime/package.json",
-    "packages/translator/package.json"
-  ]
+  "quiet": true
 }
