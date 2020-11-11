@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.51](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.50...v5.0.0-next.51) (2020-11-11)
+
+
+### Bug Fixes
+
+* refactor and optimize optimizers ([7e1d058](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/7e1d0588c54f4143ecd04ec8e04426ac4d37a655))
+
+
+### Features
+
+* cached compilations, nested tag analysis ([74d5f10](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/74d5f104b8f35178c399ab5c3514c33f8b63cdf0))
+
+
+
+
+
 # [5.0.0-next.50](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.49...v5.0.0-next.50) (2020-10-12)
 
 

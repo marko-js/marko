@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.51](https://github.com/marko-js/marko/compare/v5.0.0-next.50...v5.0.0-next.51) (2020-11-11)
+
+
+### Bug Fixes
+
+* regression with no-update-body with no renderBody ([1e89057](https://github.com/marko-js/marko/commit/1e890574bd23035eb1d22ae78672c3a0e9dd4563))
+
+
+### Features
+
+* cached compilations, nested tag analysis ([74d5f10](https://github.com/marko-js/marko/commit/74d5f104b8f35178c399ab5c3514c33f8b63cdf0))
+
+
+
+
+
 # [5.0.0-next.50](https://github.com/marko-js/marko/compare/v5.0.0-next.49...v5.0.0-next.50) (2020-10-12)
 
 

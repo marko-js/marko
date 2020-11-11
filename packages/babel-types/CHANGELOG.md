@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.51](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.50...v5.0.0-next.51) (2020-11-11)
+
+
+### Features
+
+* **babel-utils:** add basic types ([61900a0](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/61900a0d1150b9c4e520f5916086143bd84484fb))
+* add typescript types for babel-types ([#1623](https://github.com/marko-js/marko/tree/master/packages/babel-types/issues/1623)) ([51bd454](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/51bd454ea191444699bde9c8f6f4a15e459ffba3))
+
+
+
+
+
 # [5.0.0-next.39](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.38...v5.0.0-next.39) (2020-08-10)
 
 
