@@ -5,7 +5,11 @@ const {
   MARKO_TYPES
 } = require("../packages/babel-types/dist/types/definitions");
 
+const HUB_INTERFACE = "export interface HubInterface {";
+const HUB_CLASS =
+  "export class Hub implements HubInterface {\n    constructor();";
 const IMPORT = "import * as t from '@babel/types'";
+const EXPORT_NODE = "export import Node = t.Node;";
 const IS =
   "//#region ------------------------- isXXX -------------------------";
 const ASSERT =
@@ -18,7 +22,7 @@ fs.readFile(
   (err, data) => {
     if (err) return console.error(err);
 
-    [IMPORT, IS, ASSERT].forEach(str => {
+    [HUB_INTERFACE, HUB_CLASS, IMPORT, EXPORT_NODE, IS, ASSERT].forEach(str => {
       if (data.indexOf(str) === -1) {
         console.error(
           `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`
@@ -28,7 +32,33 @@ fs.readFile(
     });
 
     var result = data
-      .replace(IMPORT, `import { types as t } from '@marko/babel-types'`)
+      .replace(
+        HUB_INTERFACE,
+        `export interface BabelFile {
+    ast: t.File,
+    path: NodePath<t.Program>,
+    hub: HubInterface,
+    code: string,
+    opts: Record<string, unknown>,
+    metadata: Record<string, unknown>,
+    markoOpts: {
+        output: "html" | "dom",
+        optimize: boolean,
+        fileSystem: typeof import("fs"),
+        cache: Map<unknown, unknown>
+    }
+}
+
+${HUB_INTERFACE}
+    file: BabelFile;`
+      )
+      .replace(
+        HUB_CLASS,
+        `${HUB_CLASS}
+    file: BabelFile;`
+      )
+      .replace(IMPORT, `import * as t from './types'`)
+      .replace(EXPORT_NODE, "type Node = t.Node")
       .replace(
         IS,
         IS +

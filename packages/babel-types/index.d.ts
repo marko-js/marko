@@ -1,9 +1,10 @@
 import * as types from "./dist/types";
+import { Scope } from "./dist/traverse";
 
 declare module "./dist/types" {
   export const MARKO_TYPES: string[];
 }
 
-export type * from "./dist/traverse";
-export type * from "./dist/types";
-export { types };
+export * from "./dist/traverse";
+export * from "./dist/types";
+export { types, Scope };

@@ -7,9 +7,8 @@ import type {
   TemplateElement,
   TemplateLiteral,
   Program,
+  BabelFile
 } from "@marko/babel-types";
-
-import type { File } from "@babel/core";
 
 export function assetAllowedAttributes(path: NodePath<MarkoTag>, allowed: string[]): void;
 export function assertNoArgs(path: NodePath<MarkoTag>): void;
@@ -49,37 +48,37 @@ export function normalizeTemplateString(
 type Loc = { line: number; column: number };
 type LocRange = { start: Loc; end: Loc };
 
-export function getLoc(file: unknown, pos: number): Loc;
-export function getLocRange(file: unknown, pos: number): LocRange;
+export function getLoc(file: BabelFile, pos: number): Loc;
+export function getLocRange(file: BabelFile, pos: number): LocRange;
 export function withLoc<T extends Node>(
-  file: unknown,
+  file: BabelFile,
   node: T,
   start: number,
   end: number
 ): T;
 
 export function parseScript(
-  file: unknown,
+  file: BabelFile,
   str: string,
   start?: number
 ): Program;
 export function parseExpression(
-  file: unknown,
+  file: BabelFile,
   str: string,
   start?: number
 ): Expression;
 
-export function resolveRelativePath(file: unknown, request: string): string;
+export function resolveRelativePath(file: BabelFile, request: string): string;
 export function importDefault(
-  file: unknown,
+  file: BabelFile,
   request: string,
   nameHint?: string
 ): Identifier;
 export function importNamed(
-  file: unknown,
+  file: BabelFile,
   request: string,
   nameHint?: string
 ): Identifier;
 
-export function getTaglibLookup(file: unknown): unknown;
-export function getTagDefForTagName(file: unknown, tagName: string): unknown;
+export function getTaglibLookup(file: BabelFile): unknown;
+export function getTagDefForTagName(file: BabelFile, tagName: string): unknown;
