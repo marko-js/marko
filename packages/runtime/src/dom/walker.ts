@@ -38,16 +38,16 @@ export const enum WalkCodes {
 // TODO: in some cases (including hydrate) we may get an existing node
 // ideally we wouldn't create the newNode unless it was actually needed
 export function walk<T extends Node>(newNode?: T) {
-  if (!currentWalks) {
-    throw new Error("Debug Error");
+  if ("MARKO_DEBUG" && !currentWalks) {
+    throw new Error("Missing encoded walk string");
   }
 
   while (true) {
     // https://jsperf.com/charat-vs-index/36
     let value = currentWalks.charCodeAt(currentWalkIndex++);
 
-    if (value === undefined) {
-      throw new Error("Debug Error");
+    if ("MARKO_DEBUG" && value === undefined) {
+      throw new Error("End of walk string was reached");
     }
 
     if (value >= WalkCodes.Next) {
@@ -67,8 +67,19 @@ export function walk<T extends Node>(newNode?: T) {
     } else if (value === WalkCodes.Get) {
       return walker.currentNode;
     } else {
-      if (!newNode) {
-        throw new Error("Debug Error");
+      if ("MARKO_DEBUG" && !newNode) {
+        const codeMap = {
+          [WalkCodes.Inside]: "Inside",
+          [WalkCodes.Before]: "Before",
+          [WalkCodes.After]: "After",
+          [WalkCodes.Replace]: "Replace"
+        };
+        throw new Error(
+          `An insertion code (${codeMap[value]}) was hit without a node to insert`
+        );
+      } else {
+        // TODO: remove branch if https://github.com/microsoft/TypeScript/issues/41503
+        newNode = newNode!;
       }
 
       const current = walker.currentNode;
@@ -91,8 +102,8 @@ export function walk<T extends Node>(newNode?: T) {
       if (value === WalkCodes.After) {
         parentNode.insertBefore(newNode, current.nextSibling);
       } else {
-        if (value !== WalkCodes.Replace) {
-          throw new Error("Debug Error");
+        if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+          throw new Error(`Unknown walk code: ${value}`);
         }
         parentNode.replaceChild(newNode, current);
       }

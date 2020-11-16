@@ -98,8 +98,14 @@ export function createRenderer<T, H extends HydrateFunction>(
 function _clone(this: Renderer) {
   let sourceNode: Node | null | undefined = this.___sourceNode;
   if (!sourceNode) {
-    if (this.___template === undefined) {
-      throw new Error("Debug Error");
+    if ("MARKO_DEBUG" && this.___template === undefined) {
+      throw new Error(
+        "The renderer does not have a template to clone: " +
+          JSON.stringify(this)
+      );
+    } else {
+      // TODO: remove branch if https://github.com/microsoft/TypeScript/issues/41503
+      this.___template = this.___template!;
     }
     const walks = this.___walks;
     // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
