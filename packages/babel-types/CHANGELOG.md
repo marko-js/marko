@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.54](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.53...v5.0.0-next.54) (2020-11-17)
+
+**Note:** Version bump only for package @marko/babel-types
+
+
+
+
+
 # [5.0.0-next.52](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.51...v5.0.0-next.52) (2020-11-12)
 
 **Note:** Version bump only for package @marko/babel-types
