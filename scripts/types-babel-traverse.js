@@ -40,7 +40,14 @@ fs.readFile(
     hub: HubInterface,
     code: string,
     opts: Record<string, unknown>,
-    metadata: Record<string, unknown>,
+    metadata: Record<string, unknown> & {
+      marko: {
+        id: string,
+        tags: string[],
+        deps: Array<string | { type: string, code: string, path: string, virtualPath: string }>,
+        watchFiles: string[]
+      }
+    },
     markoOpts: {
         output: "html" | "dom",
         optimize: boolean,

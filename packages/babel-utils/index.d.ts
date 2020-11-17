@@ -10,6 +10,92 @@ import type {
   BabelFile
 } from "@marko/babel-types";
 
+export interface AttributeDefinition {
+  allowExpressions: boolean;
+  filePath: string;
+  name: string;
+  type?: string;
+  html?: boolean;
+  enum?: string[];
+  pattern?: RegExp;
+  required: boolean;
+  defaultValue: unknown;
+  description?: string;
+  deprecated: boolean;
+  autocomplete: Array<{
+    displayText: string;
+    snippet: string;
+    description: string;
+    descriptionMoreURL?: string;
+  }>;
+}
+export interface TagDefinition {
+  dir: string;
+  filePath: string;
+  attributeGroups?: string[];
+  patternAttributes?: AttributeDefinition[];
+  attributes: { [x: string]: AttributeDefinition };
+  description?: string;
+  nestedTags?: {
+    [x: string]: TagDefinition & {
+      isNestedTag: true;
+      isRepeated: boolean;
+      targetProperty: string;
+    };
+  };
+  autocomplete?: Array<{
+    displayText: string;
+    snippet: string;
+    description: string;
+    descriptionMoreURL?: string;
+  }>;
+  htmlType?: "html" | "svg" | "math";
+  html: boolean;
+  name: string;
+  taglibId: string;
+  template: string;
+  renderer: string;
+  deprecated: boolean;
+  isNestedTag: true;
+  isRepeated: boolean;
+  openTagOnly: boolean;
+  targetProperty: string;
+  codeGeneratorModulePath?: string;
+  nodeFactoryPath?: string;
+  transformers?: string[];
+  migrators?: string[];
+  parseOptions?: {
+    rootOnly?: boolean,
+    rawOpenTag?: boolean,
+    openTagOnly?: boolean,
+    ignoreAttributes?: boolean,
+    relaxRequireCommas?: boolean,
+    state?: "html" | "static-text" | "parsed-text" | "cdata"
+  }
+}
+
+export interface TaglibLookup {
+  getTagsSorted(): TagDefinition[];
+  getTag(tagName: string): TagDefinition;
+  getAttribute(tagName: string, attrName: string): AttributeDefinition;
+  forEachAttribute(
+    tagName: string,
+    callback: (attr: AttributeDefinition, tag: TagDefinition) => void
+  ): void;
+}
+
+export type FunctionPlugin = (path: NodePath<any>, types: typeof t) => void;
+type EnterExitPlugin = {
+  enter?(path: NodePath<any>, types: typeof t): void;
+  exit?(path: NodePath<any>, types: typeof t): void;
+};
+
+export type ModulePlugin = {
+  default: EnterExitPlugin | FunctionPlugin;
+};
+
+export type Plugin = ModulePlugin | EnterExitPlugin | FunctionPlugin;
+
 export function assetAllowedAttributes(path: NodePath<MarkoTag>, allowed: string[]): void;
 export function assertNoArgs(path: NodePath<MarkoTag>): void;
 export function assertNoAttributes(path: NodePath<MarkoTag>): void;
@@ -26,7 +112,7 @@ export function isLoopTag(path: NodePath<MarkoTag>): boolean;
 export function getMacroIdentifier(
   path: NodePath<MarkoTag>
 ): Identifier | undefined;
-export function getTagDef(path: NodePath<MarkoTag>): unknown;
+export function getTagDef(path: NodePath<MarkoTag>): TagDefinition | undefined;
 export function getFullyResolvedTagName(path: NodePath<MarkoTag>): string;
 
 export function findParentTag(
@@ -80,5 +166,5 @@ export function importNamed(
   nameHint?: string
 ): Identifier;
 
-export function getTaglibLookup(file: BabelFile): unknown;
-export function getTagDefForTagName(file: BabelFile, tagName: string): unknown;
+export function getTaglibLookup(file: BabelFile): TaglibLookup;
+export function getTagDefForTagName(file: BabelFile, tagName: string): TagDefinition | undefined;
