@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.53](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.52...v5.0.0-next.53) (2020-11-17)
+
+
+### Features
+
+* **babel-utils:** expose taglib types ([1d6ccb9](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/1d6ccb983da6cbbde4c837a1fc594ab3e67fb072))
+
+
+
+
+
 # [5.0.0-next.52](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.51...v5.0.0-next.52) (2020-11-12)
 
 **Note:** Version bump only for package @marko/babel-utils
