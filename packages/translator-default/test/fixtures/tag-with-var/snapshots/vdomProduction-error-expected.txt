@@ -1,0 +1,4 @@
+packages/translator-default/test/fixtures/tag-with-var/template.marko(1,6): Tag does not support a variable.
+> 1 | <div/myDiv/>
+    |      ^^^^^
+  2 | 

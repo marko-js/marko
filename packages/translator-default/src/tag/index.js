@@ -6,7 +6,8 @@ import {
   isAttributeTag,
   isMacroTag,
   isNativeTag,
-  findAttributeTags
+  findAttributeTags,
+  assertNoVar
 } from "@marko/babel-utils";
 import markoModules from "@marko/compiler/modules";
 import nativeTag from "./native-tag";
@@ -21,6 +22,7 @@ import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 
 export default {
   enter(path) {
+    assertNoVar(path);
     const tagDef = getTagDef(path);
 
     if (tagDef) {

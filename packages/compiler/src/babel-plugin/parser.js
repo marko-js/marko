@@ -2,6 +2,7 @@ import { createParser } from "htmljs-parser";
 import parseAttributes from "./util/parse-attributes";
 import parseArguments from "./util/parse-arguments";
 import parseParams from "./util/parse-params";
+import parseVar from "./util/parse-var";
 import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
 import markoModules from "../../modules";
@@ -255,6 +256,7 @@ export function parseMarko(file) {
       }
 
       if (!parseOptions.ignoreAttributes) {
+        currentTag.set("var", parseVar(file, event.var));
         currentTag.set("params", parseParams(file, event.params));
         currentTag.set("arguments", parseArguments(file, event.argument));
         currentTag.set(
