@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.55](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.54...v5.0.0-next.55) (2020-11-19)
+
+
+### Bug Fixes
+
+* babel-utils doesnt depend on compiler ([c429ffb](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/c429ffb0aa4e79210b881d089a3db19d272a750d))
+
+
+
+
+
 # [5.0.0-next.54](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.53...v5.0.0-next.54) (2020-11-17)
 
 **Note:** Version bump only for package @marko/babel-utils
