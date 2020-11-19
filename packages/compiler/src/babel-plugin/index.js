@@ -54,10 +54,11 @@ export default (api, markoOpts) => {
         file.hub.buildError = file.buildCodeFrameError.bind(file);
         file.markoOpts = markoOpts;
         file.___taglibLookup = sourceFile.___taglibLookup;
+        file.___getMarkoFile = getMarkoFile;
         traverse(ast, translator.visitor, file.scope);
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
-        file.markoOpts = file.___taglibLookup = undefined;
+        file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
       }
 
       metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
@@ -140,6 +141,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   file.markoOpts = markoOpts;
   file.___taglibLookup = taglibLookup;
+  file.___getMarkoFile = getMarkoFile;
 
   file.ast.start = file.ast.program.start = 0;
   file.ast.end = file.ast.program.end = code.length - 1;

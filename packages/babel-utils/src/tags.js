@@ -1,5 +1,4 @@
 import { types as t } from "@marko/babel-types";
-import { ___getMarkoFile } from "@marko/compiler";
 import { getTagDefForTagName } from "./taglib";
 const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
 
@@ -156,7 +155,7 @@ export function loadFileForTag(tag) {
   const sourceFileName = def && def.template;
 
   if (sourceFileName) {
-    return ___getMarkoFile(
+    return file.___getMarkoFile(
       fs.readFileSync(sourceFileName, "utf-8"),
       { ...file.opts, sourceFileName, filename: sourceFileName },
       file.markoOpts

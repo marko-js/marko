@@ -1,9 +1,9 @@
 import * as babel from "@babel/core";
-import corePlugin, { getMarkoFile } from "./babel-plugin";
+import corePlugin from "./babel-plugin";
 import defaultOptions from "./config";
 import * as taglib from "./taglib";
 
-export { taglib, getMarkoFile as ___getMarkoFile };
+export { taglib };
 
 let globalConfig = { ...defaultOptions };
 export function configure(newConfig) {
