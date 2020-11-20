@@ -14,7 +14,7 @@ import { MarkoFile } from "./file";
 const SOURCE_FILES = new WeakMap();
 let ROOT = process.cwd();
 try {
-  ROOT = getRootDir(ROOT);
+  ROOT = getRootDir(ROOT) || ROOT;
   // eslint-disable-next-line no-empty
 } catch {}
 
