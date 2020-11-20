@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.56](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.55...v5.0.0-next.56) (2020-11-20)
+
+
+### Bug Fixes
+
+* **compiler:** no longer error when compiling from root dir ([fe84fb3](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/fe84fb345affb4a48e10d51df18bcf1114e12d3f))
+
+
+
+
+
 # [5.0.0-next.55](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.54...v5.0.0-next.55) (2020-11-19)
 
 
