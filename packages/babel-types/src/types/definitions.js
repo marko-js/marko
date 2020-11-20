@@ -155,10 +155,11 @@ const MarkoDefinitions = {
       "body",
       "params",
       "arguments",
+      "var",
       "properties",
       "runtimeFlags"
     ],
-    visitor: ["name", "attributes", "body", "params", "arguments"],
+    visitor: ["name", "attributes", "body", "params", "arguments", "var"],
     fields: {
       name: {
         validate: assertNodeType("Expression")
@@ -199,6 +200,10 @@ const MarkoDefinitions = {
       },
       key: {
         validate: assertNodeType("Expression"),
+        optional: true
+      },
+      var: {
+        validate: assertNodeType("LVal"),
         optional: true
       }
     }

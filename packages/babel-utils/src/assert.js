@@ -49,3 +49,10 @@ export function assertNoArgs(path) {
     );
   }
 }
+
+export function assertNoVar(path) {
+  const tagVar = path.get("var");
+  if (tagVar.node) {
+    throw tagVar.buildCodeFrameError("Tag does not support a variable.");
+  }
+}

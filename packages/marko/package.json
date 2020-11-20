@@ -10,7 +10,6 @@
         "argly": "^1.0.0",
         "complain": "^1.6.0",
         "events-light": "^1.0.0",
-        "htmljs-parser": "^2.7.1",
         "lasso-caching-fs": "^1.0.1",
         "lasso-package-root": "^1.0.1",
         "listener-tracker": "^2.0.0",

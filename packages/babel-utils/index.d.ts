@@ -98,6 +98,7 @@ export type Plugin = ModulePlugin | EnterExitPlugin | FunctionPlugin;
 
 export function assetAllowedAttributes(path: NodePath<MarkoTag>, allowed: string[]): void;
 export function assertNoArgs(path: NodePath<MarkoTag>): void;
+export function assertNoVar(path: NodePath<MarkoTag>): void;
 export function assertNoAttributes(path: NodePath<MarkoTag>): void;
 export function assertNoParams(path: NodePath<MarkoTag>): void;
 export function assertNoAttributeTags(path: NodePath<MarkoTag>): void;

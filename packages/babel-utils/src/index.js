@@ -18,6 +18,7 @@ export {
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
+  assertNoVar,
   assertNoAttributeTags
 } from "./assert";
 export { normalizeTemplateString } from "./template-string";
