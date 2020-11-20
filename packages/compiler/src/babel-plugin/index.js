@@ -74,13 +74,14 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   }
 
   const filename = jsParseOptions.sourceFileName;
-  const componentId = path.relative(ROOT, filename);
+  const relativeFilename = path.relative(ROOT, filename);
   const contentHash = createHash("MD5")
     .update(code)
     .digest("hex");
   const cacheKey = createHash("MD5")
-    .update(componentId)
-    .update(markoOpts.migrate ? "\0" : "")
+    .update(relativeFilename)
+    .update(markoOpts.optimize ? "\0optimize" : "")
+    .update(markoOpts.migrate ? "\0migrate" : "")
     .digest("hex");
 
   let cached = compileCache.get(cacheKey);
@@ -129,7 +130,12 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   });
 
   const meta = (file.metadata.marko = {
-    id: componentId,
+    id: markoOpts.optimize
+      ? createHash("MD5")
+          .update(relativeFilename)
+          .digest("base64")
+          .slice(0, 8)
+      : relativeFilename,
     macros: {},
     deps: [],
     tags: [],

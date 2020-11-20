@@ -1,4 +1,3 @@
-import { createHash } from "crypto";
 import { types as t } from "@marko/babel-types";
 import {
   parseExpression,
@@ -144,13 +143,6 @@ export const visitor = {
         t.identifier("meta")
       );
 
-      const componentId = markoOpts.optimize
-        ? createHash("MD5")
-            .update(meta.id)
-            .digest("base64")
-            .slice(0, 8)
-        : meta.id;
-
       if (markoOpts.writeVersionComment) {
         path.addComment(
           "leading",
@@ -176,7 +168,7 @@ export const visitor = {
         ])
       );
 
-      const componentIdString = t.stringLiteral(componentId);
+      const componentIdString = t.stringLiteral(meta.id);
       path.pushContainer(
         "body",
         t.variableDeclaration("const", [
