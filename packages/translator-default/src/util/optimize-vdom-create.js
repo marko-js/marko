@@ -9,6 +9,7 @@ import {
 import { getKeyManager } from "./key-manager";
 import write from "./vdom-out-write";
 import { tagArguments } from "../tag/native-tag[vdom]";
+import directives from "../tag/attribute/directives";
 
 const staticNodes = new WeakSet();
 
@@ -70,7 +71,8 @@ const analyzeStaticVisitor = {
           if (
             !t.isMarkoAttribute(attr) ||
             attr.node.arguments ||
-            attr.node.modifier
+            attr.node.modifier ||
+            directives[attr.node.name]
           )
             return false;
 

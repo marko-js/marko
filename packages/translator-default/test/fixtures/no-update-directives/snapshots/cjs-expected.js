@@ -134,6 +134,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
       }, out, _component, "p_@e");
     }
   }, out, _component, "@e");
+  (0, _renderTag.default)(_preserveTag.default, {
+    "n": true,
+    "renderBody": out => {
+      out.w("<div class=test></div>");
+    }
+  }, out, _component, "18");
 }, {
   t: _marko_componentType,
   i: true

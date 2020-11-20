@@ -1,20 +1,6 @@
 const _marko_template = _t();
 
 export default _marko_template;
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
-
-const _marko_node = _marko_createElement("div", {
-  "class": "shorthand"
-}, "0", null, 0, 1);
-
-const _marko_node2 = _marko_createElement("div", {
-  "class": "shorthand1 shorthand2"
-}, "1", null, 0, 1);
-
-const _marko_node3 = _marko_createElement("div", {
-  "class": "shorthand1 shorthand2 inline"
-}, "2", null, 0, 1);
-
 import _marko_class_merge from "marko/dist/runtime/helpers/class-value";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";
@@ -24,9 +10,15 @@ const _marko_componentType = _marko_registerComponent("WqUsRyBC", () => _marko_t
       _marko_component = {};
 
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.n(_marko_node, component);
-  out.n(_marko_node2, component);
-  out.n(_marko_node3, component);
+  out.e("div", {
+    "class": "shorthand"
+  }, "0", component, 0, 1);
+  out.e("div", {
+    "class": "shorthand1 shorthand2"
+  }, "1", component, 0, 1);
+  out.e("div", {
+    "class": "shorthand1 shorthand2 inline"
+  }, "2", component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge(["shorthand1 shorthand2", dynamic1])
   }, "3", component, 0, 1);

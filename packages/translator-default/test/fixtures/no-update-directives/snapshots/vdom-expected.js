@@ -139,6 +139,15 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       }, out, _component, "p_@e");
     }
   }, out, _component, "@e");
+
+  _marko_tag(_preserve, {
+    "n": true,
+    "renderBody": out => {
+      out.e("div", {
+        "class": "test"
+      }, "18", component, 0, 1);
+    }
+  }, out, _component, "18");
 }, {
   t: _marko_componentType,
   i: true
