@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.57](https://github.com/marko-js/marko/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
+
+
+### Bug Fixes
+
+* **translator-default:** ensure accruate component id metadata ([c4b0360](https://github.com/marko-js/marko/commit/c4b036058ea57f31e151e0dae965858839d1795c))
+
+
+### Features
+
+* add default attribute support ([#1631](https://github.com/marko-js/marko/issues/1631)) ([46ceab3](https://github.com/marko-js/marko/commit/46ceab34a5c1815933b8b2a9f3533716ae0fedcf))
+* add parser support for tag variables ([#1630](https://github.com/marko-js/marko/issues/1630)) ([43c4433](https://github.com/marko-js/marko/commit/43c4433cb026f7eace199203e15d1050a53dc35d))
+
+
+
+
+
 # [5.0.0-next.56](https://github.com/marko-js/marko/compare/v5.0.0-next.55...v5.0.0-next.56) (2020-11-20)
 
 

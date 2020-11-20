@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.57](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
+
+
+### Features
+
+* add default attribute support ([#1631](https://github.com/marko-js/marko/tree/master/packages/babel-types/issues/1631)) ([46ceab3](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/46ceab34a5c1815933b8b2a9f3533716ae0fedcf))
+* add parser support for tag variables ([#1630](https://github.com/marko-js/marko/tree/master/packages/babel-types/issues/1630)) ([43c4433](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/43c4433cb026f7eace199203e15d1050a53dc35d))
+
+
+
+
+
 # [5.0.0-next.54](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.53...v5.0.0-next.54) (2020-11-17)
 
 **Note:** Version bump only for package @marko/babel-types

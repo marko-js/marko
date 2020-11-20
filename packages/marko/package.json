@@ -1,11 +1,11 @@
 {
     "name": "marko",
-    "version": "5.0.0-next.56",
+    "version": "5.0.0-next.57",
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "dependencies": {
-        "@marko/compiler": "^5.0.0-next.56",
-        "@marko/translator-default": "^5.0.0-next.56",
+        "@marko/compiler": "^5.0.0-next.57",
+        "@marko/translator-default": "^5.0.0-next.57",
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
         "complain": "^1.6.0",

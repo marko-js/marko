@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.57](https://github.com/marko-js/marko/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
+
+
+### Features
+
+* add parser support for tag variables ([#1630](https://github.com/marko-js/marko/issues/1630)) ([43c4433](https://github.com/marko-js/marko/commit/43c4433cb026f7eace199203e15d1050a53dc35d))
+
+
+
+
+
 # [5.0.0-next.56](https://github.com/marko-js/marko/compare/v5.0.0-next.55...v5.0.0-next.56) (2020-11-20)
 
 **Note:** Version bump only for package marko
