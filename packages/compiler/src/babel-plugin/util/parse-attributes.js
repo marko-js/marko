@@ -7,9 +7,11 @@ export default (file, attributes, startPos) => {
   let attrEndPos = startPos;
 
   return attributes.map(attr => {
-    const attrStartPos = code.indexOf(attr.name, attrEndPos);
+    const attrStartPos = attr.default
+      ? attr.pos
+      : code.indexOf(attr.name, attrEndPos);
 
-    if (attr.name.slice(0, 3) === "...") {
+    if (attr.name.startsWith("...")) {
       let attrExpression = attr.name.slice(3);
 
       if (attr.argument) {
@@ -54,7 +56,8 @@ export default (file, attributes, startPos) => {
         name,
         value,
         modifier,
-        parseArguments(file, attr.argument)
+        parseArguments(file, attr.argument),
+        Boolean(attr.default)
       ),
       attrStartPos,
       attrEndPos

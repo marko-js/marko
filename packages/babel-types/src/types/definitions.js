@@ -92,7 +92,7 @@ const MarkoDefinitions = {
 
   MarkoAttribute: {
     aliases: ["Marko", "Expression"],
-    builder: ["name", "value", "modifier", "arguments"],
+    builder: ["name", "value", "modifier", "arguments", "default"],
     visitor: ["value", "arguments"],
     fields: {
       name: {
@@ -111,6 +111,10 @@ const MarkoDefinitions = {
           assertValueType("array"),
           assertEach(assertNodeType("Expression", "SpreadElement"))
         ),
+        optional: true
+      },
+      default: {
+        validate: assertValueType("boolean"),
         optional: true
       }
     }
