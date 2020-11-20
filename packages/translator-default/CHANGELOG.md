@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.58](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.57...v5.0.0-next.58) (2020-11-20)
+
+
+### Bug Fixes
+
+* **translator-default:** avoid vdom hoisting for directive attrs ([abf5b8c](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/abf5b8ce1286072f728dacd78427cf6ca2c09bc4))
+
+
+
+
+
 # [5.0.0-next.57](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
 
 
