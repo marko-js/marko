@@ -74,20 +74,22 @@ Object.assign(Printer.prototype, {
     this.print(node.body, node);
   },
   MarkoAttribute(node) {
-    this.token(node.name);
+    if (!node.default) {
+      this.token(node.name);
 
-    if (node.modifier) {
-      this.token(":");
-      this.token(node.modifier);
+      if (node.modifier) {
+        this.token(":");
+        this.token(node.modifier);
+      }
+
+      if (node.arguments && node.arguments.length) {
+        this.token("(");
+        this.printList(node.arguments, node);
+        this.token(")");
+      }
     }
 
-    if (node.arguments && node.arguments.length) {
-      this.token("(");
-      this.printList(node.arguments, node);
-      this.token(")");
-    }
-
-    if (!t.isBooleanLiteral(node.value) || !node.value.value) {
+    if (node.default || !t.isBooleanLiteral(node.value) || !node.value.value) {
       this.token("=");
       printWithParansIfNeeded.call(this, node.value, node);
     }
@@ -167,7 +169,12 @@ Object.assign(Printer.prototype, {
       }
 
       if (node.attributes.length) {
-        this.token(" ");
+        if (
+          !(node.attributes && node.attributes[0] && node.attributes[0].default)
+        ) {
+          this.token(" ");
+        }
+
         this.printJoin(node.attributes, node, { separator: spaceSeparator });
       }
     }
