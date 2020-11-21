@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.59](https://github.com/marko-js/marko/compare/v5.0.0-next.58...v5.0.0-next.59) (2020-11-21)
+
+
+### Bug Fixes
+
+* **babel-utils:** missing type ([2b7f619](https://github.com/marko-js/marko/commit/2b7f6199ec688f4ea37a07caa53a88ac1ba891c3))
+
+
+
+
+
 # [5.0.0-next.58](https://github.com/marko-js/marko/compare/v5.0.0-next.57...v5.0.0-next.58) (2020-11-20)
 
 
