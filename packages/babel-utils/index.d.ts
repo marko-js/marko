@@ -7,7 +7,8 @@ import type {
   TemplateElement,
   TemplateLiteral,
   Program,
-  BabelFile
+  BabelFile,
+  types as t
 } from "@marko/babel-types";
 
 export interface AttributeDefinition {
