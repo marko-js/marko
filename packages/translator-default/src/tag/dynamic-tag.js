@@ -28,25 +28,27 @@ export default function(path) {
     }
   }
 
-  const dynamicTagRenderCall = t.callExpression(
-    importDefault(
-      file,
-      `marko/src/runtime/helpers/dynamic-tag`,
-      "marko_dynamic_tag"
-    ),
-    [
-      t.identifier("out"),
-      node.name,
-      attrsLen ? t.arrowFunctionExpression([], foundAttrs) : t.nullLiteral(),
-      renderBodyProp ? renderBodyProp.value : t.nullLiteral(),
-      args && args.length ? t.arrayExpression(args) : t.nullLiteral(),
-      tagProperties.length
-        ? t.objectExpression(tagProperties)
-        : t.nullLiteral(),
-      file._componentDefIdentifier,
-      key,
-      ...buildEventHandlerArray(path)
-    ]
+  const dynamicTagRenderCall = t.expressionStatement(
+    t.callExpression(
+      importDefault(
+        file,
+        `marko/src/runtime/helpers/dynamic-tag`,
+        "marko_dynamic_tag"
+      ),
+      [
+        t.identifier("out"),
+        node.name,
+        attrsLen ? t.arrowFunctionExpression([], foundAttrs) : t.nullLiteral(),
+        renderBodyProp ? renderBodyProp.value : t.nullLiteral(),
+        args && args.length ? t.arrayExpression(args) : t.nullLiteral(),
+        tagProperties.length
+          ? t.objectExpression(tagProperties)
+          : t.nullLiteral(),
+        file._componentDefIdentifier,
+        key,
+        ...buildEventHandlerArray(path)
+      ]
+    )
   );
 
   path.replaceWith(withPreviousLocation(dynamicTagRenderCall, node));

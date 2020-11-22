@@ -91,7 +91,7 @@ const MarkoDefinitions = {
   },
 
   MarkoAttribute: {
-    aliases: ["Marko", "Expression"],
+    aliases: ["Marko"],
     builder: ["name", "value", "modifier", "arguments", "default"],
     visitor: ["value", "arguments"],
     fields: {
@@ -121,7 +121,7 @@ const MarkoDefinitions = {
   },
 
   MarkoSpreadAttribute: {
-    aliases: ["Marko", "Expression"],
+    aliases: ["Marko"],
     builder: ["value"],
     visitor: ["value"],
     fields: {
