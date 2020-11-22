@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.60](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.59...v5.0.0-next.60) (2020-11-22)
+
+
+### Bug Fixes
+
+* typing for attr nodes ([b885ee2](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/b885ee2032a2a5a81db859432520663e123444c9))
+
+
+
+
+
 # [5.0.0-next.57](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
 
 
