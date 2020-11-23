@@ -16,6 +16,7 @@ import {
   insertFragmentBefore,
   removeFragment
 } from "./fragments";
+import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { render, Renderer } from "./dom";
 import { walk, walkAndGetText } from "./walker";
@@ -39,6 +40,7 @@ export function loopOf<T>(
   onlyChild = false
 ) {
   if (isSignal(array)) {
+    const ctx = Context;
     const marker = !onlyChild ? walkAndGetText() : null;
     const parent = onlyChild
       ? (walk() as Node & ParentNode)
@@ -71,6 +73,7 @@ export function loopOf<T>(
         let newItems = 0;
         let moved = false;
 
+        setContext(ctx);
         for (let index = 0, len = _array.length; index < len; index++) {
           const item = _array[index];
           const key = getKey ? getKey(item, index) : "" + index;
@@ -107,6 +110,7 @@ export function loopOf<T>(
         }
         _newNodes.skipReconcile = !newItems && !removals && !moved;
 
+        setContext(null);
         return _newNodes;
       },
       array,
@@ -208,13 +212,18 @@ export function conditional(
     const rootFragment = currentFragment!;
     const trackFirstRef = rootFragment.___firstRef.___firstChild === marker;
     const trackLastRef = rootFragment.___lastRef.___lastChild === marker;
+    const ctx = Context;
 
     const fragmentSignal = createComputation(
       // TODO: hoist out this function and compare benchmarks
       _renderer => {
+        setContext(ctx);
         if (!_renderer && previousFragment)
           markFragmentDestroyed(previousFragment);
-        return _renderer && createFragment(_renderer, rootFragment, ...input);
+        const result =
+          _renderer && createFragment(_renderer, rootFragment, ...input);
+        setContext(null);
+        return result;
       },
       renderer,
       1

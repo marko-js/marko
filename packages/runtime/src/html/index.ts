@@ -11,3 +11,5 @@ export {
   tryPlaceholder,
   tryCatch
 } from "./writer";
+
+export { pushContext, popContext, getInContext } from "../common/context";

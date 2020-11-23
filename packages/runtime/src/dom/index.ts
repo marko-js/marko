@@ -36,3 +36,5 @@ export { on, dynamicOn, once } from "./event";
 export { classValue, styleValue } from "../common/helpers";
 
 export { init, register } from "./hydrate";
+
+export { pushContext, popContext, getInContext } from "../common/context";

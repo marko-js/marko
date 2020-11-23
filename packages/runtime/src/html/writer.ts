@@ -1,4 +1,5 @@
 import { Writable } from "stream";
+import { Context, setContext } from "../common/context";
 import { Renderer, HydrateInstance } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
@@ -39,7 +40,7 @@ export function createRenderer(renderer: Renderer) {
       } finally {
         renderedPromises = $_promises;
         $_flush();
-        clearContext();
+        clearScope();
       }
 
       if (renderedPromises) {
@@ -69,7 +70,7 @@ export function fork<T extends unknown>(
 
   $_promises = $_promises || [];
   $_promises.push(
-    resolveWithContext(
+    resolveWithScope(
       promise,
       result => {
         resolved = true;
@@ -146,7 +147,7 @@ export function tryCatch(
       markReplaceEnd(id);
       $_promises = $_promises || [];
       $_promises.push(
-        resolveWithContext(Promise.all(childPromises), null, asyncErr => {
+        resolveWithScope(Promise.all(childPromises), null, asyncErr => {
           renderReplacement(renderError, asyncErr, id);
         })
       );
@@ -211,7 +212,7 @@ export function tryPlaceholder(
       $_promises = $_promises || [];
       $_promises.push(
         Object.assign(
-          resolveWithContext(Promise.all(contentPromises), () => {
+          resolveWithScope(Promise.all(contentPromises), () => {
             resolved = true;
             renderReplacement(mergeBuffers, asyncBuffer, id);
           }),
@@ -304,11 +305,12 @@ function clearBuffer(buffer: Buffer) {
   buffer.components = null;
 }
 
-function clearContext() {
+function clearScope() {
   $_buffer = $_promises = $_stream = $_flush = null;
+  setContext(null);
 }
 
-function resolveWithContext<T>(
+function resolveWithScope<T>(
   promise: Promise<T>,
   onResolve: null | ((r: T) => unknown),
   onReject?: (e: Error) => unknown
@@ -316,6 +318,7 @@ function resolveWithContext<T>(
   const originalStream = $_stream;
   const originalBuffer = $_buffer;
   const originalFlush = $_flush;
+  const originalContext = Context;
 
   return promise.then(
     onResolve &&
@@ -325,11 +328,12 @@ function resolveWithContext<T>(
         $_flush = originalFlush;
 
         try {
+          setContext(originalContext);
           onResolve(result);
           return $_promises && Promise.all($_promises);
         } finally {
           $_flush!();
-          clearContext();
+          clearScope();
         }
       }),
     onReject &&
@@ -339,11 +343,12 @@ function resolveWithContext<T>(
         $_flush = originalFlush;
 
         try {
+          setContext(originalContext);
           onReject(error);
           return $_promises && Promise.all($_promises);
         } finally {
           $_flush!();
-          clearContext();
+          clearScope();
         }
       })
   );
