@@ -1,12 +1,12 @@
 import {
   loopOf,
-  computeProperty,
   text,
+  computeProperty,
   register,
   createRenderer,
   createRenderFn
 } from "../../../../src/dom/index";
-import { get, over, inside } from "../../utils/walks";
+import { over, inside, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -18,36 +18,35 @@ export const inputs = [
       {
         id: 2,
         text: "b"
-      }
-    ]
-  },
-  {
-    children: [
+      },
       {
-        id: 2,
+        id: 3,
         text: "c"
-      },
-      {
-        id: 1,
-        text: "d"
       }
     ]
+  },
+  {
+    children: []
   },
   {
     children: [
       {
         id: 1,
-        text: "d"
+        text: "a"
       },
       {
         id: 2,
+        text: "b"
+      },
+      {
+        id: 3,
         text: "c"
       }
     ]
   }
 ];
 
-export const template = `<div></div>`;
+export const template = `<!>`;
 export const walks = get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
@@ -57,9 +56,7 @@ export const hydrate = register(
       createRenderer(loop_template, loop_walks, undefined, item => {
         text(computeProperty("text", item));
       }),
-      i => "" + i.id,
-      false,
-      true
+      i => "" + i.id
     );
   }
 );

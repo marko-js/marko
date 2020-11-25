@@ -38,7 +38,7 @@ export const inputs = [
 ];
 
 export const template = `<!>`;
-export const walks = replace + over(1);
+export const walks = get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: typeof inputs[number]) => {

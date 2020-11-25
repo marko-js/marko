@@ -1,5 +1,5 @@
 import { html, register, createRenderFn } from "../../../../src/dom/index";
-import { over, after } from "../../utils/walks";
+import { over, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -16,8 +16,8 @@ export const inputs = [
 export const FAILS_HYDRATE = true;
 
 // <em>Testing</em> $!{input.value}
-export const template = "<em>Testing</em> ";
-export const walks = over(1) + after + over(1);
+export const template = "<em>Testing</em> <!>";
+export const walks = over(2) + get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: typeof inputs[number]) => {

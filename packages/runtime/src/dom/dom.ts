@@ -10,7 +10,7 @@ import {
   dynamicKeys,
   runInBatch
 } from "./signals";
-import { createFragment, removeFragment } from "./fragments";
+import { createFragmentFromRenderer, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
 import {
   walker,
@@ -63,7 +63,11 @@ export function createRenderFn<H extends HydrateFunction>(
     (input: Input) =>
       runInBatch(() => {
         const inputSource = createSource(input);
-        const fragment = createFragment(renderer, undefined, inputSource);
+        const fragment = createFragmentFromRenderer(
+          renderer,
+          undefined,
+          inputSource
+        );
         const container = fragment.___dom as ComponentFragment<Input>;
 
         container.rerender = (newInput: Input) =>
@@ -126,7 +130,11 @@ function parse(template: string, ensureFragment?: boolean) {
   parser.innerHTML = template;
   const content = parser.content;
 
-  if (ensureFragment || (node = content.firstChild) !== content.lastChild) {
+  if (
+    ensureFragment ||
+    (node = content.firstChild) !== content.lastChild ||
+    (node && node.nodeType === NodeType.Comment)
+  ) {
     node = doc.createDocumentFragment();
     node.appendChild(content);
   } else if (!node) {

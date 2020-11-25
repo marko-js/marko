@@ -1,40 +1,40 @@
 # Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
 ```html
-<div>
-  abc
-</div>
+abc
 ```
 
 # Mutations
 ```
-inserted div0
+inserted #text0, #text1, #text2
 ```
 
 
 # Render {"children":[]}
 ```html
-<div />
+<!---->
 ```
 
 # Mutations
 ```
-removed #text, #text, #text in div0
+inserted #comment0
+removed #text before 
+removed #text before 
+removed #text before #comment0
 ```
 
 
 # Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
 ```html
-<div>
-  abc
-</div>
+abc
 ```
 
 # Mutations
 ```
-inserted div0/#text0
-inserted div0/#text1
-inserted div0/#text2
-div0/#text0: " " => "a"
-div0/#text1: " " => "b"
-div0/#text2: " " => "c"
+inserted #text0
+inserted #text1
+inserted #text2
+removed #comment before #text0
+#text0: " " => "a"
+#text1: " " => "b"
+#text2: " " => "c"
 ```

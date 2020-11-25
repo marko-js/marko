@@ -9,7 +9,7 @@
 
 # Mutations
 ```
-inserted span0, #text1
+inserted span0
 ```
 
 
@@ -21,7 +21,7 @@ Hello
 # Mutations
 ```
 inserted #text0
-removed span before #text0
+removed span after #text0
 ```
 
 
@@ -37,7 +37,7 @@ removed span before #text0
 # Mutations
 ```
 inserted span0
-removed #text before span0
+removed #text after span0
 span0: attr(a) null => "1"
 ```
 
@@ -54,7 +54,7 @@ span0: attr(a) null => "1"
 # Mutations
 ```
 inserted a0
-removed span before a0
+removed span after a0
 a0: attr(a) null => "1"
 ```
 
@@ -71,6 +71,6 @@ a0: attr(a) null => "1"
 # Mutations
 ```
 inserted div0
-removed a before div0
+removed a after div0
 div0: attr(a) null => "1"
 ```

@@ -3,8 +3,8 @@ import { detachedWalk } from "./walker";
 import { Renderer, isDocumentFragment } from "./dom";
 
 export interface Fragment {
-  ___firstRef: Fragment & { ___firstChild: Node };
-  ___lastRef: Fragment & { ___lastChild: Node };
+  ___firstRef?: Fragment;
+  ___lastRef?: Fragment;
   ___nextNode?: Node;
   ___firstChild: Node;
   ___lastChild: Node;
@@ -19,25 +19,31 @@ export interface Fragment {
 export let currentFragment: Fragment | undefined;
 
 export function createFragment(
-  renderer: Renderer,
-  parentFragment = currentFragment,
-  ...input: UpstreamSignalOrValue[]
+  node: Node,
+  parentFragment = currentFragment
 ): Fragment {
-  const clone = renderer.___clone();
-  const isFragment = isDocumentFragment(clone);
-  const cachedFragment = currentFragment;
-  const fragment = ({
+  const isFragment = isDocumentFragment(node);
+  return {
     ___firstRef: undefined,
     ___lastRef: undefined,
     ___nextNode: undefined,
-    ___firstChild: isFragment ? clone.firstChild! : clone,
-    ___lastChild: isFragment ? clone.lastChild! : clone,
+    ___firstChild: isFragment ? node.firstChild! : node,
+    ___lastChild: isFragment ? node.lastChild! : node,
     ___parentFragment: parentFragment,
-    ___dom: clone,
+    ___dom: node,
     ___tracked: new Set(),
     ___cleanup: cleanup
-  } as any) as Fragment;
-  fragment.___firstRef = fragment.___lastRef = fragment;
+  };
+}
+
+export function createFragmentFromRenderer(
+  renderer: Renderer,
+  parentFragment = currentFragment,
+  ...input: UpstreamSignalOrValue[]
+) {
+  const clone = renderer.___clone();
+  const fragment = createFragment(clone, parentFragment);
+  const cachedFragment = currentFragment;
 
   currentFragment = fragment;
   detachedWalk(fragment.___firstChild, renderer, ...input);
@@ -73,8 +79,8 @@ export function insertFragmentBefore(
   const domParent = parent || nextSibling!.parentNode!;
   withChildren(
     domParent,
-    fragment.___firstRef.___firstChild,
-    fragment.___lastRef.___lastChild,
+    fragment.___firstChild,
+    fragment.___lastChild,
     nextSibling,
     domParent.insertBefore
   );
@@ -82,16 +88,18 @@ export function insertFragmentBefore(
 }
 
 export function replaceFragment(current: Fragment, replacement: Fragment) {
-  insertFragmentBefore(null, replacement, referenceStart(current));
-  removeFragment(current);
+  if (current !== replacement) {
+    insertFragmentBefore(null, replacement, referenceStart(current));
+    removeFragment(current);
+  }
 }
 
 export function removeFragment(fragment: Fragment) {
   const domParent = referenceStart(fragment).parentNode!;
   withChildren(
     domParent,
-    fragment.___firstRef.___firstChild,
-    fragment.___lastRef.___lastChild!,
+    fragment.___firstChild,
+    fragment.___lastChild,
     null,
     domParent.removeChild
   );
@@ -99,11 +107,11 @@ export function removeFragment(fragment: Fragment) {
 }
 
 export function referenceStart(fragment: Fragment) {
-  return fragment.___firstRef.___firstChild;
+  return fragment.___firstChild;
 }
 
 export function referenceAfter(fragment: Fragment) {
-  return fragment.___lastChild!.nextSibling;
+  return fragment.___lastChild.nextSibling;
 }
 
 export function withChildren(

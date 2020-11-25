@@ -7,7 +7,7 @@ import {
   createRenderer,
   createRenderFn
 } from "../../../../src/dom/index";
-import { next, over, before, get } from "../../utils/walks";
+import { next, over, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -24,8 +24,8 @@ export const inputs = [
   }
 ];
 
-export const template = `<div><span></span><span></span></div>`;
-export const walks = next(2) + before;
+export const template = `<div><span></span><!><span></span></div>`;
+export const walks = next(2) + get + over(2);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: { value: string | undefined }) => {

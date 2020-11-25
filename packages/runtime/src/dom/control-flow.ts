@@ -12,14 +12,14 @@ import {
 import {
   Fragment,
   createFragment,
+  createFragmentFromRenderer,
   currentFragment,
-  insertFragmentBefore,
-  removeFragment
+  replaceFragment
 } from "./fragments";
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { render, Renderer } from "./dom";
-import { walk, walkAndGetText } from "./walker";
+import { walk } from "./walker";
 
 type ForIterationFragment<T> = Fragment & {
   ___itemSignal: Source<T>;
@@ -41,76 +41,77 @@ export function loopOf<T>(
 ) {
   if (isSignal(array)) {
     const ctx = Context;
-    const marker = !onlyChild ? walkAndGetText() : null;
-    const parent = onlyChild
-      ? (walk() as Node & ParentNode)
-      : marker!.parentNode!;
-    const rootFragment = currentFragment;
-    let oldNodes: Map<string, Fragment> = new Map();
+    const rootFragment = currentFragment!;
+    const emptyNodes: Map<string, Fragment> = new Map();
+    let oldNodes: Map<string, Fragment> = emptyNodes;
     let oldKeys: string[] = [];
+    let emptyMarker: Node;
+    let emptyFragment: Fragment;
+    let parent: Node & ParentNode;
+    let trackFragmentFlags: number;
 
-    if (currentFragment!.___firstChild === marker) {
-      setRefGetter(
-        currentFragment!.___firstRef,
-        "___firstChild",
-        () => oldNodes!.get(oldKeys[0])!.___firstRef.___firstChild
-      );
-    }
-    if (currentFragment!.___lastChild === marker) {
-      setRefGetter(
-        currentFragment!.___lastRef,
-        "___lastChild",
-        () =>
-          oldNodes!.get(oldKeys[oldKeys.length - 1])!.___lastRef.___lastChild
-      );
+    if (onlyChild) {
+      parent = walk() as Node & ParentNode;
+      trackFragmentFlags = 0;
+    } else {
+      emptyMarker = walk();
+      emptyFragment = createFragment(emptyMarker, rootFragment);
+      trackFragmentFlags = trackFragmentChildren(rootFragment, emptyMarker);
+      oldNodes.set(emptyFragment as any, emptyFragment);
+      oldKeys.push(emptyFragment as any);
     }
 
     const newNodes = createComputation(
       _array => {
-        const _newNodes: Map<string, Fragment> & {
-          skipReconcile?: boolean;
-        } = new Map();
+        let _newNodes: Map<string, Fragment>;
         let newItems = 0;
         let moved = false;
+        const len = _array.length;
 
-        setContext(ctx);
-        for (let index = 0, len = _array.length; index < len; index++) {
-          const item = _array[index];
-          const key = getKey ? getKey(item, index) : "" + index;
-          const previousChildFragment = oldNodes.get(
-            key
-          ) as ForIterationFragment<typeof item>;
-          moved = moved || key !== oldKeys[index];
-          if (!previousChildFragment) {
-            newItems++;
-            const itemSignal = createSource(item);
-            const indexSignal = hasIndex && createSource(index);
-            const childFragment = createFragment(
-              renderer,
-              rootFragment,
-              itemSignal,
-              indexSignal,
-              array
-            ) as ForIterationFragment<T>;
-            childFragment.___itemSignal = itemSignal;
-            childFragment.___indexSignal = indexSignal;
+        if (len === 0) {
+          _newNodes = emptyNodes;
+        } else {
+          _newNodes = new Map();
+          setContext(ctx);
+          for (let index = 0; index < len; index++) {
+            const item = _array[index];
+            const key = getKey ? getKey(item, index) : "" + index;
+            let childFragment = oldNodes.get(key) as ForIterationFragment<
+              typeof item
+            >;
+            if (!childFragment) {
+              newItems++;
+              const itemSignal = createSource(item);
+              const indexSignal = hasIndex && createSource(index);
+              childFragment = createFragmentFromRenderer(
+                renderer,
+                rootFragment,
+                itemSignal,
+                indexSignal,
+                array
+              ) as ForIterationFragment<T>;
+              childFragment.___itemSignal = itemSignal;
+              childFragment.___indexSignal = indexSignal;
+            } else {
+              setSignalValue(childFragment.___itemSignal, item);
+              childFragment.___indexSignal &&
+                setSignalValue(childFragment.___indexSignal, index);
+              moved = moved || key !== oldKeys[index];
+            }
             _newNodes.set(key, childFragment);
-          } else {
-            setSignalValue(previousChildFragment.___itemSignal, item);
-            previousChildFragment.___indexSignal &&
-              setSignalValue(previousChildFragment.___indexSignal, index);
-            _newNodes.set(key, previousChildFragment);
           }
+          setContext(null);
         }
+
         const removals = _newNodes.size - oldNodes.size - newItems < 0;
         if (removals) {
-          for (const k of oldNodes.keys()) {
+          for (const k of oldKeys) {
             if (!_newNodes.has(k)) markFragmentDestroyed(oldNodes.get(k)!);
           }
+        } else if (!newItems && !moved) {
+          return oldNodes;
         }
-        _newNodes.skipReconcile = !newItems && !removals && !moved;
 
-        setContext(null);
         return _newNodes;
       },
       array,
@@ -119,12 +120,31 @@ export function loopOf<T>(
 
     createEffect(
       _newNodes => {
-        if (_newNodes.skipReconcile) return;
         const newKeys = Array.from(_newNodes.keys());
-        reconcile(parent, oldKeys, oldNodes, newKeys, _newNodes, marker);
+        const oldLastChild = oldNodes.get(oldKeys[oldKeys.length - 1]);
+        const afterReference = oldLastChild
+          ? oldLastChild.___lastChild.nextSibling
+          : null;
+        const parentNode = parent || oldLastChild!.___lastChild.parentNode;
+        reconcile(
+          parentNode,
+          oldKeys,
+          oldNodes,
+          newKeys,
+          _newNodes,
+          afterReference
+        );
 
-        // TODO: we should be able to remove the marker if the loop was not empty
-        // But we'll need to track the last fragment and ensure the marker is added if the loop becomes empty
+        if (trackFragmentFlags) {
+          const newFirstChild = _newNodes.get(newKeys[0]);
+          const newLastChild = _newNodes.get(newKeys[newKeys.length - 1]);
+          updateFragmentChildren(
+            rootFragment,
+            trackFragmentFlags,
+            newFirstChild!,
+            newLastChild!
+          );
+        }
 
         oldKeys = newKeys;
         oldNodes = _newNodes;
@@ -207,12 +227,12 @@ export function conditional(
   ...input: UpstreamSignalOrValue[]
 ) {
   if (isSignal(renderer)) {
-    let previousFragment: Fragment | undefined;
-    const marker = walkAndGetText();
     const rootFragment = currentFragment!;
-    const trackFirstRef = rootFragment.___firstRef.___firstChild === marker;
-    const trackLastRef = rootFragment.___lastRef.___lastChild === marker;
     const ctx = Context;
+    const emptyMarker = walk();
+    const trackFragmentFlags = trackFragmentChildren(rootFragment, emptyMarker);
+    const emptyFragment = createFragment(emptyMarker, rootFragment);
+    let previousFragment = emptyFragment;
 
     const fragmentSignal = createComputation(
       // TODO: hoist out this function and compare benchmarks
@@ -220,8 +240,9 @@ export function conditional(
         setContext(ctx);
         if (!_renderer && previousFragment)
           markFragmentDestroyed(previousFragment);
-        const result =
-          _renderer && createFragment(_renderer, rootFragment, ...input);
+        const result = _renderer
+          ? createFragmentFromRenderer(_renderer, rootFragment, ...input)
+          : emptyFragment;
         setContext(null);
         return result;
       },
@@ -231,24 +252,14 @@ export function conditional(
 
     createEffect(
       nextFragment => {
-        if (nextFragment) {
-          insertFragmentBefore(null, nextFragment, marker);
-          if (trackFirstRef) {
-            nextFragment.___firstRef = rootFragment.___firstRef;
-            nextFragment.___firstRef.___firstChild = nextFragment.___firstChild;
-          }
-
-          if (trackLastRef) {
-            nextFragment.___lastRef = rootFragment.___lastRef;
-            nextFragment.___lastRef.___lastChild = nextFragment.___lastChild;
-          }
-        }
-
-        if (previousFragment) {
-          removeFragment(previousFragment);
-        }
-
+        replaceFragment(previousFragment, nextFragment);
         previousFragment = nextFragment;
+        updateFragmentChildren(
+          rootFragment,
+          trackFragmentFlags,
+          nextFragment,
+          nextFragment
+        );
       },
       fragmentSignal,
       1
@@ -263,16 +274,50 @@ function firstArgAsKey(key: unknown) {
   return key + "";
 }
 
-function setRefGetter(object, key, getter) {
-  Object.defineProperty(object, key, {
-    get: getter,
-    set(value) {
-      Object.defineProperty(object, key, {
-        value,
-        writable: true,
-        configurable: true
-      });
-    },
-    configurable: true
-  });
+const TRACK_FIRST = 1;
+const TRACK_LAST = 2;
+
+function trackFragmentChildren(rootFragment: Fragment, marker: Node) {
+  let flags = 0;
+  if (rootFragment.___firstChild === marker) flags |= TRACK_FIRST;
+  if (rootFragment.___lastChild === marker) flags |= TRACK_LAST;
+  return flags;
+}
+
+function updateFragmentChildren(
+  rootFragment: Fragment,
+  flags: number,
+  firstChildFragment: Fragment | undefined,
+  lastChildFragment: Fragment | undefined
+) {
+  if (flags & TRACK_FIRST) {
+    updateFragmentChild(
+      rootFragment,
+      firstChildFragment!,
+      "___firstRef",
+      "___firstChild"
+    );
+  }
+  if (flags & TRACK_LAST) {
+    updateFragmentChild(
+      rootFragment,
+      lastChildFragment!,
+      "___lastRef",
+      "___lastChild"
+    );
+  }
+}
+
+function updateFragmentChild(
+  fragment: Fragment,
+  child: Fragment,
+  refKey: "___firstRef" | "___lastRef",
+  childKey: "___firstChild" | "___lastChild",
+  parent = fragment.___parentFragment
+) {
+  fragment[refKey] = child;
+  fragment[childKey] = child[childKey];
+  if (parent && parent[refKey] === fragment) {
+    updateFragmentChild(parent, fragment, refKey, childKey);
+  }
 }

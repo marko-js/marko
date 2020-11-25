@@ -1,6 +1,8 @@
 # Render {"visible":false,"value":"Hi"}
 ```html
-<div />
+<div>
+  <!---->
+</div>
 ```
 
 # Mutations
@@ -21,6 +23,7 @@ inserted div0
 # Mutations
 ```
 inserted div0/span0
+removed #comment after div0/span0
 inserted div0/span0/#text0
 ```
 

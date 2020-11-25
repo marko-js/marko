@@ -19,8 +19,8 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-export const template = `<button></button>`;
-export const walks = get + after + over(1);
+export const template = `<button></button><!>`;
+export const walks = get + over(1) + get + over(1);
 export const hydrate = register(__dirname.split("/").pop()!, () => {
   const show = source(true);
   const message = source("hi");

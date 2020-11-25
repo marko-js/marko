@@ -32,7 +32,5 @@ inserted div0/#text2
 
 # Mutations
 ```
-removed #text before 
-removed #text before 
-removed #text before div0/#text0
+removed #text, #text, #text in div0
 ```

@@ -8,7 +8,7 @@
 
 # Mutations
 ```
-inserted button0, span1, #text2
+inserted button0, span1
 ```
 
 
@@ -17,9 +17,11 @@ container.querySelector("button").click();
 
 ```html
 <button />
+<!---->
 ```
 
 # Mutations
 ```
-removed span after button0
+inserted #comment1
+removed span after #comment1
 ```

@@ -19,13 +19,15 @@ inserted div0
 ```html
 <div>
   <span />
+  <!---->
   <span />
 </div>
 ```
 
 # Mutations
 ```
-removed span after div0/span0
+inserted div0/#comment1
+removed span after div0/#comment1
 ```
 
 
@@ -43,6 +45,7 @@ removed span after div0/span0
 # Mutations
 ```
 inserted div0/span1
+removed #comment after div0/span1
 inserted div0/span1/#text0
 ```
 

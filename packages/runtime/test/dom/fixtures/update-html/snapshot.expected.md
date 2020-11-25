@@ -11,7 +11,7 @@ Hello
 
 # Mutations
 ```
-inserted em0, #text1, #text2, strong3, #text4
+inserted em0, #text1, #text2, strong3
 ```
 
 
@@ -26,8 +26,8 @@ Some content
 # Mutations
 ```
 inserted #text2
-removed #text after #text1
-removed strong after #text1
+removed #text after #text2
+removed strong after #text2
 ```
 
 
@@ -42,5 +42,5 @@ removed strong after #text1
 # Mutations
 ```
 inserted div2
-removed #text after #text1
+removed #text after div2
 ```

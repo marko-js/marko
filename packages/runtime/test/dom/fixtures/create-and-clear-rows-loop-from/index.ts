@@ -26,7 +26,7 @@ export const inputs = [
 ];
 
 export const template = `<div></div>`;
-export const walks = inside + over(1);
+export const walks = get + over(1);
 export const hydrate = register(
   __dirname.split("/").pop()!,
   (input: typeof inputs[0]) => {
@@ -34,7 +34,8 @@ export const hydrate = register(
       input.from,
       input.to,
       input.step,
-      createRenderer(loop_template, loop_walks, undefined, i => text(i))
+      createRenderer(loop_template, loop_walks, undefined, i => text(i)),
+      true
     );
   }
 );
