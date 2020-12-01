@@ -1,4 +1,5 @@
 import { isVoid, classValue, styleValue } from "../common/helpers";
+import { escapeAttrValue } from "./content";
 
 export function classAttr(val: unknown) {
   return stringAttr("class", classValue(val));
@@ -16,6 +17,10 @@ export function attrs(data: Record<string, unknown>) {
   let result = "";
 
   for (const name in data) {
+    if (name[0] === "o" && name[1] === "n") {
+      continue;
+    }
+
     const val = data[name];
 
     switch (name) {
@@ -38,74 +43,29 @@ export function attrs(data: Record<string, unknown>) {
 }
 
 function stringAttr(name: string, val: string) {
-  return val && nonVoidStringAttr(name, val);
+  return val && ` ${name}=${escapeAttrValue(val)}`;
 }
 
 function nonVoidUntypedAttr(name: string, val: unknown) {
   switch (typeof val) {
     case "string":
-      return nonVoidStringAttr(name, val);
+      return ` ${name + attrAssignment(val)}`;
     case "boolean":
       return ` ${name}`;
     case "number":
       return ` ${name}=${val}`;
     case "object":
       if (val instanceof RegExp) {
-        return nonVoidStringAttr(name, val.source);
+        return ` ${name}=${escapeAttrValue(val.source)}`;
       }
     // eslint-disable-next-line
     default:
-      return nonVoidStringAttr(name, val + "");
+      return ` ${name + attrAssignment(val + "")}`;
   }
 }
 
-function nonVoidStringAttr(name: string, val: string) {
-  const len = val.length;
-
-  if (len === 0) {
-    return ` ${name}`;
-  }
-
-  const result = ` ${name}=`;
-  let i = 0;
-  do {
-    switch (val[i]) {
-      case '"':
-        return result + quoteValue(val, i + 1, "'", "&#39;");
-      case "'":
-      case ">":
-      case " ":
-      case "\t":
-      case "\n":
-      case "\r":
-      case "\f":
-        return result + quoteValue(val, i + 1, '"', "&#34;");
-      default:
-        i++;
-        break;
-    }
-  } while (i < len);
-
-  return result + val;
-}
-
-function quoteValue(
-  val: string,
-  startPos: number,
-  quote: string,
-  escaped: string
-) {
-  let result = quote;
-  let lastPos = 0;
-
-  for (let i = startPos, len = val.length; i < len; i++) {
-    if (val[i] === quote) {
-      result += val.slice(lastPos, i) + escaped;
-      lastPos = i + 1;
-    }
-  }
-
-  return result + (lastPos ? val.slice(lastPos) : val) + quote;
+function attrAssignment(val: string) {
+  return val ? `=${escapeAttrValue(val)}` : "";
 }
 
 // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2

@@ -11,7 +11,7 @@ import {
   createRenderFn
 } from "../../../../src/dom/index";
 
-import { get, after, over } from "../../utils/walks";
+import { get, over } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();

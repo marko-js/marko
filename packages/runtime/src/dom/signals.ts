@@ -16,7 +16,7 @@ export interface Batch {
   ___mutated?: Set<UpstreamSignal<unknown>>;
 }
 
-export const enum SignalTypes {
+const enum SignalTypes {
   SOURCE,
   COMPUTATION,
   ASYNC_COMPUTATION,

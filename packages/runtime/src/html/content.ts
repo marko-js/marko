@@ -1,3 +1,7 @@
+export function toString(val: unknown) {
+  return val == null ? "" : val + "";
+}
+
 export const escapeXML = escapeIfNeeded((val: string) => {
   let result = "";
   let lastPos = 0;
@@ -52,6 +56,30 @@ function escapeTagEnding(tagName: string) {
   };
 }
 
+export function escapeAttrValue(val: string) {
+  const len = val.length;
+  let i = 0;
+  do {
+    switch (val[i]) {
+      case '"':
+        return quoteValue(val, i + 1, "'", "&#39;");
+      case "'":
+      case ">":
+      case " ":
+      case "\t":
+      case "\n":
+      case "\r":
+      case "\f":
+        return quoteValue(val, i + 1, '"', "&#34;");
+      default:
+        i++;
+        break;
+    }
+  } while (i < len);
+
+  return val;
+}
+
 function escapeIfNeeded(escape: (val: string) => string) {
   return (val: unknown) => {
     if (val == null) {
@@ -68,4 +96,23 @@ function escapeIfNeeded(escape: (val: string) => string) {
         return escape(val + "");
     }
   };
+}
+
+function quoteValue(
+  val: string,
+  startPos: number,
+  quote: string,
+  escaped: string
+) {
+  let result = quote;
+  let lastPos = 0;
+
+  for (let i = startPos, len = val.length; i < len; i++) {
+    if (val[i] === quote) {
+      result += val.slice(lastPos, i) + escaped;
+      lastPos = i + 1;
+    }
+  }
+
+  return result + (lastPos ? val.slice(lastPos) : val) + quote;
 }

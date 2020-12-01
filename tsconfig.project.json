@@ -1,0 +1,7 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/runtime" },
+    { "path": "./packages/translator" }
+  ]
+}

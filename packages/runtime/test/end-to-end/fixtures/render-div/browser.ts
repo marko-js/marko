@@ -5,9 +5,9 @@ import {
   on,
   createRenderFn,
   walk,
-  source
-} from "../../../../src/dom/index";
-import { textContent } from "../../../../dom/dom";
+  source,
+  textContent
+} from "../../../../src/dom";
 import { next, over, get as getNode } from "../../../dom/utils/walks";
 
 let button: HTMLButtonElement;

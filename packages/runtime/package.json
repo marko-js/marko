@@ -18,9 +18,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x"
-  },
-  "scripts": {
-    "build": "rollup -c ./rollup.config.js --sourcemap && tsc",
-    "prepublishOnly": "npm run build"
   }
 }

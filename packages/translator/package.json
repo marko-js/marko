@@ -4,13 +4,17 @@
   "version": "0.0.1",
   "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
   "dependencies": {
-    "@marko/babel-types": "^5.0.0-next.51",
-    "@marko/babel-utils": "^5.0.0-next.51"
+    "@marko/babel-types": "^5.0.0-next.62",
+    "@marko/babel-utils": "^5.0.0-next.62",
+    "@marko/runtime-fluurt": "^0.0.1",
+    "tslib": "^2.0.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
-  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator-fluurt/README.md",
+  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
+  "jsnext": "dist/index.esm.js",
   "keywords": [
     "babel",
     "fluurt",
@@ -21,9 +25,11 @@
     "plugin"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/x/tree/master/packages/translator-fluurt"
-  }
+    "url": "https://github.com/marko-js/x/tree/master/packages/translator"
+  },
+  "types": "types/index.d.ts"
 }

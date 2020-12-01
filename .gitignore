@@ -4,6 +4,7 @@
 dist
 debug
 types
+*.tsbuildinfo
 
 ### Node ###
 # Logs

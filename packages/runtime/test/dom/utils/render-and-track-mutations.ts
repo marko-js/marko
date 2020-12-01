@@ -11,6 +11,7 @@ const browser = createBrowser({
 const window = browser.window as DOMWindow & { MessageChannel: any };
 const document = window.document;
 window.queueMicrotask = queueMicrotask;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 window.MessageChannel = (window as any).MessageChannel = class MessageChannel {
   port1: any;
   port2: any;

@@ -1,8 +1,10 @@
 {
+  "ts-node": {
+    "transpileOnly": true
+  },
   "compilerOptions": {
-    "pretty": true,
     "target": "es6",
-    "sourceMap": true,
+    "composite": true,
     "declaration": true,
     "stripInternal": true,
     "importHelpers": true,
@@ -10,8 +12,8 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true
-  },
-  "include": ["./packages/*/src/**/*"]
+    "downlevelIteration": true,
+    "emitDeclarationOnly": true,
+    "forceConsistentCasingInFileNames": true
+  }
 }

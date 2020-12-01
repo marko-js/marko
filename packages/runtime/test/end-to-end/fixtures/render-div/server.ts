@@ -1,5 +1,5 @@
-import { write } from "../../../../src/html/index";
-import { serverRegister } from "../../../../common/server-registry";
+import { write } from "../../../../src/html";
+import { serverRegister } from "../../../../src/common/server-registry";
 
 export const input = { start: 10 };
 
