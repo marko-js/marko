@@ -97,7 +97,7 @@ export type ModulePlugin = {
 
 export type Plugin = ModulePlugin | EnterExitPlugin | FunctionPlugin;
 
-export function assetAllowedAttributes(path: NodePath<MarkoTag>, allowed: string[]): void;
+export function assertAllowedAttributes(path: NodePath<MarkoTag>, allowed: string[]): void;
 export function assertNoArgs(path: NodePath<MarkoTag>): void;
 export function assertNoVar(path: NodePath<MarkoTag>): void;
 export function assertNoAttributes(path: NodePath<MarkoTag>): void;
