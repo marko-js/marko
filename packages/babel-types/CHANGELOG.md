@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.62](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.61...v5.0.0-next.62) (2020-12-01)
+
+
+### Bug Fixes
+
+* **babel-types:** remove invalid visitors ([5d4a964](https://github.com/marko-js/marko/tree/master/packages/babel-types/commit/5d4a964f2eea73c98c22e12a90468532d62fab9c))
+
+
+
+
+
 # [5.0.0-next.60](https://github.com/marko-js/marko/tree/master/packages/babel-types/compare/v5.0.0-next.59...v5.0.0-next.60) (2020-11-22)
 
 
