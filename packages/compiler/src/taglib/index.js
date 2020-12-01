@@ -1,6 +1,8 @@
 let loader, finder, registeredTaglibs, TaglibLookup;
 
 if (
+  (process.env.MARKO_DEBUG != null &&
+    (process.env.MARKO_DEBUG !== "false" || process.env.MARKO_DEBUG !== "0")) ||
   process.env.NODE_ENV == null ||
   process.env.NODE_ENV === "development" ||
   process.env.NODE_ENV === "dev"
