@@ -17,35 +17,30 @@ const MarkoDefinitions = {
   MarkoDocumentType: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    visitor: ["value"],
     fields: { ...valueFieldCommon }
   },
 
   MarkoDeclaration: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    visitor: ["value"],
     fields: { ...valueFieldCommon }
   },
 
   MarkoCDATA: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    visitor: ["value"],
     fields: { ...valueFieldCommon }
   },
 
   MarkoComment: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    visitor: ["value"],
     fields: { ...valueFieldCommon }
   },
 
   MarkoText: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    visitor: ["value"],
     fields: { ...valueFieldCommon }
   },
 
