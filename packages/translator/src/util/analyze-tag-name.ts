@@ -70,7 +70,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
         case "BinaryExpression":
           type =
             (path as t.NodePath<t.BinaryExpression>).node.operator !== "+" ||
-            (type ?? type !== TagNameTypes.NativeTag)
+            (type !== undefined && type !== TagNameTypes.NativeTag)
               ? TagNameTypes.DynamicTag
               : TagNameTypes.NativeTag;
 
@@ -78,8 +78,13 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
 
         case "StringLiteral":
         case "TemplateLiteral":
+          if (type === undefined || type === TagNameTypes.NativeTag) {
+            type = TagNameTypes.NativeTag;
+          } else {
+            type = TagNameTypes.DynamicTag;
+          }
           type =
-            type ?? type !== TagNameTypes.NativeTag
+            type !== undefined && type !== TagNameTypes.NativeTag
               ? TagNameTypes.DynamicTag
               : TagNameTypes.NativeTag;
           break;
@@ -104,7 +109,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
                 decl.specifiers.some(it => t.isImportDefaultSpecifier(it))
               ) {
                 type =
-                  type ?? type !== TagNameTypes.CustomTag
+                  type !== undefined && type !== TagNameTypes.CustomTag
                     ? TagNameTypes.DynamicTag
                     : TagNameTypes.CustomTag;
               } else {
@@ -130,7 +135,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
                   pending.push(assignment.get("right"));
                 } else if (operator === "+=") {
                   type =
-                    type ?? type !== TagNameTypes.NativeTag
+                    type !== undefined && type !== TagNameTypes.NativeTag
                       ? TagNameTypes.DynamicTag
                       : TagNameTypes.NativeTag;
                 } else {

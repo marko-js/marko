@@ -1,0 +1,8 @@
+packages/translator/test/fixtures/dynamic-tag-name/template.marko(20,2): The 'const' tag only supports the 'default' attribute.
+  18 | <${input.tag || tagA} class=["a", "b"] other=input.other/> -->
+  19 | 
+> 20 | <const/largeHeading = input.isLarge && "h1"/>
+     |  ^^^^^
+  21 | <${largeHeading || "h2"} class=["a", "b"] other=input.other/>
+  22 | 
+  23 | <${global.x = "a" + "b"} class=["a", "b"] other=input.other/>

@@ -89,6 +89,26 @@
       }
     ]
   },
+  "<let>": {
+    "code-generator": "./translate-let",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "description": "Use to create an mutable binding.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#let"
+      }
+    ]
+  },
+  "<const>": {
+    "code-generator": "./translate-const",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "description": "Use to create an constant binding.",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#const"
+      }
+    ]
+  },
   "<html-comment>": {
     "code-generator": "./translate-html-comment",
     "parse-options": {

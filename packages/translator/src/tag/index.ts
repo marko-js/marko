@@ -10,7 +10,7 @@ import analyzeTagName, { TagNameTypes } from "../util/analyze-tag-name";
 import * as hooks from "../util/plugin-hooks";
 import * as NativeTag from "./native-tag";
 import * as CustomTag from "./custom-tag";
-// import * as DynamicTag from "./dynamic-tag";
+import * as DynamicTag from "./dynamic-tag";
 import * as AttributeTag from "./attribute-tag";
 
 declare module "@marko/babel-utils" {
@@ -80,9 +80,9 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     case TagNameTypes.CustomTag:
       CustomTag.enter(tag);
       break;
-    // case TagNameTypes.DynamicTag:
-    //   DynamicTag.enter(tag);
-    //   break;
+    case TagNameTypes.DynamicTag:
+      DynamicTag.enter(tag);
+      break;
     case TagNameTypes.AttributeTag:
       AttributeTag.enter(tag);
       break;
@@ -104,9 +104,9 @@ export function exit(tag: NodePath<t.MarkoTag>) {
     case TagNameTypes.CustomTag:
       CustomTag.exit(tag);
       break;
-    // case TagNameTypes.DynamicTag:
-    //   DynamicTag.exit(tag);
-    //   break;
+    case TagNameTypes.DynamicTag:
+      DynamicTag.exit(tag);
+      break;
     case TagNameTypes.AttributeTag:
       AttributeTag.exit(tag);
       break;

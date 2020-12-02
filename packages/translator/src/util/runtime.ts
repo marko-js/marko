@@ -14,7 +14,13 @@ export function importRuntime<T extends t.Node>(
 export function callRuntime<
   T extends t.Node,
   A extends Parameters<typeof t.callExpression>[1]
->(path: NodePath<T>, name: string, ...args: A) {
+>(
+  path: NodePath<T>,
+  name:
+    | keyof typeof import("@marko/runtime-fluurt/src/dom")
+    | keyof typeof import("@marko/runtime-fluurt/src/html"),
+  ...args: A
+) {
   return t.callExpression(importRuntime(path, name), args);
 }
 

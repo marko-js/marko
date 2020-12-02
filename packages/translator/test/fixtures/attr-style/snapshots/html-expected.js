@@ -18,17 +18,21 @@ _customTag({
   style: "color: green"
 });
 
-<${input.test} style={
-  color: "green"
-} test={
+_dynamicTag(input.test, {
   style: {
     color: "green"
   },
+  test: {
+    style: {
+      color: "green"
+    },
 
-  renderBody() {
-    _write("Hello");
+    renderBody() {
+      _write("Hello");
+    }
+
   }
+});
 
-}/>
-import { styleAttr as _styleAttr, write as _write } from "@marko/runtime-fluurt/src/html";
+import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";

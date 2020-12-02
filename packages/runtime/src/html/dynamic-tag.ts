@@ -59,7 +59,13 @@ export function dynamicTag(
   const renderer = (tag as RenderBodyObject).renderBody || tag;
 
   if (typeof renderer === "function") {
-    renderer(renderBody ? { ...input, renderBody } : input);
+    renderer(
+      renderBody
+        ? input.renderBody
+          ? { ...input, renderBody }
+          : { renderBody, ...input }
+        : input
+    );
     return;
   }
 

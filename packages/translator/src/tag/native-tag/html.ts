@@ -7,7 +7,6 @@ import { writeHTML } from "../../util/html-write";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
-  const write = writeHTML(tag);
   const name = tag.get("name");
   const attrs = tag.get("attributes");
   const tagDef = getTagDef(tag);
@@ -17,6 +16,8 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   if (nullable) {
     flushBefore(tag);
   }
+
+  const write = writeHTML(tag);
 
   write`<${name.node}`;
 
@@ -39,7 +40,11 @@ export function enter(tag: NodePath<t.MarkoTag>) {
           if (confident) {
             write`${getHTMLRuntime(tag)[`${name}Attr`](computed)}`;
           } else {
-            write`${callRuntime(tag, `${name}Attr`, value.node!)}`;
+            write`${callRuntime(
+              tag,
+              `${name}Attr` as "classAttr" | "styleAttr",
+              value.node!
+            )}`;
           }
           break;
         default:
@@ -59,6 +64,8 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     }
   }
 
+  let emptyBody = false;
+
   if (tagDef && tagDef.parseOptions?.openTagOnly) {
     switch (tagDef.htmlType) {
       case "svg":
@@ -69,34 +76,37 @@ export function enter(tag: NodePath<t.MarkoTag>) {
         write`>`;
         break;
     }
-  } else {
+
+    emptyBody = true;
+  } else if (tag.node.body.body.length) {
     write`>`;
+  } else {
+    write`></${name.node}>`;
+    emptyBody = true;
   }
 
   if (nullable) {
     tag.insertBefore(t.ifStatement(name.node, consumeHTML(tag)!))[0].skip();
   }
+
+  if (emptyBody) {
+    tag.remove();
+  }
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
-  if (!getTagDef(tag)?.parseOptions?.openTagOnly) {
-    const { nullable } = analyzeTagName(tag);
+  const { nullable } = analyzeTagName(tag);
 
-    if (nullable) {
-      flushInto(tag);
-    }
+  if (nullable) {
+    flushInto(tag);
+  }
 
-    if (tag.node.body.body.length) {
-      tag.insertBefore(tag.node.body.body).forEach(child => child.skip());
-    }
+  tag.insertBefore(tag.node.body.body).forEach(child => child.skip());
 
-    writeHTML(tag)`</${tag.node.name}>`;
+  writeHTML(tag)`</${tag.node.name}>`;
 
-    if (nullable) {
-      tag
-        .insertBefore(t.ifStatement(tag.node.name, consumeHTML(tag)!))[0]
-        .skip();
-    }
+  if (nullable) {
+    tag.insertBefore(t.ifStatement(tag.node.name, consumeHTML(tag)!))[0].skip();
   }
 
   tag.remove();

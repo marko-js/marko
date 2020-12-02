@@ -19,7 +19,10 @@ export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
         isNativeTag(parentPath) &&
         (parentPath.node.name as t.StringLiteral).value) ||
       "";
-    const escapeType = ESCAPE_TYPES[parentTagName] || "escapeXML";
+    const escapeType = (ESCAPE_TYPES[parentTagName] || "escapeXML") as
+      | "escapeScript"
+      | "escapeStyle"
+      | "escapeXML";
 
     value = confident
       ? getHTMLRuntime(placeholder)[escapeType](computed)
