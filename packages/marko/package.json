@@ -22,16 +22,6 @@
         "strip-json-comments": "^2.0.1",
         "warp10": "^2.0.1"
     },
-    "devDependencies": {
-        "bluebird": "^3.4.7",
-        "chai": "^4.2.0",
-        "diffable-html": "^2.1.0",
-        "express": "^4.16.1",
-        "it-fails": "^1.0.4",
-        "jsdom-context-require": "^1.0.1",
-        "through": "^2.3.4",
-        "through2": "^2.0.1"
-    },
     "main": "index.js",
     "browser": {
         "./compiler.js": "./compiler-browser.marko",

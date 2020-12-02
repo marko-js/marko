@@ -39,20 +39,26 @@
     "@types/babel__traverse": "^7.0.15",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-minprops": "^2.0.1",
+    "bluebird": "^3.4.7",
     "chai": "^4.2.0",
     "codecov": "^3.6.1",
     "cross-env": "^6.0.3",
+    "diffable-html": "^2.1.0",
     "dot-json": "^1.1.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
+    "express": "^4.16.1",
     "husky": "^3.1.0",
     "it-fails": "^1.0.4",
+    "jsdom-context-require": "^1.0.1",
     "lerna": "^3.19.0",
     "lint-staged": "^9.5.0",
     "mocha": "^5.2.0",
     "mocha-autotest": "^1.0.3",
     "nyc": "^15.0.0",
     "prettier": "^1.19.1",
-    "shell-quote": "^1.7.2"
+    "shell-quote": "^1.7.2",
+    "through": "^2.3.4",
+    "through2": "^2.0.1"
   }
 }

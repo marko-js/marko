@@ -8,13 +8,12 @@
     "@babel/runtime": "^7.7.7",
     "@marko/babel-types": "^5.0.0-next.62",
     "@marko/babel-utils": "^5.0.0-next.62",
-    "@marko/compiler": "^5.0.0-next.63",
     "escape-string-regexp": "^4.0.0",
-    "marko": "^5.0.0-next.63",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {
-    "marko": "^5.0.0-next.5"
+    "@marko/compiler": "^5.0.0-next.63",
+    "marko": "^5.0.0-next.63"
   },
   "files": [
     "dist"

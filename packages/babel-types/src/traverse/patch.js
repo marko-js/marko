@@ -1,7 +1,7 @@
 import "../types/patch";
 
 import * as t from "@babel/types";
-import { NodePath, Scope } from "@babel/traverse";
+import traverse, { NodePath, Scope } from "@babel/traverse";
 import { MARKO_TYPES, MARKO_ALIAS_TYPES } from "../types/definitions";
 
 MARKO_TYPES.forEach(typeName => {
@@ -28,19 +28,40 @@ MARKO_ALIAS_TYPES.forEach(aliasName => {
   };
 });
 
+// Adds a one time patch to the scope collector visitors to include
+// Marko bindings for params and tag vars.
 const originalCrawl = Scope.prototype.crawl;
 Scope.prototype.crawl = function() {
   const path = this.path;
+  const originalTraverse = path.traverse;
+  path.traverse = function(visitor) {
+    Object.assign(
+      visitor,
+      traverse.explode({
+        MarkoTag: {
+          enter(tag) {
+            const bodyScope = tag.get("body").getScope();
+            const tagVar = tag.get("var");
+            const params = tag.get("params");
 
+            if (params.length) {
+              for (const param of params) {
+                bodyScope.registerBinding("param", param);
+              }
+            }
+
+            if (tagVar.node) {
+              tag.scope.getBlockParent().registerBinding("local", tagVar);
+            }
+          }
+        }
+      })
+    );
+
+    path.traverse = originalTraverse;
+    return originalTraverse.apply(this, arguments);
+  };
+
+  Scope.prototype.crawl = originalCrawl;
   originalCrawl.apply(this, arguments);
-
-  if (path.isMarkoTagBody()) {
-    const params = path.parentPath.get("params");
-
-    if (params.length) {
-      for (const param of params) {
-        this.registerBinding("param", param);
-      }
-    }
-  }
 };
