@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.64](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.63...v5.0.0-next.64) (2020-12-02)
+
+
+### Bug Fixes
+
+* **babel-types:** support scope analysis for tag variables ([c527474](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/c5274740b5fde01b85b8b46381fadf2fc75245f2))
+
+
+
+
+
 # [5.0.0-next.63](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.62...v5.0.0-next.63) (2020-12-01)
 
 **Note:** Version bump only for package @marko/translator-default
