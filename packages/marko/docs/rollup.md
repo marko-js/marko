@@ -7,7 +7,7 @@ The [rollup](https://github.com/marko-js/examples/tree/master/examples/rollup) s
 ## Manual Installation
 
 ```bash
-npm install rollup rollup-plugin-commonjs rollup-plugin-node-resolve @marko/rollup --save-dev
+npm install rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve @marko/rollup --save-dev
 ```
 
 ## Configuration
