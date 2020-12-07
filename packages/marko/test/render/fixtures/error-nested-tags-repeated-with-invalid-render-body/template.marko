@@ -1,0 +1,14 @@
+static const tabs = [{
+    title: "A",
+    content: "1"
+}, {
+    title: "B",
+    content: "2"
+}]
+
+<test-nested-tags-tabs>
+    Content
+    <for|tab| of=tabs>
+        <@tab title=tab.title/>
+    </for>
+</test-nested-tags-tabs>

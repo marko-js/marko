@@ -5,8 +5,8 @@
  */
 module.exports = function mergeNestedTags(input) {
   if (input.renderBody) {
-    input.renderBody(null, input);
+    input.renderBody = input.renderBody(null, input);
   }
-  input.renderBody = null;
+
   return input;
 };
