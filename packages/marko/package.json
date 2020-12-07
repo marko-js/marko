@@ -4,6 +4,7 @@
     "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "dependencies": {
+        "acorn": "^7.4.0",
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
         "browser-refresh-client": "^1.0.0",
@@ -38,7 +39,6 @@
         "chai": "^3.3.0",
         "diffable-html": "^2.1.0",
         "express": "^4.16.1",
-        "it-fails": "^1.0.0",
         "jquery": "^3.1.1",
         "jsdom-context-require": "^1.0.1",
         "lasso-resolve-from": "^1.2.0",
