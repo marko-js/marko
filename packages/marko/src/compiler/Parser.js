@@ -159,10 +159,6 @@ class Parser {
       params = builder.parseJavaScriptParams(params.value);
     }
 
-    if (!el.tagNameExpression && !tagName) {
-      tagName = el.tagName = "assign";
-    }
-
     if (tagName === "marko-compiler-options") {
       context.deprecate("<marko-compiler-options> is deprecated.");
 
