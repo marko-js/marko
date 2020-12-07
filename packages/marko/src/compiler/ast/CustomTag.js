@@ -641,6 +641,14 @@ class CustomTag extends HtmlElement {
     let renderBodyFunction;
 
     if (hasBody) {
+      if (this._mergedRenderBodyStart !== undefined) {
+        const mergedRenderBody = builder.renderBodyFunction(
+          body.slice(this._mergedRenderBodyStart)
+        );
+        body = body.slice(0, this._mergedRenderBodyStart);
+        body.push(builder.returnStatement(mergedRenderBody));
+      }
+
       if (tagDef.bodyFunction) {
         let bodyFunction = tagDef.bodyFunction;
         let bodyFunctionParams = bodyFunction.params.map(function(param) {
@@ -750,7 +758,40 @@ class CustomTag extends HtmlElement {
         return null;
       } else {
         this._isDirectlyNestedTag = false;
-        parentCustomTag._hasDynamicNestedTags = true;
+
+        if (!parentCustomTag._hasDynamicNestedTags) {
+          parentCustomTag._hasDynamicNestedTags = true;
+
+          let nextBodyContent = parentCustomTag.firstChild;
+          let i = 0;
+
+          do {
+            if (
+              nextBodyContent.type === "Text" ||
+              nextBodyContent.type === "Scriptlet" ||
+              ((nextBodyContent.type === "HTMLElement" ||
+                nextBodyContent.type === "CustomTag") &&
+                !(
+                  nextBodyContent.tagDef &&
+                  (nextBodyContent.tagDef.isNestedTag ||
+                    nextBodyContent.tagDef.codeGeneratorModulePath)
+                ))
+            ) {
+              parentCustomTag._mergedRenderBodyStart = i;
+              break;
+            }
+
+            nextBodyContent = nextBodyContent.nextSibling;
+            i++;
+          } while (nextBodyContent);
+
+          if (!i) {
+            context.addError(
+              parentCustomTag,
+              "Render body content must come after any dynamic nested attribute tags."
+            );
+          }
+        }
       }
     }
 
