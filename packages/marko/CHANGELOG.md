@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.10](https://github.com/marko-js/marko/compare/v4.23.9...v4.23.10) (2020-12-08)
+
+
+### Bug Fixes
+
+* properly handle default renderBody with dynamic attribute tags ([451ce98](https://github.com/marko-js/marko/commit/451ce98d81cfccee01d6ce468d3b02ced90daebb))
+
 ### [4.23.9](https://github.com/marko-js/marko/compare/v4.23.8...v4.23.9) (2020-10-13)
 
 
