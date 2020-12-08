@@ -1,5 +1,11 @@
 import { types as t } from "@marko/babel-types";
-import { findParentTag, assertNoArgs, getTagDef } from "@marko/babel-utils";
+import {
+  findParentTag,
+  assertNoArgs,
+  getTagDef,
+  isTransparentTag,
+  isAttributeTag
+} from "@marko/babel-utils";
 import { getAttrs } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -30,7 +36,18 @@ export default function(path) {
   parentPath.node.exampleAttributeTag = node;
 
   if (isDynamic) {
-    parentPath.node.hasDynamicAttributeTags = true;
+    if (!parentPath.node.hasDynamicAttrTags) {
+      const body = parentPath.get("body").get("body");
+      parentPath.node.hasDynamicAttrTags = true;
+
+      for (let i = body.length; i--; ) {
+        const child = body[i];
+        if (isAttributeTagChild(child)) {
+          child.insertAfter(t.stringLiteral("END_ATTRIBUTE_TAGS"));
+          break;
+        }
+      }
+    }
   } else {
     if (
       parentAttributes.some(attr => attr.get("name").node === targetProperty)
@@ -101,4 +118,17 @@ export default function(path) {
       )
     );
   }
+}
+
+function isAttributeTagChild(tag) {
+  if (isAttributeTag(tag)) {
+    return true;
+  }
+
+  if (isTransparentTag(tag)) {
+    const body = tag.get("body").get("body");
+    return isAttributeTagChild(body[body.length - 1]);
+  }
+
+  return false;
 }

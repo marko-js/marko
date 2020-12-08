@@ -11,7 +11,7 @@ export function getAttrs(path, noCamel, skipRenderBody) {
   const {
     attributes,
     body: { body },
-    hasDynamicAttributeTags
+    hasDynamicAttrTags
   } = node;
   const attrsLen = attributes.length;
   const childLen = body.length;
@@ -65,9 +65,19 @@ export function getAttrs(path, noCamel, skipRenderBody) {
   }
 
   if (!skipRenderBody && childLen) {
-    if (hasDynamicAttributeTags) {
-      path.insertBefore(body);
-    } else {
+    let endDynamicAttrTagsIndex = -1;
+
+    if (hasDynamicAttrTags) {
+      endDynamicAttrTagsIndex = findLastIndex(
+        body,
+        ({ value }) => value === "END_ATTRIBUTE_TAGS"
+      );
+      path
+        .insertBefore(body.slice(0, endDynamicAttrTagsIndex))
+        .map(child => child.skip());
+    }
+
+    if (!hasDynamicAttrTags || endDynamicAttrTagsIndex !== childLen - 1) {
       if (node.params) {
         if (!file._hasTagParams && !isIgnoredTagParams(path)) {
           file._hasTagParams = true;
@@ -79,7 +89,11 @@ export function getAttrs(path, noCamel, skipRenderBody) {
           t.stringLiteral("renderBody"),
           t.arrowFunctionExpression(
             [t.identifier("out"), ...(node.params || EMPTY_ARR)],
-            t.blockStatement(body)
+            t.blockStatement(
+              hasDynamicAttrTags
+                ? body.slice(endDynamicAttrTagsIndex + 1)
+                : body
+            )
           )
         )
       );
@@ -193,4 +207,12 @@ function isIgnoredTagParams(path) {
         .get("name")
         .isStringLiteral({ value: "await" }))
   );
+}
+
+function findLastIndex(arr, check) {
+  for (let i = arr.length; i--; ) {
+    if (check(arr[i])) {
+      return i;
+    }
+  }
 }
