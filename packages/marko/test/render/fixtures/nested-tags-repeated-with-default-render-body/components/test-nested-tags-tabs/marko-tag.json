@@ -1,0 +1,6 @@
+{
+  "@orientation": "string",
+  "@tabs <tab>[]": {
+    "@title": "string"
+  }
+}
