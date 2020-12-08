@@ -6,15 +6,12 @@ module.exports = api => ({
       {
         loose: true,
         targets: {
-          node: "8"
+          node: "10"
         }
       }
     ]
   ],
-  plugins: [
-    "@babel/transform-runtime",
-    "@babel/plugin-proposal-object-rest-spread"
-  ],
+  plugins: ["@babel/transform-runtime"],
   overrides: [
     {
       test: "./packages/marko/src/**/*",
