@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.66](https://github.com/marko-js/marko/compare/v5.0.0-next.65...v5.0.0-next.66) (2020-12-08)
+
+
+### Bug Fixes
+
+* renderbody with dynamic attrs ([6c33c0f](https://github.com/marko-js/marko/commit/6c33c0fcf1f240e50ce7bccbb10ea1efb0daaed3))
+
+
+
+
+
 # [5.0.0-next.65](https://github.com/marko-js/marko/compare/v5.0.0-next.64...v5.0.0-next.65) (2020-12-02)
 
 **Note:** Version bump only for package marko
