@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.67](https://github.com/marko-js/marko/compare/v5.0.0-next.66...v5.0.0-next.67) (2020-12-09)
+
+
+### Bug Fixes
+
+* **babel-types:** scope traverse patch ([a82af6e](https://github.com/marko-js/marko/commit/a82af6ea0287a8d9816ecdd9cbd33538f36c6d52))
+
+
+
+
+
 # [5.0.0-next.66](https://github.com/marko-js/marko/compare/v5.0.0-next.65...v5.0.0-next.66) (2020-12-08)
 
 

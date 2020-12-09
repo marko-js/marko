@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.67](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.66...v5.0.0-next.67) (2020-12-09)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
 # [5.0.0-next.64](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.63...v5.0.0-next.64) (2020-12-02)
 
 **Note:** Version bump only for package @marko/babel-utils
