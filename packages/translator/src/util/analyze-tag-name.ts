@@ -1,4 +1,4 @@
-import * as t from "@marko/babel-types";
+import { types as t, NodePath } from "@marko/babel-types";
 import { isNativeTag } from "@marko/babel-utils";
 
 export const enum TagNameTypes {
@@ -10,9 +10,9 @@ export const enum TagNameTypes {
 type TagNameInfo = { type: TagNameTypes; nullable: boolean; dynamic: boolean };
 const HANDLE_BINDINGS = ["module", "var", "let", "const"];
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
-const CACHE = new WeakMap<t.NodePath<t.MarkoTag>, TagNameInfo>();
+const CACHE = new WeakMap<NodePath<t.MarkoTag>, TagNameInfo>();
 
-export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
+export default function analyzeTagName(tag: NodePath<t.MarkoTag>) {
   let cached = CACHE.get(tag);
   if (cached) {
     return cached;
@@ -32,7 +32,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
       dynamic: false
     };
   } else {
-    const pending = [name] as t.NodePath<any>[];
+    const pending = [name] as NodePath<any>[];
     let path: typeof pending[0] | undefined;
     let type: TagNameTypes | undefined = undefined;
     let nullable = false;
@@ -40,7 +40,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
     while ((path = pending.pop()) && type !== TagNameTypes.DynamicTag) {
       switch (path.type) {
         case "ConditionalExpression": {
-          const curPath = path as t.NodePath<t.ConditionalExpression>;
+          const curPath = path as NodePath<t.ConditionalExpression>;
           pending.push(curPath.get("consequent"));
 
           if (curPath.node.alternate) {
@@ -50,7 +50,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
         }
 
         case "LogicalExpression": {
-          const curPath = path as t.NodePath<t.LogicalExpression>;
+          const curPath = path as NodePath<t.LogicalExpression>;
           if (curPath.node.operator === "||") {
             pending.push(curPath.get("left"));
           } else {
@@ -62,14 +62,12 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
         }
 
         case "AssignmentExpression":
-          pending.push(
-            (path as t.NodePath<t.AssignmentExpression>).get("right")
-          );
+          pending.push((path as NodePath<t.AssignmentExpression>).get("right"));
           break;
 
         case "BinaryExpression":
           type =
-            (path as t.NodePath<t.BinaryExpression>).node.operator !== "+" ||
+            (path as NodePath<t.BinaryExpression>).node.operator !== "+" ||
             (type !== undefined && type !== TagNameTypes.NativeTag)
               ? TagNameTypes.DynamicTag
               : TagNameTypes.NativeTag;
@@ -94,7 +92,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
           break;
 
         case "Identifier": {
-          const curPath = path as t.NodePath<t.Identifier>;
+          const curPath = path as NodePath<t.Identifier>;
           if (curPath.node.name === "undefined") {
             nullable = true;
           } else {
@@ -116,7 +114,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
                 type = TagNameTypes.DynamicTag;
               }
             } else {
-              const initialValue = (binding.path as t.NodePath<t.VariableDeclarator>).get(
+              const initialValue = (binding.path as NodePath<t.VariableDeclarator>).get(
                 "init"
               );
               if (initialValue.node) {
@@ -129,7 +127,7 @@ export default function analyzeTagName(tag: t.NodePath<t.MarkoTag>) {
               for (let i = assignments.length; i--; ) {
                 const assignment = assignments[
                   i
-                ] as t.NodePath<t.AssignmentExpression>;
+                ] as NodePath<t.AssignmentExpression>;
                 const { operator } = assignment.node;
                 if (operator === "=") {
                   pending.push(assignment.get("right"));

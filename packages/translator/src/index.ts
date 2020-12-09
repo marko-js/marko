@@ -8,6 +8,7 @@ import MarkoText from "./text";
 import * as MarkoTag from "./tag";
 import MarkoPlaceholder from "./placeholder";
 import MarkoComment from "./comment";
+import * as ImportDeclaration from "./import-declaration";
 
 export const taglibs = [
   [require.resolve("./core/marko.json"), require("./core/marko.json")]
@@ -30,5 +31,6 @@ export const visitor: Visitor = {
   MarkoText,
   MarkoTag,
   MarkoPlaceholder,
-  MarkoComment
+  MarkoComment,
+  ImportDeclaration
 };
