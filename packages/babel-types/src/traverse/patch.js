@@ -36,23 +36,21 @@ Scope.prototype.crawl = function() {
   const originalTraverse = path.traverse;
   path.traverse = function(visitor) {
     Object.assign(
-      visitor,
+      traverse.explode(visitor),
       traverse.explode({
-        MarkoTag: {
-          enter(tag) {
-            const bodyScope = tag.get("body").getScope();
-            const tagVar = tag.get("var");
-            const params = tag.get("params");
+        MarkoTag(tag) {
+          const bodyScope = tag.get("body").getScope();
+          const tagVar = tag.get("var");
+          const params = tag.get("params");
 
-            if (params.length) {
-              for (const param of params) {
-                bodyScope.registerBinding("param", param);
-              }
+          if (params.length) {
+            for (const param of params) {
+              bodyScope.registerBinding("param", param);
             }
+          }
 
-            if (tagVar.node) {
-              tag.scope.getBlockParent().registerBinding("local", tagVar);
-            }
+          if (tagVar.node) {
+            tag.scope.getBlockParent().registerBinding("local", tagVar);
           }
         }
       })
