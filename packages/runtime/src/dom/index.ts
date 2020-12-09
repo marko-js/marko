@@ -5,6 +5,7 @@ export {
   createSource as source,
   createComputation as compute,
   createEffect as effect,
+  createUserEffect as userEffect,
   createPropertyComputation as computeProperty,
   createPropertyEffect as propertyEffect,
   dynamicKeys,

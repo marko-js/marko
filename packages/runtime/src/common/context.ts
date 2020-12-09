@@ -12,8 +12,8 @@ export function popContext() {
 
 export function getInContext(key: string) {
   if (
-    ("MARKO_DEBUG" && !Context) ||
-    !Object.prototype.hasOwnProperty.call(Context, key)
+    "MARKO_DEBUG" &&
+    (!Context || !Object.prototype.hasOwnProperty.call(Context, key))
   ) {
     throw new Error(`Unable to receive ${key} from current context`);
   }

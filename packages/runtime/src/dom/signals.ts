@@ -79,12 +79,12 @@ export type AsyncComputation<V> = SignalWithUpstream<V> &
     ___type: SignalTypes.ASYNC_COMPUTATION;
     ___execFn: (arg: unknown) => Promise<V>;
   };
-export type InternalEffect = SignalWithUpstream<undefined> & {
+export type InternalEffect = SignalWithUpstream<() => void> & {
   ___type: SignalTypes.EFFECT;
   ___execFn: (arg: unknown) => void;
   ___downstream: undefined;
 };
-export type UserEffect = SignalWithUpstream<undefined> & {
+export type UserEffect = SignalWithUpstream<() => void> & {
   ___type: SignalTypes.USER_EFFECT;
   ___execFn: (arg: unknown) => void;
   ___downstream: undefined;
@@ -190,11 +190,15 @@ export function createComputation<
       }
     }
 
-    if (hasUpstreamFromAnotherRoot) {
+    if (hasUpstreamFromAnotherRoot || type === SignalTypes.USER_EFFECT) {
       // only computations that depend on an upstream signal
       // owned by a different root fragment need manual cleanup
-      // GC is sufficient otherwise
-      computation.___cleanup = cleanup;
+      // GC is sufficient otherwise except for functions
+      if (type !== SignalTypes.USER_EFFECT) {
+        computation.___cleanup = cleanup;
+      } else if (!hasUpstreamFromAnotherRoot) {
+        computation.___cleanup = cleanupUserEffect;
+      } else computation.___cleanup = cleanupUserEffectAndDeps;
       currentFragment!.___tracked.add(
         computation as typeof computation & {
           ___cleanup: () => void;
@@ -229,8 +233,7 @@ function execConsumable<V>(
 export function createEffect<U>(
   fn: (arg: UpstreamRawValues<U>) => void,
   upstream: U,
-  upstreamSingle: 0 | 1,
-  type = SignalTypes.EFFECT
+  upstreamSingle: 0 | 1
 ) {
   // TODO: will need to allow user-defined cleanup
   return (createComputation(
@@ -238,9 +241,24 @@ export function createEffect<U>(
     upstream,
     upstreamSingle,
     false,
-    type,
+    SignalTypes.EFFECT,
     true
-  ) as unknown) as Effect;
+  ) as unknown) as InternalEffect;
+}
+
+export function createUserEffect<U>(
+  fn: (arg: UpstreamRawValues<U>) => void,
+  upstream: U,
+  upstreamSingle: 0 | 1
+) {
+  return (createComputation(
+    fn,
+    upstream,
+    upstreamSingle,
+    false,
+    SignalTypes.USER_EFFECT,
+    true
+  ) as unknown) as UserEffect;
 }
 
 export function createPropertyComputation<
@@ -300,6 +318,15 @@ function cleanup(this: DownstreamSignal) {
       }
     }
   }
+}
+
+function cleanupUserEffect(this: Effect) {
+  this.___value && this.___value();
+}
+
+function cleanupUserEffectAndDeps(this: Effect) {
+  this.___value && this.___value();
+  cleanup.call(this);
 }
 
 function unsubscribe(
@@ -515,7 +542,8 @@ function runEffect(effect: Effect, batch: Batch) {
     isMarkedDestroyed(batch.___fragments, effect.___root)
   )
     return;
-  execDownstreamSignal(effect);
+  if (effect.___value) effect.___value();
+  effect.___value = execDownstreamSignal(effect) as () => void | undefined;
 }
 
 function runEffects(batch: Batch) {
@@ -574,7 +602,7 @@ export function markFragmentDestroyed(f: Fragment) {
 export function tick() {
   return batch
     ? new Promise<void>(resolve => {
-        createEffect(resolve, undefined, 1, SignalTypes.USER_EFFECT);
+        createUserEffect(resolve, undefined, 1);
       })
     : Promise.resolve();
 }
