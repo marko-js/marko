@@ -1,6 +1,6 @@
 import { types as t, NodePath } from "@marko/babel-types";
 import { assertNoArgs, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import toBlockStatementIfMultiple from "../../util/to-block-statement-if-multiple";
+import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 
 export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
   const { node } = tag;
@@ -37,7 +37,7 @@ export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
 
   return t.ifStatement(
     defaultAttr.value!,
-    toBlockStatementIfMultiple(tag.node.body.body)
+    toFirstStatementOrBlock(tag.node.body)
   );
 }
 

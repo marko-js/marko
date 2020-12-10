@@ -2,12 +2,14 @@ import { types as t, NodePath } from "@marko/babel-types";
 import {
   assertNoArgs,
   assertNoAttributeTags,
-  assertNoParams
+  assertNoParams,
+  assertNoVar
 } from "@marko/babel-utils";
 import { writeHTML } from "../util/html-write";
 import { isOutputHTML } from "../util/marko-config";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
+  assertNoVar(tag);
   assertNoArgs(tag);
   assertNoParams(tag);
   assertNoAttributeTags(tag);

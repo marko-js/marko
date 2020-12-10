@@ -11,6 +11,12 @@ type TagNameInfo = { type: TagNameTypes; nullable: boolean; dynamic: boolean };
 const HANDLE_BINDINGS = ["module", "var", "let", "const"];
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 const CACHE = new WeakMap<NodePath<t.MarkoTag>, TagNameInfo>();
+const KNOWN_COMPONENTS = new WeakSet<t.Identifier>();
+
+export function markIdentifierAsComponent(node: t.Identifier) {
+  KNOWN_COMPONENTS.add(node);
+  return node;
+}
 
 export default function analyzeTagName(tag: NodePath<t.MarkoTag>) {
   let cached = CACHE.get(tag);
@@ -98,7 +104,16 @@ export default function analyzeTagName(tag: NodePath<t.MarkoTag>) {
           } else {
             const binding = curPath.scope.getBinding(curPath.node.name);
 
-            if (!binding || !HANDLE_BINDINGS.includes(binding.kind)) {
+            if (!binding) {
+              type = TagNameTypes.DynamicTag;
+            } else if (
+              KNOWN_COMPONENTS.has(binding.path.node as t.Identifier)
+            ) {
+              type =
+                type !== undefined && type !== TagNameTypes.CustomTag
+                  ? TagNameTypes.DynamicTag
+                  : TagNameTypes.CustomTag;
+            } else if (!HANDLE_BINDINGS.includes(binding.kind)) {
               type = TagNameTypes.DynamicTag;
             } else if (binding.kind === "module") {
               const decl = binding.path.parent as t.ImportDeclaration;

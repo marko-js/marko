@@ -139,5 +139,17 @@
         "descriptionMoreURL": "https://markojs.com/docs/core-tags/#html-comment"
       }
     ]
+  },
+  "<tag>": {
+    "code-generator": "./translate-tag",
+    "attributes": {},
+    "autocomplete": [
+      {
+        "displayText": "tag/<name>|<params>|",
+        "description": "Creates a reusable fragment within the template.",
+        "snippet": "tag/${1:name}|${2:param1, param2}|",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#tag"
+      }
+    ]
   }
 }

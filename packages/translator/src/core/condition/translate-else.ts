@@ -6,7 +6,7 @@ import {
   assertNoAttributes
 } from "@marko/babel-utils";
 import { flushBefore, flushInto } from "../../util/html-flush";
-import toBlockStatementIfMultiple from "../../util/to-block-statement-if-multiple";
+import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { findPreviousIfStatement } from "./util";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
@@ -19,8 +19,8 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 
 export function exit(tag: NodePath<t.MarkoTag>) {
   flushInto(tag);
-  findPreviousIfStatement(tag).node.alternate = toBlockStatementIfMultiple(
-    tag.node.body.body
+  findPreviousIfStatement(tag).node.alternate = toFirstStatementOrBlock(
+    tag.node.body
   );
   tag.remove();
 }

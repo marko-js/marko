@@ -1,4 +1,5 @@
 import { types as t, NodePath } from "@marko/babel-types";
+import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
 import { flushBefore, flushInto } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
@@ -17,18 +18,12 @@ export function exit(tag: NodePath<t.MarkoTag>) {
 
   if (renderBodyProp) {
     (attrsObject as t.ObjectExpression).properties.pop();
-    let body: t.BlockStatement | t.Expression;
-
-    if (
-      renderBodyProp.body.body.length === 1 &&
-      t.isExpressionStatement(renderBodyProp.body.body[0])
-    ) {
-      body = renderBodyProp.body.body[0].expression;
-    } else {
-      body = renderBodyProp.body;
-    }
-
-    args.push(t.arrowFunctionExpression(renderBodyProp.params, body));
+    args.push(
+      t.arrowFunctionExpression(
+        renderBodyProp.params,
+        toFirstExpressionOrBlock(renderBodyProp.body)
+      )
+    );
   }
 
   tag
