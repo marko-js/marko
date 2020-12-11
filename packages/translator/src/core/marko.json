@@ -173,5 +173,9 @@
         "descriptionMoreURL": "https://markojs.com/docs/core-tags/#get"
       }
     ]
+  },
+  "<style>": {
+    "code-generator": "./translate-style",
+    "@type": { "enum": ["css", "less", "scss", "text/css"] }
   }
 }
