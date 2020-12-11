@@ -170,3 +170,6 @@ export function importNamed(
 
 export function getTaglibLookup(file: BabelFile): TaglibLookup;
 export function getTagDefForTagName(file: BabelFile, tagName: string): TagDefinition | undefined;
+
+export function getTemplateId(optimize: boolean, request: string): string;
+export function resolveTagImport(path: NodePath<any>, request: string): string | undefined;

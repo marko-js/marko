@@ -1,7 +1,7 @@
 import { types as t } from "@marko/babel-types";
 import {
   parseExpression,
-  getTagDefForTagName,
+  resolveTagImport,
   resolveRelativePath,
   importNamed,
   importDefault,
@@ -309,35 +309,9 @@ export const visitor = {
   },
   ImportDeclaration: {
     exit(path) {
-      const {
-        node,
-        hub: { file }
-      } = path;
-      const { source } = node;
-
-      if (source.value[0] === "<") {
-        const tagName = source.value.slice(1, -1);
-        const tagDef = getTagDefForTagName(file, tagName);
-        const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
-        const relativePath = tagEntry && resolveRelativePath(file, tagEntry);
-
-        if (!relativePath) {
-          throw path
-            .get("source")
-            .buildCodeFrameError(
-              `Unable to find entry point for custom tag <${tagName}>.`
-            );
-        }
-
-        source.value = relativePath;
-      }
-
-      if (
-        source.value.endsWith(".marko") &&
-        !file.metadata.marko.tags.includes(source.value)
-      ) {
-        file.metadata.marko.tags.push(source.value);
-      }
+      const source = path.get("source");
+      const request = source.node.value;
+      source.node.value = resolveTagImport(source, request) || request;
     }
   }
 };
