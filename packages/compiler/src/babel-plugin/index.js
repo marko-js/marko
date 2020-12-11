@@ -1,8 +1,7 @@
 import path from "path";
 import { createHash } from "crypto";
-import { getRootDir } from "lasso-package-root";
 import { types as t } from "@marko/babel-types";
-import { getLoc } from "@marko/babel-utils";
+import { getLoc, getTemplateId } from "@marko/babel-utils";
 import traverse, { visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";
 import { parseMarko } from "./parser";
@@ -12,11 +11,6 @@ import markoModules from "../../modules";
 import { MarkoFile } from "./file";
 
 const SOURCE_FILES = new WeakMap();
-let ROOT = process.cwd();
-try {
-  ROOT = getRootDir(ROOT) || ROOT;
-  // eslint-disable-next-line no-empty
-} catch {}
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
@@ -74,13 +68,12 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   }
 
   const filename = jsParseOptions.sourceFileName;
-  const relativeFilename = path.relative(ROOT, filename);
+  const id = getTemplateId(markoOpts.optimize, filename);
   const contentHash = createHash("MD5")
     .update(code)
     .digest("hex");
   const cacheKey = createHash("MD5")
-    .update(relativeFilename)
-    .update(markoOpts.optimize ? "\0optimize" : "")
+    .update(id)
     .update(markoOpts.migrate ? "\0migrate" : "")
     .digest("hex");
 
@@ -130,12 +123,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   });
 
   const meta = (file.metadata.marko = {
-    id: markoOpts.optimize
-      ? createHash("MD5")
-          .update(relativeFilename)
-          .digest("base64")
-          .slice(0, 8)
-      : relativeFilename,
+    id,
     macros: {},
     deps: [],
     tags: [],

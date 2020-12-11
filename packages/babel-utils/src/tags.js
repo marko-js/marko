@@ -1,6 +1,16 @@
+import { relative } from "path";
+import { createHash } from "crypto";
 import { types as t } from "@marko/babel-types";
+import { getRootDir } from "lasso-package-root";
 import { getTagDefForTagName } from "./taglib";
+import { resolveRelativePath } from "./imports";
 const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
+
+let ROOT = process.cwd();
+try {
+  ROOT = getRootDir(ROOT) || ROOT;
+  // eslint-disable-next-line no-empty
+} catch {}
 
 export function isNativeTag(path) {
   if (path.node._isDynamicString) {
@@ -160,5 +170,46 @@ export function loadFileForTag(tag) {
       { ...file.opts, sourceFileName, filename: sourceFileName },
       file.markoOpts
     );
+  }
+}
+
+export function getTemplateId(optimize, request) {
+  const id = relative(ROOT, request);
+
+  if (optimize) {
+    return createHash("MD5")
+      .update(id)
+      .digest("base64")
+      .slice(0, 8);
+  }
+
+  return id;
+}
+
+export function resolveTagImport(path, request) {
+  const {
+    hub: { file }
+  } = path;
+  if (request[0] === "<") {
+    const tagName = request.slice(1, -1);
+    const tagDef = getTagDefForTagName(file, tagName);
+    const tagEntry = tagDef && (tagDef.renderer || tagDef.template);
+    const relativePath = tagEntry && resolveRelativePath(file, tagEntry);
+
+    if (!relativePath) {
+      throw path.buildCodeFrameError(
+        `Unable to find entry point for custom tag <${tagName}>.`
+      );
+    }
+
+    return relativePath;
+  }
+
+  if (request.endsWith(".marko")) {
+    if (!file.metadata.marko.tags.includes(request)) {
+      file.metadata.marko.tags.push(request);
+    }
+
+    return resolveRelativePath(file, request);
   }
 }

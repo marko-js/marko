@@ -11,7 +11,9 @@ export {
   findParentTag,
   findAttributeTags,
   getArgOrSequence,
-  loadFileForTag
+  loadFileForTag,
+  getTemplateId,
+  resolveTagImport
 } from "./tags";
 export {
   assertAllowedAttributes,
