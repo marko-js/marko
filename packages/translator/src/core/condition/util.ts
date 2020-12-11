@@ -22,7 +22,7 @@ export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
   if (node.attributes.length > 1) {
     const start = node.attributes[1].loc?.start;
     const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The '<${tagName}>' only supports a default attribute.`;
+    const msg = `The '<${tagName}>' tag only supports a default attribute.`;
 
     if (start == null || end == null) {
       throw tag.get("name").buildCodeFrameError(msg);

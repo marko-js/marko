@@ -151,5 +151,27 @@
         "descriptionMoreURL": "https://markojs.com/docs/core-tags/#tag"
       }
     ]
+  },
+  "<set>": {
+    "code-generator": "./translate-set",
+    "autocomplete": [
+      {
+        "displayText": "set=<value>",
+        "description": "Sets a value which can be read from a child template.",
+        "snippet": "set=${1:value}",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#set"
+      }
+    ]
+  },
+  "<get>": {
+    "code-generator": "./translate-get",
+    "autocomplete": [
+      {
+        "displayText": "get/<name>=\"<from>\"",
+        "description": "Gets a value provided from another template.",
+        "snippet": "get/${1:name}=\"${2:from}\"",
+        "descriptionMoreURL": "https://markojs.com/docs/core-tags/#get"
+      }
+    ]
   }
 }
