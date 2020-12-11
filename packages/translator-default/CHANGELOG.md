@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.68](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.67...v5.0.0-next.68) (2020-12-11)
+
+
+### Features
+
+* **babel-utils:** expose import and id utils ([#1636](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1636)) ([644e4d8](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/644e4d8756c2260a1e2d28374a31a67552414179))
+
+
+
+
+
 # [5.0.0-next.67](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.66...v5.0.0-next.67) (2020-12-09)
 
 **Note:** Version bump only for package @marko/translator-default
