@@ -17,23 +17,15 @@ import tagB from "<tag-b>";
 
 <${input.tag || tagA} class=["a", "b"] other=input.other/>
 
-$ const largeHeading = input.isLarge && "h1";
+<const/largeHeading = input.isLarge && "h1"/>
 <${largeHeading || "h2"} class=["a", "b"] other=input.other/>
 
 <${global.x = "a" + "b"} class=["a", "b"] other=input.other/>
 <${"h" + input.level} class=["a", "b"] other=input.other/>
 <${`h${input.level}`} class=["a", "b"] other=input.other/>
 
-$ const tagConstA = "a";
+<const/tagConstA = "a"/>
 <${tagConstA} class=["a", "b"] other=input.other/>
 
-$ const tagConstB = input.show ? "div" : null;
+<const/tagConstB = input.show ? "div" : null/>
 <${tagConstB} class=["a", "b"] other=input.other/>
-
-$ let tagLazyAssign;
-
-$ tagLazyAssign = "a";
-<${tagLazyAssign} class=["a", "b"] other=input.other/>
-
-$ tagLazyAssign = input.show ? "div" : null;
-<${tagLazyAssign} class=["a", "b"] other=input.other/>

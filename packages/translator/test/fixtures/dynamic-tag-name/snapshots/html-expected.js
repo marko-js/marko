@@ -53,22 +53,17 @@ const _renderer = _wrapHydratable(input => {
     other: input.other
   });
 
-  $ const largeHeading = input.isLarge && "h1";
+  const largeHeading = input.isLarge && "h1";
 
   const _tagName5 = largeHeading || "h2";
 
   if (_tagName5) _write(`<${_tagName5} class="a b"${_attr("other", input.other)}></${_tagName5}>`);
-  $ const tagConstA = "a";
-  $ const tagConstB = input.show ? "div" : null;
+  const tagConstA = "a";
+  const tagConstB = input.show ? "div" : null;
 
   _write(`<${global.x = "a" + "b"} class="a b"${_attr("other", input.other)}></${global.x = "a" + "b"}><${"h" + input.level} class="a b"${_attr("other", input.other)}></${"h" + input.level}><h${input.level} class="a b"${_attr("other", input.other)}></h${input.level}><${tagConstA} class="a b"${_attr("other", input.other)}></${tagConstA}>`);
 
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", input.other)}></${tagConstB}>`);
-  $ let tagLazyAssign;
-  $ tagLazyAssign = "a";
-  if (tagLazyAssign) _write(`<${tagLazyAssign} class="a b"${_attr("other", input.other)}></${tagLazyAssign}>`);
-  $ tagLazyAssign = input.show ? "div" : null;
-  if (tagLazyAssign) _write(`<${tagLazyAssign} class="a b"${_attr("other", input.other)}></${tagLazyAssign}>`);
 });
 
 export default _renderer;
