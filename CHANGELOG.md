@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.69](https://github.com/marko-js/marko/compare/v5.0.0-next.68...v5.0.0-next.69) (2020-12-14)
+
+
+### Features
+
+* **compiler:** provide state object during compiler hooks ([24cefa4](https://github.com/marko-js/marko/commit/24cefa4c068a8b272aa998391a695d2efd5d9786))
+
+
+
+
+
 # [5.0.0-next.68](https://github.com/marko-js/marko/compare/v5.0.0-next.67...v5.0.0-next.68) (2020-12-11)
 
 
