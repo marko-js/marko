@@ -1,15 +1,17 @@
 import path from "path";
 import { types as t, NodePath } from "@marko/babel-types";
 import {
-  assertNoArgs,
   resolveTagImport,
-  getTemplateId
+  getTemplateId,
+  assertNoParams
 } from "@marko/babel-utils";
 import { flushBefore } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
+import { assertNoBodyContent } from "../util/assert";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
-  assertNoArgs(tag);
+  assertNoParams(tag);
+  assertNoBodyContent(tag);
   flushBefore(tag);
 
   const {
@@ -17,12 +19,6 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     hub: { file }
   } = tag;
   const [defaultAttr] = node.attributes;
-
-  if (tag.node.body.body.length) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(`The '<get>' tag does not support body content.`);
-  }
 
   if (!node.var) {
     throw tag

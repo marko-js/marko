@@ -1,21 +1,19 @@
 import path from "path";
 import { types as t, NodePath } from "@marko/babel-types";
-import { isOutputHTML } from "../util/marko-config";
+import { assertNoParams, assertNoVar } from "@marko/babel-utils";
+import { assertNoSpreadAttrs } from "../util/assert";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
   const {
     hub: { file }
   } = tag;
 
+  assertNoVar(tag);
+  assertNoParams(tag);
+  assertNoSpreadAttrs(tag);
+
   let type = "text/css";
   const attrs = tag.get("attributes");
-  const spreadAttr = attrs.find(attr => attr.isMarkoSpreadAttribute());
-
-  if (spreadAttr) {
-    throw spreadAttr.buildCodeFrameError(
-      "The <style> tag does not support ...spread attributes."
-    );
-  }
 
   const base = path.basename(file.opts.sourceFileName as string);
   const typeAttr = attrs.find(
@@ -46,11 +44,6 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     );
   }
 
-  if (isOutputHTML(tag)) {
-    tag.remove();
-    return;
-  }
-
   file.metadata.marko.deps.push(({
     type,
     code: markoText.node.value,
@@ -59,4 +52,6 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     path: `./${base}`,
     style: `./${base}.${type}`
   } as unknown) as typeof file.metadata.marko.deps[0]);
+
+  tag.remove();
 }

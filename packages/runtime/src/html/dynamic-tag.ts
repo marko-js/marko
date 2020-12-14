@@ -39,18 +39,16 @@ export function dynamicTag(
   if (typeof tag === "string") {
     write(`<${tag}${attrs(input)}>`);
 
-    if (voidElements.has(tag)) {
-      if (renderBody) {
-        throw new Error(
-          `A renderBody was provided for a "${tag}" tag, which cannot have children.`
-        );
-      }
-    } else {
+    if (!voidElements.has(tag)) {
       if (renderBody) {
         renderBody();
       }
 
       write(`</${tag}>`);
+    } else if ("MARKO_DEBUG" && renderBody) {
+      throw new Error(
+        `A renderBody was provided for a "${tag}" tag, which cannot have children.`
+      );
     }
 
     return;
@@ -59,15 +57,14 @@ export function dynamicTag(
   const renderer = (tag as RenderBodyObject).renderBody || tag;
 
   if (typeof renderer === "function") {
-    renderer(
+    return renderer(
       renderBody
         ? input.renderBody
           ? { ...input, renderBody }
           : { renderBody, ...input }
         : input
     );
-    return;
+  } else if ("MARKO_DEBUG") {
+    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }
-
-  throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
 }

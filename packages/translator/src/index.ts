@@ -16,9 +16,6 @@ export const taglibs = [
 
 export const visitor: Visitor = {
   Program: {
-    enter(path) {
-      path.state = {};
-    },
     exit(path) {
       if (isOutputHTML(path)) {
         flushInto(path);

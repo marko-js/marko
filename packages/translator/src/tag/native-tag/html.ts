@@ -5,6 +5,7 @@ import attrsToObject from "../../util/attrs-to-object";
 import { consumeHTML, flushBefore, flushInto } from "../../util/html-flush";
 import { writeHTML } from "../../util/html-write";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
+import translateVar from "../../util/translate-var";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
   const name = tag.get("name");
@@ -19,6 +20,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 
   const write = writeHTML(tag);
 
+  translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)));
   write`<${name.node}`;
 
   if (hasSpread) {

@@ -1,11 +1,9 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import { assertNoArgs } from "@marko/babel-utils";
 import { markIdentifierAsComponent } from "../util/analyze-tag-name";
 import { flushBefore, flushInto } from "../util/html-flush";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
-  assertNoArgs(tag);
   flushBefore(tag);
 
   if (!tag.node.var) {

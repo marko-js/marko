@@ -3,7 +3,8 @@ import {
   findParentTag,
   isTransparentTag,
   isLoopTag,
-  isAttributeTag
+  isAttributeTag,
+  assertNoVar
 } from "@marko/babel-utils";
 import analyzeTagName, { TagNameTypes } from "../util/analyze-tag-name";
 import attrsToObject from "../util/attrs-to-object";
@@ -56,6 +57,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   if (!LOOKUPS.has(parentTag)) {
     const lookup = analyzeRoot(parentTag);
     LOOKUPS.set(parentTag, lookup);
+    (parentTag.node as any).exampleAttributeTag = tag.node; // Used by @marko/babel-utils assertNoAttributeTags.
 
     for (const attrName in lookup) {
       const info = lookup[attrName];
@@ -88,6 +90,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
+  assertNoVar(tag);
   flushInto(tag);
 
   const attrName = (tag.node.name as t.StringLiteral).value.slice(1);

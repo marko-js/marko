@@ -1,18 +1,13 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import {
-  assertAllowedAttributes,
-  assertNoArgs,
-  assertNoVar
-} from "@marko/babel-utils";
+import { assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import { flushBefore, flushInto } from "../util/html-flush";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
-  assertNoVar(tag);
-  assertNoArgs(tag);
   flushBefore(tag);
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
+  assertNoVar(tag);
   flushInto(tag);
 
   const { node } = tag;

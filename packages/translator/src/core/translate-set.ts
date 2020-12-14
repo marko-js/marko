@@ -1,11 +1,9 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import { assertNoArgs, assertNoVar } from "@marko/babel-utils";
+import { assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { flushBefore, flushInto } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
-  assertNoArgs(tag);
-  assertNoVar(tag);
   flushBefore(tag);
 
   const { node } = tag;
@@ -54,6 +52,8 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
+  assertNoParams(tag);
+  assertNoVar(tag);
   flushInto(tag);
   tag.insertAfter(t.expressionStatement(callRuntime(tag, "popContext")));
   tag.replaceWithMultiple(tag.node.body.body);

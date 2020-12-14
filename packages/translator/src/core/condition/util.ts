@@ -1,5 +1,5 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import { assertNoArgs, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import { assertNoParams, assertNoVar } from "@marko/babel-utils";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 
 export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
@@ -8,7 +8,6 @@ export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
   const tagName = (node.name as t.StringLiteral).value;
 
   assertNoVar(tag);
-  assertNoArgs(tag);
   assertNoParams(tag);
 
   if (!t.isMarkoAttribute(defaultAttr) || !defaultAttr.default) {

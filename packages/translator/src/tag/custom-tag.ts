@@ -7,6 +7,7 @@ import {
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
 import { flushBefore, flushInto } from "../util/html-flush";
 import analyzeTagName from "../util/analyze-tag-name";
+import translateVar from "../util/translate-var";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
   flushBefore(tag);
@@ -48,6 +49,10 @@ export function exit(tag: NodePath<t.MarkoTag>) {
   if (analyzeTagName(tag).nullable) {
     const renderBodyProp = getRenderBodyProp(attrsObject);
     let renderBodyId: t.Identifier | undefined = undefined;
+    let renderTagExpr: t.Expression = callExpression(
+      tagIdentifier,
+      attrsToObject(tag)
+    );
 
     if (renderBodyProp) {
       renderBodyId = tag.scope.generateUidIdentifier("renderBody");
@@ -66,15 +71,23 @@ export function exit(tag: NodePath<t.MarkoTag>) {
       ] = t.objectProperty(t.identifier("renderBody"), renderBodyId);
     }
 
+    if (node.var) {
+      translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)), "let");
+      renderTagExpr = t.assignmentExpression("=", node.var, renderTagExpr);
+    }
+
     tag
       .replaceWith(
         t.ifStatement(
           tagIdentifier,
-          callStatement(tagIdentifier, attrsToObject(tag)),
+          t.expressionStatement(renderTagExpr),
           renderBodyId && callStatement(renderBodyId)
         )
       )[0]
       .skip();
+  } else if (node.var) {
+    translateVar(tag, callExpression(tagIdentifier, attrsObject));
+    tag.remove();
   } else {
     tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
   }
@@ -84,7 +97,12 @@ function callStatement(
   id: t.Expression,
   ...args: Array<t.Expression | undefined>
 ) {
-  return t.expressionStatement(
-    t.callExpression(id, args.filter(Boolean) as t.Expression[])
-  );
+  return t.expressionStatement(callExpression(id, ...args));
+}
+
+function callExpression(
+  id: t.Expression,
+  ...args: Array<t.Expression | undefined>
+) {
+  return t.callExpression(id, args.filter(Boolean) as t.Expression[]);
 }
