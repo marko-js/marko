@@ -49,7 +49,7 @@ export default (api, markoOpts) => {
         file.markoOpts = markoOpts;
         file.___taglibLookup = sourceFile.___taglibLookup;
         file.___getMarkoFile = getMarkoFile;
-        traverse(ast, translator.visitor, file.scope);
+        traverse(ast, translator.visitor, file.scope, {});
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
         file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
@@ -162,8 +162,8 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     rootTransformers.push(mod.default || mod);
   }
 
-  traverse(file.ast, mergeVisitors(rootMigrators), file.scope);
-  traverse(file.ast, mergeVisitors(rootTransformers), file.scope);
+  traverse(file.ast, mergeVisitors(rootMigrators), file.scope, {});
+  traverse(file.ast, mergeVisitors(rootTransformers), file.scope, {});
 
   for (const taglibId in taglibLookup.taglibsById) {
     const { filePath } = taglibLookup.taglibsById[taglibId];
