@@ -1,12 +1,11 @@
-import { write } from "../../../../src/html/index";
-import { serverRegister } from "../../../../src/common/server-registry";
+import { write, wrapHydratable } from "../../../../src/html/index";
 
 const renderer = () => {
   firstComponent({});
   secondComponent({});
 };
 
-const firstComponent = serverRegister("first", () => {
+const firstComponent = wrapHydratable("first", () => {
   write("a");
   childComponent();
   write("d");
@@ -17,7 +16,7 @@ const childComponent = () => {
   write("c");
 };
 
-const secondComponent = serverRegister("second", () => {
+const secondComponent = wrapHydratable("second", () => {
   write("x");
   write("y");
   write("z");

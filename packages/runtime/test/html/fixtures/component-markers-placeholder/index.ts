@@ -1,13 +1,17 @@
-import { write, fork, tryPlaceholder } from "../../../../src/html/index";
+import {
+  write,
+  fork,
+  tryPlaceholder,
+  wrapHydratable
+} from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
-import { serverRegister } from "../../../../src/common/server-registry";
 
 const renderer = () => {
   firstComponent({});
   secondComponent({});
 };
 
-const firstComponent = serverRegister("first", () => {
+const firstComponent = wrapHydratable("first", () => {
   write("a");
   tryPlaceholder(
     () => {
@@ -24,7 +28,7 @@ const firstComponent = serverRegister("first", () => {
   write("g");
 });
 
-const secondComponent = serverRegister("second", () => {
+const secondComponent = wrapHydratable("second", () => {
   write("v");
   tryPlaceholder(
     () => {

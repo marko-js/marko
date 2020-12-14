@@ -12,13 +12,7 @@ import {
 } from "./signals";
 import { createFragmentFromRenderer, removeFragment } from "./fragments";
 import { conditional } from "./control-flow";
-import {
-  walker,
-  walk,
-  walkAndGetText,
-  detachedWalk,
-  WalkCodes
-} from "./walker";
+import { walker, walk, detachedWalk, WalkCodes } from "./walker";
 
 const enum NodeType {
   Element = 1,
@@ -246,11 +240,7 @@ export function props(properties) {
 }
 
 export function text(value: UpstreamSignalOrValue) {
-  prop(
-    "data",
-    createComputation(normalizeTextData, value, 1, true),
-    walkAndGetText()
-  );
+  prop("data", createComputation(normalizeTextData, value, 1, true), walk());
 }
 
 export function textContent(value: UpstreamSignalOrValue) {

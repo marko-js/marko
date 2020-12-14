@@ -1,30 +1,14 @@
-import createBrowser from "jsdom-context-require";
+import createBrowser from "../../utils/create-browser";
 import createMutationTracker from "./track-mutations";
 import { wait, isWait } from "../../utils/resolve";
-import { DOMWindow } from "jsdom";
 
 const browser = createBrowser({
   dir: __dirname,
   html: ""
 });
 
-const window = browser.window as DOMWindow & { MessageChannel: any };
+const window = browser.window;
 const document = window.document;
-window.queueMicrotask = queueMicrotask;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-window.MessageChannel = (window as any).MessageChannel = class MessageChannel {
-  port1: any;
-  port2: any;
-  constructor() {
-    this.port1 = { onmessage() {} };
-    this.port2 = {
-      postMessage: () => {
-        setImmediate(this.port1.onmessage);
-      }
-    };
-  }
-};
-window.requestAnimationFrame = fn => setTimeout(fn);
 
 const { createRenderFn, runInBatch } = browser.require(
   "../../../src/dom/index"

@@ -19,225 +19,225 @@
     {
       "name": "*",
       "individual": {
-        "min": 11679,
-        "gzip": 5123,
-        "brotli": 4705
+        "min": 11889,
+        "gzip": 5188,
+        "brotli": 4788
       }
     },
     {
       "name": "register",
       "individual": {
-        "min": 277,
+        "min": 288,
         "gzip": 224,
-        "brotli": 182
+        "brotli": 183
       },
       "cumulative": {
-        "min": 277,
+        "min": 288,
         "gzip": 224,
-        "brotli": 182
+        "brotli": 183
       },
       "increment": {
-        "min": 277,
+        "min": 288,
         "gzip": 224,
-        "brotli": 182
+        "brotli": 183
       }
     },
     {
       "name": "init",
       "individual": {
-        "min": 845,
-        "gzip": 537,
-        "brotli": 457
+        "min": 3018,
+        "gzip": 1508,
+        "brotli": 1372
       },
       "cumulative": {
-        "min": 894,
-        "gzip": 557,
-        "brotli": 474
+        "min": 3067,
+        "gzip": 1528,
+        "brotli": 1392
       },
       "increment": {
-        "min": 617,
-        "gzip": 333,
-        "brotli": 292
+        "min": 2779,
+        "gzip": 1304,
+        "brotli": 1209
       }
     },
     {
       "name": "source",
       "individual": {
-        "min": 475,
-        "gzip": 320,
-        "brotli": 255
+        "min": 486,
+        "gzip": 319,
+        "brotli": 263
       },
       "cumulative": {
-        "min": 1129,
-        "gzip": 666,
-        "brotli": 574
+        "min": 3263,
+        "gzip": 1613,
+        "brotli": 1458
       },
       "increment": {
-        "min": 235,
-        "gzip": 109,
-        "brotli": 100
+        "min": 196,
+        "gzip": 85,
+        "brotli": 66
       }
     },
     {
       "name": "compute",
       "individual": {
-        "min": 1371,
-        "gzip": 716,
-        "brotli": 651
+        "min": 1382,
+        "gzip": 717,
+        "brotli": 650
       },
       "cumulative": {
-        "min": 2077,
-        "gzip": 1080,
-        "brotli": 976
+        "min": 4179,
+        "gzip": 1983,
+        "brotli": 1820
       },
       "increment": {
-        "min": 948,
-        "gzip": 414,
-        "brotli": 402
+        "min": 916,
+        "gzip": 370,
+        "brotli": 362
       }
     },
     {
       "name": "effect",
       "individual": {
-        "min": 1412,
-        "gzip": 730,
-        "brotli": 672
+        "min": 1423,
+        "gzip": 731,
+        "brotli": 668
       },
       "cumulative": {
-        "min": 2131,
-        "gzip": 1103,
-        "brotli": 998
+        "min": 4233,
+        "gzip": 2006,
+        "brotli": 1838
       },
       "increment": {
         "min": 54,
         "gzip": 23,
-        "brotli": 22
+        "brotli": 18
       }
     },
     {
       "name": "get",
       "individual": {
-        "min": 317,
-        "gzip": 242,
-        "brotli": 199
+        "min": 328,
+        "gzip": 243,
+        "brotli": 202
       },
       "cumulative": {
-        "min": 2180,
-        "gzip": 1122,
-        "brotli": 1016
+        "min": 4282,
+        "gzip": 2022,
+        "brotli": 1849
       },
       "increment": {
         "min": 49,
-        "gzip": 19,
-        "brotli": 18
+        "gzip": 16,
+        "brotli": 11
       }
     },
     {
       "name": "set",
       "individual": {
-        "min": 1718,
-        "gzip": 939,
-        "brotli": 849
+        "min": 1729,
+        "gzip": 937,
+        "brotli": 857
       },
       "cumulative": {
-        "min": 3518,
-        "gzip": 1733,
-        "brotli": 1569
+        "min": 4292,
+        "gzip": 2026,
+        "brotli": 1847
       },
       "increment": {
-        "min": 1338,
-        "gzip": 611,
-        "brotli": 553
+        "min": 10,
+        "gzip": 4,
+        "brotli": -2
       }
     },
     {
       "name": "on",
       "individual": {
-        "min": 579,
-        "gzip": 393,
-        "brotli": 330
+        "min": 590,
+        "gzip": 395,
+        "brotli": 328
       },
       "cumulative": {
-        "min": 3861,
-        "gzip": 1887,
-        "brotli": 1711
+        "min": 4635,
+        "gzip": 2178,
+        "brotli": 1980
       },
       "increment": {
         "min": 343,
-        "gzip": 154,
-        "brotli": 142
+        "gzip": 152,
+        "brotli": 133
       }
     },
     {
       "name": "attr",
       "individual": {
-        "min": 1633,
-        "gzip": 847,
+        "min": 1644,
+        "gzip": 850,
         "brotli": 773
       },
       "cumulative": {
-        "min": 4094,
-        "gzip": 1989,
-        "brotli": 1796
+        "min": 4868,
+        "gzip": 2268,
+        "brotli": 2054
       },
       "increment": {
         "min": 233,
-        "gzip": 102,
-        "brotli": 85
+        "gzip": 90,
+        "brotli": 74
       }
     },
     {
       "name": "text",
       "individual": {
-        "min": 2111,
-        "gzip": 1041,
-        "brotli": 951
+        "min": 2135,
+        "gzip": 1049,
+        "brotli": 958
       },
       "cumulative": {
-        "min": 4847,
-        "gzip": 2285,
-        "brotli": 2072
+        "min": 5099,
+        "gzip": 2362,
+        "brotli": 2138
       },
       "increment": {
-        "min": 753,
-        "gzip": 296,
-        "brotli": 276
+        "min": 231,
+        "gzip": 94,
+        "brotli": 84
       }
     },
     {
       "name": "conditional",
       "individual": {
-        "min": 3136,
-        "gzip": 1483,
-        "brotli": 1357
+        "min": 3180,
+        "gzip": 1497,
+        "brotli": 1373
       },
       "cumulative": {
-        "min": 6081,
-        "gzip": 2785,
-        "brotli": 2545
+        "min": 6333,
+        "gzip": 2865,
+        "brotli": 2621
       },
       "increment": {
         "min": 1234,
-        "gzip": 500,
-        "brotli": 473
+        "gzip": 503,
+        "brotli": 483
       }
     },
     {
       "name": "loopOf",
       "individual": {
-        "min": 5455,
-        "gzip": 2554,
-        "brotli": 2345
+        "min": 5499,
+        "gzip": 2566,
+        "brotli": 2365
       },
       "cumulative": {
-        "min": 8271,
-        "gzip": 3821,
-        "brotli": 3521
+        "min": 8523,
+        "gzip": 3903,
+        "brotli": 3592
       },
       "increment": {
         "min": 2190,
-        "gzip": 1036,
-        "brotli": 976
+        "gzip": 1038,
+        "brotli": 971
       }
     }
   ]

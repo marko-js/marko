@@ -10,12 +10,12 @@
 
 # Mutations
 ```
-inserted #text0, div1, button2, #text3
+inserted div0, button1
 ```
 
 
 # Render 
-() => button.click()
+(container) => container.querySelector("button").click()
 
 ```html
 <div>
@@ -28,5 +28,5 @@ inserted #text0, div1, button2, #text3
 
 # Mutations
 ```
-div1/#text0: "10" => "11"
+div0/#text0: "10" => "11"
 ```

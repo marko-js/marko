@@ -229,6 +229,26 @@ export function tryPlaceholder(
   mergeBuffers(asyncBuffer, originalBuffer);
 }
 
+// TODO: this variable needs to be included in the scope
+let isUnderComponent = false;
+
+export function wrapHydratable(id: string, renderer: Renderer) {
+  return input => {
+    const isTopLevel = !isUnderComponent;
+    const nextid = nextId();
+    if (isTopLevel) {
+      markReplaceStart(nextid);
+      isUnderComponent = true;
+    }
+    renderer(input);
+    if (isTopLevel) {
+      markReplaceEnd(nextid);
+      addComponentToInit(nextid, input || {}, id);
+      isUnderComponent = false;
+    }
+  };
+}
+
 export function markReplaceStart(id: number) {
   return ($_buffer!.content += `<!${marker(id)}>`);
 }

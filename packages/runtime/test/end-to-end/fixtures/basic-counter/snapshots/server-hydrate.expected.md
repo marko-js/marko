@@ -1,5 +1,5 @@
 # Write
-  <body><!M$0><div>10</div><button>increment</button><!M$0/></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
+  <body><!M$0><div><!#>10</div><!#><button>increment</button><!M$0/></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
 
 
 # Render "Flush"
@@ -9,8 +9,10 @@
   <body>
     <!--M$0-->
     <div>
+      <!--#-->
       10
     </div>
+    <!--#-->
     <button>
       increment
     </button>
@@ -29,12 +31,14 @@ inserted html0/head0
 inserted html0/body1
 inserted html0/body1/#comment0
 inserted html0/body1/div1
-inserted html0/body1/div1/#text0
-inserted html0/body1/button2
-inserted html0/body1/button2/#text0
-inserted html0/body1/#comment3
-inserted html0/body1/script4
-inserted html0/body1/script4/#text0
+inserted html0/body1/div1/#comment0
+inserted html0/body1/div1/#text1
+inserted html0/body1/#comment2
+inserted html0/body1/button3
+inserted html0/body1/button3/#text0
+inserted html0/body1/#comment4
+inserted html0/body1/script5
+inserted html0/body1/script5/#text0
 ```
 
 
@@ -45,8 +49,10 @@ inserted html0/body1/script4/#text0
   <body>
     <!--M$0-->
     <div>
+      <!--#-->
       10
     </div>
+    <!--#-->
     <button>
       increment
     </button>
@@ -58,7 +64,7 @@ inserted html0/body1/script4/#text0
 
 # Mutations
 ```
-removed #text in html0/body1/script4
+removed #text in html0/body1/script5
 ```
 
 
@@ -80,13 +86,16 @@ removed #text in html0/body1/script4
 
 # Mutations
 ```
+removed #comment before html0/body1/div0/#text0
+removed #comment after html0/body1/div0
+html0/body1/div0/#text0: "10" => "10"
 removed #comment before html0/body1/div0
 removed #comment after html0/body1/button1
 ```
 
 
 # Render 
-() => button.click()
+(container) => container.querySelector("button").click()
 
 ```html
 <html>

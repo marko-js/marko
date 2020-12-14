@@ -15,7 +15,8 @@ export {
   write,
   fork,
   tryPlaceholder,
-  tryCatch
+  tryCatch,
+  wrapHydratable
 } from "./writer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

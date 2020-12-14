@@ -2,7 +2,12 @@ import { Renderer, isDocumentFragment } from "./dom";
 import { UpstreamSignalOrValue } from "./signals";
 
 const doc = document;
-export const walker = doc.createTreeWalker(doc.body, -1, null, false);
+export const walker = doc.createTreeWalker(
+  doc.documentElement,
+  -1,
+  null,
+  false
+);
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, Inside, or Replace
@@ -35,9 +40,10 @@ export const enum WalkCodes {
   NextEnd = 126
 }
 
+export let walk = walkNormal;
 // TODO: in some cases (including hydrate) we may get an existing node
 // ideally we wouldn't create the newNode unless it was actually needed
-export function walk<T extends Node>(newNode?: T) {
+function walkNormal<T extends Node>(newNode?: T) {
   if ("MARKO_DEBUG" && !currentWalks) {
     throw new Error("Missing encoded walk string");
   }
@@ -67,20 +73,7 @@ export function walk<T extends Node>(newNode?: T) {
     } else if (value === WalkCodes.Get) {
       return walker.currentNode;
     } else {
-      if ("MARKO_DEBUG" && !newNode) {
-        const codeMap = {
-          [WalkCodes.Inside]: "Inside",
-          [WalkCodes.Before]: "Before",
-          [WalkCodes.After]: "After",
-          [WalkCodes.Replace]: "Replace"
-        };
-        throw new Error(
-          `An insertion code (${codeMap[value]}) was hit without a node to insert`
-        );
-      } else {
-        // TODO: remove branch if https://github.com/microsoft/TypeScript/issues/41503
-        newNode = newNode!;
-      }
+      newNode = newNode || ((document.createTextNode("") as unknown) as T);
 
       const current = walker.currentNode;
       if (value === WalkCodes.Inside) {
@@ -115,8 +108,16 @@ export function walk<T extends Node>(newNode?: T) {
   }
 }
 
-export function walkAndGetText() {
-  return walk(doc.createTextNode(""));
+function walkHydrate() {
+  let current: Node;
+  while ((current = walker.nextNode()!)) {
+    if (current.nodeType === 8 && current.nodeValue === "#") {
+      const node = walker.nextNode()!;
+      current.parentNode!.removeChild(current);
+      return node;
+    }
+  }
+  throw new Error("debugError");
 }
 
 export function detachedWalk(
@@ -142,16 +143,9 @@ export function detachedWalk(
 
 export function beginHydrate(startNode: Node) {
   walker.currentNode = startNode;
-  // parentElement = boundary.parentNode as Element;
-  // lastHydratedChild = boundary;
-  // beginEl = hydrateBeginEl;
-  // endEl = hydrateEndEl;
-  // text = hydrateText;
+  walk = walkHydrate;
 }
 
 export function endHydrate() {
-  // parentElement = lastHydratedChild = null;
-  // beginEl = originalBeginEl;
-  // endEl = originalEndEl;
-  // text = originalText;
+  walk = walkNormal;
 }

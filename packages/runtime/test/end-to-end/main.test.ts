@@ -1,13 +1,13 @@
 import fs from "fs";
 import path from "path";
-import createBrowser from "jsdom-context-require";
+import createBrowser from "../utils/create-browser";
 import { createRenderer } from "../../src/html/index";
 import reorderRuntime from "../../src/html/reorder-runtime";
 import { Writable } from "stream";
 import assert from "assert";
 import createTrackMutations from "../dom/utils/track-mutations";
 import snapshot from "../utils/snapshot";
-import { resolveAfter } from "../utils/resolve";
+import { isWait, resolveAfter } from "../utils/resolve";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 const runtimeId = "M";
@@ -16,7 +16,7 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   runtimeId
 );
 
-describe.skip("E2E", function () {
+describe("E2E", function () {
   this.timeout(10000);
   fs.readdirSync(FIXTURES_DIR)
     .filter(entry => !/\.skip$/.test(entry))
@@ -37,13 +37,13 @@ describe.skip("E2E", function () {
           let buffer = "";
           let flushCount = 0;
           const browser = createBrowser({ dir: __dirname });
+          const browserTest = browser.require(browserFile);
+          const dom = browser.require("../../src/dom/index");
           const document = browser.window.document;
 
           document.open();
 
           const tracker = createTrackMutations(browser.window, document);
-          const browserTest = browser.require(browserFile);
-          const dom = browser.require("../../dom/index");
 
           await render(input, {
             write(data: string) {
@@ -82,12 +82,12 @@ describe.skip("E2E", function () {
           hydratedHTML = getNormalizedHtml(document.body);
 
           for (const update of browserTest.updates) {
-            if (browserTest.wait) {
-              await resolveAfter(null, browserTest.wait);
+            if (isWait(update)) {
+              await update();
+            } else {
+              dom.runInBatch(() => update(document.documentElement));
+              tracker.logUpdate(update);
             }
-            update();
-
-            tracker.logUpdate(update);
           }
 
           snapshot(snapshotDir, "server-hydrate.md", tracker.getLogs());
@@ -96,11 +96,11 @@ describe.skip("E2E", function () {
           const serverTest = require(serverFile);
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
-          const { createRenderFn } = browser.require(
+          const browserTest = browser.require(browserFile);
+          const { runInBatch } = browser.require(
             "../../src/dom/index"
           ) as typeof import("../../src/dom/index");
-          const browserTest = browser.require(browserFile);
-          const render = createRenderFn(browserTest.default, browserTest.html);
+          const render = browserTest.default;
           const container = Object.assign(document.createElement("div"), {
             TEST_ROOT: true
           });
@@ -118,14 +118,14 @@ describe.skip("E2E", function () {
             if (browserTest.wait) {
               await resolveAfter(null, browserTest.wait);
             }
-            update(container);
+            runInBatch(() => update(container));
             tracker.logUpdate(update);
           }
 
           snapshot(snapshotDir, "client-only.md", tracker.getLogs());
         });
         it("hydrate = client", () => {
-          assert.equal(hydratedHTML, initialHTML);
+          assert.strictEqual(hydratedHTML, initialHTML);
         });
       });
     });

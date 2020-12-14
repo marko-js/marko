@@ -1,6 +1,5 @@
-import { write, fork } from "../../../../src/html/index";
+import { write, fork, wrapHydratable } from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
-import { serverRegister } from "../../../../src/common/server-registry";
 
 const renderer = () => {
   firstComponent({});
@@ -8,15 +7,15 @@ const renderer = () => {
   thirdComponent({});
 };
 
-const firstComponent = serverRegister("first", () => {
+const firstComponent = wrapHydratable("first", () => {
   fork(resolveAfter("a", 3), write);
 });
 
-const secondComponent = serverRegister("second", () => {
+const secondComponent = wrapHydratable("second", () => {
   fork(resolveAfter("b", 2), write);
 });
 
-const thirdComponent = serverRegister("third", () => {
+const thirdComponent = wrapHydratable("third", () => {
   fork(resolveAfter("c", 1), write);
 });
 
