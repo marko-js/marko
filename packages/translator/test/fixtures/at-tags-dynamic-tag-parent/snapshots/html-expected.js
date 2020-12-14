@@ -1,20 +1,25 @@
-_dynamicTag(input.x, {
-  header: {
-    class: "my-header",
+import { write as _write, dynamicTag as _dynamicTag, wrapHydratable as _wrapHydratable, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/html";
 
-    renderBody() {
-      _write("Header content");
+const _renderer = _wrapHydratable(input => {
+  _dynamicTag(input.x, {
+    header: {
+      class: "my-header",
+
+      renderBody() {
+        _write("Header content");
+      }
+
+    },
+    footer: {
+      class: "my-footer",
+
+      renderBody() {
+        _write("Footer content");
+      }
+
     }
+  }, () => _write("Body content"));
+});
 
-  },
-  footer: {
-    class: "my-footer",
-
-    renderBody() {
-      _write("Footer content");
-    }
-
-  }
-}, () => _write("Body content"));
-
-import { write as _write, dynamicTag as _dynamicTag } from "@marko/runtime-fluurt/src/html";
+export default _renderer;
+export const render = _createRenderFn(_renderer);

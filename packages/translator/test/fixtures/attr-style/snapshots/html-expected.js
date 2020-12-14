@@ -1,38 +1,43 @@
-_write(`<div${_styleAttr({
-  color: input.color
-})}></div><div style=width:100px></div><div style="color: green"></div>`);
+import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, wrapHydratable as _wrapHydratable, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/html";
+import _customTag from "./components/custom-tag.marko";
 
-_customTag({
-  style: {
+const _renderer = _wrapHydratable(input => {
+  _write(`<div${_styleAttr({
     color: input.color
-  }
-});
+  })}></div><div style=width:100px></div><div style="color: green"></div>`);
 
-_customTag({
-  style: {
-    width: 100
-  }
-});
+  _customTag({
+    style: {
+      color: input.color
+    }
+  });
 
-_customTag({
-  style: "color: green"
-});
+  _customTag({
+    style: {
+      width: 100
+    }
+  });
 
-_dynamicTag(input.test, {
-  style: {
-    color: "green"
-  },
-  test: {
+  _customTag({
+    style: "color: green"
+  });
+
+  _dynamicTag(input.test, {
     style: {
       color: "green"
     },
+    test: {
+      style: {
+        color: "green"
+      },
 
-    renderBody() {
-      _write("Hello");
+      renderBody() {
+        _write("Hello");
+      }
+
     }
-
-  }
+  });
 });
 
-import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag } from "@marko/runtime-fluurt/src/html";
-import _customTag from "./components/custom-tag.marko";
+export default _renderer;
+export const render = _createRenderFn(_renderer);

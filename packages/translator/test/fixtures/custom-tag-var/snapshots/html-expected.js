@@ -1,6 +1,11 @@
-const data = _child();
-
 import _child from "./components/child/index.marko";
-import { escapeXML as _escapeXML, write as _write } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, write as _write, wrapHydratable as _wrapHydratable, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/html";
 
-_write(`${_escapeXML(data)}`);
+const _renderer = _wrapHydratable(input => {
+  const data = _child();
+
+  _write(`${_escapeXML(data)}`);
+});
+
+export default _renderer;
+export const render = _createRenderFn(_renderer);

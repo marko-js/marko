@@ -1,3 +1,8 @@
-import { write as _write } from "@marko/runtime-fluurt/src/html";
+import { write as _write, wrapHydratable as _wrapHydratable, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/html";
 
-_write("<div d=0 y=1></div>");
+const _renderer = _wrapHydratable(input => {
+  _write("<div d=0 y=1></div>");
+});
+
+export default _renderer;
+export const render = _createRenderFn(_renderer);

@@ -1,12 +1,18 @@
-const _item = [];
+import _hello from "./components/hello/index.marko";
+import { wrapHydratable as _wrapHydratable, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/html";
 
-for (const a in b) {
-  _item.push({});
-}
+const _renderer = _wrapHydratable(input => {
+  const _item = [];
 
-_hello({
-  item: _item,
-  other: {}
+  for (const a in b) {
+    _item.push({});
+  }
+
+  _hello({
+    item: _item,
+    other: {}
+  });
 });
 
-import _hello from "./components/hello/index.marko";
+export default _renderer;
+export const render = _createRenderFn(_renderer);
