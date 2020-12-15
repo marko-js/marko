@@ -150,8 +150,12 @@ export function render(renderer: Renderer, ...input: UpstreamSignalOrValue[]) {
 
 export function attr(name: string, value: UpstreamSignalOrValue) {
   const el = walker.currentNode as Element;
-  if (el.nodeType !== NodeType.Element) {
-    throw new Error("Debug Error");
+  if ("MARKO_DEBUG" && el.nodeType !== NodeType.Element) {
+    throw new Error(
+      `Unexpected node found while hydrating. Expected an HTML element but got: ${
+        (el as any).constructor.name
+      }.`
+    );
   }
   createEffect(
     _value => setAttr(el, name, normalizeAttrValue(_value)),
@@ -165,8 +169,12 @@ export function attrs(
 ) {
   let previousAttrs: UpstreamRawValue<typeof attributes>;
   const el = walker.currentNode as Element;
-  if (el.nodeType !== NodeType.Element) {
-    throw new Error("Debug Error");
+  if ("MARKO_DEBUG" && el.nodeType !== NodeType.Element) {
+    throw new Error(
+      `Unexpected node found while hydrating. Expected an HTML element but got: ${
+        (el as any).constructor.name
+      }.`
+    );
   }
   createEffect(
     nextAttrs => {

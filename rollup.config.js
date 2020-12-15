@@ -52,10 +52,10 @@ export default envs
             fs.writeFileSync(
               `packages/runtime/${env}/${name}/package.json`,
               `{
-              main: "./index.cjs.js",
-              jsnext: "./index.esm.js",
-              module: "./index.esm.js",
-              types: "../../types/${name}/index.d.ts"
+              "main": "./index.cjs.js",
+              "jsnext": "./index.esm.js",
+              "module": "./index.esm.js",
+              "types": "../../types/${name}/index.d.ts"
             }`
             );
           }

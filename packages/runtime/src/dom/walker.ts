@@ -108,7 +108,7 @@ function walkNormal<T extends Node>(newNode?: T) {
   }
 }
 
-function walkHydrate() {
+function walkHydrate(): Node {
   let current: Node;
   while ((current = walker.nextNode()!)) {
     if (current.nodeType === 8 && current.nodeValue === "#") {
@@ -117,7 +117,14 @@ function walkHydrate() {
       return node;
     }
   }
-  throw new Error("debugError");
+
+  if ("MARKO_DEBUG") {
+    throw new Error(
+      "Reached end of document while looking for next hydrated content."
+    );
+  }
+
+  return undefined as never;
 }
 
 export function detachedWalk(

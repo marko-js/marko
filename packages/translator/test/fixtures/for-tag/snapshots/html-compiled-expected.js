@@ -1,10 +1,6 @@
 import { escapeXML as _escapeXML, write as _write, attr as _attr, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = _wrapHydratable("packages/translator/test/fixtures/for-tag/template.marko", input => {
-  const $ = (() => {
-    debugger;
-  })();
-
   const arr = [1, 2, 3];
   const obj = {
     a: 1,

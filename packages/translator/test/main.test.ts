@@ -62,7 +62,7 @@ function runCompileTest(config: { output: string }) {
       }
 
       snapshot(output, {
-        name: name,
+        name,
         ext: ".js"
       });
     });
@@ -106,7 +106,7 @@ function runHTMLRenderTest({ mode, test, resolve, snapshot }) {
     }
 
     snapshot(html, {
-      name: name,
+      name,
       ext: ".html"
     });
   });

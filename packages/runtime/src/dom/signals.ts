@@ -491,10 +491,6 @@ function setInBatch(value: UpstreamSignalOrValue, newValue: unknown) {
   return newValue;
 }
 
-function setInComputation() {
-  throw new Error("You are attempting to set a signal in a pure computation");
-}
-
 export function beginBatch() {
   set = setInBatch;
   batch = {
@@ -512,8 +508,16 @@ export function beginBatch() {
 
 function endBatch(b: Batch) {
   try {
-    if (b !== batch) throw new Error("endBatch attempting to end wrong batch");
-    set = setInComputation;
+    if ("MARKO_DEBUG") {
+      if (b !== batch)
+        throw new Error("endBatch attempting to end wrong batch");
+      set = () => {
+        throw new Error(
+          "You are attempting to set a signal in a pure computation"
+        );
+      };
+    }
+
     while (batch.___computationIndex < batch.___computations.length) {
       updateComputation(batch.___computations[batch.___computationIndex++]);
     }
