@@ -25,6 +25,7 @@ export function exit(program: NodePath<t.Program>) {
         callRuntime(
           program,
           "wrapHydratable",
+          t.stringLiteral(program.hub.file.metadata.marko.id),
           t.arrowFunctionExpression(
             [t.identifier("input")],
             t.blockStatement(renderContent)
@@ -39,7 +40,7 @@ export function exit(program: NodePath<t.Program>) {
       t.variableDeclaration("const", [
         t.variableDeclarator(
           t.identifier("render"),
-          callRuntime(program, "createRenderFn", rendererId)
+          callRuntime(program, "createRenderer", rendererId)
         )
       ])
     )

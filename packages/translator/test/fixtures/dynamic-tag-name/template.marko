@@ -1,7 +1,7 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "<tag-b>";
 
-<${input} class=["a", "b"] other=input.other/>
+<${input.renderBody} class=["a", "b"] other=input.other/>
 <${input.x} class=["a", "b"] other=input.other/>
 
 <${input.show ? "div" : null} class=["a", "b"] other=input.other/>
