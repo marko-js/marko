@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.70](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.69...v5.0.0-next.70) (2020-12-16)
+
+
+### Features
+
+* add cached analyze stage ([bb6a050](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/bb6a050bbb82d5a4fcfc5e1ca6835d36a67809fa))
+
+
+
+
+
 # [5.0.0-next.69](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.68...v5.0.0-next.69) (2020-12-14)
 
 
