@@ -2,7 +2,7 @@ import {
   write,
   fork,
   tryPlaceholder,
-  wrapHydratable
+  register
 } from "../../../../src/html/index";
 import { resolveAfter } from "../../../utils/resolve";
 
@@ -11,7 +11,7 @@ const renderer = () => {
   secondComponent({});
 };
 
-const firstComponent = wrapHydratable("first", () => {
+const firstComponent = register("first", () => {
   write("a");
   tryPlaceholder(
     () => {
@@ -28,7 +28,7 @@ const firstComponent = wrapHydratable("first", () => {
   write("g");
 });
 
-const secondComponent = wrapHydratable("second", () => {
+const secondComponent = register("second", () => {
   write("v");
   tryPlaceholder(
     () => {

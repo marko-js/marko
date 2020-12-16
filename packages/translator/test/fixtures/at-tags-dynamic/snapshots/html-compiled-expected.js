@@ -1,7 +1,7 @@
-import { write as _write, escapeXML as _escapeXML, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/at-tags-dynamic/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/at-tags-dynamic/template.marko", input => {
   const _col = [];
   const _item = [];
 

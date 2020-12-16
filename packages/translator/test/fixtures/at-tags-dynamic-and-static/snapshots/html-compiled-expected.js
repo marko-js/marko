@@ -1,7 +1,7 @@
 import _hello from "./components/hello/index.marko";
-import { wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/at-tags-dynamic-and-static/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/at-tags-dynamic-and-static/template.marko", input => {
   const _item = [];
 
   for (const a in {

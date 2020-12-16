@@ -1,5 +1,5 @@
 # Write
-  <body><!M$0><div><!#>10</div><!#><button>increment</button><!M$0/></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
+  <body><div><!M$0>10</div><!#><button>increment</button></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
 
 
 # Render "Flush"
@@ -7,16 +7,14 @@
 <html>
   <head />
   <body>
-    <!--M$0-->
     <div>
-      <!--#-->
+      <!--M$0-->
       10
     </div>
     <!--#-->
     <button>
       increment
     </button>
-    <!--M$0/-->
     <script>
       M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])
     </script>
@@ -29,16 +27,14 @@
 inserted html0
 inserted html0/head0
 inserted html0/body1
-inserted html0/body1/#comment0
-inserted html0/body1/div1
-inserted html0/body1/div1/#comment0
-inserted html0/body1/div1/#text1
-inserted html0/body1/#comment2
-inserted html0/body1/button3
-inserted html0/body1/button3/#text0
-inserted html0/body1/#comment4
-inserted html0/body1/script5
-inserted html0/body1/script5/#text0
+inserted html0/body1/div0
+inserted html0/body1/div0/#comment0
+inserted html0/body1/div0/#text1
+inserted html0/body1/#comment1
+inserted html0/body1/button2
+inserted html0/body1/button2/#text0
+inserted html0/body1/script3
+inserted html0/body1/script3/#text0
 ```
 
 
@@ -47,16 +43,14 @@ inserted html0/body1/script5/#text0
 <html>
   <head />
   <body>
-    <!--M$0-->
     <div>
-      <!--#-->
+      <!--M$0-->
       10
     </div>
     <!--#-->
     <button>
       increment
     </button>
-    <!--M$0/-->
     <script />
   </body>
 </html>
@@ -64,7 +58,7 @@ inserted html0/body1/script5/#text0
 
 # Mutations
 ```
-removed #text in html0/body1/script5
+removed #text in html0/body1/script3
 ```
 
 
@@ -89,8 +83,6 @@ removed #text in html0/body1/script5
 removed #comment before html0/body1/div0/#text0
 removed #comment after html0/body1/div0
 html0/body1/div0/#text0: "10" => "10"
-removed #comment before html0/body1/div0
-removed #comment after html0/body1/button1
 ```
 
 

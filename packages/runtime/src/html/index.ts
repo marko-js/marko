@@ -16,7 +16,8 @@ export {
   fork,
   tryPlaceholder,
   tryCatch,
-  wrapHydratable
+  register,
+  hydrateMarker
 } from "./writer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

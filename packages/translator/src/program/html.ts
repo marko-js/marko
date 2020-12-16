@@ -24,7 +24,7 @@ export function exit(program: NodePath<t.Program>) {
         rendererId,
         callRuntime(
           program,
-          "wrapHydratable",
+          "register",
           t.stringLiteral(program.hub.file.metadata.marko.id),
           t.arrowFunctionExpression(
             [t.identifier("input")],

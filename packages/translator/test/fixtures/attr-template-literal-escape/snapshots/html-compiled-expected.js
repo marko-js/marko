@@ -1,6 +1,6 @@
-import { attr as _attr, write as _write, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { attr as _attr, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/attr-template-literal-escape/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/attr-template-literal-escape/template.marko", input => {
   _write(`<div${_attr("foo", `Hello ${input.name}`)}></div>`);
 });
 

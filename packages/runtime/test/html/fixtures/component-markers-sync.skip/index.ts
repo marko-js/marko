@@ -1,11 +1,11 @@
-import { write, wrapHydratable } from "../../../../src/html/index";
+import { write, register } from "../../../../src/html/index";
 
 const renderer = () => {
   firstComponent({});
   secondComponent({});
 };
 
-const firstComponent = wrapHydratable("first", () => {
+const firstComponent = register("first", () => {
   write("a");
   childComponent();
   write("d");
@@ -16,7 +16,7 @@ const childComponent = () => {
   write("c");
 };
 
-const secondComponent = wrapHydratable("second", () => {
+const secondComponent = register("second", () => {
   write("x");
   write("y");
   write("z");

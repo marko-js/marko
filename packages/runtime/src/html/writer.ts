@@ -230,23 +230,33 @@ export function tryPlaceholder(
 }
 
 // TODO: this variable needs to be included in the scope
-let isUnderComponent = false;
+let currentHydrateRoot: boolean | number = false;
 
-export function wrapHydratable(id: string, renderer: Renderer) {
-  return input => {
-    const isTopLevel = !isUnderComponent;
-    const nextid = nextId();
-    if (isTopLevel) {
-      markReplaceStart(nextid);
-      isUnderComponent = true;
-    }
-    renderer(input);
-    if (isTopLevel) {
-      markReplaceEnd(nextid);
-      addComponentToInit(nextid, input || {}, id);
-      isUnderComponent = false;
+export function register(id: string, renderer: Renderer) {
+  return (input: Record<string, unknown>) => {
+    if (currentHydrateRoot === false) {
+      const instanceId = nextId();
+      currentHydrateRoot = instanceId;
+      renderer(input);
+      currentHydrateRoot = false;
+      addComponentToInit(instanceId, input || {}, id);
+    } else {
+      renderer(input);
     }
   };
+}
+
+export function hydrateMarker() {
+  let str: string;
+  if (currentHydrateRoot === false) {
+    str = "";
+  } else if (currentHydrateRoot === true) {
+    str = `<!#>`;
+  } else {
+    str = `<!${marker(currentHydrateRoot)}>`;
+    currentHydrateRoot = true;
+  }
+  return str;
 }
 
 export function markReplaceStart(id: number) {

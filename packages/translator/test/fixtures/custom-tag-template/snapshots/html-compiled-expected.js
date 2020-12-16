@@ -1,7 +1,7 @@
 import _hello from "./hello.marko";
-import { wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/custom-tag-template/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/custom-tag-template/template.marko", input => {
   _hello({
     name: "Frank"
   });

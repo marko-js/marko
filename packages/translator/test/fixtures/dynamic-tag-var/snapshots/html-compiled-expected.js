@@ -1,7 +1,7 @@
 import child from "./components/child/index.marko";
-import { dynamicTag as _dynamicTag, write as _write, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/dynamic-tag-var/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/dynamic-tag-var/template.marko", input => {
   const data1 = child();
 
   const _tagName = input.show && child;

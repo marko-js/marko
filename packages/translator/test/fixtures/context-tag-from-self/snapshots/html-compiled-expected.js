@@ -1,6 +1,6 @@
-import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, popContext as _popContext, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, popContext as _popContext, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/context-tag-from-self/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/context-tag-from-self/template.marko", input => {
   _write("<div>");
 
   _pushContext("packages/translator/test/fixtures/context-tag-from-self/template.marko", 1);

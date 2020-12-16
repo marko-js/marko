@@ -1,6 +1,6 @@
-import { write as _write, dynamicTag as _dynamicTag, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/at-tags-dynamic-tag-parent/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/at-tags-dynamic-tag-parent/template.marko", input => {
   _dynamicTag(input.x, {
     header: {
       class: "my-header",

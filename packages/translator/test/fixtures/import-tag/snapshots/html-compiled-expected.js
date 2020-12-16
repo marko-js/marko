@@ -1,9 +1,9 @@
 import "./foo";
 import { b as c } from "./bar";
 import baz from "./components/baz.marko";
-import { escapeXML as _escapeXML, write as _write, wrapHydratable as _wrapHydratable, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _wrapHydratable("packages/translator/test/fixtures/import-tag/template.marko", input => {
+const _renderer = _register("packages/translator/test/fixtures/import-tag/template.marko", input => {
   baz();
 
   _write(`${_escapeXML(c)}`);

@@ -108,7 +108,15 @@ function walkNormal<T extends Node>(newNode?: T) {
   }
 }
 
-function walkHydrate(): Node {
+function walkHydrateFirst(): Node {
+  const current = walker.currentNode;
+  const node = walker.nextNode()!;
+  current.parentNode!.removeChild(current);
+  walk = walkHydrateSubsequent;
+  return node;
+}
+
+function walkHydrateSubsequent(): Node {
   let current: Node;
   while ((current = walker.nextNode()!)) {
     if (current.nodeType === 8 && current.nodeValue === "#") {
@@ -150,7 +158,7 @@ export function detachedWalk(
 
 export function beginHydrate(startNode: Node) {
   walker.currentNode = startNode;
-  walk = walkHydrate;
+  walk = walkHydrateFirst;
 }
 
 export function endHydrate() {
