@@ -22,9 +22,9 @@ export default (api, markoOpts) => {
     markoOpts.optimize = api.env("production");
   }
 
-  if (!translator || !translator.visitor) {
+  if (!translator || !translator.translate) {
     throw new Error(
-      "@marko/compiler: translator must provide a visitor object"
+      "@marko/compiler: translator must provide a translate visitor object"
     );
   }
 
@@ -49,7 +49,7 @@ export default (api, markoOpts) => {
         file.markoOpts = markoOpts;
         file.___taglibLookup = sourceFile.___taglibLookup;
         file.___getMarkoFile = getMarkoFile;
-        traverse(ast, translator.visitor, file.scope, {});
+        traverse(ast, translator.translate, file.scope, {});
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
         file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
@@ -174,6 +174,10 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     ) {
       meta.watchFiles.push(filePath);
     }
+  }
+
+  if (markoOpts.translator.analyze) {
+    traverse(file.ast, markoOpts.translator.analyze, file.scope, {});
   }
 
   compileCache.set(cacheKey, {

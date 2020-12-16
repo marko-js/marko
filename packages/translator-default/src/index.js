@@ -23,7 +23,7 @@ import getComponentFiles from "./util/get-component-files";
 
 export { default as taglibs } from "./taglib";
 
-export const visitor = {
+export const translate = {
   MarkoDocumentType,
   MarkoDeclaration,
   MarkoCDATA,
