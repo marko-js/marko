@@ -257,11 +257,11 @@ The `<await>` tag **renders markup asynchronously using a [Promise](https://deve
 - Its optional `<@placeholder>` attribute tag displays while the Promise is pending.
 
 ```marko
-$ const personRequest = new Promise((resolve, reject) => {
+$ const personPromise = new Promise((resolve, reject) => {
   setTimeout(() => resolve({ name: 'Frank' }), 1000);
 });
 
-<await(personPromise)>
+<await(personPromise) client-reorder=true>
   <@placeholder>
     <!-- Displays while promise is pending -->
     <label>Loading…
