@@ -6,7 +6,6 @@ import {
 } from "@marko/babel-utils";
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
 import { flushBefore, flushInto } from "../util/html-flush";
-import analyzeTagName from "../util/analyze-tag-name";
 import translateVar from "../util/translate-var";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
@@ -46,7 +45,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
 
   const attrsObject = attrsToObject(tag, true);
 
-  if (analyzeTagName(tag).nullable) {
+  if (node.extra.tagNameNullable) {
     const renderBodyProp = getRenderBodyProp(attrsObject);
     let renderBodyId: t.Identifier | undefined = undefined;
     let renderTagExpr: t.Expression = callExpression(

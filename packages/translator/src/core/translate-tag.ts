@@ -1,5 +1,4 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import { markIdentifierAsComponent } from "../util/analyze-tag-name";
 import { flushBefore, flushInto } from "../util/html-flush";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 
@@ -28,7 +27,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
   tag.replaceWith(
     t.variableDeclaration("const", [
       t.variableDeclarator(
-        markIdentifierAsComponent(tag.node.var! as t.Identifier),
+        tag.node.var!,
         t.arrowFunctionExpression(
           tag.node.params || [],
           toFirstExpressionOrBlock(tag.node.body)

@@ -6,7 +6,7 @@ import {
   Plugin
 } from "@marko/babel-utils";
 import { require as markoRequire } from "@marko/compiler/modules";
-import analyzeTagName, { TagNameTypes } from "../util/analyze-tag-name";
+import { TagNameTypes } from "../analyze/tag-name-type";
 import * as hooks from "../util/plugin-hooks";
 import * as NativeTag from "./native-tag";
 import * as CustomTag from "./custom-tag";
@@ -21,6 +21,7 @@ declare module "@marko/babel-utils" {
 
 export function enter(tag: NodePath<t.MarkoTag>) {
   const tagDef = getTagDef(tag);
+  const extra = tag.node.extra;
 
   assertNoArgs(tag);
 
@@ -57,9 +58,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     }
   }
 
-  const analyzed = analyzeTagName(tag);
-
-  if (analyzed.dynamic && analyzed.nullable) {
+  if (extra.tagNameDynamic && extra.tagNameNullable) {
     if (!tag.get("name").isIdentifier()) {
       const tagNameId = tag.scope.generateUidIdentifier("tagName");
       const [tagNameVarPath] = tag.insertBefore(
@@ -73,7 +72,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     }
   }
 
-  switch (analyzed.type) {
+  switch (extra.tagNameType) {
     case TagNameTypes.NativeTag:
       NativeTag.enter(tag);
       break;
@@ -97,7 +96,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
     return;
   }
 
-  switch (analyzeTagName(tag).type) {
+  switch (tag.node.extra.tagNameType) {
     case TagNameTypes.NativeTag:
       NativeTag.exit(tag);
       break;

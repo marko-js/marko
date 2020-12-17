@@ -1,37 +1,21 @@
 import { types as t, NodePath } from "@marko/babel-types";
-import {
-  findParentTag,
-  isTransparentTag,
-  isLoopTag,
-  isAttributeTag,
-  assertNoVar
-} from "@marko/babel-utils";
-import analyzeTagName, { TagNameTypes } from "../util/analyze-tag-name";
+import { findParentTag, assertNoVar } from "@marko/babel-utils";
+import { TagNameTypes } from "../analyze/tag-name-type";
 import attrsToObject from "../util/attrs-to-object";
 import { flushInto, hasPendingHTML } from "../util/html-flush";
 
-const HOISTED_NODES = new WeakSet<t.Node>();
-const HOISTED_CHILDREN = new WeakSet<NodePath<t.MarkoTag>>();
-const PARENT_TAGS = new WeakMap<NodePath<t.MarkoTag>, NodePath<t.MarkoTag>>();
-const LOOKUPS = new WeakMap<NodePath<t.MarkoTag>, Lookup>();
-type Lookup = Record<
-  string,
-  {
-    identifier?: t.Identifier;
-    dynamic: boolean;
-    repeated: boolean;
-  }
->;
-
-export function hasHoistedChildren(tag: NodePath<t.MarkoTag>) {
-  return HOISTED_CHILDREN.has(tag);
-}
-
-export function isHoistedNode(node: t.Node) {
-  return HOISTED_NODES.has(node);
-}
-
 export function enter(tag: NodePath<t.MarkoTag>) {
+  if (hasPendingHTML(tag)) {
+    throw tag
+      .get("name")
+      .buildCodeFrameError("Dynamic @tags cannot be mixed with body content.");
+  }
+}
+
+export function exit(tag: NodePath<t.MarkoTag>) {
+  assertNoVar(tag);
+  flushInto(tag);
+
   const parentTag = findParentTag(tag);
 
   if (!parentTag) {
@@ -40,84 +24,63 @@ export function enter(tag: NodePath<t.MarkoTag>) {
       .buildCodeFrameError("@tags must be nested within another tag.");
   }
 
-  if (analyzeTagName(parentTag).type === TagNameTypes.NativeTag) {
+  const parentExtra = parentTag.node.extra;
+
+  if (parentExtra.tagNameType === TagNameTypes.NativeTag) {
     throw tag
       .get("name")
       .buildCodeFrameError("@tags cannot be nested under native tags.");
   }
 
-  if (hasPendingHTML(tag)) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError("Dynamic @tags cannot be mixed with body content.");
-  }
-
-  PARENT_TAGS.set(tag, parentTag);
-
-  if (!LOOKUPS.has(parentTag)) {
-    const lookup = analyzeRoot(parentTag);
-    LOOKUPS.set(parentTag, lookup);
-    (parentTag.node as any).exampleAttributeTag = tag.node; // Used by @marko/babel-utils assertNoAttributeTags.
-
-    for (const attrName in lookup) {
-      const info = lookup[attrName];
-      if (info.dynamic) {
-        info.identifier = parentTag.scope.generateUidIdentifier(attrName);
-        parentTag.insertBefore(
-          info.repeated
-            ? t.variableDeclaration("const", [
-                t.variableDeclarator(info.identifier, t.arrayExpression([]))
-              ])
-            : t.variableDeclaration("let", [
-                t.variableDeclarator(info.identifier)
-              ])
-        );
-
-        parentTag.pushContainer(
-          "attributes",
-          t.markoAttribute(attrName, info.identifier)
-        );
-
-        HOISTED_CHILDREN.add(parentTag);
-      } else if (info.repeated) {
-        parentTag.pushContainer(
-          "attributes",
-          t.markoAttribute(attrName, t.arrayExpression([]))
-        );
-      }
-    }
-  }
-}
-
-export function exit(tag: NodePath<t.MarkoTag>) {
-  assertNoVar(tag);
-  flushInto(tag);
-
   const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
-  const parentTag = PARENT_TAGS.get(tag)!;
-  const info = LOOKUPS.get(parentTag)![attrName];
+  const info = parentExtra.nestedAttributeTags[attrName];
   const attrsObject = attrsToObject(tag, true) || t.objectExpression([]);
 
-  if (info.identifier) {
-    const replacement = t.expressionStatement(
-      info.repeated
-        ? t.callExpression(
-            t.memberExpression(info.identifier, t.identifier("push")),
-            [attrsObject]
-          )
-        : t.assignmentExpression("=", info.identifier, attrsObject)
-    );
+  if (info.dynamic) {
+    if (!info.identifier) {
+      info.identifier = parentTag.scope.generateUidIdentifier(attrName);
+      parentTag.insertBefore(
+        info.repeated
+          ? t.variableDeclaration("const", [
+              t.variableDeclarator(info.identifier, t.arrayExpression([]))
+            ])
+          : t.variableDeclaration("let", [
+              t.variableDeclarator(info.identifier)
+            ])
+      );
 
-    HOISTED_NODES.add(replacement);
-    tag.replaceWith(replacement);
-  } else if (info.repeated) {
-    (parentTag
-      .get("attributes")
-      .find(attr => (attr.node as t.MarkoAttribute).name === attrName)!
-      .get("value") as NodePath<t.ArrayExpression>).pushContainer(
-      "elements",
-      attrsObject
+      parentTag.pushContainer(
+        "attributes",
+        t.markoAttribute(attrName, info.identifier)
+      );
+    }
+
+    tag.replaceWith(
+      t.expressionStatement(
+        info.repeated
+          ? t.callExpression(
+              t.memberExpression(info.identifier, t.identifier("push")),
+              [attrsObject]
+            )
+          : t.assignmentExpression("=", info.identifier, attrsObject)
+      )
     );
+  } else if (info.repeated) {
+    const existingAttr = parentTag
+      .get("attributes")
+      .find(attr => (attr.node as t.MarkoAttribute).name === attrName) as
+      | NodePath<t.ArrayExpression>
+      | undefined;
+
+    if (existingAttr) {
+      existingAttr.pushContainer("elements", attrsObject);
+    } else {
+      parentTag.pushContainer(
+        "attributes",
+        t.markoAttribute(attrName, t.arrayExpression([attrsObject]))
+      );
+    }
+
     tag.remove();
   } else {
     parentTag.pushContainer(
@@ -125,47 +88,5 @@ export function exit(tag: NodePath<t.MarkoTag>) {
       t.markoAttribute(attrName, attrsObject)
     );
     tag.remove();
-  }
-}
-
-function analyzeRoot(tag: NodePath<t.MarkoTag>) {
-  const lookup = {} as Lookup;
-  analyzeChildren(lookup, false, false, tag);
-  return lookup;
-}
-
-function analyzeChildren(
-  lookup: Lookup,
-  repeated: boolean,
-  dynamic: boolean,
-  tag: NodePath<t.MarkoTag>
-) {
-  for (const child of tag.get("body").get("body")) {
-    if (child.isMarkoTag()) {
-      analyzeChild(lookup, repeated, dynamic, child as NodePath<t.MarkoTag>);
-    }
-  }
-}
-
-function analyzeChild(
-  lookup: Lookup,
-  repeated: boolean,
-  dynamic: boolean,
-  tag: NodePath<t.MarkoTag>
-) {
-  if (isTransparentTag(tag)) {
-    analyzeChildren(lookup, repeated || isLoopTag(tag), true, tag);
-  } else if (isAttributeTag(tag)) {
-    const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
-    const existing = lookup[attrName];
-    const info =
-      existing ||
-      (lookup[attrName] = {
-        dynamic: false,
-        repeated: false
-      });
-
-    info.dynamic ||= dynamic;
-    info.repeated ||= repeated || existing !== undefined;
   }
 }

@@ -1,6 +1,5 @@
 import { types as t, NodePath } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
-import analyzeTagName from "../../util/analyze-tag-name";
 import attrsToObject from "../../util/attrs-to-object";
 import { consumeHTML, flushBefore, flushInto } from "../../util/html-flush";
 import { writeHTML } from "../../util/html-write";
@@ -8,13 +7,13 @@ import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
+  const { extra } = tag.node;
   const name = tag.get("name");
   const attrs = tag.get("attributes");
   const tagDef = getTagDef(tag);
   const hasSpread = attrs.some(attr => attr.isMarkoSpreadAttribute());
-  const { nullable } = analyzeTagName(tag);
 
-  if (nullable) {
+  if (extra.tagNameNullable) {
     flushBefore(tag);
   }
 
@@ -87,7 +86,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
     emptyBody = true;
   }
 
-  if (nullable) {
+  if (extra.tagNameNullable) {
     tag.insertBefore(t.ifStatement(name.node, consumeHTML(tag)!))[0].skip();
   }
 
@@ -97,9 +96,9 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
-  const { nullable } = analyzeTagName(tag);
+  const { extra } = tag.node;
 
-  if (nullable) {
+  if (extra.tagNameNullable) {
     flushInto(tag);
   }
 
@@ -107,7 +106,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
 
   writeHTML(tag)`</${tag.node.name}>`;
 
-  if (nullable) {
+  if (extra.tagNameNullable) {
     tag.insertBefore(t.ifStatement(tag.node.name, consumeHTML(tag)!))[0].skip();
   }
 

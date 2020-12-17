@@ -1,19 +1,5 @@
-import { types as t, NodePath, Visitor } from "@marko/babel-types";
-import { hasHoistedChildren, isHoistedNode } from "../tag/attribute-tag";
+import { types as t, NodePath } from "@marko/babel-types";
 import toPropertyName from "./to-property-name";
-
-type HoistedVisitorState = { isHoisted: boolean };
-const HOISTED_CHILDREN_VISITOR: Visitor = {
-  ExpressionStatement(
-    path: NodePath<t.ExpressionStatement>,
-    state: HoistedVisitorState
-  ) {
-    if (isHoistedNode(path.node)) {
-      state.isHoisted = true;
-      path.stop();
-    }
-  }
-};
 
 export default function attrsToObject(
   tag: NodePath<t.MarkoTag>,
@@ -35,31 +21,17 @@ export default function attrsToObject(
   }
 
   if (withRenderBody) {
-    if (hasHoistedChildren(tag)) {
-      const state: HoistedVisitorState = { isHoisted: false };
-      const children = tag.get("body").get("body");
-      const len = children.length;
+    let hoistedControlFlows = node.extra.hoistedControlFlows;
 
-      for (let i = len; i--; ) {
-        const child = children[i];
+    if (hoistedControlFlows) {
+      for (const child of tag.get("body").get("body")) {
+        tag.insertBefore(child.node);
+        child.remove();
 
-        if (isHoistedNode(child.node)) {
-          state.isHoisted = true;
-        } else {
-          child.traverse(HOISTED_CHILDREN_VISITOR, state);
-        }
-
-        if (state.isHoisted) {
-          const renderBodyStartIndex = i + 1;
-
-          if (renderBodyStartIndex === len) {
-            tag.insertBefore(tag.node.body.body);
-            tag.node.body.body = [];
-          } else {
-            tag.insertBefore(tag.node.body.body.slice(0, renderBodyStartIndex));
-            tag.node.body.body = tag.node.body.body.slice(renderBodyStartIndex);
+        if (child.isConditional() || child.isLoop()) {
+          if (!--hoistedControlFlows) {
+            break;
           }
-          break;
         }
       }
     }

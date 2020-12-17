@@ -63,10 +63,10 @@ const _renderer = _register("packages/translator/test/fixtures/at-tags-dynamic/t
   });
 
   _hello({
-    col: _col,
     list: {
       item: _item
-    }
+    },
+    col: _col
   });
 });
 

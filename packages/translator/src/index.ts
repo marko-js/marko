@@ -13,7 +13,9 @@ export const taglibs = [
   [require.resolve("./core/marko.json"), require("./core/marko.json")]
 ];
 
-export const visitor: Visitor = {
+export { default as analyze } from "./analyze";
+
+export const translate: Visitor = {
   Program,
   ImportDeclaration,
   MarkoDocumentType,
