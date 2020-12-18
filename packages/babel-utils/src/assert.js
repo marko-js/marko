@@ -16,12 +16,11 @@ export function assertNoAttributes(path) {
 }
 
 export function assertNoParams(path) {
-  const { hub } = path;
-  const params = path.get("params");
+  const { params } = path.node.body;
   if (params.length) {
-    const start = params[0].node.loc.start;
-    const end = params[params.length - 1].node.loc.end;
-    throw hub.buildError(
+    const start = params[0].loc.start;
+    const end = params[params.length - 1].loc.end;
+    throw path.hub.buildError(
       { loc: { start, end } },
       "Tag does not support parameters."
     );

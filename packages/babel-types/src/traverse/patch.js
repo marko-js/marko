@@ -38,19 +38,14 @@ Scope.prototype.crawl = function() {
     Object.assign(
       traverse.explode(visitor),
       traverse.explode({
-        MarkoTag(tag) {
-          const bodyScope = tag.get("body").getScope();
-          const tagVar = tag.get("var");
-          const params = tag.get("params");
-
-          if (params.length) {
-            for (const param of params) {
-              bodyScope.registerBinding("param", param);
-            }
+        MarkoTagBody(body) {
+          for (const param of body.get("params")) {
+            body.scope.registerBinding("param", param);
           }
-
-          if (tagVar.node) {
-            tag.scope.getBlockParent().registerBinding("local", tagVar);
+        },
+        MarkoTag(tag) {
+          if (tag.has("var") && tag.get("var").node[t.NOT_LOCAL_BINDING]) {
+            tag.scope.registerBinding("local", tag.get("var"), tag);
           }
         }
       })

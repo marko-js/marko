@@ -9,7 +9,7 @@ export default {
     const replacement = t.markoTag(
       t.stringLiteral("_preserve"),
       [],
-      opts.bodyOnly ? node.body : t.markoTagBody([node])
+      opts.bodyOnly ? node.body : t.markoTagBody(undefined, [node])
     );
 
     if (isNativeTag(tag)) {
@@ -34,7 +34,7 @@ export default {
     }
 
     if (opts.bodyOnly) {
-      tag.set("body", t.markoTagBody([replacement]));
+      tag.set("body", t.markoTagBody(undefined, [replacement]));
     } else {
       tag.replaceWith(replacement);
     }

@@ -108,11 +108,11 @@ function getKeyScope(path) {
   } else {
     let keyValue;
 
-    if (path.get("name.value").node === "for" && path.node.params) {
+    if (path.get("name.value").node === "for") {
       if (path.node.attributes.some(attr => attr.name === "of")) {
-        keyValue = path.node.params[1];
+        keyValue = path.node.body.params[1];
       } else {
-        keyValue = path.node.params[0];
+        keyValue = path.node.body.params[0];
       }
     }
 
