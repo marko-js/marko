@@ -1,6 +1,7 @@
 import "../types/patch";
 
 import * as t from "@babel/types";
+import Binding from "@babel/traverse/lib/scope/binding";
 import traverse, { NodePath, Scope } from "@babel/traverse";
 import { MARKO_TYPES, MARKO_ALIAS_TYPES } from "../types/definitions";
 
@@ -38,6 +39,19 @@ Scope.prototype.crawl = function() {
     Object.assign(
       traverse.explode(visitor),
       traverse.explode({
+        Marko({ scope }) {
+          if (!scope.bindings["input"]) {
+            // If we found a Marko node in the AST then we register "input"
+            // as a top level binding, rather than leaving it to be a global variable.
+            // This allows us to gather references to it during the crawl.
+            scope.bindings["input"] = new Binding({
+              path: scope.path,
+              identifier: t.identifier("input"),
+              kind: "global",
+              scope
+            });
+          }
+        },
         MarkoTag(tag) {
           const bodyScope = tag.get("body").getScope();
           const tagVar = tag.get("var");

@@ -46,8 +46,7 @@ const originalIsReferenced = referencedValidators.default;
 referencedValidators.default = (node, parent, grandparent) => {
   if (
     parent.type === "MarkoTag" &&
-    parent.params &&
-    parent.params.includes(node)
+    (parent.var === node || (parent.params && parent.params.includes(node)))
   ) {
     return false;
   }
