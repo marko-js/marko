@@ -165,9 +165,9 @@ Object.assign(Printer.prototype, {
         this.token(")");
       }
 
-      if (node.params && node.params.length) {
+      if (node.body.params.length) {
         this.token("|");
-        this.printList(node.params, node);
+        this.printList(node.body.params, node);
         this.token("|");
       }
 

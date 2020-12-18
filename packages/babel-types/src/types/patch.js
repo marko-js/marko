@@ -10,8 +10,12 @@ const {
   VISITOR_KEYS,
   FLIPPED_ALIAS_KEYS,
   DEPRECATED_KEYS,
-  is
+  is,
+  getBindingIdentifiers
 } = babelTypes;
+
+getBindingIdentifiers.keys["MarkoTag"] = ["var"];
+getBindingIdentifiers.keys["MarkoTagBody"] = ["params"];
 
 MARKO_TYPES.forEach(typeName => {
   defineType(typeName, definitions[typeName]);
@@ -44,11 +48,7 @@ MARKO_ALIAS_TYPES.forEach(aliasName => {
 
 const originalIsReferenced = referencedValidators.default;
 referencedValidators.default = (node, parent, grandparent) => {
-  if (
-    parent.type === "MarkoTag" &&
-    parent.params &&
-    parent.params.includes(node)
-  ) {
+  if (parent.type === "MarkoTag" || parent.type === "MarkoTagBody") {
     return false;
   }
   return originalIsReferenced(node, parent, grandparent);

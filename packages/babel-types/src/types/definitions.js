@@ -129,9 +129,13 @@ const MarkoDefinitions = {
 
   MarkoTagBody: {
     aliases: ["Marko", "BlockParent", "Scope"],
-    builder: ["body"],
-    visitor: ["body"],
+    builder: ["params", "body"],
+    visitor: ["params", "body"],
     fields: {
+      params: {
+        ...functionCommon.params,
+        default: []
+      },
       body: {
         validate: arrayOfType([
           "MarkoTag",
@@ -152,13 +156,12 @@ const MarkoDefinitions = {
       "name",
       "attributes",
       "body",
-      "params",
       "arguments",
       "var",
       "properties",
       "runtimeFlags"
     ],
-    visitor: ["name", "attributes", "body", "params", "arguments", "var"],
+    visitor: ["name", "attributes", "body", "arguments", "var"],
     fields: {
       name: {
         validate: assertNodeType("Expression")
@@ -169,10 +172,6 @@ const MarkoDefinitions = {
       },
       body: {
         validate: assertNodeType("MarkoTagBody")
-      },
-      params: {
-        ...functionCommon.params,
-        optional: true
       },
       arguments: {
         validate: chain(

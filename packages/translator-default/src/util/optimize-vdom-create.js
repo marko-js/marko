@@ -59,7 +59,9 @@ const analyzeStaticVisitor = {
     exit(path) {
       // check name
       let isStatic =
-        isNativeTag(path) && !path.node.params && !path.node.arguments;
+        isNativeTag(path) &&
+        !path.node.body.params.length &&
+        !path.node.arguments;
 
       const tagDef = getTagDef(path);
       isStatic = isStatic && !tagDef.codeGeneratorModulePath;

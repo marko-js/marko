@@ -257,7 +257,7 @@ export function parseMarko(file) {
 
       if (!parseOptions.ignoreAttributes) {
         currentTag.set("var", parseVar(file, event.var));
-        currentTag.set("params", parseParams(file, event.params));
+        currentTag.get("body").set("params", parseParams(file, event.params));
         currentTag.set("arguments", parseArguments(file, event.argument));
         currentTag.set(
           "attributes",

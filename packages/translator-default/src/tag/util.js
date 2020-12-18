@@ -1,8 +1,6 @@
 import { types as t } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
 
-const EMPTY_ARR = [];
-
 export function getAttrs(path, noCamel, skipRenderBody) {
   const {
     node,
@@ -10,7 +8,7 @@ export function getAttrs(path, noCamel, skipRenderBody) {
   } = path;
   const {
     attributes,
-    body: { body },
+    body: { body, params },
     hasDynamicAttrTags
   } = node;
   const attrsLen = attributes.length;
@@ -78,7 +76,7 @@ export function getAttrs(path, noCamel, skipRenderBody) {
     }
 
     if (!hasDynamicAttrTags || endDynamicAttrTagsIndex !== childLen - 1) {
-      if (node.params) {
+      if (params.length) {
         if (!file._hasTagParams && !isIgnoredTagParams(path)) {
           file._hasTagParams = true;
         }
@@ -88,7 +86,7 @@ export function getAttrs(path, noCamel, skipRenderBody) {
         t.objectProperty(
           t.stringLiteral("renderBody"),
           t.arrowFunctionExpression(
-            [t.identifier("out"), ...(node.params || EMPTY_ARR)],
+            [t.identifier("out"), ...params],
             t.blockStatement(
               hasDynamicAttrTags
                 ? body.slice(endDynamicAttrTagsIndex + 1)
