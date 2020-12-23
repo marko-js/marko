@@ -8,11 +8,20 @@ export default function(path) {
     node,
     hub: { file }
   } = path;
-  const { key, arguments: args, properties: tagProperties } = node;
-
+  const tagProperties = [];
+  const { key, arguments: args } = node;
   const foundAttrs = getAttrs(path, true);
   let renderBodyProp;
   let attrsLen = t.isNullLiteral(foundAttrs) ? 0 : 1;
+
+  if (node.preserveAttrs) {
+    tagProperties.push(
+      t.objectProperty(
+        t.identifier("pa"),
+        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+      )
+    );
+  }
 
   if (t.isObjectExpression(foundAttrs)) {
     const renderBodyIndex = foundAttrs.properties.findIndex(

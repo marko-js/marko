@@ -94,8 +94,7 @@ const MarkoDefinitions = {
         validate: assertValueType("string")
       },
       value: {
-        validate: assertNodeType("Expression"),
-        optional: true
+        validate: assertNodeType("Expression")
       },
       modifier: {
         validate: assertValueType("string"),
@@ -121,15 +120,14 @@ const MarkoDefinitions = {
     visitor: ["value"],
     fields: {
       value: {
-        validate: assertNodeType("Expression"),
-        optional: true
+        validate: assertNodeType("Expression")
       }
     }
   },
 
   MarkoTagBody: {
     aliases: ["Marko", "BlockParent", "Scope"],
-    builder: ["params", "body"],
+    builder: ["body", "params"],
     visitor: ["params", "body"],
     fields: {
       params: {
@@ -152,15 +150,7 @@ const MarkoDefinitions = {
 
   MarkoTag: {
     aliases: ["Marko", "Statement"],
-    builder: [
-      "name",
-      "attributes",
-      "body",
-      "arguments",
-      "var",
-      "properties",
-      "runtimeFlags"
-    ],
+    builder: ["name", "attributes", "body", "arguments", "var"],
     visitor: ["name", "attributes", "body", "arguments", "var"],
     fields: {
       name: {
@@ -180,24 +170,8 @@ const MarkoDefinitions = {
         ),
         optional: true
       },
-      properties: {
-        validate: arrayOfType(["ObjectProperty"]),
-        default: []
-      },
-      handlers: {
-        validate: assertEach(assertNodeType("Expression")),
-        optional: true
-      },
       rawValue: {
         validate: assertValueType("string"),
-        optional: true
-      },
-      runtimeFlags: {
-        validate: assertValueType("number"),
-        default: 0
-      },
-      key: {
-        validate: assertNodeType("Expression"),
         optional: true
       },
       var: {

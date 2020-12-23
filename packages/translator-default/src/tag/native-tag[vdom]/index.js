@@ -29,9 +29,10 @@ export function tagArguments(path, isStatic) {
     name,
     key,
     body: { body },
-    properties,
     handlers
   } = node;
+  const tagProperties = [];
+  let runtimeFlags = 0;
 
   path.get("attributes").forEach(attr => {
     const { confident, computed } = evaluateAttr(attr);
@@ -45,7 +46,6 @@ export function tagArguments(path, isStatic) {
     }
   });
 
-  const tagProperties = properties.slice();
   let attrsObj = getAttrs(path, true, true);
 
   if (!t.isNullLiteral(attrsObj)) {
@@ -53,7 +53,7 @@ export function tagArguments(path, isStatic) {
       !t.isObjectExpression(attrsObj) ||
       attrsObj.properties.some(t.isSpreadElement)
     ) {
-      node.runtimeFlags |= FLAGS.SPREAD_ATTRS;
+      runtimeFlags |= FLAGS.SPREAD_ATTRS;
       attrsObj = t.callExpression(
         importDefault(
           file,
@@ -76,6 +76,15 @@ export function tagArguments(path, isStatic) {
       ? t.nullLiteral()
       : t.numericLiteral(0)
   ];
+
+  if (node.preserveAttrs) {
+    tagProperties.push(
+      t.objectProperty(
+        t.identifier("pa"),
+        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+      )
+    );
+  }
 
   if (handlers) {
     Object.entries(handlers).forEach(
@@ -109,9 +118,9 @@ export function tagArguments(path, isStatic) {
   if (
     t.isObjectExpression(attrsObj) &&
     attrsObj.properties.every(n => isPropertyName(n, SIMPLE_ATTRS)) &&
-    !tagProperties.some(n => isPropertyName(n, ["pa"]))
+    !node.preserveAttrs
   ) {
-    node.runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
+    runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
   }
 
   const tagDef = getTagDef(path);
@@ -119,7 +128,7 @@ export function tagArguments(path, isStatic) {
   if (tagDef) {
     const { htmlType, name, parseOptions = EMPTY_OBJECT } = tagDef;
     if (htmlType === "custom-element") {
-      node.runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
+      runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
       if (parseOptions.import) {
         // TODO: the taglib should be updated to support this as a top level option.
         file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
@@ -131,13 +140,13 @@ export function tagArguments(path, isStatic) {
         parent.tagDef &&
         parent.tagDef.htmlType === "svg")
     ) {
-      node.runtimeFlags |= FLAGS.IS_SVG;
+      runtimeFlags |= FLAGS.IS_SVG;
     } else if (name === "textarea") {
-      node.runtimeFlags |= FLAGS.IS_TEXTAREA;
+      runtimeFlags |= FLAGS.IS_TEXTAREA;
     }
   }
 
-  writeArgs.push(t.numericLiteral(node.runtimeFlags));
+  writeArgs.push(t.numericLiteral(runtimeFlags));
 
   if (tagProperties.length) {
     writeArgs.push(t.objectExpression(tagProperties));
