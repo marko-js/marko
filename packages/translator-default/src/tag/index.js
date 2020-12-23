@@ -191,11 +191,7 @@ function findDynamicTagTypes(root) {
         } else {
           const binding = path.scope.getBinding(path.node.name);
 
-          if (
-            !binding ||
-            !binding.path ||
-            !HANDLE_BINDINGS.includes(binding.kind)
-          ) {
+          if (!binding || !HANDLE_BINDINGS.includes(binding.kind)) {
             return false;
           }
 

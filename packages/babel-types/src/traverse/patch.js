@@ -44,7 +44,7 @@ Scope.prototype.crawl = function() {
           }
         },
         MarkoTag(tag) {
-          if (tag.has("var") && tag.get("var").node[t.NOT_LOCAL_BINDING]) {
+          if (tag.has("var")) {
             tag.scope.registerBinding("local", tag.get("var"), tag);
           }
         }

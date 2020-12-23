@@ -26,10 +26,9 @@ export default function(path, isNullable) {
     key,
     name,
     body: { body },
-    properties,
     handlers
   } = node;
-  const tagProperties = properties.slice();
+  const tagProperties = [];
   const tagDef = getTagDef(path);
 
   if (tagDef) {
@@ -71,6 +70,15 @@ export default function(path, isNullable) {
 
   const isHTML = file.markoOpts.output === "html";
   let dataMarko = t.stringLiteral("");
+
+  if (node.preserveAttrs) {
+    tagProperties.push(
+      t.objectProperty(
+        t.identifier("pa"),
+        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+      )
+    );
+  }
 
   if (isHTML) {
     const componentFiles = getComponentFiles(path);

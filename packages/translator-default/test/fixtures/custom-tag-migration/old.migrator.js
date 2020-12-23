@@ -16,8 +16,8 @@ export function exit(path) {
       t.stringLiteral("new"),
       path.get("attributes").map(p => p.node),
       t.markoTagBody(
-        toNodes(path.get("params")),
-        path.get("body.body").map(p => p.node)
+        path.get("body.body").map(p => p.node),
+        toNodes(path.get("params"))
       ),
       toNodes(path.get("arguments"))
     )
