@@ -36,11 +36,13 @@ Object.assign(Printer.prototype, {
     this.token("-->");
   },
   MarkoPlaceholder(node, parent) {
-    const parentBody = parent.body;
-    const prev = parentBody[parentBody.indexOf(node) - 1];
+    if (parent) {
+      const parentBody = parent.body;
+      const prev = parentBody[parentBody.indexOf(node) - 1];
 
-    if (prev && (t.isMarkoText(prev) || t.isMarkoPlaceholder(prev))) {
-      this.removeTrailingNewline();
+      if (prev && (t.isMarkoText(prev) || t.isMarkoPlaceholder(prev))) {
+        this.removeTrailingNewline();
+      }
     }
 
     this.token(node.escape ? "${" : "$!{");
