@@ -1,6 +1,6 @@
 import fs from "fs";
+import { getRootPackage } from "lasso-package-root";
 import { CachedInputFileSystem } from "enhanced-resolve";
-import * as translator from "@marko/translator-default";
 
 let config;
 const globalThis = typeof window === "undefined" ? global : window;
@@ -43,7 +43,50 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     /**
      * Allows configuring Marko to compile to different runtimes.
      */
-    translator,
+    translator: (() => {
+      const translatorReg = /^(@\/marko\/|marko-)translator-/;
+      let translator = "@marko/translator-default";
+      let pkg;
+
+      try {
+        pkg = getRootPackage(process.cwd());
+        // eslint-disable-next-line no-empty
+      } catch {}
+
+      if (pkg) {
+        for (const name in pkg.dependencies) {
+          if (translatorReg.test(name)) {
+            if (translator && translator !== name) {
+              return;
+            }
+
+            translator = name;
+          }
+        }
+
+        for (const name in pkg.peerDependencies) {
+          if (translatorReg.test(name)) {
+            if (translator && translator !== name) {
+              return;
+            }
+
+            translator = name;
+          }
+        }
+
+        for (const name in pkg.devDependencies) {
+          if (translatorReg.test(name)) {
+            if (translator && translator !== name) {
+              return;
+            }
+
+            translator = name;
+          }
+        }
+      }
+
+      return translator;
+    })(),
 
     /**
      * Use a different file system object, eg webpacks CachedInputFileSystem or lasso-caching-fs
