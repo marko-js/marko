@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.71](https://github.com/marko-js/marko/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
+
+
+### Bug Fixes
+
+* **babel-types:** allow toString on placeholder nodes ([0162f17](https://github.com/marko-js/marko/commit/0162f178938032a0e9967d992fe8e98b4ae5df75))
+
+
+### Features
+
+* move tag param ast to MarkoTagBody ([02c1e29](https://github.com/marko-js/marko/commit/02c1e29426b7995d869ab8a9fd1f8dd6dccaeca5))
+* simplify ast defs ([0f00ec7](https://github.com/marko-js/marko/commit/0f00ec7693ebfe3a74a870d2033b6a44c1d1ec2c))
+
+
+
+
+
 # [5.0.0-next.70](https://github.com/marko-js/marko/compare/v5.0.0-next.69...v5.0.0-next.70) (2020-12-16)
 
 

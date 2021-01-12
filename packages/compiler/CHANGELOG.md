@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.71](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
+
+
+### Features
+
+* move tag param ast to MarkoTagBody ([02c1e29](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/02c1e29426b7995d869ab8a9fd1f8dd6dccaeca5))
+
+
+
+
+
 # [5.0.0-next.70](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.69...v5.0.0-next.70) (2020-12-16)
 
 
