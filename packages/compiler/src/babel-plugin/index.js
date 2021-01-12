@@ -14,8 +14,25 @@ const SOURCE_FILES = new WeakMap();
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
-  const translator = markoOpts.translator;
+  let translator = markoOpts.translator;
 
+  if (typeof translator === "string") {
+    try {
+      translator = markoModules.require(translator);
+    } catch (err) {
+      try {
+        translator = markoModules.require(`@marko/translator-${translator}`);
+      } catch {
+        try {
+          translator = markoModules.require(`marko-translator-${translator}`);
+        } catch {
+          throw err;
+        }
+      }
+    }
+  }
+
+  markoOpts.translator = translator;
   markoOpts.output = markoOpts.output || "html";
 
   if (markoOpts.optimize === undefined) {
