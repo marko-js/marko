@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.11](https://github.com/marko-js/marko/compare/v4.23.10...v4.23.11) (2021-01-13)
+
+
+### Bug Fixes
+
+* issue with only renderBody being serialized ([4db3c18](https://github.com/marko-js/marko/commit/4db3c1835aea610088e1a6efb67f521bc884d966))
+
 ### [4.23.10](https://github.com/marko-js/marko/compare/v4.23.9...v4.23.10) (2020-12-08)
 
 
