@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.72](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
+
+
+### Features
+
+* **compiler:** support string as translator option ([0c6e968](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/0c6e968b4eadd9c792c8495cd218791b04206ec5))
+
+
+
+
+
 # [5.0.0-next.71](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
 
 

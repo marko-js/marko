@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.72](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
+
+
+### Bug Fixes
+
+* **babel-utils:** resolve node_module templates to relative paths ([#1645](https://github.com/marko-js/marko/tree/master/packages/babel-utils/issues/1645)) ([db4232e](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/db4232e1e2244b1b244fc9dfd62f928a7b482a1e))
+
+
+
+
+
 # [5.0.0-next.71](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
 
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.72](https://github.com/marko-js/marko/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
+
+
+### Bug Fixes
+
+* issue with only renderBody being serialized ([8c0e045](https://github.com/marko-js/marko/commit/8c0e045af9820ee26f606ee626b8a51579aded94))
+* **babel-utils:** resolve node_module templates to relative paths ([#1645](https://github.com/marko-js/marko/issues/1645)) ([db4232e](https://github.com/marko-js/marko/commit/db4232e1e2244b1b244fc9dfd62f928a7b482a1e))
+
+
+### Features
+
+* **compiler:** support string as translator option ([0c6e968](https://github.com/marko-js/marko/commit/0c6e968b4eadd9c792c8495cd218791b04206ec5))
+
+
+
+
+
 # [5.0.0-next.71](https://github.com/marko-js/marko/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
 
 
