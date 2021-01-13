@@ -2,6 +2,7 @@ import path from "path";
 import { types as t } from "@marko/babel-types";
 
 const IMPORTS_KEY = Symbol();
+const FS_ROOT_DIR = path.parse(process.cwd()).root;
 
 const toPosix =
   path.sep === "/"
@@ -17,7 +18,7 @@ const toPosix =
       };
 
 export function resolveRelativePath(file, request) {
-  if (request[0] === ".") {
+  if (!request.startsWith(FS_ROOT_DIR)) {
     return request;
   }
 
