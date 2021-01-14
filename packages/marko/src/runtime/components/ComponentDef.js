@@ -89,7 +89,7 @@ ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
-  var input = o[2] || (flags & FLAG_HAS_RENDER_BODY ? {} : null);
+  var input = o[2] || null;
   var extra = o[3] || EMPTY_OBJECT;
 
   var state = extra.s;
@@ -102,7 +102,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
   component.___updateQueued = true;
 
   if (flags & FLAG_HAS_RENDER_BODY) {
-    input.renderBody = w10Noop;
+    (input || (input = {})).renderBody = w10Noop;
   }
 
   if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
