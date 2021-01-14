@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.75](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.74...v5.0.0-next.75) (2021-01-14)
+
+**Note:** Version bump only for package @marko/translator-default
+
+
+
+
+
 # [5.0.0-next.74](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.73...v5.0.0-next.74) (2021-01-14)
 
 **Note:** Version bump only for package @marko/translator-default

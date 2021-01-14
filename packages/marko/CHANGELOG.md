@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.75](https://github.com/marko-js/marko/compare/v5.0.0-next.74...v5.0.0-next.75) (2021-01-14)
+
+
+### Bug Fixes
+
+* issue with using flags before defined ([8628d01](https://github.com/marko-js/marko/commit/8628d01ef82816a482e57938fbecde3e3c64c357))
+
+
+
+
+
 # [5.0.0-next.74](https://github.com/marko-js/marko/compare/v5.0.0-next.73...v5.0.0-next.74) (2021-01-14)
 
 
