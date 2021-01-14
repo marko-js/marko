@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.73](https://github.com/marko-js/marko/compare/v5.0.0-next.72...v5.0.0-next.73) (2021-01-14)
+
+
+### Bug Fixes
+
+* use same debug check for compiler and runtime ([#1647](https://github.com/marko-js/marko/issues/1647)) ([0c8632f](https://github.com/marko-js/marko/commit/0c8632fe92d06b27d0741fa2d5a2b599f0890693))
+
+
+
+
+
 # [5.0.0-next.72](https://github.com/marko-js/marko/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
 
 
