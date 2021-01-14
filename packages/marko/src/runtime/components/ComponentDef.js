@@ -91,7 +91,7 @@ ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 ComponentDef.___deserialize = function(o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
-  var input = o[2] || (flags & FLAG_HAS_RENDER_BODY ? {} : null);
+  var input = o[2] || null;
   var extra = o[3] || EMPTY_OBJECT;
 
   var state = extra.s;
@@ -112,7 +112,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
     component.widgetConfig = componentProps;
     component.___widgetBody = renderBody;
   } else if (renderBody) {
-    input.renderBody = renderBody;
+    (input || (input = {})).renderBody = renderBody;
   }
 
   if (
