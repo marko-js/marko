@@ -65,10 +65,15 @@ function createRendererFunc(
 
   var shouldApplySplitMixins = renderingLogic && isSplit;
 
-  if (!"MARKO_DEBUG" !== !componentProps.d) {
-    throw new Error(
-      "Component was compiled in a different NODE_ENV than the Marko runtime is using."
-    );
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    if (!componentProps.d) {
+      throw new Error(
+        "Component was compiled in a different NODE_ENV than the Marko runtime is using."
+      );
+    }
+  } else if (componentProps.d) {
+    throw new Error("Runtime/NODE_ENV Mismatch");
   }
 
   return function renderer(input, out) {
