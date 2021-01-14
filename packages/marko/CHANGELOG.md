@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.12](https://github.com/marko-js/marko/compare/v4.23.11...v4.23.12) (2021-01-14)
+
+
+### Bug Fixes
+
+* issue with using flags before defined ([8740f93](https://github.com/marko-js/marko/commit/8740f937c613dbbbfb34694db608adf5800a70ad))
+
 ### [4.23.11](https://github.com/marko-js/marko/compare/v4.23.10...v4.23.11) (2021-01-13)
 
 
