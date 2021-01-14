@@ -36,7 +36,8 @@ export default (api, markoOpts) => {
   markoOpts.output = markoOpts.output || "html";
 
   if (markoOpts.optimize === undefined) {
-    markoOpts.optimize = api.env("production");
+    api.cache.using(shouldOptimize);
+    markoOpts.optimize = shouldOptimize();
   }
 
   if (!translator || !translator.translate) {
@@ -253,4 +254,12 @@ function mergeVisitors(all) {
 
 function unique(item, i, list) {
   return list.indexOf(item) === i;
+}
+
+function shouldOptimize() {
+  const { NODE_ENV, MARKO_DEBUG } = process.env;
+  return (
+    (MARKO_DEBUG && MARKO_DEBUG !== "false" && MARKO_DEBUG !== "0") ||
+    (NODE_ENV && NODE_ENV !== "development")
+  );
 }

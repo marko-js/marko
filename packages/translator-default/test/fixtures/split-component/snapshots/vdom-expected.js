@@ -13,7 +13,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.e("div", null, "0", component, 0, 0);
 }, {
   t: _marko_componentType,
-  s: true
+  s: true,
+  d: true
 }, _marko_component);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

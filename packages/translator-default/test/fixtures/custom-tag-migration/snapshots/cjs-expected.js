@@ -25,5 +25,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   }, out, _component, "0");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

@@ -12,7 +12,8 @@ const _marko_componentType = _marko_registerComponent("packages/translator-defau
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.e("div", null, "0", component, 0, 0);
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  d: true
 }, _marko_component2);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component2, _marko_template._);

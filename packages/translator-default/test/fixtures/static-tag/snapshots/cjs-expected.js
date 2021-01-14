@@ -22,5 +22,6 @@ const _marko_componentType = "packages/translator-default/test/fixtures/static-t
       _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {}, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

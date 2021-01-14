@@ -21,5 +21,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w(`<div${(0, _attr.default)("id", _component.elId("1"))}${(0, _attr.default)("aria-described-by", _component.elId("b"))}></div>`);
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

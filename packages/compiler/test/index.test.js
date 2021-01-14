@@ -13,12 +13,12 @@ fs.readdirSync(path.join(__dirname, "../../"))
       html: runTest({ output: "html" }),
       htmlProduction: runTest({
         output: "html",
-        babelConfig: { envName: "production" }
+        optimize: true
       }),
       vdom: runTest({ output: "dom" }),
       vdomProduction: runTest({
         output: "dom",
-        babelConfig: { envName: "production" }
+        optimize: true
       }),
       generated: runTest({ _translate: false })
     });

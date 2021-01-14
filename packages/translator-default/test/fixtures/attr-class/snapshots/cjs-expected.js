@@ -58,5 +58,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   }), null, null, null, _component, "5");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

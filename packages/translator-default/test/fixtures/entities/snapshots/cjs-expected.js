@@ -19,5 +19,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w("Hello John &amp; Suzy Invalid Entity: &b ; Valid Numeric Entity: &#34; Valid Hexadecimal Entity: &#x00A2;");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

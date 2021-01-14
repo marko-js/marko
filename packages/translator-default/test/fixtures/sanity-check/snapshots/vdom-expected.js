@@ -171,7 +171,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     }, "28" + _keyScope2, component, 0, 0);
   }
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  d: true
 }, _marko_component);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

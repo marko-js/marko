@@ -23,5 +23,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(input.className))}${(0, _attr.default)("foo", 'a' + input.foo + 'b')}${(0, _attr.default)("bar", `a ${input.foo} b`)}></div>`);
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

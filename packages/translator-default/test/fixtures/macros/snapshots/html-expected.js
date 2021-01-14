@@ -34,5 +34,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _marko_dynamic_tag(out, _renderTree, () => input.node, null, null, null, _component, "4");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);
