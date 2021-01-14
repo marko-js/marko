@@ -14,5 +14,6 @@ const _marko_componentType = "packages/translator-default/test/fixtures/class-in
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<div></div>");
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  d: true
 }, _marko_component);

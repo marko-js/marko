@@ -14,5 +14,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.w("</contact-info>");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

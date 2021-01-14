@@ -92,5 +92,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${_marko_attr("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_16", component);
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);

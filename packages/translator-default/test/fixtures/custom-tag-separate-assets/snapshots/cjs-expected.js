@@ -20,5 +20,6 @@ const _marko_componentType = "packages/translator-default/test/fixtures/custom-t
 _marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
   out.w("<div></div>");
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  d: true
 }, _marko_component2);

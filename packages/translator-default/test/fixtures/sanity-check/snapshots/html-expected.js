@@ -148,5 +148,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     out.w("<div c=1></div>");
   }
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  d: true
 }, _marko_component);

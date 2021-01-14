@@ -65,6 +65,12 @@ function createRendererFunc(
 
   var shouldApplySplitMixins = renderingLogic && isSplit;
 
+  if (!"MARKO_DEBUG" !== !componentProps.d) {
+    throw new Error(
+      "Component was compiled in a different NODE_ENV than the Marko runtime is using."
+    );
+  }
+
   return function renderer(input, out) {
     trackAsyncComponents(out);
 

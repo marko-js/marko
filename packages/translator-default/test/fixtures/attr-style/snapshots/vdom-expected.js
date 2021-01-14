@@ -56,7 +56,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }), null, null, null, _component, "6");
 }, {
   t: _marko_componentType,
-  i: true
+  i: true,
+  d: true
 }, _marko_component);
 import _marko_defineComponent from "marko/src/runtime/components/defineComponent";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

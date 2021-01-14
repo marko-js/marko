@@ -218,6 +218,12 @@ export const translate = {
         );
       }
 
+      if (!markoOpts.optimize) {
+        templateRenderOptionsProps.push(
+          t.objectProperty(t.identifier("d"), t.booleanLiteral(true))
+        );
+      }
+
       path.pushContainer(
         "body",
         t.expressionStatement(
