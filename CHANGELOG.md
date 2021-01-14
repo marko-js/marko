@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.74](https://github.com/marko-js/marko/compare/v5.0.0-next.73...v5.0.0-next.74) (2021-01-14)
+
+
+### Bug Fixes
+
+* runtime mismatch check ([892f9d0](https://github.com/marko-js/marko/commit/892f9d0f10bb76d0c33ed11204c36f6edc40253c))
+
+
+
+
+
 # [5.0.0-next.73](https://github.com/marko-js/marko/compare/v5.0.0-next.72...v5.0.0-next.73) (2021-01-14)
 
 
