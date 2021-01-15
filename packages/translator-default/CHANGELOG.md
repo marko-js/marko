@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.76](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.75...v5.0.0-next.76) (2021-01-15)
+
+
+### Features
+
+* improve analysis for stateful tag parameters ([#1648](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1648)) ([8c34cb4](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/8c34cb4be6bd571f6013f50dc6808e3d9de10763))
+
+
+
+
+
 # [5.0.0-next.75](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.74...v5.0.0-next.75) (2021-01-14)
 
 **Note:** Version bump only for package @marko/translator-default
