@@ -9,7 +9,6 @@ import {
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import translateAttributes from "./attributes";
-import getComponentFiles from "../../util/get-component-files";
 import withPreviousLocation from "../../util/with-previous-location";
 
 const EMPTY_OBJECT = {};
@@ -30,6 +29,7 @@ export default function(path, isNullable) {
   } = node;
   const tagProperties = [];
   const tagDef = getTagDef(path);
+  const meta = file.metadata.marko;
 
   if (tagDef) {
     const { parseOptions = EMPTY_OBJECT } = tagDef;
@@ -81,17 +81,11 @@ export default function(path, isNullable) {
   }
 
   if (isHTML) {
-    const componentFiles = getComponentFiles(path);
-    const isSplit = Boolean(componentFiles.componentBrowserFile);
-    const isImplicit = Boolean(
-      !file._inlineComponentClass &&
-        !componentFiles.componentFile &&
-        !file._hasTagParams
-    );
-
-    const needsDataMarkoAttr = isSplit || isImplicit || isPreserved(path);
-
-    if (needsDataMarkoAttr) {
+    if (
+      (!meta.hasStatefulTagParams &&
+        (meta.hasComponentBrowser || !meta.hasComponent)) ||
+      isPreserved(path)
+    ) {
       const dataMarkoArgs = [t.identifier("out"), file._componentDefIdentifier];
 
       if (tagProperties.length) {

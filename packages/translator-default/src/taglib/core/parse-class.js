@@ -2,8 +2,6 @@ import { types as t } from "@marko/babel-types";
 import { parseExpression } from "@marko/babel-utils";
 import getComponentFiles from "../../util/get-component-files";
 
-const SEEN_INLINE_CLASS = new WeakSet();
-
 export default function(path) {
   const {
     node,
@@ -13,6 +11,7 @@ export default function(path) {
     rawValue: code,
     name: { start }
   } = node;
+  const meta = file.metadata.marko;
 
   if (getComponentFiles(path).componentFile) {
     throw path
@@ -22,7 +21,7 @@ export default function(path) {
       );
   }
 
-  if (SEEN_INLINE_CLASS.has(file)) {
+  if (meta.hasComponent) {
     throw path
       .get("name")
       .buildCodeFrameError(
@@ -56,6 +55,6 @@ export default function(path) {
     );
   }
 
-  SEEN_INLINE_CLASS.add(file);
+  meta.hasComponent = true;
   path.replaceWith(t.markoClass(parsed.body));
 }
