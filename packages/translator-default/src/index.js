@@ -5,7 +5,13 @@ import {
   resolveRelativePath,
   importNamed,
   importDefault,
-  parseScript
+  parseScript,
+  isNativeTag,
+  isMacroTag,
+  isDynamicTag,
+  isAttributeTag,
+  loadFileForTag,
+  findParentTag
 } from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
@@ -22,6 +28,43 @@ import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import getComponentFiles from "./util/get-component-files";
 
 export { default as taglibs } from "./taglib";
+
+export const analyze = {
+  Program(program) {
+    // Pre populate metadata for component files.
+    getComponentFiles(program);
+  },
+  MarkoTag(tag) {
+    // Check if tag uses stateful tag params.
+    const meta = tag.hub.file.metadata.marko;
+
+    if (
+      meta.hasStatefulTagParams ||
+      isNativeTag(tag) ||
+      isMacroTag(tag) ||
+      !tag.get("body").get("params").length
+    ) {
+      return;
+    }
+
+    if (isDynamicTag(tag)) {
+      meta.hasStatefulTagParams = true;
+      return;
+    }
+
+    let curTag = tag;
+    while (isAttributeTag(curTag)) {
+      curTag = findParentTag(curTag);
+    }
+
+    const tagFile = loadFileForTag(curTag);
+    const childMeta = tagFile && tagFile.metadata.marko;
+    meta.hasStatefulTagParams =
+      childMeta &&
+      (childMeta.hasStatefulTagParams ||
+        (childMeta.hasComponent && !childMeta.hasComponentBrowser));
+  }
+};
 
 export const translate = {
   MarkoDocumentType,
@@ -79,8 +122,6 @@ export const translate = {
         componentBrowserFile
       } = getComponentFiles(path);
       const isHTML = markoOpts.output === "html";
-      let isSplit = false;
-      let isImplicit = true;
 
       if (packageFile) {
         meta.deps.unshift(packageFile);
@@ -90,15 +131,10 @@ export const translate = {
         meta.deps.unshift(styleFile);
       }
 
-      if (componentFile || _inlineComponentClass || file._hasTagParams) {
-        isImplicit = false;
-        meta.component = file.opts.sourceFileName;
-      }
-
-      if (componentBrowserFile) {
-        isImplicit = false;
-        isSplit = true;
+      if (meta.hasComponentBrowser) {
         meta.component = componentBrowserFile;
+      } else if (meta.hasComponent || meta.hasStatefulTagParams) {
+        meta.component = file.opts.sourceFileName;
       }
 
       meta.component =
@@ -187,7 +223,7 @@ export const translate = {
                     componentIdString,
                     t.arrowFunctionExpression(
                       [],
-                      isSplit
+                      componentBrowserFile
                         ? importDefault(
                             file,
                             resolveRelativePath(file, componentBrowserFile),
@@ -206,13 +242,13 @@ export const translate = {
         t.objectProperty(t.identifier("t"), componentTypeIdentifier)
       ];
 
-      if (isImplicit) {
+      if (!meta.component) {
         templateRenderOptionsProps.push(
           t.objectProperty(t.identifier("i"), t.booleanLiteral(true))
         );
       }
 
-      if (isSplit) {
+      if (componentBrowserFile) {
         templateRenderOptionsProps.push(
           t.objectProperty(t.identifier("s"), t.booleanLiteral(true))
         );

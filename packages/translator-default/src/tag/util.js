@@ -2,10 +2,7 @@ import { types as t } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
 
 export function getAttrs(path, noCamel, skipRenderBody) {
-  const {
-    node,
-    hub: { file }
-  } = path;
+  const { node } = path;
   const {
     attributes,
     body: { body, params },
@@ -76,12 +73,6 @@ export function getAttrs(path, noCamel, skipRenderBody) {
     }
 
     if (!hasDynamicAttrTags || endDynamicAttrTagsIndex !== childLen - 1) {
-      if (params.length) {
-        if (!file._hasTagParams && !isIgnoredTagParams(path)) {
-          file._hasTagParams = true;
-        }
-      }
-
       properties.push(
         t.objectProperty(
           t.stringLiteral("renderBody"),
@@ -186,25 +177,6 @@ export function evaluateAttr(attr) {
 
 function camelCase(string) {
   return string.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-}
-
-function isIgnoredTagParams(path) {
-  const tagNamePath = path.get("name");
-
-  if (!tagNamePath.isStringLiteral()) {
-    return path.node._isMacroTagCall || false;
-  }
-
-  const tagName = tagNamePath.get("value").node;
-
-  return (
-    tagName === "for" ||
-    tagName === "macro" ||
-    ((tagName === "@then" || tagName === "@catch") &&
-      path.parentPath.parentPath
-        .get("name")
-        .isStringLiteral({ value: "await" }))
-  );
 }
 
 function findLastIndex(arr, check) {

@@ -36,8 +36,10 @@ export default function getComponentFiles({ hub: { file } }) {
       packageFile = `./${file}`;
     } else if (!componentFile && componentMatch.test(file)) {
       componentFile = `./${file}`;
+      meta.hasComponent = true;
     } else if (!componentBrowserFile && splitComponentMatch.test(file)) {
       componentBrowserFile = `./${file}`;
+      meta.hasComponentBrowser = true;
     }
   }
 

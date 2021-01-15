@@ -33,5 +33,6 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
   out.w("</div>");
 }, {
-  t: _marko_componentType
+  t: _marko_componentType,
+  i: true
 }, _marko_component);
