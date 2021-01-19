@@ -1,7 +1,7 @@
 const _marko_template = _t();
 
 export default _marko_template;
-import _await from "../../../../marko/src/core-tags/core/await/renderer.js";
+import _await from "../../../../marko/dist/core-tags/core/await/renderer.js";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/dom";

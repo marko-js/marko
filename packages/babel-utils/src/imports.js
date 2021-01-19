@@ -114,5 +114,5 @@ function getImports(file) {
 
 function remapProductionMarkoBuild(file, request) {
   if (!file.markoOpts.optimize) return request;
-  return request.replace(/^marko\/src\//, "marko/dist/");
+  return request.replace(/(^|\/)marko\/src\//, "$1marko/dist/");
 }
