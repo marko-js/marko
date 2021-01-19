@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.80](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.79...v5.0.0-next.80) (2021-01-19)
+
+
+### Bug Fixes
+
+* src to dist translations in some cases ([60772b7](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/60772b7098b3f832ad620d43d965664167b5a035))
+
+
+
+
+
 # [5.0.0-next.79](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.78...v5.0.0-next.79) (2021-01-19)
 
 
