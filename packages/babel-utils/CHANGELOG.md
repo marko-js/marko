@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.78](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.77...v5.0.0-next.78) (2021-01-19)
+
+
+### Bug Fixes
+
+* webpack's file system not converting buffer properly ([#1649](https://github.com/marko-js/marko/tree/master/packages/babel-utils/issues/1649)) ([1cd24b6](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/1cd24b68c9dae62d53a681f48a0cf61e9b8e8aed))
+
+
+
+
+
 # [5.0.0-next.72](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
 
 
