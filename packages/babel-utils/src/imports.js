@@ -19,7 +19,7 @@ const toPosix =
 
 export function resolveRelativePath(file, request) {
   if (!request.startsWith(FS_ROOT_DIR)) {
-    return request;
+    return remapProductionMarkoBuild(file, request);
   }
 
   const { sourceFileName } = file.opts;
@@ -27,7 +27,10 @@ export function resolveRelativePath(file, request) {
     path.relative(path.dirname(sourceFileName), request)
   );
   if (relativePath[0] !== ".") relativePath = `./${relativePath}`;
-  return relativePath.replace(/^(?:\.{1,2}\/)+node_modules\//, "");
+  return remapProductionMarkoBuild(
+    file,
+    relativePath.replace(/^(?:\.{1,2}\/)+node_modules\//, "")
+  );
 }
 
 export function importDefault(file, request, nameHint) {
