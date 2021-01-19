@@ -74,11 +74,18 @@ export default function(path) {
     return;
   }
 
-  let identifier = parentIdentifierLookup.get(parentPath);
+  let identifiers = parentIdentifierLookup.get(parentPath);
+
+  if (!identifiers) {
+    parentIdentifierLookup.set(parentPath, (identifiers = {}));
+  }
+
+  let identifier = identifiers[targetProperty];
 
   if (!identifier) {
-    identifier = path.scope.generateUidIdentifier(targetProperty);
-    parentIdentifierLookup.set(parentPath, identifier);
+    identifier = identifiers[targetProperty] = path.scope.generateUidIdentifier(
+      targetProperty
+    );
     parentPath
       .get("body")
       .unshiftContainer(
