@@ -43,7 +43,7 @@ export function enter(path) {
 
   path.replaceWith(
     t.markoPlaceholder(
-      t.stringLiteral(fs.readFileSync(fullPath, "utf-8")),
+      t.stringLiteral(fs.readFileSync(fullPath).toString("utf-8")),
       tagName === "include-text"
     )
   );

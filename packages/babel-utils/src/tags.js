@@ -166,7 +166,7 @@ export function loadFileForTag(tag) {
 
   if (sourceFileName) {
     return file.___getMarkoFile(
-      fs.readFileSync(sourceFileName, "utf-8"),
+      fs.readFileSync(sourceFileName).toString("utf-8"),
       { ...file.opts, sourceFileName, filename: sourceFileName },
       file.markoOpts
     );
