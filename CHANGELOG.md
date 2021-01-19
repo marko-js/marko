@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.79](https://github.com/marko-js/marko/compare/v5.0.0-next.78...v5.0.0-next.79) (2021-01-19)
+
+
+### Bug Fixes
+
+* resolve dist runtime when optimized ([261de89](https://github.com/marko-js/marko/commit/261de89672c3089212b5cef1722daf90281cee4d))
+* targetProperty for dynamic attribute tags when multiple ([2d1238f](https://github.com/marko-js/marko/commit/2d1238f78294056ec2cf7a1b26cd0e01e5b9a108))
+
+
+
+
+
 # [5.0.0-next.78](https://github.com/marko-js/marko/compare/v5.0.0-next.77...v5.0.0-next.78) (2021-01-19)
 
 

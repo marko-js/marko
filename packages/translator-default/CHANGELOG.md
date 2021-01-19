@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.79](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.78...v5.0.0-next.79) (2021-01-19)
+
+
+### Bug Fixes
+
+* targetProperty for dynamic attribute tags when multiple ([2d1238f](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/2d1238f78294056ec2cf7a1b26cd0e01e5b9a108))
+
+
+
+
+
 # [5.0.0-next.78](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.0.0-next.77...v5.0.0-next.78) (2021-01-19)
 
 
