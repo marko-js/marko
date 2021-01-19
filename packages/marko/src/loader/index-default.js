@@ -5,6 +5,7 @@ var Module = require("module").Module;
 var markoCompiler = require("../compiler");
 var cwd = process.cwd();
 var fsOptions = { encoding: "utf8" };
+var requiredCompilerOptions = { modules: "cjs" };
 
 module.exports = function load(templatePath, templateSrc, options) {
   if (arguments.length === 1) {
@@ -60,7 +61,12 @@ function getCachedTemplate(templatePath) {
 }
 
 function doLoad(templatePath, templateSrc, options) {
-  options = Object.assign({}, markoCompiler.defaultOptions, options);
+  options = Object.assign(
+    {},
+    markoCompiler.defaultOptions,
+    options,
+    requiredCompilerOptions
+  );
   templatePath = nodePath.resolve(cwd, templatePath);
   var template = getCachedTemplate(templatePath);
 
