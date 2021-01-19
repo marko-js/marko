@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.77](https://github.com/marko-js/marko/compare/v5.0.0-next.76...v5.0.0-next.77) (2021-01-19)
+
+
+### Bug Fixes
+
+* force commonjs modules for load api ([bd84dad](https://github.com/marko-js/marko/commit/bd84dadca72c4d5e6ae7ed62211e543211a29a5f))
+
+
+
+
+
 # [5.0.0-next.76](https://github.com/marko-js/marko/compare/v5.0.0-next.75...v5.0.0-next.76) (2021-01-15)
 
 
