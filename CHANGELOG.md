@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.0.0-next.81](https://github.com/marko-js/marko/compare/v5.0.0-next.80...v5.0.0-next.81) (2021-01-20)
+
+
+### Bug Fixes
+
+* **translator-default:** browser.json auto discovery path ([965c407](https://github.com/marko-js/marko/commit/965c40735f03b0c29397f77503a3bf2253ee0f91))
+
+
+
+
+
 # [5.0.0-next.80](https://github.com/marko-js/marko/compare/v5.0.0-next.79...v5.0.0-next.80) (2021-01-19)
 
 
