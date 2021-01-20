@@ -124,7 +124,7 @@ export const translate = {
       const isHTML = markoOpts.output === "html";
 
       if (packageFile) {
-        meta.deps.unshift(packageFile);
+        meta.deps.unshift(`package: ${packageFile}`);
       }
 
       if (styleFile) {
