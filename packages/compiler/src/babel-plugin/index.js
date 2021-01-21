@@ -2,7 +2,7 @@ import path from "path";
 import { createHash } from "crypto";
 import { types as t } from "@marko/babel-types";
 import { getLoc, getTemplateId } from "@marko/babel-utils";
-import traverse, { visitors } from "@babel/traverse";
+import { visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";
 import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
@@ -67,7 +67,7 @@ export default (api, markoOpts) => {
         file.markoOpts = markoOpts;
         file.___taglibLookup = sourceFile.___taglibLookup;
         file.___getMarkoFile = getMarkoFile;
-        traverse(ast, translator.translate, file.scope, {});
+        traverseAll(file, translator.translate);
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
         file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
@@ -79,10 +79,11 @@ export default (api, markoOpts) => {
 };
 
 export function getMarkoFile(code, jsParseOptions, markoOpts) {
-  let compileCache = markoOpts.cache.get(markoOpts.translator);
+  const { translator } = markoOpts;
+  let compileCache = markoOpts.cache.get(translator);
 
   if (!compileCache) {
-    markoOpts.cache.set(markoOpts.translator, (compileCache = new Map()));
+    markoOpts.cache.set(translator, (compileCache = new Map()));
   }
 
   const filename = jsParseOptions.sourceFileName;
@@ -122,10 +123,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     return cached.file;
   }
 
-  const taglibLookup = buildLookup(
-    path.dirname(filename),
-    markoOpts.translator
-  );
+  const taglibLookup = buildLookup(path.dirname(filename), translator);
 
   const file = new MarkoFile(jsParseOptions, {
     code,
@@ -180,8 +178,8 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     rootTransformers.push(mod.default || mod);
   }
 
-  traverse(file.ast, mergeVisitors(rootMigrators), file.scope, {});
-  traverse(file.ast, mergeVisitors(rootTransformers), file.scope, {});
+  traverseAll(file, rootMigrators);
+  traverseAll(file, rootTransformers);
 
   for (const taglibId in taglibLookup.taglibsById) {
     const { filePath } = taglibLookup.taglibsById[taglibId];
@@ -194,8 +192,8 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     }
   }
 
-  if (markoOpts.translator.analyze) {
-    traverse(file.ast, markoOpts.translator.analyze, file.scope, {});
+  if (translator.analyze) {
+    traverseAll(file, translator.analyze);
   }
 
   compileCache.set(cacheKey, {
@@ -245,11 +243,29 @@ function shallowClone(data) {
 }
 
 function mergeVisitors(all) {
-  if (all.length <= 1) {
-    return all[0];
+  if (Array.isArray(all)) {
+    if (all.length === 1) {
+      all = all[0];
+    } else {
+      return visitors.merge(all);
+    }
   }
 
-  return visitors.merge(all);
+  return visitors.explode(all);
+}
+
+function traverseAll(file, visitors) {
+  const program = file.path;
+  const { Program, ...mergedVisitors } = mergeVisitors(visitors);
+  // Traverse only walks into children by default
+  // This manually traverses into the Program node as well.
+  if (!(Program && Program.enter && program._call(Program.enter))) {
+    program.traverse(mergedVisitors);
+
+    if (Program && Program.exit) {
+      program._call(Program.exit);
+    }
+  }
 }
 
 function unique(item, i, list) {
