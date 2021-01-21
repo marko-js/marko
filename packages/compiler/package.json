@@ -1,7 +1,7 @@
 {
   "name": "@marko/compiler",
   "description": "Marko template to JS compiler.",
-  "version": "5.0.0-next.82",
+  "version": "5.0.0",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -13,8 +13,8 @@
     "@babel/runtime": "^7.7.7",
     "@babel/traverse": "^7.7.4",
     "@babel/types": "^7.7.4",
-    "@marko/babel-types": "^5.0.0-next.71",
-    "@marko/babel-utils": "^5.0.0-next.80",
+    "@marko/babel-types": "^5.0.0",
+    "@marko/babel-utils": "^5.0.0",
     "complain": "^1.6.0",
     "enhanced-resolve": "5.0.0",
     "he": "^1.1.0",
@@ -26,8 +26,8 @@
     "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
-    "@marko/translator-default": "^5.0.0-next.82",
-    "marko": "^5.0.0-next.82"
+    "@marko/translator-default": "^5.0.0",
+    "marko": "^5.0.0"
   },
   "files": [
     "dist",
@@ -47,7 +47,7 @@
   "main:dev": "src/index.js",
   "main:npm": "dist/index.js",
   "peerDependencies": {
-    "marko": "^5.0.0-next.5"
+    "marko": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"

@@ -8,7 +8,7 @@
     "postinstall": "lerna bootstrap --hoist",
     "prepack": "ENTRY=main:npm npm run set-entry",
     "postpack": "ENTRY=main:dev npm run set-entry",
-    "release": "npm run build && lerna publish prerelease --preid=next --dist-tag=next",
+    "release": "npm run build && lerna publish",
     "test": "mocha -r @babel/register \"packages/*/test/{*.test.js,*/*.test.js}\"",
     "test:watch": "npm run mocha -- --recursive --watch",
     "clean": "lerna clean && rm -rf ./packages/*/dist",
