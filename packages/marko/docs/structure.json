@@ -10,7 +10,7 @@
       "Styles",
       "Events",
       "Body content",
-      "Marko 4 upgrade"
+      "Marko 5 upgrade"
     ]
   },
   {
@@ -33,16 +33,7 @@
   },
   {
     "title": "Server Integrations",
-    "docs": [
-      "Express",
-      "Koa",
-      "Hapi",
-      "HTTP",
-      {
-        "title": "Other",
-        "docs": ["Fastify", "Huncwot"]
-      }
-    ]
+    "docs": ["Express", "Koa", "Hapi", "HTTP", "Fastify"]
   },
   {
     "title": "Tooling",
