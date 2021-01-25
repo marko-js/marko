@@ -12,11 +12,11 @@ If you're starting from scratch, you can use Marko's [CLI](https://github.com/ma
 npx @marko/create
 ```
 
-This will use an interactive CLI to automatically create a project for you using the pre-made starter template of your choosing. The `basic` template is the most minimal and the easiest way to get started. It uses our batteries-included `@marko/build` and `@marko/serve` tools that handle building, bundling, and serving your web application. These projects are config-free with built-in file based routing and automatic code reloading.
+This will use an interactive [CLI](https://github.com/marko-js/cli) to automatically create a project for you using the pre-made starter template of your choosing. The `basic` template is the most minimal and the easiest way to get started. It uses our batteries-included `@marko/build` and `@marko/serve` tools that handle building, bundling, and serving your web application. These projects are config-free with built-in file based routing and automatic code reloading.
 
 ## Custom Bundling
 
-Marko relies on JavaScript bundlers to package our code on both the client and the server. This is because Marko's client and server bundling works closely together to optimize the smallest client bundles and handle shared assets properly.
+Marko relies on JavaScript bundlers to package your code on both the client and the server. This is because Marko's client and server bundling works closely together to optimize the smallest client bundles and handle shared assets properly.
 
 Using the CLI is still the easiest way to get started even when you want to get your hands dirty tweaking every last part of your config files. Marko currently supports Webpack, Lasso, and Rollup.
 
