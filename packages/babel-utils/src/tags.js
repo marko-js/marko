@@ -206,10 +206,6 @@ export function resolveTagImport(path, request) {
   }
 
   if (request.endsWith(".marko")) {
-    if (!file.metadata.marko.tags.includes(request)) {
-      file.metadata.marko.tags.push(request);
-    }
-
     return resolveRelativePath(file, request);
   }
 }

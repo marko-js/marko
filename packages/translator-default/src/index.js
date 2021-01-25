@@ -352,8 +352,16 @@ export const translate = {
   ImportDeclaration: {
     exit(path) {
       const source = path.get("source");
-      const request = source.node.value;
-      source.node.value = resolveTagImport(source, request) || request;
+      const tagEntry = resolveTagImport(source, source.node.value);
+
+      if (tagEntry) {
+        const meta = path.hub.file.metadata.marko;
+        source.node.value = tagEntry;
+
+        if (!meta.tags.includes(tagEntry)) {
+          meta.tags.push(tagEntry);
+        }
+      }
     }
   }
 };
