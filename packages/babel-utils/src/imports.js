@@ -1,24 +1,24 @@
 import path from "path";
 import { types as t } from "@marko/babel-types";
 
+const IS_POSIX = path.sep === "/";
 const IMPORTS_KEY = Symbol();
-const FS_ROOT_DIR = path.parse(process.cwd()).root;
+const FS_START = IS_POSIX ? path.sep : /^(.*?:)/.exec(process.cwd())[1];
 
-const toPosix =
-  path.sep === "/"
-    ? v => v
-    : v => {
-        let result = "";
-        for (let i = v.length; i--; ) {
-          const c = v[i];
-          result = (c === path.sep ? "/" : c) + result;
-        }
+const toPosix = IS_POSIX
+  ? v => v
+  : v => {
+      let result = "";
+      for (let i = v.length; i--; ) {
+        const c = v[i];
+        result = (c === path.sep ? "/" : c) + result;
+      }
 
-        return result;
-      };
+      return result;
+    };
 
 export function resolveRelativePath(file, request) {
-  if (!request.startsWith(FS_ROOT_DIR)) {
+  if (!request.startsWith(FS_START)) {
     return remapProductionMarkoBuild(file, request);
   }
 
