@@ -1,6 +1,6 @@
 # Fastify + Marko
 
-See the [marko-fastify](https://github.com/marko-js/examples/tree/master/examples/fastify) sample
+See the [lasso-fastify](https://github.com/marko-js/examples/tree/master/examples/lasso-fastify) sample
 project for a fully-working example.
 
 ## Installation

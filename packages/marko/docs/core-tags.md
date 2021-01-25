@@ -26,23 +26,9 @@ They support any JavaScript expression in their [tag arguments](./syntax.md#argu
 </if>
 ```
 
-> **Note:** The [alternate conditional attribute syntax is deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-attributes):
->
-> ```marko
-> <p if(arriving)>Hey there</p>
-> <p else-if(leaving)>Bye now</p>
-> <p else>What’s up?</p>
-> ```
-
 ## `<for>`
 
 The `<for>` tag iterates over [arrays/array-likes](#iterating-over-a-list), [object properties](#iterating-over-an-objects-properties), and [ranges of numbers](#iterating-between-a-range-of-numbers).
-
-> **Note:** You may see `for()` as a tag or attribute. This [kinda-like-JS-but-not-really](https://github.com/marko-js/marko/issues/577) syntax [is deprecated](https://github.com/marko-js/marko/pull/1238):
->
-> ```marko
-> <li for(color in colors)>${color}</li>
-> ```
 
 ### Iterating over a list
 
@@ -174,14 +160,6 @@ $ let n = 0;
 <p>2</p>
 <p>3</p>
 ```
-
-> **Note:** [`while` as an attribute is deprecated](https://github.com/marko-js/marko/wiki/Deprecation:-control-flow-attributes):
->
-> ```marko
-> $ let n = 0;
->
-> <p while(n < 4)>${n++}</p>
-> ```
 
 ## `<macro>`
 
@@ -336,58 +314,4 @@ Marko removes HTML comment tags from its output. But if you need comments in the
 
 ```html
 <!--[if IE]><script src="html-shiv.js"></script><![endif]-->
-```
-
-> **Note:** You might see the **deprecated** `<marko-compiler-options>` tag used to configure comments for the template:
->
-> ```marko
-> <marko-compiler-options preserve-comments/>
-> ```
-
-## Deprecated
-
-The following tags and attributes are deprecated, but you might see them in older code.
-
-### `marko-preserve-whitespace`
-
-Instead, preserve whitespace with the `preserve-whitespace` attribute:
-
-```marko
-style {
-  .lang-python {
-    white-space: pre-wrap;
-  }
-}
-
-<p>You’ll get an error with that line of Python,
-  as it has one too many spaces as indentation:
-  <code.lang-python marko-preserve-whitespace>    <mark> </mark>frobulate()</code>
-</p>
-```
-
-### `marko-body`
-
-The `marko-body` attribute controls how a tag’s body content is parsed, with the following possible values:
-
-- `html` (default) — Body content is parsed as HTML.
-- `static-text` — Body content is parsed as static text, ignoring HTML tags and [dynamic text `${placeholders}`](./syntax.md/#dynamic-text).
-- `parsed-text` — Body content is parsed as text, ignoring HTML tags. Does not ignore `${placeholders}`.
-
-```marko
-<p marko-body="static-text">
-  This is just one
-  <b malformed-attribute=">
-    Hello ${THIS IS NOT VALID}!
-  </b>
-  big text block
-</p>
-```
-
-…becomes:
-
-```html
-<p>
-  This is just one &lt;b malformed-attribute="&gt; Hello ${THIS IS NOT VALID}!
-  &lt;/b&gt; big text block
-</p>
 ```

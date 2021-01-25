@@ -523,16 +523,6 @@ Prevents certain attributes from being modified during a rerender. The attribute
 
 ## Properties
 
-### `this.el`
-
-The root [`HTMLElement` object](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to. If there are multiple roots, this is the first.
-
-### `this.els`
-
-An array of the root [`HTMLElement` objects](https://developer.mozilla.org/en-US/docs/Web/API/element) that the component is bound to.
-
-> ⚠️ `this.el` and `this.els` are deprecated. Please use [the `this.getEl()` or `this.getEls()` methods](#getelkey-index).
-
 ### `this.id`
 
 A string identifier for the root HTML element that the component is bound to. (Not the `id` attribute.)

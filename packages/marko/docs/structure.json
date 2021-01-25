@@ -33,7 +33,7 @@
   },
   {
     "title": "Server Integrations",
-    "docs": ["Express", "Koa", "Hapi", "HTTP", "Fastify"]
+    "docs": ["Express", "Koa", "HTTP", "Fastify"]
   },
   {
     "title": "Tooling",

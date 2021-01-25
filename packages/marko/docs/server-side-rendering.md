@@ -94,8 +94,7 @@ require("marko/components").init();
 
 > **ProTip:** We have provided some sample apps to help you get started:
 >
-> - [marko-webpack](https://github.com/marko-js/examples/tree/master/examples/webpack)
-> - [marko-rollup](https://github.com/marko-js/examples/tree/master/examples/rollup)
+> - [marko-webpack](https://github.com/marko-js/examples/tree/master/examples/webpack-express)
 
 # Serialization
 

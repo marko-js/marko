@@ -26,7 +26,7 @@ Using the CLI is still the easiest way to get started even when you want to get 
 
 [Marko Webpack Plugin](https://github.com/marko-js/webpack)
 
-[Webpack Example](https://github.com/marko-js/examples/tree/master/examples/webpack)
+[Webpack Example](https://github.com/marko-js/examples/tree/master/examples/webpack-express)
 
 CLI Command: `npx @marko/create --template webpack`
 
@@ -46,6 +46,6 @@ CLI Command: `npx @marko/create --template lasso-express`
 
 [Marko Rollup Plugin](https://github.com/marko-js/rollup)
 
-[Rollup Example](https://github.com/marko-js/examples/tree/master/examples/rollup)
+<!-- [Rollup Example](https://github.com/marko-js/examples/tree/master/examples/rollup)
 
-CLI Command: `npx @marko/create --template rollup`
+CLI Command: `npx @marko/create --template rollup` -->
