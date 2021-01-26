@@ -68,7 +68,7 @@ const syncResult = compiler.compileFileSync("./src/index.marko", {
 
 ## Hooks
 
-<img src="./compiler-hooks.png">
+![Marko compiler hooks](./compiler-hooks.png)
 
 The Marko compiler runs through a series of stages to produce the final JavaScript output.
 These stages are intended for different aspects of processing the template and can be hooked into using [`marko.json`](./marko-json.md) configuration.
