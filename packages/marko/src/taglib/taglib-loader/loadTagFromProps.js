@@ -372,13 +372,26 @@ class TagLoader {
   }
 
   /**
+   * Deprecated
+   */
+  migrator(value) {
+    this.migrate(value);
+  }
+  /**
    * A custom tag can be mapped to module that is used
    * migrate deprecated features to modern features.
    */
-  migrator(value) {
+  migrate(value) {
     var tag = this.tag;
     var dirname = this.dirname;
     tag.migratorPaths.push(resolveFrom(dirname, value));
+  }
+
+  /**
+   * Deprecated
+   */
+  codeGenerator(value) {
+    this.translate(value);
   }
 
   /**
@@ -387,12 +400,19 @@ class TagLoader {
    * node type is created based on the methods and methods
    * exported by the code codegen module.
    */
-  codeGenerator(value) {
+  translate(value) {
     var tag = this.tag;
     var dirname = this.dirname;
 
     var path = resolveFrom(dirname, value);
     tag.codeGeneratorModulePath = path;
+  }
+
+  /**
+   * Deprecated
+   */
+  nodeFactory(value) {
+    this.parse(value);
   }
 
   /**
@@ -402,7 +422,7 @@ class TagLoader {
    * should be a path to a JS module that gets resolved using the
    * equivalent of require.resolve(path)
    */
-  nodeFactory(value) {
+  parse(value) {
     var tag = this.tag;
     var dirname = this.dirname;
 
@@ -411,11 +431,18 @@ class TagLoader {
   }
 
   /**
+   * Deprecated
+   */
+  transformer(value) {
+    this.transform(value);
+  }
+
+  /**
    * If a custom tag has an associated transformer then the transformer
    * will be called on the compile-time Node. The transformer can manipulate
    * the AST using the DOM-like API to change how the code gets generated.
    */
-  transformer(value) {
+  transform(value) {
     if (typeof value === "string") {
       // The value is a simple string type
       // so treat the value as the path to the JS

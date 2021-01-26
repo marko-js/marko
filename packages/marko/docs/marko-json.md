@@ -107,14 +107,14 @@ Typically, you should let Marko find these files automatically, but here is a re
   "renderer": "./renderer.js", // Custom path to the `renderer.js` file.
 
   // Compiler file hooks
-  "migrator": "./migrator.js", // Hooks into the migration stage for migrating deprecated features.
-  "node-factory": "./node-factory.js", // Hooks into the parsing stage; should return a valid Marko AST.
-  "transformer": "./transformer.js", // Used to modify the AST before generating it.
-  "code-generator": "./code-generator.js" // Used to generate custom JS.
+  "parse": "./parse.js", // Used to augment parsing.
+  "migrate": "./migrate.js", // Used for migrating deprecated features.
+  "transform": "./transform.js", // Used to modify the AST before generating it.
+  "translate": "./translate.js" // Used to generate custom JS.
 }
 ```
 
-> **⚠️ Note:** Compiler hooks are currently undocumented: avoid using them. The compiler API is overhauled in Marko 5, and will be documented once that transition is complete.
+For more information about the compiler hooks [jump over here](./compiler#hooks).
 
 ## Tag library definition
 
