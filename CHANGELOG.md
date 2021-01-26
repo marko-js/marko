@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/marko-js/marko/compare/v5.0.0-next.82...v5.1.0) (2021-01-26)
+
+
+### Bug Fixes
+
+* **babel-utils:** improve website compatability ([c122c08](https://github.com/marko-js/marko/commit/c122c08d92ab4a9e98ef49e27292bb3610fb3ade))
+* importing some Marko files properly includes meta ([d67bac5](https://github.com/marko-js/marko/commit/d67bac58183f46679212bbd2773adc36566cbc92))
+
+
+### Features
+
+* no longer publish as 'next' dist-tag ([8113e25](https://github.com/marko-js/marko/commit/8113e250d823000810d0fa13d76efc4cc69f4ad1))
+
+
+
+
+
 # [5.0.0-next.82](https://github.com/marko-js/marko/compare/v5.0.0-next.81...v5.0.0-next.82) (2021-01-21)
 
 

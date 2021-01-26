@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.1.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.82...v5.1.0) (2021-01-26)
+
+
+### Features
+
+* no longer publish as 'next' dist-tag ([8113e25](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/8113e250d823000810d0fa13d76efc4cc69f4ad1))
+
+
+
+
+
 # [5.0.0-next.82](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.0.0-next.81...v5.0.0-next.82) (2021-01-21)
 
 
