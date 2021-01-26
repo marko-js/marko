@@ -1,8 +1,8 @@
 # Marko + Rollup
 
-The [@marko/rollup](https://github.com/marko-js/rollup) transform can be used in conjunction with [rollup](https://github.com/rollup/rollup) to automatically compile Marko templates that are required by other modules. An official Rollup plugin will be coming soon.
+The [@marko/rollup](https://github.com/marko-js/rollup) transform can be used in conjunction with [rollup](https://github.com/rollup/rollup) to automatically compile Marko templates that are required by other modules.
 
-The [rollup](https://github.com/marko-js/examples/tree/master/examples/rollup) sample app demonstrates how to use Marko with Rollup. Run `npx @marko/create --template rollup` to use this sample as a starting point for a new app.
+<!-- The [rollup](https://github.com/marko-js/examples/tree/master/examples/rollup) sample app demonstrates how to use Marko with Rollup. Run `npx @marko/create --template rollup` to use this sample as a starting point for a new app. -->
 
 ## Manual Installation
 

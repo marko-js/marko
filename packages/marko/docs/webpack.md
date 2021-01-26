@@ -2,7 +2,7 @@
 
 The [@marko/webpack/loader](https://github.com/marko-js/webpack) loader for [Webpack](https://webpack.github.io/) will automatically compile all imported Marko templates during bundling. In addition, it will automatically bundle any template dependencies (including required CSS).
 
-> **ProTip**: Want to see it in action? Check out the [`marko-webpack`](https://github.com/marko-js/examples/tree/master/examples/webpack) demo repository. Or run `npx @marko/create --template webpack` to use this sample as a starting point for a new app.
+> **ProTip**: Want to see it in action? Check out the [`marko-webpack`](https://github.com/marko-js/examples/tree/master/examples/webpack-express) demo repository. Or run `npx @marko/create --template webpack` to use this sample as a starting point for a new app.
 
 ## Installation
 
