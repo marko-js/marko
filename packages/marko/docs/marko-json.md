@@ -114,7 +114,7 @@ Typically, you should let Marko find these files automatically, but here is a re
 }
 ```
 
-For more information about the compiler hooks [jump over here](./compiler#hooks).
+For more information about the compiler hooks [jump over here](./compiler.md#hooks).
 
 ## Tag library definition
 

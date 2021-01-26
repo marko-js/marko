@@ -25,7 +25,7 @@ type CompileResult = {
 
 ### `compiler.configure(options: CompileOptions)`
 
-The `configure` API will override the default compiler options. For the list of options (applicable to all `compile*` functions) [see the source code](../../compiler/src/config.js).
+The `configure` API will override the default compiler options. For the list of options (applicable to all `compile*` functions) [see the source code](https://github.com/marko-js/marko/tree/master/packages/compiler/src/config.js).
 
 ```js
 compiler.configure({ output: "dom" });
@@ -152,9 +152,9 @@ To hook into the `translate` stage you can use the `translate` option in the `ma
 
 ## Utilities
 
-The [`@marko/babel-utils`](../../babel-utils/index.d.ts) package exposes a handful of utilities for performing various tasks on the [Marko AST](#marko-ast).
+The [`@marko/babel-utils`](https://github.com/marko-js/marko/tree/master/packages/babel-types/index.d.ts) package exposes a handful of utilities for performing various tasks on the [Marko AST](#marko-ast).
 
 ## Marko AST
 
-You can check out the AST extensions that Marko makes [in the source code](../../babel-types/src/types/definitions.js).
+You can check out the AST extensions that Marko makes [in the source code](https://github.com/marko-js/marko/tree/master/packages/babel-types/src/types/definitions.js).
 For AST creation and assertion utilities you can also import Marko's superset of `@babel/types` through the `@marko/babel-types module`.
