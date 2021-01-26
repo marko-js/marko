@@ -24,7 +24,8 @@
       "Syntax",
       "Core tags",
       "Class components",
-      "marko.json"
+      "marko.json",
+      "Compiler"
     ]
   },
   {
