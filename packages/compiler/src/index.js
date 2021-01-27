@@ -1,55 +1,55 @@
 import * as babel from "@babel/core";
 import corePlugin from "./babel-plugin";
-import defaultOptions from "./config";
+import defaultConfig from "./config";
 import * as taglib from "./taglib";
 
 export { taglib };
 
-let globalConfig = { ...defaultOptions };
+let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
-  globalConfig = { ...defaultOptions, ...newConfig };
+  globalConfig = { ...defaultConfig, ...newConfig };
 }
 
-export async function compile(src, filename, options) {
-  const babelConfig = loadBabelConfig(filename, options);
+export async function compile(src, filename, config) {
+  const babelConfig = loadBabelConfig(filename, config);
   const babelResult = await babel.transformAsync(src, babelConfig);
-  scheduleDefaultClear(options);
+  scheduleDefaultClear(config);
   return buildResult(babelResult);
 }
 
-export function compileSync(src, filename, options) {
-  const babelConfig = loadBabelConfig(filename, options);
+export function compileSync(src, filename, config) {
+  const babelConfig = loadBabelConfig(filename, config);
   const babelResult = babel.transformSync(src, babelConfig);
-  scheduleDefaultClear(options);
+  scheduleDefaultClear(config);
   return buildResult(babelResult);
 }
 
-export async function compileFile(filename, options) {
+export async function compileFile(filename, config) {
   return new Promise((resolve, reject) => {
-    getFs(options).readFile(filename, "utf-8", (err, src) => {
+    getFs(config).readFile(filename, "utf-8", (err, src) => {
       if (err) {
         return reject(err);
       }
 
-      return resolve(compile(src, filename, options));
+      return resolve(compile(src, filename, config));
     });
   });
 }
 
-export function compileFileSync(filename, options) {
-  const src = getFs(options).readFileSync(filename, "utf-8");
-  return compileSync(src, filename, options);
+export function compileFileSync(filename, config) {
+  const src = getFs(config).readFileSync(filename, "utf-8");
+  return compileSync(src, filename, config);
 }
 
-function loadBabelConfig(filename, options) {
-  const markoConfig = { ...globalConfig, ...options, babelConfig: undefined };
+function loadBabelConfig(filename, config) {
+  const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
     filename: filename,
     sourceFileName: filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,
-    ...(options && options.babelConfig)
+    ...(config && config.babelConfig)
   };
 
   if (markoConfig.modules === "cjs") {
@@ -78,10 +78,10 @@ function buildResult(babelResult) {
 let scheduledClear = false;
 let clearingDefaultFs = false;
 let clearingDefaultCache = false;
-function scheduleDefaultClear(options) {
+function scheduleDefaultClear(config) {
   if (!scheduledClear) {
-    clearingDefaultCache = isDefaultCache(options);
-    clearingDefaultFs = isDefaultFS(options);
+    clearingDefaultCache = isDefaultCache(config);
+    clearingDefaultFs = isDefaultFS(config);
 
     if (clearingDefaultCache || clearingDefaultFs) {
       scheduledClear = true;
@@ -103,14 +103,14 @@ function clearDefaults() {
   scheduledClear = false;
 }
 
-function isDefaultCache(options) {
-  return !options.cache || options.cache === globalConfig.cache;
+function isDefaultCache(config) {
+  return !config.cache || config.cache === globalConfig.cache;
 }
 
-function isDefaultFS(options) {
-  return getFs(options) === globalConfig.fileSystem;
+function isDefaultFS(config) {
+  return getFs(config) === globalConfig.fileSystem;
 }
 
-function getFs(options) {
-  return options.fileSystem || globalConfig.fileSystem;
+function getFs(config) {
+  return config.fileSystem || globalConfig.fileSystem;
 }
