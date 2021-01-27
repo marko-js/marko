@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.3](https://github.com/marko-js/marko/compare/v5.1.2...v5.1.3) (2021-01-27)
+
+
+### Bug Fixes
+
+* enable inline sourcemaps by default with dev mode require hook ([6571a11](https://github.com/marko-js/marko/commit/6571a1124047e10ccf0b7a4b131fbe860ce008bb))
+
+
+
+
+
 ## [5.1.2](https://github.com/marko-js/marko/compare/v5.1.1...v5.1.2) (2021-01-26)
 
 **Note:** Version bump only for package marko-project
