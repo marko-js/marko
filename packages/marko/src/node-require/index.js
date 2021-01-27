@@ -6,6 +6,8 @@ const resolveFrom = require("resolve-from");
 const fs = require("fs");
 const fsReadOptions = { encoding: "utf8" };
 const requiredCompilerOptions = { modules: "cjs" };
+// eslint-disable-next-line no-constant-condition
+const defaultCompilerOptions = { sourceMaps: "MARKO_DEBUG" ? "inline" : false };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
 function normalizeExtension(extension) {
@@ -23,6 +25,7 @@ function compile(templatePath, markoCompiler, userCompilerOptions) {
     Object.assign(
       {},
       markoCompiler.defaultOptions,
+      defaultCompilerOptions,
       userCompilerOptions,
       requiredCompilerOptions
     )
