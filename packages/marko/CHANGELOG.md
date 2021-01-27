@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.4](https://github.com/marko-js/marko/compare/v5.1.3...v5.1.4) (2021-01-27)
+
+
+### Bug Fixes
+
+* docs link ([69abe9a](https://github.com/marko-js/marko/commit/69abe9a299e106f5ea0ef3c7a14b0fc5d3542a6b))
+
+
+
+
+
 ## [5.1.3](https://github.com/marko-js/marko/compare/v5.1.2...v5.1.3) (2021-01-27)
 
 
