@@ -31,7 +31,8 @@
   },
   "files": [
     "dist",
-    "modules.js"
+    "modules.js",
+    "index.d.ts"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/compiler/README.md",
   "keywords": [
@@ -55,5 +56,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/marko/tree/master/packages/compiler"
-  }
+  },
+  "types": "index.d.ts"
 }
