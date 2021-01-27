@@ -130,7 +130,7 @@ ul.example-list
 # Getting Started
 
 1. `npm install marko`
-2. Read the [docs](https://markojs.com/docs/)
+2. Read the [docs](https://markojs.com/docs/getting-started/)
 
 # Community & Support
 
