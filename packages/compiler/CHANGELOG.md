@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.5](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.1.4...v5.1.5) (2021-01-28)
+
+
+### Bug Fixes
+
+* issue with bundled compiler not respecting NODE_ENV ([c7be2a7](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/c7be2a7052366bff706eb2622a6b059866294b5b))
+
+
+
+
+
 ## [5.1.4](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.1.3...v5.1.4) (2021-01-27)
 
 **Note:** Version bump only for package @marko/compiler
