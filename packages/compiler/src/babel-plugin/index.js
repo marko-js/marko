@@ -273,9 +273,10 @@ function unique(item, i, list) {
 }
 
 function shouldOptimize() {
-  const { NODE_ENV, MARKO_DEBUG } = process.env;
   return (
-    (MARKO_DEBUG && MARKO_DEBUG !== "false" && MARKO_DEBUG !== "0") ||
-    (NODE_ENV && NODE_ENV !== "development")
+    (process.env.MARKO_DEBUG &&
+      process.env.MARKO_DEBUG !== "false" &&
+      process.env.MARKO_DEBUG !== "0") ||
+    (process.env.NODE_ENV && process.env.NODE_ENV !== "development")
   );
 }
