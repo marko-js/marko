@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.7](https://github.com/marko-js/marko/compare/v5.1.6...v5.1.7) (2021-02-01)
+
+
+### Bug Fixes
+
+* allow passing 'dom' output instead of 'vdom' ([9c11a9b](https://github.com/marko-js/marko/commit/9c11a9be187c728b46caca9a37a9b383cc20ce1b))
+
+
+
+
+
 ## [5.1.6](https://github.com/marko-js/marko/compare/v5.1.5...v5.1.6) (2021-01-29)
 
 
