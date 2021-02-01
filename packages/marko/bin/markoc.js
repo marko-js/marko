@@ -65,10 +65,6 @@ var args = require("argly")
       type: "boolean",
       description: "Only print warnings and errors"
     },
-    "--vdom -V": {
-      type: "boolean",
-      description: "VDOM output (deprecated, prefer --browser)"
-    },
     "--browser -b": {
       type: "boolean",
       description: "Browser output"
@@ -124,8 +120,8 @@ var output = "html";
 
 var isForBrowser = false;
 
-if (args.vdom || args.browser) {
-  output = "vdom";
+if (args.browser) {
+  output = "dom";
   isForBrowser = true;
 }
 

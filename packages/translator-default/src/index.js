@@ -197,7 +197,11 @@ export const translate = {
           t.variableDeclarator(
             templateIdentifier,
             t.callExpression(
-              importNamed(file, `marko/src/runtime/${markoOpts.output}`, "t"),
+              importNamed(
+                file,
+                `marko/src/runtime/${isHTML ? "html" : "vdom"}`,
+                "t"
+              ),
               includeMetaInSource ? [t.identifier("__filename")] : []
             )
           )

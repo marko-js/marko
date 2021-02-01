@@ -82,7 +82,7 @@ function compileForBrowser(src, filename, options, callback) {
 
   options = extend(
     {
-      output: "vdom",
+      output: "dom",
       meta: false,
       sourceOnly: false
     },
@@ -121,7 +121,7 @@ function compileFileForBrowser(filename, options, callback) {
     options = null;
   }
 
-  options = extend({ output: "vdom", meta: false, sourceOnly: false }, options);
+  options = extend({ output: "dom", meta: false, sourceOnly: false }, options);
   return compileFile(filename, options, callback);
 }
 
