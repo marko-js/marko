@@ -1,3 +1,5 @@
+import { TaglibLookup } from "@marko/babel-utils";
+
 export type Config = {
   output?: "html" | "dom";
   writeVersionComment?: boolean;
@@ -43,6 +45,8 @@ export type CompileResult = {
   meta: MarkoMeta;
 };
 
+export function configure(config: Config): void;
+
 export function compile(
   src: string,
   filename: string,
@@ -64,3 +68,11 @@ export function compileFileSync(
   filename: string,
   config?: Config
 ): CompileResult;
+
+export namespace taglib {
+  export function excludeDir(dirname: string): void;
+  export function excludePackage(packageName: string): void;
+  export function register(id: string, props: { [x:string]: unknown }): void;
+  export function buildLookup(dirname: string, translator?: unknown): TaglibLookup
+  export function clearCaches(): void;
+}
