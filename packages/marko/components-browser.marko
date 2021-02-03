@@ -5,7 +5,7 @@
     if (opts.module === "cjs") {
         return `module.exports = require(${file});\n`;
     } else {
-        return `export * from ${file};\n`;
+        return `nexport { default } from ${file};\nexport * from ${file};\n`;
     }
 })/>
 
