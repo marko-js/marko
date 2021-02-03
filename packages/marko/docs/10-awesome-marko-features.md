@@ -122,7 +122,7 @@ Here’s the same thing with the concise syntax:
 // Count our clicks!
 div.count
   p -- Count: ${state.count}
-button.example-button on-click('increment') — Click me!
+button.example-button on-click('increment') -- Click me!
 ```
 
 Can’t make up your mind or just want to paste in that code snippet from
