@@ -7,7 +7,7 @@ function bar() {}
 
 var baz = 456;
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("zKxreLgp", () => _marko_template),

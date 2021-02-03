@@ -3,7 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_component from "./component.js";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { t as _t } from "marko/src/runtime/dom";
+import { t as _t } from "marko/src/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/class-external-component-index/index.marko", () => _marko_template),

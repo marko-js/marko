@@ -3,7 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("V8pzyNwe", () => _marko_template),

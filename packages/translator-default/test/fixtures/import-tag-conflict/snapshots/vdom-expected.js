@@ -4,7 +4,7 @@ export default _marko_template;
 import { asset as test } from "./test1/asset";
 import { asset } from "./test2/asset";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { t as _t } from "marko/src/runtime/dom";
+import { t as _t } from "marko/src/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/import-tag-conflict/template.marko", () => _marko_template),

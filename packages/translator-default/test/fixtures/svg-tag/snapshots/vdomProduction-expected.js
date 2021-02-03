@@ -26,7 +26,7 @@ const _marko_node5 = _marko_createElement("text", {
 const _marko_node6 = _marko_createElement("a", null, "8", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("LOy6P2CY", () => _marko_template),

@@ -8,7 +8,7 @@ const _marko_node = _marko_createElement("div", {
 }, "0", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("QPcOe9nt", () => _marko_template),

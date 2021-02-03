@@ -24,7 +24,7 @@ const _marko_node7 = _marko_createElement("div", null, "16", null, 0, 0);
 const _marko_node8 = _marko_createElement("div", null, "17", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("qUg9ApxN", () => _marko_template),

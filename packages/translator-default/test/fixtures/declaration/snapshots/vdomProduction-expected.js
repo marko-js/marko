@@ -6,7 +6,7 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 const _marko_node = _marko_createElement("contact-info", null, "0", null, 1, 0).e("name", null, null, null, 1, 0).t("Hello World");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/dom";
+import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("p0+/pj8a", () => _marko_template),
