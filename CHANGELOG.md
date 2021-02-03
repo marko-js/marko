@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.9](https://github.com/marko-js/marko/compare/v5.1.8...v5.1.9) (2021-02-03)
+
+
+### Bug Fixes
+
+* **marko:** default export in esm mode for marko/component ([9b144e1](https://github.com/marko-js/marko/commit/9b144e13ea3413884fdda698fa854caca111858d))
+* **marko:** drop ie10 only runtime code ([2125bf6](https://github.com/marko-js/marko/commit/2125bf6ae991120cf27662b139b3080a93d05416))
+* **marko:** include default export in esm marko/components ([ed5fbc2](https://github.com/marko-js/marko/commit/ed5fbc2299a500851f7b9e23a9737a23285e4840))
+
+
+
+
+
 ## [5.1.8](https://github.com/marko-js/marko/compare/v5.1.7...v5.1.8) (2021-02-02)
 
 **Note:** Version bump only for package marko-project
