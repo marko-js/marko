@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.10](https://github.com/marko-js/marko/compare/v5.1.9...v5.1.10) (2021-02-05)
+
+
+### Bug Fixes
+
+* add else-if to transparent tags ([#1657](https://github.com/marko-js/marko/issues/1657)) ([7c14bdf](https://github.com/marko-js/marko/commit/7c14bdf5536eb8df8831624a4996de8b6970d184))
+
+
+
+
+
 ## [5.1.9](https://github.com/marko-js/marko/compare/v5.1.8...v5.1.9) (2021-02-03)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.10](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.1.9...v5.1.10) (2021-02-05)
+
+
+### Bug Fixes
+
+* add else-if to transparent tags ([#1657](https://github.com/marko-js/marko/tree/master/packages/babel-utils/issues/1657)) ([7c14bdf](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/7c14bdf5536eb8df8831624a4996de8b6970d184))
+
+
+
+
+
 ## [5.1.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.1.0...v5.1.1) (2021-01-26)
 
 **Note:** Version bump only for package @marko/babel-utils
