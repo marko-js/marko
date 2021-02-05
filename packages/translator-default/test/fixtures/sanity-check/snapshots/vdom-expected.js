@@ -144,11 +144,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.ee();
   out.e("div", {
     "b": "1"
-  }, "24", component, 0, 0);
-  out.be("div", null, "25", component, null, 0);
+  }, "23", component, 0, 0);
+  out.be("div", null, "24", component, null, 0);
   out.t("123 abc 123", component);
   out.ee();
-  out.e("span", _marko_attrs(abc), "26", component, 0, 4);
+  out.e("span", _marko_attrs(abc), "25", component, 0, 4);
 
   if (cond) {
     out.t("Hello ", component);
@@ -160,7 +160,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope = `[${i}]`;
     out.e("div", {
       "c": "1"
-    }, "27" + _keyScope, component, 0, 0);
+    }, "26" + _keyScope, component, 0, 0);
   }
 
   for (const key in obj) {
@@ -168,7 +168,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope2 = `[${key}]`;
     out.e("div", {
       "c": "1"
-    }, "28" + _keyScope2, component, 0, 0);
+    }, "27" + _keyScope2, component, 0, 0);
   }
 }, {
   t: _marko_componentType,

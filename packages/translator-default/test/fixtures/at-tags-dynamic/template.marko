@@ -4,8 +4,11 @@
             <if(x)>
                 <@item style={ color }>foo</@item>
             </if>
-            <else>
+            <else-if(y)>
                 <@item style={ color }>bar</@item>
+            </else-if>
+            <else>
+                <@item style={ color }>baz</@item>
             </else>
         </for>
 

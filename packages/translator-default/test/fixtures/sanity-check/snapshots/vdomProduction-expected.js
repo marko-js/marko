@@ -43,9 +43,9 @@ import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs";
 
 const _marko_node9 = _marko_createElement("div", {
   "b": "1"
-}, "24", null, 0, 0);
+}, "23", null, 0, 0);
 
-const _marko_node10 = _marko_createElement("div", null, "25", null, 1, 0).t("123 abc 123");
+const _marko_node10 = _marko_createElement("div", null, "24", null, 1, 0).t("123 abc 123");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { t as _t } from "marko/dist/runtime/vdom";
@@ -171,7 +171,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   out.ee();
   out.n(_marko_node9, component);
   out.n(_marko_node10, component);
-  out.e("span", _marko_attrs(abc), "26", component, 0, 4);
+  out.e("span", _marko_attrs(abc), "25", component, 0, 4);
 
   if (cond) {
     out.t("Hello ", component);
@@ -183,7 +183,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope = `[${i}]`;
     out.e("div", {
       "c": "1"
-    }, "27" + _keyScope, component, 0, 0);
+    }, "26" + _keyScope, component, 0, 0);
   }
 
   for (const key in obj) {
@@ -191,7 +191,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     const _keyScope2 = `[${key}]`;
     out.e("div", {
       "c": "1"
-    }, "28" + _keyScope2, component, 0, 0);
+    }, "27" + _keyScope2, component, 0, 0);
   }
 }, {
   t: _marko_componentType
