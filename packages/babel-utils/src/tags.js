@@ -4,7 +4,14 @@ import { types as t } from "@marko/babel-types";
 import { getRootDir } from "lasso-package-root";
 import { getTagDefForTagName } from "./taglib";
 import { resolveRelativePath } from "./imports";
-const TRANSPARENT_TAGS = new Set(["for", "while", "if", "else", "_no-update"]);
+const TRANSPARENT_TAGS = new Set([
+  "for",
+  "while",
+  "if",
+  "else",
+  "else-if",
+  "_no-update"
+]);
 
 let ROOT = process.cwd();
 try {

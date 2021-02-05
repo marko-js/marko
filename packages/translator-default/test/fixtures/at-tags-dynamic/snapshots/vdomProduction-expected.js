@@ -27,13 +27,22 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           out.t("foo", component);
         }
       });
-    } else {
+    } else if (y) {
       _items.push({
         "style": {
           color
         },
         "renderBody": out => {
           out.t("bar", component);
+        }
+      });
+    } else {
+      _items.push({
+        "style": {
+          color
+        },
+        "renderBody": out => {
+          out.t("baz", component);
         }
       });
     }
