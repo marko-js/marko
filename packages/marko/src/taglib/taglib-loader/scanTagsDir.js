@@ -68,7 +68,11 @@ function getPath(filename, fileMap) {
 }
 
 function findAndSetFile(tagDef, tagDirname) {
-  if (!fs.statSync(tagDirname).isDirectory()) {
+  try {
+    if (!fs.statSync(tagDirname).isDirectory()) {
+      return;
+    }
+  } catch (_) {
     return;
   }
 
