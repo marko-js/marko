@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.11](https://github.com/marko-js/marko/compare/v5.1.10...v5.1.11) (2021-02-11)
+
+
+### Bug Fixes
+
+* prevent potential race condition while tag scanning ([cafa138](https://github.com/marko-js/marko/commit/cafa138f28a5e2fbe9fbc74cc05fb4152e36d911))
+
+
+
+
+
 ## [5.1.10](https://github.com/marko-js/marko/compare/v5.1.9...v5.1.10) (2021-02-05)
 
 **Note:** Version bump only for package marko
