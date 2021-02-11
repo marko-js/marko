@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.13](https://github.com/marko-js/marko/compare/v4.23.12...v4.23.13) (2021-02-11)
+
+
+### Bug Fixes
+
+* prevent potential race condition while tag scanning ([103eb85](https://github.com/marko-js/marko/commit/103eb85bc58c5b0898bdb75793a4413b05c168bb))
+
 ### [4.23.12](https://github.com/marko-js/marko/compare/v4.23.11...v4.23.12) (2021-01-14)
 
 
