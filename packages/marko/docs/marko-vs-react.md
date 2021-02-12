@@ -4,7 +4,7 @@
   <img src="https://cdn-images-1.medium.com/max/2000/1*4BP6tPQtwImj6_QseeybwQ.png" alt="Marko logo" width="100%" />
 </a><br />
 
-You can find the original ["Marko vs React: An In-depth Look" article here](https://hackernoon.com/marko-vs-react-an-in-depth-look-767de0a5f9a6)!
+> This article was published March 2017. Both frameworks have gone through several updates since. You can find the original ["Marko vs React: An In-depth Look" article here](https://hackernoon.com/marko-vs-react-an-in-depth-look-767de0a5f9a6)!
 
 In this article we will take an in-depth look at the differences and
 similarities between [Marko](http://markojs.com/) and React from the perspective

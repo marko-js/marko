@@ -2,7 +2,7 @@
   <img src="https://cdn-images-1.medium.com/max/1000/1*Cmy6UutD5-ogL8dr1DySMQ.png" alt="Marko logo" width="100%" />
 </a><br />
 
-You can find the original ["10 Awesome Marko Features" article here](https://medium.com/@austinkelleher/10-awesome-marko-features-afba9d094d42)!
+> This article was published in August 2017. You can find the original ["10 Awesome Marko Features" article here](https://medium.com/@austinkelleher/10-awesome-marko-features-afba9d094d42)!
 
 # 10 Awesome Marko Features
 
