@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.12](https://github.com/marko-js/marko/compare/v5.1.11...v5.1.12) (2021-02-12)
+
+
+### Bug Fixes
+
+* **marko:** avoid prematurely resolving taglib paths ([29f3cbe](https://github.com/marko-js/marko/commit/29f3cbeccf07108d05e600a2a12dab2a3a0fa6a9))
+
+
+
+
+
 ## [5.1.11](https://github.com/marko-js/marko/compare/v5.1.10...v5.1.11) (2021-02-11)
 
 
