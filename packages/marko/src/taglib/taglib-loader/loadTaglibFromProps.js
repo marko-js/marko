@@ -13,6 +13,10 @@ var createError = require("raptor-util/createError");
 var loaders = require("./loaders");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
+function resolveRelative(dirname, value) {
+  return value[0] === "." ? resolveFrom(dirname, value) : value;
+}
+
 function addTransformer(taglibLoader, value) {
   // Marko allows a "text-transformer" to be registered. The provided
   // text transformer will be called for any static text found in a template.
@@ -25,8 +29,7 @@ function addTransformer(taglibLoader, value) {
     value,
     {
       path(value) {
-        const path = resolveFrom(dirname, value);
-        transformer.path = path;
+        transformer.path = resolveRelative(dirname, value);
       }
     },
     taglibLoader.dependencyChain.append("transformer").toString()
@@ -308,11 +311,7 @@ class TaglibLoader {
    * migrate deprecated features to modern features across the entire template.
    */
   migrator(value) {
-    var taglib = this.taglib;
-    var dirname = this.dirname;
-
-    var path = resolveFrom(dirname, value);
-    taglib.migratorPath = path;
+    this.taglib.migratorPath = resolveRelative(this.dirname, value);
   }
 
   /**

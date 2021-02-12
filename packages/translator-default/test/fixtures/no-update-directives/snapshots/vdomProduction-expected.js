@@ -7,7 +7,7 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 
 const _marko_node = _marko_createElement("div", null, "2", null, 0, 0);
 
-import _preserve from "../../../../marko/dist/core-tags/components/preserve-tag.js";
+import _preserve from "marko/dist/core-tags/components/preserve-tag.js";
 
 const _marko_node2 = _marko_createElement("div", null, "5", null, 0, 0);
 

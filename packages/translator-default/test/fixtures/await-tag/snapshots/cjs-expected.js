@@ -5,7 +5,7 @@ exports.default = void 0;
 
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml");
 
-var _renderer = _interopRequireDefault(require("../../../../marko/src/core-tags/core/await/renderer.js"));
+var _renderer = _interopRequireDefault(require("marko/src/core-tags/core/await/renderer.js"));
 
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
 

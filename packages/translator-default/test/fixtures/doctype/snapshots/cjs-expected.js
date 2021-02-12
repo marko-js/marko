@@ -3,13 +3,13 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _initComponentsTag = _interopRequireDefault(require("../../../../marko/src/core-tags/components/init-components-tag.js"));
+var _initComponentsTag = _interopRequireDefault(require("marko/src/core-tags/components/init-components-tag.js"));
 
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
 
-var _reordererRenderer = _interopRequireDefault(require("../../../../marko/src/core-tags/core/await/reorderer-renderer.js"));
+var _reordererRenderer = _interopRequireDefault(require("marko/src/core-tags/core/await/reorderer-renderer.js"));
 
-var _preferredScriptLocationTag = _interopRequireDefault(require("../../../../marko/src/core-tags/components/preferred-script-location-tag.js"));
+var _preferredScriptLocationTag = _interopRequireDefault(require("marko/src/core-tags/components/preferred-script-location-tag.js"));
 
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
 

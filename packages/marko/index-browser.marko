@@ -1,6 +1,5 @@
 <module-code(function(require, opts) {
-    var isDebug = require('./env').isDebug;
-    var file = `"./${isDebug ? 'src' : 'dist'}"`;
+    var file = `"./${opts.optimize ? "dist" : "src"}"`;
 
     if (opts.module === "cjs") {
         return `module.exports = require(${file});\n`;

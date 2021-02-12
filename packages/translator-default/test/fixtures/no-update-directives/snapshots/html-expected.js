@@ -3,7 +3,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
-import _preserve from "../../../../marko/src/core-tags/components/preserve-tag.js";
+import _preserve from "marko/src/core-tags/components/preserve-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { t as _t } from "marko/src/runtime/html";
 const _marko_componentType = "packages/translator-default/test/fixtures/no-update-directives/template.marko",

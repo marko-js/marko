@@ -12,6 +12,10 @@ var types = require("./types");
 var loaders = require("./loaders");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
+function resolveRelative(dirname, value) {
+  return value[0] === "." ? resolveFrom(dirname, value) : value;
+}
+
 function removeDashes(str) {
   return str.replace(/-([a-z])/g, function(match, lower) {
     return lower.toUpperCase();
@@ -47,8 +51,7 @@ function addTransformer(tagLoader, value) {
     value,
     {
       path(value) {
-        const path = resolveFrom(dirname, value);
-        transformer.path = path;
+        transformer.path = resolveRelative(dirname, value);
       },
 
       priority(value) {
@@ -328,10 +331,7 @@ class TagLoader {
    * @param {String} value The renderer path
    */
   renderer(value) {
-    var tag = this.tag;
-    var dirname = this.dirname;
-    var path = resolveFrom(dirname, value);
-    tag.renderer = path;
+    this.tag.renderer = resolveRelative(this.dirname, value);
   }
 
   /**
@@ -382,9 +382,7 @@ class TagLoader {
    * migrate deprecated features to modern features.
    */
   migrate(value) {
-    var tag = this.tag;
-    var dirname = this.dirname;
-    tag.migratorPaths.push(resolveFrom(dirname, value));
+    this.tag.migratorPaths.push(resolveRelative(this.dirname, value));
   }
 
   /**
@@ -401,11 +399,7 @@ class TagLoader {
    * exported by the code codegen module.
    */
   translate(value) {
-    var tag = this.tag;
-    var dirname = this.dirname;
-
-    var path = resolveFrom(dirname, value);
-    tag.codeGeneratorModulePath = path;
+    this.tag.codeGeneratorModulePath = resolveRelative(this.dirname, value);
   }
 
   /**
@@ -423,11 +417,7 @@ class TagLoader {
    * equivalent of require.resolve(path)
    */
   parse(value) {
-    var tag = this.tag;
-    var dirname = this.dirname;
-
-    var path = resolveFrom(dirname, value);
-    tag.nodeFactoryPath = path;
+    this.tag.nodeFactoryPath = resolveRelative(this.dirname, value);
   }
 
   /**
