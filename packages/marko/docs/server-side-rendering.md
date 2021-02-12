@@ -25,9 +25,8 @@ module.exports = function(req) {
 > **ProTip:** Marko also provides server-side framework integrations:
 >
 > - [express](./express.md)
-> - [hapi](./hapi.md)
 > - [koa](./koa.md)
-> - [huncwot](./huncwot.md)
+> - [fastify](./fastify.md)
 
 ## UI Bootstrapping
 
