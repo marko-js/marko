@@ -119,10 +119,12 @@ export default function analyzeTagNameType(tag: NodePath<t.MarkoTag>) {
           break;
         }
 
-        const bindingPath = binding.path;
-        const bindingTag = bindingPath.parentPath as NodePath<t.MarkoTag>;
+        const bindingTag = binding.path as NodePath<t.MarkoTag>;
 
-        if (bindingTag.isMarkoTag() && bindingPath.key === "var") {
+        if (
+          bindingTag.isMarkoTag() &&
+          (binding.kind as typeof binding.kind & "local") === "local"
+        ) {
           const bindingTagName = (bindingTag.get("name")
             .node as t.StringLiteral).value;
           if (bindingTagName === "tag") {

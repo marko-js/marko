@@ -21,6 +21,7 @@ export default function attrsToObject(
   }
 
   if (withRenderBody) {
+    const { body, params } = node.body;
     let hoistedControlFlows = node.extra.hoistedControlFlows;
 
     if (hoistedControlFlows) {
@@ -36,13 +37,13 @@ export default function attrsToObject(
       }
     }
 
-    if (tag.node.body.body.length) {
+    if (body.length) {
       (result as t.ObjectExpression).properties.push(
         t.objectMethod(
           "method",
           t.identifier("renderBody"),
-          node.params || [],
-          t.blockStatement(tag.node.body.body)
+          params,
+          t.blockStatement(body)
         )
       );
     }

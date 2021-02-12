@@ -73,7 +73,12 @@ function renderTable(current, previous, measure) {
         ];
       })
     ),
-    { columns: columns.map(() => ({ alignment: "right" })) }
+    {
+      columns: columns.reduce((r, _, i) => {
+        r[i] = { alignment: "right" };
+        return r;
+      }, {})
+    }
   );
 }
 

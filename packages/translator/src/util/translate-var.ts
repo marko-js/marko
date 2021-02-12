@@ -1,5 +1,8 @@
 import { types as t, NodePath } from "@marko/babel-types";
 
+const emptyArr = [];
+const getEmptyArr = () => emptyArr;
+
 export default function translateVar(
   tag: NodePath<t.MarkoTag>,
   initialValue: t.Expression,
@@ -11,19 +14,24 @@ export default function translateVar(
     return;
   }
 
-  const varPath = tag.get("var");
-  const varBinding = Object.values(scope.bindings).find(
-    binding => binding.path === varPath
-  )!;
+  const declaration = t.variableDeclaration(kind, [
+    t.variableDeclarator(t.cloneDeep(node.var), initialValue)
+  ]);
 
-  const [replacement] = tag.insertBefore(
-    t.variableDeclaration(kind, [t.variableDeclarator(node.var, initialValue)])
-  );
+  const [replacement] = tag.insertBefore(declaration);
+  const [decl] = replacement.get("declarations");
 
   replacement.skip();
 
-  varBinding.path = replacement.get(
-    "declarations"
-  )[0] as typeof varBinding.path;
-  varBinding.kind = kind;
+  for (const name in scope.bindings) {
+    const binding = scope.bindings[name];
+    if (binding.path === tag) {
+      binding.path = decl as typeof binding.path;
+      binding.kind = kind;
+    }
+  }
+
+  // We pretend there are no identifiers for this tag since we've moved them into the variable declaration.
+  tag.getBindingIdentifiers = getEmptyArr;
+  tag.get("body").getBindingIdentifiers = getEmptyArr;
 }

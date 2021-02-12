@@ -11,6 +11,7 @@ const ESCAPE_TYPES = {
 export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
   const { node, parentPath } = placeholder;
   const { confident, value: computed } = placeholder.get("value").evaluate();
+  const write = writeHTML(placeholder);
   let value: string | t.Expression = node.value;
 
   if (node.escape) {
@@ -33,6 +34,10 @@ export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
       : callRuntime(placeholder, "toString", value);
   }
 
-  writeHTML(placeholder)`${value}`;
+  if (node.extra.references) {
+    write`${callRuntime(placeholder, "hydrateMarker")}`;
+  }
+
+  write`${value}`;
   placeholder.remove();
 }

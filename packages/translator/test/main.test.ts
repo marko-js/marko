@@ -53,12 +53,21 @@ function runCompileTest(config: { output: string }) {
 
       try {
         output = (await compileFile(templateFile, compilerConfig)).code;
-      } catch (err) {
-        snapshot(stripCwd(stripAnsi(err.message)), {
-          name: `${name}-error`,
-          ext: ".txt"
-        });
-        return;
+      } catch (compileSnapshotErr) {
+        try {
+          snapshot(stripCwd(stripAnsi(compileSnapshotErr.message)), {
+            name: `${name}-error`,
+            ext: ".txt"
+          });
+
+          return;
+        } catch (errorSnapshotErr) {
+          if (errorSnapshotErr.message.startsWith("SnapshotError")) {
+            throw compileSnapshotErr;
+          }
+
+          throw errorSnapshotErr;
+        }
       }
 
       snapshot(output, {

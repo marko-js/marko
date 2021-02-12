@@ -19,6 +19,10 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 
   const write = writeHTML(tag);
 
+  if (extra.references || extra.eventHandlers || tag.has("var")) {
+    write`${callRuntime(tag, "hydrateMarker")}`;
+  }
+
   translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)));
   write`<${name.node}`;
 

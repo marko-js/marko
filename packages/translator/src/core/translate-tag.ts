@@ -29,7 +29,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
       t.variableDeclarator(
         tag.node.var!,
         t.arrowFunctionExpression(
-          tag.node.params || [],
+          tag.node.body.params,
           toFirstExpressionOrBlock(tag.node.body)
         )
       )

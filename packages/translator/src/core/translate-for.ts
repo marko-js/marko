@@ -13,7 +13,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
   const { node } = tag;
   const {
     attributes,
-    body: { body }
+    body: { body, params }
   } = node;
   const namePath = tag.get("name");
   const ofAttr = findName(attributes, "of");
@@ -27,7 +27,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
   if (inAttr) {
     allowedAttributes.push("in");
 
-    const [keyParam, valParam] = node.params || [];
+    const [keyParam, valParam] = params;
 
     if (!keyParam) {
       throw namePath.buildCodeFrameError(
@@ -61,7 +61,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
     let ofAttrValue = ofAttr.value!;
     allowedAttributes.push("of");
 
-    const [valParam, keyParam, loopParam] = node.params || [];
+    const [valParam, keyParam, loopParam] = params;
 
     if (!valParam) {
       throw namePath.buildCodeFrameError(
@@ -115,7 +115,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
       value: t.numericLiteral(1)
     };
     const stepValue = stepAttr ? stepAttr.value : t.numericLiteral(1);
-    const [indexParam] = node.params || [];
+    const [indexParam] = params;
     const stepsName = tag.scope.generateUidIdentifier("steps");
     const stepName = tag.scope.generateUidIdentifier("step");
 
