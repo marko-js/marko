@@ -41,13 +41,14 @@ export default function(path) {
   const codeEndOffset = rawValue.lastIndexOf("}");
   const code = rawValue.slice(codeSartOffset, codeEndOffset);
   const base = basename(hub.file.opts.sourceFileName);
+  const start = node.extra && node.extra.nameStart;
 
   deps.push({
     type,
     code,
     style: true,
-    startPos: node.name.start + codeSartOffset,
-    endPos: node.name.start + codeEndOffset,
+    startPos: start + codeSartOffset,
+    endPos: start + codeEndOffset,
     path: `./${base}`,
     virtualPath: `./${base}.${type}`
   });

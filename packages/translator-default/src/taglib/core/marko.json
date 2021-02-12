@@ -70,6 +70,7 @@
     ]
   },
   "<style>": {
+    "node-factory": "./parse-style.js",
     "code-generator": "./translate-style.js",
     "parse-options": {
       "rawOpenTag": true
