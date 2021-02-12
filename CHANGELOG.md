@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.14](https://github.com/marko-js/marko/compare/v5.1.13...v5.1.14) (2021-02-12)
+
+
+### Bug Fixes
+
+* **translator-default:** issue with style tag source positions ([415161b](https://github.com/marko-js/marko/commit/415161ba134d038da5ac3ab81718329a45e0f02f))
+
+
+
+
+
 ## [5.1.13](https://github.com/marko-js/marko/compare/v5.1.12...v5.1.13) (2021-02-12)
 
 **Note:** Version bump only for package marko-project
