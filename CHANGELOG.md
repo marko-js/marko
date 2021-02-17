@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.16](https://github.com/marko-js/marko/compare/v5.1.15...v5.1.16) (2021-02-17)
+
+
+### Bug Fixes
+
+* **marko:** simplify client-reorder runtime loading login to inline code ([#1661](https://github.com/marko-js/marko/issues/1661)) ([5d0a74a](https://github.com/marko-js/marko/commit/5d0a74a616d6f5d6bdf97a9c041b0c56d9a0d862))
+
+
+
+
+
 ## [5.1.15](https://github.com/marko-js/marko/compare/v5.1.14...v5.1.15) (2021-02-13)
 
 **Note:** Version bump only for package marko-project
