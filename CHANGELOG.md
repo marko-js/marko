@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.17](https://github.com/marko-js/marko/compare/v5.1.16...v5.1.17) (2021-02-18)
+
+
+### Bug Fixes
+
+* improve windows support for taglib finder ([58f6568](https://github.com/marko-js/marko/commit/58f6568da8fca1cdf09034c7dd18e7cfb1fdb902))
+
+
+
+
+
 ## [5.1.16](https://github.com/marko-js/marko/compare/v5.1.15...v5.1.16) (2021-02-17)
 
 
