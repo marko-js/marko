@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.14](https://github.com/marko-js/marko/compare/v4.23.13...v4.23.14) (2021-02-18)
+
+
+### Bug Fixes
+
+* improve windows support for taglib finder ([5b8ee7c](https://github.com/marko-js/marko/commit/5b8ee7c7d27c055d3fe9c2c7f5666bb547ea987f))
+
 ### [4.23.13](https://github.com/marko-js/marko/compare/v4.23.12...v4.23.13) (2021-02-11)
 
 
