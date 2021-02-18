@@ -110,7 +110,7 @@ function find(dirname, registeredTaglibs) {
           scanTagsDir(
             componentsPath,
             nodePath.dirname(componentsPath),
-            "./components",
+            "components",
             taglib,
             new DependencyChain([componentsPath])
           );
