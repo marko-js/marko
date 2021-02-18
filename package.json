@@ -17,6 +17,7 @@
     "cross-env": "^7.0.2",
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^6.15.0",
+    "esm": "^3.2.25",
     "fixpack": "^3.0.6",
     "husky": "^4.3.0",
     "jsdom": "^16.4.0",
@@ -56,7 +57,7 @@
     "size": "cross-env SIZE=1 rollup -c ./rollup.config.js && node ./utilities/sizes.js",
     "size:check": "cross-env CHECK=1 npm run size",
     "size:write": "cross-env WRITE=1 npm run size && git add .sizes.json",
-    "test": "cross-env NODE_ENV=test MARKO_SOURCE_RUNTIME=1 mocha -r ts-node/register -r source-map-support/register packages/*/test/{*.test.ts,*/*.test.ts}",
+    "test": "cross-env NODE_ENV=test MARKO_SOURCE_RUNTIME=1 TS_NODE_IGNORE='/node_modules/(?!@marko/)/' mocha -r esm -r ts-node/register -r source-map-support/register packages/*/test/{*.test.ts,*/*.test.ts}",
     "test:coverage": "nyc --reporter=text-summary npm run test",
     "test:watch": "npm run test -- --watch --watch-files '**/*.ts'"
   }

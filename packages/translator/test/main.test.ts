@@ -6,6 +6,8 @@ import stripAnsi from "strip-ansi";
 import { compileFile } from "@marko/compiler";
 import { install } from "marko/node-require";
 import * as translator from "../src";
+import snapshot from "./utils/snapshot";
+import renderAndTrackMutations from "./utils/render-and-track-mutations";
 
 const baseConfig = {
   translator,
@@ -29,10 +31,10 @@ install({
 
 describe("translator", () => {
   autotest("fixtures", {
-    "html-compiled": runCompileTest({ output: "html" }),
-    "html-rendered": runHTMLRenderTest,
-    "dom-compiled": () => {},
-    "dom-rendered": () => {}
+    "html-compiled": runTestWithConfig(runCompileTest({ output: "html" })),
+    "html-rendered": runTestWithConfig(runHTMLRenderTest),
+    "dom-compiled": runTestWithConfig(runCompileTest({ output: "dom" })),
+    "dom-rendered": runTestWithConfig(runDOMRenderTest)
   });
 });
 
@@ -53,6 +55,7 @@ function runCompileTest(config: { output: string }) {
 
       try {
         output = (await compileFile(templateFile, compilerConfig)).code;
+        // .replace(/"\.\//g, '"../')
       } catch (compileSnapshotErr) {
         try {
           snapshot(stripCwd(stripAnsi(compileSnapshotErr.message)), {
@@ -78,9 +81,9 @@ function runCompileTest(config: { output: string }) {
   };
 }
 
-function runHTMLRenderTest({ mode, test, resolve, snapshot }) {
+function runHTMLRenderTest({ mode, test, resolve, snapshot }, { inputHTML }) {
+  // const templateFile = resolve("./snapshots/html-compiled-expected.js");
   const templateFile = resolve("template.marko");
-  const inputFile = resolve("input.ts");
   const snapshotsDir = resolve("snapshots");
   const name = `snapshots${path.sep + mode}`;
 
@@ -88,18 +91,11 @@ function runHTMLRenderTest({ mode, test, resolve, snapshot }) {
     await ensureDir(snapshotsDir);
 
     const { render } = await import(templateFile);
-    let input: Record<string, unknown>;
     let html = "";
 
     try {
-      input = await import(inputFile);
-    } catch {
-      input = {};
-    }
-
-    try {
       await render(
-        input,
+        inputHTML || {},
         new Writable({
           write(chunk: string) {
             html += chunk;
@@ -119,6 +115,39 @@ function runHTMLRenderTest({ mode, test, resolve, snapshot }) {
       ext: ".html"
     });
   });
+}
+
+function runDOMRenderTest({ mode, test, resolve }, { inputDOM }) {
+  const templateFile = resolve("snapshots/dom-compiled-expected.js");
+  const snapshotsDir = resolve("snapshots");
+
+  test(async () => {
+    await ensureDir(snapshotsDir);
+
+    snapshot(
+      snapshotsDir,
+      `${mode}.md`,
+      await renderAndTrackMutations(templateFile, inputDOM)
+    );
+  });
+}
+
+function runTestWithConfig(fn) {
+  return opts => {
+    let config;
+    try {
+      config = require(opts.resolve("config.ts"));
+    } catch {
+      config = {};
+    }
+
+    if (config.skip && config.skip.includes(opts.mode)) {
+      opts.skip("Not Implemented");
+      return;
+    }
+
+    return fn(opts, config);
+  };
 }
 
 async function ensureDir(dir: string) {

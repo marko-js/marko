@@ -8,7 +8,8 @@ export function importRuntime<T extends t.Node>(
   path: NodePath<T>,
   name: string
 ) {
-  return importNamed(path.hub.file, getRuntimePath(path), name);
+  const { output } = getMarkoOpts(path);
+  return importNamed(path.hub.file, getRuntimePath(path, output), name);
 }
 
 export function callRuntime<
@@ -25,19 +26,28 @@ export function callRuntime<
 }
 
 export function getHTMLRuntime<T extends t.Node>(path: NodePath<T>) {
-  return getRuntime(path) as typeof import("@marko/runtime-fluurt/src/html");
+  return getRuntime(
+    path,
+    "html"
+  ) as typeof import("@marko/runtime-fluurt/src/html");
 }
 
 export function getDOMRuntime<T extends t.Node>(path: NodePath<T>) {
-  return getRuntime(path) as typeof import("@marko/runtime-fluurt/src/dom");
+  return getRuntime(
+    path,
+    "dom"
+  ) as typeof import("@marko/runtime-fluurt/src/dom");
 }
 
-function getRuntime<T extends t.Node>(path: NodePath<T>): unknown {
-  return require(getRuntimePath(path));
+function getRuntime<T extends t.Node>(
+  path: NodePath<T>,
+  output: string
+): unknown {
+  return require(getRuntimePath(path, output));
 }
 
-function getRuntimePath<T extends t.Node>(path: NodePath<T>) {
-  const { output, optimize } = getMarkoOpts(path);
+function getRuntimePath<T extends t.Node>(path: NodePath<T>, output: string) {
+  const { optimize } = getMarkoOpts(path);
   return `@marko/runtime-fluurt/${
     USE_SOURCE_RUNTIME ? "src" : optimize ? "dist" : "debug"
   }/${output}`;

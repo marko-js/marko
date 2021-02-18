@@ -1,0 +1,1 @@
+child is not a function

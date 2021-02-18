@@ -6,12 +6,13 @@ import {
   assertNoVar
 } from "@marko/babel-utils";
 import { writeHTML } from "../util/html-write";
+import { writeTemplate } from "../util/dom-writer";
 import { isOutputHTML } from "../util/marko-config";
 
 export function enter(tag: NodePath<t.MarkoTag>) {
   if (isOutputHTML(tag)) {
     writeHTML(tag)`<!--`;
-  }
+  } else writeTemplate(tag, `<!--`);
 }
 
 export function exit(tag: NodePath<t.MarkoTag>) {
@@ -22,7 +23,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
 
   if (isOutputHTML(tag)) {
     writeHTML(tag)`-->`;
-  }
+  } else writeTemplate(tag, `-->`);
 
   tag.remove();
 }
