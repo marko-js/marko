@@ -1,6 +1,8 @@
 # Server-side rendering
 
-Marko allows any Marko template/UI component to be rendered on the server or in the browser. A page can be rendered to a `Writable` stream such as an HTTP response stream as shown below:
+Marko can render components on the server and/or in the browser. Components are referred to as **templates** when rendered on the server, and **UI components** when rendered in the browser.
+
+A template can be rendered to a `Writable` stream, such as Node’s HTTP response streams:
 
 ```js
 var template = require("./template"); // Import ./template.marko
@@ -11,18 +13,17 @@ module.exports = function(req, res) {
 };
 ```
 
-Marko can also provide you with a `Readable` stream.
+Marko can also provide a `Readable` stream, for other code to use later:
 
 ```js
 var template = require("./template"); // Import ./template.marko
 
-module.exports = function(req) {
-  // Return a Readable stream for someone to do something with:
+module.exports = function() {
   return template.stream({ name: "Frank" });
 };
 ```
 
-> **ProTip:** Marko also provides server-side framework integrations:
+> **ProTip:** Marko also provides integrations for server-side frameworks:
 >
 > - [express](./express.md)
 > - [koa](./koa.md)
@@ -30,17 +31,15 @@ module.exports = function(req) {
 
 ## UI Bootstrapping
 
-When a page is rendered on the server, additional code is added to the output HTML to allow the UI to instantly boot in the browser. This additional code allows UI components rendered on the server to be mounted in the browser automatically. For each _top-level_ UI component, Marko will serialize the component's data (including `input` and `state` and any properties added to the UI component instance) so that each top-level UI component can be re-rendered and mounted when the page loads in the browser. Only a "partial" re-render is done for each top-level UI component. That is, when doing the partial re-render in the browser, the DOM is not updated and no virtual DOM is actually produced.
+When a template renders on the server, code is added to its output HTML so its UI components automatically boot in the browser.
 
-Marko encodes required information into attributes of rendered HTML elements and it also generates `<script>` tags that will cause UI components to be mounted. The code inside the `<script>` simply registers UI components and when the Marko runtime finally loads, all of the registered UI components will then be mounted. This allows the Marko runtime to be loaded at anytime without causing JavaScript errors.
+For each _top-level_ UI component, Marko serializes that component’s data (its `input`, `state`, and any properties added to its component instance) so it can mount when the page loads in the browser. Only a “partial” re-render happens for each top-level UI component — the DOM is not updated and no virtual DOM is produced.
 
-## Bootstrapping Components
-
-When a server-rendered page loads in the browser it's possible for marko to automatically detect UI components rendered on the server and create and mount them with the correct `state` and `input` in the browser.
+Marko encodes its bootstrapping data into HTML attributes and generates `<script>` tags that will register UI components, for when the full Marko runtime loads and mounts all registered components. This lets the Marko runtime load anytime without errors.
 
 ### Bootstrapping: Lasso
 
-If you are using [Lasso.js](https://github.com/lasso-js/lasso) then the bootstrapping will happen automatically as long as the JavaScript bundles for your page are included via the `<lasso-body>` tag. A typical HTML page structure will be the following:
+If you are using [Lasso.js](https://github.com/lasso-js/lasso), then bootstrapping will be automatic as long as the JavaScript bundles for your page are included via `<lasso-body>`, like so:
 
 _routes/index/template.marko_
 
@@ -50,33 +49,29 @@ _routes/index/template.marko_
     <head>
         <meta charset="UTF-8">
         <title>Marko + Lasso</title>
-
-        <!-- CSS includes -->
-        <lasso-head/>
+        <lasso-head/> <!-- CSS includes -->
     </head>
     <body>
-        <!-- Top-level UI component: -->
-        <app/>
+        <app/> <!-- Top-level UI component: -->
 
-        <!-- JS includes -->
-        <lasso-body/>
+        <lasso-body/> <!-- JS includes -->
     </body>
 </html>
 ```
 
-> **ProTip:** We have provided some sample apps to help you get started with Marko + Lasso
+> **ProTip:** These samples will help you get started with Marko + Lasso:
 >
 > - [marko-lasso](https://github.com/marko-js/examples/tree/master/examples/lasso-express)
 > - [ui-components-playground](https://github.com/marko-js/examples/tree/master/examples/ui-components-playground)
 
 ### Bootstrapping: Non-Lasso
 
-If a JavaScript module bundler other than Lasso is being used then you will need to add some client-side code to bootstrap your application in the browser by doing the following:
+For JavaScript module bundlers other than Lasso, you will need to add some client-side code that bootstraps Marko UI components:
 
-1.  Load/import/require all of the UI components that were rendered on the server (loading the top-level UI component is typically sufficient)
-2.  Call `require('marko/components').init()`
+1. Load/import/require all UI components that were rendered on the server (loading the top-level UI component is usually sufficient, since the Marko compiler will autodiscover its descendant components).
+2. Call `require('marko/components').init()`.
 
-For example, if `client.js` is the entry point for your client-side application:
+For example, if `client.js` is your client-side application’s entry point:
 
 _routes/index/client.js_
 
@@ -84,28 +79,45 @@ _routes/index/client.js_
 // Load the top-level UI component:
 require("./components/app/index");
 
-// Now that all of the JavaScript modules for the UI component have been
-// loaded and registered we can tell marko to bootstrap/initialize the app
+// Now that the JavaScript modules for the UI components are
+// loaded and registered, we can tell Marko to bootstrap/initialize the app
 
-// Initialize and mount all of the server-rendered UI components:
+// Initialize and mount all server-rendered UI components:
 require("marko/components").init();
 ```
 
-> **ProTip:** We have provided some sample apps to help you get started:
+> **ProTip:** Some sample apps to help you get started:
 >
 > - [marko-webpack](https://github.com/marko-js/examples/tree/master/examples/webpack-express)
 
 # Serialization
 
-For each _top-level_ UI component, Marko will serialize the component's data (including `input` and `state` and any properties added to the UI component instance) down to the browser. You can control which data gets serialized by implementing [`toJSON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) or by reassigning `this.input` in the UI component's `onInput(input, out)` lifecycle method as shown below:
+Marko will serialize each _top-level_ UI component’s data (its `input`, `state`, and any properties added to the UI component instance) to the browser. You can control what data is serialized by implementing [`toJSON()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) on the component’s `class`:
 
-```javascript
+```js
+class {
+    toJSON() {
+        // Do not serialize any `input`:
+        return null;
+
+        // Serialize a new object instead of the provided `input`:
+        return {
+            foo: 'bar'
+        };
+    }
+}
+```
+
+
+…or by reassigning `this.input` in the [UI component’s `onInput(input, out)` lifecycle method](https://markojs.com/docs/class-components/#lifecycle-event-methods):
+
+```js
 class {
     onInput() {
-        // Do not serialize any input:
+        // Do not serialize any `input`:
         this.input = null;
 
-        // Serialize a new object instead of the provided input:
+        // Serialize a new object instead of the provided `input`:
         this.input = {
             foo: 'bar'
         };
@@ -113,21 +125,19 @@ class {
 }
 ```
 
-> NOTE: Marko does allow cycles in serialized objects and Duplicate objects will only be serialized once
+> NOTE: Marko allows cycles in serialized objects. Duplicated objects will only be serialized once.
 
-# Caveats
+## Serialization caveats
 
-There are some caveats associated with rendering a page on the server:
+- Component data for top-level UI components must be serializable.
+  - Only simple objects, numbers, strings, booleans, arrays, and `Date` objects are serializable.
+  - Functions, Symbols, and objects with metaprogramming (like getters/setters) are not serializable.
+- Avoid having Marko serialize too much data.
+- The data in `out.global` is not serialized by default, but this can be changed…
 
-- The UI component data for top-level UI components must be serializable:
-  - Only simple objects, numbers, strings, booleans, arrays and `Date` objects are serializable
-  - Functions are not serializable
-- Care should be taken to avoid having Marko serialize too much data
-- None of the data in `out.global` is serialized by default, but this can be changed as shown below
+### Serializing globals
 
-## Serializing globals
-
-If there are specific properties on the `out.global` object that need to be serialized then they must be whitelisted when the top-level page is rendered on the server. For example, to have the `out.global.apiKey` and the `out.global.locale` properties serialized you would do the following:
+If there are properties on the `out.global` object that must be serialized, you need to explicitly allow them when rendering the top-level template on the server. For example, to serialize `out.global.apiKey` and `out.global.locale` properties, you would do the following:
 
 ```js
 template.render(
