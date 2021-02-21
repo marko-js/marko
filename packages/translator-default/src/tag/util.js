@@ -1,7 +1,7 @@
 import { types as t } from "@marko/babel-types";
 import { getTagDef } from "@marko/babel-utils";
 
-export function getAttrs(path, noCamel, skipRenderBody) {
+export function getAttrs(path, preserveNames, skipRenderBody) {
   const { node } = path;
   const {
     attributes,
@@ -22,10 +22,13 @@ export function getAttrs(path, noCamel, skipRenderBody) {
       const attrDef = tagDef && tagDef.getAttribute(name);
       let targetProperties = properties;
       let targetProperty = name;
+      let preserveName = preserveNames;
 
       if (attrDef) {
         if (attrDef.targetProperty) {
           const key = attrDef.targetProperty;
+          preserveName =
+            attrDef.preserveName !== false && attrDef.removeDashes !== true;
 
           if (attrDef.dynamicAttribute) {
             let targetObject = targetObjects[key];
@@ -43,10 +46,15 @@ export function getAttrs(path, noCamel, skipRenderBody) {
           } else {
             targetProperty = key;
           }
+        } else if (
+          !preserveName &&
+          (attrDef.preserveName === true || attrDef.removeDashes === false)
+        ) {
+          preserveName = true;
         }
       }
 
-      if (!noCamel) {
+      if (!preserveName) {
         targetProperty = camelCase(targetProperty);
       }
 

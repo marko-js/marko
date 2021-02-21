@@ -86,7 +86,10 @@ We can also describe a _pattern_ of attributes to match a definition:
 ```js
 {
     "attributes": {
-        "data-*": "string"
+        "data-*": {
+          "type": "string",
+          "pattern": true
+        }
     }
 }
 ```

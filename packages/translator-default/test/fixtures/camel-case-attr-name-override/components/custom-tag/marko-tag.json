@@ -1,0 +1,23 @@
+{
+  "@data-attr-a": "string",
+  "@data-attr-b": {
+    "preserve-name": true
+  },
+  "@data-attr-c": {
+    "preserve-name": false
+  },
+  "@data-attr-d": {
+    "remove-dashes": false
+  },
+  "@data-attr-e": {
+    "remove-dashes": true
+  },
+  "@preserve-*": {
+    "preserve-name": true,
+    "pattern": true
+  },
+  "@not-preserve-*": {
+    "preserve-name": false,
+    "pattern": true
+  }
+}
