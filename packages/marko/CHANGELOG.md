@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.18](https://github.com/marko-js/marko/compare/v5.1.17...v5.1.18) (2021-02-21)
+
+
+### Bug Fixes
+
+* **marko:** add back missing preserve-name & remove-dashes config ([4283178](https://github.com/marko-js/marko/commit/428317863d0a1d563019715194064a3cdd7c26d0))
+
+
+
+
+
 ## [5.1.17](https://github.com/marko-js/marko/compare/v5.1.16...v5.1.17) (2021-02-18)
 
 
