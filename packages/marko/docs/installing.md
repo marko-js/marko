@@ -28,7 +28,7 @@ Using the CLI is still the easiest way to get started even when you want to get 
 
 [Webpack Example](https://github.com/marko-js/examples/tree/master/examples/webpack-express)
 
-CLI Command: `npx @marko/create --template webpack`
+CLI Command: `npx @marko/create --template webpack-express`
 
 ### Lasso
 
