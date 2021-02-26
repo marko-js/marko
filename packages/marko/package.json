@@ -8,6 +8,7 @@
         "@marko/translator-default": "^5.1.18",
         "app-module-path": "^2.2.0",
         "argly": "^1.0.0",
+        "browser-refresh-client": "1.1.4",
         "complain": "^1.6.0",
         "events-light": "^1.0.0",
         "lasso-caching-fs": "^1.0.1",

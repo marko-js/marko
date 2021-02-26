@@ -85,12 +85,12 @@ function scheduleDefaultClear(config) {
 
     if (clearingDefaultCache || clearingDefaultFs) {
       scheduledClear = true;
-      setImmediate(clearDefaults);
+      setImmediate(_clearDefaults);
     }
   }
 }
 
-function clearDefaults() {
+export function _clearDefaults() {
   if (clearingDefaultCache) {
     clearingDefaultCache = false;
     globalConfig.cache.clear();

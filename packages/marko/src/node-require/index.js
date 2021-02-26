@@ -1,5 +1,4 @@
 "use strict";
-require("../");
 
 const path = require("path");
 const resolveFrom = require("resolve-from");
@@ -9,6 +8,8 @@ const requiredCompilerOptions = { modules: "cjs" };
 // eslint-disable-next-line no-constant-condition
 const defaultCompilerOptions = { sourceMaps: "MARKO_DEBUG" ? "inline" : false };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
+
+require("./browser-refresh");
 
 function normalizeExtension(extension) {
   if (extension.charAt(0) !== ".") {
