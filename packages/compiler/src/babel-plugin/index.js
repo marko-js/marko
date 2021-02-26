@@ -257,10 +257,12 @@ function mergeVisitors(all) {
 function traverseAll(file, visitors) {
   const program = file.path;
   const { Program, ...mergedVisitors } = mergeVisitors(visitors);
+  program.state = {};
+
   // Traverse only walks into children by default
   // This manually traverses into the Program node as well.
   if (!(Program && Program.enter && program._call(Program.enter))) {
-    program.traverse(mergedVisitors);
+    program.traverse(mergedVisitors, program.state);
 
     if (Program && Program.exit) {
       program._call(Program.exit);
