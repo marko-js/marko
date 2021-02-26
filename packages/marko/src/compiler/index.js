@@ -169,6 +169,7 @@ Object.defineProperties(exports, {
 });
 
 exports.clearCaches = function clearCaches() {
+  compiler._clearDefaults();
   taglib.clearCache();
 };
 
