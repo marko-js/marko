@@ -1,5 +1,5 @@
 import nodePath from "path";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   isDynamicTag,

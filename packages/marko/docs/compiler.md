@@ -75,7 +75,7 @@ These stages are intended for different aspects of processing the template and c
 
 All compiler hooks must export a visitor which will receive a [babel NodePath](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#paths) with a `MarkoTag` node.
 
-The hook will also receive a `types` object that matches the [@babel/types](https://babeljs.io/docs/en/babel-types) API extended with the [Marko AST types](#marko-ast). You can also get a reference to this by importing the `@marko/babel-types` module.
+The hook will also receive a `types` object that matches the [@babel/types](https://babeljs.io/docs/en/babel-types) API extended with the [Marko AST types](#marko-ast). You can also get a reference to this by importing `{ types }` from the `@marko/compiler` module.
 
 Here is an example hook:
 
@@ -152,9 +152,9 @@ To hook into the `translate` stage you can use the `translate` option in the `ma
 
 ## Utilities
 
-The [`@marko/babel-utils`](https://github.com/marko-js/marko/tree/master/packages/babel-types/index.d.ts) package exposes a handful of utilities for performing various tasks on the [Marko AST](#marko-ast).
+The [`@marko/babel-utils`](https://github.com/marko-js/marko/tree/master/packages/babel-utils/index.d.ts) package exposes a handful of utilities for performing various tasks on the [Marko AST](#marko-ast).
 
 ## Marko AST
 
-You can check out the AST extensions that Marko makes [in the source code](https://github.com/marko-js/marko/tree/master/packages/babel-types/src/types/definitions.js).
-For AST creation and assertion utilities you can also import Marko's superset of `@babel/types` through the `@marko/babel-types module`.
+You can check out the AST extensions that Marko makes [in the source code](https://github.com/marko-js/marko/tree/master/packages/compiler/src/babel-types/types/definitions.js).
+For AST creation and assertion utilities you can also import Marko's superset of `@babel/types` through the compiler via `import { types } from "@marko/compiler"`.

@@ -1,5 +1,5 @@
-import { types as t } from "@marko/babel-types";
 import { getTagDef, getTagDefForTagName } from "@marko/babel-utils";
+import * as t from "../../babel-types";
 import markoModules from "../../../modules";
 import { enter, exit } from "../util/plugin-hooks";
 

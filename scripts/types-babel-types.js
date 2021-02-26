@@ -1,2 +1,2 @@
-require("../packages/babel-types/dist/types/patch.js");
+require("../packages/compiler/dist/babel-types/types/patch.js");
 require("@babel/types/scripts/generators/typescript");

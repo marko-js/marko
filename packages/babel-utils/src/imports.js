@@ -1,5 +1,5 @@
 import path from "path";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 const IS_POSIX = path.sep === "/";
 const IMPORTS_KEY = Symbol();

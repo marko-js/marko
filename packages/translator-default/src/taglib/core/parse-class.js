@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { parseExpression } from "@marko/babel-utils";
 import getComponentFiles from "../../util/get-component-files";
 

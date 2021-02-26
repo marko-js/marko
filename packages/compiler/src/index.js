@@ -1,8 +1,8 @@
+export * as types from "./babel-types";
 import * as babel from "@babel/core";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
-
 export { taglib };
 
 let globalConfig = { ...defaultConfig };

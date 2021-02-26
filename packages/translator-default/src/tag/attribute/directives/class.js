@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { isNativeTag, importDefault } from "@marko/babel-utils";
 import classToString from "marko/src/runtime/helpers/class-value";
 import withPreviousLocation from "../../../util/with-previous-location";

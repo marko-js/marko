@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
 import { getAttrs, evaluateAttr } from "../util";

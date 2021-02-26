@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
-require("../packages/babel-types/dist/types/patch");
+require("../packages/compiler/dist/babel-types/types/patch");
 const {
   MARKO_TYPES
-} = require("../packages/babel-types/dist/types/definitions");
+} = require("../packages/compiler/dist/babel-types/types/definitions");
 
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =

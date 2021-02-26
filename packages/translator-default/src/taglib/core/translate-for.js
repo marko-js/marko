@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { assertAllowedAttributes } from "@marko/babel-utils";
 
 export function exit(path) {

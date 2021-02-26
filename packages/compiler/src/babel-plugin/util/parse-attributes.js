@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import * as t from "../../babel-types";
 import { withLoc, parseExpression } from "@marko/babel-utils";
 import parseArguments from "./parse-arguments";
 
