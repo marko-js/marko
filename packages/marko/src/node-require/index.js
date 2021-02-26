@@ -9,8 +9,6 @@ const requiredCompilerOptions = { modules: "cjs" };
 const defaultCompilerOptions = { sourceMaps: "MARKO_DEBUG" ? "inline" : false };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
-require("./browser-refresh");
-
 function normalizeExtension(extension) {
   if (extension.charAt(0) !== ".") {
     extension = "." + extension;
@@ -91,3 +89,5 @@ exports.install = install;
 exports.getExtensions = function() {
   return require.extensions[MARKO_EXTENSIONS];
 };
+
+require("./browser-refresh");
