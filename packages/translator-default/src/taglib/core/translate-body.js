@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 export function enter(path) {
   if (path.hub.file.markoOpts.output === "html") {

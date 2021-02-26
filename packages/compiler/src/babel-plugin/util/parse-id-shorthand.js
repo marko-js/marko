@@ -1,5 +1,5 @@
-import { types as t } from "@marko/babel-types";
 import { withLoc, parseExpression } from "@marko/babel-utils";
+import * as t from "../../babel-types";
 
 export default (file, shorthand, attributes) => {
   if (!shorthand) {

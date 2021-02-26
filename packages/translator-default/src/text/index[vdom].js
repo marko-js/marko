@@ -1,5 +1,5 @@
 import { decode } from "he";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 

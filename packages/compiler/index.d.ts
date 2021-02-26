@@ -1,5 +1,7 @@
 import { TaglibLookup } from "@marko/babel-utils";
 
+export * as types from "./babel-types";
+
 export type Config = {
   output?: "html" | "dom";
   writeVersionComment?: boolean;

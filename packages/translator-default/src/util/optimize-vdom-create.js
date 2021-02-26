@@ -1,5 +1,5 @@
 import { decode } from "he";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   importDefault,
   isNativeTag,

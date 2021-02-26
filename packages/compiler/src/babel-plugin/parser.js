@@ -6,7 +6,7 @@ import parseVar from "./util/parse-var";
 import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
 import markoModules from "../../modules";
-import { types as t } from "@marko/babel-types";
+import * as t from "../babel-types";
 import {
   withLoc,
   getLoc,

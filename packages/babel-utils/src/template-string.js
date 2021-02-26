@@ -1,5 +1,5 @@
 import jsesc from "jsesc";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 export function normalizeTemplateString(quasis, ...expressions) {
   quasis = quasis.map(q => (t.isTemplateElement(q) ? q.value.cooked : q));

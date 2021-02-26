@@ -1,6 +1,6 @@
 import { relative } from "path";
 import { createHash } from "crypto";
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { getRootDir } from "lasso-package-root";
 import { getTagDefForTagName } from "./taglib";
 import { resolveRelativePath } from "./imports";

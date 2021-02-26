@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { getTagDef, importNamed, importDefault } from "@marko/babel-utils";
 import toString from "marko/src/runtime/helpers/to-string";
 import { x as escapeXML } from "marko/src/runtime/html/helpers/escape-xml";

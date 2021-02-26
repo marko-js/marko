@@ -6,7 +6,6 @@
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "@marko/babel-types": "^5.1.1",
     "@marko/babel-utils": "^5.1.10",
     "escape-string-regexp": "^4.0.0",
     "self-closing-tags": "^1.0.1"

@@ -1,6 +1,6 @@
 import path from "path";
 import { createHash } from "crypto";
-import { types as t } from "@marko/babel-types";
+import * as t from "../babel-types";
 import { getLoc, getTemplateId } from "@marko/babel-utils";
 import { visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";

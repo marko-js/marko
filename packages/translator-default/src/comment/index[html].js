@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import write from "../util/html-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 const ieConditionalCommentRegExp = /^\[if |<!\[endif\]$/;

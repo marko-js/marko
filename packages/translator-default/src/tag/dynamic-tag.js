@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
