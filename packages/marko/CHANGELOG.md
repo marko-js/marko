@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.20](https://github.com/marko-js/marko/compare/v5.1.19...v5.1.20) (2021-02-26)
+
+
+### Bug Fixes
+
+* **marko:** circular dep issue with browser-refresh ([a704210](https://github.com/marko-js/marko/commit/a704210c272500b9aa36f90ca5c2f63cff85a7a7))
+
+
+
+
+
 ## [5.1.19](https://github.com/marko-js/marko/compare/v5.1.18...v5.1.19) (2021-02-26)
 
 

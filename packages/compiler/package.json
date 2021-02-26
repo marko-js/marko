@@ -1,7 +1,7 @@
 {
   "name": "@marko/compiler",
   "description": "Marko template to JS compiler.",
-  "version": "5.1.19",
+  "version": "5.1.20",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -25,8 +25,8 @@
     "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
-    "@marko/translator-default": "^5.1.19",
-    "marko": "^5.1.19"
+    "@marko/translator-default": "^5.1.20",
+    "marko": "^5.1.20"
   },
   "files": [
     "dist",
