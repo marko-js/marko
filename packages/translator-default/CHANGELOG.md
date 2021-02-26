@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.19](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.1.18...v5.1.19) (2021-02-26)
+
+
+### Bug Fixes
+
+* move @marko/babel-types into compiler ([5369a63](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/5369a63e0ce66c422981893525ff6c9bcbd461dd))
+
+
+
+
+
 ## [5.1.18](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.1.17...v5.1.18) (2021-02-21)
 
 

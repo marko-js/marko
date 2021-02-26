@@ -1,14 +1,14 @@
 {
   "name": "@marko/babel-types",
   "description": "Extend babels built in AST with Marko nodes.",
-  "version": "5.1.1",
+  "version": "5.1.19",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "peerDependencies": {
     "@marko/compiler": "^5.1.18"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.1.18"
+    "@marko/compiler": "^5.1.19"
   },
   "files": [
     "dist"

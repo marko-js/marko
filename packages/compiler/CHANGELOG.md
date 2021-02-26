@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.19](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.1.18...v5.1.19) (2021-02-26)
+
+
+### Bug Fixes
+
+* **marko:** bring back hot-reload when node-require hook used ([8d856a0](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/8d856a0250a1f2522f06a91a11c2d73c6a05e7b2))
+* move @marko/babel-types into compiler ([5369a63](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/5369a63e0ce66c422981893525ff6c9bcbd461dd))
+* **compiler:** issue with path.state missing ([22ab5b2](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/22ab5b282ad5b8eedf2705956a45d21cc1d55717))
+
+
+
+
+
 ## [5.1.18](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.1.17...v5.1.18) (2021-02-21)
 
 **Note:** Version bump only for package @marko/compiler
