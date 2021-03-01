@@ -1,7 +1,7 @@
 "use strict";
 
 var ok = require("assert").ok;
-var taglibTypes = require("../taglib-loader/types");
+var taglibTypes = require("../loader/types");
 var extend = require("raptor-util/extend");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 

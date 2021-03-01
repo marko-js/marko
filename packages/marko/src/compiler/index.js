@@ -9,6 +9,13 @@ var fs = require("fs");
 var taglib = require("../taglib");
 var defaults = extend({}, globalConfig);
 
+// eslint-disable-next-line no-constant-condition
+if ("MARKO_DEBUG") {
+  complain(
+    "Using `marko/compiler` has been deprecated, please upgrade to the `@marko/compiler` module."
+  );
+}
+
 var defaultOptionsExportDefinition = {
   get: function() {
     return globalConfig;
@@ -132,42 +139,10 @@ exports.compileFileForBrowser = compileFileForBrowser;
 
 exports.configure = configure;
 
-// TODO: resolve these circular dep issues.
-Object.defineProperties(exports, {
-  taglibLookup: {
-    get() {
-      return taglib.lookup;
-    }
-  },
-  taglibLoader: {
-    get() {
-      return taglib.loader;
-    }
-  },
-  taglibFinder: {
-    get() {
-      return taglib.finder;
-    }
-  },
-  buildTaglibLookup: {
-    get() {
-      return (dir, translator) => {
-        if (!translator || !Array.isArray(translator.taglibs)) {
-          translator = require("@marko/translator-default");
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            complain(
-              "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`."
-            );
-          }
-        }
-
-        return compiler.taglib.buildLookup(dir, translator);
-      };
-    }
-  }
-});
-
+exports.taglibLookup = taglib.lookup;
+exports.taglibLoader = taglib.loader;
+exports.taglibFinder = taglib.finder;
+exports.buildTaglibLookup = taglib.lookup.buildLookup;
 exports.clearCaches = function clearCaches() {
   compiler._clearDefaults();
   taglib.clearCache();

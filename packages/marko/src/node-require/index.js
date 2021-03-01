@@ -6,7 +6,10 @@ const fs = require("fs");
 const fsReadOptions = { encoding: "utf8" };
 const requiredCompilerOptions = { modules: "cjs" };
 // eslint-disable-next-line no-constant-condition
-const defaultCompilerOptions = { sourceMaps: "MARKO_DEBUG" ? "inline" : false };
+const defaultCompilerOptions = {
+  sourceMaps: "MARKO_DEBUG" ? "inline" : false,
+  meta: true
+};
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
 function normalizeExtension(extension) {
@@ -18,17 +21,16 @@ function normalizeExtension(extension) {
 
 function compile(templatePath, markoCompiler, userCompilerOptions) {
   var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-  return markoCompiler.compile(
+  return markoCompiler.compileSync(
     templateSrc,
     templatePath,
     Object.assign(
       {},
-      markoCompiler.defaultOptions,
       defaultCompilerOptions,
       userCompilerOptions,
       requiredCompilerOptions
     )
-  );
+  ).code;
 }
 
 function install(options) {
@@ -39,7 +41,6 @@ function install(options) {
     : require.extensions;
 
   var compilerOptions = options.compilerOptions;
-  require("../compiler").configure(compilerOptions);
 
   var extensions = [];
 
@@ -59,7 +60,7 @@ function install(options) {
     // Resolve the appropriate compiler relative to the location of the
     // marko template file on disk using the "resolve-from" module.
     var dirname = path.dirname(filename);
-    var markoCompilerModulePath = resolveFrom(dirname, "marko/compiler");
+    var markoCompilerModulePath = resolveFrom(dirname, "@marko/compiler");
     var markoCompiler = require(markoCompilerModulePath);
 
     // Now use the appropriate Marko compiler to compile the Marko template
