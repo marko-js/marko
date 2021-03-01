@@ -115,7 +115,7 @@ export function findAttributeTags(
 
 export function getArgOrSequence(path: t.NodePath<t.MarkoTag>): t.Expression;
 
-export function loadFileForTag(path: t.NodePath<t.MarkoTag>): File | undefined;
+export function loadFileForTag(path: t.NodePath<t.MarkoTag>): t.BabelFile | undefined;
 
 export function normalizeTemplateString(
   quasis: Array<string | t.TemplateElement>,
