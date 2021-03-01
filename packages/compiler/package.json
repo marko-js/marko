@@ -19,11 +19,15 @@
     "he": "^1.1.0",
     "htmljs-parser": "^2.9.0",
     "jsesc": "^2.5.2",
+    "lasso-caching-fs": "^1.0.1",
     "lasso-package-root": "^1.0.1",
+    "property-handlers": "^1.0.0",
     "raptor-regexp": "^1.0.0",
+    "raptor-util": "^3.2.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
-    "strip-ansi": "^5.2.0"
+    "strip-ansi": "^5.2.0",
+    "strip-json-comments": "^2.0.1"
   },
   "devDependencies": {
     "@marko/translator-default": "^5.2.1"
