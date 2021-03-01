@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.2.0...v5.2.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* **compiler:** add missing dependency after moving taglib code ([ae843f1](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/ae843f1b802fcbc1c7347247247a3c8551f6cfd2))
+
+
+
+
+
 # [5.2.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.1.21...v5.2.0) (2021-03-01)
 
 

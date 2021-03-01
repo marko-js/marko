@@ -1,7 +1,7 @@
 {
   "name": "@marko/compiler",
   "description": "Marko template to JS compiler.",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.7.7",
     "@babel/traverse": "^7.7.4",
     "@babel/types": "^7.7.4",
-    "@marko/babel-utils": "^5.2.0",
+    "@marko/babel-utils": "^5.2.1",
     "complain": "^1.6.0",
     "enhanced-resolve": "5.0.0",
     "he": "^1.1.0",
@@ -26,7 +26,7 @@
     "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
-    "@marko/translator-default": "^5.2.0"
+    "@marko/translator-default": "^5.2.1"
   },
   "files": [
     "dist",
