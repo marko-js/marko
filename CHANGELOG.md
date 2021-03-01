@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.1.21](https://github.com/marko-js/marko/compare/v5.1.20...v5.1.21) (2021-03-01)
+
+
+### Bug Fixes
+
+* **babel-utils:** update type definitions ([b3446b7](https://github.com/marko-js/marko/commit/b3446b740b62af2f956be4030b656d16bf050f1b))
+
+
+
+
+
 ## [5.1.20](https://github.com/marko-js/marko/compare/v5.1.19...v5.1.20) (2021-02-26)
 
 
