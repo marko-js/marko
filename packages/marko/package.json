@@ -16,7 +16,6 @@
         "listener-tracker": "^2.0.0",
         "minimatch": "^3.0.2",
         "property-handlers": "^1.0.0",
-        "raptor-regexp": "^1.0.0",
         "raptor-util": "^3.2.0",
         "resolve-from": "^5.0.0",
         "self-closing-tags": "^1.0.1",

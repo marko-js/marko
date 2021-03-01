@@ -20,6 +20,7 @@
     "htmljs-parser": "^2.9.0",
     "jsesc": "^2.5.2",
     "lasso-package-root": "^1.0.1",
+    "raptor-regexp": "^1.0.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "strip-ansi": "^5.2.0"
