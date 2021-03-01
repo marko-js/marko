@@ -1,4 +1,9 @@
-import { NodePath, Program, types as t } from "@marko/babel-types";
+import {
+  NodePath,
+  Program,
+  StringLiteral,
+  types as t
+} from "@marko/babel-types";
 import { callRuntime } from "./runtime";
 import { encodeWalks } from "./walks";
 
@@ -6,6 +11,19 @@ export function writeExports(path: NodePath<Program>) {
   const template = t.identifier("template");
   const walks = t.identifier("walks");
   const hydrate = t.identifier("hydrate");
+
+  let inputs: StringLiteral[] = [];
+  if (path.node.extra.references && path.node.extra.references.input) {
+    inputs = Object.keys(path.node.extra.references.input).reduce(
+      (list: StringLiteral[], key: string) => {
+        if (path.node.extra.references!.input![key]) {
+          list.push(t.stringLiteral(key.replace("input.", "")));
+        }
+        return list;
+      },
+      []
+    );
+  }
   // template
   path.node.body.push(
     t.exportNamedDeclaration(
@@ -46,7 +64,7 @@ export function writeExports(path: NodePath<Program>) {
         "createRenderFn",
         template,
         walks,
-        t.arrayExpression(),
+        t.arrayExpression(inputs),
         hydrate
       )
     )

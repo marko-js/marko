@@ -12,29 +12,26 @@ import {
 
 export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
   if (needsPlaceholderMarker(placeholder)) {
-    console.log("REPLACE");
     writeWalks(placeholder, Walks.REPLACE);
     writeTemplate(placeholder, "<!>");
+    if (checkNextMarker(placeholder)) writeWalks(placeholder, Walks.NEXT);
   } else if (isOnlyChild(placeholder)) {
-    console.log("GET");
     writeWalks(placeholder, Walks.GET);
     writeTemplate(placeholder, " ");
   } else if (!checkNextMarker(placeholder)) {
-    console.log("AFTER");
     writeWalks(placeholder, Walks.AFTER);
   } else {
-    console.log("BEFORE");
     writeWalks(placeholder, Walks.BEFORE);
   }
 
-  // writeHydrate(
-  //   placeholder,
-  //   t.expressionStatement(callRuntime(placeholder, "walk"))
-  // );
   writeHydrate(
     placeholder,
     t.expressionStatement(
-      callRuntime(placeholder, "text", placeholder.get("value").node)
+      callRuntime(
+        placeholder,
+        placeholder.node.escape ? "text" : "html",
+        placeholder.get("value").node
+      )
     )
   );
   placeholder.remove();

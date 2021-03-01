@@ -1,1 +1,2 @@
-export const skip = ["dom-compiled", "dom-rendered"];
+export const inputDOM = [{ name: "Marko" }];
+export const inputHTML = { name: "Marko" };

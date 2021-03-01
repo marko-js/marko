@@ -135,6 +135,5 @@ export function encodeWalks(walks: Walks[]): string {
     }
   }
   results += resolveSequence(current[0].sequence);
-  console.log(results, next(1) + after + out(1));
   return results;
 }

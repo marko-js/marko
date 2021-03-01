@@ -4,8 +4,7 @@ import {
   Walks,
   writeTemplate,
   writeWalks,
-  markTextSiblings,
-  checkLastStatic
+  markTextSiblings
 } from "./util/dom-writer";
 import { isOutputHTML } from "./util/marko-config";
 
@@ -14,9 +13,7 @@ export default function (text: NodePath<t.MarkoText>) {
     writeHTML(text)`${text.node.value}`;
   } else {
     writeTemplate(text, text.node.value);
-    if (checkLastStatic(text)) {
-      writeWalks(text, Walks.NEXT);
-    }
+    writeWalks(text, Walks.NEXT);
     markTextSiblings(text);
   }
 

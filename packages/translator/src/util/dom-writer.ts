@@ -22,15 +22,6 @@ export function writeWalks(path: NodePath<any>, code: Walks) {
   path.state.walks.push(code);
 }
 
-export function checkLastStatic(path: NodePath<any>) {
-  let i = +path.key;
-  let temp: NodePath<any>;
-  while ((temp = path.getSibling(++i)).node) {
-    if (t.isMarkoPlaceholder(temp)) return false;
-  }
-  return true;
-}
-
 export function checkNextMarker(path: NodePath<any>) {
   let i = +path.key;
   let temp: NodePath<any>;
@@ -49,7 +40,13 @@ export function markTextSiblings(path: NodePath<MarkoText>) {
 export function needsPlaceholderMarker(path: NodePath<MarkoPlaceholder>) {
   if (!path.state.precedingText) return false;
   const sibling = path.getSibling(+path.key + 1);
-  if (sibling && t.isMarkoText(sibling.node)) return true;
+  if (sibling) {
+    if (t.isMarkoPlaceholder(sibling.node)) {
+      path.state.precedingText = false;
+      return true;
+    }
+    if (t.isMarkoText(sibling.node)) return true;
+  }
   path.state.precedingText = false;
   return false;
 }
