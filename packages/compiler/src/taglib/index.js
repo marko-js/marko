@@ -1,34 +1,17 @@
-let loader, finder, registeredTaglibs, TaglibLookup;
-
-if (
-  (process.env.MARKO_DEBUG != null &&
-    (process.env.MARKO_DEBUG !== "false" || process.env.MARKO_DEBUG !== "0")) ||
-  process.env.NODE_ENV == null ||
-  process.env.NODE_ENV === "development" ||
-  process.env.NODE_ENV === "dev"
-) {
-  loader = require("marko/src/taglib/taglib-loader");
-  finder = require("marko/src/taglib/taglib-finder");
-  registeredTaglibs = require("marko/src/taglib/taglib-lookup")
-    .registeredTaglibs;
-  TaglibLookup = require("marko/src/taglib/taglib-lookup/TaglibLookup");
-} else {
-  loader = require("marko/dist/taglib/taglib-loader");
-  finder = require("marko/dist/taglib/taglib-finder");
-  registeredTaglibs = require("marko/dist/taglib/taglib-lookup")
-    .registeredTaglibs;
-  TaglibLookup = require("marko/dist/taglib/taglib-lookup/TaglibLookup");
-}
+import loader from "./loader";
+import finder from "./finder";
+import Lookup from "./lookup";
 
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
 
+const registeredTaglibs = [];
 const loadedTranslatorsTaglibs = new Map();
 let lookupCache = Object.create(null);
 
-register(require.resolve("./html/marko.json"), require("./html/marko.json"));
-register(require.resolve("./svg/marko.json"), require("./svg/marko.json"));
-register(require.resolve("./math/marko.json"), require("./math/marko.json"));
+register(require.resolve("./marko-html.json"), require("./marko-html.json"));
+register(require.resolve("./marko-svg.json"), require("./marko-svg.json"));
+register(require.resolve("./marko-math.json"), require("./marko-math.json"));
 
 export function buildLookup(dirname, translator) {
   if (!translator || !Array.isArray(translator.taglibs)) {
@@ -53,7 +36,7 @@ export function buildLookup(dirname, translator) {
   let lookup = lookupCache[cacheKey];
 
   if (!lookup) {
-    lookup = lookupCache[cacheKey] = new TaglibLookup();
+    lookup = lookupCache[cacheKey] = new Lookup();
     for (const taglib of taglibsForDir) {
       lookup.addTaglib(taglib);
       if (taglib.imports) {
@@ -78,6 +61,10 @@ export function clearCaches() {
   finder.clearCache();
   lookupCache = Object.create(null);
 }
+
+// Used by legacy compiler api.
+export const _loader = loader;
+export const _finder = finder;
 
 function loadTaglib(id, props) {
   return loader.loadTaglibFromProps(loader.createTaglib(id), props);

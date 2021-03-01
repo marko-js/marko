@@ -1,32 +1,50 @@
 "use strict";
 
-const taglibFinder = require("./taglib-finder");
-const taglibLookup = require("./taglib-lookup");
-const taglibLoader = require("./taglib-loader");
+const complain = "MARKO_DEBUG" && require("complain");
+const compiler = require("@marko/compiler");
 
 function clearCache() {
-  taglibLookup.clearCache();
-  taglibFinder.clearCache();
-  taglibLoader.clearCache();
+  compiler.taglib.clearCaches();
 }
 
 function register(taglibProps, taglibPath) {
-  const taglib = taglibLoader.createTaglib(taglibPath);
-  taglibLoader.loadTaglibFromProps(taglib, taglibProps);
-  taglibLookup.registerTaglib(taglib);
+  return compiler.taglib.register(taglibPath, taglibProps);
 }
 
 function registerFromFile(taglibPath) {
-  const taglib = taglibLoader.loadTaglibFromFile(taglibPath);
-  taglibLookup.registerTaglib(taglib);
+  return register(
+    compiler.taglib._loader.loadTaglibFromFile(taglibPath),
+    taglibPath
+  );
 }
 
 exports.clearCache = clearCache;
 exports.register = register;
 exports.registerFromFile = registerFromFile;
-exports.buildLookup = taglibLookup.buildLookup;
-exports.excludeDir = taglibFinder.excludeDir;
-exports.excludePackage = taglibFinder.excludePackage;
-exports.finder = taglibFinder;
-exports.lookup = taglibLookup;
-exports.loader = taglibLoader;
+exports.buildLookup = compiler.taglib.buildLookup;
+exports.excludeDir = compiler.taglib.excludeDir;
+exports.excludePackage = compiler.taglib.excludePackage;
+exports.loader = compiler.taglib._loader;
+exports.finder = compiler.taglib._finder;
+exports.lookup = {
+  buildLookup: function(dir, translator) {
+    if (!translator || !Array.isArray(translator.taglibs)) {
+      translator = require("@marko/translator-default");
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        complain(
+          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`."
+        );
+      }
+    }
+
+    return compiler.taglib.buildLookup(dir, translator);
+  },
+  registerTaglib(taglib) {
+    if (typeof taglib === "string") {
+      registerFromFile(taglib);
+    } else {
+      register(taglib, taglib.id);
+    }
+  }
+};

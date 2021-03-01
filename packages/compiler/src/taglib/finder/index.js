@@ -2,10 +2,10 @@
 var nodePath = require("path");
 var lassoCachingFS = require("lasso-caching-fs");
 var resolveFrom = require("resolve-from").silent;
-var taglibLoader = require("../taglib-loader");
+var taglibLoader = require("../loader");
 var lassoPackageRoot = require("lasso-package-root");
-var scanTagsDir = require("../taglib-loader/scanTagsDir");
-var DependencyChain = require("../taglib-loader/DependencyChain");
+var scanTagsDir = require("../loader/scanTagsDir");
+var DependencyChain = require("../loader/DependencyChain");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 var findCache = {};

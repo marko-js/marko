@@ -25,8 +25,7 @@
     "strip-ansi": "^5.2.0"
   },
   "devDependencies": {
-    "@marko/translator-default": "^5.1.21",
-    "marko": "^5.1.20"
+    "@marko/translator-default": "^5.1.21"
   },
   "files": [
     "dist",
@@ -47,9 +46,6 @@
   "main": "src/index.js",
   "main:dev": "src/index.js",
   "main:npm": "dist/index.js",
-  "peerDependencies": {
-    "marko": "^5.0.0"
-  },
   "publishConfig": {
     "access": "public"
   },
