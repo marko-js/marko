@@ -1,15 +1,15 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
 import { flushBefore, flushInto } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
 import translateVar from "../util/translate-var";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   flushBefore(tag);
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   flushInto(tag);
 

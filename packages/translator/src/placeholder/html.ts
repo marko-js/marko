@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { isNativeTag } from "@marko/babel-utils";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { writeHTML } from "../util/html-write";
@@ -8,7 +8,7 @@ const ESCAPE_TYPES = {
   style: "escapeStyle"
 } as Record<string, string>;
 
-export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
+export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const { node, parentPath } = placeholder;
   const { confident, value: computed } = placeholder.get("value").evaluate();
   const write = writeHTML(placeholder);

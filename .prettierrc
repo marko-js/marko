@@ -1,4 +1,12 @@
 {
   "arrowParens": "avoid",
-  "trailingComma": "none"
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": "*rc",
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }

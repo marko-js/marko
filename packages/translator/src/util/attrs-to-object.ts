@@ -1,8 +1,8 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import toPropertyName from "./to-property-name";
 
 export default function attrsToObject(
-  tag: NodePath<t.MarkoTag>,
+  tag: t.NodePath<t.MarkoTag>,
   withRenderBody = false
 ) {
   const { node } = tag;

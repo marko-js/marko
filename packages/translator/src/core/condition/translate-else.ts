@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   assertNoVar,
   assertNoParams,
@@ -8,11 +8,11 @@ import { flushBefore, flushInto } from "../../util/html-flush";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { findPreviousIfStatement } from "./util";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   flushBefore(tag);
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   assertNoParams(tag);
   assertNoAttributes(tag);

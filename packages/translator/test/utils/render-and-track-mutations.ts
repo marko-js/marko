@@ -54,11 +54,11 @@ export default async function renderAndGetMutations(
 
     for (const update of inputs.slice(1)) {
       if (isWait(update)) {
-        await update();
+        await (update as any)();
       } else {
         tracker.beginUpdate();
         if (typeof update === "function") {
-          runInBatch(() => update(container));
+          runInBatch(() => (update as any)(container));
         } else {
           instance.rerender(update);
         }

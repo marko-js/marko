@@ -1,6 +1,6 @@
-import { types as t, NodePath, Visitor } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
-type MarkoExprRootPath = NodePath<
+type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
   | t.MarkoTagBody
   | t.MarkoAttribute
@@ -13,7 +13,7 @@ interface ReferenceMeta {
   input?: { [x: string]: boolean };
 }
 
-declare module "@marko/babel-types" {
+declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     references?: ReferenceMeta;
   }
@@ -62,14 +62,14 @@ export default {
       return;
     }
 
-    let curPath = identifier as NodePath<t.Node>;
+    let curPath = identifier as t.NodePath<t.Node>;
     let inputPath = "input";
 
     while (true) {
       const { parentPath } = curPath;
 
       if (parentPath.isMemberExpression()) {
-        const property = (parentPath as NodePath<t.MemberExpression>).get(
+        const property = (parentPath as t.NodePath<t.MemberExpression>).get(
           "property"
         );
         if (property.isStringLiteral()) {
@@ -128,7 +128,7 @@ export default {
       }
     }
   }
-} as Visitor;
+} as t.Visitor;
 
 function getMetaForExpr(expr: ReturnType<typeof getExprRoot>): ReferenceMeta {
   let references = ((expr.parentPath.node.extra ??= {}).references ??= {});
@@ -154,22 +154,22 @@ function getMetaForTag(expr: ReturnType<typeof getExprRoot>) {
   return ((parentPath.node.extra ??= {}).references ??= {}) as ReferenceMeta;
 }
 
-function getMetaForTemplate(path: NodePath<t.Node>) {
+function getMetaForTemplate(path: t.NodePath<t.Node>) {
   return (path.hub.file.path.node.extra.references ??= {}) as ReferenceMeta;
 }
 
-function getExprRoot(path: NodePath<t.Node>) {
+function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   while (!isMarkoPath(curPath.parentPath)) {
     curPath = curPath.parentPath;
   }
 
-  return curPath as NodePath<t.Node> & {
+  return curPath as t.NodePath<t.Node> & {
     parentPath: MarkoExprRootPath;
   };
 }
 
-function isMarkoPath(path: NodePath<any>): path is MarkoExprRootPath {
+function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
   switch (path.node.type) {
     case "MarkoTag":
     case "MarkoTagBody":

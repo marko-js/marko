@@ -1,10 +1,10 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { findParentTag, assertNoVar } from "@marko/babel-utils";
 import { TagNameTypes } from "../analyze/tag-name-type";
 import attrsToObject from "../util/attrs-to-object";
 import { flushInto, hasPendingHTML } from "../util/html-flush";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   if (hasPendingHTML(tag)) {
     throw tag
       .get("name")
@@ -12,7 +12,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   flushInto(tag);
 
@@ -69,7 +69,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
     const existingAttr = parentTag
       .get("attributes")
       .find(attr => (attr.node as t.MarkoAttribute).name === attrName) as
-      | NodePath<t.ArrayExpression>
+      | t.NodePath<t.ArrayExpression>
       | undefined;
 
     if (existingAttr) {

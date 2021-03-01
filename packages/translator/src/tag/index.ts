@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   getTagDef,
@@ -19,7 +19,7 @@ declare module "@marko/babel-utils" {
   }
 }
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   const tagDef = getTagDef(tag);
   const extra = tag.node.extra;
 
@@ -47,7 +47,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
       }
 
       if (attr.node.modifier) {
-        if (isNativeTag(attr.parentPath as NodePath<t.MarkoTag>)) {
+        if (isNativeTag(attr.parentPath as t.NodePath<t.MarkoTag>)) {
           attr.node.name += `:${attr.node.modifier}`;
         } else {
           throw attr.buildCodeFrameError(
@@ -88,7 +88,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   const codeGenerator = getTagDef(tag)?.codeGenerator;
 
   if (codeGenerator) {

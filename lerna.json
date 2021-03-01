@@ -1,17 +1,13 @@
 {
+  "npmClient": "yarn",
+  "useWorkspaces": true,
   "command": {
     "publish": {
       "conventionalCommits": true,
       "message": "chore(release): publish"
     }
   },
-  "packages": [
-    "packages/*"
-  ],
-  "ignoreChanges": [
-    "**/package-lock.json",
-    "packages/*/test/**",
-    "**/*.md"
-  ],
+  "packages": ["packages/*"],
+  "ignoreChanges": ["**/yarn.lock", "packages/*/test/**", "**/*.md"],
   "version": "independent"
 }

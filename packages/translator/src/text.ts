@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { writeHTML } from "./util/html-write";
 import {
   Walks,
@@ -8,7 +8,7 @@ import {
 } from "./util/dom-writer";
 import { isOutputHTML } from "./util/marko-config";
 
-export default function (text: NodePath<t.MarkoText>) {
+export default function (text: t.NodePath<t.MarkoText>) {
   if (isOutputHTML(text)) {
     writeHTML(text)`${text.node.value}`;
   } else {

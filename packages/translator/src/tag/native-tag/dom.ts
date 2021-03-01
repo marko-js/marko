@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import {
   writeHydrate,
@@ -11,14 +11,14 @@ import {
 } from "../../util/dom-writer";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   const attrs = tag.get("attributes");
   const tagDef = getTagDef(tag);
   const hasSpread = attrs.some(attr => attr.isMarkoSpreadAttribute());
   let ofInterest = false;
   if (tagDef) {
     writeTemplate(tag, `<${tagDef.name}`);
-    for (const attr of attrs as NodePath<t.MarkoAttribute>[]) {
+    for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
       const name = attr.node.name;
 
       const value = attr.get("value");
@@ -70,7 +70,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   const tagDef = getTagDef(tag);
   if (tagDef && tagDef.name) writeTemplate(tag, `</${tagDef.name}>`);
   writeWalks(tag, Walks.EXIT);

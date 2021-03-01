@@ -6,3 +6,4 @@ coverage
 dist
 debug
 types
+*.js

@@ -1,21 +1,16 @@
-import {
-  NodePath,
-  Program,
-  StringLiteral,
-  types as t
-} from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { callRuntime } from "./runtime";
 import { encodeWalks } from "./walks";
 
-export function writeExports(path: NodePath<Program>) {
+export function writeExports(path: t.NodePath<t.Program>) {
   const template = t.identifier("template");
   const walks = t.identifier("walks");
   const hydrate = t.identifier("hydrate");
 
-  let inputs: StringLiteral[] = [];
+  let inputs: t.StringLiteral[] = [];
   if (path.node.extra.references && path.node.extra.references.input) {
     inputs = Object.keys(path.node.extra.references.input).reduce(
-      (list: StringLiteral[], key: string) => {
+      (list: t.StringLiteral[], key: string) => {
         if (path.node.extra.references!.input![key]) {
           list.push(t.stringLiteral(key.replace("input.", "")));
         }

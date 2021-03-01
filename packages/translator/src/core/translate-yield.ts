@@ -1,12 +1,12 @@
-import { types as t, NodePath, BabelFile } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { assertNoVar, assertNoParams } from "@marko/babel-utils";
 import { flushBefore } from "../util/html-flush";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 
-const RETURN_IDENTIFIERS = new WeakMap<BabelFile, t.Identifier>();
+const RETURN_IDENTIFIERS = new WeakMap<t.BabelFile, t.Identifier>();
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   assertNoParams(tag);
   assertNoBodyContent(tag);

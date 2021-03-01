@@ -1,9 +1,9 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import * as translateHTML from "./html";
 import * as translateDOM from "./dom";
 
-export function enter(program: NodePath<t.Program>) {
+export function enter(program: t.NodePath<t.Program>) {
   if (isOutputHTML(program)) {
     translateHTML.enter(program);
   } else {
@@ -11,7 +11,7 @@ export function enter(program: NodePath<t.Program>) {
   }
 }
 
-export function exit(program: NodePath<t.Program>) {
+export function exit(program: t.NodePath<t.Program>) {
   if (isOutputHTML(program)) {
     translateHTML.exit(program);
   } else {

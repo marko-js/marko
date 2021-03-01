@@ -1,43 +1,36 @@
-import {
-  NodePath,
-  Node,
-  MarkoTag,
-  MarkoText,
-  types as t,
-  MarkoPlaceholder
-} from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 import { Walks } from "./walks";
 export { Walks } from "./walks";
 
-export function writeTemplate(path: NodePath<any>, s: string) {
+export function writeTemplate(path: t.NodePath<any>, s: string) {
   path.state.template += s;
 }
 
-export function writeHydrate(path: NodePath<any>, code: Node) {
+export function writeHydrate(path: t.NodePath<any>, code: t.Node) {
   path.state.hydrate.push(code);
 }
 
-export function writeWalks(path: NodePath<any>, code: Walks) {
+export function writeWalks(path: t.NodePath<any>, code: Walks) {
   path.state.walks.push(code);
 }
 
-export function checkNextMarker(path: NodePath<any>) {
+export function checkNextMarker(path: t.NodePath<any>) {
   let i = +path.key;
-  let temp: NodePath<any>;
+  let temp: t.NodePath<any>;
   while ((temp = path.getSibling(++i)).node) {
     if (!t.isMarkoPlaceholder(temp)) return true;
   }
   return false;
 }
 
-export function markTextSiblings(path: NodePath<MarkoText>) {
+export function markTextSiblings(path: t.NodePath<t.MarkoText>) {
   const sibling = path.getSibling(+path.key + 1);
   if (sibling && t.isMarkoPlaceholder(sibling.node))
     path.state.precedingText = true;
 }
 
-export function needsPlaceholderMarker(path: NodePath<MarkoPlaceholder>) {
+export function needsPlaceholderMarker(path: t.NodePath<t.MarkoPlaceholder>) {
   if (!path.state.precedingText) return false;
   const sibling = path.getSibling(+path.key + 1);
   if (sibling) {
@@ -51,14 +44,14 @@ export function needsPlaceholderMarker(path: NodePath<MarkoPlaceholder>) {
   return false;
 }
 
-export function setOnlyChild(path: NodePath<MarkoTag>) {
+export function setOnlyChild(path: t.NodePath<t.MarkoTag>) {
   path.state.onlyChild = true;
 }
 
-export function clearOnlyChild(path: NodePath<MarkoTag>) {
+export function clearOnlyChild(path: t.NodePath<t.MarkoTag>) {
   path.state.onlyChild = false;
 }
 
-export function isOnlyChild(path: NodePath<any>) {
+export function isOnlyChild(path: t.NodePath<any>) {
   return path.state.onlyChild;
 }

@@ -1,5 +1,5 @@
 import path from "path";
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   resolveTagImport,
   getTemplateId,
@@ -9,7 +9,7 @@ import { flushBefore } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
 import { assertNoBodyContent } from "../util/assert";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoParams(tag);
   assertNoBodyContent(tag);
   flushBefore(tag);
@@ -58,7 +58,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
 
   const defaultAttrValue = tag
     .get("attributes")[0]
-    .get("value") as NodePath<t.StringLiteral>;
+    .get("value") as t.NodePath<t.StringLiteral>;
   let refId: string;
 
   if (defaultAttr.value.value === ".") {

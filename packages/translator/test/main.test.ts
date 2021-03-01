@@ -1,16 +1,20 @@
 import fs from "fs";
 import path from "path";
+import Module from "module";
 import { Writable } from "stream";
-import autotest from "mocha-autotest";
+import autotest, { TestRunnerOpts } from "mocha-autotest";
 import stripAnsi from "strip-ansi";
-import { compileFile } from "@marko/compiler";
-import { install } from "marko/node-require";
-import * as translator from "../src";
+import * as compiler from "@marko/compiler";
 import snapshot from "./utils/snapshot";
 import renderAndTrackMutations from "./utils/render-and-track-mutations";
 
-const baseConfig = {
-  translator,
+type TestConfigFile = {
+  inputDOM?: Parameters<typeof renderAndTrackMutations>[1];
+  inputHTML?: unknown;
+};
+
+const baseConfig: compiler.Config = {
+  translator: require.resolve("../src"),
   babelConfig: {
     babelrc: false,
     configFile: false
@@ -18,34 +22,41 @@ const baseConfig = {
   writeVersionComment: false
 };
 
-install({
-  compilerOptions: {
-    output: "html",
-    ...baseConfig,
-    babelConfig: {
-      ...baseConfig.babelConfig,
-      sourceMaps: "inline"
-    }
-  }
-});
+const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
+const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
+const hookConfig: compiler.Config = {
+  ...baseConfig,
+  modules: "cjs",
+  babelConfig: { ...baseConfig.babelConfig, sourceMaps: "inline" }
+};
+
+require.extensions[".marko"] = (mod, filename) => {
+  // Detect if we are in a `jsdom-context-require` or not.
+  let rootModule = mod;
+  while (rootModule.parent) rootModule = rootModule.parent;
+  hookConfig.output = rootModule.constructor === Module ? "html" : "dom";
+  return (mod as typeof mod & {
+    _compile(filename: string, code: string): unknown;
+  })._compile(compiler.compileFileSync(filename, hookConfig).code, filename);
+};
 
 describe("translator", () => {
   autotest("fixtures", {
-    "html-compiled": runTestWithConfig(runCompileTest({ output: "html" })),
-    "html-rendered": runTestWithConfig(runHTMLRenderTest),
-    "dom-compiled": runTestWithConfig(runCompileTest({ output: "dom" })),
-    "dom-rendered": runTestWithConfig(runDOMRenderTest)
+    htmlCompiled: runCompileTest(htmlConfig),
+    htmlRendered: runHTMLRenderTest,
+    domCompiled: runCompileTest(domConfig),
+    domRendered: runDOMRenderTest
   });
 });
 
-function runCompileTest(config: { output: string }) {
-  return ({ mode, test, resolve, snapshot }) => {
+function runCompileTest(config: compiler.Config) {
+  return ({
+    mode,
+    test,
+    resolve,
+    snapshot
+  }: TestRunnerOpts & { main: TestConfigFile }) => {
     const templateFile = resolve("template.marko");
-    const compilerConfig = {
-      ...config,
-      ...baseConfig
-    };
-
     const snapshotsDir = resolve("snapshots");
     const name = `snapshots${path.sep + mode}`;
 
@@ -54,8 +65,7 @@ function runCompileTest(config: { output: string }) {
       await ensureDir(snapshotsDir);
 
       try {
-        output = (await compileFile(templateFile, compilerConfig)).code;
-        // .replace(/"\.\//g, '"../')
+        output = (await compiler.compileFile(templateFile, config)).code;
       } catch (compileSnapshotErr) {
         try {
           snapshot(stripCwd(stripAnsi(compileSnapshotErr.message)), {
@@ -81,21 +91,25 @@ function runCompileTest(config: { output: string }) {
   };
 }
 
-function runHTMLRenderTest({ mode, test, resolve, snapshot }, { inputHTML }) {
-  // const templateFile = resolve("./snapshots/html-compiled-expected.js");
+function runHTMLRenderTest({
+  main = {},
+  mode,
+  test,
+  resolve,
+  snapshot
+}: TestRunnerOpts & { main: TestConfigFile }) {
   const templateFile = resolve("template.marko");
   const snapshotsDir = resolve("snapshots");
   const name = `snapshots${path.sep + mode}`;
 
   test(async () => {
     await ensureDir(snapshotsDir);
-
     const { render } = await import(templateFile);
     let html = "";
 
     try {
       await render(
-        inputHTML || {},
+        main.inputHTML || {},
         new Writable({
           write(chunk: string) {
             html += chunk;
@@ -117,8 +131,13 @@ function runHTMLRenderTest({ mode, test, resolve, snapshot }, { inputHTML }) {
   });
 }
 
-function runDOMRenderTest({ mode, test, resolve }, { inputDOM }) {
-  const templateFile = resolve("snapshots/dom-compiled-expected.js");
+function runDOMRenderTest({
+  main = {},
+  mode,
+  test,
+  resolve
+}: TestRunnerOpts & { main: TestConfigFile }) {
+  const templateFile = resolve("template.marko");
   const snapshotsDir = resolve("snapshots");
 
   test(async () => {
@@ -127,27 +146,9 @@ function runDOMRenderTest({ mode, test, resolve }, { inputDOM }) {
     snapshot(
       snapshotsDir,
       `${mode}.md`,
-      await renderAndTrackMutations(templateFile, inputDOM)
+      await renderAndTrackMutations(templateFile, main.inputDOM)
     );
   });
-}
-
-function runTestWithConfig(fn) {
-  return opts => {
-    let config;
-    try {
-      config = require(opts.resolve("config.ts"));
-    } catch {
-      config = {};
-    }
-
-    if (config.skip && config.skip.includes(opts.mode)) {
-      opts.skip("Not Implemented");
-      return;
-    }
-
-    return fn(opts, config);
-  };
 }
 
 async function ensureDir(dir: string) {
@@ -159,5 +160,5 @@ async function ensureDir(dir: string) {
 }
 
 function stripCwd(message: string) {
-  return message.replace(process.cwd() + "/", "");
+  return message.replace(process.cwd() + path.sep, "");
 }

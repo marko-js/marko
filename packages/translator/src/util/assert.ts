@@ -1,6 +1,6 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
-export function assertNoSpreadAttrs(tag: NodePath<t.MarkoTag>) {
+export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   for (const attr of tag.get("attributes")) {
     if (attr.isMarkoSpreadAttribute()) {
       throw attr.buildCodeFrameError(
@@ -10,7 +10,7 @@ export function assertNoSpreadAttrs(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function assertNoBodyContent(tag: NodePath<t.MarkoTag>) {
+export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.body.body.length) {
     throw tag
       .get("name")

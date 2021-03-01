@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 export default function toFirstExpressionOrBlock(
   body: t.BlockStatement | t.MarkoTagBody
 ) {

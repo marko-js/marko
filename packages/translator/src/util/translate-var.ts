@@ -1,10 +1,10 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 const emptyArr = [];
 const getEmptyArr = () => emptyArr;
 
 export default function translateVar(
-  tag: NodePath<t.MarkoTag>,
+  tag: t.NodePath<t.MarkoTag>,
   initialValue: t.Expression,
   kind: "let" | "const" = "const"
 ) {

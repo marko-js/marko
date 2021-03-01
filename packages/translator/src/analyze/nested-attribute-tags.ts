@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   isAttributeTag,
   isTransparentTag,
@@ -14,14 +14,14 @@ type Lookup = Record<
   }
 >;
 
-declare module "@marko/babel-types" {
+declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     hoistedControlFlows: number;
     nestedAttributeTags: Lookup;
   }
 }
 
-export default function analyzeAttributeTags(tag: NodePath<t.MarkoTag>) {
+export default function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
   const { extra } = tag.node;
   extra.nestedAttributeTags = {};
   extra.hoistedControlFlows = 0;
@@ -32,7 +32,7 @@ function analyzeChildren(
   rootExtra: t.MarkoTag["extra"],
   repeated: boolean,
   dynamic: boolean,
-  tag: NodePath<t.MarkoTag>
+  tag: t.NodePath<t.MarkoTag>
 ) {
   let hasAttributeTags = false;
   for (const child of tag.get("body").get("body")) {
@@ -42,7 +42,7 @@ function analyzeChildren(
           rootExtra,
           repeated,
           dynamic,
-          child as NodePath<t.MarkoTag>
+          child as t.NodePath<t.MarkoTag>
         )
       ) {
         hasAttributeTags = true;
@@ -57,12 +57,12 @@ function analyzeChild(
   rootExtra: t.MarkoTag["extra"],
   repeated: boolean,
   dynamic: boolean,
-  tag: NodePath<t.MarkoTag>
+  tag: t.NodePath<t.MarkoTag>
 ) {
   if (isTransparentTag(tag)) {
     if (analyzeChildren(rootExtra, repeated || isLoopTag(tag), true, tag)) {
       if (
-        !isTransparentTag(tag.parentPath.parentPath as NodePath<t.MarkoTag>)
+        !isTransparentTag(tag.parentPath.parentPath as t.NodePath<t.MarkoTag>)
       ) {
         rootExtra.hoistedControlFlows++;
       }

@@ -1,4 +1,4 @@
-import { types as t } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
 const IDENTIFIER_REG = /^[0-9A-Z_$]+$/i;
 

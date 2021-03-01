@@ -1,4 +1,4 @@
-import { Visitor } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import * as Program from "./program";
 import * as ImportDeclaration from "./import-declaration";
 import MarkoDocumentType from "./document-type";
@@ -15,7 +15,7 @@ export const taglibs = [
 
 export { default as analyze } from "./analyze";
 
-export const translate: Visitor = {
+export const translate: t.Visitor = {
   Program,
   ImportDeclaration,
   MarkoDocumentType,

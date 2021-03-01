@@ -18,6 +18,6 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
       };
     }
   };
-  window.requestAnimationFrame = fn => setTimeout(fn);
+  window.requestAnimationFrame = fn => setTimeout(fn) as any;
   return browser;
 }

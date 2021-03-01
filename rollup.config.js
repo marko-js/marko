@@ -36,6 +36,7 @@ export default envs
         env === "dist" &&
           replace({
             '"MARKO_DEBUG"': false,
+            preventAssignment: true,
             delimiters: ["", ""]
           }),
         env === "dist" && mangleInternal(),

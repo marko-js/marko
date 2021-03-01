@@ -44,7 +44,9 @@ node_modules
 
 # Yarn
 .yarn-integrity
-yarn.lock
+
+# Npm
+package-lock.json
 
 # dotenv environment variables file
 .env

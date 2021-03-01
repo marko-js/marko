@@ -1,10 +1,10 @@
-import { Visitor } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import analyzeReferences from "./references";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 import analyzeNestedAttributeTags from "./nested-attribute-tags";
 import analyzeEventHandlers from "./event-handlers";
 
-declare module "@marko/babel-types" {
+declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ProgramExtra {}
@@ -62,4 +62,4 @@ export default {
   MarkoPlaceholder(placeholder) {
     placeholder.node.extra ??= {} as typeof placeholder.node.extra;
   }
-} as Visitor;
+} as t.Visitor;

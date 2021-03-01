@@ -1,1 +1,0 @@
-_child is not a function

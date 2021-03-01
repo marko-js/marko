@@ -1,12 +1,12 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import { flushBefore, flushInto } from "../util/html-flush";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   flushBefore(tag);
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   flushInto(tag);
 
@@ -36,7 +36,7 @@ export function exit(tag: NodePath<t.MarkoTag>) {
     }
 
     if (!t.isIdentifier(keyParam)) {
-      throw (tag.get("params.0") as NodePath<t.Node>).buildCodeFrameError(
+      throw (tag.get("params.0") as t.NodePath<t.Node>).buildCodeFrameError(
         "Invalid 'for in' parameter, key must be a valid identifier."
       );
     }

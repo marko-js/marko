@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import attrsToObject from "../../util/attrs-to-object";
 import { consumeHTML, flushBefore, flushInto } from "../../util/html-flush";
@@ -6,7 +6,7 @@ import { writeHTML } from "../../util/html-write";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   const { extra } = tag.node;
   const name = tag.get("name");
   const attrs = tag.get("attributes");
@@ -29,7 +29,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   if (hasSpread) {
     write`${callRuntime(tag, "attrs", attrsToObject(tag)!)}`;
   } else {
-    for (const attr of attrs as NodePath<t.MarkoAttribute>[]) {
+    for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
       const name = attr.node.name;
 
       if (name[0] === "o" && name[1] === "n") {
@@ -99,7 +99,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   const { extra } = tag.node;
 
   if (extra.tagNameNullable) {

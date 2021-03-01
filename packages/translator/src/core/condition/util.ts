@@ -1,8 +1,8 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar } from "@marko/babel-utils";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 
-export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
+export function buildIfStatement(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const [defaultAttr] = node.attributes;
   const tagName = (node.name as t.StringLiteral).value;
@@ -40,12 +40,14 @@ export function buildIfStatement(tag: NodePath<t.MarkoTag>) {
   );
 }
 
-export function findPreviousIfStatement(tag: NodePath<t.MarkoTag>) {
+export function findPreviousIfStatement(tag: t.NodePath<t.MarkoTag>) {
   const tagName = (tag.node.name as t.StringLiteral).value;
-  let prev = tag.getSibling((tag.key as number) - 1) as NodePath<t.IfStatement>;
+  let prev = tag.getSibling(
+    (tag.key as number) - 1
+  ) as t.NodePath<t.IfStatement>;
 
   while (prev.node.alternate) {
-    prev = prev.get("alternate") as NodePath<t.IfStatement>;
+    prev = prev.get("alternate") as t.NodePath<t.IfStatement>;
   }
 
   if (!prev.isIfStatement()) {

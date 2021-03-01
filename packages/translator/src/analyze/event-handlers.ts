@@ -1,12 +1,12 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
-declare module "@marko/babel-types" {
+declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     eventHandlers: boolean;
   }
 }
 
-export default function analyzeEventHandlers(tag: NodePath<t.MarkoTag>) {
+export default function analyzeEventHandlers(tag: t.NodePath<t.MarkoTag>) {
   const { extra } = tag.node;
 
   for (const attr of tag.get("attributes")) {

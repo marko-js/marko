@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import {
   assertNoAttributeTags,
   assertNoAttributes,
@@ -9,13 +9,13 @@ import { writeHTML } from "../util/html-write";
 import { writeTemplate } from "../util/dom-writer";
 import { isOutputHTML } from "../util/marko-config";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   if (isOutputHTML(tag)) {
     writeHTML(tag)`<!--`;
   } else writeTemplate(tag, `<!--`);
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   assertNoParams(tag);
   assertNoAttributes(tag);

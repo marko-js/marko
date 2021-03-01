@@ -1,4 +1,4 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { callRuntime } from "../util/runtime";
 import {
   needsPlaceholderMarker,
@@ -10,7 +10,7 @@ import {
   checkNextMarker
 } from "../util/dom-writer";
 
-export default function (placeholder: NodePath<t.MarkoPlaceholder>) {
+export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (needsPlaceholderMarker(placeholder)) {
     writeWalks(placeholder, Walks.REPLACE);
     writeTemplate(placeholder, "<!>");

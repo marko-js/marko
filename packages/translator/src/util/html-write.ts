@@ -1,6 +1,6 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 
-export function writeHTML<T extends t.Node>(path: NodePath<T>) {
+export function writeHTML<T extends t.Node>(path: t.NodePath<T>) {
   const writes = (path.state.writes || (path.state.writes = [])) as Array<
     string | t.Expression
   >;

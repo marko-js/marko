@@ -1,11 +1,11 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { flushInto } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function enter(program: NodePath<t.Program>) {}
+export function enter(program: t.NodePath<t.Program>) {}
 
-export function exit(program: NodePath<t.Program>) {
+export function exit(program: t.NodePath<t.Program>) {
   flushInto(program);
 
   const renderContent: t.Statement[] = [];
@@ -47,7 +47,7 @@ export function exit(program: NodePath<t.Program>) {
   ]);
 }
 
-function isStatic(path: NodePath<any>) {
+function isStatic(path: t.NodePath<any>) {
   if (path.isImportDeclaration()) {
     return true;
   }

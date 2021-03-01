@@ -1,8 +1,8 @@
 {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "reporter": ["lcov"],
-    "exclude": [
-      "packages/runtime/src/html/reorder-runtime.ts",
-      "packages/**/test"
-    ]
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "reporter": ["lcov"],
+  "exclude": [
+    "packages/runtime/src/html/reorder-runtime.ts",
+    "packages/**/test"
+  ]
 }

@@ -1,9 +1,9 @@
 import path from "path";
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { assertNoSpreadAttrs } from "../util/assert";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   const {
     hub: { file }
   } = tag;

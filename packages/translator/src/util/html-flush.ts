@@ -1,7 +1,7 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { callRuntime } from "./runtime";
 
-export function consumeHTML(path: NodePath<any>) {
+export function consumeHTML(path: t.NodePath<any>) {
   const writes = path.state.writes as Array<string | t.Expression> | undefined;
 
   if (!writes) {
@@ -61,19 +61,21 @@ export function consumeHTML(path: NodePath<any>) {
 }
 
 export function hasPendingHTML(
-  path: NodePath<t.MarkoTag> | NodePath<t.Program>
+  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
 ) {
   return Boolean(path.state.writes as Array<string | t.Expression> | undefined);
 }
 
-export function flushBefore(path: NodePath<any>) {
+export function flushBefore(path: t.NodePath<any>) {
   const expr = consumeHTML(path);
   if (expr) {
     path.insertBefore(expr)[0].skip();
   }
 }
 
-export function flushInto(path: NodePath<t.MarkoTag> | NodePath<t.Program>) {
+export function flushInto(
+  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
+) {
   const expr = consumeHTML(path);
   if (expr) {
     if (path.isMarkoTag()) {

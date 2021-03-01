@@ -1,8 +1,8 @@
-import { types as t, NodePath } from "@marko/babel-types";
+import { types as t } from "@marko/compiler";
 import { flushBefore, flushInto } from "../util/html-flush";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 
-export function enter(tag: NodePath<t.MarkoTag>) {
+export function enter(tag: t.NodePath<t.MarkoTag>) {
   flushBefore(tag);
 
   if (!tag.node.var) {
@@ -22,7 +22,7 @@ export function enter(tag: NodePath<t.MarkoTag>) {
   }
 }
 
-export function exit(tag: NodePath<t.MarkoTag>) {
+export function exit(tag: t.NodePath<t.MarkoTag>) {
   flushInto(tag);
   tag.replaceWith(
     t.variableDeclaration("const", [
