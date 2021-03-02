@@ -4,9 +4,7 @@
   "version": "0.0.1",
   "bugs": "https://github.com/marko-js/x/issues",
   "files": [
-    "dist",
-    "debug",
-    "types"
+    "dist"
   ],
   "homepage": "https://github.com/marko-js/x",
   "keywords": [

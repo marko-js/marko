@@ -1,11 +1,12 @@
 import fs from "fs";
+import path from "path";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
 import typescript from "rollup-plugin-typescript2";
 import mangleInternal from "./utilities/rollup-plugin-mangle-internal";
 
 const sizeOnly = process.env.SIZE;
-const envs = sizeOnly ? ["dist"] : ["debug", "dist"];
+const envs = sizeOnly ? ["dist"] : ["dist/debug", "dist"];
 const targets = sizeOnly ? ["dom"] : ["dom", "html"];
 const tsConfig = {
   tsconfigOverride: {
@@ -50,13 +51,17 @@ export default envs
         {
           name: "write-package",
           writeBundle() {
+            const pkgDir = `packages/runtime/${env}/${name}`;
             fs.writeFileSync(
-              `packages/runtime/${env}/${name}/package.json`,
+              `${pkgDir}/package.json`,
               `{
-              "main": "./index.cjs.js",
-              "jsnext": "./index.esm.js",
-              "module": "./index.esm.js",
-              "types": "../../types/${name}/index.d.ts"
+              "main": "index.cjs.js",
+              "jsnext": "index.esm.js",
+              "module": "index.esm.js",
+              "types": "${path.relative(
+                pkgDir,
+                `packages/runtime/dist/${name}/index.d.ts`
+              )}"
             }`
             );
           }

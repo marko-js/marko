@@ -3,6 +3,6 @@
   "include": ["src/**/*.ts"],
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./types"
+    "outDir": "./dist"
   }
 }

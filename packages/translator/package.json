@@ -9,8 +9,7 @@
     "tslib": "^2.1.0"
   },
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
   "jsnext": "dist/index.esm.js",
@@ -30,5 +29,5 @@
     "type": "git",
     "url": "https://github.com/marko-js/x/tree/master/packages/translator"
   },
-  "types": "types/index.d.ts"
+  "types": "dist/index.d.ts"
 }

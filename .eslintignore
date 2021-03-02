@@ -4,6 +4,3 @@
 node_modules
 coverage
 dist
-debug
-types
-*.js

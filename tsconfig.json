@@ -1,4 +1,5 @@
 {
+  "exclude": ["**/dist"],
   "ts-node": {
     "transpileOnly": true
   },

@@ -2,8 +2,6 @@
 *.marko.js
 *actual*
 dist
-debug
-types
 *.tsbuildinfo
 
 ### Node ###

@@ -43,7 +43,7 @@
     "build": "tsc --build tsconfig.project.json && rollup -c --sourcemap",
     "ci:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "ci:test": "nyc --reporter=text npm test",
-    "clean": "lerna clean && rm -rf ./packages/*/{dist,debug,.tsbuildinfo}",
+    "clean": "lerna clean && rm -rf ./packages/*/{dist,.tsbuildinfo}",
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write && (fixpack || true)",
     "lint": "tsc -p tsconfig.lint.json && npm run lint:eslint && npm run lint:prettier -- -l && fixpack",
     "lint:eslint": "eslint -f visualstudio packages",

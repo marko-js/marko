@@ -49,6 +49,6 @@ function getRuntime<T extends t.Node>(
 function getRuntimePath<T extends t.Node>(path: t.NodePath<T>, output: string) {
   const { optimize } = getMarkoOpts(path);
   return `@marko/runtime-fluurt/${
-    USE_SOURCE_RUNTIME ? "src" : optimize ? "dist" : "debug"
+    USE_SOURCE_RUNTIME ? "src" : optimize ? "dist" : "dist/debug"
   }/${output}`;
 }

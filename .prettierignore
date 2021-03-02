@@ -9,5 +9,3 @@ CHANGELOG.md
 node_modules/
 coverage/
 dist/
-debug/
-types/

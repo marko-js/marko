@@ -9,7 +9,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export const enum TagNameTypes {
+export enum TagNameTypes {
   NativeTag,
   CustomTag,
   DynamicTag,
