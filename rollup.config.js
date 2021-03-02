@@ -55,14 +55,14 @@ export default envs
             fs.writeFileSync(
               `${pkgDir}/package.json`,
               `{
-              "main": "index.cjs.js",
-              "jsnext": "index.esm.js",
-              "module": "index.esm.js",
-              "types": "${path.relative(
-                pkgDir,
-                `packages/runtime/dist/${name}/index.d.ts`
-              )}"
-            }`
+  "main": "index.cjs.js",
+  "jsnext": "index.esm.js",
+  "module": "index.esm.js",
+  "types": "${path.relative(
+    pkgDir,
+    `packages/runtime/dist/${name}/index.d.ts`
+  )}"
+}\n`
             );
           }
         }
