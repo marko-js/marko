@@ -1,6 +1,6 @@
 "use strict";
 
-const complain = "MARKO_DEBUG" && require("complain");
+let complain = "MARKO_DEBUG" && require("complain");
 const compiler = require("@marko/compiler");
 
 function clearCache() {
