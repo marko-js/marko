@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.3](https://github.com/marko-js/marko/compare/v5.2.2...v5.2.3) (2021-03-05)
+
+
+### Bug Fixes
+
+* **marko:** issue with MARKO_DEBUG and a const ([c17f9fc](https://github.com/marko-js/marko/commit/c17f9fc5521412e24838d7ec78bee000c511064f))
+
+
+
+
+
 ## [5.2.2](https://github.com/marko-js/marko/compare/v5.2.1...v5.2.2) (2021-03-01)
 
 
