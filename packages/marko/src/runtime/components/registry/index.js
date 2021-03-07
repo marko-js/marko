@@ -1,7 +1,7 @@
 "use strict";
 const copyProps = require("raptor-util/copyProps");
 const constructorCache = new Map();
-const BaseServerComponent = require("./ServerComponent");
+const BaseServerComponent = require("../ServerComponent");
 
 function createServerComponentClass(renderingLogic) {
   var renderingLogicProps =

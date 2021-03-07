@@ -1,5 +1,0 @@
-{
-    "browser": {
-        "./preserve-tag.js": "./preserve-tag-browser.js"
-    }
-}

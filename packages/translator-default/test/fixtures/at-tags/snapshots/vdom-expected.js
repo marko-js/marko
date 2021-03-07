@@ -6,7 +6,7 @@ export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/at-tags/template.marko", () => _marko_template),
       _marko_component = {};

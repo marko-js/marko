@@ -10,7 +10,7 @@ const _marko_node = _marko_createElement("div", null, "0", null, 4, 0).e("div", 
 const _marko_node2 = _marko_createElement("div", null, "2", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("TRrwGTtp", () => _marko_template),
       _marko_component = {};

@@ -1,18 +1,18 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
 var warp10Finalize = require("warp10/finalize");
-var eventDelegation = require("./event-delegation");
+var eventDelegation = require("../event-delegation");
 var win = window;
 var defaultDocument = document;
-var createFragmentNode = require("../vdom/morphdom/fragment")
+var createFragmentNode = require("../../vdom/morphdom/fragment")
   .___createFragmentNode;
-var componentsUtil = require("./util-browser");
+var componentsUtil = require("../util");
 var componentLookup = componentsUtil.___componentLookup;
 var addComponentRootToKeyedElements =
   componentsUtil.___addComponentRootToKeyedElements;
-var ComponentDef = require("./ComponentDef");
-var registry = require("./registry");
-var domData = require("./dom-data");
+var ComponentDef = require("../ComponentDef");
+var registry = require("../registry");
+var domData = require("../dom-data");
 var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var componentsByDOMNode = domData.___componentByDOMNode;
 var serverComponentRootNodes = {};

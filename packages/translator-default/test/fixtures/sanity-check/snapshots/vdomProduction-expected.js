@@ -50,7 +50,7 @@ const _marko_node9 = _marko_createElement("div", {
 const _marko_node10 = _marko_createElement("div", null, "24", null, 1, 0).t("123 abc 123");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("OLFRWJ/R", () => _marko_template),
       _marko_component = {

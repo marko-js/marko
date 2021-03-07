@@ -1,4 +1,4 @@
-var ComponentsContext = require("../../runtime/components/ComponentsContext");
+var ComponentsContext = require("../../../runtime/components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 
 module.exports = function render(input, out) {

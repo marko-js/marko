@@ -9,7 +9,7 @@ const _marko_node = _marko_createElement("div", null, "0", null, 0, 0);
 
 import _marko_component from "./template.component.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 import _marko_split_component from "./template.component-browser.js";
 
 const _marko_componentType = _marko_registerComponent("Wgq3cfjm", () => _marko_split_component),

@@ -1,7 +1,5 @@
 "use strict";
 
-const clientReorder = require("./client-reorder");
-
 module.exports = function (input, out) {
   // We cannot call beginSync() when using renderSync(). In this case we will
   // ignore the await-reorderer tag.
@@ -49,7 +47,10 @@ module.exports = function (input, out) {
         .on("___toString", out.emit.bind(out, "___toString"))
         .on("finish", function (result) {
           if (!global._afRuntime) {
-            asyncOut.script(clientReorder.getCode());
+            // Minified version of ./client-reorder-runtime.js
+            asyncOut.script(
+              `function $af(d,a,e,l,g,h,k,b,f,c){c=$af;if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("af"+d);g=e.getElementById("afph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`
+            );
             global._afRuntime = true;
           }
 

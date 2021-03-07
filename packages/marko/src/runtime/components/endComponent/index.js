@@ -1,6 +1,6 @@
 "use strict";
 
-var ComponentsContext = require("./ComponentsContext");
+var ComponentsContext = require("../ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 
 module.exports = function endComponent(out, componentDef) {

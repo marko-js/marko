@@ -8,7 +8,7 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 const _marko_node = _marko_createElement("textarea", null, "0", null, 1, 0).t("\n  hello world\n");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("or1T1BHP", () => _marko_template),
       _marko_component = {};

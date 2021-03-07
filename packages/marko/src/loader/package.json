@@ -1,5 +1,11 @@
 {
-    "browser": {
-        "./index.js": "./index-browser.js"
+    "main": "./index.js",
+    "browser": "./index-browser.js",
+    "exports": {
+        ".": {
+            "default": "./index.js",
+            "webpack": "./index-browser.js",
+            "browser": "./index-browser.js"
+        }
     }
 }

@@ -9,7 +9,7 @@ import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
 
 const _marko_node = _marko_createElement("div", null, "2", null, 0, 0);
 
-import _preserve from "marko/dist/core-tags/components/preserve-tag.js";
+import _preserve from "marko/dist/core-tags/components/preserve-tag";
 
 const _marko_node2 = _marko_createElement("div", null, "5", null, 0, 0);
 
@@ -26,7 +26,7 @@ const _marko_node7 = _marko_createElement("div", null, "16", null, 0, 0);
 const _marko_node8 = _marko_createElement("div", null, "17", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("qUg9ApxN", () => _marko_template),
       _marko_component = {};

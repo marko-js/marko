@@ -7,7 +7,7 @@ import bar, { f as foo } from "./bar";
 import "./foo";
 import baz from "./components/baz.marko";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/import-tag/template.marko", () => _marko_template),
       _marko_component = {};

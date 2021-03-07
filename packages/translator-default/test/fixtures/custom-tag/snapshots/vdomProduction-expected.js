@@ -6,7 +6,7 @@ export default _marko_template;
 import _testHello from "./tags/test-hello/renderer.js";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("gHRccTPG", () => _marko_template),
       _marko_component = {};
