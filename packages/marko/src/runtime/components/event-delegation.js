@@ -3,6 +3,8 @@ var runtimeId = componentsUtil.___runtimeId;
 var componentLookup = componentsUtil.___componentLookup;
 var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;
 
+var TEXT_NODE = 3;
+
 // We make our best effort to allow multiple marko runtimes to be loaded in the
 // same window. Each marko runtime will get its own unique runtime ID.
 var listenersAttachedKey = "$MDE" + runtimeId;
@@ -92,10 +94,14 @@ function addDelegatedEventHandlerToDoc(eventType, doc) {
           return;
         }
 
-        // event.target of an SVGElementInstance does not have a
-        // `getAttribute` function in IE 11.
-        // See https://github.com/marko-js/marko/issues/796
-        curNode = curNode.correspondingUseElement || curNode;
+        curNode =
+          // event.target of an SVGElementInstance does not have a
+          // `getAttribute` function in IE 11.
+          // See https://github.com/marko-js/marko/issues/796
+          curNode.correspondingUseElement ||
+          // in some browsers the event target can be a text node
+          // one example being dragenter in firefox.
+          (curNode.nodeType === TEXT_NODE ? curNode.parentNode : curNode);
 
         // Search up the tree looking DOM events mapped to target
         // component methods
