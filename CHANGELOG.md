@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.3.0](https://github.com/marko-js/marko/compare/v5.2.4...v5.3.0) (2021-03-08)
+
+
+### Features
+
+* **marko:** support lazy loading hydrated components ([7e14181](https://github.com/marko-js/marko/commit/7e14181d0d01977745eb5fb551aa0068b462aae7))
+
+
+
+
+
 ## [5.2.4](https://github.com/marko-js/marko/compare/v5.2.3...v5.2.4) (2021-03-08)
 
 
