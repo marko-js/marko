@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.15](https://github.com/marko-js/marko/compare/v4.23.14...v4.23.15) (2021-03-08)
+
+
+### Bug Fixes
+
+* **marko:** issue with delegating events from text nodes ([fadde17](https://github.com/marko-js/marko/commit/fadde17db1234b7d3b915fa0895af12bf70196b5))
+* release command ([3b29aff](https://github.com/marko-js/marko/commit/3b29aff94ea4745cc3b8a71a8720d65e11ab2957))
+
 ### [4.23.14](https://github.com/marko-js/marko/compare/v4.23.13...v4.23.14) (2021-02-18)
 
 
