@@ -1,7 +1,7 @@
 {
   "name": "@marko/translator-default",
   "description": "Translates Marko templates to the default Marko runtime.",
-  "version": "5.2.3",
+  "version": "5.2.4",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@marko/compiler": "^5.2.2",
-    "marko": "^5.2.3"
+    "marko": "^5.2.4"
   },
   "files": [
     "dist"

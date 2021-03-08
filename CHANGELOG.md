@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.2.4](https://github.com/marko-js/marko/compare/v5.2.3...v5.2.4) (2021-03-08)
+
+
+### Bug Fixes
+
+* **marko:** issue with delegating events from text nodes ([787578e](https://github.com/marko-js/marko/commit/787578ed60b15cf3b8abfc65b2f24c0418c7a442))
+
+
+
+
+
 ## [5.2.3](https://github.com/marko-js/marko/compare/v5.2.2...v5.2.3) (2021-03-05)
 
 
