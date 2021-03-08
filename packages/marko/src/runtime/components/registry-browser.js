@@ -1,15 +1,61 @@
+var complain = "MARKO_DEBUG" && require("complain");
+var queueMicrotask = require("../queueMicrotask");
 var defineComponent = require("./defineComponent");
+var initComponents = require("./init-components-browser");
 require(".");
 
 var registered = {};
 var loaded = {};
 var componentTypes = {};
+var pendingDefs;
 
-function register(componentId, def) {
-  registered[componentId] = def;
-  delete loaded[componentId];
-  delete componentTypes[componentId];
-  return componentId;
+function register(type, def) {
+  var pendingForType;
+  if (pendingDefs) {
+    pendingForType = pendingDefs[type];
+  }
+  registered[type] = def;
+  delete loaded[type];
+  delete componentTypes[type];
+
+  if (pendingForType) {
+    delete pendingDefs[type];
+    queueMicrotask(function() {
+      pendingForType.forEach(function(args) {
+        initComponents.___tryHydrateComponent(
+          args[0],
+          type,
+          args[1],
+          args[2]
+        )();
+      });
+    });
+  }
+
+  return type;
+}
+
+function addPendingDef(def, type, doc, runtimeId) {
+  if (!pendingDefs) {
+    pendingDefs = {};
+
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      doc.addEventListener("load", function() {
+        var pendingComponentIds = Object.keys(pendingDefs);
+        if (pendingComponentIds.length) {
+          complain(
+            "Marko templates were never loaded for: " + pendingComponentIds
+          );
+        }
+      });
+    }
+  }
+  (pendingDefs[type] = pendingDefs[type] || []).push([def, doc, runtimeId]);
+}
+
+function isRegistered(type) {
+  return Boolean(registered[type]);
 }
 
 function load(typeName) {
@@ -89,3 +135,5 @@ function createComponent(typeName, id) {
 
 exports.r = register;
 exports.___createComponent = createComponent;
+exports.___isRegistered = isRegistered;
+exports.___addPendingDef = addPendingDef;
