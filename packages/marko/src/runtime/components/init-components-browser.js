@@ -22,6 +22,8 @@ var DEFAULT_RUNTIME_ID = "M";
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
 
+var deferredDefs;
+
 function indexServerComponentBoundaries(node, runtimeId, stack) {
   var componentId;
   var ownerId;
@@ -334,44 +336,51 @@ function initServerRendered(renderedComponents, doc) {
 
   // hydrate components top down (leaf nodes last)
   // and return an array of functions to mount these components
-  var deferredDefs;
   (renderedComponents.w || [])
     .map(function(componentDef) {
-      componentDef = ComponentDef.___deserialize(
-        componentDef,
-        meta.___types,
-        meta.___globals,
-        registry
-      );
+      var typeName = meta.___types[componentDef[1]];
 
-      var mount = hydrateComponentAndGetMount(componentDef, doc);
-
-      if (!mount) {
-        // hydrateComponentAndGetMount will return false if there is not rootNode
-        // for the component.  If this is the case, we'll wait until the
-        // DOM has fully loaded to attempt to init the component again.
-        if (deferredDefs) {
-          deferredDefs.push(componentDef);
-        } else {
-          deferredDefs = [componentDef];
-          doc.addEventListener("DOMContentLoaded", function() {
-            indexServerComponentBoundaries(doc, runtimeId);
-            deferredDefs
-              .map(function(componentDef) {
-                return hydrateComponentAndGetMount(componentDef, doc);
-              })
-              .reverse()
-              .forEach(tryInvoke);
-          });
-        }
-      }
-
-      return mount;
+      return registry.___isRegistered(typeName)
+        ? tryHydrateComponent(componentDef, meta, doc, runtimeId)
+        : registry.___addPendingDef(componentDef, typeName, doc, runtimeId);
     })
     .reverse()
     .forEach(tryInvoke);
 
   return this;
+}
+
+function tryHydrateComponent(rawDef, meta, doc, runtimeId) {
+  var componentDef = ComponentDef.___deserialize(
+    rawDef,
+    meta.___types,
+    meta.___globals,
+    registry
+  );
+  var mount = hydrateComponentAndGetMount(componentDef, doc);
+
+  if (!mount) {
+    // hydrateComponentAndGetMount will return false if there is not rootNode
+    // for the component.  If this is the case, we'll wait until the
+    // DOM has fully loaded to attempt to init the component again.
+    if (deferredDefs) {
+      deferredDefs.push(componentDef);
+    } else {
+      deferredDefs = [componentDef];
+      doc.addEventListener("DOMContentLoaded", function() {
+        indexServerComponentBoundaries(doc, runtimeId);
+        deferredDefs
+          .map(function(componentDef) {
+            return hydrateComponentAndGetMount(componentDef, doc);
+          })
+          .reverse()
+          .forEach(tryInvoke);
+        deferredDefs = undefined;
+      });
+    }
+  }
+
+  return mount;
 }
 
 function hydrateComponentAndGetMount(componentDef, doc) {
@@ -416,3 +425,4 @@ function tryInvoke(fn) {
 
 exports.___initClientRendered = initClientRendered;
 exports.___initServerRendered = initServerRendered;
+exports.___tryHydrateComponent = tryHydrateComponent;
