@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import analyzeReferences from "./references";
+import { analyzeInputReferences, analyzeTagReferences } from "./references";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 import analyzeNestedAttributeTags from "./nested-attribute-tags";
 import analyzeEventHandlers from "./event-handlers";
@@ -47,7 +47,8 @@ declare module "@marko/compiler/dist/types" {
 export default {
   Program(program) {
     program.node.extra ??= {} as typeof program.node.extra;
-    program.traverse(analyzeReferences);
+    program.traverse(analyzeInputReferences);
+    program.traverse(analyzeTagReferences);
   },
   MarkoTag(tag) {
     const extra = (tag.node.extra ??= {} as typeof tag.node.extra);

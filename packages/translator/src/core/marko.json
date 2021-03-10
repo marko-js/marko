@@ -1,4 +1,5 @@
 {
+  "taglib-id": "marko-core",
   "<import>": {
     "node-factory": "./parse-import",
     "parse-options": {

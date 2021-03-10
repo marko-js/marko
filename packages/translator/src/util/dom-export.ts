@@ -12,7 +12,7 @@ export function writeExports(path: t.NodePath<t.Program>) {
     inputs = Object.keys(path.node.extra.references.input).reduce(
       (list: t.StringLiteral[], key: string) => {
         if (path.node.extra.references!.input![key]) {
-          list.push(t.stringLiteral(key.replace("input.", "")));
+          list.push(t.stringLiteral(key));
         }
         return list;
       },

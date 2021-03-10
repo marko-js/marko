@@ -1,3 +1,9 @@
+import {
+  getTagDef,
+  loadFileForTag,
+  loadFileForImport,
+  TagDefinition
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 type MarkoExprRootPath = t.NodePath<
@@ -9,13 +15,27 @@ type MarkoExprRootPath = t.NodePath<
 >;
 
 interface ReferenceMeta {
-  state?: boolean;
+  state?: true;
   input?: { [x: string]: boolean };
+  inputAccessor?: string; // only set when the reference _is_ input itself.
+}
+
+interface TemplateReferenceMeta extends ReferenceMeta {
+  set?: ReferenceMeta;
+  yield?: ReferenceMeta;
+  // This is when we know it is going to render a specific renderBody (eg `<${input.x}/>)
+  knownRenderBodies?: {
+    [x: string]: ReferenceMeta;
+  };
+  // This is when we don't know the specific renderBody, but know what input it's based under.
+  unknownRenderBodies?: {
+    [x: string]: ReferenceMeta;
+  };
 }
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    references?: ReferenceMeta;
+    references?: TemplateReferenceMeta;
   }
 
   export interface MarkoTagExtra {
@@ -23,8 +43,8 @@ declare module "@marko/compiler/dist/types" {
       var?: ReferenceMeta;
       name?: ReferenceMeta;
       // ResourceMeta as tracked from a child
-      state?: boolean;
-      input?: { [x: string]: boolean };
+      state?: true;
+      input?: { [x: string]: true };
     };
   }
 
@@ -53,7 +73,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export default {
+export const analyzeInputReferences: t.Visitor = {
   Identifier(identifier) {
     if (
       identifier.node.name !== "input" ||
@@ -62,70 +82,158 @@ export default {
       return;
     }
 
-    let curPath = identifier as t.NodePath<t.Node>;
-    let inputPath = "input";
+    trackInputReference(identifier, "");
+  }
+};
 
-    while (true) {
-      const { parentPath } = curPath;
-
-      if (parentPath.isMemberExpression()) {
-        const property = (parentPath as t.NodePath<t.MemberExpression>).get(
-          "property"
-        );
-        if (property.isStringLiteral()) {
-          inputPath = `${inputPath}.${property.node.value}`;
-        } else if (property.isIdentifier()) {
-          inputPath = `${inputPath}.${property.node.name}`;
-        } else {
-          // Bail when computed property used.
-          break;
-        }
-      } else {
-        // TODO handle destructuring
-        break;
-      }
-
-      curPath = parentPath;
-    }
-
-    const exprRoot = getExprRoot(curPath);
-    const tagMeta = getMetaForTag(exprRoot);
-    const templateMeta = getMetaForTemplate(exprRoot);
-    const inputsForExpr = (getMetaForExpr(exprRoot).input ??= {});
-    const inputsForTag = tagMeta ? (tagMeta.input ??= {}) : inputsForExpr;
-    const inputsForTemplate = (templateMeta.input ??= {});
-    inputsForTemplate[inputPath] = inputsForTag[inputPath] = inputsForExpr[
-      inputPath
-    ] = true;
-  },
+export const analyzeTagReferences: t.Visitor = {
   MarkoTag(tag) {
     // Mark any marko nodes that use bindings introduced by this tag as stateful.
     // TODO: should special case let/const/tag and friends and add logic for child template analysis
     // to only mark things as stateful when needed.
 
-    if (tag.has("var")) {
-      for (const name in tag.get("var").getBindingIdentifiers()) {
-        for (const refPath of tag.scope.getBinding(name)!.referencePaths) {
-          const exprRoot = getExprRoot(refPath);
-          const exprMeta = getMetaForExpr(exprRoot);
-          const tagMeta = getMetaForTag(exprRoot) ?? exprMeta;
-          const templateMeta = getMetaForTemplate(exprRoot);
-          templateMeta.state = tagMeta.state = exprMeta.state = true;
+    const tagDef = getTagDef(tag);
+
+    if (
+      tagDef &&
+      isCoreTag(tagDef) &&
+      (tagDef.name === "yield" || tagDef.name === "set")
+    ) {
+      const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
+
+      if (defaultAttrReferences) {
+        const templateMeta = getMetaForTemplate(tag as t.NodePath);
+        let references = templateMeta[tagDef.name];
+
+        if (references) {
+          // When we've got multiple references we cannot do the `inputAccessor` optimization.
+          references.inputAccessor = undefined;
+        } else {
+          references = templateMeta[tagDef.name] = {
+            inputAccessor: defaultAttrReferences.inputAccessor
+          };
         }
+
+        if (defaultAttrReferences.state) {
+          references.state = true;
+        }
+
+        if (defaultAttrReferences.input) {
+          references.input = {
+            ...references.input,
+            ...defaultAttrReferences.input
+          };
+        }
+      }
+    }
+
+    if (tag.has("var")) {
+      const references: ReferenceMeta = {};
+
+      if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
+        switch (tagDef.name) {
+          case "let":
+            // TODO could check if there are any assignments.
+            references.state = true;
+            break;
+          case "const": {
+            const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
+            if (defaultAttrReferences) {
+              references.state = defaultAttrReferences.state;
+              references.input = defaultAttrReferences.input;
+              references.inputAccessor = defaultAttrReferences.inputAccessor;
+            }
+            break;
+          }
+          case "get": {
+            const defaultAttr = tag.get("attributes")[0];
+            const defaultAttrValue = defaultAttr.isMarkoAttribute({
+              default: true
+            })
+              ? defaultAttr.get("value")
+              : undefined;
+            if (defaultAttrValue?.isStringLiteral()) {
+              const request = defaultAttrValue.node.value;
+              const setReferences = (request === "."
+                ? tag.hub.file
+                : loadFileForImport(tag.hub.file, request)
+              )?.path.node.extra.references;
+
+              if (setReferences) {
+                references.state = setReferences.state;
+                // TODO: the input referenced here would be from the parent of the `<set>` tag
+                // right now we aren't doing anything with that info.
+                // references.input = setReferences.input;
+                // references.inputAccessor = setReferences.inputAccessor;
+              }
+            } else {
+              references.state = true;
+            }
+            break;
+          }
+        }
+      } else if (tagDef?.html) {
+        references.state = true;
+      } else {
+        const tagReferences = loadFileForTag(tag)?.path.node.extra.references;
+        if (tagReferences) {
+          references.state = tagReferences.state;
+          // TODO: we need to map the tags input to the input we are passing.
+          // references.input = tagReferences.input;
+          // references.inputAccessor = tagReferences.inputAccessor;
+        }
+      }
+
+      if (references.inputAccessor) {
+        // Reference is an alias of input, so we track its binding as input references.
+        trackInputAlias(
+          tag.get("var") as t.NodePath<t.LVal>,
+          references.inputAccessor
+        );
+      } else {
+        // Otherwise copy the reference meta to all of the bindings introduced.
+        copyReferencesToBindings(
+          tag.get("var").getBindingIdentifiers(),
+          tag.scope,
+          references
+        );
       }
     }
 
     const body = tag.get("body");
     if (body.get("params").length) {
-      for (const name in body.getBindingIdentifiers()) {
-        for (const refPath of body.scope.getBinding(name)!.referencePaths) {
-          const exprRoot = getExprRoot(refPath);
-          const exprMeta = getMetaForExpr(exprRoot);
-          const tagMeta = getMetaForTag(exprRoot) ?? exprMeta;
-          const templateMeta = getMetaForTemplate(exprRoot);
-          templateMeta.state = tagMeta.state = exprMeta.state = true;
+      const references: ReferenceMeta = {};
+
+      if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
+        switch (tagDef.name) {
+          case "for":
+            for (const attr of tag.get("attributes")) {
+              const attrReferences = getAttrReferenceMeta(attr);
+
+              if (attrReferences) {
+                if (attrReferences.state) {
+                  references.state = true;
+                }
+
+                if (attrReferences.input) {
+                  references.input = {
+                    ...references.input,
+                    ...attrReferences.input
+                  };
+                }
+              }
+            }
+            break;
         }
+      } else {
+        references.state = true;
       }
+
+      copyReferencesToBindings(
+        body.getBindingIdentifiers(),
+        body.scope,
+        references
+      );
     }
   }
 } as t.Visitor;
@@ -154,8 +262,8 @@ function getMetaForTag(expr: ReturnType<typeof getExprRoot>) {
   return ((parentPath.node.extra ??= {}).references ??= {}) as ReferenceMeta;
 }
 
-function getMetaForTemplate(path: t.NodePath<t.Node>) {
-  return (path.hub.file.path.node.extra.references ??= {}) as ReferenceMeta;
+function getMetaForTemplate(path: t.NodePath) {
+  return (path.hub.file.path.node.extra.references ??= {}) as TemplateReferenceMeta;
 }
 
 function getExprRoot(path: t.NodePath<t.Node>) {
@@ -169,6 +277,141 @@ function getExprRoot(path: t.NodePath<t.Node>) {
   };
 }
 
+function getDefaultAttrReferenceMeta(tag: t.NodePath<t.MarkoTag>) {
+  const defaultAttr = tag
+    .get("attributes")
+    .find(attr => (attr.node as t.MarkoAttribute).default);
+
+  return defaultAttr && getAttrReferenceMeta(defaultAttr);
+}
+
+function getAttrReferenceMeta(
+  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>
+) {
+  return attr.node.extra?.references?.value;
+}
+
+function trackInputReference(
+  identifier: t.NodePath<t.Identifier>,
+  accessor: string
+) {
+  let curPath = identifier as t.NodePath<t.Node>;
+  let curAccessor = accessor;
+
+  while (true) {
+    const { parentPath } = curPath;
+
+    if (parentPath.isVariableDeclarator()) {
+      trackInputAlias(parentPath.get("id"), curAccessor);
+      return;
+    }
+
+    if (parentPath.isMemberExpression()) {
+      const property = parentPath.get("property");
+
+      if (!parentPath.node.computed) {
+        curAccessor = joinAccessor(
+          curAccessor,
+          (property.node as t.Identifier).name
+        );
+      } else if (property.isStringLiteral()) {
+        curAccessor = joinAccessor(curAccessor, property.node.value);
+      } else {
+        // Bail when computed property used.
+        break;
+      }
+    } else {
+      break;
+    }
+
+    curPath = parentPath;
+  }
+
+  const exprRoot = getExprRoot(curPath);
+  const exprMeta = getMetaForExpr(exprRoot);
+  const inputsForExpr = (exprMeta.input ??= {});
+
+  if (exprRoot === curPath) {
+    exprMeta.inputAccessor = curAccessor;
+  }
+
+  if (!inputsForExpr[curAccessor]) {
+    const tagMeta = getMetaForTag(exprRoot);
+    const inputsForTag = tagMeta ? (tagMeta.input ??= {}) : inputsForExpr;
+    inputsForExpr[curAccessor] = true;
+
+    if (!tagMeta || !inputsForTag[curAccessor]) {
+      const templateMeta = getMetaForTemplate(exprRoot);
+      const inputsForTemplate = (templateMeta.input ??= {});
+      inputsForTemplate[curAccessor] = inputsForTag[curAccessor] = true;
+    }
+  }
+}
+
+function trackInputAlias(lVal: t.NodePath<t.LVal>, accessor: string) {
+  if (lVal.isIdentifier()) {
+    for (const ref of lVal.scope.getBinding(lVal.node.name)!.referencePaths) {
+      trackInputReference(ref as t.NodePath<t.Identifier>, accessor);
+    }
+  } else if (lVal.isArrayPattern()) {
+    let i = 0;
+    for (const element of lVal.get("elements")) {
+      if (element.node) {
+        if (element.isRestElement()) {
+          trackInputAlias(element.get("argument"), accessor);
+        } else {
+          trackInputAlias(
+            element as Extract<typeof element, t.NodePath<null>>,
+            joinAccessor(accessor, `${i}`)
+          );
+        }
+      }
+
+      i++;
+    }
+  } else if (lVal.isObjectPattern()) {
+    for (const property of lVal.get("properties")) {
+      if (property.isRestElement()) {
+        trackInputAlias(property.get("argument"), accessor);
+      } else if (property.isObjectProperty()) {
+        trackInputAlias(
+          property.get("value") as t.NodePath<t.LVal>,
+          joinAccessor(
+            accessor,
+            (property.get("key").node as t.Identifier).name
+          )
+        );
+      }
+    }
+  }
+}
+
+function copyReferencesToBindings(
+  names: ReturnType<t.NodePath["getBindingIdentifiers"]>,
+  scope: t.Scope,
+  references: ReferenceMeta
+) {
+  if (references.state || references.input) {
+    for (const name in names) {
+      for (const refPath of scope.getBinding(name)!.referencePaths) {
+        const exprRoot = getExprRoot(refPath);
+        const exprMeta = getMetaForExpr(exprRoot);
+        const tagMeta = getMetaForTag(exprRoot) ?? exprMeta;
+        const templateMeta = getMetaForTemplate(exprRoot);
+
+        if (references.state) {
+          templateMeta.state = tagMeta.state = exprMeta.state = true;
+        }
+
+        if (references.input) {
+          tagMeta.input = { ...tagMeta.input, ...references.input };
+          exprMeta.input = { ...exprMeta.input, ...references.input };
+        }
+      }
+    }
+  }
+}
+
 function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
   switch (path.node.type) {
     case "MarkoTag":
@@ -180,4 +423,12 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
     default:
       return false;
   }
+}
+
+function isCoreTag(tagDef: TagDefinition) {
+  return tagDef.taglibId === "marko-core";
+}
+
+function joinAccessor(a: string, b: string) {
+  return a ? `${a}.${b}` : b;
 }

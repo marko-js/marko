@@ -34,158 +34,134 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
     return;
   }
 
-  const pending = [name] as t.NodePath<any>[];
+  const pending = [name] as t.NodePath<t.Expression>[];
   let path: typeof pending[0] | undefined;
   let type: TagNameTypes | undefined = undefined;
   let nullable = false;
 
   while ((path = pending.pop()) && type !== TagNameTypes.DynamicTag) {
-    switch (path.type) {
-      case "ConditionalExpression": {
-        const curPath = path as t.NodePath<t.ConditionalExpression>;
-        pending.push(curPath.get("consequent"));
+    if (path.isConditionalExpression()) {
+      pending.push(path.get("consequent"));
 
-        if (curPath.node.alternate) {
-          pending.push(curPath.get("alternate"));
-        }
-        break;
+      if (path.node.alternate) {
+        pending.push(path.get("alternate"));
       }
-
-      case "LogicalExpression": {
-        const curPath = path as t.NodePath<t.LogicalExpression>;
-        if (curPath.node.operator === "||") {
-          pending.push(curPath.get("left"));
-        } else {
-          nullable = true;
-        }
-
-        pending.push(curPath.get("right"));
-        break;
-      }
-
-      case "AssignmentExpression":
-        pending.push((path as t.NodePath<t.AssignmentExpression>).get("right"));
-        break;
-
-      case "BinaryExpression":
-        type =
-          (path as t.NodePath<t.BinaryExpression>).node.operator !== "+" ||
-          (type !== undefined && type !== TagNameTypes.NativeTag)
-            ? TagNameTypes.DynamicTag
-            : TagNameTypes.NativeTag;
-
-        break;
-
-      case "StringLiteral":
-      case "TemplateLiteral":
-        type =
-          type !== undefined && type !== TagNameTypes.NativeTag
-            ? TagNameTypes.DynamicTag
-            : TagNameTypes.NativeTag;
-        break;
-
-      case "NullLiteral":
+    } else if (path.isLogicalExpression()) {
+      if (path.node.operator === "||") {
+        pending.push(path.get("left"));
+      } else {
         nullable = true;
-        break;
-
-      case "Identifier": {
-        const curPath = path as t.NodePath<t.Identifier>;
-        if (curPath.node.name === "undefined") {
-          nullable = true;
-          break;
-        }
-
-        const binding = curPath.scope.getBinding(curPath.node.name);
-
-        if (!binding) {
-          type = TagNameTypes.DynamicTag;
-          break;
-        }
-
-        if (binding.kind === "module") {
-          const decl = binding.path.parent as t.ImportDeclaration;
-          if (
-            MARKO_FILE_REG.test(decl.source.value) &&
-            decl.specifiers.some(it => t.isImportDefaultSpecifier(it))
-          ) {
-            type =
-              type !== undefined && type !== TagNameTypes.CustomTag
-                ? TagNameTypes.DynamicTag
-                : TagNameTypes.CustomTag;
-          } else {
-            type = TagNameTypes.DynamicTag;
-          }
-
-          break;
-        }
-
-        const bindingTag = binding.path as t.NodePath<t.MarkoTag>;
-
-        if (
-          bindingTag.isMarkoTag() &&
-          (binding.kind as typeof binding.kind & "local") === "local"
-        ) {
-          const bindingTagName = (bindingTag.get("name")
-            .node as t.StringLiteral).value;
-          if (bindingTagName === "tag") {
-            // treat <tag/name> as a custom tag.
-            type =
-              type !== undefined && type !== TagNameTypes.CustomTag
-                ? TagNameTypes.DynamicTag
-                : TagNameTypes.CustomTag;
-            break;
-          }
-
-          if (bindingTagName === "const") {
-            pending.push(
-              (bindingTag.get(
-                "attributes"
-              )[0] as t.NodePath<t.MarkoAttribute>).get("value")
-            );
-            break;
-          }
-
-          if (bindingTagName === "let") {
-            const defaultAttr = bindingTag.get("attributes")[0];
-
-            if (defaultAttr.node) {
-              pending.push(
-                (defaultAttr as t.NodePath<t.MarkoAttribute>).get("value")
-              );
-            } else {
-              nullable = true;
-            }
-
-            const assignments = binding.constantViolations;
-            for (let i = assignments.length; i--; ) {
-              const assignment = assignments[
-                i
-              ] as t.NodePath<t.AssignmentExpression>;
-              const { operator } = assignment.node;
-              if (operator === "=") {
-                pending.push(assignment.get("right"));
-              } else if (operator === "+=") {
-                type =
-                  type !== undefined && type !== TagNameTypes.NativeTag
-                    ? TagNameTypes.DynamicTag
-                    : TagNameTypes.NativeTag;
-              } else {
-                type = TagNameTypes.DynamicTag;
-                break;
-              }
-            }
-          }
-
-          break;
-        }
-
-        type = TagNameTypes.DynamicTag;
-        break;
       }
 
-      default:
+      pending.push(path.get("right"));
+    } else if (path.isAssignmentExpression()) {
+      pending.push(path.get("right"));
+    } else if (path.isBinaryExpression()) {
+      type =
+        path.node.operator !== "+" ||
+        (type !== undefined && type !== TagNameTypes.NativeTag)
+          ? TagNameTypes.DynamicTag
+          : TagNameTypes.NativeTag;
+    } else if (path.isStringLiteral() || path.isTemplateLiteral()) {
+      type =
+        type !== undefined && type !== TagNameTypes.NativeTag
+          ? TagNameTypes.DynamicTag
+          : TagNameTypes.NativeTag;
+    } else if (path.isNullLiteral()) {
+      nullable = true;
+    } else if (path.isIdentifier()) {
+      if (path.node.name === "undefined") {
+        nullable = true;
+        continue;
+      }
+
+      const binding = path.scope.getBinding(path.node.name);
+
+      if (!binding) {
         type = TagNameTypes.DynamicTag;
-        break;
+        continue;
+      }
+
+      if (binding.kind === "module") {
+        const decl = binding.path.parent as t.ImportDeclaration;
+        if (
+          MARKO_FILE_REG.test(decl.source.value) &&
+          decl.specifiers.some(it => t.isImportDefaultSpecifier(it))
+        ) {
+          type =
+            type !== undefined && type !== TagNameTypes.CustomTag
+              ? TagNameTypes.DynamicTag
+              : TagNameTypes.CustomTag;
+        } else {
+          type = TagNameTypes.DynamicTag;
+        }
+
+        continue;
+      }
+
+      const bindingTag = binding.path as t.NodePath<t.MarkoTag>;
+
+      if (
+        bindingTag.isMarkoTag() &&
+        (binding.kind as typeof binding.kind & "local") === "local"
+      ) {
+        const bindingTagName = (bindingTag.get("name").node as t.StringLiteral)
+          .value;
+        if (bindingTagName === "tag") {
+          // treat <tag/name> as a custom tag.
+          type =
+            type !== undefined && type !== TagNameTypes.CustomTag
+              ? TagNameTypes.DynamicTag
+              : TagNameTypes.CustomTag;
+          continue;
+        }
+
+        if (bindingTagName === "const") {
+          pending.push(
+            (bindingTag.get(
+              "attributes"
+            )[0] as t.NodePath<t.MarkoAttribute>).get("value")
+          );
+          continue;
+        }
+
+        if (bindingTagName === "let") {
+          const defaultAttr = bindingTag.get("attributes")[0];
+
+          if (defaultAttr.node) {
+            pending.push(
+              (defaultAttr as t.NodePath<t.MarkoAttribute>).get("value")
+            );
+          } else {
+            nullable = true;
+          }
+
+          const assignments = binding.constantViolations;
+          for (let i = assignments.length; i--; ) {
+            const assignment = assignments[
+              i
+            ] as t.NodePath<t.AssignmentExpression>;
+            const { operator } = assignment.node;
+            if (operator === "=") {
+              pending.push(assignment.get("right"));
+            } else if (operator === "+=") {
+              type =
+                type !== undefined && type !== TagNameTypes.NativeTag
+                  ? TagNameTypes.DynamicTag
+                  : TagNameTypes.NativeTag;
+            } else {
+              type = TagNameTypes.DynamicTag;
+              break;
+            }
+          }
+        }
+
+        continue;
+      }
+
+      type = TagNameTypes.DynamicTag;
+    } else {
+      type = TagNameTypes.DynamicTag;
     }
   }
 

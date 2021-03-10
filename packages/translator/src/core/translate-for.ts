@@ -36,9 +36,12 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
     }
 
     if (!t.isIdentifier(keyParam)) {
-      throw (tag.get("params.0") as t.NodePath<t.Node>).buildCodeFrameError(
-        "Invalid 'for in' parameter, key must be a valid identifier."
-      );
+      throw tag
+        .get("body")
+        .get("params")[0]
+        .buildCodeFrameError(
+          "Invalid 'for in' parameter, key must be a valid identifier."
+        );
     }
 
     if (valParam) {
