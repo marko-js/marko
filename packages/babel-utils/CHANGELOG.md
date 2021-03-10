@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.4.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.3.0...v5.4.0) (2021-03-10)
+
+
+### Features
+
+* **babel-utils:** add api for analyzing template by import path ([7efc2ab](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/7efc2abb1b6243920e930646c3a5e7e058029967))
+
+
+
+
+
 ## [5.2.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.2.1...v5.2.2) (2021-03-01)
 
 **Note:** Version bump only for package @marko/babel-utils
