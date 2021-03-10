@@ -73,7 +73,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export const analyzeInputReferences: t.Visitor = {
+export default {
   Identifier(identifier) {
     if (
       identifier.node.name !== "input" ||
@@ -83,125 +83,122 @@ export const analyzeInputReferences: t.Visitor = {
     }
 
     trackInputReference(identifier, "");
-  }
-};
+  },
+  MarkoTag: {
+    exit(tag) {
+      const tagDef = getTagDef(tag);
 
-export const analyzeTagReferences: t.Visitor = {
-  MarkoTag(tag) {
-    // Mark any marko nodes that use bindings introduced by this tag as stateful.
-    // TODO: should special case let/const/tag and friends and add logic for child template analysis
-    // to only mark things as stateful when needed.
+      if (
+        tagDef &&
+        isCoreTag(tagDef) &&
+        (tagDef.name === "yield" || tagDef.name === "set")
+      ) {
+        const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
 
-    const tagDef = getTagDef(tag);
+        if (defaultAttrReferences) {
+          const templateMeta = getMetaForTemplate(tag as t.NodePath);
+          let references = templateMeta[tagDef.name];
 
-    if (
-      tagDef &&
-      isCoreTag(tagDef) &&
-      (tagDef.name === "yield" || tagDef.name === "set")
-    ) {
-      const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
+          if (references) {
+            // When we've got multiple references we cannot do the `inputAccessor` optimization.
+            references.inputAccessor = undefined;
+          } else {
+            references = templateMeta[tagDef.name] = {
+              inputAccessor: defaultAttrReferences.inputAccessor
+            };
+          }
 
-      if (defaultAttrReferences) {
-        const templateMeta = getMetaForTemplate(tag as t.NodePath);
-        let references = templateMeta[tagDef.name];
-
-        if (references) {
-          // When we've got multiple references we cannot do the `inputAccessor` optimization.
-          references.inputAccessor = undefined;
-        } else {
-          references = templateMeta[tagDef.name] = {
-            inputAccessor: defaultAttrReferences.inputAccessor
-          };
-        }
-
-        if (defaultAttrReferences.state) {
-          references.state = true;
-        }
-
-        if (defaultAttrReferences.input) {
-          references.input = {
-            ...references.input,
-            ...defaultAttrReferences.input
-          };
-        }
-      }
-    }
-
-    if (tag.has("var")) {
-      const references: ReferenceMeta = {};
-
-      if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
-        switch (tagDef.name) {
-          case "let":
-            // TODO could check if there are any assignments.
+          if (defaultAttrReferences.state) {
             references.state = true;
-            break;
-          case "const": {
-            const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
-            if (defaultAttrReferences) {
-              references.state = defaultAttrReferences.state;
-              references.input = defaultAttrReferences.input;
-              references.inputAccessor = defaultAttrReferences.inputAccessor;
-            }
-            break;
           }
-          case "get": {
-            const defaultAttr = tag.get("attributes")[0];
-            const defaultAttrValue = defaultAttr.isMarkoAttribute({
-              default: true
-            })
-              ? defaultAttr.get("value")
-              : undefined;
-            if (defaultAttrValue?.isStringLiteral()) {
-              const request = defaultAttrValue.node.value;
-              const setReferences = (request === "."
-                ? tag.hub.file
-                : loadFileForImport(tag.hub.file, request)
-              )?.path.node.extra.references;
 
-              if (setReferences) {
-                references.state = setReferences.state;
-                // TODO: the input referenced here would be from the parent of the `<set>` tag
-                // right now we aren't doing anything with that info.
-                // references.input = setReferences.input;
-                // references.inputAccessor = setReferences.inputAccessor;
-              }
-            } else {
-              references.state = true;
-            }
-            break;
+          if (defaultAttrReferences.input) {
+            references.input = {
+              ...references.input,
+              ...defaultAttrReferences.input
+            };
           }
-        }
-      } else if (tagDef?.html) {
-        references.state = true;
-      } else {
-        const tagReferences = loadFileForTag(tag)?.path.node.extra.references;
-        if (tagReferences) {
-          references.state = tagReferences.state;
-          // TODO: we need to map the tags input to the input we are passing.
-          // references.input = tagReferences.input;
-          // references.inputAccessor = tagReferences.inputAccessor;
         }
       }
 
-      if (references.inputAccessor) {
-        // Reference is an alias of input, so we track its binding as input references.
-        trackInputAlias(
-          tag.get("var") as t.NodePath<t.LVal>,
-          references.inputAccessor
-        );
-      } else {
-        // Otherwise copy the reference meta to all of the bindings introduced.
-        copyReferencesToBindings(
-          tag.get("var").getBindingIdentifiers(),
-          tag.scope,
-          references
-        );
+      if (tag.has("var")) {
+        const references: ReferenceMeta = {};
+
+        if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
+          switch (tagDef.name) {
+            case "let":
+              // TODO could check if there are any assignments.
+              references.state = true;
+              break;
+            case "const": {
+              const defaultAttrReferences = getDefaultAttrReferenceMeta(tag);
+              if (defaultAttrReferences) {
+                references.state = defaultAttrReferences.state;
+                references.input = defaultAttrReferences.input;
+                references.inputAccessor = defaultAttrReferences.inputAccessor;
+              }
+              break;
+            }
+            case "get": {
+              const defaultAttr = tag.get("attributes")[0];
+              const defaultAttrValue = defaultAttr.isMarkoAttribute({
+                default: true
+              })
+                ? defaultAttr.get("value")
+                : undefined;
+              if (defaultAttrValue?.isStringLiteral()) {
+                const request = defaultAttrValue.node.value;
+                const setReferences = (request === "."
+                  ? tag.hub.file
+                  : loadFileForImport(tag.hub.file, request)
+                )?.path.node.extra.references;
+
+                if (setReferences) {
+                  references.state = setReferences.state;
+                  // TODO: the input referenced here would be from the parent of the `<set>` tag
+                  // right now we aren't doing anything with that info.
+                  // references.input = setReferences.input;
+                  // references.inputAccessor = setReferences.inputAccessor;
+                }
+              } else {
+                references.state = true;
+              }
+              break;
+            }
+          }
+        } else if (tagDef?.html) {
+          references.state = true;
+        } else {
+          const tagReferences = loadFileForTag(tag)?.path.node.extra.references;
+          if (tagReferences) {
+            references.state = tagReferences.state;
+            // TODO: we need to map the tags input to the input we are passing.
+            // references.input = tagReferences.input;
+            // references.inputAccessor = tagReferences.inputAccessor;
+          }
+        }
+
+        if (references.inputAccessor) {
+          // Reference is an alias of input, so we track its binding as input references.
+          trackInputAlias(
+            tag.get("var") as t.NodePath<t.LVal>,
+            references.inputAccessor
+          );
+        } else {
+          // Otherwise copy the reference meta to all of the bindings introduced.
+          copyReferencesToBindings(
+            tag.get("var").getBindingIdentifiers(),
+            tag.scope,
+            references
+          );
+        }
       }
     }
-
-    const body = tag.get("body");
+  },
+  MarkoTagBody(body) {
     if (body.get("params").length) {
+      const tag = body.parentPath as t.NodePath<t.MarkoTag>;
+      const tagDef = getTagDef(tag);
       const references: ReferenceMeta = {};
 
       if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {

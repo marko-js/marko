@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { analyzeInputReferences, analyzeTagReferences } from "./references";
+import analyzeReferences from "./references";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 import analyzeNestedAttributeTags from "./nested-attribute-tags";
 import analyzeEventHandlers from "./event-handlers";
@@ -44,23 +44,24 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export default {
-  Program(program) {
-    program.node.extra ??= {} as typeof program.node.extra;
-    program.traverse(analyzeInputReferences);
-    program.traverse(analyzeTagReferences);
-  },
-  MarkoTag(tag) {
-    const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
-    analyzeTagNameType(tag);
+export default [
+  analyzeReferences,
+  {
+    Program(program) {
+      program.node.extra ??= {} as typeof program.node.extra;
+    },
+    MarkoTag(tag) {
+      const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
+      analyzeTagNameType(tag);
 
-    if (extra.tagNameType === TagNameTypes.NativeTag) {
-      analyzeEventHandlers(tag);
-    } else {
-      analyzeNestedAttributeTags(tag);
+      if (extra.tagNameType === TagNameTypes.NativeTag) {
+        analyzeEventHandlers(tag);
+      } else {
+        analyzeNestedAttributeTags(tag);
+      }
+    },
+    MarkoPlaceholder(placeholder) {
+      placeholder.node.extra ??= {} as typeof placeholder.node.extra;
     }
-  },
-  MarkoPlaceholder(placeholder) {
-    placeholder.node.extra ??= {} as typeof placeholder.node.extra;
   }
-} as t.Visitor;
+] as t.Visitor[];
