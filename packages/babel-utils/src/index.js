@@ -12,6 +12,7 @@ export {
   findAttributeTags,
   getArgOrSequence,
   loadFileForTag,
+  loadFileForImport,
   getTemplateId,
   resolveTagImport
 } from "./tags";
