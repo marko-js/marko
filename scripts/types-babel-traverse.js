@@ -10,6 +10,8 @@ const HUB_CLASS =
   "export class Hub implements HubInterface {\n    constructor();";
 const IMPORT = "import * as t from '@babel/types'";
 const EXPORT_NODE = "export import Node = t.Node;";
+const NODE_PATH_GET =
+  "get(key: string, context?: boolean | TraversalContext): NodePath | NodePath[];";
 const IS =
   "//#region ------------------------- isXXX -------------------------";
 const ASSERT =
@@ -66,6 +68,7 @@ ${HUB_INTERFACE}
       )
       .replace(IMPORT, `import * as t from './types'`)
       .replace(EXPORT_NODE, "type Node = t.Node")
+      .replace(NODE_PATH_GET, "")
       .replace(
         IS,
         IS +

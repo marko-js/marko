@@ -180,6 +180,19 @@ export function loadFileForTag(tag) {
   }
 }
 
+export function loadFileForImport(file, request) {
+  const fs = file.markoOpts.fileSystem;
+  const sourceFileName = resolveTagImport(file.path, request);
+
+  if (sourceFileName) {
+    return file.___getMarkoFile(
+      fs.readFileSync(sourceFileName).toString("utf-8"),
+      { ...file.opts, sourceFileName, filename: sourceFileName },
+      file.markoOpts
+    );
+  }
+}
+
 export function getTemplateId(optimize, request) {
   const id = relative(ROOT, request);
 
