@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.4.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.4.1...v5.4.2) (2021-03-10)
+
+
+### Bug Fixes
+
+* **babel-utils:** loadFileForImport not fully resolving file ([f0cd452](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/f0cd4520cbf02507c765ce6aec026952c06af3b3))
+
+
+
+
+
 ## [5.4.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.4.0...v5.4.1) (2021-03-10)
 
 
