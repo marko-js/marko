@@ -2,22 +2,19 @@ import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   getTagDef,
-  resolveRelativePath,
-  importDefault
+  importDefault,
+  resolveRelativePath
 } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import nativeTag from "./native-tag";
 import withPreviousLocation from "../util/with-previous-location";
-
-// TODO: support transform and other entries.
-const TAG_FILE_ENTRIES = ["template", "renderer"];
 
 export default function (path, isNullable) {
   const {
     hub: { file },
     node
   } = path;
-  const { metadata, markoOpts } = file;
+  const { markoOpts } = file;
   const { name, key } = node;
 
   assertNoArgs(path);
@@ -25,9 +22,22 @@ export default function (path, isNullable) {
   let tagIdentifier;
 
   if (t.isStringLiteral(name)) {
-    const tagDef = getTagDef(path);
     const tagName = name.value;
-    const relativePath = tagDef && resolveRelativeTagEntry(file, tagDef);
+    let relativePath = node.extra && node.extra.relativePath;
+
+    if (!relativePath) {
+      const tagDef = getTagDef(path);
+      if (
+        tagDef &&
+        tagDef.taglibId === "marko-default-core" &&
+        tagDef.renderer
+      ) {
+        // Normally new tags should not be added in the translate stage.
+        // We make an exception here for core tags, init-components & _preserve being the primary culprits.
+        // TODO: in the future refactor so this is not needed.
+        relativePath = resolveRelativePath(file, tagDef.renderer);
+      }
+    }
 
     if (!relativePath) {
       if (markoOpts.ignoreUnrecognizedTags) {
@@ -42,10 +52,6 @@ export default function (path, isNullable) {
     }
 
     tagIdentifier = importDefault(file, relativePath, tagName);
-
-    if (!metadata.marko.tags.includes(relativePath)) {
-      metadata.marko.tags.push(relativePath);
-    }
   } else {
     tagIdentifier = name;
   }
@@ -104,12 +110,5 @@ export default function (path, isNullable) {
     );
   } else {
     path.replaceWith(customTagRenderCall);
-  }
-}
-
-function resolveRelativeTagEntry(file, tagDef) {
-  for (const entry of TAG_FILE_ENTRIES) {
-    if (!tagDef[entry]) continue;
-    return resolveRelativePath(file, tagDef[entry]);
   }
 }

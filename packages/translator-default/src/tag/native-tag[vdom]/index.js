@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import { types as t } from "@marko/compiler";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
@@ -10,7 +9,6 @@ import {
 } from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 
-const EMPTY_OBJECT = {};
 const SIMPLE_ATTRS = ["id", "class", "style"];
 const MAYBE_SVG = {
   a: true,
@@ -126,13 +124,9 @@ export function tagArguments(path, isStatic) {
   const tagDef = getTagDef(path);
 
   if (tagDef) {
-    const { htmlType, name, parseOptions = EMPTY_OBJECT } = tagDef;
+    const { htmlType, name } = tagDef;
     if (htmlType === "custom-element") {
       runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
-      if (parseOptions.import) {
-        // TODO: the taglib should be updated to support this as a top level option.
-        file.metadata.marko.deps.push(resolve(tagDef.dir, parseOptions.import));
-      }
     } else if (
       htmlType === "svg" ||
       (MAYBE_SVG[name] &&

@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-import-tag-root-only/template.marko(2,3): "import" tags must be at the root of your Marko template.
+  1 | <div>
+> 2 |   <import x from "y"/>
+    |   ^^^^^^^
+  3 | </div>

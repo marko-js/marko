@@ -2,14 +2,24 @@ import { TaglibLookup } from "@marko/babel-utils";
 
 export * as types from "./babel-types";
 
+type Dep = {
+  type: string;
+  code: string;
+  path: string;
+  require?: boolean;
+  virtualPath?: string;
+  [x: string]: unknown;
+};
+
 export type Config = {
-  output?: "html" | "dom";
+  output?: "html" | "dom" | "hydrate" | "migrate";
   writeVersionComment?: boolean;
   ignoreUnrecognizedTags?: boolean;
   sourceMaps?: boolean;
   translator?: string;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
+  resolveVirtualDependency?(sourceFileName: string, dep: Dep & { virtualPath: string }): string;
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   babelConfig?: {
@@ -30,14 +40,7 @@ export type MarkoMeta = {
   tags?: string[];
   deps: Array<
     | string
-    | {
-        type: string;
-        code: string;
-        path: string;
-        require?: boolean;
-        virtualPath?: string;
-        [x: string]: unknown;
-      }
+    | Dep
   >;
 };
 

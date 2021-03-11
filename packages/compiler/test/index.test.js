@@ -20,7 +20,13 @@ fs.readdirSync(path.join(__dirname, "../../"))
         output: "dom",
         optimize: true
       }),
-      generated: runTest({ _translate: false })
+      generated: runTest({ output: "migrate" }),
+      hydrate: runTest({
+        output: "hydrate",
+        resolveVirtualDependency(from, { virtualPath }) {
+          return virtualPath;
+        }
+      })
     });
 
     function runTest(config) {

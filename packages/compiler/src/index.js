@@ -45,7 +45,7 @@ function loadBabelConfig(filename, config) {
   const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
-    filename: filename,
+    filename,
     sourceFileName: filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,

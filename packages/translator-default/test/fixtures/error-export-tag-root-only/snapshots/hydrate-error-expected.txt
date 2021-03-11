@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-export-tag-root-only/template.marko(2,3): "export" tags must be at the root of your Marko template.
+  1 | <div>
+> 2 |   <export x from "y"/>
+    |   ^^^^^^^
+  3 | </div>

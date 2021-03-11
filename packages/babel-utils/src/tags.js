@@ -174,7 +174,7 @@ export function loadFileForTag(tag) {
   if (sourceFileName) {
     return file.___getMarkoFile(
       fs.readFileSync(sourceFileName).toString("utf-8"),
-      { ...file.opts, sourceFileName, filename: sourceFileName },
+      { ...file.opts, sourceFileName },
       file.markoOpts
     );
   }
@@ -192,7 +192,7 @@ export function loadFileForImport(file, request) {
     );
     return file.___getMarkoFile(
       fs.readFileSync(sourceFileName).toString("utf-8"),
-      { ...file.opts, sourceFileName, filename: sourceFileName },
+      { ...file.opts, sourceFileName },
       file.markoOpts
     );
   }

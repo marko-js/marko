@@ -109,6 +109,13 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     optimize: undefined,
 
     /**
+     * This option should be set if `hydrate` output is specified.
+     * Maps a virtual dependency to a resolved file which can be implemented
+     * for specific bundlers.
+     */
+    resolveVirtualDependency: undefined,
+
+    /**
      * Compiling a Marko template may require other (used) Marko templates to compile.
      * To prevent compiling templates more than once, most of the compilation is cached.
      *

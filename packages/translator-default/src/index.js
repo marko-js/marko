@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { types as t } from "@marko/compiler";
 import {
   parseExpression,
@@ -11,7 +12,8 @@ import {
   isDynamicTag,
   isAttributeTag,
   loadFileForTag,
-  findParentTag
+  findParentTag,
+  getTagDef
 } from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
@@ -26,17 +28,86 @@ import MarkoClass from "./class";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import getComponentFiles from "./util/get-component-files";
+import addDependencies from "./util/add-dependencies";
 
 export { default as taglibs } from "./taglib";
 
 export const analyze = {
-  Program(program) {
-    // Pre populate metadata for component files.
-    getComponentFiles(program);
+  Program: {
+    enter(program) {
+      // Pre populate metadata for component files.
+      getComponentFiles(program);
+    },
+    exit(program) {
+      const { file } = program.hub;
+      const meta = file.metadata.marko;
+      const {
+        styleFile,
+        packageFile,
+        componentBrowserFile
+      } = getComponentFiles(program);
+
+      if (packageFile) {
+        meta.deps.unshift(`package: ${packageFile}`);
+      }
+
+      if (styleFile) {
+        meta.deps.unshift(styleFile);
+      }
+
+      if (meta.hasComponentBrowser) {
+        meta.component = componentBrowserFile;
+      } else if (meta.hasComponent || meta.hasStatefulTagParams) {
+        meta.component = file.opts.sourceFileName;
+      }
+
+      meta.component =
+        meta.component && resolveRelativePath(file, meta.component);
+      meta.deps = meta.deps.map(filename =>
+        typeof filename === "string"
+          ? resolveRelativePath(file, filename)
+          : filename
+      );
+    }
   },
   MarkoTag(tag) {
+    const { file } = tag.hub;
+    const tagDef = getTagDef(tag);
     // Check if tag uses stateful tag params.
     const meta = tag.hub.file.metadata.marko;
+
+    if (tagDef) {
+      if (tagDef.html && !tagDef.template && !tagDef.renderer) {
+        if (tagDef.htmlType === "custom-element") {
+          if (tagDef.parseOptions && tagDef.parseOptions.import) {
+            // TODO: the taglib should be updated to support this as a top level option.
+            meta.deps.push(
+              resolve(
+                tagDef.dir,
+                resolve(tagDef.dir, tagDef.parseOptions.import)
+              )
+            );
+          }
+        }
+      } else if (tag.get("name").isStringLiteral()) {
+        const relativePath = resolveRelativeTagEntry(file, tagDef);
+
+        if (relativePath) {
+          tag.node.extra = tag.node.extra || {};
+          tag.node.extra.relativePath = relativePath;
+
+          if (!meta.tags.includes(relativePath)) {
+            meta.tags.push(relativePath);
+          }
+        }
+      }
+
+      if (tagDef.codeGeneratorModulePath) {
+        if (!meta.watchFiles.includes(tagDef.codeGeneratorModulePath)) {
+          meta.watchFiles.push(tagDef.codeGeneratorModulePath);
+        }
+      }
+    }
 
     if (
       meta.hasStatefulTagParams ||
@@ -63,6 +134,21 @@ export const analyze = {
       childMeta &&
       (childMeta.hasStatefulTagParams ||
         (childMeta.hasComponent && !childMeta.hasComponentBrowser));
+  },
+  ImportDeclaration: {
+    exit(path) {
+      const source = path.get("source");
+      const tagEntry = resolveTagImport(source, source.node.value);
+
+      if (tagEntry) {
+        const meta = path.hub.file.metadata.marko;
+        source.node.value = tagEntry;
+
+        if (!meta.tags.includes(tagEntry)) {
+          meta.tags.push(tagEntry);
+        }
+      }
+    }
   }
 };
 
@@ -81,6 +167,16 @@ export const translate = {
       const {
         hub: { file }
       } = path;
+
+      if (file.markoOpts.output === "hydrate") {
+        addDependencies(file, true);
+        return;
+      } else if (
+        file.markoOpts.resolveVirtualDependencies &&
+        file.markoOpts.output !== "html"
+      ) {
+        addDependencies(file, false);
+      }
 
       if (file.metadata.marko.moduleCode) {
         path
@@ -115,35 +211,8 @@ export const translate = {
       const { markoOpts, _inlineComponentClass } = file;
       const includeMetaInSource = markoOpts.meta !== false;
       const meta = file.metadata.marko;
-      const {
-        styleFile,
-        packageFile,
-        componentFile,
-        componentBrowserFile
-      } = getComponentFiles(path);
+      const { componentFile, componentBrowserFile } = getComponentFiles(path);
       const isHTML = markoOpts.output === "html";
-
-      if (packageFile) {
-        meta.deps.unshift(`package: ${packageFile}`);
-      }
-
-      if (styleFile) {
-        meta.deps.unshift(styleFile);
-      }
-
-      if (meta.hasComponentBrowser) {
-        meta.component = componentBrowserFile;
-      } else if (meta.hasComponent || meta.hasStatefulTagParams) {
-        meta.component = file.opts.sourceFileName;
-      }
-
-      meta.component =
-        meta.component && resolveRelativePath(file, meta.component);
-      meta.deps = meta.deps.map(filename =>
-        typeof filename === "string"
-          ? resolveRelativePath(file, filename)
-          : filename
-      );
 
       const renderBlock = file._renderBlock;
       const componentClass =
@@ -352,25 +421,16 @@ export const translate = {
 
       optimizeHTMLWrites(path);
     }
-  },
-  ImportDeclaration: {
-    exit(path) {
-      const source = path.get("source");
-      const tagEntry = resolveTagImport(source, source.node.value);
-
-      if (tagEntry) {
-        const meta = path.hub.file.metadata.marko;
-        source.node.value = tagEntry;
-
-        if (!meta.tags.includes(tagEntry)) {
-          meta.tags.push(tagEntry);
-        }
-      }
-    }
   }
 };
 
 function isRenderContent(path) {
   const { node } = path;
   return t.MARKO_TYPES.includes(node.type) && !node.static;
+}
+
+function resolveRelativeTagEntry(file, tagDef) {
+  // TODO: support transform and other entries.
+  const entry = tagDef.template || tagDef.renderer;
+  return entry && resolveRelativePath(file, entry);
 }

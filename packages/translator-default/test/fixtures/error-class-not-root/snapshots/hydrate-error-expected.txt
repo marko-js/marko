@@ -1,0 +1,7 @@
+packages/translator-default/test/fixtures/error-class-not-root/template.marko(2,3): "class" tags must be at the root of your Marko template.
+  1 | div
+> 2 |   class extends Test {
+    |   ^^^^^
+  3 |     onCreate() {
+  4 | 
+  5 |     }

@@ -46,6 +46,15 @@ export default (api, markoOpts) => {
     );
   }
 
+  if (
+    markoOpts.output === "hydrate" &&
+    typeof markoOpts.resolveVirtualDependency !== "function"
+  ) {
+    throw new Error(
+      `@marko/compiler: the "resolveVirtualDependency" option must be supplied when output is "hydrate".`
+    );
+  }
+
   return {
     name: "marko",
     parserOverride(code, jsParseOptions) {
@@ -55,23 +64,25 @@ export default (api, markoOpts) => {
       return finalAst;
     },
     pre(file) {
+      if (markoOpts.output === "migrate") {
+        return file;
+      }
+
       const { ast, metadata } = file;
       const sourceFile = SOURCE_FILES.get(ast);
       metadata.marko = shallowClone(sourceFile.metadata.marko);
 
-      if (markoOpts._translate !== false) {
-        const { buildCodeFrameError } = file;
-        const { buildError } = file.hub;
-        file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
-        file.hub.buildError = file.buildCodeFrameError.bind(file);
-        file.markoOpts = markoOpts;
-        file.___taglibLookup = sourceFile.___taglibLookup;
-        file.___getMarkoFile = getMarkoFile;
-        traverseAll(file, translator.translate);
-        file.buildCodeFrameError = buildCodeFrameError;
-        file.hub.buildError = buildError;
-        file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
-      }
+      const { buildCodeFrameError } = file;
+      const { buildError } = file.hub;
+      file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
+      file.hub.buildError = file.buildCodeFrameError.bind(file);
+      file.markoOpts = markoOpts;
+      file.___taglibLookup = sourceFile.___taglibLookup;
+      file.___getMarkoFile = getMarkoFile;
+      traverseAll(file, translator.translate);
+      file.buildCodeFrameError = buildCodeFrameError;
+      file.hub.buildError = buildError;
+      file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
 
       metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
     }
@@ -86,15 +97,14 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     markoOpts.cache.set(translator, (compileCache = new Map()));
   }
 
-  const filename = jsParseOptions.sourceFileName;
-  const id = getTemplateId(markoOpts.optimize, filename);
-  const contentHash = createHash("MD5").update(code).digest("hex");
-  const cacheKey = createHash("MD5")
-    .update(id)
-    .update(markoOpts.migrate ? "\0migrate" : "")
-    .digest("hex");
+  const { sourceFileName } = jsParseOptions;
+  const isMigrate = markoOpts.output === "migrate";
+  const id = getTemplateId(markoOpts.optimize, sourceFileName);
+  const contentHash =
+    !isMigrate && createHash("MD5").update(code).digest("hex");
+  const cacheKey = !isMigrate && createHash("MD5").update(id).digest("hex");
 
-  let cached = compileCache.get(cacheKey);
+  let cached = !isMigrate && compileCache.get(cacheKey);
 
   if (cached) {
     if (cached.contentHash !== contentHash) {
@@ -121,7 +131,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     return cached.file;
   }
 
-  const taglibLookup = buildLookup(path.dirname(filename), translator);
+  const taglibLookup = buildLookup(path.dirname(sourceFileName), translator);
 
   const file = new MarkoFile(jsParseOptions, {
     code,
@@ -170,13 +180,18 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     }
   }
 
+  traverseAll(file, rootMigrators);
+
+  if (isMigrate) {
+    return file;
+  }
+
   for (const { path: transformerPath } of taglibLookup.merged.transformers) {
     const mod = markoModules.require(transformerPath);
     meta.watchFiles.push(transformerPath);
     rootTransformers.push(mod.default || mod);
   }
 
-  traverseAll(file, rootMigrators);
   traverseAll(file, rootTransformers);
 
   for (const taglibId in taglibLookup.taglibsById) {

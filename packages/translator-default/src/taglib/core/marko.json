@@ -71,7 +71,7 @@
   },
   "<style>": {
     "node-factory": "./parse-style.js",
-    "code-generator": "./translate-style.js",
+    "transformer": "./transform-style.js",
     "parse-options": {
       "rawOpenTag": true
     }
