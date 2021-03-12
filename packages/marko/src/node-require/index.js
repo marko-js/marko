@@ -2,8 +2,6 @@
 
 const path = require("path");
 const resolveFrom = require("resolve-from");
-const fs = require("fs");
-const fsReadOptions = { encoding: "utf8" };
 const requiredCompilerOptions = { modules: "cjs" };
 const defaultCompilerOptions = {
   // eslint-disable-next-line no-constant-condition
@@ -20,9 +18,7 @@ function normalizeExtension(extension) {
 }
 
 function compile(templatePath, markoCompiler, userCompilerOptions) {
-  var templateSrc = fs.readFileSync(templatePath, fsReadOptions);
-  return markoCompiler.compileSync(
-    templateSrc,
+  return markoCompiler.compileFileSync(
     templatePath,
     Object.assign(
       {},

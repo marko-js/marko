@@ -2,12 +2,12 @@
 
 var ok = require("assert").ok;
 var resolveFrom = require("resolve-from").silent;
-var lassoCachingFS = require("lasso-caching-fs");
 var propertyHandlers = require("property-handlers");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
 var forEachEntry = require("raptor-util/forEachEntry");
 var createError = require("raptor-util/createError");
+var taglibFS = require("../fs");
 var types = require("./types");
 var loaders = require("./loaders");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -344,10 +344,13 @@ class TagLoader {
     var dirname = this.dirname;
 
     var path = nodePath.resolve(dirname, value);
-    if (!lassoCachingFS.existsSync(path)) {
+
+    try {
+      taglibFS.curFS.statSync(path);
+      tag.template = path;
+    } catch (_) {
       throw new Error('Template at path "' + path + '" does not exist.');
     }
-    tag.template = path;
   }
 
   /**

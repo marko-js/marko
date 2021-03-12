@@ -9,6 +9,7 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 import markoModules from "../../modules";
 import { MarkoFile } from "./file";
+import { curFS, setFS } from "../taglib/fs";
 
 const SOURCE_FILES = new WeakMap();
 
@@ -58,33 +59,45 @@ export default (api, markoOpts) => {
   return {
     name: "marko",
     parserOverride(code, jsParseOptions) {
-      const file = getMarkoFile(code, jsParseOptions, markoOpts);
-      const finalAst = t.cloneDeep(file.ast);
-      SOURCE_FILES.set(finalAst, file);
-      return finalAst;
+      let prevFS = curFS;
+      setFS(markoOpts.fileSystem);
+      try {
+        const file = getMarkoFile(code, jsParseOptions, markoOpts);
+        const finalAst = t.cloneDeep(file.ast);
+        SOURCE_FILES.set(finalAst, file);
+        return finalAst;
+      } finally {
+        setFS(prevFS);
+      }
     },
     pre(file) {
-      if (markoOpts.output === "source" || markoOpts.output === "migrate") {
-        return file;
+      let prevFS = curFS;
+      setFS(markoOpts.fileSystem);
+      try {
+        if (markoOpts.output === "source" || markoOpts.output === "migrate") {
+          return file;
+        }
+
+        const { ast, metadata } = file;
+        const sourceFile = SOURCE_FILES.get(ast);
+        metadata.marko = shallowClone(sourceFile.metadata.marko);
+
+        const { buildCodeFrameError } = file;
+        const { buildError } = file.hub;
+        file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
+        file.hub.buildError = file.buildCodeFrameError.bind(file);
+        file.markoOpts = markoOpts;
+        file.___taglibLookup = sourceFile.___taglibLookup;
+        file.___getMarkoFile = getMarkoFile;
+        traverseAll(file, translator.translate);
+        file.buildCodeFrameError = buildCodeFrameError;
+        file.hub.buildError = buildError;
+        file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
+
+        metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
+      } finally {
+        setFS(prevFS);
       }
-
-      const { ast, metadata } = file;
-      const sourceFile = SOURCE_FILES.get(ast);
-      metadata.marko = shallowClone(sourceFile.metadata.marko);
-
-      const { buildCodeFrameError } = file;
-      const { buildError } = file.hub;
-      file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
-      file.hub.buildError = file.buildCodeFrameError.bind(file);
-      file.markoOpts = markoOpts;
-      file.___taglibLookup = sourceFile.___taglibLookup;
-      file.___getMarkoFile = getMarkoFile;
-      traverseAll(file, translator.translate);
-      file.buildCodeFrameError = buildCodeFrameError;
-      file.hub.buildError = buildError;
-      file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
-
-      metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
     }
   };
 };

@@ -1,7 +1,7 @@
 "use strict";
 var nodePath = require("path");
-var lassoCachingFS = require("lasso-caching-fs");
 var resolveFrom = require("resolve-from").silent;
+var taglibFS = require("../fs");
 var taglibLoader = require("../loader");
 var lassoPackageRoot = require("lasso-package-root");
 var scanTagsDir = require("../loader/scanTagsDir");
@@ -93,7 +93,7 @@ function find(dirname, registeredTaglibs) {
       let taglibPath = nodePath.join(curDirname, "marko.json");
       let taglib;
 
-      if (lassoCachingFS.existsSync(taglibPath)) {
+      if (existsSync(taglibPath)) {
         taglib = taglibLoader.loadTaglibFromFile(taglibPath);
         helper.addTaglib(taglib);
       }
@@ -102,7 +102,7 @@ function find(dirname, registeredTaglibs) {
         let componentsPath = nodePath.join(curDirname, "components");
 
         if (
-          lassoCachingFS.existsSync(componentsPath) &&
+          existsSync(componentsPath) &&
           !excludedDirs[componentsPath] &&
           !helper.alreadyAdded(componentsPath)
         ) {
@@ -154,7 +154,6 @@ function find(dirname, registeredTaglibs) {
 }
 
 function clearCache() {
-  lassoCachingFS.clearCaches();
   findCache = {};
 }
 
@@ -164,6 +163,15 @@ function excludeDir(dir) {
 
 function excludePackage(name) {
   excludedPackages[name] = true;
+}
+
+function existsSync(file) {
+  try {
+    taglibFS.curFS.statSync(file);
+    return true;
+  } catch (_) {
+    return false;
+  }
 }
 
 exports.reset = reset;

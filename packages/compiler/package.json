@@ -19,7 +19,6 @@
     "he": "^1.2.0",
     "htmljs-parser": "^2.9.1",
     "jsesc": "^3.0.2",
-    "lasso-caching-fs": "^1.0.2",
     "lasso-package-root": "^1.0.1",
     "property-handlers": "^1.1.1",
     "raptor-regexp": "^1.0.1",
