@@ -3,7 +3,7 @@ import { writeExports } from "../util/dom-export";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function enter(program: t.NodePath<t.Program>) {
-  program.state.template = "";
+  program.state.template = [""];
   program.state.walks = [];
   program.state.hydrate = [];
 }

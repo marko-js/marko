@@ -23,18 +23,12 @@ export function writeExports(path: t.NodePath<t.Program>) {
   path.node.body.push(
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
-        t.variableDeclarator(
-          template,
-          t.stringLiteral(path.state.template || "")
-        )
+        t.variableDeclarator(template, encodeTemplate(path.state.template))
       ])
     ),
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
-        t.variableDeclarator(
-          walks,
-          t.stringLiteral(encodeWalks(path.state.walks))
-        )
+        t.variableDeclarator(walks, encodeWalks(path.state.walks))
       ])
     ),
     t.exportNamedDeclaration(
@@ -64,4 +58,17 @@ export function writeExports(path: t.NodePath<t.Program>) {
       )
     )
   );
+}
+
+function encodeTemplate(template: (string | t.Expression)[]) {
+  let res: t.Expression | undefined;
+  for (let i = 0; i < template.length; i++) {
+    let part = template[i];
+    if (typeof part === "string") {
+      if (!part.length) continue;
+      part = t.stringLiteral(part);
+    }
+    res = res ? t.binaryExpression("+", res, part) : part;
+  }
+  return res || t.stringLiteral("");
 }

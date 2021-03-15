@@ -4,9 +4,9 @@ import {
   importDefault,
   resolveRelativePath
 } from "@marko/babel-utils";
-import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
-import { flushBefore, flushInto } from "../util/html-flush";
-import translateVar from "../util/translate-var";
+import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
+import { flushBefore, flushInto } from "../../util/html-flush";
+import translateVar from "../../util/translate-var";
 
 export function enter(tag: t.NodePath<t.MarkoTag>) {
   flushBefore(tag);
@@ -45,7 +45,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
 
   const attrsObject = attrsToObject(tag, true);
 
-  if (node.extra.tagNameNullable) {
+  if (node.extra!.tagNameNullable) {
     const renderBodyProp = getRenderBodyProp(attrsObject);
     let renderBodyId: t.Identifier | undefined = undefined;
     let renderTagExpr: t.Expression = callExpression(

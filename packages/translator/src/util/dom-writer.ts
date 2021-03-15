@@ -3,15 +3,17 @@ import { types as t } from "@marko/compiler";
 import { Walks } from "./walks";
 export { Walks } from "./walks";
 
-export function writeTemplate(path: t.NodePath<any>, s: string) {
-  path.state.template += s;
+export function writeTemplate(path: t.NodePath<any>, s: string | t.Node) {
+  if (typeof s === "string") {
+    path.state.template[path.state.template.length - 1] += s;
+  } else path.state.template.push(s, "");
 }
 
 export function writeHydrate(path: t.NodePath<any>, code: t.Node) {
   path.state.hydrate.push(code);
 }
 
-export function writeWalks(path: t.NodePath<any>, code: Walks) {
+export function writeWalks(path: t.NodePath<any>, code: Walks | t.Node) {
   path.state.walks.push(code);
 }
 
