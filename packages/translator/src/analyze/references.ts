@@ -151,14 +151,17 @@ export default {
                 const setReferences = (request === "."
                   ? tag.hub.file
                   : loadFileForImport(tag.hub.file, request)
-                )?.path.node.extra.references;
+                )?.path.node.extra.references?.set;
 
                 if (setReferences) {
-                  references.state = setReferences.state;
-                  // TODO: the input referenced here would be from the parent of the `<set>` tag
-                  // right now we aren't doing anything with that info.
-                  // references.input = setReferences.input;
-                  // references.inputAccessor = setReferences.inputAccessor;
+                  // TODO: could be more granular, but needs more thought.
+                  if (
+                    setReferences.state ||
+                    setReferences.input ||
+                    setReferences.inputAccessor
+                  ) {
+                    references.state = true;
+                  }
                 }
               } else {
                 references.state = true;
@@ -169,12 +172,22 @@ export default {
         } else if (tagDef?.html) {
           references.state = true;
         } else {
-          const tagReferences = loadFileForTag(tag)?.path.node.extra.references;
-          if (tagReferences) {
-            references.state = tagReferences.state;
-            // TODO: we need to map the tags input to the input we are passing.
-            // references.input = tagReferences.input;
-            // references.inputAccessor = tagReferences.inputAccessor;
+          const childFile = loadFileForTag(tag);
+
+          if (childFile) {
+            const childExtra = childFile.path.node.extra;
+            const childYieldReferences = childExtra.references?.yield;
+
+            if (childYieldReferences) {
+              if (
+                childYieldReferences.state ||
+                ((childYieldReferences.input ||
+                  childYieldReferences.inputAccessor) &&
+                  hasStatefulAttributes(tag))
+              ) {
+                references.state = true;
+              }
+            }
           }
         }
 
@@ -286,6 +299,18 @@ function getAttrReferenceMeta(
   attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>
 ) {
   return attr.node.extra?.references?.value;
+}
+
+function hasStatefulAttributes(tag: t.NodePath<t.MarkoTag>) {
+  // TODO: optimize nestedAttributeTags
+  // TODO: support mapping yield input/inputAccessor back to attribute.
+  return (
+    tag.node.extra.nestedAttributeTags ||
+    tag.get("attributes").some(attr => {
+      const refs = attr.node.extra.references?.value;
+      return refs && (refs.state || refs.inputAccessor || refs.input);
+    })
+  );
 }
 
 function trackInputReference(

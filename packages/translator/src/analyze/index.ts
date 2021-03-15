@@ -50,14 +50,19 @@ export default [
     Program(program) {
       program.node.extra ??= {} as typeof program.node.extra;
     },
-    MarkoTag(tag) {
-      const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
-      analyzeTagNameType(tag);
+    MarkoTag: {
+      enter(tag) {
+        const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
+        analyzeTagNameType(tag);
 
-      if (extra.tagNameType === TagNameTypes.NativeTag) {
-        analyzeEventHandlers(tag);
-      } else {
-        analyzeNestedAttributeTags(tag);
+        if (extra.tagNameType === TagNameTypes.NativeTag) {
+          analyzeEventHandlers(tag);
+        }
+      },
+      exit(tag) {
+        if (tag.node.extra.tagNameType !== TagNameTypes.NativeTag) {
+          analyzeNestedAttributeTags(tag);
+        }
       }
     },
     MarkoPlaceholder(placeholder) {
