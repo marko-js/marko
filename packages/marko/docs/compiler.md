@@ -62,7 +62,7 @@ import * as compiler from "@marko/compiler";
 compiler.configure({ output: "dom" });
 ```
 
-#### `mode`
+#### `output`
 
 Type: `string` (`"html"`, `"dom"`, `"hydrate"`, or `"migrate"`)<br>
 Default: `"html"`
@@ -72,7 +72,7 @@ Default: `"html"`
 - `"hydrate"` - similar to DOM, but only includes the assets & components needed in the browser, assuming the page was rendered on the server.
 - `"migrate"` - only runs migrations (not transforms or translation) and returns the migrated template code
 
-When using mode `dom` or `hydrate`, you should also specify a [`resolveVirtualDependency`](#resolvevirtualdependency) function.
+When using output `dom` or `hydrate`, you should also specify a [`resolveVirtualDependency`](#resolvevirtualdependency) function.
 
 #### `writeVersionComment`
 
@@ -190,9 +190,9 @@ export default function markoLoader(source) {
     code = virtualSources.get(this.resource);
     virtualSources.delete(this.resource);
   } else {
-    // The default behavior is to compile the template in dom mode
+    // The default behavior is to compile the template in dom output mode
     { code, map } = markoCompiler.compileSync(source, this.resourcePath, {
-      mode: "dom",
+      output: "dom",
       resolveVirtualDependency
     });
   }
@@ -232,7 +232,7 @@ Default: babel defaults, plus
 Type: `{ analyze: Visitor, transform:Visitor }`<br>
 Default: [autodiscovers](https://github.com/marko-js/marko/blob/0f212897d2d3ec30b12c2f18ba950818bccb83b4/packages/compiler/src/config.js#L46-L89) a translator package starting with `@marko/translator-` or `marko-translator-`
 
-The translator is a collection of transforms that translates the Marko AST into a valid JavaScript AST based on the `mode` option. There is a default translator that ships with Marko, but this option may be used to switch to experimental translators for alternate runtimes.
+The translator is a collection of transforms that translates the Marko AST into a valid JavaScript AST based on the `output` option. There is a default translator that ships with Marko, but this option may be used to switch to experimental translators for alternate runtimes.
 
 The translator is an object with two [Babel Visitors](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#visitors): `analyze` and `transform`. The result of the analyze visitor is cached and may be requested by other templates. The transform visitor transforms the AST to it's final JavaScript AST.
 
