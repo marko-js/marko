@@ -50,7 +50,10 @@ export default (entryFile, isHydrate) => {
     if (meta.component) {
       hasComponents = true;
 
-      if (path.basename(meta.component) === file.opts.sourceFileName) {
+      if (
+        path.basename(meta.component) ===
+        path.basename(file.opts.sourceFileName)
+      ) {
         // Stateful component.
         program.pushContainer("body", importPath(file, meta.component));
         return;
