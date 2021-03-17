@@ -1,5 +1,6 @@
 import { SourceMap } from "magic-string";
 import { TaglibLookup } from "@marko/babel-utils";
+import { types } from "./src";
 
 export * as types from "./babel-types";
 
@@ -7,14 +8,18 @@ type Dep = {
   type: string;
   code: string;
   path: string;
-  map?: unknown;
+  startPos?: number;
+  endPos?: number;
   require?: boolean;
   virtualPath?: string;
   [x: string]: unknown;
 };
 
 export type Config = {
-  output?: "html" | "dom" | "hydrate" | "migrate";
+  output?: "html" | "dom" | "hydrate" | "migrate" | "source";
+  runtimeId?: string;
+  ast?: boolean;
+  code?: boolean;
   writeVersionComment?: boolean;
   ignoreUnrecognizedTags?: boolean;
   sourceMaps?: boolean;
@@ -47,8 +52,9 @@ export type MarkoMeta = {
 };
 
 export type CompileResult = {
+  ast: types.File;
   code: string;
-  map?: unknown;
+  map: SourceMap;
   meta: MarkoMeta;
 };
 

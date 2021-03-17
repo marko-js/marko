@@ -64,7 +64,7 @@ export default (api, markoOpts) => {
       return finalAst;
     },
     pre(file) {
-      if (markoOpts.output === "migrate") {
+      if (markoOpts.output === "source" || markoOpts.output === "migrate") {
         return file;
       }
 
@@ -98,13 +98,14 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   }
 
   const { sourceFileName } = jsParseOptions;
+  const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
+  const canCache = !(isSource || isMigrate);
   const id = getTemplateId(markoOpts.optimize, sourceFileName);
-  const contentHash =
-    !isMigrate && createHash("MD5").update(code).digest("hex");
-  const cacheKey = !isMigrate && createHash("MD5").update(id).digest("hex");
+  const contentHash = canCache && createHash("MD5").update(code).digest("hex");
+  const cacheKey = canCache && createHash("MD5").update(id).digest("hex");
 
-  let cached = !isMigrate && compileCache.get(cacheKey);
+  let cached = canCache && compileCache.get(cacheKey);
 
   if (cached) {
     if (cached.contentHash !== contentHash) {
@@ -169,6 +170,11 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   };
 
   parseMarko(file);
+
+  if (isSource) {
+    return file;
+  }
+
   file.path.scope.crawl(); // Initialize bindings.
 
   for (const id in taglibLookup.taglibsById) {

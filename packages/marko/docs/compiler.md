@@ -64,15 +64,37 @@ compiler.configure({ output: "dom" });
 
 #### `output`
 
-Type: `string` (`"html"`, `"dom"`, `"hydrate"`, or `"migrate"`)<br>
+Type: `string`<br>
 Default: `"html"`
 
-- `"html"` - compiles the template to JavaScript that generates HTML strings
-- `"dom"` - compiles the template to JavaScript that generates DOM nodes
+- `"html"` - compiles the template to JavaScript that generates HTML strings.
+- `"dom"` - compiles the template to JavaScript that generates DOM nodes.
 - `"hydrate"` - similar to DOM, but only includes the assets & components needed in the browser, assuming the page was rendered on the server.
-- `"migrate"` - only runs migrations (not transforms or translation) and returns the migrated template code
+- `"migrate"` - only runs migrations (not transforms or translation) and returns the migrated template code.
+- `"source"` - parses Marko file without running any migrations / transforms. (useful with `ast: true`)
 
 When using output `dom` or `hydrate`, you should also specify a [`resolveVirtualDependency`](#resolvevirtualdependency) function.
+
+#### `code`
+
+Type: `boolean`<br>
+Default: true
+
+If set to false, Marko will not generate the compiled source code string.
+
+#### `ast`
+
+Type: `boolean`<br>
+Default: false
+
+Set to true to have the compiler provide the `ast` in it's output.
+
+#### `runtimeId`
+
+Type: `string`<br>
+Default: undefined
+
+Optionally use to override the runtime id (used to differentiate multiple copies of Marko on the same page) passed to `marko/components.init(runtimeId)` when compiling in the `hydrate` output.
 
 #### `writeVersionComment`
 
