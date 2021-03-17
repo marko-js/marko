@@ -1,4 +1,5 @@
 import path from "path";
+import MagicString from "magic-string";
 import { types as t } from "@marko/compiler";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 export default (entryFile, isHydrate) => {
@@ -91,19 +92,38 @@ export default (entryFile, isHydrate) => {
   }
 
   function addBrowserDeps(file) {
-    for (const dep of file.metadata.marko.deps) {
-      program.pushContainer(
-        "body",
-        importPath(
-          file,
-          typeof dep === "string"
-            ? dep
-            : resolveVirtualDependency(file.opts.sourceFileName, {
-                code: dep.code,
-                virtualPath: dep.virtualPath
-              })
-        )
-      );
+    const { sourceFileName, sourceMaps } = file.opts;
+    let s;
+
+    for (let dep of file.metadata.marko.deps) {
+      if (typeof dep !== "string") {
+        const { virtualPath } = dep;
+        let { code } = dep;
+        let map;
+
+        if (sourceMaps && dep.startPos !== undefined) {
+          s = s || new MagicString(file.code, { source: sourceFileName });
+          map = s.snip(dep.startPos, dep.endPos).generateMap();
+
+          if (sourceMaps === "inline" || sourceMaps === "both") {
+            if (sourceMaps === "inline") {
+              map = undefined;
+            }
+
+            code += virtualPath.endsWith(".css")
+              ? `\n/*# sourceMappingURL=${map.toUrl()}*/`
+              : `\n//# sourceMappingURL=${map.toUrl()}`;
+          }
+        }
+
+        dep = resolveVirtualDependency(sourceFileName, {
+          map,
+          code,
+          virtualPath
+        });
+      }
+
+      program.pushContainer("body", importPath(file, dep));
     }
   }
 

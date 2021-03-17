@@ -1,3 +1,4 @@
+import { SourceMap } from "magic-string";
 import { TaglibLookup } from "@marko/babel-utils";
 
 export * as types from "./babel-types";
@@ -6,6 +7,7 @@ type Dep = {
   type: string;
   code: string;
   path: string;
+  map?: unknown;
   require?: boolean;
   virtualPath?: string;
   [x: string]: unknown;
@@ -19,7 +21,7 @@ export type Config = {
   translator?: string;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
-  resolveVirtualDependency?(sourceFileName: string, dep: Dep & { virtualPath: string }): string;
+  resolveVirtualDependency?(sourceFileName: string, dep: { virtualPath: string, code: string, map?: SourceMap }): string;
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   babelConfig?: {

@@ -139,12 +139,9 @@ Type:
 (
   sourceFileName: string,
   dep: {
-    type: string;
     code: string;
-    path: string;
-    require?: boolean;
     virtualPath: string;
-    [x: string]: unknown;
+    map?: SourceMap;
   }
 ) => string;
 ```
@@ -161,12 +158,12 @@ Different build tools have different mechanisms for handling virtual files. You 
 // lookup is shared between resolveVirtualDependency and markoLoader
 const virtualSources = new Map();
 
-function resolveVirtualDependency(sourceFileName, { code, virtualPath }) {
+function resolveVirtualDependency(sourceFileName, { virtualPath, code, map }) {
   const virtualSourceFileName = `${sourceFileName}?virtual=${virtualPath}`;
 
   // Add the virtual source to the lookup
   // to be later accessed by the loader
-  virtualSources.set(virtualSourceFileName, code);
+  virtualSources.set(virtualSourceFileName, { code, map });
 
   // Generate the webpack path, from right to left...
   // 1. Pass the virtualSourceFileName so webpack can find the real file
@@ -187,7 +184,7 @@ export default function markoLoader(source) {
     // If the resource has a ?virtual query param, we should
     // find it in the lookup and then return the virtual code
     // rather than performing the normal compilation
-    code = virtualSources.get(this.resource);
+    { code, map } = virtualSources.get(this.resource);
     virtualSources.delete(this.resource);
   } else {
     // The default behavior is to compile the template in dom output mode
