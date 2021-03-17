@@ -1,45 +1,48 @@
 # Compiler
 
-The Marko compiler tries its best to get out of your way and for the most part you will only see references to it in the various Marko ecosystem plugins for tools like webpack, Rollup, and others.
-
-The compiler also provides a series of hooks you can tap into to bend the Marko language to your will.
-
 > **Note:**
-> It is best to use existing official plugins, and the standard tag library when possible.
+> The compiler is an advanced API intended for integrating with build tools (webpack, rollup, etc.) and experimenting with new language features in userland. It's best to use existing official plugins and the standard tag library when possible.
 
 ## Compile API
 
-The compile API is relatively straightforward and always you to take any Marko file and turn it into executable JavaScript.
+### Compile Functions
+
+The compile functions take an input Marko template [`CompileOptions`](#options)and produce a `CompileResult` containing the executable JavaScript:
 
 ```ts
-import * as compiler from "@marko/compiler";
-
-type CompileOptions = typeof import("@marko/compiler/src/config.js");
-
 type CompileResult = {
-  meta: Record<string, unknown>; // Meta data gathered while compiling.
-  map?: SourceMap; // A sourcemap.
-  code: string; // The translated code.
+  meta: Record<string, unknown>; // Meta data gathered while compiling
+  map?: SourceMap; // A sourcemap
+  code: string; // The translated code
 };
 ```
 
-### `compiler.configure(options: CompileOptions)`
+#### `compiler.compileFile(filename: string, options?: CompileOptions): Promise<CompileResult>`
 
-The `configure` API will override the default compiler options. For the list of options (applicable to all `compile*` functions) [see the source code](https://github.com/marko-js/marko/tree/master/packages/compiler/src/config.js).
+#### `compiler.compileFileSync(filename: string, options?: CompileOptions): CompileResult`
+
+`compileFile` and `compileFileSync` load the source template at `filename` from disk and translate it into JavaScript.
 
 ```js
-compiler.configure({ output: "dom" });
+import * as compiler from "@marko/compiler";
+
+const asyncResult = await compiler.compileFile("./src/index.marko", {
+  modules: "cjs"
+});
+const syncResult = compiler.compileFileSync("./src/index.marko", {
+  modules: "cjs"
+});
 ```
 
-### `compiler.compile(src: string, filename: string, options?: CompileOptions): Promise<CompileResult>`
+#### `compiler.compile(src: string, filename: string, options?: CompileOptions): Promise<CompileResult>`
 
-### `compiler.compileSync(src: string, filename: string, options?: CompileOptions): CompileResult`
+#### `compiler.compileSync(src: string, filename: string, options?: CompileOptions): CompileResult`
 
-Both the `compile` and `compileSync` APIs will translate the provided Marko source code into JavaScript.
-The only difference between the two (as the names likely suggest) is that `compile` will use async APIs under the hood while `compileSync`
-will use sync APIs.
+`compile` and `compileSync` allow passing the source template as a string rather than loading from disk. The `filename` location is used for resolving taglibs and imports, but does not have to actually exist on disk.
 
 ```js
+import * as compiler from "@marko/compiler";
+
 const asyncResult = await compiler.compile(
   "<h1>Hello!</>",
   "./src/index.marko",
@@ -50,21 +53,190 @@ const syncResult = compiler.compileSync("<h1>Hello!</>", "./src/index.marko", {
 });
 ```
 
-### `compiler.compileFile(filename: string, options?: CompileOptions): Promise<CompileResult>`
+### Options
 
-### `compiler.compileFileSync(filename: string, options?: CompileOptions): CompileResult`
-
-`compileFile` and `compileFileSync` act the same as their counterparts `compile` and `compileSync` with the exception being that you do not
-need to pass in the source content. Instead, these APIs will load the file from disk for you automatically.
+Configuration options may be passed when calling the above compile functions or the compiler may be configured globally, overriding the default compiler options:
 
 ```js
-const asyncResult = await compiler.compileFile("./src/index.marko", {
-  modules: "cjs"
-});
-const syncResult = compiler.compileFileSync("./src/index.marko", {
-  modules: "cjs"
-});
+import * as compiler from "@marko/compiler";
+compiler.configure({ output: "dom" });
 ```
+
+#### `mode`
+
+Type: `string` (`"html"`, `"dom"`, `"hydrate"`, or `"migrate"`)<br>
+Default: `"html"`
+
+- `"html"` - compiles the template to JavaScript that generates HTML strings
+- `"dom"` - compiles the template to JavaScript that generates DOM nodes
+- `"hydrate"` - similar to DOM, but only includes the assets & components needed in the browser, assuming the page was rendered on the server.
+- `"migrate"` - only runs migrations (not transforms or translation) and returns the migrated template code
+
+When using mode `dom` or `hydrate`, you should also specify a [`resolveVirtualDependency`](#resolvevirtualdependency) function.
+
+#### `writeVersionComment`
+
+Type: `boolean`<br>
+Default: `true`
+
+Whether the version should be written to the template as a comment e.g.
+
+```js
+// Compiled using marko@x.x.x - DO NOT EDIT
+```
+
+#### `ignoreUnrecognizedTags`
+
+Type: `boolean`<br>
+Default: `false`
+
+Whether unrecognized tags should be silently ignored rather than throwing a compile error. The the ignored tag will be output as a native element. Some test setups use this alongside `@marko/compiler/taglib`'s `excludeDir` and `excludePackage` to simulate "shallow" rendering.
+
+#### `sourceMaps`
+
+Type: `boolean` or `string`<br>
+Default: `false`
+
+Whether source maps should be output with the compiled templates.
+
+- When `true` a `map` property will be available on the compile result.
+- When `"inline"` the sourcemap will be inlined as a comment in the output code.
+- When `"both"` both of the above will be used.
+
+#### `meta`
+
+Type: `boolean`<br>
+Default: `false,
+
+_Deprecated_. This option inlines the metadata in the output Javascript code. Metadata should be accessed instead from the `CompileResult`.
+
+#### `fileSystem`
+
+Type: typeof [`fs`](https://nodejs.org/api/fs.html) (specifically read APIs)<br>
+Default: Cached `fs`
+
+Use a different file system object (eg. webpack's [CachedInputFileSystem](https://github.com/webpack/enhanced-resolve/blob/f08fe3f1a22c90c722eca14b38a9300ad00c62e8/lib/CachedInputFileSystem.js) or [`arc-fs`](https://github.com/eBay/arc/tree/master/packages/arc-fs))
+
+#### `modules`
+
+Type: `string` (`"esm"` or `"cjs"`)<br>
+Default: `"esm"`
+
+By default Marko outputs ES Modules, you can optionally specify commonjs.
+
+#### `optimize`
+
+Type: `boolean`<br>
+Default: [environment based](https://github.com/marko-js/marko/blob/0f212897d2d3ec30b12c2f18ba950818bccb83b4/packages/compiler/src/babel-plugin/index.js#L277-L284) (`false` in development, `true` in production)
+
+Enables production mode optimizations
+
+#### `resolveVirtualDependency`
+
+Type:
+
+```ts
+(
+  sourceFileName: string,
+  dep: {
+    type: string;
+    code: string;
+    path: string;
+    require?: boolean;
+    virtualPath: string;
+    [x: string]: unknown;
+  }
+) => string;
+```
+
+Default: `undefined`
+
+This option should be set when `dom` or `hydrate` output is specified. Since Marko templates can represent multiple output files (eg. JS renderer, CSS styles), we need to be able to treat a single source `.marko` file as multiple virtual files.
+
+Different build tools have different mechanisms for handling virtual files. You should pass a function that returns a virtual path that can be handled by your build tool.
+
+##### Example based on `@marko/webpack/loader`:
+
+```js
+// lookup is shared between resolveVirtualDependency and markoLoader
+const virtualSources = new Map();
+
+function resolveVirtualDependency(sourceFileName, { code, virtualPath }) {
+  const virtualSourceFileName = `${sourceFileName}?virtual=${virtualPath}`;
+
+  // Add the virtual source to the lookup
+  // to be later accessed by the loader
+  virtualSources.set(virtualSourceFileName, code);
+
+  // Generate the webpack path, from right to left...
+  // 1. Pass the virtualSourceFileName so webpack can find the real file
+  //    located at sourceFilename, but the virtualPath is also present
+  //    (eg. "./index.marko?virtual=./index.marko.css")
+  // 2. Use an inline loader to run this file through @marko/webpack/loader
+  //    https://webpack.js.org/concepts/loaders/#inline
+  // 3. Use an inline matchResource to redefine this as the virtualPath
+  //    which allows the appropriate loaders to match the virtual dependency
+  //    https://webpack.js.org/api/loaders/#inline-matchresource
+  return `${virtualPath}!=!@marko/webpack/loader!${virtualSourceFileName}`;
+}
+
+export default function markoLoader(source) {
+  let code, map;
+
+  if (virtualSources.has(this.resource)) {
+    // If the resource has a ?virtual query param, we should
+    // find it in the lookup and then return the virtual code
+    // rather than performing the normal compilation
+    code = virtualSources.get(this.resource);
+    virtualSources.delete(this.resource);
+  } else {
+    // The default behavior is to compile the template in dom mode
+    { code, map } = markoCompiler.compileSync(source, this.resourcePath, {
+      mode: "dom",
+      resolveVirtualDependency
+    });
+  }
+
+  return this.callback(null, code, map);
+}
+```
+
+#### `cache`
+
+Type: typeof [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) (specifically, `get` is required)<br>
+Default: `new Map()`
+
+Compiling a Marko template may require other (used) Marko templates to compile.
+To prevent compiling templates more than once, most of the compilation is cached.
+
+The default cache strategy is to clear the cache on every macrotask.
+If the default cache is overwritten it is up to the user to determine when the
+cache is cleared.
+
+#### `babelConfig`
+
+Type: see [babel options](https://babeljs.io/docs/en/options)<br>
+Default: babel defaults, plus
+
+```js
+{
+  filename,
+  sourceFileName: filename,
+  sourceType: "module",
+  sourceMaps: config.sourceMaps
+}
+```
+
+#### `translator`
+
+Type: `{ analyze: Visitor, transform:Visitor }`<br>
+Default: [autodiscovers](https://github.com/marko-js/marko/blob/0f212897d2d3ec30b12c2f18ba950818bccb83b4/packages/compiler/src/config.js#L46-L89) a translator package starting with `@marko/translator-` or `marko-translator-`
+
+The translator is a collection of transforms that translates the Marko AST into a valid JavaScript AST based on the `mode` option. There is a default translator that ships with Marko, but this option may be used to switch to experimental translators for alternate runtimes.
+
+The translator is an object with two [Babel Visitors](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#visitors): `analyze` and `transform`. The result of the analyze visitor is cached and may be requested by other templates. The transform visitor transforms the AST to it's final JavaScript AST.
+
+See [`@marko/translator-default`](https://github.com/marko-js/marko/blob/11a10f82cdb5389880e6deca5f77d17727acb831/packages/translator-default/src/index.js) for a reference implementation.
 
 ## Hooks
 
@@ -80,8 +252,8 @@ The hook will also receive a `types` object that matches the [@babel/types](http
 Here is an example hook:
 
 ```js
-module.exports = (tag, t) => {
-  if (t.isStringLiteral(tag.node.name)) {
+module.exports = (tag, types) => {
+  if (types.isStringLiteral(tag.node.name)) {
     console.log(`Found a tag called ${tag.node.name.value}`);
     tag.remove();
   }
@@ -137,6 +309,9 @@ These migrations run automatically in the background and can be written to disk 
 
 To hook into the `migrate` stage you can use the `migrate` option in the `marko.json` file.
 
+> **Note:**
+> To make the compiler to stop at this point and output the migrated template rather than continuing on to produce the JavaScript output, pass `"migrate"` as the value for the `output` compilation option.
+
 ### Transform
 
 The transform stage of the compiler is meant for userland transformations of Marko code, into other Marko code. Think of it like [babel.transform](https://babeljs.io/docs/en/babel-core#transform) for Marko templates.
@@ -156,5 +331,17 @@ The [`@marko/babel-utils`](https://github.com/marko-js/marko/tree/master/package
 
 ## Marko AST
 
-You can check out the AST extensions that Marko makes [in the source code](https://github.com/marko-js/marko/tree/master/packages/compiler/src/babel-types/types/definitions.js).
-For AST creation and assertion utilities you can also import Marko's superset of `@babel/types` through the compiler via `import { types } from "@marko/compiler"`.
+Marko extends Babel's AST types adding nodes for `MarkoTag`, `MarkoAttribute`, etc.
+For AST creation and assertion utilities you can import Marko's superset of `@babel/types` through the compiler:
+
+```js
+import { types } from "@marko/compiler";
+```
+
+The [`@babel/types` documentation](https://babeljs.io/docs/en/babel-types) shows all the utility methods available for the Babel AST nodes. When importing `types` from `@marko/compiler` you get the same types of utilities for the Marko nodes as well (`types.markoTag`, `types.isMarkoTag`, `types.assertMarkoTag`, etc.).
+
+For a full list of definitions, view the source code for Babel and Marko:
+
+- [Babel's Core Definitions](https://github.com/babel/babel/blob/master/packages/babel-types/src/definitions/core.js)
+- [Babel's Extended Definitions](https://github.com/babel/babel/tree/master/packages/babel-types/src/definitions)
+- [Marko's Definitions](https://github.com/marko-js/marko/blob/master/packages/compiler/src/babel-types/types/definitions.js)
