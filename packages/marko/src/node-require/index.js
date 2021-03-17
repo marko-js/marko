@@ -5,8 +5,8 @@ const resolveFrom = require("resolve-from");
 const fs = require("fs");
 const fsReadOptions = { encoding: "utf8" };
 const requiredCompilerOptions = { modules: "cjs" };
-// eslint-disable-next-line no-constant-condition
 const defaultCompilerOptions = {
+  // eslint-disable-next-line no-constant-condition
   sourceMaps: "MARKO_DEBUG" ? "inline" : false,
   meta: true
 };
