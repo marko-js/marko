@@ -1,8 +1,7 @@
 import { SourceMap } from "magic-string";
 import { TaglibLookup } from "@marko/babel-utils";
-import { types } from "./src";
-
-export * as types from "./babel-types";
+import * as types from "./babel-types";
+export { types };
 
 type Dep = {
   type: string;
