@@ -265,10 +265,28 @@ function initServerRendered(renderedComponents, doc) {
 
     renderedComponents = win[globalKey];
 
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      if (
+        renderedComponents &&
+        renderedComponents.i !== undefined &&
+        renderedComponents.i !== componentsUtil.___runtimeId
+      ) {
+        console.warn(
+          "Multiple instances of Marko have attached to the same runtime id. This could mean that more than one copy of Marko is loaded on the page, or that the script containing Marko has executed more than once."
+        );
+      }
+    }
+
     var fakeArray = (win[globalKey] = {
       r: runtimeId,
       concat: initServerRendered
     });
+
+    // eslint-disable-next-line no-constant-condition
+    if ("MARKO_DEBUG") {
+      fakeArray.i = componentsUtil.___runtimeId;
+    }
 
     if (renderedComponents && renderedComponents.forEach) {
       renderedComponents.forEach(function (renderedComponent) {
@@ -345,7 +363,13 @@ function initServerRendered(renderedComponents, doc) {
 
       return registry.___isRegistered(typeName)
         ? tryHydrateComponent(componentDef, meta, doc, runtimeId)
-        : registry.___addPendingDef(componentDef, typeName, doc, runtimeId);
+        : registry.___addPendingDef(
+            componentDef,
+            typeName,
+            meta,
+            doc,
+            runtimeId
+          );
     })
     .reverse()
     .forEach(tryInvoke);

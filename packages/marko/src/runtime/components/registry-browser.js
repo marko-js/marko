@@ -24,9 +24,9 @@ function register(type, def) {
       pendingForType.forEach(function (args) {
         initComponents.___tryHydrateComponent(
           args[0],
-          type,
           args[1],
-          args[2]
+          args[2],
+          args[3]
         )();
       });
     });
@@ -35,7 +35,7 @@ function register(type, def) {
   return type;
 }
 
-function addPendingDef(def, type, doc, runtimeId) {
+function addPendingDef(def, type, meta, doc, runtimeId) {
   if (!pendingDefs) {
     pendingDefs = {};
 
@@ -51,7 +51,12 @@ function addPendingDef(def, type, doc, runtimeId) {
       });
     }
   }
-  (pendingDefs[type] = pendingDefs[type] || []).push([def, doc, runtimeId]);
+  (pendingDefs[type] = pendingDefs[type] || []).push([
+    def,
+    meta,
+    doc,
+    runtimeId
+  ]);
 }
 
 function isRegistered(type) {
