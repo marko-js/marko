@@ -13,6 +13,15 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     // The default output mode for compiled templates
     output: "html",
 
+    // Override the runtimeid used when calling `marko/components.init` in the `hydrate` output.
+    runtimeId: undefined,
+
+    // Have Marko provide the final AST in the compile result.
+    ast: false,
+
+    // Set the false to have Marko not generate the final code string, useful if just reading metadata or AST.
+    code: true,
+
     /**
      * Whether the version should be written to the template as a comment e.g.
      * // Compiled using marko@x.x.x - DO NOT EDIT
@@ -107,6 +116,13 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      * If left as undefined checks for env === "production".
      */
     optimize: undefined,
+
+    /**
+     * This option should be set if `hydrate` output is specified.
+     * Maps a virtual dependency to a resolved file which can be implemented
+     * for specific bundlers.
+     */
+    resolveVirtualDependency: undefined,
 
     /**
      * Compiling a Marko template may require other (used) Marko templates to compile.

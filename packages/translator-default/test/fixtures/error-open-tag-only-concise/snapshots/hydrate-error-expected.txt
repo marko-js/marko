@@ -1,0 +1,4 @@
+packages/translator-default/test/fixtures/error-open-tag-only-concise/template.marko(2,5): The "test-open-tag-only" tag does not allow nested body content
+  1 | test-open-tag-only
+> 2 |     - This should not be allowed!
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

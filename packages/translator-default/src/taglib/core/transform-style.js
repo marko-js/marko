@@ -12,7 +12,7 @@ export default function (path) {
     return;
   }
 
-  if (!path.parentPath.parentPath.isProgram()) {
+  if (!path.parentPath.isProgram()) {
     throw path
       .get("name")
       .buildCodeFrameError(

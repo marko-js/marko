@@ -45,11 +45,13 @@ function loadBabelConfig(filename, config) {
   const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
-    filename: filename,
+    ...(config && config.babelConfig),
+    filename,
     sourceFileName: filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,
-    ...(config && config.babelConfig)
+    code: markoConfig.code,
+    ast: markoConfig.ast
   };
 
   if (markoConfig.modules === "cjs") {
@@ -68,11 +70,12 @@ function loadBabelConfig(filename, config) {
 
 function buildResult(babelResult) {
   const {
+    ast,
     map,
     code,
     metadata: { marko: meta }
   } = babelResult;
-  return { map, code, meta };
+  return { ast, map, code, meta };
 }
 
 let scheduledClear = false;

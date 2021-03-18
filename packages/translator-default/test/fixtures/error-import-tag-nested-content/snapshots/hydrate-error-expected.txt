@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-import-tag-nested-content/template.marko(2,2): The "import" tag does not allow nested body content
+  1 | import a from "b";
+> 2 |  <div/>
+    |  ^
+  3 |
