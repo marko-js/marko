@@ -15,7 +15,7 @@
     "format": "eslint -f visualstudio --fix . && prettier \"**/*.{json,md,js}\" --write",
     "lint": "eslint -f visualstudio . && prettier \"**/*.{js,json,css,md}\" -l",
     "ci:test": "npm run lint && cross-env MARKO_DEBUG=1 NODE_ENV=test nyc --reporter=text npm test",
-    "ci:codecov": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "ci:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "report": "nyc report --reporter=html && open ./coverage/index.html",
     "set-entry": "lerna exec -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)"
   },
