@@ -1,1 +1,0 @@
-packages/translator-default/test/fixtures/dynamic-tag-name/template.marko: ENOENT: no such file or directory, open '/home/dpiercey/dev/github/marko/marko/packages/translator-default/test/fixtures/dynamic-tag-name/components/tag-b/index.marko'
