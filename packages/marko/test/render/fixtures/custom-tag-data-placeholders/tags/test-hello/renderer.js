@@ -1,4 +1,4 @@
-exports.render = function(input, out) {
+exports.render = function (input, out) {
   var text = "Hello " + input.name + "!";
 
   if (input.adult === true) {

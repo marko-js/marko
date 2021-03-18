@@ -105,7 +105,7 @@ function indexServerComponentBoundaries(node, runtimeId, stack) {
         keyedElements[markoKey] = node;
       }
       if (markoProps) {
-        Object.keys(markoProps).forEach(function(key) {
+        Object.keys(markoProps).forEach(function (key) {
           if (key.slice(0, 2) === "on") {
             eventDelegation.___addDelegatedEventHandler(key.slice(2));
           }
@@ -130,7 +130,7 @@ function invokeComponentEventHandler(component, targetMethodName, args) {
 function addEventListenerHelper(el, eventType, isOnce, listener) {
   var eventListener = listener;
   if (isOnce) {
-    eventListener = function(event) {
+    eventListener = function (event) {
       listener(event);
       el.removeEventListener(eventType, eventListener);
     };
@@ -152,16 +152,19 @@ function addDOMEventListeners(
   extraArgs,
   handles
 ) {
-  var removeListener = addEventListenerHelper(el, eventType, isOnce, function(
-    event
-  ) {
-    var args = [event, el];
-    if (extraArgs) {
-      args = extraArgs.concat(args);
-    }
+  var removeListener = addEventListenerHelper(
+    el,
+    eventType,
+    isOnce,
+    function (event) {
+      var args = [event, el];
+      if (extraArgs) {
+        args = extraArgs.concat(args);
+      }
 
-    invokeComponentEventHandler(component, targetMethodName, args);
-  });
+      invokeComponentEventHandler(component, targetMethodName, args);
+    }
+  );
   handles.push(removeListener);
 }
 
@@ -181,7 +184,7 @@ function initComponent(componentDef, doc) {
   if (domEvents) {
     var eventListenerHandles = [];
 
-    domEvents.forEach(function(domEventArgs) {
+    domEvents.forEach(function (domEventArgs) {
       // The event mapping is for a direct DOM event (not a custom event and not for bubblign dom events)
 
       var eventType = domEventArgs[0];
@@ -268,7 +271,7 @@ function initServerRendered(renderedComponents, doc) {
     });
 
     if (renderedComponents && renderedComponents.forEach) {
-      renderedComponents.forEach(function(renderedComponent) {
+      renderedComponents.forEach(function (renderedComponent) {
         fakeArray.concat(renderedComponent);
       });
     }
@@ -337,7 +340,7 @@ function initServerRendered(renderedComponents, doc) {
   // hydrate components top down (leaf nodes last)
   // and return an array of functions to mount these components
   (renderedComponents.w || [])
-    .map(function(componentDef) {
+    .map(function (componentDef) {
       var typeName = meta.___types[componentDef[1]];
 
       return registry.___isRegistered(typeName)
@@ -367,10 +370,10 @@ function tryHydrateComponent(rawDef, meta, doc, runtimeId) {
       deferredDefs.push(componentDef);
     } else {
       deferredDefs = [componentDef];
-      doc.addEventListener("DOMContentLoaded", function() {
+      doc.addEventListener("DOMContentLoaded", function () {
         indexServerComponentBoundaries(doc, runtimeId);
         deferredDefs
-          .map(function(componentDef) {
+          .map(function (componentDef) {
             return hydrateComponentAndGetMount(componentDef, doc);
           })
           .reverse()

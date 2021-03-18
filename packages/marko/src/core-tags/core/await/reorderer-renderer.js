@@ -2,7 +2,7 @@
 
 const clientReorder = require("./client-reorder");
 
-module.exports = function(input, out) {
+module.exports = function (input, out) {
   // We cannot call beginSync() when using renderSync(). In this case we will
   // ignore the await-reorderer tag.
   if (out.isSync()) {
@@ -29,7 +29,7 @@ module.exports = function(input, out) {
     name: "await-reorderer"
   });
 
-  out.onLast(function(next) {
+  out.onLast(function (next) {
     var awaitContext = global.___clientReorderContext;
     var remaining;
 
@@ -47,7 +47,7 @@ module.exports = function(input, out) {
     function handleAwait(awaitInfo) {
       awaitInfo.out
         .on("___toString", out.emit.bind(out, "___toString"))
-        .on("finish", function(result) {
+        .on("finish", function (result) {
           if (!global._afRuntime) {
             asyncOut.script(clientReorder.getCode());
             global._afRuntime = true;
@@ -81,14 +81,14 @@ module.exports = function(input, out) {
             next();
           }
         })
-        .on("error", function(err) {
+        .on("error", function (err) {
           asyncOut.error(err);
         });
     }
 
     awaitContext.instances.forEach(handleAwait);
 
-    out.on("await:clientReorder", function(awaitInfo) {
+    out.on("await:clientReorder", function (awaitInfo) {
       remaining++;
       handleAwait(awaitInfo);
     });

@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should allow attributes to not be updated", function() {
+it("should allow attributes to not be updated", function () {
   var app = window.app;
   var helloComponent = app.getComponent("hello");
 

@@ -1,4 +1,4 @@
 packages/translator-default/test/fixtures/error-bad-expression/template.marko(1,18): Unexpected token, expected ","
 > 1 | <div class=(this is not valid)></div>
     |                  ^
-  2 | 
+  2 |

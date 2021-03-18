@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 module.exports = {
-  onCreate: function(input, out) {
+  onCreate: function (input, out) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onCreate should not be called in the browser');
     // }
@@ -16,7 +16,7 @@ module.exports = {
     this.onCreateOutName = out.global.name;
   },
 
-  onRender: function(out) {
+  onRender: function (out) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onRender should not be called in the browser');
     // }
@@ -28,7 +28,7 @@ module.exports = {
     }
   },
 
-  onInput: function(input) {
+  onInput: function (input) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onInput should not be called in the browser');
     // }
@@ -36,12 +36,12 @@ module.exports = {
     this.state.events.push("onInput[" + input.name + "]");
   },
 
-  onMount: function() {
+  onMount: function () {
     var componentsLookup = window.components || (window.components = {});
     componentsLookup["lifecycle-events-component-object"] = this;
   },
 
-  test: function() {
+  test: function () {
     expect(this.state.events).to.deep.equal([
       "onCreate",
       "onInput[Frank]",

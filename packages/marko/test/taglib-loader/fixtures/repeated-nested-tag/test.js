@@ -1,6 +1,6 @@
 var nodePath = require("path");
 
-exports.check = function(taglibLoader, expect) {
+exports.check = function (taglibLoader, expect) {
   var taglib = taglibLoader.loadTaglibFromFile(
     nodePath.join(__dirname, "marko.json")
   );
@@ -14,7 +14,5 @@ exports.check = function(taglibLoader, expect) {
   const tab = taglib.tags["longhand-tabs"].nestedTags.tab;
   expect(tab).has.property("isRepeated", true);
   expect(tab).has.property("targetProperty", "tabs");
-  expect(tab)
-    .has.property("attributes")
-    .with.property("label");
+  expect(tab).has.property("attributes").with.property("label");
 };

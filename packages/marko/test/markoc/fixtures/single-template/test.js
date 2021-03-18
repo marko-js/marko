@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-exports.test = function(helpers) {
+exports.test = function (helpers) {
   expect(helpers.existsSync("template.marko.js")).to.equal(false);
   var result = helpers.spawnSync(["template.marko"]);
   expect(helpers.existsSync("template.marko.js")).to.equal(true);

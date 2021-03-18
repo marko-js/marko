@@ -3,12 +3,12 @@ module.exports =
   typeof queueMicrotask === "function"
     ? queueMicrotask
     : typeof Promise === "function" && (promise = Promise.resolve())
-    ? function(cb) {
+    ? function (cb) {
         promise.then(cb).catch(rethrow);
       }
     : setTimeout;
 function rethrow(err) {
-  setTimeout(function() {
+  setTimeout(function () {
     throw err;
   });
 }

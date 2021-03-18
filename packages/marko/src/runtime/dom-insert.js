@@ -24,21 +24,21 @@ function beforeRemove(referenceEl) {
   destroyComponentForNode(referenceEl);
 }
 
-module.exports = function(target, getEl, afterInsert) {
+module.exports = function (target, getEl, afterInsert) {
   extend(target, {
-    appendTo: function(referenceEl) {
+    appendTo: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
       insertBefore(el, null, referenceEl);
       return afterInsert(this, referenceEl);
     },
-    prependTo: function(referenceEl) {
+    prependTo: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
       insertBefore(el, referenceEl.firstChild || null, referenceEl);
       return afterInsert(this, referenceEl);
     },
-    replace: function(referenceEl) {
+    replace: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
       beforeRemove(referenceEl);
@@ -46,7 +46,7 @@ module.exports = function(target, getEl, afterInsert) {
       removeChild(referenceEl);
       return afterInsert(this, referenceEl);
     },
-    replaceChildrenOf: function(referenceEl) {
+    replaceChildrenOf: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
 
@@ -61,13 +61,13 @@ module.exports = function(target, getEl, afterInsert) {
       insertBefore(el, null, referenceEl);
       return afterInsert(this, referenceEl);
     },
-    insertBefore: function(referenceEl) {
+    insertBefore: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
       insertBefore(el, referenceEl, referenceEl.parentNode);
       return afterInsert(this, referenceEl);
     },
-    insertAfter: function(referenceEl) {
+    insertAfter: function (referenceEl) {
       referenceEl = resolveEl(referenceEl);
       var el = getEl(this, referenceEl);
       insertAfter(el, referenceEl, referenceEl.parentNode);

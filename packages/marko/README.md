@@ -91,7 +91,7 @@ module.exports = {
   },
   increment() {
     this.state.count++;
-  },
+  }
 };
 ```
 

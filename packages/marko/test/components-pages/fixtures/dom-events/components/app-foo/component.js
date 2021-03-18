@@ -1,21 +1,21 @@
 module.exports = {
-  onInput: function() {
+  onInput: function () {
     this.state = {
       name: "app-foo"
     };
   },
 
-  onMount: function() {
+  onMount: function () {
     window.fooComponent = this;
     this.mouseMoveEvent = null;
     this.clickEvent = null;
   },
 
-  handleButtonMouseMove: function() {
+  handleButtonMouseMove: function () {
     this.mouseMoveEvent = arguments;
   },
 
-  handleButtonClick: function() {
+  handleButtonClick: function () {
     this.clickEvent = arguments;
   }
 };

@@ -2,4 +2,4 @@ packages/translator-default/test/fixtures/error-import-tag-nested-content/templa
   1 | import a from "b";
 > 2 |  <div/>
     |  ^
-  3 | 
+  3 |

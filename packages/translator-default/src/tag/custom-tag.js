@@ -12,7 +12,7 @@ import withPreviousLocation from "../util/with-previous-location";
 // TODO: support transform and other entries.
 const TAG_FILE_ENTRIES = ["template", "renderer"];
 
-export default function(path, isNullable) {
+export default function (path, isNullable) {
   const {
     hub: { file },
     node

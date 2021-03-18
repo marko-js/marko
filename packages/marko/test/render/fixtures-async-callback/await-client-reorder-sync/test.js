@@ -2,13 +2,13 @@ var extend = require("raptor-util/extend");
 var expect = require("chai").expect;
 
 exports.templateData = {
-  userDataProvider: function(callback) {
+  userDataProvider: function (callback) {
     callback(null, { name: "Frank" });
   }
 };
 
-exports.checkEvents = function(events, snapshot) {
-  events = events.map(function(eventInfo) {
+exports.checkEvents = function (events, snapshot) {
+  events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
     expect(arg.out != null).to.equal(true);
 

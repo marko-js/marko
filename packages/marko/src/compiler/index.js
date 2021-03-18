@@ -17,7 +17,7 @@ if ("MARKO_DEBUG") {
 }
 
 var defaultOptionsExportDefinition = {
-  get: function() {
+  get: function () {
     return globalConfig;
   },
   enumerable: true,
@@ -109,7 +109,7 @@ function compileFile(filename, options, callback) {
   options.sourceOnly = options.sourceOnly !== false;
 
   if (callback) {
-    fs.readFile(filename, { encoding: "utf8" }, function(err, templateSrc) {
+    fs.readFile(filename, { encoding: "utf8" }, function (err, templateSrc) {
       if (err) {
         return callback(err);
       }
@@ -148,7 +148,7 @@ exports.clearCaches = function clearCaches() {
   taglib.clearCache();
 };
 
-exports.registerTaglib = function(filePath) {
+exports.registerTaglib = function (filePath) {
   ok(typeof filePath === "string", '"filePath" should be a string');
   taglib.registerFromFile(filePath);
   exports.clearCaches();

@@ -3,7 +3,7 @@ import getComponentFiles from "../../util/get-component-files";
 
 const STYLE_REG = /^style(?:\.([^\s]+))?\s*\{/;
 
-export default function(path) {
+export default function (path) {
   const { hub, node } = path;
   const { deps } = hub.file.metadata.marko;
   const { rawValue } = node;

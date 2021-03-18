@@ -11,7 +11,7 @@ function copyFiles(dir) {
   });
 }
 
-exports.check = function(marko, hotReload, expect, snapshot) {
+exports.check = function (marko, hotReload, expect, snapshot) {
   try {
     fs.mkdirSync(nodePath.join(__dirname, "temp"));
   } catch (e) {

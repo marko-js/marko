@@ -1,3 +1,3 @@
-module.exports = function(input, out) {
+module.exports = function (input, out) {
   out.write("Hello " + input.name + "!");
 };

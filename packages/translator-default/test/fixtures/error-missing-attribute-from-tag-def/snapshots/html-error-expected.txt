@@ -1,4 +1,4 @@
 packages/translator-default/test/fixtures/error-missing-attribute-from-tag-def/template.marko(1,23): <custom-tag> does not support the "x" attribute.
 > 1 | <custom-tag name="hi" x=1/>
     |                       ^^^
-  2 | 
+  2 |

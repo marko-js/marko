@@ -23,7 +23,7 @@ try {
   // ignore error
 }
 
-Module._resolveFilename = function(request, parent, isMain) {
+Module._resolveFilename = function (request, parent, isMain) {
   if (request.charAt(0) !== "." && parent.filename.startsWith(rootDir)) {
     if (
       request === "marko/components" ||

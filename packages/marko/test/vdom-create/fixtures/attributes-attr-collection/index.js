@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var attributes = { class: "foo", id: "bar" };
 
   return helpers.vdom

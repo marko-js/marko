@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     this.name = "app-legacy-button";
 
     var logOutput = (this.logOutput = []);
@@ -14,7 +14,7 @@ module.exports = {
     this.clicked = false;
   },
 
-  handleRootMouseDown: function(event, el) {
+  handleRootMouseDown: function (event, el) {
     this.clicked = true;
     expect(el.getAttribute("class")).to.equal("app-legacy-button");
     this.log("click");

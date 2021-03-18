@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should allow diffing title inside head", function() {
+it("should allow diffing title inside head", function () {
   var app = window.app;
   expect(document.title).to.equal("Count: 0");
 

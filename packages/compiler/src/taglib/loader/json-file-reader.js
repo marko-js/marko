@@ -2,7 +2,7 @@ var fs = require("fs");
 var stripJsonComments = require("strip-json-comments");
 var fsReadOptions = { encoding: "utf8" };
 
-exports.readFileSync = function(path) {
+exports.readFileSync = function (path) {
   var json = fs.readFileSync(path, fsReadOptions);
 
   try {

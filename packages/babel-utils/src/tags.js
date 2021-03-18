@@ -202,10 +202,7 @@ export function getTemplateId(optimize, request) {
   const id = relative(ROOT, request);
 
   if (optimize) {
-    return createHash("MD5")
-      .update(id)
-      .digest("base64")
-      .slice(0, 8);
+    return createHash("MD5").update(id).digest("base64").slice(0, 8);
   }
 
   return id;

@@ -27,7 +27,7 @@ exports.excludePackage = compiler.taglib.excludePackage;
 exports.loader = compiler.taglib._loader;
 exports.finder = compiler.taglib._finder;
 exports.lookup = {
-  buildLookup: function(dir, translator) {
+  buildLookup: function (dir, translator) {
     if (!translator || !Array.isArray(translator.taglibs)) {
       translator = require("@marko/translator-default");
       // eslint-disable-next-line no-constant-condition

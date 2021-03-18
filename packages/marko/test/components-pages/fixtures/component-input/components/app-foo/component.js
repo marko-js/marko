@@ -1,15 +1,15 @@
 module.exports = {
-  onInput: function() {
+  onInput: function () {
     this.state = {
       counter: 0
     };
   },
 
-  increment: function() {
+  increment: function () {
     this.state.counter++;
   },
 
-  onMount: function() {
+  onMount: function () {
     window.fooComponent = this;
   }
 };

@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var root = helpers.vdom.createElement("div", { class: "root" });
 
   var docFragment = helpers.vdom.createDocumentFragment();

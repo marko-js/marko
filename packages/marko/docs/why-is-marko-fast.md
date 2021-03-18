@@ -68,6 +68,7 @@ function render(input, out) {
 
 #### Compiled for the browser
 
+<!-- prettier-ignore -->
 ```js
 var marko_template = require("marko/vdom").t(__filename);
 
@@ -178,6 +179,7 @@ Given the following template:
 
 Marko will produce the following compiled output:
 
+<!-- prettier-ignore -->
 ```js
 var marko_attrs0 = {
   class: "hello"

@@ -1,12 +1,12 @@
 var through = require("through");
 
-exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var output = "";
   var outStream = through(function write(data) {
     output += data;
   });
 
-  outStream.on("end", function() {
+  outStream.on("end", function () {
     snapshot(output);
     done();
   });
@@ -17,7 +17,7 @@ exports.check = function(marko, markoCompiler, expect, snapshot, done) {
       name: "John"
     })
     .pipe(outStream)
-    .on("error", function(e) {
+    .on("error", function (e) {
       done(e);
     });
 };

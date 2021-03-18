@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var svg = helpers.vdom.createElement(
     "svg",
     { height: "150", width: "400" },

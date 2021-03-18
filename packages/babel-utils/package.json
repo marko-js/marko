@@ -5,8 +5,8 @@
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
-    "@babel/runtime": "^7.7.7",
-    "jsesc": "^2.5.2"
+    "@babel/runtime": "^7.13.10",
+    "jsesc": "^3.0.2"
   },
   "devDependencies": {
     "@marko/compiler": "^5.4.2"

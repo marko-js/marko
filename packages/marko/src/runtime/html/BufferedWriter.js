@@ -22,7 +22,7 @@ BufferedWriter.prototype = Object.assign(
       }
     },
 
-    end: function() {
+    end: function () {
       flush(this);
       if (!this._wrapped.isTTY) {
         this._wrapped.end();

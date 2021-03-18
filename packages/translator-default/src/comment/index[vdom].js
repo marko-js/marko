@@ -1,3 +1,3 @@
-export default function(path) {
+export default function (path) {
   path.remove();
 }

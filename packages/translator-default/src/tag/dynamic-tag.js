@@ -3,7 +3,7 @@ import { importDefault } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
 
-export default function(path) {
+export default function (path) {
   const {
     node,
     hub: { file }

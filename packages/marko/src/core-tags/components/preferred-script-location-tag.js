@@ -16,7 +16,7 @@ module.exports = function render(input, out) {
     forceScriptTagAtThisPoint(out);
   } else {
     const asyncOut = out.beginAsync({ last: true, timeout: -1 });
-    out.onLast(function(next) {
+    out.onLast(function (next) {
       forceScriptTagAtThisPoint(asyncOut);
       asyncOut.end();
       next();

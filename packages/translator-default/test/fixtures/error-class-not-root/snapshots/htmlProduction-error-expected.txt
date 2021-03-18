@@ -3,5 +3,5 @@ packages/translator-default/test/fixtures/error-class-not-root/template.marko(2,
 > 2 |   class extends Test {
     |   ^^^^^
   3 |     onCreate() {
-  4 | 
+  4 |
   5 |     }

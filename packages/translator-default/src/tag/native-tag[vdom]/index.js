@@ -157,7 +157,7 @@ export function tagArguments(path, isStatic) {
 /**
  * Translates the html streaming version of a standard html element.
  */
-export default function(path, isNullable) {
+export default function (path, isNullable) {
   const { node } = path;
   const {
     name,

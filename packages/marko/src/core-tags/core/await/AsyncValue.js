@@ -46,7 +46,7 @@ AsyncValue.prototype = {
    * The given callback will be invoked when there is an error or resolved data
    * available.
    */
-  ___done: function(callback) {
+  ___done: function (callback) {
     // Do we already have data or error?
     if (this.___settled) {
       // invoke the callback immediately
@@ -63,7 +63,7 @@ AsyncValue.prototype = {
    * its initial state so that any future requests to load data will trigger a
    * new load call.
    */
-  ___reject: function(err) {
+  ___reject: function (err) {
     if (this.___settled) {
       return;
     }
@@ -84,7 +84,7 @@ AsyncValue.prototype = {
   /**
    * This method will trigger any callbacks to be notified of data.
    */
-  ___resolve: function(value) {
+  ___resolve: function (value) {
     if (this.___settled) {
       return;
     }

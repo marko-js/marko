@@ -2,4 +2,4 @@ packages/translator-default/test/fixtures/error-class-tag-nested-content/templat
   1 | class {}
 > 2 |  <div/>
     |  ^
-  3 | 
+  3 |

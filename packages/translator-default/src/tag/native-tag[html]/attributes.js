@@ -3,7 +3,7 @@ import { normalizeTemplateString, importDefault } from "@marko/babel-utils";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { evaluateAttr } from "../util";
 
-export default function(path, attrs) {
+export default function (path, attrs) {
   if (!attrs.length) {
     return t.stringLiteral("");
   }

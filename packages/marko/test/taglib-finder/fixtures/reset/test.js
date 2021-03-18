@@ -1,7 +1,7 @@
 var nodePath = require("path");
 var expect = require("chai").expect;
 
-exports.check = function(taglibFinder) {
+exports.check = function (taglibFinder) {
   var finderDir = nodePath.join(__dirname, "a/b/c");
 
   function getPaths() {

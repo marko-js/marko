@@ -1,5 +1,5 @@
 var template = require("./template.marko").default;
 
-exports.renderer = function(input, out) {
+exports.renderer = function (input, out) {
   template.render(input, out);
 };

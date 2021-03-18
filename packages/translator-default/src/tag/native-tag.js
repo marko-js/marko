@@ -6,7 +6,7 @@ import {
   assertNoArgs
 } from "@marko/babel-utils";
 
-export default function(path, isNullable) {
+export default function (path, isNullable) {
   const {
     hub: { file }
   } = path;

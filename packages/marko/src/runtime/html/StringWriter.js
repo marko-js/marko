@@ -10,22 +10,22 @@ function StringWriter() {
 }
 
 StringWriter.prototype = {
-  write: function(str) {
+  write: function (str) {
     this._content += str;
   },
 
-  script: function(str) {
+  script: function (str) {
     if (str) {
       this._scripts += (this._scripts ? ";" : "") + str;
     }
   },
 
-  get: function(key) {
+  get: function (key) {
     const extra = (this._data = this._data || {});
     return (extra[key] = extra[key] || []);
   },
 
-  merge: function(otherWriter) {
+  merge: function (otherWriter) {
     this._content += otherWriter._content;
     this._scripts += otherWriter._scripts;
     if (otherWriter._data) {
@@ -43,13 +43,13 @@ StringWriter.prototype = {
     }
   },
 
-  clear: function() {
+  clear: function () {
     this._content = "";
     this._scripts = "";
     this._data = null;
   },
 
-  toString: function() {
+  toString: function () {
     this.state.events.emit("___toString", this);
     let str = this._content;
     if (this._scripts) {

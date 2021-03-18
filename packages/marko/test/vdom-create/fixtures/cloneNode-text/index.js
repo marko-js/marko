@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var text = helpers.vdom.createText("Hello World");
   var textClone = text.___cloneNode();
   expect(textClone).to.not.equal(text);

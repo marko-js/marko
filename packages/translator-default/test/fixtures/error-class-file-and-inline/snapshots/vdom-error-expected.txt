@@ -2,5 +2,5 @@ packages/translator-default/test/fixtures/error-class-file-and-inline/template.m
 > 1 | class {
     | ^^^^^
   2 |   onCreate() {
-  3 | 
+  3 |
   4 |   }

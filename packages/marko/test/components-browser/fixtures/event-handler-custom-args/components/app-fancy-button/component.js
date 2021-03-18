@@ -1,11 +1,11 @@
 module.exports = {
-  getTemplateData: function(state, input) {
+  getTemplateData: function (state, input) {
     return {
       label: input.label
     };
   },
 
-  emitPressEvent: function() {
+  emitPressEvent: function () {
     this.emit("press", { component: this });
   }
 };

@@ -142,12 +142,12 @@ If you target browsers that does not support classes, a plain object of methods 
 
 ```js
 module.exports = {
-  onCreate: function() {
+  onCreate: function () {
     this.state = {
       count: 0
     };
   },
-  increment: function() {
+  increment: function () {
     this.state.count++;
   }
 };
@@ -883,7 +883,7 @@ class {
 > **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance. A parent component, or other code that has access to the component instance, can listen for these events. For example:
 >
 > ```js
-> component.on("input", function(input, out) {
+> component.on("input", function (input, out) {
 >   // The component received an input
 > });
 > ```

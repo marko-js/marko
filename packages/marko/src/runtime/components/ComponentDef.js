@@ -34,7 +34,7 @@ function ComponentDef(component, componentId, componentsContext) {
 }
 
 ComponentDef.prototype = {
-  ___nextKey: function(key) {
+  ___nextKey: function (key) {
     return (
       this.___keySequence || (this.___keySequence = new KeySequence())
     ).___nextKey(key);
@@ -44,7 +44,7 @@ ComponentDef.prototype = {
    * This helper method generates a unique and fully qualified DOM element ID
    * that is unique within the scope of the current component.
    */
-  elId: function(nestedId) {
+  elId: function (nestedId) {
     var id = this.id;
 
     if (nestedId == null) {
@@ -70,11 +70,11 @@ ComponentDef.prototype = {
   /**
    * Returns the next auto generated unique ID for a nested DOM element or nested DOM component
    */
-  ___nextComponentId: function() {
+  ___nextComponentId: function () {
     return this.id + "-c" + this.___nextIdIndex++;
   },
 
-  d: function(eventName, handlerMethodName, isOnce, extraArgs) {
+  d: function (eventName, handlerMethodName, isOnce, extraArgs) {
     addDelegatedEventHandler(eventName);
     return attachBubblingEvent(this, handlerMethodName, isOnce, extraArgs);
   },
@@ -86,7 +86,7 @@ ComponentDef.prototype = {
 
 ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
 
-ComponentDef.___deserialize = function(o, types, global, registry) {
+ComponentDef.___deserialize = function (o, types, global, registry) {
   var id = o[0];
   var typeName = types[o[1]];
   var input = o[2] || null;
@@ -116,7 +116,7 @@ ComponentDef.___deserialize = function(o, types, global, registry) {
     if (state) {
       var undefinedPropNames = extra.u;
       if (undefinedPropNames) {
-        undefinedPropNames.forEach(function(undefinedPropName) {
+        undefinedPropNames.forEach(function (undefinedPropName) {
           state[undefinedPropName] = undefined;
         });
       }

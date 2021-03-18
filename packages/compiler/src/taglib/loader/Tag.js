@@ -41,7 +41,7 @@ class Tag {
   }
 
   forEachTransformer(callback, thisObj) {
-    forEachEntry(this.transformers, function(key, transformer) {
+    forEachEntry(this.transformers, function (key, transformer) {
       callback.call(thisObj, transformer);
     });
   }
@@ -132,7 +132,7 @@ class Tag {
       return;
     }
 
-    forEachEntry(this.nestedTags, function(key, nestedTag) {
+    forEachEntry(this.nestedTags, function (key, nestedTag) {
       callback.call(thisObj, nestedTag);
     });
   }

@@ -2,7 +2,7 @@ function KeySequence() {
   this.___lookup = Object.create(null);
 }
 
-KeySequence.prototype.___nextKey = function(key) {
+KeySequence.prototype.___nextKey = function (key) {
   var lookup = this.___lookup;
 
   if (lookup[key]) {

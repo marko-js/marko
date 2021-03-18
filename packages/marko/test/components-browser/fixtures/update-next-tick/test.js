@@ -1,12 +1,12 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers, done) {
+module.exports = function (helpers, done) {
   var component = helpers.mount(require.resolve("./index.marko"), {
     size: "large",
     label: "Initial Label"
   });
 
-  component.onUpdate = function() {
+  component.onUpdate = function () {
     expect(component.el.className).to.contain("small");
     done();
   };

@@ -26,7 +26,7 @@ const ESCAPE_TYPES = {
   }
 };
 
-export default function(path) {
+export default function (path) {
   const {
     node,
     hub: { file }

@@ -1,7 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 
-exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var compiler = require("marko/compiler");
   var templatePath = path.join(__dirname, "template.marko");
 

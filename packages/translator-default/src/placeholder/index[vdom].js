@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 
-export default function(path) {
+export default function (path) {
   const { node } = path;
   const { escape, value } = node;
   const method = escape ? "t" : "h";

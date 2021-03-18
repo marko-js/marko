@@ -4,7 +4,7 @@ import markoModules from "@marko/compiler/modules";
 
 const startOffset = "module-code".length;
 
-export default function(path) {
+export default function (path) {
   const {
     hub: { file },
     node: { rawValue }

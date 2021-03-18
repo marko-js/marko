@@ -88,9 +88,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   const filename = jsParseOptions.sourceFileName;
   const id = getTemplateId(markoOpts.optimize, filename);
-  const contentHash = createHash("MD5")
-    .update(code)
-    .digest("hex");
+  const contentHash = createHash("MD5").update(code).digest("hex");
   const cacheKey = createHash("MD5")
     .update(id)
     .update(markoOpts.migrate ? "\0migrate" : "")
