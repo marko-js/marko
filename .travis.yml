@@ -1,8 +1,0 @@
-sudo: false
-node_js:
-- "10"
-- "12"
-language: node_js
-install: "npm ci"
-script: "npm run ci:test"
-after_success: "npm run ci:codecov"

@@ -9,7 +9,9 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/marko"><img alt="NPM" src="https://img.shields.io/npm/v/marko.svg"/></a>
   <a href="https://discord.gg/RFGxYGs"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-7188da.svg"/></a>
-  <a href="https://travis-ci.org/marko-js/marko"><img alt="Build Status" src="https://travis-ci.org/marko-js/marko.svg?branch=master"/></a>
+  <a href="https://github.com/marko-js/marko/actions/workflows/ci.yml">
+    <img src="https://github.com/marko-js/marko/actions/workflows/ci.yml/badge.svg" alt="Build status"/>
+  </a>
   <a href="https://codecov.io/gh/marko-js/marko"><img alt="Coverage Status" src="https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg"/></a>
   <a href="http://npm-stat.com/charts.html?package=marko"><img alt="Downloads" src="https://img.shields.io/npm/dm/marko.svg"/></a>
 </p>
@@ -89,7 +91,7 @@ module.exports = {
   },
   increment() {
     this.state.count++;
-  }
+  },
 };
 ```
 
