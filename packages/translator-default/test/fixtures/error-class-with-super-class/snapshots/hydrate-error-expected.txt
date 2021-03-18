@@ -2,5 +2,5 @@ packages/translator-default/test/fixtures/error-class-with-super-class/template.
 > 1 | class extends Test {
     |               ^^^^
   2 |   onCreate() {
-  3 | 
+  3 |
   4 |   }
