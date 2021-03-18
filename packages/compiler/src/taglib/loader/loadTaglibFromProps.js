@@ -2,9 +2,9 @@
 
 var ok = require("assert").ok;
 var resolveFrom = require("resolve-from").silent;
-var lassoCachingFS = require("lasso-caching-fs");
-var types = require("./types");
 var nodePath = require("path");
+var types = require("./types");
+var taglibFS = require("../fs");
 var scanTagsDir = require("./scanTagsDir");
 var propertyHandlers = require("property-handlers");
 var jsonFileReader = require("./json-file-reader");
@@ -106,7 +106,9 @@ class TaglibLoader {
     if (typeof value === "string") {
       tagFilePath = nodePath.resolve(this.dirname, value);
 
-      if (!lassoCachingFS.existsSync(tagFilePath)) {
+      try {
+        taglibFS.curFS.statSync(tagFilePath);
+      } catch (_) {
         throw new Error(
           'Tag at path "' +
             tagFilePath +

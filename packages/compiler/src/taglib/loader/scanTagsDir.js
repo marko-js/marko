@@ -1,8 +1,8 @@
 "use strict";
 
 const nodePath = require("path");
-const fs = require("fs");
-const stripJsonComments = require("strip-json-comments");
+const taglibFS = require("../fs");
+const jsonFileReader = require("./json-file-reader");
 const tagDefFromCode = require("./tag-def-from-code");
 const loaders = require("./loaders");
 const fsReadOptions = { encoding: "utf8" };
@@ -42,7 +42,7 @@ function createDefaultTagDef() {
 
 function getFileMap(dirname) {
   let fileMap = {};
-  let files = fs.readdirSync(dirname);
+  let files = taglibFS.curFS.readdirSync(dirname);
 
   files.forEach(file => {
     let extName = nodePath.extname(file);
@@ -69,7 +69,7 @@ function getPath(filename, fileMap) {
 
 function findAndSetFile(tagDef, tagDirname) {
   try {
-    if (!fs.statSync(tagDirname).isDirectory()) {
+    if (!taglibFS.curFS.statSync(tagDirname).isDirectory()) {
       return;
     }
   } catch (_) {
@@ -125,7 +125,7 @@ module.exports = function scanTagsDir(
   }
 
   dir = nodePath.resolve(tagsConfigDirname, dir);
-  let children = fs.readdirSync(dir);
+  let children = taglibFS.curFS.readdirSync(dir);
 
   for (let i = 0, len = children.length; i < len; i++) {
     let childFilename = children[i];
@@ -151,21 +151,14 @@ module.exports = function scanTagsDir(
       tagJsonPath = nodePath.join(tagDirname, "marko-tag.json");
 
       let hasTagJson = false;
-      if (fs.existsSync(tagJsonPath)) {
+      try {
+        taglibFS.curFS.statSync(tagJsonPath);
         hasTagJson = true;
+        // eslint-disable-next-line no-empty
+      } catch (_) {}
+      if (hasTagJson) {
         // marko-tag.json exists in the directory, use that as the tag definition
-        try {
-          tagDef = JSON.parse(
-            stripJsonComments(fs.readFileSync(tagJsonPath, fsReadOptions))
-          );
-        } catch (e) {
-          throw new Error(
-            'Unable to parse JSON file at path "' +
-              tagJsonPath +
-              '". Error: ' +
-              e
-          );
-        }
+        tagDef = jsonFileReader.readFileSync(tagJsonPath);
       } else {
         tagJsonPath = null;
         tagDef = createDefaultTagDef();
@@ -189,7 +182,7 @@ module.exports = function scanTagsDir(
       }
 
       if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
-        let templateCode = fs.readFileSync(
+        let templateCode = taglibFS.curFS.readFileSync(
           tagDef.renderer || tagDef.template,
           fsReadOptions
         );

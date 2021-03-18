@@ -141,3 +141,6 @@ if (globalThis[MARKO_CONFIG_KEY]) {
 }
 
 export default config;
+
+import { setFS } from "./taglib/fs";
+setFS(config.fileSystem);
