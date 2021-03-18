@@ -2,4 +2,4 @@ packages/translator-default/test/fixtures/error-export-tag-nested-content/templa
   1 | export a from "b";
 > 2 |  <div/>
     |  ^
-  3 | 
+  3 |

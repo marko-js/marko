@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports.x = function(value) {
+module.exports.x = function (value) {
   if (value == null) {
     return "";
   }

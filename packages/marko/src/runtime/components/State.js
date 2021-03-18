@@ -4,10 +4,10 @@ function ensure(state, propertyName) {
   var proto = state.constructor.prototype;
   if (!(propertyName in proto)) {
     Object.defineProperty(proto, propertyName, {
-      get: function() {
+      get: function () {
         return this.___raw[propertyName];
       },
-      set: function(value) {
+      set: function (value) {
         this.___set(propertyName, value, false /* ensure:false */);
       }
     });
@@ -27,7 +27,7 @@ function State(component) {
 }
 
 State.prototype = {
-  ___reset: function() {
+  ___reset: function () {
     var self = this;
 
     self.___dirty = false;
@@ -36,7 +36,7 @@ State.prototype = {
     self.___forced = null;
   },
 
-  ___replace: function(newState) {
+  ___replace: function (newState) {
     var state = this;
     var key;
 
@@ -62,7 +62,7 @@ State.prototype = {
       );
     }
   },
-  ___set: function(name, value, shouldEnsure, forceDirty) {
+  ___set: function (name, value, shouldEnsure, forceDirty) {
     var rawState = this.___raw;
 
     if (shouldEnsure) {
@@ -97,7 +97,7 @@ State.prototype = {
       rawState[name] = value;
     }
   },
-  toJSON: function() {
+  toJSON: function () {
     return this.___raw;
   }
 };

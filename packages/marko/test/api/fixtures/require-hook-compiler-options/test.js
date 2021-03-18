@@ -18,7 +18,7 @@ function compileAndCheck(path, shouldHaveErrored) {
   }
 }
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, expect, helpers, done) {
   try {
     requireHook.install({
       compilerOptions: {

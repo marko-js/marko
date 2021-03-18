@@ -1,3 +1,4 @@
+/* eslint-disable no-import-assign */
 import * as babelTypes from "@babel/types";
 import builder from "@babel/types/lib/builders/builder";
 import defineType from "@babel/types/lib/definitions/utils";

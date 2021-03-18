@@ -6,7 +6,7 @@ var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
 var w10NOOP = require("warp10/constants").NOOP;
-var RENDER_BODY_TO_JSON = function() {
+var RENDER_BODY_TO_JSON = function () {
   return w10NOOP;
 };
 

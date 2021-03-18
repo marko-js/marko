@@ -14,7 +14,7 @@ const parentIdentifierLookup = new WeakMap();
 
 // TODO: optimize inline repeated @tags.
 
-export default function(path) {
+export default function (path) {
   const { node } = path;
   const namePath = path.get("name");
   const tagName = namePath.node.value;

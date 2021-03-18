@@ -5,7 +5,7 @@ exports.templateData = {
   testDataProvider: callbackProvider(1, { name: "Frank" })
 };
 
-exports.checkHtml = function(html) {
+exports.checkHtml = function (html) {
   expect(html).to.contain("Loading main...");
   expect(html).to.contain("Hello Frank");
 };

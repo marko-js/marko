@@ -14,30 +14,30 @@ function getChildNodes(parentNode) {
 
   return childNodes;
 }
-describe("AsyncVDOMBuilder", function() {
-  it("sync", function() {
+describe("AsyncVDOMBuilder", function () {
+  it("sync", function () {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
     var tree = out.___getOutput();
     expect(getChildNodes(tree).length).to.equal(1);
   });
 
-  it("end, then listen for finish", function(done) {
+  it("end, then listen for finish", function (done) {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
     out.end();
-    out.on("finish", function(result) {
+    out.on("finish", function (result) {
       expect(getChildNodes(result.getOutput()).length).to.equal(1);
       done();
     });
   });
 
-  it("async", function(done) {
+  it("async", function (done) {
     var out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
     var asyncOut = out.beginAsync();
 
-    setTimeout(function() {
+    setTimeout(function () {
       asyncOut.element("span", {}, 0);
       asyncOut.end();
     }, 10);
@@ -45,7 +45,7 @@ describe("AsyncVDOMBuilder", function() {
     out.element("section", {}, 0);
 
     out.end();
-    out.on("finish", function(result) {
+    out.on("finish", function (result) {
       var tree = result.getOutput();
       expect(getChildNodes(tree).length).to.equal(3);
       expect(tree.___firstChild.___nodeName).to.equal("div");
@@ -57,7 +57,7 @@ describe("AsyncVDOMBuilder", function() {
     });
   });
 
-  it("promise", function(done) {
+  it("promise", function (done) {
     const out = new AsyncVDOMBuilder();
     out.element("div", {}, 0);
     out
@@ -69,12 +69,12 @@ describe("AsyncVDOMBuilder", function() {
       .catch(done);
   });
 
-  it("async flush", function(done) {
+  it("async flush", function (done) {
     var out = new AsyncVDOMBuilder();
-    out.on("update", function(result) {
+    out.on("update", function (result) {
       expect(getChildNodes(result.getOutput()).length).to.equal(1);
     });
-    out.once("finish", function(result) {
+    out.once("finish", function (result) {
       expect(getChildNodes(result.getOutput()).length).to.equal(2);
       done();
     });
@@ -84,7 +84,7 @@ describe("AsyncVDOMBuilder", function() {
 
     var asyncOut = out.beginAsync();
 
-    setTimeout(function() {
+    setTimeout(function () {
       asyncOut.element("span", {}, 0);
       asyncOut.end();
     }, 10);
@@ -92,9 +92,9 @@ describe("AsyncVDOMBuilder", function() {
     out.end();
   });
 
-  it("for loop", function(done) {
+  it("for loop", function (done) {
     var out = new AsyncVDOMBuilder();
-    out.once("finish", function(result) {
+    out.once("finish", function (result) {
       var tree = result.getOutput();
       var childNodes = getChildNodes(tree);
       var header = childNodes[0];
@@ -122,7 +122,7 @@ describe("AsyncVDOMBuilder", function() {
     out.end();
   });
 
-  it("staticNode, comment", function(done) {
+  it("staticNode, comment", function (done) {
     var staticNode = new VElement("div", {}, 0, "f891ea3");
     var out = new AsyncVDOMBuilder();
 
@@ -130,7 +130,7 @@ describe("AsyncVDOMBuilder", function() {
     out.text("Hello <em>World</em>");
     out.end();
 
-    out.once("finish", function(result) {
+    out.once("finish", function (result) {
       var tree = result.getOutput();
       var childNodes = getChildNodes(tree);
       expect(childNodes[0].___nodeName).to.equal("div");

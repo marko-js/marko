@@ -20,8 +20,8 @@ function register(type, def) {
 
   if (pendingForType) {
     delete pendingDefs[type];
-    queueMicrotask(function() {
-      pendingForType.forEach(function(args) {
+    queueMicrotask(function () {
+      pendingForType.forEach(function (args) {
         initComponents.___tryHydrateComponent(
           args[0],
           type,
@@ -41,7 +41,7 @@ function addPendingDef(def, type, doc, runtimeId) {
 
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
-      doc.addEventListener("load", function() {
+      doc.addEventListener("load", function () {
         var pendingComponentIds = Object.keys(pendingDefs);
         if (pendingComponentIds.length) {
           complain(
@@ -101,7 +101,7 @@ function getComponentClass(typeName) {
       typeName
     );
     var className = classNameMatch ? classNameMatch[1] : "AnonymousComponent";
-    className = className.replace(/-(.)/g, function(g) {
+    className = className.replace(/-(.)/g, function (g) {
       return g[1].toUpperCase();
     });
     className = className

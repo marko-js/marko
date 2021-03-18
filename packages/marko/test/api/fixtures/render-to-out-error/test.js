@@ -1,17 +1,17 @@
 var nodePath = require("path");
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, expect, helpers, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   var out = template.createOut();
   var events = [];
   var error;
 
   out
-    .on("error", function(_error) {
+    .on("error", function (_error) {
       events.push("error");
       error = _error;
     })
-    .on("finish", function() {
+    .on("finish", function () {
       events.push("finish");
 
       expect(events).to.deep.equal(["error", "finish"]);

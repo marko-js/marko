@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should allow attributes to not be updated", function() {
+it("should allow attributes to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-attr");
   var foo = noUpdateComponent.el.getAttribute("data-foo");
@@ -15,7 +15,7 @@ it("should allow attributes to not be updated", function() {
   expect(foo).to.equal("server");
 });
 
-it("should allow a root element to not be updated", function() {
+it("should allow a root element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-el");
 
@@ -36,7 +36,7 @@ it("should allow a root element to not be updated", function() {
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 });
 
-it("should allow a nested element to not be updated", function() {
+it("should allow a nested element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-el-nested");
 
@@ -57,7 +57,7 @@ it("should allow a nested element to not be updated", function() {
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 });
 
-it("should allow a body element to not be updated", function() {
+it("should allow a body element to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-body-el");
 

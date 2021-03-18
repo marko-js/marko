@@ -1,4 +1,4 @@
-export default function(path) {
+export default function (path) {
   const { node } = path;
   path.replaceWithMultiple(node.body);
 }

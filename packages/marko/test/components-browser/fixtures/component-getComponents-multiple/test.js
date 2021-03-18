@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   expect(component.getComponents("bar").length).to.equal(2);
   expect(component.getComponents("bar")[0].name).to.equal("a");

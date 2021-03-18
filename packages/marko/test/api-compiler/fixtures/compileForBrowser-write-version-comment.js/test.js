@@ -6,7 +6,7 @@ function getMarkoVersionComment() {
   return "Compiled using marko@" + markoVersion + " - DO NOT EDIT";
 }
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, expect, helpers, done) {
   var compiler = require("marko/compiler");
   var templatePath = path.join(__dirname, "template.marko");
 

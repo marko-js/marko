@@ -1,7 +1,7 @@
 window.mountCount = 0;
 
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     window.mountCount++;
   }
 };

@@ -52,7 +52,7 @@ function createOut(globalData, writer, parentOut, buffer) {
 
 Template.prototype = {
   createOut: createOut,
-  stream: function(data) {
+  stream: function (data) {
     return new Readable(this, data, this._options);
   }
 };

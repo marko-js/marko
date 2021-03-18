@@ -1,5 +1,5 @@
 module.exports = {
-  onInput: function() {
+  onInput: function () {
     this.string = "world";
     this.number = 12;
     this.boolean = true;
@@ -9,7 +9,7 @@ module.exports = {
     };
   },
 
-  onMount: function() {
+  onMount: function () {
     this.name = "app-component-config";
   }
 };

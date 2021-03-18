@@ -52,7 +52,7 @@ var Node_prototype = VNode.prototype;
  * Shorthand method for creating and appending a Text node with a given value
  * @param  {String} value The text value for the new Text node
  */
-Node_prototype.t = function(value) {
+Node_prototype.t = function (value) {
   var type = typeof value;
   var vdomNode;
 
@@ -70,7 +70,7 @@ Node_prototype.t = function(value) {
   return this.___finishChild();
 };
 
-Node_prototype.___appendDocumentFragment = function() {
+Node_prototype.___appendDocumentFragment = function () {
   return this.___appendChild(new VDocumentFragment());
 };
 

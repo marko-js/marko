@@ -14,12 +14,12 @@ autotest("fixtures", run);
  */
 function run(fixture) {
   let resolve = fixture.resolve;
-  asyncTestSuite(path.basename(fixture.dir), function() {
+  asyncTestSuite(path.basename(fixture.dir), function () {
     var testFile = resolve("tests.js");
     var templateFile = resolve("template.marko");
     var template = require(templateFile);
     template = template.default || template;
-    var pendingHtml = new Promise(function(resolve, reject) {
+    var pendingHtml = new Promise(function (resolve, reject) {
       var html = "";
       template
         .render(
@@ -37,7 +37,7 @@ function run(fixture) {
         .once("error", reject);
     });
 
-    return pendingHtml.then(function(html) {
+    return pendingHtml.then(function (html) {
       var browser = createBrowserWithMarko(__dirname, html, {
         beforeParse(window, browser) {
           browser.require("../../components");
@@ -45,7 +45,7 @@ function run(fixture) {
           browser.require(templateFile);
         }
       });
-      after(function() {
+      after(function () {
         browser.window.close();
       });
 

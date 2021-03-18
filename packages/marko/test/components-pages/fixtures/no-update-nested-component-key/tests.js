@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should render correctly", function() {
+it("should render correctly", function () {
   var root = window.root;
   var child = window.child;
   var nestedChild = window.nestedChild;

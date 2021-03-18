@@ -119,7 +119,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
     // Otherwise, there are handlers for all of the changed properties
     // so apply the updates using those handlers
 
-    handlers.forEach(function(handler) {
+    handlers.forEach(function (handler) {
       var propertyName = handler[0];
       handlerMethod = handler[1];
 
@@ -199,7 +199,7 @@ function Component(id) {
 Component.prototype = componentProto = {
   ___isComponent: true,
 
-  subscribeTo: function(target) {
+  subscribeTo: function (target) {
     if (!target) {
       throw TypeError();
     }
@@ -215,7 +215,7 @@ Component.prototype = componentProto = {
     return subscriptions.subscribeTo(target, subscribeToOptions);
   },
 
-  emit: function(eventType) {
+  emit: function (eventType) {
     var customEvents = this.___customEvents;
     var target;
 
@@ -239,13 +239,13 @@ Component.prototype = componentProto = {
 
     return emit.apply(this, arguments);
   },
-  getElId: function(key, index) {
+  getElId: function (key, index) {
     if (!key) {
       return this.id;
     }
     return resolveComponentIdHelper(this, key, index);
   },
-  getEl: function(key, index) {
+  getEl: function (key, index) {
     if (key) {
       var keyedElement = this.___keyedElements[
         "@" + resolveKeyHelper(key, index)
@@ -268,7 +268,7 @@ Component.prototype = componentProto = {
       return this.el;
     }
   },
-  getEls: function(key) {
+  getEls: function (key) {
     key = key + "[]";
 
     var els = [];
@@ -280,7 +280,7 @@ Component.prototype = componentProto = {
     }
     return els;
   },
-  getComponent: function(key, index) {
+  getComponent: function (key, index) {
     var rootNode = this.___keyedElements["@" + resolveKeyHelper(key, index)];
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
@@ -293,17 +293,17 @@ Component.prototype = componentProto = {
 
     return rootNode && componentsByDOMNode.get(rootNode);
   },
-  getComponents: function(key) {
+  getComponents: function (key) {
     var lookup = this.___keyedElements["@" + key + "[]"];
     return lookup
       ? Object.keys(lookup)
-          .map(function(key) {
+          .map(function (key) {
             return componentsByDOMNode.get(lookup[key]);
           })
           .filter(Boolean)
       : [];
   },
-  destroy: function() {
+  destroy: function () {
     if (this.___destroyed) {
       return;
     }
@@ -314,7 +314,7 @@ Component.prototype = componentProto = {
 
     var nodes = root.nodes;
 
-    nodes.forEach(function(node) {
+    nodes.forEach(function (node) {
       destroyNodeRecursive(node);
 
       if (eventDelegation.___handleNodeDetach(node) !== false) {
@@ -328,7 +328,7 @@ Component.prototype = componentProto = {
     this.___keyedElements = {};
   },
 
-  ___destroyShallow: function() {
+  ___destroyShallow: function () {
     if (this.___destroyed) {
       return;
     }
@@ -350,7 +350,7 @@ Component.prototype = componentProto = {
     }
   },
 
-  isDestroyed: function() {
+  isDestroyed: function () {
     return this.___destroyed;
   },
   get state() {
@@ -376,7 +376,7 @@ Component.prototype = componentProto = {
       this.___state = null;
     }
   },
-  setState: function(name, value) {
+  setState: function (name, value) {
     var state = this.___state;
 
     if (!state) {
@@ -395,7 +395,7 @@ Component.prototype = componentProto = {
     }
   },
 
-  setStateDirty: function(name, value) {
+  setStateDirty: function (name, value) {
     var state = this.___state;
 
     if (arguments.length == 1) {
@@ -410,7 +410,7 @@ Component.prototype = componentProto = {
     );
   },
 
-  replaceState: function(newState) {
+  replaceState: function (newState) {
     this.___state.___replace(newState);
   },
 
@@ -425,7 +425,7 @@ Component.prototype = componentProto = {
     }
   },
 
-  ___setInput: function(newInput, onInput, out) {
+  ___setInput: function (newInput, onInput, out) {
     onInput = onInput || this.onInput;
     var updatedInput;
 
@@ -457,19 +457,19 @@ Component.prototype = componentProto = {
     return newInput;
   },
 
-  forceUpdate: function() {
+  forceUpdate: function () {
     this.___dirty = true;
     this.___queueUpdate();
   },
 
-  ___queueUpdate: function() {
+  ___queueUpdate: function () {
     if (!this.___updateQueued) {
       this.___updateQueued = true;
       updateManager.___queueComponentUpdate(this);
     }
   },
 
-  update: function() {
+  update: function () {
     if (this.___destroyed === true || this.___isDirty === false) {
       return;
     }
@@ -502,7 +502,7 @@ Component.prototype = componentProto = {
     );
   },
 
-  ___reset: function() {
+  ___reset: function () {
     this.___dirty = false;
     this.___updateQueued = false;
     this.___renderInput = null;
@@ -512,11 +512,11 @@ Component.prototype = componentProto = {
     }
   },
 
-  shouldUpdate: function() {
+  shouldUpdate: function () {
     return true;
   },
 
-  ___scheduleRerender: function() {
+  ___scheduleRerender: function () {
     var self = this;
     var renderer = self.___renderer;
 
@@ -526,14 +526,14 @@ Component.prototype = componentProto = {
 
     var input = this.___renderInput || this.___input;
 
-    updateManager.___batchUpdate(function() {
+    updateManager.___batchUpdate(function () {
       self.___rerender(input, false).afterInsert(self.___document);
     });
 
     this.___reset();
   },
 
-  ___rerender: function(input, isHydrate) {
+  ___rerender: function (input, isHydrate) {
     var doc = this.___document;
     var globalData = this.___global;
     var rootNode = this.___rootNode;
@@ -560,13 +560,13 @@ Component.prototype = componentProto = {
     return result;
   },
 
-  ___detach: function() {
+  ___detach: function () {
     var root = this.___rootNode;
     root.remove();
     return root;
   },
 
-  ___removeDOMEventListeners: function() {
+  ___removeDOMEventListeners: function () {
     var eventListenerHandles = this.___domEventListenerHandles;
     if (eventListenerHandles) {
       eventListenerHandles.forEach(removeListener);
@@ -579,11 +579,11 @@ Component.prototype = componentProto = {
     return state && state.___raw;
   },
 
-  ___setCustomEvents: function(customEvents, scope) {
+  ___setCustomEvents: function (customEvents, scope) {
     var finalCustomEvents = (this.___customEvents = {});
     this.___scope = scope;
 
-    customEvents.forEach(function(customEvent) {
+    customEvents.forEach(function (customEvent) {
       var eventType = customEvent[0];
       var targetMethodName = customEvent[1];
       var isOnce = customEvent[2];
@@ -604,7 +604,7 @@ Component.prototype = componentProto = {
         'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.'
       );
     }
-    return (this.___rootNode ? this.___rootNode.nodes : []).filter(function(
+    return (this.___rootNode ? this.___rootNode.nodes : []).filter(function (
       el
     ) {
       return el.nodeType === ELEMENT_NODE;

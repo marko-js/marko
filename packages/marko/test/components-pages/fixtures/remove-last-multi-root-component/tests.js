@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should remove the child nodes", function() {
+it("should remove the child nodes", function () {
   var component = window.testComponent;
   var el = component.getEl("root");
 

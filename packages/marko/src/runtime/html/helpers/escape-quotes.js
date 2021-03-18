@@ -1,6 +1,6 @@
 "use strict";
 
-exports.d = function(value) {
+exports.d = function (value) {
   return escapeDoubleQuotes(value + "", 0);
 };
 

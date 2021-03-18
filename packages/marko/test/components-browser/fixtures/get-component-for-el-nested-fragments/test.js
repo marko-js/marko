@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var getComponentForEl = require("marko/components").getComponentForEl;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {});
   var root = component.getEl("root");
   var childA = root.querySelector(".child-a");

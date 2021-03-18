@@ -1,14 +1,14 @@
 module.exports = {
-  onInput: function(input) {
+  onInput: function (input) {
     this.state = {
       name: input.name,
       age: input.age
     };
   },
-  getName: function() {
+  getName: function () {
     return this.getEl("name").innerHTML;
   },
-  getAge: function() {
+  getAge: function () {
     return this.getEl("age").innerHTML;
   }
 };

@@ -5,7 +5,7 @@ function Component() {
 }
 
 Component.prototype = {
-  onCreate: function(input, out) {
+  onCreate: function (input, out) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onCreate should not be called in the browser');
     // }
@@ -20,7 +20,7 @@ Component.prototype = {
     this.onCreateOutName = out.global.name;
   },
 
-  onRender: function(out) {
+  onRender: function (out) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onRender should not be called in the browser');
     // }
@@ -32,7 +32,7 @@ Component.prototype = {
     }
   },
 
-  onInput: function(input) {
+  onInput: function (input) {
     // if (typeof window !== 'undefined') {
     //     throw new Error('onInput should not be called in the browser');
     // }
@@ -40,12 +40,12 @@ Component.prototype = {
     this.state.events.push("onInput[" + input.name + "]");
   },
 
-  onMount: function() {
+  onMount: function () {
     var componentsLookup = window.components || (window.components = {});
     componentsLookup["lifecycle-events-component-class-ctor"] = this;
   },
 
-  test: function() {
+  test: function () {
     expect(this.state.events).to.deep.equal([
       "onCreate",
       "onInput[Frank]",

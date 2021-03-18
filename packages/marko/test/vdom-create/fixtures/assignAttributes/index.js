@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var morphAttrs = helpers.vdom.VElement.___morphAttrs;
 
   var fromEl = helpers.document.createElement("div");

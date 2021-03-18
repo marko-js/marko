@@ -27,7 +27,7 @@ function testRunner(fixture) {
 }
 
 function compareNormalized({ test, context }) {
-  test(function() {
+  test(function () {
     if (!("html" in context) || !("vdom" in context)) {
       this.skip();
     } else {
@@ -233,8 +233,8 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
   var events = [];
   var eventsByAwaitInstance = {};
 
-  var addEventListener = function(event) {
-    out.on(event, function(arg) {
+  var addEventListener = function (event) {
+    out.on(event, function (arg) {
       var name = arg.name;
 
       if (!eventsByAwaitInstance[name]) {
@@ -261,7 +261,7 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
       }
 
       // Make sure all of the await instances were correctly ended
-      Object.keys(eventsByAwaitInstance).forEach(function(name) {
+      Object.keys(eventsByAwaitInstance).forEach(function (name) {
         var events = eventsByAwaitInstance[name];
         expect(events).to.deep.equal([
           "await:begin",

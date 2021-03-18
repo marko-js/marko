@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var FLAGS = 1;
 
   return helpers.vdom

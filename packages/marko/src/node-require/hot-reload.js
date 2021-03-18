@@ -102,7 +102,7 @@ function _endsWithMarkoExtension(request, requireExtensions) {
   return false;
 }
 
-exports.handleFileModified = function(filename) {
+exports.handleFileModified = function (filename) {
   if (!fs.existsSync(filename)) {
     console.log(
       "[marko/hot-reload] WARNING cannot resolve template path: ",

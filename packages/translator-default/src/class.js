@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-export default function(path) {
+export default function (path) {
   const {
     hub: { file },
     node: {

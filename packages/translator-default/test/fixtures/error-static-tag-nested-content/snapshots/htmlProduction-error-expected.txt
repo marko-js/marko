@@ -2,4 +2,4 @@ packages/translator-default/test/fixtures/error-static-tag-nested-content/templa
   1 | static { console.log(x); }
 > 2 |  <div/>
     |  ^
-  3 | 
+  3 |

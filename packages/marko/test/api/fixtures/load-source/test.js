@@ -1,6 +1,6 @@
 var nodePath = require("path");
 
-exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var template;
   var templatePath;
 

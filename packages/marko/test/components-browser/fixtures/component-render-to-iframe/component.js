@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 var iframeContentComponent = require("./components/app-iframe-content").default;
 
 module.exports = {
-  renderIntoIframe: function() {
+  renderIntoIframe: function () {
     var frameEl = this.getEl("frame");
     return iframeContentComponent
       .renderSync({})
@@ -10,7 +10,7 @@ module.exports = {
       .getComponent();
   },
 
-  test: function(helpers) {
+  test: function (helpers) {
     var contentComponent = this.renderIntoIframe();
     expect(contentComponent.el.ownerDocument).to.equal(
       this.getEl("frame").contentWindow.document
@@ -20,7 +20,7 @@ module.exports = {
 
     var buttonClick = false;
 
-    contentComponent.on("buttonClick", function() {
+    contentComponent.on("buttonClick", function () {
       buttonClick = true;
     });
 

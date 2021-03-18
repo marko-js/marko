@@ -1,8 +1,8 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     window.rerenderInitOrder.push("parent");
   },
-  onUpdate: function() {
+  onUpdate: function () {
     window.rerenderInitOrder.push("parent");
   }
 };

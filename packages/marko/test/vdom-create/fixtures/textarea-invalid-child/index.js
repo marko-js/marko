@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
-  expect(function() {
+module.exports = function (helpers) {
+  expect(function () {
     helpers.vdom
       .createElement(
         "textarea",

@@ -40,7 +40,7 @@ class {
 ### `reducer.js`
 
 ```js
-module.exports = function(state, action) {
+module.exports = function (state, action) {
   state = state || { value: 0 };
 
   // Additional reducer logic here…

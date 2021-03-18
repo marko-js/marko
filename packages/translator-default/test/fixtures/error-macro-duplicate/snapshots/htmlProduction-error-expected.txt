@@ -1,6 +1,6 @@
 packages/translator-default/test/fixtures/error-macro-duplicate/template.marko(5,15): A macro with the name "thing" already exists.
   3 | </macro>
-  4 | 
+  4 |
 > 5 | <macro|stuff| name="thing">
     |               ^^^^^^^^^^^^
   6 |   <div>b</div>

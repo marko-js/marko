@@ -1,6 +1,6 @@
 import { parseScript } from "@marko/babel-utils";
 
-export default function(path) {
+export default function (path) {
   const {
     node,
     hub: { file }

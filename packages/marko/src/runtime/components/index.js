@@ -148,7 +148,7 @@ function addComponentsFromContext(componentsContext, componentsToHydrate) {
   // Also add any components from nested contexts
   var nestedContexts = componentsContext.___nestedContexts;
   if (nestedContexts !== undefined) {
-    nestedContexts.forEach(function(nestedContext) {
+    nestedContexts.forEach(function (nestedContext) {
       addComponentsFromContext(nestedContext, componentsToHydrate);
     });
   }
@@ -268,6 +268,6 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
  * @param  {ComponentsContext|AsyncWriter} componentsContext A ComponentsContext or an AsyncWriter
  * @return {Object} An object with information about the rendered components that can be serialized to JSON. The object should be treated as opaque
  */
-exports.getRenderedComponents = function(out) {
+exports.getRenderedComponents = function (out) {
   return warp10.stringifyPrepare(getInitComponentsDataFromOut(out));
 };

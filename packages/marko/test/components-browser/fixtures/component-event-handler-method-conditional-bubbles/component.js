@@ -1,9 +1,9 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     this.clicked = false;
   },
 
-  handleButtonClick: function() {
+  handleButtonClick: function () {
     this.clicked = true;
   }
 };

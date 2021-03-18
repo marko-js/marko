@@ -65,10 +65,10 @@ function find(dirname, registeredTaglibs) {
   var added = {};
 
   var helper = {
-    alreadyAdded: function(taglibPath) {
+    alreadyAdded: function (taglibPath) {
       return hasOwnProperty.call(added, taglibPath);
     },
-    addTaglib: function(taglib) {
+    addTaglib: function (taglib) {
       if (added[taglib.path]) {
         return;
       }

@@ -10,7 +10,7 @@ exports.promiseProvider = async (delay, value) => {
 };
 
 exports.callbackProvider = (delay, value) => {
-  return function(callback) {
+  return function (callback) {
     exports.promiseProvider(delay, value).then(
       resolved => callback(null, resolved),
       rejected => callback(rejected)
@@ -19,7 +19,7 @@ exports.callbackProvider = (delay, value) => {
 };
 
 exports.callbackProviderWithArgs = (delay, resolver = x => x) => {
-  return function(...all) {
+  return function (...all) {
     const args = all.slice(0, all.length - 1);
     const callback = all[all.length - 1];
     const value = resolver(...args);

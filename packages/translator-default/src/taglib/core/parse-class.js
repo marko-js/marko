@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { parseExpression } from "@marko/babel-utils";
 import getComponentFiles from "../../util/get-component-files";
 
-export default function(path) {
+export default function (path) {
   const {
     node,
     hub: { file }

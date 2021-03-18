@@ -59,6 +59,7 @@ Marko templates can be imported and rendered by any JavaScript module. The code 
 
 _client.js_
 
+<!-- prettier-ignore -->
 ```js
 require("./components/app/index.marko")
   .renderSync({})

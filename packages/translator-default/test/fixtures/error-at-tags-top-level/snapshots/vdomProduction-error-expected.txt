@@ -3,4 +3,4 @@ packages/translator-default/test/fixtures/error-at-tags-top-level/template.marko
     |  ^^^^^^^
   2 |     Header content
   3 | </@header>
-  4 | 
+  4 |

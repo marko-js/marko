@@ -2,5 +2,5 @@ packages/translator-default/test/fixtures/error-class-with-name/template.marko(1
 > 1 | class Test {
     |       ^^^^
   2 |   onCreate() {
-  3 | 
+  3 |
   4 |   }

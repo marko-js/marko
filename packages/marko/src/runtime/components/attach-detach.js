@@ -17,7 +17,7 @@ function handleNodeAttach(node, componentsContext) {
       var attachTargets = data.___attachTargets;
       if (!attachTargets) {
         attachTargets = data.___attachTargets = [];
-        out.on("___componentsInitialized", function() {
+        out.on("___componentsInitialized", function () {
           for (var i = 0; i < attachTargets.length; i += 2) {
             var node = attachTargets[i];
             var target = attachTargets[i + 1];
@@ -40,10 +40,10 @@ function handleNodeDetach(node) {
       var allowDetach;
 
       delegateEvent(node, eventName, target, {
-        preventDefault: function() {
+        preventDefault: function () {
           allowDetach = false;
         },
-        detach: function() {
+        detach: function () {
           var parentNode = node.parentNode;
           if (parentNode) {
             parentNode.removeChild(node);

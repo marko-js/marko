@@ -18,7 +18,7 @@ var VText = vdom.___VText;
 var VDocumentFragment = vdom.___VDocumentFragment;
 
 var vdomHelpers = {
-  createElement: function(
+  createElement: function (
     tagName,
     attrs,
     key,
@@ -37,10 +37,10 @@ var vdomHelpers = {
       props
     );
   },
-  createText: function(value) {
+  createText: function (value) {
     return new VText(value);
   },
-  createDocumentFragment: function() {
+  createDocumentFragment: function () {
     return new VDocumentFragment();
   },
   VElement: VElement,

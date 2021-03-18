@@ -673,7 +673,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
   morphChildren(fromNode, toNode, toNode.___component);
 
-  detachedNodes.forEach(function(node) {
+  detachedNodes.forEach(function (node) {
     var detachedFromComponent = detachedByDOMNode.get(node);
 
     if (detachedFromComponent !== undefined) {

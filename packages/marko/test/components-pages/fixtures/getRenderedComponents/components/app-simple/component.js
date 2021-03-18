@@ -3,7 +3,7 @@ if (typeof window !== "undefined") {
 }
 
 module.exports = {
-  onInput: function(input) {
+  onInput: function (input) {
     this.type = "component config";
     this.name = input.name;
     this.messageCount = input.messageCount;
@@ -15,7 +15,7 @@ module.exports = {
     };
   },
 
-  onMount: function() {
+  onMount: function () {
     window.simpleComponents.push(this);
 
     this.componentConfig = {

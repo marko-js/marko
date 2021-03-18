@@ -5,8 +5,8 @@ exports.templateData = {
   userDataProvider: { name: "Frank" }
 };
 
-exports.checkEvents = function(events, snapshot) {
-  events = events.map(function(eventInfo) {
+exports.checkEvents = function (events, snapshot) {
+  events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
     expect(arg.out != null).to.equal(true);
 

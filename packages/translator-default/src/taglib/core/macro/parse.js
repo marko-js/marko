@@ -1,4 +1,4 @@
-export default function(path) {
+export default function (path) {
   const attributes = path.get("attributes");
   const nameAttr = attributes.find(attr => attr.get("name").node === "name");
 

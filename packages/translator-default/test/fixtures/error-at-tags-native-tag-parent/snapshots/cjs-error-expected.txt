@@ -1,6 +1,6 @@
 packages/translator-default/test/fixtures/error-at-tags-native-tag-parent/template.marko(9,6): @tags must be within a custom element.
    7 |     Body content
-   8 | 
+   8 |
 >  9 |     <@footer class="my-footer">
      |      ^^^^^^^
   10 |         Footer content

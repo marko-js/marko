@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should handle ending </script> tag", function() {
+it("should handle ending </script> tag", function () {
   expect(document.readyState).to.equal("complete");
   expect(window.fooComponent.state.evil).to.equal(
     '</script><script>alert("hello")</script>'
