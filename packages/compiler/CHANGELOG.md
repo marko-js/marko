@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.4.2...v5.5.0) (2021-03-18)
+
+
+### Bug Fixes
+
+* **compiler:** use provided FS for taglib building ([#1674](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1674)) ([edb570e](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/edb570eda4b3d544795536bf81613f6c97c9859a))
+* correct Marko debug mode for ci tests ([031ca0d](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/031ca0d93fa77a3405b95467e7a98f2c5a8120de))
+
+
+### Features
+
+* add hydrate option ([#1673](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1673)) ([a4e7013](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/a4e701355efcd93971eb46988f5e990f4517796f))
+
+
+
+
+
 ## [5.4.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.4.1...v5.4.2) (2021-03-10)
 
 **Note:** Version bump only for package @marko/compiler

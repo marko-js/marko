@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.5.0](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.4.2...v5.5.0) (2021-03-18)
+
+
+### Features
+
+* add hydrate option ([#1673](https://github.com/marko-js/marko/tree/master/packages/translator-default/issues/1673)) ([a4e7013](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/a4e701355efcd93971eb46988f5e990f4517796f))
+
+
+
+
+
 ## [5.4.2](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.4.1...v5.4.2) (2021-03-10)
 
 **Note:** Version bump only for package @marko/translator-default
