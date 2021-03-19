@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.5.1...v5.5.2) (2021-03-19)
+
+
+### Bug Fixes
+
+* cast result of readFile to string ([#1679](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1679)) ([501a7fb](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/501a7fbfbe9e12869fd685f1e5c8ee4417da816d))
+
+
+
+
+
 ## [5.5.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.5.0...v5.5.1) (2021-03-18)
 
 
