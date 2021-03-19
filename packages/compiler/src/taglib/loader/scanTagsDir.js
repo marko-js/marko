@@ -182,9 +182,11 @@ module.exports = function scanTagsDir(
       }
 
       if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
-        let templateCode = taglibFS.curFS.readFileSync(
-          tagDef.renderer || tagDef.template,
-          fsReadOptions
+        let templateCode = String(
+          taglibFS.curFS.readFileSync(
+            tagDef.renderer || tagDef.template,
+            fsReadOptions
+          )
         );
         let extractedTagDef = tagDefFromCode.extractTagDef(templateCode);
         if (extractedTagDef) {

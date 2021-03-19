@@ -3,7 +3,7 @@ var stripJsonComments = require("strip-json-comments");
 var fsReadOptions = { encoding: "utf8" };
 
 exports.readFileSync = function (path) {
-  var json = taglibFS.curFS.readFileSync(path, fsReadOptions);
+  var json = String(taglibFS.curFS.readFileSync(path, fsReadOptions));
 
   try {
     var taglibProps = JSON.parse(stripJsonComments(json));
