@@ -37,11 +37,11 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
 
   const _tagName = input.show ? "div" : null;
 
-  if (_tagName) out.w(`<${_tagName} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName}>`);else out.bf("f_2", component);
+  if (_tagName) out.w(`<${_tagName} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName}>`);else out.bf("f_2", component, 1);
 
   const _tagName2 = input.show && "div";
 
-  if (_tagName2) out.w(`<${_tagName2} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName2}>`);else out.bf("f_3", component);
+  if (_tagName2) out.w(`<${_tagName2} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName2}>`);else out.bf("f_3", component, 1);
 
   const _tagName3 = input.large ? "h1" : "h2";
 
@@ -82,7 +82,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
 
   const _tagName7 = largeHeading || "h2";
 
-  if (_tagName7) out.w(`<${_tagName7} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName7}>`);else out.bf("f_9", component);
+  if (_tagName7) out.w(`<${_tagName7} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName7}>`);else out.bf("f_9", component, 1);
 
   const _tagName8 = global.x = "a" + "b";
 
@@ -96,12 +96,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   const tagConstA = "a";
   out.w(`<${tagConstA} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstA}>`);
   const tagConstB = input.show ? "div" : null;
-  if (tagConstB) out.w(`<${tagConstB} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstB}>`);else out.bf("f_14", component);
+  if (tagConstB) out.w(`<${tagConstB} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstB}>`);else out.bf("f_14", component, 1);
   let tagLazyAssign;
   tagLazyAssign = "a";
-  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_15", component);
+  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_15", component, 1);
   tagLazyAssign = input.show ? "div" : null;
-  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_16", component);
+  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_16", component, 1);
 }, {
   t: _marko_componentType,
   i: true,

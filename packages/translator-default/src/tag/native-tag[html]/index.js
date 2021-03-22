@@ -150,7 +150,11 @@ export default function (path, isNullable) {
       t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
-          [normalizeTemplateString`f_${key}`, t.identifier("component")]
+          [
+            normalizeTemplateString`f_${key}`,
+            t.identifier("component"),
+            t.numericLiteral(1)
+          ]
         )
       )
     );
