@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.3](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.5.2...v5.5.3) (2021-03-22)
+
+
+### Bug Fixes
+
+* **translator-default:** hydration mismatch with conditional dynamic tag ([91d3ee6](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/91d3ee66b2df589e3e42afb9c534b5f94a6fa6bb))
+
+
+
+
+
 ## [5.5.2](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.5.1...v5.5.2) (2021-03-19)
 
 **Note:** Version bump only for package @marko/translator-default
