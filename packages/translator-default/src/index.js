@@ -172,7 +172,7 @@ export const translate = {
         addDependencies(file, true);
         return;
       } else if (
-        file.markoOpts.resolveVirtualDependencies &&
+        file.markoOpts.resolveVirtualDependency &&
         file.markoOpts.output !== "html"
       ) {
         addDependencies(file, false);
