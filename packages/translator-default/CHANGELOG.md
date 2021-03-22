@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.5.4](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.5.3...v5.5.4) (2021-03-22)
+
+
+### Bug Fixes
+
+* resolveVirtualDependency typo ([be762ee](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/be762ee84f3c10160bcf7bb253f6f9c9e68bd3ce))
+
+
+
+
+
 ## [5.5.3](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.5.2...v5.5.3) (2021-03-22)
 
 
