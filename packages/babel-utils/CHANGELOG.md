@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.6.0...v5.6.1) (2021-03-27)
+
+
+### Bug Fixes
+
+* **babel-utils:** issue with child template analysis in node_modules ([f2133bc](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/f2133bcd19917cb04b27382ffccd8d708ac98960))
+
+
+
+
+
 # [5.6.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.5.4...v5.6.0) (2021-03-27)
 
 
