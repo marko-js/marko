@@ -1,6 +1,7 @@
 import { relative, resolve } from "path";
 import { createHash } from "crypto";
 import { types as t } from "@marko/compiler";
+import * as compilerModules from "@marko/compiler/modules";
 import { getRootDir } from "lasso-package-root";
 import { getTagDefForTagName } from "./taglib";
 import { resolveRelativePath } from "./imports";
@@ -185,11 +186,10 @@ export function loadFileForImport(file, request) {
   const relativeRequest = resolveTagImport(file.path, request);
 
   if (relativeRequest) {
-    const sourceFileName = resolve(
-      file.opts.sourceFileName,
-      "..",
-      relativeRequest
-    );
+    const sourceFileName =
+      relativeRequest[0] === "."
+        ? resolve(file.opts.sourceFileName, "..", relativeRequest)
+        : compilerModules.require.resolve(relativeRequest);
     return file.___getMarkoFile(
       fs.readFileSync(sourceFileName).toString("utf-8"),
       { ...file.opts, sourceFileName },
