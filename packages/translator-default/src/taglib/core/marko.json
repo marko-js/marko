@@ -337,6 +337,10 @@
       }
     ]
   },
+  "<__flush_here_and_after__>": {
+    "code-generator": "./translate-server-only.js",
+    "renderer": "marko/src/core-tags/core/__flush_here_and_after__.js"
+  },
   "<module-code>": {
     "node-factory": "./parse-module-code",
     "parse-options": {

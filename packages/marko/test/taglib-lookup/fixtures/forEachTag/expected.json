@@ -232,6 +232,7 @@
     "_preferred-script-location",
     "await",
     "await-reorderer",
+    "__flush_here_and_after__",
     "module-code",
     "await:then",
     "await:catch",

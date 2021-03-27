@@ -1,0 +1,28 @@
+<await(input.wait(40))>
+    <@then>
+        <h1>Before 1</h1>
+    </@then>
+</await>
+<h1>Before 2</h1>
+<await(input.wait(30))>
+    <@then>
+        <h1>Before 3</h1>
+    </@then>
+</await>
+<h1>Before 4</h1>
+$ let count = 0;
+<__flush_here_and_after__>
+    Flush ${++count}
+</__flush_here_and_after__>
+<h1>After 1</h1>
+<await(input.wait(20))>
+    <@then>
+        <h1>After 2</h1>
+    </@then>
+</await>
+<h1>After 3</h1>
+<await(input.wait(10))>
+    <@then>
+        <h1>After 4</h1>
+    </@then>
+</await>
