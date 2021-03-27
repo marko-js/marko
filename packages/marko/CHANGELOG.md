@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.6.0](https://github.com/marko-js/marko/compare/v5.5.4...v5.6.0) (2021-03-27)
+
+
+### Features
+
+* flush_here_and_after tag ([#1681](https://github.com/marko-js/marko/issues/1681)) ([9d01322](https://github.com/marko-js/marko/commit/9d0132281a89b804fe847e98f915aab951ba78a7))
+
+
+
+
+
 ## [5.5.4](https://github.com/marko-js/marko/compare/v5.5.3...v5.5.4) (2021-03-22)
 
 **Note:** Version bump only for package marko
