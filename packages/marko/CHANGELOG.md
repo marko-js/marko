@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.16](https://github.com/marko-js/marko/compare/v4.23.15...v4.23.16) (2021-03-29)
+
+
+### Bug Fixes
+
+* dynamic attr tags followed by html element ([49c6b0d](https://github.com/marko-js/marko/commit/49c6b0ddb435b34316f164e8d1b8ff26f3cc46cb))
+
 ### [4.23.15](https://github.com/marko-js/marko/compare/v4.23.14...v4.23.15) (2021-03-08)
 
 
