@@ -769,7 +769,7 @@ class CustomTag extends HtmlElement {
             if (
               nextBodyContent.type === "Text" ||
               nextBodyContent.type === "Scriptlet" ||
-              ((nextBodyContent.type === "HTMLElement" ||
+              ((nextBodyContent.type === "HtmlElement" ||
                 nextBodyContent.type === "CustomTag") &&
                 !(
                   nextBodyContent.tagDef &&
