@@ -1,3 +1,5 @@
+import { t as _t } from "marko/dist/runtime/vdom";
+
 const _marko_template = _t();
 
 export default _marko_template;
@@ -8,7 +10,6 @@ const _marko_node = _marko_createElement("script", null, "1", null, 3, 0).t("\n 
 const _marko_node2 = _marko_createElement("style", null, "2", null, 3, 0).t("\n    ").t("Hello <b> </style>").t("\n  ");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("jxXJawbJ", () => _marko_template),

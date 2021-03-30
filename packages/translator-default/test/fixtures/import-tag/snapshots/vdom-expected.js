@@ -1,3 +1,5 @@
+import { t as _t } from "marko/src/runtime/vdom";
+
 const _marko_template = _t();
 
 export default _marko_template;
@@ -5,7 +7,6 @@ import bar, { f as foo } from "./bar";
 import "./foo";
 import baz from "./components/baz.marko";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { t as _t } from "marko/src/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/import-tag/template.marko", () => _marko_template),

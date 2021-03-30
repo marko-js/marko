@@ -1,3 +1,5 @@
+import { t as _t } from "marko/dist/runtime/html";
+
 const _marko_template = _t();
 
 export default _marko_template;
@@ -19,7 +21,6 @@ import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml";
 import _marko_attrs from "marko/dist/runtime/html/helpers/attrs";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/html";
 const _marko_componentType = "OLFRWJ/R",
       _marko_component = {
   onCreate() {

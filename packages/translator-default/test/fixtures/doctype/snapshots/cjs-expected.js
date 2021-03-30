@@ -3,6 +3,8 @@
 exports.__esModule = true;
 exports.default = void 0;
 
+var _html = require("marko/src/runtime/html");
+
 var _initComponentsTag = _interopRequireDefault(require("marko/src/core-tags/components/init-components-tag.js"));
 
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
@@ -12,8 +14,6 @@ var _reordererRenderer = _interopRequireDefault(require("marko/src/core-tags/cor
 var _preferredScriptLocationTag = _interopRequireDefault(require("marko/src/core-tags/components/preferred-script-location-tag.js"));
 
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
-
-var _html = require("marko/src/runtime/html");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

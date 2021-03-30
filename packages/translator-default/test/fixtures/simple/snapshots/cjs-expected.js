@@ -3,11 +3,11 @@
 exports.__esModule = true;
 exports.default = void 0;
 
+var _html = require("marko/src/runtime/html");
+
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml");
 
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
-
-var _html = require("marko/src/runtime/html");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

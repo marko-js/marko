@@ -3,13 +3,13 @@
 exports.__esModule = true;
 exports.default = void 0;
 
+var _html = require("marko/src/runtime/html");
+
 var _renderer = _interopRequireDefault(require("./tags/test-hello/renderer.js"));
 
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
 
 var _renderer2 = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
-
-var _html = require("marko/src/runtime/html");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

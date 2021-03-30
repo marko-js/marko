@@ -1,3 +1,5 @@
+import { t as _t } from "marko/dist/runtime/html";
+
 const _marko_template = _t();
 
 export default _marko_template;
@@ -5,7 +7,6 @@ import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _preserve from "marko/dist/core-tags/components/preserve-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/html";
 const _marko_componentType = "qUg9ApxN",
       _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {

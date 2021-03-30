@@ -1,9 +1,10 @@
+import { t as _t } from "marko/dist/runtime/vdom";
+
 const _marko_template = _t();
 
 export default _marko_template;
 import _marko_class_merge from "marko/dist/runtime/helpers/class-value";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { t as _t } from "marko/dist/runtime/vdom";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
 
 const _marko_componentType = _marko_registerComponent("SA1M0lYk", () => _marko_template),

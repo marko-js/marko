@@ -256,26 +256,28 @@ export const translate = {
         );
       }
 
-      path.unshiftContainer(
-        "body",
-        t.exportDefaultDeclaration(templateIdentifier)
-      );
-      path.unshiftContainer(
-        "body",
+      const runtimeTemplateIdentifier = path.scope.generateUidIdentifier("t");
+
+      path.unshiftContainer("body", [
+        t.importDeclaration(
+          [t.importSpecifier(runtimeTemplateIdentifier, t.identifier("t"))],
+          t.stringLiteral(
+            `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/${
+              isHTML ? "html" : "vdom"
+            }`
+          )
+        ),
         t.variableDeclaration("const", [
           t.variableDeclarator(
             templateIdentifier,
             t.callExpression(
-              importNamed(
-                file,
-                `marko/src/runtime/${isHTML ? "html" : "vdom"}`,
-                "t"
-              ),
+              runtimeTemplateIdentifier,
               includeMetaInSource ? [t.identifier("__filename")] : []
             )
           )
-        ])
-      );
+        ]),
+        t.exportDefaultDeclaration(templateIdentifier)
+      ]);
 
       const componentIdString = t.stringLiteral(meta.id);
       path.pushContainer(
