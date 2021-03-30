@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.6.2](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.6.1...v5.6.2) (2021-03-30)
+
+
+### Bug Fixes
+
+* **translator-default:** some bundlers not supporting hoisted imports ([0233d04](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/0233d042206233ebaaf2ee551b8a926589c7f02f))
+
+
+
+
+
 ## [5.6.1](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.6.0...v5.6.1) (2021-03-27)
 
 **Note:** Version bump only for package @marko/translator-default
