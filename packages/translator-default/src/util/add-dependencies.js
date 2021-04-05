@@ -109,13 +109,13 @@ export default (entryFile, isHydrate) => {
           map = s.snip(dep.startPos, dep.endPos).generateMap();
 
           if (sourceMaps === "inline" || sourceMaps === "both") {
+            code += dep.style
+              ? `\n/*# sourceMappingURL=${map.toUrl()}*/`
+              : `\n//# sourceMappingURL=${map.toUrl()}`;
+
             if (sourceMaps === "inline") {
               map = undefined;
             }
-
-            code += virtualPath.endsWith(".css")
-              ? `\n/*# sourceMappingURL=${map.toUrl()}*/`
-              : `\n//# sourceMappingURL=${map.toUrl()}`;
           }
         }
 
