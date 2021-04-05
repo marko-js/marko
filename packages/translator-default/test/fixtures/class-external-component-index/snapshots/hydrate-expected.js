@@ -1,3 +1,3 @@
-import { init } from "marko/components";
+import { init } from "marko/src/runtime/components";
 import "./index.marko";
 init();
