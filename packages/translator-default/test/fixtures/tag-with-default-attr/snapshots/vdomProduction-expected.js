@@ -12,7 +12,7 @@ const _marko_node = _marko_createElement("div", {
 const _marko_node2 = _marko_createElement("div", null, "1", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("d4MwwGDt", () => _marko_template),
       _marko_component = {};

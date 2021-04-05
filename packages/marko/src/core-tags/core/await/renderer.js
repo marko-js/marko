@@ -1,6 +1,5 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
-var isClientReorderSupported = require("./client-reorder").isSupported;
 var AsyncValue = require("./AsyncValue");
 
 function safeRenderBody(renderBody, targetOut, data) {
@@ -82,7 +81,9 @@ const LAST_OPTIONS = { last: true, name: "await:finish" };
 
 module.exports = function awaitTag(input, out) {
   var clientReorder =
-    isClientReorderSupported && input.clientReorder === true && !out.isVDOM;
+    typeof window === "undefined" &&
+    input.clientReorder === true &&
+    !out.isVDOM;
 
   var name = input.name || input._name;
   var timeout = input.timeout;

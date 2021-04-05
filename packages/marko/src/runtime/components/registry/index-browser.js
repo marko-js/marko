@@ -1,8 +1,8 @@
 var complain = "MARKO_DEBUG" && require("complain");
-var queueMicrotask = require("../queueMicrotask");
-var defineComponent = require("./defineComponent");
-var initComponents = require("./init-components-browser");
-require(".");
+var queueMicrotask = require("../../queueMicrotask");
+var defineComponent = require("../defineComponent");
+var initComponents = require("../init-components");
+require("../entry");
 
 var registered = {};
 var loaded = {};

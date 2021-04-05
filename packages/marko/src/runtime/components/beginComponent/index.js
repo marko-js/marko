@@ -1,6 +1,6 @@
 "use strict";
 
-const ComponentDef = require("./ComponentDef");
+const ComponentDef = require("../ComponentDef");
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;

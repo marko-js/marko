@@ -1,4 +1,4 @@
-var ComponentDef = require("./ComponentDef");
+var ComponentDef = require("../ComponentDef");
 
 module.exports = function beginComponent(
   componentsContext,

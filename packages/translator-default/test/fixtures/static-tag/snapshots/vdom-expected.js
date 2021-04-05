@@ -9,7 +9,7 @@ function bar() {}
 
 var baz = 456;
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/static-tag/template.marko", () => _marko_template),
       _marko_component = {};

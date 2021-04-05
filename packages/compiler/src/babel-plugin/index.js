@@ -10,30 +10,16 @@ import { visitor as transform } from "./plugins/transform";
 import markoModules from "../../modules";
 import { MarkoFile } from "./file";
 import { curFS, setFS } from "../taglib/fs";
+import tryLoadTranslator from "../util/try-load-translator";
+import shouldOptimize from "../util/should-optimize";
 
 const SOURCE_FILES = new WeakMap();
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
-  let translator = markoOpts.translator;
-
-  if (typeof translator === "string") {
-    try {
-      translator = markoModules.require(translator);
-    } catch (err) {
-      try {
-        translator = markoModules.require(`@marko/translator-${translator}`);
-      } catch {
-        try {
-          translator = markoModules.require(`marko-translator-${translator}`);
-        } catch {
-          throw err;
-        }
-      }
-    }
-  }
-
-  markoOpts.translator = translator;
+  const translator = (markoOpts.translator = tryLoadTranslator(
+    markoOpts.translator
+  ));
   markoOpts.output = markoOpts.output || "html";
 
   if (markoOpts.optimize === undefined) {
@@ -304,10 +290,4 @@ function traverseAll(file, visitors) {
 
 function unique(item, i, list) {
   return list.indexOf(item) === i;
-}
-
-function shouldOptimize() {
-  return process.env.MARKO_DEBUG
-    ? process.env.MARKO_DEBUG === "false" || process.env.MARKO_DEBUG === "0"
-    : process.env.NODE_ENV && process.env.NODE_ENV !== "development";
 }

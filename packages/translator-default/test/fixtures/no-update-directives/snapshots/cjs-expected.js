@@ -9,7 +9,7 @@ var _index = _interopRequireDefault(require("./components/hello/index.marko"));
 
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
 
-var _preserveTag = _interopRequireDefault(require("marko/src/core-tags/components/preserve-tag.js"));
+var _preserveTag = _interopRequireDefault(require("marko/src/core-tags/components/preserve-tag"));
 
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
 

@@ -5,7 +5,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_component from "./template.component.js";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 import _marko_split_component from "./template.component-browser.js";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/split-component-with-component/template.marko", () => _marko_split_component),

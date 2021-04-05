@@ -234,7 +234,7 @@
     ]
   },
   "<_preserve>": {
-    "renderer": "marko/src/core-tags/components/preserve-tag.js",
+    "renderer": "marko/src/core-tags/components/preserve-tag",
     "@n": "boolean",
     "@i": "boolean",
     "@b": "boolean",

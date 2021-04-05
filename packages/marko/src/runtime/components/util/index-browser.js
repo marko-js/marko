@@ -1,4 +1,4 @@
-var domData = require("./dom-data");
+var domData = require("../dom-data");
 var componentsByDOMNode = domData.___componentByDOMNode;
 var keysByDOMNode = domData.___keyByDOMNode;
 var vElementsByDOMNode = domData.___vElementByDOMNode;

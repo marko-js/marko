@@ -5,7 +5,7 @@ const _marko_template = _t();
 export default _marko_template;
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/error-repeated-closing-dynamic-tag/template.marko", () => _marko_template),
       _marko_component = {};

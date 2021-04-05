@@ -10,7 +10,7 @@ const _marko_node = _marko_createElement("div", {
 }, "0", null, 0, 1);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry-browser";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 const _marko_componentType = _marko_registerComponent("wUxkdMJU", () => _marko_template),
       _marko_component = {};
