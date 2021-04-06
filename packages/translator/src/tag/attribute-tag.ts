@@ -2,10 +2,10 @@ import { types as t } from "@marko/compiler";
 import { findParentTag, assertNoVar } from "@marko/babel-utils";
 import { TagNameTypes } from "../analyze/tag-name-type";
 import attrsToObject from "../util/attrs-to-object";
-import { flushInto, hasPendingHTML } from "../util/html-flush";
+import * as writer from "../util/writer";
 
 export function enter(tag: t.NodePath<t.MarkoTag>) {
-  if (hasPendingHTML(tag)) {
+  if (writer.hasPendingHTML(tag)) {
     throw tag
       .get("name")
       .buildCodeFrameError("Dynamic @tags cannot be mixed with body content.");
@@ -14,7 +14,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
 
 export function exit(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
-  flushInto(tag);
+  writer.flushInto(tag);
 
   const parentTag = findParentTag(tag);
 

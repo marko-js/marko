@@ -5,14 +5,14 @@ import {
   getTemplateId,
   assertNoParams
 } from "@marko/babel-utils";
-import { flushBefore } from "../util/html-flush";
+import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
 import { assertNoBodyContent } from "../util/assert";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoParams(tag);
   assertNoBodyContent(tag);
-  flushBefore(tag);
+  writer.flushBefore(tag);
 
   const {
     node,

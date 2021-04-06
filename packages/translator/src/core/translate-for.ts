@@ -1,15 +1,14 @@
 import { types as t } from "@marko/compiler";
 import { assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
-import { flushBefore, flushInto } from "../util/html-flush";
+import * as writer from "../util/writer";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
-    flushBefore(tag);
+    writer.start(tag);
   },
-
   exit(tag: t.NodePath<t.MarkoTag>) {
     assertNoVar(tag);
-    flushInto(tag);
+    writer.end(tag);
 
     const { node } = tag;
     const {
@@ -34,15 +33,6 @@ export default {
         throw namePath.buildCodeFrameError(
           "Invalid 'for in' tag, missing |key, value| params."
         );
-      }
-
-      if (!t.isIdentifier(keyParam)) {
-        throw tag
-          .get("body")
-          .get("params")[0]
-          .buildCodeFrameError(
-            "Invalid 'for in' parameter, key must be a valid identifier."
-          );
       }
 
       if (valParam) {

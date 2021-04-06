@@ -1,17 +1,11 @@
-import { text as _text, html as _html, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-export const template = "<div><script>\n    <!>\n  </script></div>";
-export const walks = "]#####^&(";
+import { data as _data, html as _html, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+export const template = "<div><div>a</div><!>Hello Text &lt;a/><!><!><script>\n    Hello &lt;b> &lt;/script>\n  </script></div>";
+export const walks = "Db%c%c%l";
 export const hydrate = _register("+2Y4wOVt", input => {
-  _text(input.x);
-
-  _text("Hello world <a/>");
+  _data(input.x);
 
   _html(input.x);
 
-  _html(null);
-
-  _html("Hello world <a/>");
-
-  _text("Hello <b> </script>");
+  _html("Hello HTML <a/>");
 });
 export default _createRenderFn(template, walks, ["x"], hydrate);

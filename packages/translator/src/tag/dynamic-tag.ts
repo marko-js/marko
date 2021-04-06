@@ -1,30 +1,40 @@
 import { types as t } from "@marko/compiler";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
-import { flushBefore, flushInto } from "../util/html-flush";
+import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
 import translateVar from "../util/translate-var";
+import { isOutputDOM } from "../util/marko-config";
 
 export function enter(tag: t.NodePath<t.MarkoTag>) {
-  flushBefore(tag);
+  writer.start(tag);
 }
 
 export function exit(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  flushInto(tag);
-
+  const { writes, walks } = writer.end(tag);
   const attrsObject = attrsToObject(tag, true) || t.nullLiteral();
   const renderBodyProp = getRenderBodyProp(attrsObject);
   const args: t.Expression[] = [node.name, attrsObject];
 
   if (renderBodyProp) {
     (attrsObject as t.ObjectExpression).properties.pop();
-    args.push(
-      t.arrowFunctionExpression(
-        renderBodyProp.params,
-        toFirstExpressionOrBlock(renderBodyProp.body)
-      )
+    let fnExpr: t.Expression = t.arrowFunctionExpression(
+      renderBodyProp.params,
+      toFirstExpressionOrBlock(renderBodyProp.body)
     );
+
+    if (isOutputDOM(tag)) {
+      fnExpr = callRuntime(
+        tag,
+        "createRenderer",
+        writes || t.stringLiteral(""),
+        walks || t.stringLiteral(""),
+        fnExpr
+      );
+    }
+
+    args.push(fnExpr);
   }
 
   const dynamicTagExpr = callRuntime(tag, "dynamicTag", ...args);

@@ -1,13 +1,14 @@
-const {
-  a,
-  b
-} = input;
-import { text as _text, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-export const template = " ";
-export const walks = "#]#";
+import { data as _data, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+export const template = "<!> <!>";
+export const walks = "%c%b";
 export const hydrate = _register("WGegpaPM", input => {
-  _text(a);
+  const {
+    a,
+    b
+  } = input;
 
-  _text(b);
+  _data(a);
+
+  _data(b);
 });
 export default _createRenderFn(template, walks, [""], hydrate);

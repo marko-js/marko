@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { assertNoArgs, getTagDef, isNativeTag } from "@marko/babel-utils";
 import { TagNameTypes } from "../analyze/tag-name-type";
+import { isOutputHTML } from "../util/marko-config";
 import * as hooks from "../util/plugin-hooks";
 import * as NativeTag from "./native-tag";
 import * as CustomTag from "./custom-tag";
@@ -42,8 +43,10 @@ export default {
       }
     }
 
-    if (extra.tagNameDynamic && extra.tagNameNullable) {
-      if (!tag.get("name").isIdentifier()) {
+    let { tagNameType } = extra;
+
+    if (extra.tagNameDynamic) {
+      if (extra.tagNameNullable && !tag.get("name").isIdentifier()) {
         const tagNameId = tag.scope.generateUidIdentifier("tagName");
         const [tagNameVarPath] = tag.insertBefore(
           t.variableDeclaration("const", [
@@ -54,9 +57,14 @@ export default {
         tagNameVarPath.skip();
         tag.set("name", tagNameId);
       }
+
+      if (tagNameType !== TagNameTypes.DynamicTag && !isOutputHTML(tag)) {
+        // DOM implementation requires non strings actually be a dynamic tag call.
+        tagNameType = TagNameTypes.DynamicTag;
+      }
     }
 
-    switch (extra.tagNameType) {
+    switch (tagNameType) {
       case TagNameTypes.NativeTag:
         NativeTag.enter(tag);
         break;
@@ -80,7 +88,19 @@ export default {
       return;
     }
 
-    switch (tag.node.extra.tagNameType) {
+    const { extra } = tag.node;
+    let { tagNameType } = extra;
+
+    if (
+      extra.tagNameDynamic &&
+      tagNameType !== TagNameTypes.DynamicTag &&
+      !isOutputHTML(tag)
+    ) {
+      // DOM implementation requires non strings actually be a dynamic tag call.
+      tagNameType = TagNameTypes.DynamicTag;
+    }
+
+    switch (tagNameType) {
       case TagNameTypes.NativeTag:
         NativeTag.exit(tag);
         break;

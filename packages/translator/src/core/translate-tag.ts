@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { flushBefore, flushInto } from "../util/html-flush";
+import * as writer from "../util/writer";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
-    flushBefore(tag);
+    writer.start(tag);
 
     if (!tag.node.var) {
       throw tag
@@ -13,17 +13,9 @@ export default {
           "<tag> requires a variable to be defined, eg <tag/NAME>."
         );
     }
-
-    if (!t.isIdentifier(tag.node.var)) {
-      throw tag
-        .get("var")
-        .buildCodeFrameError(
-          "<tag> requires a variable to be a valid identifier, eg <tag/NAME>."
-        );
-    }
   },
   exit(tag: t.NodePath<t.MarkoTag>) {
-    flushInto(tag);
+    writer.end(tag);
     tag.replaceWith(
       t.variableDeclaration("const", [
         t.variableDeclarator(

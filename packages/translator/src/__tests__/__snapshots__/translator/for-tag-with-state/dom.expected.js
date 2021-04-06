@@ -1,27 +1,27 @@
-const arrA = [1, 2, 3];
-let _i = 0;
-
-for (const val of arrA) {
-  let i = _i++;
-}
-
-const arrB = [1, 2, 3];
-let _i2 = 0;
-
-for (const val of arrB) {
-  let i = _i2++;
-}
-
-import { text as _text, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-export const template = "<div>: </div><div>: </div>";
-export const walks = "]#]$']#]$(";
+import { data as _data, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+export const template = "";
+export const walks = "";
 export const hydrate = _register("/rMZ+rK0", input => {
-  _text(i);
+  const arrA = [1, 2, 3];
+  let _i = 0;
 
-  _text(val);
+  for (const val of arrA) {
+    let i = _i++;
 
-  _text(i);
+    _data(i);
 
-  _text(val);
+    _data(val);
+  }
+
+  const arrB = [1, 2, 3];
+  let _i2 = 0;
+
+  for (const val of arrB) {
+    let i = _i2++;
+
+    _data(i);
+
+    _data(val);
+  }
 });
 export default _createRenderFn(template, walks, [], hydrate);

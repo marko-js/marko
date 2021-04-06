@@ -5,26 +5,22 @@ import {
   assertNoParams,
   assertNoVar
 } from "@marko/babel-utils";
-import { writeHTML } from "../util/html-write";
-import { writeTemplate } from "../util/dom-writer";
-import { isOutputHTML } from "../util/marko-config";
+import * as writer from "../util/writer";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
-    if (isOutputHTML(tag)) {
-      writeHTML(tag)`<!--`;
-    } else writeTemplate(tag, `<!--`);
+    writer.enter(tag);
+    writer.writeTo(tag)`<!--`;
+    // TODO: for the DOM side this needs to normalize placeholders and text content into a string.
+    // This should also error if other tags are discovered, including control flow probably.
   },
   exit(tag: t.NodePath<t.MarkoTag>) {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
     assertNoAttributeTags(tag);
-
-    if (isOutputHTML(tag)) {
-      writeHTML(tag)`-->`;
-    } else writeTemplate(tag, `-->`);
-
+    writer.exit(tag);
+    writer.writeTo(tag)`-->`;
     tag.remove();
   }
 };

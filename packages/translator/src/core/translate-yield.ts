@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { assertNoVar, assertNoParams } from "@marko/babel-utils";
-import { flushBefore } from "../util/html-flush";
+import * as writer from "../util/writer";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 
@@ -11,7 +11,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoParams(tag);
   assertNoBodyContent(tag);
   assertNoSpreadAttrs(tag);
-  flushBefore(tag);
+  writer.flushBefore(tag);
 
   const {
     node,
@@ -42,7 +42,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       throw tag.get("name").buildCodeFrameError(msg);
     } else {
       throw tag.hub.buildError(
-        ({ loc: { start, end } } as unknown) as t.Node,
+        { loc: { start, end } } as unknown as t.Node,
         msg,
         Error
       );

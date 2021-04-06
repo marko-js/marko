@@ -1,11 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar } from "@marko/babel-utils";
-import { flushBefore, flushInto } from "../util/html-flush";
+import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
-    flushBefore(tag);
+    writer.start(tag);
 
     const { node } = tag;
     const [defaultAttr] = node.attributes;
@@ -33,7 +33,7 @@ export default {
         throw tag.get("name").buildCodeFrameError(msg);
       } else {
         throw tag.hub.buildError(
-          ({ loc: { start, end } } as unknown) as t.Node,
+          { loc: { start, end } } as unknown as t.Node,
           msg,
           Error
         );
@@ -54,7 +54,7 @@ export default {
   exit(tag: t.NodePath<t.MarkoTag>) {
     assertNoParams(tag);
     assertNoVar(tag);
-    flushInto(tag);
+    writer.end(tag);
     tag.insertAfter(t.expressionStatement(callRuntime(tag, "popContext")));
     tag.replaceWithMultiple(tag.node.body.body);
   }

@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { writeHTML } from "./util/html-write";
+import * as writer from "./util/writer";
 import { isOutputHTML } from "./util/marko-config";
 
 export default function (declaration: t.NodePath<t.MarkoDeclaration>) {
   if (isOutputHTML(declaration)) {
-    writeHTML(declaration)`<?${declaration.node.value}?>`;
+    writer.writeTo(declaration)`<?${declaration.node.value}?>`;
   }
 
   declaration.remove();

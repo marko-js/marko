@@ -1,12 +1,10 @@
-const MyTag = input => {};
-
-import { text as _text, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-export const template = "Hello ";
-export const walks = "]$";
+import { data as _data, dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+export const template = "";
+export const walks = "";
 export const hydrate = _register("165E3TM6", input => {
-  _text(input.name);
+  const MyTag = input => _data(input.name);
 
-  MyTag({
+  _dynamicTag(MyTag, {
     name: "World"
   });
 });

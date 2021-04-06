@@ -58,7 +58,7 @@ function nonVoidUntypedAttr(name: string, val: unknown) {
       if (val instanceof RegExp) {
         return ` ${name}=${escapeAttrValue(val.source)}`;
       }
-    // eslint-disable-next-line
+    // eslint-disable-next-line no-fallthrough
     default:
       return ` ${name + attrAssignment(val + "")}`;
   }

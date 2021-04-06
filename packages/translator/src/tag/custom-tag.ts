@@ -1,22 +1,26 @@
 import { types as t } from "@marko/compiler";
 import {
   getTagDef,
+  importNamed,
   importDefault,
   resolveRelativePath
 } from "@marko/babel-utils";
-import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
-import { flushBefore, flushInto } from "../../util/html-flush";
-import translateVar from "../../util/translate-var";
+import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
+import translateVar from "../util/translate-var";
+import * as writer from "../util/writer";
+import { isOutputHTML } from "../util/marko-config";
+import { callRuntime } from "../util/runtime";
 
 export function enter(tag: t.NodePath<t.MarkoTag>) {
-  flushBefore(tag);
+  writer.start(tag);
 }
 
 export function exit(tag: t.NodePath<t.MarkoTag>) {
+  const isHTML = isOutputHTML(tag);
+  const { walks, writes } = writer.end(tag);
   const { node } = tag;
+  const write = writer.writeTo(tag);
   let tagIdentifier: t.Expression;
-
-  flushInto(tag);
 
   if (t.isStringLiteral(node.name)) {
     const { file } = tag.hub;
@@ -34,7 +38,21 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
         );
     }
 
-    tagIdentifier = importDefault(file, relativePath, tagName);
+    if (isHTML) {
+      tagIdentifier = importDefault(file, relativePath, tagName);
+    } else {
+      tagIdentifier = importNamed(file, relativePath, "hydrate", tagName);
+      write`${importNamed(
+        file,
+        relativePath,
+        "template",
+        `${tagName}_template`
+      )}`;
+      writer.injectWalks(
+        tag,
+        importNamed(file, relativePath, "walks", `${tagName}_walks`)
+      );
+    }
 
     if (!tags.includes(relativePath)) {
       tags.push(relativePath);
@@ -45,9 +63,9 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
 
   const tagVar = node.var;
   const attrsObject = attrsToObject(tag, true);
+  const renderBodyProp = getRenderBodyProp(attrsObject);
 
-  if (node.extra!.tagNameNullable) {
-    const renderBodyProp = getRenderBodyProp(attrsObject);
+  if (isHTML && node.extra.tagNameNullable) {
     let renderBodyId: t.Identifier | undefined = undefined;
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
@@ -85,11 +103,32 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
         )
       )[0]
       .skip();
-  } else if (tagVar) {
-    translateVar(tag, callExpression(tagIdentifier, attrsObject));
-    tag.remove();
   } else {
-    tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
+    if (!isHTML && renderBodyProp) {
+      (attrsObject as t.ObjectExpression).properties.pop();
+      (attrsObject as t.ObjectExpression).properties.push(
+        t.objectProperty(
+          t.identifier("renderBody"),
+          callRuntime(
+            tag,
+            "createRenderer",
+            writes || t.stringLiteral(""),
+            walks || t.stringLiteral(""),
+            t.arrowFunctionExpression(
+              renderBodyProp.params,
+              renderBodyProp.body
+            )
+          )
+        )
+      );
+    }
+
+    if (tagVar) {
+      translateVar(tag, callExpression(tagIdentifier, attrsObject));
+      tag.remove();
+    } else {
+      tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
+    }
   }
 }
 

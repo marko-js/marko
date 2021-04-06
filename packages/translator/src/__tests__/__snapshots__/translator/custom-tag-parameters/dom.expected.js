@@ -1,14 +1,18 @@
-import { text as _text, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-import { hydrate as _customTag, template as _customTagTemplate, walks as _customTagWalks } from "./components/custom-tag.marko";
-export const template = "<div> <!> </div>" + _customTagTemplate;
-export const walks = `]#]&^$'${_customTagWalks}`;
+import { data as _data, createRenderer as _createRenderer, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+import { hydrate as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
+export const template = `${_customTag_template}`;
+export const walks = `${_customTag_walks}`;
 export const hydrate = _register("ieufKsWG", input => {
-  _text(a);
+  _customTag({
+    renderBody: _createRenderer("<div><!> <!> <!></div>", "D%c%c%l", (a, b, {
+      c
+    }) => {
+      _data(a);
 
-  _text(b);
+      _data(b);
 
-  _text(c);
-
-  _customTag();
+      _data(c);
+    })
+  });
 });
 export default _createRenderFn(template, walks, [], hydrate);

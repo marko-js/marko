@@ -1,12 +1,14 @@
 import { types as t } from "@marko/compiler";
-import { flushInto } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
+import * as writer from "../util/writer";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function enter(program: t.NodePath<t.Program>) {}
+export function enter(program: t.NodePath<t.Program>) {
+  writer.start(program);
+}
 
 export function exit(program: t.NodePath<t.Program>) {
-  flushInto(program);
+  writer.end(program);
 
   const renderContent: t.Statement[] = [];
 

@@ -1,10 +1,10 @@
-const data = _child();
-
-import { hydrate as _child, template as _childTemplate, walks as _childWalks } from "./components/child/index.marko";
-import { text as _text, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
-export const template = "";
-export const walks = "#";
+import { hydrate as _child, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
+import { data as _data, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+export const template = `${_child_template}<!>`;
+export const walks = `${_child_walks}%b`;
 export const hydrate = _register("lz0p3Mr3", input => {
-  _text(data);
+  const data = _child();
+
+  _data(data);
 });
 export default _createRenderFn(template, walks, [], hydrate);

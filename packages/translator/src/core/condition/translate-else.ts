@@ -4,19 +4,19 @@ import {
   assertNoParams,
   assertNoAttributes
 } from "@marko/babel-utils";
-import { flushBefore, flushInto } from "../../util/html-flush";
+import * as writer from "../../util/writer";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { findPreviousIfStatement } from "./util";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
-    flushBefore(tag);
+    writer.start(tag);
   },
   exit(tag: t.NodePath<t.MarkoTag>) {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
-    flushInto(tag);
+    writer.end(tag);
     findPreviousIfStatement(tag).node.alternate = toFirstStatementOrBlock(
       tag.node.body
     );
