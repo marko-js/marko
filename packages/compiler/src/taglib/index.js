@@ -1,6 +1,7 @@
 import loader from "./loader";
 import finder from "./finder";
 import Lookup from "./lookup";
+import tryLoadTranslator from "../util/try-load-translator";
 
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
@@ -13,7 +14,8 @@ register(require.resolve("./marko-html.json"), require("./marko-html.json"));
 register(require.resolve("./marko-svg.json"), require("./marko-svg.json"));
 register(require.resolve("./marko-math.json"), require("./marko-math.json"));
 
-export function buildLookup(dirname, translator) {
+export function buildLookup(dirname, requestedTranslator) {
+  const translator = tryLoadTranslator(requestedTranslator);
   if (!translator || !Array.isArray(translator.taglibs)) {
     throw new Error(
       "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)"
