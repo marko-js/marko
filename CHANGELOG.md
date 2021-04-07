@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/marko-js/marko/compare/v5.6.2...v5.7.0) (2021-04-07)
+
+
+### Bug Fixes
+
+* typescript types ([#1684](https://github.com/marko-js/marko/issues/1684)) ([5f950c8](https://github.com/marko-js/marko/commit/5f950c80664431445301f64e206bda92daa939de))
+* **translator-default:** issue with inline sourcmeaps and virtual files ([94ce0e1](https://github.com/marko-js/marko/commit/94ce0e136492294760d6a016c719e09c813f59f1))
+
+
+### Features
+
+* **compiler:** use default translator for buildLookup api ([#1682](https://github.com/marko-js/marko/issues/1682)) ([0899847](https://github.com/marko-js/marko/commit/0899847ea80dc65d6d8b80114f7caaf77cadccf5))
+
+
+
+
+
 ## [5.6.2](https://github.com/marko-js/marko/compare/v5.6.1...v5.6.2) (2021-03-30)
 
 

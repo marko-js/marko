@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.6.2...v5.7.0) (2021-04-07)
+
+
+### Features
+
+* **compiler:** use default translator for buildLookup api ([#1682](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1682)) ([0899847](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/0899847ea80dc65d6d8b80114f7caaf77cadccf5))
+
+
+
+
+
 ## [5.6.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.6.1...v5.6.2) (2021-03-30)
 
 **Note:** Version bump only for package @marko/compiler

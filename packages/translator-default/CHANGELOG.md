@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.6.2...v5.7.0) (2021-04-07)
+
+
+### Bug Fixes
+
+* **translator-default:** issue with inline sourcmeaps and virtual files ([94ce0e1](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/94ce0e136492294760d6a016c719e09c813f59f1))
+
+
+
+
+
 ## [5.6.2](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.6.1...v5.6.2) (2021-03-30)
 
 

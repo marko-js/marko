@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.7.0](https://github.com/marko-js/marko/compare/v5.6.2...v5.7.0) (2021-04-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
 ## [5.6.2](https://github.com/marko-js/marko/compare/v5.6.1...v5.6.2) (2021-03-30)
 
 
