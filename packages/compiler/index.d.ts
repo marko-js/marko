@@ -26,6 +26,7 @@ export type Config = {
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
   resolveVirtualDependency?(sourceFileName: string, dep: { virtualPath: string, code: string, map?: SourceMap }): string;
+  hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   babelConfig?: {
