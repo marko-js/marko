@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.8.0...v5.8.1) (2021-04-16)
+
+
+### Bug Fixes
+
+* **compiler:** add missing config type definition ([7437e88](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/7437e888b7cbd3c7f8ed5ae164d959d8c0d7eb04))
+
+
+
+
+
 # [5.8.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.7.0...v5.8.0) (2021-04-16)
 
 
