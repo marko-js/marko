@@ -220,6 +220,30 @@ export default function markoLoader(source) {
 }
 ```
 
+#### `hydrateIncludeImports`
+
+This option is only used for `output: "hydrate"`. By default any `import`'s in server only files are not included in the hydrate output. However for some assets, for example stylesheets, it is useful to have them still be included in hydrate mode.
+
+The `hydrateIncludeImports` option allows you to provide a function which receives an import path, or a regexp to match against that path which tells Marko to include that import in the hydrate mode output.
+
+The default regexp includes a list of common known asset file extensions and is as follows:
+
+```js
+/\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/;
+```
+
+Looking at a partial Marko file such as:
+
+```marko
+import "./bar"
+import "./foo.css";
+import "./baz.wasm";
+
+<div/>
+```
+
+In the `hydrate` output, with the default `hydrateIncludeImports`, would only cause `./foo.css` to be loaded in the browser.
+
 #### `cache`
 
 Type: typeof [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) (specifically, `get` is required)<br>

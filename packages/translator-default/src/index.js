@@ -68,6 +68,10 @@ export const analyze = {
           ? resolveRelativePath(file, filename)
           : filename
       );
+
+      meta.imports = program.node.body
+        .filter(child => t.isImportDeclaration(child))
+        .map(child => child.source.value);
     }
   },
   MarkoTag(tag) {
