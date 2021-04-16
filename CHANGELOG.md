@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0](https://github.com/marko-js/marko/compare/v5.7.0...v5.8.0) (2021-04-16)
+
+
+### Bug Fixes
+
+* remove unecessary windows path normalization ([6d1a4f5](https://github.com/marko-js/marko/commit/6d1a4f556400adf8a1a9161212e4c516ac9ce8e5))
+
+
+### Features
+
+* add new hydrateIncludeImports option ([#1686](https://github.com/marko-js/marko/issues/1686)) ([db84f91](https://github.com/marko-js/marko/commit/db84f913b47e4372c84c09a34ca8529b646b7869))
+
+
+
+
+
 # [5.7.0](https://github.com/marko-js/marko/compare/v5.6.2...v5.7.0) (2021-04-07)
 
 

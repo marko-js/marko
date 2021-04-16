@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.8.0](https://github.com/marko-js/marko/compare/v5.7.0...v5.8.0) (2021-04-16)
+
+
+### Features
+
+* add new hydrateIncludeImports option ([#1686](https://github.com/marko-js/marko/issues/1686)) ([db84f91](https://github.com/marko-js/marko/commit/db84f913b47e4372c84c09a34ca8529b646b7869))
+
+
+
+
+
 # [5.7.0](https://github.com/marko-js/marko/compare/v5.6.2...v5.7.0) (2021-04-07)
 
 **Note:** Version bump only for package marko
