@@ -3,8 +3,13 @@ import MagicString from "magic-string";
 import { types as t } from "@marko/compiler";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 export default (entryFile, isHydrate) => {
-  const { modules, resolveVirtualDependency } = entryFile.markoOpts;
+  const {
+    modules,
+    resolveVirtualDependency,
+    hydrateIncludeImports
+  } = entryFile.markoOpts;
   const program = entryFile.path;
+  const shouldIncludeImport = toTestFn(hydrateIncludeImports);
 
   if (!isHydrate) {
     addBrowserDeps(entryFile);
@@ -68,6 +73,12 @@ export default (entryFile, isHydrate) => {
     }
 
     addBrowserDeps(file);
+
+    for (const imported of meta.imports) {
+      if (shouldIncludeImport(imported)) {
+        program.pushContainer("body", importPath(file, imported));
+      }
+    }
 
     for (const tag of meta.tags) {
       if (tag.endsWith(".marko")) {
@@ -156,3 +167,11 @@ export default (entryFile, isHydrate) => {
     return t.importDeclaration([], t.stringLiteral(resolved));
   }
 };
+
+function toTestFn(val) {
+  if (typeof val === "function") {
+    return val;
+  }
+
+  return val.test.bind(val);
+}
