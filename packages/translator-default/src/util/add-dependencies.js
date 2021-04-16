@@ -150,11 +150,7 @@ export default (entryFile, isHydrate) => {
     if (file !== entryFile) {
       resolved = resolveRelativePath(
         entryFile,
-        path.join(
-          file.opts.sourceFileName,
-          "..",
-          path.sep === "/" ? req : req.replace(/\//g, path.sep)
-        )
+        path.join(file.opts.sourceFileName, "..", req)
       );
     }
 
