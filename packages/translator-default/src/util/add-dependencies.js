@@ -68,6 +68,8 @@ export default (entryFile, isHydrate) => {
       }
     }
 
+    watchFiles.add(file.opts.sourceFileName);
+
     for (const watchFile of meta.watchFiles) {
       watchFiles.add(watchFile);
     }
@@ -120,7 +122,10 @@ export default (entryFile, isHydrate) => {
 
         if (sourceMaps && dep.startPos !== undefined) {
           s = s || new MagicString(file.code, { source: sourceFileName });
-          map = s.snip(dep.startPos, dep.endPos).generateMap();
+          map = s.snip(dep.startPos, dep.endPos).generateMap({
+            source: sourceFileName,
+            includeContent: true
+          });
 
           if (sourceMaps === "inline" || sourceMaps === "both") {
             code += dep.style
