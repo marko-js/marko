@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.3](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.8.2...v5.8.3) (2021-04-18)
+
+
+### Bug Fixes
+
+* **translator-default:** resolve correct production paths with hydrate output ([33302ef](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/33302ef30c9f362ef5029384f3f54d881c517881))
+
+
+
+
+
 ## [5.8.2](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.8.1...v5.8.2) (2021-04-18)
 
 
