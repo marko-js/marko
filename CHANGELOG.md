@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.2](https://github.com/marko-js/marko/compare/v5.8.1...v5.8.2) (2021-04-18)
+
+
+### Bug Fixes
+
+* **translator-default:** hydrate mode watchFiles missing stateless component, css source map content ([c0da831](https://github.com/marko-js/marko/commit/c0da831860dae704d2912833b94a4a9ad343fed0))
+
+
+
+
+
 ## [5.8.1](https://github.com/marko-js/marko/compare/v5.8.0...v5.8.1) (2021-04-16)
 
 
