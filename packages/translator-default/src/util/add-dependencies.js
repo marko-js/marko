@@ -150,14 +150,13 @@ export default (entryFile, isHydrate) => {
   }
 
   function importPath(file, req) {
-    let resolved = req;
-
-    if (file !== entryFile) {
-      resolved = resolveRelativePath(
-        entryFile,
-        path.join(file.opts.sourceFileName, "..", req)
-      );
-    }
+    const resolved =
+      file === entryFile
+        ? resolveRelativePath(file, req)
+        : resolveRelativePath(
+            entryFile,
+            path.join(file.opts.sourceFileName, "..", req)
+          );
 
     if (modules === "cjs") {
       return t.expressionStatement(
