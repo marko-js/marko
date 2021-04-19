@@ -143,6 +143,8 @@ export default (entryFile, isHydrate) => {
           code,
           virtualPath
         });
+      } else if (dep.startsWith("package:")) {
+        continue;
       }
 
       program.pushContainer("body", importPath(file, dep));
