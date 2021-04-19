@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.4](https://github.com/marko-js/marko/compare/v5.8.3...v5.8.4) (2021-04-19)
+
+
+### Bug Fixes
+
+* **translator-default:** ignore browser.json with resolveVirtualDependency api ([b101623](https://github.com/marko-js/marko/commit/b101623d7a46a5c0fa497998530fd14b93497433))
+
+
+
+
+
 ## [5.8.3](https://github.com/marko-js/marko/compare/v5.8.2...v5.8.3) (2021-04-18)
 
 

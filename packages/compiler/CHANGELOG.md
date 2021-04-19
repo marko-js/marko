@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.8.4](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.8.3...v5.8.4) (2021-04-19)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
 ## [5.8.3](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.8.2...v5.8.3) (2021-04-18)
 
 **Note:** Version bump only for package @marko/compiler
