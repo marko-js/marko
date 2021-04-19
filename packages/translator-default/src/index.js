@@ -430,6 +430,55 @@ export const translate = {
   }
 };
 
+export function getRuntimeEntryFiles(output, optimize) {
+  const base = `marko/${optimize ? "dist" : "src"}/`;
+
+  return [
+    `${base}runtime/components`,
+    `${base}runtime/components/defineComponent`,
+    `${base}runtime/components/renderer`,
+    `${base}runtime/components/registry`,
+    `${base}runtime/components/attach-detach`,
+    `${base}runtime/helpers/assign`,
+    `${base}runtime/helpers/class-value`,
+    `${base}runtime/helpers/dynamic-tag`,
+    `${base}runtime/helpers/load-nested-tag`,
+    `${base}runtime/helpers/merge`,
+    `${base}runtime/helpers/render-tag`,
+    `${base}runtime/helpers/style-value`,
+    `${base}runtime/helpers/to-string`,
+    `${base}core-tags/components/preserve-tag`,
+    `${base}core-tags/components/init-components-tag`,
+    `${base}core-tags/components/preferred-script-location-tag`,
+    `${base}core-tags/core/__flush_here_and_after__`,
+    `${base}core-tags/core/await/renderer`,
+    `${base}core-tags/core/await/reorderer-renderer`,
+    ...(output === "html"
+      ? [
+          `${base}runtime/html`,
+          `${base}runtime/html/helpers/attr`,
+          `${base}runtime/html/helpers/attrs`,
+          `${base}runtime/html/helpers/class-attr`,
+          `${base}runtime/html/helpers/data-marko`,
+          `${base}runtime/html/helpers/escape-quotes`,
+          `${base}runtime/html/helpers/escape-script-placeholder`,
+          `${base}runtime/html/helpers/escape-style-placeholder`,
+          `${base}runtime/html/helpers/escape-xml`,
+          `${base}runtime/html/helpers/merge-attrs`,
+          `${base}runtime/html/helpers/props-script`,
+          `${base}runtime/html/helpers/style-attr`
+        ]
+      : [
+          `${base}runtime/vdom`,
+          `${base}runtime/vdom/helpers/attrs`,
+          `${base}runtime/vdom/helpers/const`,
+          `${base}runtime/vdom/helpers/v-element`,
+          `${base}runtime/vdom/helpers/v-text`,
+          `${base}runtime/vdom/preserve-attrs`
+        ])
+  ];
+}
+
 function isRenderContent(path) {
   const { node } = path;
   return t.MARKO_TYPES.includes(node.type) && !node.static;
