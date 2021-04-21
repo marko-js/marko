@@ -82,6 +82,8 @@ export function compileFileSync(
   config?: Config
 ): CompileResult;
 
+export function getRuntimeEntryFiles(output: string, translator?: string | undefined): string[];
+
 export namespace taglib {
   export function excludeDir(dirname: string): void;
   export function excludePackage(packageName: string): void;

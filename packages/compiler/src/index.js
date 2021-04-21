@@ -3,6 +3,8 @@ import * as babel from "@babel/core";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
+import shouldOptimize from "./util/should-optimize";
+import tryLoadTranslator from "./util/try-load-translator";
 export { taglib };
 
 let globalConfig = { ...defaultConfig };
@@ -39,6 +41,15 @@ export async function compileFile(filename, config) {
 export function compileFileSync(filename, config) {
   const src = getFs(config).readFileSync(filename, "utf-8");
   return compileSync(src, filename, config);
+}
+
+export function getRuntimeEntryFiles(output, requestedTranslator) {
+  const translator = tryLoadTranslator(requestedTranslator);
+  if (translator && translator.getRuntimeEntryFiles) {
+    return translator.getRuntimeEntryFiles(output, shouldOptimize());
+  }
+
+  return [];
 }
 
 function loadBabelConfig(filename, config) {
