@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0](https://github.com/marko-js/marko/compare/v5.8.4...v5.9.0) (2021-04-21)
+
+
+### Bug Fixes
+
+* **babel-utils:** invalid type for importNamed api ([3da1044](https://github.com/marko-js/marko/commit/3da10447d3ca8ff2a3376aa17b04116bcdec66c2))
+
+
+### Features
+
+* expose api to get runtime entry files for translator ([#1687](https://github.com/marko-js/marko/issues/1687)) ([fad9159](https://github.com/marko-js/marko/commit/fad91598b28f3ab6e8e3550e42c50d062ea41ad9))
+
+
+
+
+
 ## [5.8.4](https://github.com/marko-js/marko/compare/v5.8.3...v5.8.4) (2021-04-19)
 
 

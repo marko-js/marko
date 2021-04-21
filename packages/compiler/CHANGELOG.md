@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.9.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.8.4...v5.9.0) (2021-04-21)
+
+
+### Features
+
+* expose api to get runtime entry files for translator ([#1687](https://github.com/marko-js/marko/tree/master/packages/compiler/issues/1687)) ([fad9159](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/fad91598b28f3ab6e8e3550e42c50d062ea41ad9))
+
+
+
+
+
 ## [5.8.4](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.8.3...v5.8.4) (2021-04-19)
 
 **Note:** Version bump only for package @marko/compiler
