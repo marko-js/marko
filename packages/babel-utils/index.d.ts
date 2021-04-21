@@ -155,6 +155,7 @@ export function importDefault(
 export function importNamed(
   file: t.BabelFile,
   request: string,
+  name: string,
   nameHint?: string
 ): t.Identifier;
 
