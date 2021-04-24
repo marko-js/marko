@@ -36,6 +36,37 @@ export function createFragment(
   };
 }
 
+function createFragmentHydrate(
+  startMarker: Node,
+  parentFragment = currentFragment
+): Fragment {
+  const endMarker = walkToEndFragmentMarker(startMarker);
+  return {
+    ___firstRef: undefined,
+    ___lastRef: undefined,
+    ___nextNode: undefined,
+    ___firstChild: startMarker, //ideally next child
+    ___lastChild: endMarker,
+    ___parentFragment: parentFragment,
+    ___dom: undefined,
+    ___tracked: new Set(),
+    ___cleanup: cleanup
+  };
+}
+
+function walkToEndFragmentMarker(startMarker: Node) {
+  let count = 1;
+  let currentNode: Node = startMarker;
+  do {
+    currentNode = currentNode.nextSibling!;
+    if (currentNode.nodeType === 8) {
+      if (currentNode.nodeValue?.endsWith("^")) count++;
+      if (currentNode.nodeValue?.endsWith("$")) count--;
+    }
+  } while (count > 0);
+  return currentNode;
+}
+
 export function createFragmentFromRenderer(
   renderer: Renderer,
   parentFragment = currentFragment,
