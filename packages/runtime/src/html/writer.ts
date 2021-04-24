@@ -232,16 +232,17 @@ export function tryPlaceholder(
 // TODO: this variable needs to be included in the scope
 let currentHydrateRoot: boolean | number = false;
 
-export function register(id: string, renderer: Renderer) {
-  return (input: Record<string, unknown>) => {
+export function register<R extends Renderer>(id: string, renderer: R) {
+  return (input: Record<string, unknown>): ReturnType<R> => {
     if (currentHydrateRoot === false) {
       const instanceId = nextId();
       currentHydrateRoot = instanceId;
-      renderer(input);
+      const result = renderer(input) as ReturnType<R>;
       currentHydrateRoot = false;
       addComponentToInit(instanceId, input || {}, id);
+      return result;
     } else {
-      renderer(input);
+      return renderer(input) as ReturnType<R>;
     }
   };
 }

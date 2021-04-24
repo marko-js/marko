@@ -37,14 +37,7 @@ function analyzeChildren(
   let hasAttributeTags = false;
   for (const child of tag.get("body").get("body")) {
     if (child.isMarkoTag()) {
-      if (
-        analyzeChild(
-          rootExtra,
-          repeated,
-          dynamic,
-          child as t.NodePath<t.MarkoTag>
-        )
-      ) {
+      if (analyzeChild(rootExtra, repeated, dynamic, child)) {
         hasAttributeTags = true;
       }
     }

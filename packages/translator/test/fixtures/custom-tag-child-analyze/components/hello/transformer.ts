@@ -12,5 +12,6 @@ export default (helloTag: types.NodePath<types.MarkoTag>, t: typeof types) => {
 
 function readFileText(tag: types.NodePath<types.MarkoTag>) {
   const file = loadFileForTag(tag)!;
-  return (file.path.get("body.0.value") as types.NodePath).node;
+  return (file.path.get("body")[0] as types.NodePath<types.MarkoText>).node
+    .value;
 }

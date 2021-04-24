@@ -1,3 +1,5 @@
+import { types as t } from "@marko/compiler";
+
 const enum WalkCodes {
   Get = 33, // !
   Before = 35, // #
@@ -90,8 +92,9 @@ function resolveSequence(walks: Walks[]) {
   return results;
 }
 
-export function encodeWalks(walks: Walks[]): string {
-  let results = "";
+export function encodeWalks(walks: (Walks | t.Expression)[]) {
+  const statics: string[] = [""];
+  const dynamics: t.Expression[] = [];
   let inner: WalkInfo;
   const current: WalkInfo[] = [
     {
@@ -127,13 +130,20 @@ export function encodeWalks(walks: Walks[]): string {
       default:
         current[0].hasAction = true;
         if (current[0].sequence.length) {
-          results += resolveSequence(current[0].sequence);
+          statics[statics.length - 1] += resolveSequence(current[0].sequence);
           current[0].sequence = [];
           current[0].earlyExits = 0;
         }
-        results += lookup[walks[i]];
+        if (typeof walks[i] !== "number") {
+          dynamics.push(walks[i] as t.Expression);
+          statics.push("");
+        } else statics[statics.length - 1] += lookup[walks[i] as Walks];
     }
   }
-  results += resolveSequence(current[0].sequence);
-  return results;
+  statics[statics.length - 1] += resolveSequence(current[0].sequence);
+  if (statics.length === 1) return t.stringLiteral(statics[0]);
+  return t.templateLiteral(
+    statics.map(s => t.templateElement({ raw: s })),
+    dynamics
+  );
 }

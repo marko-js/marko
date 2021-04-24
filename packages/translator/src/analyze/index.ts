@@ -44,22 +44,29 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export default {
-  Program(program) {
-    program.node.extra ??= {} as typeof program.node.extra;
-    program.traverse(analyzeReferences);
-  },
-  MarkoTag(tag) {
-    const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
-    analyzeTagNameType(tag);
+export default [
+  analyzeReferences,
+  {
+    Program(program) {
+      program.node.extra ??= {} as typeof program.node.extra;
+    },
+    MarkoTag: {
+      enter(tag) {
+        const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
+        analyzeTagNameType(tag);
 
-    if (extra.tagNameType === TagNameTypes.NativeTag) {
-      analyzeEventHandlers(tag);
-    } else {
-      analyzeNestedAttributeTags(tag);
+        if (extra.tagNameType === TagNameTypes.NativeTag) {
+          analyzeEventHandlers(tag);
+        }
+      },
+      exit(tag) {
+        if (tag.node.extra.tagNameType !== TagNameTypes.NativeTag) {
+          analyzeNestedAttributeTags(tag);
+        }
+      }
+    },
+    MarkoPlaceholder(placeholder) {
+      placeholder.node.extra ??= {} as typeof placeholder.node.extra;
     }
-  },
-  MarkoPlaceholder(placeholder) {
-    placeholder.node.extra ??= {} as typeof placeholder.node.extra;
   }
-} as t.Visitor;
+] as t.Visitor[];

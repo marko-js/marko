@@ -1,4 +1,4 @@
-export type Renderer = (...args: unknown[]) => void;
+export type Renderer = (...args: unknown[]) => unknown;
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 

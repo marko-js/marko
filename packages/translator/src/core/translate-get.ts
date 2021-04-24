@@ -78,7 +78,11 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
 
     refId = getTemplateId(
       file.markoOpts.optimize,
-      path.resolve(file.opts.filename as string, "..", relativeReferencePath)
+      path.resolve(
+        file.opts.sourceFileName as string,
+        "..",
+        relativeReferencePath
+      )
     );
   }
 
