@@ -1,6 +1,7 @@
 import { t as _t } from "marko/src/runtime/vdom";
 
-const _marko_template = _t();
+const _marko_componentType = "packages/translator-default/test/fixtures/custom-tag-data/template.marko",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _customTagData from "./custom-tag-data-tag.js";
@@ -8,9 +9,9 @@ import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 
-const _marko_componentType = _marko_registerComponent("packages/translator-default/test/fixtures/custom-tag-data/template.marko", () => _marko_template),
-      _marko_component = {};
+_marko_registerComponent(_marko_componentType, () => _marko_template);
 
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_tag(_customTagData, {
     "name": "Frank".toUpperCase(),

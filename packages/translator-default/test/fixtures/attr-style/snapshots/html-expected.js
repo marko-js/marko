@@ -1,6 +1,7 @@
 import { t as _t } from "marko/src/runtime/html";
 
-const _marko_template = _t();
+const _marko_componentType = "packages/translator-default/test/fixtures/attr-style/template.marko",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _marko_style_merge from "marko/src/runtime/helpers/style-value";
@@ -9,8 +10,7 @@ import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-const _marko_componentType = "packages/translator-default/test/fixtures/attr-style/template.marko",
-      _marko_component = {};
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w(`<div${_marko_attr("style", _marko_style_merge({
     color: input.color

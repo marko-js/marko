@@ -1,11 +1,11 @@
 import { t as _t } from "marko/src/runtime/html";
 
-const _marko_template = _t();
+const _marko_componentType = "packages/translator-default/test/fixtures/class-inline/template.marko",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer";
-const _marko_componentType = "packages/translator-default/test/fixtures/class-inline/template.marko",
-      _marko_component = {
+const _marko_component = {
   onCreate() {
     this.x = 1
     this.y = 2

@@ -1,6 +1,7 @@
 import { t as _t } from "marko/dist/runtime/vdom";
 
-const _marko_template = _t();
+const _marko_componentType = "tgVjO8nX",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
@@ -11,9 +12,9 @@ import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 import _marko_split_component from "./template.component-browser.js";
 
-const _marko_componentType = _marko_registerComponent("tgVjO8nX", () => _marko_split_component),
-      _marko_component = {};
+_marko_registerComponent(_marko_componentType, () => _marko_split_component);
 
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.n(_marko_node, component);
 }, {

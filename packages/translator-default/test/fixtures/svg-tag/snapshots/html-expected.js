@@ -1,11 +1,11 @@
 import { t as _t } from "marko/src/runtime/html";
 
-const _marko_template = _t();
+const _marko_componentType = "packages/translator-default/test/fixtures/svg-tag/template.marko",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer";
-const _marko_componentType = "packages/translator-default/test/fixtures/svg-tag/template.marko",
-      _marko_component = {};
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<svg height=100 width=100>");
   out.w("<circle cx=50 cy=50 r=40 stroke=black stroke-width=3 fill=red />");

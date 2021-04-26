@@ -17,12 +17,12 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const _marko_template = (0, _html.t)();
+const _marko_componentType = "packages/translator-default/test/fixtures/import-hydrate-include/template.marko",
+      _marko_template = (0, _html.t)(_marko_componentType);
 
 var _default = _marko_template;
 exports.default = _default;
-const _marko_componentType = "packages/translator-default/test/fixtures/import-hydrate-include/template.marko",
-      _marko_component = {};
+const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {}, {
   t: _marko_componentType,
   i: true,

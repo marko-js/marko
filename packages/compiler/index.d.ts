@@ -29,6 +29,7 @@ export type Config = {
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
+  hot?: boolean;
   babelConfig?: {
     ast?: boolean | null;
     code?: boolean | null;

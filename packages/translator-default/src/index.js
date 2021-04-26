@@ -262,59 +262,72 @@ export const translate = {
 
       const runtimeTemplateIdentifier = path.scope.generateUidIdentifier("t");
 
-      path.unshiftContainer("body", [
-        t.importDeclaration(
-          [t.importSpecifier(runtimeTemplateIdentifier, t.identifier("t"))],
-          t.stringLiteral(
-            `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/${
-              isHTML ? "html" : "vdom"
-            }`
-          )
-        ),
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            templateIdentifier,
-            t.callExpression(
-              runtimeTemplateIdentifier,
-              includeMetaInSource ? [t.identifier("__filename")] : []
+      path.unshiftContainer(
+        "body",
+        [
+          t.importDeclaration(
+            [t.importSpecifier(runtimeTemplateIdentifier, t.identifier("t"))],
+            t.stringLiteral(
+              `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/${
+                isHTML ? "html" : "vdom"
+              }${markoOpts.hot ? "/hot-reload" : ""}`
             )
-          )
-        ]),
-        t.exportDefaultDeclaration(templateIdentifier)
-      ]);
+          ),
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              componentTypeIdentifier,
+              t.stringLiteral(meta.id)
+            ),
+            t.variableDeclarator(
+              templateIdentifier,
+              t.callExpression(runtimeTemplateIdentifier, [
+                componentTypeIdentifier
+              ])
+            )
+          ]),
+          includeMetaInSource &&
+            t.expressionStatement(
+              t.assignmentExpression(
+                "=",
+                t.memberExpression(templateIdentifier, t.identifier("path")),
+                t.identifier("__filename")
+              )
+            ),
+          t.exportDefaultDeclaration(templateIdentifier)
+        ].filter(Boolean)
+      );
 
-      const componentIdString = t.stringLiteral(meta.id);
       path.pushContainer(
         "body",
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            componentTypeIdentifier,
-            isHTML
-              ? componentIdString
-              : t.callExpression(
-                  importNamed(
-                    file,
-                    "marko/src/runtime/components/registry",
-                    "r",
-                    "marko_registerComponent"
-                  ),
-                  [
-                    componentIdString,
-                    t.arrowFunctionExpression(
-                      [],
-                      componentBrowserFile
-                        ? importDefault(
-                            file,
-                            resolveRelativePath(file, componentBrowserFile),
-                            "marko_split_component"
-                          )
-                        : templateIdentifier
-                    )
-                  ]
-                )
-          ),
-          t.variableDeclarator(componentIdentifier, componentClass)
-        ])
+        [
+          !isHTML &&
+            t.expressionStatement(
+              t.callExpression(
+                importNamed(
+                  file,
+                  "marko/src/runtime/components/registry",
+                  "r",
+                  "marko_registerComponent"
+                ),
+                [
+                  componentTypeIdentifier,
+                  t.arrowFunctionExpression(
+                    [],
+                    componentBrowserFile
+                      ? importDefault(
+                          file,
+                          resolveRelativePath(file, componentBrowserFile),
+                          "marko_split_component"
+                        )
+                      : templateIdentifier
+                  )
+                ]
+              )
+            ),
+          t.variableDeclaration("const", [
+            t.variableDeclarator(componentIdentifier, componentClass)
+          ])
+        ].filter(Boolean)
       );
 
       const templateRenderOptionsProps = [
@@ -456,6 +469,7 @@ export function getRuntimeEntryFiles(output, optimize) {
     ...(output === "html"
       ? [
           `${base}runtime/html`,
+          `${base}runtime/html/hot-reload`,
           `${base}runtime/html/helpers/attr`,
           `${base}runtime/html/helpers/attrs`,
           `${base}runtime/html/helpers/class-attr`,
@@ -470,6 +484,7 @@ export function getRuntimeEntryFiles(output, optimize) {
         ]
       : [
           `${base}runtime/vdom`,
+          `${base}runtime/vdom/hot-reload`,
           `${base}runtime/vdom/helpers/attrs`,
           `${base}runtime/vdom/helpers/const`,
           `${base}runtime/vdom/helpers/v-element`,

@@ -1,6 +1,7 @@
 import { t as _t } from "marko/dist/runtime/vdom";
 
-const _marko_template = _t();
+const _marko_componentType = "qUg9ApxN",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
@@ -28,9 +29,9 @@ const _marko_node8 = _marko_createElement("div", null, "17", null, 0, 0);
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
-const _marko_componentType = _marko_registerComponent("qUg9ApxN", () => _marko_template),
-      _marko_component = {};
+_marko_registerComponent(_marko_componentType, () => _marko_template);
 
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   _marko_tag(_preserve, {
     "renderBody": out => {

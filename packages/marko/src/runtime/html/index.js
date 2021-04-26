@@ -6,24 +6,26 @@
  * it is used to create a new Template instance.
  * @private
  */
-exports.t = function createTemplate(path) {
-  return new Template(path);
+exports.t = function createTemplate(typeName) {
+  return new Template(typeName);
 };
 
-var AsyncStream = require("./AsyncStream");
-var Template = require("./Template");
-
-function createOut(globalData, parent, state, buffer) {
-  return new AsyncStream(globalData, parent, state, buffer);
+function Template(typeName) {
+  this.___typeName = typeName;
 }
 
-exports.createWriter = function (writer) {
-  return new AsyncStream(null, writer);
-};
+Template.prototype.stream = require("./create-readable");
 
-exports.Template = Template;
-exports.___createOut = createOut;
-exports.AsyncStream = AsyncStream;
-exports.enableAsyncStackTrace = AsyncStream.enableAsyncStackTrace;
+var AsyncStream = require("./AsyncStream");
+require("../createOut").___setCreateOut(
+  (Template.prototype.createOut = function createOut(
+    globalData,
+    writer,
+    parentOut,
+    buffer
+  ) {
+    return new AsyncStream(globalData, writer, parentOut, buffer);
+  })
+);
 
-require("../createOut").___setCreateOut(createOut);
+require("../renderable")(Template.prototype);
