@@ -1,37 +1,28 @@
 "use strict";
 
-// helpers provide a core set of various utility methods
-// that are available in every template
-var AsyncVDOMBuilder = require("./AsyncVDOMBuilder");
-var makeRenderable = require("../renderable");
-
 /**
  * Method is for internal usage only. This method
  * is invoked by code in a compiled Marko template and
  * it is used to create a new Template instance.
  * @private
  */
-exports.t = function createTemplate(path) {
-  return new Template(path);
+exports.t = function createTemplate(typeName) {
+  return new Template(typeName);
 };
 
-function Template(path, func) {
-  this.path = path;
-  this._ = func;
-  this.meta = undefined;
+function Template(typeName) {
+  this.___typeName = typeName;
 }
 
-function createOut(globalData, parent, parentOut) {
-  return new AsyncVDOMBuilder(globalData, parent, parentOut);
-}
+var AsyncVDOMBuilder = require("./AsyncVDOMBuilder");
+require("../createOut").___setCreateOut(
+  (Template.prototype.createOut = function createOut(
+    globalData,
+    parent,
+    parentOut
+  ) {
+    return new AsyncVDOMBuilder(globalData, parent, parentOut);
+  })
+);
 
-var Template_prototype = (Template.prototype = {
-  createOut: createOut
-});
-
-makeRenderable(Template_prototype);
-
-exports.Template = Template;
-exports.___createOut = createOut;
-
-require("../createOut").___setCreateOut(createOut);
+require("../renderable")(Template.prototype);

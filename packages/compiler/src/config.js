@@ -137,7 +137,12 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     /**
      * A regexp or function that receives an import path that matches file types known to be client side assets.
      */
-    hydrateIncludeImports: /\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/
+    hydrateIncludeImports: /\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/,
+
+    /**
+     * Set to true in order to bring in the hot module replacement runtime.
+     */
+    hot: false
   };
 
   if (process.env.MARKO_CONFIG) {

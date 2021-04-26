@@ -1,6 +1,7 @@
 import { t as _t } from "marko/dist/runtime/html";
 
-const _marko_template = _t();
+const _marko_componentType = "VJrYycFN",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _initComponents from "marko/dist/core-tags/components/init-components-tag.js";
@@ -8,8 +9,7 @@ import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _awaitReorderer from "marko/dist/core-tags/core/await/reorderer-renderer.js";
 import _preferredScriptLocation from "marko/dist/core-tags/components/preferred-script-location-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
-const _marko_componentType = "VJrYycFN",
-      _marko_component = {};
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.w("<!DOCTYPE html><html><head><title>Title of the document</title></head><body>The content of the document......");
 

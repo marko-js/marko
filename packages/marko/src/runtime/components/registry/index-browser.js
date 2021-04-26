@@ -139,6 +139,7 @@ function createComponent(typeName, id) {
 }
 
 exports.r = register;
+exports.___getComponentClass = getComponentClass;
 exports.___createComponent = createComponent;
 exports.___isRegistered = isRegistered;
 exports.___addPendingDef = addPendingDef;

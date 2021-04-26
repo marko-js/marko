@@ -1,6 +1,7 @@
 import { t as _t } from "marko/src/runtime/html";
 
-const _marko_template = _t();
+const _marko_componentType = "packages/translator-default/test/fixtures/sanity-check/template.marko",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import a from "b";
@@ -21,8 +22,7 @@ import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml";
 import _marko_attrs from "marko/src/runtime/html/helpers/attrs";
 import _marko_renderer from "marko/src/runtime/components/renderer";
-const _marko_componentType = "packages/translator-default/test/fixtures/sanity-check/template.marko",
-      _marko_component = {
+const _marko_component = {
   onCreate() {
     this.stuff();
   }

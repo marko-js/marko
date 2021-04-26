@@ -1,6 +1,7 @@
 import { t as _t } from "marko/dist/runtime/vdom";
 
-const _marko_template = _t();
+const _marko_componentType = "jxXJawbJ",
+      _marko_template = _t(_marko_componentType);
 
 export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
@@ -12,9 +13,9 @@ const _marko_node2 = _marko_createElement("style", null, "2", null, 3, 0).t("\n 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
-const _marko_componentType = _marko_registerComponent("jxXJawbJ", () => _marko_template),
-      _marko_component = {};
+_marko_registerComponent(_marko_componentType, () => _marko_template);
 
+const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
   out.be("div", null, "0", component, null, 0);
   out.t(input.x, component);
