@@ -5,7 +5,6 @@ import parseParams from "./util/parse-params";
 import parseVar from "./util/parse-var";
 import parseIDShorthand from "./util/parse-id-shorthand";
 import parseClassnameShorthand from "./util/parse-classname-shorthand";
-import markoModules from "../../modules";
 import * as t from "../babel-types";
 import {
   withLoc,
@@ -316,11 +315,12 @@ export function parseMarko(file) {
         );
       }
 
-      if (tagDef && tagDef.nodeFactoryPath) {
-        const module = markoModules.require(tagDef.nodeFactoryPath);
-        watchFiles.push(tagDef.nodeFactoryPath);
+      if (tagDef && tagDef.parser) {
+        if (tagDef.parser.path) {
+          watchFiles.push(tagDef.parsePath);
+        }
         /* istanbul ignore next */
-        (module.default || module)(tag, t);
+        (tagDef.parser.hook.default || tagDef.parser.hook)(tag, t);
       }
 
       currentTag = currentTag.parentPath.parentPath || file.path;

@@ -5,11 +5,11 @@ var resolveFrom = require("resolve-from").silent;
 var propertyHandlers = require("property-handlers");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
-var forEachEntry = require("raptor-util/forEachEntry");
 var createError = require("raptor-util/createError");
 var taglibFS = require("../fs");
 var types = require("./types");
 var loaders = require("./loaders");
+var markoModules = require("../../../modules");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
@@ -36,48 +36,12 @@ function hasAttributes(tagProps) {
   return false;
 }
 
-function addTransformer(tagLoader, value) {
-  const dirname = tagLoader.dirname;
-  const tag = tagLoader.tag;
-
-  const transformer = new types.Transformer();
-
-  /**
-   * The transformer is a complex type and we need
-   * to process each property to load the Transformer
-   * definition.
-   */
-  propertyHandlers(
-    value,
-    {
-      path(value) {
-        transformer.path = resolveRelative(dirname, value);
-      },
-
-      priority(value) {
-        transformer.priority = value;
-      },
-
-      name(value) {
-        transformer.name = value;
-      },
-
-      properties(value) {
-        var properties =
-          transformer.properties || (transformer.properties = {});
-        for (var k in value) {
-          if (hasOwnProperty.call(value, k)) {
-            properties[k] = value[k];
-          }
-        }
-      }
-    },
-    tagLoader.dependencyChain.append("transformer")
-  );
-
-  ok(transformer.path, '"path" is required for transformer');
-
-  tag.addTransformer(transformer);
+function normalizeHook(dirname, value) {
+  if (typeof value === "string") {
+    value = resolveRelative(dirname, value);
+    return { path: value, hook: markoModules.require(value) };
+  }
+  return { hook: value };
 }
 
 /**
@@ -385,7 +349,11 @@ class TagLoader {
    * migrate deprecated features to modern features.
    */
   migrate(value) {
-    this.tag.migratorPaths.push(resolveRelative(this.dirname, value));
+    if (Array.isArray(value)) {
+      value.forEach(this.migrate, this);
+    } else {
+      this.tag.migrators.push(normalizeHook(this.dirname, value));
+    }
   }
 
   /**
@@ -402,7 +370,7 @@ class TagLoader {
    * exported by the code codegen module.
    */
   translate(value) {
-    this.tag.codeGeneratorModulePath = resolveRelative(this.dirname, value);
+    this.tag.translator = normalizeHook(this.dirname, value);
   }
 
   /**
@@ -420,7 +388,7 @@ class TagLoader {
    * equivalent of require.resolve(path)
    */
   parse(value) {
-    this.tag.nodeFactoryPath = resolveRelative(this.dirname, value);
+    this.tag.parser = normalizeHook(this.dirname, value);
   }
 
   /**
@@ -436,25 +404,10 @@ class TagLoader {
    * the AST using the DOM-like API to change how the code gets generated.
    */
   transform(value) {
-    if (typeof value === "string") {
-      // The value is a simple string type
-      // so treat the value as the path to the JS
-      // module for the transformer
-      value = {
-        path: value
-      };
-
-      addTransformer(this, value);
-    } else if (Array.isArray(value)) {
-      value.forEach(transformerPath => {
-        value = {
-          path: transformerPath
-        };
-
-        addTransformer(this, value);
-      });
+    if (Array.isArray(value)) {
+      value.forEach(this.transform, this);
     } else {
-      addTransformer(this, value);
+      this.tag.transformers.push(normalizeHook(this.dirname, value));
     }
   }
 
@@ -494,7 +447,8 @@ class TagLoader {
     var filePath = this.filePath;
     var tag = this.tag;
 
-    forEachEntry(value, (nestedTagName, nestedTagDef) => {
+    for (const nestedTagName in value) {
+      const nestedTagDef = value[nestedTagName];
       var dependencyChain = this.dependencyChain.append(
         `nestedTags["${nestedTagName}"]`
       );
@@ -514,7 +468,7 @@ class TagLoader {
 
         tag.addAttribute(attr);
       }
-    });
+    }
   }
 
   openTagOnly(value) {

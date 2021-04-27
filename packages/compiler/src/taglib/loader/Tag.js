@@ -1,5 +1,4 @@
 "use strict";
-var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -11,9 +10,9 @@ class Tag {
       this.dir = path.dirname(filePath);
     }
 
-    this.migratorPaths = [];
+    this.migrators = [];
     this.attributes = {};
-    this.transformers = {};
+    this.transformers = [];
     this.patternAttributes = [];
 
     // NOTE: We don't set this properties since
@@ -24,8 +23,8 @@ class Tag {
     // this.taglibPath = null;
     // this.name = undefined;
     // this.renderer = null;
-    // this.codeGeneratorModulePath = null;
-    // this.nodeFactoryPath = null;
+    // this.translatePath = null;
+    // this.parsePath = null;
     // this.template = null;
     // this.nestedVariables = null;
     // this.importedVariables = null;
@@ -38,21 +37,6 @@ class Tag {
     // this.body = null;
     // this.type = null; // Only applicable for nested tags
     // this._nodeFactory = undefined;
-  }
-
-  forEachTransformer(callback, thisObj) {
-    forEachEntry(this.transformers, function (key, transformer) {
-      callback.call(thisObj, transformer);
-    });
-  }
-  hasTransformers() {
-    /*jshint unused:false */
-    for (var k in this.transformers) {
-      if (hasOwnProperty.call(this.transformers, k)) {
-        return true;
-      }
-    }
-    return false;
   }
 
   addAttribute(attr) {
@@ -106,12 +90,6 @@ class Tag {
     return hasOwnProperty.call(this.attributes, attrName);
   }
 
-  addTransformer(transformer) {
-    var key = transformer.path;
-    transformer.taglibId = this.taglibId;
-    this.transformers[key] = transformer;
-  }
-
   addNestedTag(nestedTag) {
     ok(nestedTag.name, '"nestedTag.name" is required');
 
@@ -127,21 +105,9 @@ class Tag {
 
     this.nestedTags[nestedTag.name] = nestedTag;
   }
-  forEachNestedTag(callback, thisObj) {
-    if (!this.nestedTags) {
-      return;
-    }
 
-    forEachEntry(this.nestedTags, function (key, nestedTag) {
-      callback.call(thisObj, nestedTag);
-    });
-  }
   hasNestedTags() {
     return this.nestedTags != null;
-  }
-
-  forEachMigrator(callback, thisObj) {
-    this.migratorPaths.forEach(callback, thisObj);
   }
 
   toJSON() {

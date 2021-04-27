@@ -106,9 +106,9 @@ export const analyze = {
         }
       }
 
-      if (tagDef.codeGeneratorModulePath) {
-        if (!meta.watchFiles.includes(tagDef.codeGeneratorModulePath)) {
-          meta.watchFiles.push(tagDef.codeGeneratorModulePath);
+      if (tagDef.translator && tagDef.translator.path) {
+        if (!meta.watchFiles.includes(tagDef.translator.path)) {
+          meta.watchFiles.push(tagDef.translator.path);
         }
       }
     }

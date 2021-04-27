@@ -7,7 +7,6 @@ import { buildLookup } from "../taglib";
 import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
-import markoModules from "../../modules";
 import { MarkoFile } from "./file";
 import { curFS, setFS } from "../taglib/fs";
 import tryLoadTranslator from "../util/try-load-translator";
@@ -177,11 +176,12 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
   file.path.scope.crawl(); // Initialize bindings.
 
   for (const id in taglibLookup.taglibsById) {
-    const { migratorPath } = taglibLookup.taglibsById[id];
-    if (migratorPath) {
-      const mod = markoModules.require(migratorPath);
-      meta.watchFiles.push(migratorPath);
-      rootMigrators.push(mod.default || mod);
+    const { migrators } = taglibLookup.taglibsById[id];
+    for (const migrator of migrators) {
+      if (migrator.path) {
+        meta.watchFiles.push(migrator.path);
+      }
+      rootMigrators.push(migrator.hook.default || migrator.hook);
     }
   }
 
@@ -191,10 +191,14 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     return file;
   }
 
-  for (const { path: transformerPath } of taglibLookup.merged.transformers) {
-    const mod = markoModules.require(transformerPath);
-    meta.watchFiles.push(transformerPath);
-    rootTransformers.push(mod.default || mod);
+  for (const id in taglibLookup.taglibsById) {
+    const { transformers } = taglibLookup.taglibsById[id];
+    for (const transformer of transformers) {
+      if (transformer.path) {
+        meta.watchFiles.push(transformer.path);
+      }
+      rootTransformers.push(transformer.hook.default || transformer.hook);
+    }
   }
 
   traverseAll(file, rootTransformers);

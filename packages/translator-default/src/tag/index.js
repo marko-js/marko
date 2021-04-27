@@ -9,7 +9,6 @@ import {
   findAttributeTags,
   assertNoVar
 } from "@marko/babel-utils";
-import markoModules from "@marko/compiler/modules";
 import nativeTag from "./native-tag";
 import dynamicTag from "./dynamic-tag";
 import attributeTag from "./attribute-tag";
@@ -25,17 +24,12 @@ export default {
     assertNoVar(path);
     const tagDef = getTagDef(path);
 
-    if (tagDef) {
-      if (tagDef.codeGeneratorModulePath) {
-        const { node } = path;
-        tagDef.codeGenerator = markoModules.require(
-          tagDef.codeGeneratorModulePath
-        );
-        enter(tagDef.codeGenerator, path, t);
+    if (tagDef && tagDef.translator) {
+      const { node } = path;
+      enter(tagDef.translator.hook, path, t);
 
-        if (path.node !== node) {
-          return;
-        }
+      if (path.node !== node) {
+        return;
       }
     }
 
@@ -111,11 +105,10 @@ export default {
 
     const tagDef = getTagDef(path);
 
-    if (tagDef) {
-      const { codeGenerator } = tagDef;
+    if (tagDef && tagDef.translator) {
       const { node } = path;
 
-      exit(codeGenerator, path, t);
+      exit(tagDef.translator.hook, path, t);
 
       if (path.node !== node) {
         return;
