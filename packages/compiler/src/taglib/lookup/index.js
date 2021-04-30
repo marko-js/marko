@@ -5,21 +5,6 @@ var taglibTypes = require("../loader/types");
 var extend = require("raptor-util/extend");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
-function transformerComparator(a, b) {
-  a = a.priority;
-  b = b.priority;
-
-  if (a == null) {
-    a = Number.MAX_VALUE;
-  }
-
-  if (b == null) {
-    b = Number.MAX_VALUE;
-  }
-
-  return a - b;
-}
-
 function TAG_COMPARATOR(a, b) {
   return a.name.localeCompare(b.name);
 }
@@ -93,7 +78,9 @@ class TaglibLookup {
     var merged = this.merged;
 
     function handleNestedTags(tag, parentTagName) {
-      tag.forEachNestedTag(function (nestedTag) {
+      for (const key in tag.nestedTags) {
+        const nestedTag = tag.nestedTags[key];
+
         var fullyQualifiedName = parentTagName + ":" + nestedTag.name;
         // Create a clone of the nested tag since we need to add some new
         // properties
@@ -105,12 +92,13 @@ class TaglibLookup {
         clonedNestedTag.name = fullyQualifiedName;
         merged.tags[fullyQualifiedName] = clonedNestedTag;
         handleNestedTags(clonedNestedTag, fullyQualifiedName);
-      });
+      }
     }
 
-    taglib.forEachTag(function (tag) {
+    for (const key in taglib.tags) {
+      const tag = taglib.tags[key];
       handleNestedTags(tag, tag.name);
-    });
+    }
   }
 
   addTaglib(taglib) {
@@ -129,7 +117,6 @@ class TaglibLookup {
 
     merge(this.merged, {
       tags: taglib.tags,
-      transformers: taglib.transformers,
       attributes: taglib.attributes,
       patternAttributes: taglib.patternAttributes,
       attributeGroups: taglib.attributeGroups || {}
@@ -143,28 +130,14 @@ class TaglibLookup {
 
     if (sortedTags === undefined) {
       sortedTags = this._sortedTags = [];
-      this.forEachTag(tag => {
-        sortedTags.push(tag);
-      });
+      var tags = this.merged.tags;
+      for (var tagName in tags) {
+        sortedTags.push(tags[tagName]);
+      }
       sortedTags.sort(TAG_COMPARATOR);
     }
 
     return sortedTags;
-  }
-
-  forEachTag(callback) {
-    var tags = this.merged.tags;
-    if (tags) {
-      for (var tagName in tags) {
-        if (hasOwnProperty.call(tags, tagName)) {
-          var tag = tags[tagName];
-          var result = callback(tag);
-          if (result === false) {
-            break;
-          }
-        }
-      }
-    }
   }
 
   forEachAttribute(tagName, callback) {
@@ -308,119 +281,6 @@ class TaglibLookup {
     }
 
     return attrDef;
-  }
-
-  forEachTemplateMigrator(callback, thisObj) {
-    for (var key in this.taglibsById) {
-      var migration = this.taglibsById[key].migratorPath;
-      if (migration) {
-        callback.call(thisObj, migration);
-      }
-    }
-  }
-
-  forEachTagMigrator(element, callback, thisObj) {
-    if (typeof element === "string") {
-      element = {
-        tagName: element
-      };
-    }
-
-    var tagName = element.tagName;
-    /*
-     * If the node is an element node then we need to find all matching
-     * migrators based on the URI and the local name of the element.
-     */
-
-    var migrators = [];
-
-    function addMigrator(migrator) {
-      if (typeof migrator !== "function") {
-        throw new Error("Invalid transformer");
-      }
-
-      migrators.push(migrator);
-    }
-
-    /*
-     * Handle all of the migrators for all possible matching migrators.
-     *
-     * Start with the least specific and end with the most specific.
-     */
-
-    if (this.merged.tags) {
-      if (tagName) {
-        if (this.merged.tags[tagName]) {
-          this.merged.tags[tagName].forEachMigrator(addMigrator);
-        }
-      }
-
-      if (this.merged.tags["*"]) {
-        this.merged.tags["*"].forEachMigrator(addMigrator);
-      }
-    }
-
-    migrators.forEach(callback, thisObj);
-  }
-
-  forEachTemplateTransformer(callback, thisObj) {
-    var transformers = this.merged.transformers;
-    if (transformers && transformers.length) {
-      transformers.forEach(callback, thisObj);
-    }
-  }
-
-  forEachTagTransformer(element, callback, thisObj) {
-    if (typeof element === "string") {
-      element = {
-        tagName: element
-      };
-    }
-
-    var tagName = element.tagName;
-    /*
-     * If the node is an element node then we need to find all matching
-     * transformers based on the URI and the local name of the element.
-     */
-
-    var transformers = [];
-
-    function addTransformer(transformer) {
-      if (!transformer || !transformer.path) {
-        throw new Error("Invalid transformer");
-      }
-
-      transformers.push(transformer);
-    }
-
-    /*
-     * Handle all of the transformers for all possible matching transformers.
-     *
-     * Start with the least specific and end with the most specific.
-     */
-
-    if (this.merged.tags) {
-      if (tagName) {
-        if (this.merged.tags[tagName]) {
-          this.merged.tags[tagName].forEachTransformer(addTransformer);
-        }
-      }
-
-      if (this.merged.tags["*"]) {
-        this.merged.tags["*"].forEachTransformer(addTransformer);
-      }
-    }
-
-    transformers.sort(transformerComparator);
-
-    transformers.forEach(callback, thisObj);
-  }
-
-  forEachTextTransformer(callback, thisObj) {
-    if (this.merged.textTransformers) {
-      this.merged.textTransformers.sort(transformerComparator);
-      this.merged.textTransformers.forEach(callback, thisObj);
-    }
   }
 
   toString() {

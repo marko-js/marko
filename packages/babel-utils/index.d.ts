@@ -19,6 +19,10 @@ export interface AttributeDefinition {
     descriptionMoreURL?: string;
   }>;
 }
+export type PluginDefinition = {
+  path?: string;
+  hook: Plugin;
+}
 export interface TagDefinition {
   dir: string;
   filePath: string;
@@ -50,10 +54,10 @@ export interface TagDefinition {
   isRepeated: boolean;
   openTagOnly: boolean;
   targetProperty: string;
-  codeGeneratorModulePath?: string;
-  nodeFactoryPath?: string;
-  transformers?: string[];
-  migrators?: string[];
+  translator?: PluginDefinition;
+  parser?: PluginDefinition;
+  transformers?: PluginDefinition[];
+  migrators?: PluginDefinition[];
   parseOptions?: {
     rootOnly?: boolean,
     rawOpenTag?: boolean,

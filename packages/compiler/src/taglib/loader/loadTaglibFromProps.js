@@ -11,33 +11,19 @@ var jsonFileReader = require("./json-file-reader");
 var DependencyChain = require("./DependencyChain");
 var createError = require("raptor-util/createError");
 var loaders = require("./loaders");
+var markoModules = require("../../../modules");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
   return value[0] === "." ? resolveFrom(dirname, value) : value;
 }
 
-function addTransformer(taglibLoader, value) {
-  // Marko allows a "text-transformer" to be registered. The provided
-  // text transformer will be called for any static text found in a template.
-  const taglib = taglibLoader.taglib;
-  const dirname = taglibLoader.dirname;
-
-  const transformer = new types.Transformer();
-
-  propertyHandlers(
-    value,
-    {
-      path(value) {
-        transformer.path = resolveRelative(dirname, value);
-      }
-    },
-    taglibLoader.dependencyChain.append("transformer").toString()
-  );
-
-  ok(transformer.path, '"path" is required for transformer');
-
-  taglib.addTransformer(transformer);
+function normalizeHook(dirname, value) {
+  if (typeof value === "string") {
+    value = resolveRelative(dirname, value);
+    return { path: value, hook: markoModules.require(value) };
+  }
+  return { hook: value };
 }
 
 /**
@@ -309,11 +295,21 @@ class TaglibLoader {
   }
 
   /**
+   * Deprecated
+   */
+  migrator(value) {
+    this.migrate(value);
+  }
+  /**
    * A taglib can be mapped to module that is used
    * migrate deprecated features to modern features across the entire template.
    */
-  migrator(value) {
-    this.taglib.migratorPath = resolveRelative(this.dirname, value);
+  migrate(value) {
+    if (Array.isArray(value)) {
+      value.forEach(this.migrate, this);
+    } else {
+      this.taglib.migrators.push(normalizeHook(this.dirname, value));
+    }
   }
 
   /**
@@ -331,30 +327,21 @@ class TaglibLoader {
   }
 
   /**
+   * Deprecated
+   */
+  transformer(value) {
+    this.transform(value);
+  }
+  /**
    * If a custom tag has an associated transformer then the transformer
    * will be called on the compile-time Node. The transformer can manipulate
    * the AST using the DOM-like API to change how the code gets generated.
    */
-  transformer(value) {
-    if (typeof value === "string") {
-      // The value is a simple string type
-      // so treat the value as the path to the JS
-      // module for the transformer
-      value = {
-        path: value
-      };
-
-      addTransformer(this, value);
-    } else if (Array.isArray(value)) {
-      value.forEach(transformerPath => {
-        value = {
-          path: transformerPath
-        };
-
-        addTransformer(this, value);
-      });
+  transform(value) {
+    if (Array.isArray(value)) {
+      value.forEach(this.transform, this);
     } else {
-      addTransformer(this, value);
+      this.taglib.transformers.push(normalizeHook(this.dirname, value));
     }
   }
 

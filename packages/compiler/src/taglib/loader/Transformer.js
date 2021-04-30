@@ -7,9 +7,7 @@ class Transformer {
     this.name = null;
     this.tag = null;
     this.path = null;
-    this.priority = null;
     this._func = null;
-    this.properties = {};
   }
 
   toString() {

@@ -1,5 +1,4 @@
 "use strict";
-var forEachEntry = require("raptor-util/forEachEntry");
 var ok = require("assert").ok;
 var path = require("path");
 var loaders = require("./loaders");
@@ -32,6 +31,7 @@ class Taglib {
     this.filePath = this.path /* deprecated */ = this.id = filePath;
     this.dirname = path.dirname(this.filePath);
     this.tags = {};
+    this.migrators = [];
     this.transformers = [];
     this.attributes = {};
     this.patternAttributes = [];
@@ -71,18 +71,6 @@ class Taglib {
     }
     this.tags[tag.name] = tag;
     tag.taglibId = this.id || this.path;
-  }
-  addTransformer(transformer) {
-    this.transformers.push(transformer);
-  }
-  forEachTag(callback, thisObj) {
-    forEachEntry(
-      this.tags,
-      function (key, tag) {
-        callback.call(thisObj, tag);
-      },
-      this
-    );
   }
 
   addImport(path) {

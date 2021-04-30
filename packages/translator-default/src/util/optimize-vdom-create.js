@@ -64,7 +64,7 @@ const analyzeStaticVisitor = {
         !path.node.arguments;
 
       const tagDef = getTagDef(path);
-      isStatic = isStatic && !tagDef.codeGeneratorModulePath;
+      isStatic = isStatic && !tagDef.translator;
 
       // check attributes
       isStatic =
