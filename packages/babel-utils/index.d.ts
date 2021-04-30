@@ -19,7 +19,7 @@ export interface AttributeDefinition {
     descriptionMoreURL?: string;
   }>;
 }
-export type PluginDefinition = string | {
+export type PluginDefinition = {
   path?: string;
   hook: Plugin;
 }
