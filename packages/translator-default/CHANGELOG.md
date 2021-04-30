@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.9.0...v5.10.0) (2021-04-30)
+
+
+### Features
+
+* add new HMR runtime ([a873762](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/a87376299952c8f9fc5c3d467c571acc0956bfb3))
+
+
+
+
+
 # [5.9.0](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.8.4...v5.9.0) (2021-04-21)
 
 

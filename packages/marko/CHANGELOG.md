@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.10.0](https://github.com/marko-js/marko/compare/v5.9.0...v5.10.0) (2021-04-30)
+
+
+### Features
+
+* **marko:** leverage new runtime api for node-require hook ([67fb144](https://github.com/marko-js/marko/commit/67fb144c5c1c662b6fd89b1d52c420988f36365a))
+* add new HMR runtime ([a873762](https://github.com/marko-js/marko/commit/a87376299952c8f9fc5c3d467c571acc0956bfb3))
+
+
+
+
+
 # [5.9.0](https://github.com/marko-js/marko/compare/v5.8.4...v5.9.0) (2021-04-21)
 
 **Note:** Version bump only for package marko
