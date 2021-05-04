@@ -22,7 +22,7 @@ export function callRuntime<
     | keyof typeof import("@marko/runtime-fluurt/src/html"),
   ...args: A
 ) {
-  return t.callExpression(importRuntime(path, name), args);
+  return t.callExpression(importRuntime(path, name as string), args);
 }
 
 export function getHTMLRuntime<T extends t.Node>(path: t.NodePath<T>) {

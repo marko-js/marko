@@ -9,7 +9,7 @@ import { flushBefore } from "../util/html-flush";
 import { callRuntime } from "../util/runtime";
 import { assertNoBodyContent } from "../util/assert";
 
-export function enter(tag: t.NodePath<t.MarkoTag>) {
+export default function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoParams(tag);
   assertNoBodyContent(tag);
   flushBefore(tag);

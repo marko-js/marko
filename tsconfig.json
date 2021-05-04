@@ -4,7 +4,7 @@
     "transpileOnly": true
   },
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "composite": true,
     "declaration": true,
     "stripInternal": true,

@@ -124,7 +124,7 @@ export default {
       if (tag.has("var")) {
         const references: ReferenceMeta = {};
 
-        if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
+        if (tagDef?.translator && isCoreTag(tagDef)) {
           switch (tagDef.name) {
             case "let":
               // TODO could check if there are any assignments.
@@ -214,7 +214,7 @@ export default {
       const tagDef = getTagDef(tag);
       const references: ReferenceMeta = {};
 
-      if (tagDef?.codeGeneratorModulePath && isCoreTag(tagDef)) {
+      if (tagDef?.translator && isCoreTag(tagDef)) {
         switch (tagDef.name) {
           case "for":
             for (const attr of tag.get("attributes")) {

@@ -6,7 +6,7 @@ import { isOutputHTML } from "../util/marko-config";
 
 const RETURN_IDENTIFIERS = new WeakMap<t.BabelFile, t.Identifier>();
 
-export function enter(tag: t.NodePath<t.MarkoTag>) {
+export default function enter(tag: t.NodePath<t.MarkoTag>) {
   assertNoVar(tag);
   assertNoParams(tag);
   assertNoBodyContent(tag);
