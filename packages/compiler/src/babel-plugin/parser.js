@@ -317,7 +317,7 @@ export function parseMarko(file) {
 
       if (tagDef && tagDef.parser) {
         if (tagDef.parser.path) {
-          watchFiles.push(tagDef.parse.path);
+          watchFiles.push(tagDef.parser.path);
         }
         /* istanbul ignore next */
         (tagDef.parser.hook.default || tagDef.parser.hook)(tag, t);
