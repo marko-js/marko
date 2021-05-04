@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.0...v5.10.1) (2021-05-04)
+
+
+### Bug Fixes
+
+* **compiler:** issue with undefined added to watchFiles ([4704b62](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/4704b62a81165856a803b2155946b4d143d58287))
+
+
+
+
+
 # [5.10.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.9.0...v5.10.0) (2021-04-30)
 
 
