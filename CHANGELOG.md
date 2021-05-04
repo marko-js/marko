@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.2](https://github.com/marko-js/marko/compare/v5.10.1...v5.10.2) (2021-05-04)
+
+
+### Bug Fixes
+
+* **compiler:** var name typo ([8aaf910](https://github.com/marko-js/marko/commit/8aaf9105323587fae4f40dd69a2497f114a867c5))
+
+
+
+
+
 ## [5.10.1](https://github.com/marko-js/marko/compare/v5.10.0...v5.10.1) (2021-05-04)
 
 
