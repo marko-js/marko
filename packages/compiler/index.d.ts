@@ -44,7 +44,7 @@ export type Config = {
 export type MarkoMeta = {
   id: string;
   component?: string;
-  watchFiles?: string[];
+  watchFiles: string[];
   tags?: string[];
   deps: Array<
     | string
