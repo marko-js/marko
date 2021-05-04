@@ -1,11 +1,13 @@
 import { CommentWalker, HydrateInstance } from "../common/types";
-import { Renderer } from "./dom";
-import { runInBatch } from "./signals";
+import { Renderer } from "./renderer";
 import { beginHydrate, endHydrate } from "./walker";
 
 const hydrateById: Record<string, Renderer["___hydrate"]> = {};
 
-export function register(id: string, hydrate: Renderer["___hydrate"]) {
+export function register<H extends Renderer["___hydrate"]>(
+  id: string,
+  hydrate: H
+) {
   hydrateById[id] = hydrate;
   return hydrate;
 }
@@ -55,7 +57,7 @@ export function init(runtimeId = "M") {
       beginHydrate(startNode);
 
       try {
-        runInBatch(() => hydrate(input));
+        // TODO: runInBatch(() => hydrate(input));
       } finally {
         delete walker[startKey];
         endHydrate();

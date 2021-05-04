@@ -25,15 +25,15 @@ inserted div0
 
 # Mutations
 ```
-inserted 
-inserted 
-removed #comment after 
+inserted #comment
+inserted #comment
+removed #comment after #comment
 inserted div0/span0
 removed #comment after div0/span0
+div0/span0/#text0: " " => "Hello"
 inserted div0/span1
 removed #comment after div0/span1
-inserted div0/span0/#text0
-inserted div0/span1/#text0
+div0/span1/#text0: " " => "World"
 ```
 
 
@@ -70,7 +70,7 @@ removed span after div0/#comment0
 ```
 inserted div0/span0
 removed #comment after div0/span0
-inserted div0/span0/#text0
+div0/span0/#text0: " " => "Goodbye"
 ```
 
 

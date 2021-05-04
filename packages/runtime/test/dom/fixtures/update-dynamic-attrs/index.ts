@@ -2,7 +2,8 @@ import {
   attrs,
   walk,
   register,
-  createRenderFn
+  createRenderFn,
+  Scope
 } from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
 
@@ -27,12 +28,21 @@ export const inputs = [
 // <div ...input.value/>
 export const template = `<div></div>`;
 export const walks = get + over(1);
-export const hydrate = register(
-  __dirname.split("/").pop()!,
-  (input: typeof inputs[number]) => {
-    walk();
-    attrs(input.value);
-  }
-);
+export const hydrate = register("", (scope: Scope, offset: number) => {
+  scope[offset + 1] = walk();
+});
 
-export default createRenderFn(template, walks, ["value"], hydrate);
+export const execInputValue = (scope: Scope, offset: number) => {
+  attrs(scope[offset + 1] as Element, scope, offset);
+};
+
+export const execDynamicInput = (
+  input: typeof inputs[number],
+  scope: Scope,
+  offset: number
+) => {
+  scope[offset] = input.value;
+  execInputValue(scope, offset);
+};
+
+export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);

@@ -1,18 +1,13 @@
-import {
-  Fragment,
-  insertFragmentBefore,
-  removeFragment,
-  referenceStart
-} from "./fragments";
+import { Scope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller
 export function reconcile(
   parent: Node & ParentNode,
   oldKeys: string[],
-  oldNodes: Map<string, Fragment>,
+  oldNodes: Map<string, Scope>,
   newKeys: string[],
-  newNodes: Map<string, Fragment>,
+  newNodes: Map<string, Scope>,
   afterReference: Node | null
 ): void {
   let i: number;
@@ -20,8 +15,8 @@ export function reconcile(
 
   if (!newKeys.length && !afterReference) {
     for (i = 0; i < oldKeys.length; i++)
-      oldNodes.get(oldKeys[i])!.___cleanup(true);
-    parent.textContent = "";
+      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+      parent.textContent = "";
     return;
   }
 
@@ -46,15 +41,16 @@ export function reconcile(
       i++;
     } else if (newKeys.length <= j) {
       // No more elements in new, this is a delete
-      removeFragment(oldNodes.get(a)!);
+      oldNodes.get(a)!.___remove();
       i++;
     } else if (oldKeys.length <= i) {
       // No more elements in old, this is an addition
-      insertFragmentBefore(
-        parent,
-        newNodes.get(b)!,
-        a ? referenceStart(oldNodes.get(a)!) : afterReference
-      );
+      newNodes
+        .get(b)!
+        .___insertBefore(
+          parent,
+          a ? oldNodes.get(a)!.___getFirstNode() : afterReference
+        );
       j++;
     } else if (a === b) {
       // No difference, we move on
@@ -67,23 +63,25 @@ export function reconcile(
       const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
-        removeFragment(oldNodes.get(a)!);
+        oldNodes.get(a)!.___remove();
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added
-        insertFragmentBefore(
-          parent,
-          newNodes.get(b)!,
-          a ? referenceStart(oldNodes.get(a)!) : afterReference
-        );
+        newNodes
+          .get(b)!
+          .___insertBefore(
+            parent,
+            a ? oldNodes.get(a)!.___getFirstNode() : afterReference
+          );
         j++;
       } else {
         // Element is in both lists, it has been moved
-        insertFragmentBefore(
-          parent,
-          oldNodes.get(oldKeys[wantedElmInOld])!,
-          a ? referenceStart(oldNodes.get(a)!) : afterReference
-        );
+        oldNodes
+          .get(oldKeys[wantedElmInOld])!
+          .___insertBefore(
+            parent,
+            a ? oldNodes.get(a)!.___getFirstNode() : afterReference
+          );
         aIdx.delete(wantedElmInOld);
         oldKeys[wantedElmInOld] = (null as unknown) as string;
         if (wantedElmInOld > i + 1) i++;

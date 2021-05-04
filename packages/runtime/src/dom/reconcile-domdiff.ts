@@ -1,20 +1,13 @@
-import {
-  Fragment,
-  insertFragmentBefore,
-  removeFragment,
-  replaceFragment,
-  referenceAfter,
-  referenceStart
-} from "./fragments";
+import { Scope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js
 // middle sized ~.6kb minified smaller
 export function reconcile(
   parent: Node & ParentNode,
   oldKeys: string[],
-  oldNodes: Map<string, Fragment>,
+  oldNodes: Map<string, Scope>,
   newKeys: string[],
-  newNodes: Map<string, Fragment>,
+  newNodes: Map<string, Scope>,
   afterReference: Node | null
 ): void {
   const bLength = newKeys.length;
@@ -26,8 +19,8 @@ export function reconcile(
 
   if (!newKeys.length && !afterReference) {
     for (let i = 0; i < oldKeys.length; i++)
-      oldNodes.get(oldKeys[i])!.___cleanup(true);
-    parent.textContent = "";
+      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+      parent.textContent = "";
     return;
   }
 
@@ -41,18 +34,18 @@ export function reconcile(
       const node =
         bEnd < bLength
           ? bStart
-            ? referenceAfter(newNodes.get(newKeys[bStart - 1])!)
-            : referenceStart(newNodes.get(newKeys[bEnd - bStart])!)
+            ? newNodes.get(newKeys[bStart - 1])!.___getAfterNode()
+            : newNodes.get(newKeys[bEnd - bStart])!.___getFirstNode()
           : afterReference;
       while (bStart < bEnd)
-        insertFragmentBefore(parent, newNodes.get(newKeys[bStart++])!, node);
+        newNodes.get(newKeys[bStart++])!.___insertBefore(parent, node);
     }
     // remove head or tail: fast path
     else if (bEnd === bStart) {
       while (aStart < aEnd) {
         // remove the node only if it's unknown or not live
         if (!map || !map.has(oldKeys[aStart]))
-          removeFragment(oldNodes.get(oldKeys[aStart])!);
+          oldNodes.get(oldKeys[aStart])!.___remove();
         aStart++;
       }
     }
@@ -77,13 +70,14 @@ export function reconcile(
       // or asymmetric too
       // [1, 2, 3, 4, 5]
       // [1, 2, 3, 5, 6, 4]
-      const node = referenceAfter(oldNodes.get(oldKeys[--aEnd])!);
-      insertFragmentBefore(
-        parent,
-        newNodes.get(newKeys[bStart++])!,
-        referenceAfter(oldNodes.get(oldKeys[aStart++])!)
-      );
-      insertFragmentBefore(parent, newNodes.get(newKeys[--bEnd])!, node);
+      const node = oldNodes.get(oldKeys[--aEnd])!.___getAfterNode();
+      newNodes
+        .get(newKeys[bStart++])!
+        .___insertBefore(
+          parent,
+          oldNodes.get(oldKeys[aStart++])!.___getAfterNode()
+        );
+      newNodes.get(newKeys[--bEnd])!.___insertBefore(parent, node);
       // mark the future index as identical (yeah, it's dirty, but cheap 👍)
       // The main reason to do this, is that when oldKeys[aEnd] will be reached,
       // the loop will likely be on the fast path, as identical to newKeys[bEnd].
@@ -130,22 +124,22 @@ export function reconcile(
           // this would place 7 before 1 and, from that time on, 1, 2, and 3
           // will be processed at zero cost
           if (sequence > index - bStart) {
-            const node = referenceStart(oldNodes.get(oldKeys[aStart])!);
+            const node = oldNodes.get(oldKeys[aStart])!.___getFirstNode();
             while (bStart < index)
-              insertFragmentBefore(
-                parent,
-                newNodes.get(newKeys[bStart++])!,
-                node
-              );
+              newNodes.get(newKeys[bStart++])!.___insertBefore(parent, node);
           }
           // if the effort wasn't good enough, fallback to oldKeys replace,
           // moving both source and target indexes forward, hoping that some
           // similar node will be found later on, to go back to the fast path
           else {
-            replaceFragment(
-              oldNodes.get(oldKeys[aStart++])!,
-              newNodes.get(newKeys[bStart++])!
-            );
+            const oldNode = oldNodes.get(oldKeys[aStart++])!;
+            newNodes
+              .get(newKeys[bStart++])!
+              .___insertBefore(
+                oldNode.___getParentNode(),
+                oldNode.___getFirstNode()
+              );
+            oldNode.___remove();
           }
         }
         // otherwise move the source forward, 'cause there's nothing to do
@@ -154,7 +148,7 @@ export function reconcile(
       // this node has no meaning in the future list, so it's more than safe
       // to remove it, and check the next live node out instead, meaning
       // that only the live list index should be forwarded
-      else removeFragment(oldNodes.get(oldKeys[aStart++])!);
+      else oldNodes.get(oldKeys[aStart++])!.___remove();
     }
   }
 }

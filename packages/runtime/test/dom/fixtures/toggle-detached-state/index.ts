@@ -1,11 +1,11 @@
 import {
-  compute,
-  textContent,
-  conditional,
-  register,
+  walk,
+  data,
+  Conditional,
+  Scope,
   createRenderer,
   createRenderFn,
-  walk
+  staticNodeMethods
 } from "../../../../src/dom/index";
 import { next, get, over } from "../../utils/walks";
 
@@ -24,27 +24,42 @@ export const inputs = [
   }
 ];
 
+type Input = typeof inputs[number];
+
+// <div><if=input.visible><span>${input.value.name}</span></if></div>
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
-export const hydrate = register(
-  __dirname.split("/").pop()!,
-  (input: { value: { name: string } | undefined; visible: boolean }) => {
-    const branch0 = createRenderer(
-      branch0_template,
-      branch0_walks,
-      undefined,
-      () => {
-        walk();
-        textContent(compute(value => value!.name, input.value, 1, true));
-      }
-    );
-    conditional(
-      compute(visible => (visible ? branch0 : undefined), input.visible, 1)
-    );
+export const hydrate = (scope: Scope, offset: number) => {
+  scope[offset + 2] = new Conditional(walk() as Comment, scope, offset);
+};
+
+export const execInputValueVisible = (scope: Scope, offset: number) => {
+  const cond0 = scope[offset + 2] as Conditional;
+  cond0.renderer = scope[offset + 1] ? branch0 : undefined;
+  if (cond0.renderer === branch0) {
+    const cond0_scope = cond0.scope;
+    data(cond0_scope[0] as Text, (scope[offset] as Input["value"]).name);
   }
+};
+
+export const execDynamicInput = (
+  input: Input,
+  scope: Scope,
+  offset: number
+) => {
+  scope[offset] = input.value;
+  scope[offset + 1] = input.visible;
+  execInputValueVisible(scope, offset);
+};
+
+export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+
+const branch0 = createRenderer(
+  "<span> </span>",
+  next(1) + get + next(1),
+  (scope: Scope) => {
+    scope[0] = walk();
+  },
+  0,
+  staticNodeMethods
 );
-
-const branch0_template = "<span></span>";
-const branch0_walks = get + over(1);
-
-export default createRenderFn(template, walks, ["visible", "value"], hydrate);

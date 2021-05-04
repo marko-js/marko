@@ -1,41 +1,36 @@
-export { loopOf, loopIn, loopFrom, conditional } from "./control-flow";
+export { Conditional, Loop } from "./control-flow";
 
 export {
-  UpstreamSignalOrValue,
-  createSource as source,
-  createComputation as compute,
-  createEffect as effect,
-  createUserEffect as userEffect,
-  createPropertyComputation as computeProperty,
-  createPropertyEffect as propertyEffect,
-  dynamicKeys,
-  get,
-  set,
-  runInBatch,
-  tick
-} from "./signals";
-
-export {
-  text,
-  textContent,
+  data,
   html,
   innerHTML,
   attr,
   attrs,
-  prop,
   props,
   dynamicTag,
-  render,
-  createRenderer,
-  createRenderFn
+  staticNodeMethods,
+  staticFragmentMethods,
+  dynamicFragmentMethods
 } from "./dom";
 
-export { walk } from "./walker";
+export { walk, walkMany, enableExtendedWalk } from "./walker";
 
-export { on, dynamicOn, once } from "./event";
+export { on, ensureDelegated } from "./event";
 
 export { classValue, styleValue } from "../common/helpers";
 
 export { init, register } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
+
+export {
+  queue,
+  getQueuedScope,
+  run,
+  checkDirty,
+  checkDirtyNotEqual
+} from "./queue";
+
+export { Scope } from "./scope";
+
+export { createRenderer, createRenderFn } from "./renderer";

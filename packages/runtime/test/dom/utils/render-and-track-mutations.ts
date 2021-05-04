@@ -10,7 +10,7 @@ const browser = createBrowser({
 const window = browser.window;
 const document = window.document;
 
-const { createRenderFn, runInBatch } = browser.require(
+const { createRenderFn, run } = browser.require(
   "../../../src/dom/index"
 ) as typeof import("../../../src/dom/index");
 
@@ -57,9 +57,10 @@ export default async function renderAndGetMutations(
       } else {
         tracker.beginUpdate();
         if (typeof update === "function") {
-          runInBatch(() => update(container));
+          update(container);
+          run();
         } else {
-          instance.rerender(update);
+          instance.update(update);
         }
         tracker.logUpdate(update);
       }

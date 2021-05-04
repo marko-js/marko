@@ -1,18 +1,13 @@
-import {
-  Fragment,
-  insertFragmentBefore,
-  removeFragment,
-  referenceStart
-} from "./fragments";
+import { Scope } from "./scope";
 
 const WRONG_POS = 2147483647;
 
 export function reconcile(
   parent: Node & ParentNode,
-  oldKeys: string[],
-  oldNodes: Map<string, Fragment>,
-  newKeys: string[],
-  newNodes: Map<string, Fragment>,
+  oldKeys: unknown[],
+  oldNodes: Map<unknown, Scope>,
+  newKeys: unknown[],
+  newNodes: Map<unknown, Scope>,
   afterReference: Node | null
 ): void {
   let oldStart = 0;
@@ -27,12 +22,13 @@ export function reconcile(
   let j: number | undefined;
   let k: number;
   let nextSibling: Node | null;
-  let oldKey: string | null;
-  let newKey: string;
+  let oldKey: unknown | null;
+  let newKey: unknown;
 
   if (!newKeys.length && !afterReference) {
-    for (i = 0; i < oldKeys.length; i++)
-      oldNodes.get(oldKeys[i])!.___cleanup(true);
+    for (i = 0; i < oldKeys.length; i++) {
+      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+    }
     parent.textContent = "";
     return;
   }
@@ -69,27 +65,23 @@ export function reconcile(
       k = newEnd + 1;
       nextSibling =
         k < newKeys.length
-          ? referenceStart(newNodes.get(newKeys[k])!)
+          ? newNodes.get(newKeys[k])!.___getFirstNode()
           : afterReference;
       do {
-        insertFragmentBefore(
-          parent,
-          newNodes.get(newKeys[newStart++])!,
-          nextSibling
-        );
+        newNodes.get(newKeys[newStart++])!.___insertBefore(parent, nextSibling);
       } while (newStart <= newEnd);
     }
   } else if (newStart > newEnd) {
     // All new nodes are in the correct place, remove the remaining old nodes.
     do {
-      removeFragment(oldNodes.get(oldKeys[oldStart++])!);
+      oldNodes.get(oldKeys[oldStart++])!.___remove();
     } while (oldStart <= oldEnd);
   } else {
     // Step 2
     const oldLength = oldEnd - oldStart + 1;
     const newLength = newEnd - newStart + 1;
 
-    const aNullable = oldKeys as Array<string | null>; // will be removed by js optimizing compilers.
+    const aNullable = oldKeys as Array<unknown | null>; // will be removed by js optimizing compilers.
     // Mark all nodes as inserted.
     const sources = new Array(newLength);
     for (i = 0; i < newLength; ++i) {
@@ -100,7 +92,7 @@ export function reconcile(
     let pos = 0;
     let synced = 0;
 
-    const keyIndex: Map<string, number> = new Map();
+    const keyIndex: Map<unknown, number> = new Map();
     for (j = newStart; j <= newEnd; ++j) {
       keyIndex.set(newKeys[j], j);
     }
@@ -121,18 +113,18 @@ export function reconcile(
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        insertFragmentBefore(parent, newNodes.get(newKeys[newStart])!, null);
+        newNodes.get(newKeys[newStart])!.___insertBefore(parent, null);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
-        removeFragment(oldNodes.get(oldKeys[oldStart])!);
+        oldNodes.get(oldKeys[oldStart])!.___remove();
       }
     } else {
       i = oldLength - synced;
       while (i > 0) {
         oldKey = aNullable[oldStart++];
         if (oldKey !== null) {
-          removeFragment(oldNodes.get(oldKey)!);
+          oldNodes.get(oldKey)!.___remove();
           i--;
         }
       }
@@ -148,18 +140,18 @@ export function reconcile(
             newKey = newKeys[pos++];
             nextSibling =
               pos < k
-                ? referenceStart(newNodes.get(newKeys[pos])!)
+                ? newNodes.get(newKeys[pos])!.___getFirstNode()
                 : afterReference;
-            insertFragmentBefore(parent, newNodes.get(newKey)!, nextSibling);
+            newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newKey = newKeys[pos++];
               nextSibling =
                 pos < k
-                  ? referenceStart(newNodes.get(newKeys[pos])!)
+                  ? newNodes.get(newKeys[pos])!.___getFirstNode()
                   : afterReference;
-              insertFragmentBefore(parent, newNodes.get(newKey)!, nextSibling);
+              newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
             } else {
               --j;
             }
@@ -173,9 +165,9 @@ export function reconcile(
             newKey = newKeys[pos++];
             nextSibling =
               pos < k
-                ? referenceStart(newNodes.get(newKeys[pos])!)
+                ? newNodes.get(newKeys[pos])!.___getFirstNode()
                 : afterReference;
-            insertFragmentBefore(parent, newNodes.get(newKey)!, nextSibling);
+            newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
           }
         }
       }

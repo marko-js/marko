@@ -1,323 +1,278 @@
-import {
-  Source,
-  createSource,
-  isSignal,
-  createComputation,
-  createEffect,
-  get,
-  markFragmentDestroyed,
-  UpstreamSignalOrValue,
-  setSignalValue
-} from "./signals";
-import {
-  Fragment,
-  createFragment,
-  createFragmentFromRenderer,
-  currentFragment,
-  replaceFragment
-} from "./fragments";
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
-import { render, Renderer } from "./dom";
-import { walk } from "./walker";
+import { Renderer, initRenderer } from "./renderer";
+import { getQueuedScope } from "./queue";
+import { Scope, createScope, getEmptyScope } from "./scope";
+import { NodeType } from "./dom";
+export class Conditional {
+  private ___scope?: Scope;
+  private ___parentScopeOrScopes?: Scope | Array<Scope | number>;
+  private ___parentOffset?: number;
+  private ___renderer?: Renderer;
+  private ___referenceNode: Comment | Element;
+  private ___context: typeof Context;
 
-type ForIterationFragment<T> = Fragment & {
-  ___itemSignal: Source<T>;
-  ___indexSignal?: Source<number> | false;
-};
+  constructor(
+    referenceNode: Comment | Element,
+    parentScopeOrScopes?: Scope | Array<Scope | number>,
+    parentOffset?: number
+  ) {
+    this.___scope = this.___renderer = undefined;
+    this.___referenceNode = referenceNode;
+    this.___parentScopeOrScopes = parentScopeOrScopes;
+    this.___parentOffset = parentOffset;
+    this.___context = Context;
+  }
 
-export function loopOf<T>(
-  array: UpstreamSignalOrValue<T[]>,
-  renderer: Renderer<
-    (
-      item: UpstreamSignalOrValue<T>,
-      index: UpstreamSignalOrValue<number> | boolean,
-      all: typeof array
-    ) => void
-  >,
-  getKey: (item: T, index: number) => string,
-  hasIndex = false,
-  onlyChild = false
-) {
-  if (isSignal(array)) {
-    const ctx = Context;
-    const rootFragment = currentFragment!;
-    const emptyNodes: Map<string, Fragment> = new Map();
-    let oldNodes: Map<string, Fragment> = emptyNodes;
-    let oldKeys: string[] = [];
-    let emptyMarker: Node;
-    let emptyFragment: Fragment;
-    let parent: Node & ParentNode;
-    let trackFragmentFlags: number;
+  get renderer() {
+    return this.___renderer;
+  }
 
-    if (onlyChild) {
-      parent = walk() as Node & ParentNode;
-      trackFragmentFlags = 0;
-    } else {
-      emptyMarker = walk();
-      emptyFragment = createFragment(emptyMarker, rootFragment);
-      trackFragmentFlags = trackFragmentChildren(rootFragment, emptyMarker);
-      oldNodes.set(emptyFragment as any, emptyFragment);
-      oldKeys.push(emptyFragment as any);
-    }
+  set renderer(newRenderer: Renderer | undefined) {
+    if (this.___renderer !== (this.___renderer = newRenderer)) {
+      let newScope: Scope;
+      let prevScope = this.___scope!;
 
-    const newNodes = createComputation(
-      _array => {
-        let _newNodes: Map<string, Fragment>;
-        let newItems = 0;
-        let moved = false;
-        const len = _array.length;
-
-        if (len === 0) {
-          _newNodes = emptyNodes;
-        } else {
-          _newNodes = new Map();
-          setContext(ctx);
-          for (let index = 0; index < len; index++) {
-            const item = _array[index];
-            const key = getKey ? getKey(item, index) : "" + index;
-            let childFragment = oldNodes.get(key) as ForIterationFragment<
-              typeof item
-            >;
-            if (!childFragment) {
-              newItems++;
-              const itemSignal = createSource(item);
-              const indexSignal = hasIndex && createSource(index);
-              childFragment = createFragmentFromRenderer(
-                renderer,
-                rootFragment,
-                itemSignal,
-                indexSignal,
-                array
-              ) as ForIterationFragment<T>;
-              childFragment.___itemSignal = itemSignal;
-              childFragment.___indexSignal = indexSignal;
-            } else {
-              setSignalValue(childFragment.___itemSignal, item);
-              childFragment.___indexSignal &&
-                setSignalValue(childFragment.___indexSignal, index);
-              moved = moved || key !== oldKeys[index];
-            }
-            _newNodes.set(key, childFragment);
-          }
-          setContext(null);
-        }
-
-        const removals = _newNodes.size - oldNodes.size - newItems < 0;
-        if (removals) {
-          for (const k of oldKeys) {
-            if (!_newNodes.has(k)) markFragmentDestroyed(oldNodes.get(k)!);
-          }
-        } else if (!newItems && !moved) {
-          return oldNodes;
-        }
-
-        return _newNodes;
-      },
-      array,
-      1
-    );
-
-    createEffect(
-      _newNodes => {
-        const newKeys = Array.from(_newNodes.keys());
-        const oldLastChild = oldNodes.get(oldKeys[oldKeys.length - 1]);
-        const afterReference = oldLastChild
-          ? oldLastChild.___lastChild.nextSibling
-          : null;
-        const parentNode = parent || oldLastChild!.___lastChild.parentNode;
-        reconcile(
-          parentNode,
-          oldKeys,
-          oldNodes,
-          newKeys,
-          _newNodes,
-          afterReference
+      if (newRenderer) {
+        setContext(this.___context);
+        newScope = this.___scope = createScope(
+          newRenderer.___size,
+          newRenderer.___domMethods!
         );
-
-        if (trackFragmentFlags) {
-          const newFirstChild = _newNodes.get(newKeys[0]);
-          const newLastChild = _newNodes.get(newKeys[newKeys.length - 1]);
-          updateFragmentChildren(
-            rootFragment,
-            trackFragmentFlags,
-            newFirstChild!,
-            newLastChild!
-          );
-        }
-
-        oldKeys = newKeys;
-        oldNodes = _newNodes;
-      },
-      newNodes,
-      1
-    );
-  } else {
-    let index = 0;
-    for (const item of array) {
-      render(renderer, item, index++, array);
-    }
-  }
-}
-
-export function loopIn<T>(
-  object: UpstreamSignalOrValue<Record<string, T>>,
-  renderer: Renderer<
-    (
-      key: UpstreamSignalOrValue<string>,
-      value: UpstreamSignalOrValue<T>,
-      all: typeof object
-    ) => void
-  >,
-  onlyChild?: boolean
-) {
-  let keyRenderer: Renderer;
-  const originalHydrate = renderer.___hydrate;
-  if (originalHydrate) {
-    const newHydrate = (key: Source<string>) =>
-      originalHydrate(
-        get(key),
-        createComputation(_object => _object[get(key)], object, 1),
-        object
-      );
-    keyRenderer = Object.assign(newHydrate, renderer);
-    keyRenderer.___hydrate = newHydrate;
-  } else {
-    keyRenderer = renderer;
-  }
-  loopOf<string>(
-    createComputation(_object => Object.keys(_object), object, 1),
-    keyRenderer,
-    firstArgAsKey,
-    false,
-    onlyChild
-  );
-}
-
-export function loopFrom(
-  from: UpstreamSignalOrValue<number>,
-  to: UpstreamSignalOrValue<number>,
-  step: UpstreamSignalOrValue<number>,
-  renderer: Renderer<(i: UpstreamSignalOrValue<number>) => void>,
-  onlyChild?: boolean
-) {
-  loopOf<number>(
-    createComputation(
-      ([_from, _to, _step]) => {
-        const range: number[] = [];
-
-        for (let i = _from; i <= _to; i += _step) {
-          range.push(i);
-        }
-
-        return range;
-      },
-      [from, to, step] as const,
-      0
-    ),
-    renderer,
-    firstArgAsKey,
-    false,
-    onlyChild
-  );
-}
-
-export function conditional(
-  renderer: UpstreamSignalOrValue<Renderer | undefined>,
-  ...input: UpstreamSignalOrValue[]
-) {
-  if (isSignal(renderer)) {
-    const rootFragment = currentFragment!;
-    const ctx = Context;
-    const emptyMarker = walk();
-    const trackFragmentFlags = trackFragmentChildren(rootFragment, emptyMarker);
-    const emptyFragment = createFragment(emptyMarker, rootFragment);
-    let previousFragment = emptyFragment;
-
-    const fragmentSignal = createComputation(
-      // TODO: hoist out this function and compare benchmarks
-      _renderer => {
-        setContext(ctx);
-        if (!_renderer && previousFragment)
-          markFragmentDestroyed(previousFragment);
-        const result = _renderer
-          ? createFragmentFromRenderer(_renderer, rootFragment, ...input)
-          : emptyFragment;
+        initRenderer(
+          newRenderer,
+          newScope,
+          this.___parentScopeOrScopes,
+          this.___parentOffset
+        );
+        prevScope =
+          prevScope || getEmptyScope(this.___referenceNode as Comment);
         setContext(null);
-        return result;
-      },
-      renderer,
-      1
-    );
+      } else {
+        newScope = getEmptyScope(this.___referenceNode as Comment);
+        this.___scope = undefined;
+      }
 
-    createEffect(
-      nextFragment => {
-        replaceFragment(previousFragment, nextFragment);
-        previousFragment = nextFragment;
-        updateFragmentChildren(
-          rootFragment,
-          trackFragmentFlags,
-          nextFragment,
-          nextFragment
+      newScope.___insertBefore(
+        prevScope.___getParentNode(),
+        prevScope.___getFirstNode()
+      );
+      prevScope.___remove();
+    }
+  }
+
+  set rendererOnlyChild(newRenderer: Renderer | undefined) {
+    if (this.___renderer !== (this.___renderer = newRenderer)) {
+      (this.___referenceNode as Element).textContent = "";
+
+      if (newRenderer) {
+        setContext(this.___context);
+        const newScope = (this.___scope = createScope(
+          newRenderer.___size,
+          newRenderer.___domMethods!
+        ));
+        initRenderer(
+          newRenderer,
+          newScope,
+          this.___parentScopeOrScopes,
+          this.___parentOffset
         );
-      },
-      fragmentSignal,
-      1
-      // (fragmentSignal as Signal).___sid // TODO: let's add a comment as to why this is needed.
-    );
-  } else if (!isSignal(renderer) && renderer) {
-    render(renderer, ...input);
+        newScope.___insertBefore(this.___referenceNode as Element, null);
+        setContext(null);
+      }
+    }
+  }
+
+  get scope() {
+    return this.___scope!;
+  }
+
+  ___getFirstNode() {
+    return this.___scope
+      ? this.___scope.___getFirstNode()
+      : (this.___referenceNode as Comment);
+  }
+
+  ___getLastNode() {
+    return this.___scope
+      ? this.___scope.___getLastNode()
+      : (this.___referenceNode as Comment);
   }
 }
 
-function firstArgAsKey(key: unknown) {
-  return key + "";
-}
+const emptyMarkerScopes = new Map();
+const emptyMarkerKeys = [Symbol("empty")];
+emptyMarkerScopes.set(emptyMarkerKeys[0], getEmptyScope());
+const emptyScopes = new Map();
+const emptyKeys = [];
+export class Loop {
+  private ___referenceIsMarker: boolean;
+  private ___scopes: Map<unknown, Scope>;
+  private ___scopeKeys: unknown[];
+  private ___parentScopeOrScopes?: Scope | Array<Scope | number>;
+  private ___parentOffset?: number;
+  private ___referenceNode?: Comment | Element;
+  private ___renderer: Renderer;
+  private ___keyFn: (item: unknown, index: number) => string;
+  private ___execItem: (...args: unknown[]) => unknown;
+  private ___execIndex: (...args: unknown[]) => unknown;
+  private ___execArray: (...args: unknown[]) => unknown;
+  private ___context: typeof Context;
 
-const TRACK_FIRST = 1;
-const TRACK_LAST = 2;
-
-function trackFragmentChildren(rootFragment: Fragment, marker: Node) {
-  let flags = 0;
-  if (rootFragment.___firstChild === marker) flags |= TRACK_FIRST;
-  if (rootFragment.___lastChild === marker) flags |= TRACK_LAST;
-  return flags;
-}
-
-function updateFragmentChildren(
-  rootFragment: Fragment,
-  flags: number,
-  firstChildFragment: Fragment | undefined,
-  lastChildFragment: Fragment | undefined
-) {
-  if (flags & TRACK_FIRST) {
-    updateFragmentChild(
-      rootFragment,
-      firstChildFragment!,
-      "___firstRef",
-      "___firstChild"
-    );
+  constructor(
+    referenceNode: Comment | Element,
+    renderer: Renderer,
+    keyFn: (item: unknown) => string,
+    execItem,
+    execIndex,
+    execArray,
+    parentScopeOrScopes?: Scope | Array<Scope | number>,
+    parentOffset?: number
+  ) {
+    const referenceIsMarker = referenceNode.nodeType === NodeType.Comment;
+    this.___scopes = referenceIsMarker ? emptyMarkerScopes : emptyScopes;
+    this.___scopeKeys = referenceIsMarker ? emptyMarkerKeys : emptyKeys;
+    this.___referenceNode = referenceNode;
+    this.___referenceIsMarker = referenceIsMarker;
+    this.___renderer = renderer;
+    this.___keyFn = keyFn;
+    this.___parentScopeOrScopes = parentScopeOrScopes;
+    this.___parentOffset = parentOffset;
+    this.___execItem = execItem;
+    this.___execIndex = execIndex;
+    this.___execArray = execArray;
+    this.___context = Context;
   }
-  if (flags & TRACK_LAST) {
-    updateFragmentChild(
-      rootFragment,
-      lastChildFragment!,
-      "___lastRef",
-      "___lastChild"
-    );
-  }
-}
 
-function updateFragmentChild(
-  fragment: Fragment,
-  child: Fragment,
-  refKey: "___firstRef" | "___lastRef",
-  childKey: "___firstChild" | "___lastChild",
-  parent = fragment.___parentFragment
-) {
-  fragment[refKey] = child;
-  fragment[childKey] = child[childKey];
-  if (parent && parent[refKey] === fragment) {
-    updateFragmentChild(parent, fragment, refKey, childKey);
+  [Symbol.iterator]() {
+    return this.___scopes.values();
+  }
+
+  ___execChildScope(childScope: Scope) {
+    // TODO: these could all be the same function... in which case we shouldn't call it 3 times
+    this.___execItem &&
+      this.___execItem(
+        childScope,
+        this.___parentScopeOrScopes,
+        this.___parentOffset
+      );
+    this.___execIndex &&
+      this.___execIndex(
+        childScope,
+        this.___parentScopeOrScopes,
+        this.___parentOffset
+      );
+    this.___execArray &&
+      this.___execArray(
+        childScope,
+        this.___parentScopeOrScopes,
+        this.___parentOffset
+      );
+  }
+
+  ___getFirstNode() {
+    return this.___scopes.get(this.___scopeKeys[0])!.___getFirstNode();
+  }
+
+  ___getLastNode() {
+    return this.___scopes
+      .get(this.___scopeKeys[this.___scopeKeys.length - 1])!
+      .___getLastNode();
+  }
+
+  setOf(newArray: unknown[]) {
+    let newScopes: Map<unknown, Scope>;
+    let newKeys: unknown[];
+    const len = newArray.length;
+    const oldScopes = this.___scopes;
+    const oldKeys = this.___scopeKeys;
+    let newItems = 0;
+    let moved = false;
+    const referenceIsMarker = this.___referenceIsMarker;
+    let afterReference: Node | null;
+    let parentNode: Node & ParentNode;
+
+    if (len > 0) {
+      newScopes = new Map();
+      setContext(this.___context);
+      for (let index = 0; index < len; index++) {
+        const item = newArray[index];
+        const key = this.___keyFn ? this.___keyFn(item, index) : "" + index;
+        let childScope = oldScopes.get(key);
+        if (!childScope) {
+          newItems++;
+          childScope = createScope(
+            this.___renderer.___size,
+            this.___renderer.___domMethods!
+          );
+          childScope[0] = item;
+          childScope[1] = index;
+          childScope[2] = newArray;
+          initRenderer(
+            this.___renderer,
+            childScope,
+            this.___parentScopeOrScopes,
+            this.___parentOffset
+          );
+          this.___execChildScope(childScope);
+        } else {
+          const queuedScope = getQueuedScope(childScope);
+          queuedScope[0] = item;
+          queuedScope[1] = index;
+          queuedScope[2] = newArray;
+          moved = moved || key !== oldKeys[index];
+          this.___execChildScope(queuedScope);
+        }
+        newScopes.set(key, childScope);
+      }
+      setContext(null);
+      newKeys = Array.from(newScopes.keys());
+    }
+
+    // TODO: if we have an empty scope with the empty marker as an item, these numbers are off by one
+    // const removals = newScopes.size - oldScopes.size - newItems < 0;
+    // if (removals) {
+    //   for (const k of oldKeys) {
+    //     if (!newScopes.has(k)) {
+    //       // TODO: markScopeDestroyed(oldScopes.get(k)!);
+    //     }
+    //   }
+    // } else if (!newItems && !moved) {
+    //   return;
+    // }
+
+    if (referenceIsMarker) {
+      if (oldScopes === emptyMarkerScopes) {
+        getEmptyScope(this.___referenceNode as Comment);
+      }
+      const oldLastChild = oldScopes.get(oldKeys[oldKeys.length - 1])!;
+      afterReference = oldLastChild.___getAfterNode();
+      parentNode = oldLastChild.___getParentNode();
+      if (len === 0) {
+        newScopes = emptyMarkerScopes;
+        newKeys = emptyMarkerKeys;
+        getEmptyScope(this.___referenceNode as Comment);
+      }
+    } else {
+      afterReference = null;
+      parentNode = this.___referenceNode as Node & ParentNode;
+
+      if (len === 0) {
+        newScopes = emptyScopes;
+        newKeys = emptyKeys;
+      }
+    }
+
+    reconcile(
+      parentNode,
+      oldKeys,
+      oldScopes,
+      newKeys!,
+      newScopes!,
+      afterReference
+    );
+
+    this.___scopeKeys = newKeys!;
+    this.___scopes = newScopes!;
   }
 }

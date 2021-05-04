@@ -46,7 +46,7 @@ removed span after div0/#comment1
 ```
 inserted div0/span1
 removed #comment after div0/span1
-inserted div0/span1/#text0
+div0/span1/#text0: " " => "World"
 ```
 
 
@@ -63,6 +63,5 @@ inserted div0/span1/#text0
 
 # Mutations
 ```
-removed #text in div0/span1
-inserted div0/span1/#text0
+div0/span1/#text0: "World" => "!"
 ```

@@ -40,5 +40,5 @@ removed span after div0/#comment0
 ```
 inserted div0/span0
 removed #comment after div0/span0
-inserted div0/span0/#text0
+div0/span0/#text0: " " => "Jake"
 ```

@@ -7,7 +7,7 @@ export function pushContext(key: string, value: unknown) {
 }
 
 export function popContext() {
-  Context = Context!.prototype as Record<string, unknown>;
+  Context = Object.getPrototypeOf(Context!) as Record<string, unknown>;
 }
 
 export function getInContext(key: string) {

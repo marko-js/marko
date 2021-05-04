@@ -1,334 +1,205 @@
-import {
-  UpstreamSignalOrValue,
-  UpstreamRawValue,
-  createSource,
-  createComputation,
-  createPropertyComputation,
-  createPropertyEffect,
-  createEffect,
-  set,
-  dynamicKeys,
-  runInBatch
-} from "./signals";
-import { createFragmentFromRenderer, removeFragment } from "./fragments";
-import { conditional } from "./control-flow";
-import { walker, walk, detachedWalk, WalkCodes } from "./walker";
+import { Conditional, Loop } from "./control-flow";
+import { Renderer } from "./renderer";
+import { Scope } from "./scope";
 
-const enum NodeType {
+export const enum NodeType {
   Element = 1,
   Text = 3,
   Comment = 8,
   DocumentFragment = 11
 }
 
-type HydrateFunction = (...args: UpstreamSignalOrValue[]) => void;
-export interface Renderer<H extends HydrateFunction = HydrateFunction> {
-  ___input?: string[];
-  ___clone: () => Node;
-  ___hydrate?: H;
-  ___walks?: string;
-  ___template?: string;
-  ___sourceNode?: Node;
-}
+export type DOMMethods = {
+  ___insertBefore: (
+    this: Scope,
+    parent: Node & ParentNode,
+    nextSibling: Node | null
+  ) => void;
+  ___remove: (this: Scope) => void;
+  ___getParentNode: (this: Scope) => Node & ParentNode;
+  ___getAfterNode: (this: Scope) => Node | null;
+  ___getFirstNode: (this: Scope) => Node & ChildNode;
+  ___getLastNode: (this: Scope) => Node & ChildNode;
+};
 
-export interface ComponentFragment<Input> extends DocumentFragment {
-  rerender: (input: Input) => void;
-  destroy: () => void;
-}
+export const staticNodeMethods = {
+  ___insertBefore(parent, nextSibling) {
+    parent.insertBefore(this.___startNode as Node, nextSibling);
+  },
+  ___remove() {
+    (this.___startNode as ChildNode).remove();
+  },
+  ___getParentNode() {
+    return this.___getFirstNode().parentNode;
+  },
+  ___getAfterNode() {
+    return this.___getLastNode().nextSibling;
+  },
+  ___getFirstNode() {
+    return this.___startNode;
+  },
+  ___getLastNode() {
+    return this.___endNode;
+  }
+} as DOMMethods;
 
-const doc = document;
-const parser = doc.createElement("template");
+// export const staticNodePropertiesDef = {
+//   ___insertBefore: {
+//     value(parent, nextSibling) {
+//       parent.insertBefore(this.___startNode as Node, nextSibling);
+//     }
+//   },
+//   ___remove: {
+//     value() {
+//       (this.___startNode as ChildNode).remove();
+//     }
+//   },
+//   ___parentNode: {
+//     get() {
+//       return this.___startNode.parentNode;
+//     },
+//   },
+//   ___afterNode: {
+//     get() {
+//       return this.___lastNode.nextSibling;
+//     },
+//   }
+// };
 
-export function createRenderFn<H extends HydrateFunction>(
-  template: Renderer["___template"],
-  walks: Renderer["___walks"],
-  inputProps?: Renderer["___input"],
-  hydrate?: H
-) {
-  type Input = UpstreamRawValue<Parameters<H>[0]>;
-  const renderer = createRenderer(
-    template!,
-    walks,
-    inputProps,
-    input => {
-      dynamicKeys(input as any, renderer.___input!);
-      hydrate && hydrate(input);
-    },
-    (input: Input) =>
-      runInBatch(() => {
-        const inputSource = createSource(input);
-        const fragment = createFragmentFromRenderer(
-          renderer,
-          undefined,
-          inputSource
-        );
-        const container = fragment.___dom as ComponentFragment<Input>;
-
-        container.rerender = (newInput: Input) =>
-          runInBatch(() => {
-            set(inputSource, newInput);
-          });
-
-        container.destroy = () => removeFragment(fragment);
-
-        return container;
-      })
-  );
-  return renderer;
-}
-
-export function createRenderer<T, H extends HydrateFunction>(
-  template: string,
-  walks?: Renderer["___walks"],
-  input?: Renderer["___input"],
-  hydrate?: H,
-  target: T = hydrate || walks || ({} as any)
-) {
-  const renderer = target as T & Renderer<H>;
-  renderer.___template = template;
-  renderer.___walks = walks;
-  renderer.___input = input;
-  renderer.___hydrate = hydrate;
-  renderer.___clone = _clone;
-  return renderer;
-}
-
-function _clone(this: Renderer) {
-  let sourceNode: Node | null | undefined = this.___sourceNode;
-  if (!sourceNode) {
-    if ("MARKO_DEBUG" && this.___template === undefined) {
-      throw new Error(
-        "The renderer does not have a template to clone: " +
-          JSON.stringify(this)
-      );
-    } else {
-      // TODO: remove branch if https://github.com/microsoft/TypeScript/issues/41503
-      this.___template = this.___template!;
+export const staticFragmentMethods = {
+  ...staticNodeMethods,
+  ___insertBefore(parent, nextSibling) {
+    let current: Node = this.___getFirstNode();
+    const stop = this.___getAfterNode();
+    while (current !== stop) {
+      const next = current.nextSibling;
+      parent.insertBefore(current, nextSibling);
+      current = next!;
     }
-    const walks = this.___walks;
-    // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
-    // and therefore we need to put it in a document fragment, even though only a single nodee is parts
-    const ensureFragment =
-      !!walks &&
-      (walks.charCodeAt(0) === WalkCodes.Before ||
-        walks.charCodeAt(0) === WalkCodes.Replace ||
-        walks.charCodeAt(walks.length - 2) ===
-          WalkCodes.After); /* 2nd to last because last will be Over */
-    this.___sourceNode = sourceNode = parse(this.___template, ensureFragment);
+  },
+  ___remove() {
+    let current = this.___getFirstNode();
+    const stop = this.___getAfterNode();
+    while (current !== stop) {
+      const next = current.nextSibling;
+      current.remove();
+      current = next!;
+    }
   }
-  return sourceNode.cloneNode(true);
-}
+} as DOMMethods;
 
-function parse(template: string, ensureFragment?: boolean) {
-  let node: Node | null;
-  parser.innerHTML = template;
-  const content = parser.content;
-
-  if (
-    ensureFragment ||
-    (node = content.firstChild) !== content.lastChild ||
-    (node && node.nodeType === NodeType.Comment)
-  ) {
-    node = doc.createDocumentFragment();
-    node.appendChild(content);
-  } else if (!node) {
-    node = doc.createTextNode("");
+export const dynamicStartFragmentMethods = {
+  ...staticFragmentMethods,
+  ___getFirstNode() {
+    return (this.___startNode as Conditional | Loop).___getFirstNode();
   }
+} as DOMMethods;
 
-  return node as Node & { firstChild: ChildNode; lastChild: ChildNode };
-}
+export const dynamicEndFragmentMethods = {
+  ...staticFragmentMethods,
+  ___getLastNode() {
+    return (this.___endNode as Conditional | Loop).___getLastNode();
+  }
+} as DOMMethods;
+
+export const dynamicFragmentMethods = {
+  ...staticFragmentMethods,
+  ___getFirstNode() {
+    return (this.___startNode as Conditional | Loop).___getFirstNode();
+  },
+  ___getLastNode() {
+    return (this.___endNode as Conditional | Loop).___getLastNode();
+  }
+} as DOMMethods;
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
-export function render(renderer: Renderer, ...input: UpstreamSignalOrValue[]) {
-  const clone = renderer.___clone();
-  detachedWalk(clone, renderer, ...input);
-  walk(clone);
-}
-
-export function attr(name: string, value: UpstreamSignalOrValue) {
-  const el = walker.currentNode as Element;
-  if ("MARKO_DEBUG" && el.nodeType !== NodeType.Element) {
-    throw new Error(
-      `Unexpected node found while hydrating. Expected an HTML element but got: ${
-        (el as any).constructor.name
-      }.`
-    );
+export function attr(el: Element, name: string, value: unknown) {
+  const normalizedValue = normalizeAttrValue(value);
+  if (normalizedValue === undefined) {
+    el.removeAttribute(name);
+  } else {
+    el.setAttribute(name, normalizedValue);
   }
-  createEffect(
-    _value => setAttr(el, name, normalizeAttrValue(_value)),
-    value,
-    1
-  );
 }
 
-export function attrs(
-  attributes: UpstreamSignalOrValue<Record<string, unknown> | null | undefined>
+export function data(node: Text | Comment, value: unknown) {
+  node.data = normalizeString(value);
+}
+
+export function attrs(el: Element, scope: Scope, index: number) {
+  const nextAttrs = scope[index] as Record<string, unknown>;
+  const prevAttrs = Object.getPrototypeOf(scope)[index] as
+    | Record<string, unknown>
+    | undefined;
+
+  if (prevAttrs) {
+    for (const name in prevAttrs) {
+      if (!(nextAttrs && name in nextAttrs)) {
+        el.removeAttribute(name);
+      }
+    }
+  }
+  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+  for (const name in nextAttrs) {
+    if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
+      if (name !== "renderBody") {
+        attr(el, name, nextAttrs[name]);
+      }
+    }
+  }
+}
+
+export function html(value: string) {
+  // TODO
+}
+
+export function props(node: Node, scope: Scope, index: number) {
+  const nextProps = scope[index] as Record<string, unknown>;
+  const prevProps = Object.getPrototypeOf(scope)[index] as
+    | Record<string, unknown>
+    | undefined;
+  if (nextProps) {
+    for (const name in prevProps) {
+      if (!(name in nextProps)) {
+        node[name] = undefined;
+      }
+    }
+  }
+  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+  for (const name in nextProps) {
+    node[name] = nextProps[name];
+  }
+}
+
+export function innerHTML(el: Element, value: string) {
+  el.innerHTML = normalizeString(value);
+}
+
+export function dynamicTagString(tag: string, input: Record<string, unknown>) {
+  // TODO
+}
+
+export function dynamicTagRenderer(
+  tag: Renderer,
+  input: Record<string, unknown>
 ) {
-  let previousAttrs: UpstreamRawValue<typeof attributes>;
-  const el = walker.currentNode as Element;
-  if ("MARKO_DEBUG" && el.nodeType !== NodeType.Element) {
-    throw new Error(
-      `Unexpected node found while hydrating. Expected an HTML element but got: ${
-        (el as any).constructor.name
-      }.`
-    );
-  }
-  createEffect(
-    nextAttrs => {
-      if (previousAttrs) {
-        for (const name in previousAttrs) {
-          if (!(nextAttrs && name in nextAttrs)) {
-            el.removeAttribute(name);
-          }
-        }
-      }
-      // https://jsperf.com/object-keys-vs-for-in-with-closure/194
-      for (const name in nextAttrs) {
-        if (!(previousAttrs && nextAttrs[name] === previousAttrs[name])) {
-          if (name !== "renderBody") {
-            setAttr(el, name, normalizeAttrValue(nextAttrs[name]));
-          }
-        }
-      }
-      previousAttrs = nextAttrs;
-    },
-    attributes,
-    1
-  );
-}
-
-export function html(value: UpstreamSignalOrValue<string>) {
-  conditional(
-    createComputation(
-      _value => {
-        const node = parse(_value);
-        return {
-          ___clone: () => node
-        };
-      },
-      value,
-      1,
-      true
-    )
-  );
-}
-
-export function prop(name: string, value: UpstreamSignalOrValue, node?: Node) {
-  createPropertyEffect(
-    ((node || walker.currentNode) as unknown) as Record<string, unknown>,
-    name,
-    value
-  );
-}
-
-export function props(properties) {
-  let previousProps: UpstreamRawValue<typeof properties>;
-  const node = walker.currentNode;
-  createEffect(
-    nextProps => {
-      if (nextProps) {
-        for (const name in previousProps) {
-          if (!(name in nextProps)) {
-            node[name] = undefined;
-          }
-        }
-      }
-      // https://jsperf.com/object-keys-vs-for-in-with-closure/194
-      for (const name in nextProps) {
-        node[name] = nextProps[name];
-      }
-      previousProps = nextProps;
-    },
-    properties,
-    1
-  );
-}
-
-export function text(value: UpstreamSignalOrValue) {
-  prop("data", createComputation(normalizeTextData, value, 1, true), walk());
-}
-
-export function textContent(value: UpstreamSignalOrValue) {
-  prop("textContent", createComputation(normalizeTextContent, value, 1, true));
-}
-
-export function innerHTML(value: UpstreamSignalOrValue) {
-  prop("innerHTML", value);
+  // TODO
 }
 
 export function dynamicTag(
-  tag: UpstreamSignalOrValue<string | Renderer>,
-  input: UpstreamSignalOrValue<Record<string, unknown>>,
-  renderBody?: Renderer
+  tag: string | Renderer,
+  input: Record<string, unknown>
 ) {
-  const renderFns = new Map();
-
-  return conditional(
-    createComputation(
-      _tag => {
-        let nextRenderer = renderFns.get(_tag);
-        if (!nextRenderer) {
-          if (typeof _tag === "string") {
-            nextRenderer = {
-              ___clone: () => doc.createElement(_tag),
-              ___walks:
-                String.fromCharCode(WalkCodes.Get) +
-                String.fromCharCode(WalkCodes.Inside) +
-                String.fromCharCode(WalkCodes.Over),
-              ___hydrate: dynamicElHydrate
-            };
-          } else if (_tag) {
-            nextRenderer = _tag;
-          } else {
-            nextRenderer = renderBody;
-          }
-          renderFns.set(_tag, nextRenderer);
-        }
-        return nextRenderer;
-      },
-      tag,
-      1,
-      true
-    ),
-    input
-  );
-}
-
-// TODO: we don't want String.fromCharCode in the actual code.
-// Need to determine best way to keep this readable, but becomes a string literal on build
-function dynamicElHydrate(
-  input: UpstreamSignalOrValue<Record<string, unknown>>
-) {
-  walk();
-  attrs(input);
-  dynamicTag(
-    createPropertyComputation(
-      "renderBody",
-      input
-    ) as UpstreamSignalOrValue<Renderer>,
-    {}
-  );
-}
-
-function setAttr(element: Element, name: string, value: string | undefined) {
-  if (value) {
-    element.setAttribute(name, value);
-  } else {
-    element.removeAttribute(name);
-  }
+  // TODO
 }
 
 function normalizeAttrValue(value: unknown) {
   return value == null || value === false ? undefined : value + "";
 }
 
-function normalizeTextData(value: unknown) {
-  return value == null ? "" : value + "";
-}
-
-function normalizeTextContent(value: unknown) {
+function normalizeString(value: unknown) {
   return value == null ? "" : value + "";
 }

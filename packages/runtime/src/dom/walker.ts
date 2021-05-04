@@ -1,5 +1,6 @@
-import { Renderer, isDocumentFragment } from "./dom";
-import { UpstreamSignalOrValue } from "./signals";
+import { isDocumentFragment } from "./dom";
+import { Renderer } from "./renderer";
+import { Scope } from "./scope";
 
 const doc = document;
 export const walker = doc.createTreeWalker(
@@ -40,6 +41,12 @@ export const enum WalkCodes {
   NextEnd = 126
 }
 
+export function walkMany(scope: Scope, offset: number, count: number) {
+  for (let i = 0; i < count; i++) {
+    scope[offset + i] = walk();
+  }
+}
+
 export let walk = walkNormal;
 // TODO: in some cases (including hydrate) we may get an existing node
 // ideally we wouldn't create the newNode unless it was actually needed
@@ -63,7 +70,9 @@ function walkNormal<T extends Node>(newNode?: T) {
     } else if (value >= WalkCodes.Over) {
       while (WalkCodes.Over <= value--) {
         while (!walker.nextSibling()) {
-          walker.parentNode();
+          if (!walker.parentNode() && "MARKO_DEBUG") {
+            throw new Error("No more parent nodes to walk");
+          }
         }
       }
     } else if (value >= WalkCodes.Out) {
@@ -73,39 +82,51 @@ function walkNormal<T extends Node>(newNode?: T) {
     } else if (value === WalkCodes.Get) {
       return walker.currentNode;
     } else {
-      newNode = newNode || ((document.createTextNode("") as unknown) as T);
-
-      const current = walker.currentNode;
-      if (value === WalkCodes.Inside) {
-        return current.appendChild(newNode);
+      if ("MARKO_DEBUG" && extendedWalk === undefined) {
+        throw new Error("Extended walk was not enabled");
       }
-
-      const parentNode = current.parentNode!;
-
-      if (value === WalkCodes.Before) {
-        return parentNode.insertBefore(newNode, current);
-      }
-
-      // Replace/After:
-      // the walker is moved to point to newNode
-      // (or, if a document fragment, its lastChild)
-
-      const target = isDocumentFragment(newNode) ? newNode.lastChild! : newNode;
-
-      if (value === WalkCodes.After) {
-        parentNode.insertBefore(newNode, current.nextSibling);
-      } else {
-        if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
-          throw new Error(`Unknown walk code: ${value}`);
-        }
-        parentNode.replaceChild(newNode, current);
-      }
-
-      walker.currentNode = target;
-
-      return newNode;
+      return extendedWalk(value, newNode);
     }
   }
+}
+
+export function enableExtendedWalk() {
+  extendedWalk = actualExtendedWalk;
+}
+
+let extendedWalk: typeof actualExtendedWalk;
+function actualExtendedWalk<T extends Node>(value: number, newNode?: T) {
+  newNode = newNode || ((document.createTextNode("") as unknown) as T);
+
+  const current = walker.currentNode;
+  if (value === WalkCodes.Inside) {
+    return current.appendChild(newNode);
+  }
+
+  const parentNode = current.parentNode!;
+
+  if (value === WalkCodes.Before) {
+    return parentNode.insertBefore(newNode, current);
+  }
+
+  // Replace/After:
+  // the walker is moved to point to newNode
+  // (or, if a document fragment, its lastChild)
+
+  const target = isDocumentFragment(newNode) ? newNode.lastChild! : newNode;
+
+  if (value === WalkCodes.After) {
+    parentNode.insertBefore(newNode, current.nextSibling);
+  } else {
+    if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+      throw new Error(`Unknown walk code: ${value}`);
+    }
+    parentNode.replaceChild(newNode, current);
+  }
+
+  walker.currentNode = target;
+
+  return newNode;
 }
 
 function walkHydrateFirst(): Node {
@@ -138,7 +159,9 @@ function walkHydrateSubsequent(): Node {
 export function detachedWalk(
   firstChild: Node,
   renderer: Renderer,
-  ...input: UpstreamSignalOrValue[]
+  scope: Scope,
+  parentScopeOrScopes?: number | Scope | Array<Scope | number>,
+  parentOffset?: number
 ) {
   if (renderer.___hydrate) {
     const cachedWalks = currentWalks;
@@ -148,7 +171,7 @@ export function detachedWalk(
     walker.currentNode = firstChild;
     currentWalks = renderer.___walks!;
     currentWalkIndex = 0;
-    renderer.___hydrate(...input);
+    renderer.___hydrate(scope, parentScopeOrScopes as any, parentOffset as any);
 
     currentWalks = cachedWalks;
     currentWalkIndex = cachedWalkIndex;

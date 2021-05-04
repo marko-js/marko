@@ -1,5 +1,5 @@
 import format from "pretty-format";
-import { getNodePath, getTypeName } from "./get-node-info";
+import { getNodePath } from "./get-node-info";
 
 const { DOMElement, DOMCollection } = format.plugins;
 
@@ -114,7 +114,7 @@ function formatMutationRecord(record: MutationRecord) {
             : "in";
         details.push(
           `removed ${Array.from(removedNodes)
-            .map(getTypeName)
+            .map(getNodePath)
             .join(", ")} ${position} ${getNodePath(relativeNode)}`
         );
       }
