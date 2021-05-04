@@ -3,7 +3,7 @@ import { assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 
-export function enter(tag: t.NodePath<t.MarkoTag>) {
+export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
   const [defaultAttr] = node.attributes;
 

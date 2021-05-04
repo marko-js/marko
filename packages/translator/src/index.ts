@@ -1,17 +1,16 @@
 import { types as t } from "@marko/compiler";
-import * as Program from "./program";
-import * as ImportDeclaration from "./import-declaration";
+import Program from "./program";
+import ImportDeclaration from "./import-declaration";
 import MarkoDocumentType from "./document-type";
 import MarkoDeclaration from "./declaration";
 import MarkoCDATA from "./cdata";
 import MarkoText from "./text";
-import * as MarkoTag from "./tag";
+import MarkoTag from "./tag";
 import MarkoPlaceholder from "./placeholder";
 import MarkoComment from "./comment";
+import coreTagLib from "./core";
 
-export const taglibs = [
-  [require.resolve("./core/marko.json"), require("./core/marko.json")]
-];
+export const taglibs = [[__dirname, coreTagLib]];
 
 export { default as analyze } from "./analyze";
 
