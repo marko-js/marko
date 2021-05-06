@@ -6,9 +6,9 @@
     {
       "name": "*",
       "individual": {
-        "min": 8704,
-        "gzip": 3677,
-        "brotli": 3373
+        "min": 8522,
+        "gzip": 3629,
+        "brotli": 3330
       }
     }
   ]
