@@ -1,6 +1,8 @@
 import {
   walk,
   data,
+  loop,
+  setLoopOf,
   Loop,
   Scope,
   createRenderer,
@@ -53,18 +55,18 @@ type Input = typeof inputs[number];
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + next(1);
 export const hydrate = (scope: Scope, offset: number) => {
-  scope[offset + 1] = new Loop(
+  scope[offset + 1] = loop(
     walk() as Comment,
     iter0,
-    i => "" + (i as Input["children"][number]).id,
-    iter0_execItem,
-    null,
-    null
+    i => "" + (i as Input["children"][number]).id
   );
 };
 
 export const execInputChildren = (scope: Scope, offset: number) => {
-  (scope[offset + 1] as Loop).setOf(scope[offset] as Input["children"]);
+  setLoopOf(scope[offset + 1] as Loop, scope[offset] as Input["children"]);
+  for (const loopScope of scope[offset + 1] as Loop) {
+    iter0_execItem(loopScope);
+  }
 };
 
 export const execDynamicInput = (

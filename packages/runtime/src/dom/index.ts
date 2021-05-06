@@ -1,4 +1,12 @@
-export { Conditional, Loop } from "./control-flow";
+export {
+  Conditional,
+  Loop,
+  conditional,
+  setConditionalRenderer,
+  setConditionalRendererOnlyChild,
+  loop,
+  setLoopOf
+} from "./control-flow";
 
 export {
   data,

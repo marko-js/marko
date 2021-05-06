@@ -1,6 +1,8 @@
 import {
   walk,
   data,
+  conditional,
+  setConditionalRenderer,
   Conditional,
   Scope,
   createRenderer,
@@ -52,13 +54,13 @@ type Input = typeof inputs[number];
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
 export const hydrate = (scope: Scope, offset: number) => {
-  scope[offset + 3] = new Conditional(walk() as Comment, scope, offset);
+  scope[offset + 3] = conditional(walk() as Comment, scope, offset);
 };
 
 export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
   const cond0 = scope[offset + 3] as Conditional;
   if (checkDirtyNotEqual(scope, offset)) {
-    cond0.renderer = scope[offset] ? branch0 : undefined;
+    setConditionalRenderer(cond0, scope[offset] ? branch0 : undefined);
   }
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
@@ -67,7 +69,10 @@ export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
       checkDirtyNotEqual(scope, offset + 1)
     ) {
       const cond0_0 = cond0_scope[0] as Conditional;
-      cond0_0.renderer = scope[offset + 1] ? branch0_0 : undefined;
+      setConditionalRenderer(
+        cond0_0,
+        scope[offset + 1] ? branch0_0 : undefined
+      );
       if (cond0_0.renderer === branch0_0) {
         const cond0_0_scope = cond0_0.scope;
         data(cond0_0_scope[0] as Text, scope[offset + 1]);
@@ -78,7 +83,10 @@ export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
       checkDirtyNotEqual(scope, offset + 2)
     ) {
       const cond0_1 = cond0_scope[1] as Conditional;
-      cond0_1.renderer = scope[offset + 2] ? branch0_1 : undefined;
+      setConditionalRenderer(
+        cond0_1,
+        scope[offset + 2] ? branch0_1 : undefined
+      );
       if (cond0_1.renderer === branch0_1) {
         const cond0_1_scope = cond0_1.scope;
         data(cond0_1_scope[0] as Text, scope[offset + 2]);
@@ -104,8 +112,8 @@ const branch0 = createRenderer(
   "<!><!>",
   get + over(1) + get + over(1),
   (scope: Scope) => {
-    scope[0] = new Conditional(walk() as Comment, scope, 0);
-    scope[1] = new Conditional(walk() as Comment, scope, 0);
+    scope[0] = conditional(walk() as Comment, scope, 0);
+    scope[1] = conditional(walk() as Comment, scope, 0);
   },
   0,
   dynamicFragmentMethods,

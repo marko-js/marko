@@ -1,6 +1,8 @@
 import {
   walk,
   data,
+  conditional,
+  setConditionalRenderer,
   Conditional,
   Scope,
   createRenderer,
@@ -27,12 +29,12 @@ export const inputs = [
 export const template = `<div><span></span><!><span></span></div>`;
 export const walks = next(2) + get + over(2);
 export const hydrate = (scope: Scope, offset: number) => {
-  scope[offset + 1] = new Conditional(walk() as Comment, scope, offset);
+  scope[offset + 1] = conditional(walk() as Comment, scope, offset);
 };
 
 export const execInputValue = (scope: Scope, offset: number) => {
   const cond0 = scope[offset + 1] as Conditional;
-  cond0.renderer = scope[offset] ? branch0 : undefined;
+  setConditionalRenderer(cond0, scope[offset] ? branch0 : undefined);
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
     data(cond0_scope[0] as Text, scope[offset]);
