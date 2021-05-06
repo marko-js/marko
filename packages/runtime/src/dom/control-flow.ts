@@ -1,8 +1,7 @@
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
-import { getQueuedScope } from "./queue";
-import { Scope, createScope, getEmptyScope } from "./scope";
+import { Scope, createScope, getEmptyScope, set } from "./scope";
 import { NodeType } from "./dom";
 
 export type Conditional = {
@@ -199,9 +198,8 @@ export function setLoopOf(loop: Loop, newArray: unknown[]) {
           loop.___parentOffset
         );
       } else {
-        const queuedScope = getQueuedScope(childScope);
-        queuedScope[0] = item;
-        queuedScope[1] = index;
+        set(childScope, 0, item);
+        set(childScope, 1, index);
       }
       newScopes.set(key, childScope);
     }

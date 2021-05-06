@@ -1,6 +1,7 @@
 import {
   walk,
   data,
+  set,
   conditional,
   setConditionalRenderer,
   Conditional,
@@ -49,8 +50,8 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.value;
-  scope[offset + 1] = input.visible;
+  set(scope, offset, input.value);
+  set(scope, offset + 1, input.visible);
   execInputValueVisible(scope, offset);
 };
 

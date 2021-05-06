@@ -17,8 +17,8 @@ inserted #text0, #text1, #text2
 # Mutations
 ```
 inserted #comment0
-removed #text before 
-removed #text before 
+removed #text before #text
+removed #text before #text
 removed #text before #comment0
 ```
 

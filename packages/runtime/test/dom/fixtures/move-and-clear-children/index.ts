@@ -2,12 +2,14 @@ import {
   walk,
   data,
   loop,
+  set,
   setLoopOf,
   Loop,
   Scope,
   createRenderer,
   createRenderFn,
-  staticNodeMethods
+  staticNodeMethods,
+  checkDirty
 } from "../../../../src/dom/index";
 import { get, next, over } from "../../utils/walks";
 
@@ -73,7 +75,7 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.children;
+  set(scope, offset, input.children);
   execInputChildren(scope, offset);
 };
 
@@ -90,5 +92,10 @@ const iter0 = createRenderer(
 );
 
 const iter0_execItem = (scope: Scope) => {
-  data(scope[3] as Text, (scope[0] as Input["children"][number]).text);
+  if (checkDirty(scope, 0)) {
+    set(scope, 4, (scope[0] as Input["children"][number]).text);
+    if (checkDirty(scope, 4)) {
+      data(scope[3] as Text, scope[4]);
+    }
+  }
 };

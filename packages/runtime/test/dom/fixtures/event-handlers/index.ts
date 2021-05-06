@@ -6,7 +6,7 @@ import {
   Scope,
   on,
   ensureDelegated,
-  getQueuedScope,
+  setQueued,
   queue,
   checkDirty
 } from "../../../../src/dom/index";
@@ -39,7 +39,7 @@ const execClickCount = (scope: Scope, offset: number) => {
       "click",
       scope[offset] <= 1
         ? () => {
-            (getQueuedScope(scope)[offset] as number)++;
+            setQueued(scope, offset, (scope[offset] as number) + 1);
             queue(execClickCount, scope, offset);
           }
         : false

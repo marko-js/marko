@@ -1,6 +1,7 @@
 import {
   data,
   walk,
+  set,
   enableExtendedWalk,
   register,
   createRenderFn,
@@ -36,7 +37,7 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.value;
+  set(scope, offset, input.value);
   execInputValue(scope, offset);
 };
 

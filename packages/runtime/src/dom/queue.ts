@@ -1,63 +1,73 @@
-import { Scope } from "./scope";
+import { set, cleanScopes, Scope } from "./scope";
 
 type ExecFn = (scope: Scope, offset: number) => void;
 
+const { port1, port2 } = new MessageChannel();
+let queued: boolean;
+
+port1.onmessage = () => {
+  queued = false;
+  run();
+};
+
+function flushAndWaitFrame() {
+  run();
+  requestAnimationFrame(triggerMacroTask);
+}
+
+function triggerMacroTask() {
+  port2.postMessage(0);
+}
+
 const fns: Set<ExecFn> = new Set();
 let queuedFns: unknown[] = [];
-export function queue(fn: ExecFn, scope: Scope, offset: number) {
-  // TODO: maybe don't do this and
-  // 1. required a queued scope to be passed in OR
-  // 2. get the queued scope when running the queue
-  const stagedScope = getQueuedScope(scope);
 
+export function queue(fn: ExecFn, scope: Scope, offset: number) {
   if (fns.has(fn))
     for (let i = 0; i < queuedFns.length; i += 3)
       if (
         queuedFns[i] === fn &&
-        queuedFns[i + 1] === stagedScope &&
+        queuedFns[i + 1] === scope &&
         queuedFns[i + 2] === offset
       )
         return;
       else fns.add(fn);
 
-  queuedFns.push(fn, stagedScope, offset);
+  if (!queued) {
+    queued = true;
+    queueMicrotask(flushAndWaitFrame);
+  }
+
+  queuedFns.push(fn, scope, offset);
 }
 
-let queuedScopes: Map<Scope, Scope> = new Map();
-export function getQueuedScope(scope: Scope) {
-  let queuedScope = queuedScopes.get(scope);
-  if (!queuedScope) {
-    queuedScopes.set(scope, (queuedScope = Object.create(scope)));
-  }
-  return queuedScope || scope;
+let queuedValues: unknown[] = [];
+export function setQueued(scope: Scope, index: number, value: unknown) {
+  // TODO: if the same index is set twice for a scope,
+  // the first one should be removed from the queue
+  queuedValues.push(scope, index, value);
 }
 
 export function run() {
-  const runningFns = queuedFns;
-  const runningScopes = queuedScopes;
-  queuedFns = [];
-  queuedScopes = new Map();
-  fns.clear();
-  for (let i = 0; i < runningFns.length; i += 3) {
-    (runningFns[i] as ExecFn)(
-      runningFns[i + 1] as Scope,
-      runningFns[i + 2] as number
-    );
+  if (queuedFns.length) {
+    const runningFns = queuedFns;
+    const runningValues = queuedValues;
+    queuedFns = [];
+    queuedValues = [];
+    fns.clear();
+    for (let i = 0; i < runningValues.length; i += 3) {
+      set(
+        runningValues[i] as Scope,
+        runningValues[i + 1] as number,
+        runningValues[i + 2] as unknown
+      );
+    }
+    for (let i = 0; i < runningFns.length; i += 3) {
+      (runningFns[i] as ExecFn)(
+        runningFns[i + 1] as Scope,
+        runningFns[i + 2] as number
+      );
+    }
+    cleanScopes();
   }
-  for (const runningScope of runningScopes.values()) {
-    Object.assign(Object.getPrototypeOf(runningScope), runningScope);
-  }
-}
-
-export function getRunningScope() {}
-
-export function checkDirty(scope: unknown[], index: number) {
-  return scope.hasOwnProperty(index);
-}
-
-export function checkDirtyNotEqual(scope: unknown[], index: number) {
-  return (
-    checkDirty(scope, index) &&
-    scope[index] !== Object.getPrototypeOf(scope)[index]
-  );
 }

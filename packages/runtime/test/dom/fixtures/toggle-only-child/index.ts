@@ -5,6 +5,7 @@ import {
   setConditionalRendererOnlyChild,
   Conditional,
   Scope,
+  set,
   createRenderer,
   createRenderFn,
   staticNodeMethods
@@ -46,7 +47,7 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.value;
+  set(scope, offset, input.value);
   execInputValue(scope, offset);
 };
 

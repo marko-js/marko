@@ -2,6 +2,7 @@ import {
   walk,
   data,
   loop,
+  set,
   setLoopOf,
   Loop,
   Scope,
@@ -73,7 +74,7 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.children;
+  set(scope, offset, input.children);
   execInputChildren(scope, offset);
 };
 

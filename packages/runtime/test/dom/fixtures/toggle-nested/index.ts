@@ -5,12 +5,12 @@ import {
   setConditionalRenderer,
   Conditional,
   Scope,
+  set,
   createRenderer,
   createRenderFn,
   staticNodeMethods,
   dynamicFragmentMethods,
-  checkDirty,
-  checkDirtyNotEqual
+  checkDirty
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
 
@@ -59,15 +59,12 @@ export const hydrate = (scope: Scope, offset: number) => {
 
 export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
   const cond0 = scope[offset + 3] as Conditional;
-  if (checkDirtyNotEqual(scope, offset)) {
+  if (checkDirty(scope, offset)) {
     setConditionalRenderer(cond0, scope[offset] ? branch0 : undefined);
   }
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
-    if (
-      checkDirtyNotEqual(scope, offset) ||
-      checkDirtyNotEqual(scope, offset + 1)
-    ) {
+    if (checkDirty(scope, offset) || checkDirty(scope, offset + 1)) {
       const cond0_0 = cond0_scope[0] as Conditional;
       setConditionalRenderer(
         cond0_0,
@@ -78,10 +75,7 @@ export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
         data(cond0_0_scope[0] as Text, scope[offset + 1]);
       }
     }
-    if (
-      checkDirtyNotEqual(scope, offset) ||
-      checkDirtyNotEqual(scope, offset + 2)
-    ) {
+    if (checkDirty(scope, offset) || checkDirty(scope, offset + 2)) {
       const cond0_1 = cond0_scope[1] as Conditional;
       setConditionalRenderer(
         cond0_1,
@@ -100,9 +94,9 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  scope[offset] = input.show;
-  scope[offset + 1] = input.value1;
-  scope[offset + 2] = input.value2;
+  set(scope, offset, input.show);
+  set(scope, offset + 1, input.value1);
+  set(scope, offset + 2, input.value2);
   execInputShowValue1Value2(scope, offset);
 };
 

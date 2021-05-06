@@ -1,7 +1,6 @@
 import { Conditional, Loop } from "./control-flow";
 import { DOMMethods } from "./dom";
-import { getQueuedScope, queue, run } from "./queue";
-import { createScope, Scope } from "./scope";
+import { createScope, Scope, cleanScopes } from "./scope";
 import { WalkCodes, detachedWalk } from "./walker";
 
 const enum NodeType {
@@ -94,11 +93,11 @@ export function createRenderFn<I extends Input>(
     const scope = createScope(size!, domMethods!);
     const dom = initRenderer(renderer, scope, 0) as RenderResult;
     dynamicInput && dynamicInput(input, scope, 0);
+    cleanScopes();
 
     dom.update = (newInput: I) => {
-      const queuedScope = getQueuedScope(scope);
-      dynamicInput && dynamicInput(newInput, queuedScope, 0);
-      run();
+      dynamicInput && dynamicInput(newInput, scope, 0);
+      cleanScopes();
     };
 
     dom.destroy = () => {
