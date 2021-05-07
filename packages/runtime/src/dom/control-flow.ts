@@ -105,15 +105,15 @@ function getLastNodeConditional(this: Conditional) {
     : (this.___referenceNode as Comment);
 }
 
-const emptyMarkerScopes = new Map();
-const emptyMarkerKeys = [Symbol("empty")];
-emptyMarkerScopes.set(emptyMarkerKeys[0], getEmptyScope());
-const emptyScopes = new Map();
-const emptyKeys = [];
+const emptyMarkerMap = new Map();
+const emptyMarkerArray = [getEmptyScope()];
+emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
+const emptyMap = new Map();
+const emptyArray = [];
 
 export type Loop = {
-  ___scopes: Map<unknown, Scope>;
-  ___scopeKeys: unknown[];
+  ___scopeMap: Map<unknown, Scope>;
+  ___scopeArray: Scope[];
   ___referenceNode: Comment | Element;
   ___referenceIsMarker: boolean;
   ___renderer: Renderer;
@@ -135,8 +135,8 @@ export function loop(
 ): Loop {
   const referenceIsMarker = referenceNode.nodeType === NodeType.Comment;
   return {
-    ___scopes: referenceIsMarker ? emptyMarkerScopes : emptyScopes,
-    ___scopeKeys: referenceIsMarker ? emptyMarkerKeys : emptyKeys,
+    ___scopeMap: referenceIsMarker ? emptyMarkerMap : emptyMap,
+    ___scopeArray: referenceIsMarker ? emptyMarkerArray : emptyArray,
     ___referenceNode: referenceNode,
     ___referenceIsMarker: referenceIsMarker,
     ___renderer: renderer,
@@ -151,39 +151,37 @@ export function loop(
 }
 
 function loopIterator(this: Loop) {
-  return (this.___scopes === emptyMarkerScopes
-    ? emptyScopes
-    : this.___scopes
+  return (this.___scopeArray === emptyMarkerArray
+    ? emptyArray
+    : this.___scopeArray
   ).values();
 }
 
 function getFirstNodeLoop(this: Loop) {
-  return this.___scopes.get(this.___scopeKeys[0])!.___getFirstNode();
+  return this.___scopeArray[0].___getFirstNode();
 }
 
 function getLastNodeLoop(this: Loop) {
-  return this.___scopes
-    .get(this.___scopeKeys[this.___scopeKeys.length - 1])!
-    .___getLastNode();
+  return this.___scopeArray[this.___scopeArray.length - 1].___getLastNode();
 }
 
-export function setLoopOf(loop: Loop, newArray: unknown[]) {
-  let newScopes: Map<unknown, Scope>;
-  let newKeys: unknown[];
-  const len = newArray.length;
-  const oldScopes = loop.___scopes;
-  const oldKeys = loop.___scopeKeys;
+export function setLoopOf(loop: Loop, newValues: unknown[]) {
+  let newMap: Map<unknown, Scope>;
+  let newArray: Scope[];
+  const len = newValues.length;
+  const oldMap = loop.___scopeMap;
+  const oldArray = loop.___scopeArray;
   const referenceIsMarker = loop.___referenceIsMarker;
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
 
   if (len > 0) {
-    newScopes = new Map();
+    newMap = new Map();
     setContext(loop.___context);
     for (let index = 0; index < len; index++) {
-      const item = newArray[index];
+      const item = newValues[index];
       const key = loop.___keyFn ? loop.___keyFn(item, index) : "" + index;
-      let childScope = oldScopes.get(key);
+      let childScope = oldMap.get(key);
       if (!childScope) {
         childScope = createScope(
           loop.___renderer.___size,
@@ -201,22 +199,22 @@ export function setLoopOf(loop: Loop, newArray: unknown[]) {
         set(childScope, 0, item);
         set(childScope, 1, index);
       }
-      newScopes.set(key, childScope);
+      newMap.set(key, childScope);
     }
     setContext(null);
-    newKeys = Array.from(newScopes.keys());
+    newArray = Array.from(newMap.values());
   }
 
   if (referenceIsMarker) {
-    if (oldScopes === emptyMarkerScopes) {
+    if (oldMap === emptyMarkerMap) {
       getEmptyScope(loop.___referenceNode as Comment);
     }
-    const oldLastChild = oldScopes.get(oldKeys[oldKeys.length - 1])!;
+    const oldLastChild = oldArray[oldArray.length - 1];
     afterReference = oldLastChild.___getAfterNode();
     parentNode = oldLastChild.___getParentNode();
     if (len === 0) {
-      newScopes = emptyMarkerScopes;
-      newKeys = emptyMarkerKeys;
+      newMap = emptyMarkerMap;
+      newArray = emptyMarkerArray;
       getEmptyScope(loop.___referenceNode as Comment);
     }
   } else {
@@ -224,20 +222,13 @@ export function setLoopOf(loop: Loop, newArray: unknown[]) {
     parentNode = loop.___referenceNode as Node & ParentNode;
 
     if (len === 0) {
-      newScopes = emptyScopes;
-      newKeys = emptyKeys;
+      newMap = emptyMap;
+      newArray = emptyArray;
     }
   }
 
-  reconcile(
-    parentNode,
-    oldKeys,
-    oldScopes,
-    newKeys!,
-    newScopes!,
-    afterReference
-  );
+  reconcile(parentNode, oldArray, newArray!, afterReference);
 
-  loop.___scopeKeys = newKeys!;
-  loop.___scopes = newScopes!;
+  loop.___scopeArray = newArray!;
+  loop.___scopeMap = newMap!;
 }

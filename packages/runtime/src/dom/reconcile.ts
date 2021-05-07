@@ -4,30 +4,28 @@ const WRONG_POS = 2147483647;
 
 export function reconcile(
   parent: Node & ParentNode,
-  oldKeys: unknown[],
-  oldNodes: Map<unknown, Scope>,
-  newKeys: unknown[],
-  newNodes: Map<unknown, Scope>,
+  oldScopes: Scope[],
+  newScopes: Scope[],
   afterReference: Node | null
 ): void {
   let oldStart = 0;
   let newStart = 0;
-  let oldEnd = oldKeys.length - 1;
-  let newEnd = newKeys.length - 1;
-  let oldStartKey = oldKeys[oldStart];
-  let newStartKey = newKeys[newStart];
-  let oldEndKey = oldKeys[oldEnd];
-  let newEndKey = newKeys[newEnd];
+  let oldEnd = oldScopes.length - 1;
+  let newEnd = newScopes.length - 1;
+  let oldStartScope = oldScopes[oldStart];
+  let newStartScope = newScopes[newStart];
+  let oldEndScope = oldScopes[oldEnd];
+  let newEndScope = newScopes[newEnd];
   let i: number;
   let j: number | undefined;
   let k: number;
   let nextSibling: Node | null;
-  let oldKey: unknown | null;
-  let newKey: unknown;
+  let oldScope: Scope | null;
+  let newScope: Scope;
 
-  if (!newKeys.length && !afterReference) {
-    for (i = 0; i < oldKeys.length; i++) {
-      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+  if (!newScopes.length && !afterReference) {
+    for (i = 0; i < oldScopes.length; i++) {
+      // TODO: oldKeys[i].___cleanup(true);
     }
     parent.textContent = "";
     return;
@@ -37,25 +35,25 @@ export function reconcile(
   // tslint:disable-next-line: label-position
   outer: {
     // Skip nodes with the same key at the beginning.
-    while (oldStartKey === newStartKey) {
+    while (oldStartScope === newStartScope) {
       ++oldStart;
       ++newStart;
       if (oldStart > oldEnd || newStart > newEnd) {
         break outer;
       }
-      oldStartKey = oldKeys[oldStart];
-      newStartKey = newKeys[newStart];
+      oldStartScope = oldScopes[oldStart];
+      newStartScope = newScopes[newStart];
     }
 
     // Skip nodes with the same key at the end.
-    while (oldEndKey === newEndKey) {
+    while (oldEndScope === newEndScope) {
       --oldEnd;
       --newEnd;
       if (oldStart > oldEnd || newStart > newEnd) {
         break outer;
       }
-      oldEndKey = oldKeys[oldEnd];
-      newEndKey = newKeys[newEnd];
+      oldEndScope = oldScopes[oldEnd];
+      newEndScope = newScopes[newEnd];
     }
   }
 
@@ -64,24 +62,22 @@ export function reconcile(
     if (newStart <= newEnd) {
       k = newEnd + 1;
       nextSibling =
-        k < newKeys.length
-          ? newNodes.get(newKeys[k])!.___getFirstNode()
-          : afterReference;
+        k < newScopes.length ? newScopes[k].___getFirstNode() : afterReference;
       do {
-        newNodes.get(newKeys[newStart++])!.___insertBefore(parent, nextSibling);
+        newScopes[newStart++].___insertBefore(parent, nextSibling);
       } while (newStart <= newEnd);
     }
   } else if (newStart > newEnd) {
     // All new nodes are in the correct place, remove the remaining old nodes.
     do {
-      oldNodes.get(oldKeys[oldStart++])!.___remove();
+      oldScopes[oldStart++].___remove();
     } while (oldStart <= oldEnd);
   } else {
     // Step 2
     const oldLength = oldEnd - oldStart + 1;
     const newLength = newEnd - newStart + 1;
 
-    const aNullable = oldKeys as Array<unknown | null>; // will be removed by js optimizing compilers.
+    const aNullable = oldScopes as Array<Scope | null>; // will be removed by js optimizing compilers.
     // Mark all nodes as inserted.
     const sources = new Array(newLength);
     for (i = 0; i < newLength; ++i) {
@@ -94,37 +90,37 @@ export function reconcile(
 
     const keyIndex: Map<unknown, number> = new Map();
     for (j = newStart; j <= newEnd; ++j) {
-      keyIndex.set(newKeys[j], j);
+      keyIndex.set(newScopes[j], j);
     }
 
     for (i = oldStart; i <= oldEnd && synced < newLength; ++i) {
-      oldKey = oldKeys[i];
-      j = keyIndex.get(oldKey);
+      oldScope = oldScopes[i];
+      j = keyIndex.get(oldScope);
       if (j !== undefined) {
         pos = pos > j ? WRONG_POS : j;
         ++synced;
-        newKey = newKeys[j];
+        newScope = newScopes[j];
         sources[j - newStart] = i;
         aNullable[i] = null;
       }
     }
 
-    if (oldLength === oldKeys.length && synced === 0) {
+    if (oldLength === oldScopes.length && synced === 0) {
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        newNodes.get(newKeys[newStart])!.___insertBefore(parent, null);
+        newScopes[newStart].___insertBefore(parent, null);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
-        oldNodes.get(oldKeys[oldStart])!.___remove();
+        oldScopes[oldStart].___remove();
       }
     } else {
       i = oldLength - synced;
       while (i > 0) {
-        oldKey = aNullable[oldStart++];
-        if (oldKey !== null) {
-          oldNodes.get(oldKey)!.___remove();
+        oldScope = aNullable[oldStart++];
+        if (oldScope !== null) {
+          oldScope.___remove();
           i--;
         }
       }
@@ -133,41 +129,35 @@ export function reconcile(
       if (pos === WRONG_POS) {
         const seq = longestIncreasingSubsequence(sources);
         j = seq.length - 1;
-        k = newKeys.length;
+        k = newScopes.length;
         for (i = newLength - 1; i >= 0; --i) {
           if (sources[i] === -1) {
             pos = i + newStart;
-            newKey = newKeys[pos++];
+            newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? newNodes.get(newKeys[pos])!.___getFirstNode()
-                : afterReference;
-            newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
+              pos < k ? newScopes[pos].___getFirstNode() : afterReference;
+            newScope.___insertBefore(parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
-              newKey = newKeys[pos++];
+              newScope = newScopes[pos++];
               nextSibling =
-                pos < k
-                  ? newNodes.get(newKeys[pos])!.___getFirstNode()
-                  : afterReference;
-              newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
+                pos < k ? newScopes[pos].___getFirstNode() : afterReference;
+              newScope.___insertBefore(parent, nextSibling);
             } else {
               --j;
             }
           }
         }
       } else if (synced !== newLength) {
-        k = newKeys.length;
+        k = newScopes.length;
         for (i = newLength - 1; i >= 0; --i) {
           if (sources[i] === -1) {
             pos = i + newStart;
-            newKey = newKeys[pos++];
+            newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? newNodes.get(newKeys[pos])!.___getFirstNode()
-                : afterReference;
-            newNodes.get(newKey)!.___insertBefore(parent, nextSibling);
+              pos < k ? newScopes[pos].___getFirstNode() : afterReference;
+            newScope.___insertBefore(parent, nextSibling);
           }
         }
       }
