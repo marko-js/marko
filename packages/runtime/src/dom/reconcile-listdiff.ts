@@ -4,18 +4,16 @@ import { Scope } from "./scope";
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller
 export function reconcile(
   parent: Node & ParentNode,
-  oldKeys: string[],
-  oldNodes: Map<string, Scope>,
-  newKeys: string[],
-  newNodes: Map<string, Scope>,
+  oldScopes: Scope[],
+  newScopes: Scope[],
   afterReference: Node | null
 ): void {
   let i: number;
   let j: number;
 
-  if (!newKeys.length && !afterReference) {
-    for (i = 0; i < oldKeys.length; i++)
-      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+  if (!newScopes.length && !afterReference) {
+    for (i = 0; i < oldScopes.length; i++)
+      // TODO: oldKeys[i].___cleanup(true);
       parent.textContent = "";
     return;
   }
@@ -24,33 +22,28 @@ export function reconcile(
   const bIdx = new Map();
 
   // Create a mapping from keys to their position in the old list
-  for (i = 0; i < oldKeys.length; i++) {
-    aIdx.set(oldKeys[i], i);
+  for (i = 0; i < oldScopes.length; i++) {
+    aIdx.set(oldScopes[i], i);
   }
 
   // Create a mapping from keys to their position in the new list
-  for (i = 0; i < newKeys.length; i++) {
-    bIdx.set(newKeys[i], i);
+  for (i = 0; i < newScopes.length; i++) {
+    bIdx.set(newScopes[i], i);
   }
 
-  for (i = j = 0; i !== oldKeys.length || j !== newKeys.length; ) {
-    const a = oldKeys[i],
-      b = newKeys[j];
+  for (i = j = 0; i !== oldScopes.length || j !== newScopes.length; ) {
+    const a = oldScopes[i],
+      b = newScopes[j];
     if (a === null) {
       // This is a element that has been moved to earlier in the list
       i++;
-    } else if (newKeys.length <= j) {
+    } else if (newScopes.length <= j) {
       // No more elements in new, this is a delete
-      oldNodes.get(a)!.___remove();
+      a.___remove();
       i++;
-    } else if (oldKeys.length <= i) {
+    } else if (oldScopes.length <= i) {
       // No more elements in old, this is an addition
-      newNodes
-        .get(b)!
-        .___insertBefore(
-          parent,
-          a ? oldNodes.get(a)!.___getFirstNode() : afterReference
-        );
+      b.___insertBefore(parent, a ? a.___getFirstNode() : afterReference);
       j++;
     } else if (a === b) {
       // No difference, we move on
@@ -63,27 +56,20 @@ export function reconcile(
       const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
-        oldNodes.get(a)!.___remove();
+        a.___remove();
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added
-        newNodes
-          .get(b)!
-          .___insertBefore(
-            parent,
-            a ? oldNodes.get(a)!.___getFirstNode() : afterReference
-          );
+        b.___insertBefore(parent, a ? a.___getFirstNode() : afterReference);
         j++;
       } else {
         // Element is in both lists, it has been moved
-        oldNodes
-          .get(oldKeys[wantedElmInOld])!
-          .___insertBefore(
-            parent,
-            a ? oldNodes.get(a)!.___getFirstNode() : afterReference
-          );
+        oldScopes[wantedElmInOld].___insertBefore(
+          parent,
+          a ? a.___getFirstNode() : afterReference
+        );
         aIdx.delete(wantedElmInOld);
-        oldKeys[wantedElmInOld] = (null as unknown) as string;
+        oldScopes[wantedElmInOld] = (null as unknown) as Scope;
         if (wantedElmInOld > i + 1) i++;
         j++;
       }

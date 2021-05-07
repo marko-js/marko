@@ -4,22 +4,20 @@ import { Scope } from "./scope";
 // middle sized ~.6kb minified smaller
 export function reconcile(
   parent: Node & ParentNode,
-  oldKeys: string[],
-  oldNodes: Map<string, Scope>,
-  newKeys: string[],
-  newNodes: Map<string, Scope>,
+  oldScopes: Scope[],
+  newScopes: Scope[],
   afterReference: Node | null
 ): void {
-  const bLength = newKeys.length;
-  let aEnd = oldKeys.length;
+  const bLength = newScopes.length;
+  let aEnd = oldScopes.length;
   let bEnd = bLength;
   let aStart = 0;
   let bStart = 0;
-  let map: Map<string, number> | null = null;
+  let map: Map<Scope, number> | null = null;
 
-  if (!newKeys.length && !afterReference) {
-    for (let i = 0; i < oldKeys.length; i++)
-      // TODO: oldNodes.get(oldKeys[i])!.___cleanup(true);
+  if (!newScopes.length && !afterReference) {
+    for (let i = 0; i < oldScopes.length; i++)
+      // TODO: oldKeys[i])!.___cleanup(true);
       parent.textContent = "";
     return;
   }
@@ -34,35 +32,33 @@ export function reconcile(
       const node =
         bEnd < bLength
           ? bStart
-            ? newNodes.get(newKeys[bStart - 1])!.___getAfterNode()
-            : newNodes.get(newKeys[bEnd - bStart])!.___getFirstNode()
+            ? newScopes[bStart - 1].___getAfterNode()
+            : newScopes[bEnd - bStart].___getFirstNode()
           : afterReference;
-      while (bStart < bEnd)
-        newNodes.get(newKeys[bStart++])!.___insertBefore(parent, node);
+      while (bStart < bEnd) newScopes[bStart++].___insertBefore(parent, node);
     }
     // remove head or tail: fast path
     else if (bEnd === bStart) {
       while (aStart < aEnd) {
         // remove the node only if it's unknown or not live
-        if (!map || !map.has(oldKeys[aStart]))
-          oldNodes.get(oldKeys[aStart])!.___remove();
+        if (!map || !map.has(oldScopes[aStart])) oldScopes[aStart].___remove();
         aStart++;
       }
     }
     // same node: fast path
-    else if (oldKeys[aStart] === newKeys[bStart]) {
+    else if (oldScopes[aStart] === newScopes[bStart]) {
       aStart++;
       bStart++;
     }
     // same tail: fast path
-    else if (oldKeys[aEnd - 1] === newKeys[bEnd - 1]) {
+    else if (oldScopes[aEnd - 1] === newScopes[bEnd - 1]) {
       aEnd--;
       bEnd--;
     }
     // reverse swap: also fast path
     else if (
-      oldKeys[aStart] === newKeys[bEnd - 1] &&
-      newKeys[bStart] === oldKeys[aEnd - 1]
+      oldScopes[aStart] === newScopes[bEnd - 1] &&
+      newScopes[bStart] === oldScopes[aEnd - 1]
     ) {
       // this is oldKeys "shrink" operation that could happen in these cases:
       // [1, 2, 3, 4, 5]
@@ -70,21 +66,19 @@ export function reconcile(
       // or asymmetric too
       // [1, 2, 3, 4, 5]
       // [1, 2, 3, 5, 6, 4]
-      const node = oldNodes.get(oldKeys[--aEnd])!.___getAfterNode();
-      newNodes
-        .get(newKeys[bStart++])!
-        .___insertBefore(
-          parent,
-          oldNodes.get(oldKeys[aStart++])!.___getAfterNode()
-        );
-      newNodes.get(newKeys[--bEnd])!.___insertBefore(parent, node);
+      const node = oldScopes[--aEnd].___getAfterNode();
+      newScopes[bStart++].___insertBefore(
+        parent,
+        oldScopes[aStart++].___getAfterNode()
+      );
+      newScopes[--bEnd].___insertBefore(parent, node);
       // mark the future index as identical (yeah, it's dirty, but cheap 👍)
       // The main reason to do this, is that when oldKeys[aEnd] will be reached,
       // the loop will likely be on the fast path, as identical to newKeys[bEnd].
       // In the best case scenario, the next loop will skip the tail,
       // but in the worst one, this node will be considered as already
       // processed, bailing out pretty quickly from the map index check
-      oldKeys[aEnd] = newKeys[bEnd];
+      oldScopes[aEnd] = newScopes[bEnd];
     }
     // map based fallback, "slow" path
     else {
@@ -96,12 +90,12 @@ export function reconcile(
       if (!map) {
         map = new Map();
         let i = bStart;
-        while (i < bEnd) map.set(newKeys[i], i++);
+        while (i < bEnd) map.set(newScopes[i], i++);
       }
       // if it's oldKeys future node, hence it needs some handling
-      if (map.has(oldKeys[aStart])) {
+      if (map.has(oldScopes[aStart])) {
         // grab the index of such node, 'cause it might have been processed
-        const index = map.get(oldKeys[aStart])!;
+        const index = map.get(oldScopes[aStart])!;
         // if it's not already processed, look on demand for the next LCS
         if (bStart < index && index < bEnd) {
           let i = aStart;
@@ -110,7 +104,7 @@ export function reconcile(
           while (
             ++i < aEnd &&
             i < bEnd &&
-            map.get(oldKeys[i]) === index + sequence
+            map.get(oldScopes[i]) === index + sequence
           )
             sequence++;
           // effort decision here: if the sequence is longer than replaces
@@ -124,21 +118,19 @@ export function reconcile(
           // this would place 7 before 1 and, from that time on, 1, 2, and 3
           // will be processed at zero cost
           if (sequence > index - bStart) {
-            const node = oldNodes.get(oldKeys[aStart])!.___getFirstNode();
+            const node = oldScopes[aStart].___getFirstNode();
             while (bStart < index)
-              newNodes.get(newKeys[bStart++])!.___insertBefore(parent, node);
+              newScopes[bStart++].___insertBefore(parent, node);
           }
           // if the effort wasn't good enough, fallback to oldKeys replace,
           // moving both source and target indexes forward, hoping that some
           // similar node will be found later on, to go back to the fast path
           else {
-            const oldNode = oldNodes.get(oldKeys[aStart++])!;
-            newNodes
-              .get(newKeys[bStart++])!
-              .___insertBefore(
-                oldNode.___getParentNode(),
-                oldNode.___getFirstNode()
-              );
+            const oldNode = oldScopes[aStart++];
+            newScopes[bStart++].___insertBefore(
+              oldNode.___getParentNode(),
+              oldNode.___getFirstNode()
+            );
             oldNode.___remove();
           }
         }
@@ -148,7 +140,7 @@ export function reconcile(
       // this node has no meaning in the future list, so it's more than safe
       // to remove it, and check the next live node out instead, meaning
       // that only the live list index should be forwarded
-      else oldNodes.get(oldKeys[aStart++])!.___remove();
+      else oldScopes[aStart++].___remove();
     }
   }
 }
