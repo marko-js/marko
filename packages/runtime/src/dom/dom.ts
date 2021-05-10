@@ -131,9 +131,7 @@ export function data(node: Text | Comment, value: unknown) {
 
 export function attrs(el: Element, scope: Scope, index: number) {
   const nextAttrs = scope[index] as Record<string, unknown>;
-  const prevAttrs = Object.getPrototypeOf(scope)[index] as
-    | Record<string, unknown>
-    | undefined;
+  const prevAttrs = scope[index + 1] as Record<string, unknown> | undefined;
 
   if (prevAttrs) {
     for (const name in prevAttrs) {
@@ -150,6 +148,8 @@ export function attrs(el: Element, scope: Scope, index: number) {
       }
     }
   }
+
+  scope[index + 1] = nextAttrs;
 }
 
 export function html(value: string) {

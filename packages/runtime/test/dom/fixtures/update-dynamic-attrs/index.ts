@@ -30,11 +30,11 @@ export const inputs = [
 export const template = `<div></div>`;
 export const walks = get + over(1);
 export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset + 1] = walk();
+  scope[offset + 2] = walk();
 });
 
 export const execInputValue = (scope: Scope, offset: number) => {
-  attrs(scope[offset + 1] as Element, scope, offset);
+  attrs(scope[offset + 2] as Element, scope, offset);
 };
 
 export const execDynamicInput = (
