@@ -143,7 +143,7 @@ This allows you to create components that have other files associated with them 
 To use [tags from npm](https://www.npmjs.com/search?q=keywords%3Amarko%20components), ensure that the package is installed and listed in your `package.json` dependencies:
 
 ```
-npm install --save @marko/match-media
+npm install --save @marko-tags/match-media
 ```
 
 Marko discover tags from packages defined in your `package.json`, so you can start using them right away:
