@@ -158,10 +158,9 @@ export function html(value: string) {
 
 export function props(node: Node, scope: Scope, index: number) {
   const nextProps = scope[index] as Record<string, unknown>;
-  const prevProps = Object.getPrototypeOf(scope)[index] as
-    | Record<string, unknown>
-    | undefined;
-  if (nextProps) {
+  const prevProps = scope[index + 1] as Record<string, unknown> | undefined;
+
+  if (prevProps) {
     for (const name in prevProps) {
       if (!(name in nextProps)) {
         node[name] = undefined;
@@ -172,6 +171,8 @@ export function props(node: Node, scope: Scope, index: number) {
   for (const name in nextProps) {
     node[name] = nextProps[name];
   }
+
+  scope[index + 1] = nextProps;
 }
 
 export function innerHTML(el: Element, value: string) {
