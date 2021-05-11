@@ -4,9 +4,16 @@ import { Renderer, initRenderer } from "./renderer";
 import { Scope, createScope, getEmptyScope, set } from "./scope";
 import { NodeType } from "./dom";
 
-export type Conditional = {
-  scope?: Scope;
-  renderer?: Renderer;
+export type Conditional = (
+  | {
+      scope: Scope;
+      renderer: Renderer;
+    }
+  | {
+      scope: undefined;
+      renderer: undefined;
+    }
+) & {
   ___parentScopeOrScopes?: Scope | Array<Scope | number>;
   ___parentOffset?: number;
   ___referenceNode: Comment | Element;
@@ -129,7 +136,7 @@ export type Loop = {
 export function loop(
   referenceNode: Comment | Element,
   renderer: Renderer,
-  keyFn: (item: unknown) => string,
+  keyFn: (item: unknown) => unknown,
   parentScopeOrScopes?: Scope | Array<Scope | number>,
   parentOffset?: number
 ): Loop {
