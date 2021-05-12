@@ -244,3 +244,22 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
   loop.___scopeArray = newArray!;
   loop.___scopeMap = newMap!;
 }
+
+export function setLoopFromTo(
+  loop: Loop,
+  from: number,
+  to: number,
+  step: number
+) {
+  const range: number[] = [];
+
+  for (let i = from; i <= to; i += step) {
+    range.push(i);
+  }
+
+  setLoopOf(loop, range);
+}
+
+export function setLoopIn(loop: Loop, object: Record<string, unknown>) {
+  setLoopOf(loop, Object.entries(object));
+}

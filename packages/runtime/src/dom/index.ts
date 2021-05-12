@@ -5,7 +5,9 @@ export {
   setConditionalRenderer,
   setConditionalRendererOnlyChild,
   loop,
-  setLoopOf
+  setLoopOf,
+  setLoopFromTo,
+  setLoopIn
 } from "./control-flow";
 
 export {

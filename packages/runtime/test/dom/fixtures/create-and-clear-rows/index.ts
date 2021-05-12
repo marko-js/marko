@@ -8,6 +8,7 @@ import {
   Scope,
   createRenderer,
   createRenderFn,
+  checkDirty,
   staticNodeMethods
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
@@ -52,8 +53,8 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
-export const template = `<div><!></div>`;
-export const walks = next(1) + get + next(1);
+export const template = `<div></div>`;
+export const walks = get + over(1);
 export const hydrate = (scope: Scope, offset: number) => {
   scope[offset + 1] = loop(
     walk() as Comment,
@@ -91,5 +92,10 @@ const iter0 = createRenderer(
 );
 
 const iter0_execItem = (scope: Scope) => {
-  data(scope[3] as Text, (scope[0] as Input["children"][number]).text);
+  if (checkDirty(scope, 0)) {
+    set(scope, 4, (scope[0] as Input["children"][number]).text);
+    if (checkDirty(scope, 4)) {
+      data(scope[3] as Text, scope[4]);
+    }
+  }
 };

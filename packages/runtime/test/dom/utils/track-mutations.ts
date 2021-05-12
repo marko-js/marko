@@ -78,6 +78,7 @@ function getStatusString(container: HTMLDivElement, changes, update) {
     .join("\n")
     .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${changes
     .map(formatMutationRecord)
+    .filter(Boolean)
     .join("\n")}\n\`\`\``;
 }
 
