@@ -178,6 +178,8 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
   const len = newValues.length;
   const oldMap = loop.___scopeMap;
   const oldArray = loop.___scopeArray;
+  let inserts = 0;
+  let moves = 0;
   const referenceIsMarker = loop.___referenceIsMarker;
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
@@ -202,39 +204,42 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
           loop.___parentScopeOrScopes,
           loop.___parentOffset
         );
+        inserts++;
       } else {
         set(childScope, 0, item);
         set(childScope, 1, index);
+        if (childScope[1] !== index) moves++;
       }
       newMap.set(key, childScope);
     }
     setContext(null);
     newArray = Array.from(newMap.values());
-  }
-
-  if (referenceIsMarker) {
-    if (oldMap === emptyMarkerMap) {
-      getEmptyScope(loop.___referenceNode as Comment);
-    }
-    const oldLastChild = oldArray[oldArray.length - 1];
-    afterReference = oldLastChild.___getAfterNode();
-    parentNode = oldLastChild.___getParentNode();
-    if (len === 0) {
+  } else {
+    if (referenceIsMarker) {
       newMap = emptyMarkerMap;
       newArray = emptyMarkerArray;
       getEmptyScope(loop.___referenceNode as Comment);
-    }
-  } else {
-    afterReference = null;
-    parentNode = loop.___referenceNode as Node & ParentNode;
-
-    if (len === 0) {
+    } else {
       newMap = emptyMap;
       newArray = emptyArray;
     }
   }
 
-  reconcile(parentNode, oldArray, newArray!, afterReference);
+  if (inserts || moves || len !== oldArray.length) {
+    if (referenceIsMarker) {
+      if (oldMap === emptyMarkerMap) {
+        getEmptyScope(loop.___referenceNode as Comment);
+      }
+      const oldLastChild = oldArray[oldArray.length - 1];
+      afterReference = oldLastChild.___getAfterNode();
+      parentNode = oldLastChild.___getParentNode();
+    } else {
+      afterReference = null;
+      parentNode = loop.___referenceNode as Node & ParentNode;
+    }
+
+    reconcile(parentNode, oldArray, newArray!, afterReference);
+  }
 
   loop.___scopeArray = newArray!;
   loop.___scopeMap = newMap!;
