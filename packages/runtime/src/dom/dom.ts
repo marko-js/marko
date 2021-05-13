@@ -1,5 +1,5 @@
 import { Conditional, Loop } from "./control-flow";
-import { Renderer } from "./renderer";
+import { createRenderer, Renderer } from "./renderer";
 import { Scope } from "./scope";
 
 export const enum NodeType {
@@ -152,8 +152,27 @@ export function attrs(el: Element, scope: Scope, index: number) {
   scope[index + 1] = nextAttrs;
 }
 
-export function html(value: string) {
-  // TODO
+const doc = document;
+const parser = doc.createElement("template");
+
+export function html(value: string, scope: Scope, index: number) {
+  const firstChild = scope[index] as Node & ChildNode;
+  const lastChild = scope[index + 1] as Node & ChildNode;
+  const parentNode = firstChild.parentNode!;
+  const afterReference = lastChild.nextSibling;
+
+  parser.innerHTML = value || " ";
+  const newContent = parser.content;
+  scope[index] = newContent.firstChild;
+  scope[index + 1] = newContent.lastChild;
+  parentNode.insertBefore(newContent, firstChild);
+
+  let current = firstChild;
+  while (current !== afterReference) {
+    const next = current.nextSibling;
+    current.remove();
+    current = next!;
+  }
 }
 
 export function props(node: Node, scope: Scope, index: number) {
