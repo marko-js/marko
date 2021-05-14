@@ -1,14 +1,16 @@
 import {
-  once,
-  textContent,
+  on,
   walk,
-  compute,
-  source,
+  Scope,
   set,
+  checkDirty,
+  data,
   register,
-  createRenderFn
+  createRenderFn,
+  ensureDelegated,
+  queue
 } from "../../../../src/dom/index";
-import { get, over } from "../../utils/walks";
+import { get, next } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -16,17 +18,30 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
-export const template = `<button></button>`;
-export const walks = get + over(1);
-export const hydrate = register(__dirname.split("/").pop()!, () => {
-  const a = source(0);
-  const b = source(0);
-  walk();
-  once("click", () => {
-    set(a, 1);
-    set(b, 1);
+export const template = `<button> </button>`;
+export const walks = get + next(1) + get + next(1);
+export const hydrate = register("", (scope: Scope, offset: number) => {
+  scope[offset] = 0;
+  scope[offset + 1] = 0;
+  on(walk() as HTMLButtonElement, "click", () => {
+    set(scope, offset, 1);
+    set(scope, offset + 1, 1);
+    queue(execAB, scope, offset);
   });
-  textContent(compute(([_a, _b]) => _a + _b, [a, b], 0));
+  scope[offset + 2] = walk();
+
+  execAB(scope, offset);
 });
 
-export default createRenderFn(template, walks, ["value"], hydrate);
+const execAB = (scope: Scope, offset: number) => {
+  if (checkDirty(scope, offset) || checkDirty(scope, offset + 1)) {
+    data(
+      scope[offset + 2] as Text,
+      (scope[offset] as number) + (scope[offset + 1] as number)
+    );
+  }
+};
+
+export default createRenderFn(template, walks, hydrate, 0);
+
+ensureDelegated("click");

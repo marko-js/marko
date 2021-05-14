@@ -35,7 +35,6 @@ removed span in div0
 
 # Mutations
 ```
-
 inserted div0/span0
 div0/span0/#text0: " " => "World"
 ```
