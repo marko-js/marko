@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.3](https://github.com/marko-js/marko/compare/v5.10.2...v5.10.3) (2021-05-14)
+
+
+### Bug Fixes
+
+* false values are removed from style string. closes [#1692](https://github.com/marko-js/marko/issues/1692) ([#1693](https://github.com/marko-js/marko/issues/1693)) ([ac140d4](https://github.com/marko-js/marko/commit/ac140d4628836f6371982e3a7f4099fa31d89ec4))
+
+
+
+
+
 ## [5.10.2](https://github.com/marko-js/marko/compare/v5.10.1...v5.10.2) (2021-05-04)
 
 
