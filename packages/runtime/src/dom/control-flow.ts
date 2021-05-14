@@ -206,9 +206,9 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
         );
         inserts++;
       } else {
+        if (childScope[1] !== index) moves++;
         set(childScope, 0, item);
         set(childScope, 1, index);
-        if (childScope[1] !== index) moves++;
       }
       newMap.set(key, childScope);
     }

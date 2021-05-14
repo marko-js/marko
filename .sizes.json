@@ -7,8 +7,8 @@
       "name": "*",
       "individual": {
         "min": 9056,
-        "gzip": 3899,
-        "brotli": 3578
+        "gzip": 3900,
+        "brotli": 3576
       }
     }
   ]
