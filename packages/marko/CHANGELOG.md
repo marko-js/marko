@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.4](https://github.com/marko-js/marko/compare/v5.10.3...v5.10.4) (2021-05-19)
+
+
+### Bug Fixes
+
+* **marko:** issue when last mode stream ends too early ([318044f](https://github.com/marko-js/marko/commit/318044fce27cdaffe344fb0ea075a9451cb7abd9))
+
+
+
+
+
 ## [5.10.3](https://github.com/marko-js/marko/compare/v5.10.2...v5.10.3) (2021-05-14)
 
 
