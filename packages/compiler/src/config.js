@@ -54,7 +54,7 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      */
     translator: (() => {
       const translatorReg = /^(@\/marko\/|marko-)translator-/;
-      let translator = "@marko/translator-default";
+      let translator = "marko/translator";
       let pkg;
 
       try {
