@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Test</title>
+</head>
+<body>
+    <h1>Before</h1>
+    $ let count = 0;
+    <__flush_here_and_after__>
+        Flush ${++count}
+    </__flush_here_and_after__>
+    <h1>After 1</h1>
+    <await(input.wait(20))>
+        <@then>
+            <child x=1/>
+        </@then>
+    </await>
+    <h1>After 3</h1>
+    <await(input.wait(40))>
+        <@then>
+            <child x=2/>
+        </@then>
+    </await>  
+</body>
+</html>

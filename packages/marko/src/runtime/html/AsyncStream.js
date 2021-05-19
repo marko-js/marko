@@ -95,6 +95,7 @@ function AsyncStream(global, writer, parentOut) {
   this.___assignedComponentDef = null;
   this.___assignedKey = null;
   this.___assignedCustomEvents = null;
+  this.___isLast = false;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -205,6 +206,7 @@ var proto = (AsyncStream.prototype = {
           }
 
           this._lastCount++;
+          newStream.___isLast = true;
         }
 
         name = options.name;
@@ -302,7 +304,7 @@ var proto = (AsyncStream.prototype = {
       }
 
       if (remaining === 0) {
-        parentOut._handleChildDone();
+        parentOut._handleChildDone(this);
       } else if (remaining - this._lastCount === 0) {
         this._emitLast();
       }
@@ -311,7 +313,7 @@ var proto = (AsyncStream.prototype = {
     return this;
   },
 
-  _handleChildDone: function () {
+  _handleChildDone: function (childOut) {
     var remaining = --this._remaining;
 
     if (remaining === 0) {
@@ -319,10 +321,16 @@ var proto = (AsyncStream.prototype = {
       if (parentOut === undefined) {
         this._doFinish();
       } else {
-        parentOut._handleChildDone();
+        parentOut._handleChildDone(this);
       }
-    } else if (remaining - this._lastCount === 0) {
-      this._emitLast();
+    } else {
+      if (childOut.___isLast) {
+        this._lastCount--;
+      }
+
+      if (remaining - this._lastCount === 0) {
+        this._emitLast();
+      }
     }
   },
 
@@ -394,23 +402,22 @@ var proto = (AsyncStream.prototype = {
   },
 
   _emitLast: function () {
-    var lastArray = this._last;
+    if (this._last) {
+      var i = 0;
+      var lastArray = this._last;
+      this._last = undefined;
+      (function next() {
+        if (i === lastArray.length) {
+          return;
+        }
+        var lastCallback = lastArray[i++];
+        lastCallback(next);
 
-    var i = 0;
-
-    function next() {
-      if (i === lastArray.length) {
-        return;
-      }
-      var lastCallback = lastArray[i++];
-      lastCallback(next);
-
-      if (lastCallback.length === 0) {
-        next();
-      }
+        if (lastCallback.length === 0) {
+          next();
+        }
+      })();
     }
-
-    next();
   },
 
   emit: function (type, arg) {
