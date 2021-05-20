@@ -11,7 +11,7 @@ export type Scope = unknown[] &
   };
 
 export function createScope(size: number, methods: DOMMethods): Scope {
-  const scope = new Array(size).fill(undefined) as Scope;
+  const scope = new Array(size) as Scope;
   scope.___startNode = scope.___endNode = undefined;
   scope.___dirty = true;
   dirtyScopes.add(Object.assign(scope, methods));
