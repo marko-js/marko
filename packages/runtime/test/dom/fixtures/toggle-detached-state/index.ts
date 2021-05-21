@@ -41,7 +41,7 @@ export const execInputValueVisible = (scope: Scope, offset: number) => {
   setConditionalRenderer(cond0, scope[offset + 1] ? branch0 : undefined);
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
-    data(cond0_scope[0] as Text, (scope[offset] as Input["value"]).name);
+    data(cond0_scope[0] as Text, (scope[offset] as Input["value"])!.name);
   }
 };
 

@@ -20,7 +20,8 @@ export {
   dynamicTag,
   staticNodeMethods,
   staticFragmentMethods,
-  dynamicFragmentMethods
+  dynamicFragmentMethods,
+  userEffect
 } from "./dom";
 
 export { walk, walkMany, enableExtendedWalk } from "./walker";

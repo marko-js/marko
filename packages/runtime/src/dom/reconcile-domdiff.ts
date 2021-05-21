@@ -1,4 +1,4 @@
-import { Scope } from "./scope";
+import { destroyScope, Scope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js
 // middle sized ~.6kb minified smaller
@@ -14,13 +14,6 @@ export function reconcile(
   let aStart = 0;
   let bStart = 0;
   let map: Map<Scope, number> | null = null;
-
-  if (!newScopes.length && !afterReference) {
-    for (let i = 0; i < oldScopes.length; i++)
-      // TODO: oldKeys[i])!.___cleanup(true);
-      parent.textContent = "";
-    return;
-  }
 
   while (aStart < aEnd || bStart < bEnd) {
     // append head, tail, or nodes in between: fast path
@@ -41,7 +34,8 @@ export function reconcile(
     else if (bEnd === bStart) {
       while (aStart < aEnd) {
         // remove the node only if it's unknown or not live
-        if (!map || !map.has(oldScopes[aStart])) oldScopes[aStart].___remove();
+        if (!map || !map.has(oldScopes[aStart]))
+          destroyScope(oldScopes[aStart]).___remove();
         aStart++;
       }
     }
@@ -131,7 +125,7 @@ export function reconcile(
               oldNode.___getParentNode(),
               oldNode.___getFirstNode()
             );
-            oldNode.___remove();
+            destroyScope(oldNode).___remove();
           }
         }
         // otherwise move the source forward, 'cause there's nothing to do
@@ -140,7 +134,7 @@ export function reconcile(
       // this node has no meaning in the future list, so it's more than safe
       // to remove it, and check the next live node out instead, meaning
       // that only the live list index should be forwarded
-      else oldScopes[aStart++].___remove();
+      else destroyScope(oldScopes[aStart++]).___remove();
     }
   }
 }

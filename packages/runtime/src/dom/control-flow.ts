@@ -1,7 +1,7 @@
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
-import { Scope, createScope, getEmptyScope, set } from "./scope";
+import { Scope, createScope, getEmptyScope, set, destroyScope } from "./scope";
 import { NodeType } from "./dom";
 
 export type Conditional = (
@@ -14,6 +14,7 @@ export type Conditional = (
       renderer: undefined;
     }
 ) & {
+  ___parentScope: Scope | undefined;
   ___parentScopeOrScopes?: Scope | Array<Scope | number>;
   ___parentOffset?: number;
   ___referenceNode: Comment | Element;
@@ -31,6 +32,9 @@ export function conditional(
     scope: undefined,
     renderer: undefined,
     ___referenceNode: referenceNode,
+    ___parentScope: Array.isArray(parentScopeOrScopes)
+      ? (parentScopeOrScopes[0] as Scope)
+      : parentScopeOrScopes,
     ___parentScopeOrScopes: parentScopeOrScopes,
     ___parentOffset: parentOffset,
     ___context: Context,
@@ -51,7 +55,8 @@ export function setConditionalRenderer(
       setContext(conditonal.___context);
       newScope = conditonal.scope = createScope(
         newRenderer.___size,
-        newRenderer.___domMethods!
+        newRenderer.___domMethods!,
+        conditonal.___parentScope
       );
       initRenderer(
         newRenderer,
@@ -125,6 +130,7 @@ export type Loop = {
   ___referenceIsMarker: boolean;
   ___renderer: Renderer;
   ___keyFn: undefined | ((item: unknown, index: number) => unknown);
+  ___parentScope: Scope | undefined;
   ___parentScopeOrScopes: Scope | Array<Scope | number> | undefined;
   ___parentOffset: number | undefined;
   ___context: typeof Context;
@@ -148,6 +154,9 @@ export function loop(
     ___referenceIsMarker: referenceIsMarker,
     ___renderer: renderer,
     ___keyFn: keyFn,
+    ___parentScope: Array.isArray(parentScopeOrScopes)
+      ? (parentScopeOrScopes[0] as Scope)
+      : parentScopeOrScopes,
     ___parentScopeOrScopes: parentScopeOrScopes,
     ___parentOffset: parentOffset,
     ___context: Context,
@@ -194,7 +203,8 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
       if (!childScope) {
         childScope = createScope(
           loop.___renderer.___size,
-          loop.___renderer.___domMethods!
+          loop.___renderer.___domMethods!,
+          loop.___parentScope
         );
         childScope[0] = item;
         childScope[1] = index;
@@ -220,8 +230,15 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
       newArray = emptyMarkerArray;
       getEmptyScope(loop.___referenceNode as Comment);
     } else {
-      newMap = emptyMap;
-      newArray = emptyArray;
+      if (loop.___renderer.___hasUserEffects) {
+        for (let i = 0; i < oldArray.length; i++) {
+          destroyScope(oldArray[i]);
+        }
+      }
+      loop.___referenceNode.textContent = "";
+      loop.___scopeMap = emptyMap;
+      loop.___scopeArray = emptyArray;
+      return;
     }
   }
 
@@ -235,7 +252,7 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
       parentNode = oldLastChild.___getParentNode();
     } else {
       afterReference = null;
-      parentNode = loop.___referenceNode as Node & ParentNode;
+      parentNode = loop.___referenceNode as Element;
     }
 
     reconcile(parentNode, oldArray, newArray!, afterReference);

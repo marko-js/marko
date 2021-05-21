@@ -1,4 +1,4 @@
-import { Scope } from "./scope";
+import { destroyScope, Scope } from "./scope";
 
 const WRONG_POS = 2147483647;
 
@@ -22,14 +22,6 @@ export function reconcile(
   let nextSibling: Node | null;
   let oldScope: Scope | null;
   let newScope: Scope;
-
-  if (!newScopes.length && !afterReference) {
-    for (i = 0; i < oldScopes.length; i++) {
-      // TODO: oldKeys[i].___cleanup(true);
-    }
-    parent.textContent = "";
-    return;
-  }
 
   // Step 1
   // tslint:disable-next-line: label-position
@@ -70,7 +62,7 @@ export function reconcile(
   } else if (newStart > newEnd) {
     // All new nodes are in the correct place, remove the remaining old nodes.
     do {
-      oldScopes[oldStart++].___remove();
+      destroyScope(oldScopes[oldStart++]).___remove();
     } while (oldStart <= oldEnd);
   } else {
     // Step 2
@@ -113,14 +105,14 @@ export function reconcile(
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
-        oldScopes[oldStart].___remove();
+        destroyScope(oldScopes[oldStart]).___remove();
       }
     } else {
       i = oldLength - synced;
       while (i > 0) {
         oldScope = aNullable[oldStart++];
         if (oldScope !== null) {
-          oldScope.___remove();
+          destroyScope(oldScope).___remove();
           i--;
         }
       }

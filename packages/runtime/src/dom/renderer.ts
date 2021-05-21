@@ -16,6 +16,7 @@ export type Renderer = {
   ___hydrate: HydrateFn | undefined;
   ___clone: () => Node;
   ___size: number;
+  ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
   ___domMethods: DOMMethods | undefined;
   ___dynamicStartNodeOffset: number | undefined;
@@ -77,6 +78,7 @@ export function createRenderFn<I extends Input>(
   size?: number,
   dynamicInput?: DynamicInputFn<I>,
   domMethods?: DOMMethods,
+  hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
@@ -86,6 +88,7 @@ export function createRenderFn<I extends Input>(
     hydrate,
     size,
     domMethods,
+    hasUserEffects,
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );
@@ -114,6 +117,7 @@ export function createRenderer<T, H extends HydrateFn>(
   hydrate?: H,
   size?: number,
   domMethods?: DOMMethods,
+  hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ): Renderer {
@@ -123,6 +127,7 @@ export function createRenderer<T, H extends HydrateFn>(
     ___hydrate: hydrate,
     ___clone: _clone,
     ___size: size || 0,
+    ___hasUserEffects: hasUserEffects || 0,
     ___sourceNode: undefined,
     ___domMethods: domMethods,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,

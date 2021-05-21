@@ -20,8 +20,7 @@ inserted div0
 
 # Mutations
 ```
-removed #text in div0
-inserted div0/#text0
+div0/#text0: "00" => "10"
 ```
 
 
@@ -47,6 +46,5 @@ inserted div0/#text0
 
 # Mutations
 ```
-removed #text in div0
-inserted div0/#text0
+div0/#text0: "10" => "21"
 ```

@@ -1,4 +1,4 @@
-import { Scope } from "./scope";
+import { destroyScope, Scope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller
@@ -10,13 +10,6 @@ export function reconcile(
 ): void {
   let i: number;
   let j: number;
-
-  if (!newScopes.length && !afterReference) {
-    for (i = 0; i < oldScopes.length; i++)
-      // TODO: oldKeys[i].___cleanup(true);
-      parent.textContent = "";
-    return;
-  }
 
   const aIdx = new Map();
   const bIdx = new Map();
@@ -39,7 +32,7 @@ export function reconcile(
       i++;
     } else if (newScopes.length <= j) {
       // No more elements in new, this is a delete
-      a.___remove();
+      destroyScope(a).___remove();
       i++;
     } else if (oldScopes.length <= i) {
       // No more elements in old, this is an addition
@@ -56,7 +49,7 @@ export function reconcile(
       const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
-        a.___remove();
+        destroyScope(a).___remove();
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added

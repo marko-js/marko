@@ -1,6 +1,6 @@
 import { Conditional, Loop } from "./control-flow";
 import { createRenderer, Renderer } from "./renderer";
-import { Scope } from "./scope";
+import { onDestroy, Scope } from "./scope";
 
 export const enum NodeType {
   Element = 1,
@@ -222,4 +222,31 @@ function normalizeAttrValue(value: unknown) {
 
 function normalizeString(value: unknown) {
   return value == null ? "" : value + "";
+}
+
+type EffectFn = () => void | (() => void);
+export function userEffect(scope: Scope, index: number, fn: EffectFn) {
+  const cleanup = scope[index] as ReturnType<EffectFn>;
+  if (cleanup) {
+    cleanup();
+  } else {
+    onDestroy(scope, index);
+  }
+  scope[index] = fn();
+}
+
+export function lifecycle(
+  scope: Scope,
+  index: number,
+  mount?: () => void,
+  update?: () => void,
+  destroy?: () => void
+) {
+  const mounted = scope[index];
+  if (!mounted) {
+    if (mount) mount();
+    onDestroy(scope, index + 1);
+  }
+  if (mounted && update) update();
+  scope[index + 1] = destroy;
 }

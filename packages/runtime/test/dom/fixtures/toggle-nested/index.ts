@@ -112,6 +112,7 @@ const branch0 = createRenderer(
   0,
   dynamicFragmentMethods,
   0,
+  0,
   1
 );
 

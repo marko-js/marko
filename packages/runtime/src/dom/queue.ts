@@ -23,15 +23,19 @@ const fns: Set<ExecFn> = new Set();
 let queuedFns: unknown[] = [];
 
 export function queue(fn: ExecFn, scope: Scope, offset: number) {
-  if (fns.has(fn))
-    for (let i = 0; i < queuedFns.length; i += 3)
+  if (fns.has(fn)) {
+    for (let i = 0; i < queuedFns.length; i += 3) {
       if (
         queuedFns[i] === fn &&
         queuedFns[i + 1] === scope &&
         queuedFns[i + 2] === offset
-      )
+      ) {
         return;
-      else fns.add(fn);
+      }
+    }
+  } else {
+    fns.add(fn);
+  }
 
   if (!queued) {
     queued = true;
