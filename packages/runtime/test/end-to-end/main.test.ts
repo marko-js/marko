@@ -28,7 +28,7 @@ describe("E2E", function () {
       describe(entry, () => {
         let initialHTML: string;
         let hydratedHTML: string;
-        it("server + hydrate", async () => {
+        it.skip("server + hydrate", async () => {
           const serverTest = require(serverFile);
           const hydrateIndex = serverTest.HYDRATE_ON_FLUSH;
           const render = createRenderer(serverTest.default);
@@ -92,7 +92,7 @@ describe("E2E", function () {
 
           snapshot(snapshotDir, "server-hydrate.md", tracker.getLogs());
         });
-        it("client only", async () => {
+        it.skip("client only", async () => {
           const serverTest = require(serverFile);
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
@@ -124,7 +124,7 @@ describe("E2E", function () {
 
           snapshot(snapshotDir, "client-only.md", tracker.getLogs());
         });
-        it("hydrate = client", () => {
+        it.skip("hydrate = client", () => {
           assert.strictEqual(hydratedHTML, initialHTML);
         });
       });

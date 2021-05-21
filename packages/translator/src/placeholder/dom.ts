@@ -24,15 +24,15 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
     writeWalks(placeholder, Walks.BEFORE);
   }
 
-  // writeHydrate(
-  //   placeholder,
-  //   t.expressionStatement(
-  //     callRuntime(
-  //       placeholder,
-  //       placeholder.node.escape ? "text" : "html",
-  //       placeholder.get("value").node
-  //     )
-  //   )
-  // );
+  writeHydrate(
+    placeholder,
+    t.expressionStatement(
+      callRuntime(
+        placeholder,
+        placeholder.node.escape ? "text" : ("html" as any),
+        placeholder.get("value").node
+      )
+    )
+  );
   placeholder.remove();
 }

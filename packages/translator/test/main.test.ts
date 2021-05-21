@@ -44,8 +44,8 @@ describe("translator", () => {
   autotest("fixtures", {
     htmlCompiled: runCompileTest(htmlConfig),
     htmlRendered: runHTMLRenderTest,
-    domCompiled: runCompileTest(domConfig),
-    domRendered: runDOMRenderTest
+    domCompiled: runCompileTest(domConfig)
+    // domRendered: runDOMRenderTest
   });
 });
 
