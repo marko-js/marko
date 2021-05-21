@@ -1,4 +1,3 @@
-import { walker } from "./walker";
 const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {

@@ -1,5 +1,5 @@
 import { Conditional, Loop } from "./control-flow";
-import { createRenderer, Renderer } from "./renderer";
+import { Renderer } from "./renderer";
 import { onDestroy, Scope } from "./scope";
 
 export const enum NodeType {
@@ -200,6 +200,7 @@ export function innerHTML(el: Element, value: string) {
 
 export function dynamicTagString(tag: string, input: Record<string, unknown>) {
   // TODO
+  return [tag, input];
 }
 
 export function dynamicTagRenderer(
@@ -207,6 +208,7 @@ export function dynamicTagRenderer(
   input: Record<string, unknown>
 ) {
   // TODO
+  return [tag, input];
 }
 
 export function dynamicTag(
@@ -214,6 +216,7 @@ export function dynamicTag(
   input: Record<string, unknown>
 ) {
   // TODO
+  return [tag, input];
 }
 
 function normalizeAttrValue(value: unknown) {

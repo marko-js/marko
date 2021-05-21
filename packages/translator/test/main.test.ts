@@ -47,6 +47,7 @@ describe("translator", () => {
     domCompiled: runCompileTest(domConfig)
     // domRendered: runDOMRenderTest
   });
+  runDOMRenderTest;
 });
 
 function runCompileTest(config: compiler.Config) {

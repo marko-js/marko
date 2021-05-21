@@ -49,7 +49,7 @@ export function init(runtimeId = "M") {
       }
     }
 
-    components.forEach(([markerId, componentType, input]) => {
+    components.forEach(([markerId, componentType /* input */]) => {
       const startKey = runtimePrefix + markerId;
       const startNode = walker[startKey];
       const hydrate = hydrateById[componentType]!;
@@ -58,6 +58,7 @@ export function init(runtimeId = "M") {
 
       try {
         // TODO: runInBatch(() => hydrate(input));
+        hydrate;
       } finally {
         delete walker[startKey];
         endHydrate();

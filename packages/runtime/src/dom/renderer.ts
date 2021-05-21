@@ -111,7 +111,7 @@ export function createRenderFn<I extends Input>(
   };
 }
 
-export function createRenderer<T, H extends HydrateFn>(
+export function createRenderer<H extends HydrateFn>(
   template: string,
   walks?: string,
   hydrate?: H,

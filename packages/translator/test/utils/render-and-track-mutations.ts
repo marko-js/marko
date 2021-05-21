@@ -10,7 +10,7 @@ const browser = createBrowser({
 const window = browser.window;
 const document = window.document;
 
-const { createRenderFn, runInBatch } = browser.require(
+const { createRenderFn, run } = browser.require(
   "@marko/runtime-fluurt/src/dom/index"
 ) as typeof import("@marko/runtime-fluurt/src/dom/index");
 
@@ -58,9 +58,10 @@ export default async function renderAndGetMutations(
       } else {
         tracker.beginUpdate();
         if (typeof update === "function") {
-          runInBatch(() => (update as any)(container));
+          (update as any)(container);
+          run();
         } else {
-          instance.rerender(update);
+          instance.update(update);
         }
         tracker.logUpdate(update);
       }

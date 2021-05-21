@@ -97,7 +97,7 @@ describe("E2E", function () {
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
           const browserTest = browser.require(browserFile);
-          const { runInBatch } = browser.require(
+          const { run } = browser.require(
             "../../src/dom/index"
           ) as typeof import("../../src/dom/index");
           const render = browserTest.default;
@@ -118,7 +118,8 @@ describe("E2E", function () {
             if (browserTest.wait) {
               await resolveAfter(null, browserTest.wait);
             }
-            runInBatch(() => update(container));
+            update(container);
+            run();
             tracker.logUpdate(update);
           }
 

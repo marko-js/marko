@@ -37,7 +37,7 @@ const execClickCount = (scope: Scope, offset: number) => {
     on(
       scope[offset + 1] as Element,
       "click",
-      scope[offset] <= 1
+      (scope[offset] as number) <= 1
         ? () => {
             setQueued(scope, offset, (scope[offset] as number) + 1);
             queue(execClickCount, scope, offset);
