@@ -37,7 +37,7 @@
     "index.d.ts",
     "babel-types.d.ts"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/compiler/README.md",
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/marko/docs/compiler.md",
   "keywords": [
     "babel",
     "htmljs",
