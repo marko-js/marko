@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.5](https://github.com/marko-js/marko/compare/v5.10.4...v5.10.5) (2021-06-08)
+
+
+### Bug Fixes
+
+* **marko:** issue with dynamic tag name string and no renderbody ([69e8514](https://github.com/marko-js/marko/commit/69e8514e33d68705ccf76de8ec82efebfd31b1bc))
+
+
+
+
+
 ## [5.10.4](https://github.com/marko-js/marko/compare/v5.10.3...v5.10.4) (2021-05-19)
 
 
