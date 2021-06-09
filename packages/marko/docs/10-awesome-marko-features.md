@@ -132,7 +132,7 @@ back and make it consistent…_one day_.
 #### 5. Import JavaScript modules
 
 Do you have some helper JavaScript functions that you need to use in your views?
-Marko let’s you import any JavaScript module into your template using the same
+Marko lets you import any JavaScript module into your template using the same
 syntax as the JavaScript `import` statement without using Babel or any other
 build tool. No need for problematic globals (you could do that too, but please
 don’t or your coworkers will hate you).
