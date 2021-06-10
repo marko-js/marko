@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.6](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.10.5...v5.10.6) (2021-06-10)
+
+
+### Bug Fixes
+
+* **translator-default:** issue with user defined component var ([a36cfd1](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/a36cfd1bbbc213ea7889b5f59aec61e94cc5598c))
+
+
+
+
+
 ## [5.10.5](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.10.4...v5.10.5) (2021-06-08)
 
 **Note:** Version bump only for package @marko/translator-default
