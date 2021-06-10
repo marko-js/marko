@@ -28,7 +28,7 @@ const _marko_component = {
   }
 
 };
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.w(`<style id=css>\n  div {\n    color: ${_marko_escapeStyle(x)};\n  }\n</style><script>\n  var y = ${_marko_escapeScript(x)};\n</script>`);
 
   function _thing(out, stuff) {
@@ -43,24 +43,24 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     let e = thing;
     out.w(`<div${_marko_attr("d", d)}${_marko_attr("e", e)}></div>`);
   }
-  out.w(`</div><div></div><div${_marko_attr("id", _component.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
+  out.w(`</div><div></div><div${_marko_attr("id", _componentDef.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
   }]))} style=a:b;></div><input type=text>`);
 
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");
-  }, null, null, _component, "@x");
+  }, null, null, _componentDef, "@x");
 
   _marko_dynamic_tag(out, _thing, () => ({
     "x": 1
-  }), null, null, null, _component, "11");
+  }), null, null, null, _componentDef, "11");
 
   _marko_tag(_other, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
-  }, out, _component, "12", [["click", "handleClick", false, [a, b, ...d]]]);
+  }, out, _componentDef, "12", [["click", "handleClick", false, [a, b, ...d]]]);
 
   _marko_tag(_other, {
     "x": 1,
@@ -84,7 +84,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "renderBody": (out, b) => {
       out.w("<div></div>");
     }
-  }, out, _component, "14");
+  }, out, _componentDef, "14");
 
   out.w(`<div${_marko_attrs({
     "class": "b c",

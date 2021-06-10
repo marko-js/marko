@@ -11,18 +11,18 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", null, "0", component, null, 0);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.be("div", null, "0", _component, null, 0);
   out.e("input", {
     "value": input.defaultValue
-  }, "1", component, 0, 0, {
+  }, "1", _component, 0, 0, {
     pa: ["value"]
   });
   out.e("input", {
     "type": "checkbox",
     "value": input.defaultValue,
     "checked": input.checked
-  }, "2", component, 0, 0, {
+  }, "2", _component, 0, 0, {
     pa: ["value", "checked"]
   });
   out.ee();

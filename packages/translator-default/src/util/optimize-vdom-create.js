@@ -133,7 +133,7 @@ export function optimizeStaticVDOM(path) {
     t.variableDeclarator(identifier, state.currentRoot)
   ]);
   file.path.node.body.push(d);
-  path.replaceWith(write("n", identifier, t.identifier("component")));
+  path.replaceWith(write("n", identifier, file._componentInstanceIdentifier));
   path.skip();
 }
 

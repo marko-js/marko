@@ -11,10 +11,10 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   _marko_dynamic_tag(out, input.x, null, out => {
-    out.t("Hello", component);
-  }, null, null, _component, "0");
+    out.t("Hello", _component);
+  }, null, null, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true

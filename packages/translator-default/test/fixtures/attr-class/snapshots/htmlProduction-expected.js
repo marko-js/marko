@@ -11,7 +11,7 @@ import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.w(`<div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
@@ -22,11 +22,11 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       b: c,
       d
     }]
-  }, out, _component, "3");
+  }, out, _componentDef, "3");
 
   _marko_tag(_customTag, {
     "class": ["a", false, "b"]
-  }, out, _component, "4");
+  }, out, _componentDef, "4");
 
   _marko_dynamic_tag(out, input.test, () => ({
     "class": ["a", {
@@ -42,7 +42,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         out.w("Hello");
       }
     }
-  }), null, null, null, _component, "5");
+  }), null, null, null, _componentDef, "5");
 }, {
   t: _marko_componentType,
   i: true

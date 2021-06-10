@@ -19,7 +19,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/macros/t
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   function _renderTree(out, node) {
     out.w("Name: ");
     out.w((0, _escapeXml.x)(node.name));
@@ -33,7 +33,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
         for (const child of node.children) {
           const _keyScope = `[${_keyValue++}]`;
           out.w("<li>");
-          (0, _dynamicTag.default)(out, _renderTree, () => child, null, null, null, _component, "3" + _keyScope);
+          (0, _dynamicTag.default)(out, _renderTree, () => child, null, null, null, _componentDef, "3" + _keyScope);
           out.w("</li>");
         }
       }
@@ -41,7 +41,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     }
   }
 
-  (0, _dynamicTag.default)(out, _renderTree, () => input.node, null, null, null, _component, "4");
+  (0, _dynamicTag.default)(out, _renderTree, () => input.node, null, null, null, _componentDef, "4");
 }, {
   t: _marko_componentType,
   i: true,

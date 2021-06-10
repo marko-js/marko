@@ -17,7 +17,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   (0, _dynamicTag.default)(out, input.x, () => ({
     "header": {
       "class": "my-header",
@@ -33,7 +33,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     }
   }), out => {
     out.w("Body content");
-  }, null, null, _component, "0");
+  }, null, null, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true,

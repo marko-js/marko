@@ -19,7 +19,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/attr-esc
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(input.className))}${(0, _attr.default)("foo", 'a' + input.foo + 'b')}${(0, _attr.default)("bar", `a ${input.foo} b`)}></div>`);
 }, {
   t: _marko_componentType,

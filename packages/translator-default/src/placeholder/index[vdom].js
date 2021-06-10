@@ -1,4 +1,3 @@
-import { types as t } from "@marko/compiler";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -13,7 +12,7 @@ export default function (path) {
   } else {
     path.replaceWith(
       withPreviousLocation(
-        write(method, value, t.identifier("component")),
+        write(method, value, path.hub.file._componentInstanceIdentifier),
         node
       )
     );

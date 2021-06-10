@@ -10,9 +10,9 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("textarea", null, "0", component, null, 0);
-  out.t("\n  hello world\n", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.be("textarea", null, "0", _component, null, 0);
+  out.t("\n  hello world\n", _component);
   out.ee();
 }, {
   t: _marko_componentType,

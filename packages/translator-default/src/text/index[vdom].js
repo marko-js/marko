@@ -11,7 +11,7 @@ export default function (path) {
       write(
         "t",
         t.stringLiteral(decode(node.value)),
-        t.identifier("component")
+        path.hub.file._componentInstanceIdentifier
       ),
       node
     )
