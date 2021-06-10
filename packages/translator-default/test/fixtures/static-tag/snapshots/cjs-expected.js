@@ -20,7 +20,7 @@ function bar() {}
 
 var baz = 456;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {}, {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {}, {
   t: _marko_componentType,
   i: true,
   d: true

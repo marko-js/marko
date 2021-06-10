@@ -23,7 +23,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/doctype/
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   out.w("<!DOCTYPE html>");
   out.w("<html>");
   out.w("<head>");
@@ -33,9 +33,9 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w("</head>");
   out.w("<body>");
   out.w("The content of the document......");
-  (0, _renderTag.default)(_initComponentsTag.default, {}, out, _component, "4");
-  (0, _renderTag.default)(_reordererRenderer.default, {}, out, _component, "5");
-  (0, _renderTag.default)(_preferredScriptLocationTag.default, {}, out, _component, "6");
+  (0, _renderTag.default)(_initComponentsTag.default, {}, out, _componentDef, "4");
+  (0, _renderTag.default)(_reordererRenderer.default, {}, out, _componentDef, "5");
+  (0, _renderTag.default)(_preferredScriptLocationTag.default, {}, out, _componentDef, "6");
   out.w("</body>");
   out.w("</html>");
 }, {

@@ -14,34 +14,34 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
     "style": _marko_style_merge({
       color: input.color
     })
-  }, "0", component, 0, 1);
+  }, "0", _component, 0, 1);
   out.e("div", {
     "style": "width:100px;"
-  }, "1", component, 0, 1);
+  }, "1", _component, 0, 1);
   out.e("div", {
     "style": "color: green"
-  }, "2", component, 0, 1);
+  }, "2", _component, 0, 1);
 
   _marko_tag(_customTag, {
     "style": {
       color: input.color
     }
-  }, out, _component, "3");
+  }, out, _componentDef, "3");
 
   _marko_tag(_customTag, {
     "style": {
       width: 100
     }
-  }, out, _component, "4");
+  }, out, _componentDef, "4");
 
   _marko_tag(_customTag, {
     "style": "color: green"
-  }, out, _component, "5");
+  }, out, _componentDef, "5");
 
   _marko_dynamic_tag(out, input.test, () => ({
     "style": {
@@ -52,10 +52,10 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
         color: "green"
       },
       "renderBody": out => {
-        out.t("Hello", component);
+        out.t("Hello", _component);
       }
     }
-  }), null, null, null, _component, "6");
+  }), null, null, null, _componentDef, "6");
 }, {
   t: _marko_componentType,
   i: true

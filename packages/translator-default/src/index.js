@@ -166,6 +166,11 @@ export const translate = {
   MarkoScriptlet,
   MarkoClass,
   MarkoComment,
+  ReferencedIdentifier(path) {
+    if (path.node.name === "component" && !path.scope.hasBinding("component")) {
+      path.replaceWith(path.hub.file._componentInstanceIdentifier);
+    }
+  },
   Program: {
     enter(path) {
       const {
@@ -190,6 +195,10 @@ export const translate = {
       }
 
       file._componentDefIdentifier = path.scope.generateUidIdentifier(
+        "componentDef"
+      );
+
+      file._componentInstanceIdentifier = path.scope.generateUidIdentifier(
         "component"
       );
 
@@ -365,7 +374,7 @@ export const translate = {
                   t.identifier("input"),
                   t.identifier("out"),
                   file._componentDefIdentifier,
-                  t.identifier("component"),
+                  file._componentInstanceIdentifier,
                   t.identifier("state")
                 ],
                 renderBlock.node

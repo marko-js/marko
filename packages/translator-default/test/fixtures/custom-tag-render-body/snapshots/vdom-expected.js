@@ -12,13 +12,13 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   _marko_tag(_testBodyFunction, {
     "name": "World",
     "renderBody": out => {
-      out.t("This is the body content", component);
+      out.t("This is the body content", _component);
     }
-  }, out, _component, "0");
+  }, out, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true,

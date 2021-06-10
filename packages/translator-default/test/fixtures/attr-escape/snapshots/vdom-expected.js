@@ -11,12 +11,12 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
     "class": _marko_class_merge(input.className),
     "foo": 'a' + input.foo + 'b',
     "bar": `a ${input.foo} b`
-  }, "0", component, 0, 0);
+  }, "0", _component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true,

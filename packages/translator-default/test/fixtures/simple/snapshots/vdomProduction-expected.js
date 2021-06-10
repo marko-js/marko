@@ -14,26 +14,26 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.t("Hello ", component);
-  out.t(input.name, component);
-  out.t("! ", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.t("Hello ", _component);
+  out.t(input.name, _component);
+  out.t("! ", _component);
 
   if (input.colors.length) {
-    out.be("ul", null, "0", component, null, 0);
+    out.be("ul", null, "0", _component, null, 0);
     {
       let _keyValue = 0;
 
       for (const color of input.colors) {
         const _keyScope = `[${_keyValue++}]`;
-        out.be("li", null, "1" + _keyScope, component, null, 0);
-        out.t(color, component);
+        out.be("li", null, "1" + _keyScope, _component, null, 0);
+        out.t(color, _component);
         out.ee();
       }
     }
     out.ee();
   } else {
-    out.n(_marko_node, component);
+    out.n(_marko_node, _component);
   }
 }, {
   t: _marko_componentType,

@@ -16,20 +16,20 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.n(_marko_node, component);
-  out.be("div", null, "1", component, null, 0);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.n(_marko_node, _component);
+  out.be("div", null, "1", _component, null, 0);
   scriptletA();
   scriptletB();
-  out.t("Hello ", component);
+  out.t("Hello ", _component);
   scriptletC();
-  out.t("World", component);
+  out.t("World", _component);
   scriptletD();
   out.ee();
-  out.t(" Hello World! ", component);
-  out.t(a, component);
-  out.t(b, component);
-  out.n(_marko_node2, component);
+  out.t(" Hello World! ", _component);
+  out.t(a, _component);
+  out.t(b, _component);
+  out.n(_marko_node2, _component);
 }, {
   t: _marko_componentType,
   i: true

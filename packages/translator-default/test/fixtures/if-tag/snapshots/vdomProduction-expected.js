@@ -10,23 +10,23 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   if (a + b) {
-    out.t("Hello", component);
+    out.t("Hello", _component);
   }
 
   if (a, b) {
-    out.t("World", component);
+    out.t("World", _component);
   }
 
-  out.be("div", null, "0", component, null, 0);
+  out.be("div", null, "0", _component, null, 0);
 
   if (x) {
-    out.t("A", component);
+    out.t("A", _component);
   } else if (y) {
-    out.t("B", component);
+    out.t("B", _component);
   } else {
-    out.t("C", component);
+    out.t("C", _component);
   }
 
   out.ee();

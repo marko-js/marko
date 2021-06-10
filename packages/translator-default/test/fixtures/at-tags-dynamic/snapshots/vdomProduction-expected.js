@@ -12,7 +12,7 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   const _cols = [];
   const _items = [];
   let _keyValue = 0;
@@ -26,7 +26,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           color
         },
         "renderBody": out => {
-          out.t("foo", component);
+          out.t("foo", _component);
         }
       });
     } else if (y) {
@@ -35,7 +35,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           color
         },
         "renderBody": out => {
-          out.t("bar", component);
+          out.t("bar", _component);
         }
       });
     } else {
@@ -44,7 +44,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           color
         },
         "renderBody": out => {
-          out.t("baz", component);
+          out.t("baz", _component);
         }
       });
     }
@@ -58,7 +58,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
 
     _items.push({
       "renderBody": out => {
-        out.t(i, component);
+        out.t(i, _component);
       }
     });
   }
@@ -76,7 +76,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       _rows.push({
         "row": row,
         "renderBody": out => {
-          out.t(row, component);
+          out.t(row, _component);
         }
       });
     }
@@ -92,7 +92,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   _rows2.push({
     "row": -1,
     "renderBody": out => {
-      out.t("Outside", component);
+      out.t("Outside", _component);
     }
   });
 
@@ -106,7 +106,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       "items": _items
     },
     "cols": _cols
-  }, out, _component, "0");
+  }, out, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true

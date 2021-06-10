@@ -47,7 +47,7 @@ const _marko_component = {
   }
 
 };
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   out.w("<style id=css>");
   out.w("\n  div {\n    color: ");
   out.w((0, _escapeStylePlaceholder.default)(x));
@@ -73,7 +73,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   }
   out.w("</div>");
   out.w("<div></div>");
-  out.w(`<div${(0, _attr.default)("id", _component.elId("1"))}></div>`);
+  out.w(`<div${(0, _attr.default)("id", _componentDef.elId("1"))}></div>`);
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(["a", {
     b: c,
     d
@@ -81,15 +81,15 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   out.w("<input type=text>");
   (0, _dynamicTag.default)(out, _b.default, null, out => {
     out.w("<div></div>");
-  }, null, null, _component, "@x");
+  }, null, null, _componentDef, "@x");
   (0, _dynamicTag.default)(out, _thing, () => ({
     "x": 1
-  }), null, null, null, _component, "11");
+  }), null, null, null, _componentDef, "11");
   (0, _renderTag.default)(_index.default, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
-  }, out, _component, "12", [["click", "handleClick", false, [_b.default, b, ...d]]]);
+  }, out, _componentDef, "12", [["click", "handleClick", false, [_b.default, b, ...d]]]);
   (0, _renderTag.default)(_index.default, {
     "x": 1,
     ...thing,
@@ -112,7 +112,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     "renderBody": (out, b) => {
       out.w("<div></div>");
     }
-  }, out, _component, "14");
+  }, out, _componentDef, "14");
   out.w(`<div${(0, _attrs.default)({
     "class": "b c",
     "a": {

@@ -10,14 +10,14 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.t("Hello ", component);
-  out.t(input.name, component);
-  out.t("! Hello ", component);
-  out.h(input.name, component);
-  out.t("! Hello ", component);
-  out.h(input.missing, component);
-  out.t("!", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.t("Hello ", _component);
+  out.t(input.name, _component);
+  out.t("! Hello ", _component);
+  out.h(input.name, _component);
+  out.t("! Hello ", _component);
+  out.h(input.missing, _component);
+  out.t("!", _component);
 }, {
   t: _marko_componentType,
   i: true

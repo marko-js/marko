@@ -10,39 +10,39 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", null, "0", component, null, 0);
-  out.be("div", null, "1", component, null, 0);
-  out.t("Hello ", component);
-  out.be("div", null, "2", component, null, 0);
-  out.t(" ", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.be("div", null, "0", _component, null, 0);
+  out.be("div", null, "1", _component, null, 0);
+  out.t("Hello ", _component);
+  out.be("div", null, "2", _component, null, 0);
+  out.t(" ", _component);
   out.ee();
-  out.t(" World", component);
+  out.t(" World", _component);
   out.ee();
-  out.be("div", null, "3", component, null, 0);
-  out.t(" Hello", component);
+  out.be("div", null, "3", _component, null, 0);
+  out.t(" Hello", _component);
   out.ee();
-  out.be("pre", null, "4", component, null, 0);
-  out.t("\n    This should  \n      be preserved\n  ", component);
+  out.be("pre", null, "4", _component, null, 0);
+  out.t("\n    This should  \n      be preserved\n  ", _component);
   out.ee();
-  out.be("div", null, "5", component, null, 0);
-  out.be("div", null, "6", component, null, 0);
-  out.t("Hello ", component);
+  out.be("div", null, "5", _component, null, 0);
+  out.be("div", null, "6", _component, null, 0);
+  out.t("Hello ", _component);
   out.ee();
   out.ee();
   out.ee();
-  out.be("div", null, "7", component, null, 0);
+  out.be("div", null, "7", _component, null, 0);
   scriptletA();
   scriptletB();
-  out.t("Hello ", component);
+  out.t("Hello ", _component);
   scriptletC();
-  out.t("World", component);
+  out.t("World", _component);
   scriptletD();
   out.ee();
-  out.t(" Hello World! ", component);
-  out.t(a, component);
-  out.t(b, component);
-  out.e("div", null, "8", component, 0, 0);
+  out.t(" Hello World! ", _component);
+  out.t(a, _component);
+  out.t(b, _component);
+  out.e("div", null, "8", _component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true,

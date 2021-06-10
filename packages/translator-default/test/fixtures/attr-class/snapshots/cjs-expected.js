@@ -25,7 +25,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/attr-cla
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(["a", {
     b: c,
     d
@@ -37,10 +37,10 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
       b: c,
       d
     }]
-  }, out, _component, "3");
+  }, out, _componentDef, "3");
   (0, _renderTag.default)(_customTag2.default, {
     "class": ["a", false, "b"]
-  }, out, _component, "4");
+  }, out, _componentDef, "4");
   (0, _dynamicTag.default)(out, input.test, () => ({
     "class": ["a", {
       b: c,
@@ -55,7 +55,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
         out.w("Hello");
       }
     }
-  }), null, null, null, _component, "5");
+  }), null, null, null, _componentDef, "5");
 }, {
   t: _marko_componentType,
   i: true,
