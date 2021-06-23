@@ -21,7 +21,7 @@ export type Config = {
   code?: boolean;
   writeVersionComment?: boolean;
   ignoreUnrecognizedTags?: boolean;
-  sourceMaps?: boolean;
+  sourceMaps?: boolean | "inline" | "both";
   translator?: string;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
