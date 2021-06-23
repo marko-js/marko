@@ -21,7 +21,6 @@ import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 
 export default {
   enter(path) {
-    assertNoVar(path);
     const tagDef = getTagDef(path);
 
     if (tagDef && tagDef.translator) {
@@ -32,6 +31,8 @@ export default {
         return;
       }
     }
+
+    assertNoVar(path);
 
     for (const attr of path.get("attributes")) {
       if (attr.isMarkoAttribute()) {
