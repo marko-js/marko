@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.7](https://github.com/marko-js/marko/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+
+### Bug Fixes
+
+* **compiler:** improve sourceMap config option type definition ([5a5092e](https://github.com/marko-js/marko/commit/5a5092e89d77046b046db2d34a1d34715f93756e))
+* **translator-default:** delay no tag var assertion if translator exists ([3f7b570](https://github.com/marko-js/marko/commit/3f7b570fa11688b84345d056e08d31b737fa4783))
+
+
+
+
+
 ## [5.10.6](https://github.com/marko-js/marko/compare/v5.10.5...v5.10.6) (2021-06-10)
 
 

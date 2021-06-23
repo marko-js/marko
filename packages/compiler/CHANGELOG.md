@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.7](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+
+### Bug Fixes
+
+* **compiler:** improve sourceMap config option type definition ([5a5092e](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/5a5092e89d77046b046db2d34a1d34715f93756e))
+
+
+
+
+
 ## [5.10.6](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.5...v5.10.6) (2021-06-10)
 
 **Note:** Version bump only for package @marko/compiler

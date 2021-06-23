@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.10.7](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+
+### Bug Fixes
+
+* **translator-default:** delay no tag var assertion if translator exists ([3f7b570](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/3f7b570fa11688b84345d056e08d31b737fa4783))
+
+
+
+
+
 ## [5.10.6](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.10.5...v5.10.6) (2021-06-10)
 
 
