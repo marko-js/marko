@@ -289,4 +289,4 @@ Coming soon: auto correction and autonomous coding
 
 ---
 
-_Cover image credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Amanhecer_no_Hercules_--.jpg)_
+*Cover image credit: [Wikipedia](https://commons.wikimedia.org/wiki/File:Amanhecer_no_Hercules_--.jpg)*
