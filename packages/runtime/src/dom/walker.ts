@@ -69,10 +69,8 @@ function walkNormal<T extends Node>(newNode?: T) {
       }
     } else if (value >= WalkCodes.Over) {
       while (WalkCodes.Over <= value--) {
-        while (!walker.nextSibling()) {
-          if (!walker.parentNode() && "MARKO_DEBUG") {
-            throw new Error("No more parent nodes to walk");
-          }
+        if (!walker.nextSibling() && !walker.nextNode() && "MARKO_DEBUG") {
+          throw new Error("No more nodes to walk");
         }
       }
     } else if (value >= WalkCodes.Out) {
@@ -91,7 +89,7 @@ function walkNormal<T extends Node>(newNode?: T) {
 }
 
 export function enableExtendedWalk() {
-  extendedWalk = actualExtendedWalk;
+  // extendedWalk = actualExtendedWalk;
 }
 
 let extendedWalk: typeof actualExtendedWalk;
