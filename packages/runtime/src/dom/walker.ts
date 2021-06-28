@@ -89,7 +89,7 @@ function walkNormal<T extends Node>(newNode?: T) {
 }
 
 export function enableExtendedWalk() {
-  // extendedWalk = actualExtendedWalk;
+  extendedWalk = actualExtendedWalk;
 }
 
 let extendedWalk: typeof actualExtendedWalk;
