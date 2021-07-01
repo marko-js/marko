@@ -4,12 +4,13 @@ import {
   conditional,
   setConditionalRenderer,
   Conditional,
-  Scope,
   write,
   read,
   createRenderer,
   createRenderFn,
-  staticNodeMethods
+  staticNodeMethods,
+  runWithScope,
+  readInOwner
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
 
@@ -50,18 +51,24 @@ type scope = {
 
 export const template = `<div><!><span></span><span></span></div>`;
 export const walks = next(1) + get + over(3);
-export const hydrate = (scope: Scope, offset: number) => {
-  write(Index.CONDITIONAL, conditional(walk() as Comment, scope, offset));
+export const hydrate = () => {
+  write(Index.CONDITIONAL, conditional(walk() as Comment));
 };
 
 export const execInputValue = () => {
   const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
   setConditionalRenderer(cond0, read(Index.INPUT_VALUE) ? branch0 : undefined);
   if (cond0.renderer === branch0) {
-    const cond0_scope = cond0.scope;
-    data(cond0_scope[0] as Text, read(Index.INPUT_VALUE));
+    runWithScope(execInputBranch0, 0, cond0.scope);
   }
 };
+
+function execInputBranch0() {
+  data(
+    read<Branch0Scope, Branch0Index.TEXT>(Branch0Index.TEXT),
+    readInOwner<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE)
+  );
+}
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
   write(Index.INPUT_VALUE, input.value);
@@ -73,6 +80,8 @@ export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
 const enum Branch0Index {
   TEXT = 0
 }
+
+type Branch0Scope = [Text];
 
 const branch0 = createRenderer(
   "<span> </span>",

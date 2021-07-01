@@ -41,6 +41,9 @@ export {
   read,
   write,
   isDirty,
+  readInOwner,
+  writeInOwner,
+  isDirtyInOwner,
   bind,
   writeQueued,
   runWithScope

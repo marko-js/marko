@@ -74,6 +74,8 @@ const enum Branch0Index {
   TEXT = 0
 }
 
+type Branch0Scope = [Text];
+
 const branch0 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),

@@ -4,7 +4,7 @@ import { setQueued } from "./queue";
 
 export let currentScope: Scope;
 export let currentOffset: number;
-let parentOffset: number;
+let ownerOffset: number;
 
 const dirtyScopes: Set<Scope> = new Set();
 
@@ -74,6 +74,38 @@ export function setDirty(
   if (scope.___dirty !== true) {
     scope.___dirty[offset + localIndex] = true;
   }
+}
+
+export function readInOwner<
+  S extends Record<number, unknown>,
+  I extends number
+>(localIndex: I, ownerLevel?: number) {
+  return read<S, I>(localIndex, getOwnerScope(ownerLevel), ownerOffset);
+}
+
+export function writeInOwner(
+  localIndex: number,
+  value: unknown,
+  ownerLevel?: number
+) {
+  write(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
+}
+
+export function isDirtyInOwner(localIndex: number, ownerLevel?: number) {
+  return isDirty(localIndex, getOwnerScope(ownerLevel), ownerOffset);
+}
+
+export function setDirtyInOwner(localIndex: number, ownerLevel?: number) {
+  setDirty(localIndex, getOwnerScope(ownerLevel), ownerOffset);
+}
+
+export function getOwnerScope(ownerLevel = 1) {
+  let scope = currentScope;
+  while (ownerLevel--) {
+    scope = scope.___parentScope!;
+    ownerOffset = scope.___parentOffset!;
+  }
+  return scope;
 }
 
 export function bind(fn: (...args: unknown[]) => unknown) {
