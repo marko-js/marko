@@ -1,6 +1,6 @@
 import { isDocumentFragment } from "./dom";
 import { Renderer } from "./renderer";
-import { Scope } from "./scope";
+import { Scope, runWithScope } from "./scope";
 
 const doc = document;
 export const walker = doc.createTreeWalker(
@@ -157,9 +157,7 @@ function walkHydrateSubsequent(): Node {
 export function detachedWalk(
   firstChild: Node,
   renderer: Renderer,
-  scope: Scope,
-  parentScopeOrScopes?: number | Scope | Array<Scope | number>,
-  parentOffset?: number
+  scope: Scope
 ) {
   if (renderer.___hydrate) {
     const cachedWalks = currentWalks;
@@ -169,8 +167,7 @@ export function detachedWalk(
     walker.currentNode = firstChild;
     currentWalks = renderer.___walks!;
     currentWalkIndex = 0;
-    renderer.___hydrate(scope, parentScopeOrScopes as any, parentOffset as any);
-
+    runWithScope(renderer.___hydrate, 0, scope);
     currentWalks = cachedWalks;
     currentWalkIndex = cachedWalkIndex;
     walker.currentNode = cachedCurrent;

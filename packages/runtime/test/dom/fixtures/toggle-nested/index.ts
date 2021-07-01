@@ -4,13 +4,13 @@ import {
   conditional,
   setConditionalRenderer,
   Conditional,
-  Scope,
-  set,
   createRenderer,
   createRenderFn,
   staticNodeMethods,
   dynamicFragmentMethods,
-  checkDirty
+  write,
+  isDirty,
+  read
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
 
@@ -44,6 +44,20 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
+const enum Index {
+  INPUT_SHOW = 1,
+  INPUT_VALUE1 = 2,
+  INPUT_VALUE2 = 3,
+  CONDITIONAL = 4
+}
+
+type scope = {
+  [Index.INPUT_SHOW]: Input["show"];
+  [Index.INPUT_VALUE1]: Input["value1"];
+  [Index.INPUT_VALUE2]: Input["value2"];
+  [Index.CONDITIONAL]: Conditional;
+};
+
 // <div>
 //   <if=input.show>
 //     <if=input.value1><span>${input.value1}</span></if>
@@ -53,61 +67,64 @@ type Input = typeof inputs[number];
 
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
-export const hydrate = (scope: Scope, offset: number) => {
-  scope[offset + 3] = conditional(walk() as Comment, scope, offset);
+export const hydrate = () => {
+  write(Index.CONDITIONAL, conditional(walk() as Comment));
 };
 
-export const execInputShowValue1Value2 = (scope: Scope, offset: number) => {
-  const cond0 = scope[offset + 3] as Conditional;
-  if (checkDirty(scope, offset)) {
-    setConditionalRenderer(cond0, scope[offset] ? branch0 : undefined);
+export const execInputShowValue1Value2 = () => {
+  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
+  if (isDirty(Index.INPUT_SHOW)) {
+    setConditionalRenderer(cond0, read(Index.INPUT_SHOW) ? branch0 : undefined);
   }
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
-    if (checkDirty(scope, offset) || checkDirty(scope, offset + 1)) {
+    if (isDirty(Index.INPUT_SHOW) || isDirty(Index.INPUT_VALUE1)) {
       const cond0_0 = cond0_scope[0] as Conditional;
       setConditionalRenderer(
         cond0_0,
-        scope[offset + 1] ? branch0_0 : undefined
+        read(Index.INPUT_VALUE1) ? branch0_0 : undefined
       );
       if (cond0_0.renderer === branch0_0) {
         const cond0_0_scope = cond0_0.scope;
-        data(cond0_0_scope[0] as Text, scope[offset + 1]);
+        data(cond0_0_scope[0] as Text, read(Index.INPUT_VALUE1));
       }
     }
-    if (checkDirty(scope, offset) || checkDirty(scope, offset + 2)) {
+    if (isDirty(Index.INPUT_SHOW) || isDirty(Index.INPUT_VALUE2)) {
       const cond0_1 = cond0_scope[1] as Conditional;
       setConditionalRenderer(
         cond0_1,
-        scope[offset + 2] ? branch0_1 : undefined
+        read(Index.INPUT_VALUE2) ? branch0_1 : undefined
       );
       if (cond0_1.renderer === branch0_1) {
         const cond0_1_scope = cond0_1.scope;
-        data(cond0_1_scope[0] as Text, scope[offset + 2]);
+        data(cond0_1_scope[0] as Text, read(Index.INPUT_VALUE2));
       }
     }
   }
 };
 
-export const execDynamicInput = (
-  input: Input,
-  scope: Scope,
-  offset: number
-) => {
-  set(scope, offset, input.show);
-  set(scope, offset + 1, input.value1);
-  set(scope, offset + 2, input.value2);
-  execInputShowValue1Value2(scope, offset);
+export const execDynamicInput = (input: Input) => {
+  write(Index.INPUT_SHOW, input.show);
+  write(Index.INPUT_VALUE1, input.value1);
+  write(Index.INPUT_VALUE2, input.value2);
+  execInputShowValue1Value2();
 };
 
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
 
+const enum Branch0Index {
+  COND1 = 0,
+  COND2 = 1
+}
+
+type Branch0Scope = [Conditional, Conditional];
+
 const branch0 = createRenderer(
   "<!><!>",
   get + over(1) + get + over(1),
-  (scope: Scope) => {
-    scope[0] = conditional(walk() as Comment, scope, 0);
-    scope[1] = conditional(walk() as Comment, scope, 0);
+  () => {
+    write(Branch0Index.COND1, conditional(walk() as Comment));
+    write(Branch0Index.COND2, conditional(walk() as Comment));
   },
   0,
   dynamicFragmentMethods,
@@ -116,23 +133,35 @@ const branch0 = createRenderer(
   1
 );
 
+const enum Branch0_0Index {
+  TEXT = 0
+}
+
+type Branch0_0Scope = [Text];
+
 const branch0_0 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  (scope: Scope) => {
-    scope[0] = walk();
+  () => {
+    write(Branch0_0Index.TEXT, walk());
   },
   0,
   staticNodeMethods
 );
+
+const enum Branch0_1Index {
+  TEXT = 0
+}
+
+type Branch0_1Scope = [Text];
 
 // OPTIMIZATION: these two branches have the same renderer arguments
 // so they could share the same renderer instance
 const branch0_1 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  (scope: Scope) => {
-    scope[0] = walk();
+  () => {
+    write(Branch0_1Index.TEXT, walk());
   },
   0,
   staticNodeMethods

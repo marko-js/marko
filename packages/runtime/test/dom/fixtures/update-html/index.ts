@@ -2,7 +2,8 @@ import {
   html,
   register,
   walk,
-  set,
+  read,
+  write,
   createRenderFn,
   Scope
 } from "../../../../src/dom/index";
@@ -22,15 +23,25 @@ export const inputs = [
 
 export const FAILS_HYDRATE = true;
 
+const enum Index {
+  HTML = 0,
+  INPUT_VALUE = 2
+}
+
+type scope = {
+  [Index.HTML]: Node & ChildNode;
+  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
+};
+
 // <em>Testing</em> $!{input.value}
 export const template = "<em>Testing</em> <!>";
 export const walks = over(2) + get + over(1);
-export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset + 1] = scope[offset + 2] = walk();
+export const hydrate = register("", () => {
+  write(Index.HTML, walk());
 });
 
-export const execInputValue = (scope: Scope, offset: number) => {
-  html(scope[offset] as string, scope, offset + 1);
+export const execInputValue = () => {
+  html(read<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE), Index.HTML);
 };
 
 export const execDynamicInput = (
@@ -38,8 +49,8 @@ export const execDynamicInput = (
   scope: Scope,
   offset: number
 ) => {
-  set(scope, offset, input.value);
-  execInputValue(scope, offset);
+  write(Index.INPUT_VALUE, input.value);
+  execInputValue();
 };
 
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);

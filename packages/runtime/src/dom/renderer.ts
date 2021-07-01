@@ -1,6 +1,6 @@
 import { Conditional, Loop } from "./control-flow";
 import { DOMMethods } from "./dom";
-import { createScope, Scope, cleanScopes } from "./scope";
+import { createScope, Scope, cleanScopes, runWithScope } from "./scope";
 import { WalkCodes, detachedWalk } from "./walker";
 
 const enum NodeType {
@@ -39,25 +39,14 @@ type RenderResult = Node & {
   destroy: () => void;
 };
 
-export function initRenderer(
-  renderer: Renderer,
-  scope: Scope,
-  parentScopeOrScopes?: number | Scope | Array<Scope | number>,
-  parentOffset?: number
-) {
+export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
   // TODO: handle dynamic start/end nodes
   scope.___startNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom;
   scope.___endNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
-  detachedWalk(
-    scope.___startNode,
-    renderer,
-    scope,
-    parentScopeOrScopes,
-    parentOffset
-  );
+  detachedWalk(scope.___startNode, renderer, scope);
   if (renderer.___dynamicStartNodeOffset !== undefined) {
     scope.___startNode = scope[renderer.___dynamicStartNodeOffset] as
       | Conditional
@@ -94,12 +83,12 @@ export function createRenderFn<I extends Input>(
   );
   return (input: I): RenderResult => {
     const scope = createScope(size!, domMethods!);
-    const dom = initRenderer(renderer, scope, 0) as RenderResult;
-    dynamicInput && dynamicInput(input, scope, 0);
+    const dom = initRenderer(renderer, scope) as RenderResult;
+    dynamicInput && runWithScope(dynamicInput, 0, scope, [input]);
     cleanScopes();
 
     dom.update = (newInput: I) => {
-      dynamicInput && dynamicInput(newInput, scope, 0);
+      dynamicInput && runWithScope(dynamicInput, 0, scope, [newInput]);
       cleanScopes();
     };
 

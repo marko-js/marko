@@ -2,14 +2,16 @@ import {
   walk,
   data,
   loop,
-  set,
   setLoopFromTo,
   Loop,
   Scope,
   createRenderer,
   createRenderFn,
-  checkDirty,
-  staticNodeMethods
+  isDirty,
+  runWithScope,
+  staticNodeMethods,
+  write,
+  read
 } from "../../../../src/dom/index";
 import { over, get, next } from "../../utils/walks";
 
@@ -33,49 +35,82 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
-export const template = `<div></div>`;
-export const walks = get + over(1);
-export const hydrate = (scope: Scope, offset: number) => {
-  scope[offset + 3] = loop(walk() as Comment, iter0, i => i);
+const enum Index {
+  DIV = 0,
+  INPUT_FROM = 1,
+  INPUT_TO = 2,
+  INPUT_STEP = 3,
+  LOOP = 4
+}
+
+type scope = {
+  [Index.DIV]: HTMLDivElement;
+  [Index.INPUT_FROM]: Input["from"];
+  [Index.INPUT_TO]: Input["to"];
+  [Index.INPUT_STEP]: Input["step"];
+  [Index.LOOP]: Loop;
 };
 
-export const execInputFromToStep = (scope: Scope, offset: number) => {
-  setLoopFromTo(
-    scope[offset + 3] as Loop,
-    scope[offset] as Input["from"],
-    scope[offset + 1] as Input["to"],
-    scope[offset + 2] as Input["step"]
+// <div>
+//   <for|child| from=input.from to=input.to step=input.step>
+//     ${child.text}
+//   </for>
+// </div>
+
+export const template = `<div></div>`;
+export const walks = get + over(1);
+export const hydrate = () => {
+  write(
+    Index.LOOP,
+    loop(walk() as Comment, iter0, i => i)
   );
-  for (const loopScope of scope[offset + 3] as Loop) {
-    iter0_execItem(loopScope);
+};
+
+export const execInputFromToStep = () => {
+  setLoopFromTo(
+    read<scope, Index.LOOP>(Index.LOOP),
+    read<scope, Index.INPUT_FROM>(Index.INPUT_FROM),
+    read<scope, Index.INPUT_TO>(Index.INPUT_TO),
+    read<scope, Index.INPUT_STEP>(Index.INPUT_STEP)
+  );
+  for (const loopScope of read<scope, Index.LOOP>(Index.LOOP)) {
+    runWithScope(iter0_execItem, 0, loopScope);
   }
 };
 
-export const execDynamicInput = (
-  input: Input,
-  scope: Scope,
-  offset: number
-) => {
-  set(scope, offset, input.from);
-  set(scope, offset + 1, input.to);
-  set(scope, offset + 2, input.step);
-  execInputFromToStep(scope, offset);
+export const execDynamicInput = (input: Input) => {
+  write(Index.INPUT_FROM, input.from);
+  write(Index.INPUT_TO, input.to);
+  write(Index.INPUT_STEP, input.step);
+  execInputFromToStep();
 };
 
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
 
+const enum Iter0Index {
+  ITEM = 0,
+  INDEX = 1,
+  ALL = 2,
+  TEXT = 3
+}
+
+type iterScope = [number, number, number[], Text];
+
 const iter0 = createRenderer(
   " ",
   get + next(1),
-  (scope: Scope) => {
-    scope[3] = walk();
+  () => {
+    write(Iter0Index.TEXT, walk());
   },
   0,
   staticNodeMethods
 );
 
-const iter0_execItem = (scope: Scope) => {
-  if (checkDirty(scope, 0)) {
-    data(scope[3] as Text, scope[0]);
+const iter0_execItem = () => {
+  if (isDirty(Iter0Index.ITEM)) {
+    data(
+      read<iterScope, Iter0Index.TEXT>(Iter0Index.TEXT),
+      read(Iter0Index.ITEM)
+    );
   }
 };

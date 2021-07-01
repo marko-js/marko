@@ -1,7 +1,8 @@
 import {
   data,
   walk,
-  set,
+  read,
+  write,
   enableExtendedWalk,
   register,
   createRenderFn,
@@ -21,24 +22,30 @@ export const inputs = [
   }
 ];
 
+const enum Index {
+  TEXT = 0,
+  INPUT_VALUE = 1
+}
+
+type scope = {
+  [Index.TEXT]: Text;
+  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
+};
+
 // Static ${input.value}
 export const template = "Static ";
 export const walks = after + over(1);
-export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset + 1] = walk();
+export const hydrate = register("", () => {
+  write(Index.TEXT, walk());
 });
 
-export const execInputValue = (scope: Scope, offset: number) => {
-  data(scope[offset + 1] as Text, scope[offset]);
+export const execInputValue = () => {
+  data(read<scope, Index.TEXT>(Index.TEXT), read(Index.INPUT_VALUE));
 };
 
-export const execDynamicInput = (
-  input: typeof inputs[number],
-  scope: Scope,
-  offset: number
-) => {
-  set(scope, offset, input.value);
-  execInputValue(scope, offset);
+export const execDynamicInput = (input: typeof inputs[number]) => {
+  write(Index.INPUT_VALUE, input.value);
+  execInputValue();
 };
 
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);

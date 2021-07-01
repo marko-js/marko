@@ -5,10 +5,13 @@ import {
   createRenderFn,
   Scope,
   on,
+  read,
+  writeQueued,
   ensureDelegated,
-  setQueued,
   queue,
-  checkDirty
+  isDirty,
+  write,
+  bind
 } from "../../../../src/dom/index";
 import { get, next } from "../../utils/walks";
 
@@ -18,53 +21,55 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click, click, click] as const;
 
+const enum Index {
+  BUTTON = 0,
+  BUTTON_TEXT = 1,
+  CLICK_COUNT = 2
+}
+
+type scope = {
+  [Index.BUTTON]: HTMLButtonElement;
+  [Index.BUTTON_TEXT]: Text;
+  [Index.CLICK_COUNT]: number;
+};
+
 // <let/clickCount = 0/>
 // <button onclick() { clickCount++; }>${clickCount}</button>
+
 export const template = `<button> </button>`;
 export const walks = get + next(1) + get + next(1);
-export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset] = 0;
-  scope[offset + 1] = walk();
-  scope[offset + 2] = walk();
-  execClickCount(scope, offset);
+export const hydrate = register("", () => {
+  write(Index.CLICK_COUNT, 0);
+  write(Index.BUTTON, walk());
+  write(Index.BUTTON_TEXT, walk());
+  execClickCount();
 });
 
-const execClickCount = (scope: Scope, offset: number) => {
-  if (checkDirty(scope, offset)) {
+const execClickCount = () => {
+  if (isDirty(Index.CLICK_COUNT)) {
     // TODO: the `scope` being closed over by this function will not
     // always be the root scope.  How do we handle this and other
     // function closures?
     on(
-      scope[offset + 1] as Element,
+      read<scope, Index.BUTTON>(Index.BUTTON),
       "click",
-      (scope[offset] as number) <= 1
-        ? () => {
-            setQueued(scope, offset, (scope[offset] as number) + 1);
-            queue(execClickCount, scope, offset);
-          }
+      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) <= 1
+        ? bind(() => {
+            writeQueued(
+              Index.CLICK_COUNT,
+              read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
+            );
+            queue(execClickCount);
+          })
         : false
     );
-    data(scope[offset + 2] as Text, scope[offset]);
+    data(
+      read<scope, Index.BUTTON_TEXT>(Index.BUTTON_TEXT),
+      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT)
+    );
   }
 };
 
 export default createRenderFn(template, walks, hydrate, 0);
 
 ensureDelegated("click");
-
-/*
-<let/foo = 0/>
-<const/computed = input.compute(foo)/>
-<div>${computed}</div>
-
-
-////
-
-
-<let/bar = 0/>
-<child compute(foo) { return foo + bar; }/>
-
-/////
-
-scope[computeFn] = (foo) => foo + getQueuedScope(scope)[bar];
-*/

@@ -14,29 +14,17 @@ export type Conditional = (
       renderer: undefined;
     }
 ) & {
-  ___parentScope: Scope | undefined;
-  ___parentScopeOrScopes?: Scope | Array<Scope | number>;
-  ___parentOffset?: number;
   ___referenceNode: Comment | Element;
   ___context: typeof Context;
   ___getFirstNode: () => Node;
   ___getLastNode: () => Node;
 };
 
-export function conditional(
-  referenceNode: Comment | Element,
-  parentScopeOrScopes?: Scope | Array<Scope | number>,
-  parentOffset?: number
-): Conditional {
+export function conditional(referenceNode: Comment | Element): Conditional {
   return {
     scope: undefined,
     renderer: undefined,
     ___referenceNode: referenceNode,
-    ___parentScope: Array.isArray(parentScopeOrScopes)
-      ? (parentScopeOrScopes[0] as Scope)
-      : parentScopeOrScopes,
-    ___parentScopeOrScopes: parentScopeOrScopes,
-    ___parentOffset: parentOffset,
     ___context: Context,
     ___getFirstNode: getFirstNodeConditional,
     ___getLastNode: getLastNodeConditional
@@ -55,15 +43,9 @@ export function setConditionalRenderer(
       setContext(conditonal.___context);
       newScope = conditonal.scope = createScope(
         newRenderer.___size,
-        newRenderer.___domMethods!,
-        conditonal.___parentScope
+        newRenderer.___domMethods!
       );
-      initRenderer(
-        newRenderer,
-        newScope,
-        conditonal.___parentScopeOrScopes,
-        conditonal.___parentOffset
-      );
+      initRenderer(newRenderer, newScope);
       prevScope =
         prevScope || getEmptyScope(conditonal.___referenceNode as Comment);
       setContext(null);
@@ -93,12 +75,7 @@ export function setConditionalRendererOnlyChild(
         newRenderer.___size,
         newRenderer.___domMethods!
       ));
-      initRenderer(
-        newRenderer,
-        newScope,
-        conditonal.___parentScopeOrScopes,
-        conditonal.___parentOffset
-      );
+      initRenderer(newRenderer, newScope);
       newScope.___insertBefore(conditonal.___referenceNode as Element, null);
       setContext(null);
     }
@@ -130,9 +107,6 @@ export type Loop = {
   ___referenceIsMarker: boolean;
   ___renderer: Renderer;
   ___keyFn: undefined | ((item: unknown, index: number) => unknown);
-  ___parentScope: Scope | undefined;
-  ___parentScopeOrScopes: Scope | Array<Scope | number> | undefined;
-  ___parentOffset: number | undefined;
   ___context: typeof Context;
   ___getFirstNode: () => Node;
   ___getLastNode: () => Node;
@@ -142,9 +116,7 @@ export type Loop = {
 export function loop(
   referenceNode: Comment | Element,
   renderer: Renderer,
-  keyFn: (item: unknown) => unknown,
-  parentScopeOrScopes?: Scope | Array<Scope | number>,
-  parentOffset?: number
+  keyFn: (item: unknown) => unknown
 ): Loop {
   const referenceIsMarker = referenceNode.nodeType === NodeType.Comment;
   return {
@@ -154,11 +126,6 @@ export function loop(
     ___referenceIsMarker: referenceIsMarker,
     ___renderer: renderer,
     ___keyFn: keyFn,
-    ___parentScope: Array.isArray(parentScopeOrScopes)
-      ? (parentScopeOrScopes[0] as Scope)
-      : parentScopeOrScopes,
-    ___parentScopeOrScopes: parentScopeOrScopes,
-    ___parentOffset: parentOffset,
     ___context: Context,
     ___getFirstNode: getFirstNodeLoop,
     ___getLastNode: getLastNodeLoop,
@@ -203,17 +170,11 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
       if (!childScope) {
         childScope = createScope(
           loop.___renderer.___size,
-          loop.___renderer.___domMethods!,
-          loop.___parentScope
+          loop.___renderer.___domMethods!
         );
         childScope[0] = item;
         childScope[1] = index;
-        initRenderer(
-          loop.___renderer,
-          childScope,
-          loop.___parentScopeOrScopes,
-          loop.___parentOffset
-        );
+        initRenderer(loop.___renderer, childScope);
         inserts++;
       } else {
         if (childScope[1] !== index) moves++;

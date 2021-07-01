@@ -1,4 +1,11 @@
-import { set, cleanScopes, Scope } from "./scope";
+import {
+  set,
+  cleanScopes,
+  Scope,
+  runWithScope,
+  currentScope,
+  currentOffset
+} from "./scope";
 
 type ExecFn = (scope: Scope, offset: number) => void;
 
@@ -22,7 +29,11 @@ function triggerMacroTask() {
 const fns: Set<ExecFn> = new Set();
 let queuedFns: unknown[] = [];
 
-export function queue(fn: ExecFn, scope: Scope, offset: number) {
+export function queue(
+  fn: ExecFn,
+  scope: Scope = currentScope,
+  offset: number = currentOffset
+) {
   if (fns.has(fn)) {
     for (let i = 0; i < queuedFns.length; i += 3) {
       if (
@@ -67,9 +78,10 @@ export function run() {
       );
     }
     for (let i = 0; i < runningFns.length; i += 3) {
-      (runningFns[i] as ExecFn)(
-        runningFns[i + 1] as Scope,
-        runningFns[i + 2] as number
+      runWithScope(
+        runningFns[i] as ExecFn,
+        runningFns[i + 2] as number,
+        runningFns[i + 1] as Scope
       );
     }
     cleanScopes();

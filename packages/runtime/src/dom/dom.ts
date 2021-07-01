@@ -1,6 +1,6 @@
 import { Conditional, Loop } from "./control-flow";
 import { Renderer } from "./renderer";
-import { onDestroy, Scope } from "./scope";
+import { onDestroy, Scope, bind, read, write } from "./scope";
 
 export const enum NodeType {
   Element = 1,
@@ -129,9 +129,9 @@ export function data(node: Text | Comment, value: unknown) {
   node.data = normalizeString(value);
 }
 
-export function attrs(el: Element, scope: Scope, index: number) {
-  const nextAttrs = scope[index] as Record<string, unknown>;
-  const prevAttrs = scope[index + 1] as Record<string, unknown> | undefined;
+export function attrs(el: Element, index: number) {
+  const nextAttrs = read(index) as Record<string, unknown>;
+  const prevAttrs = read(index + 1) as Record<string, unknown> | undefined;
 
   if (prevAttrs) {
     for (const name in prevAttrs) {
@@ -149,22 +149,22 @@ export function attrs(el: Element, scope: Scope, index: number) {
     }
   }
 
-  scope[index + 1] = nextAttrs;
+  write(index + 1, nextAttrs);
 }
 
 const doc = document;
 const parser = doc.createElement("template");
 
-export function html(value: string, scope: Scope, index: number) {
-  const firstChild = scope[index] as Node & ChildNode;
-  const lastChild = scope[index + 1] as Node & ChildNode;
+export function html(value: string, index: number) {
+  const firstChild = read(index) as Node & ChildNode;
+  const lastChild = (read(index + 1) || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
 
   parser.innerHTML = value || " ";
   const newContent = parser.content;
-  scope[index] = newContent.firstChild;
-  scope[index + 1] = newContent.lastChild;
+  write(index, newContent.firstChild);
+  write(index + 1, newContent.lastChild);
   parentNode.insertBefore(newContent, firstChild);
 
   let current = firstChild;
@@ -175,9 +175,9 @@ export function html(value: string, scope: Scope, index: number) {
   }
 }
 
-export function props(node: Node, scope: Scope, index: number) {
-  const nextProps = scope[index] as Record<string, unknown>;
-  const prevProps = scope[index + 1] as Record<string, unknown> | undefined;
+export function props(node: Node, index: number) {
+  const nextProps = read(index) as Record<string, unknown>;
+  const prevProps = read(index + 1) as Record<string, unknown> | undefined;
 
   if (prevProps) {
     for (const name in prevProps) {
@@ -191,7 +191,7 @@ export function props(node: Node, scope: Scope, index: number) {
     node[name] = nextProps[name];
   }
 
-  scope[index + 1] = nextProps;
+  write(index + 1, nextProps);
 }
 
 export function innerHTML(el: Element, value: string) {
@@ -228,28 +228,28 @@ function normalizeString(value: unknown) {
 }
 
 type EffectFn = () => void | (() => void);
-export function userEffect(scope: Scope, index: number, fn: EffectFn) {
-  const cleanup = scope[index] as ReturnType<EffectFn>;
+export function userEffect(index: number, fn: EffectFn) {
+  const cleanup = read(index) as ReturnType<EffectFn>;
+  const nextCleanup = fn();
   if (cleanup) {
     cleanup();
   } else {
-    onDestroy(scope, index);
+    onDestroy(index);
   }
-  scope[index] = fn();
+  write(index, nextCleanup);
 }
 
 export function lifecycle(
-  scope: Scope,
   index: number,
   mount?: () => void,
   update?: () => void,
   destroy?: () => void
 ) {
-  const mounted = scope[index];
+  const mounted = read(index);
   if (!mounted) {
     if (mount) mount();
-    onDestroy(scope, index + 1);
+    onDestroy(index + 1);
   }
   if (mounted && update) update();
-  scope[index + 1] = destroy;
+  write(index + 1, destroy);
 }

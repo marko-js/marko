@@ -34,8 +34,16 @@ export { init, register } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queue, setQueued, run } from "./queue";
+export { queue, run } from "./queue";
 
-export { Scope, set, checkDirty } from "./scope";
+export {
+  Scope,
+  read,
+  write,
+  isDirty,
+  bind,
+  writeQueued,
+  runWithScope
+} from "./scope";
 
 export { createRenderer, createRenderFn } from "./renderer";

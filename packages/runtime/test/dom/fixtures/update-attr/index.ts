@@ -2,9 +2,9 @@ import {
   attr,
   walk,
   register,
-  set,
   createRenderFn,
-  Scope
+  write,
+  read
 } from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
 
@@ -29,24 +29,30 @@ export const inputs = [
   }
 ];
 
+const enum Index {
+  DIV = 0,
+  INPUT_VALUE = 1
+}
+
+type scope = {
+  [Index.DIV]: HTMLDivElement;
+  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
+};
+
 // <div a=0 b=input.value/>
 export const template = `<div a=0></div>`;
 export const walks = get + over(1);
-export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset + 1] = walk();
+export const hydrate = register("", () => {
+  write(Index.DIV, walk());
 });
 
-export const execInputValue = (scope: Scope, offset: number) => {
-  attr(scope[offset + 1] as Element, "b", scope[offset]);
+export const execInputValue = () => {
+  attr(read<scope, Index.DIV>(Index.DIV), "b", read(Index.INPUT_VALUE));
 };
 
-export const execDynamicInput = (
-  input: typeof inputs[number],
-  scope: Scope,
-  offset: number
-) => {
-  set(scope, offset, input.value);
-  execInputValue(scope, offset);
+export const execDynamicInput = (input: typeof inputs[number]) => {
+  write(Index.INPUT_VALUE, input.value);
+  execInputValue();
 };
 
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);

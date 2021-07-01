@@ -3,9 +3,6 @@ import {
   walk,
   conditional,
   Conditional,
-  Scope,
-  checkDirty,
-  set,
   register,
   createRenderer,
   createRenderFn,
@@ -13,7 +10,11 @@ import {
   data,
   queue,
   ensureDelegated,
-  staticNodeMethods
+  staticNodeMethods,
+  write,
+  read,
+  bind,
+  isDirty
 } from "../../../../src/dom/index";
 
 import { get, next, over } from "../../utils/walks";
@@ -24,30 +25,63 @@ const click = (container: Element) => {
 
 export const inputs = [{}, click] as const;
 
+const enum Index {
+  BUTTON = 0,
+  COMMENT = 1,
+  SHOW = 2,
+  MESSAGE = 3,
+  CONDITIONAL = 4
+}
+
+type scope = {
+  [Index.BUTTON]: HTMLButtonElement;
+  [Index.COMMENT]: Comment;
+  [Index.SHOW]: boolean;
+  [Index.MESSAGE]: string;
+  [Index.CONDITIONAL]: Conditional;
+};
+
+// <let/show = true/>
+// <let/message = "hi"/>
+// <button onclick() { message = "bye"; show = !show; }/>
+// <if=show><span>${message}</span></if>
+
 export const template = `<button></button><!>`;
 export const walks = get + over(1) + get + over(1);
-export const hydrate = register("", (scope: Scope, offset: number) => {
-  scope[offset] = true;
-  scope[offset + 1] = "hi";
-  on(walk() as HTMLButtonElement, "click", () => {
-    set(scope, offset + 1, "bye");
-    set(scope, offset, false);
-    queue(execShowMessage, scope, offset);
-  });
-  scope[offset + 2] = conditional(walk() as Comment, scope, offset);
+export const hydrate = register("", () => {
+  write(Index.SHOW, true);
+  write(Index.MESSAGE, "hi");
+  ``;
+  on(
+    walk() as HTMLButtonElement,
+    "click",
+    bind(() => {
+      write(Index.MESSAGE, "bye");
+      write(Index.SHOW, !read(Index.SHOW));
+      queue(execShowMessage);
+    })
+  );
+  write(Index.CONDITIONAL, conditional(walk() as Comment));
 
-  execShowMessage(scope, offset);
+  execShowMessage();
 });
 
-const execShowMessage = (scope: Scope, offset: number) => {
-  const cond0 = scope[offset + 2] as Conditional;
-  if (checkDirty(scope, offset)) {
-    setConditionalRenderer(cond0, scope[offset] ? branch0 : undefined);
+const execShowMessage = () => {
+  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
+  if (isDirty(Index.SHOW)) {
+    setConditionalRenderer(cond0, read(Index.SHOW) ? branch0 : undefined);
   }
   if (cond0.renderer === branch0) {
     const cond0_scope = cond0.scope;
-    if (checkDirty(cond0_scope, 0) || checkDirty(scope, offset + 1)) {
-      data(cond0_scope[0] as Text, scope[offset + 1]);
+    if (isDirty(Index.MESSAGE)) {
+      data(
+        read<Branch0Scope, Branch0Index.TEXT>(
+          Branch0Index.TEXT,
+          cond0_scope,
+          0
+        ),
+        read(Index.MESSAGE)
+      );
     }
   }
 };
@@ -56,11 +90,17 @@ export default createRenderFn(template, walks, hydrate, 0);
 
 ensureDelegated("click");
 
+const enum Branch0Index {
+  TEXT = 0
+}
+
+type Branch0Scope = [Text];
+
 const branch0 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  (scope: Scope) => {
-    scope[0] = walk();
+  () => {
+    write(Branch0Index.TEXT, walk());
   },
   0,
   staticNodeMethods
