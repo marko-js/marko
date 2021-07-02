@@ -10,7 +10,7 @@ import {
   createRenderer,
   createRenderFn,
   staticNodeMethods,
-  runWithScope
+  runInBranch
 } from "../../../../src/dom/index";
 import { next, get, over } from "../../utils/walks";
 
@@ -58,19 +58,16 @@ export const hydrate = () => {
 };
 
 export const execInputValue = () => {
-  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
   setConditionalRenderer(
-    cond0,
+    Index.CONDITIONAL,
     read(Index.INPUT_VISIBLE) ? branch0 : undefined
   );
-  if (cond0.renderer === branch0) {
-    runWithScope(execInputBranch0, 0, cond0.scope);
-  }
+  runInBranch(Index.CONDITIONAL, branch0, execInputBranch0);
 };
 
 function execInputBranch0() {
   data(
-    read<Branch0Scope, Branch0Index.TEXT>(Branch0Index.TEXT),
+    Branch0Index.TEXT,
     readInOwner<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE).name
   );
 }

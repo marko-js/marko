@@ -3,7 +3,6 @@ import {
   walk,
   register,
   createRenderFn,
-  read,
   write
 } from "../../../../src/dom/index";
 import { get, over } from "../../utils/walks";
@@ -44,7 +43,7 @@ export const hydrate = register("", () => {
 });
 
 export const execInputValue = () => {
-  attrs(read<scope, Index.DIV>(Index.DIV), Index.INPUT_VALUE);
+  attrs(Index.DIV, Index.INPUT_VALUE);
 };
 
 export const execDynamicInput = (input: typeof inputs[number]) => {

@@ -47,7 +47,7 @@ export const hydrate = register("", () => {
 });
 
 export const execInputValue = () => {
-  attr(read<scope, Index.DIV>(Index.DIV), "b", read(Index.INPUT_VALUE));
+  attr(Index.DIV, "b", read(Index.INPUT_VALUE));
 };
 
 export const execDynamicInput = (input: typeof inputs[number]) => {

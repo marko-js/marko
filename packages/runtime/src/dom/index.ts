@@ -4,10 +4,12 @@ export {
   conditional,
   setConditionalRenderer,
   setConditionalRendererOnlyChild,
+  runInBranch,
   loop,
   setLoopOf,
   setLoopFromTo,
-  setLoopIn
+  setLoopIn,
+  runForEach
 } from "./control-flow";
 
 export {

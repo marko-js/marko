@@ -10,7 +10,10 @@ import {
   dynamicFragmentMethods,
   write,
   isDirty,
-  read
+  read,
+  readInOwner,
+  isDirtyInOwner,
+  runInBranch
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
 
@@ -72,35 +75,38 @@ export const hydrate = () => {
 };
 
 export const execInputShowValue1Value2 = () => {
-  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
   if (isDirty(Index.INPUT_SHOW)) {
-    setConditionalRenderer(cond0, read(Index.INPUT_SHOW) ? branch0 : undefined);
+    setConditionalRenderer(
+      Index.CONDITIONAL,
+      read(Index.INPUT_SHOW) ? branch0 : undefined
+    );
   }
-  if (cond0.renderer === branch0) {
-    const cond0_scope = cond0.scope;
-    if (isDirty(Index.INPUT_SHOW) || isDirty(Index.INPUT_VALUE1)) {
-      const cond0_0 = cond0_scope[0] as Conditional;
-      setConditionalRenderer(
-        cond0_0,
-        read(Index.INPUT_VALUE1) ? branch0_0 : undefined
-      );
-      if (cond0_0.renderer === branch0_0) {
-        const cond0_0_scope = cond0_0.scope;
-        data(cond0_0_scope[0] as Text, read(Index.INPUT_VALUE1));
-      }
-    }
-    if (isDirty(Index.INPUT_SHOW) || isDirty(Index.INPUT_VALUE2)) {
-      const cond0_1 = cond0_scope[1] as Conditional;
-      setConditionalRenderer(
-        cond0_1,
-        read(Index.INPUT_VALUE2) ? branch0_1 : undefined
-      );
-      if (cond0_1.renderer === branch0_1) {
-        const cond0_1_scope = cond0_1.scope;
-        data(cond0_1_scope[0] as Text, read(Index.INPUT_VALUE2));
-      }
-    }
+  runInBranch(Index.CONDITIONAL, branch0, execInputShowValue1Value2Branch0);
+};
+
+const execInputShowValue1Value2Branch0 = () => {
+  if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE1)) {
+    setConditionalRenderer(
+      Branch0Index.COND1,
+      readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
+    );
+    runInBranch(Branch0Index.COND1, branch0_0, execInputValue1Branch0_0);
   }
+  if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE2)) {
+    setConditionalRenderer(
+      Branch0Index.COND2,
+      readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
+    );
+    runInBranch(Branch0Index.COND2, branch0_1, execInputValue2Branch0_1);
+  }
+};
+
+const execInputValue1Branch0_0 = () => {
+  data(Branch0_0Index.TEXT, readInOwner(Index.INPUT_VALUE1, 2));
+};
+
+const execInputValue2Branch0_1 = () => {
+  data(Branch0_1Index.TEXT, readInOwner(Index.INPUT_VALUE2, 2));
 };
 
 export const execDynamicInput = (input: Input) => {

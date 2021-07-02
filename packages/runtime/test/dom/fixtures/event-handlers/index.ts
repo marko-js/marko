@@ -3,7 +3,6 @@ import {
   walk,
   register,
   createRenderFn,
-  Scope,
   on,
   read,
   writeQueued,
@@ -63,10 +62,7 @@ const execClickCount = () => {
           })
         : false
     );
-    data(
-      read<scope, Index.BUTTON_TEXT>(Index.BUTTON_TEXT),
-      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT)
-    );
+    data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
   }
 };
 

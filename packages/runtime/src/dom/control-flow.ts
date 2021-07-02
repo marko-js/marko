@@ -1,7 +1,15 @@
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
-import { Scope, createScope, getEmptyScope, set, destroyScope } from "./scope";
+import {
+  Scope,
+  createScope,
+  getEmptyScope,
+  set,
+  destroyScope,
+  read,
+  runWithScope
+} from "./scope";
 import { NodeType } from "./dom";
 
 export type Conditional = (
@@ -31,10 +39,23 @@ export function conditional(referenceNode: Comment | Element): Conditional {
   };
 }
 
+export function runInBranch(
+  conditionalIndex: number,
+  branch: Renderer,
+  fn: () => void
+) {
+  const cond = read(conditionalIndex) as Conditional;
+  if (cond.renderer === branch) {
+    runWithScope(fn, 0, cond.scope!);
+    return 1;
+  }
+}
+
 export function setConditionalRenderer(
-  conditonal: Conditional,
+  conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
+  const conditonal = read(conditionalIndex) as Conditional;
   if (conditonal.renderer !== (conditonal.renderer = newRenderer)) {
     let newScope: Scope;
     let prevScope = conditonal.scope!;
@@ -63,9 +84,10 @@ export function setConditionalRenderer(
 }
 
 export function setConditionalRendererOnlyChild(
-  conditonal: Conditional,
+  conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
+  const conditonal = read(conditionalIndex) as Conditional;
   if (conditonal.renderer !== (conditonal.renderer = newRenderer)) {
     (conditonal.___referenceNode as Element).textContent = "";
 
@@ -133,6 +155,12 @@ export function loop(
   };
 }
 
+export function runForEach(loopIndex: number, fn: () => void) {
+  for (const scope of (read(loopIndex) as Loop).___scopeArray) {
+    runWithScope(fn, 0, scope);
+  }
+}
+
 function loopIterator(this: Loop) {
   return (this.___scopeArray === emptyMarkerArray
     ? emptyArray
@@ -148,7 +176,8 @@ function getLastNodeLoop(this: Loop) {
   return this.___scopeArray[this.___scopeArray.length - 1].___getLastNode();
 }
 
-export function setLoopOf(loop: Loop, newValues: unknown[]) {
+export function setLoopOf(loopIndex: number, newValues: unknown[]) {
+  const loop = read(loopIndex) as Loop;
   let newMap: Map<unknown, Scope>;
   let newArray: Scope[];
   const len = newValues.length;
@@ -224,7 +253,7 @@ export function setLoopOf(loop: Loop, newValues: unknown[]) {
 }
 
 export function setLoopFromTo(
-  loop: Loop,
+  loopIndex: number,
   from: number,
   to: number,
   step: number
@@ -235,9 +264,9 @@ export function setLoopFromTo(
     range.push(i);
   }
 
-  setLoopOf(loop, range);
+  setLoopOf(loopIndex, range);
 }
 
-export function setLoopIn(loop: Loop, object: Record<string, unknown>) {
-  setLoopOf(loop, Object.entries(object));
+export function setLoopIn(loopIndex: number, object: Record<string, unknown>) {
+  setLoopOf(loopIndex, Object.entries(object));
 }

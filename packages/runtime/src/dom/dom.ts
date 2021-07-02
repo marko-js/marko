@@ -116,27 +116,27 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
-export function attr(el: Element, name: string, value: unknown) {
+export function attr(elementIndex: number, name: string, value: unknown) {
   const normalizedValue = normalizeAttrValue(value);
   if (normalizedValue === undefined) {
-    el.removeAttribute(name);
+    (read(elementIndex) as Element).removeAttribute(name);
   } else {
-    el.setAttribute(name, normalizedValue);
+    (read(elementIndex) as Element).setAttribute(name, normalizedValue);
   }
 }
 
-export function data(node: Text | Comment, value: unknown) {
-  node.data = normalizeString(value);
+export function data(textOrCommentIndex: number, value: unknown) {
+  (read(textOrCommentIndex) as Text | Comment).data = normalizeString(value);
 }
 
-export function attrs(el: Element, index: number) {
+export function attrs(elementIndex: number, index: number) {
   const nextAttrs = read(index) as Record<string, unknown>;
   const prevAttrs = read(index + 1) as Record<string, unknown> | undefined;
 
   if (prevAttrs) {
     for (const name in prevAttrs) {
       if (!(nextAttrs && name in nextAttrs)) {
-        el.removeAttribute(name);
+        (read(elementIndex) as Element).removeAttribute(name);
       }
     }
   }
@@ -144,7 +144,7 @@ export function attrs(el: Element, index: number) {
   for (const name in nextAttrs) {
     if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
       if (name !== "renderBody") {
-        attr(el, name, nextAttrs[name]);
+        attr(elementIndex, name, nextAttrs[name]);
       }
     }
   }
@@ -175,9 +175,10 @@ export function html(value: string, index: number) {
   }
 }
 
-export function props(node: Node, index: number) {
+export function props(nodeIndex: number, index: number) {
   const nextProps = read(index) as Record<string, unknown>;
   const prevProps = read(index + 1) as Record<string, unknown> | undefined;
+  const node = read(nodeIndex) as Node;
 
   if (prevProps) {
     for (const name in prevProps) {
@@ -194,8 +195,8 @@ export function props(node: Node, index: number) {
   write(index + 1, nextProps);
 }
 
-export function innerHTML(el: Element, value: string) {
-  el.innerHTML = normalizeString(value);
+export function innerHTML(elementIndex: number, value: string) {
+  (read(elementIndex) as Element).innerHTML = normalizeString(value);
 }
 
 export function dynamicTagString(tag: string, input: Record<string, unknown>) {

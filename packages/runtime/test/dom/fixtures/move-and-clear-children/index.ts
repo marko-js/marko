@@ -6,11 +6,11 @@ import {
   write,
   setLoopOf,
   Loop,
-  runWithScope,
   createRenderer,
   createRenderFn,
   staticNodeMethods,
-  isDirty
+  isDirty,
+  runForEach
 } from "../../../../src/dom/index";
 import { get, next, over } from "../../utils/walks";
 
@@ -87,12 +87,10 @@ export const hydrate = () => {
 
 export const execInputChildren = () => {
   setLoopOf(
-    read<scope, Index.LOOP>(Index.LOOP),
+    Index.LOOP,
     read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN)
   );
-  for (const loopScope of read<scope, Index.LOOP>(Index.LOOP)) {
-    runWithScope(iter0_execItem, 0, loopScope);
-  }
+  runForEach(Index.LOOP, iter0_execItem);
 };
 
 export const execDynamicInput = (input: Input) => {
@@ -135,10 +133,7 @@ const iter0_execItem = () => {
       read<iterScope, Iter0Index.ITEM>(Iter0Index.ITEM).text
     );
     if (isDirty(Iter0Index.ITEM_TEXT)) {
-      data(
-        read<iterScope, Iter0Index.TEXT>(Iter0Index.TEXT),
-        read(Iter0Index.ITEM_TEXT)
-      );
+      data(Iter0Index.TEXT, read(Iter0Index.ITEM_TEXT));
     }
   }
 };

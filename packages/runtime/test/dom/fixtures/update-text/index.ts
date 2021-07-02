@@ -5,8 +5,7 @@ import {
   write,
   enableExtendedWalk,
   register,
-  createRenderFn,
-  Scope
+  createRenderFn
 } from "../../../../src/dom/index";
 import { after, over } from "../../utils/walks";
 
@@ -40,7 +39,7 @@ export const hydrate = register("", () => {
 });
 
 export const execInputValue = () => {
-  data(read<scope, Index.TEXT>(Index.TEXT), read(Index.INPUT_VALUE));
+  data(Index.TEXT, read(Index.INPUT_VALUE));
 };
 
 export const execDynamicInput = (input: typeof inputs[number]) => {

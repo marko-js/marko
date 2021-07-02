@@ -50,10 +50,7 @@ export const hydrate = register("", () => {
 
 function execAB() {
   if (isDirty(Index.A) || isDirty(Index.B)) {
-    data(
-      read<scope, Index.DIV_TEXT>(Index.DIV_TEXT),
-      "" + read(Index.A) + read(Index.B)
-    );
+    data(Index.DIV_TEXT, "" + read(Index.A) + read(Index.B));
   }
 }
 

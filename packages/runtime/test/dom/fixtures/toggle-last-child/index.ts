@@ -4,12 +4,13 @@ import {
   conditional,
   setConditionalRenderer,
   Conditional,
-  Scope,
   read,
   write,
   createRenderer,
   createRenderFn,
-  staticNodeMethods
+  staticNodeMethods,
+  readInOwner,
+  runInBranch
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
 
@@ -55,13 +56,19 @@ export const hydrate = () => {
 };
 
 export const execInputValue = () => {
-  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
-  setConditionalRenderer(cond0, read(Index.INPUT_VALUE) ? branch0 : undefined);
-  if (cond0.renderer === branch0) {
-    const cond0_scope = cond0.scope;
-    data(cond0_scope[0] as Text, read(Index.INPUT_VALUE));
-  }
+  setConditionalRenderer(
+    Index.CONDITIONAL,
+    read(Index.INPUT_VALUE) ? branch0 : undefined
+  );
+  runInBranch(Index.CONDITIONAL, branch0, execInputBranch0);
 };
+
+function execInputBranch0() {
+  data(
+    Branch0Index.TEXT,
+    readInOwner<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE)
+  );
+}
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
   write(Index.INPUT_VALUE, input.value);

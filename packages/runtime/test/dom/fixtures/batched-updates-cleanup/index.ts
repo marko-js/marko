@@ -14,7 +14,9 @@ import {
   write,
   read,
   bind,
-  isDirty
+  isDirty,
+  readInOwner,
+  runInBranch
 } from "../../../../src/dom/index";
 
 import { get, next, over } from "../../utils/walks";
@@ -67,23 +69,19 @@ export const hydrate = register("", () => {
 });
 
 const execShowMessage = () => {
-  const cond0 = read<scope, Index.CONDITIONAL>(Index.CONDITIONAL);
   if (isDirty(Index.SHOW)) {
-    setConditionalRenderer(cond0, read(Index.SHOW) ? branch0 : undefined);
+    setConditionalRenderer(
+      Index.CONDITIONAL,
+      read(Index.SHOW) ? branch0 : undefined
+    );
   }
-  if (cond0.renderer === branch0) {
-    const cond0_scope = cond0.scope;
-    if (isDirty(Index.MESSAGE)) {
-      data(
-        read<Branch0Scope, Branch0Index.TEXT>(
-          Branch0Index.TEXT,
-          cond0_scope,
-          0
-        ),
-        read(Index.MESSAGE)
-      );
-    }
+  if (isDirty(Index.MESSAGE)) {
+    runInBranch(Index.CONDITIONAL, branch0, execMessageBranch0);
   }
+};
+
+const execMessageBranch0 = () => {
+  data(Branch0Index.TEXT, readInOwner(Index.MESSAGE));
 };
 
 export default createRenderFn(template, walks, hydrate, 0);
