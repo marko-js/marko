@@ -1,13 +1,5 @@
-import {
-  data,
-  walk,
-  read,
-  write,
-  enableExtendedWalk,
-  register,
-  createRenderFn
-} from "../../../../src/dom/index";
-import { after, over } from "../../utils/walks";
+import { data, read, write, createRenderFn } from "../../../../src/dom/index";
+import { after, over, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -33,10 +25,7 @@ type scope = {
 
 // Static ${input.value}
 export const template = "Static ";
-export const walks = after + over(1);
-export const hydrate = register("", () => {
-  write(Index.TEXT, walk());
-});
+export const walks = open(2) + after + over(1) + close;
 
 export const execInputValue = () => {
   data(Index.TEXT, read(Index.INPUT_VALUE));
@@ -47,6 +36,4 @@ export const execDynamicInput = (input: typeof inputs[number]) => {
   execInputValue();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
-
-enableExtendedWalk();
+export default createRenderFn(template, walks, undefined, 0, execDynamicInput);

@@ -1,6 +1,5 @@
 import {
   on,
-  walk,
   data,
   register,
   createRenderFn,
@@ -11,7 +10,8 @@ import {
   write,
   isDirty
 } from "../../../../src/dom/index";
-import { get, next } from "../../utils/walks";
+import { currentScope } from "../../../../src/dom/scope";
+import { get, next, open, close } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -38,23 +38,19 @@ type scope = {
 // <button onclick() { a++; b++; }>${a + b}</button>
 
 export const template = `<button> </button>`;
-export const walks = get + next(1) + get + next(1);
+export const walks = open(4) + get + next(1) + get + next(1) + close;
 export const hydrate = register("", () => {
   write(Index.A, 0);
   write(Index.B, 0);
-  on(
-    walk() as HTMLButtonElement,
-    "click",
-    bind(() => {
-      write(Index.A, read<scope, Index.A>(Index.A) + 1);
-      write(Index.B, read<scope, Index.B>(Index.B) + 1);
-      queue(execAB);
-    })
-  );
-  write(Index.TEXT, walk());
-
+  on(Index.BUTTON, "click", bind(clickHandler));
   execAB();
 });
+
+const clickHandler = () => {
+  write(Index.A, read<scope, Index.A>(Index.A) + 1);
+  write(Index.B, read<scope, Index.B>(Index.B) + 1);
+  queue(execAB);
+};
 
 const execAB = () => {
   if (isDirty(Index.A) || isDirty(Index.B)) {

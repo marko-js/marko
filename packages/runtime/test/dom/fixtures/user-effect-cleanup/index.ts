@@ -1,6 +1,5 @@
 import {
   data,
-  walk,
   register,
   createRenderFn,
   userEffect,
@@ -12,7 +11,7 @@ import {
   bind
 } from "../../../../src/dom/index";
 import { wait } from "../../../utils/resolve";
-import { get, next } from "../../utils/walks";
+import { get, next, open, close } from "../../utils/walks";
 
 export const inputs = [{ value: 0 }, wait(2), { value: 1 }, wait(2)] as const;
 
@@ -40,9 +39,8 @@ type scope = {
 //   return () => b = previousValue;
 // }/>
 export const template = `<div> </div>`;
-export const walks = next(1) + get + next(1);
+export const walks = open(5) + next(1) + get + next(1) + close;
 export const hydrate = register("", () => {
-  write(Index.DIV_TEXT, walk());
   write(Index.A, 0);
   write(Index.B, 0);
   execAB();

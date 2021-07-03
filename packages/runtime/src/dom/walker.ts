@@ -1,7 +1,3 @@
-import { isDocumentFragment } from "./dom";
-import { Renderer } from "./renderer";
-import { Scope, runWithScope } from "./scope";
-
 const doc = document;
 export const walker = doc.createTreeWalker(
   doc.documentElement,
@@ -23,115 +19,152 @@ export const walker = doc.createTreeWalker(
 //    - Before must be done before walking into the node
 //    - Next would walk back in the node we just walked Out of
 //  - A component must assume the walker is on its first node, and include instructions for walking to its assumed nextSibling
-let currentWalks: string;
-let currentWalkIndex: number;
 
-// Skip codes that would require more than one character to represent (34: " and 92: \)
+// Reserved Character Codes
+// 0-31 [control characters]
+// 34 " [double quote]
+// 39 ' [single quote]
+// 92 \ [backslash]
+// 96 ` [backtick]
 export const enum WalkCodes {
-  Get = 33, // !
-  Before = 35, // #
-  After = 36, // $
-  Inside = 37, // %
-  Replace = 38, // &
-  Out = 39,
-  OutEnd = 49,
-  Over = 58,
-  OverEnd = 91,
-  Next = 93,
-  NextEnd = 126
+  Get = 32,
+  Before = 33,
+  After = 35,
+  Inside = 36,
+  Replace = 37,
+  Close = 38,
+
+  Skip = 40,
+  SkipEnd = 46,
+
+  Open = 47,
+  OpenEnd = 66,
+
+  Next = 67,
+  NextEnd = 91,
+
+  Over = 97,
+  OverEnd = 106,
+
+  Out = 107,
+  OutEnd = 116,
+
+  Multiplier = 117,
+  MultiplierEnd = 126
 }
 
-export function walkMany(scope: Scope, offset: number, count: number) {
-  for (let i = 0; i < count; i++) {
-    scope[offset + i] = walk();
-  }
+export const enum WalkRangeSizes {
+  Skip = 7, // 40 through 46
+  Open = 20, // 47 through 66
+  Next = 20, // 67 through 91
+  Over = 10, // 97 through 106
+  Out = 10, // 107 through 116
+  Multiplier = 10 // 117 through 126
+}
+
+export function trimWalkString(walkString: string): string {
+  let end = walkString.length;
+  while (walkString.charCodeAt(--end) > WalkCodes.Replace);
+  return walkString.slice(0, end + 1);
 }
 
 export let walk = walkNormal;
-// TODO: in some cases (including hydrate) we may get an existing node
-// ideally we wouldn't create the newNode unless it was actually needed
-function walkNormal() {
-  if ("MARKO_DEBUG" && !currentWalks) {
-    throw new Error("Missing encoded walk string");
-  }
 
-  while (true) {
-    // https://jsperf.com/charat-vs-index/36
-    let value = currentWalks.charCodeAt(currentWalkIndex++);
+let currentWalkIndex = 0;
 
-    if ("MARKO_DEBUG" && value === undefined) {
-      throw new Error("End of walk string was reached");
-    }
+function walkNormal(startNode: Node, walkCodes: string, scope: unknown[]) {
+  walker.currentNode = startNode;
+  currentWalkIndex = 0;
+  walkInternal(walkCodes, scope);
+  walker.currentNode = document.documentElement;
+}
 
-    if (value >= WalkCodes.Next) {
-      while (WalkCodes.Next <= value--) {
-        walker.nextNode();
+function walkInternal(
+  walkCodes: string,
+  scope: unknown[],
+  currentScopeIndex = 0,
+  childScopeIndex = 0
+) {
+  let value: number;
+  let storedMultiplier = 0;
+  let currentMultiplier = 0;
+
+  while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
+    currentMultiplier = storedMultiplier;
+    storedMultiplier = 0;
+    if (value >= WalkCodes.Multiplier) {
+      storedMultiplier =
+        currentMultiplier * WalkRangeSizes.Multiplier +
+        value -
+        WalkCodes.Multiplier;
+    } else if (value >= WalkCodes.Out) {
+      value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
+      while (value--) {
+        walker.parentNode();
       }
     } else if (value >= WalkCodes.Over) {
-      while (WalkCodes.Over <= value--) {
+      value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
+      while (value--) {
         if (!walker.nextSibling() && !walker.nextNode() && "MARKO_DEBUG") {
           throw new Error("No more nodes to walk");
         }
       }
-    } else if (value >= WalkCodes.Out) {
-      while (WalkCodes.Out <= value--) {
-        walker.parentNode();
+    } else if (value >= WalkCodes.Next) {
+      value = WalkRangeSizes.Next * currentMultiplier + value - WalkCodes.Next;
+      while (value--) {
+        walker.nextNode();
       }
+    } else if (value >= WalkCodes.Open) {
+      value = WalkRangeSizes.Open * currentMultiplier + value - WalkCodes.Open;
+      childScopeIndex = walkInternal(
+        walkCodes,
+        scope,
+        childScopeIndex,
+        childScopeIndex + value
+      )!;
+    } else if (value >= WalkCodes.Skip) {
+      currentScopeIndex +=
+        WalkRangeSizes.Skip * currentMultiplier + value - WalkCodes.Skip;
+    } else if (value === WalkCodes.Close) {
+      return childScopeIndex;
     } else if (value === WalkCodes.Get) {
-      return walker.currentNode;
+      scope[currentScopeIndex++] = walker.currentNode;
     } else {
-      if ("MARKO_DEBUG" && extendedWalk === undefined) {
-        throw new Error("Extended walk was not enabled");
+      const newNode = (scope[currentScopeIndex++] = document.createTextNode(
+        ""
+      ));
+      const current = walker.currentNode;
+      const parentNode = current.parentNode!;
+
+      if (value === WalkCodes.Before) {
+        parentNode.insertBefore(newNode, current);
+      } else {
+        if (value === WalkCodes.After) {
+          parentNode.insertBefore(newNode, current.nextSibling);
+        } else {
+          if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+            throw new Error(`Unknown walk code: ${value}`);
+          }
+          parentNode.replaceChild(newNode, current);
+        }
+
+        walker.currentNode = newNode;
       }
-      return extendedWalk(value);
-    }
+    } /* else {
+      if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+        throw new Error(`Unknown walk code: ${value}`);
+      }
+      const current = walker.currentNode;
+      current.parentNode!.replaceChild(walker.currentNode = scope[currentScopeIndex++] = document.createTextNode(""), current);
+    } */
   }
-}
-
-export function enableExtendedWalk() {
-  extendedWalk = actualExtendedWalk;
-}
-
-let extendedWalk: typeof actualExtendedWalk;
-function actualExtendedWalk(value: number) {
-  const newNode = document.createTextNode("");
-
-  const current = walker.currentNode;
-  if (value === WalkCodes.Inside) {
-    return current.appendChild(newNode);
-  }
-
-  const parentNode = current.parentNode!;
-
-  if (value === WalkCodes.Before) {
-    return parentNode.insertBefore(newNode, current);
-  }
-
-  // Replace/After:
-  // the walker is moved to point to newNode
-  // (or, if a document fragment, its lastChild)
-
-  const target = isDocumentFragment(newNode) ? newNode.lastChild! : newNode;
-
-  if (value === WalkCodes.After) {
-    parentNode.insertBefore(newNode, current.nextSibling);
-  } else {
-    if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
-      throw new Error(`Unknown walk code: ${value}`);
-    }
-    parentNode.replaceChild(newNode, current);
-  }
-
-  walker.currentNode = target;
-
-  return newNode;
 }
 
 function walkHydrateFirst(): Node {
   const current = walker.currentNode;
   const node = walker.nextNode()!;
   current.parentNode!.removeChild(current);
-  walk = walkHydrateSubsequent;
+  walk = walkHydrateSubsequent as any;
   return node;
 }
 
@@ -154,31 +187,11 @@ function walkHydrateSubsequent(): Node {
   return undefined as never;
 }
 
-export function detachedWalk(
-  firstChild: Node,
-  renderer: Renderer,
-  scope: Scope
-) {
-  if (renderer.___hydrate) {
-    const cachedWalks = currentWalks;
-    const cachedWalkIndex = currentWalkIndex;
-    const cachedCurrent = walker.currentNode;
-
-    walker.currentNode = firstChild;
-    currentWalks = renderer.___walks!;
-    currentWalkIndex = 0;
-    runWithScope(renderer.___hydrate, 0, scope);
-    currentWalks = cachedWalks;
-    currentWalkIndex = cachedWalkIndex;
-    walker.currentNode = cachedCurrent;
-  }
-}
-
 export function beginHydrate(startNode: Node) {
   walker.currentNode = startNode;
-  walk = walkHydrateFirst;
+  walk = walkHydrateFirst as any;
 }
 
 export function endHydrate() {
-  walk = walkNormal;
+  walk = walkNormal as any;
 }

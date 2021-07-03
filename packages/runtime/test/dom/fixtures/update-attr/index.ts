@@ -1,12 +1,5 @@
-import {
-  attr,
-  walk,
-  register,
-  createRenderFn,
-  write,
-  read
-} from "../../../../src/dom/index";
-import { get, over } from "../../utils/walks";
+import { attr, createRenderFn, write, read } from "../../../../src/dom/index";
+import { get, over, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -41,10 +34,7 @@ type scope = {
 
 // <div a=0 b=input.value/>
 export const template = `<div a=0></div>`;
-export const walks = get + over(1);
-export const hydrate = register("", () => {
-  write(Index.DIV, walk());
-});
+export const walks = open(2) + get + over(1) + close;
 
 export const execInputValue = () => {
   attr(Index.DIV, "b", read(Index.INPUT_VALUE));
@@ -55,4 +45,4 @@ export const execDynamicInput = (input: typeof inputs[number]) => {
   execInputValue();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, 0, execDynamicInput);

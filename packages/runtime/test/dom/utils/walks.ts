@@ -1,31 +1,45 @@
-import { WalkCodes } from "../../../src/dom/walker";
+import { WalkCodes, WalkRangeSizes } from "../../../src/dom/walker";
 
 export const get = String.fromCharCode(WalkCodes.Get);
 export const before = String.fromCharCode(WalkCodes.Before);
 export const after = String.fromCharCode(WalkCodes.After);
 export const replace = String.fromCharCode(WalkCodes.Replace);
 export const inside = String.fromCharCode(WalkCodes.Inside);
+export const close = String.fromCharCode(WalkCodes.Close);
 
-export function next(number: number) {
-  return toCharString(number, WalkCodes.Next, WalkCodes.NextEnd);
-}
-export function over(number: number) {
-  return toCharString(number, WalkCodes.Over, WalkCodes.OverEnd);
-}
-export function out(number: number) {
-  return toCharString(number, WalkCodes.Out, WalkCodes.OutEnd);
+export function next(value: number) {
+  return toCharString(value, WalkCodes.Next, WalkRangeSizes.Next);
 }
 
-function toCharString(
-  number: number,
-  startCharCode: number,
-  endCharCode: number
-) {
-  const total = endCharCode - startCharCode + 1;
-  let value = "";
-  while (number > total) {
-    value += String.fromCharCode(endCharCode);
-    number -= total;
+export function over(value: number) {
+  return toCharString(value, WalkCodes.Over, WalkRangeSizes.Over);
+}
+
+export function out(value: number) {
+  return toCharString(value, WalkCodes.Out, WalkRangeSizes.Out);
+}
+
+export function open(value: number) {
+  return toCharString(value, WalkCodes.Open, WalkRangeSizes.Open);
+}
+
+export function skip(value: number) {
+  return toCharString(value, WalkCodes.Skip, WalkRangeSizes.Skip);
+}
+
+function toCharString(value: number, startCode: number, rangeSize: number) {
+  let string = "";
+
+  if (value >= rangeSize) {
+    const multiplier = Math.floor(value / rangeSize);
+    string += toCharString(
+      multiplier,
+      WalkCodes.Multiplier,
+      WalkRangeSizes.Multiplier
+    );
+    value -= multiplier * rangeSize;
   }
-  return value + String.fromCharCode(startCharCode + number - 1);
+
+  string += String.fromCharCode(startCode + value);
+  return string;
 }

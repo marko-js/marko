@@ -1,3 +1,5 @@
+import { read } from "./scope";
+
 const doc = document as DocumentWithDelegated;
 
 interface DocumentWithDelegated extends Document {
@@ -15,8 +17,8 @@ const eventOpts: AddEventListenerOptions = {
 export function on<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
->(el: Element, type: T, handler: H | Unset) {
-  el[getKey(type)] = handler;
+>(elIndex: number, type: T, handler: H | Unset) {
+  (read(elIndex) as Element)[getKey(type)] = handler;
 }
 
 export function ensureDelegated(type: EventNames) {

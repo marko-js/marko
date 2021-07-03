@@ -1,6 +1,6 @@
 import { DOMMethods, staticNodeMethods } from "./dom";
 import { createScope, Scope, cleanScopes, runWithScope } from "./scope";
-import { WalkCodes, detachedWalk } from "./walker";
+import { WalkCodes, walk, trimWalkString } from "./walker";
 
 const enum NodeType {
   Element = 1,
@@ -42,12 +42,14 @@ type RenderResult = Node & {
 
 export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
-  // TODO: handle dynamic start/end nodes
   scope.___startNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom;
   scope.___endNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
-  detachedWalk(scope.___startNode, renderer, scope);
+  walk(scope.___startNode, renderer.___walks!, scope);
+  if (renderer.___hydrate) {
+    runWithScope(renderer.___hydrate, 0, scope);
+  }
   if (renderer.___dynamicStartNodeMethod) {
     scope.___getFirstNode = renderer.___dynamicStartNodeMethod;
     scope.___startNode = renderer.___dynamicStartNodeOffset!;
@@ -117,7 +119,7 @@ export function createRenderer<H extends HydrateFn>(
 ): Renderer {
   return {
     ___template: template,
-    ___walks: walks,
+    ___walks: walks && trimWalkString(walks),
     ___hydrate: hydrate,
     ___clone: _clone,
     ___size: size,
@@ -139,20 +141,18 @@ function _clone(this: Renderer) {
         "The renderer does not have a template to clone: " +
           JSON.stringify(this)
       );
-    } else {
-      // TODO: remove branch if https://github.com/microsoft/TypeScript/issues/41503
-      this.___template = this.___template!;
     }
     const walks = this.___walks;
     // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
-    // and therefore we need to put it in a document fragment, even though only a single nodee is parts
+    // and therefore we need to put it in a document fragment, even though only a single node results from the parse
     const ensureFragment =
-      !!walks &&
-      (walks.charCodeAt(0) === WalkCodes.Before ||
-        walks.charCodeAt(0) === WalkCodes.Replace ||
-        walks.charCodeAt(walks.length - 2) ===
-          WalkCodes.After); /* 2nd to last because last will be Over */
-    this.___sourceNode = sourceNode = parse(this.___template, ensureFragment);
+      walks &&
+      walks.length < 4 &&
+      walks.charCodeAt(walks.length - 1) !== WalkCodes.Get;
+    this.___sourceNode = sourceNode = parse(
+      this.___template,
+      ensureFragment as boolean
+    );
   }
   return sourceNode.cloneNode(true);
 }

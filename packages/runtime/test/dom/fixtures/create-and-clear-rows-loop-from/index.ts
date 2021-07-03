@@ -1,5 +1,4 @@
 import {
-  walk,
   data,
   setLoopFromTo,
   createRenderer,
@@ -9,7 +8,7 @@ import {
   read,
   runForEach
 } from "../../../../src/dom/index";
-import { over, get, next } from "../../utils/walks";
+import { over, get, next, open, close, skip } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -32,19 +31,19 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  INPUT_FROM = 0,
-  INPUT_TO = 1,
-  INPUT_STEP = 2,
-  DIV = 3,
-  LOOP = 3
+  DIV = 0,
+  LOOP = 0,
+  INPUT_FROM = 4,
+  INPUT_TO = 5,
+  INPUT_STEP = 6
 }
 
 type scope = {
+  [Index.DIV]: HTMLDivElement;
+  [Index.LOOP]: HTMLDivElement;
   [Index.INPUT_FROM]: Input["from"];
   [Index.INPUT_TO]: Input["to"];
   [Index.INPUT_STEP]: Input["step"];
-  [Index.DIV]: HTMLDivElement;
-  [Index.LOOP]: HTMLDivElement;
 };
 
 // <div>
@@ -54,10 +53,7 @@ type scope = {
 // </div>
 
 export const template = `<div></div>`;
-export const walks = get + over(1);
-export const hydrate = () => {
-  write(Index.DIV, walk());
-};
+export const walks = open(7) + get + over(1) + close;
 
 export const execInputFromToStep = () => {
   setLoopFromTo(
@@ -77,7 +73,7 @@ export const execDynamicInput = (input: Input) => {
   execInputFromToStep();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Iter0Index {
   ITEM = 0,
@@ -90,10 +86,8 @@ type iterScope = [number, number, number[], Text];
 
 const iter0 = createRenderer(
   " ",
-  get + next(1),
-  () => {
-    write(Iter0Index.TEXT, walk());
-  },
+  open(4) + skip(3) + get + next(1) + close,
+  undefined,
   0
 );
 

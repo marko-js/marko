@@ -1,5 +1,4 @@
 import {
-  walk,
   data,
   setConditionalRenderer,
   write,
@@ -9,7 +8,7 @@ import {
   readInOwner,
   runInBranch
 } from "../../../../src/dom/index";
-import { next, over, get } from "../../utils/walks";
+import { next, over, get, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -27,15 +26,15 @@ export const inputs = [
 ];
 
 const enum Index {
-  INPUT_VALUE = 0,
-  COMMENT = 1,
-  CONDITIONAL = 1
+  COMMENT = 0,
+  CONDITIONAL = 0,
+  INPUT_VALUE = 4
 }
 
 type scope = {
-  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
   [Index.COMMENT]: Comment;
   [Index.CONDITIONAL]: Comment;
+  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
 };
 
 // <div>
@@ -47,10 +46,7 @@ type scope = {
 // </div>
 
 export const template = `<div><!><span></span><span></span></div>`;
-export const walks = next(1) + get + over(3);
-export const hydrate = () => {
-  write(Index.COMMENT, walk());
-};
+export const walks = open(5) + next(1) + get + over(3) + close;
 
 export const execInputValue = () => {
   setConditionalRenderer(
@@ -72,7 +68,7 @@ export const execDynamicInput = (input: typeof inputs[number]) => {
   execInputValue();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
   TEXT = 0
@@ -82,9 +78,7 @@ type Branch0Scope = [Text];
 
 const branch0 = createRenderer(
   "<span> </span>",
-  next(1) + get + next(1),
-  () => {
-    write(Branch0Index.TEXT, walk());
-  },
+  open(1) + next(1) + get + next(1) + close,
+  undefined,
   0
 );

@@ -1,6 +1,5 @@
 import {
   data,
-  walk,
   register,
   createRenderFn,
   on,
@@ -12,7 +11,7 @@ import {
   write,
   bind
 } from "../../../../src/dom/index";
-import { get, next } from "../../utils/walks";
+import { get, next, open, close } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -36,34 +35,31 @@ type scope = {
 // <button onclick() { clickCount++; }>${clickCount}</button>
 
 export const template = `<button> </button>`;
-export const walks = get + next(1) + get + next(1);
+export const walks = open(3) + get + next(1) + get + next(1) + close;
 export const hydrate = register("", () => {
   write(Index.CLICK_COUNT, 0);
-  write(Index.BUTTON, walk());
-  write(Index.BUTTON_TEXT, walk());
   execClickCount();
 });
 
 const execClickCount = () => {
   if (isDirty(Index.CLICK_COUNT)) {
-    // TODO: the `scope` being closed over by this function will not
-    // always be the root scope.  How do we handle this and other
-    // function closures?
     on(
-      read<scope, Index.BUTTON>(Index.BUTTON),
+      Index.BUTTON,
       "click",
       read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) <= 1
-        ? bind(() => {
-            writeQueued(
-              Index.CLICK_COUNT,
-              read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
-            );
-            queue(execClickCount);
-          })
+        ? bind(clickHandler)
         : false
     );
     data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
   }
+};
+
+const clickHandler = () => {
+  writeQueued(
+    Index.CLICK_COUNT,
+    read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
+  );
+  queue(execClickCount);
 };
 
 export default createRenderFn(template, walks, hydrate, 0);

@@ -1,6 +1,5 @@
 import {
   on,
-  walk,
   register,
   createRenderer,
   createRenderFn,
@@ -16,7 +15,7 @@ import {
   runInBranch
 } from "../../../../src/dom/index";
 
-import { get, next, over } from "../../utils/walks";
+import { get, next, over, open, close } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -26,18 +25,18 @@ export const inputs = [{}, click] as const;
 
 const enum Index {
   BUTTON = 0,
-  SHOW = 1,
-  MESSAGE = 2,
-  COMMENT = 3,
-  CONDITIONAL = 3
+  COMMENT = 1,
+  CONDITIONAL = 1,
+  SHOW = 5,
+  MESSAGE = 6
 }
 
 type scope = {
   [Index.BUTTON]: HTMLButtonElement;
-  [Index.SHOW]: boolean;
-  [Index.MESSAGE]: string;
   [Index.COMMENT]: Comment;
   [Index.CONDITIONAL]: Comment;
+  [Index.SHOW]: boolean;
+  [Index.MESSAGE]: string;
 };
 
 // <let/show = true/>
@@ -46,24 +45,21 @@ type scope = {
 // <if=show><span>${message}</span></if>
 
 export const template = `<button></button><!>`;
-export const walks = get + over(1) + get + over(1);
+export const walks = open(7) + get + over(1) + get + over(1) + close;
 export const hydrate = register("", () => {
   write(Index.SHOW, true);
   write(Index.MESSAGE, "hi");
-  ``;
-  on(
-    walk() as HTMLButtonElement,
-    "click",
-    bind(() => {
-      write(Index.MESSAGE, "bye");
-      write(Index.SHOW, !read(Index.SHOW));
-      queue(execShowMessage);
-    })
-  );
-  write(Index.COMMENT, walk());
+
+  on(Index.BUTTON, "click", bind(clickHandler));
 
   execShowMessage();
 });
+
+const clickHandler = () => {
+  write(Index.MESSAGE, "bye");
+  write(Index.SHOW, !read(Index.SHOW));
+  queue(execShowMessage);
+};
 
 const execShowMessage = () => {
   if (isDirty(Index.SHOW)) {
@@ -94,8 +90,6 @@ type Branch0Scope = [Text];
 const branch0 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  () => {
-    write(Branch0Index.TEXT, walk());
-  },
+  undefined,
   0
 );

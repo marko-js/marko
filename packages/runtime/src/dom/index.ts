@@ -25,8 +25,6 @@ export {
   userEffect
 } from "./dom";
 
-export { walk, walkMany, enableExtendedWalk } from "./walker";
-
 export { on, ensureDelegated } from "./event";
 
 export { classValue, styleValue } from "../common/helpers";

@@ -1,5 +1,4 @@
 import {
-  walk,
   data,
   setConditionalRenderer,
   createRenderer,
@@ -14,7 +13,7 @@ import {
   isDirtyInOwner,
   runInBranch
 } from "../../../../src/dom/index";
-import { next, over, get } from "../../utils/walks";
+import { next, over, get, open, close, skip } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -47,19 +46,19 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  INPUT_SHOW = 0,
-  INPUT_VALUE1 = 1,
-  INPUT_VALUE2 = 2,
-  COMMENT = 3,
-  CONDITIONAL = 3
+  COMMENT = 0,
+  CONDITIONAL = 0,
+  INPUT_SHOW = 4,
+  INPUT_VALUE1 = 5,
+  INPUT_VALUE2 = 6
 }
 
 type scope = {
+  [Index.COMMENT]: Comment;
+  [Index.CONDITIONAL]: Comment;
   [Index.INPUT_SHOW]: Input["show"];
   [Index.INPUT_VALUE1]: Input["value1"];
   [Index.INPUT_VALUE2]: Input["value2"];
-  [Index.COMMENT]: Comment;
-  [Index.CONDITIONAL]: Comment;
 };
 
 // <div>
@@ -70,10 +69,7 @@ type scope = {
 // </div>
 
 export const template = `<div><!></div>`;
-export const walks = next(1) + get + over(1);
-export const hydrate = () => {
-  write(Index.COMMENT, walk());
-};
+export const walks = open(7) + next(1) + get + over(1) + close;
 
 export const execInputShowValue1Value2 = () => {
   if (isDirty(Index.INPUT_SHOW)) {
@@ -117,7 +113,7 @@ export const execDynamicInput = (input: Input) => {
   execInputShowValue1Value2();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
   COMMENT1 = 0,
@@ -135,11 +131,8 @@ type Branch0Scope = {
 
 const branch0 = createRenderer(
   "<!><!>",
-  get + over(1) + get + over(1),
-  () => {
-    write(Branch0Index.COMMENT1, walk());
-    write(Branch0Index.COMMENT2, walk());
-  },
+  open(8) + get + over(1) + skip(3) + get + over(1) + close,
+  undefined,
   0,
   0,
   fragmentMethods,
@@ -159,10 +152,8 @@ type Branch0_0Scope = {
 
 const branch0_0 = createRenderer(
   "<span> </span>",
-  next(1) + get + next(1),
-  () => {
-    write(Branch0_0Index.TEXT, walk());
-  },
+  open(1) + next(1) + get + next(1) + close,
+  undefined,
   0
 );
 
@@ -178,9 +169,7 @@ type Branch0_1Scope = {
 // so they could share the same renderer instance
 const branch0_1 = createRenderer(
   "<span> </span>",
-  next(1) + get + next(1),
-  () => {
-    write(Branch0_1Index.TEXT, walk());
-  },
+  open(1) + next(1) + get + next(1) + close,
+  undefined,
   0
 );
