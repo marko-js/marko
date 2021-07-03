@@ -151,25 +151,6 @@ export function writeQueued(
   setQueued(scope, offset + localIndex, value);
 }
 
-export function set(scope: Scope, index: number, value: unknown) {
-  if (scope[index] !== value) {
-    if (!scope.___dirty) {
-      scope.___dirty = {};
-      dirtyScopes.add(scope);
-    }
-
-    scope[index] = value;
-    if (scope.___dirty !== true) {
-      scope.___dirty[index] = true;
-    }
-  }
-}
-
-export function checkDirty(scope: Scope, index: number) {
-  const dirty = scope.___dirty;
-  return dirty === true || (dirty && dirty[index]);
-}
-
 export function cleanScopes() {
   for (const scope of dirtyScopes) {
     scope.___dirty = undefined;

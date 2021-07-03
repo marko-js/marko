@@ -1,10 +1,10 @@
 import {
-  set,
   cleanScopes,
   Scope,
   runWithScope,
   currentScope,
-  currentOffset
+  currentOffset,
+  write
 } from "./scope";
 
 type ExecFn = (scope: Scope, offset: number) => void;
@@ -71,10 +71,11 @@ export function run() {
     queuedValues = [];
     fns.clear();
     for (let i = 0; i < runningValues.length; i += 3) {
-      set(
+      write(
+        0,
+        runningValues[i + 2] as unknown,
         runningValues[i] as Scope,
-        runningValues[i + 1] as number,
-        runningValues[i + 2] as unknown
+        runningValues[i + 1] as number
       );
     }
     for (let i = 0; i < runningFns.length; i += 3) {
