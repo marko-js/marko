@@ -1,6 +1,5 @@
-import { Conditional, Loop } from "./control-flow";
 import { Renderer } from "./renderer";
-import { onDestroy, Scope, bind, read, write } from "./scope";
+import { onDestroy, Scope, read, write } from "./scope";
 
 export const enum NodeType {
   Element = 1,
@@ -66,7 +65,7 @@ export const staticNodeMethods = {
 //   }
 // };
 
-export const staticFragmentMethods = {
+export const fragmentMethods = {
   ...staticNodeMethods,
   ___insertBefore(parent, nextSibling) {
     let current: Node = this.___getFirstNode();
@@ -85,30 +84,6 @@ export const staticFragmentMethods = {
       current.remove();
       current = next!;
     }
-  }
-} as DOMMethods;
-
-export const dynamicStartFragmentMethods = {
-  ...staticFragmentMethods,
-  ___getFirstNode() {
-    return (this.___startNode as Conditional | Loop).___getFirstNode();
-  }
-} as DOMMethods;
-
-export const dynamicEndFragmentMethods = {
-  ...staticFragmentMethods,
-  ___getLastNode() {
-    return (this.___endNode as Conditional | Loop).___getLastNode();
-  }
-} as DOMMethods;
-
-export const dynamicFragmentMethods = {
-  ...staticFragmentMethods,
-  ___getFirstNode() {
-    return (this.___startNode as Conditional | Loop).___getFirstNode();
-  },
-  ___getLastNode() {
-    return (this.___endNode as Conditional | Loop).___getLastNode();
   }
 } as DOMMethods;
 

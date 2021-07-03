@@ -1,14 +1,14 @@
 export {
-  Conditional,
-  Loop,
-  conditional,
   setConditionalRenderer,
   setConditionalRendererOnlyChild,
+  getConditionalFirstNode,
+  getConditionalLastNode,
   runInBranch,
-  loop,
   setLoopOf,
   setLoopFromTo,
   setLoopIn,
+  getLoopFirstNode,
+  getLoopLastNode,
   runForEach
 } from "./control-flow";
 
@@ -21,8 +21,7 @@ export {
   props,
   dynamicTag,
   staticNodeMethods,
-  staticFragmentMethods,
-  dynamicFragmentMethods,
+  fragmentMethods,
   userEffect
 } from "./dom";
 

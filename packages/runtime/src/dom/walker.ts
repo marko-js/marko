@@ -50,7 +50,7 @@ export function walkMany(scope: Scope, offset: number, count: number) {
 export let walk = walkNormal;
 // TODO: in some cases (including hydrate) we may get an existing node
 // ideally we wouldn't create the newNode unless it was actually needed
-function walkNormal<T extends Node>(newNode?: T) {
+function walkNormal() {
   if ("MARKO_DEBUG" && !currentWalks) {
     throw new Error("Missing encoded walk string");
   }
@@ -83,7 +83,7 @@ function walkNormal<T extends Node>(newNode?: T) {
       if ("MARKO_DEBUG" && extendedWalk === undefined) {
         throw new Error("Extended walk was not enabled");
       }
-      return extendedWalk(value, newNode);
+      return extendedWalk(value);
     }
   }
 }
@@ -93,8 +93,8 @@ export function enableExtendedWalk() {
 }
 
 let extendedWalk: typeof actualExtendedWalk;
-function actualExtendedWalk<T extends Node>(value: number, newNode?: T) {
-  newNode = newNode || ((document.createTextNode("") as unknown) as T);
+function actualExtendedWalk(value: number) {
+  const newNode = document.createTextNode("");
 
   const current = walker.currentNode;
   if (value === WalkCodes.Inside) {

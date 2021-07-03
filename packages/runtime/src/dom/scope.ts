@@ -1,4 +1,3 @@
-import { Conditional, Loop } from "./control-flow";
 import { DOMMethods, staticNodeMethods } from "./dom";
 import { setQueued } from "./queue";
 
@@ -12,8 +11,8 @@ export type Scope = unknown[] &
   DOMMethods & {
     ___parentScope: Scope | undefined;
     ___parentOffset: number | undefined;
-    ___startNode: Conditional | Loop | Node | undefined;
-    ___endNode: Conditional | Loop | Node | undefined;
+    ___startNode: Node | number | undefined;
+    ___endNode: Node | number | undefined;
     ___dirty: Record<number, true> | true | undefined;
     ___cleanup: Set<number | Scope> | undefined;
   };

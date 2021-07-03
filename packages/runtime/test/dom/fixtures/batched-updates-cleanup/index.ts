@@ -1,8 +1,6 @@
 import {
   on,
   walk,
-  conditional,
-  Conditional,
   register,
   createRenderer,
   createRenderFn,
@@ -10,7 +8,6 @@ import {
   data,
   queue,
   ensureDelegated,
-  staticNodeMethods,
   write,
   read,
   bind,
@@ -29,18 +26,18 @@ export const inputs = [{}, click] as const;
 
 const enum Index {
   BUTTON = 0,
-  COMMENT = 1,
-  SHOW = 2,
-  MESSAGE = 3,
-  CONDITIONAL = 4
+  SHOW = 1,
+  MESSAGE = 2,
+  COMMENT = 3,
+  CONDITIONAL = 3
 }
 
 type scope = {
   [Index.BUTTON]: HTMLButtonElement;
-  [Index.COMMENT]: Comment;
   [Index.SHOW]: boolean;
   [Index.MESSAGE]: string;
-  [Index.CONDITIONAL]: Conditional;
+  [Index.COMMENT]: Comment;
+  [Index.CONDITIONAL]: Comment;
 };
 
 // <let/show = true/>
@@ -63,7 +60,7 @@ export const hydrate = register("", () => {
       queue(execShowMessage);
     })
   );
-  write(Index.CONDITIONAL, conditional(walk() as Comment));
+  write(Index.COMMENT, walk());
 
   execShowMessage();
 });
@@ -100,6 +97,5 @@ const branch0 = createRenderer(
   () => {
     write(Branch0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );

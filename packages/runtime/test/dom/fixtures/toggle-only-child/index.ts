@@ -1,12 +1,9 @@
 import {
   walk,
   data,
-  conditional,
   setConditionalRendererOnlyChild,
-  Conditional,
   createRenderer,
   createRenderFn,
-  staticNodeMethods,
   read,
   write,
   readInOwner,
@@ -30,15 +27,15 @@ export const inputs = [
 ];
 
 const enum Index {
-  DIV = 0,
-  INPUT_VALUE = 1,
-  CONDITIONAL = 2
+  INPUT_VALUE = 0,
+  DIV = 1,
+  CONDITIONAL = 1
 }
 
 type scope = {
-  [Index.DIV]: HTMLDivElement;
   [Index.INPUT_VALUE]: typeof inputs[number]["value"];
-  [Index.CONDITIONAL]: Conditional;
+  [Index.DIV]: HTMLDivElement;
+  [Index.CONDITIONAL]: HTMLDivElement;
 };
 
 // <div>
@@ -50,7 +47,7 @@ type scope = {
 export const template = `<div></div>`;
 export const walks = get + over(1);
 export const hydrate = () => {
-  write(Index.CONDITIONAL, conditional(walk() as HTMLDivElement));
+  write(Index.DIV, walk());
 };
 
 export const execInputValue = () => {
@@ -87,6 +84,5 @@ const branch0 = createRenderer(
   () => {
     write(Branch0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );

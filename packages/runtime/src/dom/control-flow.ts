@@ -5,74 +5,94 @@ import {
   Scope,
   createScope,
   getEmptyScope,
-  set,
   destroyScope,
   read,
-  runWithScope
+  runWithScope,
+  write
 } from "./scope";
-import { NodeType } from "./dom";
 
-export type Conditional = (
-  | {
-      scope: Scope;
-      renderer: Renderer;
-    }
-  | {
-      scope: undefined;
-      renderer: undefined;
-    }
-) & {
-  ___referenceNode: Comment | Element;
-  ___context: typeof Context;
-  ___getFirstNode: () => Node;
-  ___getLastNode: () => Node;
-};
-
-export function conditional(referenceNode: Comment | Element): Conditional {
-  return {
-    scope: undefined,
-    renderer: undefined,
-    ___referenceNode: referenceNode,
-    ___context: Context,
-    ___getFirstNode: getFirstNodeConditional,
-    ___getLastNode: getLastNodeConditional
-  };
+const enum ConditionalIndex {
+  REFERENCE_NODE = 0,
+  SCOPE = 1,
+  RENDERER = 2,
+  CONTEXT = 3
 }
+
+type Conditional = {
+  [ConditionalIndex.REFERENCE_NODE]: Element | Comment;
+  [ConditionalIndex.SCOPE]: Scope;
+  [ConditionalIndex.RENDERER]: Renderer;
+  [ConditionalIndex.CONTEXT]: typeof Context;
+};
 
 export function runInBranch(
   conditionalIndex: number,
   branch: Renderer,
   fn: () => void
 ) {
-  const cond = read(conditionalIndex) as Conditional;
-  if (cond.renderer === branch) {
-    runWithScope(fn, 0, cond.scope!);
+  if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
+    runWithScope(
+      fn,
+      0,
+      read(conditionalIndex + ConditionalIndex.SCOPE) as Scope
+    );
     return 1;
   }
+}
+
+export function getConditionalFirstNode(
+  this: Scope,
+  conditionalIndex: number = this.___startNode as number,
+  last?: boolean
+) {
+  const scope = this[conditionalIndex + ConditionalIndex.SCOPE] as Scope;
+  return scope
+    ? scope[last ? "___getLastNode" : "___getFirstNode"]()
+    : (this[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment);
+}
+
+export function getConditionalLastNode(this: Scope) {
+  return getConditionalFirstNode.call(this, this.___endNode as number, true);
 }
 
 export function setConditionalRenderer(
   conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
-  const conditonal = read(conditionalIndex) as Conditional;
-  if (conditonal.renderer !== (conditonal.renderer = newRenderer)) {
+  if (read(conditionalIndex + ConditionalIndex.RENDERER) !== newRenderer) {
+    write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer);
     let newScope: Scope;
-    let prevScope = conditonal.scope!;
+    let prevScope = read<Conditional, ConditionalIndex.SCOPE>(
+      conditionalIndex + ConditionalIndex.SCOPE
+    );
 
     if (newRenderer) {
-      setContext(conditonal.___context);
-      newScope = conditonal.scope = createScope(
-        newRenderer.___size,
-        newRenderer.___domMethods!
+      setContext(
+        read(conditionalIndex + ConditionalIndex.CONTEXT) as typeof Context
+      );
+      write(
+        conditionalIndex + ConditionalIndex.SCOPE,
+        (newScope = createScope(
+          newRenderer.___size,
+          newRenderer.___domMethods!
+        ))
       );
       initRenderer(newRenderer, newScope);
       prevScope =
-        prevScope || getEmptyScope(conditonal.___referenceNode as Comment);
+        prevScope ||
+        getEmptyScope(
+          read<Conditional, ConditionalIndex.REFERENCE_NODE>(
+            conditionalIndex + ConditionalIndex.REFERENCE_NODE
+          ) as Comment
+        );
       setContext(null);
     } else {
-      newScope = getEmptyScope(conditonal.___referenceNode as Comment);
-      conditonal.scope = undefined;
+      newScope = getEmptyScope(
+        read<Conditional, ConditionalIndex.REFERENCE_NODE>(
+          conditionalIndex + ConditionalIndex.REFERENCE_NODE
+        ) as Comment
+      );
+      write(conditionalIndex + ConditionalIndex.SCOPE, undefined);
     }
 
     newScope.___insertBefore(
@@ -87,33 +107,30 @@ export function setConditionalRendererOnlyChild(
   conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
-  const conditonal = read(conditionalIndex) as Conditional;
-  if (conditonal.renderer !== (conditonal.renderer = newRenderer)) {
-    (conditonal.___referenceNode as Element).textContent = "";
+  if (read(conditionalIndex + ConditionalIndex.RENDERER) !== newRenderer) {
+    write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer);
+    const referenceNode = read<Conditional, ConditionalIndex.REFERENCE_NODE>(
+      conditionalIndex + ConditionalIndex.REFERENCE_NODE
+    ) as Element;
+    referenceNode.textContent = "";
 
     if (newRenderer) {
-      setContext(conditonal.___context);
-      const newScope = (conditonal.scope = createScope(
-        newRenderer.___size,
-        newRenderer.___domMethods!
-      ));
+      setContext(
+        read(conditionalIndex + ConditionalIndex.CONTEXT) as typeof Context
+      );
+      let newScope: Scope;
+      write(
+        conditionalIndex + ConditionalIndex.SCOPE,
+        (newScope = createScope(
+          newRenderer.___size,
+          newRenderer.___domMethods!
+        ))
+      );
       initRenderer(newRenderer, newScope);
-      newScope.___insertBefore(conditonal.___referenceNode as Element, null);
+      newScope.___insertBefore(referenceNode, null);
       setContext(null);
     }
   }
-}
-
-function getFirstNodeConditional(this: Conditional) {
-  return this.scope
-    ? this.scope.___getFirstNode()
-    : (this.___referenceNode as Comment);
-}
-
-function getLastNodeConditional(this: Conditional) {
-  return this.scope
-    ? this.scope.___getLastNode()
-    : (this.___referenceNode as Comment);
 }
 
 const emptyMarkerMap = new Map();
@@ -122,93 +139,86 @@ emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
 const emptyMap = new Map();
 const emptyArray = [];
 
-export type Loop = {
-  ___scopeMap: Map<unknown, Scope>;
-  ___scopeArray: Scope[];
-  ___referenceNode: Comment | Element;
-  ___referenceIsMarker: boolean;
-  ___renderer: Renderer;
-  ___keyFn: undefined | ((item: unknown, index: number) => unknown);
-  ___context: typeof Context;
-  ___getFirstNode: () => Node;
-  ___getLastNode: () => Node;
-  [Symbol.iterator]: () => IterableIterator<Scope>;
-};
-
-export function loop(
-  referenceNode: Comment | Element,
-  renderer: Renderer,
-  keyFn: (item: unknown) => unknown
-): Loop {
-  const referenceIsMarker = referenceNode.nodeType === NodeType.Comment;
-  return {
-    ___scopeMap: referenceIsMarker ? emptyMarkerMap : emptyMap,
-    ___scopeArray: referenceIsMarker ? emptyMarkerArray : emptyArray,
-    ___referenceNode: referenceNode,
-    ___referenceIsMarker: referenceIsMarker,
-    ___renderer: renderer,
-    ___keyFn: keyFn,
-    ___context: Context,
-    ___getFirstNode: getFirstNodeLoop,
-    ___getLastNode: getLastNodeLoop,
-    [Symbol.iterator]: loopIterator
-  };
+const enum LoopIndex {
+  REFERENCE_NODE = 0,
+  SCOPE_MAP = 1,
+  SCOPE_ARRAY = 2,
+  CONTEXT = 3
 }
 
+type Loop = {
+  [LoopIndex.REFERENCE_NODE]: Element | Comment;
+  [LoopIndex.SCOPE_MAP]: Map<unknown, Scope>;
+  [LoopIndex.SCOPE_ARRAY]: Scope[];
+  [LoopIndex.CONTEXT]: typeof Context;
+};
+
 export function runForEach(loopIndex: number, fn: () => void) {
-  for (const scope of (read(loopIndex) as Loop).___scopeArray) {
+  for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
+    loopIndex + LoopIndex.SCOPE_ARRAY
+  )) {
     runWithScope(fn, 0, scope);
   }
 }
 
-function loopIterator(this: Loop) {
-  return (this.___scopeArray === emptyMarkerArray
-    ? emptyArray
-    : this.___scopeArray
-  ).values();
+export function getLoopFirstNode(
+  this: Scope,
+  loopIndex: number = this.___startNode as number,
+  last?: boolean
+) {
+  const scopes = this[loopIndex + LoopIndex.SCOPE_ARRAY] as Scope[];
+  return scopes === emptyMarkerArray
+    ? (this[loopIndex + LoopIndex.REFERENCE_NODE] as Comment)
+    : scopes[last ? scopes.length - 1 : 0][
+        last ? "___getLastNode" : "___getFirstNode"
+      ]();
 }
 
-function getFirstNodeLoop(this: Loop) {
-  return this.___scopeArray[0].___getFirstNode();
+export function getLoopLastNode(this: Scope) {
+  return getLoopFirstNode.call(this, this.___endNode as number, true);
 }
 
-function getLastNodeLoop(this: Loop) {
-  return this.___scopeArray[this.___scopeArray.length - 1].___getLastNode();
-}
-
-export function setLoopOf(loopIndex: number, newValues: unknown[]) {
-  const loop = read(loopIndex) as Loop;
+export function setLoopOf(
+  loopIndex: number,
+  newValues: unknown[],
+  renderer: Renderer,
+  keyFn?: (item: unknown) => unknown
+) {
   let newMap: Map<unknown, Scope>;
   let newArray: Scope[];
   const len = newValues.length;
-  const oldMap = loop.___scopeMap;
-  const oldArray = loop.___scopeArray;
+  const referenceNode = read<Loop, LoopIndex.REFERENCE_NODE>(
+    loopIndex + LoopIndex.REFERENCE_NODE
+  );
+  const referenceIsMarker = referenceNode.nodeType === 8; /* Comment */
+  const oldMap =
+    read<Loop, LoopIndex.SCOPE_MAP>(loopIndex + LoopIndex.SCOPE_MAP) ||
+    (referenceIsMarker ? emptyMarkerMap : emptyMap);
+  const oldArray =
+    read<Loop, LoopIndex.SCOPE_ARRAY>(loopIndex + LoopIndex.SCOPE_ARRAY) ||
+    (referenceIsMarker ? emptyMarkerArray : emptyArray);
   let inserts = 0;
   let moves = 0;
-  const referenceIsMarker = loop.___referenceIsMarker;
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
 
   if (len > 0) {
     newMap = new Map();
-    setContext(loop.___context);
+    setContext(read(loopIndex + LoopIndex.CONTEXT) as typeof Context);
     for (let index = 0; index < len; index++) {
       const item = newValues[index];
-      const key = loop.___keyFn ? loop.___keyFn(item, index) : "" + index;
+      const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
       if (!childScope) {
-        childScope = createScope(
-          loop.___renderer.___size,
-          loop.___renderer.___domMethods!
-        );
+        childScope = createScope(renderer.___size, renderer.___domMethods!);
         childScope[0] = item;
         childScope[1] = index;
-        initRenderer(loop.___renderer, childScope);
+        initRenderer(renderer, childScope);
         inserts++;
       } else {
         if (childScope[1] !== index) moves++;
-        set(childScope, 0, item);
-        set(childScope, 1, index);
+        write(0, item, childScope, 0);
+        write(1, index, childScope, 0);
       }
       newMap.set(key, childScope);
     }
@@ -218,16 +228,16 @@ export function setLoopOf(loopIndex: number, newValues: unknown[]) {
     if (referenceIsMarker) {
       newMap = emptyMarkerMap;
       newArray = emptyMarkerArray;
-      getEmptyScope(loop.___referenceNode as Comment);
+      getEmptyScope(referenceNode as Comment);
     } else {
-      if (loop.___renderer.___hasUserEffects) {
+      if (renderer.___hasUserEffects) {
         for (let i = 0; i < oldArray.length; i++) {
           destroyScope(oldArray[i]);
         }
       }
-      loop.___referenceNode.textContent = "";
-      loop.___scopeMap = emptyMap;
-      loop.___scopeArray = emptyArray;
+      referenceNode.textContent = "";
+      write(loopIndex + LoopIndex.SCOPE_MAP, emptyMap);
+      write(loopIndex + LoopIndex.SCOPE_ARRAY, emptyArray);
       return;
     }
   }
@@ -235,28 +245,29 @@ export function setLoopOf(loopIndex: number, newValues: unknown[]) {
   if (inserts || moves || len !== oldArray.length) {
     if (referenceIsMarker) {
       if (oldMap === emptyMarkerMap) {
-        getEmptyScope(loop.___referenceNode as Comment);
+        getEmptyScope(referenceNode as Comment);
       }
       const oldLastChild = oldArray[oldArray.length - 1];
       afterReference = oldLastChild.___getAfterNode();
       parentNode = oldLastChild.___getParentNode();
     } else {
       afterReference = null;
-      parentNode = loop.___referenceNode as Element;
+      parentNode = referenceNode as Element;
     }
 
     reconcile(parentNode, oldArray, newArray!, afterReference);
   }
 
-  loop.___scopeArray = newArray!;
-  loop.___scopeMap = newMap!;
+  write(loopIndex + LoopIndex.SCOPE_MAP, newMap);
+  write(loopIndex + LoopIndex.SCOPE_ARRAY, newArray);
 }
 
 export function setLoopFromTo(
   loopIndex: number,
   from: number,
   to: number,
-  step: number
+  step: number,
+  renderer: Renderer
 ) {
   const range: number[] = [];
 
@@ -264,9 +275,21 @@ export function setLoopFromTo(
     range.push(i);
   }
 
-  setLoopOf(loopIndex, range);
+  setLoopOf(loopIndex, range, renderer, keyFromTo);
 }
 
-export function setLoopIn(loopIndex: number, object: Record<string, unknown>) {
-  setLoopOf(loopIndex, Object.entries(object));
+function keyFromTo(item: unknown) {
+  return item;
+}
+
+export function setLoopIn(
+  loopIndex: number,
+  object: Record<string, unknown>,
+  renderer: Renderer
+) {
+  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn);
+}
+
+function keyIn(item: [string, unknown]) {
+  return item[0];
 }

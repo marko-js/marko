@@ -1,13 +1,10 @@
 import {
   walk,
   data,
-  loop,
   setLoopFromTo,
-  Loop,
   createRenderer,
   createRenderFn,
   isDirty,
-  staticNodeMethods,
   write,
   read,
   runForEach
@@ -35,19 +32,19 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  DIV = 0,
-  INPUT_FROM = 1,
-  INPUT_TO = 2,
-  INPUT_STEP = 3,
-  LOOP = 4
+  INPUT_FROM = 0,
+  INPUT_TO = 1,
+  INPUT_STEP = 2,
+  DIV = 3,
+  LOOP = 3
 }
 
 type scope = {
-  [Index.DIV]: HTMLDivElement;
   [Index.INPUT_FROM]: Input["from"];
   [Index.INPUT_TO]: Input["to"];
   [Index.INPUT_STEP]: Input["step"];
-  [Index.LOOP]: Loop;
+  [Index.DIV]: HTMLDivElement;
+  [Index.LOOP]: HTMLDivElement;
 };
 
 // <div>
@@ -59,10 +56,7 @@ type scope = {
 export const template = `<div></div>`;
 export const walks = get + over(1);
 export const hydrate = () => {
-  write(
-    Index.LOOP,
-    loop(walk() as Comment, iter0, i => i)
-  );
+  write(Index.DIV, walk());
 };
 
 export const execInputFromToStep = () => {
@@ -70,7 +64,8 @@ export const execInputFromToStep = () => {
     Index.LOOP,
     read<scope, Index.INPUT_FROM>(Index.INPUT_FROM),
     read<scope, Index.INPUT_TO>(Index.INPUT_TO),
-    read<scope, Index.INPUT_STEP>(Index.INPUT_STEP)
+    read<scope, Index.INPUT_STEP>(Index.INPUT_STEP),
+    iter0
   );
   runForEach(Index.LOOP, iter0_execItem);
 };
@@ -99,8 +94,7 @@ const iter0 = createRenderer(
   () => {
     write(Iter0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );
 
 const iter0_execItem = () => {

@@ -1,15 +1,12 @@
 import {
   walk,
   data,
-  loop,
   read,
   write,
   setLoopOf,
-  Loop,
   isDirty,
   createRenderer,
   createRenderFn,
-  staticNodeMethods,
   runForEach
 } from "../../../../src/dom/index";
 import { next, over, get } from "../../utils/walks";
@@ -55,15 +52,15 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  COMMENT = 0,
-  INPUT_CHILDREN = 1,
-  LOOP = 2
+  INPUT_CHILDREN = 0,
+  COMMENT = 1,
+  LOOP = 1
 }
 
 type scope = {
-  [Index.COMMENT]: Comment;
   [Index.INPUT_CHILDREN]: Input["children"];
-  [Index.LOOP]: Loop;
+  [Index.COMMENT]: Comment;
+  [Index.LOOP]: Comment;
 };
 
 // <for|child| of=input.children by(c) { return c.id }>
@@ -73,20 +70,15 @@ type scope = {
 export const template = `<!>`;
 export const walks = get + over(1);
 export const hydrate = () => {
-  write(
-    Index.LOOP,
-    loop(
-      walk() as Comment,
-      iter0,
-      i => "" + (i as Input["children"][number]).id
-    )
-  );
+  write(Index.COMMENT, walk());
 };
 
 export const execInputChildren = () => {
   setLoopOf(
     Index.LOOP,
-    read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN)
+    read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
+    iter0,
+    i => "" + (i as Input["children"][number]).id
   );
   runForEach(Index.LOOP, iter0_execItem);
 };
@@ -120,8 +112,7 @@ const iter0 = createRenderer(
   () => {
     write(Iter0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );
 
 const iter0_execItem = () => {

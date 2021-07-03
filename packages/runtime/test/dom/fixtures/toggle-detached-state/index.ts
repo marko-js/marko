@@ -4,12 +4,9 @@ import {
   read,
   write,
   readInOwner,
-  conditional,
   setConditionalRenderer,
-  Conditional,
   createRenderer,
   createRenderFn,
-  staticNodeMethods,
   runInBranch
 } from "../../../../src/dom/index";
 import { next, get, over } from "../../utils/walks";
@@ -32,17 +29,17 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  COMMENT = 0,
-  INPUT_VISIBLE = 1,
-  INPUT_VALUE = 2,
-  CONDITIONAL = 3
+  INPUT_VISIBLE = 0,
+  INPUT_VALUE = 1,
+  COMMENT = 2,
+  CONDITIONAL = 2
 }
 
 type scope = {
-  [Index.COMMENT]: Comment;
   [Index.INPUT_VISIBLE]: Input["visible"];
   [Index.INPUT_VALUE]: Input["value"];
-  [Index.CONDITIONAL]: Conditional;
+  [Index.COMMENT]: Comment;
+  [Index.CONDITIONAL]: Comment;
 };
 
 // <div>
@@ -54,7 +51,7 @@ type scope = {
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
 export const hydrate = () => {
-  write(Index.CONDITIONAL, conditional(walk() as Comment));
+  write(Index.COMMENT, walk());
 };
 
 export const execInputValue = () => {
@@ -92,6 +89,5 @@ const branch0 = createRenderer(
   () => {
     write(Branch0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );

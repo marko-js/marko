@@ -1,13 +1,12 @@
 import {
   walk,
   data,
-  conditional,
   setConditionalRenderer,
-  Conditional,
   createRenderer,
   createRenderFn,
-  staticNodeMethods,
-  dynamicFragmentMethods,
+  fragmentMethods,
+  getConditionalFirstNode,
+  getConditionalLastNode,
   write,
   isDirty,
   read,
@@ -48,17 +47,19 @@ export const inputs = [
 type Input = typeof inputs[number];
 
 const enum Index {
-  INPUT_SHOW = 1,
-  INPUT_VALUE1 = 2,
-  INPUT_VALUE2 = 3,
-  CONDITIONAL = 4
+  INPUT_SHOW = 0,
+  INPUT_VALUE1 = 1,
+  INPUT_VALUE2 = 2,
+  COMMENT = 3,
+  CONDITIONAL = 3
 }
 
 type scope = {
   [Index.INPUT_SHOW]: Input["show"];
   [Index.INPUT_VALUE1]: Input["value1"];
   [Index.INPUT_VALUE2]: Input["value2"];
-  [Index.CONDITIONAL]: Conditional;
+  [Index.COMMENT]: Comment;
+  [Index.CONDITIONAL]: Comment;
 };
 
 // <div>
@@ -71,7 +72,7 @@ type scope = {
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
 export const hydrate = () => {
-  write(Index.CONDITIONAL, conditional(walk() as Comment));
+  write(Index.COMMENT, walk());
 };
 
 export const execInputShowValue1Value2 = () => {
@@ -87,17 +88,17 @@ export const execInputShowValue1Value2 = () => {
 const execInputShowValue1Value2Branch0 = () => {
   if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE1)) {
     setConditionalRenderer(
-      Branch0Index.COND1,
+      Branch0Index.CONDITIONAL1,
       readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
     );
-    runInBranch(Branch0Index.COND1, branch0_0, execInputValue1Branch0_0);
+    runInBranch(Branch0Index.CONDITIONAL1, branch0_0, execInputValue1Branch0_0);
   }
   if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE2)) {
     setConditionalRenderer(
-      Branch0Index.COND2,
+      Branch0Index.CONDITIONAL2,
       readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
     );
-    runInBranch(Branch0Index.COND2, branch0_1, execInputValue2Branch0_1);
+    runInBranch(Branch0Index.CONDITIONAL2, branch0_1, execInputValue2Branch0_1);
   }
 };
 
@@ -119,31 +120,42 @@ export const execDynamicInput = (input: Input) => {
 export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
 
 const enum Branch0Index {
-  COND1 = 0,
-  COND2 = 1
+  COMMENT1 = 0,
+  CONDITIONAL1 = 0,
+  COMMENT2 = 4,
+  CONDITIONAL2 = 4
 }
 
-type Branch0Scope = [Conditional, Conditional];
+type Branch0Scope = {
+  [Branch0Index.COMMENT1]: Comment;
+  [Branch0Index.CONDITIONAL1]: Comment;
+  [Branch0Index.COMMENT2]: Comment;
+  [Branch0Index.CONDITIONAL2]: Comment;
+};
 
 const branch0 = createRenderer(
   "<!><!>",
   get + over(1) + get + over(1),
   () => {
-    write(Branch0Index.COND1, conditional(walk() as Comment));
-    write(Branch0Index.COND2, conditional(walk() as Comment));
+    write(Branch0Index.COMMENT1, walk());
+    write(Branch0Index.COMMENT2, walk());
   },
   0,
-  dynamicFragmentMethods,
   0,
+  fragmentMethods,
+  getConditionalFirstNode,
   0,
-  1
+  getConditionalLastNode,
+  4
 );
 
 const enum Branch0_0Index {
   TEXT = 0
 }
 
-type Branch0_0Scope = [Text];
+type Branch0_0Scope = {
+  [Branch0_0Index.TEXT]: Text;
+};
 
 const branch0_0 = createRenderer(
   "<span> </span>",
@@ -151,15 +163,16 @@ const branch0_0 = createRenderer(
   () => {
     write(Branch0_0Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );
 
 const enum Branch0_1Index {
   TEXT = 0
 }
 
-type Branch0_1Scope = [Text];
+type Branch0_1Scope = {
+  [Branch0_1Index.TEXT]: Text;
+};
 
 // OPTIMIZATION: these two branches have the same renderer arguments
 // so they could share the same renderer instance
@@ -169,6 +182,5 @@ const branch0_1 = createRenderer(
   () => {
     write(Branch0_1Index.TEXT, walk());
   },
-  0,
-  staticNodeMethods
+  0
 );
