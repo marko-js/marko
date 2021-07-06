@@ -178,11 +178,11 @@ export function getLoopLastNode(this: Scope) {
   return getLoopFirstNode.call(this, this.___endNode as number, true);
 }
 
-export function setLoopOf(
+export function setLoopOf<T>(
   loopIndex: number,
-  newValues: unknown[],
+  newValues: T[],
   renderer: Renderer,
-  keyFn?: (item: unknown) => unknown
+  keyFn?: (item: T) => unknown
 ) {
   let newMap: Map<unknown, Scope>;
   let newArray: Scope[];
@@ -278,7 +278,7 @@ export function setLoopFromTo(
   setLoopOf(loopIndex, range, renderer, keyFromTo);
 }
 
-function keyFromTo(item: unknown) {
+function keyFromTo(item: number) {
   return item;
 }
 
