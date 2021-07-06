@@ -3,12 +3,14 @@ import { setQueued } from "./queue";
 
 export let currentScope: Scope;
 export let currentOffset: number;
-let ownerOffset: number;
+export let ownerOffset: number;
+let scopeId = 0;
 
 const dirtyScopes: Set<Scope> = new Set();
 
 export type Scope = unknown[] &
   DOMMethods & {
+    ___id: number;
     ___parentScope: Scope | undefined;
     ___parentOffset: number | undefined;
     ___startNode: Node | number | undefined;
@@ -19,6 +21,7 @@ export type Scope = unknown[] &
 
 export function createScope(size: number, methods: DOMMethods): Scope {
   const scope = new Array(size) as Scope;
+  scope.___id = scopeId++;
   scope.___startNode = scope.___endNode = undefined;
   scope.___dirty = true;
   scope.___parentScope = currentScope;
@@ -133,14 +136,14 @@ export function runWithScope(
   }
 }
 
-// export function runWithOffset(fn: () => void, offset: number) {
-//   currentOffset += offset;
-//   try {
-//     fn();
-//   } finally {
-//     currentOffset -= offset;
-//   }
-// }
+export function runInChild(fn: () => void, offset: number) {
+  currentOffset += offset;
+  try {
+    fn();
+  } finally {
+    currentOffset -= offset;
+  }
+}
 
 export function writeQueued(
   localIndex: number,
@@ -149,6 +152,14 @@ export function writeQueued(
   offset = currentOffset
 ) {
   setQueued(scope, offset + localIndex, value);
+}
+
+export function writeQueuedInOwner(
+  localIndex: number,
+  value: unknown,
+  ownerLevel?: number
+) {
+  writeQueued(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
 }
 
 export function cleanScopes() {
