@@ -31,7 +31,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
         if (!ofInterest) {
           ofInterest = true;
           writeWalks(tag, Walks.GET);
-          writeHydrate(tag, t.expressionStatement(callRuntime(tag, "walk")));
+          // writeHydrate(tag, t.expressionStatement(callRuntime(tag, "walk")));
         }
         writeHydrate(
           tag,
