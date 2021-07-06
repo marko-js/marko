@@ -204,6 +204,7 @@ export function setLoopOf<T>(
 
   if (len > 0) {
     newMap = new Map();
+    newArray = [];
     setContext(read(loopIndex + LoopIndex.CONTEXT) as typeof Context);
     for (let index = 0; index < len; index++) {
       const item = newValues[index];
@@ -221,9 +222,9 @@ export function setLoopOf<T>(
         write(1, index, childScope, 0);
       }
       newMap.set(key, childScope);
+      newArray.push(childScope);
     }
     setContext(null);
-    newArray = Array.from(newMap.values());
   } else {
     if (referenceIsMarker) {
       newMap = emptyMarkerMap;
