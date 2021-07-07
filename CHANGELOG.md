@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.2](https://github.com/marko-js/marko/compare/v5.11.1...v5.11.2) (2021-07-07)
+
+
+### Bug Fixes
+
+* incorrect search file types for taglib lookup ([4e6bd9a](https://github.com/marko-js/marko/commit/4e6bd9a2e9de27566b78c98301715054c421c264))
+
+
+
+
+
 ## [5.11.1](https://github.com/marko-js/marko/compare/v5.11.0...v5.11.1) (2021-07-07)
 
 
