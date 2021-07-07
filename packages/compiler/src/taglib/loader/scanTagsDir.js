@@ -26,12 +26,12 @@ const searchFiles = [
   { name: "index", type: "renderer" },
   { name: "template.marko", type: "template" },
   { name: "template.html", type: "template" },
-  { name: "code-generator", type: "translator" },
-  { name: "translate", type: "translator" },
-  { name: "node-factory", type: "parser" },
-  { name: "parse", type: "parser" },
-  { name: "transformer", type: "transformer" },
-  { name: "transform", type: "transformer" }
+  { name: "code-generator", type: "translate" },
+  { name: "translate", type: "translate" },
+  { name: "node-factory", type: "parse" },
+  { name: "parse", type: "parse" },
+  { name: "transformer", type: "transform" },
+  { name: "transform", type: "transform" }
 ];
 
 function createDefaultTagDef() {
@@ -70,7 +70,9 @@ function getPath(filename, fileMap) {
   if (file.__path) return file.__path;
   if (file.js) return file[".js"];
 
-  return file[Object.keys(file)[0]];
+  for (let key in file) {
+    return file[key];
+  }
 }
 
 function findAndSetFile(tagDef, tagDirname) {
