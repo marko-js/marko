@@ -313,6 +313,13 @@ class TaglibLoader {
   }
 
   /**
+   * Exposes a babel visitor to perform additional translations on the entire ast.
+   */
+  translate(value) {
+    this.tag.translator = normalizeHook(this.dirname, value);
+  }
+
+  /**
    * Allows an ID to be explicitly assigned to a taglib.
    * The taglib ID is used to prevent the same taglib  (even if different versions)
    * from being loaded multiple times.
