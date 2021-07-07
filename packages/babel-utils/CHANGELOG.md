@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.11.0...v5.11.1) (2021-07-07)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
 # [5.11.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.10.7...v5.11.0) (2021-07-07)
 
 **Note:** Version bump only for package @marko/babel-utils

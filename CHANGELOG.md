@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.1](https://github.com/marko-js/marko/compare/v5.11.0...v5.11.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* add missing compiler hook aliases during taglib loading ([0e008e3](https://github.com/marko-js/marko/commit/0e008e33e5c39d99b6a0744c1ad0132adbd0bf6a))
+
+
+
+
+
 # [5.11.0](https://github.com/marko-js/marko/compare/v5.10.7...v5.11.0) (2021-07-07)
 
 
