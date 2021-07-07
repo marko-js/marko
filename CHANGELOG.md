@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.11.0](https://github.com/marko-js/marko/compare/v5.10.7...v5.11.0) (2021-07-07)
+
+
+### Features
+
+* add hoisting support for tag var bindings ([956a80c](https://github.com/marko-js/marko/commit/956a80c5c28948745b0e554971853d88ceb41871))
+* support taglib translate hook, support arrays in taglib hooks ([e2b0e66](https://github.com/marko-js/marko/commit/e2b0e66138acec5ee11ec0f582da99391a5c7396))
+
+
+
+
+
 ## [5.10.7](https://github.com/marko-js/marko/compare/v5.10.6...v5.10.7) (2021-06-23)
 
 
