@@ -12,9 +12,12 @@ const types = require("./types");
 const tagFileTypes = [
   "template",
   "renderer",
+  "transform",
   "transformer",
   "code-generator",
-  "node-factory"
+  "translate",
+  "node-factory",
+  "parse"
 ];
 
 const searchFiles = [
@@ -23,9 +26,12 @@ const searchFiles = [
   { name: "index", type: "renderer" },
   { name: "template.marko", type: "template" },
   { name: "template.html", type: "template" },
-  { name: "code-generator", type: "code-generator" },
-  { name: "node-factory", type: "node-factory" },
-  { name: "transformer", type: "transformer" }
+  { name: "code-generator", type: "translator" },
+  { name: "translate", type: "translator" },
+  { name: "node-factory", type: "parser" },
+  { name: "parse", type: "parser" },
+  { name: "transformer", type: "transformer" },
+  { name: "transform", type: "transformer" }
 ];
 
 function createDefaultTagDef() {

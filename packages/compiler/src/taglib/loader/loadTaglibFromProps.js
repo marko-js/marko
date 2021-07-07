@@ -316,7 +316,7 @@ class TaglibLoader {
    * Exposes a babel visitor to perform additional translations on the entire ast.
    */
   translate(value) {
-    this.tag.translator = normalizeHook(this.dirname, value);
+    this.taglib.translator = normalizeHook(this.dirname, value);
   }
 
   /**
