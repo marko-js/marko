@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.11.3](https://github.com/marko-js/marko/compare/v5.11.2...v5.11.3) (2021-07-08)
+
+
+### Bug Fixes
+
+* allow key attribute to pass through for attribute tags ([ab52ae4](https://github.com/marko-js/marko/commit/ab52ae4c41fd94f27b397507423b3da4343bd9a5))
+
+
+
+
+
 ## [5.11.2](https://github.com/marko-js/marko/compare/v5.11.1...v5.11.2) (2021-07-07)
 
 
