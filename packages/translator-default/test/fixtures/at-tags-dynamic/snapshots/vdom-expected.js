@@ -15,11 +15,8 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   const _cols = [];
   const _items = [];
-  let _keyValue = 0;
 
   for (const color of input.colors) {
-    const _keyScope = `[${_keyValue++}]`;
-
     if (x) {
       _items.push({
         "style": {
@@ -51,11 +48,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   }
 
   let i = 10;
-  let _keyValue2 = 0;
 
   while (i--) {
-    const _keyScope2 = `[${_keyValue2++}]`;
-
     _items.push({
       "renderBody": out => {
         out.t(i, _component);
@@ -63,16 +57,10 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     });
   }
 
-  let _keyValue3 = 0;
-
   for (const col of input.table) {
-    const _keyScope3 = `[${_keyValue3++}]`;
     const _rows = [];
-    let _keyValue4 = 0;
 
     for (const row of col) {
-      const _keyScope4 = `[${_keyValue4++ + _keyScope3}]`;
-
       _rows.push({
         "row": row,
         "renderBody": out => {

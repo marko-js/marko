@@ -53,7 +53,10 @@ export default {
       });
     }
 
-    getKeyManager(path).resolveKey(path);
+    if (!isAttributeTag(path)) {
+      getKeyManager(path).resolveKey(path);
+    }
+
     optimizeStaticVDOM(path);
   },
   exit(path) {
