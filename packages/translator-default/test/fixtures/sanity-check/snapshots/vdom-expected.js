@@ -106,11 +106,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       "d": {
         "d": 1,
         "renderBody": out => {
-          out.e("div", null, "19", _component, 0, 0);
+          out.e("div", null, "17", _component, 0, 0);
         }
       },
       "renderBody": out => {
-        out.e("div", null, "17", _component, 0, 0);
+        out.e("div", null, "16", _component, 0, 0);
       }
     },
     "renderBody": (out, b) => {
@@ -125,14 +125,14 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     ...e,
     ...f(),
     "id": "a"
-  }), "20", _component, null, 4);
+  }), "18", _component, null, 4);
   out.t(a, _component);
   out.e("div", {
     "c": "1"
-  }, "21", _component, 0, 0);
+  }, "19", _component, 0, 0);
   out.e("div", {
     "d": "1"
-  }, "22", _component, 0, 0);
+  }, "20", _component, 0, 0);
 
   if (x === a) {
     out.t("a ", _component);
@@ -146,11 +146,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.ee();
   out.e("div", {
     "b": "1"
-  }, "23", _component, 0, 0);
-  out.be("div", null, "24", _component, null, 0);
+  }, "21", _component, 0, 0);
+  out.be("div", null, "22", _component, null, 0);
   out.t("123 abc 123", _component);
   out.ee();
-  out.e("span", _marko_attrs(abc), "25", _component, 0, 4);
+  out.e("span", _marko_attrs(abc), "23", _component, 0, 4);
 
   if (cond) {
     out.t("Hello ", _component);
@@ -162,7 +162,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     const _keyScope = `[${i}]`;
     out.e("div", {
       "c": "1"
-    }, "26" + _keyScope, _component, 0, 0);
+    }, "24" + _keyScope, _component, 0, 0);
   }
 
   for (const key in obj) {
@@ -170,7 +170,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     const _keyScope2 = `[${key}]`;
     out.e("div", {
       "c": "1"
-    }, "27" + _keyScope2, _component, 0, 0);
+    }, "25" + _keyScope2, _component, 0, 0);
   }
 }, {
   t: _marko_componentType,

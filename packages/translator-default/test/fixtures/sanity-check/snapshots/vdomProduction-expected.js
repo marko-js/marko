@@ -30,25 +30,25 @@ import _marko_tag from "marko/dist/runtime/helpers/render-tag";
 
 const _marko_node4 = _marko_createElement("div", null, "15", null, 0, 0);
 
-const _marko_node5 = _marko_createElement("div", null, "17", null, 0, 0);
+const _marko_node5 = _marko_createElement("div", null, "16", null, 0, 0);
 
-const _marko_node6 = _marko_createElement("div", null, "19", null, 0, 0);
+const _marko_node6 = _marko_createElement("div", null, "17", null, 0, 0);
 
 const _marko_node7 = _marko_createElement("div", {
   "c": "1"
-}, "21", null, 0, 0);
+}, "19", null, 0, 0);
 
 const _marko_node8 = _marko_createElement("div", {
   "d": "1"
-}, "22", null, 0, 0);
+}, "20", null, 0, 0);
 
 import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs";
 
 const _marko_node9 = _marko_createElement("div", {
   "b": "1"
-}, "23", null, 0, 0);
+}, "21", null, 0, 0);
 
-const _marko_node10 = _marko_createElement("div", null, "24", null, 1, 0).t("123 abc 123");
+const _marko_node10 = _marko_createElement("div", null, "22", null, 1, 0).t("123 abc 123");
 
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
@@ -156,7 +156,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     ...e,
     ...f(),
     "id": "a"
-  }), "20", _component, null, 4);
+  }), "18", _component, null, 4);
   out.t(a, _component);
   out.n(_marko_node7, _component);
   out.n(_marko_node8, _component);
@@ -173,7 +173,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.ee();
   out.n(_marko_node9, _component);
   out.n(_marko_node10, _component);
-  out.e("span", _marko_attrs(abc), "25", _component, 0, 4);
+  out.e("span", _marko_attrs(abc), "23", _component, 0, 4);
 
   if (cond) {
     out.t("Hello ", _component);
@@ -185,7 +185,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     const _keyScope = `[${i}]`;
     out.e("div", {
       "c": "1"
-    }, "26" + _keyScope, _component, 0, 0);
+    }, "24" + _keyScope, _component, 0, 0);
   }
 
   for (const key in obj) {
@@ -193,7 +193,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     const _keyScope2 = `[${key}]`;
     out.e("div", {
       "c": "1"
-    }, "27" + _keyScope2, _component, 0, 0);
+    }, "25" + _keyScope2, _component, 0, 0);
   }
 }, {
   t: _marko_componentType
