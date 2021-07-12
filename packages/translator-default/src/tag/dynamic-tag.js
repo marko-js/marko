@@ -8,7 +8,7 @@ export default function (path) {
     node,
     hub: { file }
   } = path;
-  const tagProperties = [];
+  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const { key, arguments: args } = node;
   const foundAttrs = getAttrs(path, true);
   let renderBodyProp;

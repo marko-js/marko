@@ -29,7 +29,7 @@ export function tagArguments(path, isStatic) {
     body: { body },
     handlers
   } = node;
-  const tagProperties = [];
+  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   let runtimeFlags = 0;
 
   path.get("attributes").forEach(attr => {
