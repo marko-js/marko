@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.12.0](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.11.3...v5.12.0) (2021-07-12)
+
+
+### Features
+
+* **translator-default:** support new tag runtime props via compile hook ([f345b0c](https://github.com/marko-js/marko/tree/master/packages/translator-default/commit/f345b0c071dce3906049ff65a0430b4cd621bdad))
+
+
+
+
+
 ## [5.11.3](https://github.com/marko-js/marko/tree/master/packages/translator-default/compare/v5.11.2...v5.11.3) (2021-07-08)
 
 
