@@ -13,5 +13,5 @@
     "packages/*/test/**",
     "**/*.md"
   ],
-  "version": "5.12.0"
+  "version": "5.12.1"
 }
