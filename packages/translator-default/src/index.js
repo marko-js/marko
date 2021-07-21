@@ -216,6 +216,7 @@ export const translate = {
         });
 
       file._renderBlock = renderBlock;
+      path.scope.crawl();
     },
     exit(path) {
       const {

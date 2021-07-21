@@ -87,7 +87,7 @@ Scope.prototype.crawl = function () {
         let curScope = ref.scope;
         if (curScope.hasBinding(name)) continue;
 
-        while ((curScope = curScope.parent)) {
+        do {
           const hoistableBinding =
             curScope.hoistableTagVars && curScope.hoistableTagVars[name];
           if (hoistableBinding) {
@@ -105,7 +105,7 @@ Scope.prototype.crawl = function () {
               movedBindings.set(hoistableBinding, curScope);
             }
           }
-        }
+        } while ((curScope = curScope.parent));
       }
 
       for (const [binding, scope] of movedBindings) {
