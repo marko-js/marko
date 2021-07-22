@@ -92,7 +92,7 @@ Object.assign(Printer.prototype, {
     }
 
     if (node.default || !t.isBooleanLiteral(node.value) || !node.value.value) {
-      this.token("=");
+      this.token(node.bound ? ":=" : "=");
       printWithParansIfNeeded.call(this, node.value, node);
     }
   },

@@ -57,7 +57,8 @@ export default (file, attributes, startPos) => {
         value,
         modifier,
         parseArguments(file, attr.argument),
-        Boolean(attr.default)
+        Boolean(attr.default),
+        Boolean(attr.bound)
       ),
       attrStartPos,
       attrEndPos

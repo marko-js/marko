@@ -87,7 +87,7 @@ const MarkoDefinitions = {
 
   MarkoAttribute: {
     aliases: ["Marko"],
-    builder: ["name", "value", "modifier", "arguments", "default"],
+    builder: ["name", "value", "modifier", "arguments", "default", "bound"],
     visitor: ["value", "arguments"],
     fields: {
       name: {
@@ -108,6 +108,10 @@ const MarkoDefinitions = {
         optional: true
       },
       default: {
+        validate: assertValueType("boolean"),
+        optional: true
+      },
+      bound: {
         validate: assertValueType("boolean"),
         optional: true
       }
