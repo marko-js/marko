@@ -1,19 +1,19 @@
 {
   "name": "@marko/translator-default",
   "description": "Translates Marko templates to the default Marko runtime.",
-  "version": "5.12.1",
+  "version": "5.13.0",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@marko/babel-utils": "^5.12.1",
+    "@marko/babel-utils": "^5.13.0",
     "escape-string-regexp": "^4.0.0",
     "magic-string": "^0.25.7",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.12.1",
-    "marko": "^5.12.1"
+    "@marko/compiler": "^5.13.0",
+    "marko": "^5.13.0"
   },
   "files": [
     "dist"

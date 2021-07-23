@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.13.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.12.1...v5.13.0) (2021-07-23)
+
+
+### Features
+
+* add support for new binding shorthand syntax ([1c20064](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/1c20064bdf04c3491b40e68aa6e57113dd40bc40))
+
+
+
+
+
 ## [5.12.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.12.0...v5.12.1) (2021-07-21)
 
 
