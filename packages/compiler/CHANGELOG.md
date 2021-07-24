@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.14.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.13.0...v5.14.0) (2021-07-24)
+
+
+### Bug Fixes
+
+* issue with root translator running in hydrate mode ([56495ae](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/56495aee99f1adbbdbdc08324561fbbd62ae95a1))
+
+
+### Features
+
+* lazy load load compiler hook paths, expose error loc object ([f49fc19](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/f49fc1901bb1fc66ae1eb64b98ce2402d4faa8fa))
+
+
+
+
+
 # [5.13.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.12.1...v5.13.0) (2021-07-23)
 
 
