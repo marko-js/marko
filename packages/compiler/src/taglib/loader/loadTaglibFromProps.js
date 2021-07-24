@@ -21,7 +21,12 @@ function resolveRelative(dirname, value) {
 function normalizeHook(dirname, value) {
   if (typeof value === "string") {
     value = resolveRelative(dirname, value);
-    return { path: value, hook: markoModules.require(value) };
+    return {
+      path: value,
+      get hook() {
+        return markoModules.require(value);
+      }
+    };
   }
   return { hook: value };
 }

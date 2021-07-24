@@ -35,6 +35,7 @@ export class MarkoFile extends File {
     }: ${msg}\n${frame || ""}`;
 
     const err = new Error();
+    err.loc = loc;
 
     // Prevent babel from changing our error message.
     Object.defineProperty(err, "message", {
