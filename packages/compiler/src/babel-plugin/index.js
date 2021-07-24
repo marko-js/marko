@@ -76,12 +76,14 @@ export default (api, markoOpts) => {
         file.___taglibLookup = taglibLookup;
         file.___getMarkoFile = getMarkoFile;
 
-        for (const id in taglibLookup.taglibsById) {
-          addPlugin(
-            metadata.marko,
-            rootTranslators,
-            taglibLookup.taglibsById[id].translator
-          );
+        if (markoOpts.output !== "hydrate") {
+          for (const id in taglibLookup.taglibsById) {
+            addPlugin(
+              metadata.marko,
+              rootTranslators,
+              taglibLookup.taglibsById[id].translator
+            );
+          }
         }
 
         rootTranslators.push(translator.translate);
