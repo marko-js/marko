@@ -10,43 +10,29 @@ function TAG_COMPARATOR(a, b) {
 }
 
 function merge(target, source) {
-  for (var k in source) {
-    if (hasOwnProperty.call(source, k)) {
+  const descs = Object.getOwnPropertyDescriptors(source);
+  for (const key in descs) {
+    const desc = descs[key];
+    if (desc.writable) {
+      const sourceVal = desc.value;
+      const targetVal = target[key];
+
       if (
-        target[k] &&
-        typeof target[k] === "object" &&
-        source[k] &&
-        typeof source[k] === "object"
+        sourceVal &&
+        typeof sourceVal === "object" &&
+        targetVal &&
+        typeof targetVal === "object"
       ) {
-        if (source.__noMerge) {
-          // Don't merge objects that are explicitly marked as "do not merge"
-          continue;
-        }
-
-        if (Array.isArray(target[k]) || Array.isArray(source[k])) {
-          var targetArray = target[k];
-          var sourceArray = source[k];
-
-          if (!Array.isArray(targetArray)) {
-            targetArray = [targetArray];
-          }
-
-          if (!Array.isArray(sourceArray)) {
-            sourceArray = [sourceArray];
-          }
-
-          target[k] = [].concat(targetArray).concat(sourceArray);
-        } else {
-          var Ctor = target[k].constructor;
-          var newTarget = new Ctor();
-          merge(newTarget, target[k]);
-          merge(newTarget, source[k]);
-          target[k] = newTarget;
-        }
-      } else {
-        target[k] = source[k];
+        target[key] = Array.isArray(targetVal)
+          ? targetVal.concat(sourceVal)
+          : Array.isArray(sourceVal)
+          ? [targetVal].concat(sourceVal)
+          : merge(merge(new targetVal.constructor(), targetVal), sourceVal);
+        continue;
       }
     }
+
+    Object.defineProperty(target, key, desc);
   }
 
   return target;
