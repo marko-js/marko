@@ -36,7 +36,14 @@ export const analyze = {
   Program: {
     enter(program) {
       // Pre populate metadata for component files.
+      const meta = program.hub.file.metadata.marko;
       getComponentFiles(program);
+
+      if (!meta.hasComponent && !meta.hasComponentBrowser) {
+        meta.hasComponent = program
+          .get("body")
+          .some(child => child.isMarkoClass());
+      }
     },
     exit(program) {
       const { file } = program.hub;
