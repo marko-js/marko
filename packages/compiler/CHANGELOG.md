@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.0...v5.14.1) (2021-07-26)
+
+
+### Bug Fixes
+
+* **compiler:** issue with getters on taglibs not properly merging ([c728439](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/c728439906bc87a9167f02aecd979e5801b1c415))
+
+
+
+
+
 # [5.14.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.13.0...v5.14.0) (2021-07-24)
 
 

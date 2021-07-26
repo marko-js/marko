@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.1](https://github.com/marko-js/marko/compare/v5.14.0...v5.14.1) (2021-07-26)
+
+
+### Bug Fixes
+
+* **compiler:** issue with getters on taglibs not properly merging ([c728439](https://github.com/marko-js/marko/commit/c728439906bc87a9167f02aecd979e5801b1c415))
+* **translator-default:** issue when MarkoClass added via compiler hook ([c5ba393](https://github.com/marko-js/marko/commit/c5ba3934ff1657eabe15fb66521401e4e2f7f4c4))
+
+
+
+
+
 # [5.14.0](https://github.com/marko-js/marko/compare/v5.13.0...v5.14.0) (2021-07-24)
 
 
