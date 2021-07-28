@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.15.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.2...v5.15.0) (2021-07-28)
+
+
+### Features
+
+* expose @marko/compiler/register api ([5726899](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/572689909618939585e93c1a0d1ab101ff73aefd))
+
+
+
+
+
 ## [5.14.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.1...v5.14.2) (2021-07-28)
 
 
