@@ -248,7 +248,7 @@ components](http://markojs.com/docs/server-side-rendering/) rendered on the
 server when the page loads in the browser):
 
 ```js
-require("marko/node-require").install(); // require .marko files!
+require("@marko/compiler/register"); // require .marko files!
 
 const http = require("http");
 const template = require("./template");
