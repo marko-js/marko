@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.14.2](https://github.com/marko-js/marko/compare/v5.14.1...v5.14.2) (2021-07-28)
+
+
+### Bug Fixes
+
+* support method shorthand from updated parser ([accb1bf](https://github.com/marko-js/marko/commit/accb1bf51ff73ccff5f3fcbd0c65172b9a7a262a))
+
+
+
+
+
 ## [5.14.1](https://github.com/marko-js/marko/compare/v5.14.0...v5.14.1) (2021-07-26)
 
 
