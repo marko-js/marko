@@ -7,7 +7,7 @@ export default (file, attributes, startPos) => {
   let attrEndPos = startPos;
 
   return attributes.map(attr => {
-    const attrStartPos = attr.default
+    let attrStartPos = attr.default
       ? attr.pos
       : code.indexOf(attr.name, attrEndPos);
 
@@ -42,9 +42,30 @@ export default (file, attributes, startPos) => {
 
     if (attr.value) {
       attrEndPos = attr.endPos;
-      const valueStart = attr.pos + 1; // Add one to account for "=".
-      const rawValue = code.slice(valueStart, attrEndPos); // We use the raw value to ignore things like non standard placeholders.
-      value = parseExpression(file, rawValue, valueStart);
+
+      if (attr.method) {
+        if (code[attrStartPos] !== "(") {
+          // fix bug in htmljs parser position.
+          attrStartPos = code.indexOf("(", attrStartPos);
+        }
+
+        if (code[attrEndPos] === "}") {
+          // fix bug in htmljs parser position.
+          attrEndPos++;
+        }
+
+        const prefix = "function";
+        value = parseExpression(
+          file,
+          prefix + code.slice(attrStartPos, attrEndPos), // We use the raw value to ignore things like non standard placeholders.
+          prefix.length + attrStartPos
+        );
+      } else {
+        const valueStart = attr.pos + 1; // Add one to account for "=".
+        const rawValue = code.slice(valueStart, attrEndPos); // We use the raw value to ignore things like non standard placeholders.
+
+        value = parseExpression(file, rawValue, valueStart);
+      }
     } else {
       attrEndPos = attr.argument ? attr.argument.endPos + 1 : attr.endPos;
       value = t.booleanLiteral(true);

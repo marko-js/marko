@@ -76,6 +76,8 @@ Object.assign(Printer.prototype, {
     this.print(node.body, node);
   },
   MarkoAttribute(node) {
+    const value = node.value;
+
     if (!node.default) {
       this.token(node.name);
 
@@ -91,9 +93,19 @@ Object.assign(Printer.prototype, {
       }
     }
 
-    if (node.default || !t.isBooleanLiteral(node.value) || !node.value.value) {
-      this.token(node.bound ? ":=" : "=");
-      printWithParansIfNeeded.call(this, node.value, node);
+    if (node.default || !t.isBooleanLiteral(value, { value: true })) {
+      if (
+        t.isFunctionExpression(value) &&
+        !(value.id || value.async || value.generator)
+      ) {
+        this.token("(");
+        this.printList(value.params, value);
+        this.token(") ");
+        this.print(value.body, value);
+      } else {
+        this.token(node.bound ? ":=" : "=");
+        printWithParansIfNeeded.call(this, value, node);
+      }
     }
   },
   MarkoSpreadAttribute(node) {
