@@ -11,7 +11,7 @@ npm install koa marko --save
 ## Usage
 
 ```javascript
-require("marko/node-require");
+require("@marko/compiler/register");
 
 const Koa = require("koa");
 const app = new Koa();
@@ -33,7 +33,7 @@ app.listen(8080);
 You may also easily add `gzip` streaming support without additional dependencies:
 
 ```javascript
-require("marko/node-require");
+require("@marko/compiler/register");
 const zlib = require("zlib");
 
 const Koa = require("koa");

@@ -16,15 +16,15 @@ The built in view engine for express may be asynchronous, but it doesn't support
 
 ## Usage
 
-Marko provides a submodule (`marko/express`) to add a `res.marko` method to the express response object. This function works much like `res.render`, but doesn't impose the restrictions of the express view engine and allows you to take full advantage of Marko's streaming and modular approach to templates.
+Marko provides a package (`@marko/express`) to add a `res.marko` method to the express response object. This function works much like `res.render`, but doesn't impose the restrictions of the express view engine and allows you to take full advantage of Marko's streaming and modular approach to templates.
 
 By using `res.marko` you'll automatically have access to `req`, `res`, `app`, `app.locals`, and `res.locals` from within your Marko template and custom tags. These values are added to `out.global`.
 
 ```javascript
-require("marko/node-require"); // Allow Node.js to require and load `.marko` files
+require("@marko/compiler/register"); // Allow Node.js to require and load `.marko` files
 
 var express = require("express");
-var markoExpress = require("marko/express");
+var markoExpress = require("@marko/express");
 var template = require("./template");
 
 var app = express();

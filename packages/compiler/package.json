@@ -35,7 +35,9 @@
     "dist",
     "modules.js",
     "index.d.ts",
-    "babel-types.d.ts"
+    "babel-types.d.ts",
+    "register.js",
+    "register.d.ts"
   ],
   "homepage": "https://github.com/marko-js/marko/blob/main/packages/marko/docs/compiler.md",
   "keywords": [

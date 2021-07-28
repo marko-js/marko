@@ -12,7 +12,7 @@ npm install marko --save
 ## Usage
 
 ```js
-require("marko/node-require").install();
+require("@marko/compiler/register");
 
 const http = require("http");
 const server = http.createServer();

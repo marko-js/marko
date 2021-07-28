@@ -1,5 +1,6 @@
 "use strict";
 
+const complain = "MARKO_DEBUG" && require("complain");
 const path = require("path");
 const resolveFrom = require("resolve-from");
 const requiredCompilerOptions = { modules: "cjs" };
@@ -9,6 +10,13 @@ const defaultCompilerOptions = {
   meta: true
 };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
+
+// eslint-disable-next-line no-constant-condition
+if ("MARKO_DEBUG") {
+  complain(
+    'Using "marko/node-require" has been replaced with "@marko/compiler/register".'
+  );
+}
 
 function normalizeExtension(extension) {
   if (extension.charAt(0) !== ".") {
