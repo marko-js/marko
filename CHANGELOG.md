@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.1](https://github.com/marko-js/marko/compare/v5.15.0...v5.15.1) (2021-07-30)
+
+
+### Bug Fixes
+
+* **marko:** issue with HMR enabled using split components ([ab8706c](https://github.com/marko-js/marko/commit/ab8706c56cb1e1eef180207dcb510e9c85076501))
+
+
+
+
+
 # [5.15.0](https://github.com/marko-js/marko/compare/v5.14.2...v5.15.0) (2021-07-28)
 
 
