@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.2](https://github.com/marko-js/marko/compare/v5.15.1...v5.15.2) (2021-08-06)
+
+
+### Bug Fixes
+
+* issue with hoisted tag var scopes ([86162a1](https://github.com/marko-js/marko/commit/86162a1471aeb2d6f6729ef2ed872092b549105b))
+
+
+
+
+
 ## [5.15.1](https://github.com/marko-js/marko/compare/v5.15.0...v5.15.1) (2021-07-30)
 
 
