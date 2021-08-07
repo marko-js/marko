@@ -65,7 +65,10 @@ export default {
           if (!attachedDetachedLoaded.has(file)) {
             // Pull in helper for element attach/detach;
             attachedDetachedLoaded.add(file);
-            importDefault(file, "marko/src/runtime/components/attach-detach");
+            importDefault(
+              file,
+              "marko/src/runtime/components/attach-detach.js"
+            );
           }
         }
       }

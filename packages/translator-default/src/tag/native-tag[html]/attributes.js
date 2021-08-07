@@ -58,7 +58,7 @@ export default function (path, attrs) {
         t.callExpression(
           importDefault(
             file,
-            "marko/src/runtime/html/helpers/attr",
+            "marko/src/runtime/html/helpers/attr.js",
             "marko_attr"
           ),
           args
@@ -71,7 +71,7 @@ export default function (path, attrs) {
     return t.callExpression(
       importDefault(
         path.hub.file,
-        "marko/src/runtime/html/helpers/attrs",
+        "marko/src/runtime/html/helpers/attrs.js",
         "marko_attrs"
       ),
       [

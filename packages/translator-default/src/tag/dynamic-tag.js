@@ -41,7 +41,7 @@ export default function (path) {
     t.callExpression(
       importDefault(
         file,
-        `marko/src/runtime/helpers/dynamic-tag`,
+        `marko/src/runtime/helpers/dynamic-tag.js`,
         "marko_dynamic_tag"
       ),
       [

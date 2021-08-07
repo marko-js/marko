@@ -23,7 +23,7 @@ export default {
             t.callExpression(
               importDefault(
                 file,
-                "marko/src/runtime/helpers/class-value",
+                "marko/src/runtime/helpers/class-value.js",
                 "marko_class_merge"
               ),
               [value.node]

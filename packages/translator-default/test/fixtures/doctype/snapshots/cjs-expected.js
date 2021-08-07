@@ -3,22 +3,22 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _html = require("marko/src/runtime/html");
+var _index = require("marko/src/runtime/html/index.js");
 
 var _initComponentsTag = _interopRequireDefault(require("marko/src/core-tags/components/init-components-tag.js"));
 
-var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
+var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 
 var _reordererRenderer = _interopRequireDefault(require("marko/src/core-tags/core/await/reorderer-renderer.js"));
 
 var _preferredScriptLocationTag = _interopRequireDefault(require("marko/src/core-tags/components/preferred-script-location-tag.js"));
 
-var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
+var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const _marko_componentType = "packages/translator-default/test/fixtures/doctype/template.marko",
-      _marko_template = (0, _html.t)(_marko_componentType);
+      _marko_template = (0, _index.t)(_marko_componentType);
 
 var _default = _marko_template;
 exports.default = _default;

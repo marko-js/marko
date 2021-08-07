@@ -120,7 +120,7 @@ export function optimizeStaticVDOM(path) {
     currentRoot: t.callExpression(
       importDefault(
         file,
-        "marko/src/runtime/vdom/helpers/v-element",
+        "marko/src/runtime/vdom/helpers/v-element.js",
         "marko_createElement"
       ),
       writeArgs

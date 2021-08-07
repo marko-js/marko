@@ -55,7 +55,7 @@ export function tagArguments(path, isStatic) {
       attrsObj = t.callExpression(
         importDefault(
           file,
-          "marko/src/runtime/vdom/helpers/attrs",
+          "marko/src/runtime/vdom/helpers/attrs.js",
           "marko_attrs"
         ),
         [attrsObj]

@@ -18,7 +18,7 @@ export default {
 
       if (isVDOM && !hasMonkeyPatch.has(file)) {
         hasMonkeyPatch.add(file);
-        importDefault(file, "marko/src/runtime/vdom/preserve-attrs");
+        importDefault(file, "marko/src/runtime/vdom/preserve-attrs.js");
       }
     }
 

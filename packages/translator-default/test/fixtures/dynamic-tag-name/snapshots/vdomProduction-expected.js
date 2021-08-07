@@ -1,4 +1,4 @@
-import { t as _t } from "marko/dist/runtime/vdom";
+import { t as _t } from "marko/dist/runtime/vdom/index.js";
 
 const _marko_componentType = "FiPq+pCl",
       _marko_template = _t(_marko_componentType);
@@ -6,9 +6,9 @@ const _marko_componentType = "FiPq+pCl",
 export default _marko_template;
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag";
-import _marko_tag from "marko/dist/runtime/helpers/render-tag";
-import _marko_renderer from "marko/dist/runtime/components/renderer";
+import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
+import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 _marko_registerComponent(_marko_componentType, () => _marko_template);
@@ -131,5 +131,5 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   t: _marko_componentType,
   i: true
 }, _marko_component);
-import _marko_defineComponent from "marko/dist/runtime/components/defineComponent";
+import _marko_defineComponent from "marko/dist/runtime/components/defineComponent.js";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

@@ -105,7 +105,7 @@ export default function (path, isNullable) {
         dataMarko = t.callExpression(
           importDefault(
             file,
-            "marko/src/runtime/html/helpers/data-marko",
+            "marko/src/runtime/html/helpers/data-marko.js",
             "marko_props"
           ),
           dataMarkoArgs

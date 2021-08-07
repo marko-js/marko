@@ -10,17 +10,17 @@ import withPreviousLocation from "../util/with-previous-location";
 const ESCAPE_TYPES = {
   html: {
     name: "x",
-    module: "marko/src/runtime/html/helpers/escape-xml",
+    module: "marko/src/runtime/html/helpers/escape-xml.js",
     alias: "marko_escapeXml",
     fn: escapeXML
   },
   script: {
-    module: "marko/src/runtime/html/helpers/escape-script-placeholder",
+    module: "marko/src/runtime/html/helpers/escape-script-placeholder.js",
     alias: "marko_escapeScript",
     fn: escapeScript
   },
   style: {
-    module: "marko/src/runtime/html/helpers/escape-style-placeholder",
+    module: "marko/src/runtime/html/helpers/escape-style-placeholder.js",
     alias: "marko_escapeStyle",
     fn: escapeStyle
   }
@@ -57,7 +57,7 @@ export default function (path) {
       : t.callExpression(
           importDefault(
             file,
-            "marko/src/runtime/helpers/to-string",
+            "marko/src/runtime/helpers/to-string.js",
             "marko_to_string"
           ),
           [value]
