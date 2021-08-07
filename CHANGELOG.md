@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.4](https://github.com/marko-js/marko/compare/v5.15.3...v5.15.4) (2021-08-07)
+
+
+### Bug Fixes
+
+* improve compiler register hook types ([ecdafa0](https://github.com/marko-js/marko/commit/ecdafa047cdcbe87b941856102a00da34d8efe25))
+
+
+
+
+
 ## [5.15.3](https://github.com/marko-js/marko/compare/v5.15.2...v5.15.3) (2021-08-06)
 
 

@@ -1,7 +1,7 @@
 {
   "name": "@marko/babel-utils",
   "description": "Utilities for use with Marko babel plugins.",
-  "version": "5.15.3",
+  "version": "5.15.4",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
@@ -9,7 +9,7 @@
     "jsesc": "^3.0.2"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.15.3"
+    "@marko/compiler": "^5.15.4"
   },
   "files": [
     "dist",
