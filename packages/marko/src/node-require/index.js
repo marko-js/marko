@@ -48,8 +48,6 @@ function compile(templatePath, markoCompiler, compilerOptions) {
       return fs.readFileSync(targetFile, fsReadOptions);
     }
 
-    var targetDir = path.dirname(templatePath);
-
     var isUpToDate = markoCompiler.checkUpToDate(targetFile);
 
     if (isUpToDate) {
@@ -62,17 +60,7 @@ function compile(templatePath, markoCompiler, compilerOptions) {
         compilerOptions
       );
 
-      // Write to a temporary file and move it into place to avoid problems
-      // assocatiated with multiple processes write to the same file. We only
-      // write the compiled source code to disk so that stack traces will
-      // be accurate.
-      var filename = path.basename(targetFile);
-      var tempFile = path.join(
-        targetDir,
-        "." + process.pid + "." + Date.now() + "." + filename
-      );
-      fs.writeFileSync(tempFile, compiledSrc, fsReadOptions);
-      fs.renameSync(tempFile, targetFile);
+      fs.writeFileSync(targetFile, compiledSrc, fsReadOptions);
     }
   }
 
