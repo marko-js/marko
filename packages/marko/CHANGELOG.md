@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.17](https://github.com/marko-js/marko/compare/v4.23.16...v4.23.17) (2021-08-11)
+
+
+### Bug Fixes
+
+* remove file rename hack when writing files to disk ([22ae52f](https://github.com/marko-js/marko/commit/22ae52ff7c215b4a7f6ea1690e496be457abb039))
+
 ### [4.23.16](https://github.com/marko-js/marko/compare/v4.23.15...v4.23.16) (2021-03-29)
 
 
