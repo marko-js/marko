@@ -2,20 +2,16 @@ import fs from "fs";
 import path from "path";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
-import typescript from "rollup-plugin-typescript2";
+import typescript from "@rollup/plugin-typescript";
 import mangleInternal from "./utilities/rollup-plugin-mangle-internal";
 
 const sizeOnly = process.env.SIZE;
 const envs = sizeOnly ? ["dist"] : ["dist/debug", "dist"];
 const targets = sizeOnly ? ["dom"] : ["dom", "html"];
 const tsConfig = {
-  tsconfigOverride: {
-    compilerOptions: {
-      composite: false,
-      declaration: false,
-      emitDeclarationOnly: false
-    }
-  }
+  composite: false,
+  declaration: false,
+  emitDeclarationOnly: false
 };
 
 export default envs
@@ -25,11 +21,13 @@ export default envs
       output: [
         {
           file: `packages/runtime/${env}/${name}/index.esm.js`,
-          format: "esm"
+          format: "esm",
+          sourcemap: true
         },
         {
           file: `packages/runtime/${env}/${name}/index.cjs.js`,
-          format: "cjs"
+          format: "cjs",
+          sourcemap: true
         }
       ],
       plugins: [
