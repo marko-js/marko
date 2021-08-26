@@ -42,6 +42,8 @@ async function runRenderTest(fixture) {
   let snapshot = fixture.snapshot;
   let isVDOM = output === "vdom";
 
+  browser.error = undefined;
+
   let templatePath = path.join(dir, "template.marko");
   let mainPath = path.join(dir, "test.js");
   let main = !fs.existsSync(mainPath)
@@ -144,6 +146,12 @@ async function runRenderTest(fixture) {
         (fixture.context || (fixture.context = {})).vdom = normalizeHtml(
           actualNode
         );
+
+        if (browser.error) {
+          const err = browser.error;
+          browser.error = undefined;
+          throw err;
+        }
       } else {
         if (main.checkHtml) {
           fs.writeFileSync(path.join(dir, "actual.html"), html, {

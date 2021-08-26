@@ -1,0 +1,11 @@
+<button id="toggle" on-click("toggle")>
+    Toggle. (current value: ${state.active})
+</button>
+
+<button id="dom-button" on-click(state.active && "handleDOMClick")>
+  Test DOM
+</button>
+
+<custom-button id="custom-button" on-button-click(state.active && 'handleCustomClick')>
+  Test Custom
+</custom-button>
