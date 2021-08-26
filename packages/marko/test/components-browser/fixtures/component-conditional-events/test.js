@@ -16,6 +16,3 @@ module.exports = function (helpers) {
   helpers.triggerMouseEvent(document.getElementById("custom-button"), "click");
   expect(component.logOutput).to.deep.equal([]);
 };
-
-module.exports.fails_client = true;
-module.exports.fails_hydrate = true;
