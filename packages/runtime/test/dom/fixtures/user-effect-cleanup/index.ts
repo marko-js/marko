@@ -40,11 +40,11 @@ type scope = {
 // }/>
 export const template = `<div> </div>`;
 export const walks = open(5) + next(1) + get + next(1) + close;
-export const hydrate = register("", () => {
+export const render = () => {
   write(Index.A, 0);
   write(Index.B, 0);
   execAB();
-});
+};
 
 function execAB() {
   if (isDirty(Index.A) || isDirty(Index.B)) {
@@ -52,7 +52,7 @@ function execAB() {
   }
 }
 
-export const execInputValue = () => {
+export const hydrateInputValue = () => {
   if (isDirty(Index.INPUT_VALUE)) {
     userEffect(Index.EFFECT_CLEANUP, effectFn);
   }
@@ -70,7 +70,7 @@ const effectFn = () => {
 
 export const execDynamicInput = (input: typeof inputs[0]) => {
   write(Index.INPUT_VALUE, input.value);
-  execInputValue();
+  hydrateInputValue();
 };
 
-export default createRenderFn(template, walks, hydrate, 0, execDynamicInput);
+export default createRenderFn(template, walks, render, 0, execDynamicInput);

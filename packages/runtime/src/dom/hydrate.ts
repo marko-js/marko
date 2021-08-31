@@ -1,13 +1,11 @@
 import { CommentWalker, HydrateInstance } from "../common/types";
-import { Renderer } from "./renderer";
 import { beginHydrate, endHydrate } from "./walker";
 
-const hydrateById: Record<string, Renderer["___hydrate"]> = {};
+type HydrateFn = () => void;
 
-export function register<H extends Renderer["___hydrate"]>(
-  id: string,
-  hydrate: H
-) {
+const hydrateById: Record<string, HydrateFn> = {};
+
+export function register<H extends HydrateFn>(id: string, hydrate: H) {
   hydrateById[id] = hydrate;
   return hydrate;
 }

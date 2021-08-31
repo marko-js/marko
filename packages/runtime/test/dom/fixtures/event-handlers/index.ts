@@ -36,12 +36,23 @@ type scope = {
 
 export const template = `<button> </button>`;
 export const walks = open(3) + get + next(1) + get + next(1) + close;
-export const hydrate = register("", () => {
+export const render = () => {
   write(Index.CLICK_COUNT, 0);
-  execClickCount();
+  renderClickCount();
+  hydrate();
+};
+
+export const hydrate = register("", () => {
+  hydrateClickCount();
 });
 
-const execClickCount = () => {
+const renderClickCount = () => {
+  if (isDirty(Index.CLICK_COUNT)) {
+    data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
+  }
+};
+
+const hydrateClickCount = () => {
   if (isDirty(Index.CLICK_COUNT)) {
     on(
       Index.BUTTON,
@@ -50,8 +61,12 @@ const execClickCount = () => {
         ? bind(clickHandler)
         : false
     );
-    data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
   }
+};
+
+const execClickCount = () => {
+  renderClickCount();
+  hydrateClickCount();
 };
 
 const clickHandler = () => {
@@ -62,6 +77,6 @@ const clickHandler = () => {
   queue(execClickCount);
 };
 
-export default createRenderFn(template, walks, hydrate, 0);
+export default createRenderFn(template, walks, render, 0);
 
 ensureDelegated("click");

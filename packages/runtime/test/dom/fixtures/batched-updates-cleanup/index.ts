@@ -46,13 +46,15 @@ type scope = {
 
 export const template = `<button></button><!>`;
 export const walks = open(7) + get + over(1) + get + over(1) + close;
-export const hydrate = register("", () => {
+export const render = () => {
   write(Index.SHOW, true);
   write(Index.MESSAGE, "hi");
-
-  on(Index.BUTTON, "click", bind(clickHandler));
-
   execShowMessage();
+  hydrate();
+};
+
+export const hydrate = register("", () => {
+  on(Index.BUTTON, "click", bind(clickHandler));
 });
 
 const clickHandler = () => {
@@ -77,7 +79,7 @@ const execMessageBranch0 = () => {
   data(Branch0Index.TEXT, readInOwner(Index.MESSAGE));
 };
 
-export default createRenderFn(template, walks, hydrate, 0);
+export default createRenderFn(template, walks, render, 0);
 
 ensureDelegated("click");
 

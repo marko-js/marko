@@ -12,7 +12,7 @@ const enum NodeType {
 export type Renderer = {
   ___template: string;
   ___walks: string | undefined;
-  ___hydrate: HydrateFn | undefined;
+  ___render: RenderFn | undefined;
   ___clone: () => Node;
   ___size: number;
   ___hasUserEffects: 0 | 1;
@@ -25,16 +25,8 @@ export type Renderer = {
 };
 
 type Input = Record<string, unknown>;
-type HydrateFn =
-  | ((scope: Scope) => void)
-  | ((scope: Scope, offset: number) => void)
-  | ((scope: Scope, parentScope: Scope, parentOffset: number) => void)
-  | ((scope: Scope, parentScopesAndOffsets: Array<Scope | number>) => void);
-type DynamicInputFn<I extends Input> = (
-  input: I,
-  scope: Scope,
-  offset: number
-) => void;
+type RenderFn = () => void;
+type DynamicInputFn<I extends Input> = (input: I) => void;
 type RenderResult = Node & {
   update: (input: Input) => void;
   destroy: () => void;
@@ -47,8 +39,8 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
   scope.___endNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
   walk(scope.___startNode, renderer.___walks!, scope);
-  if (renderer.___hydrate) {
-    runWithScope(renderer.___hydrate, 0, scope);
+  if (renderer.___render) {
+    runWithScope(renderer.___render, 0, scope);
   }
   if (renderer.___dynamicStartNodeMethod) {
     scope.___getFirstNode = renderer.___dynamicStartNodeMethod;
@@ -64,7 +56,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
 export function createRenderFn<I extends Input>(
   template: string,
   walks: string,
-  hydrate?: HydrateFn,
+  render?: RenderFn,
   size?: number,
   dynamicInput?: DynamicInputFn<I>,
   hasUserEffects?: 0 | 1,
@@ -77,7 +69,7 @@ export function createRenderFn<I extends Input>(
   const renderer = createRenderer(
     template,
     walks,
-    hydrate,
+    render,
     size,
     hasUserEffects,
     domMethods,
@@ -105,10 +97,10 @@ export function createRenderFn<I extends Input>(
   };
 }
 
-export function createRenderer<H extends HydrateFn>(
+export function createRenderer<R extends RenderFn>(
   template: string,
   walks?: string,
-  hydrate?: H,
+  render?: R,
   size = 0,
   hasUserEffects: 0 | 1 = 0,
   domMethods: DOMMethods = staticNodeMethods,
@@ -120,7 +112,7 @@ export function createRenderer<H extends HydrateFn>(
   return {
     ___template: template,
     ___walks: walks && trimWalkString(walks),
-    ___hydrate: hydrate,
+    ___render: render,
     ___clone: _clone,
     ___size: size,
     ___hasUserEffects: hasUserEffects,
