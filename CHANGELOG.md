@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
+
+
+### Bug Fixes
+
+* cyclic hydration deps ([#1736](https://github.com/marko-js/marko/issues/1736)) ([3dfa904](https://github.com/marko-js/marko/commit/3dfa904f7296ec29ce74ff1e32bf13e239e05be6))
+
+
+
+
+
 ## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
 
 
