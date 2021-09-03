@@ -90,7 +90,10 @@ export default (api, markoOpts) => {
         traverseAll(file, rootTranslators);
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
-        file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
+        file.markoOpts =
+          file.___taglibLookup =
+          file.___getMarkoFile =
+            undefined;
 
         metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
       } finally {
@@ -106,6 +109,12 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   if (!compileCache) {
     markoOpts.cache.set(translator, (compileCache = new Map()));
+  }
+
+  if (!jsParseOptions.sourceFileName) {
+    // Babel had a breaking change that updated this property name.
+    // https://github.com/babel/babel/pull/13532#issuecomment-912449296
+    jsParseOptions.sourceFileName = jsParseOptions.sourceFilename;
   }
 
   const { sourceFileName } = jsParseOptions;
