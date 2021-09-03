@@ -48,11 +48,8 @@ export const analyze = {
     exit(program) {
       const { file } = program.hub;
       const meta = file.metadata.marko;
-      const {
-        styleFile,
-        packageFile,
-        componentBrowserFile
-      } = getComponentFiles(program);
+      const { styleFile, packageFile, componentBrowserFile } =
+        getComponentFiles(program);
 
       if (packageFile) {
         meta.deps.unshift(`package: ${packageFile}`);
@@ -201,13 +198,11 @@ export const translate = {
         return;
       }
 
-      file._componentDefIdentifier = path.scope.generateUidIdentifier(
-        "componentDef"
-      );
+      file._componentDefIdentifier =
+        path.scope.generateUidIdentifier("componentDef");
 
-      file._componentInstanceIdentifier = path.scope.generateUidIdentifier(
-        "component"
-      );
+      file._componentInstanceIdentifier =
+        path.scope.generateUidIdentifier("component");
 
       // Pre-Analyze tree
       analyzeStaticVDOM(path);
@@ -246,15 +241,13 @@ export const translate = {
         _inlineComponentClass ||
         t.objectExpression([]);
 
-      const componentIdentifier = path.scope.generateUidIdentifier(
-        "marko_component"
-      );
+      const componentIdentifier =
+        path.scope.generateUidIdentifier("marko_component");
       const componentTypeIdentifier = path.scope.generateUidIdentifier(
         "marko_componentType"
       );
-      const templateIdentifier = path.scope.generateUidIdentifier(
-        "marko_template"
-      );
+      const templateIdentifier =
+        path.scope.generateUidIdentifier("marko_template");
       const rendererIdentifier = importDefault(
         file,
         "marko/src/runtime/components/renderer",

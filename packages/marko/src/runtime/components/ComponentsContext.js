@@ -20,9 +20,8 @@ function ComponentsContext(out, parentComponentsContext) {
   } else {
     globalComponentsContext = out.global.___components;
     if (globalComponentsContext === undefined) {
-      out.global.___components = globalComponentsContext = new GlobalComponentsContext(
-        out
-      );
+      out.global.___components = globalComponentsContext =
+        new GlobalComponentsContext(out);
     }
   }
 

@@ -15,9 +15,8 @@ function tryParse(file, isExpression, str, start) {
     let whitespace = file.metadata.marko[CODE_AS_WHITE_SPACE_KEY];
 
     if (whitespace === undefined) {
-      file.metadata.marko[
-        CODE_AS_WHITE_SPACE_KEY
-      ] = whitespace = file.code.replace(/[^\s]/g, " ");
+      file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] = whitespace =
+        file.code.replace(/[^\s]/g, " ");
     }
 
     str = whitespace.slice(0, start) + str;

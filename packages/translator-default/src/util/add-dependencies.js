@@ -3,11 +3,8 @@ import MagicString from "magic-string";
 import { types as t } from "@marko/compiler";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 export default (entryFile, isHydrate) => {
-  const {
-    modules,
-    resolveVirtualDependency,
-    hydrateIncludeImports
-  } = entryFile.markoOpts;
+  const { modules, resolveVirtualDependency, hydrateIncludeImports } =
+    entryFile.markoOpts;
   const program = entryFile.path;
   const shouldIncludeImport = toTestFn(hydrateIncludeImports);
 

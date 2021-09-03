@@ -5,8 +5,8 @@ var complain = "MARKO_DEBUG" && require("complain");
 
 var domInsert = require("../dom-insert");
 var defaultCreateOut = require("../createOut");
-var getComponentsContext = require("./ComponentsContext")
-  .___getComponentsContext;
+var getComponentsContext =
+  require("./ComponentsContext").___getComponentsContext;
 var componentsUtil = require("./util");
 var componentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
@@ -247,9 +247,8 @@ Component.prototype = componentProto = {
   },
   getEl: function (key, index) {
     if (key) {
-      var keyedElement = this.___keyedElements[
-        "@" + resolveKeyHelper(key, index)
-      ];
+      var keyedElement =
+        this.___keyedElements["@" + resolveKeyHelper(key, index)];
 
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {

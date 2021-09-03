@@ -69,7 +69,8 @@ function createFragmentNode(startNode, nextNode, parentNode) {
     : document.createTextNode("");
   fragment.startNode.fragment = fragment;
   fragment.endNode.fragment = fragment;
-  var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
+  var detachedContainer = (fragment.detachedContainer =
+    document.createDocumentFragment());
   parentNode =
     parentNode || (startNode && startNode.parentNode) || detachedContainer;
   insertBefore(fragment.startNode, startNode, parentNode);

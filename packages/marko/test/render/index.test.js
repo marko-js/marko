@@ -143,9 +143,8 @@ async function runRenderTest(fixture) {
           ext: ".html"
         });
 
-        (fixture.context || (fixture.context = {})).vdom = normalizeHtml(
-          actualNode
-        );
+        (fixture.context || (fixture.context = {})).vdom =
+          normalizeHtml(actualNode);
 
         if (browser.error) {
           const err = browser.error;

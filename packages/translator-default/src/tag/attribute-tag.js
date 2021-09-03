@@ -83,9 +83,8 @@ export default function (path) {
   let identifier = identifiers[targetProperty];
 
   if (!identifier) {
-    identifier = identifiers[targetProperty] = path.scope.generateUidIdentifier(
-      targetProperty
-    );
+    identifier = identifiers[targetProperty] =
+      path.scope.generateUidIdentifier(targetProperty);
     parentPath
       .get("body")
       .unshiftContainer(

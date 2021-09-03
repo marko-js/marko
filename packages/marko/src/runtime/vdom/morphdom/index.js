@@ -321,9 +321,8 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
                 curVFromNodeChild = virtualizeElement(curFromNodeChild);
                 curVFromNodeChild.___nodeName = curToNodeChild.___nodeName;
                 keysByDOMNode.set(curFromNodeChild, curToNodeKey);
-                referenceComponent.___keyedElements[
-                  curToNodeKey
-                ] = curFromNodeChild;
+                referenceComponent.___keyedElements[curToNodeKey] =
+                  curFromNodeChild;
 
                 if (curToNodeChild.___preserve) {
                   vElementByDOMNode.set(curFromNodeChild, curVFromNodeChild);
