@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
+
+
+### Bug Fixes
+
+* supports babel 7.15.4 ([a301a87](https://github.com/marko-js/marko/commit/a301a870e8e719d770ccef1958e9d9c03a93d765))
+
+
+
+
+
 ## [5.15.4](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.15.3...v5.15.4) (2021-08-07)
 
 
