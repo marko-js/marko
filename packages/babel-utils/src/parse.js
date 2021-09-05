@@ -24,8 +24,8 @@ function tryParse(file, isExpression, str, start) {
 
   try {
     return isExpression
-      ? babelParser.parseExpression(str, file.opts)
-      : babelParser.parse(str, file.opts).program;
+      ? babelParser.parseExpression(str, file.opts.parserOpts)
+      : babelParser.parse(str, file.opts.parserOpts).program;
   } catch (err) {
     let { loc, message } = err;
     if (loc) {

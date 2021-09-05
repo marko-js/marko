@@ -41,13 +41,18 @@ export default (api, markoOpts) => {
     );
   }
 
+  let curOpts;
+
   return {
     name: "marko",
-    parserOverride(code, jsParseOptions) {
+    manipulateOptions(opts) {
+      curOpts = opts;
+    },
+    parserOverride(code) {
       let prevFS = curFS;
       setFS(markoOpts.fileSystem);
       try {
-        const file = getMarkoFile(code, jsParseOptions, markoOpts);
+        const file = getMarkoFile(code, curOpts, markoOpts);
         const finalAst = t.cloneNode(file.ast, true);
         SOURCE_FILES.set(finalAst, file);
         return finalAst;
@@ -57,6 +62,7 @@ export default (api, markoOpts) => {
     },
     pre(file) {
       let prevFS = curFS;
+      curOpts = undefined;
       setFS(markoOpts.fileSystem);
       try {
         if (markoOpts.output === "source" || markoOpts.output === "migrate") {
@@ -103,7 +109,7 @@ export default (api, markoOpts) => {
   };
 };
 
-export function getMarkoFile(code, jsParseOptions, markoOpts) {
+export function getMarkoFile(code, fileOpts, markoOpts) {
   const { translator } = markoOpts;
   let compileCache = markoOpts.cache.get(translator);
 
@@ -111,13 +117,13 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     markoOpts.cache.set(translator, (compileCache = new Map()));
   }
 
-  if (!jsParseOptions.sourceFileName) {
+  if (!fileOpts.parserOpts.sourceFileName) {
     // Babel had a breaking change that updated this property name.
     // https://github.com/babel/babel/pull/13532#issuecomment-912449296
-    jsParseOptions.sourceFileName = jsParseOptions.sourceFilename;
+    fileOpts.parserOpts.sourceFileName = fileOpts.parserOpts.sourceFilename;
   }
 
-  const { sourceFileName } = jsParseOptions;
+  const { sourceFileName } = fileOpts;
   const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
@@ -154,7 +160,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   const taglibLookup = buildLookup(path.dirname(sourceFileName), translator);
 
-  const file = new MarkoFile(jsParseOptions, {
+  const file = new MarkoFile(fileOpts, {
     code,
     ast: {
       type: "File",
