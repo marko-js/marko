@@ -58,7 +58,7 @@ export default (file, attributes, startPos) => {
         value = parseExpression(
           file,
           prefix + code.slice(attrStartPos, attrEndPos), // We use the raw value to ignore things like non standard placeholders.
-          prefix.length + attrStartPos
+          attrStartPos - prefix.length
         );
       } else {
         const valueStart = attr.pos + 1; // Add one to account for "=".

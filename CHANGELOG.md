@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
+
+
+### Bug Fixes
+
+* attribute shorthand method source locations ([20e3cf4](https://github.com/marko-js/marko/commit/20e3cf42aa35392edb8582491abf1a31b6a06d8a))
+
+
+
+
+
 ## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
 
 
