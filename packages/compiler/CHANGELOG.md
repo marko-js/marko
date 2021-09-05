@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
+
+
+### Bug Fixes
+
+* consistent file.opts during parse & other stages ([ff07ead](https://github.com/marko-js/marko/commit/ff07eadde29ace7aaf4323d11f78c892fdc8f0ed))
+* incorrect source position for attribute arguments ([0c0ff04](https://github.com/marko-js/marko/commit/0c0ff04e767342c910f5087faf4bdef2778f0f92))
+
+
+
+
+
 ## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
 
 **Note:** Version bump only for package @marko/compiler
