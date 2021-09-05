@@ -5,9 +5,12 @@ project for a working example.
 
 ## Installation
 
+Need to install mark as well as the express-related marko package:
+
 ```
 npm install express --save
 npm install marko --save
+npm install @marko/express --save
 ```
 
 ## Skip the view engine
