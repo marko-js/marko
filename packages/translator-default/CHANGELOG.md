@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.10](https://github.com/marko-js/marko/compare/v5.15.9...v5.15.10) (2021-09-07)
+
+
+### Bug Fixes
+
+* deduping issue with hydrate output ([e5d38e1](https://github.com/marko-js/marko/commit/e5d38e14d3c27cd7d3644868f10ec3e8ad2955cb))
+
+
+
+
+
 ## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
 
 **Note:** Version bump only for package @marko/translator-default
