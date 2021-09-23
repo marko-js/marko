@@ -20,12 +20,12 @@
     "set-entry": "lerna exec -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)"
   },
   "devDependencies": {
-    "@babel/cli": "^7.13.10",
-    "@babel/core": "^7.13.10",
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.5",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
     "@babel/plugin-proposal-private-methods": "^7.13.0",
     "@babel/plugin-transform-runtime": "^7.13.10",
-    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-env": "^7.15.6",
     "@babel/register": "^7.13.8",
     "@commitlint/cli": "^12.1.0",
     "@commitlint/config-conventional": "^12.1.0",
@@ -51,7 +51,7 @@
     "mocha": "^8.3.2",
     "mocha-autotest": "^1.1.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.4.1",
     "shell-quote": "^1.7.2",
     "through": "^2.3.8",
     "through2": "^4.0.2"
