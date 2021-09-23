@@ -67,6 +67,10 @@ function replaceMarkoDebug(path, test, consequent, alternate) {
       path.replaceWith(alternate);
     }
   } else {
-    path.remove();
+    if (path.parentPath.node.type === "VariableDeclarator") {
+      path.parentPath.remove();
+    } else {
+      path.remove();
+    }
   }
 }
