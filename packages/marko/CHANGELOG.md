@@ -3,6 +3,205 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.10](https://github.com/marko-js/marko/compare/v5.15.9...v5.15.10) (2021-09-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.5](https://github.com/marko-js/marko/compare/v5.15.4...v5.15.5) (2021-08-26)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.4](https://github.com/marko-js/marko/compare/v5.15.3...v5.15.4) (2021-08-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.2](https://github.com/marko-js/marko/compare/v5.15.1...v5.15.2) (2021-08-06)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.15.1](https://github.com/marko-js/marko/compare/v5.15.0...v5.15.1) (2021-07-30)
+
+
+### Bug Fixes
+
+* **marko:** issue with HMR enabled using split components ([ab8706c](https://github.com/marko-js/marko/commit/ab8706c56cb1e1eef180207dcb510e9c85076501))
+
+
+
+
+
+# [5.15.0](https://github.com/marko-js/marko/compare/v5.14.2...v5.15.0) (2021-07-28)
+
+
+### Features
+
+* expose @marko/compiler/register api ([5726899](https://github.com/marko-js/marko/commit/572689909618939585e93c1a0d1ab101ff73aefd))
+
+
+
+
+
+## [5.14.2](https://github.com/marko-js/marko/compare/v5.14.1...v5.14.2) (2021-07-28)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.14.1](https://github.com/marko-js/marko/compare/v5.14.0...v5.14.1) (2021-07-26)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+# [5.14.0](https://github.com/marko-js/marko/compare/v5.13.0...v5.14.0) (2021-07-24)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+# [5.13.0](https://github.com/marko-js/marko/compare/v5.12.1...v5.13.0) (2021-07-23)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.12.1](https://github.com/marko-js/marko/compare/v5.12.0...v5.12.1) (2021-07-21)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+# [5.12.0](https://github.com/marko-js/marko/compare/v5.11.3...v5.12.0) (2021-07-12)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.11.3](https://github.com/marko-js/marko/compare/v5.11.2...v5.11.3) (2021-07-08)
+
+
+### Bug Fixes
+
+* allow key attribute to pass through for attribute tags ([ab52ae4](https://github.com/marko-js/marko/commit/ab52ae4c41fd94f27b397507423b3da4343bd9a5))
+
+
+
+
+
+## [5.11.2](https://github.com/marko-js/marko/compare/v5.11.1...v5.11.2) (2021-07-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.11.1](https://github.com/marko-js/marko/compare/v5.11.0...v5.11.1) (2021-07-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+# [5.11.0](https://github.com/marko-js/marko/compare/v5.10.7...v5.11.0) (2021-07-07)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.10.7](https://github.com/marko-js/marko/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+**Note:** Version bump only for package marko
+
+
+
+
+
+## [5.10.6](https://github.com/marko-js/marko/compare/v5.10.5...v5.10.6) (2021-06-10)
+
+
+### Bug Fixes
+
+* **translator-default:** issue with user defined component var ([a36cfd1](https://github.com/marko-js/marko/commit/a36cfd1bbbc213ea7889b5f59aec61e94cc5598c))
+
+
+
+
+
+## [5.10.5](https://github.com/marko-js/marko/compare/v5.10.4...v5.10.5) (2021-06-08)
+
+
+### Bug Fixes
+
+* **marko:** issue with dynamic tag name string and no renderbody ([69e8514](https://github.com/marko-js/marko/commit/69e8514e33d68705ccf76de8ec82efebfd31b1bc))
+
+
+
+
+
 ## [5.10.4](https://github.com/marko-js/marko/compare/v5.10.3...v5.10.4) (2021-05-19)
 
 

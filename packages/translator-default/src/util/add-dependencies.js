@@ -2,12 +2,11 @@ import path from "path";
 import MagicString from "magic-string";
 import { types as t } from "@marko/compiler";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
+
 export default (entryFile, isHydrate) => {
-  const {
-    modules,
-    resolveVirtualDependency,
-    hydrateIncludeImports
-  } = entryFile.markoOpts;
+  const { modules, resolveVirtualDependency, hydrateIncludeImports } =
+    entryFile.markoOpts;
+  const hydratedFiles = new Set();
   const program = entryFile.path;
   const shouldIncludeImport = toTestFn(hydrateIncludeImports);
 
@@ -29,8 +28,7 @@ export default (entryFile, isHydrate) => {
   if (hasComponents) {
     const initId = t.identifier("init");
     const markoComponentsImport = importPath(
-      entryFile,
-      "marko/src/runtime/components"
+      resolvePath(entryFile, "marko/src/runtime/components")
     );
     if (splitComponentIndex) {
       markoComponentsImport.specifiers.push(
@@ -54,6 +52,10 @@ export default (entryFile, isHydrate) => {
 
   function addHydrateDeps(file) {
     const meta = file.metadata.marko;
+    const resolved = resolveRelativePath(entryFile, file.opts.sourceFileName);
+    if (hydratedFiles.has(resolved)) return;
+
+    hydratedFiles.add(resolved);
 
     if (meta.component) {
       hasComponents = true;
@@ -63,7 +65,7 @@ export default (entryFile, isHydrate) => {
         path.basename(file.opts.sourceFileName)
       ) {
         // Stateful component.
-        program.pushContainer("body", importPath(file, meta.component));
+        program.pushContainer("body", importPath(resolved));
         return;
       }
     }
@@ -78,13 +80,15 @@ export default (entryFile, isHydrate) => {
 
     for (const imported of meta.imports) {
       if (shouldIncludeImport(imported)) {
-        program.pushContainer("body", importPath(file, imported));
+        program.pushContainer("body", importPath(resolvePath(file, imported)));
       }
     }
 
     for (const tag of meta.tags) {
       if (tag.endsWith(".marko")) {
-        addHydrateDeps(loadFileForImport(file, tag));
+        if (!hydratedFiles.has(resolvePath(file, tag))) {
+          addHydrateDeps(loadFileForImport(file, tag));
+        }
       }
     }
 
@@ -93,7 +97,9 @@ export default (entryFile, isHydrate) => {
       const splitComponentId = t.identifier(
         `component_${splitComponentIndex++}`
       );
-      const splitComponentImport = importPath(file, meta.component);
+      const splitComponentImport = importPath(
+        resolvePath(file, meta.component)
+      );
       splitComponentImport.specifiers.push(
         t.importDefaultSpecifier(splitComponentId)
       );
@@ -147,26 +153,27 @@ export default (entryFile, isHydrate) => {
         continue;
       }
 
-      program.pushContainer("body", importPath(file, dep));
+      program.pushContainer("body", importPath(resolvePath(file, dep)));
     }
   }
 
-  function importPath(file, req) {
-    const resolved =
-      file === entryFile
-        ? resolveRelativePath(file, req)
-        : resolveRelativePath(
-            entryFile,
-            path.join(file.opts.sourceFileName, "..", req)
-          );
+  function resolvePath(file, req) {
+    return file === entryFile
+      ? resolveRelativePath(file, req)
+      : resolveRelativePath(
+          entryFile,
+          path.join(file.opts.sourceFileName, "..", req)
+        );
+  }
 
+  function importPath(path) {
     if (modules === "cjs") {
       return t.expressionStatement(
-        t.callExpression(t.identifier("require"), [t.stringLiteral(resolved)])
+        t.callExpression(t.identifier("require"), [t.stringLiteral(path)])
       );
     }
 
-    return t.importDeclaration([], t.stringLiteral(resolved));
+    return t.importDeclaration([], t.stringLiteral(path));
   }
 };
 

@@ -2,10 +2,10 @@
 
 const INIT_COMPONENTS_KEY = Symbol();
 
-const addComponentsFromContext = require("../../runtime/components")
-  .___addComponentsFromContext;
-const getInitComponentsCode = require("../../runtime/components")
-  .___getInitComponentsCode;
+const addComponentsFromContext =
+  require("../../runtime/components").___addComponentsFromContext;
+const getInitComponentsCode =
+  require("../../runtime/components").___getInitComponentsCode;
 
 function addComponentsFromOut(source, target) {
   const sourceOut = source.out || source;

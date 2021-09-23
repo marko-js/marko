@@ -100,6 +100,12 @@ export default {
         `Unsupported arguments on the "${name}" attribute.`
       );
     }
+
+    if (attr.node.bound) {
+      throw attr.buildCodeFrameError(
+        `The binding syntax (:=) is only supported when using the "Tags API".`
+      );
+    }
   }
 };
 

@@ -15,8 +15,8 @@ import _marko_split_component from "./template.component-browser.js";
 _marko_registerComponent(_marko_componentType, () => _marko_split_component);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.n(_marko_node, component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.n(_marko_node, _component);
 }, {
   t: _marko_componentType,
   s: true

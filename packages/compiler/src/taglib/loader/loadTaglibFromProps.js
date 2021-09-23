@@ -21,7 +21,12 @@ function resolveRelative(dirname, value) {
 function normalizeHook(dirname, value) {
   if (typeof value === "string") {
     value = resolveRelative(dirname, value);
-    return { path: value, hook: markoModules.require(value) };
+    return {
+      path: value,
+      get hook() {
+        return markoModules.require(value);
+      }
+    };
   }
   return { hook: value };
 }
@@ -310,6 +315,13 @@ class TaglibLoader {
     } else {
       this.taglib.migrators.push(normalizeHook(this.dirname, value));
     }
+  }
+
+  /**
+   * Exposes a babel visitor to perform additional translations on the entire ast.
+   */
+  translate(value) {
+    this.taglib.translator = normalizeHook(this.dirname, value);
   }
 
   /**

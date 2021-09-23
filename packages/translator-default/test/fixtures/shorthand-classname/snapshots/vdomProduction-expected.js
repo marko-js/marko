@@ -11,37 +11,37 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
     "class": "shorthand"
-  }, "0", component, 0, 1);
+  }, "0", _component, 0, 1);
   out.e("div", {
     "class": "shorthand1 shorthand2"
-  }, "1", component, 0, 1);
+  }, "1", _component, 0, 1);
   out.e("div", {
     "class": "shorthand1 shorthand2 inline"
-  }, "2", component, 0, 1);
+  }, "2", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge(["shorthand1 shorthand2", dynamic1])
-  }, "3", component, 0, 1);
+  }, "3", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge([dynamic1, "inline"])
-  }, "4", component, 0, 1);
+  }, "4", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge([dynamic1, "shorthand2", "inline"])
-  }, "5", component, 0, 1);
+  }, "5", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge([dynamic1, "shorthand2", dynamic2])
-  }, "6", component, 0, 1);
+  }, "6", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge([dynamic2, dynamic3, dynamic1, "shorthand2"])
-  }, "7", component, 0, 1);
+  }, "7", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge([dynamic1, dynamic2, "shorthand"])
-  }, "8", component, 0, 1);
+  }, "8", _component, 0, 1);
   out.e("div", {
     "class": _marko_class_merge(["partially-" + dynamic1, "shorthand2", dynamic2])
-  }, "9", component, 0, 1);
+  }, "9", _component, 0, 1);
 }, {
   t: _marko_componentType,
   i: true

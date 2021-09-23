@@ -7,7 +7,7 @@ export default _marko_template;
 import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml";
 import _marko_renderer from "marko/dist/runtime/components/renderer";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.w(`Hello ${_marko_escapeXml(input.name)}! `);
 
   if (input.colors.length) {

@@ -31,30 +31,96 @@ MARKO_ALIAS_TYPES.forEach(aliasName => {
 // Adds a one time patch to the scope collector visitors to include
 // Marko bindings for params and tag vars.
 const originalCrawl = Scope.prototype.crawl;
+const patchedVisitors = new WeakSet();
+
 Scope.prototype.crawl = function () {
   const path = this.path;
   const originalTraverse = path.traverse;
-  path.traverse = function (visitor) {
-    Object.assign(
-      traverse.explode(visitor),
-      traverse.explode({
-        MarkoTagBody(body) {
-          for (const param of body.get("params")) {
-            body.scope.registerBinding("param", param);
-          }
-        },
-        MarkoTag(tag) {
-          if (tag.has("var")) {
-            tag.scope.registerBinding("local", tag.get("var"), tag);
-          }
-        }
-      })
-    );
-
+  path.traverse = function (visitor, state) {
     path.traverse = originalTraverse;
-    return originalTraverse.apply(this, arguments);
+
+    if (!patchedVisitors.has(visitor)) {
+      patchedVisitors.add(visitor);
+      Object.assign(
+        traverse.explode(visitor),
+        traverse.explode({
+          MarkoTagBody(body) {
+            for (const param of body.get("params")) {
+              body.scope.registerBinding("param", param);
+            }
+          },
+          MarkoTag(tag) {
+            const tagVar = tag.get("var");
+            if (tagVar.node) {
+              tag.scope.registerBinding("local", tagVar, tag);
+              for (const name in tagVar.getBindingIdentifiers()) {
+                let curScope = tag.scope;
+                const binding = curScope.getBinding(name);
+
+                while ((curScope = curScope.parent)) {
+                  curScope.hoistableTagVars =
+                    curScope.hoistableTagVars ||
+                    (curScope.hoistableTagVars = {});
+                  const existingBinding = curScope.hoistableTagVars[name];
+
+                  if (existingBinding) {
+                    if (existingBinding !== binding) {
+                      curScope.hoistableTagVars[name] = true;
+                    }
+                  } else {
+                    curScope.hoistableTagVars[name] = binding;
+                  }
+                }
+              }
+            }
+          }
+        })
+      );
+    }
+
+    this.traverse(visitor, state);
+
+    if (state.references.length) {
+      const movedBindings = new Map();
+      for (const ref of state.references) {
+        const { name } = ref.node;
+        let curScope = ref.scope;
+        if (curScope.hasBinding(name)) continue;
+
+        do {
+          const hoistableBinding =
+            curScope.hoistableTagVars && curScope.hoistableTagVars[name];
+          if (hoistableBinding) {
+            if (hoistableBinding === true) {
+              throw ref.buildCodeFrameError(
+                "Ambiguous reference, variable was defined in multiple places and was not shadowed."
+              );
+            }
+
+            const movedBinding = movedBindings.get(hoistableBinding);
+            if (
+              !movedBinding ||
+              getScopeDepth(movedBinding) < getScopeDepth(curScope)
+            ) {
+              movedBindings.set(hoistableBinding, curScope);
+            }
+          }
+        } while ((curScope = curScope.parent));
+      }
+
+      for (const [binding, scope] of movedBindings) {
+        binding.scope.moveBindingTo(binding.identifier.name, scope);
+      }
+    }
   };
 
-  Scope.prototype.crawl = originalCrawl;
-  originalCrawl.apply(this, arguments);
+  originalCrawl.call(this);
+  path.traverse = originalTraverse;
 };
+
+function getScopeDepth(scope) {
+  let depth = 0;
+  let cur = scope;
+  while ((cur = cur.parent)) depth++;
+  return depth;
+}

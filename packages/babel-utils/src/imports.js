@@ -35,7 +35,7 @@ export function resolveRelativePath(file, request) {
 
 export function importDefault(file, request, nameHint) {
   const imports = getImports(file);
-  request = remapProductionMarkoBuild(file, request);
+  request = resolveRelativePath(file, request);
   let importDeclaration = imports.get(request);
 
   if (!importDeclaration) {
@@ -70,7 +70,7 @@ export function importDefault(file, request, nameHint) {
 }
 
 export function importNamed(file, request, name, nameHint = name) {
-  request = remapProductionMarkoBuild(file, request);
+  request = resolveRelativePath(file, request);
   const imports = getImports(file);
   let importDeclaration = imports.get(request);
 

@@ -47,7 +47,7 @@ function getTransformersForTag(path) {
           if (transformer.path) {
             watchFiles.push(transformer.path);
           }
-          transformers.push(transformer.hook);
+          transformers.push(transformer.hook.default || transformer.hook);
         }
       }
     };

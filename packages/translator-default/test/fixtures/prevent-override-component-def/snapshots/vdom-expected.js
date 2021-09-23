@@ -10,9 +10,9 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component2, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component2, state) {
   const _component = "test";
-  out.e("div", null, "0", component, 0, 0);
+  out.e("div", null, "0", _component2, 0, 0);
 }, {
   t: _marko_componentType,
   i: true,

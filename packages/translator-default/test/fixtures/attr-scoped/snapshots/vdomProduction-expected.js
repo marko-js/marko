@@ -10,11 +10,11 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
-    "id": _component.elId("1"),
-    "aria-described-by": _component.elId("b")
-  }, "0", component, 0, 0);
+    "id": _componentDef.elId("1"),
+    "aria-described-by": _componentDef.elId("b")
+  }, "0", _component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true

@@ -36,23 +36,23 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.be("svg", {
     "height": "100",
     "width": "100"
-  }, "0", component, null, 0);
-  out.n(_marko_node, component);
-  out.n(_marko_node2, component);
-  out.n(_marko_node3, component);
-  out.n(_marko_node4, component);
-  out.n(_marko_node5, component);
+  }, "0", _component, null, 0);
+  out.n(_marko_node, _component);
+  out.n(_marko_node2, _component);
+  out.n(_marko_node3, _component);
+  out.n(_marko_node4, _component);
+  out.n(_marko_node5, _component);
   out.be("a", {
     "xlink:href": "https://developer.mozilla.org/"
-  }, "6", component, null, 0);
-  out.n(_marko_node6, component);
+  }, "6", _component, null, 0);
+  out.n(_marko_node6, _component);
   out.ee();
   out.ee();
-  out.n(_marko_node7, component);
+  out.n(_marko_node7, _component);
 }, {
   t: _marko_componentType,
   i: true

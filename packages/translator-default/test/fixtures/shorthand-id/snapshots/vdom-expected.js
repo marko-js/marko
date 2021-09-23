@@ -10,16 +10,16 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
     "id": "shorthand"
-  }, "0", component, 0, 1);
+  }, "0", _component, 0, 1);
   out.e("div", {
     "id": dynamic
-  }, "1", component, 0, 1);
+  }, "1", _component, 0, 1);
   out.e("div", {
     "id": "partial-" + dynamic
-  }, "2", component, 0, 1);
+  }, "2", _component, 0, 1);
 }, {
   t: _marko_componentType,
   i: true,

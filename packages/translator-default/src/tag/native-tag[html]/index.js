@@ -27,7 +27,7 @@ export default function (path, isNullable) {
     body: { body },
     handlers
   } = node;
-  const tagProperties = [];
+  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const tagDef = getTagDef(path);
   const meta = file.metadata.marko;
 
@@ -152,7 +152,7 @@ export default function (path, isNullable) {
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
             normalizeTemplateString`f_${key}`,
-            t.identifier("component"),
+            file._componentInstanceIdentifier,
             t.numericLiteral(1)
           ]
         )

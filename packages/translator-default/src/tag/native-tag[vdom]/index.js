@@ -29,7 +29,7 @@ export function tagArguments(path, isStatic) {
     body: { body },
     handlers
   } = node;
-  const tagProperties = [];
+  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   let runtimeFlags = 0;
 
   path.get("attributes").forEach(attr => {
@@ -67,7 +67,7 @@ export function tagArguments(path, isStatic) {
     name,
     attrsObj,
     !key && isStatic ? t.nullLiteral() : key,
-    isStatic ? t.nullLiteral() : t.identifier("component"),
+    isStatic ? t.nullLiteral() : file._componentInstanceIdentifier,
     isStatic
       ? t.numericLiteral(body.length)
       : body.length
@@ -173,7 +173,10 @@ export default function (path, isNullable) {
       t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
-          [normalizeTemplateString`f_${key}`, t.identifier("component")]
+          [
+            normalizeTemplateString`f_${key}`,
+            path.hub.file._componentInstanceIdentifier
+          ]
         )
       )
     );

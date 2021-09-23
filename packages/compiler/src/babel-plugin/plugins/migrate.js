@@ -45,7 +45,7 @@ function getMigratorsForTag(path) {
           if (migrator.path) {
             watchFiles.push(migrator.path);
           }
-          migrators.push(migrator.hook);
+          migrators.push(migrator.hook.default || migrator.hook);
         }
       }
     };

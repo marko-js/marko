@@ -75,14 +75,18 @@ runtime.t = function (typeName) {
 };
 
 registry.___createComponent = function (typeName, id) {
-  var instances = registered[typeName].___instances;
+  var template = registered[typeName];
   var instance = createComponent(typeName, id);
-  instances.push(instance);
-  instance.once("destroy", function () {
-    if (!instance.___hmrDestroyed) {
-      instances.splice(1, instances.indexOf(instance));
-    }
-  });
+
+  if (template) {
+    var instances = template.___instances;
+    instances.push(instance);
+    instance.once("destroy", function () {
+      if (!instance.___hmrDestroyed) {
+        instances.splice(1, instances.indexOf(instance));
+      }
+    });
+  }
 
   return instance;
 };

@@ -1,5 +1,5 @@
-var promiseProvider = require("../../../../../__util__/async-helpers")
-  .promiseProvider;
+var promiseProvider =
+  require("../../../../../__util__/async-helpers").promiseProvider;
 
 module.exports = async function (input, out) {
   var asyncOut = out.beginAsync();

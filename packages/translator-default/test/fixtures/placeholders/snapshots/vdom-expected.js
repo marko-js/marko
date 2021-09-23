@@ -10,21 +10,21 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("div", null, "0", component, null, 0);
-  out.t(input.x, component);
-  out.t("Hello world <a/>", component);
-  out.h(input.x, component);
-  out.h("Hello world <a/>", component);
-  out.be("script", null, "1", component, null, 0);
-  out.t("\n    ", component);
-  out.t("Hello <b> </script>", component);
-  out.t("\n  ", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.be("div", null, "0", _component, null, 0);
+  out.t(input.x, _component);
+  out.t("Hello world <a/>", _component);
+  out.h(input.x, _component);
+  out.h("Hello world <a/>", _component);
+  out.be("script", null, "1", _component, null, 0);
+  out.t("\n    ", _component);
+  out.t("Hello <b> </script>", _component);
+  out.t("\n  ", _component);
   out.ee();
-  out.be("style", null, "2", component, null, 0);
-  out.t("\n    ", component);
-  out.t("Hello <b> </style>", component);
-  out.t("\n  ", component);
+  out.be("style", null, "2", _component, null, 0);
+  out.t("\n    ", _component);
+  out.t("Hello <b> </style>", _component);
+  out.t("\n  ", _component);
   out.ee();
   out.ee();
 }, {

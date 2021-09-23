@@ -1,7 +1,7 @@
 "use strict";
 
-var escapeDoubleQuotes = require("./helpers/escape-quotes")
-  .___escapeDoubleQuotes;
+var escapeDoubleQuotes =
+  require("./helpers/escape-quotes").___escapeDoubleQuotes;
 
 function StringWriter() {
   this._content = "";

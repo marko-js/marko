@@ -21,19 +21,19 @@ const _marko_componentType = "packages/translator-default/test/fixtures/event-ha
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
-  out.w(`<div${(0, _dataMarko.default)(out, _component, {
-    "onclick": _component.d("click", "handleClick", false, [a, b, ...d])
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+  out.w(`<div${(0, _dataMarko.default)(out, _componentDef, {
+    "onclick": _componentDef.d("click", "handleClick", false, [a, b, ...d])
   })}></div>`);
-  out.w(`<div${(0, _dataMarko.default)(out, _component, {
-    "onDashed-cased-Event": _component.d("Dashed-cased-Event", "handle", false)
+  out.w(`<div${(0, _dataMarko.default)(out, _componentDef, {
+    "onDashed-cased-Event": _componentDef.d("Dashed-cased-Event", "handle", false)
   })}></div>`);
-  out.w(`<div${(0, _dataMarko.default)(out, _component, {
-    "oncamelcasedevent": _component.d("camelcasedevent", "handle", false)
+  out.w(`<div${(0, _dataMarko.default)(out, _componentDef, {
+    "oncamelcasedevent": _componentDef.d("camelcasedevent", "handle", false)
   })} onmouseout=someStringHandler></div>`);
-  (0, _renderTag.default)(_customTag2.default, {}, out, _component, "3", [["thing", "handleThing", false, [a, b, ...d]]]);
-  (0, _renderTag.default)(_customTag2.default, {}, out, _component, "4", [["Dashed-cased-Event", "handle", false]]);
-  (0, _renderTag.default)(_customTag2.default, {}, out, _component, "5", [["camelcasedEvent", "handle", false]]);
+  (0, _renderTag.default)(_customTag2.default, {}, out, _componentDef, "3", [["thing", "handleThing", false, [a, b, ...d]]]);
+  (0, _renderTag.default)(_customTag2.default, {}, out, _componentDef, "4", [["Dashed-cased-Event", "handle", false]]);
+  (0, _renderTag.default)(_customTag2.default, {}, out, _componentDef, "5", [["camelcasedEvent", "handle", false]]);
 }, {
   t: _marko_componentType,
   i: true,

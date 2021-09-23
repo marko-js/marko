@@ -14,11 +14,11 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
-  out.be("html", null, "0", component, null, 0);
-  out.n(_marko_node, component);
-  out.be("body", null, "2", component, null, 0);
-  out.t("The content of the document......", component);
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+  out.be("html", null, "0", _component, null, 0);
+  out.n(_marko_node, _component);
+  out.be("body", null, "2", _component, null, 0);
+  out.t("The content of the document......", _component);
   out.ee();
   out.ee();
 }, {

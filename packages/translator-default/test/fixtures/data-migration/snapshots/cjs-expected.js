@@ -21,14 +21,14 @@ const _marko_componentType = "packages/translator-default/test/fixtures/data-mig
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   (0, _renderTag.default)(_test2.default, {
     "class": input.class,
     "renderBody": (out, data) => {
       out.w("Hello ");
       out.w((0, _escapeXml.x)(data.name));
     }
-  }, out, _component, "0");
+  }, out, _componentDef, "0");
   out.w("<div>");
   out.w("Hello ");
   out.w((0, _escapeXml.x)(input.name));

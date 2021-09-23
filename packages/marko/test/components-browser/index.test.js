@@ -45,6 +45,10 @@ function runClientTest(fixture) {
       if (!err) context.rendered = helpers.rendered;
       helpers.instances.forEach(instance => instance.destroy());
       helpers.targetEl.innerHTML = "";
+      if (browser.error) {
+        err = browser.error;
+        browser.error = undefined;
+      }
       done(err);
     }
   });
@@ -95,14 +99,22 @@ function runHydrateTest(fixture) {
         };
 
         if (hasCallback) {
-          testFunc(helpers, done);
+          testFunc(helpers, cleanupAndFinish);
         } else {
           const result = testFunc(helpers);
           if (result && result.then) {
-            result.then(done, done);
+            result.then(cleanupAndFinish, cleanupAndFinish);
           } else {
-            done();
+            cleanupAndFinish();
           }
+        }
+
+        function cleanupAndFinish(err) {
+          if (browser.error) {
+            err = browser.error;
+            browser.error = undefined;
+          }
+          done(err);
         }
       })
       .catch(done);

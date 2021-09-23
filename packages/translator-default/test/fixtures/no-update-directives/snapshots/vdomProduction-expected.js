@@ -32,18 +32,18 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   _marko_tag(_preserve, {
     "renderBody": out => {
       _marko_tag(_hello, {
         "renderBody": out => {
-          _marko_tag(_hello, {}, out, _component, "1");
+          _marko_tag(_hello, {}, out, _componentDef, "1");
 
-          out.n(_marko_node, component);
+          out.n(_marko_node, _component);
         }
-      }, out, _component, "0");
+      }, out, _componentDef, "0");
     }
-  }, out, _component, "p_0");
+  }, out, _componentDef, "p_0");
 
   _marko_tag(_preserve, {
     "i": x,
@@ -53,27 +53,27 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           _marko_tag(_preserve, {
             "i": (a, b),
             "renderBody": out => {
-              _marko_tag(_hello, {}, out, _component, "4");
+              _marko_tag(_hello, {}, out, _componentDef, "4");
             }
-          }, out, _component, "p_4");
+          }, out, _componentDef, "p_4");
 
-          out.n(_marko_node2, component);
+          out.n(_marko_node2, _component);
         }
-      }, out, _component, "3");
+      }, out, _componentDef, "3");
     }
-  }, out, _component, "p_3");
+  }, out, _componentDef, "p_3");
 
   _marko_tag(_hello, {
     "renderBody": out => {
       _marko_tag(_preserve, {
         "renderBody": out => {
-          _marko_tag(_hello, {}, out, _component, "7");
+          _marko_tag(_hello, {}, out, _componentDef, "7");
 
-          out.n(_marko_node3, component);
+          out.n(_marko_node3, _component);
         }
-      }, out, _component, "p_6");
+      }, out, _componentDef, "p_6");
     }
-  }, out, _component, "6");
+  }, out, _componentDef, "6");
 
   _marko_tag(_hello, {
     "renderBody": out => {
@@ -85,29 +85,29 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
               _marko_tag(_preserve, {
                 "i": (a, b),
                 "renderBody": out => {
-                  out.t("Again", component);
+                  out.t("Again", _component);
                 }
-              }, out, _component, "p_10");
+              }, out, _componentDef, "p_10");
             }
-          }, out, _component, "10");
+          }, out, _componentDef, "10");
 
-          out.n(_marko_node4, component);
+          out.n(_marko_node4, _component);
         }
-      }, out, _component, "p_9");
+      }, out, _componentDef, "p_9");
     }
-  }, out, _component, "9");
+  }, out, _componentDef, "9");
 
   _marko_tag(_preserve, {
     "renderBody": out => {
       _marko_tag(_hello, {
         "renderBody": out => {
-          _marko_tag(_hello, {}, out, _component, "12");
+          _marko_tag(_hello, {}, out, _componentDef, "12");
 
-          out.n(_marko_node5, component);
+          out.n(_marko_node5, _component);
         }
-      }, out, _component, "@a");
+      }, out, _componentDef, "@a");
     }
-  }, out, _component, "p_@a");
+  }, out, _componentDef, "p_@a");
 
   _marko_tag(_preserve, {
     "i": x,
@@ -117,27 +117,27 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
           _marko_tag(_preserve, {
             "i": (a, b),
             "renderBody": out => {
-              _marko_tag(_hello, {}, out, _component, "@c");
+              _marko_tag(_hello, {}, out, _componentDef, "@c");
             }
-          }, out, _component, "p_@c");
+          }, out, _componentDef, "p_@c");
 
-          out.n(_marko_node6, component);
+          out.n(_marko_node6, _component);
         }
-      }, out, _component, "@b");
+      }, out, _componentDef, "@b");
     }
-  }, out, _component, "p_@b");
+  }, out, _componentDef, "p_@b");
 
   _marko_tag(_hello, {
     "renderBody": out => {
       _marko_tag(_preserve, {
         "renderBody": out => {
-          _marko_tag(_hello, {}, out, _component, "15");
+          _marko_tag(_hello, {}, out, _componentDef, "15");
 
-          out.n(_marko_node7, component);
+          out.n(_marko_node7, _component);
         }
-      }, out, _component, "p_@d");
+      }, out, _componentDef, "p_@d");
     }
-  }, out, _component, "@d");
+  }, out, _componentDef, "@d");
 
   _marko_tag(_hello, {
     "renderBody": out => {
@@ -149,26 +149,26 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
               _marko_tag(_preserve, {
                 "i": (a, b),
                 "renderBody": out => {
-                  out.t("Again", component);
+                  out.t("Again", _component);
                 }
-              }, out, _component, "p_@f");
+              }, out, _componentDef, "p_@f");
             }
-          }, out, _component, "@f");
+          }, out, _componentDef, "@f");
 
-          out.n(_marko_node8, component);
+          out.n(_marko_node8, _component);
         }
-      }, out, _component, "p_@e");
+      }, out, _componentDef, "p_@e");
     }
-  }, out, _component, "@e");
+  }, out, _componentDef, "@e");
 
   _marko_tag(_preserve, {
     "n": true,
     "renderBody": out => {
       out.e("div", {
         "class": "test"
-      }, "18", component, 0, 1);
+      }, "18", _component, 0, 1);
     }
-  }, out, _component, "18");
+  }, out, _componentDef, "18");
 }, {
   t: _marko_componentType,
   i: true

@@ -10,11 +10,11 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.be("svg", {
     "height": "100",
     "width": "100"
-  }, "0", component, null, 0);
+  }, "0", _component, null, 0);
   out.e("circle", {
     "cx": "50",
     "cy": "50",
@@ -22,29 +22,29 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     "stroke": "black",
     "stroke-width": "3",
     "fill": "red"
-  }, "1", component, 0, 0);
-  out.e("a", null, "2", component, 0, 0);
-  out.be("style", null, "3", component, null, 0);
-  out.t("div { color: green }", component);
+  }, "1", _component, 0, 0);
+  out.e("a", null, "2", _component, 0, 0);
+  out.be("style", null, "3", _component, null, 0);
+  out.t("div { color: green }", _component);
   out.ee();
-  out.be("script", null, "4", component, null, 0);
-  out.t("alert(\"Hello\");", component);
+  out.be("script", null, "4", _component, null, 0);
+  out.t("alert(\"Hello\");", _component);
   out.ee();
-  out.be("title", null, "5", component, null, 0);
-  out.t("Test", component);
+  out.be("title", null, "5", _component, null, 0);
+  out.t("Test", _component);
   out.ee();
   out.be("a", {
     "xlink:href": "https://developer.mozilla.org/"
-  }, "6", component, null, 0);
+  }, "6", _component, null, 0);
   out.be("text", {
     "x": "10",
     "y": "25"
-  }, "7", component, null, 0);
-  out.t("MDN Web Docs", component);
+  }, "7", _component, null, 0);
+  out.t("MDN Web Docs", _component);
   out.ee();
   out.ee();
   out.ee();
-  out.e("a", null, "8", component, 0, 0);
+  out.e("a", null, "8", _component, 0, 0);
 }, {
   t: _marko_componentType,
   i: true,

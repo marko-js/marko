@@ -1,5 +1,5 @@
-var callbackProviderWithArgs = require("../../../__util__/async-helpers")
-  .callbackProviderWithArgs;
+var callbackProviderWithArgs =
+  require("../../../__util__/async-helpers").callbackProviderWithArgs;
 var users = {
   0: {
     name: "John B. Flowers",

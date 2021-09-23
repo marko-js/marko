@@ -15,7 +15,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/prevent-
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component2, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component2, state) {
   const _component = "test";
   out.w("<div></div>");
 }, {

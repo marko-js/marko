@@ -3,6 +3,156 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
+
+
+### Bug Fixes
+
+* consistent file.opts during parse & other stages ([ff07ead](https://github.com/marko-js/marko/commit/ff07eadde29ace7aaf4323d11f78c892fdc8f0ed))
+
+
+
+
+
+## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.15.4](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.15.3...v5.15.4) (2021-08-07)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.15.3](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.15.2...v5.15.3) (2021-08-06)
+
+
+### Bug Fixes
+
+* **babel-utils:** ensure relative paths when using import utils ([9d5ef81](https://github.com/marko-js/marko/tree/master/packages/babel-utils/commit/9d5ef81e0bdb0e4fbad5370ff3d2eaeeedf5e413))
+
+
+
+
+
+## [5.15.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.15.1...v5.15.2) (2021-08-06)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+# [5.15.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.14.2...v5.15.0) (2021-07-28)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.14.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.14.1...v5.14.2) (2021-07-28)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.14.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.14.0...v5.14.1) (2021-07-26)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+# [5.14.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.13.0...v5.14.0) (2021-07-24)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+# [5.13.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.12.1...v5.13.0) (2021-07-23)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.12.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.12.0...v5.12.1) (2021-07-21)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.11.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.11.1...v5.11.2) (2021-07-07)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.11.1](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.11.0...v5.11.1) (2021-07-07)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+# [5.11.0](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.10.7...v5.11.0) (2021-07-07)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.10.7](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
+## [5.10.5](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.10.4...v5.10.5) (2021-06-08)
+
+**Note:** Version bump only for package @marko/babel-utils
+
+
+
+
+
 ## [5.10.2](https://github.com/marko-js/marko/tree/master/packages/babel-utils/compare/v5.10.1...v5.10.2) (2021-05-04)
 
 **Note:** Version bump only for package @marko/babel-utils

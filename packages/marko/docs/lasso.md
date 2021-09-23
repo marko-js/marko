@@ -125,9 +125,8 @@ To retrieve the list of server rendered components, do:
 
 ```javascript
 template.render(data, (err, output) => {
-  const renderedComponentsList = require("marko/components").getRenderedComponents(
-    output.out
-  );
+  const renderedComponentsList =
+    require("marko/components").getRenderedComponents(output.out);
   const html = output.getOutput();
 });
 res.json({

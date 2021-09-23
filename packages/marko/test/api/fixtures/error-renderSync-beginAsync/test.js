@@ -1,6 +1,6 @@
 var nodePath = require("path");
-var promiseProvider = require("../../../__util__/async-helpers")
-  .promiseProvider;
+var promiseProvider =
+  require("../../../__util__/async-helpers").promiseProvider;
 
 exports.check = function (marko, markoCompiler, expect, helpers, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));

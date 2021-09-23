@@ -132,7 +132,7 @@ back and make it consistent…_one day_.
 #### 5. Import JavaScript modules
 
 Do you have some helper JavaScript functions that you need to use in your views?
-Marko let’s you import any JavaScript module into your template using the same
+Marko lets you import any JavaScript module into your template using the same
 syntax as the JavaScript `import` statement without using Babel or any other
 build tool. No need for problematic globals (you could do that too, but please
 don’t or your coworkers will hate you).
@@ -248,7 +248,7 @@ components](http://markojs.com/docs/server-side-rendering/) rendered on the
 server when the page loads in the browser):
 
 ```js
-require("marko/node-require").install(); // require .marko files!
+require("@marko/compiler/register"); // require .marko files!
 
 const http = require("http");
 const template = require("./template");
@@ -289,5 +289,4 @@ Coming soon: auto correction and autonomous coding
 
 ---
 
-_Cover image credit:
-_[Wikipedia](https://commons.wikimedia.org/wiki/File:Amanhecer_no_Hercules_--.jpg)
+_Cover image credit:_ [Wikipedia](https://commons.wikimedia.org/wiki/File:Amanhecer_no_Hercules_--.jpg)

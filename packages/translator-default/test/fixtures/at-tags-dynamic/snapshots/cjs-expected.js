@@ -21,14 +21,11 @@ const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   const _cols = [];
   const _items = [];
-  let _keyValue = 0;
 
   for (const color of input.colors) {
-    const _keyScope = `[${_keyValue++}]`;
-
     if (x) {
       _items.push({
         "style": {
@@ -60,11 +57,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
   }
 
   let i = 10;
-  let _keyValue2 = 0;
 
   while (i--) {
-    const _keyScope2 = `[${_keyValue2++}]`;
-
     _items.push({
       "renderBody": out => {
         out.w((0, _escapeXml.x)(i));
@@ -72,16 +66,10 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
     });
   }
 
-  let _keyValue3 = 0;
-
   for (const col of input.table) {
-    const _keyScope3 = `[${_keyValue3++}]`;
     const _rows = [];
-    let _keyValue4 = 0;
 
     for (const row of col) {
-      const _keyScope4 = `[${_keyValue4++ + _keyScope3}]`;
-
       _rows.push({
         "row": row,
         "renderBody": out => {
@@ -115,7 +103,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _component, com
       "items": _items
     },
     "cols": _cols
-  }, out, _component, "0");
+  }, out, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true,

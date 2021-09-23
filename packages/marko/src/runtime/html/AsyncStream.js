@@ -519,9 +519,9 @@ var proto = (AsyncStream.prototype = {
     if (selfClosingTags.voidElements.indexOf(tagName) !== -1) {
       str += ">";
     } else if (selfClosingTags.svgElements.indexOf(tagName) !== -1) {
-      str += " />";
+      str += "/>";
     } else {
-      str += "</" + tagName + ">";
+      str += "></" + tagName + ">";
     }
 
     this.write(str);

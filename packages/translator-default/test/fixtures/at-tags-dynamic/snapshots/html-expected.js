@@ -9,14 +9,11 @@ import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   const _cols = [];
   const _items = [];
-  let _keyValue = 0;
 
   for (const color of input.colors) {
-    const _keyScope = `[${_keyValue++}]`;
-
     if (x) {
       _items.push({
         "style": {
@@ -48,11 +45,8 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
   }
 
   let i = 10;
-  let _keyValue2 = 0;
 
   while (i--) {
-    const _keyScope2 = `[${_keyValue2++}]`;
-
     _items.push({
       "renderBody": out => {
         out.w(_marko_escapeXml(i));
@@ -60,16 +54,10 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
     });
   }
 
-  let _keyValue3 = 0;
-
   for (const col of input.table) {
-    const _keyScope3 = `[${_keyValue3++}]`;
     const _rows = [];
-    let _keyValue4 = 0;
 
     for (const row of col) {
-      const _keyScope4 = `[${_keyValue4++ + _keyScope3}]`;
-
       _rows.push({
         "row": row,
         "renderBody": out => {
@@ -103,7 +91,7 @@ _marko_template._ = _marko_renderer(function (input, out, _component, component,
       "items": _items
     },
     "cols": _cols
-  }, out, _component, "0");
+  }, out, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true,

@@ -45,6 +45,18 @@ function run(fixture) {
           browser.require(templateFile);
         }
       });
+      // TODO: we should enable this but it causes a test (diff-body) to fail
+      // due to DOMContentLoaded firing twice, which shouldn't be possible.
+      // Since this is almost certainly an issue with our JSDOM setup
+      // and not Marko, I'm disabling it for now.
+      //
+      // afterEach(function() {
+      //   if (browser.error) {
+      //     const err = browser.error;
+      //     browser.error = undefined;
+      //     throw err;
+      //   }
+      // });
       after(function () {
         browser.window.close();
       });

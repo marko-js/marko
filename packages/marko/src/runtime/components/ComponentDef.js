@@ -3,8 +3,8 @@ var complain = "MARKO_DEBUG" && require("complain");
 var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("./util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
-var addDelegatedEventHandler = require("./event-delegation")
-  .___addDelegatedEventHandler;
+var addDelegatedEventHandler =
+  require("./event-delegation").___addDelegatedEventHandler;
 var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 var EMPTY_OBJECT = {};

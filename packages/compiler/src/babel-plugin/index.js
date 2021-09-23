@@ -41,14 +41,19 @@ export default (api, markoOpts) => {
     );
   }
 
+  let curOpts;
+
   return {
     name: "marko",
-    parserOverride(code, jsParseOptions) {
+    manipulateOptions(opts) {
+      curOpts = opts;
+    },
+    parserOverride(code) {
       let prevFS = curFS;
       setFS(markoOpts.fileSystem);
       try {
-        const file = getMarkoFile(code, jsParseOptions, markoOpts);
-        const finalAst = t.cloneDeep(file.ast);
+        const file = getMarkoFile(code, curOpts, markoOpts);
+        const finalAst = t.cloneNode(file.ast, true);
         SOURCE_FILES.set(finalAst, file);
         return finalAst;
       } finally {
@@ -57,6 +62,7 @@ export default (api, markoOpts) => {
     },
     pre(file) {
       let prevFS = curFS;
+      curOpts = undefined;
       setFS(markoOpts.fileSystem);
       try {
         if (markoOpts.output === "source" || markoOpts.output === "migrate") {
@@ -65,19 +71,35 @@ export default (api, markoOpts) => {
 
         const { ast, metadata } = file;
         const sourceFile = SOURCE_FILES.get(ast);
-        metadata.marko = shallowClone(sourceFile.metadata.marko);
-
+        const taglibLookup = sourceFile.___taglibLookup;
+        const rootTranslators = [];
         const { buildCodeFrameError } = file;
         const { buildError } = file.hub;
+        metadata.marko = shallowClone(sourceFile.metadata.marko);
         file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
         file.hub.buildError = file.buildCodeFrameError.bind(file);
         file.markoOpts = markoOpts;
-        file.___taglibLookup = sourceFile.___taglibLookup;
+        file.___taglibLookup = taglibLookup;
         file.___getMarkoFile = getMarkoFile;
-        traverseAll(file, translator.translate);
+
+        if (markoOpts.output !== "hydrate") {
+          for (const id in taglibLookup.taglibsById) {
+            addPlugin(
+              metadata.marko,
+              rootTranslators,
+              taglibLookup.taglibsById[id].translator
+            );
+          }
+        }
+
+        rootTranslators.push(translator.translate);
+        traverseAll(file, rootTranslators);
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
-        file.markoOpts = file.___taglibLookup = file.___getMarkoFile = undefined;
+        file.markoOpts =
+          file.___taglibLookup =
+          file.___getMarkoFile =
+            undefined;
 
         metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
       } finally {
@@ -87,7 +109,7 @@ export default (api, markoOpts) => {
   };
 };
 
-export function getMarkoFile(code, jsParseOptions, markoOpts) {
+export function getMarkoFile(code, fileOpts, markoOpts) {
   const { translator } = markoOpts;
   let compileCache = markoOpts.cache.get(translator);
 
@@ -95,7 +117,13 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     markoOpts.cache.set(translator, (compileCache = new Map()));
   }
 
-  const { sourceFileName } = jsParseOptions;
+  if (!fileOpts.parserOpts.sourceFileName) {
+    // Babel had a breaking change that updated this property name.
+    // https://github.com/babel/babel/pull/13532#issuecomment-912449296
+    fileOpts.parserOpts.sourceFileName = fileOpts.parserOpts.sourceFilename;
+  }
+
+  const { sourceFileName } = fileOpts;
   const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
@@ -132,7 +160,7 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   const taglibLookup = buildLookup(path.dirname(sourceFileName), translator);
 
-  const file = new MarkoFile(jsParseOptions, {
+  const file = new MarkoFile(fileOpts, {
     code,
     ast: {
       type: "File",
@@ -153,9 +181,6 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
     watchFiles: []
   });
 
-  const rootMigrators = [migrate];
-  const rootTransformers = [transform];
-
   file.markoOpts = markoOpts;
   file.___taglibLookup = taglibLookup;
   file.___getMarkoFile = getMarkoFile;
@@ -175,32 +200,28 @@ export function getMarkoFile(code, jsParseOptions, markoOpts) {
 
   file.path.scope.crawl(); // Initialize bindings.
 
+  const rootMigrators = [];
   for (const id in taglibLookup.taglibsById) {
-    const { migrators } = taglibLookup.taglibsById[id];
-    for (const migrator of migrators) {
-      if (migrator.path) {
-        meta.watchFiles.push(migrator.path);
-      }
-      rootMigrators.push(migrator.hook.default || migrator.hook);
+    for (const migrator of taglibLookup.taglibsById[id].migrators) {
+      addPlugin(meta, rootMigrators, migrator);
     }
   }
 
+  rootMigrators.push(migrate);
   traverseAll(file, rootMigrators);
 
   if (isMigrate) {
     return file;
   }
 
+  const rootTransformers = [];
   for (const id in taglibLookup.taglibsById) {
-    const { transformers } = taglibLookup.taglibsById[id];
-    for (const transformer of transformers) {
-      if (transformer.path) {
-        meta.watchFiles.push(transformer.path);
-      }
-      rootTransformers.push(transformer.hook.default || transformer.hook);
+    for (const transformer of taglibLookup.taglibsById[id].transformers) {
+      addPlugin(meta, rootTransformers, transformer);
     }
   }
 
+  rootTransformers.push(transform);
   traverseAll(file, rootTransformers);
 
   for (const taglibId in taglibLookup.taglibsById) {
@@ -288,6 +309,22 @@ function traverseAll(file, visitors) {
 
     if (Program && Program.exit) {
       program._call(Program.exit);
+    }
+  }
+}
+
+function addPlugin(meta, arr, plugin) {
+  if (plugin) {
+    const hook = plugin.hook.default || plugin.hook;
+
+    if (plugin.path) {
+      meta.watchFiles.push(plugin.path);
+    }
+
+    if (Array.isArray(hook)) {
+      arr.push(...hook);
+    } else {
+      arr.push(hook);
     }
   }
 }

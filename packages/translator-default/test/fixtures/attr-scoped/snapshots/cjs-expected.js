@@ -17,8 +17,8 @@ const _marko_componentType = "packages/translator-default/test/fixtures/attr-sco
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _component, component, state) {
-  out.w(`<div${(0, _attr.default)("id", _component.elId("1"))}${(0, _attr.default)("aria-described-by", _component.elId("b"))}></div>`);
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+  out.w(`<div${(0, _attr.default)("id", _componentDef.elId("1"))}${(0, _attr.default)("aria-described-by", _componentDef.elId("b"))}></div>`);
 }, {
   t: _marko_componentType,
   i: true,

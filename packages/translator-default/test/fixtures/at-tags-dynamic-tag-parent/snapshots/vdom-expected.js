@@ -11,23 +11,23 @@ import { r as _marko_registerComponent } from "marko/src/runtime/components/regi
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _component, component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   _marko_dynamic_tag(out, input.x, () => ({
     "header": {
       "class": "my-header",
       "renderBody": out => {
-        out.t("Header content", component);
+        out.t("Header content", _component);
       }
     },
     "footer": {
       "class": "my-footer",
       "renderBody": out => {
-        out.t("Footer content", component);
+        out.t("Footer content", _component);
       }
     }
   }), out => {
-    out.t("Body content", component);
-  }, null, null, _component, "0");
+    out.t("Body content", _component);
+  }, null, null, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true,

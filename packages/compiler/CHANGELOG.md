@@ -3,6 +3,234 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.10](https://github.com/marko-js/marko/compare/v5.15.9...v5.15.10) (2021-09-07)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
+
+
+### Bug Fixes
+
+* attribute shorthand method source locations ([20e3cf4](https://github.com/marko-js/marko/commit/20e3cf42aa35392edb8582491abf1a31b6a06d8a))
+
+
+
+
+
+## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
+
+
+### Bug Fixes
+
+* consistent file.opts during parse & other stages ([ff07ead](https://github.com/marko-js/marko/commit/ff07eadde29ace7aaf4323d11f78c892fdc8f0ed))
+* incorrect source position for attribute arguments ([0c0ff04](https://github.com/marko-js/marko/commit/0c0ff04e767342c910f5087faf4bdef2778f0f92))
+
+
+
+
+
+## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
+
+
+### Bug Fixes
+
+* supports babel 7.15.4 ([a301a87](https://github.com/marko-js/marko/commit/a301a870e8e719d770ccef1958e9d9c03a93d765))
+
+
+
+
+
+## [5.15.4](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.15.3...v5.15.4) (2021-08-07)
+
+
+### Bug Fixes
+
+* improve compiler register hook types ([ecdafa0](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/ecdafa047cdcbe87b941856102a00da34d8efe25))
+
+
+
+
+
+## [5.15.3](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.15.2...v5.15.3) (2021-08-06)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.15.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.15.1...v5.15.2) (2021-08-06)
+
+
+### Bug Fixes
+
+* issue with hoisted tag var scopes ([86162a1](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/86162a1471aeb2d6f6729ef2ed872092b549105b))
+
+
+
+
+
+# [5.15.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.2...v5.15.0) (2021-07-28)
+
+
+### Features
+
+* expose @marko/compiler/register api ([5726899](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/572689909618939585e93c1a0d1ab101ff73aefd))
+
+
+
+
+
+## [5.14.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.1...v5.14.2) (2021-07-28)
+
+
+### Bug Fixes
+
+* support method shorthand from updated parser ([accb1bf](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/accb1bf51ff73ccff5f3fcbd0c65172b9a7a262a))
+
+
+
+
+
+## [5.14.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.14.0...v5.14.1) (2021-07-26)
+
+
+### Bug Fixes
+
+* **compiler:** issue with getters on taglibs not properly merging ([c728439](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/c728439906bc87a9167f02aecd979e5801b1c415))
+
+
+
+
+
+# [5.14.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.13.0...v5.14.0) (2021-07-24)
+
+
+### Bug Fixes
+
+* issue with root translator running in hydrate mode ([56495ae](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/56495aee99f1adbbdbdc08324561fbbd62ae95a1))
+
+
+### Features
+
+* lazy load load compiler hook paths, expose error loc object ([f49fc19](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/f49fc1901bb1fc66ae1eb64b98ce2402d4faa8fa))
+
+
+
+
+
+# [5.13.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.12.1...v5.13.0) (2021-07-23)
+
+
+### Features
+
+* add support for new binding shorthand syntax ([1c20064](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/1c20064bdf04c3491b40e68aa6e57113dd40bc40))
+
+
+
+
+
+## [5.12.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.12.0...v5.12.1) (2021-07-21)
+
+
+### Bug Fixes
+
+* issue with tag var scope hoisting ([ed8de11](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/ed8de119f1d81da04f2006922864be0ef8a60ab0))
+
+
+
+
+
+# [5.12.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.11.3...v5.12.0) (2021-07-12)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.11.3](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.11.2...v5.11.3) (2021-07-08)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.11.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.11.1...v5.11.2) (2021-07-07)
+
+
+### Bug Fixes
+
+* incorrect search file types for taglib lookup ([4e6bd9a](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/4e6bd9a2e9de27566b78c98301715054c421c264))
+
+
+
+
+
+## [5.11.1](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.11.0...v5.11.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* add missing compiler hook aliases during taglib loading ([0e008e3](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/0e008e33e5c39d99b6a0744c1ad0132adbd0bf6a))
+
+
+
+
+
+# [5.11.0](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.7...v5.11.0) (2021-07-07)
+
+
+### Features
+
+* add hoisting support for tag var bindings ([956a80c](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/956a80c5c28948745b0e554971853d88ceb41871))
+* support taglib translate hook, support arrays in taglib hooks ([e2b0e66](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/e2b0e66138acec5ee11ec0f582da99391a5c7396))
+
+
+
+
+
+## [5.10.7](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.6...v5.10.7) (2021-06-23)
+
+
+### Bug Fixes
+
+* **compiler:** improve sourceMap config option type definition ([5a5092e](https://github.com/marko-js/marko/tree/master/packages/compiler/commit/5a5092e89d77046b046db2d34a1d34715f93756e))
+
+
+
+
+
+## [5.10.6](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.5...v5.10.6) (2021-06-10)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
+## [5.10.5](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.4...v5.10.5) (2021-06-08)
+
+**Note:** Version bump only for package @marko/compiler
+
+
+
+
+
 ## [5.10.2](https://github.com/marko-js/marko/tree/master/packages/compiler/compare/v5.10.1...v5.10.2) (2021-05-04)
 
 
