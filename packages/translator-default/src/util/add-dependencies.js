@@ -6,7 +6,7 @@ import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 export default (entryFile, isHydrate) => {
   const { modules, resolveVirtualDependency, hydrateIncludeImports } =
     entryFile.markoOpts;
-  const fileDependencies = new Set();
+  const hydratedFiles = new Set();
   const program = entryFile.path;
   const shouldIncludeImport = toTestFn(hydrateIncludeImports);
 
@@ -52,6 +52,10 @@ export default (entryFile, isHydrate) => {
 
   function addHydrateDeps(file) {
     const meta = file.metadata.marko;
+    const resolved = resolveRelativePath(entryFile, file.opts.sourceFileName);
+    if (hydratedFiles.has(resolved)) return;
+
+    hydratedFiles.add(resolved);
 
     if (meta.component) {
       hasComponents = true;
@@ -61,9 +65,7 @@ export default (entryFile, isHydrate) => {
         path.basename(file.opts.sourceFileName)
       ) {
         // Stateful component.
-        resolveIfMissing(file, meta.component, resolved =>
-          program.pushContainer("body", importPath(resolved))
-        );
+        program.pushContainer("body", importPath(resolved));
         return;
       }
     }
@@ -78,17 +80,15 @@ export default (entryFile, isHydrate) => {
 
     for (const imported of meta.imports) {
       if (shouldIncludeImport(imported)) {
-        resolveIfMissing(file, imported, resolved =>
-          program.pushContainer("body", importPath(resolved))
-        );
+        program.pushContainer("body", importPath(resolvePath(file, imported)));
       }
     }
 
     for (const tag of meta.tags) {
       if (tag.endsWith(".marko")) {
-        resolveIfMissing(file, tag, resolved =>
-          addHydrateDeps(loadFileForImport(file, resolved))
-        );
+        if (!hydratedFiles.has(resolvePath(file, tag))) {
+          addHydrateDeps(loadFileForImport(file, tag));
+        }
       }
     }
 
@@ -153,9 +153,7 @@ export default (entryFile, isHydrate) => {
         continue;
       }
 
-      resolveIfMissing(file, dep, resolved =>
-        program.pushContainer("body", importPath(resolved))
-      );
+      program.pushContainer("body", importPath(resolvePath(file, dep)));
     }
   }
 
@@ -176,14 +174,6 @@ export default (entryFile, isHydrate) => {
     }
 
     return t.importDeclaration([], t.stringLiteral(path));
-  }
-
-  function resolveIfMissing(file, req, callback) {
-    const resolved = resolvePath(file, req);
-    if (!fileDependencies.has(resolved)) {
-      fileDependencies.add(resolved);
-      callback(resolved);
-    }
   }
 };
 
