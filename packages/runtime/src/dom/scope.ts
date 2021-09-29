@@ -11,10 +11,10 @@ const dirtyScopes: Set<Scope> = new Set();
 export type Scope = unknown[] &
   DOMMethods & {
     ___id: number;
-    ___parentScope: Scope | undefined;
-    ___parentOffset: number | undefined;
     ___startNode: Node | number | undefined;
     ___endNode: Node | number | undefined;
+    ___parentScope: Scope | undefined;
+    ___parentOffset: number | undefined;
     ___dirty: Record<number, true> | true | undefined;
     ___cleanup: Set<number | Scope> | undefined;
   };

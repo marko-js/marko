@@ -43,7 +43,7 @@ require.extensions[".marko"] = (mod, filename) => {
 describe("translator", () => {
   autotest("fixtures", {
     htmlCompiled: runCompileTest(htmlConfig),
-    htmlRendered: runHTMLRenderTest,
+    // htmlRendered: runHTMLRenderTest,
     domCompiled: runCompileTest(domConfig)
     // domRendered: runDOMRenderTest
   });

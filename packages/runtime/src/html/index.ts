@@ -16,8 +16,8 @@ export {
   fork,
   tryPlaceholder,
   tryCatch,
-  register,
-  hydrateMarker
+  markScopeOffset,
+  hydrateFunction
 } from "./writer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

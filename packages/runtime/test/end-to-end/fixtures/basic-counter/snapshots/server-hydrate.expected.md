@@ -1,110 +1,143 @@
 # Write
-  <body><div><!M$0>10</div><!#><button>increment</button></body><script>M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])</script>
-
-
-# Render "Flush"
-```html
-<html>
-  <head />
-  <body>
-    <div>
-      <!--M$0-->
-      10
-    </div>
-    <!--#-->
-    <button>
-      increment
-    </button>
-    <script>
-      M$c=(window.M$c||[]).concat([[0,"counter",{"start":10}]])
-    </script>
-  </body>
-</html>
-```
-
-# Mutations
-```
-inserted html0
-inserted html0/head0
-inserted html0/body1
-inserted html0/body1/div0
-inserted html0/body1/div0/#comment0
-inserted html0/body1/div0/#text1
-inserted html0/body1/#comment1
-inserted html0/body1/button2
-inserted html0/body1/button2/#text0
-inserted html0/body1/script3
-inserted html0/body1/script3/#text0
-```
+  <!M^ROOT><body><!M#3 ROOT 3><button><!M#1 ROOT 4>0</button></body><!M/ROOT><script>M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])</script>
 
 
 # Render "End"
 ```html
+<!--M^ROOT-->
 <html>
   <head />
   <body>
-    <div>
-      <!--M$0-->
-      10
-    </div>
-    <!--#-->
+    <!--M#3 ROOT 3-->
     <button>
-      increment
+      <!--M#1 ROOT 4-->
+      0
     </button>
-    <script />
+    <script>
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+    </script>
   </body>
+  <!--M/ROOT-->
 </html>
 ```
 
 # Mutations
 ```
-removed #text in html0/body1/script3
+inserted #document/#comment0
+inserted #document/html1
+inserted #document/html1/head0
+inserted #document/html1/body1
+inserted #document/html1/body1/#comment0
+inserted #document/html1/body1/button1
+inserted #document/html1/body1/button1/#comment0
+inserted #document/html1/body1/button1/#text1
+inserted #document/html1/#comment2
+inserted #document/html1/body1/script2
+inserted #document/html1/body1/script2/#text0
 ```
 
 
 # Render "Hydrate"
 ```html
+<!--M^ROOT-->
 <html>
   <head />
   <body>
-    <div>
-      10
-    </div>
+    <!--M#3 ROOT 3-->
     <button>
-      increment
+      <!--M#1 ROOT 4-->
+      0
     </button>
-    <script />
+    <script>
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+    </script>
   </body>
+  <!--M/ROOT-->
 </html>
 ```
 
 # Mutations
 ```
-removed #comment before html0/body1/div0/#text0
-removed #comment after html0/body1/div0
-html0/body1/div0/#text0: "10" => "10"
+
 ```
 
 
 # Render 
-(container) => container.querySelector("button").click()
+container.querySelector("button").click();
 
 ```html
+<!--M^ROOT-->
 <html>
   <head />
   <body>
-    <div>
-      11
-    </div>
+    <!--M#3 ROOT 3-->
     <button>
-      increment
+      <!--M#1 ROOT 4-->
+      1
     </button>
-    <script />
+    <script>
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+    </script>
   </body>
+  <!--M/ROOT-->
 </html>
 ```
 
 # Mutations
 ```
-html0/body1/div0/#text0: "10" => "11"
+#document/html1/body1/button1/#text1: "0" => "1"
+```
+
+
+# Render 
+container.querySelector("button").click();
+
+```html
+<!--M^ROOT-->
+<html>
+  <head />
+  <body>
+    <!--M#3 ROOT 3-->
+    <button>
+      <!--M#1 ROOT 4-->
+      2
+    </button>
+    <script>
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+    </script>
+  </body>
+  <!--M/ROOT-->
+</html>
+```
+
+# Mutations
+```
+#document/html1/body1/button1/#text1: "1" => "2"
+```
+
+
+# Render 
+container.querySelector("button").click();
+
+```html
+<!--M^ROOT-->
+<html>
+  <head />
+  <body>
+    <!--M#3 ROOT 3-->
+    <button>
+      <!--M#1 ROOT 4-->
+      3
+    </button>
+    <script>
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+    </script>
+  </body>
+  <!--M/ROOT-->
+</html>
+```
+
+# Mutations
+```
+#document/html1/body1/button1/#text1: "2" => "3"
 ```

@@ -7,7 +7,7 @@ import { Writable } from "stream";
 import assert from "assert";
 import createTrackMutations from "../dom/utils/track-mutations";
 import snapshot from "../utils/snapshot";
-import { isWait, resolveAfter } from "../utils/resolve";
+import { isWait } from "../utils/resolve";
 
 const FIXTURES_DIR = path.join(__dirname, "./fixtures");
 const runtimeId = "M";
@@ -24,21 +24,24 @@ describe("E2E", function () {
       const testDir = path.join(FIXTURES_DIR, entry);
       const snapshotDir = path.join(testDir, "snapshots");
       const serverFile = path.join(testDir, "server.ts");
+      const hydrateFile = path.join(testDir, "hydrate.ts");
       const browserFile = path.join(testDir, "browser.ts");
+      const testFile = path.join(testDir, "test.ts");
       describe(entry, () => {
         let initialHTML: string;
         let hydratedHTML: string;
-        it.skip("server + hydrate", async () => {
-          const serverTest = require(serverFile);
-          const hydrateIndex = serverTest.HYDRATE_ON_FLUSH;
-          const render = createRenderer(serverTest.default);
-          const input = serverTest.input;
+        it("server + hydrate", async () => {
+          const serverTemplate = require(serverFile);
+          const render = createRenderer(serverTemplate.default, true);
 
           let buffer = "";
           let flushCount = 0;
+
           const browser = createBrowser({ dir: __dirname });
-          const browserTest = browser.require(browserFile);
-          const dom = browser.require("../../src/dom/index");
+          const test = browser.require(testFile);
+          const hydrateIndex = test.hydrateFlush;
+          const input = test.default[0];
+
           const document = browser.window.document;
 
           document.open();
@@ -56,19 +59,19 @@ describe("E2E", function () {
             },
             flush() {
               if (hydrateIndex === flushCount++) {
-                dom.init();
+                browser.require(hydrateFile);
                 tracker.logUpdate("Hydrate");
               }
-              document.write(buffer);
-              tracker.logUpdate("Flush");
-              buffer = "";
+              // document.write(buffer);
+              // tracker.logUpdate("Flush");
+              // buffer = "";
             },
             end(data?: string) {
               document.write(buffer + (data || ""));
               document.close();
               tracker.logUpdate("End");
               if (hydrateIndex == null) {
-                dom.init();
+                browser.require(hydrateFile);
                 tracker.logUpdate("Hydrate");
               }
             },
@@ -81,31 +84,36 @@ describe("E2E", function () {
 
           hydratedHTML = getNormalizedHtml(document.body);
 
-          for (const update of browserTest.updates) {
+          const { run } = browser.require(
+            "../../src/dom/index"
+          ) as typeof import("../../src/dom/index");
+
+          for (const update of test.default) {
             if (isWait(update)) {
               await update();
-            } else {
-              dom.runInBatch(() => update(document.documentElement));
+            } else if (typeof update === "function") {
+              update(document.documentElement);
+              run();
               tracker.logUpdate(update);
             }
           }
 
           snapshot(snapshotDir, "server-hydrate.md", tracker.getLogs());
         });
-        it.skip("client only", async () => {
-          const serverTest = require(serverFile);
+        it("client only", async () => {
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
-          const browserTest = browser.require(browserFile);
+          const test = browser.require(testFile);
+          const input = test.default[0];
           const { run } = browser.require(
             "../../src/dom/index"
           ) as typeof import("../../src/dom/index");
-          const render = browserTest.default;
+          const render = browser.require(browserFile).default;
           const container = Object.assign(document.createElement("div"), {
             TEST_ROOT: true
           });
           const tracker = createTrackMutations(browser.window, container);
-          const input = serverTest.input;
+
           document.body.appendChild(container);
 
           const instance = await render(input);
@@ -114,18 +122,19 @@ describe("E2E", function () {
           initialHTML = getNormalizedHtml(container);
           tracker.logUpdate(input);
 
-          for (const update of browserTest.updates) {
-            if (browserTest.wait) {
-              await resolveAfter(null, browserTest.wait);
+          for (const update of test.default) {
+            if (isWait(update)) {
+              await update();
+            } else if (typeof update === "function") {
+              update(document.documentElement);
+              run();
+              tracker.logUpdate(update);
             }
-            update(container);
-            run();
-            tracker.logUpdate(update);
           }
 
           snapshot(snapshotDir, "client-only.md", tracker.getLogs());
         });
-        it.skip("hydrate = client", () => {
+        it("hydrate = client", () => {
           assert.strictEqual(hydratedHTML, initialHTML);
         });
       });

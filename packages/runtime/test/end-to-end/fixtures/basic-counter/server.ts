@@ -1,16 +1,30 @@
-import { write, register, hydrateMarker } from "../../../../src/html";
+import { Scope } from "../../../../src/common/types";
+import { write, markScopeOffset, hydrateFunction } from "../../../../src/html";
 
-export const input = { start: 10 };
-
-export default (_input: typeof input) => {
+export default (
+  _input: unknown,
+  currentScope: Scope,
+  currentOffset: number
+) => {
+  currentScope[0] = "ROOT";
   write("<body>");
-  counter(_input);
+  counter(_input, currentScope, currentOffset);
   write("</body>");
 };
 
-const counter = register("counter", (_input: typeof input) => {
-  const count = _input.start;
+const counter = (
+  _input: unknown,
+  currentScope: Scope,
+  currentOffset: number
+) => {
+  const count = 0;
+
+  currentScope[currentOffset + 2] = count;
   write(
-    `<div>${hydrateMarker()}${count}</div>${hydrateMarker()}<button>increment</button>`
+    `${markScopeOffset(currentOffset, currentScope)}<button>${markScopeOffset(
+      currentOffset + 1,
+      currentScope
+    )}${count}</button>`
   );
-});
+  hydrateFunction("counter", currentScope, currentOffset);
+};

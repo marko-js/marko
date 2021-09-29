@@ -1,32 +1,56 @@
-# Render {"start":10}
+# Render {}
 ```html
-<div>
-  10
-</div>
 <button>
-  increment
+  0
 </button>
 ```
 
 # Mutations
 ```
-inserted div0, button1
+inserted button0
 ```
 
 
 # Render 
-(container) => container.querySelector("button").click()
+container.querySelector("button").click();
 
 ```html
-<div>
-  11
-</div>
 <button>
-  increment
+  1
 </button>
 ```
 
 # Mutations
 ```
-div0/#text0: "10" => "11"
+button0/#text0: "0" => "1"
+```
+
+
+# Render 
+container.querySelector("button").click();
+
+```html
+<button>
+  2
+</button>
+```
+
+# Mutations
+```
+button0/#text0: "1" => "2"
+```
+
+
+# Render 
+container.querySelector("button").click();
+
+```html
+<button>
+  3
+</button>
+```
+
+# Mutations
+```
+button0/#text0: "2" => "3"
 ```

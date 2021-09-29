@@ -68,11 +68,9 @@ export function trimWalkString(walkString: string): string {
   return walkString.slice(0, end + 1);
 }
 
-export let walk = walkNormal;
-
 let currentWalkIndex = 0;
 
-function walkNormal(startNode: Node, walkCodes: string, scope: unknown[]) {
+export function walk(startNode: Node, walkCodes: string, scope: unknown[]) {
   walker.currentNode = startNode;
   currentWalkIndex = 0;
   walkInternal(walkCodes, scope);
@@ -158,40 +156,4 @@ function walkInternal(
       current.parentNode!.replaceChild(walker.currentNode = scope[currentScopeIndex++] = document.createTextNode(""), current);
     } */
   }
-}
-
-function walkHydrateFirst(): Node {
-  const current = walker.currentNode;
-  const node = walker.nextNode()!;
-  current.parentNode!.removeChild(current);
-  walk = walkHydrateSubsequent as any;
-  return node;
-}
-
-function walkHydrateSubsequent(): Node {
-  let current: Node;
-  while ((current = walker.nextNode()!)) {
-    if (current.nodeType === 8 && current.nodeValue === "#") {
-      const node = walker.nextNode()!;
-      current.parentNode!.removeChild(current);
-      return node;
-    }
-  }
-
-  if ("MARKO_DEBUG") {
-    throw new Error(
-      "Reached end of document while looking for next hydrated content."
-    );
-  }
-
-  return undefined as never;
-}
-
-export function beginHydrate(startNode: Node) {
-  walker.currentNode = startNode;
-  walk = walkHydrateFirst as any;
-}
-
-export function endHydrate() {
-  walk = walkNormal as any;
 }
