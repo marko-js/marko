@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.15.11](https://github.com/marko-js/marko/compare/v5.15.10...v5.15.11) (2021-09-29)
+
+
+### Bug Fixes
+
+* normalize file opts similar to babel ([86310e6](https://github.com/marko-js/marko/commit/86310e603985ed96cba523fb07e25a0852cff8e6))
+* remove empty const/let/var declarations caused by removal of MARKO_DEBUG expressions ([086533e](https://github.com/marko-js/marko/commit/086533ead4b4e5437ac30903deb4847ce9ff0dfd))
+
+
+
+
+
 ## [5.15.10](https://github.com/marko-js/marko/compare/v5.15.9...v5.15.10) (2021-09-07)
 
 
