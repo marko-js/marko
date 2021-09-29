@@ -62,7 +62,7 @@ export const analyze = {
       if (meta.hasComponentBrowser) {
         meta.component = componentBrowserFile;
       } else if (meta.hasComponent || meta.hasStatefulTagParams) {
-        meta.component = file.opts.sourceFileName;
+        meta.component = file.opts.filename;
       }
 
       meta.component =

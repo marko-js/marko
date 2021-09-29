@@ -52,7 +52,7 @@ export default (entryFile, isHydrate) => {
 
   function addHydrateDeps(file) {
     const meta = file.metadata.marko;
-    const resolved = resolveRelativePath(entryFile, file.opts.sourceFileName);
+    const resolved = resolveRelativePath(entryFile, file.opts.filename);
     if (hydratedFiles.has(resolved)) return;
 
     hydratedFiles.add(resolved);
@@ -60,17 +60,14 @@ export default (entryFile, isHydrate) => {
     if (meta.component) {
       hasComponents = true;
 
-      if (
-        path.basename(meta.component) ===
-        path.basename(file.opts.sourceFileName)
-      ) {
+      if (path.basename(meta.component) === path.basename(file.opts.filename)) {
         // Stateful component.
         program.pushContainer("body", importPath(resolved));
         return;
       }
     }
 
-    watchFiles.add(file.opts.sourceFileName);
+    watchFiles.add(file.opts.filename);
 
     for (const watchFile of meta.watchFiles) {
       watchFiles.add(watchFile);
@@ -117,7 +114,7 @@ export default (entryFile, isHydrate) => {
   }
 
   function addBrowserDeps(file) {
-    const { sourceFileName, sourceMaps } = file.opts;
+    const { filename, sourceMaps } = file.opts;
     let s;
 
     for (let dep of file.metadata.marko.deps) {
@@ -127,9 +124,9 @@ export default (entryFile, isHydrate) => {
         let map;
 
         if (sourceMaps && dep.startPos !== undefined) {
-          s = s || new MagicString(file.code, { source: sourceFileName });
+          s = s || new MagicString(file.code, { source: filename });
           map = s.snip(dep.startPos, dep.endPos).generateMap({
-            source: sourceFileName,
+            source: filename,
             includeContent: true
           });
 
@@ -144,7 +141,7 @@ export default (entryFile, isHydrate) => {
           }
         }
 
-        dep = resolveVirtualDependency(sourceFileName, {
+        dep = resolveVirtualDependency(filename, {
           map,
           code,
           virtualPath
@@ -162,7 +159,7 @@ export default (entryFile, isHydrate) => {
       ? resolveRelativePath(file, req)
       : resolveRelativePath(
           entryFile,
-          path.join(file.opts.sourceFileName, "..", req)
+          path.join(file.opts.filename, "..", req)
         );
   }
 

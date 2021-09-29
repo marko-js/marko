@@ -22,10 +22,8 @@ export function resolveRelativePath(file, request) {
     return remapProductionMarkoBuild(file, request);
   }
 
-  const { sourceFileName } = file.opts;
-  let relativePath = toPosix(
-    path.relative(path.dirname(sourceFileName), request)
-  );
+  const { filename } = file.opts;
+  let relativePath = toPosix(path.relative(path.dirname(filename), request));
   if (relativePath[0] !== ".") relativePath = `./${relativePath}`;
   return remapProductionMarkoBuild(
     file,

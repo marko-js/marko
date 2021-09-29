@@ -347,5 +347,5 @@ export function parseMarko(file) {
     },
     ignoreNonstandardStringPlaceholders: true,
     ...htmlParseOptions
-  }).parse(code, file.opts.sourceFileName);
+  }).parse(code, file.opts.filename);
 }

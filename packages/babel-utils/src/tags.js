@@ -1,4 +1,4 @@
-import { relative, resolve } from "path";
+import { relative, resolve, basename } from "path";
 import { createHash } from "crypto";
 import { types as t } from "@marko/compiler";
 import * as compilerModules from "@marko/compiler/modules";
@@ -14,7 +14,8 @@ const TRANSPARENT_TAGS = new Set([
   "_no-update"
 ]);
 
-let ROOT = process.cwd();
+const CWD = process.cwd();
+let ROOT = CWD;
 try {
   ROOT = getRootDir(ROOT) || ROOT;
   // eslint-disable-next-line no-empty
@@ -170,12 +171,12 @@ export function loadFileForTag(tag) {
   const def = getTagDef(tag);
   const { file } = tag.hub;
   const fs = file.markoOpts.fileSystem;
-  const sourceFileName = def && def.template;
+  const filename = def && def.template;
 
-  if (sourceFileName) {
+  if (filename) {
     return file.___getMarkoFile(
-      fs.readFileSync(sourceFileName).toString("utf-8"),
-      { ...file.opts, sourceFileName },
+      fs.readFileSync(filename).toString("utf-8"),
+      createNewFileOpts(file.opts, filename),
       file.markoOpts
     );
   }
@@ -186,13 +187,13 @@ export function loadFileForImport(file, request) {
   const relativeRequest = resolveTagImport(file.path, request);
 
   if (relativeRequest) {
-    const sourceFileName =
+    const filename =
       relativeRequest[0] === "."
-        ? resolve(file.opts.sourceFileName, "..", relativeRequest)
+        ? resolve(file.opts.filename, "..", relativeRequest)
         : compilerModules.require.resolve(relativeRequest);
     return file.___getMarkoFile(
-      fs.readFileSync(sourceFileName).toString("utf-8"),
-      { ...file.opts, sourceFileName },
+      fs.readFileSync(filename).toString("utf-8"),
+      createNewFileOpts(file.opts, filename),
       file.markoOpts
     );
   }
@@ -230,4 +231,24 @@ export function resolveTagImport(path, request) {
   if (request.endsWith(".marko")) {
     return resolveRelativePath(file, request);
   }
+}
+
+function createNewFileOpts(opts, filename) {
+  const sourceFileName = basename(filename);
+  const filenameRelative = relative(CWD, filename);
+  return {
+    ...opts,
+    filename,
+    sourceFileName,
+    filenameRelative,
+    parserOpts: {
+      ...opts.parserOpts,
+      sourceFileName
+    },
+    generatorOpts: {
+      ...opts.generatorOpts,
+      filename,
+      sourceFileName
+    }
+  };
 }

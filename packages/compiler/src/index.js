@@ -1,4 +1,5 @@
 export * as types from "./babel-types";
+import path from "path";
 import * as babel from "@babel/core";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
@@ -56,9 +57,12 @@ function loadBabelConfig(filename, config) {
   const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
   const requiredPlugins = [[corePlugin, markoConfig]];
   const baseBabelConfig = {
+    filenameRelative: filename
+      ? path.relative(process.cwd(), filename)
+      : undefined,
+    sourceFileName: filename ? path.basename(filename) : undefined,
     ...(config && config.babelConfig),
     filename,
-    sourceFileName: filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,
     code: markoConfig.code,
