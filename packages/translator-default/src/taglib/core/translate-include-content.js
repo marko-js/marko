@@ -1,21 +1,21 @@
-import nodePath from "path";
+import path from "path";
 import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoAttributes } from "@marko/babel-utils";
 
-export function enter(path) {
+export function enter(tag) {
   const {
     hub: { file }
-  } = path;
-  assertNoParams(path);
-  assertNoAttributes(path);
+  } = tag;
+  assertNoParams(tag);
+  assertNoAttributes(tag);
 
   const fs = file.markoOpts.fileSystem;
-  const tagName = path.get("name").node.value;
+  const tagName = tag.get("name").node.value;
   const tagExample = `<${tagName}("./path-to-file.ext")>`;
-  const args = path.get("arguments");
+  const args = tag.get("arguments");
 
   if (args.length !== 1) {
-    throw path.buildCodeFrameError(
+    throw tag.buildCodeFrameError(
       `A single path argument is required for ${tagExample}.`
     );
   }
@@ -28,8 +28,8 @@ export function enter(path) {
     );
   }
 
-  const dir = nodePath.dirname(file.opts.sourceFileName);
-  const fullPath = nodePath.resolve(dir, content.node.value);
+  const dir = path.dirname(file.opts.filename);
+  const fullPath = path.resolve(dir, content.node.value);
 
   try {
     const stat = fs.statSync(fullPath);
@@ -41,7 +41,7 @@ export function enter(path) {
     throw content.buildCodeFrameError(`Unable to find file for <${tagName}>.`);
   }
 
-  path.replaceWith(
+  tag.replaceWith(
     t.markoPlaceholder(
       t.stringLiteral(fs.readFileSync(fullPath).toString("utf-8")),
       tagName === "include-text"

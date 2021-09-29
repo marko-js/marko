@@ -30,7 +30,7 @@ export class MarkoFile extends File {
         { highlightCode: true }
       );
 
-    const finalMsg = `${path.relative(CWD, this.opts.sourceFileName)}${
+    const finalMsg = `${path.relative(CWD, this.opts.filename)}${
       loc ? `(${loc.start.line},${loc.start.column + 1})` : ""
     }: ${msg}\n${frame || ""}`;
 

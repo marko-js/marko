@@ -10,12 +10,12 @@ export default function getComponentFiles({ hub: { file } }) {
     return meta[COMPONENT_FILES_KEY];
   }
 
-  const { sourceFileName } = file.opts;
+  const { filename } = file.opts;
   const fs = file.markoOpts.fileSystem;
-  const ext = path.extname(sourceFileName);
-  const dirname = path.dirname(sourceFileName);
+  const ext = path.extname(filename);
+  const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
-  const nameNoExt = path.basename(sourceFileName, ext);
+  const nameNoExt = path.basename(filename, ext);
   const isEntry = "index" === nameNoExt;
   const fileMatch = `(${escapeRegExp(nameNoExt)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
