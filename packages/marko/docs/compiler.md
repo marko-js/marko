@@ -159,7 +159,7 @@ Type:
 
 ```ts
 (
-  sourceFileName: string,
+  filename: string,
   dep: {
     code: string;
     virtualPath: string;
@@ -180,15 +180,15 @@ Different build tools have different mechanisms for handling virtual files. You 
 // lookup is shared between resolveVirtualDependency and markoLoader
 const virtualSources = new Map();
 
-function resolveVirtualDependency(sourceFileName, { virtualPath, code, map }) {
-  const virtualSourceFileName = `${sourceFileName}?virtual=${virtualPath}`;
+function resolveVirtualDependency(filename, { virtualPath, code, map }) {
+  const virtualFilename = `${filename}?virtual=${virtualPath}`;
 
   // Add the virtual source to the lookup
   // to be later accessed by the loader
-  virtualSources.set(virtualSourceFileName, { code, map });
+  virtualSources.set(virtualFilename, { code, map });
 
   // Generate the webpack path, from right to left...
-  // 1. Pass the virtualSourceFileName so webpack can find the real file
+  // 1. Pass the virtualFilename so webpack can find the real file
   //    located at sourceFilename, but the virtualPath is also present
   //    (eg. "./index.marko?virtual=./index.marko.css")
   // 2. Use an inline loader to run this file through @marko/webpack/loader
@@ -196,7 +196,7 @@ function resolveVirtualDependency(sourceFileName, { virtualPath, code, map }) {
   // 3. Use an inline matchResource to redefine this as the virtualPath
   //    which allows the appropriate loaders to match the virtual dependency
   //    https://webpack.js.org/api/loaders/#inline-matchresource
-  return `${virtualPath}!=!@marko/webpack/loader!${virtualSourceFileName}`;
+  return `${virtualPath}!=!@marko/webpack/loader!${virtualFilename}`;
 }
 
 export default function markoLoader(source) {
@@ -264,7 +264,6 @@ Default: babel defaults, plus
 ```js
 {
   filename,
-  sourceFileName: filename,
   sourceType: "module",
   sourceMaps: config.sourceMaps
 }

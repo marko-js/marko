@@ -117,17 +117,11 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     markoOpts.cache.set(translator, (compileCache = new Map()));
   }
 
-  if (!fileOpts.parserOpts.sourceFileName) {
-    // Babel had a breaking change that updated this property name.
-    // https://github.com/babel/babel/pull/13532#issuecomment-912449296
-    fileOpts.parserOpts.sourceFileName = fileOpts.parserOpts.sourceFilename;
-  }
-
-  const { sourceFileName } = fileOpts;
+  const { filename } = fileOpts;
   const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
-  const id = getTemplateId(markoOpts.optimize, sourceFileName);
+  const id = getTemplateId(markoOpts.optimize, filename);
   const contentHash = canCache && createHash("MD5").update(code).digest("hex");
   const cacheKey = canCache && createHash("MD5").update(id).digest("hex");
 
@@ -158,7 +152,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     return cached.file;
   }
 
-  const taglibLookup = buildLookup(path.dirname(sourceFileName), translator);
+  const taglibLookup = buildLookup(path.dirname(filename), translator);
 
   const file = new MarkoFile(fileOpts, {
     code,

@@ -1,10 +1,10 @@
-import { basename } from "path";
+import path from "path";
 import getComponentFiles from "../../util/get-component-files";
 
 const STYLE_REG = /^style(?:\.([^\s]+))?\s*\{/;
 
-export default function (path) {
-  const { hub, node } = path;
+export default function (tag) {
+  const { hub, node } = tag;
   const { deps } = hub.file.metadata.marko;
   const { rawValue } = node;
   const matchedBlock = STYLE_REG.exec(rawValue);
@@ -12,8 +12,8 @@ export default function (path) {
     return;
   }
 
-  if (!path.parentPath.isProgram()) {
-    throw path
+  if (!tag.parentPath.isProgram()) {
+    throw tag
       .get("name")
       .buildCodeFrameError(
         "Style blocks must be at the root of your Marko template."
@@ -21,15 +21,15 @@ export default function (path) {
   }
 
   if (deps.some(dep => dep.style)) {
-    throw path
+    throw tag
       .get("name")
       .buildCodeFrameError(
         "A Marko file can only contain a single inline style block."
       );
   }
 
-  if (getComponentFiles(path).styleFile) {
-    throw path
+  if (getComponentFiles(tag).styleFile) {
+    throw tag
       .get("name")
       .buildCodeFrameError(
         'A Marko file can either have an inline style block, or an external "style.ext" file, but not both.'
@@ -40,7 +40,7 @@ export default function (path) {
   const codeSartOffset = startContent.length;
   const codeEndOffset = rawValue.lastIndexOf("}");
   const code = rawValue.slice(codeSartOffset, codeEndOffset);
-  const base = basename(hub.file.opts.sourceFileName);
+  const base = path.basename(hub.file.opts.filename);
   const start = node.extra && node.extra.nameStart;
 
   deps.push({
@@ -53,5 +53,5 @@ export default function (path) {
     virtualPath: `./${base}.${type}`
   });
 
-  path.remove();
+  tag.remove();
 }

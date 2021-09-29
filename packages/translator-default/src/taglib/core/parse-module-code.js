@@ -1,15 +1,15 @@
-import nodePath from "path";
+import path from "path";
 import resolveFrom from "resolve-from";
 import markoModules from "@marko/compiler/modules";
 
 const startOffset = "module-code".length;
 
-export default function (path) {
+export default function (tag) {
   const {
     hub: { file },
     node: { rawValue }
-  } = path;
-  const dirname = nodePath.dirname(file.opts.sourceFileName);
+  } = tag;
+  const dirname = path.dirname(file.opts.filename);
   const relativeRequire = entry =>
     markoModules.require(resolveFrom(dirname, entry));
   const fn = eval(rawValue.slice(startOffset));
