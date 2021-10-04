@@ -564,6 +564,17 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             isCompatible = true;
             // Simply update nodeValue on the original node to
             // change the text value
+
+            if (
+              isHydrate === true &&
+              toNextSibling &&
+              curFromNodeType === TEXT_NODE &&
+              toNextSibling.___nodeType === TEXT_NODE
+            ) {
+              fromNextSibling = curFromNodeChild.splitText(
+                curToNodeChild.___nodeValue.length
+              );
+            }
             if (curFromNodeChild.nodeValue !== curToNodeChild.___nodeValue) {
               curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
             }
