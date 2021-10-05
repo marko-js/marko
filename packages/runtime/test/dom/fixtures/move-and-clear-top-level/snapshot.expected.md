@@ -34,7 +34,4 @@ inserted #text0
 inserted #text1
 inserted #text2
 removed #comment before #text0
-#text0: " " => "a"
-#text1: " " => "b"
-#text2: " " => "c"
 ```

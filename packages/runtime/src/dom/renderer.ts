@@ -1,5 +1,5 @@
 import { DOMMethods, staticNodeMethods } from "./dom";
-import { createScope, Scope, cleanScopes, runWithScope } from "./scope";
+import { createScope, Scope, runWithScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 
 const enum NodeType {
@@ -82,11 +82,9 @@ export function createRenderFn<I extends Input>(
     const scope = createScope(size!, domMethods!);
     const dom = initRenderer(renderer, scope) as RenderResult;
     dynamicInput && runWithScope(dynamicInput, 0, scope, [input]);
-    cleanScopes();
 
     dom.update = (newInput: I) => {
       dynamicInput && runWithScope(dynamicInput, 0, scope, [newInput]);
-      cleanScopes();
     };
 
     dom.destroy = () => {

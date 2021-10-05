@@ -35,5 +35,4 @@ removed #text after div0/#text0
 ```
 removed #text before div0/#text1
 inserted div0/#text0
-div0/#text0: " " => "d"
 ```

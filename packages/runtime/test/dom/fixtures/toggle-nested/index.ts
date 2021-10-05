@@ -7,10 +7,8 @@ import {
   getConditionalFirstNode,
   getConditionalLastNode,
   write,
-  isDirty,
   read,
   readInOwner,
-  isDirtyInOwner,
   runInBranch
 } from "../../../../src/dom/index";
 import { next, over, get, open, close, skip } from "../../utils/walks";
@@ -71,31 +69,40 @@ type scope = {
 export const template = `<div><!></div>`;
 export const walks = open(7) + next(1) + get + over(1) + close;
 
-export const execInputShowValue1Value2 = () => {
-  if (isDirty(Index.INPUT_SHOW)) {
+export const execInputShow = () => {
+  if (
     setConditionalRenderer(
       Index.CONDITIONAL,
       read(Index.INPUT_SHOW) ? branch0 : undefined
-    );
+    )
+  ) {
+    runInBranch(Index.CONDITIONAL, branch0, execInputValue1Branch0);
+    runInBranch(Index.CONDITIONAL, branch0, execInputValue2Branch0);
   }
-  runInBranch(Index.CONDITIONAL, branch0, execInputShowValue1Value2Branch0);
 };
 
-const execInputShowValue1Value2Branch0 = () => {
-  if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE1)) {
-    setConditionalRenderer(
-      Branch0Index.CONDITIONAL1,
-      readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
-    );
-    runInBranch(Branch0Index.CONDITIONAL1, branch0_0, execInputValue1Branch0_0);
-  }
-  if (isDirtyInOwner(Index.INPUT_SHOW) || isDirtyInOwner(Index.INPUT_VALUE2)) {
-    setConditionalRenderer(
-      Branch0Index.CONDITIONAL2,
-      readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
-    );
-    runInBranch(Branch0Index.CONDITIONAL2, branch0_1, execInputValue2Branch0_1);
-  }
+export const execInputValue1 = () => {
+  runInBranch(Index.CONDITIONAL, branch0, execInputValue1Branch0);
+};
+
+export const execInputValue1Branch0 = () => {
+  setConditionalRenderer(
+    Branch0Index.CONDITIONAL1,
+    readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
+  );
+  runInBranch(Branch0Index.CONDITIONAL1, branch0_0, execInputValue1Branch0_0);
+};
+
+export const execInputValue2 = () => {
+  runInBranch(Index.CONDITIONAL, branch0, execInputValue2Branch0);
+};
+
+export const execInputValue2Branch0 = () => {
+  setConditionalRenderer(
+    Branch0Index.CONDITIONAL2,
+    readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
+  );
+  runInBranch(Branch0Index.CONDITIONAL2, branch0_1, execInputValue2Branch0_1);
 };
 
 const execInputValue1Branch0_0 = () => {
@@ -107,10 +114,9 @@ const execInputValue2Branch0_1 = () => {
 };
 
 export const execDynamicInput = (input: Input) => {
-  write(Index.INPUT_SHOW, input.show);
-  write(Index.INPUT_VALUE1, input.value1);
-  write(Index.INPUT_VALUE2, input.value2);
-  execInputShowValue1Value2();
+  write(Index.INPUT_SHOW, input.show) && execInputShow();
+  write(Index.INPUT_VALUE1, input.value1) && execInputValue1();
+  write(Index.INPUT_VALUE2, input.value2) && execInputValue2();
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);

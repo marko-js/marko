@@ -35,8 +35,4 @@ inserted div0/#text0
 inserted div0/#text1
 inserted div0/#text2
 inserted div0/#text3
-div0/#text0: " " => "0"
-div0/#text1: " " => "1"
-div0/#text2: " " => "2"
-div0/#text3: " " => "3"
 ```

@@ -10,7 +10,6 @@ import {
   write,
   read,
   bind,
-  isDirty,
   readInOwner,
   runInBranch
 } from "../../../../src/dom/index";
@@ -49,7 +48,8 @@ export const walks = open(7) + get + over(1) + get + over(1) + close;
 export const render = () => {
   write(Index.SHOW, true);
   write(Index.MESSAGE, "hi");
-  execShowMessage();
+  execShow();
+  execMessage();
   hydrate();
 };
 
@@ -58,21 +58,23 @@ export const hydrate = register("", () => {
 });
 
 const clickHandler = () => {
-  write(Index.MESSAGE, "bye");
-  write(Index.SHOW, !read(Index.SHOW));
-  queue(execShowMessage);
+  if (write(Index.MESSAGE, "bye")) {
+    queue(execMessage, 6);
+  }
+  if (write(Index.SHOW, !read(Index.SHOW))) {
+    queue(execShow, 5);
+  }
 };
 
-const execShowMessage = () => {
-  if (isDirty(Index.SHOW)) {
-    setConditionalRenderer(
-      Index.CONDITIONAL,
-      read(Index.SHOW) ? branch0 : undefined
-    );
-  }
-  if (isDirty(Index.MESSAGE)) {
-    runInBranch(Index.CONDITIONAL, branch0, execMessageBranch0);
-  }
+const execShow = () => {
+  setConditionalRenderer(
+    Index.CONDITIONAL,
+    read(Index.SHOW) ? branch0 : undefined
+  );
+};
+
+const execMessage = () => {
+  runInBranch(Index.CONDITIONAL, branch0, execMessageBranch0);
 };
 
 const execMessageBranch0 = () => {

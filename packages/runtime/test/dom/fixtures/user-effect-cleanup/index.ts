@@ -1,13 +1,10 @@
 import {
   data,
-  register,
   createRenderFn,
   userEffect,
-  isDirty,
   queue,
   read,
   write,
-  writeQueued,
   bind
 } from "../../../../src/dom/index";
 import { wait } from "../../../utils/resolve";
@@ -47,24 +44,22 @@ export const render = () => {
 };
 
 function execAB() {
-  if (isDirty(Index.A) || isDirty(Index.B)) {
-    data(Index.DIV_TEXT, "" + read(Index.A) + read(Index.B));
-  }
+  data(Index.DIV_TEXT, "" + read(Index.A) + read(Index.B));
 }
 
 export const hydrateInputValue = () => {
-  if (isDirty(Index.INPUT_VALUE)) {
-    userEffect(Index.EFFECT_CLEANUP, effectFn);
-  }
+  userEffect(Index.EFFECT_CLEANUP, effectFn);
 };
 
 const effectFn = () => {
   const previousValue = read<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE) + 1;
-  writeQueued(Index.A, previousValue);
-  queue(execAB);
-  return bind(() => {
-    writeQueued(Index.B, previousValue);
+  if (write(Index.A, previousValue)) {
     queue(execAB);
+  }
+  return bind(() => {
+    if (write(Index.B, previousValue)) {
+      queue(execAB);
+    }
   });
 };
 

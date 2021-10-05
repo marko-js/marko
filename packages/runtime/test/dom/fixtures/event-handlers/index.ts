@@ -4,10 +4,8 @@ import {
   createRenderFn,
   on,
   read,
-  writeQueued,
   ensureDelegated,
   queue,
-  isDirty,
   write,
   bind
 } from "../../../../src/dom/index";
@@ -32,7 +30,7 @@ type scope = {
 };
 
 // <let/clickCount = 0/>
-// <button onclick() { clickCount++; }>${clickCount}</button>
+// <button onclick=(clickCount < 1 ? (() => clickCount++) : false)>${clickCount}</button>
 
 export const template = `<button> </button>`;
 export const walks = open(3) + get + next(1) + get + next(1) + close;
@@ -47,21 +45,17 @@ export const hydrate = register("", () => {
 });
 
 const renderClickCount = () => {
-  if (isDirty(Index.CLICK_COUNT)) {
-    data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
-  }
+  data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
 };
 
 const hydrateClickCount = () => {
-  if (isDirty(Index.CLICK_COUNT)) {
-    on(
-      Index.BUTTON,
-      "click",
-      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) <= 1
-        ? bind(clickHandler)
-        : false
-    );
-  }
+  on(
+    Index.BUTTON,
+    "click",
+    read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) <= 1
+      ? bind(clickHandler)
+      : false
+  );
 };
 
 const execClickCount = () => {
@@ -70,11 +64,14 @@ const execClickCount = () => {
 };
 
 const clickHandler = () => {
-  writeQueued(
-    Index.CLICK_COUNT,
-    read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
-  );
-  queue(execClickCount);
+  if (
+    write(
+      Index.CLICK_COUNT,
+      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
+    )
+  ) {
+    queue(execClickCount);
+  }
 };
 
 export default createRenderFn(template, walks, render, 0);

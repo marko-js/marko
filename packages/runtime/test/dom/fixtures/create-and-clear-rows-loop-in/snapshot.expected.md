@@ -34,7 +34,4 @@ removed #text, #text, #text in div0
 inserted div0/#text0
 inserted div0/#text1
 inserted div0/#text2
-div0/#text0: " " => "a"
-div0/#text1: " " => "b"
-div0/#text2: " " => "c"
 ```

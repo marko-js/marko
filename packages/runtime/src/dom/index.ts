@@ -8,8 +8,7 @@ export {
   setLoopFromTo,
   setLoopIn,
   getLoopFirstNode,
-  getLoopLastNode,
-  runForEach
+  getLoopLastNode
 } from "./control-flow";
 
 export {
@@ -39,10 +38,8 @@ export {
   Scope,
   read,
   write,
-  isDirty,
   readInOwner,
   writeInOwner,
-  isDirtyInOwner,
   bind,
   writeQueued,
   runWithScope,

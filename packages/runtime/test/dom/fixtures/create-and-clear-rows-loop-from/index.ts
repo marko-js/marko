@@ -3,10 +3,8 @@ import {
   setLoopFromTo,
   createRenderer,
   createRenderFn,
-  isDirty,
   write,
-  read,
-  runForEach
+  read
 } from "../../../../src/dom/index";
 import { over, get, next, open, close, skip } from "../../utils/walks";
 
@@ -61,9 +59,9 @@ export const execInputFromToStep = () => {
     read<scope, Index.INPUT_FROM>(Index.INPUT_FROM),
     read<scope, Index.INPUT_TO>(Index.INPUT_TO),
     read<scope, Index.INPUT_STEP>(Index.INPUT_STEP),
-    iter0
+    iter0,
+    iter0_execItem
   );
-  runForEach(Index.LOOP, iter0_execItem);
 };
 
 export const execDynamicInput = (input: Input) => {
@@ -92,7 +90,5 @@ const iter0 = createRenderer(
 );
 
 const iter0_execItem = () => {
-  if (isDirty(Iter0Index.ITEM)) {
-    data(Iter0Index.TEXT, read(Iter0Index.ITEM));
-  }
+  data(Iter0Index.TEXT, read(Iter0Index.ITEM));
 };

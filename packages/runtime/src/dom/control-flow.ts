@@ -59,8 +59,7 @@ export function setConditionalRenderer(
   conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
-  if (read(conditionalIndex + ConditionalIndex.RENDERER) !== newRenderer) {
-    write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer);
+  if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
     let newScope: Scope;
     let prevScope = read<Conditional, ConditionalIndex.SCOPE>(
       conditionalIndex + ConditionalIndex.SCOPE
@@ -100,6 +99,8 @@ export function setConditionalRenderer(
       prevScope.___getFirstNode()
     );
     prevScope.___remove();
+
+    return newRenderer;
   }
 }
 
@@ -107,8 +108,7 @@ export function setConditionalRendererOnlyChild(
   conditionalIndex: number,
   newRenderer: Renderer | undefined
 ) {
-  if (read(conditionalIndex + ConditionalIndex.RENDERER) !== newRenderer) {
-    write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer);
+  if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
     const referenceNode = read<Conditional, ConditionalIndex.REFERENCE_NODE>(
       conditionalIndex + ConditionalIndex.REFERENCE_NODE
     ) as Element;
@@ -129,6 +129,8 @@ export function setConditionalRendererOnlyChild(
       initRenderer(newRenderer, newScope);
       newScope.___insertBefore(referenceNode, null);
       setContext(null);
+
+      return newRenderer;
     }
   }
 }
@@ -182,7 +184,9 @@ export function setLoopOf<T>(
   loopIndex: number,
   newValues: T[],
   renderer: Renderer,
-  keyFn?: (item: T) => unknown
+  keyFn?: (item: T) => unknown,
+  itemFn?: () => void,
+  indexFn?: () => void
 ) {
   let newMap: Map<unknown, Scope>;
   let newArray: Scope[];
@@ -215,11 +219,21 @@ export function setLoopOf<T>(
         childScope[0] = item;
         childScope[1] = index;
         initRenderer(renderer, childScope);
+        if (itemFn) {
+          runWithScope(itemFn, 0, childScope);
+        }
+        if (indexFn) {
+          runWithScope(indexFn, 0, childScope);
+        }
         inserts++;
       } else {
-        if (childScope[1] !== index) moves++;
-        write(0, item, childScope, 0);
-        write(1, index, childScope, 0);
+        if (childScope[1] !== (childScope[1] = index)) moves++;
+        if (itemFn && write(0, item, childScope, 0)) {
+          runWithScope(itemFn, 0, childScope);
+        }
+        if (indexFn && write(1, index, childScope, 0)) {
+          runWithScope(indexFn, 0, childScope);
+        }
       }
       newMap.set(key, childScope);
       newArray.push(childScope);
@@ -268,7 +282,9 @@ export function setLoopFromTo(
   from: number,
   to: number,
   step: number,
-  renderer: Renderer
+  renderer: Renderer,
+  itemFn?: () => void,
+  indexFn?: () => void
 ) {
   const range: number[] = [];
 
@@ -276,7 +292,7 @@ export function setLoopFromTo(
     range.push(i);
   }
 
-  setLoopOf(loopIndex, range, renderer, keyFromTo);
+  setLoopOf(loopIndex, range, renderer, keyFromTo, itemFn, indexFn);
 }
 
 function keyFromTo(item: number) {
@@ -286,9 +302,10 @@ function keyFromTo(item: number) {
 export function setLoopIn(
   loopIndex: number,
   object: Record<string, unknown>,
-  renderer: Renderer
+  renderer: Renderer,
+  itemFn?: () => void
 ) {
-  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn);
+  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn, itemFn);
 }
 
 function keyIn(item: [string, unknown]) {

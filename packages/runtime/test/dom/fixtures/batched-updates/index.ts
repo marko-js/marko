@@ -7,10 +7,8 @@ import {
   queue,
   bind,
   read,
-  write,
-  isDirty
+  write
 } from "../../../../src/dom/index";
-import { currentScope } from "../../../../src/dom/scope";
 import { get, next, open, close } from "../../utils/walks";
 
 const click = (container: Element) => {
@@ -51,18 +49,19 @@ export const hydrate = register("", () => {
 });
 
 const clickHandler = () => {
-  write(Index.A, read<scope, Index.A>(Index.A) + 1);
-  write(Index.B, read<scope, Index.B>(Index.B) + 1);
-  queue(execAB);
+  if (
+    write(Index.A, read<scope, Index.A>(Index.A) + 1) |
+    write(Index.B, read<scope, Index.B>(Index.B) + 1)
+  ) {
+    queue(execAB);
+  }
 };
 
 const execAB = () => {
-  if (isDirty(Index.A) || isDirty(Index.B)) {
-    data(
-      Index.TEXT,
-      read<scope, Index.A>(Index.A) + read<scope, Index.B>(Index.B)
-    );
-  }
+  data(
+    Index.TEXT,
+    read<scope, Index.A>(Index.A) + read<scope, Index.B>(Index.B)
+  );
 };
 
 export default createRenderFn(template, walks, render, 0);

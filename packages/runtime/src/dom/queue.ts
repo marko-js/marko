@@ -1,5 +1,4 @@
 import {
-  cleanScopes,
   Scope,
   runWithScope,
   currentScope,
@@ -98,7 +97,6 @@ export function run() {
         runningFns[i + 1] as Scope
       );
     }
-    cleanScopes();
   }
 }
 

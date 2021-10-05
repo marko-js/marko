@@ -3,10 +3,8 @@ import {
   createRenderFn,
   on,
   read,
-  writeQueued,
   ensureDelegated,
   queue,
-  isDirty,
   write,
   bind
 } from "../../../../src/dom/index";
@@ -40,17 +38,18 @@ export const hydrate = () => {
 };
 
 const renderClickCount = () => {
-  if (isDirty(Index.CLICK_COUNT)) {
-    data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
-  }
+  data(Index.BUTTON_TEXT, read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT));
 };
 
 const clickHandler = () => {
-  writeQueued(
-    Index.CLICK_COUNT,
-    read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
-  );
-  queue(renderClickCount);
+  if (
+    write(
+      Index.CLICK_COUNT,
+      read<scope, Index.CLICK_COUNT>(Index.CLICK_COUNT) + 1
+    )
+  ) {
+    queue(renderClickCount);
+  }
 };
 
 export default createRenderFn(template, walks, render, 0);

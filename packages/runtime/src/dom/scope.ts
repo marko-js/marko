@@ -15,7 +15,6 @@ export type Scope = unknown[] &
     ___endNode: Node | number | undefined;
     ___parentScope: Scope | undefined;
     ___parentOffset: number | undefined;
-    ___dirty: Record<number, true> | true | undefined;
     ___cleanup: Set<number | Scope> | undefined;
   };
 
@@ -23,7 +22,6 @@ export function createScope(size: number, methods: DOMMethods): Scope {
   const scope = new Array(size) as Scope;
   scope.___id = scopeId++;
   scope.___startNode = scope.___endNode = undefined;
-  scope.___dirty = true;
   scope.___parentScope = currentScope;
   scope.___parentOffset = currentOffset;
   dirtyScopes.add(Object.assign(scope, methods));
@@ -43,15 +41,6 @@ export function read<
   return scope[offset + localIndex] as LocalScope[typeof localIndex];
 }
 
-export function isDirty(
-  localIndex: number,
-  scope = currentScope,
-  offset = currentOffset
-) {
-  const dirty = scope.___dirty;
-  return dirty === true || (dirty && dirty[offset + localIndex]);
-}
-
 export function write(
   localIndex: number,
   value: unknown,
@@ -60,22 +49,9 @@ export function write(
 ) {
   if (scope[offset + localIndex] !== value) {
     scope[offset + localIndex] = value;
-    setDirty(localIndex, scope, offset);
+    return 1;
   }
-}
-
-export function setDirty(
-  localIndex: number,
-  scope = currentScope,
-  offset = currentOffset
-) {
-  if (!scope.___dirty) {
-    scope.___dirty = {};
-    dirtyScopes.add(scope);
-  }
-  if (scope.___dirty !== true) {
-    scope.___dirty[offset + localIndex] = true;
-  }
+  return 0;
 }
 
 export function readInOwner<
@@ -91,14 +67,6 @@ export function writeInOwner(
   ownerLevel?: number
 ) {
   write(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function isDirtyInOwner(localIndex: number, ownerLevel?: number) {
-  return isDirty(localIndex, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function setDirtyInOwner(localIndex: number, ownerLevel?: number) {
-  setDirty(localIndex, getOwnerScope(ownerLevel), ownerOffset);
 }
 
 export function getOwnerScope(ownerLevel = 1) {
@@ -160,13 +128,6 @@ export function writeQueuedInOwner(
   ownerLevel?: number
 ) {
   writeQueued(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function cleanScopes() {
-  for (const scope of dirtyScopes) {
-    scope.___dirty = undefined;
-  }
-  dirtyScopes.clear();
 }
 
 export function destroyScope(scope: Scope) {

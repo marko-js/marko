@@ -4,9 +4,7 @@ import {
   write,
   setLoopOf,
   createRenderer,
-  createRenderFn,
-  isDirty,
-  runForEach
+  createRenderFn
 } from "../../../../src/dom/index";
 import { open, close, get, next, over, skip } from "../../utils/walks";
 
@@ -76,9 +74,9 @@ export const execInputChildren = () => {
     Index.LOOP,
     read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
     iter0,
-    i => "" + (i as Input["children"][number]).id
+    i => "" + (i as Input["children"][number]).id,
+    iter0_execItem
   );
-  runForEach(Index.LOOP, iter0_execItem);
 };
 
 export const execDynamicInput = (input: Input) => {
@@ -112,13 +110,12 @@ const iter0 = createRenderer(
 );
 
 const iter0_execItem = () => {
-  if (isDirty(Iter0Index.ITEM)) {
+  if (
     write(
       Iter0Index.ITEM_TEXT,
       read<iterScope, Iter0Index.ITEM>(Iter0Index.ITEM).text
-    );
-    if (isDirty(Iter0Index.ITEM_TEXT)) {
-      data(Iter0Index.TEXT, read(Iter0Index.ITEM_TEXT));
-    }
+    )
+  ) {
+    data(Iter0Index.TEXT, read(Iter0Index.ITEM_TEXT));
   }
 };
