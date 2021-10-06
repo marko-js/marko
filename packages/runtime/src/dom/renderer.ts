@@ -1,3 +1,4 @@
+import { ScopeOffsets } from "../common/types";
 import { DOMMethods, staticNodeMethods } from "./dom";
 import { createScope, Scope, runWithScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
@@ -34,21 +35,21 @@ type RenderResult = Node & {
 
 export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
-  scope.___startNode =
+  scope[ScopeOffsets.START_NODE] =
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom;
-  scope.___endNode =
+  scope[ScopeOffsets.END_NODE] =
     dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
-  walk(scope.___startNode, renderer.___walks!, scope);
+  walk(scope[ScopeOffsets.START_NODE] as Node, renderer.___walks!, scope);
   if (renderer.___render) {
-    runWithScope(renderer.___render, 0, scope);
+    runWithScope(renderer.___render, ScopeOffsets.BEGIN_DATA, scope);
   }
   if (renderer.___dynamicStartNodeMethod) {
     scope.___getFirstNode = renderer.___dynamicStartNodeMethod;
-    scope.___startNode = renderer.___dynamicStartNodeOffset!;
+    scope[ScopeOffsets.START_NODE] = renderer.___dynamicStartNodeOffset!;
   }
   if (renderer.___dynamicEndNodeMethod) {
     scope.___getLastNode = renderer.___dynamicEndNodeMethod;
-    scope.___endNode = renderer.___dynamicEndNodeOffset!;
+    scope[ScopeOffsets.END_NODE] = renderer.___dynamicEndNodeOffset!;
   }
   return dom;
 }
@@ -81,10 +82,12 @@ export function createRenderFn<I extends Input>(
   return (input: I): RenderResult => {
     const scope = createScope(size!, domMethods!);
     const dom = initRenderer(renderer, scope) as RenderResult;
-    dynamicInput && runWithScope(dynamicInput, 0, scope, [input]);
+    dynamicInput &&
+      runWithScope(dynamicInput, ScopeOffsets.BEGIN_DATA, scope, [input]);
 
     dom.update = (newInput: I) => {
-      dynamicInput && runWithScope(dynamicInput, 0, scope, [newInput]);
+      dynamicInput &&
+        runWithScope(dynamicInput, ScopeOffsets.BEGIN_DATA, scope, [newInput]);
     };
 
     dom.destroy = () => {

@@ -8,13 +8,35 @@ export type HydrateInstance = [
   number // offset
 ];
 
-export type Scope = [string, Node, Node, ...unknown[]];
+export type Scope = [
+  string, // ID
+  Node | number | undefined, // START_NODE
+  Node | number | undefined, // END_NODE
+  Set<number | Scope> | undefined, // CLEANUP
+  Scope | undefined, // OWNER_SCOPE
+  number | undefined, // OWNER_OFFSET
+  ...unknown[]
+] & {
+  ___insertBefore: (
+    this: Scope,
+    parent: Node & ParentNode,
+    nextSibling: Node | null
+  ) => void;
+  ___remove: (this: Scope) => void;
+  ___getParentNode: (this: Scope) => Node & ParentNode;
+  ___getAfterNode: (this: Scope) => Node | null;
+  ___getFirstNode: (this: Scope) => Node & ChildNode;
+  ___getLastNode: (this: Scope) => Node & ChildNode;
+};
 
 export const enum ScopeOffsets {
   ID = 0,
   START_NODE = 1,
   END_NODE = 2,
-  BEGIN_DATA = 3
+  CLEANUP = 3,
+  OWNER_SCOPE = 4,
+  OWNER_OFFSET = 5,
+  BEGIN_DATA = 6
 }
 
 export const enum HydrateSymbols {

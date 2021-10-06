@@ -35,7 +35,6 @@ export { pushContext, popContext, getInContext } from "../common/context";
 export { queue, queueInOwner, run } from "./queue";
 
 export {
-  Scope,
   read,
   write,
   readInOwner,
@@ -46,5 +45,7 @@ export {
   runInChild,
   writeQueuedInOwner
 } from "./scope";
+
+export { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";

@@ -1,5 +1,5 @@
 # Write
-  <!M^ROOT><body><!M#3 ROOT 3><button><!M#1 ROOT 4>0</button></body><!M/ROOT><script>M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])</script>
+  <!M^ROOT><body><!M#6 ROOT 6><button><!M#1 ROOT 7>0</button></body><!M/ROOT><script>M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])</script>
 
 
 # Render "End"
@@ -8,13 +8,13 @@
 <html>
   <head />
   <body>
-    <!--M#3 ROOT 3-->
+    <!--M#6 ROOT 6-->
     <button>
-      <!--M#1 ROOT 4-->
+      <!--M#1 ROOT 7-->
       0
     </button>
     <script>
-      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])
     </script>
   </body>
   <!--M/ROOT-->
@@ -43,13 +43,13 @@ inserted #document/html1/body1/script2/#text0
 <html>
   <head />
   <body>
-    <!--M#3 ROOT 3-->
+    <!--M#6 ROOT 6-->
     <button>
-      <!--M#1 ROOT 4-->
+      <!--M#1 ROOT 7-->
       0
     </button>
     <script>
-      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])
     </script>
   </body>
   <!--M/ROOT-->
@@ -70,13 +70,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#3 ROOT 3-->
+    <!--M#6 ROOT 6-->
     <button>
-      <!--M#1 ROOT 4-->
+      <!--M#1 ROOT 7-->
       1
     </button>
     <script>
-      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])
     </script>
   </body>
   <!--M/ROOT-->
@@ -97,13 +97,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#3 ROOT 3-->
+    <!--M#6 ROOT 6-->
     <button>
-      <!--M#1 ROOT 4-->
+      <!--M#1 ROOT 7-->
       2
     </button>
     <script>
-      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])
     </script>
   </body>
   <!--M/ROOT-->
@@ -124,13 +124,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#3 ROOT 3-->
+    <!--M#6 ROOT 6-->
     <button>
-      <!--M#1 ROOT 4-->
+      <!--M#1 ROOT 7-->
       3
     </button>
     <script>
-      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,0],3]])
+      M$h=(window.M$h||[]).concat([["counter",["ROOT",null,null,null,null,null,null,null,0],6]])
     </script>
   </body>
   <!--M/ROOT-->

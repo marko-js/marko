@@ -1,5 +1,5 @@
 import { Renderer } from "./renderer";
-import { onDestroy, Scope, read, write } from "./scope";
+import { onDestroy, Scope, ScopeOffsets, read, write } from "./scope";
 
 export const enum NodeType {
   Element = 1,
@@ -23,10 +23,10 @@ export type DOMMethods = {
 
 export const staticNodeMethods = {
   ___insertBefore(parent, nextSibling) {
-    parent.insertBefore(this.___startNode as Node, nextSibling);
+    parent.insertBefore(this[ScopeOffsets.START_NODE] as Node, nextSibling);
   },
   ___remove() {
-    (this.___startNode as ChildNode).remove();
+    (this[ScopeOffsets.START_NODE] as ChildNode).remove();
   },
   ___getParentNode() {
     return this.___getFirstNode().parentNode;
@@ -35,27 +35,27 @@ export const staticNodeMethods = {
     return this.___getLastNode().nextSibling;
   },
   ___getFirstNode() {
-    return this.___startNode;
+    return this[ScopeOffsets.START_NODE];
   },
   ___getLastNode() {
-    return this.___endNode;
+    return this[ScopeOffsets.END_NODE];
   }
 } as DOMMethods;
 
 // export const staticNodePropertiesDef = {
 //   ___insertBefore: {
 //     value(parent, nextSibling) {
-//       parent.insertBefore(this.___startNode as Node, nextSibling);
+//       parent.insertBefore(this[ScopeOffsets.START_NODE] as Node, nextSibling);
 //     }
 //   },
 //   ___remove: {
 //     value() {
-//       (this.___startNode as ChildNode).remove();
+//       (this[ScopeOffsets.START_NODE] as ChildNode).remove();
 //     }
 //   },
 //   ___parentNode: {
 //     get() {
-//       return this.___startNode.parentNode;
+//       return this[ScopeOffsets.START_NODE].parentNode;
 //     },
 //   },
 //   ___afterNode: {

@@ -1,3 +1,5 @@
+import { ScopeOffsets } from "../common/types";
+
 const doc = document;
 export const walker = doc.createTreeWalker(
   doc.documentElement,
@@ -80,8 +82,8 @@ export function walk(startNode: Node, walkCodes: string, scope: unknown[]) {
 function walkInternal(
   walkCodes: string,
   scope: unknown[],
-  currentScopeIndex = 0,
-  childScopeIndex = 0
+  currentScopeIndex = ScopeOffsets.BEGIN_DATA,
+  childScopeIndex = ScopeOffsets.BEGIN_DATA
 ) {
   let value: number;
   let storedMultiplier = 0;

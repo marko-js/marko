@@ -1,3 +1,4 @@
+import { ScopeOffsets } from "../common/types";
 import {
   Scope,
   runWithScope,
@@ -133,7 +134,10 @@ function compareQueue(
 ) {
   return (
     (queuedFns[index + 3] as number) - sourceCount ||
-    (queuedFns[index + 1] as Scope).___id - scope.___id ||
+    compare(
+      (queuedFns[index + 1] as Scope)[ScopeOffsets.ID],
+      scope[ScopeOffsets.ID]
+    ) ||
     (queuedFns[index + 2] as number) - offset ||
     // TODO: if a function gets inlined, it would be anonomous and this would not work
     compare((queuedFns[index] as ExecFn).name, fn.name)

@@ -1,36 +1,26 @@
 import { DOMMethods, staticNodeMethods } from "./dom";
 import { setQueued } from "./queue";
+import { Scope, ScopeOffsets } from "../common/types";
 
+export { Scope, ScopeOffsets };
 export let currentScope: Scope;
 export let currentOffset: number;
 export let ownerOffset: number;
 let scopeId = 0;
 
-const dirtyScopes: Set<Scope> = new Set();
-
-export type Scope = unknown[] &
-  DOMMethods & {
-    ___id: number;
-    ___startNode: Node | number | undefined;
-    ___endNode: Node | number | undefined;
-    ___parentScope: Scope | undefined;
-    ___parentOffset: number | undefined;
-    ___cleanup: Set<number | Scope> | undefined;
-  };
-
 export function createScope(size: number, methods: DOMMethods): Scope {
   const scope = new Array(size) as Scope;
-  scope.___id = scopeId++;
-  scope.___startNode = scope.___endNode = undefined;
-  scope.___parentScope = currentScope;
-  scope.___parentOffset = currentOffset;
-  dirtyScopes.add(Object.assign(scope, methods));
-  return scope;
+  scope[ScopeOffsets.ID] = "" + scopeId++;
+  scope[ScopeOffsets.OWNER_SCOPE] = currentScope;
+  scope[ScopeOffsets.OWNER_OFFSET] = currentOffset;
+  return Object.assign(scope, methods);
 }
 
 const emptyScope = createScope(0, staticNodeMethods);
 export function getEmptyScope(marker?: Comment) {
-  emptyScope.___startNode = emptyScope.___endNode = marker;
+  emptyScope[ScopeOffsets.START_NODE] = emptyScope[
+    ScopeOffsets.END_NODE
+  ] = marker;
   return emptyScope;
 }
 
@@ -71,9 +61,11 @@ export function writeInOwner(
 
 export function getOwnerScope(ownerLevel = 1) {
   let scope = currentScope;
+  ownerOffset = currentOffset;
   while (ownerLevel--) {
-    scope = scope.___parentScope!;
-    ownerOffset = scope.___parentOffset!;
+    const nextScope = scope[ownerOffset - 2]! as Scope;
+    ownerOffset = scope[ownerOffset - 1]! as number;
+    scope = nextScope;
   }
   return scope;
 }
@@ -88,7 +80,7 @@ export function bind(fn: (...args: unknown[]) => unknown) {
 
 export function runWithScope(
   fn: (...args: unknown[]) => unknown,
-  offset = 0,
+  offset = ScopeOffsets.BEGIN_DATA,
   scope: Scope = currentScope,
   args?: unknown[]
 ) {
@@ -131,9 +123,9 @@ export function writeQueuedInOwner(
 }
 
 export function destroyScope(scope: Scope) {
-  scope.___parentScope?.___cleanup?.delete(scope);
+  scope[ScopeOffsets.OWNER_SCOPE]?.[ScopeOffsets.CLEANUP]?.delete(scope);
 
-  const cleanup = scope.___cleanup;
+  const cleanup = scope[ScopeOffsets.CLEANUP];
   if (cleanup) {
     for (const instance of cleanup) {
       if (typeof instance === "number") {
@@ -147,13 +139,13 @@ export function destroyScope(scope: Scope) {
 }
 
 export function onDestroy(localIndex: number) {
-  const parentScope = currentScope.___parentScope;
+  const parentScope = currentScope[ScopeOffsets.OWNER_SCOPE];
   if (parentScope) {
-    (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(
-      currentScope
-    );
+    (parentScope[ScopeOffsets.CLEANUP] =
+      parentScope[ScopeOffsets.CLEANUP] || new Set()).add(currentScope);
   }
-  (currentScope.___cleanup = currentScope.___cleanup || new Set()).add(
+  (currentScope[ScopeOffsets.CLEANUP] =
+    currentScope[ScopeOffsets.CLEANUP] || new Set()).add(
     currentOffset + localIndex
   );
 }

@@ -1,8 +1,8 @@
 import { Context, setContext } from "../common/context";
+import { Scope, ScopeOffsets } from "../common/types";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import {
-  Scope,
   createScope,
   getEmptyScope,
   destroyScope,
@@ -33,7 +33,7 @@ export function runInBranch(
   if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
     runWithScope(
       fn,
-      0,
+      ScopeOffsets.BEGIN_DATA,
       read(conditionalIndex + ConditionalIndex.SCOPE) as Scope
     );
     return 1;
@@ -42,17 +42,27 @@ export function runInBranch(
 
 export function getConditionalFirstNode(
   this: Scope,
-  conditionalIndex: number = this.___startNode as number,
+  conditionalIndex: number = this[ScopeOffsets.START_NODE] as number,
   last?: boolean
 ) {
-  const scope = this[conditionalIndex + ConditionalIndex.SCOPE] as Scope;
+  const scope = this[
+    conditionalIndex + ConditionalIndex.SCOPE + ScopeOffsets.BEGIN_DATA
+  ] as Scope;
   return scope
     ? scope[last ? "___getLastNode" : "___getFirstNode"]()
-    : (this[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment);
+    : (this[
+        conditionalIndex +
+          ConditionalIndex.REFERENCE_NODE +
+          ScopeOffsets.BEGIN_DATA
+      ] as Comment);
 }
 
 export function getConditionalLastNode(this: Scope) {
-  return getConditionalFirstNode.call(this, this.___endNode as number, true);
+  return getConditionalFirstNode.call(
+    this,
+    this[ScopeOffsets.END_NODE] as number,
+    true
+  );
 }
 
 export function setConditionalRenderer(
@@ -159,25 +169,33 @@ export function runForEach(loopIndex: number, fn: () => void) {
   for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
     loopIndex + LoopIndex.SCOPE_ARRAY
   )) {
-    runWithScope(fn, 0, scope);
+    runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
   }
 }
 
 export function getLoopFirstNode(
   this: Scope,
-  loopIndex: number = this.___startNode as number,
+  loopIndex: number = this[ScopeOffsets.START_NODE] as number,
   last?: boolean
 ) {
-  const scopes = this[loopIndex + LoopIndex.SCOPE_ARRAY] as Scope[];
+  const scopes = this[
+    loopIndex + LoopIndex.SCOPE_ARRAY + ScopeOffsets.BEGIN_DATA
+  ] as Scope[];
   return scopes === emptyMarkerArray
-    ? (this[loopIndex + LoopIndex.REFERENCE_NODE] as Comment)
+    ? (this[
+        loopIndex + LoopIndex.REFERENCE_NODE + ScopeOffsets.BEGIN_DATA
+      ] as Comment)
     : scopes[last ? scopes.length - 1 : 0][
         last ? "___getLastNode" : "___getFirstNode"
       ]();
 }
 
 export function getLoopLastNode(this: Scope) {
-  return getLoopFirstNode.call(this, this.___endNode as number, true);
+  return getLoopFirstNode.call(
+    this,
+    this[ScopeOffsets.END_NODE] as number,
+    true
+  );
 }
 
 export function setLoopOf<T>(
@@ -216,23 +234,25 @@ export function setLoopOf<T>(
       let childScope = oldMap.get(key);
       if (!childScope) {
         childScope = createScope(renderer.___size, renderer.___domMethods!);
-        childScope[0] = item;
-        childScope[1] = index;
+        childScope[ScopeOffsets.BEGIN_DATA] = item;
+        childScope[ScopeOffsets.BEGIN_DATA + 1] = index;
         initRenderer(renderer, childScope);
         if (itemFn) {
-          runWithScope(itemFn, 0, childScope);
+          runWithScope(itemFn, ScopeOffsets.BEGIN_DATA, childScope);
         }
         if (indexFn) {
-          runWithScope(indexFn, 0, childScope);
+          runWithScope(indexFn, ScopeOffsets.BEGIN_DATA, childScope);
         }
         inserts++;
       } else {
-        if (childScope[1] !== (childScope[1] = index)) moves++;
-        if (itemFn && write(0, item, childScope, 0)) {
-          runWithScope(itemFn, 0, childScope);
+        if (itemFn && write(0, item, childScope, ScopeOffsets.BEGIN_DATA)) {
+          runWithScope(itemFn, ScopeOffsets.BEGIN_DATA, childScope);
         }
-        if (indexFn && write(1, index, childScope, 0)) {
-          runWithScope(indexFn, 0, childScope);
+        if (write(1, index, childScope, ScopeOffsets.BEGIN_DATA)) {
+          moves++;
+          if (indexFn) {
+            runWithScope(indexFn, ScopeOffsets.BEGIN_DATA, childScope);
+          }
         }
       }
       newMap.set(key, childScope);
@@ -269,7 +289,6 @@ export function setLoopOf<T>(
       afterReference = null;
       parentNode = referenceNode as Element;
     }
-
     reconcile(parentNode, oldArray, newArray!, afterReference);
   }
 

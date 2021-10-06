@@ -4,7 +4,7 @@ import {
   ScopeOffsets,
   HydrateSymbols
 } from "../common/types";
-import { runWithScope, Scope as ActualScope } from "./scope";
+import { runWithScope } from "./scope";
 
 type HydrateFn = () => void;
 
@@ -116,11 +116,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     hydrationLogic.forEach(([hydrateFnId, scope, offset]) => {
-      runWithScope(
-        fnsById[hydrateFnId]!,
-        offset,
-        (scope as unknown) as ActualScope
-      );
+      runWithScope(fnsById[hydrateFnId]!, offset, scope);
     });
 
     return fakeArray;
