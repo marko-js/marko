@@ -33,11 +33,11 @@ let queuedFns: unknown[] = [];
 
 export function queue(
   fn: ExecFn,
-  sourceCount = 1,
+  localIndex = 0,
   scope = currentScope,
   offset = currentOffset
 ) {
-  const index = findQueueIndex(fn, sourceCount, scope, offset);
+  const index = findQueueIndex(scope, offset + localIndex);
 
   // index is where the function should be in the queue
   // but if it already exists, we should not add it again
@@ -58,7 +58,7 @@ export function queue(
     queuedFns[index] = fn;
     queuedFns[index + 1] = scope;
     queuedFns[index + 2] = offset;
-    queuedFns[index + 3] = sourceCount;
+    queuedFns[index + 3] = offset + localIndex;
   }
 }
 
@@ -101,18 +101,13 @@ export function run() {
   }
 }
 
-function findQueueIndex(
-  fn: ExecFn,
-  sourceCount: number,
-  scope: Scope,
-  offset: number
-) {
+function findQueueIndex(scope: Scope, offset: number) {
   let index = 0;
   let max = queuedFns.length >>> 2;
 
   while (index < max) {
     const mid = (index + max) >>> 1;
-    const compareResult = compareQueue(mid * 4, fn, sourceCount, scope, offset);
+    const compareResult = compareQueue(mid * 4, scope, offset);
     if (compareResult > 0) {
       max = mid;
     } else if (compareResult < 0) {
@@ -125,22 +120,12 @@ function findQueueIndex(
   return index * 4;
 }
 
-function compareQueue(
-  index: number,
-  fn: ExecFn,
-  sourceCount: number,
-  scope: Scope,
-  offset: number
-) {
+function compareQueue(index: number, scope: Scope, offset: number) {
   return (
-    (queuedFns[index + 3] as number) - sourceCount ||
     compare(
       (queuedFns[index + 1] as Scope)[ScopeOffsets.ID],
       scope[ScopeOffsets.ID]
-    ) ||
-    (queuedFns[index + 2] as number) - offset ||
-    // TODO: if a function gets inlined, it would be anonomous and this would not work
-    compare((queuedFns[index] as ExecFn).name, fn.name)
+    ) || (queuedFns[index + 3] as number) - offset
   );
 }
 
