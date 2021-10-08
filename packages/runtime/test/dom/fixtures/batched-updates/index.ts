@@ -21,7 +21,8 @@ const enum Index {
   BUTTON = 0,
   TEXT = 1,
   A = 2,
-  B = 3
+  B = 3,
+  SUM_AB = 4
 }
 
 type scope = {
@@ -29,6 +30,7 @@ type scope = {
   [Index.TEXT]: Text;
   [Index.A]: number;
   [Index.B]: number;
+  [Index.SUM_AB]: number;
 };
 
 // <let/a = 0/>
@@ -38,9 +40,8 @@ type scope = {
 export const template = `<button> </button>`;
 export const walks = open(4) + get + next(1) + get + next(1) + close;
 export const render = () => {
-  write(Index.A, 0);
-  write(Index.B, 0);
-  execAB();
+  execA(0);
+  execB(0);
   hydrate();
 };
 
@@ -49,19 +50,30 @@ export const hydrate = register("", () => {
 });
 
 const clickHandler = () => {
-  if (
-    write(Index.A, read<scope, Index.A>(Index.A) + 1) |
-    write(Index.B, read<scope, Index.B>(Index.B) + 1)
-  ) {
-    queue(execAB);
+  queue(execA, Index.A, read<scope, Index.A>(Index.A) + 1);
+  queue(execB, Index.B, read<scope, Index.B>(Index.B) + 1);
+};
+
+const execA = (value: number) => {
+  if (write(Index.A, value)) {
+    queue(execAB, Index.SUM_AB);
+  }
+};
+
+const execB = (value: number) => {
+  if (write(Index.B, value)) {
+    queue(execAB, Index.SUM_AB);
   }
 };
 
 const execAB = () => {
-  data(
-    Index.TEXT,
-    read<scope, Index.A>(Index.A) + read<scope, Index.B>(Index.B)
-  );
+  execSumAB(read<scope, Index.A>(Index.A) + read<scope, Index.B>(Index.B));
+};
+
+const execSumAB = (value: number) => {
+  if (write(Index.SUM_AB, value)) {
+    data(Index.TEXT, value);
+  }
 };
 
 export default createRenderFn(template, walks, render, 0);

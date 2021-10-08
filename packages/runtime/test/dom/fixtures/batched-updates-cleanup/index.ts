@@ -11,7 +11,7 @@ import {
   read,
   bind,
   readInOwner,
-  runInBranch
+  queueInBranch
 } from "../../../../src/dom/index";
 
 import { get, next, over, open, close } from "../../utils/walks";
@@ -46,10 +46,8 @@ type scope = {
 export const template = `<button></button><!>`;
 export const walks = open(7) + get + over(1) + get + over(1) + close;
 export const render = () => {
-  write(Index.SHOW, true);
-  write(Index.MESSAGE, "hi");
-  execShow();
-  execMessage();
+  execShow(true);
+  execMessage("hi");
   hydrate();
 };
 
@@ -58,23 +56,25 @@ export const hydrate = register("", () => {
 });
 
 const clickHandler = () => {
-  if (write(Index.MESSAGE, "bye")) {
-    queue(execMessage, 6);
-  }
-  if (write(Index.SHOW, !read(Index.SHOW))) {
-    queue(execShow, 5);
+  queue(execMessage, Index.MESSAGE, "bye");
+  queue(execShow, Index.SHOW, !read(Index.SHOW));
+};
+
+const execShow = value => {
+  if (write(Index.SHOW, value)) {
+    setConditionalRenderer(Index.CONDITIONAL, value ? branch0 : undefined);
   }
 };
 
-const execShow = () => {
-  setConditionalRenderer(
-    Index.CONDITIONAL,
-    read(Index.SHOW) ? branch0 : undefined
-  );
-};
-
-const execMessage = () => {
-  runInBranch(Index.CONDITIONAL, branch0, execMessageBranch0);
+const execMessage = value => {
+  if (write(Index.MESSAGE, value)) {
+    queueInBranch(
+      Index.CONDITIONAL,
+      branch0,
+      execMessageBranch0,
+      Branch0Index.CLOSURE_MESSAGE
+    );
+  }
 };
 
 const execMessageBranch0 = () => {
@@ -86,6 +86,7 @@ export default createRenderFn(template, walks, render, 0);
 ensureDelegated("click");
 
 const enum Branch0Index {
+  CLOSURE_MESSAGE = -1,
   TEXT = 0
 }
 
@@ -94,6 +95,8 @@ type Branch0Scope = [Text];
 const branch0 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  undefined,
+  () => {
+    queue(execMessageBranch0, Branch0Index.CLOSURE_MESSAGE);
+  },
   0
 );

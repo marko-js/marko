@@ -6,7 +6,7 @@ import {
   read,
   write,
   readInOwner,
-  runInBranch
+  queueInBranch
 } from "../../../../src/dom/index";
 import { get, next, over, open, close } from "../../utils/walks";
 
@@ -51,7 +51,12 @@ export const execInputValue = () => {
     Index.CONDITIONAL,
     read(Index.INPUT_VALUE) ? branch0 : undefined
   );
-  runInBranch(Index.CONDITIONAL, branch0, execInputBranch0);
+  queueInBranch(
+    Index.CONDITIONAL,
+    branch0,
+    execInputBranch0,
+    Branch0Index.CLOSURE_VALUE
+  );
 };
 
 function execInputBranch0() {
@@ -62,13 +67,15 @@ function execInputBranch0() {
 }
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
-  write(Index.INPUT_VALUE, input.value);
-  execInputValue();
+  if (write(Index.INPUT_VALUE, input.value)) {
+    execInputValue();
+  }
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
+  CLOSURE_VALUE = -1,
   TEXT = 0
 }
 

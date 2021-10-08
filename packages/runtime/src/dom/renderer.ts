@@ -2,6 +2,7 @@ import { ScopeOffsets } from "../common/types";
 import { DOMMethods, staticNodeMethods } from "./dom";
 import { createScope, Scope, runWithScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
+import { queue, run } from "./queue";
 
 const enum NodeType {
   Element = 1,
@@ -82,12 +83,18 @@ export function createRenderFn<I extends Input>(
   return (input: I): RenderResult => {
     const scope = createScope(size!, domMethods!);
     const dom = initRenderer(renderer, scope) as RenderResult;
-    dynamicInput &&
-      runWithScope(dynamicInput, ScopeOffsets.BEGIN_DATA, scope, [input]);
+
+    if (dynamicInput) {
+      queue(dynamicInput, -1, input, scope, ScopeOffsets.BEGIN_DATA);
+    }
+
+    run();
 
     dom.update = (newInput: I) => {
-      dynamicInput &&
-        runWithScope(dynamicInput, ScopeOffsets.BEGIN_DATA, scope, [newInput]);
+      if (dynamicInput) {
+        queue(dynamicInput, -1, newInput, scope, ScopeOffsets.BEGIN_DATA);
+        run();
+      }
     };
 
     dom.destroy = () => {

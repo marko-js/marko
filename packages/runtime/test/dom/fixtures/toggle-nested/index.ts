@@ -8,8 +8,9 @@ import {
   getConditionalLastNode,
   write,
   read,
+  queue,
   readInOwner,
-  runInBranch
+  queueInBranch
 } from "../../../../src/dom/index";
 import { next, over, get, open, close, skip } from "../../utils/walks";
 
@@ -70,19 +71,19 @@ export const template = `<div><!></div>`;
 export const walks = open(7) + next(1) + get + over(1) + close;
 
 export const execInputShow = () => {
-  if (
-    setConditionalRenderer(
-      Index.CONDITIONAL,
-      read(Index.INPUT_SHOW) ? branch0 : undefined
-    )
-  ) {
-    runInBranch(Index.CONDITIONAL, branch0, execInputValue1Branch0);
-    runInBranch(Index.CONDITIONAL, branch0, execInputValue2Branch0);
-  }
+  setConditionalRenderer(
+    Index.CONDITIONAL,
+    read(Index.INPUT_SHOW) ? branch0 : undefined
+  );
 };
 
 export const execInputValue1 = () => {
-  runInBranch(Index.CONDITIONAL, branch0, execInputValue1Branch0);
+  queueInBranch(
+    Index.CONDITIONAL,
+    branch0,
+    execInputValue1Branch0,
+    Branch0Index.CLOSURE_VALUE1
+  );
 };
 
 export const execInputValue1Branch0 = () => {
@@ -90,11 +91,21 @@ export const execInputValue1Branch0 = () => {
     Branch0Index.CONDITIONAL1,
     readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
   );
-  runInBranch(Branch0Index.CONDITIONAL1, branch0_0, execInputValue1Branch0_0);
+  queueInBranch(
+    Branch0Index.CONDITIONAL1,
+    branch0_0,
+    execInputValue1Branch0_0,
+    Branch0_0Index.CLOSURE_VALUE1
+  );
 };
 
 export const execInputValue2 = () => {
-  runInBranch(Index.CONDITIONAL, branch0, execInputValue2Branch0);
+  queueInBranch(
+    Index.CONDITIONAL,
+    branch0,
+    execInputValue2Branch0,
+    Branch0Index.CLOSURE_VALUE2
+  );
 };
 
 export const execInputValue2Branch0 = () => {
@@ -102,7 +113,12 @@ export const execInputValue2Branch0 = () => {
     Branch0Index.CONDITIONAL2,
     readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
   );
-  runInBranch(Branch0Index.CONDITIONAL2, branch0_1, execInputValue2Branch0_1);
+  queueInBranch(
+    Branch0Index.CONDITIONAL2,
+    branch0_1,
+    execInputValue2Branch0_1,
+    Branch0_1Index.CLOSURE_VALUE2
+  );
 };
 
 const execInputValue1Branch0_0 = () => {
@@ -122,6 +138,8 @@ export const execDynamicInput = (input: Input) => {
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
+  CLOSURE_VALUE1 = -2,
+  CLOSURE_VALUE2 = -1,
   COMMENT1 = 0,
   CONDITIONAL1 = 0,
   COMMENT2 = 4,
@@ -138,7 +156,10 @@ type Branch0Scope = {
 const branch0 = createRenderer(
   "<!><!>",
   open(8) + get + over(1) + skip(3) + get + over(1) + close,
-  undefined,
+  () => {
+    queue(execInputValue1Branch0, Branch0Index.CLOSURE_VALUE1);
+    queue(execInputValue2Branch0, Branch0Index.CLOSURE_VALUE2);
+  },
   0,
   0,
   fragmentMethods,
@@ -149,6 +170,7 @@ const branch0 = createRenderer(
 );
 
 const enum Branch0_0Index {
+  CLOSURE_VALUE1 = -1,
   TEXT = 0
 }
 
@@ -164,6 +186,7 @@ const branch0_0 = createRenderer(
 );
 
 const enum Branch0_1Index {
+  CLOSURE_VALUE2 = -1,
   TEXT = 0
 }
 

@@ -61,8 +61,9 @@ export const execInputChildren = () => {
 };
 
 export const execDynamicInput = (input: Input) => {
-  write(Index.INPUT_CHILDREN, input.children);
-  execInputChildren();
+  if (write(Index.INPUT_CHILDREN, input.children)) {
+    execInputChildren();
+  }
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);

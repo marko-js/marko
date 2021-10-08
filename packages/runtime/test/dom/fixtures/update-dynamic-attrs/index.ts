@@ -38,8 +38,9 @@ export const execInputValue = () => {
 };
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
-  write(Index.INPUT_VALUE, input.value);
-  execInputValue();
+  if (write(Index.INPUT_VALUE, input.value)) {
+    execInputValue();
+  }
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);

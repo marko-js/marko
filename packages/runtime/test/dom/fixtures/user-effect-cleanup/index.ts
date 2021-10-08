@@ -10,14 +10,15 @@ import {
 import { wait } from "../../../utils/resolve";
 import { get, next, open, close } from "../../utils/walks";
 
-export const inputs = [{ value: 0 }, wait(2), { value: 1 }, wait(2)] as const;
+export const inputs = [{ value: 0 }, wait(4), { value: 1 }, wait(4)] as const;
 
 const enum Index {
   DIV_TEXT = 0,
   INPUT_VALUE = 1,
   A = 2,
   B = 3,
-  EFFECT_CLEANUP = 4
+  CONCAT_AB = 4,
+  EFFECT_CLEANUP = 5
 }
 
 type scope = {
@@ -25,6 +26,7 @@ type scope = {
   [Index.INPUT_VALUE]: typeof inputs[0 | 2]["value"];
   [Index.A]: number;
   [Index.B]: number;
+  [Index.CONCAT_AB]: string;
   [Index.EFFECT_CLEANUP]: () => void;
 };
 
@@ -38,13 +40,30 @@ type scope = {
 export const template = `<div> </div>`;
 export const walks = open(5) + next(1) + get + next(1) + close;
 export const render = () => {
-  write(Index.A, 0);
-  write(Index.B, 0);
-  execAB();
+  execA(0);
+  execB(0);
 };
 
+function execA(value) {
+  if (write(Index.A, value)) {
+    queue(execAB, Index.CONCAT_AB);
+  }
+}
+
+function execB(value) {
+  if (write(Index.B, value)) {
+    queue(execAB, Index.CONCAT_AB);
+  }
+}
+
 function execAB() {
-  data(Index.DIV_TEXT, "" + read(Index.A) + read(Index.B));
+  execConcatAB("" + read(Index.A) + read(Index.B));
+}
+
+function execConcatAB(value) {
+  if (write(Index.CONCAT_AB, value)) {
+    data(Index.DIV_TEXT, value);
+  }
 }
 
 export const hydrateInputValue = () => {
@@ -53,19 +72,16 @@ export const hydrateInputValue = () => {
 
 const effectFn = () => {
   const previousValue = read<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE) + 1;
-  if (write(Index.A, previousValue)) {
-    queue(execAB);
-  }
+  queue(execA, Index.A, previousValue);
   return bind(() => {
-    if (write(Index.B, previousValue)) {
-      queue(execAB);
-    }
+    queue(execB, Index.B, previousValue);
   });
 };
 
 export const execDynamicInput = (input: typeof inputs[0]) => {
-  write(Index.INPUT_VALUE, input.value);
-  hydrateInputValue();
+  if (write(Index.INPUT_VALUE, input.value)) {
+    hydrateInputValue();
+  }
 };
 
 export default createRenderFn(template, walks, render, 0, execDynamicInput);

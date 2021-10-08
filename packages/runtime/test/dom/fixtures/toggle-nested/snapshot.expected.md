@@ -30,9 +30,9 @@ inserted #comment
 removed #comment after #comment
 inserted div0/span0
 removed #comment after div0/span0
-div0/span0/#text0: " " => "Hello"
 inserted div0/span1
 removed #comment after div0/span1
+div0/span0/#text0: " " => "Hello"
 div0/span1/#text0: " " => "World"
 ```
 

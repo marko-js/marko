@@ -3,7 +3,8 @@ export {
   setConditionalRendererOnlyChild,
   getConditionalFirstNode,
   getConditionalLastNode,
-  runInBranch,
+  queueInBranch,
+  queueForEach,
   setLoopOf,
   setLoopFromTo,
   setLoopIn,
@@ -40,10 +41,8 @@ export {
   readInOwner,
   writeInOwner,
   bind,
-  writeQueued,
   runWithScope,
-  runInChild,
-  writeQueuedInOwner
+  runInChild
 } from "./scope";
 
 export { Scope } from "../common/types";

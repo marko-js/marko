@@ -1,5 +1,5 @@
 import { DOMMethods, staticNodeMethods } from "./dom";
-import { setQueued } from "./queue";
+import { withQueueNext } from "./queue";
 import { Scope, ScopeOffsets } from "../common/types";
 
 export { Scope, ScopeOffsets };
@@ -105,23 +105,6 @@ export function runInChild(fn: () => void, offset: number) {
   }
 }
 
-export function writeQueued(
-  localIndex: number,
-  value: unknown,
-  scope = currentScope,
-  offset = currentOffset
-) {
-  setQueued(scope, offset + localIndex, value);
-}
-
-export function writeQueuedInOwner(
-  localIndex: number,
-  value: unknown,
-  ownerLevel?: number
-) {
-  writeQueued(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
-}
-
 export function destroyScope(scope: Scope) {
   scope[ScopeOffsets.OWNER_SCOPE]?.[ScopeOffsets.CLEANUP]?.delete(scope);
 
@@ -129,7 +112,7 @@ export function destroyScope(scope: Scope) {
   if (cleanup) {
     for (const instance of cleanup) {
       if (typeof instance === "number") {
-        (scope[instance] as () => void)();
+        withQueueNext(scope[instance] as () => void);
       } else {
         destroyScope(instance);
       }

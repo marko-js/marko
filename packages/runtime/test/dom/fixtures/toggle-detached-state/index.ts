@@ -2,11 +2,12 @@ import {
   data,
   read,
   write,
+  queue,
   readInOwner,
   setConditionalRenderer,
   createRenderer,
   createRenderFn,
-  runInBranch
+  queueInBranch
 } from "../../../../src/dom/index";
 import { next, get, over, open, close } from "../../utils/walks";
 
@@ -50,15 +51,23 @@ type scope = {
 export const template = `<div><!></div>`;
 export const walks = open(6) + next(1) + get + over(1) + close;
 
-export const execInputValue = () => {
+export const execInputVisible = () => {
   setConditionalRenderer(
     Index.CONDITIONAL,
     read(Index.INPUT_VISIBLE) ? branch0 : undefined
   );
-  runInBranch(Index.CONDITIONAL, branch0, execInputBranch0);
 };
 
-function execInputBranch0() {
+export const execInputValue = () => {
+  queueInBranch(
+    Index.CONDITIONAL,
+    branch0,
+    execInputValueBranch0,
+    Branch0Index.CLOSURE_VALUE
+  );
+};
+
+function execInputValueBranch0() {
   data(
     Branch0Index.TEXT,
     readInOwner<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE)!.name
@@ -66,14 +75,18 @@ function execInputBranch0() {
 }
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
-  write(Index.INPUT_VISIBLE, input.visible);
-  write(Index.INPUT_VALUE, input.value);
-  execInputValue();
+  if (write(Index.INPUT_VISIBLE, input.visible)) {
+    execInputVisible();
+  }
+  if (write(Index.INPUT_VALUE, input.value)) {
+    execInputValue();
+  }
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
+  CLOSURE_VALUE = -1,
   TEXT = 0
 }
 
@@ -82,6 +95,8 @@ type Branch0Scope = [Text];
 const branch0 = createRenderer(
   "<span> </span>",
   open(1) + next(1) + get + next(1) + close,
-  undefined,
+  () => {
+    queue(execInputValueBranch0, Branch0Index.CLOSURE_VALUE);
+  },
   0
 );

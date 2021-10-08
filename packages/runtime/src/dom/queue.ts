@@ -4,12 +4,11 @@ import {
   runWithScope,
   currentScope,
   currentOffset,
-  write,
   getOwnerScope,
   ownerOffset
 } from "./scope";
 
-type ExecFn = (scope: Scope, offset: number) => void;
+type ExecFn = (...args: unknown[]) => void;
 
 const { port1, port2 } = new MessageChannel();
 let queued: boolean;
@@ -29,11 +28,21 @@ function triggerMacroTask() {
 }
 
 let queuedFns: unknown[] = [];
-// [fn, scope, offset, sourceCount]
+let queuedNext: unknown[] = [];
+
+const enum QueueOffsets {
+  FN = 0,
+  SCOPE = 1,
+  OFFSET = 2,
+  SORT_VALUE = 3,
+  ARGUMENT = 4,
+  TOTAL = 5
+}
 
 export function queue(
   fn: ExecFn,
   localIndex = 0,
+  argument: unknown = undefined,
   scope = currentScope,
   offset = currentOffset
 ) {
@@ -42,9 +51,9 @@ export function queue(
   // index is where the function should be in the queue
   // but if it already exists, we should not add it again
   if (
-    queuedFns[index] !== fn ||
-    queuedFns[index + 1] !== scope ||
-    queuedFns[index + 2] !== offset
+    queuedFns[index + QueueOffsets.FN] !== fn ||
+    queuedFns[index + QueueOffsets.SCOPE] !== scope ||
+    queuedFns[index + QueueOffsets.OFFSET] !== offset
   ) {
     if (!queued) {
       queued = true;
@@ -52,80 +61,78 @@ export function queue(
     }
 
     for (let i = queuedFns.length - 1; i >= index; i--) {
-      queuedFns[i + 4] = queuedFns[i];
+      queuedFns[i + QueueOffsets.TOTAL] = queuedFns[i];
     }
 
-    queuedFns[index] = fn;
-    queuedFns[index + 1] = scope;
-    queuedFns[index + 2] = offset;
-    queuedFns[index + 3] = offset + localIndex;
+    queuedFns[index + QueueOffsets.FN] = fn;
+    queuedFns[index + QueueOffsets.SCOPE] = scope;
+    queuedFns[index + QueueOffsets.OFFSET] = offset;
+    queuedFns[index + QueueOffsets.SORT_VALUE] = offset + localIndex;
   }
+  queuedFns[index + QueueOffsets.ARGUMENT] = argument;
 }
 
 export function queueInOwner(
   fn: ExecFn,
-  sourceCount?: number,
+  localIndex?: number,
+  argument?: unknown,
   ownerLevel?: number
 ) {
-  queue(fn, sourceCount, getOwnerScope(ownerLevel), ownerOffset);
+  queue(fn, localIndex, argument, getOwnerScope(ownerLevel), ownerOffset);
 }
 
-let queuedValues: unknown[] = [];
-export function setQueued(scope: Scope, index: number, value: unknown) {
-  // TODO: if the same index is set twice for a scope,
-  // the first one should be removed from the queue
-  queuedValues.push(scope, index, value);
+export function withQueueNext(fn: () => unknown) {
+  const current = queuedFns;
+  queuedFns = queuedNext;
+  const result = fn();
+  queuedFns = current;
+  return result;
 }
 
 export function run() {
   if (queuedFns.length) {
-    const runningFns = queuedFns;
-    const runningValues = queuedValues;
-    queuedFns = [];
-    queuedValues = [];
-    for (let i = 0; i < runningValues.length; i += 3) {
-      write(
-        0,
-        runningValues[i + 2] as unknown,
-        runningValues[i] as Scope,
-        runningValues[i + 1] as number
-      );
-    }
-    for (let i = 0; i < runningFns.length; i += 4) {
+    for (let i = 0; i < queuedFns.length; i += QueueOffsets.TOTAL) {
       runWithScope(
-        runningFns[i] as ExecFn,
-        runningFns[i + 2] as number,
-        runningFns[i + 1] as Scope
+        queuedFns[i + QueueOffsets.FN] as ExecFn,
+        queuedFns[i + QueueOffsets.OFFSET] as number,
+        queuedFns[i + QueueOffsets.SCOPE] as Scope,
+        [queuedFns[i + QueueOffsets.ARGUMENT]]
       );
     }
+    queuedFns = queuedNext;
+    queuedNext = [];
   }
 }
 
-function findQueueIndex(scope: Scope, offset: number) {
+function findQueueIndex(scope: Scope, sortValue: number) {
   let index = 0;
-  let max = queuedFns.length >>> 2;
+  let max = queuedFns.length / QueueOffsets.TOTAL;
 
   while (index < max) {
     const mid = (index + max) >>> 1;
-    const compareResult = compareQueue(mid * 4, scope, offset);
+    const compareResult = compareQueue(
+      mid * QueueOffsets.TOTAL,
+      scope,
+      sortValue
+    );
     if (compareResult > 0) {
       max = mid;
     } else if (compareResult < 0) {
       index = mid + 1;
     } else {
-      return mid * 4;
+      return mid * QueueOffsets.TOTAL;
     }
   }
 
-  return index * 4;
+  return index * QueueOffsets.TOTAL;
 }
 
-function compareQueue(index: number, scope: Scope, offset: number) {
+function compareQueue(index: number, scope: Scope, sortValue: number) {
   return (
     compare(
-      (queuedFns[index + 1] as Scope)[ScopeOffsets.ID],
+      (queuedFns[index + QueueOffsets.SCOPE] as Scope)[ScopeOffsets.ID],
       scope[ScopeOffsets.ID]
-    ) || (queuedFns[index + 3] as number) - offset
+    ) || (queuedFns[index + QueueOffsets.SORT_VALUE] as number) - sortValue
   );
 }
 

@@ -1,5 +1,6 @@
 import { Renderer } from "./renderer";
 import { onDestroy, Scope, ScopeOffsets, read, write } from "./scope";
+import { withQueueNext } from "./queue";
 
 export const enum NodeType {
   Element = 1,
@@ -206,9 +207,9 @@ function normalizeString(value: unknown) {
 type EffectFn = () => void | (() => void);
 export function userEffect(index: number, fn: EffectFn) {
   const cleanup = read(index) as ReturnType<EffectFn>;
-  const nextCleanup = fn();
+  const nextCleanup = withQueueNext(fn);
   if (cleanup) {
-    cleanup();
+    withQueueNext(cleanup);
   } else {
     onDestroy(index);
   }
@@ -223,7 +224,7 @@ export function lifecycle(
 ) {
   const mounted = read(index);
   if (!mounted) {
-    if (mount) mount();
+    if (mount) withQueueNext(mount);
     onDestroy(index + 1);
   }
   if (mounted && update) update();

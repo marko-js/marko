@@ -1,5 +1,6 @@
 import { Context, setContext } from "../common/context";
 import { Scope, ScopeOffsets } from "../common/types";
+import { queue } from "./queue";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import {
@@ -25,16 +26,19 @@ type Conditional = {
   [ConditionalIndex.CONTEXT]: typeof Context;
 };
 
-export function runInBranch(
+export function queueInBranch(
   conditionalIndex: number,
   branch: Renderer,
-  fn: () => void
+  fn: () => void,
+  sortValue: number
 ) {
   if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
-    runWithScope(
+    queue(
       fn,
-      ScopeOffsets.BEGIN_DATA,
-      read(conditionalIndex + ConditionalIndex.SCOPE) as Scope
+      sortValue,
+      undefined,
+      read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
+      ScopeOffsets.BEGIN_DATA
     );
     return 1;
   }
@@ -109,8 +113,6 @@ export function setConditionalRenderer(
       prevScope.___getFirstNode()
     );
     prevScope.___remove();
-
-    return newRenderer;
   }
 }
 
@@ -139,8 +141,6 @@ export function setConditionalRendererOnlyChild(
       initRenderer(newRenderer, newScope);
       newScope.___insertBefore(referenceNode, null);
       setContext(null);
-
-      return newRenderer;
     }
   }
 }
@@ -165,11 +165,15 @@ type Loop = {
   [LoopIndex.CONTEXT]: typeof Context;
 };
 
-export function runForEach(loopIndex: number, fn: () => void) {
+export function queueForEach(
+  loopIndex: number,
+  fn: () => void,
+  sortValue: number
+) {
   for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
     loopIndex + LoopIndex.SCOPE_ARRAY
   )) {
-    runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
+    queue(fn, sortValue, undefined, scope, ScopeOffsets.BEGIN_DATA);
   }
 }
 
