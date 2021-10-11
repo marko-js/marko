@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.16.0](https://github.com/marko-js/marko/compare/v5.15.12...v5.16.0) (2021-10-11)
+
+
+### Features
+
+* upgrade htmljs-parser ([a53fc71](https://github.com/marko-js/marko/commit/a53fc717c1c019e764c677af8665a5159c885dd8))
+
+
+
+
+
 ## [5.15.12](https://github.com/marko-js/marko/compare/v5.15.11...v5.15.12) (2021-10-04)
 
 
