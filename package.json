@@ -56,7 +56,7 @@
     "size": "cross-env SIZE=1 rollup -c ./rollup.config.js && node ./utilities/sizes.js",
     "size:check": "cross-env CHECK=1 yarn size",
     "size:write": "cross-env WRITE=1 yarn size && git add .sizes.json",
-    "test": "cross-env MARKO_SOURCE_RUNTIME=1 TS_NODE_IGNORE='/node_modules/(?!@marko/)/' mocha --enable-source-maps -r ts-node/register --timeout 10000 packages/*/test/{*.test.ts,*/*.test.ts}",
+    "test": "cross-env MARKO_SOURCE_RUNTIME=1 TS_NODE_IGNORE='/node_modules/(?!@marko/)/' mocha --enable-source-maps -r ts-node/register --timeout 10000 packages/*/test/*.test.ts",
     "test:coverage": "nyc --reporter=text-summary yarn test",
     "test:watch": "yarn test --watch --watch-files '**/*.ts'"
   },
