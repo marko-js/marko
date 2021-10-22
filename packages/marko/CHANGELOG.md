@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.16.1](https://github.com/marko-js/marko/compare/v5.16.0...v5.16.1) (2021-10-22)
+
+
+### Bug Fixes
+
+* regression with identical tag name & taglib deduping ([a8d85d7](https://github.com/marko-js/marko/commit/a8d85d7771378d0e995c988cabe4b511ab95dc3d))
+
+
+
+
+
 # [5.16.0](https://github.com/marko-js/marko/compare/v5.15.12...v5.16.0) (2021-10-11)
 
 **Note:** Version bump only for package marko
