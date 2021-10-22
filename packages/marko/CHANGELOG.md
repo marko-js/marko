@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.1](https://github.com/marko-js/marko/compare/v4.24.0...v4.24.1) (2021-10-22)
+
+
+### Bug Fixes
+
+* regression with identical tag name & taglib deduping ([3da701c](https://github.com/marko-js/marko/commit/3da701c0f101ae064c943faf0a908b674992b845))
+* upgrade htmljs parser ([18a41fb](https://github.com/marko-js/marko/commit/18a41fb96bdbc851480856bd6342d822d367866b))
+
 ## [4.24.0](https://github.com/marko-js/marko/compare/v4.23.17...v4.24.0) (2021-10-11)
 
 
