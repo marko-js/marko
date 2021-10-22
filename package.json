@@ -6,7 +6,7 @@
         "build": "node scripts/build.js",
         "build-src": "node scripts/build.js src",
         "postinstall": "cd packages/marko && npm i",
-        "release": "npm run build-src && (cd ./packages/marko && standard-version && git push --tags origin v4 && npm publish --tag v4)",
+        "release": "npm run build-src && (cd ./packages/marko && standard-version && git push --tags origin v4 && npm publish --tag m4)",
         "test": "mocha --timeout 10000 ./packages/marko/test/*/*.test.js",
         "test-ci": "npm run lint && npm run check-format && npm run test-generate-coverage",
         "test-coverage": "npm run test-generate-coverage && nyc report --reporter=html && opn ./coverage/index.html",
