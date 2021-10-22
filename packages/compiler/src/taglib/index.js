@@ -39,7 +39,8 @@ export function buildLookup(dirname, requestedTranslator) {
 
   if (!lookup) {
     lookup = lookupCache[cacheKey] = new Lookup();
-    for (const taglib of taglibsForDir) {
+    for (let i = taglibsForDir.length; i--; ) {
+      const taglib = taglibsForDir[i];
       lookup.addTaglib(taglib);
       if (taglib.imports) {
         for (const importedTaglib of taglib.imports) {
