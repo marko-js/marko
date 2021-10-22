@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.2](https://github.com/marko-js/marko/compare/v4.24.1...v4.24.2) (2021-10-22)
+
+
+### Bug Fixes
+
+* m4 npm publish dist tag ([478d772](https://github.com/marko-js/marko/commit/478d7720b281893ba16913b8292e96195f86a007))
+
 ### [4.24.1](https://github.com/marko-js/marko/compare/v4.24.0...v4.24.1) (2021-10-22)
 
 
