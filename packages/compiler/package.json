@@ -17,7 +17,7 @@
     "complain": "^1.6.0",
     "enhanced-resolve": "5.7.0",
     "he": "^1.2.0",
-    "htmljs-parser": "^2.11.0",
+    "htmljs-parser": "^2.11.1",
     "jsesc": "^3.0.2",
     "lasso-package-root": "^1.0.1",
     "property-handlers": "^1.1.1",
