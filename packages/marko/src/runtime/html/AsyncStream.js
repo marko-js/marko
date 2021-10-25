@@ -2,7 +2,6 @@
 var EventEmitter = require("events-light");
 var StringWriter = require("./StringWriter");
 var BufferedWriter = require("./BufferedWriter");
-var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
@@ -115,7 +114,7 @@ AsyncStream.enableAsyncStackTrace = function () {
 
 var proto = (AsyncStream.prototype = {
   constructor: AsyncStream,
-  ___document: defaultDocument,
+  ___host: typeof window === "object" && document,
   ___isOut: true,
 
   sync: function () {
@@ -603,17 +602,16 @@ var proto = (AsyncStream.prototype = {
     }
   },
 
-  ___getNode: function (doc) {
+  ___getNode: function (host) {
     var node = this._node;
-    var nextEl;
-    var fragment;
-    var html = this.___getOutput();
-
-    if (!doc) {
-      doc = this.___document;
-    }
 
     if (!node) {
+      var nextEl;
+      var fragment;
+      var html = this.___getOutput();
+      if (!host) host = this.___host;
+      var doc = host.ownerDocument || host;
+
       if (html) {
         node = parseHTML(html);
 

@@ -3,7 +3,6 @@ var complain = "MARKO_DEBUG" && require("complain");
 var warp10Finalize = require("warp10/finalize");
 var eventDelegation = require("../event-delegation");
 var win = window;
-var defaultDocument = document;
 var createFragmentNode =
   require("../../vdom/morphdom/fragment").___createFragmentNode;
 var componentsUtil = require("../util");
@@ -168,11 +167,11 @@ function addDOMEventListeners(
   handles.push(removeListener);
 }
 
-function initComponent(componentDef, doc) {
+function initComponent(componentDef, host) {
   var component = componentDef.___component;
 
   component.___reset();
-  component.___document = doc;
+  component.___host = host;
 
   var isExisting = componentDef.___isExisting;
 
@@ -225,12 +224,11 @@ function initComponent(componentDef, doc) {
  * in the components context (nested components are initialized before ancestor components).
  * @param  {Array<marko-components/lib/ComponentDef>} componentDefs An array of ComponentDef instances
  */
-function initClientRendered(componentDefs, doc) {
+function initClientRendered(componentDefs, host) {
+  if (!host) host = document;
   // Ensure that event handlers to handle delegating events are
   // always attached before initializing any components
-  eventDelegation.___init(doc);
-
-  doc = doc || defaultDocument;
+  eventDelegation.___init(host);
   var len = componentDefs.length;
   var componentDef;
   var i;
@@ -242,7 +240,7 @@ function initClientRendered(componentDefs, doc) {
 
   for (i = len; i--; ) {
     componentDef = componentDefs[i];
-    initComponent(componentDef, doc);
+    initComponent(componentDef, host);
   }
 }
 
@@ -250,7 +248,7 @@ function initClientRendered(componentDefs, doc) {
  * This method initializes all components that were rendered on the server by iterating over all
  * of the component IDs.
  */
-function initServerRendered(renderedComponents, doc) {
+function initServerRendered(renderedComponents, host) {
   var type = typeof renderedComponents;
   var globalKey = "$";
   var runtimeId;
@@ -302,10 +300,10 @@ function initServerRendered(renderedComponents, doc) {
 
   if (isFromSerializedGlobals) {
     runtimeId = this.r;
-    doc = defaultDocument;
+    host = document;
   } else {
     runtimeId = renderedComponents.r || DEFAULT_RUNTIME_ID;
-    doc = doc || defaultDocument;
+    if (!host) host = document;
 
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
@@ -317,7 +315,7 @@ function initServerRendered(renderedComponents, doc) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    if (doc !== defaultDocument) {
+    if (host !== document) {
       complain(
         "Passing a document other than the current document to `require('marko/components).init` is deprecated."
       );
@@ -342,8 +340,8 @@ function initServerRendered(renderedComponents, doc) {
 
   // Ensure that event handlers to handle delegating events are
   // always attached before initializing any components
-  indexServerComponentBoundaries(doc, runtimeId);
-  eventDelegation.___init(doc);
+  indexServerComponentBoundaries(host, runtimeId);
+  eventDelegation.___init(host);
 
   if (renderedComponents.g) {
     meta.___globals = renderedComponents.g;
@@ -362,12 +360,12 @@ function initServerRendered(renderedComponents, doc) {
       var typeName = meta.___types[componentDef[1]];
 
       return registry.___isRegistered(typeName)
-        ? tryHydrateComponent(componentDef, meta, doc, runtimeId)
+        ? tryHydrateComponent(componentDef, meta, host, runtimeId)
         : registry.___addPendingDef(
             componentDef,
             typeName,
             meta,
-            doc,
+            host,
             runtimeId
           );
     })
@@ -377,14 +375,14 @@ function initServerRendered(renderedComponents, doc) {
   return this;
 }
 
-function tryHydrateComponent(rawDef, meta, doc, runtimeId) {
+function tryHydrateComponent(rawDef, meta, host, runtimeId) {
   var componentDef = ComponentDef.___deserialize(
     rawDef,
     meta.___types,
     meta.___globals,
     registry
   );
-  var mount = hydrateComponentAndGetMount(componentDef, doc);
+  var mount = hydrateComponentAndGetMount(componentDef, host);
 
   if (!mount) {
     // hydrateComponentAndGetMount will return false if there is not rootNode
@@ -394,11 +392,11 @@ function tryHydrateComponent(rawDef, meta, doc, runtimeId) {
       deferredDefs.push(componentDef);
     } else {
       deferredDefs = [componentDef];
-      doc.addEventListener("DOMContentLoaded", function () {
-        indexServerComponentBoundaries(doc, runtimeId);
+      document.addEventListener("DOMContentLoaded", function () {
+        indexServerComponentBoundaries(host, runtimeId);
         deferredDefs
           .map(function (componentDef) {
-            return hydrateComponentAndGetMount(componentDef, doc);
+            return hydrateComponentAndGetMount(componentDef, host);
           })
           .reverse()
           .forEach(tryInvoke);
@@ -410,7 +408,7 @@ function tryHydrateComponent(rawDef, meta, doc, runtimeId) {
   return mount;
 }
 
-function hydrateComponentAndGetMount(componentDef, doc) {
+function hydrateComponentAndGetMount(componentDef, host) {
   var componentId = componentDef.id;
   var component = componentDef.___component;
   var rootNode = serverComponentRootNodes[componentId];
@@ -423,18 +421,18 @@ function hydrateComponentAndGetMount(componentDef, doc) {
     componentsByDOMNode.set(rootNode, component);
 
     if (componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER) {
-      component.___document = doc;
+      component.___host = host;
       renderResult = component.___rerender(component.___input, true);
       trackComponent(componentDef);
       return function mount() {
-        renderResult.afterInsert(doc);
+        renderResult.afterInsert(host);
       };
     } else {
       trackComponent(componentDef);
     }
 
     return function mount() {
-      initComponent(componentDef, doc);
+      initComponent(componentDef, host);
     };
   }
 }

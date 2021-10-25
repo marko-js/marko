@@ -60,7 +60,7 @@ runtime.t = function (typeName) {
             instance.__proto__ = newProto;
             instance
               .___rerender(instance.___input, false)
-              .afterInsert(instance.___document);
+              .afterInsert(instance.___host);
           });
         });
       }

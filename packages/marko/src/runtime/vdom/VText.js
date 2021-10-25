@@ -11,8 +11,8 @@ VText.prototype = {
 
   ___nodeType: 3,
 
-  ___actualize: function (doc) {
-    return doc.createTextNode(this.___nodeValue);
+  ___actualize: function (host) {
+    return (host.ownerDocument || host).createTextNode(this.___nodeValue);
   },
 
   ___cloneNode: function () {

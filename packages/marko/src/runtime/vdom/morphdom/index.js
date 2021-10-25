@@ -56,7 +56,7 @@ function onNodeAdded(node, componentsContext) {
   }
 }
 
-function morphdom(fromNode, toNode, doc, componentsContext) {
+function morphdom(fromNode, toNode, host, componentsContext) {
   var globalComponentsContext;
   var isHydrate = false;
   var keySequences = Object.create(null);
@@ -74,7 +74,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     ownerComponent,
     parentComponent
   ) {
-    var realNode = vNode.___actualize(doc, parentEl.namespaceURI);
+    var realNode = vNode.___actualize(host, parentEl.namespaceURI);
     insertBefore(realNode, referenceEl, parentEl);
 
     if (
@@ -678,7 +678,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    componentsUtil.___stopDOMManipulationWarning();
+    componentsUtil.___stopDOMManipulationWarning(host);
   }
 
   morphChildren(fromNode, toNode, toNode.___component);
@@ -707,7 +707,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    componentsUtil.___startDOMManipulationWarning();
+    componentsUtil.___startDOMManipulationWarning(host);
   }
 }
 

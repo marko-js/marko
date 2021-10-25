@@ -151,13 +151,16 @@ VElement.prototype = {
     return this.___finishChild();
   },
 
-  ___actualize: function (doc, parentNamespaceURI) {
+  ___actualize: function (host, parentNamespaceURI) {
     var tagName = this.___nodeName;
     var attributes = this.___attributes;
     var namespaceURI = DEFAULT_NS[tagName] || parentNamespaceURI || NS_HTML;
 
     var flags = this.___flags;
-    var el = doc.createElementNS(namespaceURI, tagName);
+    var el = (host.ownerDocument || host).createElementNS(
+      namespaceURI,
+      tagName
+    );
 
     if (flags & FLAG_CUSTOM_ELEMENT) {
       assign(el, attributes);

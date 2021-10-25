@@ -35,13 +35,13 @@ function register(type, def) {
   return type;
 }
 
-function addPendingDef(def, type, meta, doc, runtimeId) {
+function addPendingDef(def, type, meta, host, runtimeId) {
   if (!pendingDefs) {
     pendingDefs = {};
 
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
-      doc.addEventListener("load", function () {
+      document.addEventListener("load", function () {
         var pendingComponentIds = Object.keys(pendingDefs);
         if (pendingComponentIds.length) {
           complain(
@@ -54,7 +54,7 @@ function addPendingDef(def, type, meta, doc, runtimeId) {
   (pendingDefs[type] = pendingDefs[type] || []).push([
     def,
     meta,
-    doc,
+    host,
     runtimeId
   ]);
 }

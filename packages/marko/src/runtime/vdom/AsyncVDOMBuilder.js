@@ -7,7 +7,6 @@ var VComponent = vdom.___VComponent;
 var VFragment = vdom.___VFragment;
 var virtualizeHTML = vdom.___virtualizeHTML;
 var RenderResult = require("../RenderResult");
-var defaultDocument = vdom.___defaultDocument;
 var morphdom = require("./morphdom");
 var attrsHelper = require("./helpers/attrs");
 
@@ -54,7 +53,7 @@ function AsyncVDOMBuilder(globalData, parentNode, parentOut) {
 
 var proto = (AsyncVDOMBuilder.prototype = {
   ___isOut: true,
-  ___document: defaultDocument,
+  ___host: typeof window === "object" && document,
 
   bc: function (component, key, ownerComponent) {
     var vComponent = new VComponent(component, key, ownerComponent);
@@ -136,11 +135,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
 
   html: function (html, ownerComponent) {
     if (html != null) {
-      var vdomNode = virtualizeHTML(
-        html,
-        this.___document || document,
-        ownerComponent
-      );
+      var vdomNode = virtualizeHTML(html, ownerComponent);
       this.node(vdomNode);
     }
 
@@ -389,20 +384,20 @@ var proto = (AsyncVDOMBuilder.prototype = {
     return this;
   },
 
-  ___getNode: function (doc) {
+  ___getNode: function (host) {
     var node = this.___vnode;
     if (!node) {
       var vdomTree = this.___getOutput();
-      // Create the root document fragment node
-      doc = doc || this.___document || document;
-      this.___vnode = node = vdomTree.___actualize(doc, null);
-      morphdom(node, vdomTree, doc, this.___components);
+
+      if (!host) host = this.___host;
+      this.___vnode = node = vdomTree.___actualize(host, null);
+      morphdom(node, vdomTree, host, this.___components);
     }
     return node;
   },
 
-  toString: function (doc) {
-    var docFragment = this.___getNode(doc);
+  toString: function (host) {
+    var docFragment = this.___getNode(host);
     var html = "";
 
     var child = docFragment.firstChild;
