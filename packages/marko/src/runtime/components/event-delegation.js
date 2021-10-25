@@ -76,7 +76,7 @@ function addDelegatedEventHandlerToHost(eventType, host) {
   var listeners = (host[listenersAttachedKey] =
     host[listenersAttachedKey] || {});
   if (!listeners[eventType]) {
-    host.addEventListener(
+    (host.body || host).addEventListener(
       eventType,
       (listeners[eventType] = function (event) {
         var propagationStopped = false;
