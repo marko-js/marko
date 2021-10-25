@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.17.0](https://github.com/marko-js/marko/compare/v5.16.1...v5.17.0) (2021-10-25)
+
+
+### Features
+
+* improve shadow root support ([#1749](https://github.com/marko-js/marko/issues/1749)) ([955ea00](https://github.com/marko-js/marko/commit/955ea006b89ee303d25f415d88962cd3b6f020f8))
+
+
+
+
+
 ## [5.16.1](https://github.com/marko-js/marko/compare/v5.16.0...v5.16.1) (2021-10-22)
 
 
