@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.1](https://github.com/marko-js/marko/compare/v5.17.0...v5.17.1) (2021-10-25)
+
+
+### Bug Fixes
+
+* prefer delegating events from document.body ([f51ac21](https://github.com/marko-js/marko/commit/f51ac21a1116aacc97bd9a8b3009da368ce81f61))
+
+
+
+
+
 # [5.17.0](https://github.com/marko-js/marko/compare/v5.16.1...v5.17.0) (2021-10-25)
 
 
