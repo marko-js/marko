@@ -72,11 +72,11 @@ function addDelegatedEventHandler(eventType) {
   }
 }
 
-function addDelegatedEventHandlerToDoc(eventType, doc) {
-  var body = doc.body || doc;
-  var listeners = (doc[listenersAttachedKey] = doc[listenersAttachedKey] || {});
+function addDelegatedEventHandlerToHost(eventType, host) {
+  var listeners = (host[listenersAttachedKey] =
+    host[listenersAttachedKey] || {});
   if (!listeners[eventType]) {
-    body.addEventListener(
+    host.addEventListener(
       eventType,
       (listeners[eventType] = function (event) {
         var propagationStopped = false;
@@ -133,8 +133,8 @@ exports.___handleNodeDetach = noop;
 exports.___delegateEvent = delegateEvent;
 exports.___getEventFromEl = getEventFromEl;
 exports.___addDelegatedEventHandler = addDelegatedEventHandler;
-exports.___init = function (doc) {
+exports.___init = function (host) {
   Object.keys(delegatedEvents).forEach(function (eventType) {
-    addDelegatedEventHandlerToDoc(eventType, doc);
+    addDelegatedEventHandlerToHost(eventType, host);
   });
 };

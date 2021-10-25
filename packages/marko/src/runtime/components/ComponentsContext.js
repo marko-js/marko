@@ -35,10 +35,10 @@ function ComponentsContext(out, parentComponentsContext) {
 }
 
 ComponentsContext.prototype = {
-  ___initComponents: function (doc) {
+  ___initComponents: function (host) {
     var componentDefs = this.___components;
 
-    ComponentsContext.___initClientRendered(componentDefs, doc);
+    ComponentsContext.___initClientRendered(componentDefs, host);
 
     this.___out.emit("___componentsInitialized");
 

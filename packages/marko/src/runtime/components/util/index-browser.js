@@ -8,12 +8,13 @@ var runtimeId = markoUID.i++;
 
 var componentLookup = {};
 
-var defaultDocument = document;
 var EMPTY_OBJECT = {};
 
-function getComponentForEl(el, doc) {
+function getComponentForEl(el, host) {
   var node =
-    typeof el == "string" ? (doc || defaultDocument).getElementById(el) : el;
+    typeof el == "string"
+      ? ((host ? host.ownerDocument : host) || document).getElementById(el)
+      : el;
   var component;
   var vElement;
 
@@ -158,11 +159,11 @@ if ("MARKO_DEBUG") {
       };
     }
   };
-  exports.___startDOMManipulationWarning = function () {
-    document.addEventListener("DOMNodeRemoved", warnNodeRemoved);
+  exports.___startDOMManipulationWarning = function (host) {
+    host.addEventListener("DOMNodeRemoved", warnNodeRemoved);
   };
-  exports.___stopDOMManipulationWarning = function () {
-    document.removeEventListener("DOMNodeRemoved", warnNodeRemoved);
+  exports.___stopDOMManipulationWarning = function (host) {
+    host.removeEventListener("DOMNodeRemoved", warnNodeRemoved);
   };
 }
 

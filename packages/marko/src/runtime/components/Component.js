@@ -184,7 +184,7 @@ function Component(id) {
   this.___updateQueued = false;
   this.___dirty = false;
   this.___settingInput = false;
-  this.___document = undefined;
+  this.___host = undefined;
 
   var ssrKeyedElements = keyedElementsByComponentId[id];
 
@@ -526,21 +526,21 @@ Component.prototype = componentProto = {
     var input = this.___renderInput || this.___input;
 
     updateManager.___batchUpdate(function () {
-      self.___rerender(input, false).afterInsert(self.___document);
+      self.___rerender(input, false).afterInsert(self.___host);
     });
 
     this.___reset();
   },
 
   ___rerender: function (input, isHydrate) {
-    var doc = this.___document;
+    var host = this.___host;
     var globalData = this.___global;
     var rootNode = this.___rootNode;
     var renderer = this.___renderer;
     var createOut = renderer.createOut || defaultCreateOut;
     var out = createOut(globalData);
     out.sync();
-    out.___document = this.___document;
+    out.___host = this.___host;
     out[CONTEXT_KEY] = this.___context;
 
     var componentsContext = getComponentsContext(out);
@@ -554,7 +554,7 @@ Component.prototype = componentProto = {
 
     var targetNode = out.___getOutput().___firstChild;
 
-    morphdom(rootNode, targetNode, doc, componentsContext);
+    morphdom(rootNode, targetNode, host, componentsContext);
 
     return result;
   },
