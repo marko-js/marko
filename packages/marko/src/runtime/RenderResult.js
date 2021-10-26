@@ -1,6 +1,12 @@
 var domInsert = require("./dom-insert");
 var complain = "MARKO_DEBUG" && require("complain");
 
+function getRootNode(el) {
+  var cur = el;
+  while (cur.parentNode) cur = cur.parentNode;
+  return cur;
+}
+
 function getComponentDefs(result) {
   var componentDefs = result.___components;
 
@@ -97,9 +103,9 @@ Object.defineProperty(proto, "context", {
 domInsert(
   proto,
   function getEl(renderResult, referenceEl) {
-    return renderResult.getNode(referenceEl);
+    return renderResult.getNode(getRootNode(referenceEl));
   },
   function afterInsert(renderResult, referenceEl) {
-    return renderResult.afterInsert(referenceEl);
+    return renderResult.afterInsert(getRootNode(referenceEl));
   }
 );
