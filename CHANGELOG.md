@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.2](https://github.com/marko-js/marko/compare/v5.17.1...v5.17.2) (2021-10-26)
+
+
+### Bug Fixes
+
+* ensure host element always a document or shadow root ([#1751](https://github.com/marko-js/marko/issues/1751)) ([d719724](https://github.com/marko-js/marko/commit/d719724c9b3ee4ea904ad0d583925ac8205007fb))
+
+
+
+
+
 ## [5.17.1](https://github.com/marko-js/marko/compare/v5.17.0...v5.17.1) (2021-10-25)
 
 
