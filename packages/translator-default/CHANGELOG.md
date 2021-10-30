@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.3](https://github.com/marko-js/marko/compare/v5.17.2...v5.17.3) (2021-10-30)
+
+
+### Bug Fixes
+
+* upgrade babel deps & fix builder regression ([91b3c58](https://github.com/marko-js/marko/commit/91b3c5855923adb64ab30677729e2d0404245846))
+
+
+
+
+
 ## [5.17.2](https://github.com/marko-js/marko/compare/v5.17.1...v5.17.2) (2021-10-26)
 
 **Note:** Version bump only for package @marko/translator-default
