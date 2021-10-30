@@ -36,8 +36,9 @@ MARKO_TYPES.forEach(typeName => {
   const assertKey = `assert${typeName}`;
   babelTypes[checkKey] = (node, opts) => is(typeName, node, opts);
   babelTypes[assertKey] = (node, opts) => assert(typeName, node, opts);
-  babelTypes[typeName] = babelTypes[lowerName] = (...args) =>
-    builder(typeName, ...args);
+  babelTypes[typeName] = babelTypes[lowerName] = function () {
+    return builder.apply(typeName, arguments);
+  };
 });
 
 MARKO_ALIAS_TYPES.forEach(aliasName => {
