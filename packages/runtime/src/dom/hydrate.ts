@@ -23,12 +23,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   // TODO: check if this is a fakeArray
   // and warn in dev that there are conflicting runtime ids
   const initialHydration = window[hydrateVar];
-  const walker = doc.createTreeWalker(
-    doc,
-    128 /** NodeFilter.SHOW_COMMENT */,
-    (() => 1) as any /** NodeFilter.FILTER_ACCEPT */,
-    false
-  );
+  const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
   let currentScope: Scope;
   let currentOffset: number;
@@ -70,7 +65,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
 
     while ((currentNode = walker.nextNode()!)) {
       const nodeValue = currentNode.nodeValue;
-      if (currentNode.nodeType === 8 && nodeValue?.startsWith(`${runtimeId}`)) {
+      if (nodeValue?.startsWith(`${runtimeId}`)) {
         const token = nodeValue[runtimeLength];
         const data = nodeValue.slice(runtimeLength + 1);
         if (token === HydrateSymbols.SCOPE_OFFSET) {
@@ -94,10 +89,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           currentScope = scopeLookup.get(data)!;
           currentOffset = 0;
           if (!currentScope) {
-            scopeLookup.set(
-              data,
-              (currentScope = ([data] as unknown) as Scope)
-            );
+            scopeLookup.set(data, (currentScope = [data] as unknown as Scope));
           }
           currentScope[ScopeOffsets.START_NODE] = currentNode;
         } else if (token === HydrateSymbols.SCOPE_END) {

@@ -21,11 +21,7 @@ export default function (
     doc[runtimePrefix + "w"] ||
     (doc[runtimePrefix + "w"] = doc.createTreeWalker(
       doc,
-      128 /** NodeFilter.SHOW_COMMENT */,
-      function () {
-        return 1; /** NodeFilter.FILTER_ACCEPT */
-      } as any,
-      false
+      128 /** NodeFilter.SHOW_COMMENT */
     ) as CommentWalker);
   while ((node = walker.nextNode() as Comment)) {
     if (node.data.indexOf(runtimePrefix) === 0) {

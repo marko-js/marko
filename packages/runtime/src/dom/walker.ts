@@ -1,12 +1,6 @@
 import { ScopeOffsets } from "../common/types";
 
-const doc = document;
-export const walker = doc.createTreeWalker(
-  doc.documentElement,
-  -1,
-  null,
-  false
-);
+export const walker = document.createTreeWalker(document);
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, Inside, or Replace
@@ -130,9 +124,8 @@ function walkInternal(
     } else if (value === WalkCodes.Get) {
       scope[currentScopeIndex++] = walker.currentNode;
     } else {
-      const newNode = (scope[currentScopeIndex++] = document.createTextNode(
-        ""
-      ));
+      const newNode = (scope[currentScopeIndex++] =
+        document.createTextNode(""));
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
 
