@@ -49,7 +49,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       throw tag.get("name").buildCodeFrameError(msg);
     } else {
       throw tag.hub.buildError(
-        ({ loc: { start, end } } as unknown) as t.Node,
+        { loc: { start, end } } as unknown as t.Node,
         msg,
         Error
       );
@@ -78,11 +78,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
 
     refId = getTemplateId(
       file.markoOpts.optimize,
-      path.resolve(
-        file.opts.sourceFileName as string,
-        "..",
-        relativeReferencePath
-      )
+      path.resolve(file.opts.filename as string, "..", relativeReferencePath)
     );
   }
 

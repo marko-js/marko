@@ -46,6 +46,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
     tagIdentifier = node.name;
   }
 
+  const tagVar = node.var;
   const attrsObject = attrsToObject(tag, true);
 
   if (node.extra!.tagNameNullable) {
@@ -73,9 +74,9 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
       ] = t.objectProperty(t.identifier("renderBody"), renderBodyId);
     }
 
-    if (node.var) {
+    if (tagVar) {
       translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)), "let");
-      renderTagExpr = t.assignmentExpression("=", node.var, renderTagExpr);
+      renderTagExpr = t.assignmentExpression("=", tagVar, renderTagExpr);
     }
 
     writeTemplate(tag, tagTemplate!);
@@ -88,7 +89,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
         renderBodyId && callStatement(renderBodyId)
       )
     );
-  } else if (node.var) {
+  } else if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, attrsObject));
   } else {
     writeTemplate(tag, tagTemplate!);

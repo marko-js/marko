@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
   "dependencies": {
-    "@marko/babel-utils": "5.10.2",
+    "@marko/babel-utils": "5.17.3",
     "@marko/runtime-fluurt": "^0.0.1",
-    "tslib": "^2.1.0"
+    "tslib": "^2.3.1"
   },
   "files": [
     "dist"

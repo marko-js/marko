@@ -4,7 +4,7 @@ const _renderer = _register("packages/translator/test/fixtures/let-tag/template.
   const x = 1;
   const y = 1;
 
-  _write(`<div>${_hydrateMarker()}1</div>${_escapeXML(y)}`);
+  _write(`<div>${_hydrateMarker()}1</div>${_hydrateMarker()}${_escapeXML(y)}`);
 });
 
 export default _renderer;

@@ -1,7 +1,7 @@
-import format from "pretty-format";
+import format, { plugins } from "pretty-format";
 import { getNodePath } from "./get-node-info";
 
-const { DOMElement, DOMCollection } = format.plugins;
+const { DOMElement, DOMCollection } = plugins;
 
 import reorderRuntime from "../../src/html/reorder-runtime";
 const runtimeId = "M";

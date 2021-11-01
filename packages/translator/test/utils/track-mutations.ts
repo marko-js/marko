@@ -1,7 +1,7 @@
-import format from "pretty-format";
+import format, { plugins } from "pretty-format";
 import { getNodePath, getTypeName } from "./get-node-info";
 
-const { DOMElement, DOMCollection } = format.plugins;
+const { DOMElement, DOMCollection } = plugins;
 
 export default function createMutationTracker(window, container) {
   const result: string[] = [];
