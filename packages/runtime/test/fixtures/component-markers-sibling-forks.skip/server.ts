@@ -1,22 +1,22 @@
-import { write, fork, register } from "../../../src/html/index";
+import { write, fork } from "../../../src/html/index";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
-  firstComponent({});
-  secondComponent({});
-  thirdComponent({});
+  firstComponent();
+  secondComponent();
+  thirdComponent();
 };
 
-const firstComponent = register("first", () => {
+const firstComponent = () => {
   fork(resolveAfter("a", 3), write);
-});
+};
 
-const secondComponent = register("second", () => {
+const secondComponent = () => {
   fork(resolveAfter("b", 2), write);
-});
+};
 
-const thirdComponent = register("third", () => {
+const thirdComponent = () => {
   fork(resolveAfter("c", 1), write);
-});
+};
 
 export default renderer;

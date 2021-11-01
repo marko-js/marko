@@ -89,11 +89,7 @@ function getStatusString(container: HTMLDivElement, changes, update) {
     .join("\n")}\n\`\`\``;
 }
 
-function formatMutationRecord(
-  record: MutationRecord,
-  index: number,
-  allRecords: MutationRecord[]
-) {
+function formatMutationRecord(record: MutationRecord) {
   const { target, oldValue } = record;
 
   switch (record.type) {

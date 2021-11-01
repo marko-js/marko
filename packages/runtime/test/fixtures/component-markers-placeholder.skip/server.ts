@@ -2,11 +2,11 @@ import { write, fork, tryPlaceholder } from "../../../src/html/index";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
-  firstComponent({});
-  secondComponent({});
+  firstComponent();
+  secondComponent();
 };
 
-const firstComponent = register("first", () => {
+const firstComponent = () => {
   write("a");
   tryPlaceholder(
     () => {
@@ -21,9 +21,9 @@ const firstComponent = register("first", () => {
   write("e");
   fork(resolveAfter("f", 1), write);
   write("g");
-});
+};
 
-const secondComponent = register("second", () => {
+const secondComponent = () => {
   write("v");
   tryPlaceholder(
     () => {
@@ -36,6 +36,6 @@ const secondComponent = register("second", () => {
     }
   );
   write("z");
-});
+};
 
 export default renderer;

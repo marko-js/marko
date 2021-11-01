@@ -80,7 +80,12 @@ const enum Iter0Index {
   TEXT = 3
 }
 
-type iterScope = [number, number, number[], Text];
+type iterScope = {
+  [Iter0Index.ITEM]: number;
+  [Iter0Index.INDEX]: number;
+  [Iter0Index.ALL]: number[];
+  [Iter0Index.TEXT]: Text;
+};
 
 const iter0 = createRenderer(
   " ",
@@ -90,5 +95,5 @@ const iter0 = createRenderer(
 );
 
 const iter0_execItem = () => {
-  data(Iter0Index.TEXT, read(Iter0Index.ITEM));
+  data(Iter0Index.TEXT, read<iterScope, Iter0Index.ITEM>(Iter0Index.ITEM));
 };

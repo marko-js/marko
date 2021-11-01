@@ -16,7 +16,7 @@ export const template = "Static ";
 export const walks = open(2) + after + over(1) + close;
 
 export const execInputValue = () => {
-  data(Index.TEXT, read(Index.INPUT_VALUE));
+  data(Index.TEXT, read<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE));
 };
 
 export const execDynamicInput = (input: { value: string }) => {

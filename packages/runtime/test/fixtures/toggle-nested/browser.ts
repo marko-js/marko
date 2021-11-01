@@ -73,7 +73,7 @@ export const walks = open(7) + next(1) + get + over(1) + close;
 export const execInputShow = () => {
   setConditionalRenderer(
     Index.CONDITIONAL,
-    read(Index.INPUT_SHOW) ? branch0 : undefined
+    read<scope, Index.INPUT_SHOW>(Index.INPUT_SHOW) ? branch0 : undefined
   );
 };
 
@@ -89,7 +89,9 @@ export const execInputValue1 = () => {
 export const execInputValue1Branch0 = () => {
   setConditionalRenderer(
     Branch0Index.CONDITIONAL1,
-    readInOwner(Index.INPUT_VALUE1) ? branch0_0 : undefined
+    readInOwner<scope, Index.INPUT_VALUE1>(Index.INPUT_VALUE1)
+      ? branch0_0
+      : undefined
   );
   queueInBranch(
     Branch0Index.CONDITIONAL1,
@@ -111,7 +113,9 @@ export const execInputValue2 = () => {
 export const execInputValue2Branch0 = () => {
   setConditionalRenderer(
     Branch0Index.CONDITIONAL2,
-    readInOwner(Index.INPUT_VALUE2) ? branch0_1 : undefined
+    readInOwner<scope, Index.INPUT_VALUE2>(Index.INPUT_VALUE2)
+      ? branch0_1
+      : undefined
   );
   queueInBranch(
     Branch0Index.CONDITIONAL2,
@@ -122,11 +126,17 @@ export const execInputValue2Branch0 = () => {
 };
 
 const execInputValue1Branch0_0 = () => {
-  data(Branch0_0Index.TEXT, readInOwner(Index.INPUT_VALUE1, 2));
+  data(
+    Branch0_0Index.TEXT,
+    readInOwner<scope, Index.INPUT_VALUE1>(Index.INPUT_VALUE1, 2)
+  );
 };
 
 const execInputValue2Branch0_1 = () => {
-  data(Branch0_1Index.TEXT, readInOwner(Index.INPUT_VALUE2, 2));
+  data(
+    Branch0_1Index.TEXT,
+    readInOwner<scope, Index.INPUT_VALUE2>(Index.INPUT_VALUE2, 2)
+  );
 };
 
 export const execDynamicInput = (input: Input) => {
@@ -146,12 +156,12 @@ const enum Branch0Index {
   CONDITIONAL2 = 4
 }
 
-type Branch0Scope = {
-  [Branch0Index.COMMENT1]: Comment;
-  [Branch0Index.CONDITIONAL1]: Comment;
-  [Branch0Index.COMMENT2]: Comment;
-  [Branch0Index.CONDITIONAL2]: Comment;
-};
+// type Branch0Scope = {
+//   [Branch0Index.COMMENT1]: Comment;
+//   [Branch0Index.CONDITIONAL1]: Comment;
+//   [Branch0Index.COMMENT2]: Comment;
+//   [Branch0Index.CONDITIONAL2]: Comment;
+// };
 
 const branch0 = createRenderer(
   "<!><!>",
@@ -174,9 +184,9 @@ const enum Branch0_0Index {
   TEXT = 0
 }
 
-type Branch0_0Scope = {
-  [Branch0_0Index.TEXT]: Text;
-};
+// type Branch0_0Scope = {
+//   [Branch0_0Index.TEXT]: Text;
+// };
 
 const branch0_0 = createRenderer(
   "<span> </span>",
@@ -190,9 +200,9 @@ const enum Branch0_1Index {
   TEXT = 0
 }
 
-type Branch0_1Scope = {
-  [Branch0_1Index.TEXT]: Text;
-};
+// type Branch0_1Scope = {
+//   [Branch0_1Index.TEXT]: Text;
+// };
 
 // OPTIMIZATION: these two branches have the same renderer arguments
 // so they could share the same renderer instance

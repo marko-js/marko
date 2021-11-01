@@ -19,9 +19,8 @@ type MaybeFlushable = Writable & { flush?(): void };
 let $_buffer: Buffer | null = null;
 let $_stream: MaybeFlushable | null = null;
 let $_flush: typeof flushToStream | null = null;
-let $_promises: Array<
-  Promise<unknown> & { isPlaceholder?: true }
-> | null = null;
+let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
+  null;
 
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
@@ -32,11 +31,11 @@ export function nextId() {
   return id;
 }
 
-const nullScope = (new Proxy([], {
+const nullScope = new Proxy([], {
   set() {
     return false;
   }
-}) as any) as Scope;
+}) as any as Scope;
 
 export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
   type Input = Parameters<Renderer>[0];
@@ -48,7 +47,7 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
     try {
       let renderedPromises: typeof $_promises;
       try {
-        const scope = hydrateRoot ? ((["ROOT"] as any) as Scope) : nullScope;
+        const scope = hydrateRoot ? (["ROOT"] as any as Scope) : nullScope;
         hydrateRoot && write(markScopeStart(scope));
         renderer(input, scope, ScopeOffsets.BEGIN_DATA);
         hydrateRoot && write(markScopeEnd(scope));
@@ -73,7 +72,7 @@ export function write(data: string) {
   $_buffer!.content += data;
 }
 
-export function fork<T extends unknown>(
+export function fork<T>(
   promise: Promise<T>,
   renderResult: (result: T) => void
 ) {

@@ -57,7 +57,7 @@ export const hydrate = register("", () => {
 
 const clickHandler = () => {
   queue(execMessage, Index.MESSAGE, "bye");
-  queue(execShow, Index.SHOW, !read(Index.SHOW));
+  queue(execShow, Index.SHOW, !read<scope, Index.SHOW>(Index.SHOW));
 };
 
 const execShow = value => {
@@ -78,7 +78,7 @@ const execMessage = value => {
 };
 
 const execMessageBranch0 = () => {
-  data(Branch0Index.TEXT, readInOwner(Index.MESSAGE));
+  data(Branch0Index.TEXT, readInOwner<scope, Index.MESSAGE>(Index.MESSAGE));
 };
 
 export default createRenderFn(template, walks, render, 0);
@@ -90,7 +90,7 @@ const enum Branch0Index {
   TEXT = 0
 }
 
-type Branch0Scope = [Text];
+// type Branch0Scope = [Text];
 
 const branch0 = createRenderer(
   "<span> </span>",

@@ -1,2 +1,2 @@
-import { inputs } from "./browser";
-export default inputs;
+// import { inputs } from "./browser";
+// export default inputs;

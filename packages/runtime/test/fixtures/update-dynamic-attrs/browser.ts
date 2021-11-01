@@ -24,10 +24,10 @@ const enum Index {
   INPUT_VALUE = 1
 }
 
-type scope = {
-  [Index.DIV]: HTMLDivElement;
-  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
-};
+// type scope = {
+//   [Index.DIV]: HTMLDivElement;
+//   [Index.INPUT_VALUE]: typeof inputs[number]["value"];
+// };
 
 // <div ...input.value/>
 export const template = `<div></div>`;

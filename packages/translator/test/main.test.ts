@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
 import Module from "module";
-import { Writable } from "stream";
+// import { Writable } from "stream";
 import autotest, { TestRunnerOpts } from "mocha-autotest";
 import stripAnsi from "strip-ansi";
 import * as compiler from "@marko/compiler";
-import snapshot from "./utils/snapshot";
+// import snapshot from "./utils/snapshot";
 import renderAndTrackMutations from "./utils/render-and-track-mutations";
 
 type TestConfigFile = {
@@ -35,9 +35,11 @@ require.extensions[".marko"] = (mod, filename) => {
   let rootModule = mod;
   while (rootModule.parent) rootModule = rootModule.parent;
   hookConfig.output = rootModule.constructor === Module ? "html" : "dom";
-  return (mod as typeof mod & {
-    _compile(filename: string, code: string): unknown;
-  })._compile(compiler.compileFileSync(filename, hookConfig).code, filename);
+  return (
+    mod as typeof mod & {
+      _compile(filename: string, code: string): unknown;
+    }
+  )._compile(compiler.compileFileSync(filename, hookConfig).code, filename);
 };
 
 describe("translator", () => {
@@ -47,7 +49,6 @@ describe("translator", () => {
     domCompiled: runCompileTest(domConfig)
     // domRendered: runDOMRenderTest
   });
-  runDOMRenderTest;
 });
 
 function runCompileTest(config: compiler.Config) {
@@ -92,65 +93,65 @@ function runCompileTest(config: compiler.Config) {
   };
 }
 
-function runHTMLRenderTest({
-  main = {},
-  mode,
-  test,
-  resolve,
-  snapshot
-}: TestRunnerOpts & { main: TestConfigFile }) {
-  const templateFile = resolve("template.marko");
-  const snapshotsDir = resolve("snapshots");
-  const name = `snapshots${path.sep + mode}`;
+// function runHTMLRenderTest({
+//   main = {},
+//   mode,
+//   test,
+//   resolve,
+//   snapshot
+// }: TestRunnerOpts & { main: TestConfigFile }) {
+//   const templateFile = resolve("template.marko");
+//   const snapshotsDir = resolve("snapshots");
+//   const name = `snapshots${path.sep + mode}`;
 
-  test(async () => {
-    await ensureDir(snapshotsDir);
-    const { render } = await import(templateFile);
-    let html = "";
+//   test(async () => {
+//     await ensureDir(snapshotsDir);
+//     const { render } = await import(templateFile);
+//     let html = "";
 
-    try {
-      await render(
-        main.inputHTML || {},
-        new Writable({
-          write(chunk: string) {
-            html += chunk;
-          }
-        })
-      );
-    } catch (err) {
-      snapshot(stripCwd(err.message), {
-        name: `${name}-error`,
-        ext: ".txt"
-      });
-      return;
-    }
+//     try {
+//       await render(
+//         main.inputHTML || {},
+//         new Writable({
+//           write(chunk: string) {
+//             html += chunk;
+//           }
+//         })
+//       );
+//     } catch (err) {
+//       snapshot(stripCwd(err.message), {
+//         name: `${name}-error`,
+//         ext: ".txt"
+//       });
+//       return;
+//     }
 
-    snapshot(html, {
-      name,
-      ext: ".html"
-    });
-  });
-}
+//     snapshot(html, {
+//       name,
+//       ext: ".html"
+//     });
+//   });
+// }
 
-function runDOMRenderTest({
-  main = {},
-  mode,
-  test,
-  resolve
-}: TestRunnerOpts & { main: TestConfigFile }) {
-  const templateFile = resolve("template.marko");
-  const snapshotsDir = resolve("snapshots");
+// function runDOMRenderTest({
+//   main = {},
+//   mode,
+//   test,
+//   resolve
+// }: TestRunnerOpts & { main: TestConfigFile }) {
+//   const templateFile = resolve("template.marko");
+//   const snapshotsDir = resolve("snapshots");
 
-  test(async () => {
-    await ensureDir(snapshotsDir);
+//   test(async () => {
+//     await ensureDir(snapshotsDir);
 
-    snapshot(
-      snapshotsDir,
-      `${mode}.md`,
-      await renderAndTrackMutations(templateFile, main.inputDOM)
-    );
-  });
-}
+//     snapshot(
+//       snapshotsDir,
+//       `${mode}.md`,
+//       await renderAndTrackMutations(templateFile, main.inputDOM)
+//     );
+//   });
+// }
 
 async function ensureDir(dir: string) {
   try {

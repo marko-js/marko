@@ -148,9 +148,10 @@ export default {
                 : undefined;
               if (defaultAttrValue?.isStringLiteral()) {
                 const request = defaultAttrValue.node.value;
-                const setReferences = (request === "."
-                  ? tag.hub.file
-                  : loadFileForImport(tag.hub.file, request)
+                const setReferences = (
+                  request === "."
+                    ? tag.hub.file
+                    : loadFileForImport(tag.hub.file, request)
                 )?.path.node.extra.references?.set;
 
                 if (setReferences) {
@@ -273,13 +274,14 @@ function getMetaForTag(expr: ReturnType<typeof getExprRoot>) {
 }
 
 function getMetaForTemplate(path: t.NodePath) {
-  return (path.hub.file.path.node.extra.references ??= {}) as TemplateReferenceMeta;
+  return (path.hub.file.path.node.extra.references ??=
+    {}) as TemplateReferenceMeta;
 }
 
 function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
-  while (!isMarkoPath(curPath.parentPath)) {
-    curPath = curPath.parentPath;
+  while (!isMarkoPath(curPath.parentPath!)) {
+    curPath = curPath.parentPath!;
   }
 
   return curPath as t.NodePath<t.Node> & {
@@ -321,7 +323,7 @@ function trackInputReference(
   let curAccessor = accessor;
 
   while (true) {
-    const { parentPath } = curPath;
+    const parentPath = curPath.parentPath!;
 
     if (parentPath.isVariableDeclarator()) {
       trackInputAlias(parentPath.get("id"), curAccessor);

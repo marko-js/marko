@@ -49,7 +49,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
      * had to create a dummy scope to store Nodes of interest.
      * If so merge them and set/replace the scope in the scopeLookup.
      */
-    hydrationLogic.forEach(([hydrateFnId, scope, offset]) => {
+    hydrationLogic.forEach(([, scope]) => {
       const storedScope = scopeLookup.get(scope[ScopeOffsets.ID]);
 
       if (storedScope !== scope) {

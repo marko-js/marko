@@ -90,7 +90,9 @@ const enum Branch0Index {
   TEXT = 0
 }
 
-type Branch0Scope = [Text];
+// type Branch0Scope = {
+//   [Branch0Index.TEXT]: Text
+// };
 
 const branch0 = createRenderer(
   "<span> </span>",
