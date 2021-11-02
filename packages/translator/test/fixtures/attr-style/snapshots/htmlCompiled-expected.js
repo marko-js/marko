@@ -1,8 +1,8 @@
-import { hydrateMarker as _hydrateMarker, styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 
 const _renderer = _register("packages/translator/test/fixtures/attr-style/template.marko", input => {
-  _write(`${_hydrateMarker()}<div${_styleAttr({
+  _write(`<div${_styleAttr({
     color: input.color
   })}></div><div style=width:100px></div><div style="color: green"></div>`);
 
