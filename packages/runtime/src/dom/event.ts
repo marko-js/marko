@@ -1,13 +1,19 @@
 import { read } from "./scope";
 
-const doc = document as DocumentWithDelegated;
-
-interface DocumentWithDelegated extends Document {
-  ___delegated?: Record<string, 1>;
-}
-
-type EventNames = keyof GlobalEventHandlersEventMap;
 type Unset = false | null | undefined;
+type EventNames = keyof GlobalEventHandlersEventMap;
+
+const delegatedByType = new Map<
+  string,
+  WeakMap<
+    Element,
+    | Unset
+    | ((
+        ev: GlobalEventHandlersEventMap[keyof GlobalEventHandlersEventMap],
+        target: Element
+      ) => void)
+  >
+>();
 
 const eventOpts: AddEventListenerOptions = {
   capture: true,
@@ -18,27 +24,27 @@ export function on<
   T extends EventNames,
   H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
 >(elIndex: number, type: T, handler: H | Unset) {
-  (read(elIndex) as Element)[getKey(type)] = handler;
-}
+  const el = read(elIndex) as Element;
+  const delegated = delegatedByType.get(type);
 
-export function ensureDelegated(type: EventNames) {
-  const delegated = doc.___delegated || (doc.___delegated = {});
-  if (!delegated[type]) {
-    delegated[type] = 1;
-    doc.addEventListener(type, handleDelegated, eventOpts);
+  if (delegated) {
+    delegated.set(el, handler);
+  } else {
+    delegatedByType.set(type, new WeakMap([[el, handler]]));
+    document.addEventListener(type, handleDelegated, eventOpts);
   }
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
-  const key = getKey(ev.type);
-  let target = ev.target as Node | null;
+  let target = ev.target as Element | null;
+  const delegated = delegatedByType.get(ev.type)!;
 
   if (target) {
-    let handler = target[key];
+    let handler = delegated.get(target);
 
     if (ev.bubbles) {
-      while (!handler && !ev.cancelBubble && (target = target!.parentNode)) {
-        handler = target[key];
+      while (!handler && !ev.cancelBubble && (target = target!.parentElement!)) {
+        handler = delegated.get(target);
       }
     }
 
@@ -46,8 +52,4 @@ function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
       handler(ev, target);
     }
   }
-}
-
-function getKey(type: string) {
-  return `#on${type}`;
 }

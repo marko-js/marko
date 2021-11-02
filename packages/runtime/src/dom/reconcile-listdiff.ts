@@ -1,4 +1,5 @@
-import { destroyScope, Scope } from "./scope";
+import { Scope } from "../common/types";
+import { destroyScope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller

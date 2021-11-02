@@ -1,5 +1,6 @@
+import { Scope, ScopeOffsets } from "../common/types";
 import { Renderer } from "./renderer";
-import { onDestroy, Scope, ScopeOffsets, read, write } from "./scope";
+import { onDestroy, read, write } from "./scope";
 import { withQueueNext } from "./queue";
 
 export const enum NodeType {
@@ -22,7 +23,7 @@ export type DOMMethods = {
   ___getLastNode: (this: Scope) => Node & ChildNode;
 };
 
-export const staticNodeMethods = {
+export const staticNodeMethods: DOMMethods = {
   ___insertBefore(parent, nextSibling) {
     parent.insertBefore(this[ScopeOffsets.START_NODE] as Node, nextSibling);
   },
@@ -30,18 +31,18 @@ export const staticNodeMethods = {
     (this[ScopeOffsets.START_NODE] as ChildNode).remove();
   },
   ___getParentNode() {
-    return this.___getFirstNode().parentNode;
+    return this.___getFirstNode().parentNode!;
   },
   ___getAfterNode() {
     return this.___getLastNode().nextSibling;
   },
   ___getFirstNode() {
-    return this[ScopeOffsets.START_NODE];
+    return this[ScopeOffsets.START_NODE] as ChildNode;
   },
   ___getLastNode() {
-    return this[ScopeOffsets.END_NODE];
+    return this[ScopeOffsets.END_NODE] as ChildNode;
   }
-} as DOMMethods;
+};
 
 // export const staticNodePropertiesDef = {
 //   ___insertBefore: {

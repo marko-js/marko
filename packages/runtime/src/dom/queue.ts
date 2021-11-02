@@ -1,6 +1,5 @@
-import { ScopeOffsets } from "../common/types";
+import { Scope, ScopeOffsets } from "../common/types";
 import {
-  Scope,
   runWithScope,
   currentScope,
   currentOffset,
@@ -39,8 +38,8 @@ const enum QueueOffsets {
   TOTAL = 5
 }
 
-export function queue(
-  fn: ExecFn,
+export function queue<T extends ExecFn>(
+  fn: T,
   localIndex = 0,
   argument: unknown = undefined,
   scope = currentScope,

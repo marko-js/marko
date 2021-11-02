@@ -2,7 +2,6 @@ import { DOMMethods, staticNodeMethods } from "./dom";
 import { withQueueNext } from "./queue";
 import { Scope, ScopeOffsets } from "../common/types";
 
-export { Scope, ScopeOffsets };
 export let currentScope: Scope;
 export let currentOffset: number;
 export let ownerOffset: number;

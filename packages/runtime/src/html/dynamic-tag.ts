@@ -1,4 +1,4 @@
-import { Renderer } from "../common/types";
+import type { Renderer } from "../common/types";
 import { write } from "./writer";
 import { attrs } from "./attrs";
 

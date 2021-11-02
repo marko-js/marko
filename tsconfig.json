@@ -1,20 +1,20 @@
 {
-  "exclude": ["**/dist"],
-  "ts-node": {
-    "transpileOnly": true
-  },
+  "include": ["packages/*/src/**/*"],
   "compilerOptions": {
-    "target": "es2017",
-    "composite": true,
+    "lib": ["dom", "ESNext", "scripthost"],
+    "outDir": "dist",
+    "target": "ESNext",
+    "sourceMap": false,
     "declaration": true,
+    "incremental": true,
+    "module": "CommonJS",
     "stripInternal": true,
-    "importHelpers": true,
     "esModuleInterop": true,
-    "strictNullChecks": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
-    "downlevelIteration": true,
+    "preserveConstEnums": true,
     "emitDeclarationOnly": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   }
 }

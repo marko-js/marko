@@ -25,7 +25,7 @@ export {
   userEffect
 } from "./dom";
 
-export { on, ensureDelegated } from "./event";
+export { on } from "./event";
 
 export { classValue, styleValue } from "../common/helpers";
 
@@ -45,6 +45,6 @@ export {
   runInChild
 } from "./scope";
 
-export { Scope } from "../common/types";
+export type { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";

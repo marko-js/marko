@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["packages/**/**/*.ts"],
-  "compilerOptions": {
-    "noEmit": true,
-    "module": "ESNext",
-    "emitDeclarationOnly": false
-  }
-}

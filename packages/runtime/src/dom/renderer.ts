@@ -1,6 +1,6 @@
-import { ScopeOffsets } from "../common/types";
+import { Scope, ScopeOffsets } from "../common/types";
 import { DOMMethods, staticNodeMethods } from "./dom";
-import { createScope, Scope, runWithScope } from "./scope";
+import { createScope, runWithScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queue, run } from "./queue";
 

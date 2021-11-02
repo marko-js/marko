@@ -68,12 +68,12 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
   } else if (info.repeated) {
     const existingAttr = parentTag
       .get("attributes")
-      .find(attr => (attr.node as t.MarkoAttribute).name === attrName) as
-      | t.NodePath<t.ArrayExpression>
-      | undefined;
+      .find(attr => (attr.node as t.MarkoAttribute).name === attrName);
 
     if (existingAttr) {
-      existingAttr.pushContainer("elements", attrsObject);
+      (
+        existingAttr.get("value") as t.NodePath<t.ArrayExpression>
+      ).pushContainer("elements", attrsObject);
     } else {
       parentTag.pushContainer(
         "attributes",

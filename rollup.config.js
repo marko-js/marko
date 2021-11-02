@@ -2,17 +2,12 @@ import fs from "fs";
 import path from "path";
 import replace from "@rollup/plugin-replace";
 import { terser } from "rollup-plugin-terser";
-import typescript from "@rollup/plugin-typescript";
+import esbuild from "rollup-plugin-esbuild-transform";
 import mangleInternal from "./utilities/rollup-plugin-mangle-internal";
 
 const sizeOnly = process.env.SIZE;
 const envs = sizeOnly ? ["dist"] : ["dist/debug", "dist"];
 const targets = sizeOnly ? ["dom"] : ["dom", "html"];
-const tsConfig = {
-  composite: false,
-  declaration: false,
-  emitDeclarationOnly: false
-};
 
 export default envs
   .flatMap(env =>
@@ -31,7 +26,7 @@ export default envs
         }
       ],
       plugins: [
-        typescript(tsConfig),
+        esbuild({ loader: "ts", include: /\.ts$/ }),
         env === "dist" &&
           replace({
             '"MARKO_DEBUG"': false,
@@ -83,6 +78,6 @@ export default envs
               format: "cjs"
             }
           ],
-          plugins: [typescript(tsConfig)]
+          plugins: [esbuild({ loader: "ts", include: /\.ts$/ }),]
         }
   );

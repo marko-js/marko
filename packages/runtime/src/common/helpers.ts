@@ -30,7 +30,7 @@ function stringifyStyleObject(name: string, value: unknown) {
 function toDelimitedString(
   val: unknown,
   delimiter: string,
-  stringify: (n: string, v: string) => string | undefined
+  stringify: (n: string, v: unknown) => string | undefined
 ) {
   switch (typeof val) {
     case "string":
@@ -50,7 +50,7 @@ function toDelimitedString(
           }
         } else {
           for (const name in val) {
-            const v = val[name];
+            const v = (val as Record<string, unknown>)[name];
             const part = stringify(name, v);
             if (part !== "") {
               result += curDelimiter + part;

@@ -79,8 +79,6 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
       renderTagExpr = t.assignmentExpression("=", tagVar, renderTagExpr);
     }
 
-    writeTemplate(tag, tagTemplate!);
-    writeWalks(tag, tagWalks!);
     writeHydrate(
       tag,
       t.ifStatement(
@@ -92,10 +90,17 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
   } else if (tagVar) {
     translateVar(tag, callExpression(tagIdentifier, attrsObject));
   } else {
-    writeTemplate(tag, tagTemplate!);
-    writeWalks(tag, tagWalks!);
     writeHydrate(tag, callStatement(tagIdentifier, attrsObject));
   }
+
+  if (tagTemplate) {
+    // TODO: fix template / walks for dynamic/nullable component (probably deopt)
+    // eg <${show && SomeTemplate}/>
+    // eg <${SomeTemplate}/>
+    writeTemplate(tag, tagTemplate!);
+    writeWalks(tag, tagWalks!);
+  }
+
   tag.remove();
 }
 

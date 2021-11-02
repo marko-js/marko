@@ -1,5 +1,5 @@
-import { Context, setContext } from "../common/context";
 import { Scope, ScopeOffsets } from "../common/types";
+import { Context, setContext } from "../common/context";
 import { queue } from "./queue";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
@@ -149,7 +149,7 @@ const emptyMarkerMap = new Map();
 const emptyMarkerArray = [getEmptyScope()];
 emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
 const emptyMap = new Map();
-const emptyArray = [];
+const emptyArray = [] as unknown[];
 
 const enum LoopIndex {
   REFERENCE_NODE = 0,
@@ -222,7 +222,7 @@ export function setLoopOf<T>(
     (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
     read<Loop, LoopIndex.SCOPE_ARRAY>(loopIndex + LoopIndex.SCOPE_ARRAY) ||
-    (referenceIsMarker ? emptyMarkerArray : emptyArray);
+    (referenceIsMarker ? emptyMarkerArray : emptyArray as Scope[]);
   let inserts = 0;
   let moves = 0;
   let afterReference: Node | null;

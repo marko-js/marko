@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { CommentWalker } from "../common/types";
+import type { CommentWalker } from "../common/types";
 
 export default function (
   id: string,

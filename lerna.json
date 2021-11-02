@@ -8,6 +8,6 @@
     }
   },
   "packages": ["packages/*"],
-  "ignoreChanges": ["**/yarn.lock", "packages/*/test/**", "**/*.md"],
+  "ignoreChanges": ["**/yarn.lock", "**/__tests__/**", "**/*.md"],
   "version": "independent"
 }

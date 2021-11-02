@@ -19,5 +19,5 @@ export default function translateVar(
       t.variableDeclarator(t.cloneDeep(tagVar), initialValue)
     ])
   );
-  tag.scope.crawl();
+  tag.hub.file.path.scope.crawl();
 }
