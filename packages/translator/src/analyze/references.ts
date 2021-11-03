@@ -4,7 +4,7 @@ import {
   loadFileForImport,
   TagDefinition
 } from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
@@ -250,7 +250,8 @@ export default {
 } as t.Visitor;
 
 function getMetaForExpr(expr: ReturnType<typeof getExprRoot>): ReferenceMeta {
-  let references = ((expr.parentPath.node.extra ??= {}).references ??= {});
+  let references = ((expr.parentPath.node.extra ??= {}).references ??=
+    {}) as any;
 
   if (expr.listKey) {
     references = references[expr.listKey] ??= [];

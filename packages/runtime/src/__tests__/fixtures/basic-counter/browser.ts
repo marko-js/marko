@@ -35,7 +35,7 @@ export const hydrate = () => {
   on(Index.BUTTON, "click", bind(clickHandler));
 };
 
-const renderClickCount = value => {
+const renderClickCount = (value: scope[Index.CLICK_COUNT]) => {
   if (write(Index.CLICK_COUNT, value)) {
     data(Index.BUTTON_TEXT, value);
   }

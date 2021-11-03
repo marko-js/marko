@@ -1,3 +1,4 @@
+import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
 import { getNodePath } from "./get-node-info";
 
@@ -10,9 +11,12 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   runtimeId
 );
 
-export default function createMutationTracker(window, container) {
+export default function createMutationTracker(
+  window: JSDOM["window"],
+  container: ParentNode
+) {
   const result: string[] = [];
-  let currentRecords: unknown[] | null = null;
+  let currentRecords: MutationRecord[] | null = null;
   const observer = new window.MutationObserver(records => {
     if (currentRecords) {
       currentRecords = currentRecords.concat(records);
@@ -36,7 +40,7 @@ export default function createMutationTracker(window, container) {
       observer.takeRecords();
       currentRecords = null;
     },
-    getUpdate(update) {
+    getUpdate(update: unknown) {
       if (currentRecords) {
         currentRecords = currentRecords.concat(observer.takeRecords());
       } else {
@@ -46,10 +50,10 @@ export default function createMutationTracker(window, container) {
       currentRecords = null;
       return updateString;
     },
-    log(message) {
+    log(message: string) {
       result.push(message);
     },
-    logUpdate(update) {
+    logUpdate(update: unknown) {
       result.push(this.getUpdate(update));
     },
     getRawLogs() {
@@ -64,7 +68,11 @@ export default function createMutationTracker(window, container) {
   };
 }
 
-function getStatusString(container: HTMLDivElement, changes, update) {
+function getStatusString(
+  container: ParentNode,
+  records: MutationRecord[],
+  update: unknown
+) {
   const clone = container.cloneNode(true);
   clone.normalize();
 
@@ -83,7 +91,7 @@ function getStatusString(container: HTMLDivElement, changes, update) {
     )
     .filter(Boolean)
     .join("\n")
-    .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${changes
+    .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${records
     .map(formatMutationRecord)
     .filter(Boolean)
     .join("\n")}\n\`\`\``;

@@ -7,7 +7,7 @@ import {
   ownerOffset
 } from "./scope";
 
-type ExecFn = (...args: unknown[]) => void;
+type ExecFn = (arg?: any) => void;
 
 const { port1, port2 } = new MessageChannel();
 let queued: boolean;
@@ -41,7 +41,7 @@ const enum QueueOffsets {
 export function queue<T extends ExecFn>(
   fn: T,
   localIndex = 0,
-  argument: unknown = undefined,
+  argument: Parameters<T>[0] = undefined,
   scope = currentScope,
   offset = currentOffset
 ) {
@@ -71,10 +71,10 @@ export function queue<T extends ExecFn>(
   queuedFns[index + QueueOffsets.ARGUMENT] = argument;
 }
 
-export function queueInOwner(
-  fn: ExecFn,
+export function queueInOwner<T extends ExecFn>(
+  fn: T,
   localIndex?: number,
-  argument?: unknown,
+  argument?: Parameters<T>[0],
   ownerLevel?: number
 ) {
   queue(fn, localIndex, argument, getOwnerScope(ownerLevel), ownerOffset);

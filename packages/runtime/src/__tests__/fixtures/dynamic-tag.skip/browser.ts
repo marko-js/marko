@@ -50,3 +50,5 @@
 // const renderBody = createRenderer(renderBody_template);
 
 // export default createRenderFn(template, walks, ["tag"], hydrate);
+
+export {};

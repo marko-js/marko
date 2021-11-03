@@ -45,3 +45,5 @@
 // });
 
 // export default createRenderFn(template, walks, [], hydrate);
+
+export {};

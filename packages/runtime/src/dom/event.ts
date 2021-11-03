@@ -5,14 +5,7 @@ type EventNames = keyof GlobalEventHandlersEventMap;
 
 const delegatedByType = new Map<
   string,
-  WeakMap<
-    Element,
-    | Unset
-    | ((
-        ev: GlobalEventHandlersEventMap[keyof GlobalEventHandlersEventMap],
-        target: Element
-      ) => void)
-  >
+  WeakMap<Element, Unset | ((...args: any[]) => void)>
 >();
 
 const eventOpts: AddEventListenerOptions = {
@@ -22,8 +15,10 @@ const eventOpts: AddEventListenerOptions = {
 
 export function on<
   T extends EventNames,
-  H extends (ev: GlobalEventHandlersEventMap[T], target: Element) => void
->(elIndex: number, type: T, handler: H | Unset) {
+  H extends
+    | Unset
+    | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void)
+>(elIndex: number, type: T, handler: H) {
   const el = read(elIndex) as Element;
   const delegated = delegatedByType.get(type);
 
@@ -43,7 +38,11 @@ function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
     let handler = delegated.get(target);
 
     if (ev.bubbles) {
-      while (!handler && !ev.cancelBubble && (target = target!.parentElement!)) {
+      while (
+        !handler &&
+        !ev.cancelBubble &&
+        (target = target!.parentElement!)
+      ) {
         handler = delegated.get(target);
       }
     }

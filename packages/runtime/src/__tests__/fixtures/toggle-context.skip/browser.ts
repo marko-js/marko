@@ -55,3 +55,5 @@
 // const branch0_walks = get + over(1);
 
 // export default createRenderFn(template, walks, ["visible", "value"], hydrate);
+
+export {};

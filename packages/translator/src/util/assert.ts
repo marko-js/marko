@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 
 export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   for (const attr of tag.get("attributes")) {

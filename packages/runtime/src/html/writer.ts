@@ -1,4 +1,4 @@
-import { Writable } from "stream";
+import type { Writable } from "stream";
 import { Context, setContext } from "../common/context";
 import {
   Renderer,
@@ -144,7 +144,7 @@ export function tryCatch(
     $_promises = null;
     renderBody();
   } catch (_err) {
-    err = _err;
+    err = _err as Error;
   } finally {
     const childPromises = $_promises;
     $_promises = originalPromises;

@@ -1,5 +1,5 @@
+import type { Renderer } from "./renderer";
 import { Scope, ScopeOffsets } from "../common/types";
-import { Renderer } from "./renderer";
 import { onDestroy, read, write } from "./scope";
 import { withQueueNext } from "./queue";
 
@@ -160,13 +160,13 @@ export function props(nodeIndex: number, index: number) {
   if (prevProps) {
     for (const name in prevProps) {
       if (!(name in nextProps)) {
-        node[name] = undefined;
+        (node as any)[name] = undefined;
       }
     }
   }
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextProps) {
-    node[name] = nextProps[name];
+    (node as any)[name] = nextProps[name];
   }
 
   write(index + 1, nextProps);

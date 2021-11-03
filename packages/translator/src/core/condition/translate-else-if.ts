@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import * as writer from "../../util/writer";
 import { buildIfStatement, findPreviousIfStatement } from "./util";
 

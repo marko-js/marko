@@ -1,4 +1,4 @@
-import { Scope } from "../common/types";
+import type { Scope } from "../common/types";
 import { destroyScope } from "./scope";
 
 const WRONG_POS = 2147483647;

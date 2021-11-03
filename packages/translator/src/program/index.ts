@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import * as translateHTML from "./html";
 import * as translateDOM from "./dom";

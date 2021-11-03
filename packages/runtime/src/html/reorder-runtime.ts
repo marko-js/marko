@@ -18,19 +18,19 @@ export default function (
   id = runtimePrefix + id;
   doc = document;
   walker =
-    doc[runtimePrefix + "w"] ||
-    (doc[runtimePrefix + "w"] = doc.createTreeWalker(
+    (doc as any)[runtimePrefix + "w"] ||
+    ((doc as any)[runtimePrefix + "w"] = doc.createTreeWalker(
       doc,
       128 /** NodeFilter.SHOW_COMMENT */
     ) as CommentWalker);
   while ((node = walker.nextNode() as Comment)) {
     if (node.data.indexOf(runtimePrefix) === 0) {
-      walker[node.data] = node;
+      (walker as any)[node.data] = node;
     }
   }
 
   replacementNode = doc.getElementById(id)!;
-  targetNode = walker[id];
+  targetNode = (walker as any)[id];
   targetParent = targetNode!.parentNode!;
 
   while ((refNode = replacementNode.firstChild)) {
@@ -41,7 +41,7 @@ export default function (
   nextNode.removeChild(replacementNode.nextSibling!);
   nextNode.removeChild(replacementNode);
 
-  refNode = walker[id + "/"];
+  refNode = (walker as any)[id + "/"];
 
   while (
     ((nextNode = targetNode!.nextSibling),

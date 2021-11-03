@@ -29,8 +29,8 @@ export type Renderer = {
 type Input = Record<string, unknown>;
 type RenderFn = () => void;
 type DynamicInputFn<I extends Input> = (input: I) => void;
-type RenderResult = Node & {
-  update: (input: Input) => void;
+type RenderResult<I extends Input> = Node & {
+  update: (input: I) => void;
   destroy: () => void;
 };
 
@@ -80,9 +80,9 @@ export function createRenderFn<I extends Input>(
     dynamicEndNodeMethod,
     dynamicEndNodeOffset
   );
-  return (input: I): RenderResult => {
+  return (input: I): RenderResult<I> => {
     const scope = createScope(size!, domMethods!);
-    const dom = initRenderer(renderer, scope) as RenderResult;
+    const dom = initRenderer(renderer, scope) as RenderResult<I>;
 
     if (dynamicInput) {
       queue(dynamicInput, -1, input, scope, ScopeOffsets.BEGIN_DATA);

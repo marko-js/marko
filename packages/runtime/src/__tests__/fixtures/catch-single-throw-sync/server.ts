@@ -6,7 +6,6 @@ const renderer = () => {
     () => {
       write("b");
       throw new Error("ERROR!");
-      write("c");
     },
     err => {
       write(err.message);

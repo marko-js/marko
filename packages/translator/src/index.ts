@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import Program from "./program";
 import ImportDeclaration from "./import-declaration";
 import MarkoDocumentType from "./document-type";

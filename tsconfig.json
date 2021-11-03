@@ -1,7 +1,8 @@
 {
   "include": ["packages/*/src/**/*"],
   "compilerOptions": {
-    "lib": ["dom", "ESNext", "scripthost"],
+    "lib": ["dom", "ESNext"],
+    "strict": true,
     "outDir": "dist",
     "target": "ESNext",
     "sourceMap": false,
@@ -9,11 +10,17 @@
     "incremental": true,
     "module": "CommonJS",
     "stripInternal": true,
+    "noUnusedLocals": true,
+    "isolatedModules": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "moduleResolution": "node",
-    "preserveConstEnums": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": false,
+    "noImplicitOverride": true,
     "emitDeclarationOnly": true,
+    "allowUnreachableCode": false,
+    "importsNotUsedAsValues": "error",
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   }

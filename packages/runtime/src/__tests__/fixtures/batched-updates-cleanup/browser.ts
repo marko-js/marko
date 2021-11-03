@@ -59,13 +59,13 @@ const clickHandler = () => {
   queue(execShow, Index.SHOW, !read<scope, Index.SHOW>(Index.SHOW));
 };
 
-const execShow = value => {
+const execShow = (value: scope[Index.SHOW]) => {
   if (write(Index.SHOW, value)) {
     setConditionalRenderer(Index.CONDITIONAL, value ? branch0 : undefined);
   }
 };
 
-const execMessage = value => {
+const execMessage = (value: scope[Index.MESSAGE]) => {
   if (write(Index.MESSAGE, value)) {
     queueInBranch(
       Index.CONDITIONAL,

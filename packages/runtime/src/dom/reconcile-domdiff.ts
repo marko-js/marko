@@ -1,4 +1,4 @@
-import { Scope } from "../common/types";
+import type { Scope } from "../common/types";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js

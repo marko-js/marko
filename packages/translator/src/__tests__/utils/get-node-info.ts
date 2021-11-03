@@ -1,6 +1,7 @@
 export function getNodePath(node: Node) {
   const parts: string[] = [];
   let cur: Node | null = node;
+
   while (cur) {
     const { parentNode } = cur;
 
@@ -18,7 +19,7 @@ export function getNodePath(node: Node) {
     }
 
     parts.unshift(name);
-    cur = parentNode;
+    cur = parentNode as Node;
   }
 
   return parts.join("/");

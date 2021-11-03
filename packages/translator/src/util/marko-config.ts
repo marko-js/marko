@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 
 export function isOutputHTML<T extends t.Node>(path: t.NodePath<T>) {
   return getMarkoOpts(path).output === "html";

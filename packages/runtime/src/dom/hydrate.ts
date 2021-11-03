@@ -22,7 +22,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const hydrateVar = runtimeId + HydrateSymbols.VAR_HYDRATE;
   // TODO: check if this is a fakeArray
   // and warn in dev that there are conflicting runtime ids
-  const initialHydration = window[hydrateVar];
+  const initialHydration = (window as any)[hydrateVar];
   const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
   let currentScope: Scope;
@@ -31,7 +31,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const scopeLookup: Map<string, Scope> = new Map();
   const stack: Array<string | number> = [];
 
-  const fakeArray = (window[hydrateVar] = {
+  const fakeArray = ((window as any)[hydrateVar] = {
     concat: hydrateAll
   });
 

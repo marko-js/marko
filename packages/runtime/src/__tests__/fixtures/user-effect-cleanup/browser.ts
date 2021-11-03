@@ -44,13 +44,13 @@ export const render = () => {
   execB(0);
 };
 
-function execA(value) {
+function execA(value: scope[Index.A]) {
   if (write(Index.A, value)) {
     queue(execAB, Index.CONCAT_AB);
   }
 }
 
-function execB(value) {
+function execB(value: scope[Index.B]) {
   if (write(Index.B, value)) {
     queue(execAB, Index.CONCAT_AB);
   }
@@ -60,7 +60,7 @@ function execAB() {
   execConcatAB("" + read(Index.A) + read(Index.B));
 }
 
-function execConcatAB(value) {
+function execConcatAB(value: scope[Index.CONCAT_AB]) {
   if (write(Index.CONCAT_AB, value)) {
     data(Index.DIV_TEXT, value);
   }

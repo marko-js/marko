@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import analyzeReferences from "./references";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 import analyzeNestedAttributeTags from "./nested-attribute-tags";

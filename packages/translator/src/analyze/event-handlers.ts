@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {

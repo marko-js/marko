@@ -23,7 +23,7 @@ export function getNodePath(node: Node) {
       break;
     }
 
-    cur = parentNode;
+    cur = parentNode as Node;
   }
 
   return parts.join("/");

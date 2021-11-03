@@ -1,7 +1,7 @@
+import type { Writable } from "stream";
 import fs from "fs";
 import path from "path";
 import assert from "assert";
-import { Writable } from "stream";
 import snap from "mocha-snap";
 import { createRenderer } from "../html/index";
 import reorderRuntime from "../html/reorder-runtime";
@@ -78,7 +78,7 @@ describe("runtime", () => {
                   tracker.logUpdate("Hydrate");
                 }
               },
-              emit(type, ...args: unknown[]) {
+              emit(type: string, ...args: unknown[]) {
                 tracker.log(
                   `# Emit ${type}${args.map(arg => `\n${indent(arg)}`)}`
                 );
@@ -172,7 +172,7 @@ function getNormalizedHtml(container: Element) {
 
   while (treeWalker.nextNode()) {
     const node = treeWalker.currentNode;
-    if (node.nodeType === 8 || isIgnoredTag(node)) {
+    if (node.nodeType === 8 || isIgnoredTag(node as Element)) {
       nodesToRemove.push(node as ChildNode);
     } else if ((node as Element).tagName === "TEXTAREA") {
       node.textContent = (node as HTMLTextAreaElement).value;
@@ -186,7 +186,7 @@ function getNormalizedHtml(container: Element) {
   return clone.innerHTML.trim();
 }
 
-function isIgnoredTag(node) {
+function isIgnoredTag(node: Element) {
   switch (node.tagName) {
     case "LINK":
     case "TITLE":

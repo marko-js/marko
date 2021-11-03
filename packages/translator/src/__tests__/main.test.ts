@@ -5,7 +5,7 @@ import path from "path";
 import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import renderAndTrackMutations from "./utils/render-and-track-mutations";
+import type renderAndTrackMutations from "./utils/render-and-track-mutations";
 
 type TestConfig = {
   inputDOM?: Parameters<typeof renderAndTrackMutations>[1];
@@ -38,7 +38,7 @@ describe("translator", () => {
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
-        // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty
         } catch {
           return {};
         }
@@ -49,14 +49,16 @@ describe("translator", () => {
           async () =>
             (await compiler.compileFile(templateFile, htmlConfig)).code,
           ".js"
-        ));
+        )
+      );
 
-        (config.skip_dom ? it.skip : it)("dom", () =>
+      (config.skip_dom ? it.skip : it)("dom", () =>
         snap(
           async () =>
             (await compiler.compileFile(templateFile, domConfig)).code,
           ".js"
-        ));
+        )
+      );
     });
   }
 });

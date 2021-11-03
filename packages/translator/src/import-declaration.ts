@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import { resolveTagImport } from "@marko/babel-utils";
 
 export default {

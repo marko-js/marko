@@ -1,5 +1,5 @@
 import path from "path";
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { assertNoSpreadAttrs } from "../util/assert";
 
@@ -44,14 +44,14 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
     );
   }
 
-  file.metadata.marko.deps.push(({
+  file.metadata.marko.deps.push({
     type,
     code: markoText.node.value,
     startPos: markoText.node.start!,
     endPos: markoText.node.end!,
     path: `./${base}`,
     style: `./${base}.${type}`
-  } as unknown) as typeof file.metadata.marko.deps[0]);
+  } as unknown as typeof file.metadata.marko.deps[0]);
 
   tag.remove();
 }

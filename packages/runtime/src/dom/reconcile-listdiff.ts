@@ -1,4 +1,4 @@
-import { Scope } from "../common/types";
+import type { Scope } from "../common/types";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
@@ -63,7 +63,7 @@ export function reconcile(
           a ? a.___getFirstNode() : afterReference
         );
         aIdx.delete(wantedElmInOld);
-        oldScopes[wantedElmInOld] = (null as unknown) as Scope;
+        oldScopes[wantedElmInOld] = null as unknown as Scope;
         if (wantedElmInOld > i + 1) i++;
         j++;
       }

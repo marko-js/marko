@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import {
+import type {
   Plugin,
   FunctionPlugin,
   EnterExitPlugin,

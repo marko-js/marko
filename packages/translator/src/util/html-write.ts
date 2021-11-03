@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
 
 export function writeHTML<T extends t.Node>(path: t.NodePath<T>) {
   const writes = (path.state.writes || (path.state.writes = [])) as Array<
