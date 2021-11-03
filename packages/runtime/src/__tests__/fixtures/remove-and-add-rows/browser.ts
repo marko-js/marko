@@ -4,7 +4,7 @@ import {
   write,
   setLoopOf,
   createRenderer,
-  createRenderFn
+  createRenderFn,
 } from "../../../dom/index";
 import { get, next, open, close, skip } from "../../utils/walks";
 
@@ -13,42 +13,42 @@ export const inputs = [
     children: [
       {
         id: 1,
-        text: "a"
+        text: "a",
       },
       {
         id: 2,
-        text: "b"
+        text: "b",
       },
       {
         id: 3,
-        text: "c"
-      }
-    ]
+        text: "c",
+      },
+    ],
   },
   {
     children: [
       {
         id: 1,
-        text: "a"
+        text: "a",
       },
       {
         id: 3,
-        text: "c"
-      }
-    ]
+        text: "c",
+      },
+    ],
   },
   {
     children: [
       {
         id: 4,
-        text: "d"
+        text: "d",
       },
       {
         id: 3,
-        text: "c"
-      }
-    ]
-  }
+        text: "c",
+      },
+    ],
+  },
 ];
 
 type Input = typeof inputs[number];
@@ -56,7 +56,7 @@ type Input = typeof inputs[number];
 const enum Index {
   DIV = 0,
   LOOP = 0,
-  INPUT_CHILDREN = 4
+  INPUT_CHILDREN = 4,
 }
 
 type scope = {
@@ -79,7 +79,7 @@ export const execInputChildren = () => {
     Index.LOOP,
     read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
     iter0,
-    i => "" + (i as Input["children"][number]).id,
+    (i) => "" + (i as Input["children"][number]).id,
     iter0_execItem
   );
 };
@@ -97,7 +97,7 @@ const enum Iter0Index {
   INDEX = 1,
   ALL = 2,
   TEXT = 3,
-  ITEM_TEXT = 4
+  ITEM_TEXT = 4,
 }
 
 type iterScope = [

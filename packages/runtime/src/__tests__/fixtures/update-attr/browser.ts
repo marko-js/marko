@@ -3,28 +3,28 @@ import { get, over, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
-    value: 1
+    value: 1,
   },
   {
-    value: "1"
+    value: "1",
   },
   {
-    value: "2"
+    value: "2",
   },
   {
-    value: null
+    value: null,
   },
   {
-    value: "1"
+    value: "1",
   },
   {
-    value: false
-  }
+    value: false,
+  },
 ];
 
 const enum Index {
   DIV = 0,
-  INPUT_VALUE = 1
+  INPUT_VALUE = 1,
 }
 
 type scope = {

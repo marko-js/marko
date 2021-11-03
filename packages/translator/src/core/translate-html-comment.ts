@@ -3,7 +3,7 @@ import {
   assertNoAttributeTags,
   assertNoAttributes,
   assertNoParams,
-  assertNoVar
+  assertNoVar,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 
@@ -22,5 +22,5 @@ export default {
     writer.exit(tag);
     writer.writeTo(tag)`-->`;
     tag.remove();
-  }
+  },
 };

@@ -27,7 +27,7 @@ export function buildIfStatement(tag: t.NodePath<t.MarkoTag>) {
       throw tag.get("name").buildCodeFrameError(msg);
     } else {
       throw tag.hub.buildError(
-        ({ loc: { start, end } } as unknown) as t.Node,
+        { loc: { start, end } } as unknown as t.Node,
         msg,
         Error
       );

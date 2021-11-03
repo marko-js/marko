@@ -8,7 +8,7 @@ const enum NodeType {
   Element = 1,
   Text = 3,
   Comment = 8,
-  DocumentFragment = 11
+  DocumentFragment = 11,
 }
 
 export type Renderer = {
@@ -129,7 +129,7 @@ export function createRenderer<R extends RenderFn>(
     ___dynamicStartNodeMethod: dynamicStartNodeMethod,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
     ___dynamicEndNodeMethod: dynamicEndNodeMethod,
-    ___dynamicEndNodeOffset: dynamicEndNodeOffset
+    ___dynamicEndNodeOffset: dynamicEndNodeOffset,
   };
 }
 

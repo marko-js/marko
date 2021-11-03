@@ -10,7 +10,7 @@ export default function createMutationTracker(
 ) {
   const result: string[] = [];
   let currentRecords: MutationRecord[] | null = null;
-  const observer = new window.MutationObserver(records => {
+  const observer = new window.MutationObserver((records) => {
     if (currentRecords) {
       currentRecords = currentRecords.concat(records);
     } else {
@@ -23,7 +23,7 @@ export default function createMutationTracker(
     characterData: true,
     characterDataOldValue: true,
     childList: true,
-    subtree: true
+    subtree: true,
   });
   return {
     beginUpdate() {
@@ -57,7 +57,7 @@ export default function createMutationTracker(
     },
     cleanup() {
       observer.disconnect();
-    }
+    },
   };
 }
 
@@ -77,9 +77,9 @@ function getStatusString(
           .replace(/^ {4}/gm, "")}\n`
       : JSON.stringify(update)
   }\n\`\`\`html\n${Array.from(clone.childNodes)
-    .map(child =>
+    .map((child) =>
       format(child, {
-        plugins: [DOMElement, DOMCollection]
+        plugins: [DOMElement, DOMCollection],
       }).trim()
     )
     .filter(Boolean)

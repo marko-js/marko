@@ -7,7 +7,7 @@ const renderer = () => {
       write("b");
       throw new Error("ERROR!");
     },
-    err => {
+    (err) => {
       write(err.message);
     }
   );

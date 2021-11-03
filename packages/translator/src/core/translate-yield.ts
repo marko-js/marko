@@ -15,7 +15,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
 
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = tag;
   const [defaultAttr, onNextAttr] = node.attributes;
 

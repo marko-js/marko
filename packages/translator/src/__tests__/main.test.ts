@@ -18,9 +18,9 @@ const baseConfig: compiler.Config = {
   translator: require.resolve(".."),
   babelConfig: {
     babelrc: false,
-    configFile: false
+    configFile: false,
   },
-  writeVersionComment: false
+  writeVersionComment: false,
 };
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };

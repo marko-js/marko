@@ -10,5 +10,5 @@ export default {
   exit(tag: t.NodePath<t.MarkoTag>) {
     writer.end(tag);
     tag.replaceWith(buildIfStatement(tag))[0].skip();
-  }
+  },
 };

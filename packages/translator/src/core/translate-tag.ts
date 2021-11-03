@@ -24,8 +24,8 @@ export default {
             tag.node.body.params,
             toFirstExpressionOrBlock(tag.node.body)
           )
-        )
+        ),
       ])
     );
-  }
+  },
 };

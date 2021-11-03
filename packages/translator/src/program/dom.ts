@@ -26,12 +26,12 @@ export function exit(program: t.NodePath<t.Program>) {
   program.node.body.push(
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
-        t.variableDeclarator(templateIdentifier, writes || t.stringLiteral(""))
+        t.variableDeclarator(templateIdentifier, writes || t.stringLiteral("")),
       ])
     ),
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
-        t.variableDeclarator(walksIdentifier, walks || t.stringLiteral(""))
+        t.variableDeclarator(walksIdentifier, walks || t.stringLiteral("")),
       ])
     ),
     t.exportNamedDeclaration(
@@ -47,7 +47,7 @@ export function exit(program: t.NodePath<t.Program>) {
               t.blockStatement(hydrateContent)
             )
           )
-        )
+        ),
       ])
     ),
     t.exportDefaultDeclaration(
@@ -56,7 +56,7 @@ export function exit(program: t.NodePath<t.Program>) {
         "createRenderFn",
         templateIdentifier,
         walksIdentifier,
-        t.arrayExpression(usedInputs.map(k => t.stringLiteral(k))),
+        t.arrayExpression(usedInputs.map((k) => t.stringLiteral(k))),
         hydrateIdentifier
       )
     )

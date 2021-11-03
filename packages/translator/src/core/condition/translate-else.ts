@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 import {
   assertNoVar,
   assertNoParams,
-  assertNoAttributes
+  assertNoAttributes,
 } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
@@ -21,5 +21,5 @@ export default {
       tag.node.body
     );
     tag.remove();
-  }
+  },
 };

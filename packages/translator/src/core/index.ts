@@ -21,7 +21,7 @@ export default {
       rawOpenTag: true,
       openTagOnly: true,
       ignoreAttributes: true,
-      relaxRequireCommas: true
+      relaxRequireCommas: true,
     },
     autocomplete: [
       {
@@ -30,9 +30,9 @@ export default {
           "Use to import external modules, follows the same syntax as JavaScript imports.",
         snippet: 'import ${2} from "${1:path}"',
         descriptionMoreURL:
-          "https://markojs.com/docs/syntax/#importing-external-files"
-      }
-    ]
+          "https://markojs.com/docs/syntax/#importing-external-files",
+      },
+    ],
   },
   "<if>": {
     translate: translateIf,
@@ -42,9 +42,9 @@ export default {
         snippet: "if=${1:condition}",
         description: "Use to display content only if the condition is met.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<else-if>": {
     translate: translateElseIf,
@@ -55,9 +55,9 @@ export default {
         description:
           "Use after an <if> or <else-if> tag to display content if those conditions do not match and this one does.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<else>": {
     translate: translateElse,
@@ -67,9 +67,9 @@ export default {
         description:
           "Use after an <if> or <else-if> tag to display content if those conditions do not match.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<for>": {
     translate: translateFor,
@@ -77,42 +77,42 @@ export default {
       type: "expression",
       autocomplete: [
         {
-          description: "Iterates over a list of items."
-        }
-      ]
+          description: "Iterates over a list of items.",
+        },
+      ],
     },
     "@in": {
       type: "expression",
       autocomplete: [
         {
-          description: "Iterates over the keys and values of an object."
-        }
-      ]
+          description: "Iterates over the keys and values of an object.",
+        },
+      ],
     },
     "@to": {
       type: "number",
       autocomplete: [
         {
-          description: "Iterates up to the provided number (inclusive)"
-        }
-      ]
+          description: "Iterates up to the provided number (inclusive)",
+        },
+      ],
     },
     "@from": {
       type: "number",
       autocomplete: [
         {
-          description: "Iterates starting from the provided number (inclusive)"
-        }
-      ]
+          description: "Iterates starting from the provided number (inclusive)",
+        },
+      ],
     },
     "@step": {
       type: "number",
       autocomplete: [
         {
           description:
-            "The amount to increment during each interation (with from/to)"
-        }
-      ]
+            "The amount to increment during each interation (with from/to)",
+        },
+      ],
     },
     autocomplete: [
       {
@@ -120,20 +120,20 @@ export default {
         description:
           "Use to iterate over lists, object properties, or between ranges.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-over-a-list"
+          "https://markojs.com/docs/core-tags/#iterating-over-a-list",
       },
       {
         snippet: "for|${1:name, value}| in=${3:object}",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties"
+          "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties",
       },
       {
         snippet:
           "for|${1:index}| from=${2:number} to=${3:number} step=${4:number}",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers",
+      },
+    ],
   },
   "<let>": {
     translate: translateLet,
@@ -141,9 +141,9 @@ export default {
     autocomplete: [
       {
         description: "Use to create an mutable binding.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#let"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
+      },
+    ],
   },
   "<const>": {
     translate: translateConst,
@@ -151,23 +151,23 @@ export default {
     autocomplete: [
       {
         description: "Use to create an constant binding.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#const"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
+      },
+    ],
   },
   "<html-comment>": {
     translate: translateHTMLComment,
     parseOptions: {
-      state: "parsed-text"
+      state: "parsed-text",
     },
     attributes: {},
     autocomplete: [
       {
         description:
           "Use to create an html comment that is not stripped from the output.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#html-comment"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#html-comment",
+      },
+    ],
   },
   "<tag>": {
     translate: translateTag,
@@ -177,9 +177,9 @@ export default {
         displayText: "tag/<name>|<params>|",
         description: "Creates a reusable fragment within the template.",
         snippet: "tag/${1:name}|${2:param1, param2}|",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#tag"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#tag",
+      },
+    ],
   },
   "<set>": {
     translate: translateSet,
@@ -188,9 +188,9 @@ export default {
         displayText: "set=<value>",
         description: "Sets a value which can be read from a child template.",
         snippet: "set=${1:value}",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#set"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#set",
+      },
+    ],
   },
   "<get>": {
     translate: translateGet,
@@ -199,9 +199,9 @@ export default {
         displayText: 'get/<name>="<from>"',
         description: "Gets a value provided from another template.",
         snippet: 'get/${1:name}="${2:from}"',
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#get"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#get",
+      },
+    ],
   },
   "<yield>": {
     translate: translateYield,
@@ -210,12 +210,12 @@ export default {
         displayText: "yield=<value>",
         description: "Provides a value for use in a parent template.",
         snippet: "yield=${1:value}",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#yield"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#yield",
+      },
+    ],
   },
   "<style>": {
     translate: translateStyle,
-    "@type": { enum: ["css", "less", "scss", "text/css"] }
-  }
+    "@type": { enum: ["css", "less", "scss", "text/css"] },
+  },
 };

@@ -2,7 +2,7 @@ import {
   getTagDef,
   loadFileForTag,
   loadFileForImport,
-  TagDefinition
+  TagDefinition,
 } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
 
@@ -104,7 +104,7 @@ export default {
             references.inputAccessor = undefined;
           } else {
             references = templateMeta[tagDef.name] = {
-              inputAccessor: defaultAttrReferences.inputAccessor
+              inputAccessor: defaultAttrReferences.inputAccessor,
             };
           }
 
@@ -115,7 +115,7 @@ export default {
           if (defaultAttrReferences.input) {
             references.input = {
               ...references.input,
-              ...defaultAttrReferences.input
+              ...defaultAttrReferences.input,
             };
           }
         }
@@ -142,7 +142,7 @@ export default {
             case "get": {
               const defaultAttr = tag.get("attributes")[0];
               const defaultAttrValue = defaultAttr.isMarkoAttribute({
-                default: true
+                default: true,
               })
                 ? defaultAttr.get("value")
                 : undefined;
@@ -207,7 +207,7 @@ export default {
           );
         }
       }
-    }
+    },
   },
   MarkoTagBody(body) {
     if (body.get("params").length) {
@@ -229,7 +229,7 @@ export default {
                 if (attrReferences.input) {
                   references.input = {
                     ...references.input,
-                    ...attrReferences.input
+                    ...attrReferences.input,
                   };
                 }
               }
@@ -246,7 +246,7 @@ export default {
         references
       );
     }
-  }
+  },
 } as t.Visitor;
 
 function getMetaForExpr(expr: ReturnType<typeof getExprRoot>): ReferenceMeta {
@@ -293,7 +293,7 @@ function getExprRoot(path: t.NodePath<t.Node>) {
 function getDefaultAttrReferenceMeta(tag: t.NodePath<t.MarkoTag>) {
   const defaultAttr = tag
     .get("attributes")
-    .find(attr => (attr.node as t.MarkoAttribute).default);
+    .find((attr) => (attr.node as t.MarkoAttribute).default);
 
   return defaultAttr && getAttrReferenceMeta(defaultAttr);
 }
@@ -309,7 +309,7 @@ function hasStatefulAttributes(tag: t.NodePath<t.MarkoTag>) {
   // TODO: support mapping yield input/inputAccessor back to attribute.
   return (
     tag.node.extra.nestedAttributeTags ||
-    tag.get("attributes").some(attr => {
+    tag.get("attributes").some((attr) => {
       const refs = attr.node.extra.references?.value;
       return refs && (refs.state || refs.inputAccessor || refs.input);
     })

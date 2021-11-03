@@ -17,5 +17,5 @@ export default {
     } else {
       translateDOM.exit(program);
     }
-  }
+  },
 };

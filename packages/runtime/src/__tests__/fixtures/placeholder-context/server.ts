@@ -1,8 +1,4 @@
-import {
-  pushContext,
-  popContext,
-  getInContext
-} from "../../../common/context";
+import { pushContext, popContext, getInContext } from "../../../common/context";
 import { tryPlaceholder, write, fork } from "../../../html/index";
 import { resolveAfter } from "../../utils/resolve";
 
@@ -13,7 +9,7 @@ const renderer = () => {
   tryPlaceholder(
     () => {
       write("b");
-      fork(resolveAfter("c", 2), r => {
+      fork(resolveAfter("c", 2), (r) => {
         const v = getInContext(k) as string;
         write(r + v);
       });

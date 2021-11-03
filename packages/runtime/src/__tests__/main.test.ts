@@ -80,9 +80,9 @@ describe("runtime", () => {
               },
               emit(type: string, ...args: unknown[]) {
                 tracker.log(
-                  `# Emit ${type}${args.map(arg => `\n${indent(arg)}`)}`
+                  `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
                 );
-              }
+              },
             } as Writable & { flush(): void });
 
             hydratedHTML = getNormalizedHtml(document.body);
@@ -122,7 +122,7 @@ describe("runtime", () => {
           ) as typeof import("../dom/index");
           const render = browser.require(browserFile).default;
           const container = Object.assign(document.createElement("div"), {
-            TEST_ROOT: true
+            TEST_ROOT: true,
           });
           const tracker = createTrackMutations(browser.window, container);
 
@@ -160,7 +160,7 @@ describe("runtime", () => {
 function indent(data: unknown) {
   return String(data)
     .split("\n")
-    .map(line => `  ${line}`)
+    .map((line) => `  ${line}`)
     .join("\n");
 }
 
@@ -179,7 +179,7 @@ function getNormalizedHtml(container: Element) {
     }
   }
 
-  nodesToRemove.forEach(n => n.remove());
+  nodesToRemove.forEach((n) => n.remove());
   // clone.innerHTML = clone.innerHTML;
   clone.normalize();
 

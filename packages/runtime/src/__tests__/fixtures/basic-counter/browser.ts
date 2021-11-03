@@ -5,14 +5,14 @@ import {
   read,
   queue,
   write,
-  bind
+  bind,
 } from "../../../dom/index";
 import { get, next, open, close } from "../../utils/walks";
 
 const enum Index {
   BUTTON = 0,
   BUTTON_TEXT = 1,
-  CLICK_COUNT = 2
+  CLICK_COUNT = 2,
 }
 
 type scope = {

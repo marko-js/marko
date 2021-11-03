@@ -9,7 +9,7 @@ export {
   setLoopFromTo,
   setLoopIn,
   getLoopFirstNode,
-  getLoopLastNode
+  getLoopLastNode,
 } from "./control-flow";
 
 export {
@@ -22,7 +22,7 @@ export {
   dynamicTag,
   staticNodeMethods,
   fragmentMethods,
-  userEffect
+  userEffect,
 } from "./dom";
 
 export { on } from "./event";
@@ -40,7 +40,7 @@ export {
   writeInOwner,
   bind,
   runWithScope,
-  runInChild
+  runInChild,
 } from "./scope";
 
 export type { Scope } from "../common/types";

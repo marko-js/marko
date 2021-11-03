@@ -3,7 +3,7 @@ export {
   escapeScript,
   escapeStyle,
   escapeXML,
-  escapeAttrValue
+  escapeAttrValue,
 } from "./content";
 
 export { attr, attrs, classAttr, styleAttr } from "./attrs";
@@ -17,7 +17,7 @@ export {
   tryPlaceholder,
   tryCatch,
   markScopeOffset,
-  hydrateFunction
+  hydrateFunction,
 } from "./writer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

@@ -4,7 +4,7 @@ import {
   currentScope,
   currentOffset,
   getOwnerScope,
-  ownerOffset
+  ownerOffset,
 } from "./scope";
 
 type ExecFn = (arg?: any) => void;
@@ -35,7 +35,7 @@ const enum QueueOffsets {
   OFFSET = 2,
   SORT_VALUE = 3,
   ARGUMENT = 4,
-  TOTAL = 5
+  TOTAL = 5,
 }
 
 export function queue<T extends ExecFn>(

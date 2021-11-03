@@ -10,7 +10,7 @@ import {
   read,
   queue,
   readInOwner,
-  queueInBranch
+  queueInBranch,
 } from "../../../dom/index";
 import { next, over, get, open, close, skip } from "../../utils/walks";
 
@@ -18,28 +18,28 @@ export const inputs = [
   {
     show: false,
     value1: "Hello",
-    value2: "World"
+    value2: "World",
   },
   {
     show: true,
     value1: "Hello",
-    value2: "World"
+    value2: "World",
   },
   {
     show: true,
     value1: false,
-    value2: "World"
+    value2: "World",
   },
   {
     show: true,
     value1: "Goodbye",
-    value2: "World"
+    value2: "World",
   },
   {
     show: false,
     value1: "Goodbye",
-    value2: "World"
-  }
+    value2: "World",
+  },
 ];
 
 type Input = typeof inputs[number];
@@ -49,7 +49,7 @@ const enum Index {
   CONDITIONAL = 0,
   INPUT_SHOW = 4,
   INPUT_VALUE1 = 5,
-  INPUT_VALUE2 = 6
+  INPUT_VALUE2 = 6,
 }
 
 type scope = {
@@ -153,7 +153,7 @@ const enum Branch0Index {
   COMMENT1 = 0,
   CONDITIONAL1 = 0,
   COMMENT2 = 4,
-  CONDITIONAL2 = 4
+  CONDITIONAL2 = 4,
 }
 
 // type Branch0Scope = {
@@ -181,7 +181,7 @@ const branch0 = createRenderer(
 
 const enum Branch0_0Index {
   CLOSURE_VALUE1 = -1,
-  TEXT = 0
+  TEXT = 0,
 }
 
 // type Branch0_0Scope = {
@@ -197,7 +197,7 @@ const branch0_0 = createRenderer(
 
 const enum Branch0_1Index {
   CLOSURE_VALUE2 = -1,
-  TEXT = 0
+  TEXT = 0,
 }
 
 // type Branch0_1Scope = {

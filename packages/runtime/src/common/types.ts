@@ -36,7 +36,7 @@ export const enum ScopeOffsets {
   CLEANUP = 3,
   OWNER_SCOPE = 4,
   OWNER_OFFSET = 5,
-  BEGIN_DATA = 6
+  BEGIN_DATA = 6,
 }
 
 export const enum HydrateSymbols {
@@ -47,5 +47,5 @@ export const enum HydrateSymbols {
   PLACEHOLDER_END = "",
   REPLACEMENT_ID = "",
   VAR_HYDRATE = "$h",
-  VAR_REORDER_RUNTIME = "$r"
+  VAR_REORDER_RUNTIME = "$r",
 }

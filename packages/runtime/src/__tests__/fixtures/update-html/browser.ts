@@ -3,21 +3,21 @@ import { over, get, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
-    value: "Hello <strong>World</strong>"
+    value: "Hello <strong>World</strong>",
   },
   {
-    value: "Some content"
+    value: "Some content",
   },
   {
-    value: "<div/>"
-  }
+    value: "<div/>",
+  },
 ];
 
 export const FAILS_HYDRATE = true;
 
 const enum Index {
   HTML = 0,
-  INPUT_VALUE = 2
+  INPUT_VALUE = 2,
 }
 
 type scope = {

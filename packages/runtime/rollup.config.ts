@@ -6,26 +6,26 @@ import { terser } from "rollup-plugin-terser";
 import esbuild from "rollup-plugin-esbuild-transform";
 import mangleInternal from "../../utilities/rollup-plugin-mangle-internal";
 
-export default ["dist/debug", "dist"].flatMap(env =>
+export default ["dist/debug", "dist"].flatMap((env) =>
   ["dom", "html"].map(
     (name): RollupOptions => ({
       input: `src/${name}/index.ts`,
       output: [
         {
           file: `${env}/${name}/index.esm.js`,
-          format: "esm"
+          format: "esm",
         },
         {
           file: `${env}/${name}/index.cjs.js`,
-          format: "cjs"
-        }
+          format: "cjs",
+        },
       ],
       plugins: [
         esbuild({ loader: "ts", include: /\.ts$/ }),
         replace({
           '"MARKO_SRC"': false,
           preventAssignment: true,
-          delimiters: ["", ""]
+          delimiters: ["", ""],
         }),
         {
           name: "write-package",
@@ -40,25 +40,25 @@ export default ["dist/debug", "dist"].flatMap(env =>
   "types": "${path.relative(pkgDir, `dist/${name}/index.d.ts`)}"
 }\n`
             );
-          }
+          },
         },
         ...(env === "dist"
           ? [
               replace({
                 '"MARKO_DEBUG"': false,
                 preventAssignment: true,
-                delimiters: ["", ""]
+                delimiters: ["", ""],
               }),
               mangleInternal(),
               terser({
                 compress: {},
                 mangle: {
-                  module: true
-                }
-              })
+                  module: true,
+                },
+              }),
             ]
-          : [])
-      ]
+          : []),
+      ],
     })
   )
 );

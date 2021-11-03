@@ -2,7 +2,7 @@ import {
   HydrateInstance,
   Scope,
   ScopeOffsets,
-  HydrateSymbols
+  HydrateSymbols,
 } from "../common/types";
 import { runWithScope } from "./scope";
 
@@ -32,7 +32,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const stack: Array<string | number> = [];
 
   const fakeArray = ((window as any)[hydrateVar] = {
-    concat: hydrateAll
+    concat: hydrateAll,
   });
 
   if (initialHydration) {

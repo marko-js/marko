@@ -5,7 +5,7 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
   // something up with extensions
   const browser = createBrowser({
     ...options,
-    extensions: require.extensions as any
+    extensions: require.extensions as any,
   });
   const window = browser.window as DOMWindow & { MessageChannel: any };
   window.queueMicrotask = queueMicrotask;
@@ -20,10 +20,10 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
       this.port2 = {
         postMessage: () => {
           setImmediate(this.port1.onmessage);
-        }
+        },
       };
     }
   };
-  window.requestAnimationFrame = fn => setTimeout(fn) as any;
+  window.requestAnimationFrame = (fn) => setTimeout(fn) as any;
   return browser;
 }

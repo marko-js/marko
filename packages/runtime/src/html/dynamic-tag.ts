@@ -16,7 +16,7 @@ const voidElements = new Set([
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ]);
 interface RenderBodyObject {
   [x: string]: unknown;

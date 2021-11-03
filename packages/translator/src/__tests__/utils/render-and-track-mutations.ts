@@ -4,7 +4,7 @@ import { wait, isWait } from "./resolve";
 
 const browser = createBrowser({
   dir: __dirname,
-  html: ""
+  html: "",
 });
 
 const window = browser.window;
@@ -37,7 +37,7 @@ export default async function renderAndGetMutations(
   const { default: render } = browser.require(test) as Test;
   const [firstInput] = inputs;
   const container = Object.assign(document.createElement("div"), {
-    TEST_ROOT: true
+    TEST_ROOT: true,
   });
   const tracker = createMutationTracker(window, container);
 

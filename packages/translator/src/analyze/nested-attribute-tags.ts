@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 import {
   isAttributeTag,
   isTransparentTag,
-  isLoopTag
+  isLoopTag,
 } from "@marko/babel-utils";
 
 type Lookup = Record<
@@ -69,7 +69,7 @@ function analyzeChild(
       existing ||
       (lookup[attrName] = {
         dynamic: false,
-        repeated: false
+        repeated: false,
       });
 
     info.dynamic ||= dynamic;

@@ -21,7 +21,7 @@ function stringifyStyleObject(name: string, value: unknown) {
   }
 
   if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
-    ((value as unknown) as string) += "px";
+    (value as unknown as string) += "px";
   }
 
   return `${name}:${value}`;

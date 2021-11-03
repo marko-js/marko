@@ -12,7 +12,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
   const name = tag.get("name");
   const attrs = tag.get("attributes");
   const tagDef = getTagDef(tag);
-  const hasSpread = attrs.some(attr => attr.isMarkoSpreadAttribute());
+  const hasSpread = attrs.some((attr) => attr.isMarkoSpreadAttribute());
   const write = writer.writeTo(tag);
 
   if (isHTML) {
@@ -137,7 +137,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
     writer.flushInto(tag);
   }
 
-  tag.insertBefore(tag.node.body.body).forEach(child => child.skip());
+  tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
 
   writer.writeTo(tag)`</${tag.node.name}>`;
 

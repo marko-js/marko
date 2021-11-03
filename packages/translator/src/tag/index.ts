@@ -50,7 +50,7 @@ export default {
         const tagNameId = tag.scope.generateUidIdentifier("tagName");
         const [tagNameVarPath] = tag.insertBefore(
           t.variableDeclaration("const", [
-            t.variableDeclarator(tagNameId, tag.node.name)
+            t.variableDeclarator(tagNameId, tag.node.name),
           ])
         );
 
@@ -114,5 +114,5 @@ export default {
         AttributeTag.exit(tag);
         break;
     }
-  }
+  },
 };

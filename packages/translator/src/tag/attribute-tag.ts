@@ -42,10 +42,10 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
       parentTag.insertBefore(
         info.repeated
           ? t.variableDeclaration("const", [
-              t.variableDeclarator(info.identifier, t.arrayExpression([]))
+              t.variableDeclarator(info.identifier, t.arrayExpression([])),
             ])
           : t.variableDeclaration("let", [
-              t.variableDeclarator(info.identifier)
+              t.variableDeclarator(info.identifier),
             ])
       );
 
@@ -68,7 +68,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
   } else if (info.repeated) {
     const existingAttr = parentTag
       .get("attributes")
-      .find(attr => (attr.node as t.MarkoAttribute).name === attrName);
+      .find((attr) => (attr.node as t.MarkoAttribute).name === attrName);
 
     if (existingAttr) {
       (

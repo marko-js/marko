@@ -63,10 +63,10 @@ export default [
         if (tag.node.extra.tagNameType !== TagNameTypes.NativeTag) {
           analyzeNestedAttributeTags(tag);
         }
-      }
+      },
     },
     MarkoPlaceholder(placeholder) {
       placeholder.node.extra ??= {} as typeof placeholder.node.extra;
-    }
-  }
+    },
+  },
 ] as t.Visitor[];

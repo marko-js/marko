@@ -4,7 +4,7 @@ import {
   createRenderer,
   createRenderFn,
   write,
-  read
+  read,
 } from "../../../dom/index";
 import { over, get, next, open, close, skip } from "../../utils/walks";
 
@@ -12,18 +12,18 @@ export const inputs = [
   {
     from: 0,
     to: 3,
-    step: 1
+    step: 1,
   },
   {
     from: 0,
     to: -1,
-    step: 1
+    step: 1,
   },
   {
     from: 0,
     to: 3,
-    step: 1
-  }
+    step: 1,
+  },
 ];
 
 type Input = typeof inputs[number];
@@ -33,7 +33,7 @@ const enum Index {
   LOOP = 0,
   INPUT_FROM = 4,
   INPUT_TO = 5,
-  INPUT_STEP = 6
+  INPUT_STEP = 6,
 }
 
 type scope = {
@@ -77,7 +77,7 @@ const enum Iter0Index {
   ITEM = 0,
   INDEX = 1,
   ALL = 2,
-  TEXT = 3
+  TEXT = 3,
 }
 
 type iterScope = {

@@ -10,7 +10,7 @@ const delegatedByType = new Map<
 
 const eventOpts: AddEventListenerOptions = {
   capture: true,
-  passive: true
+  passive: true,
 };
 
 export function on<

@@ -57,5 +57,5 @@ export default {
     writer.end(tag);
     tag.insertAfter(t.expressionStatement(callRuntime(tag, "popContext")));
     tag.replaceWithMultiple(tag.node.body.body);
-  }
+  },
 };

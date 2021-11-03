@@ -3,7 +3,7 @@ import type {
   Plugin,
   FunctionPlugin,
   EnterExitPlugin,
-  ModulePlugin
+  ModulePlugin,
 } from "@marko/babel-utils";
 
 export function enter<T extends t.Node>(

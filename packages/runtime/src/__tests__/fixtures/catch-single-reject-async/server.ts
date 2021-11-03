@@ -9,7 +9,7 @@ const renderer = () => {
       fork(rejectAfter(new Error("ERROR!"), 2), write);
       write("d");
     },
-    err => {
+    (err) => {
       write(err.message);
     }
   );

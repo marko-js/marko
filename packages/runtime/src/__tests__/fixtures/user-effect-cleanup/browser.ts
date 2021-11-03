@@ -5,7 +5,7 @@ import {
   queue,
   read,
   write,
-  bind
+  bind,
 } from "../../../dom/index";
 import { wait } from "../../utils/resolve";
 import { get, next, open, close } from "../../utils/walks";
@@ -18,7 +18,7 @@ const enum Index {
   A = 2,
   B = 3,
   CONCAT_AB = 4,
-  EFFECT_CLEANUP = 5
+  EFFECT_CLEANUP = 5,
 }
 
 type scope = {

@@ -1,6 +1,4 @@
 {
-  "arrowParens": "avoid",
-  "trailingComma": "none",
   "overrides": [
     {
       "files": "*rc",

@@ -6,7 +6,7 @@ import * as writer from "./util/writer";
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
-  style: "escapeStyle"
+  style: "escapeStyle",
 } as Record<string, string>;
 
 type HTMLMethod = "escapeScript" | "escapeStyle" | "escapeXML" | "toString";

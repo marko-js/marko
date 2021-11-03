@@ -3,7 +3,7 @@ import { after, over, open, close } from "../../utils/walks";
 
 const enum Index {
   TEXT = 0,
-  INPUT_VALUE = 1
+  INPUT_VALUE = 1,
 }
 
 type scope = {

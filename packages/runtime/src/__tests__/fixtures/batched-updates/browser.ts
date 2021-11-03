@@ -6,7 +6,7 @@ import {
   queue,
   bind,
   read,
-  write
+  write,
 } from "../../../dom/index";
 import { get, next, open, close } from "../../utils/walks";
 
@@ -21,7 +21,7 @@ const enum Index {
   TEXT = 1,
   A = 2,
   B = 3,
-  SUM_AB = 4
+  SUM_AB = 4,
 }
 
 type scope = {

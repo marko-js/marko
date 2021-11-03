@@ -6,29 +6,29 @@ import {
   createRenderer,
   createRenderFn,
   readInOwner,
-  queueInBranch
+  queueInBranch,
 } from "../../../dom/index";
 import { next, over, get, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
-    value: "Hello"
+    value: "Hello",
   },
   {
-    value: false
+    value: false,
   },
   {
-    value: "World"
+    value: "World",
   },
   {
-    value: "!"
-  }
+    value: "!",
+  },
 ];
 
 const enum Index {
   COMMENT = 0,
   CONDITIONAL = 0,
-  INPUT_VALUE = 4
+  INPUT_VALUE = 4,
 }
 
 type scope = {
@@ -78,7 +78,7 @@ export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Branch0Index {
   CLOSURE_VALUE = -1,
-  TEXT = 0
+  TEXT = 0,
 }
 
 // type Branch0Scope = {

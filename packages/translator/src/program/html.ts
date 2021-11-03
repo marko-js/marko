@@ -33,7 +33,7 @@ export function exit(program: t.NodePath<t.Program>) {
             t.blockStatement(renderContent)
           )
         )
-      )
+      ),
     ]),
 
     t.exportDefaultDeclaration(rendererId),
@@ -43,9 +43,9 @@ export function exit(program: t.NodePath<t.Program>) {
         t.variableDeclarator(
           t.identifier("render"),
           callRuntime(program, "createRenderer", rendererId)
-        )
+        ),
       ])
-    )
+    ),
   ]);
 }
 

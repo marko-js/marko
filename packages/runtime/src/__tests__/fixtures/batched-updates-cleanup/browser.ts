@@ -10,7 +10,7 @@ import {
   read,
   bind,
   readInOwner,
-  queueInBranch
+  queueInBranch,
 } from "../../../dom/index";
 
 import { get, next, over, open, close } from "../../utils/walks";
@@ -26,7 +26,7 @@ const enum Index {
   COMMENT = 1,
   CONDITIONAL = 1,
   SHOW = 5,
-  MESSAGE = 6
+  MESSAGE = 6,
 }
 
 type scope = {
@@ -84,7 +84,7 @@ export default createRenderFn(template, walks, render, 0);
 
 const enum Branch0Index {
   CLOSURE_MESSAGE = -1,
-  TEXT = 0
+  TEXT = 0,
 }
 
 // type Branch0Scope = [Text];

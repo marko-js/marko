@@ -5,7 +5,7 @@ import { assertNoSpreadAttrs } from "../util/assert";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const {
-    hub: { file }
+    hub: { file },
   } = tag;
 
   assertNoVar(tag);
@@ -17,7 +17,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
 
   const base = path.basename(file.opts.sourceFileName as string);
   const typeAttr = attrs.find(
-    attr => attr.isMarkoAttribute() && attr.node.name === "type"
+    (attr) => attr.isMarkoAttribute() && attr.node.name === "type"
   );
 
   if (typeAttr) {
@@ -50,7 +50,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
     startPos: markoText.node.start!,
     endPos: markoText.node.end!,
     path: `./${base}`,
-    style: `./${base}.${type}`
+    style: `./${base}.${type}`,
   } as unknown as typeof file.metadata.marko.deps[0]);
 
   tag.remove();

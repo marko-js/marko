@@ -5,7 +5,7 @@ import {
   Scope,
   HydrateInstance,
   ScopeOffsets,
-  HydrateSymbols
+  HydrateSymbols,
 } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
@@ -34,7 +34,7 @@ export function nextId() {
 const nullScope = new Proxy([], {
   set() {
     return false;
-  }
+  },
 }) as any as Scope;
 
 export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
@@ -86,7 +86,7 @@ export function fork<T>(
   $_promises.push(
     resolveWithScope(
       promise,
-      result => {
+      (result) => {
         resolved = true;
         try {
           renderResult(result);
@@ -101,7 +101,7 @@ export function fork<T>(
           }
         }
       },
-      err => {
+      (err) => {
         resolved = true;
         $_buffer = forkedBuffer;
         $_flush = targetFlush;
@@ -161,7 +161,7 @@ export function tryCatch(
       markReplaceEnd(id);
       $_promises = $_promises || [];
       $_promises.push(
-        resolveWithScope(Promise.all(childPromises), null, asyncErr => {
+        resolveWithScope(Promise.all(childPromises), null, (asyncErr) => {
           renderReplacement(renderError, asyncErr, id);
         })
       );
@@ -321,7 +321,7 @@ interface Buffer {
 function createBuffer() {
   return {
     content: "",
-    hydrate: null
+    hydrate: null,
   } as Buffer;
 }
 
@@ -361,7 +361,7 @@ function resolveWithScope<T>(
 
   return promise.then(
     onResolve &&
-      (result => {
+      ((result) => {
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;
@@ -376,7 +376,7 @@ function resolveWithScope<T>(
         }
       }),
     onReject &&
-      (error => {
+      ((error) => {
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;

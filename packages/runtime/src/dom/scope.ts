@@ -17,9 +17,8 @@ export function createScope(size: number, methods: DOMMethods): Scope {
 
 const emptyScope = createScope(0, staticNodeMethods);
 export function getEmptyScope(marker?: Comment) {
-  emptyScope[ScopeOffsets.START_NODE] = emptyScope[
-    ScopeOffsets.END_NODE
-  ] = marker;
+  emptyScope[ScopeOffsets.START_NODE] = emptyScope[ScopeOffsets.END_NODE] =
+    marker;
   return emptyScope;
 }
 

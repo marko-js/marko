@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import {
   resolveTagImport,
   getTemplateId,
-  assertNoParams
+  assertNoParams,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
@@ -16,7 +16,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
 
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = tag;
   const [defaultAttr] = node.attributes;
 
@@ -87,7 +87,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       t.variableDeclarator(
         node.var,
         callRuntime(tag, "getInContext", t.stringLiteral(refId))
-      )
+      ),
     ])
   );
 }

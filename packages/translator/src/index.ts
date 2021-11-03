@@ -23,5 +23,5 @@ export const translate: t.Visitor = {
   MarkoText,
   MarkoTag,
   MarkoPlaceholder,
-  MarkoComment
+  MarkoComment,
 };

@@ -26,7 +26,7 @@ export enum WalkCodes {
   OutEnd = 116,
 
   Multiplier = 117,
-  MultiplierEnd = 126
+  MultiplierEnd = 126,
 }
 
 export enum WalkRangeSizes {
@@ -35,12 +35,12 @@ export enum WalkRangeSizes {
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
-  Multiplier = 10 // 117 through 126
+  Multiplier = 10, // 117 through 126
 }
 
 enum Step {
   enter,
-  exit
+  exit,
 }
 
 interface Writer {
@@ -67,7 +67,7 @@ export function start(path: t.NodePath<any>) {
     parent,
     writes: [""],
     walks: [""],
-    steps: []
+    steps: [],
   };
 }
 
@@ -82,7 +82,7 @@ export function end(path: t.NodePath<any>) {
   path.state.writer = writer.parent;
   return {
     walks: toTemplateOrStringLiteral(writer.walks),
-    writes: toTemplateOrStringLiteral(writer.writes)
+    writes: toTemplateOrStringLiteral(writer.writes),
   };
 }
 
@@ -277,7 +277,7 @@ export function toTemplateOrStringLiteral(
     strs.push(curStr);
 
     return t.templateLiteral(
-      strs.map(raw => t.templateElement({ raw })),
+      strs.map((raw) => t.templateElement({ raw })),
       exprs
     );
   } else if (curStr) {

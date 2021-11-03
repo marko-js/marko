@@ -13,7 +13,7 @@ export default {
     const { node } = tag;
     const {
       attributes,
-      body: { body, params }
+      body: { body, params },
     } = node;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
@@ -42,7 +42,7 @@ export default {
             t.variableDeclarator(
               valParam,
               t.memberExpression(inAttr.value!, keyParam as t.Identifier, true)
-            )
+            ),
           ])
         );
       }
@@ -73,13 +73,13 @@ export default {
         );
         forNode.push(
           t.variableDeclaration("let", [
-            t.variableDeclarator(indexName, t.numericLiteral(0))
+            t.variableDeclarator(indexName, t.numericLiteral(0)),
           ])
         );
 
         block.body.unshift(
           t.variableDeclaration("let", [
-            t.variableDeclarator(keyParam, t.updateExpression("++", indexName))
+            t.variableDeclarator(keyParam, t.updateExpression("++", indexName)),
           ])
         );
       }
@@ -91,7 +91,7 @@ export default {
 
         forNode.push(
           t.variableDeclaration("const", [
-            t.variableDeclarator(loopParam, ofAttr.value)
+            t.variableDeclarator(loopParam, ofAttr.value),
           ])
         );
       }
@@ -107,7 +107,7 @@ export default {
       allowedAttributes.push("from", "to", "step");
 
       const stepAttr = findName(attributes, "step") || {
-        value: t.numericLiteral(1)
+        value: t.numericLiteral(1),
       };
       const stepValue = stepAttr ? stepAttr.value : t.numericLiteral(1);
       const [indexParam] = params;
@@ -124,7 +124,7 @@ export default {
                 fromAttr.value!,
                 t.binaryExpression("*", stepName, stepValue!)
               )
-            )
+            ),
           ])
         );
       }
@@ -139,7 +139,7 @@ export default {
               stepValue!
             )
           ),
-          t.variableDeclarator(stepName, t.numericLiteral(0))
+          t.variableDeclarator(stepName, t.numericLiteral(0)),
         ]),
         t.binaryExpression("<=", stepName, stepsName),
         t.updateExpression("++", stepName),
@@ -153,12 +153,12 @@ export default {
 
     assertAllowedAttributes(tag, allowedAttributes);
     tag.replaceWithMultiple(([] as t.Node[]).concat(forNode));
-  }
+  },
 };
 
 function findName(
   arr: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
   value: string
 ) {
-  return arr.find(obj => t.isMarkoAttribute(obj) && obj.name === value);
+  return arr.find((obj) => t.isMarkoAttribute(obj) && obj.name === value);
 }

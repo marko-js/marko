@@ -42,7 +42,7 @@ export default (): Plugin => {
       } while (m);
 
       const result: { code: string; map?: SourceMapInput } = {
-        code: s.toString()
+        code: s.toString(),
       };
 
       if (outputOptions.sourcemap !== false) {
@@ -50,6 +50,6 @@ export default (): Plugin => {
       }
 
       return result;
-    }
+    },
   };
 };

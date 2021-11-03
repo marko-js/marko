@@ -6,7 +6,7 @@ export default function translateVar(
   kind: "let" | "const" = "const"
 ) {
   const {
-    node: { var: tagVar }
+    node: { var: tagVar },
   } = tag;
 
   if (!tagVar) {
@@ -16,7 +16,7 @@ export default function translateVar(
   tag.get("var").remove();
   tag.insertBefore(
     t.variableDeclaration(kind, [
-      t.variableDeclarator(t.cloneDeep(tagVar), initialValue)
+      t.variableDeclarator(t.cloneDeep(tagVar), initialValue),
     ])
   );
   tag.hub.file.path.scope.crawl();

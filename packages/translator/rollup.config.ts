@@ -8,19 +8,19 @@ export default {
   output: [
     {
       file: "dist/index.esm.js",
-      format: "esm"
+      format: "esm",
     },
     {
       file: "dist/index.cjs.js",
-      format: "cjs"
-    }
+      format: "cjs",
+    },
   ],
   plugins: [
     esbuild({ loader: "ts", include: /\.ts$/ }),
     replace({
       '"MARKO_SRC"': false,
       preventAssignment: true,
-      delimiters: ["", ""]
-    })
-  ]
+      delimiters: ["", ""],
+    }),
+  ],
 } as RollupOptions;

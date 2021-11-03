@@ -9,14 +9,14 @@ import {
   destroyScope,
   read,
   runWithScope,
-  write
+  write,
 } from "./scope";
 
 const enum ConditionalIndex {
   REFERENCE_NODE = 0,
   SCOPE = 1,
   RENDERER = 2,
-  CONTEXT = 3
+  CONTEXT = 3,
 }
 
 type Conditional = {
@@ -155,7 +155,7 @@ const enum LoopIndex {
   REFERENCE_NODE = 0,
   SCOPE_MAP = 1,
   SCOPE_ARRAY = 2,
-  CONTEXT = 3
+  CONTEXT = 3,
 }
 
 type Loop = {
@@ -222,7 +222,7 @@ export function setLoopOf<T>(
     (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
     read<Loop, LoopIndex.SCOPE_ARRAY>(loopIndex + LoopIndex.SCOPE_ARRAY) ||
-    (referenceIsMarker ? emptyMarkerArray : emptyArray as Scope[]);
+    (referenceIsMarker ? emptyMarkerArray : (emptyArray as Scope[]));
   let inserts = 0;
   let moves = 0;
   let afterReference: Node | null;

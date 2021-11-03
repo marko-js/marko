@@ -7,7 +7,7 @@ export const enum NodeType {
   Element = 1,
   Text = 3,
   Comment = 8,
-  DocumentFragment = 11
+  DocumentFragment = 11,
 }
 
 export type DOMMethods = {
@@ -41,7 +41,7 @@ export const staticNodeMethods: DOMMethods = {
   },
   ___getLastNode() {
     return this[ScopeOffsets.END_NODE] as ChildNode;
-  }
+  },
 };
 
 // export const staticNodePropertiesDef = {
@@ -86,7 +86,7 @@ export const fragmentMethods = {
       current.remove();
       current = next!;
     }
-  }
+  },
 } as DOMMethods;
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {

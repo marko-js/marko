@@ -12,5 +12,5 @@ export default {
     const prev = findPreviousIfStatement(tag);
     prev.node.alternate = buildIfStatement(tag);
     tag.remove();
-  }
+  },
 };

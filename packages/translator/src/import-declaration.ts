@@ -6,5 +6,5 @@ export default {
     const source = path.get("source");
     const request = source.node.value;
     source.node.value = resolveTagImport(source, request) || request;
-  }
+  },
 };

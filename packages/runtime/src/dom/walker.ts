@@ -46,7 +46,7 @@ export const enum WalkCodes {
   OutEnd = 116,
 
   Multiplier = 117,
-  MultiplierEnd = 126
+  MultiplierEnd = 126,
 }
 
 export const enum WalkRangeSizes {
@@ -55,7 +55,7 @@ export const enum WalkRangeSizes {
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
-  Multiplier = 10 // 117 through 126
+  Multiplier = 10, // 117 through 126
 }
 
 export function trimWalkString(walkString: string): string {

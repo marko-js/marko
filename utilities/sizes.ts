@@ -38,7 +38,7 @@ async function run(configPath: string) {
     file,
     exports,
     preminified,
-    results: previous
+    results: previous,
   } = loadData(configPath);
   const current = await getExportResults(file, exports, preminified);
 
@@ -87,7 +87,7 @@ function renderTable(
   previous: Result[],
   measure: keyof Sizes
 ) {
-  const columns = ["name", "individual", "cumulative", "increment"].map(n =>
+  const columns = ["name", "individual", "cumulative", "increment"].map((n) =>
     chalk.bold(n)
   );
   let unsynced = false;
@@ -97,13 +97,13 @@ function renderTable(
         let p = previous && previous[i];
         if (!p || p.name !== result.name) {
           unsynced = true;
-          p = previous && previous.find(p => p.name === result.name);
+          p = previous && previous.find((p) => p.name === result.name);
         }
         return [
           chalk.cyan(result.name),
           renderSize(result.individual, p && p.individual, measure),
           renderSize(result.cumulative, !unsynced && p.cumulative, measure),
-          renderSize(result.increment, !unsynced && p.increment, measure)
+          renderSize(result.increment, !unsynced && p.increment, measure),
         ];
       })
     ),
@@ -111,7 +111,7 @@ function renderTable(
       columns: columns.reduce((r, _, i) => {
         r[i] = { alignment: "right" };
         return r;
-      }, {})
+      }, {}),
     }
   );
 }
@@ -147,14 +147,14 @@ async function getExportResults(
   const results: Result[] = [
     {
       name: "*",
-      individual: await getSizesForAll(file, preminified)
-    }
+      individual: await getSizesForAll(file, preminified),
+    },
   ];
   const exportsSoFar: string[] = [];
   let previous = {
     min: 0,
     gzip: 0,
-    brotli: 0
+    brotli: 0,
   };
   for (const e of exports) {
     exportsSoFar.push(e);
@@ -171,8 +171,8 @@ async function getExportResults(
       increment: {
         min: cumulative.min - previous.min,
         gzip: cumulative.gzip - previous.gzip,
-        brotli: cumulative.brotli - previous.brotli
-      }
+        brotli: cumulative.brotli - previous.brotli,
+      },
     });
     previous = cumulative;
   }
@@ -195,13 +195,13 @@ async function getSizesForExports(
 async function getSizesForSrc(minified: string): Promise<Sizes> {
   const [gzipped, brotlied] = await Promise.all([
     gzip(minified),
-    brotli(minified)
+    brotli(minified),
   ]);
 
   return {
     min: minified.length,
     gzip: gzipped.length,
-    brotli: brotlied.length
+    brotli: brotlied.length,
   };
 }
 
@@ -224,17 +224,17 @@ async function bundle(src: string, preminified: boolean) {
   const bundle = await rollup.rollup({
     input: "./entry.js",
     output: {
-      compact: true
+      compact: true,
     },
     plugins: [
       hypothetical({
         files: {
-          "./entry.js": src
+          "./entry.js": src,
         },
-        allowFallthrough: true
+        allowFallthrough: true,
       }),
-      !preminified && terser({ compress: {}, mangle: { module: true } })
-    ]
+      !preminified && terser({ compress: {}, mangle: { module: true } }),
+    ],
   });
 
   const { output } = await bundle.generate({ format: "es", compact: true });

@@ -4,7 +4,7 @@ import {
   write,
   setLoopIn,
   createRenderer,
-  createRenderFn
+  createRenderFn,
 } from "../../../dom/index";
 import { over, get, next, open, close, skip } from "../../utils/walks";
 
@@ -13,19 +13,19 @@ export const inputs = [
     children: {
       "1": "a",
       "2": "b",
-      "3": "c"
-    }
+      "3": "c",
+    },
   },
   {
-    children: {}
+    children: {},
   },
   {
     children: {
       "1": "a",
       "2": "b",
-      "3": "c"
-    }
-  }
+      "3": "c",
+    },
+  },
 ];
 
 type Input = typeof inputs[number];
@@ -33,7 +33,7 @@ type Input = typeof inputs[number];
 const enum Index {
   DIV = 0,
   LOOP = 0,
-  INPUT_CHILDREN = 4
+  INPUT_CHILDREN = 4,
 }
 
 type scope = {
@@ -73,7 +73,7 @@ const enum Iter0Index {
   INDEX = 1,
   ALL = 2,
   TEXT = 3,
-  ITEM_TEXT = 4
+  ITEM_TEXT = 4,
 }
 
 type Entry<T> = NonNullable<{ [K in keyof T]: [K, T[K]] }[keyof T]>;

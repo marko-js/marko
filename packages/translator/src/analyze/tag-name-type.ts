@@ -13,7 +13,7 @@ export enum TagNameTypes {
   NativeTag,
   CustomTag,
   DynamicTag,
-  AttributeTag
+  AttributeTag,
 }
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
@@ -86,7 +86,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         const decl = binding.path.parent as t.ImportDeclaration;
         if (
           MARKO_FILE_REG.test(decl.source.value) &&
-          decl.specifiers.some(it => t.isImportDefaultSpecifier(it))
+          decl.specifiers.some((it) => t.isImportDefaultSpecifier(it))
         ) {
           type =
             type !== undefined && type !== TagNameTypes.CustomTag
@@ -118,9 +118,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
         if (bindingTagName === "const") {
           pending.push(
-            (bindingTag.get(
-              "attributes"
-            )[0] as t.NodePath<t.MarkoAttribute>).get("value")
+            (
+              bindingTag.get("attributes")[0] as t.NodePath<t.MarkoAttribute>
+            ).get("value")
           );
           continue;
         }

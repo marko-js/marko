@@ -3,7 +3,7 @@ import {
   getTagDef,
   importNamed,
   importDefault,
-  resolveRelativePath
+  resolveRelativePath,
 } from "@marko/babel-utils";
 import attrsToObject, { getRenderBodyProp } from "../util/attrs-to-object";
 import translateVar from "../util/translate-var";
