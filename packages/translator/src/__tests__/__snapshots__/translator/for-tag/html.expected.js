@@ -1,6 +1,6 @@
-import { escapeXML as _escapeXML, write as _write, attr as _attr, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { escapeXML as _escapeXML, write as _write, attr as _attr, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("kLJbLoSu", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag/template.marko", input => {
   const arr = [1, 2, 3];
   const obj = {
     a: 1,

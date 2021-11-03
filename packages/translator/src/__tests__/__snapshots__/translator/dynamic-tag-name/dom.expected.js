@@ -1,9 +1,9 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+import { dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "";
 export const walks = "";
-export const hydrate = _register("24T0MEjS", input => {
+export const hydrate = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko", input => {
   _dynamicTag(input.renderBody, {
     class: ["a", "b"],
     other: input.other

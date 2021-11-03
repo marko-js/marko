@@ -1,8 +1,8 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, attr as _attr, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { dynamicTag as _dynamicTag, attr as _attr, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("24T0MEjS", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko", input => {
   _dynamicTag(input.renderBody, {
     class: ["a", "b"],
     other: input.other

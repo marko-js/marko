@@ -1,7 +1,7 @@
-import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 
-const _renderer = _register("rL9tpv82", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/attr-style/template.marko", input => {
   _write(`<div${_styleAttr({
     color: input.color
   })}></div><div style=width:100px></div><div style="color: green"></div>`);

@@ -1,13 +1,13 @@
-import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, popContext as _popContext, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, popContext as _popContext, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("UFl+/m9P", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko", input => {
   _write("<div>");
 
-  _pushContext("UFl+/m9P", 1);
+  _pushContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko", 1);
 
   _write("<span>");
 
-  const x = _getInContext("UFl+/m9P");
+  const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko");
 
   _write(`${_escapeXML(x)}</span>`);
 

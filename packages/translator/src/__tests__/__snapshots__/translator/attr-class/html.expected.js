@@ -1,7 +1,7 @@
-import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 
-const _renderer = _register("KWMISTno", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/attr-class/template.marko", input => {
   const {
     c,
     d

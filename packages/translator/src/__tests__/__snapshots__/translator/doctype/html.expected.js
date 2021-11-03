@@ -1,6 +1,6 @@
-import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("4F+7r26M", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/doctype/template.marko", input => {
   _write("<!DOCTYPE html><html><head><title>Title of the document</title></head><body>The content of the document......</body></html>");
 });
 

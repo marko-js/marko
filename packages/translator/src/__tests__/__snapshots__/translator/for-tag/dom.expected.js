@@ -1,7 +1,7 @@
-import { data as _data, attr as _attr, walk as _walk, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+import { data as _data, attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "";
 export const walks = "";
-export const hydrate = _register("kLJbLoSu", input => {
+export const hydrate = _register("packages/translator/src/__tests__/fixtures/for-tag/template.marko", input => {
   const arr = [1, 2, 3];
   const obj = {
     a: 1,
@@ -37,15 +37,11 @@ export const hydrate = _register("kLJbLoSu", input => {
   for (const val of arr) {
     let i = _i2++;
 
-    _walk();
-
     _attr("key", i);
 
     _data(i);
 
     _data(val);
-
-    _walk();
 
     _attr("key", `other-${i}`);
   }
@@ -55,8 +51,6 @@ export const hydrate = _register("kLJbLoSu", input => {
 
   for (const val of list) {
     let i = _i3++;
-
-    _walk();
 
     _attr("key", i);
 
@@ -68,15 +62,11 @@ export const hydrate = _register("kLJbLoSu", input => {
   for (const key in obj) {
     const val = obj[key];
 
-    _walk();
-
     _attr("key", key);
 
     _data(key);
 
     _data(val);
-
-    _walk();
 
     _attr("key", `other-${key}`);
   }
@@ -84,26 +74,18 @@ export const hydrate = _register("kLJbLoSu", input => {
   for (let _steps3 = (10 - 0) / 2, _step3 = 0; _step3 <= _steps3; _step3++) {
     const i = 0 + _step3 * 2;
 
-    _walk();
-
     _attr("key", i);
 
     _data(i);
-
-    _walk();
 
     _attr("key", `other-${i}`);
 
     for (let _steps2 = (10 - 0) / 2, _step2 = 0; _step2 <= _steps2; _step2++) {
       const i = 0 + _step2 * 2;
 
-      _walk();
-
       _attr("key", i);
 
       _data(i);
-
-      _walk();
 
       _attr("key", `other-${i}`);
     }
@@ -112,13 +94,9 @@ export const hydrate = _register("kLJbLoSu", input => {
   for (let _steps4 = (0 - 10) / -2, _step4 = 0; _step4 <= _steps4; _step4++) {
     const i = 10 + _step4 * -2;
 
-    _walk();
-
     _attr("key", i);
 
     _data(i);
-
-    _walk();
 
     _attr("key", `other-${i}`);
   }

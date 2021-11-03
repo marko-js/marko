@@ -1,10 +1,8 @@
-import { styleAttr as _styleAttr, walk as _walk, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { hydrate as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 export const template = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}`;
 export const walks = ` ${_customTag_walks}${_customTag_walks}${_customTag_walks}d`;
-export const hydrate = _register("rL9tpv82", input => {
-  _walk();
-
+export const hydrate = _register("packages/translator/src/__tests__/fixtures/attr-style/template.marko", input => {
   _styleAttr({
     color: input.color
   });

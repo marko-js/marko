@@ -33,6 +33,11 @@ export default envs
             preventAssignment: true,
             delimiters: ["", ""]
           }),
+        replace({
+          '"MARKO_SRC"': false,
+          preventAssignment: true,
+          delimiters: ["", ""]
+        }),
         env === "dist" && mangleInternal(),
         env === "dist" &&
           terser({
@@ -78,6 +83,13 @@ export default envs
               format: "cjs"
             }
           ],
-          plugins: [esbuild({ loader: "ts", include: /\.ts$/ }),]
+          plugins: [
+            esbuild({ loader: "ts", include: /\.ts$/ }),
+            replace({
+              '"MARKO_SRC"': false,
+              preventAssignment: true,
+              delimiters: ["", ""]
+            })
+          ]
         }
   );

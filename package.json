@@ -46,7 +46,7 @@
     "lint": "tsc -b && yarn lint:eslint && yarn lint:prettier -l && fixpack",
     "lint:eslint": "eslint -f visualstudio .",
     "lint:prettier": "prettier '**/*{.ts,.js,.json,.md,.yml,rc}'",
-    "mocha": "NODE_ENV=test mocha 'packages/*/src/**/__tests__/*.test.ts'",
+    "mocha": "mocha 'packages/*/src/**/__tests__/*.test.ts'",
     "prepare": "husky install",
     "prepublishOnly": "yarn build",
     "release": "lerna publish",
@@ -54,7 +54,7 @@
     "size": "cross-env SIZE=1 rollup -c ./rollup.config.js && node ./utilities/sizes.js",
     "size:check": "cross-env CHECK=1 yarn size",
     "size:write": "cross-env WRITE=1 yarn size && git add .sizes.json",
-    "test": "npm run mocha -- --watch",
+    "test": "npm run mocha",
     "test:inspect": "npm test -- --inspect",
     "test:update": "npm run mocha -- --update"
   },

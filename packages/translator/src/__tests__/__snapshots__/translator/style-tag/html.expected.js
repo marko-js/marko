@@ -1,6 +1,6 @@
-import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("Fh6ROoqv", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/style-tag/template.marko", input => {
   _write("<div class=content>Hello</div>");
 });
 

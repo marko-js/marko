@@ -1,9 +1,7 @@
-import { classAttr as _classAttr, walk as _walk, attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/dist/dom";
+import { classAttr as _classAttr, attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "<div></div>";
 export const walks = " b";
-export const hydrate = _register("ItejCh5k", input => {
-  _walk();
-
+export const hydrate = _register("packages/translator/src/__tests__/fixtures/attr-escape/template.marko", input => {
   _classAttr(input.className);
 
   _attr("foo", 'a' + input.foo + 'b');

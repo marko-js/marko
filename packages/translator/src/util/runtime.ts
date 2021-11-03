@@ -2,8 +2,6 @@ import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 
-const USE_SOURCE_RUNTIME = process.env.MARKO_SOURCE_RUNTIME;
-
 export function importRuntime<T extends t.Node>(
   path: t.NodePath<T>,
   name: string
@@ -49,6 +47,6 @@ function getRuntime<T extends t.Node>(
 function getRuntimePath<T extends t.Node>(path: t.NodePath<T>, output: string) {
   const { optimize } = getMarkoOpts(path);
   return `@marko/runtime-fluurt/${
-    USE_SOURCE_RUNTIME ? "src" : optimize ? "dist" : "dist/debug"
+    "MARKO_SRC" ? "src" : optimize ? "dist" : "dist/debug"
   }/${output}`;
 }

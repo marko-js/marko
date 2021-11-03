@@ -36,11 +36,12 @@ export default {
       }
 
       if (valParam) {
+        // TODO: account for keyParam being a non identifier.
         block.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(
               valParam,
-              t.memberExpression(inAttr.value!, keyParam, true)
+              t.memberExpression(inAttr.value!, keyParam as t.Identifier, true)
             )
           ])
         );

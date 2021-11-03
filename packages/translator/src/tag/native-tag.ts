@@ -86,7 +86,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
         if (!didVisit) {
           didVisit = true;
           writer.visit(tag, writer.WalkCodes.Get);
-          tag.insertBefore(t.expressionStatement(callRuntime(tag, "walk")));
+          // tag.insertBefore(t.expressionStatement(callRuntime(tag, "walk")));
         }
 
         tag.insertBefore(t.expressionStatement(dynamicExpr!));

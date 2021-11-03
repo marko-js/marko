@@ -1,6 +1,6 @@
-import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/html";
+import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("bS1NBW1t", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/comments/template.marko", input => {
   _write("<div><!--abc--><!--[if lt IE 9]><script src=\"...\"></script><![endif]--><!--[if lt IE 9]><script src=\"...\"></script><![endif]--></div>");
 });
 
