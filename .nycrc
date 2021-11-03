@@ -1,8 +1,6 @@
 {
-  "extends": "@istanbuljs/nyc-config-typescript",
-  "reporter": ["lcov"],
-  "exclude": [
-    "packages/runtime/src/html/reorder-runtime.ts",
-    "packages/**/test"
-  ]
+  "parserPlugins": ["objectRestSpread", "typescript"],
+  "reporter": ["text", "lcov"],
+  "include": ["packages/*/src/**/*.ts", "packages/*/src/**/*.marko"],
+  "exclude": ["**/__tests__", "packages/runtime/src/html/reorder-runtime.ts"]
 }

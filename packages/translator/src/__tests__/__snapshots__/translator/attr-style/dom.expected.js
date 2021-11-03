@@ -2,7 +2,7 @@ import { styleAttr as _styleAttr, write as _write, dynamicTag as _dynamicTag, re
 import { hydrate as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 export const template = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}`;
 export const walks = ` ${_customTag_walks}${_customTag_walks}${_customTag_walks}d`;
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/attr-style/template.marko", input => {
+export const hydrate = _register("src/__tests__/fixtures/attr-style/template.marko", input => {
   _styleAttr({
     color: input.color
   });

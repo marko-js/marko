@@ -1,7 +1,7 @@
 import { data as _data, attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "";
 export const walks = "";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/for-tag/template.marko", input => {
+export const hydrate = _register("src/__tests__/fixtures/for-tag/template.marko", input => {
   const arr = [1, 2, 3];
   const obj = {
     a: 1,

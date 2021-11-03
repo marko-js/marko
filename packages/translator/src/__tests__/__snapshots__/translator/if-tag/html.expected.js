@@ -1,6 +1,6 @@
 import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko", input => {
+const _renderer = _register("src/__tests__/fixtures/if-tag/template.marko", input => {
   if (input.a + input.b) _write("Hello");
   if (input.a, input.b) _write("World");
 

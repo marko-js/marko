@@ -1,6 +1,7 @@
 {
   "extension": ["js", "ts"],
   "enable-source-maps": true,
-  "watchFiles": ["packages/*/src/**.{ts,marko}"],
+  "watchFiles": ["src/**/*.ts", "src/**/*.marko"],
+  "watchIgnore": [".git", "node_modules", "__snapshots__"],
   "require": ["esbuild-register", "mocha-snap"]
 }
