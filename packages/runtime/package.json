@@ -4,7 +4,9 @@
   "version": "0.0.1",
   "bugs": "https://github.com/marko-js/x/issues",
   "files": [
-    "dist"
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
   ],
   "homepage": "https://github.com/marko-js/x",
   "keywords": [
@@ -16,5 +18,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x"
+  },
+  "scripts": {
+    "build": "npm run build:types && npm run build:js",
+    "build:js": "rollup -c --configPlugin 'esbuild-transform={loader:\"ts\",include:/\\.ts$/}'",
+    "build:types": "tsc -b",
+    "prepublishOnly": "npm run build",
+    "test": "mocha './src/**/__tests__/*.test.ts'"
   }
 }

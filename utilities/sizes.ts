@@ -1,31 +1,61 @@
-const fs = require("fs");
-const zlib = require("zlib");
-const chalk = require("chalk");
-const { table } = require("table");
-const rollup = require("rollup");
-const hypothetical = require("rollup-plugin-hypothetical");
+import fs from "fs";
+import path from "path";
+import zlib from "zlib";
+import chalk from "chalk";
+import assert from "assert";
+import rollup from "rollup";
+import { table } from "table";
+import { terser } from "rollup-plugin-terser";
+import hypothetical from "rollup-plugin-hypothetical";
 
-const path = require("path");
-const assert = require("assert");
-const { terser } = require("rollup-plugin-terser");
+interface Sizes {
+  min: number;
+  gzip: number;
+  brotli: number;
+}
+
+interface Result {
+  name: string;
+  individual?: Sizes;
+  cumulative?: Sizes;
+  increment?: Sizes;
+}
+
+interface Saved {
+  file: string;
+  exports: string[];
+  results: Result[];
+  preminified: boolean;
+}
+
 const configPath = path.join(__dirname, "../.sizes.json");
+const shouldWrite = process.argv.includes("--write");
 
 run(configPath).catch(console.error);
 
-async function run(configPath) {
-  const { file, exports, preminified, results: previous } = loadData(
-    configPath
-  );
+async function run(configPath: string) {
+  const {
+    file,
+    exports,
+    preminified,
+    results: previous
+  } = loadData(configPath);
   const current = await getExportResults(file, exports, preminified);
 
-  console.log(renderTable(current, previous, process.env.MEASURE || "gzip"));
+  console.log(
+    renderTable(
+      current,
+      previous,
+      (process.env.MEASURE as undefined | keyof Sizes) || "gzip"
+    )
+  );
 
-  if (process.env.WRITE) {
+  if (shouldWrite) {
     writeData(configPath, current);
     console.log(
       chalk.green(`${path.relative(process.cwd(), configPath)} updated!`)
     );
-  } else if (process.env.CHECK) {
+  } else {
     try {
       assert.deepStrictEqual(previous, current);
       console.log(
@@ -40,19 +70,23 @@ async function run(configPath) {
   }
 }
 
-function loadData(configPath) {
-  const data = JSON.parse(fs.readFileSync(configPath));
+function loadData(configPath: string): Saved {
+  const data = JSON.parse(fs.readFileSync(configPath, "utf-8")) as Saved;
   data.file = path.resolve(path.dirname(configPath), data.file);
   return data;
 }
 
-function writeData(configPath, results) {
-  const data = JSON.parse(fs.readFileSync(configPath));
+function writeData(configPath: string, results: Result[]) {
+  const data = JSON.parse(fs.readFileSync(configPath, "utf-8")) as Saved;
   data.results = results;
   fs.writeFileSync(configPath, JSON.stringify(data, null, 2));
 }
 
-function renderTable(current, previous, measure) {
+function renderTable(
+  current: Result[],
+  previous: Result[],
+  measure: keyof Sizes
+) {
   const columns = ["name", "individual", "cumulative", "increment"].map(n =>
     chalk.bold(n)
   );
@@ -82,7 +116,11 @@ function renderTable(current, previous, measure) {
   );
 }
 
-function renderSize(current, previous, measure) {
+function renderSize(
+  current: Sizes | undefined,
+  previous: Sizes | undefined,
+  measure: keyof Sizes
+) {
   let str = "";
   if (current && current[measure]) {
     str += current[measure];
@@ -101,14 +139,18 @@ function renderSize(current, previous, measure) {
   return str;
 }
 
-async function getExportResults(file, exports, preminified) {
-  const results = [
+async function getExportResults(
+  file: string,
+  exports: string[],
+  preminified: boolean
+) {
+  const results: Result[] = [
     {
       name: "*",
       individual: await getSizesForAll(file, preminified)
     }
   ];
-  const exportsSoFar = [];
+  const exportsSoFar: string[] = [];
   let previous = {
     min: 0,
     gzip: 0,
@@ -138,17 +180,23 @@ async function getExportResults(file, exports, preminified) {
   return results;
 }
 
-async function getSizesForAll(file, preminified) {
+async function getSizesForAll(file: string, preminified: boolean) {
   return getSizesForSrc(await bundleAll(file, preminified));
 }
 
-async function getSizesForExports(file, exports, preminified) {
+async function getSizesForExports(
+  file: string,
+  exports: string[],
+  preminified: boolean
+) {
   return getSizesForSrc(await bundleExports(file, exports, preminified));
 }
 
-async function getSizesForSrc(minified) {
-  const gzipped = await gzip(minified);
-  const brotlied = await brotli(minified);
+async function getSizesForSrc(minified: string): Promise<Sizes> {
+  const [gzipped, brotlied] = await Promise.all([
+    gzip(minified),
+    brotli(minified)
+  ]);
 
   return {
     min: minified.length,
@@ -157,18 +205,22 @@ async function getSizesForSrc(minified) {
   };
 }
 
-async function bundleAll(file, preminified) {
+async function bundleAll(file: string, preminified: boolean) {
   return bundle(`export * from ${JSON.stringify(file)}`, preminified);
 }
 
-async function bundleExports(file, exports, preminified) {
+async function bundleExports(
+  file: string,
+  exports: string[],
+  preminified: boolean
+) {
   return bundle(
     `export { ${exports.join(", ")} } from ${JSON.stringify(file)}`,
     preminified
   );
 }
 
-async function bundle(src, preminified) {
+async function bundle(src: string, preminified: boolean) {
   const bundle = await rollup.rollup({
     input: "./entry.js",
     output: {
@@ -189,7 +241,7 @@ async function bundle(src, preminified) {
   return output[0].code;
 }
 
-function brotli(src) {
+function brotli(src: string): Promise<Buffer> {
   return new Promise((resolve, reject) =>
     zlib.brotliCompress(src, (error, result) =>
       error ? reject(error) : resolve(result)
@@ -197,7 +249,7 @@ function brotli(src) {
   );
 }
 
-function gzip(src) {
+function gzip(src: string): Promise<Buffer> {
   return new Promise((resolve, reject) =>
     zlib.gzip(src, (error, result) => (error ? reject(error) : resolve(result)))
   );

@@ -9,7 +9,9 @@
     "tslib": "^2.3.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
   ],
   "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
   "jsnext": "dist/index.esm.js",
@@ -28,6 +30,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x/tree/master/packages/translator"
+  },
+  "scripts": {
+    "build": "npm run build:types && npm run build:js",
+    "build:js": "rollup -c --configPlugin 'esbuild-transform={loader:\"ts\",include:/\\.ts$/}'",
+    "build:types": "tsc -b",
+    "prepublishOnly": "npm run build",
+    "test": "mocha './src/**/__tests__/*.test.ts'"
   },
   "types": "dist/index.d.ts"
 }

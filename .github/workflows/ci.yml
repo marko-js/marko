@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [12.x, 14.x, 15.x]
+        node: [14.x, 16.x]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,6 +27,6 @@ jobs:
       - name: Run tests
         run: yarn ci:test
       - name: Check bundle size
-        run: yarn size:check
+        run: yarn size
       - name: Report code coverage
         run: yarn ci:report

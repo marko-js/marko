@@ -1,7 +1,8 @@
+import type { Plugin, SourceMapInput } from "rollup";
 import MagicString from "magic-string";
 const internalReg = /(?<=\b)___[a-z0-9$_]+(?=\b)/gi;
 
-export default () => {
+export default (): Plugin => {
   const ids = new Map();
   return {
     name: "mangle-internal",
@@ -26,9 +27,10 @@ export default () => {
 
           while (index > 0) {
             mod = index % 64;
-            id += "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_"[
-              mod
-            ];
+            id +=
+              "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_"[
+                mod
+              ];
             index = (index - mod) / 64;
           }
 
@@ -39,10 +41,14 @@ export default () => {
         m = internalReg.exec(code);
       } while (m);
 
-      const result = { code: s.toString() };
+      const result: { code: string; map?: SourceMapInput } = {
+        code: s.toString()
+      };
+
       if (outputOptions.sourcemap !== false) {
         result.map = s.generateMap({ hires: true });
       }
+
       return result;
     }
   };

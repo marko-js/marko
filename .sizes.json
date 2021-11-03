@@ -1,7 +1,7 @@
 {
   "file": "./packages/runtime/dist/dom/index.esm.js",
-  "exports": [],
   "preminified": true,
+  "exports": [],
   "results": [
     {
       "name": "*",
