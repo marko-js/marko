@@ -247,6 +247,7 @@ const lastIndex = new WeakMap();
 export function markScopeOffset(index: number, scope: Scope) {
   const offset = index - (lastIndex.get(scope) || 0);
   lastIndex.set(scope, index);
+  // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset} ${
       scope[ScopeOffsets.ID]
@@ -262,6 +263,7 @@ export function markScopeStart(scope: Scope) {
 }
 
 export function markScopeEnd(scope: Scope) {
+  // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     return `<!${runtimeId}${HydrateSymbols.SCOPE_END}${
       scope[ScopeOffsets.ID]

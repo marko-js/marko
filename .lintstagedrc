@@ -1,5 +1,0 @@
-{
-  "*.{json,md}": ["prettier --write"],
-  "*.{js,ts}": ["eslint --fix", "prettier --write"],
-  "./{,packages/*/}package.json": ["fixpack"]
-}

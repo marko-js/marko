@@ -323,6 +323,7 @@ function trackInputReference(
   let curPath = identifier as t.NodePath<t.Node>;
   let curAccessor = accessor;
 
+  // eslint-disable-next-line no-constant-condition
   while (true) {
     const parentPath = curPath.parentPath!;
 

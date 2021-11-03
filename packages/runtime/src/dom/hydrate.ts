@@ -69,6 +69,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
         const token = nodeValue[runtimeLength];
         const data = nodeValue.slice(runtimeLength + 1);
         if (token === HydrateSymbols.SCOPE_OFFSET) {
+          // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
             const [offset, scopeId, index] = data.split(" ");
             if (scopeId !== currentScope[ScopeOffsets.ID]) {
@@ -93,6 +94,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           }
           currentScope[ScopeOffsets.START_NODE] = currentNode;
         } else if (token === HydrateSymbols.SCOPE_END) {
+          // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
             if (data !== currentScope[ScopeOffsets.ID]) {
               throw new Error("SCOPE_END_MISMATCH: " + nodeValue);
@@ -101,6 +103,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           currentScope[ScopeOffsets.END_NODE] = currentNode;
           currentOffset = stack.pop() as number;
           currentScope = scopeLookup.get(stack.pop() as string)!;
+          // eslint-disable-next-line no-constant-condition
         } else if ("MARKO_DEBUG") {
           throw new Error("MALFORMED MARKER: " + nodeValue);
         }

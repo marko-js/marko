@@ -64,6 +64,7 @@ export function dynamicTag(
           : { renderBody, ...input }
         : input
     );
+    // eslint-disable-next-line no-constant-condition
   } else if ("MARKO_DEBUG") {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }
