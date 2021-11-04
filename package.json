@@ -38,7 +38,7 @@
   "private": true,
   "scripts": {
     "build": "npm run -ws build",
-    "ci:test": "nyc npm run -ws test -- --forbid-pending --forbid-only",
+    "ci:test": "nyc npm run -ws test -- --forbid-only",
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write && (fixpack || true)",
     "lint": "npm run -ws build:types && npm run lint:eslint && npm run lint:prettier -- -l && fixpack",
     "lint:eslint": "eslint -f visualstudio .",
