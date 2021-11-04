@@ -2,7 +2,7 @@
   "timeout": 5000,
   "extension": ["js", "ts"],
   "enable-source-maps": true,
-  "watchFiles": ["src/**/*.ts", "src/**/*.marko"],
+  "watchFiles": ["packages/*/src/**/*.ts", "packages/*/src/**/*.marko"],
   "watchIgnore": [".git", "node_modules", "__snapshots__"],
   "require": ["esbuild-register", "mocha-snap"]
 }

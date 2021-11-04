@@ -1,12 +1,12 @@
 import Other from "./other.marko";
 import { write as _write, getInContext as _getInContext, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("src/__tests__/fixtures/context-tag-from-relative-path/template.marko", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/context-tag-from-relative-path/template.marko", input => {
   Other({
     renderBody() {
       _write("<span>");
 
-      const message = _getInContext("src/__tests__/fixtures/context-tag-from-relative-path/other.marko");
+      const message = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-relative-path/other.marko");
 
       _write(`${_escapeXML(message)}</span>`);
     }

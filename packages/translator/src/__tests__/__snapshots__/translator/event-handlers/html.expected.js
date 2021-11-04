@@ -1,7 +1,7 @@
 import _child from "./components/child/index.marko";
 import { write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("src/__tests__/fixtures/event-handlers/template.marko", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko", input => {
   _child({
     class: "hi",
     onclick: () => {

@@ -38,7 +38,7 @@
   "private": true,
   "scripts": {
     "build": "npm run -ws build",
-    "ci:test": "nyc npm run -ws test -- --forbid-only",
+    "ci:test": "nyc npm test -- --forbid-only",
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write && (fixpack || true)",
     "lint": "npm run -ws build:types && npm run lint:eslint && npm run lint:prettier -- -l && fixpack",
     "lint:eslint": "eslint -f visualstudio .",
@@ -49,9 +49,9 @@
     "report": "open ./coverage/lcov-report/index.html",
     "size": "node -r esbuild-register ./utilities/sizes",
     "size:write": "npm run size -- --write && git add .sizes.json",
-    "test": "npm run -ws test",
-    "test:inspect": "npm run -ws test -- --inspect",
-    "test:update": "npm run -ws test -- --update"
+    "test": "mocha './packages/*/src/**/__tests__/*.test.ts'",
+    "test:inspect": "npm test -- --inspect",
+    "test:update": "npm test -- --update"
   },
   "workspaces": [
     "packages/*"

@@ -35,8 +35,7 @@
     "build": "npm run build:types && npm run build:js",
     "build:js": "rollup -c --configPlugin 'esbuild-transform={loader:\"ts\",include:/\\.ts$/}'",
     "build:types": "tsc -b",
-    "prepublishOnly": "npm run build",
-    "test": "mocha './src/**/__tests__/*.test.ts'"
+    "prepublishOnly": "npm run build"
   },
   "types": "dist/index.d.ts"
 }

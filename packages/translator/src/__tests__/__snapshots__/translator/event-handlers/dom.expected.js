@@ -2,7 +2,7 @@ import { hydrate as _child, template as _child_template, walks as _child_walks }
 import { attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = `${_child_template}<div class=hi></div>`;
 export const walks = `${_child_walks} b`;
-export const hydrate = _register("src/__tests__/fixtures/event-handlers/template.marko", input => {
+export const hydrate = _register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko", input => {
   _child({
     class: "hi",
     onclick: () => {

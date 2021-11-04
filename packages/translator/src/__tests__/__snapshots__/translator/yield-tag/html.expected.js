@@ -1,6 +1,6 @@
 import { register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("src/__tests__/fixtures/yield-tag/template.marko", input => {
+const _renderer = _register("packages/translator/src/__tests__/fixtures/yield-tag/template.marko", input => {
   var _return;
 
   if (input.show) _return = 1;else _return = 2;
