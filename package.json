@@ -44,6 +44,7 @@
     "lint:eslint": "eslint -f visualstudio .",
     "lint:prettier": "prettier '**/*{.ts,.js,.json,.md,.yml,rc}'",
     "prepare": "husky install",
+    "presize": "npm run build:js -w @marko/runtime-fluurt",
     "release": "npm exec -ws -- semantic-release",
     "report": "open ./coverage/lcov-report/index.html",
     "size": "node -r esbuild-register ./utilities/sizes",
