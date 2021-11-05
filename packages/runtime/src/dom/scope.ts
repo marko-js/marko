@@ -68,9 +68,11 @@ export function getOwnerScope(ownerLevel = 1) {
   return scope;
 }
 
-export function bind(fn: (...args: unknown[]) => unknown) {
-  const boundScope = currentScope;
-  const boundOffset = currentOffset;
+export function bind(
+  fn: (...args: unknown[]) => unknown,
+  boundOffset = currentOffset,
+  boundScope = currentScope
+) {
   return fn.length
     ? (...args: unknown[]) => runWithScope(fn, boundOffset, boundScope, args)
     : () => runWithScope(fn, boundOffset, boundScope);

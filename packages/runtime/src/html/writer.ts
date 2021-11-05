@@ -2,6 +2,7 @@ import type { Writable } from "stream";
 import { Context, setContext } from "../common/context";
 import { Renderer, Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
+import { Serializer } from "./serializer";
 
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -18,7 +19,7 @@ let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
 
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
-const hydrateFlushed: WeakSet<MaybeFlushable> = new WeakSet();
+const streamSerializers: WeakMap<MaybeFlushable, Serializer> = new WeakMap();
 
 export function nextId() {
   const id = uids.get($_stream!)! + 1 || 0;
@@ -286,11 +287,18 @@ export function markReplaceEnd(id: number) {
 
 function flushToStream() {
   if ($_buffer!.calls || $_buffer!.scopes) {
+    let isFirstFlush;
+    let serializer = streamSerializers.get($_stream!);
+    if ((isFirstFlush = !serializer)) {
+      streamSerializers.set($_stream!, (serializer = new Serializer()));
+    }
     $_buffer!.content += `<script>${
-      hydrateFlushed.has($_stream!)
-        ? runtimeId + HydrateSymbols.VAR_HYDRATE
-        : `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
-    }.push(${JSON.stringify($_buffer!.scopes)},[${$_buffer!.calls}])</script>`;
+      isFirstFlush
+        ? `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
+        : runtimeId + HydrateSymbols.VAR_HYDRATE
+    }.push(${serializer.stringify($_buffer!.scopes)},[${
+      $_buffer!.calls
+    }])</script>`;
   }
   $_stream!.write($_buffer!.content);
   if ($_stream!.flush) {

@@ -1,5 +1,5 @@
 import { Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
-import { runWithScope } from "./scope";
+import { bind, runWithScope } from "./scope";
 
 type HydrateFn = () => void;
 
@@ -23,9 +23,14 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   let currentScope: Scope;
   let currentOffset: number;
   let currentNode: Node;
-  const scopeLookup: Map<string, Scope> = new Map();
+  const scopeLookup: Record<string, Scope> = {};
   const stack: Array<string | number> = [];
   const fakeArray = { push: hydrate };
+  const bindFunction = (fnId: string, offset: number, scopeId: string) => {
+    const fn = fnsById[fnId];
+    const scope = scopeLookup[scopeId];
+    return bind(fn, offset, scope);
+  };
 
   Object.defineProperty(window, hydrateVar, {
     get() {
@@ -40,12 +45,14 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   }
 
   function hydrate(
-    scopes: Record<string, Scope>,
+    scopesFn: (b, s, ...rest: unknown[]) => Record<string, Scope>,
     calls: Array<string | number>
   ) {
     if (doc.readyState !== "loading") {
       walker.currentNode = doc;
     }
+
+    const scopes = scopesFn(bindFunction, scopeLookup);
 
     /**
      * Loop over all the new hydration scopes and see if a previous walk
@@ -54,13 +61,13 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
      */
     for (const scopeId in scopes) {
       const scope = scopes[scopeId];
-      const storedScope = scopeLookup.get(scope[ScopeOffsets.ID]);
+      const storedScope = scopeLookup[scopeId];
 
       if (storedScope !== scope) {
         if (storedScope) {
           Object.assign(scope, storedScope);
         }
-        scopeLookup.set(scope[ScopeOffsets.ID], scope);
+        scopeLookup[scopeId] = scope;
         if (currentScope === storedScope) {
           currentScope = scope;
         }
@@ -91,10 +98,10 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           if (currentScope) {
             stack.push(currentScope[ScopeOffsets.ID] as string, currentOffset);
           }
-          currentScope = scopeLookup.get(data)!;
+          currentScope = scopeLookup[data]!;
           currentOffset = 0;
           if (!currentScope) {
-            scopeLookup.set(data, (currentScope = [data] as unknown as Scope));
+            scopeLookup[data] = currentScope = [data] as unknown as Scope;
           }
           currentScope[ScopeOffsets.START_NODE] = currentNode;
         } else if (token === HydrateSymbols.SCOPE_END) {
@@ -106,7 +113,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           }
           currentScope[ScopeOffsets.END_NODE] = currentNode;
           currentOffset = stack.pop() as number;
-          currentScope = scopeLookup.get(stack.pop() as string)!;
+          currentScope = scopeLookup[stack.pop() as string]!;
           // eslint-disable-next-line no-constant-condition
         } else if ("MARKO_DEBUG") {
           throw new Error("MALFORMED MARKER: " + nodeValue);
@@ -118,7 +125,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       runWithScope(
         fnsById[calls[i]]!,
         calls[i + 1] as number,
-        scopeLookup.get(calls[i + 2] as string)
+        scopeLookup[calls[i + 2]]
       );
     }
   }

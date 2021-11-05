@@ -1,5 +1,5 @@
 # Write
-  <!M^ROOT><body><!M#6 ROOT 6><button><!M#1 ROOT 7>0</button></body><!M/ROOT><script>(M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])</script>
+  <!M^ROOT><body><!M#6 ROOT 6><button><!M#1 ROOT 7>0</button></body><!M/ROOT><script>(M$h=[]).push((b,s)=>({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])</script>
 
 
 # Render "End"
@@ -14,7 +14,7 @@
       0
     </button>
     <script>
-      (M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])
+      (M$h=[]).push((b,s)=&gt;({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])
     </script>
   </body>
   <!--M/ROOT-->
@@ -49,7 +49,7 @@ inserted #document/html1/body1/script2/#text0
       0
     </button>
     <script>
-      (M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])
+      (M$h=[]).push((b,s)=&gt;({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])
     </script>
   </body>
   <!--M/ROOT-->
@@ -76,7 +76,7 @@ container.querySelector("button").click();
       1
     </button>
     <script>
-      (M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])
+      (M$h=[]).push((b,s)=&gt;({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])
     </script>
   </body>
   <!--M/ROOT-->
@@ -103,7 +103,7 @@ container.querySelector("button").click();
       2
     </button>
     <script>
-      (M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])
+      (M$h=[]).push((b,s)=&gt;({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])
     </script>
   </body>
   <!--M/ROOT-->
@@ -130,7 +130,7 @@ container.querySelector("button").click();
       3
     </button>
     <script>
-      (M$h=[]).push({"ROOT":["ROOT",null,null,null,null,null,null,null,0]},["counter",6,"ROOT",])
+      (M$h=[]).push((b,s)=&gt;({ROOT:["ROOT",,,,,,,,0]}),["counter",6,"ROOT",])
     </script>
   </body>
   <!--M/ROOT-->

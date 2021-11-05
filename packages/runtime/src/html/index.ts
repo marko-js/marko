@@ -21,4 +21,6 @@ export {
   writeScope,
 } from "./writer";
 
+export { register } from "./serializer";
+
 export { pushContext, popContext, getInContext } from "../common/context";
