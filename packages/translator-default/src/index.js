@@ -250,7 +250,7 @@ export const translate = {
         path.scope.generateUidIdentifier("marko_template");
       const rendererIdentifier = importDefault(
         file,
-        "marko/src/runtime/components/renderer",
+        "marko/src/runtime/components/renderer.js",
         "marko_renderer"
       );
       const templateRendererMember = t.memberExpression(
@@ -280,7 +280,7 @@ export const translate = {
             t.stringLiteral(
               `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/${
                 isHTML ? "html" : "vdom"
-              }${markoOpts.hot ? "/hot-reload" : ""}`
+              }${markoOpts.hot ? "/hot-reload" : ""}/index.js`
             )
           ),
           t.variableDeclaration("const", [
