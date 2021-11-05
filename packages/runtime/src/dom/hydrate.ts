@@ -1,9 +1,4 @@
-import {
-  HydrateInstance,
-  Scope,
-  ScopeOffsets,
-  HydrateSymbols,
-} from "../common/types";
+import { Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
 import { runWithScope } from "./scope";
 
 type HydrateFn = () => void;
@@ -30,16 +25,24 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   let currentNode: Node;
   const scopeLookup: Map<string, Scope> = new Map();
   const stack: Array<string | number> = [];
+  const fakeArray = { push: hydrate };
 
-  const fakeArray = ((window as any)[hydrateVar] = {
-    concat: hydrateAll,
+  Object.defineProperty(window, hydrateVar, {
+    get() {
+      return fakeArray;
+    },
   });
 
   if (initialHydration) {
-    hydrateAll(initialHydration);
+    for (let i = 0; i < initialHydration.length; i += 2) {
+      hydrate(initialHydration[i], initialHydration[i + 1]);
+    }
   }
 
-  function hydrateAll(hydrationLogic: HydrateInstance[]) {
+  function hydrate(
+    scopes: Record<string, Scope>,
+    calls: Array<string | number>
+  ) {
     if (doc.readyState !== "loading") {
       walker.currentNode = doc;
     }
@@ -49,7 +52,8 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
      * had to create a dummy scope to store Nodes of interest.
      * If so merge them and set/replace the scope in the scopeLookup.
      */
-    hydrationLogic.forEach(([, scope]) => {
+    for (const scopeId in scopes) {
+      const scope = scopes[scopeId];
       const storedScope = scopeLookup.get(scope[ScopeOffsets.ID]);
 
       if (storedScope !== scope) {
@@ -61,7 +65,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           currentScope = scope;
         }
       }
-    });
+    }
 
     while ((currentNode = walker.nextNode()!)) {
       const nodeValue = currentNode.nodeValue;
@@ -110,10 +114,12 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       }
     }
 
-    hydrationLogic.forEach(([hydrateFnId, scope, offset]) => {
-      runWithScope(fnsById[hydrateFnId]!, offset, scope);
-    });
-
-    return fakeArray;
+    for (let i = 0; i < calls.length; i += 3) {
+      runWithScope(
+        fnsById[calls[i]]!,
+        calls[i + 1] as number,
+        scopeLookup.get(calls[i + 2] as string)
+      );
+    }
   }
 }

@@ -1,5 +1,5 @@
 import type { Scope } from "../../../common/types";
-import { write, markScopeOffset, hydrateFunction } from "../../../html";
+import { write, markScopeOffset, writeScope, writeCall } from "../../../html";
 
 export default (
   _input: unknown,
@@ -26,5 +26,6 @@ const counter = (
       currentScope
     )}${count}</button>`
   );
-  hydrateFunction("counter", currentScope, currentOffset);
+  writeScope(currentScope);
+  writeCall("counter", currentOffset, currentScope[0]);
 };

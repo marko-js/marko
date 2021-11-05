@@ -17,7 +17,8 @@ export {
   tryPlaceholder,
   tryCatch,
   markScopeOffset,
-  hydrateFunction,
+  writeCall,
+  writeScope,
 } from "./writer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

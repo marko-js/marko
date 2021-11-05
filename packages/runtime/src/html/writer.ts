@@ -1,12 +1,6 @@
 import type { Writable } from "stream";
 import { Context, setContext } from "../common/context";
-import {
-  Renderer,
-  Scope,
-  HydrateInstance,
-  ScopeOffsets,
-  HydrateSymbols,
-} from "../common/types";
+import { Renderer, Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 
 const runtimeId = "M";
@@ -24,6 +18,7 @@ let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
 
 const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
 const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
+const hydrateFlushed: WeakSet<MaybeFlushable> = new WeakSet();
 
 export function nextId() {
   const id = uids.get($_stream!)! + 1 || 0;
@@ -70,6 +65,15 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
 
 export function write(data: string) {
   $_buffer!.content += data;
+}
+
+export function writeCall(fnId: string, offset: number, scopeId: string) {
+  $_buffer!.calls += `"${fnId}",${offset},"${scopeId}",`;
+}
+
+export function writeScope(scope: Scope) {
+  $_buffer!.scopes = $_buffer!.scopes || {};
+  $_buffer!.scopes[scope[ScopeOffsets.ID]] = scope;
 }
 
 export function fork<T>(
@@ -280,18 +284,13 @@ export function markReplaceEnd(id: number) {
   return ($_buffer!.content += `<!${marker(id)}/>`);
 }
 
-export function hydrateFunction(fnId: string, scope: Scope, offset: number) {
-  $_buffer!.hydrate = $_buffer!.hydrate || [];
-  $_buffer!.hydrate.push([fnId, scope, offset]);
-}
-
 function flushToStream() {
-  if ($_buffer!.hydrate) {
-    $_buffer!.content += `<script>${runtimeId}${
-      HydrateSymbols.VAR_HYDRATE
-    }=(window.${runtimeId}${
-      HydrateSymbols.VAR_HYDRATE
-    }||[]).concat(${JSON.stringify($_buffer!.hydrate)})</script>`;
+  if ($_buffer!.calls || $_buffer!.scopes) {
+    $_buffer!.content += `<script>${
+      hydrateFlushed.has($_stream!)
+        ? runtimeId + HydrateSymbols.VAR_HYDRATE
+        : `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
+    }.push(${JSON.stringify($_buffer!.scopes)},[${$_buffer!.calls}])</script>`;
   }
   $_stream!.write($_buffer!.content);
   if ($_stream!.flush) {
@@ -317,25 +316,26 @@ function marker(id: number) {
 
 interface Buffer {
   content: string;
-  hydrate: HydrateInstance[] | null;
+  calls: string;
+  scopes: Record<string, unknown[]> | null;
 }
 
 function createBuffer() {
   return {
     content: "",
-    hydrate: null,
+    calls: "",
+    scopes: null,
   } as Buffer;
 }
 
 function mergeBuffers(source: Buffer, target: Buffer = $_buffer!) {
   target.content += source.content;
-  if (source.hydrate) {
-    if (target.hydrate) {
-      for (let i = 0, length = source.hydrate.length; i < length; i++) {
-        target.hydrate.push(source.hydrate[i]);
-      }
+  target.calls += source.calls;
+  if (source.scopes) {
+    if (target.scopes) {
+      Object.assign(target.scopes, source.scopes);
     } else {
-      target.hydrate = source.hydrate;
+      target.scopes = source.scopes;
     }
   }
   clearBuffer(source);
@@ -343,7 +343,8 @@ function mergeBuffers(source: Buffer, target: Buffer = $_buffer!) {
 
 function clearBuffer(buffer: Buffer) {
   buffer.content = "";
-  buffer.hydrate = null;
+  buffer.calls = "";
+  buffer.scopes = null;
 }
 
 function clearScope() {
