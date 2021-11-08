@@ -36,21 +36,21 @@ type RenderResult<I extends Input> = Node & {
 
 export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
-  scope[ScopeOffsets.START_NODE] =
+  scope.___startNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom;
-  scope[ScopeOffsets.END_NODE] =
+  scope.___endNode =
     dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
-  walk(scope[ScopeOffsets.START_NODE] as Node, renderer.___walks!, scope);
+  walk(scope.___startNode as Node, renderer.___walks!, scope);
   if (renderer.___render) {
     runWithScope(renderer.___render, ScopeOffsets.BEGIN_DATA, scope);
   }
   if (renderer.___dynamicStartNodeMethod) {
     scope.___getFirstNode = renderer.___dynamicStartNodeMethod;
-    scope[ScopeOffsets.START_NODE] = renderer.___dynamicStartNodeOffset!;
+    scope.___startNode = renderer.___dynamicStartNodeOffset!;
   }
   if (renderer.___dynamicEndNodeMethod) {
     scope.___getLastNode = renderer.___dynamicEndNodeMethod;
-    scope[ScopeOffsets.END_NODE] = renderer.___dynamicEndNodeOffset!;
+    scope.___endNode = renderer.___dynamicEndNodeOffset!;
   }
   return dom;
 }

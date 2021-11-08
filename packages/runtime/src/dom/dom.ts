@@ -1,5 +1,5 @@
 import type { Renderer } from "./renderer";
-import { Scope, ScopeOffsets } from "../common/types";
+import { Scope } from "../common/types";
 import { onDestroy, read, write } from "./scope";
 import { withQueueNext } from "./queue";
 
@@ -25,10 +25,10 @@ export type DOMMethods = {
 
 export const staticNodeMethods: DOMMethods = {
   ___insertBefore(parent, nextSibling) {
-    parent.insertBefore(this[ScopeOffsets.START_NODE] as Node, nextSibling);
+    parent.insertBefore(this.___startNode as Node, nextSibling);
   },
   ___remove() {
-    (this[ScopeOffsets.START_NODE] as ChildNode).remove();
+    (this.___startNode as ChildNode).remove();
   },
   ___getParentNode() {
     return this.___getFirstNode().parentNode!;
@@ -37,27 +37,27 @@ export const staticNodeMethods: DOMMethods = {
     return this.___getLastNode().nextSibling;
   },
   ___getFirstNode() {
-    return this[ScopeOffsets.START_NODE] as ChildNode;
+    return this.___startNode as ChildNode;
   },
   ___getLastNode() {
-    return this[ScopeOffsets.END_NODE] as ChildNode;
+    return this.___endNode as ChildNode;
   },
 };
 
 // export const staticNodePropertiesDef = {
 //   ___insertBefore: {
 //     value(parent, nextSibling) {
-//       parent.insertBefore(this[ScopeOffsets.START_NODE] as Node, nextSibling);
+//       parent.insertBefore(this.___startNode as Node, nextSibling);
 //     }
 //   },
 //   ___remove: {
 //     value() {
-//       (this[ScopeOffsets.START_NODE] as ChildNode).remove();
+//       (this.___startNode as ChildNode).remove();
 //     }
 //   },
 //   ___parentNode: {
 //     get() {
-//       return this[ScopeOffsets.START_NODE].parentNode;
+//       return this.___startNode.parentNode;
 //     },
 //   },
 //   ___afterNode: {

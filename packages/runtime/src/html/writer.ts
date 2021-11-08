@@ -43,7 +43,9 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
     try {
       let renderedPromises: typeof $_promises;
       try {
-        const scope = hydrateRoot ? (["ROOT"] as any as Scope) : nullScope;
+        const scope = hydrateRoot
+          ? (Object.assign([], { ___id: "ROOT" }) as any as Scope)
+          : nullScope;
         hydrateRoot && write(markScopeStart(scope));
         renderer(input, scope, ScopeOffsets.BEGIN_DATA);
         hydrateRoot && write(markScopeEnd(scope));
@@ -74,7 +76,7 @@ export function writeCall(fnId: string, offset: number, scopeId: string) {
 
 export function writeScope(scope: Scope) {
   $_buffer!.scopes = $_buffer!.scopes || {};
-  $_buffer!.scopes[scope[ScopeOffsets.ID]] = scope;
+  $_buffer!.scopes[scope.___id] = scope;
 }
 
 export function fork<T>(
@@ -254,25 +256,19 @@ export function markScopeOffset(index: number, scope: Scope) {
   lastIndex.set(scope, index);
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset} ${
-      scope[ScopeOffsets.ID]
-    } ${index}>`;
+    return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset} ${scope.___id} ${index}>`;
   }
   return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset}>`;
 }
 
 export function markScopeStart(scope: Scope) {
-  return `<!${runtimeId}${HydrateSymbols.SCOPE_START}${
-    scope[ScopeOffsets.ID]
-  }>`;
+  return `<!${runtimeId}${HydrateSymbols.SCOPE_START}${scope.___id}>`;
 }
 
 export function markScopeEnd(scope: Scope) {
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    return `<!${runtimeId}${HydrateSymbols.SCOPE_END}${
-      scope[ScopeOffsets.ID]
-    }>`;
+    return `<!${runtimeId}${HydrateSymbols.SCOPE_END}${scope.___id}>`;
   }
   return `<!${runtimeId}${HydrateSymbols.SCOPE_END}>`;
 }

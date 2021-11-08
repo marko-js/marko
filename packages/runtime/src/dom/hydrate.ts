@@ -1,4 +1,4 @@
-import { Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
+import { Scope, HydrateSymbols } from "../common/types";
 import { bind, runWithScope } from "./scope";
 
 type HydrateFn = () => void;
@@ -66,8 +66,10 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       if (storedScope !== scope) {
         if (storedScope) {
           Object.assign(scope, storedScope);
+        } else {
+          scope.___id = scopeId;
+          scopeLookup[scopeId] = scope;
         }
-        scopeLookup[scopeId] = scope;
         if (currentScope === storedScope) {
           currentScope = scope;
         }
@@ -83,7 +85,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
             const [offset, scopeId, index] = data.split(" ");
-            if (scopeId !== currentScope[ScopeOffsets.ID]) {
+            if (scopeId !== currentScope.___id) {
               throw new Error("INVALID_MARKER_NESTING: " + nodeValue);
             }
             if (parseInt(offset) + currentOffset !== parseInt(index)) {
@@ -96,22 +98,23 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           currentScope[(currentOffset += offset)] = node;
         } else if (token === HydrateSymbols.SCOPE_START) {
           if (currentScope) {
-            stack.push(currentScope[ScopeOffsets.ID] as string, currentOffset);
+            stack.push(currentScope.___id, currentOffset);
           }
           currentScope = scopeLookup[data]!;
           currentOffset = 0;
           if (!currentScope) {
-            scopeLookup[data] = currentScope = [data] as unknown as Scope;
+            scopeLookup[data] = currentScope = [] as unknown as Scope;
+            currentScope.___id = data;
           }
-          currentScope[ScopeOffsets.START_NODE] = currentNode;
+          currentScope.___startNode = currentNode;
         } else if (token === HydrateSymbols.SCOPE_END) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
-            if (data !== currentScope[ScopeOffsets.ID]) {
+            if (data !== currentScope.___id) {
               throw new Error("SCOPE_END_MISMATCH: " + nodeValue);
             }
           }
-          currentScope[ScopeOffsets.END_NODE] = currentNode;
+          currentScope.___endNode = currentNode;
           currentOffset = stack.pop() as number;
           currentScope = scopeLookup[stack.pop() as string]!;
           // eslint-disable-next-line no-constant-condition

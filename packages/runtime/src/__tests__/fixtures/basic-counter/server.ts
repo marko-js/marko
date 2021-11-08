@@ -6,7 +6,6 @@ export default (
   currentScope: Scope,
   currentOffset: number
 ) => {
-  currentScope[0] = "ROOT";
   write("<body>");
   counter(_input, currentScope, currentOffset);
   write("</body>");
@@ -27,5 +26,5 @@ const counter = (
     )}${count}</button>`
   );
   writeScope(currentScope);
-  writeCall("counter", currentOffset, currentScope[0]);
+  writeCall("counter", currentOffset, currentScope.___id);
 };

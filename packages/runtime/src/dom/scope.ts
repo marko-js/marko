@@ -9,7 +9,7 @@ let scopeId = 0;
 
 export function createScope(size: number, methods: DOMMethods): Scope {
   const scope = new Array(size) as Scope;
-  scope[ScopeOffsets.ID] = "" + scopeId++;
+  scope.___id = "" + scopeId++;
   scope[ScopeOffsets.OWNER_SCOPE] = currentScope;
   scope[ScopeOffsets.OWNER_OFFSET] = currentOffset;
   return Object.assign(scope, methods);
@@ -17,8 +17,7 @@ export function createScope(size: number, methods: DOMMethods): Scope {
 
 const emptyScope = createScope(0, staticNodeMethods);
 export function getEmptyScope(marker?: Comment) {
-  emptyScope[ScopeOffsets.START_NODE] = emptyScope[ScopeOffsets.END_NODE] =
-    marker;
+  emptyScope.___startNode = emptyScope.___endNode = marker;
   return emptyScope;
 }
 
@@ -106,9 +105,9 @@ export function runInChild(fn: () => void, offset: number) {
 }
 
 export function destroyScope(scope: Scope) {
-  scope[ScopeOffsets.OWNER_SCOPE]?.[ScopeOffsets.CLEANUP]?.delete(scope);
+  scope[ScopeOffsets.OWNER_SCOPE]?.___cleanup?.delete(scope);
 
-  const cleanup = scope[ScopeOffsets.CLEANUP];
+  const cleanup = scope.___cleanup;
   if (cleanup) {
     for (const instance of cleanup) {
       if (typeof instance === "number") {
@@ -124,11 +123,11 @@ export function destroyScope(scope: Scope) {
 export function onDestroy(localIndex: number) {
   const parentScope = currentScope[ScopeOffsets.OWNER_SCOPE];
   if (parentScope) {
-    (parentScope[ScopeOffsets.CLEANUP] =
-      parentScope[ScopeOffsets.CLEANUP] || new Set()).add(currentScope);
+    (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(
+      currentScope
+    );
   }
-  (currentScope[ScopeOffsets.CLEANUP] =
-    currentScope[ScopeOffsets.CLEANUP] || new Set()).add(
+  (currentScope.___cleanup = currentScope.___cleanup || new Set()).add(
     currentOffset + localIndex
   );
 }

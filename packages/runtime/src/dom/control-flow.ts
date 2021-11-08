@@ -46,7 +46,7 @@ export function queueInBranch(
 
 export function getConditionalFirstNode(
   this: Scope,
-  conditionalIndex: number = this[ScopeOffsets.START_NODE] as number,
+  conditionalIndex: number = this.___startNode as number,
   last?: boolean
 ) {
   const scope = this[
@@ -62,11 +62,7 @@ export function getConditionalFirstNode(
 }
 
 export function getConditionalLastNode(this: Scope) {
-  return getConditionalFirstNode.call(
-    this,
-    this[ScopeOffsets.END_NODE] as number,
-    true
-  );
+  return getConditionalFirstNode.call(this, this.___endNode as number, true);
 }
 
 export function setConditionalRenderer(
@@ -179,7 +175,7 @@ export function queueForEach(
 
 export function getLoopFirstNode(
   this: Scope,
-  loopIndex: number = this[ScopeOffsets.START_NODE] as number,
+  loopIndex: number = this.___startNode as number,
   last?: boolean
 ) {
   const scopes = this[
@@ -195,11 +191,7 @@ export function getLoopFirstNode(
 }
 
 export function getLoopLastNode(this: Scope) {
-  return getLoopFirstNode.call(
-    this,
-    this[ScopeOffsets.END_NODE] as number,
-    true
-  );
+  return getLoopFirstNode.call(this, this.___endNode as number, true);
 }
 
 export function setLoopOf<T>(

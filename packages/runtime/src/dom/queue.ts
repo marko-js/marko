@@ -1,4 +1,4 @@
-import { Scope, ScopeOffsets } from "../common/types";
+import { Scope } from "../common/types";
 import {
   runWithScope,
   currentScope,
@@ -129,8 +129,8 @@ function findQueueIndex(scope: Scope, sortValue: number) {
 function compareQueue(index: number, scope: Scope, sortValue: number) {
   return (
     compare(
-      (queuedFns[index + QueueOffsets.SCOPE] as Scope)[ScopeOffsets.ID],
-      scope[ScopeOffsets.ID]
+      (queuedFns[index + QueueOffsets.SCOPE] as Scope).___id,
+      scope.___id
     ) || (queuedFns[index + QueueOffsets.SORT_VALUE] as number) - sortValue
   );
 }
