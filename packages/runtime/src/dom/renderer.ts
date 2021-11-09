@@ -1,5 +1,4 @@
 import { Scope, ScopeOffsets } from "../common/types";
-import { DOMMethods, staticNodeMethods } from "./dom";
 import { createScope, runWithScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queue, run } from "./queue";
@@ -19,10 +18,7 @@ export type Renderer = {
   ___size: number;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
-  ___domMethods: DOMMethods | undefined;
-  ___dynamicStartNodeMethod: ((this: Scope) => Node & ChildNode) | undefined;
   ___dynamicStartNodeOffset: number | undefined;
-  ___dynamicEndNodeMethod: ((this: Scope) => Node & ChildNode) | undefined;
   ___dynamicEndNodeOffset: number | undefined;
 };
 
@@ -37,20 +33,22 @@ type RenderResult<I extends Input> = Node & {
 export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
   scope.___startNode =
-    dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom;
+    dom.nodeType === NodeType.DocumentFragment
+      ? dom.firstChild!
+      : (dom as ChildNode);
   scope.___endNode =
-    dom.nodeType === NodeType.DocumentFragment ? dom.lastChild! : dom;
+    dom.nodeType === NodeType.DocumentFragment
+      ? dom.lastChild!
+      : (dom as ChildNode);
   walk(scope.___startNode as Node, renderer.___walks!, scope);
   if (renderer.___render) {
     runWithScope(renderer.___render, ScopeOffsets.BEGIN_DATA, scope);
   }
-  if (renderer.___dynamicStartNodeMethod) {
-    scope.___getFirstNode = renderer.___dynamicStartNodeMethod;
-    scope.___startNode = renderer.___dynamicStartNodeOffset!;
+  if (renderer.___dynamicStartNodeOffset !== undefined) {
+    scope.___startNode = renderer.___dynamicStartNodeOffset;
   }
-  if (renderer.___dynamicEndNodeMethod) {
-    scope.___getLastNode = renderer.___dynamicEndNodeMethod;
-    scope.___endNode = renderer.___dynamicEndNodeOffset!;
+  if (renderer.___dynamicEndNodeOffset !== undefined) {
+    scope.___endNode = renderer.___dynamicEndNodeOffset;
   }
   return dom;
 }
@@ -62,10 +60,7 @@ export function createRenderFn<I extends Input>(
   size?: number,
   dynamicInput?: DynamicInputFn<I>,
   hasUserEffects?: 0 | 1,
-  domMethods?: DOMMethods,
-  dynamicStartNodeMethod?: (this: Scope) => Node & ChildNode,
   dynamicStartNodeOffset?: number,
-  dynamicEndNodeMethod?: (this: Scope) => Node & ChildNode,
   dynamicEndNodeOffset?: number
 ) {
   const renderer = createRenderer(
@@ -74,14 +69,11 @@ export function createRenderFn<I extends Input>(
     render,
     size,
     hasUserEffects,
-    domMethods,
-    dynamicStartNodeMethod,
     dynamicStartNodeOffset,
-    dynamicEndNodeMethod,
     dynamicEndNodeOffset
   );
   return (input: I): RenderResult<I> => {
-    const scope = createScope(size!, domMethods!);
+    const scope = createScope(size!);
     const dom = initRenderer(renderer, scope) as RenderResult<I>;
 
     if (dynamicInput) {
@@ -111,10 +103,7 @@ export function createRenderer<R extends RenderFn>(
   render?: R,
   size = 0,
   hasUserEffects: 0 | 1 = 0,
-  domMethods: DOMMethods = staticNodeMethods,
-  dynamicStartNodeMethod?: (this: Scope) => Node & ChildNode,
   dynamicStartNodeOffset?: number,
-  dynamicEndNodeMethod?: (this: Scope) => Node & ChildNode,
   dynamicEndNodeOffset?: number
 ): Renderer {
   return {
@@ -125,10 +114,7 @@ export function createRenderer<R extends RenderFn>(
     ___size: size,
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
-    ___domMethods: domMethods,
-    ___dynamicStartNodeMethod: dynamicStartNodeMethod,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
-    ___dynamicEndNodeMethod: dynamicEndNodeMethod,
     ___dynamicEndNodeOffset: dynamicEndNodeOffset,
   };
 }

@@ -1,4 +1,5 @@
 import type { Scope } from "../common/types";
+import type { DOMFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
@@ -7,7 +8,8 @@ export function reconcile(
   parent: Node & ParentNode,
   oldScopes: Scope[],
   newScopes: Scope[],
-  afterReference: Node | null
+  afterReference: Node | null,
+  fragment: DOMFragment
 ): void {
   let i: number;
   let j: number;
@@ -33,11 +35,15 @@ export function reconcile(
       i++;
     } else if (newScopes.length <= j) {
       // No more elements in new, this is a delete
-      destroyScope(a).___remove();
+      fragment.___remove(destroyScope(a));
       i++;
     } else if (oldScopes.length <= i) {
       // No more elements in old, this is an addition
-      b.___insertBefore(parent, a ? a.___getFirstNode() : afterReference);
+      fragment.___insertBefore(
+        b,
+        parent,
+        a ? fragment.___getFirstNode(a) : afterReference
+      );
       j++;
     } else if (a === b) {
       // No difference, we move on
@@ -50,17 +56,22 @@ export function reconcile(
       const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
-        destroyScope(a).___remove();
+        fragment.___remove(destroyScope(a));
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added
-        b.___insertBefore(parent, a ? a.___getFirstNode() : afterReference);
+        fragment.___insertBefore(
+          b,
+          parent,
+          a ? fragment.___getFirstNode(a) : afterReference
+        );
         j++;
       } else {
         // Element is in both lists, it has been moved
-        oldScopes[wantedElmInOld].___insertBefore(
+        fragment.___insertBefore(
+          oldScopes[wantedElmInOld],
           parent,
-          a ? a.___getFirstNode() : afterReference
+          a ? fragment.___getFirstNode(a) : afterReference
         );
         aIdx.delete(wantedElmInOld);
         oldScopes[wantedElmInOld] = null as unknown as Scope;

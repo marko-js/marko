@@ -1,15 +1,11 @@
 export {
   setConditionalRenderer,
   setConditionalRendererOnlyChild,
-  getConditionalFirstNode,
-  getConditionalLastNode,
   queueInBranch,
   queueForEach,
   setLoopOf,
   setLoopFromTo,
   setLoopIn,
-  getLoopFirstNode,
-  getLoopLastNode,
 } from "./control-flow";
 
 export {
@@ -20,12 +16,12 @@ export {
   attrs,
   props,
   dynamicTag,
-  staticNodeMethods,
-  fragmentMethods,
   userEffect,
 } from "./dom";
 
 export { on } from "./event";
+
+export { staticNodesFragment, dynamicFragment } from "./fragment";
 
 export { init, register } from "./hydrate";
 

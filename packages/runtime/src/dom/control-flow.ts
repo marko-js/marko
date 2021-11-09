@@ -11,8 +11,9 @@ import {
   runWithScope,
   write,
 } from "./scope";
+import { DOMFragment, singleNodeFragment } from "./fragment";
 
-const enum ConditionalIndex {
+export const enum ConditionalIndex {
   REFERENCE_NODE = 0,
   SCOPE = 1,
   RENDERER = 2,
@@ -44,30 +45,10 @@ export function queueInBranch(
   }
 }
 
-export function getConditionalFirstNode(
-  this: Scope,
-  conditionalIndex: number = this.___startNode as number,
-  last?: boolean
-) {
-  const scope = this[
-    conditionalIndex + ConditionalIndex.SCOPE + ScopeOffsets.BEGIN_DATA
-  ] as Scope;
-  return scope
-    ? scope[last ? "___getLastNode" : "___getFirstNode"]()
-    : (this[
-        conditionalIndex +
-          ConditionalIndex.REFERENCE_NODE +
-          ScopeOffsets.BEGIN_DATA
-      ] as Comment);
-}
-
-export function getConditionalLastNode(this: Scope) {
-  return getConditionalFirstNode.call(this, this.___endNode as number, true);
-}
-
 export function setConditionalRenderer(
   conditionalIndex: number,
-  newRenderer: Renderer | undefined
+  newRenderer: Renderer | undefined,
+  fragment: DOMFragment = singleNodeFragment
 ) {
   if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
     let newScope: Scope;
@@ -81,10 +62,7 @@ export function setConditionalRenderer(
       );
       write(
         conditionalIndex + ConditionalIndex.SCOPE,
-        (newScope = createScope(
-          newRenderer.___size,
-          newRenderer.___domMethods!
-        ))
+        (newScope = createScope(newRenderer.___size))
       );
       initRenderer(newRenderer, newScope);
       prevScope =
@@ -104,17 +82,19 @@ export function setConditionalRenderer(
       write(conditionalIndex + ConditionalIndex.SCOPE, undefined);
     }
 
-    newScope.___insertBefore(
-      prevScope.___getParentNode(),
-      prevScope.___getFirstNode()
+    fragment.___insertBefore(
+      newScope,
+      fragment.___getParentNode(prevScope),
+      fragment.___getFirstNode(prevScope)
     );
-    prevScope.___remove();
+    fragment.___remove(prevScope);
   }
 }
 
 export function setConditionalRendererOnlyChild(
   conditionalIndex: number,
-  newRenderer: Renderer | undefined
+  newRenderer: Renderer | undefined,
+  fragment: DOMFragment = singleNodeFragment
 ) {
   if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
     const referenceNode = read<Conditional, ConditionalIndex.REFERENCE_NODE>(
@@ -129,35 +109,32 @@ export function setConditionalRendererOnlyChild(
       let newScope: Scope;
       write(
         conditionalIndex + ConditionalIndex.SCOPE,
-        (newScope = createScope(
-          newRenderer.___size,
-          newRenderer.___domMethods!
-        ))
+        (newScope = createScope(newRenderer.___size))
       );
       initRenderer(newRenderer, newScope);
-      newScope.___insertBefore(referenceNode, null);
+      fragment.___insertBefore(newScope, referenceNode, null);
       setContext(null);
     }
   }
 }
 
 const emptyMarkerMap = new Map();
-const emptyMarkerArray = [getEmptyScope()];
+export const emptyMarkerArray = [getEmptyScope()];
 emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
 const emptyMap = new Map();
 const emptyArray = [] as unknown[];
 
-const enum LoopIndex {
+export const enum LoopIndex {
   REFERENCE_NODE = 0,
-  SCOPE_MAP = 1,
-  SCOPE_ARRAY = 2,
+  SCOPE_ARRAY = 1,
+  SCOPE_MAP = 2,
   CONTEXT = 3,
 }
 
 type Loop = {
   [LoopIndex.REFERENCE_NODE]: Element | Comment;
-  [LoopIndex.SCOPE_MAP]: Map<unknown, Scope>;
   [LoopIndex.SCOPE_ARRAY]: Scope[];
+  [LoopIndex.SCOPE_MAP]: Map<unknown, Scope>;
   [LoopIndex.CONTEXT]: typeof Context;
 };
 
@@ -173,34 +150,14 @@ export function queueForEach(
   }
 }
 
-export function getLoopFirstNode(
-  this: Scope,
-  loopIndex: number = this.___startNode as number,
-  last?: boolean
-) {
-  const scopes = this[
-    loopIndex + LoopIndex.SCOPE_ARRAY + ScopeOffsets.BEGIN_DATA
-  ] as Scope[];
-  return scopes === emptyMarkerArray
-    ? (this[
-        loopIndex + LoopIndex.REFERENCE_NODE + ScopeOffsets.BEGIN_DATA
-      ] as Comment)
-    : scopes[last ? scopes.length - 1 : 0][
-        last ? "___getLastNode" : "___getFirstNode"
-      ]();
-}
-
-export function getLoopLastNode(this: Scope) {
-  return getLoopFirstNode.call(this, this.___endNode as number, true);
-}
-
 export function setLoopOf<T>(
   loopIndex: number,
   newValues: T[],
   renderer: Renderer,
   keyFn?: (item: T) => unknown,
   itemFn?: () => void,
-  indexFn?: () => void
+  indexFn?: () => void,
+  fragment: DOMFragment = singleNodeFragment
 ) {
   let newMap: Map<unknown, Scope>;
   let newArray: Scope[];
@@ -229,7 +186,7 @@ export function setLoopOf<T>(
       const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
       if (!childScope) {
-        childScope = createScope(renderer.___size, renderer.___domMethods!);
+        childScope = createScope(renderer.___size);
         childScope[ScopeOffsets.BEGIN_DATA] = item;
         childScope[ScopeOffsets.BEGIN_DATA + 1] = index;
         initRenderer(renderer, childScope);
@@ -279,13 +236,13 @@ export function setLoopOf<T>(
         getEmptyScope(referenceNode as Comment);
       }
       const oldLastChild = oldArray[oldArray.length - 1];
-      afterReference = oldLastChild.___getAfterNode();
-      parentNode = oldLastChild.___getParentNode();
+      afterReference = fragment.___getAfterNode(oldLastChild);
+      parentNode = fragment.___getParentNode(oldLastChild);
     } else {
       afterReference = null;
       parentNode = referenceNode as Element;
     }
-    reconcile(parentNode, oldArray, newArray!, afterReference);
+    reconcile(parentNode, oldArray, newArray!, afterReference, fragment);
   }
 
   write(loopIndex + LoopIndex.SCOPE_MAP, newMap);

@@ -3,9 +3,7 @@ import {
   setConditionalRenderer,
   createRenderer,
   createRenderFn,
-  fragmentMethods,
-  getConditionalFirstNode,
-  getConditionalLastNode,
+  dynamicFragment,
   write,
   read,
   queue,
@@ -73,7 +71,8 @@ export const walks = open(7) + next(1) + get + over(1) + close;
 export const execInputShow = () => {
   setConditionalRenderer(
     Index.CONDITIONAL,
-    read<scope, Index.INPUT_SHOW>(Index.INPUT_SHOW) ? branch0 : undefined
+    read<scope, Index.INPUT_SHOW>(Index.INPUT_SHOW) ? branch0 : undefined,
+    dynamicFragment
   );
 };
 
@@ -172,10 +171,7 @@ const branch0 = createRenderer(
   },
   0,
   0,
-  fragmentMethods,
-  getConditionalFirstNode,
   0,
-  getConditionalLastNode,
   4
 );
 

@@ -45,7 +45,11 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   }
 
   function hydrate(
-    scopesFn: (b, s, ...rest: unknown[]) => Record<string, Scope>,
+    scopesFn: (
+      b: typeof bindFunction,
+      s: typeof scopeLookup,
+      ...rest: unknown[]
+    ) => Record<string, Scope>,
     calls: Array<string | number>
   ) {
     if (doc.readyState !== "loading") {
@@ -106,7 +110,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
             scopeLookup[data] = currentScope = [] as unknown as Scope;
             currentScope.___id = data;
           }
-          currentScope.___startNode = currentNode;
+          currentScope.___startNode = currentNode as ChildNode;
         } else if (token === HydrateSymbols.SCOPE_END) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
@@ -114,7 +118,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
               throw new Error("SCOPE_END_MISMATCH: " + nodeValue);
             }
           }
-          currentScope.___endNode = currentNode;
+          currentScope.___endNode = currentNode as ChildNode;
           currentOffset = stack.pop() as number;
           currentScope = scopeLookup[stack.pop() as string]!;
           // eslint-disable-next-line no-constant-condition

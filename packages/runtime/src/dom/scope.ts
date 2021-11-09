@@ -1,4 +1,3 @@
-import { DOMMethods, staticNodeMethods } from "./dom";
 import { withQueueNext } from "./queue";
 import { Scope, ScopeOffsets } from "../common/types";
 
@@ -7,15 +6,15 @@ export let currentOffset: number;
 export let ownerOffset: number;
 let scopeId = 0;
 
-export function createScope(size: number, methods: DOMMethods): Scope {
+export function createScope(size: number): Scope {
   const scope = new Array(size) as Scope;
   scope.___id = "" + scopeId++;
   scope[ScopeOffsets.OWNER_SCOPE] = currentScope;
   scope[ScopeOffsets.OWNER_OFFSET] = currentOffset;
-  return Object.assign(scope, methods);
+  return scope;
 }
 
-const emptyScope = createScope(0, staticNodeMethods);
+const emptyScope = createScope(0);
 export function getEmptyScope(marker?: Comment) {
   emptyScope.___startNode = emptyScope.___endNode = marker;
   return emptyScope;

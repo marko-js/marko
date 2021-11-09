@@ -1,5 +1,4 @@
 import type { Renderer } from "./renderer";
-import { Scope } from "../common/types";
 import { onDestroy, read, write } from "./scope";
 import { withQueueNext } from "./queue";
 
@@ -9,85 +8,6 @@ export const enum NodeType {
   Comment = 8,
   DocumentFragment = 11,
 }
-
-export type DOMMethods = {
-  ___insertBefore: (
-    this: Scope,
-    parent: Node & ParentNode,
-    nextSibling: Node | null
-  ) => void;
-  ___remove: (this: Scope) => void;
-  ___getParentNode: (this: Scope) => Node & ParentNode;
-  ___getAfterNode: (this: Scope) => Node | null;
-  ___getFirstNode: (this: Scope) => Node & ChildNode;
-  ___getLastNode: (this: Scope) => Node & ChildNode;
-};
-
-export const staticNodeMethods: DOMMethods = {
-  ___insertBefore(parent, nextSibling) {
-    parent.insertBefore(this.___startNode as Node, nextSibling);
-  },
-  ___remove() {
-    (this.___startNode as ChildNode).remove();
-  },
-  ___getParentNode() {
-    return this.___getFirstNode().parentNode!;
-  },
-  ___getAfterNode() {
-    return this.___getLastNode().nextSibling;
-  },
-  ___getFirstNode() {
-    return this.___startNode as ChildNode;
-  },
-  ___getLastNode() {
-    return this.___endNode as ChildNode;
-  },
-};
-
-// export const staticNodePropertiesDef = {
-//   ___insertBefore: {
-//     value(parent, nextSibling) {
-//       parent.insertBefore(this.___startNode as Node, nextSibling);
-//     }
-//   },
-//   ___remove: {
-//     value() {
-//       (this.___startNode as ChildNode).remove();
-//     }
-//   },
-//   ___parentNode: {
-//     get() {
-//       return this.___startNode.parentNode;
-//     },
-//   },
-//   ___afterNode: {
-//     get() {
-//       return this.___lastNode.nextSibling;
-//     },
-//   }
-// };
-
-export const fragmentMethods = {
-  ...staticNodeMethods,
-  ___insertBefore(parent, nextSibling) {
-    let current: Node = this.___getFirstNode();
-    const stop = this.___getAfterNode();
-    while (current !== stop) {
-      const next = current.nextSibling;
-      parent.insertBefore(current, nextSibling);
-      current = next!;
-    }
-  },
-  ___remove() {
-    let current = this.___getFirstNode();
-    const stop = this.___getAfterNode();
-    while (current !== stop) {
-      const next = current.nextSibling;
-      current.remove();
-      current = next!;
-    }
-  },
-} as DOMMethods;
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;

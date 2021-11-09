@@ -1,4 +1,5 @@
 import type { Scope } from "../common/types";
+import type { DOMFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js
@@ -7,7 +8,8 @@ export function reconcile(
   parent: Node & ParentNode,
   oldScopes: Scope[],
   newScopes: Scope[],
-  afterReference: Node | null
+  afterReference: Node | null,
+  fragment: DOMFragment
 ): void {
   const bLength = newScopes.length;
   let aEnd = oldScopes.length;
@@ -26,17 +28,18 @@ export function reconcile(
       const node =
         bEnd < bLength
           ? bStart
-            ? newScopes[bStart - 1].___getAfterNode()
-            : newScopes[bEnd - bStart].___getFirstNode()
+            ? fragment.___getAfterNode(newScopes[bStart - 1])
+            : fragment.___getFirstNode(newScopes[bEnd - bStart])
           : afterReference;
-      while (bStart < bEnd) newScopes[bStart++].___insertBefore(parent, node);
+      while (bStart < bEnd)
+        fragment.___insertBefore(newScopes[bStart++], parent, node);
     }
     // remove head or tail: fast path
     else if (bEnd === bStart) {
       while (aStart < aEnd) {
         // remove the node only if it's unknown or not live
         if (!map || !map.has(oldScopes[aStart]))
-          destroyScope(oldScopes[aStart]).___remove();
+          fragment.___remove(destroyScope(oldScopes[aStart]));
         aStart++;
       }
     }
@@ -61,12 +64,13 @@ export function reconcile(
       // or asymmetric too
       // [1, 2, 3, 4, 5]
       // [1, 2, 3, 5, 6, 4]
-      const node = oldScopes[--aEnd].___getAfterNode();
-      newScopes[bStart++].___insertBefore(
+      const node = fragment.___getAfterNode(oldScopes[--aEnd]);
+      fragment.___insertBefore(
+        newScopes[bStart++],
         parent,
-        oldScopes[aStart++].___getAfterNode()
+        fragment.___getAfterNode(oldScopes[aStart++])
       );
-      newScopes[--bEnd].___insertBefore(parent, node);
+      fragment.___insertBefore(newScopes[--bEnd], parent, node);
       // mark the future index as identical (yeah, it's dirty, but cheap 👍)
       // The main reason to do this, is that when oldKeys[aEnd] will be reached,
       // the loop will likely be on the fast path, as identical to newKeys[bEnd].
@@ -113,20 +117,21 @@ export function reconcile(
           // this would place 7 before 1 and, from that time on, 1, 2, and 3
           // will be processed at zero cost
           if (sequence > index - bStart) {
-            const node = oldScopes[aStart].___getFirstNode();
+            const node = fragment.___getFirstNode(oldScopes[aStart]);
             while (bStart < index)
-              newScopes[bStart++].___insertBefore(parent, node);
+              fragment.___insertBefore(newScopes[bStart++], parent, node);
           }
           // if the effort wasn't good enough, fallback to oldKeys replace,
           // moving both source and target indexes forward, hoping that some
           // similar node will be found later on, to go back to the fast path
           else {
             const oldNode = oldScopes[aStart++];
-            newScopes[bStart++].___insertBefore(
-              oldNode.___getParentNode(),
-              oldNode.___getFirstNode()
+            fragment.___insertBefore(
+              newScopes[bStart++],
+              fragment.___getParentNode(oldNode),
+              fragment.___getFirstNode(oldNode)
             );
-            destroyScope(oldNode).___remove();
+            fragment.___remove(destroyScope(oldNode));
           }
         }
         // otherwise move the source forward, 'cause there's nothing to do
@@ -135,7 +140,7 @@ export function reconcile(
       // this node has no meaning in the future list, so it's more than safe
       // to remove it, and check the next live node out instead, meaning
       // that only the live list index should be forwarded
-      else destroyScope(oldScopes[aStart++]).___remove();
+      else fragment.___remove(destroyScope(oldScopes[aStart++]));
     }
   }
 }

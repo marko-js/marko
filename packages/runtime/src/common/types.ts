@@ -14,20 +14,9 @@ export type Scope = [
   ...unknown[]
 ] & {
   ___id: string;
-  ___startNode: Node | number | undefined;
-  ___endNode: Node | number | undefined;
+  ___startNode: (Node & ChildNode) | number | undefined;
+  ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;
-} & {
-  ___insertBefore: (
-    this: Scope,
-    parent: Node & ParentNode,
-    nextSibling: Node | null
-  ) => void;
-  ___remove: (this: Scope) => void;
-  ___getParentNode: (this: Scope) => Node & ParentNode;
-  ___getAfterNode: (this: Scope) => Node | null;
-  ___getFirstNode: (this: Scope) => Node & ChildNode;
-  ___getLastNode: (this: Scope) => Node & ChildNode;
 };
 
 export const enum ScopeOffsets {
