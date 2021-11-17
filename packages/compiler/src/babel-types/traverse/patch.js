@@ -37,6 +37,7 @@ Scope.prototype.crawl = function () {
   const path = this.path;
   const originalTraverse = path.traverse;
   path.traverse = function (visitor, state) {
+    state.hoistableTagVarsByScope = new Map();
     path.traverse = originalTraverse;
 
     if (!patchedVisitors.has(visitor)) {
@@ -49,7 +50,7 @@ Scope.prototype.crawl = function () {
               body.scope.registerBinding("param", param);
             }
           },
-          MarkoTag(tag) {
+          MarkoTag(tag, state) {
             const tagVar = tag.get("var");
             if (tagVar.node) {
               tag.scope.registerBinding("local", tagVar, tag);
@@ -58,17 +59,17 @@ Scope.prototype.crawl = function () {
                 const binding = curScope.getBinding(name);
 
                 while ((curScope = curScope.parent)) {
-                  curScope.hoistableTagVars =
-                    curScope.hoistableTagVars ||
-                    (curScope.hoistableTagVars = {});
-                  const existingBinding = curScope.hoistableTagVars[name];
+                  const hoistableTagVars =
+                    state.hoistableTagVarsByScope.get(curScope);
 
-                  if (existingBinding) {
-                    if (existingBinding !== binding) {
-                      curScope.hoistableTagVars[name] = true;
-                    }
+                  if (hoistableTagVars) {
+                    hoistableTagVars[name] = hoistableTagVars[name]
+                      ? true
+                      : binding;
                   } else {
-                    curScope.hoistableTagVars[name] = binding;
+                    state.hoistableTagVarsByScope.set(curScope, {
+                      [name]: binding
+                    });
                   }
                 }
               }
@@ -89,7 +90,8 @@ Scope.prototype.crawl = function () {
 
         do {
           const hoistableBinding =
-            curScope.hoistableTagVars && curScope.hoistableTagVars[name];
+            state.hoistableTagVarsByScope.get(curScope)?.[name];
+
           if (hoistableBinding) {
             if (hoistableBinding === true) {
               throw ref.buildCodeFrameError(
