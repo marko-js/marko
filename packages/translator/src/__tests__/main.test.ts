@@ -34,7 +34,9 @@ describe("translator", () => {
 
     describe(entry, () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
+      const fixtureDir = resolve(".");
       const templateFile = resolve("template.marko");
+      const snapJS = (fn: () => unknown) => snap(fn, ".js", fixtureDir);
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -45,19 +47,11 @@ describe("translator", () => {
       })();
 
       (config.skip_html ? it.skip : it)("html", () =>
-        snap(
-          async () =>
-            (await compiler.compileFile(templateFile, htmlConfig)).code,
-          ".js"
-        )
+        snapJS(() => compileCode(templateFile, htmlConfig))
       );
 
       (config.skip_dom ? it.skip : it)("dom", () =>
-        snap(
-          async () =>
-            (await compiler.compileFile(templateFile, domConfig)).code,
-          ".js"
-        )
+        snapJS(() => compileCode(templateFile, domConfig))
       );
     });
   }
@@ -122,3 +116,7 @@ describe("translator", () => {
 //     );
 //   });
 // }
+
+async function compileCode(templateFile: string, config: compiler.Config) {
+  return (await compiler.compileFile(templateFile, config)).code;
+}
