@@ -1,6 +1,7 @@
 import child from "<child>";
 
+<attrs/{ show, dynamic }/>
 <${child}/data1/>
-<${input.show && child}/data2/>
-<${input.dynamic}/data3/>
-<${input.show && "div"}/el1/>
+<${show && child}/data2/>
+<${dynamic}/data3/>
+<${show && "div"}/el1/>

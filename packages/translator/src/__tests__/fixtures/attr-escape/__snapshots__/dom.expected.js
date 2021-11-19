@@ -8,4 +8,4 @@ export const hydrate = _register("packages/translator/src/__tests__/fixtures/att
 
   _attr("bar", `a ${input.foo} b`);
 });
-export default _createRenderFn(template, walks, ["className", "foo"], hydrate);
+export default _createRenderFn(template, walks, [], hydrate);

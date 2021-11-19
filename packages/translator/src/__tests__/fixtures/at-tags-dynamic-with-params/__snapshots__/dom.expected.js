@@ -5,7 +5,7 @@ export const walks = `${_hello_walks}`;
 export const hydrate = _register("packages/translator/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko", input => {
   let _item;
 
-  if (input.x) _item = {
+  if (x) _item = {
     renderBody(y) {
       _data(y);
 

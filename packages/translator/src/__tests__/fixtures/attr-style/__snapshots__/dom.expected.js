@@ -4,12 +4,12 @@ export const template = `<div></div><div style=width:100px></div><div style="col
 export const walks = ` ${_customTag_walks}${_customTag_walks}${_customTag_walks}d`;
 export const hydrate = _register("packages/translator/src/__tests__/fixtures/attr-style/template.marko", input => {
   _styleAttr({
-    color: input.color
+    color: color
   });
 
   _customTag({
     style: {
-      color: input.color
+      color: color
     }
   });
 
@@ -23,7 +23,7 @@ export const hydrate = _register("packages/translator/src/__tests__/fixtures/att
     style: "color: green"
   });
 
-  _dynamicTag(input.test, {
+  _dynamicTag(test, {
     style: {
       color: "green"
     },
@@ -39,4 +39,4 @@ export const hydrate = _register("packages/translator/src/__tests__/fixtures/att
     }
   });
 });
-export default _createRenderFn(template, walks, ["color", "test"], hydrate);
+export default _createRenderFn(template, walks, ["color"], hydrate);

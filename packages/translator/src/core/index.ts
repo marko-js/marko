@@ -1,4 +1,5 @@
 import parseImport from "./parse-import";
+import translateAttrs from "./translate-attrs";
 import translateIf from "./condition/translate-if";
 import translateElseIf from "./condition/translate-else-if";
 import translateElse from "./condition/translate-else";
@@ -31,6 +32,17 @@ export default {
         snippet: 'import ${2} from "${1:path}"',
         descriptionMoreURL:
           "https://markojs.com/docs/syntax/#importing-external-files",
+      },
+    ],
+  },
+  "<attrs>": {
+    translate: translateAttrs,
+    attributes: {},
+    autocomplete: [
+      {
+        displayText: "attrs/{ ... }",
+        description: "Use to receive the attributes passed into this template.",
+        snippet: "attrs/{ $1 }$2",
       },
     ],
   },

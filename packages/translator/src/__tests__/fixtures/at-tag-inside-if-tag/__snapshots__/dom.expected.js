@@ -5,7 +5,7 @@ export const walks = `${_customTag_walks}`;
 export const hydrate = _register("packages/translator/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko", input => {
   let _thing;
 
-  if (input.x) _thing = {
+  if (x) _thing = {
     x: 1,
 
     renderBody() {

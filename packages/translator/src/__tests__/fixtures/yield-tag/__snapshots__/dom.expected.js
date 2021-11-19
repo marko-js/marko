@@ -4,7 +4,7 @@ export const walks = "";
 export const hydrate = _register("packages/translator/src/__tests__/fixtures/yield-tag/template.marko", input => {
   var _return;
 
-  if (input.show) <yield=1/>else <yield=2/>
+  if (show) <yield=1/>else <yield=2/>
   return _return;
 });
 export default _createRenderFn(template, walks, ["show"], hydrate);

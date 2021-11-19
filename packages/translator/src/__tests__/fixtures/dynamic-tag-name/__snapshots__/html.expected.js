@@ -1,43 +1,36 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, attr as _attr, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { attr as _attr, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko", input => {
-  _dynamicTag(input.renderBody, {
+  <${renderBody} class=["a", "b"] other=other/>
+  <${x} class=["a", "b"] other=other/>
+
+  const _tagName = show ? "div" : null;
+
+  if (_tagName) _write(`<${_tagName} class="a b"${_attr("other", other)}></${_tagName}>`);
+
+  const _tagName2 = show && "div";
+
+  if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}></${_tagName2}>`);
+
+  _write(`<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>`);
+
+  (showTagA ? tagA : tagB)({
     class: ["a", "b"],
-    other: input.other
+    other: other,
+    class: ["a", "b"],
+    other: other
   });
 
-  _dynamicTag(input.x, {
-    class: ["a", "b"],
-    other: input.other
-  });
-
-  const _tagName = input.show ? "div" : null;
-
-  if (_tagName) _write(`<${_tagName} class="a b"${_attr("other", input.other)}></${_tagName}>`);
-
-  const _tagName2 = input.show && "div";
-
-  if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", input.other)}></${_tagName2}>`);
-
-  _write(`<${input.large ? "h1" : "h2"} class="a b"${_attr("other", input.other)}></${input.large ? "h1" : "h2"}>`);
-
-  (input.showTagA ? tagA : tagB)({
-    class: ["a", "b"],
-    other: input.other,
-    class: ["a", "b"],
-    other: input.other
-  });
-
-  const _tagName3 = input.showTagA && tagA;
+  const _tagName3 = showTagA && tagA;
 
   if (_tagName3) _tagName3({
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const _tagName4 = input.showTagA && tagA;
+  const _tagName4 = showTagA && tagA;
 
   function _renderBody() {
     _write("Body content");
@@ -45,25 +38,23 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/dynamic-
 
   if (_tagName4) _tagName4({
     class: ["a", "b"],
-    other: input.other
+    other: other
   });else _renderBody();
-
-  _dynamicTag(input.tag || tagA, {
+  (tag || tagA)({
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
-
-  const largeHeading = input.isLarge && "h1";
+  const largeHeading = isLarge && "h1";
 
   const _tagName5 = largeHeading || "h2";
 
-  if (_tagName5) _write(`<${_tagName5} class="a b"${_attr("other", input.other)}></${_tagName5}>`);
+  if (_tagName5) _write(`<${_tagName5} class="a b"${_attr("other", other)}></${_tagName5}>`);
   const tagConstA = "a";
-  const tagConstB = input.show ? "div" : null;
+  const tagConstB = show ? "div" : null;
 
-  _write(`<${global.x = "a" + "b"} class="a b"${_attr("other", input.other)}></${global.x = "a" + "b"}><${"h" + input.level} class="a b"${_attr("other", input.other)}></${"h" + input.level}><h${input.level} class="a b"${_attr("other", input.other)}></h${input.level}><${tagConstA} class="a b"${_attr("other", input.other)}></${tagConstA}>`);
+  _write(`<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}><${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}><h${level} class="a b"${_attr("other", other)}></h${level}><${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>`);
 
-  if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", input.other)}></${tagConstB}>`);
+  if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}></${tagConstB}>`);
 });
 
 export default _renderer;

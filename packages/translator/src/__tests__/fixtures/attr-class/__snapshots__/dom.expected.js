@@ -42,4 +42,4 @@ export const hydrate = _register("packages/translator/src/__tests__/fixtures/att
     }
   });
 });
-export default _createRenderFn(template, walks, ["", "test"], hydrate);
+export default _createRenderFn(template, walks, [""], hydrate);

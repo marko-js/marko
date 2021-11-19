@@ -1,31 +1,33 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "<tag-b>";
 
-<${input.renderBody} class=["a", "b"] other=input.other/>
-<${input.x} class=["a", "b"] other=input.other/>
+<attrs/{ renderBody, x, show, showTagA, isLarge, tag, level, other }/>
 
-<${input.show ? "div" : null} class=["a", "b"] other=input.other/>
-<${input.show && "div"} class=["a", "b"] other=input.other/>
+<${renderBody} class=["a", "b"] other=other/>
+<${x} class=["a", "b"] other=other/>
 
-<${input.large ? "h1" : "h2"} class=["a", "b"] other=input.other/>
+<${show ? "div" : null} class=["a", "b"] other=other/>
+<${show && "div"} class=["a", "b"] other=other/>
 
-<${input.showTagA ? tagA : tagB} class=["a", "b"] other=input.other class=["a", "b"] other=input.other/>
-<${input.showTagA && tagA} class=["a", "b"] other=input.other/>
-<${input.showTagA && tagA} class=["a", "b"] other=input.other>
+<${large ? "h1" : "h2"} class=["a", "b"] other=other/>
+
+<${showTagA ? tagA : tagB} class=["a", "b"] other=other class=["a", "b"] other=other/>
+<${showTagA && tagA} class=["a", "b"] other=other/>
+<${showTagA && tagA} class=["a", "b"] other=other>
   Body content
 </>
 
-<${input.tag || tagA} class=["a", "b"] other=input.other/>
+<${tag || tagA} class=["a", "b"] other=other/>
 
-<const/largeHeading = input.isLarge && "h1"/>
-<${largeHeading || "h2"} class=["a", "b"] other=input.other/>
+<const/largeHeading = isLarge && "h1"/>
+<${largeHeading || "h2"} class=["a", "b"] other=other/>
 
-<${global.x = "a" + "b"} class=["a", "b"] other=input.other/>
-<${"h" + input.level} class=["a", "b"] other=input.other/>
-<${`h${input.level}`} class=["a", "b"] other=input.other/>
+<${global.x = "a" + "b"} class=["a", "b"] other=other/>
+<${"h" + level} class=["a", "b"] other=other/>
+<${`h${level}`} class=["a", "b"] other=other/>
 
 <const/tagConstA = "a"/>
-<${tagConstA} class=["a", "b"] other=input.other/>
+<${tagConstA} class=["a", "b"] other=other/>
 
-<const/tagConstB = input.show ? "div" : null/>
-<${tagConstB} class=["a", "b"] other=input.other/>
+<const/tagConstB = show ? "div" : null/>
+<${tagConstB} class=["a", "b"] other=other/>

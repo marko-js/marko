@@ -4,97 +4,97 @@ import { dynamicTag as _dynamicTag, register as _register, createRenderFn as _cr
 export const template = "";
 export const walks = "";
 export const hydrate = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko", input => {
-  _dynamicTag(input.renderBody, {
+  _dynamicTag(renderBody, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag(input.x, {
+  _dynamicTag(x, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const _tagName = input.show ? "div" : null;
+  const _tagName = show ? "div" : null;
 
   _dynamicTag(_tagName, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const _tagName2 = input.show && "div";
+  const _tagName2 = show && "div";
 
   _dynamicTag(_tagName2, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag(input.large ? "h1" : "h2", {
+  _dynamicTag(large ? "h1" : "h2", {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag(input.showTagA ? tagA : tagB, {
+  _dynamicTag(showTagA ? tagA : tagB, {
     class: ["a", "b"],
-    other: input.other,
+    other: other,
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const _tagName3 = input.showTagA && tagA;
+  const _tagName3 = showTagA && tagA;
 
   _dynamicTag(_tagName3, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const _tagName4 = input.showTagA && tagA;
+  const _tagName4 = showTagA && tagA;
 
   _dynamicTag(_tagName4, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag(input.tag || tagA, {
+  _dynamicTag(tag || tagA, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const largeHeading = input.isLarge && "h1";
+  const largeHeading = isLarge && "h1";
 
   const _tagName5 = largeHeading || "h2";
 
   _dynamicTag(_tagName5, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
   _dynamicTag(global.x = "a" + "b", {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag("h" + input.level, {
+  _dynamicTag("h" + level, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  _dynamicTag(`h${input.level}`, {
+  _dynamicTag(`h${level}`, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
   const tagConstA = "a";
 
   _dynamicTag(tagConstA, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 
-  const tagConstB = input.show ? "div" : null;
+  const tagConstB = show ? "div" : null;
 
   _dynamicTag(tagConstB, {
     class: ["a", "b"],
-    other: input.other
+    other: other
   });
 });
-export default _createRenderFn(template, walks, ["renderBody", "other", "x", "show", "large", "showTagA", "tag", "isLarge", "level"], hydrate);
+export default _createRenderFn(template, walks, ["show", "showTagA", "isLarge", "tag", "level", "other"], hydrate);

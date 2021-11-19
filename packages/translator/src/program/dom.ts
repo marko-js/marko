@@ -12,7 +12,7 @@ export function exit(program: t.NodePath<t.Program>) {
   const templateIdentifier = t.identifier("template");
   const walksIdentifier = t.identifier("walks");
   const hydrateIdentifier = t.identifier("hydrate");
-  const usedInputs = Object.keys(program.node.extra.references?.input || {});
+  const usedAttrs = Object.keys(program.node.extra.references?.attrs || {});
   const hydrateContent: t.Statement[] = [];
   const { walks, writes } = writer.end(program);
 
@@ -56,7 +56,7 @@ export function exit(program: t.NodePath<t.Program>) {
         "createRenderFn",
         templateIdentifier,
         walksIdentifier,
-        t.arrayExpression(usedInputs.map((k) => t.stringLiteral(k))),
+        t.arrayExpression(usedAttrs.map((k) => t.stringLiteral(k))),
         hydrateIdentifier
       )
     )

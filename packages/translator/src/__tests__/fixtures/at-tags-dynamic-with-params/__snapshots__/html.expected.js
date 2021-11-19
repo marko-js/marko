@@ -4,7 +4,7 @@ import _hello from "./components/hello/index.marko";
 const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko", input => {
   let _item;
 
-  if (input.x) _item = {
+  if (x) _item = {
     renderBody(y) {
       _write(`${_escapeXML(y)}`);
     }

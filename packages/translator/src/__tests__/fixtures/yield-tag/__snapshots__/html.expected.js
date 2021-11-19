@@ -3,7 +3,7 @@ import { register as _register, createRenderer as _createRenderer } from "@marko
 const _renderer = _register("packages/translator/src/__tests__/fixtures/yield-tag/template.marko", input => {
   var _return;
 
-  if (input.show) _return = 1;else _return = 2;
+  if (show) _return = 1;else _return = 2;
   return _return;
 });
 
