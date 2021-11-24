@@ -29,6 +29,7 @@ module.exports = function beginComponent(
   // On the server
   if (!componentsContext.___isPreserved && ownerWillRerender) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
+    componentDef._wrr = true;
     return componentDef;
   }
 
@@ -49,6 +50,7 @@ module.exports = function beginComponent(
 
   if (isSplitComponent === false && out.global.noBrowserRerender !== true) {
     componentDef.___flags |= FLAG_WILL_RERENDER_IN_BROWSER;
+    componentDef._wrr = true;
     componentsContext.___isPreserved = false;
   }
 
