@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 import type { types as t } from "@marko/compiler";
 import analyzeReferences from "./references";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
@@ -6,17 +7,11 @@ import analyzeEventHandlers from "./event-handlers";
 
 declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface ProgramExtra {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface MarkoTagExtra {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface MarkoTagBodyExtra {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface MarkoAttributeExtra {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface MarkoSpreadAttributeExtra {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
   export interface MarkoPlaceholderExtra {}
 
   export interface Program {

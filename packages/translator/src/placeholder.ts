@@ -28,7 +28,6 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
   if (confident && canWriteHTML) {
     write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
-    placeholder.remove();
   } else {
     const callExpr = callRuntime(
       placeholder,
@@ -42,15 +41,20 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
       }
 
       write`${callExpr}`;
-      placeholder.remove();
     } else {
       write`<!>`;
       writer.visit(placeholder, writer.WalkCodes.Replace);
-      placeholder.replaceWith(t.expressionStatement(callExpr));
+      writer.addStatement(
+        "apply",
+        placeholder,
+        placeholder.node.extra.references?.value?.bindings,
+        t.expressionStatement(callExpr)
+      );
     }
   }
 
   writer.enterShallow(placeholder);
+  placeholder.remove();
 }
 
 function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {

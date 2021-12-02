@@ -43,8 +43,16 @@ enum Step {
   exit,
 }
 
+type BindingStatements = {
+  identifier: t.Identifier;
+  bindings: undefined | string | Set<string>;
+  statements: t.Statement[];
+};
+
 interface Writer {
   parent: Writer | undefined;
+  apply: BindingStatements[];
+  hydrate: BindingStatements[];
   writes: (string | t.Expression)[];
   walks: (string | t.Expression)[];
   steps: Step[];
@@ -65,22 +73,30 @@ export function start(path: t.NodePath<any>) {
 
   path.state.writer = {
     parent,
+    apply: [],
+    hydrate: [],
     writes: [""],
     walks: [""],
     steps: [],
-  };
+  } as Writer;
 }
 
 export function end(path: t.NodePath<any>) {
   const writer = path.state.writer as Writer;
+  let apply: t.Identifier | undefined = undefined;
   visit(path);
 
   if (isOutputHTML(path)) {
     flushInto(path);
+  } else {
+    writeBindingStatements(path, writer.apply);
+    writeBindingStatements(path, writer.hydrate);
+    apply = writer.apply.find((it) => !it.bindings)!.identifier;
   }
 
   path.state.writer = writer.parent;
   return {
+    apply,
     walks: toTemplateOrStringLiteral(writer.walks),
     writes: toTemplateOrStringLiteral(writer.writes),
   };
@@ -203,6 +219,142 @@ export function flushInto(
       path.pushContainer("body", expr)[0].skip();
     }
   }
+}
+
+export function addStatement(
+  type: "apply" | "hydrate",
+  path: t.NodePath<any>,
+  bindings: undefined | string | Set<string>,
+  statement: t.Statement
+) {
+  const writer = path.state.writer as Writer;
+  const bindingStatements: BindingStatements | undefined =
+    findBindingStatements(writer[type], bindings);
+
+  if (bindingStatements) {
+    bindingStatements.statements.push(statement);
+  } else {
+    let identifier: t.Identifier;
+
+    switch (typeof bindings) {
+      case "undefined":
+        identifier = path.scope.generateUidIdentifier(type);
+        break;
+      case "string":
+        identifier = path.scope.generateUidIdentifier(`${type}_${bindings}`);
+        break;
+      default: {
+        const names: string[] = Array.from(bindings).sort();
+        identifier = path.scope.generateUidIdentifier(
+          `${type}With_${names.join("_")}`
+        );
+        for (const name of names) {
+          // TODO: this should queue the identifier instead of just print it.
+          // The binding also needs to know it's scope index so we can pass that in.
+          addStatement(type, path, name, t.expressionStatement(t.stringLiteral(`queue ${identifier.name}`)));
+        }
+
+        break;
+      }
+    }
+
+    writer[type].push({
+      identifier,
+      bindings,
+      statements: [statement],
+    });
+  }
+}
+
+export function ensureBinding(
+  type: "apply" | "hydrate",
+  path: t.NodePath<any>,
+  name: string
+) {
+  const writer = path.state.writer as Writer;
+  let identifier: t.Identifier | undefined = findBindingStatements(
+    writer[type],
+    name
+  )?.identifier;
+
+  if (!identifier) {
+    identifier = path.scope.generateUidIdentifier(`${type}_${name}`);
+    writer[type].push({
+      identifier,
+      bindings: name,
+      statements: [],
+    });
+  }
+
+  return identifier;
+}
+
+function writeBindingStatements(
+  path: t.NodePath<any>,
+  all: BindingStatements[]
+) {
+  const program = path.hub.file.path;
+  for (const { identifier, bindings, statements } of all) {
+    let body: t.BlockStatement;
+    switch (typeof bindings) {
+      case "undefined":
+        body = t.blockStatement(statements);
+        break;
+      case "string":
+        body = t.blockStatement(
+          (
+            [t.expressionStatement(t.stringLiteral(`write ${bindings}`))] as t.Statement[]
+          ).concat(statements)
+        );
+        break;
+      default:
+        body = t.blockStatement(
+          (
+            Array.from(bindings, (name) =>
+              t.expressionStatement(t.stringLiteral(`read ${name}`))
+            ) as t.Statement[]
+          ).concat(statements)
+        );
+        break;
+    }
+
+    program.pushContainer("body", t.functionDeclaration(identifier, [], body));
+  }
+}
+
+function findBindingStatements(
+  all: BindingStatements[],
+  bindings: undefined | string | Set<string>
+) {
+  switch (typeof bindings) {
+    case "string":
+    case "undefined":
+      for (const item of all) {
+        if (item.bindings === bindings) {
+          return item;
+        }
+      }
+      break;
+    default:
+      for (const item of all) {
+        if (
+          typeof item.bindings === "object" &&
+          isEqualSet(item.bindings, bindings)
+        ) {
+          return item;
+        }
+      }
+      break;
+  }
+}
+
+function isEqualSet(a: Set<unknown>, b: Set<unknown>) {
+  if (a.size !== b.size) return false;
+  for (const item of a) {
+    if (!b.has(item)) return false;
+  }
+
+  return true;
 }
 
 function nCodeString(code: WalkCodes, number: number) {

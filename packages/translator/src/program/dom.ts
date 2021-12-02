@@ -11,17 +11,10 @@ export function enter(program: t.NodePath<t.Program>) {
 export function exit(program: t.NodePath<t.Program>) {
   const templateIdentifier = t.identifier("template");
   const walksIdentifier = t.identifier("walks");
-  const hydrateIdentifier = t.identifier("hydrate");
-  const usedAttrs = Object.keys(program.node.extra.references?.attrs || {});
-  const hydrateContent: t.Statement[] = [];
-  const { walks, writes } = writer.end(program);
-
-  for (const child of program.get("body")) {
-    if (!isStatic(child)) {
-      hydrateContent.push(child.node);
-      child.remove();
-    }
-  }
+  const applyIdentifier = t.identifier("apply");
+  // const usedAttrs = Object.keys(program.node.extra.references?.attrs || {});
+  const usedAttrs: string[] = [];
+  const { walks, writes, apply } = writer.end(program);
 
   program.node.body.push(
     t.exportNamedDeclaration(
@@ -36,18 +29,7 @@ export function exit(program: t.NodePath<t.Program>) {
     ),
     t.exportNamedDeclaration(
       t.variableDeclaration("const", [
-        t.variableDeclarator(
-          hydrateIdentifier,
-          callRuntime(
-            program,
-            "register",
-            t.stringLiteral(program.hub.file.metadata.marko.id),
-            t.arrowFunctionExpression(
-              [t.identifier("input")],
-              t.blockStatement(hydrateContent)
-            )
-          )
-        ),
+        t.variableDeclarator(applyIdentifier, apply!),
       ])
     ),
     t.exportDefaultDeclaration(
@@ -57,18 +39,8 @@ export function exit(program: t.NodePath<t.Program>) {
         templateIdentifier,
         walksIdentifier,
         t.arrayExpression(usedAttrs.map((k) => t.stringLiteral(k))),
-        hydrateIdentifier
+        applyIdentifier
       )
     )
   );
-}
-
-function isStatic(path: t.NodePath<any>) {
-  if (path.isImportDeclaration()) {
-    return true;
-  }
-
-  // TODO include more cases here.
-
-  return false;
 }
