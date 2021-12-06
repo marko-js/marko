@@ -7,7 +7,7 @@ The [@marko/rollup](https://github.com/marko-js/rollup) transform can be used in
 ## Manual Installation
 
 ```bash
-npm install rollup rollup-plugin-commonjs rollup-plugin-node-resolve @marko/rollup --save-dev
+npm install rollup @rollup/plugin-commonjs @rollup/plugin-node-resolve @marko/rollup --save-dev
 ```
 
 ## Configuration
