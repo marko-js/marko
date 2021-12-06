@@ -29,26 +29,28 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
   if (confident && canWriteHTML) {
     write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
   } else {
-    const callExpr = callRuntime(
-      placeholder,
-      method as HTMLMethod | DOMMethod,
-      placeholder.node.value
-    );
-
     if (isHTML) {
       if (placeholder.node.extra.references) {
         // write`${callRuntime(placeholder, "hydrateMarker")}`;
       }
 
-      write`${callExpr}`;
+      write`${callRuntime(
+        placeholder,
+        method as HTMLMethod | DOMMethod,
+        placeholder.node.value
+      )}`;
     } else {
       write`<!>`;
-      writer.visit(placeholder, writer.WalkCodes.Replace);
       writer.addStatement(
         "apply",
         placeholder,
         placeholder.node.extra.references?.value?.bindings,
-        t.expressionStatement(callExpr)
+        t.expressionStatement(callRuntime(
+          placeholder,
+          method as DOMMethod,
+          writer.visit(placeholder, writer.WalkCodes.Replace),
+          placeholder.node.value,
+        ))
       );
     }
   }

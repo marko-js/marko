@@ -52,12 +52,12 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       t.expressionStatement(
         t.callExpression(
           writer.ensureBinding("apply", tag, node.var.name),
-          [defaultAttr.value!]
+          [defaultAttr.value]
         )
       )
     );
   } else {
-    translateVar(tag, defaultAttr.value!);
+    translateVar(tag, defaultAttr.value);
   }
 
   tag.remove();

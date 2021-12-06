@@ -44,6 +44,7 @@ enum Step {
 }
 
 type BindingStatements = {
+  scopeId: t.NumericLiteral;
   identifier: t.Identifier;
   bindings: undefined | string | Set<string>;
   statements: t.Statement[];
@@ -51,6 +52,7 @@ type BindingStatements = {
 
 interface Writer {
   parent: Writer | undefined;
+  elScopeId: number;
   apply: BindingStatements[];
   hydrate: BindingStatements[];
   writes: (string | t.Expression)[];
@@ -73,6 +75,7 @@ export function start(path: t.NodePath<any>) {
 
   path.state.writer = {
     parent,
+    elScopeId: 0,
     apply: [],
     hydrate: [],
     writes: [""],
@@ -89,8 +92,11 @@ export function end(path: t.NodePath<any>) {
   if (isOutputHTML(path)) {
     flushInto(path);
   } else {
-    writeBindingStatements(path, writer.apply);
-    writeBindingStatements(path, writer.hydrate);
+    writeBindingStatements(
+      writeBindingStatements(writer.elScopeId, path, writer.apply),
+      path,
+      writer.hydrate
+    );
     apply = writer.apply.find((it) => !it.bindings)!.identifier;
   }
 
@@ -120,6 +126,7 @@ export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
 
 export function visit(path: t.NodePath<any>, code?: VisitCodes) {
   const writer = path.state.writer as Writer;
+  const scopeId = writer.elScopeId++;
   let walkString = "";
 
   if (writer.steps.length) {
@@ -167,6 +174,8 @@ export function visit(path: t.NodePath<any>, code?: VisitCodes) {
   }
 
   writer.walks[writer.walks.length - 1] += walkString;
+
+  return t.numericLiteral(scopeId);
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -225,14 +234,19 @@ export function addStatement(
   type: "apply" | "hydrate",
   path: t.NodePath<any>,
   bindings: undefined | string | Set<string>,
-  statement: t.Statement
+  statement: t.Statement | t.Statement[]
 ) {
   const writer = path.state.writer as Writer;
   const bindingStatements: BindingStatements | undefined =
     findBindingStatements(writer[type], bindings);
 
   if (bindingStatements) {
-    bindingStatements.statements.push(statement);
+    if (Array.isArray(statement)) {
+      bindingStatements.statements =
+        bindingStatements.statements.concat(statement);
+    } else {
+      bindingStatements.statements.push(statement);
+    }
   } else {
     let identifier: t.Identifier;
 
@@ -251,7 +265,13 @@ export function addStatement(
         for (const name of names) {
           // TODO: this should queue the identifier instead of just print it.
           // The binding also needs to know it's scope index so we can pass that in.
-          addStatement(type, path, name, t.expressionStatement(t.stringLiteral(`queue ${identifier.name}`)));
+          addStatement(
+            type,
+            path,
+            name,
+            // TODO need to pass scope id for identifier.
+            t.expressionStatement(callRuntime(path, "queue", identifier))
+          );
         }
 
         break;
@@ -259,9 +279,10 @@ export function addStatement(
     }
 
     writer[type].push({
+      scopeId: t.numericLiteral(-1),
       identifier,
       bindings,
-      statements: [statement],
+      statements: Array.isArray(statement) ? statement : [statement],
     });
   }
 }
@@ -280,6 +301,7 @@ export function ensureBinding(
   if (!identifier) {
     identifier = path.scope.generateUidIdentifier(`${type}_${name}`);
     writer[type].push({
+      scopeId: t.numericLiteral(-1),
       identifier,
       bindings: name,
       statements: [],
@@ -290,36 +312,49 @@ export function ensureBinding(
 }
 
 function writeBindingStatements(
+  scopeOffset: number,
   path: t.NodePath<any>,
   all: BindingStatements[]
 ) {
   const program = path.hub.file.path;
-  for (const { identifier, bindings, statements } of all) {
+  for (const { scopeId, identifier, bindings, statements } of all) {
+    let params: (t.Identifier | t.RestElement | t.Pattern)[];
     let body: t.BlockStatement;
     switch (typeof bindings) {
       case "undefined":
+        params = [];
         body = t.blockStatement(statements);
         break;
       case "string":
-        body = t.blockStatement(
-          (
-            [t.expressionStatement(t.stringLiteral(`write ${bindings}`))] as t.Statement[]
-          ).concat(statements)
-        );
+        scopeId.value = scopeOffset++;
+        params = [t.identifier(bindings)];
+        body = t.blockStatement([
+          t.ifStatement(
+            callRuntime(path, "write", scopeId, t.identifier(bindings)),
+            statements.length === 1
+              ? statements[0]
+              : t.blockStatement(statements)
+          ),
+        ]);
         break;
       default:
-        body = t.blockStatement(
-          (
-            Array.from(bindings, (name) =>
-              t.expressionStatement(t.stringLiteral(`read ${name}`))
-            ) as t.Statement[]
-          ).concat(statements)
+        params = Array.from(bindings, (name) =>
+          t.assignmentPattern(
+            t.identifier(name),
+            callRuntime(path, "read", t.numericLiteral(0))
+          )
         );
+        body = t.blockStatement(statements);
         break;
     }
 
-    program.pushContainer("body", t.functionDeclaration(identifier, [], body));
+    program.pushContainer(
+      "body",
+      t.functionDeclaration(identifier, params, body)
+    );
   }
+
+  return scopeOffset;
 }
 
 function findBindingStatements(

@@ -1,4 +1,8 @@
-<let/clickCount = 0/>
-<let/y = clickCount + 1/>
-<span>${new Date()}</span>
-<button onclick() { clickCount++ }>${clickCount + y}</button>
+<div>
+  <let/clickCount = 0/>
+  <button onclick() { clickCount++ }>${clickCount}</button>
+</div>
+<div>
+  <let/clickCount = 0/>
+  <button onclick() { clickCount++ }>${clickCount}</button>
+</div>
