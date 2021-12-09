@@ -4,6 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
+import type { Reference } from "../analyze/references";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
@@ -43,17 +44,15 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (isOutputDOM(tag)) {
-    const bindings = defaultAttr.extra?.references?.value?.bindings;
     // TODO: add defined guard if bindings exist.
     writer.addStatement(
       "apply",
       tag,
-      bindings,
+      defaultAttr.extra?.valueReferences,
       t.expressionStatement(
-        t.callExpression(
-          writer.ensureBinding("apply", tag, node.var.name),
-          [defaultAttr.value]
-        )
+        t.callExpression(writer.getApplyId(tag, node.var.extra as Reference), [
+          defaultAttr.value,
+        ])
       )
     );
   } else {

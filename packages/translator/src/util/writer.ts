@@ -1,6 +1,13 @@
 import { types as t } from "@marko/compiler";
+import {
+  compareReferences,
+  References,
+  Reference,
+} from "../analyze/references";
+import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
+import toTemplateOrStringLiteral from "./to-template-string-or-literal";
 
 export enum WalkCodes {
   Get = 32,
@@ -43,18 +50,17 @@ enum Step {
   exit,
 }
 
-type BindingStatements = {
-  scopeId: t.NumericLiteral;
+interface ReferenceGroup {
   identifier: t.Identifier;
-  bindings: undefined | string | Set<string>;
+  references: References;
   statements: t.Statement[];
-};
+}
 
-interface Writer {
-  parent: Writer | undefined;
-  elScopeId: number;
-  apply: BindingStatements[];
-  hydrate: BindingStatements[];
+interface Section {
+  index: number;
+  parent: Section | undefined;
+  apply: ReferenceGroup[];
+  hydrate: ReferenceGroup[];
   writes: (string | t.Expression)[];
   walks: (string | t.Expression)[];
   steps: Step[];
@@ -68,72 +74,69 @@ type VisitCodes =
   | WalkCodes.Replace;
 
 export function start(path: t.NodePath<any>) {
-  const parent = path.state.writer;
+  const parent = path.state.section;
   if (parent && isOutputHTML(path)) {
     flushBefore(path);
   }
 
-  path.state.writer = {
+  path.state.section = {
+    index: path.node.extra.section,
     parent,
-    elScopeId: 0,
     apply: [],
     hydrate: [],
     writes: [""],
     walks: [""],
     steps: [],
-  } as Writer;
+  } as Section;
 }
 
 export function end(path: t.NodePath<any>) {
-  const writer = path.state.writer as Writer;
-  let apply: t.Identifier | undefined = undefined;
+  const section = path.state.section as Section;
   visit(path);
 
   if (isOutputHTML(path)) {
     flushInto(path);
   } else {
-    writeBindingStatements(
-      writeBindingStatements(writer.elScopeId, path, writer.apply),
-      path,
-      writer.hydrate
-    );
-    apply = writer.apply.find((it) => !it.bindings)!.identifier;
+    writeReferenceGroups(path, section.apply);
+    writeReferenceGroups(path, section.hydrate);
   }
 
-  path.state.writer = writer.parent;
+  path.state.section = section.parent;
   return {
-    apply,
-    walks: toTemplateOrStringLiteral(writer.walks),
-    writes: toTemplateOrStringLiteral(writer.writes),
+    apply: section.apply[0]?.identifier,
+    walks: toTemplateOrStringLiteral(section.walks),
+    writes: toTemplateOrStringLiteral(section.writes),
   };
 }
 
 export function enter(path: t.NodePath<any>) {
-  (path.state.writer as Writer).steps.push(Step.enter);
+  (path.state.section as Section).steps.push(Step.enter);
 }
 
 export function exit(path: t.NodePath<any>) {
-  (path.state.writer as Writer).steps.push(Step.exit);
+  (path.state.section as Section).steps.push(Step.exit);
 }
 
 export function enterShallow(path: t.NodePath<any>) {
-  (path.state.writer as Writer).steps.push(Step.enter, Step.exit);
+  (path.state.section as Section).steps.push(Step.enter, Step.exit);
 }
 
 export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
-  (path.state.writer as Writer).walks.push(expr, "");
+  (path.state.section as Section).walks.push(expr, "");
 }
 
-export function visit(path: t.NodePath<any>, code?: VisitCodes) {
-  const writer = path.state.writer as Writer;
-  const scopeId = writer.elScopeId++;
+export function visit(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  code?: VisitCodes
+) {
+  const section = path.state.section as Section;
   let walkString = "";
 
-  if (writer.steps.length) {
+  if (section.steps.length) {
     const walks: WalkCodes[] = [];
     let depth = 0;
 
-    for (const step of writer.steps) {
+    for (const step of section.steps) {
       if (step === Step.enter) {
         depth++;
         walks.push(WalkCodes.Next);
@@ -166,16 +169,14 @@ export function visit(path: t.NodePath<any>, code?: VisitCodes) {
     }
 
     walkString += nCodeString(current, count);
-    writer.steps = [];
+    section.steps = [];
   }
 
   if (code !== undefined) {
     walkString += String.fromCharCode(code);
   }
 
-  writer.walks[writer.walks.length - 1] += walkString;
-
-  return t.numericLiteral(scopeId);
+  section.walks[section.walks.length - 1] += walkString;
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -184,7 +185,7 @@ export function writeTo(path: t.NodePath<any>) {
     ...exprs: Array<string | t.Expression>
   ) => {
     const exprsLen = exprs.length;
-    const { writes } = path.state.writer as Writer;
+    const { writes } = path.state.section as Section;
     writes[writes.length - 1] += strs[0];
 
     for (let i = 0; i < exprsLen; i++) {
@@ -194,9 +195,9 @@ export function writeTo(path: t.NodePath<any>) {
 }
 
 export function consumeHTML(path: t.NodePath<any>) {
-  const writer = path.state.writer as Writer;
-  const result = toTemplateOrStringLiteral(writer.writes);
-  writer.writes = [""];
+  const section = path.state.section as Section;
+  const result = toTemplateOrStringLiteral(section.writes);
+  section.writes = [""];
 
   if (result) {
     return t.expressionStatement(callRuntime(path, "write", result));
@@ -206,8 +207,8 @@ export function consumeHTML(path: t.NodePath<any>) {
 export function hasPendingHTML(
   path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
 ) {
-  const writer = path.state.writer as Writer;
-  return Boolean(writer.writes.length > 1 || writer.writes[0]);
+  const section = path.state.section as Section;
+  return Boolean(section.writes.length > 1 || section.writes[0]);
 }
 
 export function flushBefore(path: t.NodePath<any>) {
@@ -233,119 +234,117 @@ export function flushInto(
 export function addStatement(
   type: "apply" | "hydrate",
   path: t.NodePath<any>,
-  bindings: undefined | string | Set<string>,
+  references: References,
   statement: t.Statement | t.Statement[]
 ) {
-  const writer = path.state.writer as Writer;
-  const bindingStatements: BindingStatements | undefined =
-    findBindingStatements(writer[type], bindings);
+  const section = path.state.section as Section;
+  const groups = section[type];
+  const groupIndex = sorted.findIndex(
+    groups,
+    { references } as ReferenceGroup,
+    compareReferenceGroups
+  );
 
-  if (bindingStatements) {
-    if (Array.isArray(statement)) {
-      bindingStatements.statements =
-        bindingStatements.statements.concat(statement);
-    } else {
-      bindingStatements.statements.push(statement);
-    }
-  } else {
-    let identifier: t.Identifier;
+  if (groupIndex === -1) {
+    const identifier = t.identifier(createGroupName(type, path, references));
+    sorted.insert(
+      groups,
+      {
+        identifier,
+        references,
+        statements: Array.isArray(statement) ? statement : [statement],
+      },
+      compareReferenceGroups
+    );
 
-    switch (typeof bindings) {
-      case "undefined":
-        identifier = path.scope.generateUidIdentifier(type);
-        break;
-      case "string":
-        identifier = path.scope.generateUidIdentifier(`${type}_${bindings}`);
-        break;
-      default: {
-        const names: string[] = Array.from(bindings).sort();
-        identifier = path.scope.generateUidIdentifier(
-          `${type}With_${names.join("_")}`
+    if (Array.isArray(references)) {
+      for (const ref of references) {
+        addStatement(
+          type,
+          path,
+          ref,
+          t.expressionStatement(
+            callRuntime(
+              path,
+              "queue",
+              identifier,
+              t.numericLiteral(ref.bindingIndex)
+            )
+          )
         );
-        for (const name of names) {
-          // TODO: this should queue the identifier instead of just print it.
-          // The binding also needs to know it's scope index so we can pass that in.
-          addStatement(
-            type,
-            path,
-            name,
-            // TODO need to pass scope id for identifier.
-            t.expressionStatement(callRuntime(path, "queue", identifier))
-          );
-        }
-
-        break;
       }
     }
+  } else {
+    const group = groups[groupIndex];
 
-    writer[type].push({
-      scopeId: t.numericLiteral(-1),
-      identifier,
-      bindings,
-      statements: Array.isArray(statement) ? statement : [statement],
-    });
+    if (Array.isArray(statement)) {
+      group.statements = group.statements.concat(statement);
+    } else {
+      group.statements.push(statement);
+    }
   }
 }
 
-export function ensureBinding(
-  type: "apply" | "hydrate",
-  path: t.NodePath<any>,
-  name: string
-) {
-  const writer = path.state.writer as Writer;
-  let identifier: t.Identifier | undefined = findBindingStatements(
-    writer[type],
-    name
-  )?.identifier;
+export function getApplyId(path: t.NodePath<any>, ref: Reference) {
+  const section = path.state.section as Section;
+  const groupIndex = sorted.findIndex(
+    section.apply,
+    { references: [ref] } as ReferenceGroup,
+    compareReferenceGroups
+  );
 
-  if (!identifier) {
-    identifier = path.scope.generateUidIdentifier(`${type}_${name}`);
-    writer[type].push({
-      scopeId: t.numericLiteral(-1),
-      identifier,
-      bindings: name,
-      statements: [],
-    });
+  if (groupIndex === -1) {
+    const identifier = t.identifier(createGroupName("apply", path, ref));
+    sorted.insert(
+      section.apply,
+      {
+        identifier,
+        references: ref,
+        statements: [],
+      },
+      compareReferenceGroups
+    );
+    return identifier;
+  } else {
+    return section.apply[groupIndex]!.identifier;
   }
-
-  return identifier;
 }
 
-function writeBindingStatements(
-  scopeOffset: number,
-  path: t.NodePath<any>,
-  all: BindingStatements[]
-) {
+function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
   const program = path.hub.file.path;
-  for (const { scopeId, identifier, bindings, statements } of all) {
+  for (const { identifier, references, statements } of groups) {
     let params: (t.Identifier | t.RestElement | t.Pattern)[];
     let body: t.BlockStatement;
-    switch (typeof bindings) {
-      case "undefined":
-        params = [];
+
+    if (references) {
+      if (Array.isArray(references)) {
+        params = references.map(({ name, bindingIndex }) =>
+          t.assignmentPattern(
+            t.identifier(name),
+            callRuntime(path, "read", t.numericLiteral(bindingIndex))
+          )
+        );
         body = t.blockStatement(statements);
-        break;
-      case "string":
-        scopeId.value = scopeOffset++;
-        params = [t.identifier(bindings)];
+      } else {
+        const param = t.identifier(references.name);
+        params = [param];
         body = t.blockStatement([
           t.ifStatement(
-            callRuntime(path, "write", scopeId, t.identifier(bindings)),
+            callRuntime(
+              path,
+              "write",
+              t.numericLiteral(references.bindingIndex),
+              param
+            ),
             statements.length === 1
               ? statements[0]
               : t.blockStatement(statements)
           ),
         ]);
-        break;
-      default:
-        params = Array.from(bindings, (name) =>
-          t.assignmentPattern(
-            t.identifier(name),
-            callRuntime(path, "read", t.numericLiteral(0))
-          )
-        );
-        body = t.blockStatement(statements);
-        break;
+      }
+    } else {
+      params = [];
+      body = t.blockStatement(statements);
     }
 
     program.pushContainer(
@@ -353,43 +352,48 @@ function writeBindingStatements(
       t.functionDeclaration(identifier, params, body)
     );
   }
-
-  return scopeOffset;
 }
 
-function findBindingStatements(
-  all: BindingStatements[],
-  bindings: undefined | string | Set<string>
+/**
+ * reference group priority is sorted by number of references,
+ * then if needed by reference order.
+ */
+function compareReferenceGroups(
+  { references: a }: ReferenceGroup,
+  { references: b }: ReferenceGroup
 ) {
-  switch (typeof bindings) {
-    case "string":
-    case "undefined":
-      for (const item of all) {
-        if (item.bindings === bindings) {
-          return item;
-        }
-      }
-      break;
-    default:
-      for (const item of all) {
-        if (
-          typeof item.bindings === "object" &&
-          isEqualSet(item.bindings, bindings)
-        ) {
-          return item;
-        }
-      }
-      break;
-  }
-}
+  if (a) {
+    if (b) {
+      if (Array.isArray(a)) {
+        if (Array.isArray(b)) {
+          const len = a.length;
+          const lenDelta = len - b.length;
+          if (lenDelta !== 0) {
+            return lenDelta;
+          }
 
-function isEqualSet(a: Set<unknown>, b: Set<unknown>) {
-  if (a.size !== b.size) return false;
-  for (const item of a) {
-    if (!b.has(item)) return false;
-  }
+          for (let i = 0; i < len; i++) {
+            const compareResult = compareReferences(a[i], b[i]);
+            if (compareResult !== 0) {
+              return compareResult;
+            }
+          }
 
-  return true;
+          return 0;
+        } else {
+          return 1;
+        }
+      } else if (Array.isArray(b)) {
+        return -1;
+      } else {
+        return compareReferences(a, b);
+      }
+    } else {
+      return 1;
+    }
+  } else {
+    return b ? -1 : 0;
+  }
 }
 
 function nCodeString(code: WalkCodes, number: number) {
@@ -424,56 +428,22 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
   return result;
 }
 
-export function toTemplateOrStringLiteral(
-  parts: (string | t.Expression)[]
-): t.StringLiteral | t.TemplateLiteral | undefined {
-  const strs: string[] = [];
-  const exprs: t.Expression[] = [];
-  let curStr: string = parts[0] as string;
+function createGroupName(
+  type: "apply" | "hydrate",
+  path: t.NodePath,
+  references: References
+) {
+  let name = type;
 
-  for (let i = 1; i < parts.length; i++) {
-    let content = parts[i];
-
-    if (typeof content === "object") {
-      if (t.isStringLiteral(content)) {
-        content = content.value;
-      } else if (t.isTemplateLiteral(content)) {
-        let nextIndex = i + 1;
-        const exprLen = content.expressions.length;
-        shiftItems(parts, nextIndex, content.quasis.length + exprLen);
-
-        for (let j = 0; j < exprLen; j++) {
-          parts[nextIndex++] = content.quasis[j].value.raw;
-          parts[nextIndex++] = content.expressions[j] as t.Expression;
-        }
-
-        parts[nextIndex] = content.quasis[exprLen].value.raw;
-        continue;
-      } else {
-        exprs.push(content);
-        strs.push(curStr);
-        curStr = "";
-        continue;
+  if (references) {
+    if (Array.isArray(references)) {
+      for (const ref of references) {
+        name += `_${ref.name}`;
       }
+    } else {
+      name += `_${references.name}`;
     }
-
-    curStr += content;
   }
 
-  if (exprs.length) {
-    strs.push(curStr);
-
-    return t.templateLiteral(
-      strs.map((raw) => t.templateElement({ raw })),
-      exprs
-    );
-  } else if (curStr) {
-    return t.stringLiteral(curStr);
-  }
-}
-
-function shiftItems(list: unknown[], start: number, offset: number) {
-  for (let i = list.length - 1; i >= start; i--) {
-    list[i + offset] = list[i];
-  }
+  return path.hub.file.path.scope.generateUid(name);
 }

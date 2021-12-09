@@ -13,9 +13,11 @@ type HTMLMethod = "escapeScript" | "escapeStyle" | "escapeXML" | "toString";
 type DOMMethod = "html" | "data";
 
 export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  const { confident, value: computed } = placeholder.get("value").evaluate();
   const isHTML = isOutputHTML(placeholder);
   const write = writer.writeTo(placeholder);
+  const extra = placeholder.node.extra;
+  const confident = "computed" in extra;
+  const { computed } = extra;
   const canWriteHTML =
     isHTML || (confident && (placeholder.node.escape || !computed));
   const method = canWriteHTML
@@ -28,31 +30,28 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
   if (confident && canWriteHTML) {
     write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
+  } else if (isHTML) {
+    write`${callRuntime(
+      placeholder,
+      method as HTMLMethod | DOMMethod,
+      placeholder.node.value
+    )}`;
   } else {
-    if (isHTML) {
-      if (placeholder.node.extra.references) {
-        // write`${callRuntime(placeholder, "hydrateMarker")}`;
-      }
-
-      write`${callRuntime(
-        placeholder,
-        method as HTMLMethod | DOMMethod,
-        placeholder.node.value
-      )}`;
-    } else {
-      write`<!>`;
-      writer.addStatement(
-        "apply",
-        placeholder,
-        placeholder.node.extra.references?.value?.bindings,
-        t.expressionStatement(callRuntime(
+    write`<!>`;
+    writer.visit(placeholder, writer.WalkCodes.Replace);
+    writer.addStatement(
+      "apply",
+      placeholder,
+      extra.valueReferences,
+      t.expressionStatement(
+        callRuntime(
           placeholder,
           method as DOMMethod,
-          writer.visit(placeholder, writer.WalkCodes.Replace),
-          placeholder.node.value,
-        ))
-      );
-    }
+          t.numericLiteral(extra.visitIndex!),
+          placeholder.node.value
+        )
+      )
+    );
   }
 
   writer.enterShallow(placeholder);

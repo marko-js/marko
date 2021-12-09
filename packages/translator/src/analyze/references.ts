@@ -1,4 +1,6 @@
 import type { types as t } from "@marko/compiler";
+import * as sorted from "../util/sorted-arr";
+import { getSection, Section } from "./sections";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
@@ -8,73 +10,56 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoPlaceholder
 >;
 
-interface ReferenceMeta {
-  bindings?: string | Set<string>;
+export interface Reference {
+  name: string;
+  sectionIndex: number;
+  bindingIndex: number;
 }
+export type References = undefined | Reference | Reference[];
 
 declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    bindings?: number;
+  }
+
+  export interface IdentifierExtra {
+    name?: string;
+    sectionIndex?: number;
+    bindingIndex?: number;
+  }
+
   export interface MarkoTagExtra {
-    vars?: string | Set<string>;
-    references?: {
-      var?: ReferenceMeta;
-      name?: ReferenceMeta;
-    };
+    varReferences?: References;
+    nameReferences?: References;
   }
 
   export interface MarkoTagBodyExtra {
-    params?: string | Set<string>;
-    references?: {
-      params?: ReferenceMeta[];
-    };
+    bindings?: number;
+    paramsReferences?: References;
   }
 
   export interface MarkoAttributeExtra {
-    references?: {
-      value?: ReferenceMeta;
-    };
+    valueReferences?: References;
   }
 
   export interface MarkoSpreadAttributeExtra {
-    references?: {
-      value?: ReferenceMeta;
-    };
+    valueReferences?: References;
   }
 
   export interface MarkoPlaceholderExtra {
-    references?: {
-      value?: ReferenceMeta;
-    };
+    valueReferences?: References;
   }
 }
 
-export default {
-  MarkoTag: {
-    exit(tag) {
-      if (tag.has("var")) {
-        for (const name in tag.get("var").getBindingIdentifiers()) {
-          addReferenceMeta(name, tag.scope);
-        }
-      }
-    },
-  },
-  MarkoTagBody(body) {
-    if (body.get("params").length) {
-      for (const name in body.getBindingIdentifiers()) {
-        addReferenceMeta(name, body.scope);
-      }
-    }
-  },
-} as t.Visitor;
-
-function getMetaForExpr(expr: ReturnType<typeof getExprRoot>): ReferenceMeta {
-  let references = ((expr.parentPath.node.extra ??= {}).references ??=
-    {}) as any;
-
-  if (expr.listKey) {
-    references = references[expr.listKey] ??= [];
+export default function trackCustomTagReferences(tag: t.NodePath<t.MarkoTag>) {
+  if (tag.has("var")) {
+    trackReferences(getSection(tag), tag.get("var"));
   }
 
-  return (references[expr.key] ??= {});
+  const body = tag.get("body");
+  if (body.get("body").length && body.get("params").length) {
+    trackReferences(getSection(body), body);
+  }
 }
 
 function getExprRoot(path: t.NodePath<t.Node>) {
@@ -88,27 +73,57 @@ function getExprRoot(path: t.NodePath<t.Node>) {
   };
 }
 
-function addReferenceMeta(name: string, scope: t.Scope) {
-  for (const refPath of scope.getBinding(name)!.referencePaths) {
-    const exprRoot = getExprRoot(refPath);
-    const exprMeta = getMetaForExpr(exprRoot);
+function trackReferences(section: Section, path: t.NodePath<any>) {
+  const scope = path.scope;
+  const { sectionIndex } = section;
+  const bindings = path.getBindingIdentifiers() as unknown as Record<
+    string,
+    t.Identifier
+  >;
+  for (const name in bindings) {
+    const references = scope.getBinding(name)!.referencePaths;
 
-    if (exprMeta.bindings) {
-      if (typeof exprMeta.bindings === "string") {
-        if (exprMeta.bindings !== name) {
-          exprMeta.bindings = new Set([exprMeta.bindings, name]);
+    if (references.length) {
+      const identifier = bindings[name];
+      const identifierExtra = (identifier.extra ??= {});
+      const bindingIndex = section.bindings++;
+      const ref: Reference = {
+        name,
+        sectionIndex,
+        bindingIndex,
+      };
+      identifierExtra.name = name;
+      identifierExtra.sectionIndex = sectionIndex;
+      identifierExtra.bindingIndex = bindingIndex;
+
+      for (const reference of references) {
+        const exprRoot = getExprRoot(reference);
+        const exprExtra = (exprRoot.parentPath.node.extra ??= {});
+        const key = exprRoot.listKey || exprRoot.key;
+        const refsKey = `${key}References`;
+        const curRefs = exprExtra[refsKey] as References;
+
+        if (curRefs) {
+          if (Array.isArray(curRefs)) {
+            sorted.insert(curRefs, ref, compareReferences);
+          } else {
+            const compareResult = compareReferences(curRefs, ref);
+
+            if (compareResult !== 0) {
+              exprExtra[refsKey] =
+                compareResult > 0 ? [curRefs, ref] : [ref, curRefs];
+            }
+          }
+        } else {
+          exprExtra[refsKey] = ref;
         }
-      } else {
-        exprMeta.bindings.add(name);
       }
-    } else {
-      exprMeta.bindings = name;
     }
   }
 }
 
 function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
-  switch (path.node.type) {
+  switch (path.type) {
     case "MarkoTag":
     case "MarkoTagBody":
     case "MarkoAttribute":
@@ -118,4 +133,10 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
     default:
       return false;
   }
+}
+
+export function compareReferences(a: Reference, b: Reference) {
+  return a.sectionIndex === b.sectionIndex
+    ? a.bindingIndex - b.bindingIndex
+    : a.sectionIndex - b.sectionIndex;
 }

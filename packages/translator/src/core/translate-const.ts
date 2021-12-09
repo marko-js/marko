@@ -4,6 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
+import type { Reference } from "../analyze/references";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
@@ -37,15 +38,17 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (isOutputDOM(tag)) {
-    const identifiers = Object.keys(tag.get("var").getBindingIdentifiers());
+    const identifiers = Object.values(
+      tag.get("var").getBindingIdentifiers()
+    ) as t.Identifier[];
     writer.addStatement(
       "apply",
       tag,
-      defaultAttr.extra?.references?.value?.bindings,
+      defaultAttr.extra?.valueReferences,
       identifiers.length === 1
         ? t.expressionStatement(
             t.callExpression(
-              writer.ensureBinding("apply", tag, identifiers[0]),
+              writer.getApplyId(tag, identifiers[0].extra as Reference),
               [defaultAttr.value]
             )
           )
@@ -53,11 +56,12 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
             t.variableDeclaration("const", [
               t.variableDeclarator(node.var, defaultAttr.value),
             ]),
-            ...identifiers.map((name) =>
+            ...identifiers.map((identifier) =>
               t.expressionStatement(
-                t.callExpression(writer.ensureBinding("apply", tag, name), [
-                  t.identifier(name),
-                ])
+                t.callExpression(
+                  writer.getApplyId(tag, identifier.extra as Reference),
+                  [t.identifier(identifier.name)]
+                )
               )
             ),
           ]
