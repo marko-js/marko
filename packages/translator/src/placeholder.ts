@@ -28,6 +28,8 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ? "data"
     : "html";
 
+  const visitIndex = writer.visit(placeholder, writer.WalkCodes.Replace);
+
   if (confident && canWriteHTML) {
     write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
   } else if (isHTML) {
@@ -38,7 +40,6 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
     )}`;
   } else {
     write`<!>`;
-    writer.visit(placeholder, writer.WalkCodes.Replace);
     writer.addStatement(
       "apply",
       placeholder,
@@ -47,7 +48,7 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
         callRuntime(
           placeholder,
           method as DOMMethod,
-          t.numericLiteral(extra.visitIndex!),
+          t.numericLiteral(visitIndex!),
           placeholder.node.value
         )
       )

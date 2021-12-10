@@ -127,54 +127,65 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   code?: VisitCodes
 ) {
-  const section = path.state.section as Section;
-  let walkString = "";
+  const { visitIndex } = path.node.extra;
+  if (visitIndex !== undefined) {
+    const section = path.state.section as Section;
+    if (isOutputHTML(path)) {
+      section.writes.push(
+        callRuntime(path, "markScopeOffset", t.numericLiteral(visitIndex))
+      );
+    } else {
+      let walkString = "";
 
-  if (section.steps.length) {
-    const walks: WalkCodes[] = [];
-    let depth = 0;
+      if (section.steps.length) {
+        const walks: WalkCodes[] = [];
+        let depth = 0;
 
-    for (const step of section.steps) {
-      if (step === Step.enter) {
-        depth++;
-        walks.push(WalkCodes.Next);
-      } else {
-        depth--;
-        if (depth >= 0) {
-          // delete back to and including previous NEXT
-          walks.length = walks.lastIndexOf(WalkCodes.Next);
-          walks.push(WalkCodes.Over);
-        } else {
-          // delete back to previous OUT
-          walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
-          walks.push(WalkCodes.Out);
-          depth = 0;
+        for (const step of section.steps) {
+          if (step === Step.enter) {
+            depth++;
+            walks.push(WalkCodes.Next);
+          } else {
+            depth--;
+            if (depth >= 0) {
+              // delete back to and including previous NEXT
+              walks.length = walks.lastIndexOf(WalkCodes.Next);
+              walks.push(WalkCodes.Over);
+            } else {
+              // delete back to previous OUT
+              walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
+              walks.push(WalkCodes.Out);
+              depth = 0;
+            }
+          }
         }
-      }
-    }
 
-    let current = walks[0];
-    let count = 0;
+        let current = walks[0];
+        let count = 0;
 
-    for (const walk of walks) {
-      if (walk !== current) {
+        for (const walk of walks) {
+          if (walk !== current) {
+            walkString += nCodeString(current, count);
+            current = walk;
+            count = 1;
+          } else {
+            count++;
+          }
+        }
+
         walkString += nCodeString(current, count);
-        current = walk;
-        count = 1;
-      } else {
-        count++;
+        section.steps = [];
       }
+
+      if (code !== undefined) {
+        walkString += String.fromCharCode(code);
+      }
+
+      section.walks[section.walks.length - 1] += walkString;
     }
-
-    walkString += nCodeString(current, count);
-    section.steps = [];
   }
 
-  if (code !== undefined) {
-    walkString += String.fromCharCode(code);
-  }
-
-  section.walks[section.walks.length - 1] += walkString;
+  return visitIndex;
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -323,7 +334,11 @@ function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
         params = references.map((ref) =>
           t.assignmentPattern(
             t.identifier(ref.name),
-            callRuntime(path, "read", t.numericLiteral(bindingToScopeId(path, ref)))
+            callRuntime(
+              path,
+              "read",
+              t.numericLiteral(bindingToScopeId(path, ref))
+            )
           )
         );
         body = t.blockStatement(statements);

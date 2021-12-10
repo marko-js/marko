@@ -19,13 +19,10 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
     if (extra.tagNameNullable) {
       writer.flushBefore(tag);
     }
-
-    if (extra.references || extra.eventHandlers || tag.has("var")) {
-      // write`${callRuntime(tag, "hydrateMarker")}`;
-    }
-
     translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)));
   }
+
+  const visitIndex = writer.visit(tag, writer.WalkCodes.Get);
 
   write`<${name.node}`;
 
@@ -39,7 +36,6 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
     }
   } else {
     // TODO: this should iterate backward and filter out duplicated attrs.
-    let didVisit = false;
     for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
       const name = attr.node.name;
 
@@ -47,8 +43,10 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
         continue;
       }
 
+      const extra = attr.node.extra;
       const value = attr.get("value");
-      const { confident, value: computed } = value.evaluate();
+      const confident = "computed" in extra;
+      const { computed } = extra;
       let staticContent: string | undefined;
       let dynamicExpr: t.Expression | undefined;
 
@@ -58,23 +56,33 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
           if (confident) {
             staticContent = getHTMLRuntime(tag)[`${name}Attr`](computed);
           } else {
-            dynamicExpr = callRuntime(
-              tag,
-              `${name}Attr` as "classAttr" | "styleAttr",
-              value.node
-            );
+            dynamicExpr = isHTML
+              ? callRuntime(
+                  tag,
+                  `${name}Attr` as "classAttr" | "styleAttr",
+                  value.node
+                )
+              : callRuntime(
+                  tag,
+                  `${name}Attr` as "classAttr" | "styleAttr",
+                  t.numericLiteral(visitIndex!),
+                  value.node
+                );
           }
           break;
         default:
           if (confident) {
             staticContent = getHTMLRuntime(tag).attr(name, computed);
           } else {
-            dynamicExpr = callRuntime(
-              tag,
-              "attr",
-              t.stringLiteral(name),
-              value.node
-            );
+            dynamicExpr = isHTML
+              ? callRuntime(tag, "attr", t.stringLiteral(name), value.node)
+              : callRuntime(
+                  tag,
+                  "attr",
+                  t.numericLiteral(visitIndex!),
+                  t.stringLiteral(name),
+                  value.node
+                );
           }
 
           break;
@@ -83,13 +91,12 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
       if (isHTML || staticContent !== undefined) {
         write`${dynamicExpr || staticContent!}`;
       } else {
-        if (!didVisit) {
-          didVisit = true;
-          writer.visit(tag, writer.WalkCodes.Get);
-          // tag.insertBefore(t.expressionStatement(callRuntime(tag, "walk")));
-        }
-
-        tag.insertBefore(t.expressionStatement(dynamicExpr!));
+        writer.addStatement(
+          "apply",
+          tag,
+          extra.valueReferences,
+          t.expressionStatement(dynamicExpr!)
+        );
       }
     }
   }
