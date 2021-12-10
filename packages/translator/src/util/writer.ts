@@ -57,7 +57,6 @@ interface ReferenceGroup {
 }
 
 interface Section {
-  index: number;
   parent: Section | undefined;
   apply: ReferenceGroup[];
   hydrate: ReferenceGroup[];
@@ -80,7 +79,6 @@ export function start(path: t.NodePath<any>) {
   }
 
   path.state.section = {
-    index: path.node.extra.section,
     parent,
     apply: [],
     hydrate: [],
@@ -246,7 +244,9 @@ export function addStatement(
   );
 
   if (groupIndex === -1) {
-    const identifier = t.identifier(createGroupName(type, path, references));
+    const identifier = t.identifier(
+      generateReferenceGroupName(type, path, references)
+    );
     sorted.insert(
       groups,
       {
@@ -268,7 +268,7 @@ export function addStatement(
               path,
               "queue",
               identifier,
-              t.numericLiteral(ref.bindingIndex)
+              t.numericLiteral(bindingToScopeId(path, ref))
             )
           )
         );
@@ -294,7 +294,9 @@ export function getApplyId(path: t.NodePath<any>, ref: Reference) {
   );
 
   if (groupIndex === -1) {
-    const identifier = t.identifier(createGroupName("apply", path, ref));
+    const identifier = t.identifier(
+      generateReferenceGroupName("apply", path, ref)
+    );
     sorted.insert(
       section.apply,
       {
@@ -318,10 +320,10 @@ function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
 
     if (references) {
       if (Array.isArray(references)) {
-        params = references.map(({ name, bindingIndex }) =>
+        params = references.map((ref) =>
           t.assignmentPattern(
-            t.identifier(name),
-            callRuntime(path, "read", t.numericLiteral(bindingIndex))
+            t.identifier(ref.name),
+            callRuntime(path, "read", t.numericLiteral(bindingToScopeId(path, ref)))
           )
         );
         body = t.blockStatement(statements);
@@ -333,7 +335,7 @@ function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
             callRuntime(
               path,
               "write",
-              t.numericLiteral(references.bindingIndex),
+              t.numericLiteral(bindingToScopeId(path, references)),
               param
             ),
             statements.length === 1
@@ -428,7 +430,14 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
   return result;
 }
 
-function createGroupName(
+function bindingToScopeId(path: t.NodePath<any>, ref: Reference) {
+  return (
+    path.hub.file.path.node.extra.sections![ref.sectionIndex!].visits +
+    ref.bindingIndex!
+  );
+}
+
+function generateReferenceGroupName(
   type: "apply" | "hydrate",
   path: t.NodePath,
   references: References
@@ -437,6 +446,7 @@ function createGroupName(
 
   if (references) {
     if (Array.isArray(references)) {
+      name += "With";
       for (const ref of references) {
         name += `_${ref.name}`;
       }

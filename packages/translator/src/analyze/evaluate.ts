@@ -1,3 +1,5 @@
+import type { types as t } from "@marko/compiler";
+
 declare module "@marko/compiler/dist/types" {
   export interface MarkoAttributeExtra {
     computed?: unknown;

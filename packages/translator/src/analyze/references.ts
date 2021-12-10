@@ -62,17 +62,6 @@ export default function trackCustomTagReferences(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function getExprRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
-  while (!isMarkoPath(curPath.parentPath!)) {
-    curPath = curPath.parentPath!;
-  }
-
-  return curPath as t.NodePath<t.Node> & {
-    parentPath: MarkoExprRootPath;
-  };
-}
-
 function trackReferences(section: Section, path: t.NodePath<any>) {
   const scope = path.scope;
   const { sectionIndex } = section;
@@ -120,6 +109,17 @@ function trackReferences(section: Section, path: t.NodePath<any>) {
       }
     }
   }
+}
+
+function getExprRoot(path: t.NodePath<t.Node>) {
+  let curPath = path;
+  while (!isMarkoPath(curPath.parentPath!)) {
+    curPath = curPath.parentPath!;
+  }
+
+  return curPath as t.NodePath<t.Node> & {
+    parentPath: MarkoExprRootPath;
+  };
 }
 
 function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
