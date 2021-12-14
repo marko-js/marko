@@ -16,8 +16,7 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const isHTML = isOutputHTML(placeholder);
   const write = writer.writeTo(placeholder);
   const extra = placeholder.node.extra;
-  const confident = "computed" in extra;
-  const { computed } = extra;
+  const { confident, computed } = extra;
   const canWriteHTML =
     isHTML || (confident && (placeholder.node.escape || !computed));
   const method = canWriteHTML

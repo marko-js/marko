@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { assertNoArgs, getTagDef, isNativeTag } from "@marko/babel-utils";
-import { TagNameTypes } from "../analyze/tag-name-type";
+import { TagNameTypes } from "../analyze/util/tag-name-type";
 import { isOutputHTML } from "../util/marko-config";
 import * as hooks from "../util/plugin-hooks";
 import * as NativeTag from "./native-tag";

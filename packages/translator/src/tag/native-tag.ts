@@ -45,8 +45,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
 
       const extra = attr.node.extra;
       const value = attr.get("value");
-      const confident = "computed" in extra;
-      const { computed } = extra;
+      const { confident, computed } = extra;
       let staticContent: string | undefined;
       let dynamicExpr: t.Expression | undefined;
 

@@ -3,7 +3,7 @@ import {
   compareReferences,
   References,
   Reference,
-} from "../analyze/references";
+} from "../analyze/util/references";
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";

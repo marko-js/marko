@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
-import type { Reference } from "../analyze/references";
+import type { Reference } from "../analyze/util/references";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;

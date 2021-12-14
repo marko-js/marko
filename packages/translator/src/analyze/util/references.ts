@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-import * as sorted from "../util/sorted-arr";
+import * as sorted from "../../util/sorted-arr";
 import { getSection, Section } from "./sections";
 
 type MarkoExprRootPath = t.NodePath<
@@ -51,18 +51,18 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export default function trackCustomTagReferences(tag: t.NodePath<t.MarkoTag>) {
+export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
   if (tag.has("var")) {
-    trackReferences(getSection(tag), tag.get("var"));
+    trackReferencesForBindings(getSection(tag), tag.get("var"));
   }
 
   const body = tag.get("body");
   if (body.get("body").length && body.get("params").length) {
-    trackReferences(getSection(body), body);
+    trackReferencesForBindings(getSection(body), body);
   }
 }
 
-function trackReferences(section: Section, path: t.NodePath<any>) {
+function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
   const scope = path.scope;
   const { sectionIndex } = section;
   const bindings = path.getBindingIdentifiers() as unknown as Record<

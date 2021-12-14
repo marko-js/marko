@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { findParentTag, assertNoVar } from "@marko/babel-utils";
-import { TagNameTypes } from "../analyze/tag-name-type";
+import { TagNameTypes } from "../analyze/util/tag-name-type";
 import attrsToObject from "../util/attrs-to-object";
 import * as writer from "../util/writer";
 
