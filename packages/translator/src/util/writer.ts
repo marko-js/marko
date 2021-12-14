@@ -2,8 +2,9 @@ import { types as t } from "@marko/compiler";
 import {
   compareReferences,
   References,
-  Reference,
+  Binding,
 } from "../analyze/util/references";
+import type { Reserve } from "../analyze/util/reserves";
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
@@ -95,8 +96,8 @@ export function end(path: t.NodePath<any>) {
   if (isOutputHTML(path)) {
     flushInto(path);
   } else {
-    writeReferenceGroups(path, section.apply);
-    writeReferenceGroups(path, section.hydrate);
+    writeApplyGroups(path, section.apply);
+    writeHydrateGroups(path, section.hydrate);
   }
 
   path.state.section = section.parent;
@@ -192,7 +193,7 @@ export function writeTo(path: t.NodePath<any>) {
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
-  ) => {
+  ): void => {
     const exprsLen = exprs.length;
     const { writes } = path.state.section as Section;
     writes[writes.length - 1] += strs[0];
@@ -268,18 +269,27 @@ export function addStatement(
       compareReferenceGroups
     );
 
+    if (type === "hydrate") {
+      addStatement(
+        "apply",
+        path,
+        references,
+        t.expressionStatement(t.callExpression(identifier, []))
+      );
+    }
+
     if (Array.isArray(references)) {
-      for (const ref of references) {
+      for (const binding of references) {
         addStatement(
           type,
           path,
-          ref,
+          binding,
           t.expressionStatement(
             callRuntime(
               path,
               "queue",
               identifier,
-              t.numericLiteral(bindingToScopeId(path, ref))
+              t.numericLiteral(bindingToScopeId(path, binding))
             )
           )
         );
@@ -296,23 +306,23 @@ export function addStatement(
   }
 }
 
-export function getApplyId(path: t.NodePath<any>, ref: Reference) {
+export function getApplyId(path: t.NodePath<any>, binding: Binding) {
   const section = path.state.section as Section;
   const groupIndex = sorted.findIndex(
     section.apply,
-    { references: [ref] } as ReferenceGroup,
+    { references: [binding] } as ReferenceGroup,
     compareReferenceGroups
   );
 
   if (groupIndex === -1) {
     const identifier = t.identifier(
-      generateReferenceGroupName("apply", path, ref)
+      generateReferenceGroupName("apply", path, binding)
     );
     sorted.insert(
       section.apply,
       {
         identifier,
-        references: ref,
+        references: binding,
         statements: [],
       },
       compareReferenceGroups
@@ -323,7 +333,7 @@ export function getApplyId(path: t.NodePath<any>, ref: Reference) {
   }
 }
 
-function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
+function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     let params: (t.Identifier | t.RestElement | t.Pattern)[];
@@ -331,13 +341,13 @@ function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
 
     if (references) {
       if (Array.isArray(references)) {
-        params = references.map((ref) =>
+        params = references.map((binding) =>
           t.assignmentPattern(
-            t.identifier(ref.name),
+            t.identifier(binding.name),
             callRuntime(
               path,
               "read",
-              t.numericLiteral(bindingToScopeId(path, ref))
+              t.numericLiteral(bindingToScopeId(path, binding))
             )
           )
         );
@@ -367,6 +377,29 @@ function writeReferenceGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
     program.pushContainer(
       "body",
       t.functionDeclaration(identifier, params, body)
+    );
+  }
+}
+
+function writeHydrateGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
+  const program = path.hub.file.path;
+  for (const { identifier, references, statements } of groups) {
+    const params = references
+      ? (Array.isArray(references) ? references : [references]).map((binding) =>
+          t.assignmentPattern(
+            t.identifier(binding.name),
+            callRuntime(
+              path,
+              "read",
+              t.numericLiteral(bindingToScopeId(path, binding))
+            )
+          )
+        )
+      : [];
+
+    program.pushContainer(
+      "body",
+      t.functionDeclaration(identifier, params, t.blockStatement(statements))
     );
   }
 }
@@ -445,11 +478,21 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
   return result;
 }
 
-function bindingToScopeId(path: t.NodePath<any>, ref: Reference) {
+export function bindingToScopeId(
+  path: t.NodePath<any>,
+  { sectionIndex, bindingIndex }: Binding
+) {
   return (
-    path.hub.file.path.node.extra.sections![ref.sectionIndex!].visits +
-    ref.bindingIndex!
+    path.hub.file.path.node.extra.sections![sectionIndex].visits + bindingIndex
   );
+}
+
+export function reserveToScopeId(
+  path: t.NodePath<any>,
+  { sectionIndex, reserveIndex }: Reserve
+) {
+  const section = path.hub.file.path.node.extra.sections![sectionIndex];
+  return section.visits + section.bindings + reserveIndex;
 }
 
 function generateReferenceGroupName(

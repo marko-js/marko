@@ -5,6 +5,7 @@ export interface Section {
   sectionIndex: number;
   visits: number;
   bindings: number;
+  reserves: number;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -49,6 +50,7 @@ export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
       sectionIndex,
       visits: 0,
       bindings: 0,
+      reserves: 0,
     };
 
     if (sectionIndex) {

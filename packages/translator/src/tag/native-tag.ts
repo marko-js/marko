@@ -38,64 +38,89 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
     // TODO: this should iterate backward and filter out duplicated attrs.
     for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
       const name = attr.node.name;
-
-      if (isHTML && name[0] === "o" && name[1] === "n") {
-        continue;
-      }
-
       const extra = attr.node.extra;
       const value = attr.get("value");
-      const { confident, computed } = extra;
-      let staticContent: string | undefined;
-      let dynamicExpr: t.Expression | undefined;
+      const { confident, computed, valueReferences } = extra;
 
       switch (name) {
         case "class":
-        case "style":
+        case "style": {
+          const helper = `${name}Attr` as "classAttr" | "styleAttr";
           if (confident) {
-            staticContent = getHTMLRuntime(tag)[`${name}Attr`](computed);
+            write`${getHTMLRuntime(tag)[helper](computed)}`;
+          } else if (isHTML) {
+            write`${callRuntime(tag, helper, value.node)}`;
           } else {
-            dynamicExpr = isHTML
-              ? callRuntime(
+            writer.addStatement(
+              "apply",
+              tag,
+              valueReferences,
+              t.expressionStatement(
+                callRuntime(
                   tag,
-                  `${name}Attr` as "classAttr" | "styleAttr",
+                  helper,
+                  t.numericLiteral(visitIndex!),
                   value.node
                 )
-              : callRuntime(
-                  tag,
-                  `${name}Attr` as "classAttr" | "styleAttr",
-                  t.numericLiteral(visitIndex!),
-                  value.node
-                );
+              )
+            );
           }
           break;
+        }
         default:
           if (confident) {
-            staticContent = getHTMLRuntime(tag).attr(name, computed);
+            write`${getHTMLRuntime(tag).attr(name, computed)}`;
+          } else if (isHTML && !name.startsWith("on")) {
+            write`${callRuntime(
+              tag,
+              "attr",
+              t.stringLiteral(name),
+              value.node
+            )}`;
           } else {
-            dynamicExpr = isHTML
-              ? callRuntime(tag, "attr", t.stringLiteral(name), value.node)
-              : callRuntime(
-                  tag,
-                  "attr",
-                  t.numericLiteral(visitIndex!),
-                  t.stringLiteral(name),
-                  value.node
-                );
+            if (name.startsWith("on")) {
+              const reserveIndex = writer.reserveToScopeId(tag, extra.reserve!);
+              writer.addStatement(
+                "apply",
+                tag,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    tag,
+                    "write",
+                    t.numericLiteral(reserveIndex),
+                    value.node
+                  )
+                )
+              );
+
+              writer.addStatement(
+                "hydrate",
+                tag,
+                extra.valueReferences,
+                t.expressionStatement(
+                  callRuntime(tag, "read", t.numericLiteral(reserveIndex))
+                )
+              );
+            } else {
+              writer.addStatement(
+                "apply",
+                tag,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    tag,
+                    "attr",
+                    t.numericLiteral(visitIndex!),
+                    t.stringLiteral(name),
+                    value.node
+                  )
+                )
+              );
+            }
           }
 
           break;
-      }
-
-      if (isHTML || staticContent !== undefined) {
-        write`${dynamicExpr || staticContent!}`;
-      } else {
-        writer.addStatement(
-          "apply",
-          tag,
-          extra.valueReferences,
-          t.expressionStatement(dynamicExpr!)
-        );
       }
     }
   }

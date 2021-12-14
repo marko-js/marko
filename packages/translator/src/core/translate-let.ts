@@ -4,7 +4,6 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
-import type { Reference } from "../analyze/util/references";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
@@ -50,7 +49,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       tag,
       defaultAttr.extra?.valueReferences,
       t.expressionStatement(
-        t.callExpression(writer.getApplyId(tag, node.var.extra as Reference), [
+        t.callExpression(writer.getApplyId(tag, node.var.extra.binding!), [
           defaultAttr.value,
         ])
       )

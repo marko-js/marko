@@ -4,7 +4,6 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
-import type { Reference } from "../analyze/util/references";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
@@ -48,7 +47,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       identifiers.length === 1
         ? t.expressionStatement(
             t.callExpression(
-              writer.getApplyId(tag, identifiers[0].extra as Reference),
+              writer.getApplyId(tag, identifiers[0].extra.binding!),
               [defaultAttr.value]
             )
           )
@@ -59,7 +58,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
             ...identifiers.map((identifier) =>
               t.expressionStatement(
                 t.callExpression(
-                  writer.getApplyId(tag, identifier.extra as Reference),
+                  writer.getApplyId(tag, identifier.extra.binding!),
                   [t.identifier(identifier.name)]
                 )
               )

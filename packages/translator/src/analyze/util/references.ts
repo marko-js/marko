@@ -10,12 +10,12 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoPlaceholder
 >;
 
-export interface Reference {
+export interface Binding {
   name: string;
   sectionIndex: number;
   bindingIndex: number;
 }
-export type References = undefined | Reference | Reference[];
+export type References = undefined | Binding | Binding[];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -23,9 +23,7 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface IdentifierExtra {
-    name?: string;
-    sectionIndex?: number;
-    bindingIndex?: number;
+    binding?: Binding;
   }
 
   export interface MarkoTagExtra {
@@ -76,14 +74,11 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
       const identifier = bindings[name];
       const identifierExtra = (identifier.extra ??= {});
       const bindingIndex = section.bindings++;
-      const ref: Reference = {
+      const binding: Binding = (identifierExtra.binding = {
         name,
         sectionIndex,
         bindingIndex,
-      };
-      identifierExtra.name = name;
-      identifierExtra.sectionIndex = sectionIndex;
-      identifierExtra.bindingIndex = bindingIndex;
+      });
 
       for (const reference of references) {
         const exprRoot = getExprRoot(reference);
@@ -94,17 +89,17 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
 
         if (curRefs) {
           if (Array.isArray(curRefs)) {
-            sorted.insert(curRefs, ref, compareReferences);
+            sorted.insert(curRefs, binding, compareReferences);
           } else {
-            const compareResult = compareReferences(curRefs, ref);
+            const compareResult = compareReferences(curRefs, binding);
 
             if (compareResult !== 0) {
               exprExtra[refsKey] =
-                compareResult > 0 ? [curRefs, ref] : [ref, curRefs];
+                compareResult > 0 ? [curRefs, binding] : [binding, curRefs];
             }
           }
         } else {
-          exprExtra[refsKey] = ref;
+          exprExtra[refsKey] = binding;
         }
       }
     }
@@ -135,7 +130,7 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
   }
 }
 
-export function compareReferences(a: Reference, b: Reference) {
+export function compareReferences(a: Binding, b: Binding) {
   return a.sectionIndex === b.sectionIndex
     ? a.bindingIndex - b.bindingIndex
     : a.sectionIndex - b.sectionIndex;

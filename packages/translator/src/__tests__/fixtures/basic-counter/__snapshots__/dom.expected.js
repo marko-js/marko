@@ -1,36 +1,26 @@
-_attr("onclick", function () {
-  clickCount++;
-});
-
-import { data as _data, attr as _attr, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-
-function _apply_clickCount() {
-  "write clickCount";
-
-  _apply_y(clickCount + 1);
-
-  "queue _applyWith_clickCount_y";
-}
+import { write as _write, read as _read, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply() {
   _apply_clickCount(0);
-
-  _data(new Date());
 }
 
-function _apply_y() {
-  "write y";
-  "queue _applyWith_clickCount_y";
+function _apply_clickCount(clickCount) {
+  if (_write(2, clickCount)) {
+    _write(4, function () {
+      clickCount++;
+    });
+
+    _hydrate_clickCount();
+
+    _data(1, clickCount);
+  }
 }
 
-function _applyWith_clickCount_y() {
-  "read clickCount";
-  "read y";
-
-  _data(clickCount + y);
+function _hydrate_clickCount(clickCount = _read(2)) {
+  _read(4);
 }
 
-export const template = "<span><!></span><button><!></button>";
-export const walks = "D%l D%l";
+export const template = "<div><button><!></button></div>";
+export const walks = "D D%";
 export const apply = _apply;
 export default _createRenderFn(template, walks, [], apply);
