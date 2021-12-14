@@ -1,8 +1,6 @@
 import type { types as t } from "@marko/compiler";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
-const sectionCounts = new WeakMap<t.BabelFile, number>();
-
 export interface Section {
   sectionIndex: number;
   visits: number;
@@ -44,16 +42,17 @@ export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
   const { sectionIndex } = sectionExtra;
 
   if (sectionIndex === undefined) {
+    const sectionIndex = (sectionExtra.sectionIndex = programExtra.sections
+      ? programExtra.sections.length
+      : 0);
     const section: Section = {
-      sectionIndex: sectionCounts.get(file) || 0,
+      sectionIndex,
       visits: 0,
       bindings: 0,
     };
-    sectionCounts.set(file, section.sectionIndex + 1);
-    sectionExtra.sectionIndex = section.sectionIndex;
 
-    if (programExtra.sections) {
-      programExtra.sections.push(section);
+    if (sectionIndex) {
+      programExtra.sections!.push(section);
     } else {
       programExtra.sections = [section];
     }
