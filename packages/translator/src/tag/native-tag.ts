@@ -99,7 +99,13 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
                 tag,
                 extra.valueReferences,
                 t.expressionStatement(
-                  callRuntime(tag, "read", t.numericLiteral(reserveIndex))
+                  callRuntime(
+                    tag,
+                    "on",
+                    t.numericLiteral(visitIndex!),
+                    t.stringLiteral(name.slice(2)),
+                    callRuntime(tag, "read", t.numericLiteral(reserveIndex))
+                  )
                 )
               );
             } else {

@@ -26,6 +26,16 @@ declare module "@marko/compiler/dist/types" {
     binding?: Binding;
   }
 
+  export interface FunctionExpressionExtra {
+    references?: References;
+    name?: string;
+  }
+
+  export interface ArrowFunctionExpressionExtra {
+    references?: References;
+    name?: string;
+  }
+
   export interface MarkoTagExtra {
     varReferences?: References;
     nameReferences?: References;
@@ -72,35 +82,39 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
 
     if (references.length) {
       const identifier = bindings[name];
-      const identifierExtra = (identifier.extra ??= {});
-      const bindingIndex = section.bindings++;
-      const binding: Binding = (identifierExtra.binding = {
+      const binding: Binding = ((identifier.extra ??= {}).binding = {
         name,
         sectionIndex,
-        bindingIndex,
+        bindingIndex: section.bindings++,
       });
 
       for (const reference of references) {
         const exprRoot = getExprRoot(reference);
         const exprExtra = (exprRoot.parentPath.node.extra ??= {});
-        const key = exprRoot.listKey || exprRoot.key;
-        const refsKey = `${key}References`;
-        const curRefs = exprExtra[refsKey] as References;
+        const scopePath = reference.scope.path;
 
-        if (curRefs) {
-          if (Array.isArray(curRefs)) {
-            sorted.insert(curRefs, binding, compareReferences);
-          } else {
-            const compareResult = compareReferences(curRefs, binding);
+        if (isFunctionExpression(scopePath)) {
+          const fnExtra = (scopePath.node.extra ??= {});
+          let name = (scopePath.node as t.FunctionExpression).id?.name;
 
-            if (compareResult !== 0) {
-              exprExtra[refsKey] =
-                compareResult > 0 ? [curRefs, binding] : [binding, curRefs];
+          if (!name) {
+            const { parentPath } = exprRoot;
+
+            if (parentPath.isMarkoAttribute() && !parentPath.node.default) {
+              name = parentPath.node.name;
             }
           }
-        } else {
-          exprExtra[refsKey] = binding;
+
+          fnExtra.name = name;
+          sorted.insertProp(compareReferences, fnExtra, "references", binding);
         }
+
+        sorted.insertProp(
+          compareReferences,
+          exprExtra,
+          `${exprRoot.listKey || exprRoot.key}References`,
+          binding
+        );
       }
     }
   }
@@ -124,6 +138,18 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
     case "MarkoAttribute":
     case "MarkoSpreadAttribute":
     case "MarkoPlaceholder":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isFunctionExpression(
+  path: t.NodePath<any>
+): path is t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression> {
+  switch (path.type) {
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
       return true;
     default:
       return false;

@@ -8,6 +8,8 @@ declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   export interface ProgramExtra {}
   export interface IdentifierExtra {}
+  export interface FunctionExpressionExtra {}
+  export interface ArrowFunctionExpressionExtra {}
   export interface ExpressionExtra {}
   export interface MarkoTagExtra {}
   export interface MarkoTagBodyExtra {}
@@ -21,6 +23,14 @@ declare module "@marko/compiler/dist/types" {
 
   export interface Identifier {
     extra: IdentifierExtra & Record<string, unknown>;
+  }
+
+  export interface FunctionExpression {
+    extra: FunctionExpressionExtra & Record<string, unknown>;
+  }
+
+  export interface ArrowFunctionExpression {
+    extra: ArrowFunctionExpressionExtra & Record<string, unknown>;
   }
 
   export interface MarkoTag {

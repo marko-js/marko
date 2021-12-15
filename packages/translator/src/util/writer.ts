@@ -249,25 +249,19 @@ export function addStatement(
 ) {
   const section = path.state.section as Section;
   const groups = section[type];
-  const groupIndex = sorted.findIndex(
-    groups,
-    { references } as ReferenceGroup,
-    compareReferenceGroups
-  );
+  const groupIndex = sorted.findIndex(compareReferenceGroups, groups, {
+    references,
+  } as ReferenceGroup);
 
   if (groupIndex === -1) {
     const identifier = t.identifier(
       generateReferenceGroupName(type, path, references)
     );
-    sorted.insert(
-      groups,
-      {
-        identifier,
-        references,
-        statements: Array.isArray(statement) ? statement : [statement],
-      },
-      compareReferenceGroups
-    );
+    sorted.insert(compareReferenceGroups, groups, {
+      identifier,
+      references,
+      statements: Array.isArray(statement) ? statement : [statement],
+    });
 
     if (type === "hydrate") {
       addStatement(
@@ -308,25 +302,19 @@ export function addStatement(
 
 export function getApplyId(path: t.NodePath<any>, binding: Binding) {
   const section = path.state.section as Section;
-  const groupIndex = sorted.findIndex(
-    section.apply,
-    { references: [binding] } as ReferenceGroup,
-    compareReferenceGroups
-  );
+  const groupIndex = sorted.findIndex(compareReferenceGroups, section.apply, {
+    references: [binding],
+  } as ReferenceGroup);
 
   if (groupIndex === -1) {
     const identifier = t.identifier(
       generateReferenceGroupName("apply", path, binding)
     );
-    sorted.insert(
-      section.apply,
-      {
-        identifier,
-        references: binding,
-        statements: [],
-      },
-      compareReferenceGroups
-    );
+    sorted.insert(compareReferenceGroups, section.apply, {
+      identifier,
+      references: binding,
+      statements: [],
+    });
     return identifier;
   } else {
     return section.apply[groupIndex]!.identifier;
@@ -374,10 +362,12 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
       body = t.blockStatement(statements);
     }
 
-    program.pushContainer(
+    const [result] = program.pushContainer(
       "body",
       t.functionDeclaration(identifier, params, body)
     );
+
+    result.traverse(bindFunctionsVisitor, { root: result });
   }
 }
 
@@ -514,4 +504,26 @@ function generateReferenceGroupName(
   }
 
   return path.hub.file.path.scope.generateUid(name);
+}
+
+const bindFunctionsVisitor: t.Visitor<{ root: t.NodePath<any> }> = {
+  FunctionExpression: bindFunction,
+  ArrowFunctionExpression: bindFunction,
+};
+
+function bindFunction(
+  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
+  state: { root: t.NodePath<any> }
+) {
+  const { node } = fn;
+  const { extra } = node;
+  const references = extra?.references;
+  if (references) {
+    const program = fn.hub.file.path;
+    const id = program.scope.generateUidIdentifier(extra.name);
+    fn.replaceWith(callRuntime(fn, "bind", id));
+    state.root.insertBefore(
+      t.variableDeclaration("const", [t.variableDeclarator(id, node)])
+    );
+  }
 }
