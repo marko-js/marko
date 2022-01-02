@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.6](https://github.com/marko-js/marko/compare/v5.17.5...v5.17.6) (2022-01-02)
+
+
+### Bug Fixes
+
+* use full file extension for compiler imports ([#1762](https://github.com/marko-js/marko/issues/1762)) ([041011a](https://github.com/marko-js/marko/commit/041011afceb581a64169c4ee370b31448a81c0e7))
+
+
+
+
+
 ## [5.17.5](https://github.com/marko-js/marko/compare/v5.17.4...v5.17.5) (2021-11-24)
 
 **Note:** Version bump only for package @marko/translator-default
