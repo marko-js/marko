@@ -28,7 +28,7 @@ export default (entryFile, isHydrate) => {
   if (hasComponents) {
     const initId = t.identifier("init");
     const markoComponentsImport = importPath(
-      resolvePath(entryFile, "marko/src/runtime/components")
+      resolvePath(entryFile, "marko/src/runtime/components/index.js")
     );
     if (splitComponentIndex) {
       markoComponentsImport.specifiers.push(

@@ -3,13 +3,13 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _html = require("marko/src/runtime/html");
+var _index = require("marko/src/runtime/html/index.js");
 
 var _bar = _interopRequireWildcard(require("./bar"));
 
 require("./foo.css");
 
-var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
+var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18,7 +18,7 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 const _marko_componentType = "packages/translator-default/test/fixtures/import-hydrate-include/template.marko",
-      _marko_template = (0, _html.t)(_marko_componentType);
+      _marko_template = (0, _index.t)(_marko_componentType);
 
 var _default = _marko_template;
 exports.default = _default;

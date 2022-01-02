@@ -19,7 +19,7 @@ export default {
           : t.callExpression(
               importDefault(
                 file,
-                "marko/src/runtime/helpers/style-value",
+                "marko/src/runtime/helpers/style-value.js",
                 "marko_style_merge"
               ),
               [value.node]

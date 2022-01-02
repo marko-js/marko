@@ -1,4 +1,4 @@
-import { t as _t } from "marko/src/runtime/html";
+import { t as _t } from "marko/src/runtime/html/index.js";
 
 const _marko_componentType = "packages/translator-default/test/fixtures/sanity-check/template.marko",
       _marko_template = _t(_marko_componentType);
@@ -12,16 +12,16 @@ function more() {
   abc();
 }
 
-import _marko_escapeStyle from "marko/src/runtime/html/helpers/escape-style-placeholder";
-import _marko_escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder";
-import _marko_attr from "marko/src/runtime/html/helpers/attr";
-import _marko_class_merge from "marko/src/runtime/helpers/class-value";
-import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag";
+import _marko_escapeStyle from "marko/src/runtime/html/helpers/escape-style-placeholder.js";
+import _marko_escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder.js";
+import _marko_attr from "marko/src/runtime/html/helpers/attr.js";
+import _marko_class_merge from "marko/src/runtime/helpers/class-value.js";
+import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _other from "./components/other/index.marko";
-import _marko_tag from "marko/src/runtime/helpers/render-tag";
-import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml";
-import _marko_attrs from "marko/src/runtime/html/helpers/attrs";
-import _marko_renderer from "marko/src/runtime/components/renderer";
+import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
+import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
+import _marko_attrs from "marko/src/runtime/html/helpers/attrs.js";
+import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {
   onCreate() {
     this.stuff();

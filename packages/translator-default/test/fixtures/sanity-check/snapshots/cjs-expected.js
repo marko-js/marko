@@ -3,34 +3,34 @@
 exports.__esModule = true;
 exports.default = void 0;
 
-var _html = require("marko/src/runtime/html");
+var _index = require("marko/src/runtime/html/index.js");
 
 var _b = _interopRequireDefault(require("b"));
 
-var _escapeStylePlaceholder = _interopRequireDefault(require("marko/src/runtime/html/helpers/escape-style-placeholder"));
+var _escapeStylePlaceholder = _interopRequireDefault(require("marko/src/runtime/html/helpers/escape-style-placeholder.js"));
 
-var _escapeScriptPlaceholder = _interopRequireDefault(require("marko/src/runtime/html/helpers/escape-script-placeholder"));
+var _escapeScriptPlaceholder = _interopRequireDefault(require("marko/src/runtime/html/helpers/escape-script-placeholder.js"));
 
-var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr"));
+var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr.js"));
 
-var _classValue = _interopRequireDefault(require("marko/src/runtime/helpers/class-value"));
+var _classValue = _interopRequireDefault(require("marko/src/runtime/helpers/class-value.js"));
 
-var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag"));
+var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 
-var _index = _interopRequireDefault(require("./components/other/index.marko"));
+var _index2 = _interopRequireDefault(require("./components/other/index.marko"));
 
-var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag"));
+var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 
-var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml");
+var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 
-var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs"));
+var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
 
-var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer"));
+var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const _marko_componentType = "packages/translator-default/test/fixtures/sanity-check/template.marko",
-      _marko_template = (0, _html.t)(_marko_componentType);
+      _marko_template = (0, _index.t)(_marko_componentType);
 
 var _default = _marko_template;
 exports.default = _default;
@@ -85,12 +85,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   (0, _dynamicTag.default)(out, _thing, () => ({
     "x": 1
   }), null, null, null, _componentDef, "11");
-  (0, _renderTag.default)(_index.default, {
+  (0, _renderTag.default)(_index2.default, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
   }, out, _componentDef, "12", [["click", "handleClick", false, [_b.default, b, ...d]]]);
-  (0, _renderTag.default)(_index.default, {
+  (0, _renderTag.default)(_index2.default, {
     "x": 1,
     ...thing,
     "b": {

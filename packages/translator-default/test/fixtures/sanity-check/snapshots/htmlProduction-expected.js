@@ -1,4 +1,4 @@
-import { t as _t } from "marko/dist/runtime/html";
+import { t as _t } from "marko/dist/runtime/html/index.js";
 
 const _marko_componentType = "OLFRWJ/R",
       _marko_template = _t(_marko_componentType);
@@ -12,16 +12,16 @@ function more() {
   abc();
 }
 
-import _marko_escapeStyle from "marko/dist/runtime/html/helpers/escape-style-placeholder";
-import _marko_escapeScript from "marko/dist/runtime/html/helpers/escape-script-placeholder";
-import _marko_attr from "marko/dist/runtime/html/helpers/attr";
-import _marko_class_merge from "marko/dist/runtime/helpers/class-value";
-import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag";
+import _marko_escapeStyle from "marko/dist/runtime/html/helpers/escape-style-placeholder.js";
+import _marko_escapeScript from "marko/dist/runtime/html/helpers/escape-script-placeholder.js";
+import _marko_attr from "marko/dist/runtime/html/helpers/attr.js";
+import _marko_class_merge from "marko/dist/runtime/helpers/class-value.js";
+import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
 import _other from "./components/other/index.marko";
-import _marko_tag from "marko/dist/runtime/helpers/render-tag";
-import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml";
-import _marko_attrs from "marko/dist/runtime/html/helpers/attrs";
-import _marko_renderer from "marko/dist/runtime/components/renderer";
+import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
+import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
+import _marko_attrs from "marko/dist/runtime/html/helpers/attrs.js";
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {
   onCreate() {
     this.stuff();

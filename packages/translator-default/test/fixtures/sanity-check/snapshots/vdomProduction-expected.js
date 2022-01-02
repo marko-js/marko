@@ -1,4 +1,4 @@
-import { t as _t } from "marko/dist/runtime/vdom";
+import { t as _t } from "marko/dist/runtime/vdom/index.js";
 
 const _marko_componentType = "OLFRWJ/R",
       _marko_template = _t(_marko_componentType);
@@ -12,8 +12,8 @@ function more() {
   abc();
 }
 
-import _marko_class_merge from "marko/dist/runtime/helpers/class-value";
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element";
+import _marko_class_merge from "marko/dist/runtime/helpers/class-value.js";
+import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
 
 const _marko_node = _marko_createElement("input", {
   "type": "text"
@@ -21,12 +21,12 @@ const _marko_node = _marko_createElement("input", {
 
 const _marko_node2 = _marko_createElement("div", null, "10", null, 0, 0);
 
-import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag";
+import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
 
 const _marko_node3 = _marko_createElement("div", null, "13", null, 0, 0);
 
 import _other from "./components/other/index.marko";
-import _marko_tag from "marko/dist/runtime/helpers/render-tag";
+import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 
 const _marko_node4 = _marko_createElement("div", null, "15", null, 0, 0);
 
@@ -42,7 +42,7 @@ const _marko_node8 = _marko_createElement("div", {
   "d": "1"
 }, "20", null, 0, 0);
 
-import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs";
+import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs.js";
 
 const _marko_node9 = _marko_createElement("div", {
   "b": "1"
@@ -50,7 +50,7 @@ const _marko_node9 = _marko_createElement("div", {
 
 const _marko_node10 = _marko_createElement("div", null, "22", null, 1, 0).t("123 abc 123");
 
-import _marko_renderer from "marko/dist/runtime/components/renderer";
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 
 _marko_registerComponent(_marko_componentType, () => _marko_template);
@@ -198,5 +198,5 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
 }, {
   t: _marko_componentType
 }, _marko_component);
-import _marko_defineComponent from "marko/dist/runtime/components/defineComponent";
+import _marko_defineComponent from "marko/dist/runtime/components/defineComponent.js";
 _marko_template.Component = _marko_defineComponent(_marko_component, _marko_template._);

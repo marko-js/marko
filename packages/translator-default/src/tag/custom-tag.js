@@ -62,7 +62,7 @@ export default function (path, isNullable) {
       t.callExpression(
         importDefault(
           file,
-          "marko/src/runtime/helpers/render-tag",
+          "marko/src/runtime/helpers/render-tag.js",
           "marko_tag"
         ),
         [
