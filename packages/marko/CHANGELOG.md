@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.8](https://github.com/marko-js/marko/compare/v5.17.7...v5.17.8) (2022-01-06)
+
+
+### Bug Fixes
+
+* setTimeout issue in webworkers ([d838e4d](https://github.com/marko-js/marko/commit/d838e4d3974ec2ad7df7fddf0fc0d8096853b3e8))
+
+
+
+
+
 ## [5.17.7](https://github.com/marko-js/marko/compare/v5.17.6...v5.17.7) (2022-01-06)
 
 
