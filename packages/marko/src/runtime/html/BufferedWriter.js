@@ -1,5 +1,6 @@
 "use strict";
 
+const immediate = require("../setImmediate");
 const StringWriter = require("./StringWriter");
 
 /**
@@ -18,7 +19,7 @@ BufferedWriter.prototype = Object.assign(
   {
     scheduleFlush() {
       if (!this._scheduled) {
-        this._scheduled = setImmediate(flush, this);
+        this._scheduled = immediate.___setImmediate(flush.bind(0, this));
       }
     },
 
@@ -41,7 +42,8 @@ function flush(writer) {
       writer._wrapped.flush();
     }
   }
-  clearImmediate(writer._scheduled);
+
+  immediate.___clearImmediate(writer._scheduled);
   writer._scheduled = null;
 }
 

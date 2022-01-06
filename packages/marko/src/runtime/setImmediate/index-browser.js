@@ -10,7 +10,7 @@ window.addEventListener("message", function (ev) {
   }
 });
 
-module.exports = function (callback) {
+exports.___setImmediate = function (callback) {
   if (queue.push(callback) === 1) {
     window.postMessage(msg, "*");
   }

@@ -3,7 +3,7 @@ var encoder = new TextEncoder();
 module.exports = function (data) {
   // eslint-disable-next-line no-undef
   var transformStream = new TransformStream();
-  var writer = transformStream.getWriter();
+  var writer = transformStream.writable.getWriter();
   var out = this.createOut(
     data && data.$global,
     {

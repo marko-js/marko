@@ -1,1 +1,2 @@
-module.exports = setImmediate;
+exports.___setImmediate = setImmediate;
+exports.___clearImmediate = clearImmediate;
