@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.7](https://github.com/marko-js/marko/compare/v5.17.6...v5.17.7) (2022-01-06)
+
+
+### Bug Fixes
+
+* improve cloudflare (workers) support ([185d71b](https://github.com/marko-js/marko/commit/185d71b08282ded4d178e0f6ada6f6d21e9b4b31))
+
+
+
+
+
 ## [5.17.6](https://github.com/marko-js/marko/compare/v5.17.5...v5.17.6) (2022-01-02)
 
 
