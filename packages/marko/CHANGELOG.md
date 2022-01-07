@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.9](https://github.com/marko-js/marko/compare/v5.17.8...v5.17.9) (2022-01-07)
+
+
+### Bug Fixes
+
+* improve error handling in web workers ([8611e42](https://github.com/marko-js/marko/commit/8611e42fc90c5f9ec3f39e9da5e040a531f72052))
+
+
+
+
+
 ## [5.17.8](https://github.com/marko-js/marko/compare/v5.17.7...v5.17.8) (2022-01-06)
 
 
