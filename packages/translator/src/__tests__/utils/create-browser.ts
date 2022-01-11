@@ -2,11 +2,7 @@ import type { DOMWindow } from "jsdom";
 import createBrowser from "jsdom-context-require";
 
 export default function (options: Parameters<typeof createBrowser>[0]) {
-  // something up with extensions
-  const browser = createBrowser({
-    ...options,
-    extensions: require.extensions as any,
-  });
+  const browser = createBrowser(options);
   const window = browser.window as DOMWindow & { MessageChannel: any };
   window.queueMicrotask = queueMicrotask;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

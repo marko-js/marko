@@ -1,6 +1,6 @@
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
-import { getNodePath, getTypeName } from "./get-node-info";
+import { getNodePath } from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
@@ -86,6 +86,7 @@ function getStatusString(
     .join("\n")
     .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${records
     .map(formatMutationRecord)
+    .filter(Boolean)
     .join("\n")}\n\`\`\``;
 }
 
@@ -104,9 +105,23 @@ function formatMutationRecord(record: MutationRecord) {
     }
 
     case "characterData": {
+      const newValue = target.nodeValue;
+
+      // if the new value begins with the old value
+      // and whitespace delimits the old value and remaining new value
+      if (
+        newValue?.indexOf(oldValue!) === 0 &&
+        (/\s$/ms.test(oldValue!) || /\s$/ms.test(newValue![oldValue!.length]))
+      ) {
+        // filter out invalid records that jsdom creates
+        // see https://github.com/jsdom/jsdom/issues/3261
+        // TODO: remove if fixed
+        return;
+      }
+
       return `${getNodePath(target)}: ${JSON.stringify(
-        oldValue
-      )} => ${JSON.stringify(target.nodeValue)}`;
+        oldValue || ""
+      )} => ${JSON.stringify(target.nodeValue || "")}`;
     }
 
     case "childList": {
@@ -122,7 +137,7 @@ function formatMutationRecord(record: MutationRecord) {
             : "in";
         details.push(
           `removed ${Array.from(removedNodes)
-            .map(getTypeName)
+            .map(getNodePath)
             .join(", ")} ${position} ${getNodePath(relativeNode)}`
         );
       }

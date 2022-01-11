@@ -5,6 +5,8 @@ function _apply() {
 }
 
 const _onclick = function () {
+  const clickCount = _read(2);
+
   clickCount++;
 };
 
@@ -25,4 +27,4 @@ function _hydrate_clickCount(clickCount = _read(2)) {
 export const template = "<div><button><!></button></div>";
 export const walks = "D D%";
 export const apply = _apply;
-export default _createRenderFn(template, walks, [], apply);
+export default _createRenderFn(template, walks, apply);

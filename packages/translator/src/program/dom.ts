@@ -12,8 +12,6 @@ export function exit(program: t.NodePath<t.Program>) {
   const templateIdentifier = t.identifier("template");
   const walksIdentifier = t.identifier("walks");
   const applyIdentifier = t.identifier("apply");
-  // const usedAttrs = Object.keys(program.node.extra.references?.attrs || {});
-  const usedAttrs: string[] = [];
   const { walks, writes, apply } = writer.end(program);
 
   program.node.body.push(
@@ -38,7 +36,6 @@ export function exit(program: t.NodePath<t.Program>) {
         "createRenderFn",
         templateIdentifier,
         walksIdentifier,
-        t.arrayExpression(usedAttrs.map((k) => t.stringLiteral(k))),
         applyIdentifier
       )
     )

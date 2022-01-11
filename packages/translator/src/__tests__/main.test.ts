@@ -1,17 +1,17 @@
 import fs from "fs";
 import path from "path";
-// import { Writable } from "stream";
-// import autotest, { TestRunnerOpts } from "mocha-autotest";
 import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type renderAndTrackMutations from "./utils/render-and-track-mutations";
+import createBrowser from "./utils/create-browser";
+import createMutationTracker from "./utils/track-mutations";
 
 type TestConfig = {
-  inputDOM?: Parameters<typeof renderAndTrackMutations>[1];
-  inputHTML?: unknown;
+  steps?: unknown[];
   skip_dom?: boolean;
   skip_html?: boolean;
+  skip_csr?: boolean;
+  skip_ssr?: boolean;
 };
 
 const baseConfig: compiler.Config = {
@@ -37,6 +37,7 @@ describe("translator", () => {
       const fixtureDir = resolve(".");
       const templateFile = resolve("template.marko");
       const snapJS = (fn: () => unknown) => snap(fn, ".js", fixtureDir);
+      const snapMD = (fn: () => unknown) => snap(fn, ".md", fixtureDir);
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -53,69 +54,56 @@ describe("translator", () => {
       (config.skip_dom ? it.skip : it)("dom", () =>
         snapJS(() => compileCode(templateFile, domConfig))
       );
+
+      (config.skip_csr ? it.skip : it)("csr", async () => {
+        await snapMD(async () => {
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              extensions: {},
+            }),
+          });
+          const document = browser.window.document;
+          const [input, ...steps] = config.steps || [];
+          const { run } = browser.require(
+            "@marko/runtime-fluurt/dist/dom"
+          ) as typeof import("../../../runtime/src/dom");
+          const render = browser.require(templateFile).default;
+          const container = Object.assign(document.createElement("div"), {
+            TEST_ROOT: true,
+          });
+          const tracker = createMutationTracker(browser.window, container);
+
+          document.body.appendChild(container);
+
+          const instance = render(input);
+          container.appendChild(instance);
+
+          tracker.logUpdate(input);
+
+          for (const update of steps) {
+            // if (isWait(update)) {
+            //   await update();
+            //   return;
+            // }
+
+            if (typeof update === "function") {
+              update(document.documentElement);
+              run();
+              tracker.logUpdate(update);
+            } else {
+              instance.update(update);
+              tracker.logUpdate(update);
+            }
+          }
+
+          return tracker.getLogs();
+        });
+      });
     });
   }
 });
-
-// function runHTMLRenderTest({
-//   main = {},
-//   mode,
-//   test,
-//   resolve,
-//   snapshot
-// }: TestRunnerOpts & { main: TestConfigFile }) {
-//   const templateFile = resolve("template.marko");
-//   const snapshotsDir = resolve("snapshots");
-//   const name = `snapshots${path.sep + mode}`;
-
-//   test(async () => {
-//     await ensureDir(snapshotsDir);
-//     const { render } = await import(templateFile);
-//     let html = "";
-
-//     try {
-//       await render(
-//         main.inputHTML || {},
-//         new Writable({
-//           write(chunk: string) {
-//             html += chunk;
-//           }
-//         })
-//       );
-//     } catch (err) {
-//       snapshot(stripCwd(err.message), {
-//         name: `${name}-error`,
-//         ext: ".txt"
-//       });
-//       return;
-//     }
-
-//     snapshot(html, {
-//       name,
-//       ext: ".html"
-//     });
-//   });
-// }
-
-// function runDOMRenderTest({
-//   main = {},
-//   mode,
-//   test,
-//   resolve
-// }: TestRunnerOpts & { main: TestConfigFile }) {
-//   const templateFile = resolve("template.marko");
-//   const snapshotsDir = resolve("snapshots");
-
-//   test(async () => {
-//     await ensureDir(snapshotsDir);
-
-//     snapshot(
-//       snapshotsDir,
-//       `${mode}.md`,
-//       await renderAndTrackMutations(templateFile, main.inputDOM)
-//     );
-//   });
-// }
 
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;

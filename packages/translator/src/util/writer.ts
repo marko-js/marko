@@ -367,7 +367,10 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
       t.functionDeclaration(identifier, params, body)
     );
 
-    result.traverse(bindFunctionsVisitor, { root: result });
+    if (references) {
+      // result.scope.crawl();
+      result.traverse(bindFunctionsVisitor, { root: result });
+    }
   }
 }
 
@@ -522,6 +525,27 @@ function bindFunction(
     const program = fn.hub.file.path;
     const id = program.scope.generateUidIdentifier(extra.name);
     fn.replaceWith(callRuntime(fn, "bind", id));
+
+    if (node.body.type !== "BlockStatement") {
+      node.body = t.blockStatement([t.returnStatement(node.body)]);
+    }
+
+    node.body.body.unshift(
+      t.variableDeclaration(
+        "const",
+        (Array.isArray(references) ? references : [references]).map((binding) =>
+          t.variableDeclarator(
+            t.identifier(binding.name),
+            callRuntime(
+              fn,
+              "read",
+              t.numericLiteral(bindingToScopeId(fn, binding))
+            )
+          )
+        )
+      )
+    );
+
     state.root.insertBefore(
       t.variableDeclaration("const", [t.variableDeclarator(id, node)])
     );
