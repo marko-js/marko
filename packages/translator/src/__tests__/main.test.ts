@@ -64,7 +64,30 @@ describe("translator", () => {
               extensions: {},
             }),
           });
-          const document = browser.window.document;
+
+          const { window } = browser;
+          const { document } = window;
+          const errors: Set<Error> = new Set();
+          const throwErrors = () => {
+            switch (errors.size) {
+              case 0:
+                return;
+              case 1:
+                throw [...errors][0];
+              default:
+                throw new AggregateError(errors);
+            }
+          };
+
+          window.addEventListener("error", (ev) => {
+            errors.add(ev.error.detail || ev.error);
+            ev.preventDefault();
+          });
+          window.addEventListener("unhandledrejection", (ev) => {
+            errors.add(ev.reason.detail || ev.reason);
+            ev.preventDefault();
+          });
+
           const [input, ...steps] = config.steps || [];
           const { run } = browser.require(
             "@marko/runtime-fluurt/dist/dom"
@@ -78,24 +101,22 @@ describe("translator", () => {
           document.body.appendChild(container);
 
           const instance = render(input);
-          container.appendChild(instance);
+          throwErrors();
 
+          container.appendChild(instance);
           tracker.logUpdate(input);
 
           for (const update of steps) {
-            // if (isWait(update)) {
-            //   await update();
-            //   return;
-            // }
-
             if (typeof update === "function") {
-              update(document.documentElement);
+              await update(document.documentElement);
               run();
               tracker.logUpdate(update);
             } else {
               instance.update(update);
               tracker.logUpdate(update);
             }
+
+            throwErrors();
           }
 
           return tracker.getLogs();

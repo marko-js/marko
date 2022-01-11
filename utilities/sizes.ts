@@ -3,7 +3,7 @@ import path from "path";
 import zlib from "zlib";
 import chalk from "chalk";
 import assert from "assert";
-import rollup from "rollup";
+import { rollup } from "rollup";
 import { table } from "table";
 import { terser } from "rollup-plugin-terser";
 import hypothetical from "rollup-plugin-hypothetical";
@@ -221,7 +221,7 @@ async function bundleExports(
 }
 
 async function bundle(src: string, preminified: boolean) {
-  const bundle = await rollup.rollup({
+  const bundle = await rollup({
     input: "./entry.js",
     output: {
       compact: true,
