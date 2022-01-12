@@ -1,1 +1,1 @@
-export * from "./reconcile-longest-increasing-subsequence";
+export { reconcile } from "./reconcile-longest-increasing-subsequence";

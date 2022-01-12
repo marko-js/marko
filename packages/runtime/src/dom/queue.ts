@@ -1,1 +1,1 @@
-export * from "./queue-heap";
+export { queue, queueInOwner, withQueueNext, run } from "./queue-heap";

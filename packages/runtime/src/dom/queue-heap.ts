@@ -6,25 +6,9 @@ import {
   getOwnerScope,
   ownerOffset,
 } from "./scope";
+import { schedule } from "./schedule";
 
 type ExecFn = (arg?: any) => void;
-
-const { port1, port2 } = new MessageChannel();
-let queued: boolean;
-
-port1.onmessage = () => {
-  queued = false;
-  run();
-};
-
-function flushAndWaitFrame() {
-  run();
-  requestAnimationFrame(triggerMacroTask);
-}
-
-function triggerMacroTask() {
-  port2.postMessage(0);
-}
 
 let queuedFns: unknown[] = [];
 let queuedFnsMap: Map<number, unknown> = new Map();
@@ -49,10 +33,7 @@ export function queue<T extends ExecFn>(
 ) {
   const priority = scope.___id + offset + localIndex;
   if (!queuedFnsMap.has(priority)) {
-    if (!queued) {
-      queued = true;
-      queueMicrotask(flushAndWaitFrame);
-    }
+    schedule();
 
     let currentIndex = queuedFns.length;
 
