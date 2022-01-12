@@ -4,6 +4,7 @@ import { bind, runWithScope } from "./scope";
 type HydrateFn = () => void;
 
 const fnsById: Record<string, HydrateFn> = {};
+const SCOPE_ID_MULTIPLIER = 2 ** 16;
 
 export function register<F extends HydrateFn>(id: string, fn: F) {
   fnsById[id] = fn;
@@ -23,10 +24,10 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   let currentScope: Scope;
   let currentOffset: number;
   let currentNode: Node;
-  const scopeLookup: Record<string, Scope> = {};
-  const stack: Array<string | number> = [];
+  const scopeLookup: Record<number, Scope> = {};
+  const stack: number[] = [];
   const fakeArray = { push: hydrate };
-  const bindFunction = (fnId: string, offset: number, scopeId: string) => {
+  const bindFunction = (fnId: string, offset: number, scopeId: number) => {
     const fn = fnsById[fnId];
     const scope = scopeLookup[scopeId];
     return bind(fn, offset, scope);
@@ -63,7 +64,8 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
      * had to create a dummy scope to store Nodes of interest.
      * If so merge them and set/replace the scope in the scopeLookup.
      */
-    for (const scopeId in scopes) {
+    for (const scopeIdAsString in scopes) {
+      const scopeId = parseInt(scopeIdAsString);
       const scope = scopes[scopeId];
       const storedScope = scopeLookup[scopeId];
 
@@ -71,7 +73,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
         if (storedScope) {
           Object.assign(scope, storedScope);
         } else {
-          scope.___id = scopeId;
+          scope.___id = scopeId * SCOPE_ID_MULTIPLIER;
           scopeLookup[scopeId] = scope;
         }
         if (currentScope === storedScope) {
@@ -84,22 +86,26 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       const nodeValue = currentNode.nodeValue;
       if (nodeValue?.startsWith(`${runtimeId}`)) {
         const token = nodeValue[runtimeLength];
-        const data = nodeValue.slice(runtimeLength + 1);
+        const data = parseInt(nodeValue.slice(runtimeLength + 1));
         if (token === HydrateSymbols.SCOPE_OFFSET) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
-            const [offset, scopeId, index] = data.split(" ");
-            if (scopeId !== currentScope.___id) {
+            const [offset, scopeId, index] = nodeValue
+              .slice(runtimeLength + 1)
+              .split(" ");
+            if (
+              parseInt(scopeId) * SCOPE_ID_MULTIPLIER !==
+              currentScope.___id
+            ) {
               throw new Error("INVALID_MARKER_NESTING: " + nodeValue);
             }
             if (parseInt(offset) + currentOffset !== parseInt(index)) {
               throw new Error("SCOPE_OFFSET_MISMATCH: " + nodeValue);
             }
           }
-          const offset = parseInt(data);
           const node = currentNode.nextSibling;
           // currentNode.parentNode!.removeChild(currentNode);
-          currentScope[(currentOffset += offset)] = node;
+          currentScope[(currentOffset += data)] = node;
         } else if (token === HydrateSymbols.SCOPE_START) {
           if (currentScope) {
             stack.push(currentScope.___id, currentOffset);
@@ -108,19 +114,19 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           currentOffset = 0;
           if (!currentScope) {
             scopeLookup[data] = currentScope = [] as unknown as Scope;
-            currentScope.___id = data;
+            currentScope.___id = data * SCOPE_ID_MULTIPLIER;
           }
           currentScope.___startNode = currentNode as ChildNode;
         } else if (token === HydrateSymbols.SCOPE_END) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
-            if (data !== currentScope.___id) {
+            if (data * SCOPE_ID_MULTIPLIER !== currentScope.___id) {
               throw new Error("SCOPE_END_MISMATCH: " + nodeValue);
             }
           }
           currentScope.___endNode = currentNode as ChildNode;
           currentOffset = stack.pop() as number;
-          currentScope = scopeLookup[stack.pop() as string]!;
+          currentScope = scopeLookup[stack.pop() as number]!;
           // eslint-disable-next-line no-constant-condition
         } else if ("MARKO_DEBUG") {
           throw new Error("MALFORMED MARKER: " + nodeValue);
@@ -132,7 +138,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       runWithScope(
         fnsById[calls[i]]!,
         calls[i + 1] as number,
-        scopeLookup[calls[i + 2]]
+        scopeLookup[calls[i + 2] as number]
       );
     }
   }

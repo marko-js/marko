@@ -1,15 +1,15 @@
 # Write
-  <!M^ROOT>aERROR!d<!M/ROOT>
+  <!M^0>aERROR!d<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     aERROR!d
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

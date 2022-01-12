@@ -1,9 +1,9 @@
 # Write
-  <!M^ROOT>a<!M$0>e...<!M$0/>f
+  <!M^0>a<!M$0>e...<!M$0/>f
 
 
 # Write
-  gh<!M/ROOT>
+  gh<!M/0>
 
 
 # Write
@@ -12,12 +12,12 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abcdfgh
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

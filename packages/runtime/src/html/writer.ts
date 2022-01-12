@@ -44,7 +44,7 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
       let renderedPromises: typeof $_promises;
       try {
         const scope = hydrateRoot
-          ? (Object.assign([], { ___id: "ROOT" }) as any as Scope)
+          ? (Object.assign([], { ___id: 0 }) as any as Scope)
           : nullScope;
         hydrateRoot && write(markScopeStart(scope));
         renderer(input, scope, ScopeOffsets.BEGIN_DATA);
@@ -70,8 +70,8 @@ export function write(data: string) {
   $_buffer!.content += data;
 }
 
-export function writeCall(fnId: string, offset: number, scopeId: string) {
-  $_buffer!.calls += `"${fnId}",${offset},"${scopeId}",`;
+export function writeCall(fnId: string, offset: number, scopeId: number) {
+  $_buffer!.calls += `"${fnId}",${offset},${scopeId},`;
 }
 
 export function writeScope(scope: Scope) {

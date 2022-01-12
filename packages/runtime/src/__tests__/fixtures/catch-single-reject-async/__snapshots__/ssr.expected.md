@@ -1,9 +1,9 @@
 # Write
-  <!M^ROOT>a<!M$0>b
+  <!M^0>a<!M$0>b
 
 
 # Write
-  d<!M$0/>efg<!M/ROOT>
+  d<!M$0/>efg<!M/0>
 
 
 # Write
@@ -12,12 +12,12 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     aERROR!efg
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

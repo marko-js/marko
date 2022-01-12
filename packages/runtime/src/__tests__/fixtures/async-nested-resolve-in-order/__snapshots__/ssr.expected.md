@@ -1,5 +1,5 @@
 # Write
-  <!M^ROOT>a
+  <!M^0>a
 
 
 # Write
@@ -15,17 +15,17 @@
 
 
 # Write
-  jkl<!M/ROOT>
+  jkl<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abcdefghijkl
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

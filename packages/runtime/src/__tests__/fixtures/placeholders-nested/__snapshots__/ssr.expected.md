@@ -1,9 +1,9 @@
 # Write
-  <!M^ROOT>a<!M$1>i...<!M$1/>j
+  <!M^0>a<!M$1>i...<!M$1/>j
 
 
 # Write
-  kl<!M/ROOT>
+  kl<!M/0>
 
 
 # Write
@@ -16,12 +16,12 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abcdefgjkl
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

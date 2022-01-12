@@ -1,5 +1,5 @@
 # Write
-  <!M^ROOT>a
+  <!M^0>a
 
 
 # Emit error
@@ -8,7 +8,7 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>

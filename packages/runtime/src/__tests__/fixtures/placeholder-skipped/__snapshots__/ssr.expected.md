@@ -1,19 +1,19 @@
 # Write
-  <!M^ROOT>abd
+  <!M^0>abd
 
 
 # Write
-  ef<!M/ROOT>
+  ef<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abdef
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

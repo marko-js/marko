@@ -4,11 +4,13 @@ import { Scope, ScopeOffsets } from "../common/types";
 export let currentScope: Scope;
 export let currentOffset: number;
 export let ownerOffset: number;
+const CLIENT_SCOPE_ID_BIT = 2 ** 52;
+const SCOPE_ID_MULTIPLIER = 2 ** 16;
 let scopeId = 0;
 
 export function createScope(size: number): Scope {
   const scope = new Array(size) as Scope;
-  scope.___id = "" + scopeId++;
+  scope.___id = CLIENT_SCOPE_ID_BIT + SCOPE_ID_MULTIPLIER * scopeId++;
   scope[ScopeOffsets.OWNER_SCOPE] = currentScope;
   scope[ScopeOffsets.OWNER_OFFSET] = currentOffset;
   return scope;

@@ -1,19 +1,19 @@
 # Write
-  <!M^ROOT>a
+  <!M^0>a
 
 
 # Write
-  bcde<!M/ROOT>
+  bcde<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abcde
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

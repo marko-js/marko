@@ -13,7 +13,7 @@ export type Scope = [
   number | undefined, // OWNER_OFFSET
   ...unknown[]
 ] & {
-  ___id: string;
+  ___id: number;
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;

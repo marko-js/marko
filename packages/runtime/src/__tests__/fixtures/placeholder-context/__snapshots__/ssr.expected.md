@@ -1,10 +1,10 @@
 # Write
-  <!M^ROOT>a<!M$0>e...<!M$0/>f
+  <!M^0>a<!M$0>e...<!M$0/>f
 
 
 # Write
   gh
-  context cleared<!M/ROOT>
+  context cleared<!M/0>
 
 
 # Write
@@ -13,13 +13,13 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abc2dfgh
 context cleared
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

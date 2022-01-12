@@ -45,7 +45,8 @@ export function queue<T extends ExecFn>(
   scope = currentScope,
   offset = currentOffset
 ) {
-  const index = findQueueIndex(scope, offset + localIndex);
+  const sortValue = scope.___id + offset + localIndex;
+  const index = findQueueIndex(sortValue);
 
   // index is where the function should be in the queue
   // but if it already exists, we should not add it again
@@ -66,7 +67,7 @@ export function queue<T extends ExecFn>(
     queuedFns[index + QueueOffsets.FN] = fn;
     queuedFns[index + QueueOffsets.SCOPE] = scope;
     queuedFns[index + QueueOffsets.OFFSET] = offset;
-    queuedFns[index + QueueOffsets.SORT_VALUE] = offset + localIndex;
+    queuedFns[index + QueueOffsets.SORT_VALUE] = sortValue;
   }
   queuedFns[index + QueueOffsets.ARGUMENT] = argument;
 }
@@ -103,17 +104,16 @@ export function run() {
   }
 }
 
-function findQueueIndex(scope: Scope, sortValue: number) {
+function findQueueIndex(sortValue: number) {
   let index = 0;
   let max = queuedFns.length / QueueOffsets.TOTAL;
 
   while (index < max) {
     const mid = (index + max) >>> 1;
-    const compareResult = compareQueue(
-      mid * QueueOffsets.TOTAL,
-      scope,
-      sortValue
-    );
+    const compareResult =
+      (queuedFns[
+        mid * QueueOffsets.TOTAL + QueueOffsets.SORT_VALUE
+      ] as number) - sortValue;
     if (compareResult > 0) {
       max = mid;
     } else if (compareResult < 0) {
@@ -124,17 +124,4 @@ function findQueueIndex(scope: Scope, sortValue: number) {
   }
 
   return index * QueueOffsets.TOTAL;
-}
-
-function compareQueue(index: number, scope: Scope, sortValue: number) {
-  return (
-    compare(
-      (queuedFns[index + QueueOffsets.SCOPE] as Scope).___id,
-      scope.___id
-    ) || (queuedFns[index + QueueOffsets.SORT_VALUE] as number) - sortValue
-  );
-}
-
-function compare(a: number | string, b: number | string) {
-  return a < b ? -1 : a > b ? 1 : 0;
 }

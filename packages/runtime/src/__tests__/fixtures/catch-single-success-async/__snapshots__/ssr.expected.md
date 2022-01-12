@@ -1,14 +1,14 @@
 # Write
-  <!M^ROOT>a<!M$0>b
+  <!M^0>a<!M$0>b
 
 
 # Write
-  cd<!M$0/>fgh<!M/ROOT>
+  cd<!M$0/>fgh<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
@@ -17,7 +17,7 @@
     bcd
     <!--M$0/-->
     fgh
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

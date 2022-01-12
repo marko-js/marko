@@ -1,9 +1,9 @@
 # Write
-  <!M^ROOT>a
+  <!M^0>a
 
 
 # Write
-  b<!M/ROOT>
+  b<!M/0>
 
 
 # Emit error
@@ -12,12 +12,12 @@
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     ab
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

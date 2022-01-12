@@ -1,15 +1,15 @@
 # Write
-  <!M^ROOT>abc<!M/ROOT>
+  <!M^0>abc<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abc
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```

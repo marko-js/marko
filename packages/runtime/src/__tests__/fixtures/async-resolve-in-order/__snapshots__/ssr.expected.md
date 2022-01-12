@@ -1,5 +1,5 @@
 # Write
-  <!M^ROOT>a
+  <!M^0>a
 
 
 # Write
@@ -7,17 +7,17 @@
 
 
 # Write
-  de<!M/ROOT>
+  de<!M/0>
 
 
 # Render "End"
 ```html
-<!--M^ROOT-->
+<!--M^0-->
 <html>
   <head />
   <body>
     abcde
-    <!--M/ROOT-->
+    <!--M/0-->
   </body>
 </html>
 ```
