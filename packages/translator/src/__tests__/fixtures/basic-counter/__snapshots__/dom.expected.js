@@ -1,4 +1,4 @@
-import { write as _write, read as _read, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, read as _read, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply() {
   _apply_clickCount(0);
@@ -7,7 +7,7 @@ function _apply() {
 const _onclick = function () {
   const clickCount = _read(2);
 
-  clickCount++;
+  _queue(_apply_clickCount, 2, clickCount + 1);
 };
 
 function _apply_clickCount(clickCount) {

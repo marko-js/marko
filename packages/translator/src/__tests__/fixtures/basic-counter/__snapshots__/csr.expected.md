@@ -19,7 +19,24 @@ container.querySelector("button").click();
 ```html
 <div>
   <button>
-    0
+    1
+  </button>
+</div>
+```
+
+# Mutations
+```
+div0/button0/#text0: "0" => "1"
+```
+
+
+# Render 
+container.querySelector("button").click();
+
+```html
+<div>
+  <button>
+    1
   </button>
 </div>
 ```
@@ -36,24 +53,7 @@ container.querySelector("button").click();
 ```html
 <div>
   <button>
-    0
-  </button>
-</div>
-```
-
-# Mutations
-```
-
-```
-
-
-# Render 
-container.querySelector("button").click();
-
-```html
-<div>
-  <button>
-    0
+    1
   </button>
 </div>
 ```

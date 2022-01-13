@@ -283,7 +283,7 @@ export function addStatement(
               path,
               "queue",
               identifier,
-              t.numericLiteral(bindingToScopeId(path, binding))
+              bindingToScopeId(path, binding)
             )
           )
         );
@@ -300,7 +300,7 @@ export function addStatement(
   }
 }
 
-export function getApplyId(path: t.NodePath<any>, binding: Binding) {
+export function bindingToApplyId(path: t.NodePath<any>, binding: Binding) {
   const section = path.state.section as Section;
   const groupIndex = sorted.findIndex(compareReferenceGroups, section.apply, {
     references: [binding],
@@ -332,11 +332,7 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
         params = references.map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRuntime(
-              path,
-              "read",
-              t.numericLiteral(bindingToScopeId(path, binding))
-            )
+            callRuntime(path, "read", bindingToScopeId(path, binding))
           )
         );
         body = t.blockStatement(statements);
@@ -348,7 +344,7 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
             callRuntime(
               path,
               "write",
-              t.numericLiteral(bindingToScopeId(path, references)),
+              bindingToScopeId(path, references),
               param
             ),
             statements.length === 1
@@ -381,11 +377,7 @@ function writeHydrateGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRuntime(
-              path,
-              "read",
-              t.numericLiteral(bindingToScopeId(path, binding))
-            )
+            callRuntime(path, "read", bindingToScopeId(path, binding))
           )
         )
       : [];
@@ -475,7 +467,7 @@ export function bindingToScopeId(
   path: t.NodePath<any>,
   { sectionIndex, bindingIndex }: Binding
 ) {
-  return (
+  return t.numericLiteral(
     path.hub.file.path.node.extra.sections![sectionIndex].visits + bindingIndex
   );
 }
@@ -536,11 +528,7 @@ function bindFunction(
         (Array.isArray(references) ? references : [references]).map((binding) =>
           t.variableDeclarator(
             t.identifier(binding.name),
-            callRuntime(
-              fn,
-              "read",
-              t.numericLiteral(bindingToScopeId(fn, binding))
-            )
+            callRuntime(fn, "read", bindingToScopeId(fn, binding))
           )
         )
       )
