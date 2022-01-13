@@ -2,6 +2,7 @@ import type { types as t } from "@marko/compiler";
 import analyzeTagNameType, { TagNameTypes } from "../util/tag-name-type";
 import NativeTag from "./native-tag";
 import CustomTag from "./custom-tag";
+import analyzeAttributeTags from "../util/nested-attribute-tags";
 
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
@@ -21,10 +22,15 @@ export default {
     }
   },
   exit(tag: t.NodePath<t.MarkoTag>) {
-    switch (analyzeTagNameType(tag)) {
-      case TagNameTypes.NativeTag:
-        // NativeTag.exit(tag);
-        break;
+    const type = analyzeTagNameType(tag);
+
+    if (type === TagNameTypes.NativeTag) {
+      // NativeTag.exit(tag);
+      return;
+    }
+
+    analyzeAttributeTags(tag);
+    switch (type) {
       case TagNameTypes.CustomTag:
         // CustomTag.exit(tag);
         break;

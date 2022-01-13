@@ -26,8 +26,8 @@ export default function reserveScope(
   size: number
 ) {
   const section = getSection(tag);
-  const { extra } = tag.node;
   const { sectionIndex } = section;
+  const extra = (tag.node.extra ??= {});
   extra.reserve = {
     sectionIndex,
     reserveIndex: (section.reserves += size),

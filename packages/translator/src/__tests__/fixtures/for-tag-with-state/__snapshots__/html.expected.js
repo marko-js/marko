@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markScopeOffset as _markScopeOffset, escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag-with-state/template.marko", input => {
   const arrA = [1, 2, 3];
@@ -7,7 +7,7 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag-
   for (const val of arrA) {
     let i = _i++;
 
-    _write(`<div>${_escapeXML(i)}: ${_escapeXML(val)}</div>`);
+    _write(`<div>${_markScopeOffset(0)}${_escapeXML(i)}: ${_markScopeOffset(1)}${_escapeXML(val)}</div>`);
   }
 
   const arrB = [1, 2, 3];
@@ -16,7 +16,7 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag-
   for (const val of arrB) {
     let i = _i2++;
 
-    _write(`<div>${_escapeXML(i)}: ${_escapeXML(val)}</div>`);
+    _write(`<div>${_markScopeOffset(0)}${_escapeXML(i)}: ${_markScopeOffset(1)}${_escapeXML(val)}</div>`);
   }
 });
 

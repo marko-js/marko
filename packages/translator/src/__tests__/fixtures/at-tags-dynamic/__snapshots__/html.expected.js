@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, markScopeOffset as _markScopeOffset, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko", input => {
@@ -38,7 +38,7 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
         row: row,
 
         renderBody() {
-          _write(`${_escapeXML(row)}`);
+          _write(`${_markScopeOffset(0)}${_escapeXML(row)}`);
         }
 
       });

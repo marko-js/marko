@@ -133,7 +133,8 @@ export function visit(
     const section = path.state.section as Section;
     if (isOutputHTML(path)) {
       section.writes.push(
-        callRuntime(path, "markScopeOffset", t.numericLiteral(visitIndex))
+        callRuntime(path, "markScopeOffset", t.numericLiteral(visitIndex)),
+        ""
       );
     } else {
       let walkString = "";
