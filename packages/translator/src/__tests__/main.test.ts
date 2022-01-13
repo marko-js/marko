@@ -90,7 +90,7 @@ describe("translator", () => {
 
           const [input, ...steps] = config.steps || [];
           const { run } = browser.require(
-            "@marko/runtime-fluurt/dist/dom"
+            "@marko/runtime-fluurt/src/dom"
           ) as typeof import("../../../runtime/src/dom");
           const render = browser.require(templateFile).default;
           const container = Object.assign(document.createElement("div"), {

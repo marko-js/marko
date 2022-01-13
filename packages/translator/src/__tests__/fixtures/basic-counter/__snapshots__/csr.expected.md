@@ -36,14 +36,14 @@ container.querySelector("button").click();
 ```html
 <div>
   <button>
-    1
+    2
   </button>
 </div>
 ```
 
 # Mutations
 ```
-
+div0/button0/#text0: "1" => "2"
 ```
 
 
@@ -53,12 +53,12 @@ container.querySelector("button").click();
 ```html
 <div>
   <button>
-    1
+    3
   </button>
 </div>
 ```
 
 # Mutations
 ```
-
+div0/button0/#text0: "2" => "3"
 ```
