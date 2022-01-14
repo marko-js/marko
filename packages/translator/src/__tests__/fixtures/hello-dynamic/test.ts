@@ -1,2 +1,2 @@
-export const inputDOM = [{ name: "Marko" }];
-export const inputHTML = { name: "Marko" };
+export const skip_csr = true;
+export const skip_ssr = true;

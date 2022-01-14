@@ -1,14 +1,27 @@
-import { data as _data, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_input(input) {
+  if (_write(2, input)) {
+    const {
+      a,
+      b
+    } = input;
+
+    _apply_a(a);
+
+    _apply_b(b);
+  }
+}
+
+function _apply_a(a) {
+  if (_write(3, a)) _data(0, a);
+}
+
+function _apply_b(b) {
+  if (_write(4, b)) _data(1, b);
+}
+
 export const template = "<!> <!>";
-export const walks = "%c%b";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/input-tracking/template.marko", input => {
-  const {
-    a,
-    b
-  } = input;
-
-  _data(a);
-
-  _data(b);
-});
-export default _createRenderFn(template, walks, [""], hydrate);
+export const walks = "%c%";
+export const apply = _apply_input;
+export default _createRenderFn(template, walks, apply);

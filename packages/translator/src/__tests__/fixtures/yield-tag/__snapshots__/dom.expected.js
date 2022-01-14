@@ -1,10 +1,9 @@
-import { register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+var _return;
+
+if (show) <yield=1/>else <yield=2/>
+return _return;
+import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "";
 export const walks = "";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/yield-tag/template.marko", input => {
-  var _return;
-
-  if (show) <yield=1/>else <yield=2/>
-  return _return;
-});
-export default _createRenderFn(template, walks, ["show"], hydrate);
+export const apply;
+export default _createRenderFn(template, walks, apply);

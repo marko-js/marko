@@ -1,11 +1,16 @@
-import { data as _data, dynamicTag as _dynamicTag, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const MyTag = input => {};
+
+_dynamicTag(MyTag, {
+  name: "World"
+});
+
+import { data as _data, write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_input(input) {
+  if (_write(1, input)) _data(0, input.name);
+}
+
 export const template = "";
 export const walks = "";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/tag-tag/template.marko", input => {
-  const MyTag = input => _data(input.name);
-
-  _dynamicTag(MyTag, {
-    name: "World"
-  });
-});
-export default _createRenderFn(template, walks, [], hydrate);
+export const apply;
+export default _createRenderFn(template, walks, apply);

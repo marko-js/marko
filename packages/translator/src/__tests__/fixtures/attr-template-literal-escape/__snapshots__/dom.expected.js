@@ -1,7 +1,10 @@
-import { attr as _attr, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { attr as _attr, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_name(name) {
+  if (_write(1, name)) _attr(0, "foo", `Hello ${name}`);
+}
+
 export const template = "<div></div>";
-export const walks = " b";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/attr-template-literal-escape/template.marko", input => {
-  _attr("foo", `Hello ${name}`);
-});
-export default _createRenderFn(template, walks, ["name"], hydrate);
+export const walks = " ";
+export const apply = _apply_name;
+export default _createRenderFn(template, walks, apply);

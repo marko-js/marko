@@ -1,11 +1,14 @@
 import { asset as asset1 } from "./asset1";
 import { asset as asset2 } from "./asset2";
-import { data as _data, register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export const template = "<!> <!>";
-export const walks = "%c%b";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/import-tag-conflict/template.marko", input => {
-  _data(asset1);
+import { data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-  _data(asset2);
-});
-export default _createRenderFn(template, walks, [], hydrate);
+function _apply() {
+  _data(0, asset1);
+
+  _data(1, asset2);
+}
+
+export const template = "<!> <!>";
+export const walks = "%c%";
+export const apply = _apply;
+export default _createRenderFn(template, walks, apply);

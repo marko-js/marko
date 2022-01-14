@@ -1,5 +1,5 @@
-import { register as _register, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "<div><!--abc--><!--[if lt IE 9]><script src=\"...\"></script><![endif]--></div>";
-export const walks = "b";
-export const hydrate = _register("packages/translator/src/__tests__/fixtures/comments/template.marko", input => {});
-export default _createRenderFn(template, walks, [], hydrate);
+export const walks = "";
+export const apply;
+export default _createRenderFn(template, walks, apply);
