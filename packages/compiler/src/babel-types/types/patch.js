@@ -50,10 +50,14 @@ MARKO_ALIAS_TYPES.forEach(aliasName => {
 
 const originalIsReferenced = referencedValidators.default;
 referencedValidators.default = (node, parent, grandparent) => {
-  if (parent.type === "MarkoTag" || parent.type === "MarkoTagBody") {
-    return false;
+  switch (parent.type) {
+    case "MarkoTag":
+      return parent.var !== node;
+    case "MarkoTagBody":
+      return false;
+    default:
+      return originalIsReferenced(node, parent, grandparent);
   }
-  return originalIsReferenced(node, parent, grandparent);
 };
 
 function assert(typeName, node, opts) {
