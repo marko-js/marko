@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.17.10](https://github.com/marko-js/marko/compare/v5.17.9...v5.17.10) (2022-01-14)
+
+
+### Bug Fixes
+
+* issue with dynamic tag names not tracking references ([9d86540](https://github.com/marko-js/marko/commit/9d86540a37b0028370206d2367c0a2fc8a724575))
+
+
+
+
+
 ## [5.17.6](https://github.com/marko-js/marko/compare/v5.17.5...v5.17.6) (2022-01-02)
 
 **Note:** Version bump only for package @marko/compiler
