@@ -85,12 +85,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
                 tag,
                 valueReferences,
                 t.expressionStatement(
-                  callRuntime(
-                    tag,
-                    "write",
-                    t.numericLiteral(reserveIndex),
-                    value.node
-                  )
+                  callRuntime(tag, "write", reserveIndex, value.node)
                 )
               );
 
@@ -104,7 +99,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
                     "on",
                     t.numericLiteral(visitIndex!),
                     t.stringLiteral(name.slice(2)),
-                    callRuntime(tag, "read", t.numericLiteral(reserveIndex))
+                    callRuntime(tag, "read", reserveIndex)
                   )
                 )
               );

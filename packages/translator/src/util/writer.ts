@@ -478,7 +478,7 @@ export function reserveToScopeId(
   { sectionIndex, reserveIndex }: Reserve
 ) {
   const section = path.hub.file.path.node.extra.sections![sectionIndex];
-  return section.visits + section.bindings + reserveIndex;
+  return t.numericLiteral(section.visits + section.bindings + reserveIndex);
 }
 
 function generateReferenceGroupName(
