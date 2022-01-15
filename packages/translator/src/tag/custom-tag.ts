@@ -16,8 +16,8 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
 }
 
 export function exit(tag: t.NodePath<t.MarkoTag>) {
+  const section = writer.end(tag);
   const isHTML = isOutputHTML(tag);
-  const { walks, writes } = writer.end(tag);
   const { node } = tag;
   const write = writer.writeTo(tag);
   let tagIdentifier: t.Expression;
@@ -105,6 +105,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
       .skip();
   } else {
     if (!isHTML && renderBodyProp) {
+      const { walks, writes } = writer.getSectionMeta(section);
       (attrsObject as t.ObjectExpression).properties.pop();
       (attrsObject as t.ObjectExpression).properties.push(
         t.objectProperty(

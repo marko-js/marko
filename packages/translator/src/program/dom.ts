@@ -9,10 +9,11 @@ export function enter(program: t.NodePath<t.Program>) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function exit(program: t.NodePath<t.Program>) {
+  const section = writer.end(program);
   const templateIdentifier = t.identifier("template");
   const walksIdentifier = t.identifier("walks");
   const applyIdentifier = t.identifier("apply");
-  const { walks, writes, apply } = writer.end(program);
+  const { walks, writes, apply } = writer.getSectionMeta(section);
 
   program.node.body.push(
     t.exportNamedDeclaration(

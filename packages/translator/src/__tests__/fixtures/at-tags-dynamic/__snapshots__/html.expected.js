@@ -1,4 +1,4 @@
-import { write as _write, markScopeOffset as _markScopeOffset, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markScopeOffset as _markScopeOffset, write as _write, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko", input => {
@@ -6,16 +6,22 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
   const _item = [];
 
   for (const color of ["red", "blue", "green"]) {
-    if (color === "red") _item.push({
-      style: {
-        color
-      },
+    _write(`${_markScopeOffset(0)}`);
 
-      renderBody() {
-        _write("foo");
-      }
+    if (color === "red") {
+      _item.push({
+        style: {
+          color
+        },
 
-    });else _item.push({
+        renderBody() {
+          _write("foo");
+        }
+
+      });
+
+      _write(`${_markScopeOffset(0)}`);
+    } else _item.push({
       style: {
         color
       },

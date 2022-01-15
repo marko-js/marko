@@ -57,7 +57,7 @@ interface ReferenceGroup {
   statements: t.Statement[];
 }
 
-interface Section {
+export interface Section {
   parent: Section | undefined;
   apply: ReferenceGroup[];
   hydrate: ReferenceGroup[];
@@ -101,11 +101,7 @@ export function end(path: t.NodePath<any>) {
   }
 
   path.state.section = section.parent;
-  return {
-    apply: section.apply[0]?.identifier,
-    walks: toTemplateOrStringLiteral(section.walks),
-    writes: toTemplateOrStringLiteral(section.writes),
-  };
+  return section;
 }
 
 export function enter(path: t.NodePath<any>) {
@@ -320,6 +316,14 @@ export function bindingToApplyId(path: t.NodePath<any>, binding: Binding) {
   } else {
     return section.apply[groupIndex]!.identifier;
   }
+}
+
+export function getSectionMeta(section: Section) {
+  return {
+    apply: section.apply[0]?.identifier,
+    walks: toTemplateOrStringLiteral(section.walks),
+    writes: toTemplateOrStringLiteral(section.writes),
+  };
 }
 
 function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {

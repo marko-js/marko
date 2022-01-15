@@ -1,0 +1,9 @@
+<div>
+  <let/id=0/>
+  <let/items=[]/>
+
+  <for|item| of=items>${item}</for>
+
+  <button onclick() { items = [...items, id++]; }>Add</button>
+  <button onclick() { items = items.slice(0, -1); }>Remove</button>
+</div>

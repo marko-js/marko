@@ -1,62 +1,113 @@
 import { types as t } from "@marko/compiler";
-import { assertNoParams, assertNoVar } from "@marko/babel-utils";
+import * as writer from "../../util/writer";
+import * as sorted from "../../util/sorted-arr";
+import { callRuntime } from "../../util/runtime";
+import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
+import { Binding, compareReferences } from "../../analyze/util/references";
+import { isOutputDOM } from "../../util/marko-config";
 
-export function buildIfStatement(tag: t.NodePath<t.MarkoTag>) {
-  const { node } = tag;
-  const [defaultAttr] = node.attributes;
-  const tagName = (node.name as t.StringLiteral).value;
+const BRANCHES_LOOKUP = new WeakMap<
+  t.NodePath<t.MarkoTag>,
+  {
+    tag: t.NodePath<t.MarkoTag>;
+    section: writer.Section;
+  }[]
+>();
 
-  assertNoVar(tag);
-  assertNoParams(tag);
-
-  if (!t.isMarkoAttribute(defaultAttr) || !defaultAttr.default) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The '<${tagName}>' tag requires default attribute like '<${tagName}=condition>'.`
-      );
-  }
-
-  if (node.attributes.length > 1) {
-    const start = node.attributes[1].loc?.start;
-    const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The '<${tagName}>' tag only supports a default attribute.`;
-
-    if (start == null || end == null) {
-      throw tag.get("name").buildCodeFrameError(msg);
-    } else {
-      throw tag.hub.buildError(
-        { loc: { start, end } } as unknown as t.Node,
-        msg,
-        Error
-      );
-    }
-  }
-
-  return t.ifStatement(
-    defaultAttr.value!,
-    toFirstStatementOrBlock(tag.node.body)
+export function exitCondition(
+  tag: t.NodePath<t.MarkoTag>,
+  section: writer.Section
+) {
+  const nextTag = tag.getNextSibling();
+  const isLast = !(
+    isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
   );
-}
+  const branches = BRANCHES_LOOKUP.get(tag) || [];
 
-export function findPreviousIfStatement(tag: t.NodePath<t.MarkoTag>) {
-  const tagName = (tag.node.name as t.StringLiteral).value;
-  let prev = tag.getSibling(
-    (tag.key as number) - 1
-  ) as t.NodePath<t.IfStatement>;
+  branches.push({
+    tag,
+    section,
+  });
 
-  while (prev.node.alternate) {
-    prev = prev.get("alternate") as t.NodePath<t.IfStatement>;
-  }
+  if (isLast) {
+    if (isOutputDOM(tag)) {
+      const { extra } = branches[0].tag.node;
+      const refs: Binding[] = [];
+      const declarators: t.VariableDeclarator[] = [];
+      let expr: t.Expression = t.nullLiteral();
 
-  if (!prev.isIfStatement()) {
-    throw tag
-      .get("name")
-      .buildCodeFrameError(
-        `The <${tagName}> tag must be preceded by an <if> or <else-if> tag.`
+      for (let i = branches.length; i--; ) {
+        const { tag, section } = branches[i];
+        const id = tag.scope.generateUidIdentifierBasedOnNode(tag.node.name);
+        const [testAttr] = tag.node.attributes;
+        const {
+          writes = t.stringLiteral(""),
+          walks = t.stringLiteral(""),
+          apply = t.nullLiteral(),
+        } = writer.getSectionMeta(section);
+        declarators.push(
+          t.variableDeclarator(
+            id,
+            callRuntime(tag, "createRenderer", writes, walks, apply)
+          )
+        );
+
+        tag.remove();
+
+        if (testAttr) {
+          const curRefs = testAttr.extra.valueReferences;
+          if (curRefs) {
+            if (Array.isArray(curRefs)) {
+              for (const ref of curRefs) {
+                sorted.insert(compareReferences, refs, ref);
+              }
+            } else {
+              sorted.insert(compareReferences, refs, curRefs);
+            }
+          }
+
+          expr = t.conditionalExpression(testAttr.value, id, expr);
+        } else {
+          expr = id;
+        }
+      }
+
+      nextTag.insertBefore(t.variableDeclaration("const", declarators));
+
+      writer.addStatement(
+        "apply",
+        tag,
+        refs.length === 0 ? undefined : refs.length === 1 ? refs[0] : refs,
+        t.expressionStatement(
+          callRuntime(
+            tag,
+            "setConditionalRenderer",
+            t.numericLiteral(extra.visitIndex!),
+            writer.reserveToScopeId(tag, extra.reserve!),
+            expr
+          )
+        )
       );
-  }
+    } else {
+      let statement: t.Statement | undefined;
+      for (let i = branches.length; i--; ) {
+        const { tag } = branches[i];
+        const [testAttr] = tag.node.attributes;
+        const curStatement = toFirstStatementOrBlock(tag.node.body);
 
-  return prev;
+        if (testAttr) {
+          statement = t.ifStatement(testAttr.value, curStatement, statement);
+        } else {
+          statement = curStatement;
+        }
+
+        tag.remove();
+      }
+
+      nextTag.insertBefore(statement!);
+    }
+  } else {
+    BRANCHES_LOOKUP.set(nextTag as t.NodePath<t.MarkoTag>, branches);
+  }
 }

@@ -12,7 +12,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
 
 export function exit(tag: t.NodePath<t.MarkoTag>) {
   const { node } = tag;
-  const { writes, walks } = writer.end(tag);
+  const section = writer.end(tag);
   const attrsObject = attrsToObject(tag, true) || t.nullLiteral();
   const renderBodyProp = getRenderBodyProp(attrsObject);
   const args: t.Expression[] = [node.name, attrsObject];
@@ -25,6 +25,7 @@ export function exit(tag: t.NodePath<t.MarkoTag>) {
     );
 
     if (isOutputDOM(tag)) {
+      const { walks, writes } = writer.getSectionMeta(section);
       fnExpr = callRuntime(
         tag,
         "createRenderer",

@@ -2,25 +2,8 @@ const _col = [];
 const _item = [];
 
 for (const color of ["red", "blue", "green"]) {
-  if (color === "red") _item.push({
-    style: {
-      color
-    },
-
-    renderBody() {
-      _write("foo");
-    }
-
-  });else _item.push({
-    style: {
-      color
-    },
-
-    renderBody() {
-      _write("bar");
-    }
-
-  });
+  const _else = _createRenderer("", "", null),
+        _if = _createRenderer("", "b", null);
 }
 
 let _i = 0;
@@ -65,7 +48,11 @@ _hello({
   col: _col
 });
 
-import { write as _write, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_color(color) {
+  if (_write(1, color)) _setConditionalRenderer(0, 5, color === "red" ? _if : _else);
+}
 
 function _apply_row(row) {
   if (_write(0, row)) _data(0, row);

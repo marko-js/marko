@@ -12,9 +12,10 @@ import translateSet from "./translate-set";
 import translateStyle from "./translate-style";
 import translateTag from "./translate-tag";
 import translateYield from "./translate-yield";
+import { taglibId } from "../util/is-core-tag";
 
 export default {
-  taglibId: "marko-core",
+  taglibId,
   "<import>": {
     parse: parseImport,
     parseOptions: {
