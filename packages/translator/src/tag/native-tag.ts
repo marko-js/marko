@@ -22,7 +22,11 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
     translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)));
   }
 
-  const visitIndex = writer.visit(tag, writer.WalkCodes.Get);
+  let visitIndex: t.NumericLiteral | undefined;
+  if (extra.reserve) {
+    visitIndex = t.numericLiteral(extra.reserve.id);
+    writer.visit(tag, writer.WalkCodes.Get);
+  }
 
   write`<${name.node}`;
 
@@ -56,12 +60,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
               tag,
               valueReferences,
               t.expressionStatement(
-                callRuntime(
-                  tag,
-                  helper,
-                  t.numericLiteral(visitIndex!),
-                  value.node
-                )
+                callRuntime(tag, helper, visitIndex!, value.node)
               )
             );
           }
@@ -79,7 +78,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
             )}`;
           } else {
             if (name.startsWith("on")) {
-              const reserveIndex = writer.reserveToScopeId(tag, extra.reserve!);
+              const reserveIndex = t.numericLiteral(extra.reserve!.id);
               writer.addStatement(
                 "apply",
                 tag,
@@ -97,7 +96,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
                   callRuntime(
                     tag,
                     "on",
-                    t.numericLiteral(visitIndex!),
+                    visitIndex!,
                     t.stringLiteral(name.slice(2)),
                     callRuntime(tag, "read", reserveIndex)
                   )
@@ -112,7 +111,7 @@ export function enter(tag: t.NodePath<t.MarkoTag>) {
                   callRuntime(
                     tag,
                     "attr",
-                    t.numericLiteral(visitIndex!),
+                    visitIndex!,
                     t.stringLiteral(name),
                     value.node
                   )

@@ -2,20 +2,48 @@ import type { types as t } from "@marko/compiler";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
 export interface Section {
-  sectionIndex: number;
-  visits: number;
-  bindings: number;
-  reserves: number;
+  id: number;
+  reservesByType: [Reserve[] | undefined, Reserve[] | undefined];
+}
+
+export const enum ReserveType {
+  Visit = 0,
+  Store = 1,
+}
+
+export interface Reserve {
+  type: ReserveType;
+  section: Section;
+  name: string;
+  size: number;
+  id: number;
 }
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     sections?: Section[];
-    sectionIndex?: number;
+    section?: Section;
+    reserve?: Reserve;
   }
 
   export interface MarkoTagBodyExtra {
-    sectionIndex?: number;
+    section?: Section;
+  }
+
+  export interface MarkoTagExtra {
+    reserve?: Reserve;
+  }
+
+  export interface MarkoAttributeExtra {
+    reserve?: Reserve;
+  }
+
+  export interface MarkoPlaceholderExtra {
+    reserve?: Reserve;
+  }
+
+  export interface IdentifierExtra {
+    reserve?: Reserve;
   }
 }
 
@@ -37,30 +65,73 @@ export function getSection(path: t.NodePath<any>) {
 }
 
 export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
-  const { file } = path.hub;
-  const programExtra = (file.path.node.extra ??= {});
-  const sectionExtra = (path.node.extra ??= {});
-  const { sectionIndex } = sectionExtra;
+  const extra = (path.node.extra ??= {});
+  if (extra.section) return extra.section;
 
-  if (sectionIndex === undefined) {
-    const sectionIndex = (sectionExtra.sectionIndex = programExtra.sections
-      ? programExtra.sections.length
-      : 0);
-    const section: Section = {
-      sectionIndex,
-      visits: 0,
-      bindings: 0,
-      reserves: 0,
-    };
+  const programExtra = (path.hub.file.path.node.extra ??= {});
+  const section = (extra.section = {
+    id: 0,
+    reservesByType: [undefined, undefined],
+  });
 
-    if (sectionIndex) {
-      programExtra.sections!.push(section);
-    } else {
-      programExtra.sections = [section];
-    }
-
-    return section;
+  if (programExtra.sections) {
+    section.id = programExtra.sections.push(section) - 1;
   } else {
-    return programExtra.sections![sectionIndex];
+    programExtra.sections = [section];
   }
+
+  return section;
+}
+
+export function reserveScope(
+  type: ReserveType,
+  section: Section,
+  node: t.MarkoTag | t.MarkoAttribute | t.MarkoPlaceholder | t.Identifier,
+  name: string,
+  size = 0
+) {
+  const extra = (node.extra ??= {} as typeof node.extra);
+
+  if (extra.reserve) {
+    throw new Error("Unable to reserve multiple scopes for a node.");
+  }
+
+  const { reservesByType } = section;
+  const reserve = (extra.reserve = {
+    id: 0,
+    type,
+    size,
+    name,
+    section,
+  });
+
+  if (reservesByType[type]) {
+    reserve.id = reservesByType[type]!.push(reserve) - 1;
+  } else {
+    reservesByType[type] = [reserve];
+  }
+
+  return reserve;
+}
+
+export function assignFinalIds(program: t.NodePath<t.Program>) {
+  for (const section of program.node.extra.sections!) {
+    let curIndex = 0;
+    for (const reserves of section.reservesByType) {
+      if (reserves) {
+        for (const reserve of reserves) {
+          reserve.id = curIndex;
+          curIndex += reserve.size + 1;
+        }
+      }
+    }
+  }
+}
+
+export function compareReserves(a: Reserve, b: Reserve) {
+  return a.section === b.section
+    ? a.type === b.type
+      ? a.id - b.id
+      : a.type - b.type
+    : a.section.id - b.section.id;
 }

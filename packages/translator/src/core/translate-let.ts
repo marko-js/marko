@@ -46,9 +46,9 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (isOutputDOM(tag)) {
-    const binding = tagVar.extra.binding!;
+    const binding = tagVar.extra.reserve!;
     const applyId = writer.bindingToApplyId(tag, binding);
-    const scopeId = writer.bindingToScopeId(tag, binding);
+    const scopeId = t.numericLiteral(binding.id);
     // TODO: add defined guard if bindings exist.
     writer.addStatement(
       "apply",

@@ -16,7 +16,7 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const isHTML = isOutputHTML(placeholder);
   const write = writer.writeTo(placeholder);
   const extra = placeholder.node.extra;
-  const { confident, computed } = extra;
+  const { confident, computed, valueReferences, reserve } = extra;
   const canWriteHTML =
     isHTML || (confident && (placeholder.node.escape || !computed));
   const method = canWriteHTML
@@ -27,31 +27,32 @@ export default function (placeholder: t.NodePath<t.MarkoPlaceholder>) {
     ? "data"
     : "html";
 
-  const visitIndex = writer.visit(placeholder, writer.WalkCodes.Replace);
-
   if (confident && canWriteHTML) {
     write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
-  } else if (isHTML) {
-    write`${callRuntime(
-      placeholder,
-      method as HTMLMethod | DOMMethod,
-      placeholder.node.value
-    )}`;
   } else {
-    write`<!>`;
-    writer.addStatement(
-      "apply",
-      placeholder,
-      extra.valueReferences,
-      t.expressionStatement(
-        callRuntime(
-          placeholder,
-          method as DOMMethod,
-          t.numericLiteral(visitIndex!),
-          placeholder.node.value
+    writer.visit(placeholder, writer.WalkCodes.Replace);
+
+    if (isHTML) {
+      write`${callRuntime(
+        placeholder,
+        method as HTMLMethod | DOMMethod,
+        placeholder.node.value
+      )}`;
+    } else {
+      writer.addStatement(
+        "apply",
+        placeholder,
+        valueReferences,
+        t.expressionStatement(
+          callRuntime(
+            placeholder,
+            method as DOMMethod,
+            t.numericLiteral(reserve!.id!),
+            placeholder.node.value
+          )
         )
-      )
-    );
+      );
+    }
   }
 
   writer.enterShallow(placeholder);

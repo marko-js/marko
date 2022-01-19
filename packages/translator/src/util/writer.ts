@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
+import type { References } from "../analyze/util/references";
 import {
-  compareReferences,
-  References,
-  Binding,
-} from "../analyze/util/references";
-import type { Reserve } from "../analyze/util/reserves";
+  Reserve,
+  ReserveType,
+  compareReserves,
+} from "../analyze/util/sections";
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
@@ -91,7 +91,6 @@ export function start(path: t.NodePath<any>) {
 
 export function end(path: t.NodePath<any>) {
   const section = path.state.section as Section;
-  visit(path);
 
   if (isOutputHTML(path)) {
     flushInto(path);
@@ -124,66 +123,71 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
   code?: VisitCodes
 ) {
-  const { visitIndex } = path.node.extra;
-  if (visitIndex !== undefined) {
-    const section = path.state.section as Section;
-    if (isOutputHTML(path)) {
-      section.writes.push(
-        callRuntime(path, "markScopeOffset", t.numericLiteral(visitIndex)),
-        ""
-      );
-    } else {
-      let walkString = "";
-
-      if (section.steps.length) {
-        const walks: WalkCodes[] = [];
-        let depth = 0;
-
-        for (const step of section.steps) {
-          if (step === Step.enter) {
-            depth++;
-            walks.push(WalkCodes.Next);
-          } else {
-            depth--;
-            if (depth >= 0) {
-              // delete back to and including previous NEXT
-              walks.length = walks.lastIndexOf(WalkCodes.Next);
-              walks.push(WalkCodes.Over);
-            } else {
-              // delete back to previous OUT
-              walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
-              walks.push(WalkCodes.Out);
-              depth = 0;
-            }
-          }
-        }
-
-        let current = walks[0];
-        let count = 0;
-
-        for (const walk of walks) {
-          if (walk !== current) {
-            walkString += nCodeString(current, count);
-            current = walk;
-            count = 1;
-          } else {
-            count++;
-          }
-        }
-
-        walkString += nCodeString(current, count);
-        section.steps = [];
-      }
-
-      if (code !== undefined) {
-        walkString += String.fromCharCode(code);
-      }
-
-      section.walks[section.walks.length - 1] += walkString;
-    }
+  const { reserve } = path.node.extra;
+  if (!reserve || reserve.type !== ReserveType.Visit) {
+    throw path.buildCodeFrameError(
+      "Tried to visit a node that was not marked as needing to visit during analyze."
+    );
   }
 
-  return visitIndex;
+  const section = path.state.section as Section;
+  if (isOutputHTML(path)) {
+    section.writes.push(
+      callRuntime(path, "markScopeOffset", t.numericLiteral(reserve.id)),
+      ""
+    );
+  } else {
+    let walkString = "";
+
+    if (section.steps.length) {
+      const walks: WalkCodes[] = [];
+      let depth = 0;
+
+      for (const step of section.steps) {
+        if (step === Step.enter) {
+          depth++;
+          walks.push(WalkCodes.Next);
+        } else {
+          depth--;
+          if (depth >= 0) {
+            // delete back to and including previous NEXT
+            walks.length = walks.lastIndexOf(WalkCodes.Next);
+            walks.push(WalkCodes.Over);
+          } else {
+            // delete back to previous OUT
+            walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
+            walks.push(WalkCodes.Out);
+            depth = 0;
+          }
+        }
+      }
+
+      let current = walks[0];
+      let count = 0;
+
+      for (const walk of walks) {
+        if (walk !== current) {
+          walkString += nCodeString(current, count);
+          current = walk;
+          count = 1;
+        } else {
+          count++;
+        }
+      }
+
+      walkString += nCodeString(current, count);
+      section.steps = [];
+    }
+
+    if (code !== undefined) {
+      if (code !== WalkCodes.Get) {
+        appendLiteral(section.writes, "<!>");
+      }
+      walkString += String.fromCharCode(code);
+    }
+
+    appendLiteral(section.walks, walkString);
+  }
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -193,7 +197,7 @@ export function writeTo(path: t.NodePath<any>) {
   ): void => {
     const exprsLen = exprs.length;
     const { writes } = path.state.section as Section;
-    writes[writes.length - 1] += strs[0];
+    appendLiteral(writes, strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
       writes.push(exprs[i], strs[i + 1]);
@@ -276,12 +280,7 @@ export function addStatement(
           path,
           binding,
           t.expressionStatement(
-            callRuntime(
-              path,
-              "queue",
-              identifier,
-              bindingToScopeId(path, binding)
-            )
+            callRuntime(path, "queue", identifier, t.numericLiteral(binding.id))
           )
         );
       }
@@ -297,7 +296,7 @@ export function addStatement(
   }
 }
 
-export function bindingToApplyId(path: t.NodePath<any>, binding: Binding) {
+export function bindingToApplyId(path: t.NodePath<any>, binding: Reserve) {
   const section = path.state.section as Section;
   const groupIndex = sorted.findIndex(compareReferenceGroups, section.apply, {
     references: [binding],
@@ -326,6 +325,10 @@ export function getSectionMeta(section: Section) {
   };
 }
 
+function appendLiteral(arr: unknown[], str: string) {
+  arr[arr.length - 1] += str;
+}
+
 function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
@@ -337,7 +340,7 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
         params = references.map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRuntime(path, "read", bindingToScopeId(path, binding))
+            callRuntime(path, "read", t.numericLiteral(binding.id))
           )
         );
         body = t.blockStatement(statements);
@@ -346,12 +349,7 @@ function writeApplyGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
         params = [param];
         body = t.blockStatement([
           t.ifStatement(
-            callRuntime(
-              path,
-              "write",
-              bindingToScopeId(path, references),
-              param
-            ),
+            callRuntime(path, "write", t.numericLiteral(references.id), param),
             statements.length === 1
               ? statements[0]
               : t.blockStatement(statements)
@@ -382,7 +380,7 @@ function writeHydrateGroups(path: t.NodePath<any>, groups: ReferenceGroup[]) {
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRuntime(path, "read", bindingToScopeId(path, binding))
+            callRuntime(path, "read", t.numericLiteral(binding.id))
           )
         )
       : [];
@@ -413,7 +411,7 @@ function compareReferenceGroups(
           }
 
           for (let i = 0; i < len; i++) {
-            const compareResult = compareReferences(a[i], b[i]);
+            const compareResult = compareReserves(a[i], b[i]);
             if (compareResult !== 0) {
               return compareResult;
             }
@@ -426,7 +424,7 @@ function compareReferenceGroups(
       } else if (Array.isArray(b)) {
         return -1;
       } else {
-        return compareReferences(a, b);
+        return compareReserves(a, b);
       }
     } else {
       return 1;
@@ -466,23 +464,6 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 
   result += String.fromCharCode(startCode + number);
   return result;
-}
-
-export function bindingToScopeId(
-  path: t.NodePath<any>,
-  { sectionIndex, bindingIndex }: Binding
-) {
-  return t.numericLiteral(
-    path.hub.file.path.node.extra.sections![sectionIndex].visits + bindingIndex
-  );
-}
-
-export function reserveToScopeId(
-  path: t.NodePath<any>,
-  { sectionIndex, reserveIndex }: Reserve
-) {
-  const section = path.hub.file.path.node.extra.sections![sectionIndex];
-  return t.numericLiteral(section.visits + section.bindings + reserveIndex);
 }
 
 function generateReferenceGroupName(
@@ -533,7 +514,7 @@ function bindFunction(
         (Array.isArray(references) ? references : [references]).map((binding) =>
           t.variableDeclarator(
             t.identifier(binding.name),
-            callRuntime(fn, "read", bindingToScopeId(fn, binding))
+            callRuntime(fn, "read", t.numericLiteral(binding.id))
           )
         )
       )

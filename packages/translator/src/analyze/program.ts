@@ -1,6 +1,12 @@
 import type { types as t } from "@marko/compiler";
-import { startSection } from "./util/sections";
+import { startSection, assignFinalIds } from "./util/sections";
 
-export default function Program(program: t.NodePath<t.Program>) {
-  startSection(program);
-}
+export default {
+  enter(program: t.NodePath<t.Program>) {
+    startSection(program);
+  },
+
+  exit(program: t.NodePath<t.Program>) {
+    assignFinalIds(program);
+  },
+};

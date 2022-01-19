@@ -47,7 +47,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       identifiers.length === 1
         ? t.expressionStatement(
             t.callExpression(
-              writer.bindingToApplyId(tag, identifiers[0].extra.binding!),
+              writer.bindingToApplyId(tag, identifiers[0].extra.reserve!),
               [defaultAttr.value]
             )
           )
@@ -58,7 +58,7 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
             ...identifiers.map((identifier) =>
               t.expressionStatement(
                 t.callExpression(
-                  writer.bindingToApplyId(tag, identifier.extra.binding!),
+                  writer.bindingToApplyId(tag, identifier.extra.reserve!),
                   [t.identifier(identifier.name)]
                 )
               )

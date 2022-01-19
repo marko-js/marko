@@ -1,6 +1,13 @@
 import type { types as t } from "@marko/compiler";
 import * as sorted from "../../util/sorted-arr";
-import { getSection, Section } from "./sections";
+import {
+  getSection,
+  Section,
+  Reserve,
+  ReserveType,
+  reserveScope,
+  compareReserves,
+} from "./sections";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
@@ -10,22 +17,9 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoPlaceholder
 >;
 
-export interface Binding {
-  name: string;
-  sectionIndex: number;
-  bindingIndex: number;
-}
-export type References = undefined | Binding | Binding[];
+export type References = undefined | Reserve | Reserve[];
 
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    bindings?: number;
-  }
-
-  export interface IdentifierExtra {
-    binding?: Binding;
-  }
-
   export interface FunctionExpressionExtra {
     references?: References;
     name?: string;
@@ -42,7 +36,6 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface MarkoTagBodyExtra {
-    bindings?: number;
     paramsReferences?: References;
   }
 
@@ -72,7 +65,6 @@ export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
 
 function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
   const scope = path.scope;
-  const { sectionIndex } = section;
   const bindings = path.getBindingIdentifiers() as unknown as Record<
     string,
     t.Identifier
@@ -82,11 +74,12 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
 
     if (references.length) {
       const identifier = bindings[name];
-      const binding: Binding = ((identifier.extra ??= {}).binding = {
-        name,
-        sectionIndex,
-        bindingIndex: section.bindings++,
-      });
+      const binding = reserveScope(
+        ReserveType.Store,
+        section,
+        identifier,
+        name
+      );
 
       for (const reference of references) {
         const exprRoot = getExprRoot(reference);
@@ -106,11 +99,11 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
           }
 
           fnExtra.name = name;
-          sorted.insertProp(compareReferences, fnExtra, "references", binding);
+          sorted.insertProp(compareReserves, fnExtra, "references", binding);
         }
 
         sorted.insertProp(
-          compareReferences,
+          compareReserves,
           exprExtra,
           `${exprRoot.listKey || exprRoot.key}References`,
           binding
@@ -154,10 +147,4 @@ function isFunctionExpression(
     default:
       return false;
   }
-}
-
-export function compareReferences(a: Binding, b: Binding) {
-  return a.sectionIndex === b.sectionIndex
-    ? a.bindingIndex - b.bindingIndex
-    : a.sectionIndex - b.sectionIndex;
 }

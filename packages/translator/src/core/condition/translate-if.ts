@@ -1,15 +1,16 @@
 import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar } from "@marko/babel-utils";
-import reserveScope from "../../analyze/util/reserves";
-import visit from "../../analyze/util/visit";
-import { isOutputDOM } from "../../util/marko-config";
 import * as writer from "../../util/writer";
 import { exitCondition } from "./util";
+import {
+  ReserveType,
+  reserveScope,
+  getSection,
+} from "../../analyze/util/sections";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
-    visit(tag);
-    reserveScope(tag, 3);
+    reserveScope(ReserveType.Visit, getSection(tag), tag.node, "if", 3);
   },
   enter(tag: t.NodePath<t.MarkoTag>) {
     const { node } = tag;
@@ -42,7 +43,6 @@ export default {
       }
     }
 
-    if (isOutputDOM(tag)) writer.writeTo(tag)`<!>`;
     writer.visit(tag, writer.WalkCodes.Replace);
     writer.start(tag);
   },

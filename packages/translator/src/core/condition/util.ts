@@ -4,7 +4,7 @@ import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import { Binding, compareReferences } from "../../analyze/util/references";
+import { Reserve, compareReserves } from "../../analyze/util/sections";
 import { isOutputDOM } from "../../util/marko-config";
 
 const BRANCHES_LOOKUP = new WeakMap<
@@ -33,7 +33,7 @@ export function exitCondition(
   if (isLast) {
     if (isOutputDOM(tag)) {
       const { extra } = branches[0].tag.node;
-      const refs: Binding[] = [];
+      const refs: Reserve[] = [];
       const declarators: t.VariableDeclarator[] = [];
       let expr: t.Expression = t.nullLiteral();
 
@@ -60,10 +60,10 @@ export function exitCondition(
           if (curRefs) {
             if (Array.isArray(curRefs)) {
               for (const ref of curRefs) {
-                sorted.insert(compareReferences, refs, ref);
+                sorted.insert(compareReserves, refs, ref);
               }
             } else {
-              sorted.insert(compareReferences, refs, curRefs);
+              sorted.insert(compareReserves, refs, curRefs);
             }
           }
 
@@ -83,8 +83,7 @@ export function exitCondition(
           callRuntime(
             tag,
             "setConditionalRenderer",
-            t.numericLiteral(extra.visitIndex!),
-            writer.reserveToScopeId(tag, extra.reserve!),
+            t.numericLiteral(extra.reserve!.id),
             expr
           )
         )
