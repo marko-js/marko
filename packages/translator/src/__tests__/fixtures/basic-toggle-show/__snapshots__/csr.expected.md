@@ -19,7 +19,6 @@ container.querySelector("button").click();
 
 ```html
 <div>
-  Hello!
   <button>
     Toggle
   </button>
@@ -28,7 +27,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-
+inserted div0/#text0
+removed  after div0/#text0
 ```
 
 
@@ -46,7 +46,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-
+inserted div0/#text0
+removed  after div0/#text0
 ```
 
 
@@ -55,7 +56,6 @@ container.querySelector("button").click();
 
 ```html
 <div>
-  Hello!
   <button>
     Toggle
   </button>
@@ -64,5 +64,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-
+inserted div0/#text0
+removed  after div0/#text0
 ```
