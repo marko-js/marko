@@ -44,6 +44,7 @@ export default {
     }
 
     writer.visit(tag, writer.WalkCodes.Replace);
+    writer.enterShallow(tag);
     writer.start(tag);
   },
   exit(tag: t.NodePath<t.MarkoTag>) {

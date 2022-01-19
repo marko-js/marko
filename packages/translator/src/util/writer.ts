@@ -186,6 +186,10 @@ export function visit(
       walkString += String.fromCharCode(code);
     }
 
+    if (reserve.size) {
+      walkString += nCodeString(WalkCodes.Skip, reserve.size);
+    }
+
     appendLiteral(section.walks, walkString);
   }
 }

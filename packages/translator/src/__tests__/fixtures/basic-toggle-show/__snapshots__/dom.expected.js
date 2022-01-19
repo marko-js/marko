@@ -27,6 +27,6 @@ function _hydrate_show(show = _read(5)) {
 }
 
 export const template = "<div><!><button>Toggle</button></div>";
-export const walks = "D% ";
+export const walks = "D%+b ";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);
