@@ -6,18 +6,14 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tag-i
 
   _write(`${_markScopeOffset(0)}`);
 
-  if (x) {
-    _thing = {
-      x: 1,
+  if (x) _thing = {
+    x: 1,
 
-      renderBody() {
-        _write("Hello");
-      }
+    renderBody() {
+      _write("Hello");
+    }
 
-    };
-
-    _write(`${_markScopeOffset(0)}`);
-  }
+  };
 
   _customTag({
     thing: _thing

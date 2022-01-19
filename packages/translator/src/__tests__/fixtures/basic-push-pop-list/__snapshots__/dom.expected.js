@@ -32,7 +32,7 @@ function _apply_items(items) {
 
     _hydrate_items();
 
-    _write(6, _bind(_onclick));
+    _write(5, _bind(_onclick));
   }
 }
 
@@ -44,7 +44,7 @@ const _onclick2 = function () {
 };
 
 function _applyWith_items_id(items = _read(3), id = _read(2)) {
-  _write(5, _bind(_onclick2));
+  _write(4, _bind(_onclick2));
 
   _hydrateWith_items_id();
 }
@@ -56,11 +56,11 @@ function _hydrate_id(id = _read(2)) {
 function _hydrate_items(items = _read(3)) {
   _queue(_hydrateWith_items_id, 3);
 
-  _on(1, "click", _read(6));
+  _on(1, "click", _read(5));
 }
 
 function _hydrateWith_items_id(items = _read(3), id = _read(2)) {
-  _on(0, "click", _read(5));
+  _on(0, "click", _read(4));
 }
 
 export const template = "<div><button>Add</button><button>Remove</button></div>";

@@ -9,7 +9,7 @@ import { hydrate as _child, template as _child_template, walks as _child_walks }
 import { write as _write, read as _read, on as _on, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply() {
-  _write(2, () => {
+  _write(1, () => {
     console.log("hello world");
   });
 
@@ -17,7 +17,7 @@ function _apply() {
 }
 
 function _hydrate() {
-  _on(0, "click", _read(2));
+  _on(0, "click", _read(1));
 }
 
 export const template = `${_child_template}<div class=hi></div>`;

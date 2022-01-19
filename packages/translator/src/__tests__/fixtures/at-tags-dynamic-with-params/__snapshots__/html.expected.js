@@ -6,16 +6,12 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
 
   _write(`${_markScopeOffset(0)}`);
 
-  if (x) {
-    _item = {
-      renderBody(y) {
-        _write(`${_markScopeOffset(0)}${_escapeXML(y)}`);
-      }
+  if (x) _item = {
+    renderBody(y) {
+      _write(`${_markScopeOffset(0)}${_escapeXML(y)}`);
+    }
 
-    };
-
-    _write(`${_markScopeOffset(0)}`);
-  }
+  };
 
   _hello({
     item: _item

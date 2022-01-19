@@ -1,6 +1,6 @@
 let _item;
 
-const _if = _createRenderer("", "%b", _apply);
+const _if = _createRenderer("", "%", _apply);
 
 _hello({
   item: _item
@@ -13,7 +13,7 @@ function _apply() {
 }
 
 function _apply_x(x) {
-  if (_write(0, x)) _setConditionalRenderer(0, 4, x ? _if : null);
+  if (_write(0, x)) _setConditionalRenderer(0, x ? _if : null);
 }
 
 import { hydrate as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";

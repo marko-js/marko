@@ -3,15 +3,15 @@ import { markScopeOffset as _markScopeOffset, write as _write, register as _regi
 const _renderer = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko", input => {
   _write(`${_markScopeOffset(0)}`);
 
-  if (a + b) _write(`Hello${_markScopeOffset(0)}`);
+  if (a + b) _write("Hello");
 
-  _write(`${_markScopeOffset(1)}`);
+  _write(`${_markScopeOffset(4)}`);
 
-  if (a, b) _write(`World${_markScopeOffset(1)}`);
+  if (a, b) _write("World");
 
-  _write(`<div>${_markScopeOffset(2)}`);
+  _write(`<div>${_markScopeOffset(8)}`);
 
-  if (x) _write(`A${_markScopeOffset(2)}`);else if (y) _write("B");else _write("C");
+  if (x) _write("A");else if (y) _write("B");else _write("C");
 
   _write("</div>");
 });

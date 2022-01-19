@@ -8,20 +8,16 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
   for (const color of ["red", "blue", "green"]) {
     _write(`${_markScopeOffset(0)}`);
 
-    if (color === "red") {
-      _item.push({
-        style: {
-          color
-        },
+    if (color === "red") _item.push({
+      style: {
+        color
+      },
 
-        renderBody() {
-          _write("foo");
-        }
+      renderBody() {
+        _write("foo");
+      }
 
-      });
-
-      _write(`${_markScopeOffset(0)}`);
-    } else _item.push({
+    });else _item.push({
       style: {
         color
       },

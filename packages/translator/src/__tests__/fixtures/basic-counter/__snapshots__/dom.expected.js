@@ -12,7 +12,7 @@ const _onclick = function () {
 
 function _apply_clickCount(clickCount) {
   if (_write(2, clickCount)) {
-    _write(4, _bind(_onclick));
+    _write(3, _bind(_onclick));
 
     _hydrate_clickCount();
 
@@ -21,7 +21,7 @@ function _apply_clickCount(clickCount) {
 }
 
 function _hydrate_clickCount(clickCount = _read(2)) {
-  _on(0, "click", _read(4));
+  _on(0, "click", _read(3));
 }
 
 export const template = "<div><button><!></button></div>";

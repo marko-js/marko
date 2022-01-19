@@ -5,9 +5,9 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/basic-to
 
   _write(`<div>${_markScopeOffset(0)}`);
 
-  if (show) _write(`Hello!${_markScopeOffset(0)}`);
+  if (show) _write("Hello!");
 
-  _write(`${_markScopeOffset(1)}<button>Toggle</button></div>`);
+  _write(`${_markScopeOffset(4)}<button>Toggle</button></div>`);
 });
 
 export default _renderer;

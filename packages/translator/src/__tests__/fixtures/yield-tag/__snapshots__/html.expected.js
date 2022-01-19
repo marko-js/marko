@@ -5,12 +5,7 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/yield-ta
 
   _write(`${_markScopeOffset(0)}`);
 
-  if (show) {
-    _return = 1;
-
-    _write(`${_markScopeOffset(0)}`);
-  } else _return = 2;
-
+  if (show) _return = 1;else _return = 2;
   return _return;
 });
 

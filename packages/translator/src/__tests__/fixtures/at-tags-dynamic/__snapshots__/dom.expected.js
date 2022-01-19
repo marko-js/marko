@@ -3,7 +3,7 @@ const _item = [];
 
 for (const color of ["red", "blue", "green"]) {
   const _else = _createRenderer("", "", null),
-        _if = _createRenderer("", "b", null);
+        _if = _createRenderer("", "", null);
 }
 
 let _i = 0;
@@ -51,7 +51,7 @@ _hello({
 import { write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_color(color) {
-  if (_write(1, color)) _setConditionalRenderer(0, 5, color === "red" ? _if : _else);
+  if (_write(4, color)) _setConditionalRenderer(0, color === "red" ? _if : _else);
 }
 
 function _apply_row(row) {
