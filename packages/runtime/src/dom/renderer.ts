@@ -32,6 +32,13 @@ type RenderResult<I extends Input> = Node & {
 
 export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
+  walk(
+    dom.nodeType === NodeType.DocumentFragment
+      ? dom.firstChild!
+      : (dom as ChildNode),
+    renderer.___walks!,
+    scope
+  );
   scope.___startNode =
     dom.nodeType === NodeType.DocumentFragment
       ? dom.firstChild!
@@ -40,7 +47,6 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
     dom.nodeType === NodeType.DocumentFragment
       ? dom.lastChild!
       : (dom as ChildNode);
-  walk(scope.___startNode as Node, renderer.___walks!, scope);
   if (renderer.___render) {
     runWithScope(renderer.___render, ScopeOffsets.BEGIN_DATA, scope);
   }

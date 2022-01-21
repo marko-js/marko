@@ -6,7 +6,7 @@ import {
   write,
   read,
 } from "../../../dom/index";
-import { over, get, next, open, close, skip } from "../../utils/walks";
+import { over, get, next, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -74,26 +74,24 @@ export const execDynamicInput = (input: Input) => {
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Iter0Index {
-  ITEM = 0,
-  INDEX = 1,
-  ALL = 2,
-  TEXT = 3,
+  TEXT = 0,
+  ITEM = 1,
 }
 
-type iterScope = {
-  [Iter0Index.ITEM]: number;
-  [Iter0Index.INDEX]: number;
-  [Iter0Index.ALL]: number[];
-  [Iter0Index.TEXT]: Text;
-};
+// type iterScope = {
+//   [Iter0Index.TEXT]: Text;
+//   [Iter0Index.ITEM]: number;
+// };
 
 const iter0 = createRenderer(
   " ",
-  open(4) + skip(3) + get + next(1) + close,
+  open(4) + get + next(1) + close,
   undefined,
   0
 );
 
-const iter0_execItem = () => {
-  data(Iter0Index.TEXT, read<iterScope, Iter0Index.ITEM>(Iter0Index.ITEM));
+const iter0_execItem = (item: number) => {
+  if (write(Iter0Index.ITEM, item)) {
+    data(Iter0Index.TEXT, item);
+  }
 };

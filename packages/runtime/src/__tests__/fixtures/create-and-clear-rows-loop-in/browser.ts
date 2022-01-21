@@ -6,7 +6,7 @@ import {
   createRenderer,
   createRenderFn,
 } from "../../../dom/index";
-import { over, get, next, open, close, skip } from "../../utils/walks";
+import { over, get, next, open, close } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -43,8 +43,8 @@ type scope = {
 };
 
 // <div>
-//   <for|child| in=input.children>
-//     ${child.text}
+//   <for|key, child| in=input.children>
+//     ${child}
 //   </for>
 // </div>
 
@@ -56,7 +56,7 @@ export const execInputChildren = () => {
     Index.LOOP,
     read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
     iter0,
-    iter0_execItem
+    iter0_execItem as any
   );
 };
 
@@ -69,38 +69,23 @@ export const execDynamicInput = (input: Input) => {
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
 const enum Iter0Index {
-  ITEM = 0,
-  INDEX = 1,
-  ALL = 2,
-  TEXT = 3,
-  ITEM_TEXT = 4,
+  TEXT = 0,
+  CHILD = 1,
 }
 
 type Entry<T> = NonNullable<{ [K in keyof T]: [K, T[K]] }[keyof T]>;
-type Entries<T> = Entry<T>[];
 
-type iterScope = [
-  Entry<Input["children"]>,
-  number,
-  Entries<Input["children"]>,
-  Text,
-  string
-];
+// type iterScope = [Text, Entry<Input["children"]>[0]];
 
 const iter0 = createRenderer(
   " ",
-  open(5) + skip(3) + get + next(1) + close,
+  open(5) + get + next(1) + close,
   undefined,
   0
 );
 
-const iter0_execItem = () => {
-  if (
-    write(
-      Iter0Index.ITEM_TEXT,
-      read<iterScope, Iter0Index.ITEM>(Iter0Index.ITEM)[1]
-    )
-  ) {
-    data(Iter0Index.TEXT, read(Iter0Index.ITEM_TEXT));
+const iter0_execItem = ([, child]: Entry<Input["children"]>) => {
+  if (write(Iter0Index.CHILD, child)) {
+    data(Iter0Index.TEXT, child);
   }
 };

@@ -106,7 +106,7 @@ export function reconcile(
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        fragment.___insertBefore(newScopes[newStart], parent, null);
+        fragment.___insertBefore(newScopes[newStart], parent, afterReference);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {

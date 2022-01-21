@@ -122,7 +122,7 @@ const emptyMarkerMap = new Map();
 export const emptyMarkerArray = [getEmptyScope()];
 emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
 const emptyMap = new Map();
-const emptyArray = [] as unknown[];
+const emptyArray = [] as Scope[];
 
 export const enum LoopIndex {
   REFERENCE_NODE = 0,
@@ -155,8 +155,7 @@ export function setLoopOf<T>(
   newValues: T[],
   renderer: Renderer,
   keyFn?: (item: T) => unknown,
-  itemFn?: () => void,
-  indexFn?: () => void,
+  applyFn?: (item: T, index: number, array: T[]) => void,
   fragment: DOMFragment = singleNodeFragment
 ) {
   let newMap: Map<unknown, Scope>;
@@ -165,17 +164,19 @@ export function setLoopOf<T>(
   const referenceNode = read<Loop, LoopIndex.REFERENCE_NODE>(
     loopIndex + LoopIndex.REFERENCE_NODE
   );
-  const referenceIsMarker = referenceNode.nodeType === 8; /* Comment */
+  // TODO: compiler should use only comment so the text check can be removed
+  const referenceIsMarker =
+    referenceNode.nodeType === 8 /* Comment */ ||
+    referenceNode.nodeType === 3; /* Text */
   const oldMap =
     read<Loop, LoopIndex.SCOPE_MAP>(loopIndex + LoopIndex.SCOPE_MAP) ||
     (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
     read<Loop, LoopIndex.SCOPE_ARRAY>(loopIndex + LoopIndex.SCOPE_ARRAY) ||
     (referenceIsMarker ? emptyMarkerArray : (emptyArray as Scope[]));
-  let inserts = 0;
-  let moves = 0;
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
+  let needsReconciliation = true; // TODO: len !== oldArray.length;
 
   if (len > 0) {
     newMap = new Map();
@@ -187,29 +188,23 @@ export function setLoopOf<T>(
       let childScope = oldMap.get(key);
       if (!childScope) {
         childScope = createScope(renderer.___size);
-        childScope[ScopeOffsets.BEGIN_DATA] = item;
-        childScope[ScopeOffsets.BEGIN_DATA + 1] = index;
         initRenderer(renderer, childScope);
-        if (itemFn) {
-          runWithScope(itemFn, ScopeOffsets.BEGIN_DATA, childScope);
-        }
-        if (indexFn) {
-          runWithScope(indexFn, ScopeOffsets.BEGIN_DATA, childScope);
-        }
-        inserts++;
+        // TODO: once we can track moves
+        // needsReconciliation = true;
       } else {
-        if (itemFn && write(0, item, childScope, ScopeOffsets.BEGIN_DATA)) {
-          runWithScope(itemFn, ScopeOffsets.BEGIN_DATA, childScope);
-        }
-        if (write(1, index, childScope, ScopeOffsets.BEGIN_DATA)) {
-          moves++;
-          if (indexFn) {
-            runWithScope(indexFn, ScopeOffsets.BEGIN_DATA, childScope);
-          }
-        }
+        // TODO: track if any childScope has changed index
+        // needsReconciliation ||= oldIndexMap.get(key) !== index;
+      }
+      if (applyFn) {
+        runWithScope(applyFn as any, ScopeOffsets.BEGIN_DATA, childScope, [
+          item,
+          index,
+          newArray,
+        ]);
       }
       newMap.set(key, childScope);
       newArray.push(childScope);
+      // newIndexMap.set(key, index);
     }
     setContext(null);
   } else {
@@ -218,19 +213,20 @@ export function setLoopOf<T>(
       newArray = emptyMarkerArray;
       getEmptyScope(referenceNode as Comment);
     } else {
+      // Fast path when loop is only child of parent
       if (renderer.___hasUserEffects) {
         for (let i = 0; i < oldArray.length; i++) {
           destroyScope(oldArray[i]);
         }
       }
       referenceNode.textContent = "";
-      write(loopIndex + LoopIndex.SCOPE_MAP, emptyMap);
-      write(loopIndex + LoopIndex.SCOPE_ARRAY, emptyArray);
-      return;
+      newMap = emptyMap;
+      newArray = emptyArray;
+      needsReconciliation = false;
     }
   }
 
-  if (inserts || moves || len !== oldArray.length) {
+  if (needsReconciliation) {
     if (referenceIsMarker) {
       if (oldMap === emptyMarkerMap) {
         getEmptyScope(referenceNode as Comment);
@@ -255,8 +251,7 @@ export function setLoopFromTo(
   to: number,
   step: number,
   renderer: Renderer,
-  itemFn?: () => void,
-  indexFn?: () => void
+  applyFn?: (item: number, index: number, array: number[]) => void
 ) {
   const range: number[] = [];
 
@@ -264,7 +259,7 @@ export function setLoopFromTo(
     range.push(i);
   }
 
-  setLoopOf(loopIndex, range, renderer, keyFromTo, itemFn, indexFn);
+  setLoopOf(loopIndex, range, renderer, keyFromTo, applyFn);
 }
 
 function keyFromTo(item: number) {
@@ -275,9 +270,9 @@ export function setLoopIn(
   loopIndex: number,
   object: Record<string, unknown>,
   renderer: Renderer,
-  itemFn?: () => void
+  applyFn?: (item: [key: string, value: unknown], index: number) => void
 ) {
-  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn, itemFn);
+  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn, applyFn);
 }
 
 function keyIn(item: [string, unknown]) {

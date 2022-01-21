@@ -23,7 +23,12 @@ export function attr(elementIndex: number, name: string, value: unknown) {
 }
 
 export function data(textOrCommentIndex: number, value: unknown) {
-  (read(textOrCommentIndex) as Text | Comment).data = normalizeString(value);
+  const node = read(textOrCommentIndex) as Text | Comment;
+  const normalizedValue = normalizeString(value);
+  // TODO: benchmark if it is actually faster to check data first
+  if (node.data !== normalizedValue) {
+    node.data = normalizedValue;
+  }
 }
 
 export function attrs(elementIndex: number, index: number) {
