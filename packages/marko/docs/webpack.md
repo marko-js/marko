@@ -1,144 +1,205 @@
 # Marko + Webpack
 
-The [@marko/webpack/loader](https://github.com/marko-js/webpack) loader for [Webpack](https://webpack.github.io/) will automatically compile all imported Marko templates during bundling. In addition, it will automatically bundle any template dependencies (including required CSS).
+# Installation
 
-> **ProTip**: Want to see it in action? Check out the [`marko-webpack`](https://github.com/marko-js/examples/tree/master/examples/webpack-express) demo repository. Or run `npx @marko/create --template webpack-express` to use this sample as a starting point for a new app.
+> `@marko/webpack` >= 7 Only supports Marko 5+.
+> For Marko 4 support use `@marko/webpack@6`.
 
-## Installation
-
-```
-npm install marko
-npm install webpack @marko/webpack --save-dev
+```console
+npm install @marko/webpack
 ```
 
-## Client rendering
+### Loader: `@marko/webpack/loader`
 
-Let's say we have a simple view that we want to render in the browser: `hello.marko`
+The loader portion of this module can be used standalone and simply transforms your Marko templates into the appropriate JavaScript depending on your webpack target.
 
-_hello.marko_
+You can override the output by adding a `target` option to the loader of `target: "server" | "browser"`.
+
+### Plugin: `@marko/webpack/plugin`
+
+The plugin actually creates two separate webpack plugins, the `browser` plugin and the `server` plugin.
+
+These are intended to be used in a isomorphic [webpack multi compiler](https://github.com/webpack/webpack/tree/master/examples/multi-compiler) where you are bundling both the server and the browser. The way it works is that the server plugin is going to analyze the top level Marko components in your server and automatically communicate with the browser compiler to retrieve the assets for that template.
+
+This plugin also analyzes the top level Marko templates and determines if it is possible for them to rerender (currently the heuristic is simply does the component have an associated `class` or `component.js`). The plugin will automatically skip sending down any unnecessary top level templates to the browser.
+
+The end result is that you setup a multi compiler (as shown below) and you can simply import Marko templates, and all assets are automatically generated and inlined into an optimized server response. No need to keep track of a webpack manifest yourself!
+
+### Tag: `<webpack-assets>`
+
+The `<webpack-assets>` tag can be used along with the plugin in a multi-compiler setup. This tag allows you to inject `<script>`/`<style>` tags into a server-rendered template for the assets of an entry in the client compiler.
+
+#### Example Usage
 
 ```marko
-<h1>Hello ${input.name}</h1>
+<webpack-assets entry="tracking"/>
 ```
 
-First, let's create a `client.js` that requires the view and renders it to the body:
-
-_client.js_
+#### Example Config
 
 ```js
-import MyTemplate from "./hello.marko";
-
-MyTemplate.renderSync({ name: "Marko" }).appendTo(document.body);
-```
-
-Now, let's configure `webpack` to compile the `client.js` file and use `@marko/webpack/loader` for any `*.marko` files:
-
-_webpack.config.js_
-
-```js
-module.exports = {
-  entry: "./client.js",
-  output: {
-    path: __dirname,
-    filename: "static/bundle.js"
+// ...
+export default [
+  {
+    entry: "./server.js",
+    plugins: [markoPlugin.server]
+    // ...
   },
-  resolve: {
-    extensions: [".js", ".marko"]
-  },
-  module: {
-    rules: [
-      {
-        test: /\.marko$/,
-        loader: "@marko/webpack/loader"
-      }
-    ]
+  {
+    // ...
+    entry: {
+      tracking: "./tracking.js"
+    },
+    plugins: [markoPlugin.browser]
   }
-};
+];
 ```
 
-Run `webpack` from your terminal and you'll have a new `static/bundle.js` file created. Reference that from an html file and you're good to go.
+# Example
 
-_index.html_
+```javascript
+import MarkoPlugin from "@marko/webpack/plugin";
 
-```html
-<!DOCTYPE html>
-<html>
-  <body>
-    <script src="static/bundle.js"></script>
-  </body>
-</html>
-```
+const markoPlugin = new MarkoPlugin();
 
-Load up that page in your browser and you should see `Hello Marko` staring back at you.
-
-## Using CSS pre-processors
-
-If you're using inline css with pre-processors, you must configure the appropriate loader.
-
-_pretty.marko_
-
-```marko
-style.less {
-    .pretty {
-        color:@pretty-color;
-    }
-}
-
-<div.pretty/>
-```
-
-_webpack.config.js_
-
-```js
-//...
-module: {
-  rules: [
-    //...
-    {
-      test: /\.less$/, // matches style.less { ... } from our template
-      use: ["style-loader", "css-loader", "less-loader"]
-    }
-    //...
-  ];
-}
-//...
-```
-
-## Extracting CSS
-
-It is recommended to configure the [`MiniCSSExtractPlugin`](https://webpack.js.org/plugins/mini-css-extract-plugin) so that you get a separate css bundle rather than it being included in the JavaScript bundle.
-
-```
-npm install mini-css-extract-plugin --save-dev
-```
-
-_webpack.config.js_
-
-```js
-const CSSExtractPlugin = require("mini-css-extract-plugin");
-
-module.exports = {
-  entry: "./client.js",
-  resolve: {
-    extensions: [".js", ".marko"]
+export default [
+  {
+    entry: "./server.js",
+    module: {
+      rules: [
+        {
+          test: /\.marko$/,
+          loader: "@marko/webpack/loader"
+        }
+      ]
+    },
+    plugins: [markoPlugin.server]
   },
-  module: {
+  {
     rules: [
       {
         test: /\.marko$/,
         loader: "@marko/webpack/loader"
       },
+      // If using `style` blocks with Marko you must use an appropriate loader
       {
-        test: /\.(less|css)$/,
-        use: [CSSExtractPlugin.loader, "css-loader", "less-loader"]
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
-    ]
-  },
-  plugins: [
-    // Write out CSS bundle to its own file:
-    new CSSExtractPlugin({
-      filename: "[name].css"
-    })
-  ]
-};
+    ],
+    plugins: [markoPlugin.browser]
+  }
+];
 ```
+
+## Babel options (Marko 5+)
+
+If you are using Marko 5 with this plugin you can manually override the Babel configuration used by passing a `babelConfig` object along side the `@marko/webpack/loader`. By default Babels regular [config file resolution](https://babeljs.io/docs/en/config-files) will be used.
+
+```javascript
+export default {
+    module: {
+      rules: [
+        {
+          test: /\.marko$/,
+          loader: "@marko/webpack/loader",
+          options: {
+            babelConfig: {
+              presets: [
+                ["@babel/preset-env", { node: "current" }]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+```
+
+## Multiple client side compilers
+
+Sometimes you need to have multiple compilers for your client side bundles. For example with [`i18n`](https://github.com/webpack/webpack/tree/master/examples/i18n) or [even shipping dynamic runtime bundles to the browser](https://github.com/eBay/arc/tree/master/packages/arc-webpack).
+
+The Marko webpack browser plugin can be passed to multiple webpack compilers. At runtime you can provide a `$global.buildName` when rendering which will cause assets from the webpack compiler with that name to be included in the page.
+
+For example with the webpack i18n plugin you might have a config like the following:
+
+```js
+import MarkoPlugin from "@marko/webpack/plugin";
+import I18nPlugin from "i18n-webpack-plugin";
+
+const languages = {
+  en: null,
+  de: require("./de.json")
+};
+
+const markoPlugin = new MarkoPlugin();
+
+export default [
+  {
+    name: "Server",
+    entry: "./server.js",
+    module: {
+      rules: [
+        {
+          test: /\.marko$/,
+          loader: "@marko/webpack/loader"
+        }
+      ]
+    },
+    plugins: [markoPlugin.server]
+  },
+  ...Object.keys(languages).map(language => ({
+    name: `Browser-${language}`,
+    rules: [
+      {
+        test: /\.marko$/,
+        loader: "@marko/webpack/loader"
+      },
+      // If using `style` blocks with Marko you must use an appropriate loader
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      }
+    ],
+    plugins: [new I18nPlugin(languages[language]), markoPlugin.browser]
+  }))
+];
+```
+
+With the above config you can render your top level Marko template server side with a `$global.buildName`, like so:
+
+```javascript
+template.render({ $global: { buildName: "Browser-de" } });
+```
+
+This will automatically send assets for the German language.
+Of course in this case you'll want to conditionally send the appropriate assets given a users locale. This can be some simply, like so:
+
+```javascript
+template.render({ $global: { buildName: `Browser-${req.language}` } });
+```
+
+Note: If a bundle with the provided name does not exist an error will be thrown.
+
+## Multiple copies of Marko
+
+In some cases you may want to embed multiple isolated copies of Marko on the page. Since Marko relies on some `window` properties to initialize this can cause issues. For example, by default Marko will read the server rendered hydration code from `window.$components`. In Marko you can change these `window` properties by rendering with `{ $global: { runtimeId: "MY_MARKO_RUNTIME_ID" } }` as input on the server side.
+
+This plugin exposes a `runtimeId` option produces output that automatically sets `$global.runtimeId` on the server side and initializes properly in the browser.
+The `runtimeId` will default to the [`uniqueName` option](https://webpack.js.org/configuration/output/#outputuniquename) from the server compiler in the webpack config.
+
+```js
+import MarkoPlugin from "@marko/webpack/plugin";
+
+const markoPlugin = new MarkoPlugin({
+  runtimeId: "MY_MARKO_RUNTIME_ID" // default to webpack `output.uniqueName` option.
+});
+```
+
+Note: This option will also override the default values for the `jsonpFunction`, `chunkCallbackName` and `hotUpdateFunction` webpack `output` options, which all use global variables, to be prefixed with the `runtimeId`.
+
+## Dynamic public paths
+
+When using the plugin, the server will automatically sync the runtime [`__webpack_public_path__`](https://webpack.js.org/guides/public-path/#on-the-fly) with the browser.
+This means that you only need to setup the dynamic public path on the server side.

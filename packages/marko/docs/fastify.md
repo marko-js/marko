@@ -1,37 +1,47 @@
-# Fastify + Marko
+# Marko + Fastify
 
-See the [lasso-fastify](https://github.com/marko-js/examples/tree/master/examples/lasso-fastify) sample
-project for a fully-working example.
+## Quick Start
 
-## Installation
-
-```bash
-npm install fastify --save
-npm install point-of-view --save
-npm install marko --save
+```terminal
+npm init marko -- --template vite-fastify
 ```
 
-## Usage
+See the [the fastify sample](https://github.com/marko-js/examples/tree/master/examples/vite-fastify)
+project for a working example.
 
-```js
-const fastify = require("fastify")();
+## From Scratch
 
-fastify.register(require("point-of-view"), {
-  engine: {
-    marko: require("marko")
-  }
-});
+First install Marko and the fastify related dependencies:
 
-fastify.get("/", (req, reply) => {
-  reply.view("/index.marko", {
-    name: "Frank",
-    count: 30,
-    colors: ["red", "green", "blue"]
-  });
-});
-
-fastify.listen(8080, err => {
-  if (err) throw err;
-  console.log(`Server listening on ${fastify.server.address().port}`);
-});
+```terminal
+npm install marko @marko/fastify fastify --save
 ```
+
+### Usage
+
+The [`@marko/fastify`](https://github.com/marko-js/fastify/) adds a `reply.marko` decorator to the `reply` object. This function allows us to pass in a Marko template and supports Marko's streaming and modular approach to templates.
+
+By using `reply.marko` you'll automatically have access to `app.locals`, and `reply.locals` from within your Marko template and custom tags. These values are added to `out.global`.
+
+```javascript
+import fastify from "fastify";
+import markoPlugin from "@marko/fastify";
+import Template from "./template.marko";
+
+const app = fastify();
+
+app.register(markoPlugin);
+
+app.get("/", (request, reply) => {
+  // Streams Marko template into the response.
+  // Forwards errors into fa error handler.
+  reply.marko(Template, { hello: "world" });
+});
+
+await fastify.listen(3000);
+```
+
+### BYOB (Bring your own bundler)
+
+For the large portion of Marko's API a bundler is required. The example code above assumes that Marko templates can be loaded in your environment.
+Marko supports a number of bundlers, [take a look through our supported bundlers](#bundler-integrations) and pick what works best for you.

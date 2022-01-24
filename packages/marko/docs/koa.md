@@ -1,22 +1,21 @@
-# Koa + Marko
+# Marko + Koa
 
-See [the `marko-koa` sample project](https://github.com/marko-js/examples/tree/master/examples/lasso-koa) for a fully-working example.
+See the [the koa sample](https://github.com/marko-js/examples/tree/master/examples/vite-koa)
+project for a working example.
 
 ## Installation
 
-```sh
+```terminal
 npm install koa marko --save
 ```
 
 ## Usage
 
 ```javascript
-require("@marko/compiler/register");
+import Koa from "koa";
+import template from "./index.marko";
 
-const Koa = require("koa");
 const app = new Koa();
-
-const template = require("./index.marko");
 
 app.use((ctx, next) => {
   ctx.type = "html";
@@ -30,33 +29,7 @@ app.use((ctx, next) => {
 app.listen(8080);
 ```
 
-You may also easily add `gzip` streaming support without additional dependencies:
+### BYOB (Bring your own bundler)
 
-```javascript
-require("@marko/compiler/register");
-const zlib = require("zlib");
-
-const Koa = require("koa");
-const app = new Koa();
-
-const template = require("./index.marko");
-
-app.use((ctx, next) => {
-  ctx.type = "html";
-  ctx.body = template.stream({
-    name: "Frank",
-    count: 30,
-    colors: ["red", "green", "blue"]
-  });
-
-  ctx.vary("Accept-Encoding");
-  if (ctx.acceptsEncodings("gzip")) {
-    ctx.set("Content-Encoding", "gzip");
-    ctx.body = ctx.body.pipe(
-      zlib.createGzip({ flush: zlib.constants.Z_PARTIAL_FLUSH })
-    );
-  }
-});
-
-app.listen(8080);
-```
+For the large portion of Marko's API a bundler is required. The example code above assumes that Marko templates can be loaded in your environment.
+Marko supports a number of bundlers, [take a look through our supported bundlers](#bundler-integrations) and pick what works best for you.
