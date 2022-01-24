@@ -34,7 +34,7 @@ Content Delivery Networks (CDNs) consider efficient streaming one of their best 
 - For Fastly or another provider that uses VCL configuration, check [if backend responses have `beresp.do_stream = true` set](https://developer.fastly.com/reference/vcl/variables/backend-response/beresp-do-stream/).
 
 - Some [Akamai features designed to mitigate slow backends can ironically slow down fast chunked responses](https://community.akamai.com/customers/s/question/0D50f00006n975d/enabling-chunked-transfer-encoding-responses). Try toggling off Adaptive Acceleration, Ion, mPulse, Prefetch, and/or similar performance features. Also check for the following in the configuration:
-  
+
   ```html
   <network:http.buffer-response-v2>off</network:http.buffer-response-v2>
   ```
@@ -47,12 +47,16 @@ For extreme cases where [Node streams very small HTML chunks with its built-in c
 const http = require("http");
 const zlib = require("zlib");
 
-const markoTemplate = require ("./something.marko");
+const markoTemplate = require("./something.marko");
 
-http.createServer(function (request, response) {
-  response.writeHead(200, { 'content-type': 'text/html;charset=utf-8' });    
-  const templateStream = markoTemplate.stream({});
-  const gzipStream = zlib.createGzip({ flush: zlib.constants.Z_PARTIAL_FLUSH });
-  templateStream.pipe(outputStream).pipe(response);
-}).listen(80);
+http
+  .createServer(function (request, response) {
+    response.writeHead(200, { "content-type": "text/html;charset=utf-8" });
+    const templateStream = markoTemplate.stream({});
+    const gzipStream = zlib.createGzip({
+      flush: zlib.constants.Z_PARTIAL_FLUSH
+    });
+    templateStream.pipe(outputStream).pipe(response);
+  })
+  .listen(80);
 ```

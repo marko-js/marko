@@ -10,7 +10,8 @@
       "Styles",
       "Events",
       "Body content",
-      "Marko 5 upgrade"
+      "Marko 5 upgrade",
+      "Troubleshooting Streaming"
     ]
   },
   {
@@ -30,11 +31,11 @@
   },
   {
     "title": "Bundler Integrations",
-    "docs": ["Webpack", "Rollup", "Lasso"]
+    "docs": ["Vite", "Webpack", "Rollup", "Lasso"]
   },
   {
     "title": "Server Integrations",
-    "docs": ["Express", "Koa", "HTTP", "Fastify"]
+    "docs": ["Cloudflare Workers", "Express", "Fastify", "Koa", "HTTP"]
   },
   {
     "title": "Tooling",
