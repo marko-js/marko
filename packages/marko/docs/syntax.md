@@ -358,6 +358,16 @@ _HTML Output:_
 <button>Click me!</button>
 ```
 
+As a shorthand if there is a variable in scope and [no other matching tag is discovered](#how-tags-are-discovered) the wrapping `${}` is unnecessary.
+
+For example the following are equivalent:
+
+```marko
+$ const MyTag = href ? 'a' : 'button';
+<${MyTag}/>
+<MyTag/>
+```
+
 > **ProTip:**
 > If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use a null dynamic tag. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 >

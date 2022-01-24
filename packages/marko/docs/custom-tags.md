@@ -184,3 +184,18 @@ The [`<macro>`](./core-tags.md#macro) tag allows you to create custom tags in th
 <welcome-message name="Patrick"/>
 <welcome-message name="Austin"/>
 ```
+
+# From Variables
+
+If no other tag would be discovered Marko will check for an in scope variable that matches the tag name.
+
+```marko
+import SomeTag from "./somewhere.marko"
+
+$ const { renderBody } = input;
+$ const MyTag = input.href ? "a" : "button";
+
+<SomeTag/>
+<MyTag/>
+<renderBody/>
+```
