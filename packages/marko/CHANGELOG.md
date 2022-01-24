@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.18.0](https://github.com/marko-js/marko/compare/v5.17.10...v5.18.0) (2022-01-24)
+
+
+### Features
+
+* add shorthand for dynamic tag names from identifier ([#1766](https://github.com/marko-js/marko/issues/1766)) ([94e4fd8](https://github.com/marko-js/marko/commit/94e4fd818bffaf798298317e6813d369a3c7f413))
+
+
+
+
+
 ## [5.17.10](https://github.com/marko-js/marko/compare/v5.17.9...v5.17.10) (2022-01-14)
 
 **Note:** Version bump only for package marko
