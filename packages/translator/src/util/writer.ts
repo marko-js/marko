@@ -300,10 +300,13 @@ export function addStatement(
   }
 }
 
-export function bindingToApplyId(path: t.NodePath<any>, binding: Reserve) {
-  const section = path.state.section as Section;
+export function bindingToApplyId(
+  path: t.NodePath<any>,
+  binding: Reserve,
+  section: Section = path.state.section
+) {
   const groupIndex = sorted.findIndex(compareReferenceGroups, section.apply, {
-    references: [binding],
+    references: binding,
   } as ReferenceGroup);
 
   if (groupIndex === -1) {
@@ -322,10 +325,13 @@ export function bindingToApplyId(path: t.NodePath<any>, binding: Reserve) {
 }
 
 export function getSectionMeta(section: Section) {
+  const [firstApply] = section.apply;
+  const defaultApply =
+    firstApply && !firstApply.references && firstApply.identifier;
   return {
-    apply: section.apply[0]?.identifier,
-    walks: toTemplateOrStringLiteral(section.walks),
-    writes: toTemplateOrStringLiteral(section.writes),
+    apply: defaultApply || t.nullLiteral(),
+    walks: toTemplateOrStringLiteral(section.walks) || t.stringLiteral(""),
+    writes: toTemplateOrStringLiteral(section.writes) || t.stringLiteral(""),
   };
 }
 

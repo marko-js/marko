@@ -5,6 +5,8 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
   const _col = [];
   const _item = [];
 
+  _write(`${_markScopeOffset(0)}`);
+
   for (const color of ["red", "blue", "green"]) {
     _write(`${_markScopeOffset(0)}`);
 
@@ -29,11 +31,15 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/at-tags-
     });
   }
 
+  _write(`${_markScopeOffset(0)}`);
+
   let _i = 0;
 
   for (const col of [["a", "b"], ["c", "d"]]) {
     let i = _i++;
     const _row = [];
+
+    _write(`${_markScopeOffset(0)}`);
 
     for (const row of col) {
       _row.push({

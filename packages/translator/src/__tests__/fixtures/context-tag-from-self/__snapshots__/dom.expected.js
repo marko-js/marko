@@ -14,5 +14,5 @@ function _apply_x(x) {
 
 export const template = "<div></div>";
 export const walks = "";
-export const apply;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

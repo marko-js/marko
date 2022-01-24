@@ -60,5 +60,5 @@ function _applyWith_d_c(d = _read(3), c = _read(2)) {
 
 export const template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}`;
 export const walks = ` ${_customTag_walks}${_customTag_walks}`;
-export const apply = _apply_input;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

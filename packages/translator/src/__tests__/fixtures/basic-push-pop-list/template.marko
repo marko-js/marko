@@ -4,6 +4,11 @@
 
   <for|item| of=items>${item}</for>
 
-  <button onclick() { items = [...items, id++]; }>Add</button>
-  <button onclick() { items = items.slice(0, -1); }>Remove</button>
+  <button id="add" onclick() { 
+    // TODO: nested writes ([...items, id++]) don't work
+    const nextId = id + 1;
+    id = nextId;
+    items = [...items, nextId];
+  }>Add</button>
+  <button id="remove" onclick() { items = items.slice(0, -1); }>Remove</button>
 </div>

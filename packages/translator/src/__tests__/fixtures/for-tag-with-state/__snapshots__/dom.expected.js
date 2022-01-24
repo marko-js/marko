@@ -1,31 +1,23 @@
-let _i = 0;
+const _for = _createRenderer("<div><!>: <!></div>", "D%c%", null);
 
-for (const val of arrA) {
-  let i = _i++;
-}
+const _for2 = _createRenderer("<div><!>: <!></div>", "D%c%", null);
 
-let _i2 = 0;
-
-for (const val of arrB) {
-  let i = _i2++;
-}
-
-import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, write as _write, createRenderer as _createRenderer, setLoopOf as _setLoopOf, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_val(val) {
-  if (_write(2, val)) _data(1, val);
+  if (_write(9, val)) _data(1, val);
 }
 
 function _apply_i(i) {
-  if (_write(3, i)) _data(0, i);
+  if (_write(10, i)) _data(0, i);
 }
 
 function _apply_val2(val) {
-  if (_write(2, val)) _data(1, val);
+  if (_write(12, val)) _data(1, val);
 }
 
 function _apply_i2(i) {
-  if (_write(3, i)) _data(0, i);
+  if (_write(13, i)) _data(0, i);
 }
 
 function _apply() {
@@ -35,14 +27,14 @@ function _apply() {
 }
 
 function _apply_arrA(arrA) {
-  if (_write(0, arrA)) {}
+  if (_write(8, arrA)) _setLoopOf(0, arrA, _for, null, _apply_val);
 }
 
 function _apply_arrB(arrB) {
-  if (_write(1, arrB)) {}
+  if (_write(11, arrB)) _setLoopOf(4, arrB, _for2, null, _apply_val2);
 }
 
-export const template = "";
-export const walks = "";
+export const template = "<!><!>";
+export const walks = "%+b%+";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

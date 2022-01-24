@@ -55,8 +55,9 @@ export function getSection(path: t.NodePath<any>) {
 
     if (
       cur.type === "Program" ||
-      (cur.type === "MarkoTag" &&
-        analyzeTagNameType(cur) !== TagNameTypes.NativeTag)
+      (cur.type === "MarkoTagBody" &&
+        analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
+          TagNameTypes.NativeTag)
     ) {
       return startSection(cur);
     }
@@ -86,7 +87,12 @@ export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
 export function reserveScope(
   type: ReserveType,
   section: Section,
-  node: t.MarkoTag | t.MarkoAttribute | t.MarkoPlaceholder | t.Identifier,
+  node:
+    | t.MarkoTag
+    | t.MarkoAttribute
+    | t.MarkoPlaceholder
+    | t.Identifier
+    | t.MarkoTagBody,
   name: string,
   size = 0
 ) {

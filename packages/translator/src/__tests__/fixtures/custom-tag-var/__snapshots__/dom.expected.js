@@ -9,5 +9,5 @@ function _apply_data(data) {
 
 export const template = `${_child_template}<!>`;
 export const walks = `${_child_walks}%`;
-export const apply = _apply_data;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

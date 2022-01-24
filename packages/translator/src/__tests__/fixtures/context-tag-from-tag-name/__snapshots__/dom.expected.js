@@ -15,5 +15,5 @@ function _apply_message(message) {
 import { hydrate as _other, template as _other_template, walks as _other_walks } from "./components/other.marko";
 export const template = `${_other_template}`;
 export const walks = `${_other_walks}`;
-export const apply;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

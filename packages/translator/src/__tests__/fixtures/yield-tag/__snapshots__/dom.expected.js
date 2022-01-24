@@ -12,5 +12,5 @@ function _apply_show(show) {
 
 export const template = "<!>";
 export const walks = "%+";
-export const apply = _apply_show;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

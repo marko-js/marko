@@ -14,5 +14,5 @@ function _apply_missing(missing) {
 
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
 export const walks = "b%c%c%";
-export const apply = _apply_name;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

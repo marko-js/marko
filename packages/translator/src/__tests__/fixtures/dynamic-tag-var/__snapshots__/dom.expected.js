@@ -15,5 +15,5 @@ const el1 = _dynamicTag(_tagName2, null);
 import { dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = "";
 export const walks = "";
-export const apply;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

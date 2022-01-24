@@ -14,5 +14,5 @@ function _apply_message(message) {
 
 export const template = "";
 export const walks = "";
-export const apply;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

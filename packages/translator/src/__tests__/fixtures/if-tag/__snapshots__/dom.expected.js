@@ -36,5 +36,5 @@ function _applyWith_x_y(x = _read(14), y = _read(15)) {
 
 export const template = "<!><!><div><!></div>";
 export const walks = "%+b%+bD%+";
-export const apply = _apply_a;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

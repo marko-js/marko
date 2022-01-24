@@ -6,5 +6,5 @@ function _apply_name(name) {
 
 export const template = "<div></div>";
 export const walks = " ";
-export const apply = _apply_name;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

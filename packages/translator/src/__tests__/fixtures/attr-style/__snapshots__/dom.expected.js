@@ -41,5 +41,5 @@ function _apply_color(color) {
 
 export const template = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}`;
 export const walks = ` ${_customTag_walks}${_customTag_walks}${_customTag_walks}`;
-export const apply = _apply_color;
+export const apply = null;
 export default _createRenderFn(template, walks, apply);

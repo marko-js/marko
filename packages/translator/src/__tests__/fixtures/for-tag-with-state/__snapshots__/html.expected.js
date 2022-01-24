@@ -1,7 +1,10 @@
-import { markScopeOffset as _markScopeOffset, escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markScopeOffset as _markScopeOffset, write as _write, escapeXML as _escapeXML, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag-with-state/template.marko", input => {
   const arrA = [1, 2, 3];
+
+  _write(`${_markScopeOffset(0)}`);
+
   let _i = 0;
 
   for (const val of arrA) {
@@ -11,6 +14,9 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/for-tag-
   }
 
   const arrB = [1, 2, 3];
+
+  _write(`${_markScopeOffset(4)}`);
+
   let _i2 = 0;
 
   for (const val of arrB) {
