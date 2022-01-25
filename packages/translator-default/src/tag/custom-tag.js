@@ -40,30 +40,31 @@ export default function (path, isNullable) {
       }
     }
 
+    let binding = path.scope.getBinding(tagName);
+    if (binding && !binding.identifier.loc) binding = null;
+
     if (relativePath) {
-      if (path.scope.hasBinding(tagName)) {
+      if (binding) {
         console.warn(
           path.buildCodeFrameError(
             `The <${tagName}> tag has been resolved from the filesystem, however a local variable with the same name exists. In the next major version of Marko the local variable will tag precedence.`
           )
         );
       }
-    } else {
-      if (path.scope.hasBinding(tagName)) {
-        path.set("name", t.identifier(tagName));
-        return dynamicTag(path);
-      } else if (markoOpts.ignoreUnrecognizedTags) {
-        return nativeTag(path);
-      } else {
-        throw path
-          .get("name")
-          .buildCodeFrameError(
-            `Unable to find entry point for custom tag <${tagName}>.`
-          );
-      }
-    }
 
-    tagIdentifier = importDefault(file, relativePath, tagName);
+      tagIdentifier = importDefault(file, relativePath, tagName);
+    } else if (binding) {
+      path.set("name", t.identifier(tagName));
+      return dynamicTag(path);
+    } else if (markoOpts.ignoreUnrecognizedTags) {
+      return nativeTag(path);
+    } else {
+      throw path
+        .get("name")
+        .buildCodeFrameError(
+          `Unable to find entry point for custom tag <${tagName}>.`
+        );
+    }
   } else {
     tagIdentifier = name;
   }
