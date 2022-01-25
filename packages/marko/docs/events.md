@@ -124,7 +124,7 @@ The above code listens to native `change` events from the `<input>` element, and
 
 ```marko
 <form>
-  <email-input name="email" on-email-change(...)/>
+  <email-input name="email" on-email-change("...")/>
 </form>
 ```
 

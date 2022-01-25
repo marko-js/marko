@@ -737,28 +737,23 @@ the server or in the browser. For example, given the following template:
 
 #### Compiled for the server:
 
-```marko
+```js
 var marko_template = require("marko/html").t(__filename),
-    marko_helpers = require("marko/runtime/html/helpers"),
-    marko_escapeXml = marko_helpers.x;
+  marko_helpers = require("marko/runtime/html/helpers"),
+  marko_escapeXml = marko_helpers.x;
 
 function render(input, out) {
-  out.w("<div>Hello " +
-    marko_escapeXml(input.name) +
-    "!</div>");
+  out.w("<div>Hello " + marko_escapeXml(input.name) + "!</div>");
 }
 ```
 
 #### Compiled for the browser:
 
-```marko
+```js
 var marko_template = require("marko/vdom").t(__filename);
 
 function render(input, out) {
-  out.e("DIV", null, 3)
-    .t("Hello ")
-    .t(input.name)
-    .t("!");
+  out.e("DIV", null, 3).t("Hello ").t(input.name).t("!");
 }
 ```
 
