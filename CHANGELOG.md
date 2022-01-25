@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.18.2](https://github.com/marko-js/marko/compare/v5.18.1...v5.18.2) (2022-01-25)
+
+
+### Bug Fixes
+
+* update invalid docs link ([3e67bfe](https://github.com/marko-js/marko/commit/3e67bfe1e52da5ae077613a804ea5ef6b4c3d8f4))
+
+
+
+
+
 ## [5.18.1](https://github.com/marko-js/marko/compare/v5.18.0...v5.18.1) (2022-01-25)
 
 
