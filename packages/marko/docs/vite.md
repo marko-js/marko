@@ -18,7 +18,7 @@ export default defineConfig({
 
 # Linked Mode
 
-By default this plugin operates in `linked` mode (you can disabled this by passing [`linked: false` as an option](#options.linked)). In `linked` mode the plugin automatically discovers all of the entry `.marko` files while compiling the server, and tells `Vite` which modules to load in the browser.
+By default this plugin operates in `linked` mode (you can disabled this by passing [`linked: false` as an option](#optionslinked)). In `linked` mode the plugin automatically discovers all of the entry `.marko` files while compiling the server, and tells `Vite` which modules to load in the browser.
 
 With this you _do not_ create `.html` files for `Vite`, it's Marko all the way down!
 Scripts, styles and other content that _would have_ been injected into the `.html` files is instead automatically injected into your `.marko` templates.
