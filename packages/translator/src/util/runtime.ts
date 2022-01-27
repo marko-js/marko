@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
+import { Reserve, getParentSectionId } from "../analyze/util/sections";
 
 export function importRuntime<T extends t.Node>(
   path: t.NodePath<T>,
@@ -51,3 +52,37 @@ function getRuntimePath<T extends t.Node>(path: t.NodePath<T>, output: string) {
     "MARKO_SRC" ? "src" : optimize ? "dist" : "dist/debug"
   }/${output}`;
 }
+
+export function callRead(path: t.NodePath, reference: Reserve) {
+  const sectionId = path.state.sectionId;
+  const diff = getScopeDepthDifference(reference, sectionId);
+  switch (diff) {
+    case 0:
+      return callRuntime(path, "read", t.numericLiteral(reference.id));
+    case 1:
+      return callRuntime(path, "readInOwner", t.numericLiteral(reference.id));
+    default:
+      return callRuntime(path, "readInOwner", t.numericLiteral(reference.id), t.numericLiteral(diff));
+  }
+}
+
+export function callQueue(path: t.NodePath, fnIdentifier: t.Identifier, reference: Reserve, value: t.Expression) {
+  const sectionId = getParentSectionId(path);
+  const diff = getScopeDepthDifference(reference, sectionId);
+  switch (diff) {
+    case 0:
+      return callRuntime(path, "queue", fnIdentifier, t.numericLiteral(reference.id), value);
+    case 1:
+      return callRuntime(path, "queueInOwner", fnIdentifier, t.numericLiteral(reference.id), value);
+    default:
+      return callRuntime(path, "queueInOwner", fnIdentifier, t.numericLiteral(reference.id), value, t.numericLiteral(diff));
+  }
+}
+
+function getScopeDepthDifference(reference: Reserve, sectionId: number) {
+  if (reference.sectionId !== sectionId) {
+    return 1;
+  }
+  return 0;
+}
+

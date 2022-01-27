@@ -1,6 +1,6 @@
 _pushContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko", 1);
 
-_write("<span>");
+_write("<div><span>");
 
 const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko");
 
@@ -12,7 +12,11 @@ function _apply_x(x) {
   if (_write(1, x)) _data(0, x);
 }
 
-export const template = "<div></div>";
-export const walks = "";
+function _apply_x(x) {
+  if (_write(1, x)) _data(0, x);
+}
+
+export const template = "<!></span></div>";
+export const walks = "E%";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

@@ -5,19 +5,19 @@ const _for2 = _createRenderer("<div><!>: <!></div>", "D%c%", null);
 import { data as _data, write as _write, createRenderer as _createRenderer, setLoopOf as _setLoopOf, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_val(val) {
-  if (_write(9, val)) _data(1, val);
+  if (_write(2, val)) _data(1, val);
 }
 
 function _apply_i(i) {
-  if (_write(10, i)) _data(0, i);
+  if (_write(3, i)) _data(0, i);
 }
 
 function _apply_val2(val) {
-  if (_write(12, val)) _data(1, val);
+  if (_write(2, val)) _data(1, val);
 }
 
 function _apply_i2(i) {
-  if (_write(13, i)) _data(0, i);
+  if (_write(3, i)) _data(0, i);
 }
 
 function _apply() {
@@ -31,7 +31,7 @@ function _apply_arrA(arrA) {
 }
 
 function _apply_arrB(arrB) {
-  if (_write(11, arrB)) _setLoopOf(4, arrB, _for2, null, _apply_val2);
+  if (_write(9, arrB)) _setLoopOf(4, arrB, _for2, null, _apply_val2);
 }
 
 export const template = "<!><!>";

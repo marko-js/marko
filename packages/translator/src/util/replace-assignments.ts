@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 
 export default function replaceAssignments(
   binding: t.Binding,
-  map: (value: t.Expression) => t.Expression
+  map: (assignment: t.NodePath, value: t.Expression) => t.Expression
 ): void {
   for (const assignment of binding.constantViolations) {
     let value: t.Expression | undefined;
@@ -27,7 +27,7 @@ export default function replaceAssignments(
     }
 
     if (value) {
-      assignment.parentPath!.replaceWith(map(value));
+      assignment.parentPath!.replaceWith(map(assignment, value));
     }
   }
 }

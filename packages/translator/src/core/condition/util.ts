@@ -11,13 +11,13 @@ const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   {
     tag: t.NodePath<t.MarkoTag>;
-    section: writer.Section;
+    section: writer.SectionTranslate;
   }[]
 >();
 
 export function exitCondition(
   tag: t.NodePath<t.MarkoTag>,
-  section: writer.Section
+  section: writer.SectionTranslate
 ) {
   const nextTag = tag.getNextSibling();
   const isLast = !(
@@ -39,19 +39,11 @@ export function exitCondition(
 
       for (let i = branches.length; i--; ) {
         const { tag, section } = branches[i];
-        const id = tag.scope.generateUidIdentifierBasedOnNode(tag.node.name);
         const [testAttr] = tag.node.attributes;
-        const {
-          writes = t.stringLiteral(""),
-          walks = t.stringLiteral(""),
-          apply = t.nullLiteral(),
-        } = writer.getSectionMeta(section);
-        declarators.push(
-          t.variableDeclarator(
-            id,
-            callRuntime(tag, "createRenderer", writes, walks, apply)
-          )
-        );
+        const rendererDeclarator = writer.getSectionDeclarator(tag, section)
+        const id = rendererDeclarator.id as t.Identifier;
+
+        declarators.push(rendererDeclarator);
 
         tag.remove();
 

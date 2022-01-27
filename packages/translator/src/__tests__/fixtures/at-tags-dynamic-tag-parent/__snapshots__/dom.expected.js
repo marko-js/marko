@@ -18,7 +18,7 @@ _dynamicTag(x, {
 });
 
 import { write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export const template = "";
+export const template = "Body content";
 export const walks = "";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

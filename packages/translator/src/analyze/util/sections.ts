@@ -13,7 +13,7 @@ export const enum ReserveType {
 
 export interface Reserve {
   type: ReserveType;
-  section: Section;
+  sectionId: number;
   name: string;
   size: number;
   id: number;
@@ -22,12 +22,12 @@ export interface Reserve {
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     sections?: Section[];
-    section?: Section;
+    sectionId?: number;
     reserve?: Reserve;
   }
 
   export interface MarkoTagBodyExtra {
-    section?: Section;
+    sectionId?: number;
   }
 
   export interface MarkoTagExtra {
@@ -50,9 +50,8 @@ declare module "@marko/compiler/dist/types" {
 export function getSection(path: t.NodePath<any>) {
   let cur = path;
 
-  do {
-    cur = cur.parentPath!;
-
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     if (
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
@@ -61,25 +60,29 @@ export function getSection(path: t.NodePath<any>) {
     ) {
       return startSection(cur);
     }
-    // eslint-disable-next-line no-constant-condition
-  } while (true);
+
+    cur = cur.parentPath!;
+  }
 }
 
 export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
   const extra = (path.node.extra ??= {});
-  if (extra.section) return extra.section;
+  if (extra.sectionId)
+    return getSectionById(path, extra as ObjectWithSectionId);
 
   const programExtra = (path.hub.file.path.node.extra ??= {});
-  const section = (extra.section = {
+  const section: Section = {
     id: 0,
     reservesByType: [undefined, undefined],
-  });
+  };
 
   if (programExtra.sections) {
     section.id = programExtra.sections.push(section) - 1;
   } else {
     programExtra.sections = [section];
   }
+
+  extra.sectionId = section.id;
 
   return section;
 }
@@ -108,7 +111,7 @@ export function reserveScope(
     type,
     size,
     name,
-    section,
+    sectionId: section.id,
   });
 
   if (reservesByType[type]) {
@@ -135,9 +138,29 @@ export function assignFinalIds(program: t.NodePath<t.Program>) {
 }
 
 export function compareReserves(a: Reserve, b: Reserve) {
-  return a.section === b.section
-    ? a.type === b.type
-      ? a.id - b.id
-      : a.type - b.type
-    : a.section.id - b.section.id;
+  return a.sectionId - b.sectionId || a.type - b.type || a.id - b.id;
+}
+
+export function getParentSectionId(path: t.NodePath) {
+  let sectionId: number;
+  let currentPath = path.parentPath!;
+  while (
+    (sectionId = currentPath.node.extra?.sectionId as number) === undefined
+  ) {
+    currentPath = currentPath.parentPath!;
+  }
+  return sectionId;
+}
+
+type ObjectWithSectionId = {
+  sectionId: number;
+};
+
+export function getSectionById<S extends Section>(
+  path: t.NodePath,
+  reference: ObjectWithSectionId = path.state
+) {
+  const program = path.hub.file.path;
+  const sections = program.node.extra.sections!;
+  return sections[reference.sectionId] as S;
 }

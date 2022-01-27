@@ -6,10 +6,10 @@ _customTag({
   thing: _thing
 });
 
-import { write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, readInOwner as _readInOwner, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_x(x) {
-  if (_write(0, x)) _setConditionalRenderer(0, x ? _if : null);
+function _apply_x(x = _readInOwner(0)) {
+  _setConditionalRenderer(0, x ? _if : null);
 }
 
 import { hydrate as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";

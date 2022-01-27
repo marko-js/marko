@@ -90,6 +90,78 @@ _dynamicTag(tagConstB, {
 
 import { dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply() {
+  _apply_tagConstA("a");
+}
+
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply_tagConstA(tagConstA) {
+  if (_write(18, tagConstA)) {}
+}
+
+function _apply() {
+  _apply_tagConstA("a");
+}
+
+function _apply_show(show) {
+  if (_write(11, show)) _apply_tagConstB(show ? "div" : null);
+}
+
+function _apply_isLarge(isLarge) {
+  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+}
+
+function _apply_largeHeading(largeHeading) {
+  if (_write(17, largeHeading)) {}
+}
+
+function _apply_tagConstA(tagConstA) {
+  if (_write(18, tagConstA)) {}
+}
+
+function _apply_tagConstB(tagConstB) {
+  if (_write(19, tagConstB)) {}
+}
+
 function _apply() {
   _apply_tagConstA("a");
 }

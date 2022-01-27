@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
-import { callRuntime } from "../util/runtime";
+import { callQueue } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
 
 export default function enter(tag: t.NodePath<t.MarkoTag>) {
@@ -48,7 +48,6 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
   if (isOutputDOM(tag)) {
     const binding = tagVar.extra.reserve!;
     const applyId = writer.bindingToApplyId(tag, binding);
-    const scopeId = t.numericLiteral(binding.id);
     // TODO: add defined guard if bindings exist.
     writer.addStatement(
       "apply",
@@ -57,8 +56,8 @@ export default function enter(tag: t.NodePath<t.MarkoTag>) {
       t.expressionStatement(t.callExpression(applyId, [defaultAttr.value]))
     );
 
-    replaceAssignments(tag.scope.getBinding(binding.name)!, (v) =>
-      callRuntime(tag, "queue", applyId, scopeId, v)
+    replaceAssignments(tag.scope.getBinding(binding.name)!, (assignment, value) =>
+      callQueue(assignment, applyId, binding, value)
     );
   } else {
     translateVar(tag, defaultAttr.value);

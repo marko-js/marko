@@ -26,7 +26,7 @@ export default {
 
     writer.visit(tag, writer.WalkCodes.Replace);
     writer.enterShallow(tag);
-    writer.start(tag);
+    writer.start(tag, "for");
   },
   exit(tag: t.NodePath<t.MarkoTag>) {
     const section = writer.end(tag);
@@ -40,7 +40,7 @@ export default {
 };
 
 const translateDOM = {
-  exit(tag: t.NodePath<t.MarkoTag>, section: writer.Section) {
+  exit(tag: t.NodePath<t.MarkoTag>, section: writer.SectionTranslate) {
     const { node } = tag;
     const {
       attributes,
@@ -53,9 +53,6 @@ const translateDOM = {
       const ofAttrValue = ofAttr.value!;
       const [valParam] = params;
 
-      const id = tag.scope.generateUidIdentifier("for");
-      const { writes, walks, apply } = writer.getSectionMeta(section);
-
       // TODO: support patterns/rest
       if (!t.isIdentifier(valParam)) {
         throw tag.buildCodeFrameError(
@@ -63,12 +60,12 @@ const translateDOM = {
         );
       }
 
+      const rendererDeclarator = writer.getSectionDeclarator(tag, section)
+      const rendererId = rendererDeclarator.id as t.Identifier;
+
       tag.replaceWith(
         t.variableDeclaration("const", [
-          t.variableDeclarator(
-            id,
-            callRuntime(tag, "createRenderer", writes, walks, apply)
-          ),
+          rendererDeclarator,
         ])
       );
 
@@ -83,7 +80,7 @@ const translateDOM = {
             "setLoopOf",
             t.numericLiteral(node.extra.reserve!.id),
             ofAttrValue,
-            id,
+            rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
             writer.bindingToApplyId(tag, valParam.extra.reserve!, section)
           )

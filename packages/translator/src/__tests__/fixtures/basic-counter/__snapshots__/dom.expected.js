@@ -14,9 +14,9 @@ function _apply_clickCount(clickCount) {
   if (_write(2, clickCount)) {
     _write(3, _bind(_onclick));
 
-    _hydrate_clickCount();
-
     _data(1, clickCount);
+
+    _hydrate_clickCount();
   }
 }
 

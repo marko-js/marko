@@ -2,9 +2,9 @@ const _if = _createRenderer("Hello", "", null);
 
 const _if2 = _createRenderer("World", "", null);
 
-const _else = _createRenderer("C", "", null),
-      _elseIf = _createRenderer("B", "", null),
-      _if3 = _createRenderer("A", "", null);
+const _if3 = _createRenderer("C", "", null),
+      _if4 = _createRenderer("B", "", null),
+      _if5 = _createRenderer("A", "", null);
 
 import { createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, queue as _queue, write as _write, read as _read, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
@@ -31,7 +31,7 @@ function _applyWith_a_b(a = _read(12), b = _read(13)) {
 }
 
 function _applyWith_x_y(x = _read(14), y = _read(15)) {
-  _setConditionalRenderer(8, x ? _if3 : y ? _elseIf : _else);
+  _setConditionalRenderer(8, x ? _if5 : y ? _if4 : _if3);
 }
 
 export const template = "<!><!><div><!></div>";
