@@ -45,11 +45,13 @@ export default function (path, isNullable) {
 
     if (relativePath) {
       if (binding) {
-        console.warn(
-          path.buildCodeFrameError(
-            `The <${tagName}> tag has been resolved from the filesystem, however a local variable with the same name exists. In the next major version of Marko the local variable will tag precedence.`
-          )
-        );
+        // TODO: implement auto migration for conflicts here
+        // and log below warning
+        // console.warn(
+        //   path.buildCodeFrameError(
+        //     `The <${tagName}> tag has been resolved from the filesystem, however a local variable with the same name exists. In the next major version of Marko the local variable will tag precedence.`
+        //   )
+        // );
       }
 
       tagIdentifier = importDefault(file, relativePath, tagName);
