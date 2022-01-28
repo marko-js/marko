@@ -50,10 +50,8 @@ export interface TagDefinition {
   template: string;
   renderer: string;
   deprecated: boolean;
-  isNestedTag: true;
-  isRepeated: boolean;
   openTagOnly: boolean;
-  targetProperty: string;
+  analyzer?: PluginDefinition;
   translator?: PluginDefinition;
   parser?: PluginDefinition;
   transformers?: PluginDefinition[];
@@ -77,6 +75,64 @@ export interface TaglibLookup {
     callback: (attr: AttributeDefinition, tag: TagDefinition) => void
   ): void;
 }
+
+export interface Attribute {
+  allowExpressions?: boolean;
+  type?: string;
+  html?: boolean;
+  enum?: string[];
+  pattern?: RegExp;
+  required?: boolean;
+  defaultValue?: unknown;
+  description?: string;
+  deprecated?: boolean;
+  autocomplete?: Array<{
+    displayText?: string;
+    snippet?: string;
+    description?: string;
+    descriptionMoreURL?: string;
+  }>;
+}
+
+export interface Tag {
+  attributeGroups?: string[];
+  patternAttributes?: Attribute[];
+  attributes?: { [x: string]: Attribute };
+  description?: string;
+  nestedTags?: {
+    [x: string]: Tag & {
+      isRepeated?: boolean;
+      targetProperty?: string;
+    };
+  };
+  autocomplete?: Array<{
+    displayText?: string;
+    snippet?: string;
+    description?: string;
+    descriptionMoreURL?: string;
+  }>;
+  htmlType?: "html" | "svg" | "math";
+  html?: boolean;
+  template?: string;
+  renderer?: string;
+  deprecated?: boolean;
+  openTagOnly: boolean;
+  analyze?: Plugin;
+  translate?: Plugin;
+  parse?: Plugin;
+  transform?: Plugin[];
+  migrate?: Plugin[];
+  parseOptions?: {
+    rootOnly?: boolean,
+    rawOpenTag?: boolean,
+    openTagOnly?: boolean,
+    ignoreAttributes?: boolean,
+    relaxRequireCommas?: boolean,
+    state?: "html" | "static-text" | "parsed-text" | "cdata"
+  }
+}
+
+export function defineTag<T extends Tag>(tag: T): T;
 
 export type FunctionPlugin = (path: t.NodePath<any>, types: typeof t) => void;
 type EnterExitPlugin = {

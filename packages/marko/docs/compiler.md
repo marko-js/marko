@@ -361,6 +361,13 @@ At this stage, you are given a fully parsed and migrated AST to do what you will
 
 To hook into the `transform` stage you can use the `transform` option in the `marko.json` file.
 
+### Analyze
+
+Next up is the analyze stage. This stage is intended to do non mutative analysis of the entire AST in a way that is cached in memory.
+Meta data should be stored on the `.extra` property of nodes and typically read in the [translate](#translate) stage, or using the child template analysis helpers.
+
+To hook into the `analyze` stage you can use the `analyze` option in the `marko.json` file.
+
 ### Translate
 
 Finally, we have the translation stage. This stage is Marko's "Rosetta Stone" and is responsible for turning your beautiful Marko code into the optimized JavaScript you'd rather avoid writing.

@@ -417,6 +417,15 @@ class TagLoader {
   }
 
   /**
+   * A custom tag can be mapped to module that is is used
+   * to analyze code and cache the result in memory.
+   * This analysis data should be read by translate hooks.
+   */
+  analyze(value) {
+    this.tag.analyzer = normalizeHook(this.dirname, value);
+  }
+
+  /**
    * The tag type.
    */
   type(value) {

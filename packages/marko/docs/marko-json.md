@@ -113,6 +113,7 @@ Typically, you should let Marko find these files automatically, but here is a re
   "parse": "./parse.js", // Used to augment parsing.
   "migrate": "./migrate.js", // Used for migrating deprecated features.
   "transform": "./transform.js", // Used to modify the AST before generating it.
+  "analyze": "./analyze.js" // Used to analyze metadata the entire ast before beginning to translate it.
   "translate": "./translate.js" // Used to generate custom JS.
 }
 ```
