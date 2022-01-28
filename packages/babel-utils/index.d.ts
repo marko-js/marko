@@ -19,9 +19,9 @@ export interface AttributeDefinition {
     descriptionMoreURL?: string;
   }>;
 }
-export type PluginDefinition = {
+export type PluginDefinition<T = any> = {
   path?: string;
-  hook: Plugin;
+  hook: Plugin<T>;
 }
 export interface TagDefinition {
   dir: string;
@@ -51,11 +51,11 @@ export interface TagDefinition {
   renderer: string;
   deprecated: boolean;
   openTagOnly: boolean;
-  analyzer?: PluginDefinition;
-  translator?: PluginDefinition;
-  parser?: PluginDefinition;
-  transformers?: PluginDefinition[];
-  migrators?: PluginDefinition[];
+  analyzer?: PluginDefinition<t.MarkoTag>;
+  translator?: PluginDefinition<t.MarkoTag>;
+  parser?: PluginDefinition<t.MarkoTag>;
+  transformers?: PluginDefinition<t.MarkoTag>[];
+  migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
     rootOnly?: boolean,
     rawOpenTag?: boolean,
@@ -116,12 +116,12 @@ export interface Tag {
   template?: string;
   renderer?: string;
   deprecated?: boolean;
-  openTagOnly: boolean;
-  analyze?: Plugin;
-  translate?: Plugin;
-  parse?: Plugin;
-  transform?: Plugin[];
-  migrate?: Plugin[];
+  openTagOnly?: boolean;
+  analyze?: Plugin<t.MarkoTag>;
+  translate?: Plugin<t.MarkoTag>;
+  parse?: Plugin<t.MarkoTag>;
+  transform?: Plugin<t.MarkoTag>[];
+  migrate?: Plugin<t.MarkoTag>[];
   parseOptions?: {
     rootOnly?: boolean,
     rawOpenTag?: boolean,
@@ -134,17 +134,17 @@ export interface Tag {
 
 export function defineTag<T extends Tag>(tag: T): T;
 
-export type FunctionPlugin = (path: t.NodePath<any>, types: typeof t) => void;
-type EnterExitPlugin = {
-  enter?(path: t.NodePath<any>, types: typeof t): void;
-  exit?(path: t.NodePath<any>, types: typeof t): void;
+export type FunctionPlugin<T = any> = (path: t.NodePath<T>, types: typeof t) => void;
+type EnterExitPlugin<T = any> = {
+  enter?(path: t.NodePath<T>, types: typeof t): void;
+  exit?(path: t.NodePath<T>, types: typeof t): void;
 };
 
-export type ModulePlugin = {
-  default: EnterExitPlugin | FunctionPlugin;
+export type ModulePlugin<T = any> = {
+  default: EnterExitPlugin<T> | FunctionPlugin<T>;
 };
 
-export type Plugin = ModulePlugin | EnterExitPlugin | FunctionPlugin;
+export type Plugin<T = any> = ModulePlugin<T> | EnterExitPlugin<T> | FunctionPlugin<T>;
 
 export function assertAllowedAttributes(path: t.NodePath<t.MarkoTag>, allowed: string[]): void;
 export function assertNoArgs(path: t.NodePath<t.MarkoTag>): void;
