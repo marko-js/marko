@@ -33,3 +33,7 @@ export { parseScript, parseExpression } from "./parse";
 export { resolveRelativePath, importDefault, importNamed } from "./imports";
 
 export { getTaglibLookup, getTagDefForTagName } from "./taglib";
+
+export function defineTag(tag) {
+  return tag;
+} // just used for adding types for compiler plugins.
