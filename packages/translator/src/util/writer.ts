@@ -10,7 +10,7 @@ import {
 } from "../analyze/util/sections";
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
-import { callRuntime, callRead, callQueue } from "./runtime";
+import { callRuntime, callRead } from "./runtime";
 import toTemplateOrStringLiteral from "./to-template-string-or-literal";
 
 export enum WalkCodes {
@@ -82,8 +82,11 @@ export function start(path: t.NodePath<any>, type?: "if" | "for") {
   if (parentId && isOutputHTML(path)) {
     flushBefore(path);
   }
-  
-  const section = getSectionById<SectionTranslate>(path, (t.isMarkoTag(path.node) ? path.node.body : path.node).extra);
+
+  const section = getSectionById<SectionTranslate>(
+    path,
+    (t.isMarkoTag(path.node) ? path.node.body : path.node).extra
+  );
   section.type = type;
   path.state.sectionId = section.id;
 }
@@ -102,7 +105,7 @@ export function end(path: t.NodePath<any>) {
   if (!path.isProgram()) {
     path.state.sectionId = getParentSectionId(path);
   }
-  
+
   return section;
 }
 
@@ -256,9 +259,12 @@ export function addStatement(
   statement: t.Statement | t.Statement[],
   targetSection: SectionTranslate = getSectionById<SectionTranslate>(path)
 ) {
-  
-
-  const {statements, identifier} = bindingToGroup(type, path, references, targetSection);
+  const { statements, identifier } = bindingToGroup(
+    type,
+    path,
+    references,
+    targetSection
+  );
   const isFirstStatement = statements.length === 0;
 
   if (Array.isArray(statement)) {
@@ -295,7 +301,14 @@ export function addStatement(
           path,
           references,
           crossGroupExpressionStatement(
-            callRuntime(path, "queueInBranch", t.numericLiteral(0), renderer, identifier, t.numericLiteral(references.id))
+            callRuntime(
+              path,
+              "queueInBranch",
+              t.numericLiteral(0),
+              renderer,
+              identifier,
+              t.numericLiteral(references.id)
+            )
           ),
           getSectionById<SectionTranslate>(path, references)
         );
@@ -307,7 +320,7 @@ export function addStatement(
 function crossGroupExpressionStatement(expression: t.Expression) {
   const statement = t.expressionStatement(expression);
   statement.extra = {
-    crossGroup: true
+    crossGroup: true,
   };
   return statement;
 }
@@ -358,7 +371,10 @@ export function getSectionMeta(section: SectionTranslate) {
   };
 }
 
-export function getSectionDeclarator(path: t.NodePath, section: SectionTranslate) {
+export function getSectionDeclarator(
+  path: t.NodePath,
+  section: SectionTranslate
+) {
   const identifier = getSectionIdentifier(path, section);
   const { writes, walks, apply } = getSectionMeta(section);
   return t.variableDeclarator(
@@ -367,8 +383,12 @@ export function getSectionDeclarator(path: t.NodePath, section: SectionTranslate
   );
 }
 
-function getSectionIdentifier(path: t.NodePath<any>, section: SectionTranslate) {
-  return section.renderer = section.renderer || path.scope.generateUidIdentifier(section.type);
+function getSectionIdentifier(
+  path: t.NodePath<any>,
+  section: SectionTranslate
+) {
+  return (section.renderer =
+    section.renderer || path.scope.generateUidIdentifier(section.type));
 }
 
 function appendLiteral(arr: unknown[], str: string) {
@@ -381,7 +401,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
   for (const { identifier, references, statements } of groups) {
     statements.sort((a, b) => {
       const aCrossGroup = a.extra && a.extra.crossGroup ? 1 : 0;
-      const bCrossGroup = b.extra && b.extra.crossGroup ? 1 : 0; 
+      const bCrossGroup = b.extra && b.extra.crossGroup ? 1 : 0;
       return aCrossGroup - bCrossGroup;
     });
 
@@ -402,7 +422,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
           t.assignmentPattern(
             t.identifier(references.name),
             callRead(path, references)
-          )
+          ),
         ];
         body = t.blockStatement(statements);
       } else {
@@ -549,14 +569,17 @@ function generateReferenceGroupName(
   return path.hub.file.path.scope.generateUid(name);
 }
 
-const bindFunctionsVisitor: t.Visitor<{ root: t.NodePath<any>, source: t.NodePath<any> }> = {
+const bindFunctionsVisitor: t.Visitor<{
+  root: t.NodePath<any>;
+  source: t.NodePath<any>;
+}> = {
   FunctionExpression: bindFunction,
   ArrowFunctionExpression: bindFunction,
 };
 
 function bindFunction(
   fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
-  state: { root: t.NodePath<any>, source: t.NodePath<any> }
+  state: { root: t.NodePath<any>; source: t.NodePath<any> }
 ) {
   const { node } = fn;
   const { extra } = node;
@@ -584,8 +607,7 @@ function bindFunction(
     state.root.insertBefore(
       t.variableDeclaration("const", [t.variableDeclarator(id, node)])
     );
-    
+
     fn.replaceWith(callRuntime(fn, "bind", id));
   }
 }
-

@@ -6,12 +6,10 @@ import analyzeTagNameType, { TagNameTypes } from "../util/tag-name-type";
 import NativeTag from "./native-tag";
 import CustomTag from "./custom-tag";
 
-type PluginWithAnalyze = Plugin & { analyze?: Plugin };
-
 export default {
   enter(tag: t.NodePath<t.MarkoTag>) {
     const tagDef = getTagDef(tag);
-    const hook = (tagDef?.translator?.hook as PluginWithAnalyze)?.analyze;
+    const hook = tagDef?.analyzer?.hook as Plugin;
 
     if (hook) {
       hooks.enter(hook, tag);
@@ -35,7 +33,7 @@ export default {
   exit(tag: t.NodePath<t.MarkoTag>) {
     const tagDef = getTagDef(tag);
     const type = analyzeTagNameType(tag);
-    const hook = (tagDef?.translator?.hook as PluginWithAnalyze)?.analyze;
+    const hook = tagDef?.analyzer?.hook as Plugin;
 
     if (hook) {
       hooks.exit(hook, tag);

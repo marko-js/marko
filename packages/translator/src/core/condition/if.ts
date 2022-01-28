@@ -1,11 +1,72 @@
 import { types as t } from "@marko/compiler";
+import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import { Reserve, compareReserves } from "../../analyze/util/sections";
+import {
+  Reserve,
+  ReserveType,
+  reserveScope,
+  getSection,
+  compareReserves,
+} from "../../analyze/util/sections";
 import { isOutputDOM } from "../../util/marko-config";
+
+export default {
+  analyze(tag) {
+    reserveScope(ReserveType.Visit, getSection(tag), tag.node, "if", 3);
+  },
+  translate: {
+    enter(tag) {
+      const { node } = tag;
+      const [testAttr] = node.attributes;
+
+      assertNoVar(tag);
+      assertNoParams(tag);
+
+      if (!t.isMarkoAttribute(testAttr) || !testAttr.default) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The '<if>' tag requires a default attribute like '<if=condition>'.`
+          );
+      }
+
+      if (node.attributes.length > 1) {
+        const start = node.attributes[1].loc?.start;
+        const end = node.attributes[node.attributes.length - 1].loc?.end;
+        const msg = `The '<if>' tag only supports a default attribute.`;
+
+        if (start == null || end == null) {
+          throw tag.get("name").buildCodeFrameError(msg);
+        } else {
+          throw tag.hub.buildError(
+            { loc: { start, end } } as unknown as t.Node,
+            msg,
+            Error
+          );
+        }
+      }
+
+      writer.visit(tag, writer.WalkCodes.Replace);
+      writer.enterShallow(tag);
+      writer.start(tag, "if");
+    },
+    exit(tag) {
+      exitCondition(tag, writer.end(tag));
+    },
+  },
+  attributes: {},
+  autocomplete: [
+    {
+      snippet: "if=${1:condition}",
+      description: "Use to display content only if the condition is met.",
+      descriptionMoreURL: "https://markojs.com/docs/core-tags/#if-else-if-else",
+    },
+  ],
+} as Tag;
 
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
@@ -40,7 +101,7 @@ export function exitCondition(
       for (let i = branches.length; i--; ) {
         const { tag, section } = branches[i];
         const [testAttr] = tag.node.attributes;
-        const rendererDeclarator = writer.getSectionDeclarator(tag, section)
+        const rendererDeclarator = writer.getSectionDeclarator(tag, section);
         const id = rendererDeclarator.id as t.Identifier;
 
         declarators.push(rendererDeclarator);

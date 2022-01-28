@@ -9,6 +9,7 @@
     "sourceMap": false,
     "declaration": true,
     "incremental": true,
+    "skipLibCheck": true,
     "module": "CommonJS",
     "stripInternal": true,
     "noUnusedLocals": true,

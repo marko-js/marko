@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
-import { assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
+import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import {
   ReserveType,
@@ -10,34 +10,99 @@ import {
 import { callRuntime } from "../util/runtime";
 
 export default {
-  analyze(tag: t.NodePath<t.MarkoTag>) {
+  analyze(tag) {
     reserveScope(ReserveType.Visit, getSection(tag), tag.node, "for", 3);
   },
-  enter(tag: t.NodePath<t.MarkoTag>) {
-    validateFor(tag);
+  translate: {
+    enter(tag) {
+      validateFor(tag);
 
-    if (
-      !isOutputHTML(tag) &&
-      Object.keys(tag.node.extra.nestedAttributeTags).length
-    ) {
-      tag.remove();
-      return;
-    }
+      if (
+        !isOutputHTML(tag) &&
+        Object.keys(tag.node.extra.nestedAttributeTags).length
+      ) {
+        tag.remove();
+        return;
+      }
 
-    writer.visit(tag, writer.WalkCodes.Replace);
-    writer.enterShallow(tag);
-    writer.start(tag, "for");
+      writer.visit(tag, writer.WalkCodes.Replace);
+      writer.enterShallow(tag);
+      writer.start(tag, "for");
+    },
+    exit(tag) {
+      const section = writer.end(tag);
+
+      if (isOutputHTML(tag)) {
+        translateHTML.exit(tag);
+      } else {
+        translateDOM.exit(tag, section);
+      }
+    },
   },
-  exit(tag: t.NodePath<t.MarkoTag>) {
-    const section = writer.end(tag);
-
-    if (isOutputHTML(tag)) {
-      translateHTML.exit(tag);
-    } else {
-      translateDOM.exit(tag, section);
-    }
+  attributes: {
+    of: {
+      type: "expression",
+      autocomplete: [
+        {
+          description: "Iterates over a list of items.",
+        },
+      ],
+    },
+    in: {
+      type: "expression",
+      autocomplete: [
+        {
+          description: "Iterates over the keys and values of an object.",
+        },
+      ],
+    },
+    to: {
+      type: "number",
+      autocomplete: [
+        {
+          description: "Iterates up to the provided number (inclusive)",
+        },
+      ],
+    },
+    from: {
+      type: "number",
+      autocomplete: [
+        {
+          description: "Iterates starting from the provided number (inclusive)",
+        },
+      ],
+    },
+    step: {
+      type: "number",
+      autocomplete: [
+        {
+          description:
+            "The amount to increment during each interation (with from/to)",
+        },
+      ],
+    },
   },
-};
+  autocomplete: [
+    {
+      snippet: "for|${1:value, index}| of=${3:array}",
+      description:
+        "Use to iterate over lists, object properties, or between ranges.",
+      descriptionMoreURL:
+        "https://markojs.com/docs/core-tags/#iterating-over-a-list",
+    },
+    {
+      snippet: "for|${1:name, value}| in=${3:object}",
+      descriptionMoreURL:
+        "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties",
+    },
+    {
+      snippet:
+        "for|${1:index}| from=${2:number} to=${3:number} step=${4:number}",
+      descriptionMoreURL:
+        "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers",
+    },
+  ],
+} as Tag;
 
 const translateDOM = {
   exit(tag: t.NodePath<t.MarkoTag>, section: writer.SectionTranslate) {
@@ -60,14 +125,10 @@ const translateDOM = {
         );
       }
 
-      const rendererDeclarator = writer.getSectionDeclarator(tag, section)
+      const rendererDeclarator = writer.getSectionDeclarator(tag, section);
       const rendererId = rendererDeclarator.id as t.Identifier;
 
-      tag.replaceWith(
-        t.variableDeclaration("const", [
-          rendererDeclarator,
-        ])
-      );
+      tag.replaceWith(t.variableDeclaration("const", [rendererDeclarator]));
 
       writer.addStatement(
         "apply",
