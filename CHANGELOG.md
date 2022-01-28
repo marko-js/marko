@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.19.1](https://github.com/marko-js/marko/compare/v5.19.0...v5.19.1) (2022-01-28)
+
+
+### Bug Fixes
+
+* **babel-utils:** improve plugin types ([ff0e5c6](https://github.com/marko-js/marko/commit/ff0e5c6b1f2ec4daa64d1909b1e3aefa61e48063))
+
+
+
+
+
 # [5.19.0](https://github.com/marko-js/marko/compare/v5.18.2...v5.19.0) (2022-01-28)
 
 
