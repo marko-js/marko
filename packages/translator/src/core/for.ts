@@ -2,11 +2,7 @@ import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
-import {
-  ReserveType,
-  reserveScope,
-  getSection,
-} from "../analyze/util/sections";
+import { ReserveType, reserveScope, getSection } from "../util/sections";
 import { callRuntime } from "../util/runtime";
 
 export default {

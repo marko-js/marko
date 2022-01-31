@@ -11,7 +11,7 @@ import {
   reserveScope,
   getSection,
   compareReserves,
-} from "../../analyze/util/sections";
+} from "../../util/sections";
 import { isOutputDOM } from "../../util/marko-config";
 
 export default {

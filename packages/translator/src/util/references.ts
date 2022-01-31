@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-import * as sorted from "../../util/sorted-arr";
+import * as sorted from "./sorted-arr";
 import {
   getSection,
   Section,

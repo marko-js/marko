@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import type { References } from "../analyze/util/references";
+import type { References } from "../util/references";
 import {
   Section,
   Reserve,
@@ -7,7 +7,7 @@ import {
   compareReserves,
   getSectionById,
   getParentSectionId,
-} from "../analyze/util/sections";
+} from "../util/sections";
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime, callRead } from "./runtime";
