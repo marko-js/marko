@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
+import * as walks from "../util/walks";
 import { ReserveType, reserveScope, getSection } from "../util/sections";
 import { callRuntime } from "../util/runtime";
 
@@ -21,8 +22,8 @@ export default {
         return;
       }
 
-      writer.visit(tag, writer.WalkCodes.Replace);
-      writer.enterShallow(tag);
+      walks.visit(tag, walks.WalkCodes.Replace);
+      walks.enterShallow(tag);
       writer.start(tag, "for");
     },
     exit(tag) {

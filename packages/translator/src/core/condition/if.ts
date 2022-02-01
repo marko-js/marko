@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
+import * as walks from "../../util/walks";
 import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
@@ -50,8 +51,8 @@ export default {
         }
       }
 
-      writer.visit(tag, writer.WalkCodes.Replace);
-      writer.enterShallow(tag);
+      walks.visit(tag, walks.WalkCodes.Replace);
+      walks.enterShallow(tag);
       writer.start(tag, "if");
     },
     exit(tag) {

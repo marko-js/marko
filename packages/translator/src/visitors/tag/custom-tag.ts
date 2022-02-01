@@ -8,6 +8,7 @@ import {
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import translateVar from "../../util/translate-var";
 import * as writer from "../../util/writer";
+import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime } from "../../util/runtime";
 import { startSection } from "../../util/sections";
@@ -61,7 +62,7 @@ export default {
             "template",
             `${tagName}_template`
           )}`;
-          writer.injectWalks(
+          walks.injectWalks(
             tag,
             importNamed(file, relativePath, "walks", `${tagName}_walks`)
           );

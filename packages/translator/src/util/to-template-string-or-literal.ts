@@ -48,6 +48,10 @@ export default function toTemplateOrStringLiteral(
   }
 }
 
+export function appendLiteral(arr: unknown[], str: string) {
+  arr[arr.length - 1] += str;
+}
+
 function shiftItems(list: unknown[], start: number, offset: number) {
   for (let i = list.length - 1; i >= start; i--) {
     list[i + offset] = list[i];

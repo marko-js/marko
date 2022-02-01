@@ -3,7 +3,6 @@ import type { References } from "../util/references";
 import {
   Section,
   Reserve,
-  ReserveType,
   compareReserves,
   getSectionById,
   getParentSectionId,
@@ -11,55 +10,15 @@ import {
 import * as sorted from "../util/sorted-arr";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime, callRead } from "./runtime";
-import toTemplateOrStringLiteral from "./to-template-string-or-literal";
-
-export enum WalkCodes {
-  Get = 32,
-  Before = 33,
-  After = 35,
-  Inside = 36,
-  Replace = 37,
-  Close = 38,
-
-  Skip = 40,
-  SkipEnd = 46,
-
-  Open = 47,
-  OpenEnd = 66,
-
-  Next = 67,
-  NextEnd = 91,
-
-  Over = 97,
-  OverEnd = 106,
-
-  Out = 107,
-  OutEnd = 116,
-
-  Multiplier = 117,
-  MultiplierEnd = 126,
-}
-
-export enum WalkRangeSizes {
-  Skip = 7, // 40 through 46
-  Open = 20, // 47 through 66
-  Next = 20, // 67 through 91
-  Over = 10, // 97 through 106
-  Out = 10, // 107 through 116
-  Multiplier = 10, // 117 through 126
-}
-
-enum Step {
-  enter,
-  exit,
-}
-
+import toTemplateOrStringLiteral, {
+  appendLiteral,
+} from "./to-template-string-or-literal";
+import type { Step } from "./walks";
 interface ReferenceGroup {
   identifier: t.Identifier;
   references: References;
   statements: t.Statement[];
 }
-
 export interface SectionTranslate extends Section {
   type?: "if" | "for";
   renderer?: t.Identifier;
@@ -69,13 +28,6 @@ export interface SectionTranslate extends Section {
   walks: (string | t.Expression)[];
   steps: Step[];
 }
-
-type VisitCodes =
-  | WalkCodes.Get
-  | WalkCodes.Before
-  | WalkCodes.After
-  | WalkCodes.Inside
-  | WalkCodes.Replace;
 
 export function start(path: t.NodePath<any>, type?: "if" | "for") {
   const parentId = path.state.sectionId;
@@ -107,97 +59,6 @@ export function end(path: t.NodePath<any>) {
   }
 
   return section;
-}
-
-export function enter(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.enter);
-}
-
-export function exit(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.exit);
-}
-
-export function enterShallow(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.enter, Step.exit);
-}
-
-export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
-  getSectionById<SectionTranslate>(path).walks.push(expr, "");
-}
-
-export function visit(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
-  code?: VisitCodes
-) {
-  const { reserve } = path.node.extra;
-  if (!reserve || reserve.type !== ReserveType.Visit) {
-    throw path.buildCodeFrameError(
-      "Tried to visit a node that was not marked as needing to visit during analyze."
-    );
-  }
-
-  const section = getSectionById<SectionTranslate>(path);
-  if (isOutputHTML(path)) {
-    section.writes.push(
-      callRuntime(path, "markScopeOffset", t.numericLiteral(reserve.id)),
-      ""
-    );
-  } else {
-    let walkString = "";
-
-    if (section.steps.length) {
-      const walks: WalkCodes[] = [];
-      let depth = 0;
-
-      for (const step of section.steps) {
-        if (step === Step.enter) {
-          depth++;
-          walks.push(WalkCodes.Next);
-        } else {
-          depth--;
-          if (depth >= 0) {
-            // delete back to and including previous NEXT
-            walks.length = walks.lastIndexOf(WalkCodes.Next);
-            walks.push(WalkCodes.Over);
-          } else {
-            // delete back to previous OUT
-            walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
-            walks.push(WalkCodes.Out);
-            depth = 0;
-          }
-        }
-      }
-
-      let current = walks[0];
-      let count = 0;
-
-      for (const walk of walks) {
-        if (walk !== current) {
-          walkString += nCodeString(current, count);
-          current = walk;
-          count = 1;
-        } else {
-          count++;
-        }
-      }
-
-      walkString += nCodeString(current, count);
-      section.steps = [];
-    }
-
-    if (code !== undefined) {
-      if (code !== WalkCodes.Get) {
-        appendLiteral(section.writes, "<!>");
-      }
-      walkString += String.fromCharCode(code);
-    }
-
-    if (reserve.size) {
-      walkString += nCodeString(WalkCodes.Skip, reserve.size);
-    }
-
-    appendLiteral(section.walks, walkString);
-  }
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -391,10 +252,6 @@ function getSectionIdentifier(
     section.renderer || path.scope.generateUidIdentifier(section.type));
 }
 
-function appendLiteral(arr: unknown[], str: string) {
-  arr[arr.length - 1] += str;
-}
-
 function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
   const groups = section.apply;
   const program = path.hub.file.path;
@@ -514,38 +371,6 @@ function compareReferenceGroups(
   } else {
     return b ? -1 : 0;
   }
-}
-
-function nCodeString(code: WalkCodes, number: number) {
-  switch (code) {
-    case WalkCodes.Next:
-      return toCharString(number, code, WalkRangeSizes.Next);
-    case WalkCodes.Over:
-      return toCharString(number, code, WalkRangeSizes.Over);
-    case WalkCodes.Out:
-      return toCharString(number, code, WalkRangeSizes.Out);
-    case WalkCodes.Open:
-      return toCharString(number, code, WalkRangeSizes.Open);
-    case WalkCodes.Skip:
-      return toCharString(number, code, WalkRangeSizes.Skip);
-  }
-}
-
-function toCharString(number: number, startCode: number, rangeSize: number) {
-  let result = "";
-
-  if (number >= rangeSize) {
-    const multiplier = Math.floor(number / rangeSize);
-    result += toCharString(
-      multiplier,
-      WalkCodes.Multiplier,
-      WalkRangeSizes.Multiplier
-    );
-    number -= multiplier * rangeSize;
-  }
-
-  result += String.fromCharCode(startCode + number);
-  return result;
 }
 
 function generateReferenceGroupName(

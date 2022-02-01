@@ -6,11 +6,12 @@ import {
   Tag,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
+import * as walks from "../util/walks";
 
 export default {
   translate: {
     enter(tag) {
-      writer.enter(tag);
+      walks.enter(tag);
       writer.writeTo(tag)`<!--`;
       // TODO: for the DOM side this needs to normalize placeholders and text content into a string.
       // This should also error if other tags are discovered, including control flow probably.
@@ -20,7 +21,7 @@ export default {
       assertNoParams(tag);
       assertNoAttributes(tag);
       assertNoAttributeTags(tag);
-      writer.exit(tag);
+      walks.exit(tag);
       writer.writeTo(tag)`-->`;
       tag.remove();
     },

@@ -5,6 +5,7 @@ import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
 import { ReserveType, getSection, reserveScope } from "../util/sections";
 import * as writer from "../util/writer";
+import * as walks from "../util/walks";
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
@@ -46,7 +47,7 @@ export default {
     if (confident && canWriteHTML) {
       write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
     } else {
-      writer.visit(placeholder, writer.WalkCodes.Replace);
+      walks.visit(placeholder, walks.WalkCodes.Replace);
 
       if (isHTML) {
         write`${callRuntime(
@@ -71,7 +72,7 @@ export default {
       }
     }
 
-    writer.enterShallow(placeholder);
+    walks.enterShallow(placeholder);
     placeholder.remove();
   },
 };

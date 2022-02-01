@@ -12,6 +12,7 @@ import {
   reserveScope,
 } from "../../util/sections";
 import * as writer from "../../util/writer";
+import * as walks from "../../util/walks";
 
 export default {
   analyze: {
@@ -68,7 +69,7 @@ export default {
       let visitIndex: t.NumericLiteral | undefined;
       if (extra.reserve) {
         visitIndex = t.numericLiteral(extra.reserve.id);
-        writer.visit(tag, writer.WalkCodes.Get);
+        walks.visit(tag, walks.WalkCodes.Get);
       }
 
       write`<${name.node}`;
@@ -196,10 +197,10 @@ export default {
       }
 
       if (emptyBody) {
-        writer.enterShallow(tag);
+        walks.enterShallow(tag);
         tag.remove();
       } else {
-        writer.enter(tag);
+        walks.enter(tag);
       }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
@@ -223,7 +224,7 @@ export default {
       }
 
       tag.remove();
-      writer.exit(tag);
+      walks.exit(tag);
     },
   },
 };
