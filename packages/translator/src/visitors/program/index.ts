@@ -5,9 +5,12 @@ import programDOM from "./dom";
 import type { SectionTranslate } from "../../util/writer";
 import { startSection, assignFinalIds } from "../../util/sections";
 
+export let currentProgramPath: t.NodePath<t.Program>;
+
 export default {
   analyze: {
     enter(program: t.NodePath<t.Program>) {
+      currentProgramPath = program;
       startSection(program);
     },
 
@@ -17,6 +20,7 @@ export default {
   },
   translate: {
     enter(program: t.NodePath<t.Program>) {
+      currentProgramPath = program;
       program.node.extra.sections = program.node.extra.sections!.map(
         (section) =>
           ({
@@ -24,8 +28,6 @@ export default {
             apply: [],
             hydrate: [],
             writes: [""],
-            walks: [""],
-            steps: [],
           } as SectionTranslate)
       );
 

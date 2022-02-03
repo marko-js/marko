@@ -223,8 +223,8 @@ export default {
           .skip();
       }
 
-      tag.remove();
       walks.exit(tag);
+      tag.remove();
     },
   },
 };

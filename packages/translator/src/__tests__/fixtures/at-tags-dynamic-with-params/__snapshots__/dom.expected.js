@@ -1,6 +1,6 @@
 let _item;
 
-const _if = _createRenderer("", "%", _apply);
+const _if = _createRenderer("", "", _apply);
 
 _hello({
   item: _item

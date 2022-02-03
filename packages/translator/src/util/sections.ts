@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
 export interface Section {
@@ -142,8 +143,12 @@ export function compareReserves(a: Reserve, b: Reserve) {
 }
 
 export function getParentSectionId(path: t.NodePath) {
+  return getSectionId(path.parentPath!);
+}
+
+export function getSectionId(path: t.NodePath) {
   let sectionId: number;
-  let currentPath = path.parentPath!;
+  let currentPath = path;
   while (
     (sectionId = currentPath.node.extra?.sectionId as number) === undefined
   ) {
@@ -163,4 +168,12 @@ export function getSectionById<S extends Section>(
   const program = path.hub.file.path;
   const sections = program.node.extra.sections!;
   return sections[reference.sectionId] as S;
+}
+
+export function createSectionGetter<T = unknown>(key: string, init: () => T) {
+  return (sectionId: number): T => {
+    const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
+    const sectionData = (arrayOfSectionData[sectionId] ??= init());
+    return sectionData as T;
+  };
 }

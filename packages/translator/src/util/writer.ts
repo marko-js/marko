@@ -13,7 +13,7 @@ import { callRuntime, callRead } from "./runtime";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
-import type { Step } from "./walks";
+import { getWalkString } from "./walks";
 interface ReferenceGroup {
   identifier: t.Identifier;
   references: References;
@@ -25,8 +25,6 @@ export interface SectionTranslate extends Section {
   apply: ReferenceGroup[];
   hydrate: ReferenceGroup[];
   writes: (string | t.Expression)[];
-  walks: (string | t.Expression)[];
-  steps: Step[];
 }
 
 export function start(path: t.NodePath<any>, type?: "if" | "for") {
@@ -227,7 +225,7 @@ export function getSectionMeta(section: SectionTranslate) {
     firstApply && !firstApply.references && firstApply.identifier;
   return {
     apply: defaultApply || t.nullLiteral(),
-    walks: toTemplateOrStringLiteral(section.walks) || t.stringLiteral(""),
+    walks: getWalkString(section.id),
     writes: toTemplateOrStringLiteral(section.writes) || t.stringLiteral(""),
   };
 }

@@ -1,9 +1,20 @@
 import { types as t } from "@marko/compiler";
-import { ReserveType, getSectionById } from "../util/sections";
+import {
+  ReserveType,
+  createSectionGetter,
+  getSectionId,
+} from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
-import { appendLiteral } from "./to-template-string-or-literal";
-import { SectionTranslate, writeTo } from "./writer";
+import toTemplateOrStringLiteral, {
+  appendLiteral,
+} from "./to-template-string-or-literal";
+import { writeTo } from "./writer";
+
+const getWalks = createSectionGetter<(string | t.Expression)[]>("walks", () => [
+  "",
+]);
+const getSteps = createSectionGetter<Step[]>("steps", () => []);
 
 export enum WalkCodes {
   Get = 32,
@@ -54,19 +65,19 @@ type VisitCodes =
   | WalkCodes.Replace;
 
 export function enter(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.enter);
+  getSteps(getSectionId(path)).push(Step.enter);
 }
 
 export function exit(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.exit);
+  getSteps(getSectionId(path)).push(Step.exit);
 }
 
 export function enterShallow(path: t.NodePath<any>) {
-  getSectionById<SectionTranslate>(path).steps.push(Step.enter, Step.exit);
+  getSteps(getSectionId(path)).push(Step.enter, Step.exit);
 }
 
 export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
-  getSectionById<SectionTranslate>(path).walks.push(expr, "");
+  getWalks(getSectionId(path)).push(expr, "");
 }
 
 export function visit(
@@ -80,7 +91,10 @@ export function visit(
     );
   }
 
-  const section = getSectionById<SectionTranslate>(path);
+  const sectionId = getSectionId(path);
+  const steps = getSteps(sectionId);
+  const walks = getWalks(sectionId);
+
   if (isOutputHTML(path)) {
     writeTo(path)`${callRuntime(
       path,
@@ -90,11 +104,11 @@ export function visit(
   } else {
     let walkString = "";
 
-    if (section.steps.length) {
+    if (steps.length) {
       const walks: WalkCodes[] = [];
       let depth = 0;
 
-      for (const step of section.steps) {
+      for (const step of steps) {
         if (step === Step.enter) {
           depth++;
           walks.push(WalkCodes.Next);
@@ -127,12 +141,12 @@ export function visit(
       }
 
       walkString += nCodeString(current, count);
-      section.steps = [];
+      steps.length = 0;
     }
 
     if (code !== undefined) {
       if (code !== WalkCodes.Get) {
-        appendLiteral(section.writes, "<!>");
+        writeTo(path)`<!>`;
       }
       walkString += String.fromCharCode(code);
     }
@@ -141,7 +155,7 @@ export function visit(
       walkString += nCodeString(WalkCodes.Skip, reserve.size);
     }
 
-    appendLiteral(section.walks, walkString);
+    appendLiteral(walks, walkString);
   }
 }
 
@@ -175,4 +189,8 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 
   result += String.fromCharCode(startCode + number);
   return result;
+}
+
+export function getWalkString(sectionId: number) {
+  return toTemplateOrStringLiteral(getWalks(sectionId)) || t.stringLiteral("");
 }
