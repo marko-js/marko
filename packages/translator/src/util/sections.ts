@@ -4,8 +4,11 @@ import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
 export interface Section {
   id: number;
-  reservesByType: [Reserve[] | undefined, Reserve[] | undefined];
 }
+
+const [getReservesByType] = createSectionState<
+  [Reserve[] | undefined, Reserve[] | undefined]
+>("reservesByType", () => [undefined, undefined]);
 
 export const enum ReserveType {
   Visit = 0,
@@ -74,7 +77,6 @@ export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
   const programExtra = (path.hub.file.path.node.extra ??= {});
   const section: Section = {
     id: 0,
-    reservesByType: [undefined, undefined],
   };
 
   if (programExtra.sections) {
@@ -106,7 +108,7 @@ export function reserveScope(
     throw new Error("Unable to reserve multiple scopes for a node.");
   }
 
-  const { reservesByType } = section;
+  const reservesByType = getReservesByType(section.id);
   const reserve = (extra.reserve = {
     id: 0,
     type,
@@ -127,7 +129,7 @@ export function reserveScope(
 export function assignFinalIds(program: t.NodePath<t.Program>) {
   for (const section of program.node.extra.sections!) {
     let curIndex = 0;
-    for (const reserves of section.reservesByType) {
+    for (const reserves of getReservesByType(section.id)) {
       if (reserves) {
         for (const reserve of reserves) {
           reserve.id = curIndex;
