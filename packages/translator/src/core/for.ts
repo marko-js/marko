@@ -3,12 +3,8 @@ import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import {
-  ReserveType,
-  reserveScope,
-  getSection,
-  getSectionId,
-} from "../util/sections";
+import { getSection, getSectionId } from "../util/sections";
+import { ReserveType, reserveScope } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";

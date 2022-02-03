@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
-import type { Reserve } from "./sections";
+import type { Reserve } from "./reserve";
 import { currentProgramPath } from "../visitors/program";
 
 export function importRuntime(name: string) {

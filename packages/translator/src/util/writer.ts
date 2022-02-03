@@ -1,12 +1,11 @@
 import { types as t } from "@marko/compiler";
 import type { References } from "../util/references";
 import {
-  Reserve,
   getSectionId,
   getParentSectionId,
   createSectionState,
-  compareReserves,
 } from "../util/sections";
+import { Reserve, compareReserves } from "../util/reserve";
 import * as sorted from "../util/sorted-arr";
 import { currentProgramPath } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";

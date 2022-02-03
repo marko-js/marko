@@ -1,9 +1,6 @@
 import { types as t } from "@marko/compiler";
-import {
-  ReserveType,
-  createSectionState,
-  getSectionId,
-} from "../util/sections";
+import { createSectionState, getSectionId } from "../util/sections";
+import { ReserveType } from "../util/reserve";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {

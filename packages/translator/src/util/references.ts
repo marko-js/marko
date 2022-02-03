@@ -1,13 +1,7 @@
 import type { types as t } from "@marko/compiler";
 import * as sorted from "./sorted-arr";
-import {
-  getSection,
-  Section,
-  Reserve,
-  ReserveType,
-  reserveScope,
-  compareReserves,
-} from "./sections";
+import { getSection, Section } from "./sections";
+import { Reserve, ReserveType, reserveScope, compareReserves } from "./reserve";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag

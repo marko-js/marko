@@ -5,13 +5,8 @@ import attrsToObject from "../../util/attrs-to-object";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
-import {
-  Section,
-  ReserveType,
-  getSection,
-  getSectionId,
-  reserveScope,
-} from "../../util/sections";
+import { Section, getSection, getSectionId } from "../../util/sections";
+import { ReserveType, reserveScope } from "../../util/reserve";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 

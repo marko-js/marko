@@ -2,7 +2,8 @@ import type { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../../util/marko-config";
 import programHTML from "./html";
 import programDOM from "./dom";
-import { startSection, assignFinalIds } from "../../util/sections";
+import { startSection } from "../../util/sections";
+import { assignFinalIds } from "../../util/reserve";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 

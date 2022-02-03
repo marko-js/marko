@@ -6,14 +6,13 @@ import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
+import { getSection } from "../../util/sections";
 import {
   Reserve,
   ReserveType,
   reserveScope,
-  getSection,
-  getSectionId,
   compareReserves,
-} from "../../util/sections";
+} from "../../util/reserve";
 import { isOutputDOM } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
