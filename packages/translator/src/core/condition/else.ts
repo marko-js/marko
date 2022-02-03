@@ -35,7 +35,7 @@ export default {
       writer.setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {
-      exitCondition(tag, writer.end(tag));
+      exitCondition(tag);
     },
   },
   attributes: {},

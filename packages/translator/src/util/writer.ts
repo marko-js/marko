@@ -1,15 +1,14 @@
 import { types as t } from "@marko/compiler";
 import type { References } from "../util/references";
 import {
-  Section,
   Reserve,
   getSectionId,
+  getParentSectionId,
   createSectionState,
   compareReserves,
-  getSectionById,
-  getParentSectionId,
 } from "../util/sections";
 import * as sorted from "../util/sorted-arr";
+import { currentProgramPath } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { callRuntime, callRead } from "./runtime";
 import toTemplateOrStringLiteral, {
@@ -25,7 +24,7 @@ interface ReferenceGroup {
 export type queueFactory = (
   binding: Reserve,
   functionIdentifier: t.Identifier,
-  targetSection: SectionTranslate
+  targetSectionId: number
 ) => t.Expression;
 
 const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
@@ -48,37 +47,32 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""]
 );
 
-export type SectionTranslate = Section;
-
 export function start(path: t.NodePath<any>) {
   const parentId = path.state.sectionId;
   if (parentId && isOutputHTML()) {
     flushBefore(path);
   }
 
-  const section = getSectionById<SectionTranslate>(
-    path,
-    (t.isMarkoTag(path.node) ? path.node.body : path.node).extra
-  );
-  path.state.sectionId = section.id;
+  const targetPath = path.isMarkoTag() ? path.get("body") : path;
+  path.state.sectionId = getSectionId(targetPath);
 }
 
 export function end(path: t.NodePath<any>) {
-  const section = getSectionById<SectionTranslate>(path);
   const targetPath = path.isMarkoTag() ? path.get("body") : path;
+  const sectionId = getSectionId(targetPath);
 
   if (isOutputHTML()) {
     flushInto(path);
   } else {
-    writeApplyGroups(targetPath, section);
-    writeHydrateGroups(targetPath, section);
+    writeApplyGroups(targetPath, sectionId);
+    writeHydrateGroups(targetPath, sectionId);
   }
 
   if (!path.isProgram()) {
     path.state.sectionId = getParentSectionId(path);
   }
 
-  return section;
+  return sectionId;
 }
 
 export function writeTo(path: t.NodePath<any>) {
@@ -138,13 +132,12 @@ export function addStatement(
   path: t.NodePath<any>,
   references: References,
   statement: t.Statement | t.Statement[],
-  targetSection: SectionTranslate = getSectionById<SectionTranslate>(path)
+  targetSectionId: number = path.state.sectionId
 ) {
   const { statements, identifier } = bindingToGroup(
     type,
-    path,
     references,
-    targetSection
+    targetSectionId
   );
   const isFirstStatement = statements.length === 0;
 
@@ -160,7 +153,8 @@ export function addStatement(
         "apply",
         path,
         references,
-        crossGroupExpressionStatement(t.callExpression(identifier, []))
+        crossGroupExpressionStatement(t.callExpression(identifier, [])),
+        targetSectionId
       );
     } else if (Array.isArray(references)) {
       for (const binding of references) {
@@ -171,20 +165,21 @@ export function addStatement(
           crossGroupExpressionStatement(
             // TODO: might need to queue in a child scope
             callRuntime("queue", identifier, t.numericLiteral(binding.id))
-          )
+          ),
+          targetSectionId
         );
       }
-    } else if (references && references.sectionId !== targetSection.id) {
-      const factory = getQueueFactory(targetSection.id);
+    } else if (references && references.sectionId !== targetSectionId) {
+      const factory = getQueueFactory(targetSectionId);
       if (factory) {
         addStatement(
           type,
           path,
           references,
           crossGroupExpressionStatement(
-            factory(references, identifier, targetSection)
+            factory(references, identifier, targetSectionId)
           ),
-          getSectionById<SectionTranslate>(path, references)
+          references.sectionId
         );
       }
     }
@@ -199,29 +194,23 @@ function crossGroupExpressionStatement(expression: t.Expression) {
   return statement;
 }
 
-export function bindingToApplyId(
-  path: t.NodePath<any>,
-  binding: Reserve,
-  section: SectionTranslate = getSectionById(path)
-) {
-  return bindingToGroup("apply", path, binding, section).identifier;
+export function bindingToApplyId(binding: Reserve, sectionId: number) {
+  return bindingToGroup("apply", binding, sectionId).identifier;
 }
 
 function bindingToGroup(
   type: "apply" | "hydrate",
-  path: t.NodePath<any>,
   references: References,
-  section: SectionTranslate = getSectionById(path)
+  sectionId: number
 ) {
-  const groups =
-    type === "apply" ? getApply(section.id) : getHydrate(section.id);
+  const groups = type === "apply" ? getApply(sectionId) : getHydrate(sectionId);
   const groupIndex = sorted.findIndex(compareReferenceGroups, groups, {
     references,
   } as ReferenceGroup);
 
   if (groupIndex === -1) {
     const identifier = t.identifier(
-      generateReferenceGroupName(type, path, references)
+      generateReferenceGroupName(type, references)
     );
     const group = {
       identifier,
@@ -235,35 +224,35 @@ function bindingToGroup(
   }
 }
 
-export function getSectionMeta(section: SectionTranslate) {
-  const [firstApply] = getApply(section.id);
-  const writes = getWrites(section.id);
+export function getSectionMeta(sectionId: number) {
+  const [firstApply] = getApply(sectionId);
+  const writes = getWrites(sectionId);
   const defaultApply =
     firstApply && !firstApply.references && firstApply.identifier;
   return {
     apply: defaultApply || t.nullLiteral(),
-    walks: getWalkString(section.id),
+    walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
   };
 }
 
 export function getSectionDeclarator(
   path: t.NodePath,
-  section: SectionTranslate,
+  sectionId: number,
   name: string
 ) {
   const dummyIdentifier = path.scope.generateUidIdentifier(name);
-  const identifier = getRenderer(section.id);
+  const identifier = getRenderer(sectionId);
   identifier.name = dummyIdentifier.name;
-  const { writes, walks, apply } = getSectionMeta(section);
+  const { writes, walks, apply } = getSectionMeta(sectionId);
   return t.variableDeclarator(
     identifier,
     callRuntime("createRenderer", writes, walks, apply)
   );
 }
 
-function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
-  const groups = getApply(section.id);
+function writeApplyGroups(path: t.NodePath<any>, sectionId: number) {
+  const groups = getApply(sectionId);
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     statements.sort((a, b) => {
@@ -280,15 +269,15 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
         params = references.map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRead(binding, section.id)
+            callRead(binding, sectionId)
           )
         );
         body = t.blockStatement(statements);
-      } else if (references.sectionId !== section.id) {
+      } else if (references.sectionId !== sectionId) {
         params = [
           t.assignmentPattern(
             t.identifier(references.name),
-            callRead(references, section.id)
+            callRead(references, sectionId)
           ),
         ];
         body = t.blockStatement(statements);
@@ -321,15 +310,15 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
   }
 }
 
-function writeHydrateGroups(path: t.NodePath<any>, section: SectionTranslate) {
-  const groups = getHydrate(section.id);
+function writeHydrateGroups(path: t.NodePath<any>, sectionId: number) {
+  const groups = getHydrate(sectionId);
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     const params = references
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRead(binding, section.id)
+            callRead(binding, sectionId)
           )
         )
       : [];
@@ -385,7 +374,6 @@ function compareReferenceGroups(
 
 function generateReferenceGroupName(
   type: "apply" | "hydrate",
-  path: t.NodePath,
   references: References
 ) {
   let name = type;
@@ -401,7 +389,7 @@ function generateReferenceGroupName(
     }
   }
 
-  return path.hub.file.path.scope.generateUid(name);
+  return currentProgramPath.scope.generateUid(name);
 }
 
 const bindFunctionsVisitor: t.Visitor<{

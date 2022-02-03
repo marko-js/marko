@@ -161,7 +161,7 @@ type ObjectWithSectionId = {
   sectionId: number;
 };
 
-export function getSectionById<S extends Section>(
+function getSectionById<S extends Section>(
   path: t.NodePath,
   reference: ObjectWithSectionId = path.state
 ) {

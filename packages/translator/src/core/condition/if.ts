@@ -11,6 +11,7 @@ import {
   ReserveType,
   reserveScope,
   getSection,
+  getSectionId,
   compareReserves,
 } from "../../util/sections";
 import { isOutputDOM } from "../../util/marko-config";
@@ -65,7 +66,7 @@ export default {
       writer.setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {
-      exitCondition(tag, writer.end(tag));
+      exitCondition(tag);
     },
   },
   attributes: {},
@@ -82,16 +83,16 @@ const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   {
     tag: t.NodePath<t.MarkoTag>;
-    section: writer.SectionTranslate;
+    sectionId: number;
   }[]
 >();
 
 export const queueBranchFactory: writer.queueFactory = (
   binding,
   functionIdentifier,
-  targetSection
+  targetSectionId
 ) => {
-  const renderer = writer.getRenderer(targetSection.id);
+  const renderer = writer.getRenderer(targetSectionId);
   return callRuntime(
     "queueInBranch",
     t.numericLiteral(0),
@@ -101,10 +102,8 @@ export const queueBranchFactory: writer.queueFactory = (
   );
 };
 
-export function exitCondition(
-  tag: t.NodePath<t.MarkoTag>,
-  section: writer.SectionTranslate
-) {
+export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
+  const sectionId = writer.end(tag);
   const nextTag = tag.getNextSibling();
   const isLast = !(
     isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
@@ -113,7 +112,7 @@ export function exitCondition(
 
   branches.push({
     tag,
-    section,
+    sectionId,
   });
 
   if (isLast) {
@@ -124,11 +123,11 @@ export function exitCondition(
       let expr: t.Expression = t.nullLiteral();
 
       for (let i = branches.length; i--; ) {
-        const { tag, section } = branches[i];
+        const { tag, sectionId } = branches[i];
         const [testAttr] = tag.node.attributes;
         const rendererDeclarator = writer.getSectionDeclarator(
           tag,
-          section,
+          sectionId,
           "if"
         );
         const id = rendererDeclarator.id as t.Identifier;

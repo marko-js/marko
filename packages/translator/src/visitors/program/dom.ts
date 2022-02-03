@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
+import { getSectionId } from "../../util/sections";
 import * as writer from "../../util/writer";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -10,11 +11,11 @@ export default {
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit(program: t.NodePath<t.Program>) {
-      const section = writer.end(program);
+      const sectionId = writer.end(program);
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
       const applyIdentifier = t.identifier("apply");
-      const { walks, writes, apply } = writer.getSectionMeta(section);
+      const { walks, writes, apply } = writer.getSectionMeta(sectionId);
 
       program.node.body.push(
         t.exportNamedDeclaration(

@@ -2,7 +2,6 @@ import type { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../../util/marko-config";
 import programHTML from "./html";
 import programDOM from "./dom";
-import type { SectionTranslate } from "../../util/writer";
 import { startSection, assignFinalIds } from "../../util/sections";
 
 export let currentProgramPath: t.NodePath<t.Program>;
@@ -21,10 +20,6 @@ export default {
   translate: {
     enter(program: t.NodePath<t.Program>) {
       currentProgramPath = program;
-      program.node.extra.sections = program.node.extra.sections!.map(
-        (section) => ({ ...section } as SectionTranslate)
-      );
-
       if (isOutputHTML()) {
         programHTML.translate.enter(program);
       } else {

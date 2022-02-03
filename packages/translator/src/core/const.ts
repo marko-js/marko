@@ -4,6 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
+import { getSectionId } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -37,7 +38,8 @@ export default {
         );
     }
 
-    if (isOutputDOM(tag)) {
+    if (isOutputDOM()) {
+      const sectionId = getSectionId(tag);
       const identifiers = Object.values(
         tag.get("var").getBindingIdentifiers()
       ) as t.Identifier[];
@@ -48,7 +50,10 @@ export default {
         identifiers.length === 1
           ? t.expressionStatement(
               t.callExpression(
-                writer.bindingToApplyId(tag, identifiers[0].extra.reserve!),
+                writer.bindingToApplyId(
+                  identifiers[0].extra.reserve!,
+                  sectionId
+                ),
                 [defaultAttr.value]
               )
             )
@@ -59,7 +64,10 @@ export default {
               ...identifiers.map((identifier) =>
                 t.expressionStatement(
                   t.callExpression(
-                    writer.bindingToApplyId(tag, identifier.extra.reserve!),
+                    writer.bindingToApplyId(
+                      identifier.extra.reserve!,
+                      sectionId
+                    ),
                     [t.identifier(identifier.name)]
                   )
                 )

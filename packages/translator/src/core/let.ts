@@ -48,8 +48,9 @@ export default {
     }
 
     if (isOutputDOM()) {
+      const sectionId = getSectionId(tag);
       const binding = tagVar.extra.reserve!;
-      const applyId = writer.bindingToApplyId(tag, binding);
+      const applyId = writer.bindingToApplyId(binding, sectionId);
       // TODO: add defined guard if bindings exist.
       writer.addStatement(
         "apply",

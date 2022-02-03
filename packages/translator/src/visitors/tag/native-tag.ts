@@ -9,6 +9,7 @@ import {
   Section,
   ReserveType,
   getSection,
+  getSectionId,
   reserveScope,
 } from "../../util/sections";
 import * as writer from "../../util/writer";
@@ -58,6 +59,7 @@ export default {
       const tagDef = getTagDef(tag);
       const hasSpread = attrs.some((attr) => attr.isMarkoSpreadAttribute());
       const write = writer.writeTo(tag);
+      const sectionId = getSectionId(tag);
 
       if (isHTML) {
         if (extra.tagNameNullable) {

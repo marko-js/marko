@@ -3,7 +3,12 @@ import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import { ReserveType, reserveScope, getSection } from "../util/sections";
+import {
+  ReserveType,
+  reserveScope,
+  getSection,
+  getSectionId,
+} from "../util/sections";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
@@ -36,12 +41,12 @@ export default {
       writer.setQueueFactory(tag, queueLoopFactory);
     },
     exit(tag) {
-      const section = writer.end(tag);
+      const sectionId = writer.end(tag);
 
       if (isOutputHTML()) {
         translateHTML.exit(tag);
       } else {
-        translateDOM.exit(tag, section);
+        translateDOM.exit(tag, sectionId);
       }
     },
   },
@@ -111,7 +116,7 @@ export default {
 } as Tag;
 
 const translateDOM = {
-  exit(tag: t.NodePath<t.MarkoTag>, section: writer.SectionTranslate) {
+  exit(tag: t.NodePath<t.MarkoTag>, sectionId: number) {
     const { node } = tag;
     const {
       attributes,
@@ -133,7 +138,7 @@ const translateDOM = {
 
       const rendererDeclarator = writer.getSectionDeclarator(
         tag,
-        section,
+        sectionId,
         "for"
       );
       const rendererId = rendererDeclarator.id as t.Identifier;
@@ -152,7 +157,7 @@ const translateDOM = {
             ofAttrValue,
             rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
-            writer.bindingToApplyId(tag, valParam.extra.reserve!, section)
+            writer.bindingToApplyId(valParam.extra.reserve!, sectionId)
           )
         )
       );
@@ -163,7 +168,7 @@ const translateDOM = {
 const queueLoopFactory: writer.queueFactory = (
   binding,
   functionIdentifier,
-  targetSection
+  targetSectionId
 ) => {
   return t.identifier("TODO");
 };

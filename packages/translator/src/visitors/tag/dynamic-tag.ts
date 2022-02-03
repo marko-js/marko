@@ -5,6 +5,7 @@ import * as writer from "../../util/writer";
 import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputDOM } from "../../util/marko-config";
+import { getSectionId } from "../../util/sections";
 
 export default {
   translate: {
@@ -13,7 +14,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
-      const section = writer.end(tag);
+      const sectionId = writer.end(tag);
       const attrsObject = attrsToObject(tag, true) || t.nullLiteral();
       const renderBodyProp = getRenderBodyProp(attrsObject);
       const args: t.Expression[] = [node.name, attrsObject];
@@ -26,7 +27,7 @@ export default {
         );
 
         if (isOutputDOM()) {
-          const { walks, writes } = writer.getSectionMeta(section);
+          const { walks, writes } = writer.getSectionMeta(sectionId);
           fnExpr = callRuntime(
             "createRenderer",
             writes || t.stringLiteral(""),
