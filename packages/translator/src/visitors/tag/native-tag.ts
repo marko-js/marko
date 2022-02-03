@@ -7,6 +7,7 @@ import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope } from "../../util/reserve";
+import { addStatement } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 
@@ -96,7 +97,7 @@ export default {
               } else if (isHTML) {
                 write`${callRuntime(helper, value.node)}`;
               } else {
-                writer.addStatement(
+                addStatement(
                   "apply",
                   sectionId,
                   valueReferences,
@@ -119,7 +120,7 @@ export default {
               } else {
                 if (name.startsWith("on")) {
                   const reserveIndex = t.numericLiteral(extra.reserve!.id);
-                  writer.addStatement(
+                  addStatement(
                     "apply",
                     sectionId,
                     valueReferences,
@@ -128,7 +129,7 @@ export default {
                     )
                   );
 
-                  writer.addStatement(
+                  addStatement(
                     "hydrate",
                     sectionId,
                     extra.valueReferences,
@@ -142,7 +143,7 @@ export default {
                     )
                   );
                 } else {
-                  writer.addStatement(
+                  addStatement(
                     "apply",
                     sectionId,
                     valueReferences,

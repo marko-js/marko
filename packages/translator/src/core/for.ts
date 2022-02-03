@@ -3,6 +3,12 @@ import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
+import {
+  addStatement,
+  bindingToApplyId,
+  queueFactory,
+  setQueueFactory,
+} from "../util/apply-hydrate";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
@@ -40,7 +46,7 @@ export default {
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
       writer.start(tag);
-      writer.setQueueFactory(tag, queueLoopFactory);
+      setQueueFactory(tag, queueLoopFactory);
     },
     exit(tag) {
       const sectionId = writer.end(tag);
@@ -148,7 +154,7 @@ const translateDOM = {
 
       tag.replaceWith(t.variableDeclaration("const", [rendererDeclarator]));
 
-      writer.addStatement(
+      addStatement(
         "apply",
         sectionId,
         // TODO: should merge byAttr refereces with ofAttr references
@@ -160,7 +166,7 @@ const translateDOM = {
             ofAttrValue,
             rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
-            writer.bindingToApplyId(valParam.extra.reserve!, bodySectionId)
+            bindingToApplyId(valParam.extra.reserve!, bodySectionId)
           )
         )
       );
@@ -168,7 +174,7 @@ const translateDOM = {
   },
 };
 
-const queueLoopFactory: writer.queueFactory = (
+const queueLoopFactory: queueFactory = (
   binding,
   functionIdentifier,
   targetSectionId

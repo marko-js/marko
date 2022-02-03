@@ -5,6 +5,7 @@ import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
 import { getSectionId } from "../util/sections";
+import { addStatement, bindingToApplyId } from "../util/apply-hydrate";
 
 export default {
   translate(tag) {
@@ -43,17 +44,14 @@ export default {
       const identifiers = Object.values(
         tag.get("var").getBindingIdentifiers()
       ) as t.Identifier[];
-      writer.addStatement(
+      addStatement(
         "apply",
         sectionId,
         defaultAttr.extra?.valueReferences,
         identifiers.length === 1
           ? t.expressionStatement(
               t.callExpression(
-                writer.bindingToApplyId(
-                  identifiers[0].extra.reserve!,
-                  sectionId
-                ),
+                bindingToApplyId(identifiers[0].extra.reserve!, sectionId),
                 [defaultAttr.value]
               )
             )
@@ -64,10 +62,7 @@ export default {
               ...identifiers.map((identifier) =>
                 t.expressionStatement(
                   t.callExpression(
-                    writer.bindingToApplyId(
-                      identifier.extra.reserve!,
-                      sectionId
-                    ),
+                    bindingToApplyId(identifier.extra.reserve!, sectionId),
                     [t.identifier(identifier.name)]
                   )
                 )

@@ -3,6 +3,11 @@ import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import * as sorted from "../../util/sorted-arr";
+import {
+  addStatement,
+  queueFactory,
+  setQueueFactory,
+} from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
@@ -68,7 +73,7 @@ export default {
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
       writer.start(tag);
-      writer.setQueueFactory(tag, queueBranchFactory);
+      setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {
       exitCondition(tag);
@@ -92,7 +97,7 @@ const BRANCHES_LOOKUP = new WeakMap<
   }[]
 >();
 
-export const queueBranchFactory: writer.queueFactory = (
+export const queueBranchFactory: queueFactory = (
   binding,
   functionIdentifier,
   targetSectionId
@@ -162,7 +167,7 @@ export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
 
       nextTag.insertBefore(t.variableDeclaration("const", declarators));
 
-      writer.addStatement(
+      addStatement(
         "apply",
         sectionId,
         refs.length === 0 ? undefined : refs.length === 1 ? refs[0] : refs,

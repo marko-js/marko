@@ -5,6 +5,7 @@ import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
 import { getSectionId, getOrCreateSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
+import { addStatement } from "../util/apply-hydrate";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 
@@ -56,7 +57,7 @@ export default {
           placeholder.node.value
         )}`;
       } else {
-        writer.addStatement(
+        addStatement(
           "apply",
           getSectionId(placeholder),
           valueReferences,
