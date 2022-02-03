@@ -22,13 +22,7 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       currentProgramPath = program;
       program.node.extra.sections = program.node.extra.sections!.map(
-        (section) =>
-          ({
-            ...section,
-            apply: [],
-            hydrate: [],
-            writes: [""],
-          } as SectionTranslate)
+        (section) => ({ ...section } as SectionTranslate)
       );
 
       if (isOutputHTML(program)) {

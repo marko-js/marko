@@ -3,6 +3,8 @@ import type { References } from "../util/references";
 import {
   Section,
   Reserve,
+  getSectionId,
+  createSectionGetter,
   compareReserves,
   getSectionById,
   getParentSectionId,
@@ -19,12 +21,16 @@ interface ReferenceGroup {
   references: References;
   statements: t.Statement[];
 }
+
+const getApply = createSectionGetter<ReferenceGroup[]>("apply", () => []);
+const getHydrate = createSectionGetter<ReferenceGroup[]>("hydrate", () => []);
+const getWrites = createSectionGetter<(string | t.Expression)[]>(
+  "writes",
+  () => [""]
+);
 export interface SectionTranslate extends Section {
   type?: "if" | "for";
   renderer?: t.Identifier;
-  apply: ReferenceGroup[];
-  hydrate: ReferenceGroup[];
-  writes: (string | t.Expression)[];
 }
 
 export function start(path: t.NodePath<any>, type?: "if" | "for") {
@@ -60,12 +66,13 @@ export function end(path: t.NodePath<any>) {
 }
 
 export function writeTo(path: t.NodePath<any>) {
+  const sectionId = getSectionId(path);
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
   ): void => {
     const exprsLen = exprs.length;
-    const { writes } = getSectionById<SectionTranslate>(path);
+    const writes = getWrites(sectionId);
     appendLiteral(writes, strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
@@ -75,9 +82,11 @@ export function writeTo(path: t.NodePath<any>) {
 }
 
 export function consumeHTML(path: t.NodePath<any>) {
-  const section = getSectionById<SectionTranslate>(path);
-  const result = toTemplateOrStringLiteral(section.writes);
-  section.writes = [""];
+  const writes = getWrites(getSectionId(path));
+  const result = toTemplateOrStringLiteral(writes);
+
+  writes.length = 0;
+  writes[0] = "";
 
   if (result) {
     return t.expressionStatement(callRuntime(path, "write", result));
@@ -87,8 +96,8 @@ export function consumeHTML(path: t.NodePath<any>) {
 export function hasPendingHTML(
   path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
 ) {
-  const section = getSectionById<SectionTranslate>(path);
-  return Boolean(section.writes.length > 1 || section.writes[0]);
+  const writes = getWrites(getSectionId(path));
+  return Boolean(writes.length > 1 || writes[0]);
 }
 
 export function flushBefore(path: t.NodePath<any>) {
@@ -101,13 +110,10 @@ export function flushBefore(path: t.NodePath<any>) {
 export function flushInto(
   path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
 ) {
-  const expr = consumeHTML(path);
+  const target = path.isProgram() ? path : path.get("body");
+  const expr = consumeHTML(target);
   if (expr) {
-    if (path.isMarkoTag()) {
-      path.get("body").pushContainer("body", expr)[0].skip();
-    } else {
-      path.pushContainer("body", expr)[0].skip();
-    }
+    target.pushContainer("body", expr)[0].skip();
   }
 }
 
@@ -198,7 +204,8 @@ function bindingToGroup(
   references: References,
   section: SectionTranslate = getSectionById(path)
 ) {
-  const groups = section[type];
+  const groups =
+    type === "apply" ? getApply(section.id) : getHydrate(section.id);
   const groupIndex = sorted.findIndex(compareReferenceGroups, groups, {
     references,
   } as ReferenceGroup);
@@ -220,13 +227,14 @@ function bindingToGroup(
 }
 
 export function getSectionMeta(section: SectionTranslate) {
-  const [firstApply] = section.apply;
+  const [firstApply] = getApply(section.id);
+  const writes = getWrites(section.id);
   const defaultApply =
     firstApply && !firstApply.references && firstApply.identifier;
   return {
     apply: defaultApply || t.nullLiteral(),
     walks: getWalkString(section.id),
-    writes: toTemplateOrStringLiteral(section.writes) || t.stringLiteral(""),
+    writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
   };
 }
 
@@ -251,7 +259,7 @@ function getSectionIdentifier(
 }
 
 function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
-  const groups = section.apply;
+  const groups = getApply(section.id);
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     statements.sort((a, b) => {
@@ -310,7 +318,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
 }
 
 function writeHydrateGroups(path: t.NodePath<any>, section: SectionTranslate) {
-  const groups = section.hydrate;
+  const groups = getHydrate(section.id);
   const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     const params = references
