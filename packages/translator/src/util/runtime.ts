@@ -1,69 +1,52 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
-import { Reserve, getParentSectionId } from "./sections";
+import type { Reserve } from "./sections";
+import { currentProgramPath } from "../visitors/program";
 
-export function importRuntime<T extends t.Node>(
-  path: t.NodePath<T>,
-  name: string
-) {
-  const { output } = getMarkoOpts(path);
-  return importNamed(path.hub.file, getRuntimePath(path, output), name);
+export function importRuntime(name: string) {
+  const { output } = getMarkoOpts();
+  return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
 }
 
-export function callRuntime<
-  T extends t.Node,
-  A extends Parameters<typeof t.callExpression>[1]
->(
-  path: t.NodePath<T>,
+export function callRuntime<A extends Parameters<typeof t.callExpression>[1]>(
   name:
     | keyof typeof import("@marko/runtime-fluurt/src/dom")
     | keyof typeof import("@marko/runtime-fluurt/src/html"),
   ...args: A
 ) {
-  return t.callExpression(importRuntime(path, name as string), args);
+  return t.callExpression(importRuntime(name as string), args);
 }
 
-export function getHTMLRuntime<T extends t.Node>(path: t.NodePath<T>) {
-  return getRuntime(
-    path,
-    "html"
-  ) as typeof import("@marko/runtime-fluurt/src/html");
+export function getHTMLRuntime() {
+  return getRuntime("html") as typeof import("@marko/runtime-fluurt/src/html");
 }
 
-export function getDOMRuntime<T extends t.Node>(path: t.NodePath<T>) {
-  return getRuntime(
-    path,
-    "dom"
-  ) as typeof import("@marko/runtime-fluurt/src/dom");
+export function getDOMRuntime() {
+  return getRuntime("dom") as typeof import("@marko/runtime-fluurt/src/dom");
 }
 
-function getRuntime<T extends t.Node>(
-  path: t.NodePath<T>,
-  output: string
-): unknown {
-  return require(getRuntimePath(path, output));
+function getRuntime(output: string): unknown {
+  return require(getRuntimePath(output));
 }
 
-function getRuntimePath<T extends t.Node>(path: t.NodePath<T>, output: string) {
-  const { optimize } = getMarkoOpts(path);
+function getRuntimePath(output: string) {
+  const { optimize } = getMarkoOpts();
   return `@marko/runtime-fluurt/${
     // eslint-disable-next-line no-constant-condition
     "MARKO_SRC" ? "src" : optimize ? "dist" : "dist/debug"
   }/${output}`;
 }
 
-export function callRead(path: t.NodePath, reference: Reserve) {
-  const sectionId = path.state.sectionId;
-  const diff = getScopeDepthDifference(reference, sectionId);
+export function callRead(reference: Reserve, targetSectionId: number) {
+  const diff = getScopeDepthDifference(reference, targetSectionId);
   switch (diff) {
     case 0:
-      return callRuntime(path, "read", t.numericLiteral(reference.id));
+      return callRuntime("read", t.numericLiteral(reference.id));
     case 1:
-      return callRuntime(path, "readInOwner", t.numericLiteral(reference.id));
+      return callRuntime("readInOwner", t.numericLiteral(reference.id));
     default:
       return callRuntime(
-        path,
         "readInOwner",
         t.numericLiteral(reference.id),
         t.numericLiteral(diff)
@@ -72,17 +55,15 @@ export function callRead(path: t.NodePath, reference: Reserve) {
 }
 
 export function callQueue(
-  path: t.NodePath,
   fnIdentifier: t.Identifier,
   reference: Reserve,
-  value: t.Expression
+  value: t.Expression,
+  targetSectionId: number
 ) {
-  const sectionId = getParentSectionId(path);
-  const diff = getScopeDepthDifference(reference, sectionId);
+  const diff = getScopeDepthDifference(reference, targetSectionId);
   switch (diff) {
     case 0:
       return callRuntime(
-        path,
         "queue",
         fnIdentifier,
         t.numericLiteral(reference.id),
@@ -90,7 +71,6 @@ export function callQueue(
       );
     case 1:
       return callRuntime(
-        path,
         "queueInOwner",
         fnIdentifier,
         t.numericLiteral(reference.id),
@@ -98,7 +78,6 @@ export function callQueue(
       );
     default:
       return callRuntime(
-        path,
         "queueInOwner",
         fnIdentifier,
         t.numericLiteral(reference.id),

@@ -44,7 +44,6 @@ export default {
       tag.insertBefore(
         t.expressionStatement(
           callRuntime(
-            tag,
             "pushContext",
             t.stringLiteral(tag.hub.file.metadata.marko.id),
             defaultAttr.value!
@@ -56,7 +55,7 @@ export default {
       assertNoParams(tag);
       assertNoVar(tag);
       writer.end(tag);
-      tag.insertAfter(t.expressionStatement(callRuntime(tag, "popContext")));
+      tag.insertAfter(t.expressionStatement(callRuntime("popContext")));
       tag.replaceWithMultiple(tag.node.body.body);
     },
   },

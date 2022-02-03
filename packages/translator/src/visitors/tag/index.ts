@@ -119,7 +119,7 @@ export default {
           tag.set("name", tagNameId);
         }
 
-        if (tagNameType !== TagNameTypes.DynamicTag && !isOutputHTML(tag)) {
+        if (tagNameType !== TagNameTypes.DynamicTag && !isOutputHTML()) {
           // DOM implementation requires non strings actually be a dynamic tag call.
           tagNameType = TagNameTypes.DynamicTag;
         }
@@ -155,7 +155,7 @@ export default {
       if (
         extra.tagNameDynamic &&
         tagNameType !== TagNameTypes.DynamicTag &&
-        !isOutputHTML(tag)
+        !isOutputHTML()
       ) {
         // DOM implementation requires non strings actually be a dynamic tag call.
         tagNameType = TagNameTypes.DynamicTag;

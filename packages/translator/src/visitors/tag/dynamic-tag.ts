@@ -25,10 +25,9 @@ export default {
           toFirstExpressionOrBlock(renderBodyProp.body)
         );
 
-        if (isOutputDOM(tag)) {
+        if (isOutputDOM()) {
           const { walks, writes } = writer.getSectionMeta(section);
           fnExpr = callRuntime(
-            tag,
             "createRenderer",
             writes || t.stringLiteral(""),
             walks || t.stringLiteral(""),
@@ -39,7 +38,7 @@ export default {
         args.push(fnExpr);
       }
 
-      const dynamicTagExpr = callRuntime(tag, "dynamicTag", ...args);
+      const dynamicTagExpr = callRuntime("dynamicTag", ...args);
 
       if (node.var) {
         translateVar(tag, dynamicTagExpr);

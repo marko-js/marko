@@ -5,7 +5,7 @@ const ieConditionalCommentRegExp = /^\[if |<!\[endif\]$/;
 
 export default {
   translate(comment: t.NodePath<t.MarkoComment>) {
-    if (isOutputHTML(comment)) {
+    if (isOutputHTML()) {
       const { value } = comment.node;
 
       if (ieConditionalCommentRegExp.test(value)) {

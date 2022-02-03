@@ -96,9 +96,8 @@ export function visit(
   const steps = getSteps(sectionId);
   const walks = getWalks(sectionId);
 
-  if (isOutputHTML(path)) {
+  if (isOutputHTML()) {
     writeTo(path)`${callRuntime(
-      path,
       "markScopeOffset",
       t.numericLiteral(reserve.id)
     )}`;

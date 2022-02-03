@@ -6,6 +6,7 @@ import { isOutputDOM } from "../util/marko-config";
 import * as writer from "../util/writer";
 import { callQueue } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
+import { getSectionId } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -46,7 +47,7 @@ export default {
         );
     }
 
-    if (isOutputDOM(tag)) {
+    if (isOutputDOM()) {
       const binding = tagVar.extra.reserve!;
       const applyId = writer.bindingToApplyId(tag, binding);
       // TODO: add defined guard if bindings exist.
@@ -59,7 +60,8 @@ export default {
 
       replaceAssignments(
         tag.scope.getBinding(binding.name)!,
-        (assignment, value) => callQueue(assignment, applyId, binding, value)
+        (assignment, value) =>
+          callQueue(applyId, binding, value, getSectionId(assignment))
       );
     } else {
       translateVar(tag, defaultAttr.value);

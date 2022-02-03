@@ -4,7 +4,7 @@ import { isOutputHTML } from "../util/marko-config";
 
 export default {
   translate(documentType: t.NodePath<t.MarkoDocumentType>) {
-    if (isOutputHTML(documentType)) {
+    if (isOutputHTML()) {
       writer.writeTo(documentType)`<!${documentType.node.value}>`;
     }
 

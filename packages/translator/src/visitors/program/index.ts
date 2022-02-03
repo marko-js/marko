@@ -25,14 +25,14 @@ export default {
         (section) => ({ ...section } as SectionTranslate)
       );
 
-      if (isOutputHTML(program)) {
+      if (isOutputHTML()) {
         programHTML.translate.enter(program);
       } else {
         programDOM.translate.enter(program);
       }
     },
     exit(program: t.NodePath<t.Program>) {
-      if (isOutputHTML(program)) {
+      if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {
         programDOM.translate.exit(program);

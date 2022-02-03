@@ -30,7 +30,7 @@ export default {
     }
   },
   translate(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-    const isHTML = isOutputHTML(placeholder);
+    const isHTML = isOutputHTML();
     const write = writer.writeTo(placeholder);
     const extra = placeholder.node.extra;
     const { confident, computed, valueReferences, reserve } = extra;
@@ -45,13 +45,12 @@ export default {
       : "html";
 
     if (confident && canWriteHTML) {
-      write`${getHTMLRuntime(placeholder)[method as HTMLMethod](computed)}`;
+      write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
     } else {
       walks.visit(placeholder, walks.WalkCodes.Replace);
 
       if (isHTML) {
         write`${callRuntime(
-          placeholder,
           method as HTMLMethod | DOMMethod,
           placeholder.node.value
         )}`;
@@ -62,7 +61,6 @@ export default {
           valueReferences,
           t.expressionStatement(
             callRuntime(
-              placeholder,
               method as DOMMethod,
               t.numericLiteral(reserve!.id!),
               placeholder.node.value

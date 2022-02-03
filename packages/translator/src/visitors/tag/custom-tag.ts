@@ -31,7 +31,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const section = writer.end(tag);
-      const isHTML = isOutputHTML(tag);
+      const isHTML = isOutputHTML();
       const { node } = tag;
       const write = writer.writeTo(tag);
       let tagIdentifier: t.Expression;
@@ -129,7 +129,6 @@ export default {
             t.objectProperty(
               t.identifier("renderBody"),
               callRuntime(
-                tag,
                 "createRenderer",
                 writes || t.stringLiteral(""),
                 walks || t.stringLiteral(""),

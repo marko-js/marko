@@ -23,7 +23,7 @@ export default {
       validateFor(tag);
 
       if (
-        !isOutputHTML(tag) &&
+        !isOutputHTML() &&
         Object.keys(tag.node.extra.nestedAttributeTags).length
       ) {
         tag.remove();
@@ -38,7 +38,7 @@ export default {
     exit(tag) {
       const section = writer.end(tag);
 
-      if (isOutputHTML(tag)) {
+      if (isOutputHTML()) {
         translateHTML.exit(tag);
       } else {
         translateDOM.exit(tag, section);
@@ -147,7 +147,6 @@ const translateDOM = {
         ofAttr.extra?.valueReferences,
         t.expressionStatement(
           callRuntime(
-            tag,
             "setLoopOf",
             t.numericLiteral(node.extra.reserve!.id),
             ofAttrValue,
@@ -162,7 +161,6 @@ const translateDOM = {
 };
 
 const queueLoopFactory: writer.queueFactory = (
-  path,
   binding,
   functionIdentifier,
   targetSection

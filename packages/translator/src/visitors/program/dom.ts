@@ -37,7 +37,6 @@ export default {
         ),
         t.exportDefaultDeclaration(
           callRuntime(
-            program,
             "createRenderFn",
             templateIdentifier,
             walksIdentifier,

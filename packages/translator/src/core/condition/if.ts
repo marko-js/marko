@@ -87,14 +87,12 @@ const BRANCHES_LOOKUP = new WeakMap<
 >();
 
 export const queueBranchFactory: writer.queueFactory = (
-  path,
   binding,
   functionIdentifier,
   targetSection
 ) => {
   const renderer = writer.getRenderer(targetSection.id);
   return callRuntime(
-    path,
     "queueInBranch",
     t.numericLiteral(0),
     renderer,
@@ -119,7 +117,7 @@ export function exitCondition(
   });
 
   if (isLast) {
-    if (isOutputDOM(tag)) {
+    if (isOutputDOM()) {
       const { extra } = branches[0].tag.node;
       const refs: Reserve[] = [];
       const declarators: t.VariableDeclarator[] = [];
@@ -165,7 +163,6 @@ export function exitCondition(
         refs.length === 0 ? undefined : refs.length === 1 ? refs[0] : refs,
         t.expressionStatement(
           callRuntime(
-            tag,
             "setConditionalRenderer",
             t.numericLiteral(extra.reserve!.id),
             expr

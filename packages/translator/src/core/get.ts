@@ -88,7 +88,7 @@ export default {
       t.variableDeclaration("const", [
         t.variableDeclarator(
           node.var,
-          callRuntime(tag, "getInContext", t.stringLiteral(refId))
+          callRuntime("getInContext", t.stringLiteral(refId))
         ),
       ])
     );

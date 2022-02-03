@@ -29,7 +29,7 @@ export default {
     }
 
     if (onNextAttr && (onNextAttr as t.MarkoAttribute).name === "onnext") {
-      if (isOutputHTML(tag)) {
+      if (isOutputHTML()) {
         tag.get("attributes")[1].remove();
       }
     }
@@ -61,7 +61,7 @@ export default {
       program.pushContainer("body", t.returnStatement(returnId))[0].skip();
     }
 
-    if (isOutputHTML(tag)) {
+    if (isOutputHTML()) {
       tag
         .replaceWith(
           t.assignmentExpression("=", returnId, defaultAttr.value!)

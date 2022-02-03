@@ -52,7 +52,7 @@ export default {
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { extra } = tag.node;
-      const isHTML = isOutputHTML(tag);
+      const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
       const tagDef = getTagDef(tag);
@@ -75,7 +75,7 @@ export default {
       write`<${name.node}`;
 
       if (hasSpread) {
-        const attrsCallExpr = callRuntime(tag, "attrs", attrsToObject(tag)!);
+        const attrsCallExpr = callRuntime("attrs", attrsToObject(tag)!);
 
         if (isHTML) {
           write`${attrsCallExpr}`;
@@ -95,16 +95,16 @@ export default {
             case "style": {
               const helper = `${name}Attr` as "classAttr" | "styleAttr";
               if (confident) {
-                write`${getHTMLRuntime(tag)[helper](computed)}`;
+                write`${getHTMLRuntime()[helper](computed)}`;
               } else if (isHTML) {
-                write`${callRuntime(tag, helper, value.node)}`;
+                write`${callRuntime(helper, value.node)}`;
               } else {
                 writer.addStatement(
                   "apply",
                   tag,
                   valueReferences,
                   t.expressionStatement(
-                    callRuntime(tag, helper, visitIndex!, value.node)
+                    callRuntime(helper, visitIndex!, value.node)
                   )
                 );
               }
@@ -112,10 +112,9 @@ export default {
             }
             default:
               if (confident) {
-                write`${getHTMLRuntime(tag).attr(name, computed)}`;
+                write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML && !name.startsWith("on")) {
                 write`${callRuntime(
-                  tag,
                   "attr",
                   t.stringLiteral(name),
                   value.node
@@ -128,7 +127,7 @@ export default {
                     tag,
                     valueReferences,
                     t.expressionStatement(
-                      callRuntime(tag, "write", reserveIndex, value.node)
+                      callRuntime("write", reserveIndex, value.node)
                     )
                   );
 
@@ -138,11 +137,10 @@ export default {
                     extra.valueReferences,
                     t.expressionStatement(
                       callRuntime(
-                        tag,
                         "on",
                         visitIndex!,
                         t.stringLiteral(name.slice(2)),
-                        callRuntime(tag, "read", reserveIndex)
+                        callRuntime("read", reserveIndex)
                       )
                     )
                   );
@@ -153,7 +151,6 @@ export default {
                     valueReferences,
                     t.expressionStatement(
                       callRuntime(
-                        tag,
                         "attr",
                         visitIndex!,
                         t.stringLiteral(name),
@@ -205,7 +202,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { extra } = tag.node;
-      const isHTML = isOutputHTML(tag);
+      const isHTML = isOutputHTML();
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushInto(tag);

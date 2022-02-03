@@ -23,7 +23,6 @@ interface ReferenceGroup {
 }
 
 export type queueFactory = (
-  path: t.NodePath,
   binding: Reserve,
   functionIdentifier: t.Identifier,
   targetSection: SectionTranslate
@@ -53,7 +52,7 @@ export type SectionTranslate = Section;
 
 export function start(path: t.NodePath<any>) {
   const parentId = path.state.sectionId;
-  if (parentId && isOutputHTML(path)) {
+  if (parentId && isOutputHTML()) {
     flushBefore(path);
   }
 
@@ -68,7 +67,7 @@ export function end(path: t.NodePath<any>) {
   const section = getSectionById<SectionTranslate>(path);
   const targetPath = path.isMarkoTag() ? path.get("body") : path;
 
-  if (isOutputHTML(path)) {
+  if (isOutputHTML()) {
     flushInto(path);
   } else {
     writeApplyGroups(targetPath, section);
@@ -106,7 +105,7 @@ export function consumeHTML(path: t.NodePath<any>) {
   writes[0] = "";
 
   if (result) {
-    return t.expressionStatement(callRuntime(path, "write", result));
+    return t.expressionStatement(callRuntime("write", result));
   }
 }
 
@@ -171,7 +170,7 @@ export function addStatement(
           binding,
           crossGroupExpressionStatement(
             // TODO: might need to queue in a child scope
-            callRuntime(path, "queue", identifier, t.numericLiteral(binding.id))
+            callRuntime("queue", identifier, t.numericLiteral(binding.id))
           )
         );
       }
@@ -183,7 +182,7 @@ export function addStatement(
           path,
           references,
           crossGroupExpressionStatement(
-            factory(path, references, identifier, targetSection)
+            factory(references, identifier, targetSection)
           ),
           getSectionById<SectionTranslate>(path, references)
         );
@@ -259,7 +258,7 @@ export function getSectionDeclarator(
   const { writes, walks, apply } = getSectionMeta(section);
   return t.variableDeclarator(
     identifier,
-    callRuntime(path, "createRenderer", writes, walks, apply)
+    callRuntime("createRenderer", writes, walks, apply)
   );
 }
 
@@ -281,7 +280,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
         params = references.map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRead(path, binding)
+            callRead(binding, section.id)
           )
         );
         body = t.blockStatement(statements);
@@ -289,7 +288,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
         params = [
           t.assignmentPattern(
             t.identifier(references.name),
-            callRead(path, references)
+            callRead(references, section.id)
           ),
         ];
         body = t.blockStatement(statements);
@@ -298,7 +297,7 @@ function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {
         params = [param];
         body = t.blockStatement([
           t.ifStatement(
-            callRuntime(path, "write", t.numericLiteral(references.id), param),
+            callRuntime("write", t.numericLiteral(references.id), param),
             statements.length === 1
               ? statements[0]
               : t.blockStatement(statements)
@@ -330,7 +329,7 @@ function writeHydrateGroups(path: t.NodePath<any>, section: SectionTranslate) {
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
-            callRead(path, binding)
+            callRead(binding, section.id)
           )
         )
       : [];
@@ -434,7 +433,7 @@ function bindFunction(
         (Array.isArray(references) ? references : [references]).map((binding) =>
           t.variableDeclarator(
             t.identifier(binding.name),
-            callRead(state.source, binding)
+            callRead(binding, getSectionId(state.source))
           )
         )
       )
@@ -444,6 +443,6 @@ function bindFunction(
       t.variableDeclaration("const", [t.variableDeclarator(id, node)])
     );
 
-    fn.replaceWith(callRuntime(fn, "bind", id));
+    fn.replaceWith(callRuntime("bind", id));
   }
 }

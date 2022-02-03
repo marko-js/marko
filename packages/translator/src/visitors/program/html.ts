@@ -26,7 +26,6 @@ export default {
           t.variableDeclarator(
             rendererId,
             callRuntime(
-              program,
               "register",
               t.stringLiteral(program.hub.file.metadata.marko.id),
               t.arrowFunctionExpression(
@@ -43,7 +42,7 @@ export default {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               t.identifier("render"),
-              callRuntime(program, "createRenderer", rendererId)
+              callRuntime("createRenderer", rendererId)
             ),
           ])
         ),
