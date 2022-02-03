@@ -5,10 +5,18 @@ import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import { ReserveType, reserveScope, getSection } from "../util/sections";
 import { callRuntime } from "../util/runtime";
+import analyzeAttributeTags from "../util/nested-attribute-tags";
+import customTag from "../visitors/tag/custom-tag";
 
 export default {
-  analyze(tag) {
-    reserveScope(ReserveType.Visit, getSection(tag), tag.node, "for", 3);
+  analyze: {
+    enter(tag) {
+      reserveScope(ReserveType.Visit, getSection(tag), tag.node, "for", 3);
+      customTag.analyze.enter(tag);
+    },
+    exit(tag) {
+      analyzeAttributeTags(tag);
+    },
   },
   translate: {
     enter(tag) {

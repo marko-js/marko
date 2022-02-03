@@ -22,6 +22,7 @@ export default {
 
       if (hook) {
         hooks.enter(hook, tag);
+        return;
       }
 
       switch (analyzeTagNameType(tag)) {
@@ -46,6 +47,7 @@ export default {
 
       if (hook) {
         hooks.exit(hook, tag);
+        return;
       }
 
       if (type === TagNameTypes.NativeTag) {

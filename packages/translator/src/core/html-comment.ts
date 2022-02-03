@@ -9,6 +9,9 @@ import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 
 export default {
+  analyze() {
+    // skip default custom tag analysis
+  },
   translate: {
     enter(tag) {
       walks.enter(tag);

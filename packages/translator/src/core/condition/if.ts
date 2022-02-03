@@ -14,10 +14,18 @@ import {
   compareReserves,
 } from "../../util/sections";
 import { isOutputDOM } from "../../util/marko-config";
+import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import customTag from "../../visitors/tag/custom-tag";
 
 export default {
-  analyze(tag) {
-    reserveScope(ReserveType.Visit, getSection(tag), tag.node, "if", 3);
+  analyze: {
+    enter(tag) {
+      reserveScope(ReserveType.Visit, getSection(tag), tag.node, "if", 3);
+      customTag.analyze.enter(tag);
+    },
+    exit(tag) {
+      analyzeAttributeTags(tag);
+    },
   },
   translate: {
     enter(tag) {
