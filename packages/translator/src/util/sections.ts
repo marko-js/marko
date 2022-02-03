@@ -170,10 +170,16 @@ export function getSectionById<S extends Section>(
   return sections[reference.sectionId] as S;
 }
 
-export function createSectionGetter<T = unknown>(key: string, init: () => T) {
-  return (sectionId: number): T => {
-    const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
-    const sectionData = (arrayOfSectionData[sectionId] ??= init());
-    return sectionData as T;
-  };
+export function createSectionState<T = unknown>(key: string, init?: () => T) {
+  return [
+    (sectionId: number): T => {
+      const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
+      const sectionData = (arrayOfSectionData[sectionId] ??= init && init());
+      return sectionData as T;
+    },
+    (sectionId: number, value: T): void => {
+      const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
+      arrayOfSectionData[sectionId] = value;
+    },
+  ] as const;
 }

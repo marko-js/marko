@@ -4,7 +4,7 @@ import {
   Section,
   Reserve,
   getSectionId,
-  createSectionGetter,
+  createSectionState,
   compareReserves,
   getSectionById,
   getParentSectionId,
@@ -22,18 +22,36 @@ interface ReferenceGroup {
   statements: t.Statement[];
 }
 
-const getApply = createSectionGetter<ReferenceGroup[]>("apply", () => []);
-const getHydrate = createSectionGetter<ReferenceGroup[]>("hydrate", () => []);
-const getWrites = createSectionGetter<(string | t.Expression)[]>(
+export type queueFactory = (
+  path: t.NodePath,
+  binding: Reserve,
+  functionIdentifier: t.Identifier,
+  targetSection: SectionTranslate
+) => t.Expression;
+
+const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
+const [getHydrate] = createSectionState<ReferenceGroup[]>("hydrate", () => []);
+const [getQueueFactory, _setQueueFactory] =
+  createSectionState<queueFactory>("queue");
+
+export function setQueueFactory(tag: t.NodePath<t.MarkoTag>, fn: queueFactory) {
+  _setQueueFactory(getSectionId(tag.get("body")), fn);
+}
+
+const [getRenderer] = createSectionState<t.Identifier>("renderer", () =>
+  t.identifier("")
+);
+
+export { getRenderer };
+
+const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",
   () => [""]
 );
-export interface SectionTranslate extends Section {
-  type?: "if" | "for";
-  renderer?: t.Identifier;
-}
 
-export function start(path: t.NodePath<any>, type?: "if" | "for") {
+export type SectionTranslate = Section;
+
+export function start(path: t.NodePath<any>) {
   const parentId = path.state.sectionId;
   if (parentId && isOutputHTML(path)) {
     flushBefore(path);
@@ -43,7 +61,6 @@ export function start(path: t.NodePath<any>, type?: "if" | "for") {
     path,
     (t.isMarkoTag(path.node) ? path.node.body : path.node).extra
   );
-  section.type = type;
   path.state.sectionId = section.id;
 }
 
@@ -159,21 +176,14 @@ export function addStatement(
         );
       }
     } else if (references && references.sectionId !== targetSection.id) {
-      if (targetSection.type === "if") {
-        const renderer = getSectionIdentifier(path, targetSection);
+      const factory = getQueueFactory(targetSection.id);
+      if (factory) {
         addStatement(
           type,
           path,
           references,
           crossGroupExpressionStatement(
-            callRuntime(
-              path,
-              "queueInBranch",
-              t.numericLiteral(0),
-              renderer,
-              identifier,
-              t.numericLiteral(references.id)
-            )
+            factory(path, references, identifier, targetSection)
           ),
           getSectionById<SectionTranslate>(path, references)
         );
@@ -240,22 +250,17 @@ export function getSectionMeta(section: SectionTranslate) {
 
 export function getSectionDeclarator(
   path: t.NodePath,
-  section: SectionTranslate
+  section: SectionTranslate,
+  name: string
 ) {
-  const identifier = getSectionIdentifier(path, section);
+  const dummyIdentifier = path.scope.generateUidIdentifier(name);
+  const identifier = getRenderer(section.id);
+  identifier.name = dummyIdentifier.name;
   const { writes, walks, apply } = getSectionMeta(section);
   return t.variableDeclarator(
     identifier,
     callRuntime(path, "createRenderer", writes, walks, apply)
   );
-}
-
-function getSectionIdentifier(
-  path: t.NodePath<any>,
-  section: SectionTranslate
-) {
-  return (section.renderer =
-    section.renderer || path.scope.generateUidIdentifier(section.type));
 }
 
 function writeApplyGroups(path: t.NodePath<any>, section: SectionTranslate) {

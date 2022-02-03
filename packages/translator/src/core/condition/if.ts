@@ -61,7 +61,8 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      writer.start(tag, "if");
+      writer.start(tag);
+      writer.setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {
       exitCondition(tag, writer.end(tag));
@@ -84,6 +85,23 @@ const BRANCHES_LOOKUP = new WeakMap<
     section: writer.SectionTranslate;
   }[]
 >();
+
+export const queueBranchFactory: writer.queueFactory = (
+  path,
+  binding,
+  functionIdentifier,
+  targetSection
+) => {
+  const renderer = writer.getRenderer(targetSection.id);
+  return callRuntime(
+    path,
+    "queueInBranch",
+    t.numericLiteral(0),
+    renderer,
+    functionIdentifier,
+    t.numericLiteral(binding.id)
+  );
+};
 
 export function exitCondition(
   tag: t.NodePath<t.MarkoTag>,
@@ -110,7 +128,11 @@ export function exitCondition(
       for (let i = branches.length; i--; ) {
         const { tag, section } = branches[i];
         const [testAttr] = tag.node.attributes;
-        const rendererDeclarator = writer.getSectionDeclarator(tag, section);
+        const rendererDeclarator = writer.getSectionDeclarator(
+          tag,
+          section,
+          "if"
+        );
         const id = rendererDeclarator.id as t.Identifier;
 
         declarators.push(rendererDeclarator);

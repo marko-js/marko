@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import {
   ReserveType,
-  createSectionGetter,
+  createSectionState,
   getSectionId,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
@@ -11,10 +11,11 @@ import toTemplateOrStringLiteral, {
 } from "./to-template-string-or-literal";
 import { writeTo } from "./writer";
 
-const getWalks = createSectionGetter<(string | t.Expression)[]>("walks", () => [
-  "",
-]);
-const getSteps = createSectionGetter<Step[]>("steps", () => []);
+const [getWalks] = createSectionState<(string | t.Expression)[]>(
+  "walks",
+  () => [""]
+);
+const [getSteps] = createSectionState<Step[]>("steps", () => []);
 
 export enum WalkCodes {
   Get = 32,

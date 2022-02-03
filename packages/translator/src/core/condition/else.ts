@@ -1,7 +1,7 @@
 import type { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
-import { exitCondition } from "./if";
+import { exitCondition, queueBranchFactory } from "./if";
 
 export default {
   translate: {
@@ -31,7 +31,8 @@ export default {
         }
       }
 
-      writer.start(tag, "if");
+      writer.start(tag);
+      writer.setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {
       exitCondition(tag, writer.end(tag));

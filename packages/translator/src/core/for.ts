@@ -32,7 +32,8 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      writer.start(tag, "for");
+      writer.start(tag);
+      writer.setQueueFactory(tag, queueLoopFactory);
     },
     exit(tag) {
       const section = writer.end(tag);
@@ -130,7 +131,11 @@ const translateDOM = {
         );
       }
 
-      const rendererDeclarator = writer.getSectionDeclarator(tag, section);
+      const rendererDeclarator = writer.getSectionDeclarator(
+        tag,
+        section,
+        "for"
+      );
       const rendererId = rendererDeclarator.id as t.Identifier;
 
       tag.replaceWith(t.variableDeclaration("const", [rendererDeclarator]));
@@ -154,6 +159,15 @@ const translateDOM = {
       );
     }
   },
+};
+
+const queueLoopFactory: writer.queueFactory = (
+  path,
+  binding,
+  functionIdentifier,
+  targetSection
+) => {
+  return t.identifier("TODO");
 };
 
 const translateHTML = {
