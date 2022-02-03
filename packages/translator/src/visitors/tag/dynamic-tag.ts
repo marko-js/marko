@@ -5,7 +5,6 @@ import * as writer from "../../util/writer";
 import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputDOM } from "../../util/marko-config";
-import { getSectionId } from "../../util/sections";
 
 export default {
   translate: {

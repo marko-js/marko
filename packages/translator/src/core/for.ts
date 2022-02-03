@@ -3,7 +3,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import { getSection, getSectionId } from "../util/sections";
+import { getOrCreateSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
@@ -12,7 +12,13 @@ import customTag from "../visitors/tag/custom-tag";
 export default {
   analyze: {
     enter(tag) {
-      reserveScope(ReserveType.Visit, getSection(tag), tag.node, "for", 3);
+      reserveScope(
+        ReserveType.Visit,
+        getOrCreateSectionId(tag),
+        tag.node,
+        "for",
+        3
+      );
       customTag.analyze.enter(tag);
     },
     exit(tag) {

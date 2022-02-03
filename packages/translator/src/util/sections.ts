@@ -2,13 +2,9 @@ import type { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
-export interface Section {
-  id: number;
-}
-
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    sections?: Section[];
+    nextSectionId?: number;
     sectionId?: number;
   }
 
@@ -17,7 +13,20 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export function getSection(path: t.NodePath<any>) {
+export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
+  const extra = (path.node.extra ??= {});
+  let sectionId = extra.sectionId;
+
+  if (sectionId === undefined) {
+    const programExtra = (path.hub.file.path.node.extra ??= {});
+    sectionId = extra.sectionId = programExtra.nextSectionId || 0;
+    programExtra.nextSectionId = sectionId + 1;
+  }
+
+  return sectionId;
+}
+
+export function getOrCreateSectionId(path: t.NodePath<any>) {
   let cur = path;
 
   // eslint-disable-next-line no-constant-condition
@@ -35,31 +44,6 @@ export function getSection(path: t.NodePath<any>) {
   }
 }
 
-export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
-  const extra = (path.node.extra ??= {});
-  if (extra.sectionId)
-    return getSectionById(path, extra as ObjectWithSectionId);
-
-  const programExtra = (path.hub.file.path.node.extra ??= {});
-  const section: Section = {
-    id: 0,
-  };
-
-  if (programExtra.sections) {
-    section.id = programExtra.sections.push(section) - 1;
-  } else {
-    programExtra.sections = [section];
-  }
-
-  extra.sectionId = section.id;
-
-  return section;
-}
-
-export function getParentSectionId(path: t.NodePath) {
-  return getSectionId(path.parentPath!);
-}
-
 export function getSectionId(path: t.NodePath) {
   let sectionId: number;
   let currentPath = path;
@@ -71,17 +55,8 @@ export function getSectionId(path: t.NodePath) {
   return sectionId;
 }
 
-type ObjectWithSectionId = {
-  sectionId: number;
-};
-
-function getSectionById<S extends Section>(
-  path: t.NodePath,
-  reference: ObjectWithSectionId = path.state
-) {
-  const program = path.hub.file.path;
-  const sections = program.node.extra.sections!;
-  return sections[reference.sectionId] as S;
+export function getParentSectionId(path: t.NodePath) {
+  return getSectionId(path.parentPath!);
 }
 
 export function createSectionState<T = unknown>(key: string, init?: () => T) {
@@ -96,4 +71,11 @@ export function createSectionState<T = unknown>(key: string, init?: () => T) {
       arrayOfSectionData[sectionId] = value;
     },
   ] as const;
+}
+
+export function forEachSectionId(fn: (id: number) => void) {
+  const { nextSectionId } = currentProgramPath.node.extra;
+  for (let sectionId = 0; sectionId < nextSectionId!; sectionId++) {
+    fn(sectionId);
+  }
 }

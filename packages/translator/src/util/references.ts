@@ -1,6 +1,6 @@
 import type { types as t } from "@marko/compiler";
 import * as sorted from "./sorted-arr";
-import { getSection, Section } from "./sections";
+import { getOrCreateSectionId } from "./sections";
 import { Reserve, ReserveType, reserveScope, compareReserves } from "./reserve";
 
 type MarkoExprRootPath = t.NodePath<
@@ -48,16 +48,16 @@ declare module "@marko/compiler/dist/types" {
 
 export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
   if (tag.has("var")) {
-    trackReferencesForBindings(getSection(tag), tag.get("var"));
+    trackReferencesForBindings(getOrCreateSectionId(tag), tag.get("var"));
   }
 
   const body = tag.get("body");
   if (body.get("body").length && body.get("params").length) {
-    trackReferencesForBindings(getSection(body), body);
+    trackReferencesForBindings(getOrCreateSectionId(body), body);
   }
 }
 
-function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
+function trackReferencesForBindings(sectionId: number, path: t.NodePath<any>) {
   const scope = path.scope;
   const bindings = path.getBindingIdentifiers() as unknown as Record<
     string,
@@ -70,7 +70,7 @@ function trackReferencesForBindings(section: Section, path: t.NodePath<any>) {
       const identifier = bindings[name];
       const binding = reserveScope(
         ReserveType.Store,
-        section,
+        sectionId,
         identifier,
         name
       );

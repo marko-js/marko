@@ -15,7 +15,7 @@ export default {
     },
 
     exit(program: t.NodePath<t.Program>) {
-      assignFinalIds(program);
+      assignFinalIds();
     },
   },
   translate: {

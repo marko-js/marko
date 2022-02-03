@@ -11,7 +11,7 @@ import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime } from "../../util/runtime";
-import { getSectionId, startSection } from "../../util/sections";
+import { startSection } from "../../util/sections";
 import trackReferences from "../../util/references";
 
 export default {

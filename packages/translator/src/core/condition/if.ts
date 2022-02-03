@@ -6,7 +6,7 @@ import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import { getSection } from "../../util/sections";
+import { getOrCreateSectionId } from "../../util/sections";
 import {
   Reserve,
   ReserveType,
@@ -20,7 +20,13 @@ import customTag from "../../visitors/tag/custom-tag";
 export default {
   analyze: {
     enter(tag) {
-      reserveScope(ReserveType.Visit, getSection(tag), tag.node, "if", 3);
+      reserveScope(
+        ReserveType.Visit,
+        getOrCreateSectionId(tag),
+        tag.node,
+        "if",
+        3
+      );
       customTag.analyze.enter(tag);
     },
     exit(tag) {

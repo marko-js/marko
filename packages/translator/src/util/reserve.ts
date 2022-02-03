@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-import { Section, createSectionState } from "./sections";
+import { createSectionState, forEachSectionId } from "./sections";
 
 const [getReservesByType] = createSectionState<
   [Reserve[] | undefined, Reserve[] | undefined]
@@ -46,7 +46,7 @@ declare module "@marko/compiler/dist/types" {
 
 export function reserveScope(
   type: ReserveType,
-  section: Section,
+  sectionId: number,
   node:
     | t.MarkoTag
     | t.MarkoAttribute
@@ -62,13 +62,13 @@ export function reserveScope(
     throw new Error("Unable to reserve multiple scopes for a node.");
   }
 
-  const reservesByType = getReservesByType(section.id);
+  const reservesByType = getReservesByType(sectionId);
   const reserve = (extra.reserve = {
     id: 0,
     type,
     size,
     name,
-    sectionId: section.id,
+    sectionId,
   });
 
   if (reservesByType[type]) {
@@ -80,10 +80,10 @@ export function reserveScope(
   return reserve;
 }
 
-export function assignFinalIds(program: t.NodePath<t.Program>) {
-  for (const section of program.node.extra.sections!) {
+export function assignFinalIds() {
+  forEachSectionId((sectionId) => {
     let curIndex = 0;
-    for (const reserves of getReservesByType(section.id)) {
+    for (const reserves of getReservesByType(sectionId)) {
       if (reserves) {
         for (const reserve of reserves) {
           reserve.id = curIndex;
@@ -91,7 +91,7 @@ export function assignFinalIds(program: t.NodePath<t.Program>) {
         }
       }
     }
-  }
+  });
 }
 
 export function compareReserves(a: Reserve, b: Reserve) {

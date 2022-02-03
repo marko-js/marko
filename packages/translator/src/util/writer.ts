@@ -48,7 +48,7 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
 
 export function start(path: t.NodePath<any>) {
   const parentId = path.state.sectionId;
-  if (parentId && isOutputHTML()) {
+  if (parentId !== undefined && isOutputHTML()) {
     flushBefore(path);
   }
 

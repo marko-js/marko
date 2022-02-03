@@ -3,7 +3,7 @@ import { isNativeTag } from "@marko/babel-utils";
 import { isOutputHTML } from "../util/marko-config";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
-import { getSection } from "../util/sections";
+import { getOrCreateSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
@@ -24,7 +24,7 @@ export default {
     if (!(confident && (node.escape || !computed))) {
       reserveScope(
         ReserveType.Visit,
-        getSection(placeholder),
+        getOrCreateSectionId(placeholder),
         node,
         "placeholder"
       );

@@ -5,7 +5,7 @@ import attrsToObject from "../../util/attrs-to-object";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
-import { Section, getSection, getSectionId } from "../../util/sections";
+import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope } from "../../util/reserve";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
@@ -15,8 +15,8 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const attrs = tag.get("attributes");
-      let section: Section | undefined = tag.has("var")
-        ? getSection(tag)
+      let sectionId: number | undefined = tag.has("var")
+        ? getOrCreateSectionId(tag)
         : undefined;
 
       if (attrs.some(isSpreadAttr)) {
@@ -27,18 +27,18 @@ export default {
           const { name } = attrNode;
 
           if (name.startsWith("on")) {
-            section ||= getSection(tag);
-            reserveScope(ReserveType.Store, section, attrNode, name);
+            sectionId ??= getOrCreateSectionId(tag);
+            reserveScope(ReserveType.Store, sectionId, attrNode, name);
           } else if (!evaluate(attr).confident) {
-            section ||= getSection(tag);
+            sectionId ??= getOrCreateSectionId(tag);
           }
         }
       }
 
-      if (section) {
+      if (sectionId !== undefined) {
         reserveScope(
           ReserveType.Visit,
-          section,
+          sectionId,
           node,
           (node.name as t.StringLiteral).value
         );
