@@ -36,8 +36,8 @@ export function end(path: t.NodePath<any>) {
   if (isOutputHTML()) {
     flushInto(path);
   } else {
-    writeApplyGroups(targetPath, sectionId);
-    writeHydrateGroups(targetPath, sectionId);
+    writeApplyGroups(sectionId);
+    writeHydrateGroups(sectionId);
   }
 
   return sectionId;

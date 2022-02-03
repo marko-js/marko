@@ -120,9 +120,8 @@ function bindingToGroup(
   }
 }
 
-export function writeApplyGroups(path: t.NodePath<any>, sectionId: number) {
+export function writeApplyGroups(sectionId: number) {
   const groups = getApply(sectionId);
-  const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     statements.sort((a, b) => {
       const aCrossGroup = a.extra && a.extra.crossGroup ? 1 : 0;
@@ -167,21 +166,20 @@ export function writeApplyGroups(path: t.NodePath<any>, sectionId: number) {
       body = t.blockStatement(statements);
     }
 
-    const [result] = program.pushContainer(
+    const [result] = currentProgramPath.pushContainer(
       "body",
       t.functionDeclaration(identifier, params, body)
     );
 
     if (references) {
       // result.scope.crawl();
-      result.traverse(bindFunctionsVisitor, { root: result, source: path });
+      result.traverse(bindFunctionsVisitor, { root: result, sectionId });
     }
   }
 }
 
-export function writeHydrateGroups(path: t.NodePath<any>, sectionId: number) {
+export function writeHydrateGroups(sectionId: number) {
   const groups = getHydrate(sectionId);
-  const program = path.hub.file.path;
   for (const { identifier, references, statements } of groups) {
     const params = references
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
@@ -192,7 +190,7 @@ export function writeHydrateGroups(path: t.NodePath<any>, sectionId: number) {
         )
       : [];
 
-    program.pushContainer(
+    currentProgramPath.pushContainer(
       "body",
       t.functionDeclaration(identifier, params, t.blockStatement(statements))
     );
@@ -263,7 +261,7 @@ function generateReferenceGroupName(
 
 const bindFunctionsVisitor: t.Visitor<{
   root: t.NodePath<any>;
-  source: t.NodePath<any>;
+  sectionId: number;
 }> = {
   FunctionExpression: bindFunction,
   ArrowFunctionExpression: bindFunction,
@@ -271,7 +269,7 @@ const bindFunctionsVisitor: t.Visitor<{
 
 function bindFunction(
   fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
-  state: { root: t.NodePath<any>; source: t.NodePath<any> }
+  { root, sectionId }: { root: t.NodePath<any>; sectionId: number }
 ) {
   const { node } = fn;
   const { extra } = node;
@@ -290,13 +288,13 @@ function bindFunction(
         (Array.isArray(references) ? references : [references]).map((binding) =>
           t.variableDeclarator(
             t.identifier(binding.name),
-            callRead(binding, getSectionId(state.source))
+            callRead(binding, sectionId)
           )
         )
       )
     );
 
-    state.root.insertBefore(
+    root.insertBefore(
       t.variableDeclaration("const", [t.variableDeclarator(id, node)])
     );
 
