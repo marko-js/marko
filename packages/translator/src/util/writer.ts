@@ -47,13 +47,9 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
 );
 
 export function start(path: t.NodePath<any>) {
-  const parentId = path.state.sectionId;
-  if (parentId !== undefined && isOutputHTML()) {
+  if (!path.isProgram() && isOutputHTML()) {
     flushBefore(path);
   }
-
-  const targetPath = path.isMarkoTag() ? path.get("body") : path;
-  path.state.sectionId = getSectionId(targetPath);
 }
 
 export function end(path: t.NodePath<any>) {
@@ -65,10 +61,6 @@ export function end(path: t.NodePath<any>) {
   } else {
     writeApplyGroups(targetPath, sectionId);
     writeHydrateGroups(targetPath, sectionId);
-  }
-
-  if (!path.isProgram()) {
-    path.state.sectionId = getParentSectionId(path);
   }
 
   return sectionId;
@@ -128,10 +120,9 @@ export function flushInto(
 
 export function addStatement(
   type: "apply" | "hydrate",
-  path: t.NodePath<any>,
+  targetSectionId: number,
   references: References,
-  statement: t.Statement | t.Statement[],
-  targetSectionId: number = path.state.sectionId
+  statement: t.Statement | t.Statement[]
 ) {
   const { statements, identifier } = bindingToGroup(
     type,
@@ -150,22 +141,20 @@ export function addStatement(
     if (type === "hydrate") {
       addStatement(
         "apply",
-        path,
+        targetSectionId,
         references,
-        crossGroupExpressionStatement(t.callExpression(identifier, [])),
-        targetSectionId
+        crossGroupExpressionStatement(t.callExpression(identifier, []))
       );
     } else if (Array.isArray(references)) {
       for (const binding of references) {
         addStatement(
           type,
-          path,
+          targetSectionId,
           binding,
           crossGroupExpressionStatement(
             // TODO: might need to queue in a child scope
             callRuntime("queue", identifier, t.numericLiteral(binding.id))
-          ),
-          targetSectionId
+          )
         );
       }
     } else if (references && references.sectionId !== targetSectionId) {
@@ -173,12 +162,11 @@ export function addStatement(
       if (factory) {
         addStatement(
           type,
-          path,
+          references.sectionId,
           references,
           crossGroupExpressionStatement(
             factory(references, identifier, targetSectionId)
-          ),
-          references.sectionId
+          )
         );
       }
     }

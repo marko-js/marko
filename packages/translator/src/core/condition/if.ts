@@ -6,7 +6,7 @@ import * as sorted from "../../util/sorted-arr";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import { getOrCreateSectionId } from "../../util/sections";
+import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import {
   Reserve,
   ReserveType,
@@ -122,6 +122,7 @@ export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
 
   if (isLast) {
     if (isOutputDOM()) {
+      const sectionId = getSectionId(tag);
       const { extra } = branches[0].tag.node;
       const refs: Reserve[] = [];
       const declarators: t.VariableDeclarator[] = [];
@@ -163,7 +164,7 @@ export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
 
       writer.addStatement(
         "apply",
-        tag,
+        sectionId,
         refs.length === 0 ? undefined : refs.length === 1 ? refs[0] : refs,
         t.expressionStatement(
           callRuntime(

@@ -98,7 +98,7 @@ export default {
               } else {
                 writer.addStatement(
                   "apply",
-                  tag,
+                  sectionId,
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(helper, visitIndex!, value.node)
@@ -121,7 +121,7 @@ export default {
                   const reserveIndex = t.numericLiteral(extra.reserve!.id);
                   writer.addStatement(
                     "apply",
-                    tag,
+                    sectionId,
                     valueReferences,
                     t.expressionStatement(
                       callRuntime("write", reserveIndex, value.node)
@@ -130,7 +130,7 @@ export default {
 
                   writer.addStatement(
                     "hydrate",
-                    tag,
+                    sectionId,
                     extra.valueReferences,
                     t.expressionStatement(
                       callRuntime(
@@ -144,7 +144,7 @@ export default {
                 } else {
                   writer.addStatement(
                     "apply",
-                    tag,
+                    sectionId,
                     valueReferences,
                     t.expressionStatement(
                       callRuntime(

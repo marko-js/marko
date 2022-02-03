@@ -1,16 +1,12 @@
 let _item;
 
-const _if = _createRenderer("", "", _apply);
+const _if = _createRenderer("", "", null);
 
 _hello({
   item: _item
 });
 
 import { data as _data, write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, readInOwner as _readInOwner, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-
-function _apply() {
-  _data(0, y);
-}
 
 function _apply_x(x = _readInOwner(0)) {
   _setConditionalRenderer(0, x ? _if : null);

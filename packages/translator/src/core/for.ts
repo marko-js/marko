@@ -3,7 +3,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import { getOrCreateSectionId } from "../util/sections";
+import { getOrCreateSectionId, getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
@@ -118,7 +118,8 @@ export default {
 } as Tag;
 
 const translateDOM = {
-  exit(tag: t.NodePath<t.MarkoTag>, sectionId: number) {
+  exit(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
+    const sectionId = getSectionId(tag);
     const { node } = tag;
     const {
       attributes,
@@ -140,7 +141,7 @@ const translateDOM = {
 
       const rendererDeclarator = writer.getSectionDeclarator(
         tag,
-        sectionId,
+        bodySectionId,
         "for"
       );
       const rendererId = rendererDeclarator.id as t.Identifier;
@@ -149,7 +150,7 @@ const translateDOM = {
 
       writer.addStatement(
         "apply",
-        tag,
+        sectionId,
         // TODO: should merge byAttr refereces with ofAttr references
         ofAttr.extra?.valueReferences,
         t.expressionStatement(
@@ -159,7 +160,7 @@ const translateDOM = {
             ofAttrValue,
             rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
-            writer.bindingToApplyId(valParam.extra.reserve!, sectionId)
+            writer.bindingToApplyId(valParam.extra.reserve!, bodySectionId)
           )
         )
       );

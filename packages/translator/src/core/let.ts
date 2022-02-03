@@ -54,7 +54,7 @@ export default {
       // TODO: add defined guard if bindings exist.
       writer.addStatement(
         "apply",
-        tag,
+        sectionId,
         defaultAttr.extra?.valueReferences,
         t.expressionStatement(t.callExpression(applyId, [defaultAttr.value]))
       );

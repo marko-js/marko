@@ -45,7 +45,7 @@ export default {
       ) as t.Identifier[];
       writer.addStatement(
         "apply",
-        tag,
+        sectionId,
         defaultAttr.extra?.valueReferences,
         identifiers.length === 1
           ? t.expressionStatement(
