@@ -38,9 +38,10 @@
   "private": true,
   "scripts": {
     "build": "npm run -ws build",
+    "build:types": "npm run -ws build:types",
     "ci:test": "nyc npm test -- --forbid-only",
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write && (fixpack || true)",
-    "lint": "npm run -ws build:types && npm run lint:eslint && npm run lint:prettier -- -l && fixpack",
+    "lint": "npm run build:types && npm run lint:eslint && npm run lint:prettier -- -l && fixpack",
     "lint:eslint": "eslint -f visualstudio .",
     "lint:prettier": "prettier '**/*{.ts,.js,.json,.md,.yml,rc}'",
     "prepare": "husky install",
