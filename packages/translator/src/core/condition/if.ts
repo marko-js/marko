@@ -5,8 +5,8 @@ import * as walks from "../../util/walks";
 import * as sorted from "../../util/sorted-arr";
 import {
   addStatement,
-  queueFactory,
-  setQueueFactory,
+  queueBuilder,
+  setQueueBuilder,
 } from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
@@ -72,13 +72,13 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      setQueueFactory(tag, queueBranchFactory);
+      setQueueBuilder(tag, queueBranchBuilder);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
     },
     exit(tag) {
-      exitCondition(tag);
+      exitBranch(tag);
     },
   },
   attributes: {},
@@ -99,7 +99,7 @@ const BRANCHES_LOOKUP = new WeakMap<
   }[]
 >();
 
-export const queueBranchFactory: queueFactory = (
+export const queueBranchBuilder: queueBuilder = (
   binding,
   functionIdentifier,
   targetSectionId
@@ -114,7 +114,7 @@ export const queueBranchFactory: queueFactory = (
   );
 };
 
-export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
+export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
   const bodySectionId = getSectionId(tag.get("body"));
   const nextTag = tag.getNextSibling();
   const isLast = !(

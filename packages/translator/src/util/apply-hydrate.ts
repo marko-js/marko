@@ -16,7 +16,7 @@ interface ReferenceGroup {
   statements: t.Statement[];
 }
 
-export type queueFactory = (
+export type queueBuilder = (
   binding: Reserve,
   functionIdentifier: t.Identifier,
   targetSectionId: number
@@ -24,11 +24,14 @@ export type queueFactory = (
 
 const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
 const [getHydrate] = createSectionState<ReferenceGroup[]>("hydrate", () => []);
-const [getQueueFactory, _setQueueFactory] =
-  createSectionState<queueFactory>("queue");
+const [getQueueBuilder, _setQueueBuilder] =
+  createSectionState<queueBuilder>("queue");
 
-export function setQueueFactory(tag: t.NodePath<t.MarkoTag>, fn: queueFactory) {
-  _setQueueFactory(getSectionId(tag.get("body")), fn);
+export function setQueueBuilder(
+  tag: t.NodePath<t.MarkoTag>,
+  builder: queueBuilder
+) {
+  _setQueueBuilder(getSectionId(tag.get("body")), builder);
 }
 
 export function addStatement(
@@ -123,7 +126,7 @@ export function writeApplyGroups(sectionId: number) {
         ];
         body = t.blockStatement(statements);
 
-        const factory = getQueueFactory(sectionId);
+        const factory = getQueueBuilder(sectionId);
         if (factory) {
           i += addStatement(
             "apply",

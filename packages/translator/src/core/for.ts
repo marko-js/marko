@@ -6,8 +6,8 @@ import * as walks from "../util/walks";
 import {
   addStatement,
   bindingToApplyId,
-  queueFactory,
-  setQueueFactory,
+  queueBuilder,
+  setQueueBuilder,
 } from "../util/apply-hydrate";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
@@ -45,7 +45,7 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      setQueueFactory(tag, queueLoopFactory);
+      setQueueBuilder(tag, queueEachBuilder);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -175,7 +175,7 @@ const translateDOM = {
   },
 };
 
-const queueLoopFactory: queueFactory = (
+const queueEachBuilder: queueBuilder = (
   binding,
   functionIdentifier,
   targetSectionId

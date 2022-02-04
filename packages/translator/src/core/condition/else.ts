@@ -1,7 +1,7 @@
 import type { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import { setQueueFactory } from "../../util/apply-hydrate";
-import { exitCondition, queueBranchFactory } from "./if";
+import { setQueueBuilder } from "../../util/apply-hydrate";
+import { exitBranch, queueBranchBuilder } from "./if";
 
 export default {
   translate: {
@@ -31,10 +31,10 @@ export default {
         }
       }
 
-      setQueueFactory(tag, queueBranchFactory);
+      setQueueBuilder(tag, queueBranchBuilder);
     },
     exit(tag) {
-      exitCondition(tag);
+      exitBranch(tag);
     },
   },
   attributes: {},
