@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import { getSectionId, createSectionState } from "../util/sections";
-import { isOutputHTML } from "./marko-config";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
   appendLiteral,

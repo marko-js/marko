@@ -175,11 +175,7 @@ const translateDOM = {
   },
 };
 
-const queueEachBuilder: queueBuilder = (
-  binding,
-  functionIdentifier,
-  targetSectionId
-) => {
+const queueEachBuilder: queueBuilder = () => {
   return t.identifier("TODO");
 };
 

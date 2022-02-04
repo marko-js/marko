@@ -15,7 +15,7 @@ export default {
     },
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    exit(program: t.NodePath<t.Program>) {
+    exit() {
       assignFinalIds();
     },
   },
