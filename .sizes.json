@@ -1,14 +1,32 @@
 {
-  "file": "./packages/runtime/dist/dom/index.esm.js",
-  "preminified": true,
-  "exports": [],
+  "examples": {
+    "counter": "./packages/translator/src/__tests__/fixtures/basic-counter/template.marko"
+  },
   "results": [
     {
       "name": "*",
-      "individual": {
-        "min": 10553,
-        "gzip": 4705,
-        "brotli": 4244
+      "total": {
+        "min": 10482,
+        "gzip": 4692,
+        "brotli": 4229
+      }
+    },
+    {
+      "name": "counter",
+      "user": {
+        "min": 334,
+        "gzip": 253,
+        "brotli": 229
+      },
+      "runtime": {
+        "min": 4456,
+        "gzip": 2099,
+        "brotli": 1869
+      },
+      "total": {
+        "min": 4790,
+        "gzip": 2352,
+        "brotli": 2098
       }
     }
   ]
