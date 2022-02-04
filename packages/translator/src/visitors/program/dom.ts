@@ -4,15 +4,10 @@ import { getSectionId } from "../../util/sections";
 import { writeAllStatementGroups } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default {
   translate: {
-    enter(program: t.NodePath<t.Program>) {
-      writer.start(program);
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit(program: t.NodePath<t.Program>) {
-      const sectionId = writer.end(program);
+      const sectionId = getSectionId(program);
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
       const applyIdentifier = t.identifier("apply");

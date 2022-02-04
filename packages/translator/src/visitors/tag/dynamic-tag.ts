@@ -4,19 +4,26 @@ import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import * as writer from "../../util/writer";
 import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
-import { isOutputDOM } from "../../util/marko-config";
+import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
+import { getSectionId } from "../../util/sections";
 
 export default {
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      writer.start(tag);
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
-      const sectionId = writer.end(tag);
+      const tagBodySectionId = getSectionId(tag.get("body"));
       const attrsObject = attrsToObject(tag, true) || t.nullLiteral();
       const renderBodyProp = getRenderBodyProp(attrsObject);
       const args: t.Expression[] = [node.name, attrsObject];
+
+      if (isOutputHTML()) {
+        writer.flushInto(tag);
+      }
 
       if (renderBodyProp) {
         (attrsObject as t.ObjectExpression).properties.pop();
@@ -26,7 +33,7 @@ export default {
         );
 
         if (isOutputDOM()) {
-          const { walks, writes } = writer.getSectionMeta(sectionId);
+          const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
           fnExpr = callRuntime(
             "createRenderer",
             writes || t.stringLiteral(""),

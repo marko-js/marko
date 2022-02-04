@@ -14,6 +14,7 @@ export default {
       startSection(program);
     },
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit(program: t.NodePath<t.Program>) {
       assignFinalIds();
     },
@@ -21,11 +22,6 @@ export default {
   translate: {
     enter(program: t.NodePath<t.Program>) {
       currentProgramPath = program;
-      if (isOutputHTML()) {
-        programHTML.translate.enter(program);
-      } else {
-        programDOM.translate.enter(program);
-      }
     },
     exit(program: t.NodePath<t.Program>) {
       if (isOutputHTML()) {

@@ -11,7 +11,7 @@ import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime } from "../../util/runtime";
-import { startSection } from "../../util/sections";
+import { startSection, getSectionId } from "../../util/sections";
 import trackReferences from "../../util/references";
 
 export default {
@@ -27,14 +27,20 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      writer.start(tag);
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const sectionId = writer.end(tag);
+      const tagBodySectionId = getSectionId(tag.get("body"));
       const isHTML = isOutputHTML();
       const { node } = tag;
       const write = writer.writeTo(tag);
       let tagIdentifier: t.Expression;
+
+      if (isHTML) {
+        writer.flushInto(tag);
+      }
 
       if (t.isStringLiteral(node.name)) {
         const { file } = tag.hub;
@@ -123,7 +129,7 @@ export default {
           .skip();
       } else {
         if (!isHTML && renderBodyProp) {
-          const { walks, writes } = writer.getSectionMeta(sectionId);
+          const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
           (attrsObject as t.ObjectExpression).properties.pop();
           (attrsObject as t.ObjectExpression).properties.push(
             t.objectProperty(

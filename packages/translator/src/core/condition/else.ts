@@ -1,6 +1,5 @@
 import type { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import * as writer from "../../util/writer";
 import { setQueueFactory } from "../../util/apply-hydrate";
 import { exitCondition, queueBranchFactory } from "./if";
 
@@ -32,7 +31,6 @@ export default {
         }
       }
 
-      writer.start(tag);
       setQueueFactory(tag, queueBranchFactory);
     },
     exit(tag) {

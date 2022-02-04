@@ -19,23 +19,6 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""]
 );
 
-export function start(path: t.NodePath<any>) {
-  if (!path.isProgram() && isOutputHTML()) {
-    flushBefore(path);
-  }
-}
-
-export function end(path: t.NodePath<any>) {
-  const targetPath = path.isMarkoTag() ? path.get("body") : path;
-  const sectionId = getSectionId(targetPath);
-
-  if (isOutputHTML()) {
-    flushInto(path);
-  }
-
-  return sectionId;
-}
-
 export function writeTo(path: t.NodePath<any>) {
   const sectionId = getSectionId(path);
   return (

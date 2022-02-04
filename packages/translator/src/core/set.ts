@@ -2,11 +2,14 @@ import { types as t } from "@marko/compiler";
 import { assertNoParams, assertNoVar, Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
+import { isOutputHTML } from "../util/marko-config";
 
 export default {
   translate: {
     enter(tag) {
-      writer.start(tag);
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
 
       const { node } = tag;
       const [defaultAttr] = node.attributes;
@@ -54,7 +57,9 @@ export default {
     exit(tag) {
       assertNoParams(tag);
       assertNoVar(tag);
-      writer.end(tag);
+      if (isOutputHTML()) {
+        writer.flushInto(tag);
+      }
       tag.insertAfter(t.expressionStatement(callRuntime("popContext")));
       tag.replaceWithMultiple(tag.node.body.body);
     },

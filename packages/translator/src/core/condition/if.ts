@@ -18,7 +18,7 @@ import {
   reserveScope,
   compareReserves,
 } from "../../util/reserve";
-import { isOutputDOM } from "../../util/marko-config";
+import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
 
@@ -72,8 +72,10 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      writer.start(tag);
       setQueueFactory(tag, queueBranchFactory);
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
     },
     exit(tag) {
       exitCondition(tag);
@@ -113,7 +115,7 @@ export const queueBranchFactory: queueFactory = (
 };
 
 export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
-  const sectionId = writer.end(tag);
+  const bodySectionId = getSectionId(tag.get("body"));
   const nextTag = tag.getNextSibling();
   const isLast = !(
     isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
@@ -122,8 +124,12 @@ export function exitCondition(tag: t.NodePath<t.MarkoTag>) {
 
   branches.push({
     tag,
-    sectionId,
+    sectionId: bodySectionId,
   });
+
+  if (isOutputHTML()) {
+    writer.flushInto(tag);
+  }
 
   if (isLast) {
     if (isOutputDOM()) {

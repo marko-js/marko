@@ -45,16 +45,16 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      writer.start(tag);
       setQueueFactory(tag, queueLoopFactory);
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
     },
     exit(tag) {
-      const sectionId = writer.end(tag);
-
       if (isOutputHTML()) {
         translateHTML.exit(tag);
       } else {
-        translateDOM.exit(tag, sectionId);
+        translateDOM.exit(tag);
       }
     },
   },
@@ -124,7 +124,8 @@ export default {
 } as Tag;
 
 const translateDOM = {
-  exit(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
+  exit(tag: t.NodePath<t.MarkoTag>) {
+    const bodySectionId = getSectionId(tag.get("body"));
     const sectionId = getSectionId(tag);
     const { node } = tag;
     const {
@@ -196,6 +197,8 @@ const translateHTML = {
     const toAttr = findName(attributes, "to");
     const block = t.blockStatement(body);
     let forNode: t.Node | t.Node[];
+
+    writer.flushInto(tag);
 
     if (inAttr) {
       const [keyParam, valParam] = params;

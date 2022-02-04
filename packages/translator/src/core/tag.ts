@@ -2,12 +2,14 @@ import { types as t } from "@marko/compiler";
 import * as writer from "../util/writer";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 import type { Tag } from "@marko/babel-utils";
+import { isOutputHTML } from "../util/marko-config";
 
 export default {
   translate: {
     enter(tag) {
-      writer.start(tag);
-
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+      }
       if (!tag.node.var) {
         throw tag
           .get("name")
@@ -17,7 +19,10 @@ export default {
       }
     },
     exit(tag) {
-      writer.end(tag);
+      if (isOutputHTML()) {
+        writer.flushInto(tag);
+      }
+
       tag.replaceWith(
         t.variableDeclaration("const", [
           t.variableDeclarator(
