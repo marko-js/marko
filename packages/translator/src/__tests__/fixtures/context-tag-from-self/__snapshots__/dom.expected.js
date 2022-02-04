@@ -12,10 +12,6 @@ function _apply_x(x) {
   if (_write(1, x)) _data(0, x);
 }
 
-function _apply_x(x) {
-  if (_write(1, x)) _data(0, x);
-}
-
 export const template = "<!></span></div>";
 export const walks = "E%";
 export const apply = null;

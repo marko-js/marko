@@ -6,11 +6,7 @@ import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
-import {
-  writeHydrateGroups,
-  writeApplyGroups,
-  getDefaultApply,
-} from "./apply-hydrate";
+import { getDefaultApply } from "./apply-hydrate";
 
 const [getRenderer] = createSectionState<t.Identifier>("renderer", () =>
   t.identifier("")
@@ -35,9 +31,6 @@ export function end(path: t.NodePath<any>) {
 
   if (isOutputHTML()) {
     flushInto(path);
-  } else {
-    writeApplyGroups(sectionId);
-    writeHydrateGroups(sectionId);
   }
 
   return sectionId;

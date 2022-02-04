@@ -1,6 +1,10 @@
 import { types as t } from "@marko/compiler";
 import type { References } from "../util/references";
-import { getSectionId, createSectionState } from "../util/sections";
+import {
+  getSectionId,
+  createSectionState,
+  forEachSectionIdReverse,
+} from "../util/sections";
 import { Reserve, compareReserves } from "../util/reserve";
 import * as sorted from "../util/sorted-arr";
 import { currentProgramPath } from "../visitors/program";
@@ -33,12 +37,8 @@ export function addStatement(
   references: References,
   statement: t.Statement | t.Statement[]
 ) {
-  const { statements, identifier } = bindingToGroup(
-    type,
-    references,
-    targetSectionId
-  );
-  const isFirstStatement = statements.length === 0;
+  const { statements } = bindingToGroup(type, references, targetSectionId);
+  const isNewGroup = statements.length === 0;
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -46,48 +46,7 @@ export function addStatement(
     statements.push(statement);
   }
 
-  if (isFirstStatement) {
-    if (type === "hydrate") {
-      addStatement(
-        "apply",
-        targetSectionId,
-        references,
-        crossGroupExpressionStatement(t.callExpression(identifier, []))
-      );
-    } else if (Array.isArray(references)) {
-      for (const binding of references) {
-        addStatement(
-          type,
-          targetSectionId,
-          binding,
-          crossGroupExpressionStatement(
-            // TODO: might need to queue in a child scope
-            callRuntime("queue", identifier, t.numericLiteral(binding.id))
-          )
-        );
-      }
-    } else if (references && references.sectionId !== targetSectionId) {
-      const factory = getQueueFactory(targetSectionId);
-      if (factory) {
-        addStatement(
-          type,
-          references.sectionId,
-          references,
-          crossGroupExpressionStatement(
-            factory(references, identifier, targetSectionId)
-          )
-        );
-      }
-    }
-  }
-}
-
-function crossGroupExpressionStatement(expression: t.Expression) {
-  const statement = t.expressionStatement(expression);
-  statement.extra = {
-    crossGroup: true,
-  };
-  return statement;
+  return isNewGroup ? 1 : 0;
 }
 
 export function bindingToApplyId(binding: Reserve, sectionId: number) {
@@ -120,15 +79,17 @@ function bindingToGroup(
   }
 }
 
+export function writeAllStatementGroups() {
+  forEachSectionIdReverse((sectionId) => {
+    writeHydrateGroups(sectionId);
+    writeApplyGroups(sectionId);
+  });
+}
+
 export function writeApplyGroups(sectionId: number) {
   const groups = getApply(sectionId);
-  for (const { identifier, references, statements } of groups) {
-    statements.sort((a, b) => {
-      const aCrossGroup = a.extra && a.extra.crossGroup ? 1 : 0;
-      const bCrossGroup = b.extra && b.extra.crossGroup ? 1 : 0;
-      return aCrossGroup - bCrossGroup;
-    });
-
+  for (let i = groups.length; i--; ) {
+    const { identifier, references, statements } = groups[i];
     let params: (t.Identifier | t.RestElement | t.Pattern)[];
     let body: t.BlockStatement;
 
@@ -141,6 +102,18 @@ export function writeApplyGroups(sectionId: number) {
           )
         );
         body = t.blockStatement(statements);
+
+        for (const binding of references) {
+          i += addStatement(
+            "apply",
+            sectionId,
+            binding,
+            t.expressionStatement(
+              // TODO: might need to queue in a child scope
+              callRuntime("queue", identifier, t.numericLiteral(binding.id))
+            )
+          );
+        }
       } else if (references.sectionId !== sectionId) {
         params = [
           t.assignmentPattern(
@@ -149,6 +122,16 @@ export function writeApplyGroups(sectionId: number) {
           ),
         ];
         body = t.blockStatement(statements);
+
+        const factory = getQueueFactory(sectionId);
+        if (factory) {
+          i += addStatement(
+            "apply",
+            references.sectionId,
+            references,
+            t.expressionStatement(factory(references, identifier, sectionId))
+          );
+        }
       } else {
         const param = t.identifier(references.name);
         params = [param];
@@ -180,7 +163,8 @@ export function writeApplyGroups(sectionId: number) {
 
 export function writeHydrateGroups(sectionId: number) {
   const groups = getHydrate(sectionId);
-  for (const { identifier, references, statements } of groups) {
+  for (let i = groups.length; i--; ) {
+    const { identifier, references, statements } = groups[i];
     const params = references
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
@@ -193,6 +177,13 @@ export function writeHydrateGroups(sectionId: number) {
     currentProgramPath.pushContainer(
       "body",
       t.functionDeclaration(identifier, params, t.blockStatement(statements))
+    );
+
+    i += addStatement(
+      "apply",
+      sectionId,
+      references,
+      t.expressionStatement(t.callExpression(identifier, []))
     );
   }
 }

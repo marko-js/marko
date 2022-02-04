@@ -79,3 +79,10 @@ export function forEachSectionId(fn: (id: number) => void) {
     fn(sectionId);
   }
 }
+
+export function forEachSectionIdReverse(fn: (id: number) => void) {
+  const { nextSectionId } = currentProgramPath.node.extra;
+  for (let sectionId = nextSectionId!; sectionId--; ) {
+    fn(sectionId);
+  }
+}

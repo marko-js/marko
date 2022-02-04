@@ -2,8 +2,8 @@ const _if = _createRenderer("Hello!", "", null);
 
 import { queue as _queue, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, write as _write, read as _read, on as _on, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply() {
-  _apply_show(true);
+function _hydrate_show(show = _read(5)) {
+  _on(4, "click", _read(6));
 }
 
 const _onclick = function () {
@@ -22,8 +22,8 @@ function _apply_show(show) {
   }
 }
 
-function _hydrate_show(show = _read(5)) {
-  _on(4, "click", _read(6));
+function _apply() {
+  _apply_show(true);
 }
 
 export const template = "<div><!><button>Toggle</button></div>";

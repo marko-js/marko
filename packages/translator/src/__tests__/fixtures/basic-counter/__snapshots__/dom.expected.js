@@ -1,7 +1,7 @@
 import { queue as _queue, write as _write, read as _read, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply() {
-  _apply_clickCount(0);
+function _hydrate_clickCount(clickCount = _read(2)) {
+  _on(0, "click", _read(3));
 }
 
 const _onclick = function () {
@@ -20,8 +20,8 @@ function _apply_clickCount(clickCount) {
   }
 }
 
-function _hydrate_clickCount(clickCount = _read(2)) {
-  _on(0, "click", _read(3));
+function _apply() {
+  _apply_clickCount(0);
 }
 
 export const template = "<div><button><!></button></div>";

@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import { getSectionId } from "../../util/sections";
+import { writeAllStatementGroups } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16,6 +17,8 @@ export default {
       const walksIdentifier = t.identifier("walks");
       const applyIdentifier = t.identifier("apply");
       const { walks, writes, apply } = writer.getSectionMeta(sectionId);
+
+      writeAllStatementGroups();
 
       program.node.body.push(
         t.exportNamedDeclaration(

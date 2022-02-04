@@ -4,7 +4,7 @@ _dynamicTag(MyTag, {
   name: "World"
 });
 
-import { data as _data, write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_input(input) {
   if (_write(1, input)) _data(0, input.name);
