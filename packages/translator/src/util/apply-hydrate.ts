@@ -182,7 +182,7 @@ export function writeHydrateGroups(sectionId: number) {
       t.functionDeclaration(identifier, params, t.blockStatement(statements))
     );
 
-    i += addStatement(
+    addStatement(
       "apply",
       sectionId,
       references,
