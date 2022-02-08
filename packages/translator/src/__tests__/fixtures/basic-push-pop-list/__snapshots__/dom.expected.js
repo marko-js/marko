@@ -32,12 +32,6 @@ function _applyWith_items_id(items = _read(7), id = _read(6)) {
   _hydrateWith_items_id();
 }
 
-function _applyWith_items_id(items = _read(7), id = _read(6)) {
-  _write(8, _bind(_onclick));
-
-  _hydrateWith_items_id();
-}
-
 const _onclick2 = function () {
   const items = _read(7);
 
@@ -53,17 +47,11 @@ function _apply_items(items) {
     _hydrate_items();
 
     _queue(_applyWith_items_id, 7);
-
-    _queue(_applyWith_items_id, 7);
   }
 }
 
 function _apply_id(id) {
-  if (_write(6, id)) {
-    _queue(_applyWith_items_id, 6);
-
-    _queue(_applyWith_items_id, 6);
-  }
+  if (_write(6, id)) _queue(_applyWith_items_id, 6);
 }
 
 function _apply() {

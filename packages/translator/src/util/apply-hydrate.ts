@@ -40,46 +40,53 @@ export function addStatement(
   references: References,
   statement: t.Statement | t.Statement[]
 ) {
-  const { statements } = bindingToGroup(type, references, targetSectionId);
-  const isNewGroup = statements.length === 0;
+  const groups =
+    type === "apply" ? getApply(targetSectionId) : getHydrate(targetSectionId);
+  const existingGroup = getGroupByReferences(groups, references);
+  const isNew = !existingGroup;
+  const { statements } = isNew
+    ? createAndInsertGroup(type, groups, references)
+    : existingGroup;
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
   } else {
     statements.push(statement);
   }
-
-  return isNewGroup ? 1 : 0;
+  return isNew ? 1 : 0;
 }
 
 export function bindingToApplyId(binding: Reserve, sectionId: number) {
-  return bindingToGroup("apply", binding, sectionId).identifier;
+  const applyGroups = getApply(sectionId);
+  const group =
+    getGroupByReferences(applyGroups, binding) ??
+    createAndInsertGroup("apply", applyGroups, binding);
+  return group.identifier;
 }
 
-function bindingToGroup(
+function createAndInsertGroup(
   type: "apply" | "hydrate",
-  references: References,
-  sectionId: number
+  groups: ReferenceGroup[],
+  references: References
 ) {
-  const groups = type === "apply" ? getApply(sectionId) : getHydrate(sectionId);
+  const identifier = t.identifier(generateReferenceGroupName(type, references));
+  const group: ReferenceGroup = {
+    identifier,
+    references,
+    statements: [],
+  };
+  sorted.insert(compareReferenceGroups, groups, group);
+  return group;
+}
+
+function getGroupByReferences(
+  groups: ReferenceGroup[],
+  references: References
+) {
   const groupIndex = sorted.findIndex(compareReferenceGroups, groups, {
     references,
   } as ReferenceGroup);
-
-  if (groupIndex === -1) {
-    const identifier = t.identifier(
-      generateReferenceGroupName(type, references)
-    );
-    const group = {
-      identifier,
-      references,
-      statements: [],
-    };
-    sorted.insert(compareReferenceGroups, groups, group);
-    return group;
-  } else {
-    return groups[groupIndex];
-  }
+  return groups[groupIndex];
 }
 
 export function writeAllStatementGroups() {
