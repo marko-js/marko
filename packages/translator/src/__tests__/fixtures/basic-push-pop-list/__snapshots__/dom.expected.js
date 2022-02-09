@@ -6,7 +6,7 @@ function _apply_item(item) {
   if (_write(1, item)) _data(0, item);
 }
 
-function _hydrateWith_items_id(items = _read(7), id = _read(6)) {
+function _hydrateWith_id_items(id = _read(6), items = _read(7)) {
   _on(4, "click", _read(8));
 }
 
@@ -15,8 +15,8 @@ function _hydrate_items(items = _read(7)) {
 }
 
 const _onclick = function () {
-  const items = _read(7),
-        id = _read(6);
+  const id = _read(6),
+        items = _read(7);
 
   // TODO: nested writes ([...items, id++]) don't work
   const nextId = id + 1;
@@ -26,10 +26,10 @@ const _onclick = function () {
   _queue(_apply_items, 7, [...items, nextId]);
 };
 
-function _applyWith_items_id(items = _read(7), id = _read(6)) {
+function _applyWith_id_items(id = _read(6), items = _read(7)) {
   _write(8, _bind(_onclick));
 
-  _hydrateWith_items_id();
+  _hydrateWith_id_items();
 }
 
 const _onclick2 = function () {
@@ -46,12 +46,12 @@ function _apply_items(items) {
 
     _hydrate_items();
 
-    _queue(_applyWith_items_id, 7);
+    _queue(_applyWith_id_items, 7);
   }
 }
 
 function _apply_id(id) {
-  if (_write(6, id)) _queue(_applyWith_items_id, 6);
+  if (_write(6, id)) _queue(_applyWith_id_items, 6);
 }
 
 function _apply() {

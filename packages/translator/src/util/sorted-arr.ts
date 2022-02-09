@@ -67,7 +67,7 @@ export function insertProp<
       const compareResult = compare(cur, val);
 
       if (compareResult !== 0) {
-        (data[key] as V[]) = compareResult > 0 ? [cur, val] : [val, cur];
+        (data[key] as V[]) = compareResult < 0 ? [cur, val] : [val, cur];
       }
     }
   } else {
