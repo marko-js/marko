@@ -81,7 +81,7 @@ export const execInputValue1 = () => {
     Index.CONDITIONAL,
     branch0,
     execInputValue1Branch0,
-    Branch0Index.CLOSURE_VALUE1
+    Index.CONDITIONAL
   );
 };
 
@@ -96,7 +96,7 @@ export const execInputValue1Branch0 = () => {
     Branch0Index.CONDITIONAL1,
     branch0_0,
     execInputValue1Branch0_0,
-    Branch0_0Index.CLOSURE_VALUE1
+    Branch0Index.CONDITIONAL1
   );
 };
 
@@ -105,7 +105,7 @@ export const execInputValue2 = () => {
     Index.CONDITIONAL,
     branch0,
     execInputValue2Branch0,
-    Branch0Index.CLOSURE_VALUE2
+    Index.CONDITIONAL
   );
 };
 
@@ -120,7 +120,7 @@ export const execInputValue2Branch0 = () => {
     Branch0Index.CONDITIONAL2,
     branch0_1,
     execInputValue2Branch0_1,
-    Branch0_1Index.CLOSURE_VALUE2
+    Branch0Index.CONDITIONAL2
   );
 };
 

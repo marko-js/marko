@@ -33,16 +33,25 @@ export function queueInBranch(
   fn: () => void,
   sortValue: number
 ) {
-  if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
-    queue(
-      fn,
-      sortValue,
-      undefined,
-      read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
-      ScopeOffsets.BEGIN_DATA
-    );
-    return 1;
-  }
+  // if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
+  //   queue(
+  //     fn,
+  //     sortValue,
+  //     undefined,
+  //     read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
+  //     ScopeOffsets.BEGIN_DATA
+  //   );
+  //   return 1;
+  // }
+  queue(() => {
+    if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
+      runWithScope(
+        fn,
+        ScopeOffsets.BEGIN_DATA,
+        read(conditionalIndex + ConditionalIndex.SCOPE) as Scope
+      );
+    }
+  }, sortValue);
 }
 
 export function setConditionalRenderer(
@@ -143,11 +152,13 @@ export function queueForEach(
   fn: () => void,
   sortValue: number
 ) {
-  for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
-    loopIndex + LoopIndex.SCOPE_ARRAY
-  )) {
-    queue(fn, sortValue, undefined, scope, ScopeOffsets.BEGIN_DATA);
-  }
+  queue(() => {
+    for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
+      loopIndex + LoopIndex.SCOPE_ARRAY
+    )) {
+      runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
+    }
+  }, sortValue);
 }
 
 export function setLoopOf<T>(

@@ -175,8 +175,13 @@ const translateDOM = {
   },
 };
 
-const queueEachBuilder: queueBuilder = () => {
-  return t.identifier("TODO");
+const queueEachBuilder: queueBuilder = (binding, functionIdentifier) => {
+  return callRuntime(
+    "queueForEach",
+    t.numericLiteral(0),
+    functionIdentifier,
+    t.numericLiteral(binding.id)
+  );
 };
 
 const translateHTML = {

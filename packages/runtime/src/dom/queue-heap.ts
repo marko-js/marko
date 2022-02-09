@@ -83,7 +83,12 @@ export function run() {
         number
       ];
       pop();
-      runWithScope(fn, offset, scope, [queuedFnsMap.get(priority)]);
+      // TODO: we should not have to delete from the map
+      // but we're not currently using unique queue priorities
+      // so this allows (some) things to work in the meantime
+      const value = queuedFnsMap.get(priority);
+      queuedFnsMap.delete(priority);
+      runWithScope(fn, offset, scope, [value]);
     }
     queuedFns = queuedNext;
     queuedFnsMap = queuedNextMap;
@@ -94,7 +99,8 @@ export function run() {
 
 function pop() {
   const last = queuedFns.length - QueueOffsets.TOTAL;
-  const halfLength = queuedFns.length >> 1;
+  const newLength = last;
+  const halfLength = newLength >> 1;
   const lastPriority = queuedFns[last + QueueOffsets.PRIORITY] as number;
   let currentIndex = 0;
 
@@ -103,7 +109,7 @@ function pop() {
     const rightChildIndex = bestChildIndex + QueueOffsets.TOTAL;
 
     if (
-      rightChildIndex < queuedFns.length &&
+      rightChildIndex < newLength &&
       (queuedFns[rightChildIndex + QueueOffsets.PRIORITY] as number) <
         (queuedFns[bestChildIndex + QueueOffsets.PRIORITY] as number)
     ) {
@@ -120,7 +126,7 @@ function pop() {
   }
 
   move(last, currentIndex);
-  queuedFns.length = last;
+  queuedFns.length = newLength;
 }
 
 function move(sourceIndex: number, targetIndex: number) {
