@@ -583,7 +583,7 @@ As a shorthand you can also import components by providing it's html tag name wr
 import MyComponent from "<my-component>"
 ```
 
-This is especially useful with the [dynamic tag name syntax]("#dynamic-tagname") and uses the same [component discovery](./custom-tags.md#how-tags-are-discovered) as if the tag was used in the template.
+This is especially useful with the [dynamic tag name syntax](#dynamic-tagname) and uses the same [component discovery](./custom-tags.md#how-tags-are-discovered) as if the tag was used in the template.
 
 ## Comments
 
