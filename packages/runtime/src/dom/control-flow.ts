@@ -153,10 +153,13 @@ export function queueForEach(
   sortValue: number
 ) {
   queue(() => {
-    for (const scope of read<Loop, LoopIndex.SCOPE_ARRAY>(
+    const scopes = read<Loop, LoopIndex.SCOPE_ARRAY>(
       loopIndex + LoopIndex.SCOPE_ARRAY
-    )) {
-      runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
+    );
+    if (scopes !== emptyMarkerArray) {
+      for (const scope of scopes) {
+        runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
+      }
     }
   }, sortValue);
 }
