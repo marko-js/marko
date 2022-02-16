@@ -92,10 +92,11 @@ function walkInternal(
         value -
         WalkCodes.Multiplier;
     } else if (value >= WalkCodes.Out) {
-      value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
+      value = WalkRangeSizes.Out * currentMultiplier + value - WalkCodes.Out;
       while (value--) {
         walker.parentNode();
       }
+      walker.nextSibling();
     } else if (value >= WalkCodes.Over) {
       value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
       while (value--) {
