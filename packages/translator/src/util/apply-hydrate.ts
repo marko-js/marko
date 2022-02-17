@@ -165,10 +165,7 @@ export function writeApplyGroups(sectionId: number) {
       t.functionDeclaration(identifier, params, body)
     );
 
-    if (references) {
-      // result.scope.crawl();
-      result.traverse(bindFunctionsVisitor, { root: result, sectionId });
-    }
+    result.traverse(bindFunctionsVisitor, { root: result, sectionId });
   }
 
   const offset = groups[0].references ? 0 : 1;
@@ -281,10 +278,10 @@ function bindFunction(
   const { node } = fn;
   const { extra } = node;
   const references = extra?.references;
-  if (references) {
-    const program = fn.hub.file.path;
-    const id = program.scope.generateUidIdentifier(extra.name);
+  const program = fn.hub.file.path;
+  const id = program.scope.generateUidIdentifier(extra?.name);
 
+  if (references) {
     if (node.body.type !== "BlockStatement") {
       node.body = t.blockStatement([t.returnStatement(node.body)]);
     }
@@ -300,13 +297,13 @@ function bindFunction(
         )
       )
     );
-
-    root.insertBefore(
-      t.variableDeclaration("const", [t.variableDeclarator(id, node)])
-    );
-
-    fn.replaceWith(callRuntime("bind", id));
   }
+
+  root.insertBefore(
+    t.variableDeclaration("const", [t.variableDeclarator(id, node)])
+  );
+
+  fn.replaceWith(callRuntime("bind", id));
 }
 
 export function getDefaultApply(sectionId: number) {
