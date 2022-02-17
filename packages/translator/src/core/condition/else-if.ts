@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import { exitBranch, queueBranchBuilder } from "./if";
-import { setQueueBuilder } from "../../util/apply-hydrate";
+import { exitBranch } from "./if";
 
 export default {
   translate: {
@@ -35,8 +34,6 @@ export default {
           );
         }
       }
-
-      setQueueBuilder(tag, queueBranchBuilder);
     },
     exit(tag) {
       exitBranch(tag);

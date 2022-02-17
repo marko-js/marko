@@ -3,6 +3,7 @@ import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
 import { currentProgramPath } from "../visitors/program";
+import type { ReferenceGroup } from "./apply-hydrate";
 
 export function importRuntime(name: string) {
   const { output } = getMarkoOpts();
@@ -55,7 +56,7 @@ export function callRead(reference: Reserve, targetSectionId: number) {
 }
 
 export function callQueue(
-  fnIdentifier: t.Identifier,
+  { identifier, queuePriority }: ReferenceGroup,
   reference: Reserve,
   value: t.Expression,
   targetSectionId: number
@@ -63,24 +64,14 @@ export function callQueue(
   const diff = getScopeDepthDifference(reference, targetSectionId);
   switch (diff) {
     case 0:
-      return callRuntime(
-        "queue",
-        fnIdentifier,
-        t.numericLiteral(reference.id),
-        value
-      );
+      return callRuntime("queue", identifier, queuePriority, value);
     case 1:
-      return callRuntime(
-        "queueInOwner",
-        fnIdentifier,
-        t.numericLiteral(reference.id),
-        value
-      );
+      return callRuntime("queueInOwner", identifier, queuePriority, value);
     default:
       return callRuntime(
         "queueInOwner",
-        fnIdentifier,
-        t.numericLiteral(reference.id),
+        identifier,
+        queuePriority,
         value,
         t.numericLiteral(diff)
       );

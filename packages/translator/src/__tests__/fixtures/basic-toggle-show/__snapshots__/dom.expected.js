@@ -9,7 +9,7 @@ function _hydrate_show(show = _read(5)) {
 const _onclick = function () {
   const show = _read(5);
 
-  _queue(_apply_show, 5, !show);
+  _queue(_apply_show, 0, !show);
 };
 
 function _apply_show(show) {

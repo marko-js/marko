@@ -10,17 +10,14 @@ import * as sorted from "../util/sorted-arr";
 import { currentProgramPath } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 
-interface ReferenceGroup {
+export interface ReferenceGroup {
   identifier: t.Identifier;
   references: References;
   statements: t.Statement[];
+  queuePriority: t.NumericLiteral;
 }
 
-export type queueBuilder = (
-  binding: Reserve,
-  functionIdentifier: t.Identifier,
-  targetSectionId: number
-) => t.Expression;
+export type queueBuilder = (group: ReferenceGroup) => t.Expression;
 
 const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
 const [getHydrate] = createSectionState<ReferenceGroup[]>("hydrate", () => []);
@@ -56,12 +53,12 @@ export function addStatement(
   return isNew ? 1 : 0;
 }
 
-export function bindingToApplyId(binding: Reserve, sectionId: number) {
+export function bindingToApplyGroup(binding: Reserve, sectionId: number) {
   const applyGroups = getApply(sectionId);
   const group =
     getGroupByReferences(applyGroups, binding) ??
     createAndInsertGroup("apply", applyGroups, binding);
-  return group.identifier;
+  return group;
 }
 
 function createAndInsertGroup(
@@ -74,6 +71,7 @@ function createAndInsertGroup(
     identifier,
     references,
     statements: [],
+    queuePriority: t.numericLiteral(NaN),
   };
   sorted.insert(compareReferenceGroups, groups, group);
   return group;
@@ -98,8 +96,11 @@ export function writeAllStatementGroups() {
 
 export function writeApplyGroups(sectionId: number) {
   const groups = getApply(sectionId);
+  if (!groups.length) return;
+
   for (let i = groups.length; i--; ) {
-    const { identifier, references, statements } = groups[i];
+    const group = groups[i];
+    const { identifier, references, statements, queuePriority } = group;
     let params: (t.Identifier | t.RestElement | t.Pattern)[];
     let body: t.BlockStatement;
 
@@ -120,7 +121,7 @@ export function writeApplyGroups(sectionId: number) {
             binding,
             t.expressionStatement(
               // TODO: might need to queue in a child scope
-              callRuntime("queue", identifier, t.numericLiteral(binding.id))
+              callRuntime("queue", identifier, queuePriority)
             )
           );
         }
@@ -139,7 +140,7 @@ export function writeApplyGroups(sectionId: number) {
             "apply",
             references.sectionId,
             references,
-            t.expressionStatement(factory(references, identifier, sectionId))
+            t.expressionStatement(factory(group))
           );
         }
       } else {
@@ -168,6 +169,11 @@ export function writeApplyGroups(sectionId: number) {
       // result.scope.crawl();
       result.traverse(bindFunctionsVisitor, { root: result, sectionId });
     }
+  }
+
+  const offset = groups[0].references ? 0 : 1;
+  for (let i = offset; i < groups.length; i++) {
+    groups[i].queuePriority.value = i - offset;
   }
 }
 

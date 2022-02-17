@@ -19,19 +19,19 @@ function _applyWith_a_b(a = _read(12), b = _read(13)) {
 }
 
 function _apply_y(y) {
-  if (_write(15, y)) _queue(_applyWith_x_y, 15);
+  if (_write(15, y)) _queue(_applyWith_x_y, 5);
 }
 
 function _apply_x(x) {
-  if (_write(14, x)) _queue(_applyWith_x_y, 14);
+  if (_write(14, x)) _queue(_applyWith_x_y, 5);
 }
 
 function _apply_b(b) {
-  if (_write(13, b)) _queue(_applyWith_a_b, 13);
+  if (_write(13, b)) _queue(_applyWith_a_b, 4);
 }
 
 function _apply_a(a) {
-  if (_write(12, a)) _queue(_applyWith_a_b, 12);
+  if (_write(12, a)) _queue(_applyWith_a_b, 4);
 }
 
 export const template = "<!><!><div><!></div>";

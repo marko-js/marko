@@ -3,11 +3,7 @@ import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import * as sorted from "../../util/sorted-arr";
-import {
-  addStatement,
-  queueBuilder,
-  setQueueBuilder,
-} from "../../util/apply-hydrate";
+import { addStatement, setQueueBuilder } from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
@@ -72,7 +68,6 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      setQueueBuilder(tag, queueBranchBuilder);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -99,21 +94,6 @@ const BRANCHES_LOOKUP = new WeakMap<
   }[]
 >();
 
-export const queueBranchBuilder: queueBuilder = (
-  binding,
-  functionIdentifier,
-  targetSectionId
-) => {
-  const renderer = writer.getRenderer(targetSectionId);
-  return callRuntime(
-    "queueInBranch",
-    t.numericLiteral(0),
-    renderer,
-    functionIdentifier,
-    t.numericLiteral(binding.id)
-  );
-};
-
 export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
   const bodySectionId = getSectionId(tag.get("body"));
   const nextTag = tag.getNextSibling();
@@ -121,11 +101,22 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
     isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
   );
   const branches = BRANCHES_LOOKUP.get(tag) || [];
+  const reserve = tag.node.extra.reserve!;
 
   branches.push({
     tag,
     sectionId: bodySectionId,
   });
+
+  setQueueBuilder(tag, ({ identifier, queuePriority }) =>
+    callRuntime(
+      "queueInBranch",
+      t.numericLiteral(reserve.id),
+      writer.getRenderer(bodySectionId),
+      identifier,
+      queuePriority
+    )
+  );
 
   if (isOutputHTML()) {
     writer.flushInto(tag);

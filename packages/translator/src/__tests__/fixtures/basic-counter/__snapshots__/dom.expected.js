@@ -7,7 +7,7 @@ function _hydrate_clickCount(clickCount = _read(2)) {
 const _onclick = function () {
   const clickCount = _read(2);
 
-  _queue(_apply_clickCount, 2, clickCount + 1);
+  _queue(_apply_clickCount, 0, clickCount + 1);
 };
 
 function _apply_clickCount(clickCount) {

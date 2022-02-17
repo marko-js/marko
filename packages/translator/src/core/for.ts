@@ -5,8 +5,7 @@ import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
   addStatement,
-  bindingToApplyId,
-  queueBuilder,
+  bindingToApplyGroup,
   setQueueBuilder,
 } from "../util/apply-hydrate";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
@@ -45,7 +44,6 @@ export default {
 
       walks.visit(tag, walks.WalkCodes.Replace);
       walks.enterShallow(tag);
-      setQueueBuilder(tag, queueEachBuilder);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -131,9 +129,19 @@ const translateDOM = {
     const {
       attributes,
       body: { params },
+      extra: { reserve },
     } = node;
     const ofAttr = findName(attributes, "of");
     const byAttr = findName(attributes, "by");
+
+    setQueueBuilder(tag, ({ identifier, queuePriority }) => {
+      return callRuntime(
+        "queueForEach",
+        t.numericLiteral(reserve!.id),
+        identifier,
+        queuePriority
+      );
+    });
 
     if (ofAttr) {
       const ofAttrValue = ofAttr.value!;
@@ -163,25 +171,17 @@ const translateDOM = {
         t.expressionStatement(
           callRuntime(
             "setLoopOf",
-            t.numericLiteral(node.extra.reserve!.id),
+            t.numericLiteral(reserve!.id),
             ofAttrValue,
             rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
-            bindingToApplyId(valParam.extra.reserve!, bodySectionId)
+            bindingToApplyGroup(valParam.extra.reserve!, bodySectionId)
+              .identifier
           )
         )
       );
     }
   },
-};
-
-const queueEachBuilder: queueBuilder = (binding, functionIdentifier) => {
-  return callRuntime(
-    "queueForEach",
-    t.numericLiteral(0),
-    functionIdentifier,
-    t.numericLiteral(binding.id)
-  );
 };
 
 const translateHTML = {

@@ -3,7 +3,7 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { addStatement, bindingToApplyId } from "../util/apply-hydrate";
+import { addStatement, bindingToApplyGroup } from "../util/apply-hydrate";
 import { callQueue } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";
@@ -50,7 +50,8 @@ export default {
     if (isOutputDOM()) {
       const sectionId = getSectionId(tag);
       const binding = tagVar.extra.reserve!;
-      const applyId = bindingToApplyId(binding, sectionId);
+      const applyGroup = bindingToApplyGroup(binding, sectionId);
+      const applyId = applyGroup.identifier;
       // TODO: add defined guard if bindings exist.
       addStatement(
         "apply",
@@ -62,7 +63,7 @@ export default {
       replaceAssignments(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
-          callQueue(applyId, binding, value, getSectionId(assignment))
+          callQueue(applyGroup, binding, value, getSectionId(assignment))
       );
     } else {
       translateVar(tag, defaultAttr.value);

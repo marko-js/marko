@@ -9,7 +9,7 @@ function _hydrate_clickCount(clickCount = _readInOwner(4)) {
 const _onclick = function () {
   const clickCount = _readInOwner(4);
 
-  _queueInOwner(_apply_clickCount, 4, clickCount + 1);
+  _queueInOwner(_apply_clickCount, 0, clickCount + 1);
 };
 
 function _apply_clickCount2(clickCount = _readInOwner(4)) {
@@ -24,7 +24,7 @@ function _apply_clickCount(clickCount) {
   if (_write(4, clickCount)) {
     _setConditionalRenderer(0, clickCount < 3 ? _if : null);
 
-    _queueInBranch(0, _if, _apply_clickCount2, 4);
+    _queueInBranch(0, _if, _apply_clickCount2, 0);
   }
 }
 

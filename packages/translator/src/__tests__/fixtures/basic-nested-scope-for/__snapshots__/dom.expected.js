@@ -15,7 +15,7 @@ function _applyWith_selected_num(selected = _readInOwner(4), num = _read(2)) {
 const _onclick = function () {
   const num = _read(2);
 
-  _queueInOwner(_apply_selected, 4, num);
+  _queueInOwner(_apply_selected, 0, num);
 };
 
 function _apply_num(num) {
@@ -31,11 +31,11 @@ function _apply_num(num) {
 }
 
 function _apply_selected2(selected = _readInOwner(4)) {
-  _queue(_applyWith_selected_num, 4);
+  _queue(_applyWith_selected_num, 2);
 }
 
 function _apply_selected(selected) {
-  if (_write(4, selected)) _queueForEach(0, _apply_selected2, 4);
+  if (_write(4, selected)) _queueForEach(0, _apply_selected2, 0);
 }
 
 function _apply() {
