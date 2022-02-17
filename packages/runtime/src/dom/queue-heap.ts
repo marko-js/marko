@@ -88,7 +88,7 @@ export function run() {
       // so this allows (some) things to work in the meantime
       const value = queuedFnsMap.get(priority);
       queuedFnsMap.delete(priority);
-      runWithScope(fn, offset, scope, [value]);
+      runWithScope(fn, offset, scope, undefined, value);
     }
     queuedFns = queuedNext;
     queuedFnsMap = queuedNextMap;

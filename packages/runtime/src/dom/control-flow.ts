@@ -210,11 +210,15 @@ export function setLoopOf<T>(
         // needsReconciliation ||= oldIndexMap.get(key) !== index;
       }
       if (applyFn) {
-        runWithScope(applyFn as any, ScopeOffsets.BEGIN_DATA, childScope, [
+        runWithScope(
+          applyFn as any,
+          ScopeOffsets.BEGIN_DATA,
+          childScope,
+          undefined,
           item,
           index,
-          newArray,
-        ]);
+          newArray
+        );
       }
       newMap.set(key, childScope);
       newArray.push(childScope);

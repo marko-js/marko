@@ -80,16 +80,39 @@ export function bind(
 
 export function runWithScope(
   fn: (...args: unknown[]) => unknown,
+  offset: number,
+  scope: Scope,
+  spreadArgs: undefined,
+  arg1: unknown,
+  arg2?: unknown,
+  arg3?: unknown
+): void;
+export function runWithScope(
+  fn: (...args: unknown[]) => unknown,
+  offset: number,
+  scope: Scope,
+  spreadArgs: unknown[]
+): void;
+export function runWithScope(
+  fn: (...args: unknown[]) => unknown,
+  offset: number,
+  scope: Scope
+): void;
+export function runWithScope(
+  fn: (...args: unknown[]) => unknown,
   offset = ScopeOffsets.BEGIN_DATA,
   scope: Scope = currentScope,
-  args?: unknown[]
+  spreadArgs?: unknown[],
+  arg1?: unknown,
+  arg2?: unknown,
+  arg3?: unknown
 ) {
   const previousScope = currentScope;
   const previousOffset = currentOffset;
   currentScope = scope;
   currentOffset = offset;
   try {
-    return args ? fn(...args) : fn();
+    return !spreadArgs ? fn(arg1, arg2, arg3) : fn(...spreadArgs);
   } finally {
     currentScope = previousScope;
     currentOffset = previousOffset;

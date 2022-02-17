@@ -77,7 +77,8 @@ export function run() {
         queuedFns[i + QueueOffsets.FN] as ExecFn,
         queuedFns[i + QueueOffsets.OFFSET] as number,
         queuedFns[i + QueueOffsets.SCOPE] as Scope,
-        [queuedFns[i + QueueOffsets.ARGUMENT]]
+        undefined,
+        queuedFns[i + QueueOffsets.ARGUMENT]
       );
     }
     queuedFns = queuedNext;
