@@ -6,9 +6,9 @@
     {
       "name": "*",
       "total": {
-        "min": 10550,
-        "gzip": 4716,
-        "brotli": 4248
+        "min": 11245,
+        "gzip": 4993,
+        "brotli": 4517
       }
     },
     {
@@ -16,17 +16,17 @@
       "user": {
         "min": 334,
         "gzip": 255,
-        "brotli": 235
+        "brotli": 236
       },
       "runtime": {
         "min": 4502,
-        "gzip": 2124,
-        "brotli": 1896
+        "gzip": 2125,
+        "brotli": 1892
       },
       "total": {
         "min": 4836,
-        "gzip": 2379,
-        "brotli": 2131
+        "gzip": 2380,
+        "brotli": 2128
       }
     }
   ]

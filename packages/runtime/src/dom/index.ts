@@ -14,6 +14,8 @@ export {
   innerHTML,
   attr,
   attrs,
+  classAttr,
+  styleAttr,
   props,
   dynamicTag,
   userEffect,

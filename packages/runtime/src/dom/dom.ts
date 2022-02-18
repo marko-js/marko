@@ -1,6 +1,7 @@
 import type { Renderer } from "./renderer";
 import { onDestroy, read, write } from "./scope";
 import { withQueueNext } from "./queue";
+import { styleValue, classValue } from "../common/helpers";
 
 export const enum NodeType {
   Element = 1,
@@ -20,6 +21,14 @@ export function attr(elementIndex: number, name: string, value: unknown) {
   } else {
     (read(elementIndex) as Element).setAttribute(name, normalizedValue);
   }
+}
+
+export function classAttr(elementIndex: number, value: unknown) {
+  attr(elementIndex, "class", classValue(value) || false);
+}
+
+export function styleAttr(elementIndex: number, value: unknown) {
+  attr(elementIndex, "style", styleValue(value) || false);
 }
 
 export function data(textOrCommentIndex: number, value: unknown) {
@@ -45,7 +54,11 @@ export function attrs(elementIndex: number, index: number) {
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
     if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
-      if (name !== "renderBody") {
+      if (name === "class") {
+        classAttr(elementIndex, nextAttrs[name]);
+      } else if (name === "style") {
+        styleAttr(elementIndex, nextAttrs[name]);
+      } else if (name !== "renderBody") {
         attr(elementIndex, name, nextAttrs[name]);
       }
     }
