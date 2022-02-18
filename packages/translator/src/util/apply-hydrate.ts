@@ -267,8 +267,8 @@ const bindFunctionsVisitor: t.Visitor<{
   root: t.NodePath<any>;
   sectionId: number;
 }> = {
-  FunctionExpression: bindFunction,
-  ArrowFunctionExpression: bindFunction,
+  FunctionExpression: { exit: bindFunction },
+  ArrowFunctionExpression: { exit: bindFunction },
 };
 
 function bindFunction(
