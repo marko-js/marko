@@ -633,7 +633,7 @@ response stream:
 require("./components/hello").render({ name: "John" }, res);
 ```
 
-> The user’s of a Marko UI component do not need to know that the component was
+> The users of a Marko UI component do not need to know that the component was
 > implemented using Marko.
 
 Contrast this with React as an example:
