@@ -65,44 +65,41 @@ function trackReferencesForBindings(sectionId: number, path: t.NodePath<any>) {
   >;
   for (const name in bindings) {
     const references = scope.getBinding(name)!.referencePaths;
+    const identifier = bindings[name];
+    const binding = reserveScope(
+      ReserveType.Store,
+      sectionId,
+      identifier,
+      name
+    );
 
-    if (references.length) {
-      const identifier = bindings[name];
-      const binding = reserveScope(
-        ReserveType.Store,
-        sectionId,
-        identifier,
-        name
-      );
+    for (const reference of references) {
+      const fnRoot = getFnRoot(reference.scope.path);
+      const exprRoot = getExprRoot(fnRoot || reference);
+      const exprExtra = (exprRoot.parentPath.node.extra ??= {});
 
-      for (const reference of references) {
-        const fnRoot = getFnRoot(reference.scope.path);
-        const exprRoot = getExprRoot(fnRoot || reference);
-        const exprExtra = (exprRoot.parentPath.node.extra ??= {});
+      if (fnRoot) {
+        const fnExtra = (fnRoot.node.extra ??= {});
+        let name = (fnRoot.node as t.FunctionExpression).id?.name;
 
-        if (fnRoot) {
-          const fnExtra = (fnRoot.node.extra ??= {});
-          let name = (fnRoot.node as t.FunctionExpression).id?.name;
+        if (!name) {
+          const { parentPath } = exprRoot;
 
-          if (!name) {
-            const { parentPath } = exprRoot;
-
-            if (parentPath.isMarkoAttribute() && !parentPath.node.default) {
-              name = parentPath.node.name;
-            }
+          if (parentPath.isMarkoAttribute() && !parentPath.node.default) {
+            name = parentPath.node.name;
           }
-
-          fnExtra.name = name;
-          sorted.insertProp(compareReserves, fnExtra, "references", binding);
         }
 
-        sorted.insertProp(
-          compareReserves,
-          exprExtra,
-          `${exprRoot.listKey || exprRoot.key}References`,
-          binding
-        );
+        fnExtra.name = name;
+        sorted.insertProp(compareReserves, fnExtra, "references", binding);
       }
+
+      sorted.insertProp(
+        compareReserves,
+        exprExtra,
+        `${exprRoot.listKey || exprRoot.key}References`,
+        binding
+      );
     }
   }
 }
