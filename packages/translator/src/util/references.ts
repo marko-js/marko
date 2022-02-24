@@ -76,13 +76,13 @@ function trackReferencesForBindings(sectionId: number, path: t.NodePath<any>) {
       );
 
       for (const reference of references) {
-        const exprRoot = getExprRoot(reference);
+        const fnRoot = getFnRoot(reference.scope.path);
+        const exprRoot = getExprRoot(fnRoot || reference);
         const exprExtra = (exprRoot.parentPath.node.extra ??= {});
-        const scopePath = reference.scope.path;
 
-        if (isFunctionExpression(scopePath)) {
-          const fnExtra = (scopePath.node.extra ??= {});
-          let name = (scopePath.node as t.FunctionExpression).id?.name;
+        if (fnRoot) {
+          const fnExtra = (fnRoot.node.extra ??= {});
+          let name = (fnRoot.node as t.FunctionExpression).id?.name;
 
           if (!name) {
             const { parentPath } = exprRoot;
@@ -116,6 +116,20 @@ function getExprRoot(path: t.NodePath<t.Node>) {
   return curPath as t.NodePath<t.Node> & {
     parentPath: MarkoExprRootPath;
   };
+}
+
+function getFnRoot(path: t.NodePath<t.Node>) {
+  let curPath = path;
+  if (curPath.isProgram()) return;
+
+  while (!isFunctionExpression(curPath)) {
+    if (isMarkoPath(curPath)) return;
+    curPath = curPath.parentPath!;
+  }
+
+  return curPath as
+    | undefined
+    | t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>;
 }
 
 function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
