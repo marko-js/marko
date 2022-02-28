@@ -17,20 +17,20 @@ const enum QueueOffsets {
   FN = 0,
   SCOPE = 1,
   OFFSET = 2,
-  SORT_VALUE = 3,
+  PRIORITY = 3,
   ARGUMENT = 4,
   TOTAL = 5,
 }
 
 export function queue<T extends ExecFn>(
   fn: T,
-  localIndex = 0,
+  localPriority = 0,
   argument: Parameters<T>[0] = undefined,
   scope = currentScope,
   offset = currentOffset
 ) {
-  const sortValue = scope.___id + offset + localIndex;
-  const index = findQueueIndex(sortValue);
+  const priority = scope.___id + offset + localPriority;
+  const index = findQueueIndex(priority);
 
   // index is where the function should be in the queue
   // but if it already exists, we should not add it again
@@ -48,18 +48,18 @@ export function queue<T extends ExecFn>(
     queuedFns[index + QueueOffsets.FN] = fn;
     queuedFns[index + QueueOffsets.SCOPE] = scope;
     queuedFns[index + QueueOffsets.OFFSET] = offset;
-    queuedFns[index + QueueOffsets.SORT_VALUE] = sortValue;
+    queuedFns[index + QueueOffsets.PRIORITY] = priority;
   }
   queuedFns[index + QueueOffsets.ARGUMENT] = argument;
 }
 
 export function queueInOwner<T extends ExecFn>(
   fn: T,
-  localIndex?: number,
+  localPriority?: number,
   argument?: Parameters<T>[0],
   ownerLevel?: number
 ) {
-  queue(fn, localIndex, argument, getOwnerScope(ownerLevel), ownerOffset);
+  queue(fn, localPriority, argument, getOwnerScope(ownerLevel), ownerOffset);
 }
 
 export function withQueueNext(fn: () => unknown) {
@@ -86,16 +86,15 @@ export function run() {
   }
 }
 
-function findQueueIndex(sortValue: number) {
+function findQueueIndex(priority: number) {
   let index = 0;
   let max = queuedFns.length / QueueOffsets.TOTAL;
 
   while (index < max) {
     const mid = (index + max) >>> 1;
     const compareResult =
-      (queuedFns[
-        mid * QueueOffsets.TOTAL + QueueOffsets.SORT_VALUE
-      ] as number) - sortValue;
+      (queuedFns[mid * QueueOffsets.TOTAL + QueueOffsets.PRIORITY] as number) -
+      priority;
     if (compareResult > 0) {
       max = mid;
     } else if (compareResult < 0) {

@@ -26,12 +26,12 @@ const enum QueueOffsets {
 
 export function queue<T extends ExecFn>(
   fn: T,
-  localIndex = 0,
+  localPriority = 0,
   argument: Parameters<T>[0] = undefined,
   scope = currentScope,
   offset = currentOffset
 ) {
-  const priority = scope.___id + offset + localIndex;
+  const priority = scope.___id + offset + localPriority;
   if (!queuedFnsMap.has(priority)) {
     schedule();
 
@@ -55,11 +55,11 @@ export function queue<T extends ExecFn>(
 
 export function queueInOwner<T extends ExecFn>(
   fn: T,
-  localIndex?: number,
+  localPriority?: number,
   argument?: Parameters<T>[0],
   ownerLevel?: number
 ) {
-  queue(fn, localIndex, argument, getOwnerScope(ownerLevel), ownerOffset);
+  queue(fn, localPriority, argument, getOwnerScope(ownerLevel), ownerOffset);
 }
 
 export function withQueueNext(fn: () => unknown) {
