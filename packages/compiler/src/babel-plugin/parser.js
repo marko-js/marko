@@ -1,4 +1,4 @@
-import { createParser } from "htmljs-parser";
+import { createLegacyParser } from "htmljs-parser";
 import parseAttributes from "./util/parse-attributes";
 import parseArguments from "./util/parse-arguments";
 import parseParams from "./util/parse-params";
@@ -30,8 +30,8 @@ export function parseMarko(file) {
   const pushTagBody = node => getTagBody().pushContainer("body", node);
   const getTagBody = () =>
     currentTag.isProgram() ? currentTag : currentTag.get("body");
-  let { preserveWhitespace } = htmlParseOptions;
   let currentTag = file.path;
+  let { preserveWhitespace } = htmlParseOptions;
   let preservingWhitespaceUntil = preserveWhitespace;
   let wasSelfClosing = false;
   let handledTagName = false;
@@ -64,10 +64,9 @@ export function parseMarko(file) {
       onNext = onNext && onNext(node);
     },
 
-    onText({ value }, parser) {
+    onText({ pos, value }) {
       const shouldTrim = !preservingWhitespaceUntil;
       const { body } = getTagBody().node;
-      let pos = parser.pos - value.length;
 
       if (shouldTrim) {
         if (htmlTrim(value) === "") {
@@ -122,25 +121,23 @@ export function parseMarko(file) {
         });
     },
 
-    onPlaceholder({ escape, value, withinBody, pos, endPos }) {
-      if (withinBody) {
-        const node = withLoc(
-          file,
-          t.markoPlaceholder(
-            parseExpression(
-              file,
-              value,
-              pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
-            ),
-            escape
+    onPlaceholder({ escape, value, pos, endPos }) {
+      const node = withLoc(
+        file,
+        t.markoPlaceholder(
+          parseExpression(
+            file,
+            value,
+            pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
           ),
-          pos,
-          endPos
-        );
+          escape
+        ),
+        pos,
+        endPos
+      );
 
-        pushTagBody(node);
-        onNext = onNext && onNext(node);
-      }
+      pushTagBody(node);
+      onNext = onNext && onNext(node);
     },
 
     onScriptlet({ value, line, block, pos, endPos }) {
@@ -219,21 +216,7 @@ export function parseMarko(file) {
         endPos
       );
 
-      if (tagDef) {
-        node.tagDef = tagDef;
-
-        const { parseOptions } = tagDef;
-        if (parseOptions) {
-          event.setParseOptions(parseOptions);
-
-          if (parseOptions.rootOnly && !currentTag.isProgram()) {
-            throw file.buildCodeFrameError(
-              { loc: getLocRange(file, pos, endPos) },
-              `"${tagName}" tags must be at the root of your Marko template.`
-            );
-          }
-        }
-      }
+      node.tagDef = tagDef;
 
       [currentTag] = pushTagBody(node);
 
@@ -243,7 +226,7 @@ export function parseMarko(file) {
       }
     },
 
-    onOpenTag(event, parser) {
+    onOpenTag(event) {
       if (!handledTagName) {
         // There is a bug in htmljs parser where a single top level concise mode tag with nothing else
         // does not emit the openTagNameEvent.
@@ -256,16 +239,10 @@ export function parseMarko(file) {
       const parseOptions = (tagDef && tagDef.parseOptions) || EMPTY_OBJECT;
       wasSelfClosing = event.selfClosed;
 
-      if (parseOptions.state === "parsed-text") {
-        parser.enterParsedTextContentState();
-      } else if (parseOptions.state === "static-text") {
-        parser.enterStaticTextContentState();
-      }
-
       if (parseOptions.rawOpenTag) {
         currentTag.set(
           "rawValue",
-          parser.substring(pos, endPos).replace(/^<|\/>$|>$/g, "")
+          code.slice(pos, endPos).replace(/^<|\/>$|>$/g, "")
         );
       }
 
@@ -292,7 +269,7 @@ export function parseMarko(file) {
       }
     },
 
-    onCloseTag(event, parser) {
+    onCloseTag(event) {
       let { pos, endPos } = event;
       const tag = currentTag;
       const { node } = tag;
@@ -301,18 +278,6 @@ export function parseMarko(file) {
 
       if (preservingWhitespaceUntil === currentTag) {
         preservingWhitespaceUntil = undefined;
-      }
-
-      if (!pos) {
-        pos = parser.pos;
-      }
-
-      if (!endPos) {
-        endPos = pos;
-
-        if (wasSelfClosing && !isConcise) {
-          endPos += 2; // account for "/>"
-        }
       }
 
       node.end = endPos;
@@ -354,13 +319,5 @@ export function parseMarko(file) {
     }
   };
 
-  createParser(handlers, {
-    isOpenTagOnly(name) {
-      const { parseOptions = EMPTY_OBJECT } =
-        getTagDefForTagName(file, name) || EMPTY_OBJECT;
-      return parseOptions.openTagOnly;
-    },
-    ignoreNonstandardStringPlaceholders: true,
-    ...htmlParseOptions
-  }).parse(code, file.opts.filename);
+  createLegacyParser(handlers).parse(code, file.opts.filename);
 }

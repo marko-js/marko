@@ -1,3 +1,0 @@
-packages/translator-default/test/fixtures/custom-tag-migration/new.marko(1,1): A line in concise mode cannot start with a single hyphen. Use "--" instead. See: https://github.com/marko-js/htmljs-parser/issues/43
-> 1 | - Hello ${input.name}!
-    | ^^^^^^^^^^^^^^^^^^^^^^

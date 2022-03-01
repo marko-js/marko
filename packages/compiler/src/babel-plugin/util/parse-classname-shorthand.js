@@ -7,19 +7,9 @@ export default (file, shorthands, attributes) => {
   }
 
   const classAttr = attributes.find(({ name }) => name === "class");
-  const classParts = shorthands.map(({ rawParts }) => {
-    const nodes = rawParts.map(part =>
-      part.expression
-        ? parseExpression(file, part.expression, part.pos)
-        : withLoc(file, t.stringLiteral(part.text), part.pos, part.endPos)
-    );
-
-    if (nodes.length === 1) {
-      return nodes[0];
-    }
-
-    return nodes.reduce((a, b) => t.binaryExpression("+", a, b));
-  });
+  const classParts = shorthands.map(({ pos, value }) =>
+    parseExpression(file, `\`${value}\``, pos - 1)
+  );
 
   let shorthandNode;
   if (classParts.length === 1) {

@@ -2,72 +2,46 @@ import * as t from "../../babel-types";
 import { withLoc, parseExpression } from "@marko/babel-utils";
 import parseArguments from "./parse-arguments";
 
-export default (file, attributes, startPos) => {
-  const code = file.code;
-  let attrEndPos = startPos;
-
+export default (file, attributes) => {
   return attributes.map(attr => {
-    let attrStartPos = attr.default
-      ? attr.pos
-      : code.indexOf(attr.name, attrEndPos);
-
-    if (attr.name.startsWith("...")) {
-      let attrExpression = attr.name.slice(3);
-
-      if (attr.argument) {
-        attrExpression += `(${attr.argument.value})`;
-      }
-
-      attrEndPos = attrStartPos + attrExpression.length;
-
-      const value = parseExpression(file, attrExpression, attrStartPos + 3);
-
+    if (attr.spread) {
       // TODO: Inline merge object literals.
       return withLoc(
         file,
-        t.markoSpreadAttribute(value),
-        attrStartPos,
-        attrEndPos
+        t.markoSpreadAttribute(
+          parseExpression(
+            file,
+            attr.value,
+            0 // TODO
+          )
+        ),
+        0, // TODO
+        0 // TODO
       );
     }
 
-    const match = /:(.*)$/.exec(attr.name);
-    const modifier = match && match[1];
-    let name = attr.name;
-    let value;
+    let name, modifier, value;
 
-    if (modifier) {
-      name = name.slice(0, name.length - modifier.length - 1);
+    if (attr.name) {
+      [, name, modifier] = /^([^:]*)(?::(.*))?/.exec(attr.name);
     }
 
     if (attr.value) {
-      attrEndPos = attr.endPos;
-
       if (attr.method) {
-        if (code[attrStartPos] !== "(") {
-          // fix bug in htmljs parser position.
-          attrStartPos = code.indexOf("(", attrStartPos);
-        }
-
-        if (code[attrEndPos] === "}") {
-          // fix bug in htmljs parser position.
-          attrEndPos++;
-        }
-
         const prefix = "function";
         value = parseExpression(
           file,
-          prefix + code.slice(attrStartPos, attrEndPos), // We use the raw value to ignore things like non standard placeholders.
-          attrStartPos - prefix.length
+          prefix + `(${attr.argument.value}){${attr.value}}`,
+          0 - prefix.length // TODO
         );
       } else {
-        const valueStart = attr.pos + 1; // Add one to account for "=".
-        const rawValue = code.slice(valueStart, attrEndPos); // We use the raw value to ignore things like non standard placeholders.
-
-        value = parseExpression(file, rawValue, valueStart);
+        value = parseExpression(
+          file,
+          attr.value,
+          0 // TODO
+        );
       }
     } else {
-      attrEndPos = attr.argument ? attr.argument.endPos + 1 : attr.endPos;
       value = t.booleanLiteral(true);
     }
 
@@ -77,12 +51,14 @@ export default (file, attributes, startPos) => {
         name,
         value,
         modifier,
-        parseArguments(file, attr.argument),
+        !attr.method && attr.argument
+          ? parseArguments(file, attr.argument)
+          : undefined,
         Boolean(attr.default),
         Boolean(attr.bound)
       ),
-      attrStartPos,
-      attrEndPos
+      0, // TODO
+      0 // TODO
     );
   });
 };

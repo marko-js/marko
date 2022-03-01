@@ -1,4 +1,4 @@
-import { withLoc, parseExpression } from "@marko/babel-utils";
+import { parseExpression } from "@marko/babel-utils";
 import * as t from "../../babel-types";
 
 export default (file, shorthand, attributes) => {
@@ -14,18 +14,10 @@ export default (file, shorthand, attributes) => {
     );
   }
 
-  const idParts = shorthand.rawParts.map(part =>
-    part.expression
-      ? parseExpression(file, part.expression, part.pos)
-      : withLoc(file, t.stringLiteral(part.text), part.pos, part.endPos)
-  );
-
   attributes.push(
     t.markoAttribute(
       "id",
-      idParts.length === 1
-        ? idParts[0]
-        : idParts.reduce((a, b) => t.binaryExpression("+", a, b))
+      parseExpression(file, `\`${shorthand.value}\``, shorthand.pos - 1)
     )
   );
 
