@@ -14,9 +14,9 @@
     {
       "name": "counter",
       "user": {
-        "min": 334,
-        "gzip": 255,
-        "brotli": 236
+        "min": 336,
+        "gzip": 256,
+        "brotli": 218
       },
       "runtime": {
         "min": 4502,
@@ -24,9 +24,9 @@
         "brotli": 1892
       },
       "total": {
-        "min": 4836,
-        "gzip": 2380,
-        "brotli": 2128
+        "min": 4838,
+        "gzip": 2381,
+        "brotli": 2110
       }
     }
   ]

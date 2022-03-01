@@ -3,10 +3,12 @@ import { callRuntime } from "../../util/runtime";
 import { getSectionId } from "../../util/sections";
 import { writeAllStatementGroups } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
+import { visit } from "../../util/walks";
 
 export default {
   translate: {
     exit(program: t.NodePath<t.Program>) {
+      visit(program);
       const sectionId = getSectionId(program);
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");

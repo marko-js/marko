@@ -22,6 +22,6 @@ function _apply_input(input) {
 }
 
 export const template = "<!> <!>";
-export const walks = "%c%";
+export const walks = "%c%b";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

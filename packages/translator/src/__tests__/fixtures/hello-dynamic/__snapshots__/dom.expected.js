@@ -13,6 +13,6 @@ function _apply_name(name) {
 }
 
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
-export const walks = "b%c%c%";
+export const walks = "b%c%c%c";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

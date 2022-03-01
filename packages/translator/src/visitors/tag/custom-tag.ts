@@ -13,6 +13,7 @@ import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime } from "../../util/runtime";
 import { startSection, getSectionId } from "../../util/sections";
 import trackReferences from "../../util/references";
+import { addStatement } from "../../util/apply-hydrate";
 
 export default {
   analyze: {
@@ -27,11 +28,13 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      walks.visit(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
+      const tagSectionId = getSectionId(tag);
       const tagBodySectionId = getSectionId(tag.get("body"));
       const isHTML = isOutputHTML();
       const { node } = tag;
@@ -61,7 +64,7 @@ export default {
         if (isHTML) {
           tagIdentifier = importDefault(file, relativePath, tagName);
         } else {
-          tagIdentifier = importNamed(file, relativePath, "hydrate", tagName);
+          tagIdentifier = importNamed(file, relativePath, "apply", tagName);
           write`${importNamed(
             file,
             relativePath,
@@ -128,30 +131,41 @@ export default {
           )[0]
           .skip();
       } else {
-        if (!isHTML && renderBodyProp) {
-          const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
-          (attrsObject as t.ObjectExpression).properties.pop();
-          (attrsObject as t.ObjectExpression).properties.push(
-            t.objectProperty(
-              t.identifier("renderBody"),
-              callRuntime(
-                "createRenderer",
-                writes || t.stringLiteral(""),
-                walks || t.stringLiteral(""),
-                t.arrowFunctionExpression(
-                  renderBodyProp.params,
-                  renderBodyProp.body
+        if (isHTML) {
+          if (tagVar) {
+            translateVar(tag, callExpression(tagIdentifier, attrsObject));
+            tag.remove();
+          } else {
+            tag
+              .replaceWith(callStatement(tagIdentifier, attrsObject))[0]
+              .skip();
+          }
+        } else {
+          if (renderBodyProp) {
+            const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
+            (attrsObject as t.ObjectExpression).properties.pop();
+            (attrsObject as t.ObjectExpression).properties.push(
+              t.objectProperty(
+                t.identifier("renderBody"),
+                callRuntime(
+                  "createRenderer",
+                  writes || t.stringLiteral(""),
+                  walks || t.stringLiteral(""),
+                  t.arrowFunctionExpression(
+                    renderBodyProp.params,
+                    renderBodyProp.body
+                  )
                 )
               )
-            )
+            );
+          }
+          addStatement(
+            "apply",
+            tagSectionId,
+            undefined,
+            t.expressionStatement(t.callExpression(tagIdentifier, []))
           );
-        }
-
-        if (tagVar) {
-          translateVar(tag, callExpression(tagIdentifier, attrsObject));
           tag.remove();
-        } else {
-          tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
         }
       }
     },

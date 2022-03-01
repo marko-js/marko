@@ -33,6 +33,6 @@ function _apply() {
 }
 
 export const template = "<div><!></div><!>";
-export const walks = " D%l%";
+export const walks = " D%l%b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

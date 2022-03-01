@@ -13,6 +13,6 @@ function _apply() {
 }
 
 export const template = "<div><div>a</div><!>Hello Text &lt;a/><!><!><script>\n    Hello &lt;b> &lt;/script>\n  </script></div>";
-export const walks = "Db%c%c%";
+export const walks = "Db%c%c%l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

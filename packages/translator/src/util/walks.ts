@@ -79,11 +79,11 @@ export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
 }
 
 export function visit(
-  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
   code?: VisitCodes
 ) {
   const { reserve } = path.node.extra;
-  if (!reserve || reserve.type !== ReserveType.Visit) {
+  if (code && (!reserve || reserve.type !== ReserveType.Visit)) {
     throw path.buildCodeFrameError(
       "Tried to visit a node that was not marked as needing to visit during analyze."
     );
@@ -93,10 +93,10 @@ export function visit(
   const steps = getSteps(sectionId);
   const walks = getWalks(sectionId);
 
-  if (isOutputHTML()) {
+  if (code && isOutputHTML()) {
     writeTo(path)`${callRuntime(
       "markScopeOffset",
-      t.numericLiteral(reserve.id)
+      t.numericLiteral(reserve!.id)
     )}`;
   } else {
     let walkString = "";
@@ -148,7 +148,7 @@ export function visit(
       walkString += String.fromCharCode(code);
     }
 
-    if (reserve.size) {
+    if (reserve?.size) {
       walkString += nCodeString(WalkCodes.Skip, reserve.size);
     }
 

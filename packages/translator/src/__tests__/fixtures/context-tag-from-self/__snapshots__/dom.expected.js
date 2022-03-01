@@ -13,6 +13,6 @@ function _apply_x(x) {
 }
 
 export const template = "<!></span></div>";
-export const walks = "E%";
+export const walks = "E%m";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

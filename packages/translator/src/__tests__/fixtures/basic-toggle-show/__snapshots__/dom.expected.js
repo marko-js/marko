@@ -27,6 +27,6 @@ function _apply() {
 }
 
 export const template = "<div><!><button>Toggle</button></div>";
-export const walks = "D%+b ";
+export const walks = "D%+b l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);
