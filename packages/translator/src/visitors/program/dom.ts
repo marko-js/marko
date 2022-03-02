@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
-import { getSectionId } from "../../util/sections";
+import { forEachSectionId, getSectionId } from "../../util/sections";
 import { writeAllStatementGroups } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
@@ -16,6 +16,27 @@ export default {
       const { walks, writes, apply } = writer.getSectionMeta(sectionId);
 
       writeAllStatementGroups();
+
+      const childRendererDeclarators: t.VariableDeclarator[] = [];
+      forEachSectionId((childSectionId) => {
+        if (childSectionId !== sectionId) {
+          const { walks, writes, apply } =
+            writer.getSectionMeta(childSectionId);
+          const identifier = writer.getRenderer(childSectionId);
+          childRendererDeclarators.push(
+            t.variableDeclarator(
+              identifier,
+              callRuntime("createRenderer", writes, walks, apply)
+            )
+          );
+        }
+      });
+
+      if (childRendererDeclarators.length) {
+        program.node.body.push(
+          t.variableDeclaration("const", childRendererDeclarators)
+        );
+      }
 
       program.node.body.push(
         t.exportNamedDeclaration(

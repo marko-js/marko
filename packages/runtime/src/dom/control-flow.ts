@@ -31,27 +31,20 @@ export function queueInBranch(
   conditionalIndex: number,
   branch: Renderer,
   fn: () => void,
-  sortValue: number
+  priority: number,
+  closurePriority: number
 ) {
-  // if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
-  //   queue(
-  //     fn,
-  //     sortValue,
-  //     undefined,
-  //     read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
-  //     ScopeOffsets.BEGIN_DATA
-  //   );
-  //   return 1;
-  // }
   queue(() => {
     if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
-      runWithScope(
+      queue(
         fn,
-        ScopeOffsets.BEGIN_DATA,
-        read(conditionalIndex + ConditionalIndex.SCOPE) as Scope
+        priority,
+        undefined,
+        read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
+        ScopeOffsets.BEGIN_DATA
       );
     }
-  }, sortValue);
+  }, closurePriority);
 }
 
 export function setConditionalRenderer(
@@ -150,7 +143,8 @@ type Loop = {
 export function queueForEach(
   loopIndex: number,
   fn: () => void,
-  sortValue: number
+  priority: number,
+  closurePriority: number
 ) {
   queue(() => {
     const scopes = read<Loop, LoopIndex.SCOPE_ARRAY>(
@@ -158,10 +152,10 @@ export function queueForEach(
     );
     if (scopes !== emptyMarkerArray) {
       for (const scope of scopes) {
-        runWithScope(fn, ScopeOffsets.BEGIN_DATA, scope);
+        queue(fn, priority, undefined, scope, ScopeOffsets.BEGIN_DATA);
       }
     }
-  }, sortValue);
+  }, closurePriority);
 }
 
 export function setLoopOf<T>(

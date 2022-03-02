@@ -1,12 +1,5 @@
-const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>", "D%c%", null);
-
 <for|key, val| in=obj/>
 <for|i| from=0 to=10 step=2/>
-
-const _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>", " D%c%lb ", null);
-
-const _for3 = _createRenderer("<div><!>: <!></div>", " D%c%", null);
-
 <for|key, val| in=obj/>
 <for|i| from=0 to=10 step=2>
   <for|i| from=0 to=10 step=2/>
@@ -14,7 +7,7 @@ const _for3 = _createRenderer("<div><!>: <!></div>", " D%c%", null);
 <for|i| from=10 to=0 step=-2/>
 <for from=0 to=10/>
 <for from=0 to=10/>
-import { data as _data, createRenderer as _createRenderer, setLoopOf as _setLoopOf, attr as _attr, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, setLoopOf as _setLoopOf, attr as _attr, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_i7(i) {
   if (_write(3, i)) {
@@ -129,6 +122,18 @@ function _apply() {
     c: 1
   });
 }
+
+const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>", "D%c%", null),
+      _temp4 = _createRenderer("<div><!>: <!></div><div></div><div></div>", "D%c%", null),
+      _temp5 = _createRenderer("<div><!></div><div></div><div></div>", "D%", null),
+      _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>", " D%c%lb ", null),
+      _for3 = _createRenderer("<div><!>: <!></div>", " D%c%", null),
+      _temp6 = _createRenderer("<div><!>: <!></div><div></div><div></div>", " D%c%lb ", null),
+      _temp7 = _createRenderer("<div><!></div><div></div><div></div><!>", " D%lb b%+", null),
+      _temp8 = _createRenderer("<div><!></div><div></div><div></div>", " D%lb ", null),
+      _temp9 = _createRenderer("<div><!></div><div></div><div></div>", " D%lb ", null),
+      _temp10 = _createRenderer("Hello", "", null),
+      _temp11 = _createRenderer("Hello", "", null);
 
 export const template = "<!><!><!><!><!><!><!><!><!><!>";
 export const walks = "%+b%+b%+b%+b%+b%+b%+b%+b%+b%+b";

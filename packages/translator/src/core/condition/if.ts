@@ -108,13 +108,14 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
     sectionId: bodySectionId,
   });
 
-  setQueueBuilder(tag, ({ identifier, queuePriority }) =>
+  setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) =>
     callRuntime(
       "queueInBranch",
       t.numericLiteral(reserve.id),
       writer.getRenderer(bodySectionId),
       identifier,
-      queuePriority
+      queuePriority,
+      closurePriority
     )
   );
 
@@ -127,20 +128,12 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
       const sectionId = getSectionId(tag);
       const { extra } = branches[0].tag.node;
       const refs: Reserve[] = [];
-      const declarators: t.VariableDeclarator[] = [];
       let expr: t.Expression = t.nullLiteral();
 
       for (let i = branches.length; i--; ) {
         const { tag, sectionId } = branches[i];
         const [testAttr] = tag.node.attributes;
-        const rendererDeclarator = writer.getSectionDeclarator(
-          tag,
-          sectionId,
-          "if"
-        );
-        const id = rendererDeclarator.id as t.Identifier;
-
-        declarators.push(rendererDeclarator);
+        const id = writer.getRenderer(sectionId, "if");
 
         tag.remove();
 
@@ -161,8 +154,6 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
           expr = id;
         }
       }
-
-      nextTag.insertBefore(t.variableDeclaration("const", declarators));
 
       addStatement(
         "apply",

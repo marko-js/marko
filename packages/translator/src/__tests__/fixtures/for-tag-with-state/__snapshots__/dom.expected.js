@@ -1,8 +1,4 @@
-const _for = _createRenderer("<div><!>: <!></div>", "D%c%", null);
-
-const _for2 = _createRenderer("<div><!>: <!></div>", "D%c%", null);
-
-import { data as _data, createRenderer as _createRenderer, setLoopOf as _setLoopOf, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, setLoopOf as _setLoopOf, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_i2(i) {
   if (_write(3, i)) _data(0, i);
@@ -33,6 +29,9 @@ function _apply() {
 
   _apply_arrB([1, 2, 3]);
 }
+
+const _for = _createRenderer("<div><!>: <!></div>", "D%c%", null),
+      _for2 = _createRenderer("<div><!>: <!></div>", "D%c%", null);
 
 export const template = "<!><!>";
 export const walks = "%+b%+b";

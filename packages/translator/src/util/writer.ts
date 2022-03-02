@@ -6,12 +6,19 @@ import toTemplateOrStringLiteral, {
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 import { getDefaultApply } from "./apply-hydrate";
+import { currentProgramPath } from "../visitors/program";
 
-const [getRenderer] = createSectionState<t.Identifier>("renderer", () =>
-  t.identifier("")
+const [_getRenderer] = createSectionState<t.Identifier>("renderer", () =>
+  currentProgramPath.scope.generateUidIdentifier()
 );
 
-export { getRenderer };
+export function getRenderer(sectionId: number, name?: string) {
+  const renderer = _getRenderer(sectionId);
+  if (name) {
+    renderer.name = currentProgramPath.scope.generateUid(name);
+  }
+  return renderer;
+}
 
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",
@@ -77,19 +84,4 @@ export function getSectionMeta(sectionId: number) {
     walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
   };
-}
-
-export function getSectionDeclarator(
-  path: t.NodePath,
-  sectionId: number,
-  name: string
-) {
-  const dummyIdentifier = path.scope.generateUidIdentifier(name);
-  const identifier = getRenderer(sectionId);
-  identifier.name = dummyIdentifier.name;
-  const { writes, walks, apply } = getSectionMeta(sectionId);
-  return t.variableDeclarator(
-    identifier,
-    callRuntime("createRenderer", writes, walks, apply)
-  );
 }

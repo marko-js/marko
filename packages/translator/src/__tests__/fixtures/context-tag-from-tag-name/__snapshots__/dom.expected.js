@@ -9,6 +9,8 @@ function _apply() {
   _other();
 }
 
+const _temp = _createRenderer("<!></span>", "D%", null);
+
 export const template = `${_other_template}`;
 export const walks = `${_other_walks}`;
 export const apply = _apply;

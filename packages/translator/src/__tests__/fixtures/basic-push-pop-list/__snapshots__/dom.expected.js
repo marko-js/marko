@@ -1,6 +1,4 @@
-const _for = _createRenderer("<!>", "%", null);
-
-import { queue as _queue, data as _data, createRenderer as _createRenderer, setLoopOf as _setLoopOf, write as _write, read as _read, on as _on, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, data as _data, setLoopOf as _setLoopOf, write as _write, read as _read, on as _on, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_item(item) {
   if (_write(1, item)) _data(0, item);
@@ -59,6 +57,8 @@ function _apply() {
 
   _apply_items([]);
 }
+
+const _for = _createRenderer("<!>", "%", null);
 
 export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const walks = "D%+b b l";

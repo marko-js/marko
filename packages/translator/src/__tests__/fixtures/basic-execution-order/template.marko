@@ -1,0 +1,10 @@
+<let/message = { text:"hi" }/>
+<let/show = true/>
+  
+<button onclick() {
+  message = null;
+  show = false;
+}>hide</button>
+<if=show>
+  ${message.text}
+</if>

@@ -134,12 +134,13 @@ const translateDOM = {
     const ofAttr = findName(attributes, "of");
     const byAttr = findName(attributes, "by");
 
-    setQueueBuilder(tag, ({ identifier, queuePriority }) => {
+    setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) => {
       return callRuntime(
         "queueForEach",
         t.numericLiteral(reserve!.id),
         identifier,
-        queuePriority
+        queuePriority,
+        closurePriority
       );
     });
 
@@ -154,14 +155,9 @@ const translateDOM = {
         );
       }
 
-      const rendererDeclarator = writer.getSectionDeclarator(
-        tag,
-        bodySectionId,
-        "for"
-      );
-      const rendererId = rendererDeclarator.id as t.Identifier;
+      const rendererId = writer.getRenderer(bodySectionId, "for");
 
-      tag.replaceWith(t.variableDeclaration("const", [rendererDeclarator]));
+      tag.remove();
 
       addStatement(
         "apply",

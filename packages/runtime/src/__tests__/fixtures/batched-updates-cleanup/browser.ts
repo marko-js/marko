@@ -29,6 +29,12 @@ const enum Index {
   MESSAGE = 6,
 }
 
+const enum Priority {
+  SHOW = 0,
+  MESSAGE = 1,
+  MESSAGE_SHOW = 2,
+}
+
 type scope = {
   [Index.BUTTON]: HTMLButtonElement;
   [Index.COMMENT]: Comment;
@@ -45,55 +51,59 @@ type scope = {
 export const template = `<button></button><!>`;
 export const walks = open(7) + get + over(1) + get + over(1) + close;
 export const render = () => {
-  execShow(true);
-  execMessage("hi");
-  hydrate();
+  _apply_show(true);
+  _apply_message("hi");
+  _hydrate();
 };
 
-export const hydrate = register("", () => {
-  on(Index.BUTTON, "click", bind(clickHandler));
+export const _hydrate = register("", () => {
+  on(Index.BUTTON, "click", bind(_onclick));
 });
 
-const clickHandler = () => {
-  queue(execMessage, Index.MESSAGE, "bye");
-  queue(execShow, Index.SHOW, !read<scope, Index.SHOW>(Index.SHOW));
+const _onclick = () => {
+  queue(_apply_message, Priority.MESSAGE, "bye");
+  queue(_apply_show, Priority.SHOW, !read<scope, Index.SHOW>(Index.SHOW));
 };
 
-const execShow = (value: scope[Index.SHOW]) => {
+const _apply_show = (value: scope[Index.SHOW]) => {
   if (write(Index.SHOW, value)) {
-    setConditionalRenderer(Index.CONDITIONAL, value ? branch0 : undefined);
+    setConditionalRenderer(Index.CONDITIONAL, value ? _if : undefined);
   }
 };
 
-const execMessage = (value: scope[Index.MESSAGE]) => {
+const _apply_message = (value: scope[Index.MESSAGE]) => {
   if (write(Index.MESSAGE, value)) {
     queueInBranch(
       Index.CONDITIONAL,
-      branch0,
-      execMessageBranch0,
-      Branch0Index.CLOSURE_MESSAGE
+      _if,
+      _apply_message2,
+      Branch0Priority.MESSAGE,
+      Priority.MESSAGE_SHOW
     );
   }
 };
 
-const execMessageBranch0 = () => {
+const _apply_message2 = () => {
   data(Branch0Index.TEXT, readInOwner<scope, Index.MESSAGE>(Index.MESSAGE));
 };
 
 export default createRenderFn(template, walks, render, 0);
 
 const enum Branch0Index {
-  CLOSURE_MESSAGE = -1,
   TEXT = 0,
+}
+
+const enum Branch0Priority {
+  MESSAGE = 0,
 }
 
 // type Branch0Scope = [Text];
 
-const branch0 = createRenderer(
+const _if = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   () => {
-    queue(execMessageBranch0, Branch0Index.CLOSURE_MESSAGE);
+    queue(_apply_message2, Branch0Priority.MESSAGE);
   },
   0
 );

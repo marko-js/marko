@@ -4,7 +4,10 @@ function _apply() {
   _child();
 }
 
-import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+const _temp = _createRenderer("This is the body content", "", null);
+
 export const template = `${_child_template}`;
 export const walks = `${_child_walks}`;
 export const apply = _apply;

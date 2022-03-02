@@ -1,4 +1,4 @@
-import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
 function _apply_c(c) {
@@ -16,6 +16,8 @@ function _apply_a(a) {
 function _apply() {
   _customTag();
 }
+
+const _temp = _createRenderer("<div><!> <!> <!></div>", "D%c%c%", null);
 
 export const template = `${_customTag_template}`;
 export const walks = `${_customTag_walks}`;

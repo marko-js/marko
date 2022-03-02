@@ -1,12 +1,4 @@
-const _if = _createRenderer("Hello", "", null);
-
-const _if2 = _createRenderer("World", "", null);
-
-const _if3 = _createRenderer("C", "", null),
-      _if4 = _createRenderer("B", "", null),
-      _if5 = _createRenderer("A", "", null);
-
-import { createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, read as _read, queue as _queue, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setConditionalRenderer as _setConditionalRenderer, read as _read, queue as _queue, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _applyWith_x_y(x = _read(14), y = _read(15)) {
   _setConditionalRenderer(8, x ? _if5 : y ? _if4 : _if3);
@@ -33,6 +25,12 @@ function _apply_b(b) {
 function _apply_a(a) {
   if (_write(12, a)) _queue(_applyWith_a_b, 4);
 }
+
+const _if = _createRenderer("Hello", "", null),
+      _if2 = _createRenderer("World", "", null),
+      _if5 = _createRenderer("A", "", null),
+      _if4 = _createRenderer("B", "", null),
+      _if3 = _createRenderer("C", "", null);
 
 export const template = "<!><!><div><!></div>";
 export const walks = "%+b%+bD%+l";

@@ -28,23 +28,30 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
-const enum Index {
-  COMMENT = 0,
-  CONDITIONAL = 0,
-  INPUT_VISIBLE = 4,
-  INPUT_VALUE = 5,
+const enum INDEX {
+  comment = 0,
+  conditional = 0,
+  visible = 4,
+  value = 5,
 }
 
-type scope = {
-  [Index.COMMENT]: Comment;
-  [Index.CONDITIONAL]: Comment;
-  [Index.INPUT_VISIBLE]: Input["visible"];
-  [Index.INPUT_VALUE]: Input["value"];
+const enum PRIORITY {
+  visible = 0,
+  value = 1,
+  closure_value = 2,
+}
+
+type SCOPE = {
+  [INDEX.comment]: Comment;
+  [INDEX.conditional]: Comment;
+  [INDEX.visible]: Input["visible"];
+  [INDEX.value]: Input["value"];
 };
 
+// <attrs/{ visible, value }/>
 // <div>
-//   <if=input.visible>
-//     <span>${input.value.name}</span>
+//   <if=visible>
+//     <span>${value.name}</span>
 //   </if>
 // </div>
 
@@ -53,41 +60,42 @@ export const walks = open(6) + next(1) + get + over(1) + close;
 
 export const execInputVisible = () => {
   setConditionalRenderer(
-    Index.CONDITIONAL,
-    read(Index.INPUT_VISIBLE) ? branch0 : undefined
+    INDEX.conditional,
+    read(INDEX.visible) ? branch0 : undefined
   );
 };
 
 export const execInputValue = () => {
   queueInBranch(
-    Index.CONDITIONAL,
+    INDEX.conditional,
     branch0,
     execInputValueBranch0,
-    Branch0Index.CLOSURE_VALUE
+    PRIORITY_BRANCH0.value,
+    PRIORITY.closure_value
   );
 };
 
 function execInputValueBranch0() {
-  data(
-    Branch0Index.TEXT,
-    readInOwner<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE)!.name
-  );
+  data(INDEX_BRANCH0.text, readInOwner<SCOPE, INDEX.value>(INDEX.value)!.name);
 }
 
 export const execDynamicInput = (input: typeof inputs[number]) => {
-  if (write(Index.INPUT_VISIBLE, input.visible)) {
+  if (write(INDEX.visible, input.visible)) {
     execInputVisible();
   }
-  if (write(Index.INPUT_VALUE, input.value)) {
+  if (write(INDEX.value, input.value)) {
     execInputValue();
   }
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
 
-const enum Branch0Index {
-  CLOSURE_VALUE = -1,
-  TEXT = 0,
+const enum INDEX_BRANCH0 {
+  text = 0,
+}
+
+const enum PRIORITY_BRANCH0 {
+  value = 0,
 }
 
 // type Branch0Scope = {
@@ -98,7 +106,7 @@ const branch0 = createRenderer(
   "<span> </span>",
   open(1) + next(1) + get + next(1) + close,
   () => {
-    queue(execInputValueBranch0, Branch0Index.CLOSURE_VALUE);
+    queue(execInputValueBranch0, PRIORITY_BRANCH0.value);
   },
   0
 );

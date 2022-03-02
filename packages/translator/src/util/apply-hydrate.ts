@@ -17,7 +17,10 @@ export interface ReferenceGroup {
   queuePriority: t.NumericLiteral;
 }
 
-export type queueBuilder = (group: ReferenceGroup) => t.Expression;
+export type queueBuilder = (
+  group: ReferenceGroup,
+  closurePriority: t.NumericLiteral
+) => t.Expression;
 
 const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
 const [getHydrate] = createSectionState<ReferenceGroup[]>("hydrate", () => []);
@@ -98,6 +101,8 @@ export function writeApplyGroups(sectionId: number) {
   const groups = getApply(sectionId);
   if (!groups.length) return;
 
+  const closurePriorities = [];
+
   for (let i = groups.length; i--; ) {
     const group = groups[i];
     const { identifier, references, statements, queuePriority } = group;
@@ -136,11 +141,21 @@ export function writeApplyGroups(sectionId: number) {
 
         const factory = getQueueBuilder(sectionId);
         if (factory) {
+          const closurePriority = t.numericLiteral(NaN);
+          closurePriorities.push(closurePriority);
           i += addStatement(
             "apply",
             references.sectionId,
             references,
-            t.expressionStatement(factory(group))
+            t.expressionStatement(factory(group, closurePriority))
+          );
+          i += addStatement(
+            "apply",
+            sectionId,
+            undefined,
+            t.expressionStatement(
+              callRuntime("queue", identifier, queuePriority)
+            )
           );
         }
       } else {
@@ -171,6 +186,9 @@ export function writeApplyGroups(sectionId: number) {
   const offset = groups[0].references ? 0 : 1;
   for (let i = offset; i < groups.length; i++) {
     groups[i].queuePriority.value = i - offset;
+  }
+  for (let i = 0; i < closurePriorities.length; i++) {
+    closurePriorities[i].value = i + groups.length - offset;
   }
 }
 

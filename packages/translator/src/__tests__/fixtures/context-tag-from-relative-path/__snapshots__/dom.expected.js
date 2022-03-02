@@ -12,6 +12,8 @@ function _apply_message(message) {
   if (_write(1, message)) _data(0, message);
 }
 
+const _temp = _createRenderer("<!></span>", "D%", null);
+
 export const template = "";
 export const walks = "";
 export const apply = null;

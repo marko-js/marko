@@ -1,8 +1,6 @@
 let _thing;
 
-const _if = _createRenderer("", "", null);
-
-import { write as _write, createRenderer as _createRenderer, setConditionalRenderer as _setConditionalRenderer, readInOwner as _readInOwner, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, setConditionalRenderer as _setConditionalRenderer, readInOwner as _readInOwner, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
 
 function _apply_x(x = _readInOwner(0)) {
@@ -12,6 +10,9 @@ function _apply_x(x = _readInOwner(0)) {
 function _apply() {
   _customTag();
 }
+
+const _temp2 = _createRenderer("<!>", "%+", null),
+      _if = _createRenderer("", "", null);
 
 export const template = `${_customTag_template}`;
 export const walks = `${_customTag_walks}`;

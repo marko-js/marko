@@ -1,6 +1,4 @@
-const _for = _createRenderer("<button><!></button>", " D%", null);
-
-import { queueInOwner as _queueInOwner, write as _write, read as _read, on as _on, attr as _attr, data as _data, createRenderer as _createRenderer, setLoopOf as _setLoopOf, readInOwner as _readInOwner, queue as _queue, bind as _bind, queueForEach as _queueForEach, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queueInOwner as _queueInOwner, write as _write, read as _read, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, readInOwner as _readInOwner, queue as _queue, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_num(num = _read(2)) {
   _on(0, "click", _read(3));
@@ -34,8 +32,12 @@ function _apply_selected2(selected = _readInOwner(4)) {
   _queue(_applyWith_selected_num, 2);
 }
 
+function _apply2() {
+  _queue(_apply_selected2, 0);
+}
+
 function _apply_selected(selected) {
-  if (_write(4, selected)) _queueForEach(0, _apply_selected2, 0);
+  if (_write(4, selected)) _queueForEach(0, _apply_selected2, 0, 3);
 }
 
 function _apply() {
@@ -43,6 +45,8 @@ function _apply() {
 
   _setLoopOf(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], _for, null, _apply_num);
 }
+
+const _for = _createRenderer("<button><!></button>", " D%", _apply2);
 
 export const template = "<!>";
 export const walks = "%+b";

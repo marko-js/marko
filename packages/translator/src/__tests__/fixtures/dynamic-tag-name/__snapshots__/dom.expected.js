@@ -88,7 +88,7 @@ _dynamicTag(tagConstB, {
   other: other
 });
 
-import { dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_tagConstB(tagConstB) {
   if (_write(19, tagConstB)) {}
@@ -113,6 +113,8 @@ function _apply_show(show) {
 function _apply() {
   _apply_tagConstA("a");
 }
+
+const _temp = _createRenderer("Body content", "", null);
 
 export const template = "";
 export const walks = "";
