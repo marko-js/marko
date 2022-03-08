@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.19.2](https://github.com/marko-js/marko/compare/v5.19.1...v5.19.2) (2022-03-08)
+
+
+### Bug Fixes
+
+* avoid deprecation warning for markoc cli ([800861b](https://github.com/marko-js/marko/commit/800861b88ec097a8e7b89fcedb3c4d3a59542ec0))
+
+
+
+
+
 # [5.19.0](https://github.com/marko-js/marko/compare/v5.18.2...v5.19.0) (2022-01-28)
 
 
