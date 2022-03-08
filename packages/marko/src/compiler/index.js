@@ -11,9 +11,14 @@ var defaults = extend({}, globalConfig);
 
 // eslint-disable-next-line no-constant-condition
 if ("MARKO_DEBUG") {
-  complain(
-    "Using `marko/compiler` has been deprecated, please upgrade to the `@marko/compiler` module."
-  );
+  if (
+    require.main &&
+    require.main.filename !== require.resolve("../../bin/markoc")
+  ) {
+    complain(
+      "Using `marko/compiler` has been deprecated, please upgrade to the `@marko/compiler` module."
+    );
+  }
 }
 
 var defaultOptionsExportDefinition = {
