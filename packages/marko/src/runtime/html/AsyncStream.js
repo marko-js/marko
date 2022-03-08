@@ -81,7 +81,7 @@ function AsyncStream(global, writer, parentOut) {
   writer.stream = this;
 
   this._sync = false;
-  this._stack = undefined;
+  this._stackRef = undefined;
   this.name = undefined;
   this._timeoutId = undefined;
 
@@ -216,9 +216,7 @@ var proto = (AsyncStream.prototype = {
       timeout = AsyncStream.DEFAULT_TIMEOUT;
     }
 
-    newStream._stack = AsyncStream.INCLUDE_STACK
-      ? getNonMarkoStack(new Error())
-      : null;
+    newStream._stackRef = AsyncStream.INCLUDE_STACK ? new Error() : null;
     newStream.name = name;
 
     if (timeout > 0) {
@@ -454,17 +452,17 @@ var proto = (AsyncStream.prototype = {
 
   error: function (e) {
     var name = this.name;
-    var stack = this._stack;
+    var stackRef = this._stackRef;
 
     if (!(e instanceof Error)) {
       e = new Error(JSON.stringify(e));
     }
 
-    if (name || stack) {
+    if (name || stackRef) {
       e.message +=
         "\nRendered by" +
         (name ? " " + name : "") +
-        (stack ? ":\n" + stack : "");
+        (stackRef ? ":\n" + getNonMarkoStack(stackRef) : "");
     }
     try {
       this.emit("error", e);
