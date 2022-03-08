@@ -216,9 +216,7 @@ var proto = (AsyncStream.prototype = {
       timeout = AsyncStream.DEFAULT_TIMEOUT;
     }
 
-    newStream._stack = AsyncStream.INCLUDE_STACK
-      ? getNonMarkoStack(new Error())
-      : null;
+    newStream._stack = AsyncStream.INCLUDE_STACK ? new Error() : null;
     newStream.name = name;
 
     if (timeout > 0) {
@@ -455,6 +453,7 @@ var proto = (AsyncStream.prototype = {
   error: function (e) {
     var name = this.name;
     var stack = this._stack;
+    if (stack) stack = getNonMarkoStack(stack);
 
     if (!(e instanceof Error)) {
       e = new Error(JSON.stringify(e));
