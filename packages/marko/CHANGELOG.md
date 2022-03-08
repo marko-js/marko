@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.3](https://github.com/marko-js/marko/compare/v4.24.2...v4.24.3) (2022-03-08)
+
+
+### Bug Fixes
+
+* performance hit in development mode because continually parsing stack trace ([#1777](https://github.com/marko-js/marko/issues/1777)) ([40d6599](https://github.com/marko-js/marko/commit/40d659979370900c18503a3dc6dab807f52c154d))
+
 ### [4.24.2](https://github.com/marko-js/marko/compare/v4.24.1...v4.24.2) (2021-10-22)
 
 
