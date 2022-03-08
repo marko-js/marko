@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.19.3](https://github.com/marko-js/marko/compare/v5.19.2...v5.19.3) (2022-03-08)
+
+
+### Bug Fixes
+
+* performance hit in development mode because continually parsing stack trace ([#1777](https://github.com/marko-js/marko/issues/1777)) ([cb99f92](https://github.com/marko-js/marko/commit/cb99f921660f206ef6e14f7c9ab5757be6375ab0))
+
+
+
+
+
 ## [5.19.2](https://github.com/marko-js/marko/compare/v5.19.1...v5.19.2) (2022-03-08)
 
 
