@@ -201,7 +201,7 @@ export function setLoopOf<T>(
         // needsReconciliation = true;
       } else {
         // TODO: track if any childScope has changed index
-        // needsReconciliation ||= oldIndexMap.get(key) !== index;
+        // needsReconciliation ||= oldArray[index] !== childScope;
       }
       if (applyFn) {
         runWithScope(
@@ -216,7 +216,6 @@ export function setLoopOf<T>(
       }
       newMap.set(key, childScope);
       newArray.push(childScope);
-      // newIndexMap.set(key, index);
     }
     setContext(null);
   } else {
