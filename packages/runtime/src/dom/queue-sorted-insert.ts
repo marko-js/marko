@@ -34,11 +34,7 @@ export function queue<T extends ExecFn>(
 
   // index is where the function should be in the queue
   // but if it already exists, we should not add it again
-  if (
-    queuedFns[index + QueueOffsets.FN] !== fn ||
-    queuedFns[index + QueueOffsets.SCOPE] !== scope ||
-    queuedFns[index + QueueOffsets.OFFSET] !== offset
-  ) {
+  if (queuedFns[index + QueueOffsets.PRIORITY] !== priority) {
     schedule();
 
     for (let i = queuedFns.length - 1; i >= index; i--) {

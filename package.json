@@ -10,6 +10,7 @@
     "@types/node": "^17.0.8",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "benchmark": "^2.1.4",
     "chalk": "^5.0.0",
     "cross-env": "^7.0.3",
     "esbuild": "0.14.3",
