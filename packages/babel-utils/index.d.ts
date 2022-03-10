@@ -190,7 +190,7 @@ type Loc = { line: number; column: number };
 type LocRange = { start: Loc; end: Loc };
 
 export function getLoc(file: t.BabelFile, pos: number): Loc;
-export function getLocRange(file: t.BabelFile, pos: number): LocRange;
+export function getLocRange(file: t.BabelFile, start: number, end: number): LocRange;
 export function withLoc<T extends t.Node>(
   file: t.BabelFile,
   node: T,

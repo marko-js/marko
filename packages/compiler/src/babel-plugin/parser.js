@@ -1,10 +1,4 @@
-import { createLegacyParser } from "htmljs-parser";
-import parseAttributes from "./util/parse-attributes";
-import parseArguments from "./util/parse-arguments";
-import parseParams from "./util/parse-params";
-import parseVar from "./util/parse-var";
-import parseIDShorthand from "./util/parse-id-shorthand";
-import parseClassnameShorthand from "./util/parse-classname-shorthand";
+import { createParser, EventTypes, OpenTagEnding } from "htmljs-parser";
 import * as t from "../babel-types";
 import {
   withLoc,
@@ -15,309 +9,490 @@ import {
   getTagDefForTagName
 } from "@marko/babel-utils";
 
-const EMPTY_OBJECT = {};
-const EMPTY_ARRAY = [];
-const htmlTrimStart = t => t.replace(/^[\n\r]\s*/, "");
-const htmlTrimEnd = t => t.replace(/[\n\r]\s*$/, "");
-const htmlTrim = t => htmlTrimStart(htmlTrimEnd(t));
-const isAttributeTag = node =>
-  t.isStringLiteral(node.name) && node.name.value[0] === "@";
+const noop = () => {};
+const emptyRange = part => part.start === part.end;
+const isAttrTag = tag => tag.name.value?.[0] === "@";
 
 export function parseMarko(file) {
   const { code } = file;
   const { htmlParseOptions = {} } = file.markoOpts;
   const { watchFiles } = file.metadata.marko;
-  const pushTagBody = node => getTagBody().pushContainer("body", node);
-  const getTagBody = () =>
-    currentTag.isProgram() ? currentTag : currentTag.get("body");
+  const parser = createParser(code, file.opts.filename);
   let currentTag = file.path;
+  let currentBody = currentTag;
+  let currentAttr = undefined;
+  let currentShorthandId = undefined;
+  let currentShorthandClassNames = undefined;
   let { preserveWhitespace } = htmlParseOptions;
   let preservingWhitespaceUntil = preserveWhitespace;
-  let wasSelfClosing = false;
-  let handledTagName = false;
-  let onNext;
+  let onNext = noop;
 
-  const handlers = {
-    onDocumentType({ value, pos, endPos }) {
-      const node = withLoc(file, t.markoDocumentType(value), pos, endPos);
-      pushTagBody(node);
-      /* istanbul ignore next */
-      onNext = onNext && onNext(node);
-    },
+  const enterTag = node => {
+    currentTag = currentBody.pushContainer("body", node)[0];
+    currentBody = currentTag.get("body");
+    onNext(node);
+  };
+  const pushContent = node => {
+    currentBody.node.body.push(node);
+    onNext(node);
+  };
+  const endAttr = () => {
+    if (currentAttr) {
+      withLoc(file, currentAttr, currentAttr.start, currentAttr.end);
+      currentAttr = undefined;
+    }
+  };
+  const parseTemplateString = ({ quasis, expressions }) => {
+    switch (expressions.length) {
+      case 0: {
+        const [first] = quasis;
+        return withLoc(
+          file,
+          t.stringLiteral(parser.read(first)),
+          first.start,
+          first.end
+        );
+      }
+      case 1: {
+        if (emptyRange(quasis[0]) && emptyRange(quasis[1])) {
+          const [{ value }] = expressions;
+          return parseExpression(file, parser.read(value), value.start);
+        }
+      }
+    }
 
-    onDeclaration({ value, pos, endPos }) {
-      const node = withLoc(file, t.markoDeclaration(value), pos, endPos);
-      pushTagBody(node);
-      /* istanbul ignore next */
-      onNext = onNext && onNext(node);
-    },
+    const [{ start }] = quasis;
+    const end = quasis[quasis.length - 1].end - 1;
+    return parseExpression(
+      file,
+      `\`${parser.read({ start, end })}\``,
+      start - 1
+    );
+  };
 
-    onComment({ value, pos, endPos }) {
-      const node = withLoc(file, t.markoComment(value), pos, endPos);
-      pushTagBody(node);
-      onNext = onNext && onNext(node);
-    },
+  for (const part of parser) {
+    switch (part.type) {
+      case EventTypes.Error:
+        throw file.buildCodeFrameError(
+          { loc: getLocRange(file, part.start, part.end) },
+          part.message
+        );
 
-    onCDATA({ value, pos, endPos }) {
-      const node = withLoc(file, t.markoCDATA(value), pos, endPos);
-      pushTagBody(node);
-      onNext = onNext && onNext(node);
-    },
+      case EventTypes.Text: {
+        const rawValue = parser.read(part);
+        const start = part.start;
 
-    onText({ pos, value }) {
-      const shouldTrim = !preservingWhitespaceUntil;
-      const { body } = getTagBody().node;
-
-      if (shouldTrim) {
-        if (htmlTrim(value) === "") {
-          return;
+        if (preservingWhitespaceUntil) {
+          pushContent(withLoc(file, t.markoText(rawValue), start, part.end));
+          break;
         }
 
-        // Find previous non-scriptlet/@tag.
+        if (/^(?:[\n\r]\s*)?(?:[\n\r]\s*)?$/.test(rawValue)) break;
+
+        const { body } = currentBody.node;
         let prev;
         let prevIndex = body.length;
+        // Find previous non-scriptlet or comment.
         while (prevIndex > 0) {
           prev = body[--prevIndex];
 
-          if (
-            t.isMarkoClass(prev) ||
-            t.isMarkoComment(prev) ||
-            t.isMarkoScriptlet(prev) ||
-            isAttributeTag(prev)
-          ) {
+          if (t.isMarkoScriptlet(prev) || t.isMarkoComment(prev)) {
             prev = undefined;
           } else {
             break;
           }
         }
 
-        if (!prev) {
-          const originalValue = value;
-          value = htmlTrimStart(value);
-          pos += originalValue.indexOf(value);
-        } else if (
-          t.isMarkoText(prev) &&
-          /\s/.test(prev.value[prev.value.length - 1])
-        ) {
-          const originalValue = value;
-          value = value.replace(/^\s+/, "");
-          pos += originalValue.indexOf(value);
+        let value = rawValue;
+        switch (prev?.type) {
+          case "MarkoPlaceholder":
+            break;
+          case "MarkoText":
+            if (/\s$/.test(prev.value)) {
+              value = value.replace(/^\s+/, "");
+            }
+            break;
+          case "MarkoTag":
+            if (isAttrTag(prev)) {
+              value = value.replace(/^[\n\r]\s*/, "");
+            }
+            break;
+          default:
+            value = value.replace(/^[\n\r]\s*/, "");
+            break;
         }
-      }
 
-      const endPos = pos + value.length;
-      const node = withLoc(file, t.markoText(value), pos, endPos);
-      const prevBody = getTagBody().node.body;
-      pushTagBody(node);
-      onNext && onNext(node);
-      onNext =
-        shouldTrim &&
-        (next => {
-          if (!next || prevBody.indexOf(next) === -1) {
-            node.value = htmlTrimEnd(node.value);
+        const node = t.markoText(value);
+        pushContent(node);
+        onNext = next => {
+          switch (next?.type) {
+            case "MarkoScriptlet":
+            case "MarkoComment":
+              return;
+            case "MarkoPlaceholder":
+              break;
+            case "MarkoText":
+              if (/^\s/.test(next.value)) {
+                value = value.replace(/\s+$/, "");
+              }
+              break;
+            case "MarkoTag":
+              if (isAttrTag(next)) {
+                value = value.replace(/[\n\r]\s*$/, "");
+              }
+
+              break;
+            default:
+              value = value.replace(/[\n\r]\s*$/, "");
+              break;
           }
 
-          node.value = node.value.replace(/\s+/g, " ");
-        });
-    },
+          node.value = value.replace(/\s+/g, " ");
 
-    onPlaceholder({ escape, value, pos, endPos }) {
-      const node = withLoc(
-        file,
-        t.markoPlaceholder(
-          parseExpression(
+          if (node.value) {
+            const trimmedStart = start + rawValue.indexOf(value);
+            withLoc(file, node, trimmedStart, trimmedStart + rawValue.length);
+          } else {
+            body.splice(body.indexOf(node), 1);
+          }
+
+          onNext = noop;
+        };
+        break;
+      }
+
+      case EventTypes.CDATA:
+        pushContent(
+          withLoc(
             file,
-            value,
-            pos + (escape ? 2 /* ${ */ : 3) /* $!{ */
-          ),
-          escape
-        ),
-        pos,
-        endPos
-      );
-
-      pushTagBody(node);
-      onNext = onNext && onNext(node);
-    },
-
-    onScriptlet({ value, line, block, pos, endPos }) {
-      if (!line && !block) {
-        throw file.buildCodeFrameError(
-          { loc: getLocRange(file, pos, endPos) },
-          "<% scriptlets %> are no longer supported."
-        );
-      }
-
-      pos -= 1; // Include $.
-      // Scriptlets are ignored as content and don't call `onNext`.
-      pushTagBody(
-        withLoc(
-          file,
-          t.markoScriptlet(
-            parseScript(file, value, pos + 2 /** Ignores leading `$ ` */).body
-          ),
-          pos,
-          endPos
-        )
-      );
-    },
-
-    onOpenTagName(event) {
-      const { pos, endPos } = event;
-      const tagName = event.tagName || "div";
-      const [, tagNameExpression] =
-        /^\$\{([\s\S]*)\}/.exec(tagName) || EMPTY_ARRAY;
-      const tagDef = !tagNameExpression && getTagDefForTagName(file, tagName);
-      const tagNameStartPos = pos + (event.concise ? 0 : 1); // Account for leading `<`.
-
-      handledTagName = true;
-
-      if (tagNameExpression === "") {
-        throw file.buildCodeFrameError(
-          { loc: getLocRange(file, tagNameStartPos + 1, tagNameStartPos + 3) },
-          "Missing expression for <${dynamic}> tag."
-        );
-      }
-
-      let tagNameNode;
-
-      if (tagNameExpression) {
-        tagNameNode = parseExpression(
-          file,
-          tagNameExpression,
-          tagNameStartPos + 2 /* ${ */
-        );
-
-        if (t.isStringLiteral(tagNameNode)) {
-          // convert to template literal just so that we don't mistake it for a native tag.
-          tagNameNode = t.templateLiteral(
-            [
-              t.templateElement({
-                raw: tagNameNode.value,
-                cooked: tagNameNode.value
-              })
-            ],
-            []
-          );
-        }
-      } else {
-        tagNameNode = withLoc(
-          file,
-          t.stringLiteral(tagName),
-          tagNameStartPos,
-          tagNameStartPos + tagName.length
-        );
-      }
-
-      const node = withLoc(
-        file,
-        t.markoTag(tagNameNode, [], t.markoTagBody()),
-        pos,
-        endPos
-      );
-
-      node.tagDef = tagDef;
-
-      [currentTag] = pushTagBody(node);
-
-      // @tags are not treated as content and do not call next.
-      if (!isAttributeTag(node)) {
-        onNext = onNext && onNext(node);
-      }
-    },
-
-    onOpenTag(event) {
-      if (!handledTagName) {
-        // There is a bug in htmljs parser where a single top level concise mode tag with nothing else
-        // does not emit the openTagNameEvent.
-        handlers.onOpenTagName(event);
-      }
-
-      handledTagName = false;
-      const { pos, endPos, tagNameEndPos } = event;
-      const { tagDef } = currentTag.node;
-      const parseOptions = (tagDef && tagDef.parseOptions) || EMPTY_OBJECT;
-      wasSelfClosing = event.selfClosed;
-
-      if (parseOptions.rawOpenTag) {
-        currentTag.set(
-          "rawValue",
-          code.slice(pos, endPos).replace(/^<|\/>$|>$/g, "")
-        );
-      }
-
-      if (!parseOptions.ignoreAttributes) {
-        currentTag.set("var", parseVar(file, event.var));
-        currentTag.get("body").set("params", parseParams(file, event.params));
-        currentTag.set("arguments", parseArguments(file, event.argument));
-        currentTag.set(
-          "attributes",
-          parseIDShorthand(
-            file,
-            event.shorthandId,
-            parseClassnameShorthand(
-              file,
-              event.shorthandClassNames,
-              parseAttributes(file, event.attributes, tagNameEndPos)
-            )
+            t.markoCDATA(parser.read(part.value)),
+            part.value.start,
+            part.value.end
           )
         );
-      }
+        break;
 
-      if (!preservingWhitespaceUntil && parseOptions.preserveWhitespace) {
-        preservingWhitespaceUntil = currentTag;
-      }
-    },
-
-    onCloseTag(event) {
-      let { pos, endPos } = event;
-      const tag = currentTag;
-      const { node } = tag;
-      const { tagDef } = node;
-      const isConcise = code[node.start - 1] !== "<";
-
-      if (preservingWhitespaceUntil === currentTag) {
-        preservingWhitespaceUntil = undefined;
-      }
-
-      node.end = endPos;
-      node.loc.end = getLoc(file, endPos);
-
-      if (
-        !isConcise &&
-        !wasSelfClosing &&
-        code[pos + 1] !== "/" &&
-        !currentTag.get("name").isStringLiteral()
-      ) {
-        throw file.buildCodeFrameError(
-          { loc: getLocRange(file, pos, endPos) },
-          `Invalid ending for dynamic tag, expected "</>".`
+      case EventTypes.DocType:
+        pushContent(
+          withLoc(
+            file,
+            t.markoDocumentType(parser.read(part.value)),
+            part.value.start,
+            part.value.end
+          )
         );
-      }
+        break;
 
-      if (tagDef && tagDef.parser) {
-        if (tagDef.parser.path) {
-          watchFiles.push(tagDef.parser.path);
+      case EventTypes.Declaration:
+        pushContent(
+          withLoc(
+            file,
+            t.markoDeclaration(parser.read(part.value)),
+            part.value.start,
+            part.value.end
+          )
+        );
+        break;
+
+      case EventTypes.Comment:
+        pushContent(
+          withLoc(
+            file,
+            t.markoComment(parser.read(part.value)),
+            part.value.start,
+            part.value.end
+          )
+        );
+        break;
+
+      case EventTypes.Placeholder:
+        pushContent(
+          withLoc(
+            file,
+            t.markoPlaceholder(
+              parseExpression(file, parser.read(part.value), part.value.start),
+              part.escape
+            ),
+            part.start,
+            part.end
+          )
+        );
+        break;
+
+      case EventTypes.Scriptlet:
+        pushContent(
+          withLoc(
+            file,
+            t.markoScriptlet(
+              parseScript(file, parser.read(part.value), part.value.start).body
+            ),
+            part.start,
+            part.end
+          )
+        );
+        break;
+
+      case EventTypes.TagName: {
+        const tagStart = part.start - (part.concise ? 0 : 1); // Account for leading `<`.
+        let tagName = parseTemplateString(part);
+        let tagDef;
+
+        if (t.isStringLiteral(tagName)) {
+          if (part.expressions.length) {
+            // convert to template literal just so that we don't mistake it for a native tag.
+            tagName = t.templateLiteral(
+              [
+                t.templateElement({
+                  raw: tagName.value,
+                  cooked: tagName.value
+                })
+              ],
+              []
+            );
+          } else {
+            const literalTagName = tagName.value || (tagName.value = "div");
+            if (literalTagName === "%") {
+              throw file.buildCodeFrameError(
+                tagName,
+                "<% scriptlets %> are no longer supported."
+              );
+            }
+
+            tagDef = getTagDefForTagName(file, literalTagName);
+          }
         }
-        /* istanbul ignore next */
-        (tagDef.parser.hook.default || tagDef.parser.hook)(tag, t);
+
+        const node = withLoc(
+          file,
+          t.markoTag(tagName, [], t.markoTagBody()),
+          tagStart,
+          part.end
+        );
+
+        if (
+          !preservingWhitespaceUntil &&
+          tagDef?.parseOptions?.preserveWhitespace
+        ) {
+          preservingWhitespaceUntil = node;
+        }
+
+        node.tagDef = tagDef;
+        enterTag(node);
+        break;
       }
 
-      currentTag = currentTag.parentPath.parentPath || file.path;
-    },
+      case EventTypes.TagShorthandId:
+        currentShorthandId = parseTemplateString(part);
+        break;
 
-    onfinish() {
-      onNext = onNext && onNext();
-    },
+      case EventTypes.TagShorthandClass:
+        if (currentShorthandClassNames) {
+          currentShorthandClassNames.push(parseTemplateString(part));
+        } else {
+          currentShorthandClassNames = [parseTemplateString(part)];
+        }
+        break;
 
-    onError({ message, pos, endPos }) {
-      if (message.includes("EOF")) endPos = pos;
-      throw file.buildCodeFrameError(
-        { loc: getLocRange(file, pos, endPos) },
-        message
-      );
+      case EventTypes.TagVar:
+        currentTag.node.var = parseExpression(
+          file,
+          `${parser.read(part.value)}=1`,
+          part.value.start
+        ).left;
+        break;
+
+      case EventTypes.TagParams:
+        currentTag.node.body.params = parseExpression(
+          file,
+          `(${parser.read(part.value)})=>{}`,
+          part.start
+        ).params;
+        break;
+
+      case EventTypes.TagArgs:
+        currentTag.node.arguments = parseExpression(
+          file,
+          `_${parser.read(part)}`,
+          part.start - 1
+        ).arguments;
+        break;
+
+      case EventTypes.AttrName: {
+        const [, name, modifier] = /^([^:]*)(?::(.*))?/.exec(parser.read(part));
+        endAttr();
+        currentTag.node.attributes.push(
+          (currentAttr = t.markoAttribute(
+            part.default ? "default" : name,
+            t.booleanLiteral(true),
+            modifier,
+            undefined,
+            part.default
+          ))
+        );
+
+        currentAttr.start = part.start;
+        break;
+      }
+
+      case EventTypes.AttrArgs:
+        currentAttr.arguments = parseExpression(
+          file,
+          `_${parser.read(part)}`,
+          part.start - 1
+        ).arguments;
+        currentAttr.end = part.end;
+        break;
+
+      case EventTypes.AttrValue:
+        currentAttr.end = part.end;
+        currentAttr.bound = part.bound;
+        currentAttr.value = parseExpression(
+          file,
+          parser.read(part.value),
+          part.value.start
+        );
+        break;
+
+      case EventTypes.AttrMethod: {
+        const prefix = "function";
+        currentAttr.end = part.end;
+        currentAttr.value = parseExpression(
+          file,
+          prefix + parser.read(part),
+          part.start - prefix.length
+        );
+        break;
+      }
+
+      case EventTypes.AttrSpread:
+        endAttr();
+        currentTag.node.attributes.push(
+          withLoc(
+            file,
+            t.markoSpreadAttribute(
+              parseExpression(file, parser.read(part.value), part.value.start)
+            ),
+            part.start,
+            part.end
+          )
+        );
+        break;
+
+      case EventTypes.OpenTagEnd: {
+        const { node } = currentTag;
+        const { attributes } = node;
+        endAttr();
+
+        if (currentShorthandClassNames) {
+          let foundClassAttr = false;
+          const classShorthandValue =
+            currentShorthandClassNames.length === 1
+              ? currentShorthandClassNames[0]
+              : currentShorthandClassNames.every(expr =>
+                  t.isStringLiteral(expr)
+                )
+              ? withLoc(
+                  file,
+                  t.stringLiteral(
+                    currentShorthandClassNames.map(node => node.value).join(" ")
+                  ),
+                  currentShorthandClassNames[0].start,
+                  currentShorthandClassNames[
+                    currentShorthandClassNames.length - 1
+                  ].end
+                )
+              : t.arrayExpression(currentShorthandClassNames);
+
+          for (const attr of attributes) {
+            if (attr.name === "class") {
+              foundClassAttr = true;
+              if (t.isArrayExpression(attr.value)) {
+                if (t.isArrayExpression(classShorthandValue)) {
+                  attr.value.elements.push(...classShorthandValue.elements);
+                } else {
+                  attr.value.elements.push(classShorthandValue);
+                }
+              } else if (
+                t.isStringLiteral(attr.value) &&
+                t.isStringLiteral(classShorthandValue)
+              ) {
+                attr.value.value = `${classShorthandValue.value} ${attr.value.value}`;
+              } else if (t.isArrayExpression(classShorthandValue)) {
+                classShorthandValue.elements.push(attr.value);
+                attr.value = classShorthandValue;
+              } else {
+                attr.value = t.arrayExpression([
+                  classShorthandValue,
+                  attr.value
+                ]);
+              }
+              break;
+            }
+          }
+
+          if (!foundClassAttr) {
+            attributes.push(t.markoAttribute("class", classShorthandValue));
+          }
+
+          currentShorthandClassNames = undefined;
+        }
+
+        if (currentShorthandId) {
+          for (const attr of attributes) {
+            if (attr.name === "id") {
+              throw file.buildCodeFrameError(
+                attr,
+                "Cannot have shorthand id and id attribute."
+              );
+            }
+          }
+          currentTag.node.attributes.push(
+            t.markoAttribute("id", currentShorthandId)
+          );
+          currentShorthandId = undefined;
+        }
+
+        if (
+          part.ending & OpenTagEnding.code ||
+          node.tagDef?.parseOptions?.rawOpenTag
+        ) {
+          node.rawValue = parser.read({
+            start: node.name.start,
+            end: part.start
+          });
+        }
+        break;
+      }
+
+      case EventTypes.CloseTag: {
+        const { node } = currentTag;
+        const parserPlugin = node.tagDef?.parser;
+        if (preservingWhitespaceUntil === node) {
+          preservingWhitespaceUntil = undefined;
+        }
+
+        node.end = part.end;
+        node.loc.end = getLoc(file, part.end);
+
+        if (parserPlugin) {
+          const { hook } = parserPlugin;
+          if (parserPlugin.path) watchFiles.push(parserPlugin.path);
+          (hook.default || hook)(currentTag, t);
+        }
+
+        currentTag = currentTag.parentPath.parentPath;
+
+        if (currentTag) {
+          currentBody = currentTag.get("body");
+        } else {
+          currentTag = currentBody = file.path;
+        }
+
+        onNext();
+        break;
+      }
     }
-  };
+  }
 
-  createLegacyParser(handlers).parse(code, file.opts.filename);
+  onNext();
 }
