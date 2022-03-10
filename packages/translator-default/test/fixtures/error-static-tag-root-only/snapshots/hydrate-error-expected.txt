@@ -1,0 +1,5 @@
+packages/translator-default/test/fixtures/error-static-tag-root-only/template.marko(2,4): The "static" tag is reserved and cannot be used as an HTML tag.
+  1 | <div>
+> 2 |   <static { console.log(x) }/>
+    |    ^^^^^^
+  3 | </div>

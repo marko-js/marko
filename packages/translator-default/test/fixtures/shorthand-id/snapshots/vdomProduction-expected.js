@@ -22,7 +22,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "id": dynamic
   }, "1", _component, 0, 1);
   out.e("div", {
-    "id": "partial-" + dynamic
+    "id": `partial-${dynamic}`
   }, "2", _component, 0, 1);
 }, {
   t: _marko_componentType,

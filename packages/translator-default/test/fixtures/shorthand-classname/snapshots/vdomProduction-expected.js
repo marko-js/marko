@@ -40,7 +40,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "class": _marko_class_merge([dynamic1, dynamic2, "shorthand"])
   }, "8", _component, 0, 1);
   out.e("div", {
-    "class": _marko_class_merge(["partially-" + dynamic1, "shorthand2", dynamic2])
+    "class": _marko_class_merge([`partially-${dynamic1}`, "shorthand2", dynamic2])
   }, "9", _component, 0, 1);
 }, {
   t: _marko_componentType,
