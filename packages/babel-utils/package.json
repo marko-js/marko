@@ -6,7 +6,8 @@
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "dependencies": {
     "@babel/runtime": "^7.16.0",
-    "jsesc": "^3.0.2"
+    "jsesc": "^3.0.2",
+    "relative-import-path": "^1.0.0"
   },
   "devDependencies": {
     "@marko/compiler": "^5.19.1"

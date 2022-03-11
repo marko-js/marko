@@ -1,34 +1,20 @@
 import path from "path";
 import { types as t } from "@marko/compiler";
+import { relativeImportPath } from "relative-import-path";
 
-const IS_POSIX = path.sep === "/";
 const IMPORTS_KEY = Symbol();
-const FS_START = IS_POSIX ? path.sep : /^(.*?:)/.exec(process.cwd())[1];
-
-const toPosix = IS_POSIX
-  ? v => v
-  : v => {
-      let result = "";
-      for (let i = v.length; i--; ) {
-        const c = v[i];
-        result = (c === path.sep ? "/" : c) + result;
-      }
-
-      return result;
-    };
+const FS_START = path.sep === "/" ? path.sep : /^(.*?:)/.exec(process.cwd())[1];
 
 export function resolveRelativePath(file, request) {
-  if (!request.startsWith(FS_START)) {
-    return remapProductionMarkoBuild(file, request);
+  if (request.startsWith(FS_START)) {
+    request = relativeImportPath(file.opts.filename, request);
   }
 
-  const { filename } = file.opts;
-  let relativePath = toPosix(path.relative(path.dirname(filename), request));
-  if (relativePath[0] !== ".") relativePath = `./${relativePath}`;
-  return remapProductionMarkoBuild(
-    file,
-    relativePath.replace(/^(?:\.{1,2}\/)+node_modules\//, "")
-  );
+  if (file.markoOpts.optimize) {
+    request = request.replace(/(^|\/)marko\/src\//, "$1marko/dist/");
+  }
+
+  return request;
 }
 
 export function importDefault(file, request, nameHint) {
@@ -108,9 +94,4 @@ function getImports(file) {
   }
 
   return imports;
-}
-
-function remapProductionMarkoBuild(file, request) {
-  if (!file.markoOpts.optimize) return request;
-  return request.replace(/(^|\/)marko\/src\//, "$1marko/dist/");
 }
