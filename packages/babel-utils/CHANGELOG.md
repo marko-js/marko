@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [5.20.0](https://github.com/marko-js/marko/compare/v5.19.3...v5.20.0) (2022-03-11)
+
+
+### Features
+
+* relative import normalization now works better with node_modules ([#1779](https://github.com/marko-js/marko/issues/1779)) ([db2539a](https://github.com/marko-js/marko/commit/db2539ab8fa1a87c68fd44b2ca4bc6cf8452a76a))
+
+
+
+
+
 ## [5.19.1](https://github.com/marko-js/marko/compare/v5.19.0...v5.19.1) (2022-01-28)
 
 
