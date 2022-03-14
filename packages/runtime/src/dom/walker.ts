@@ -1,4 +1,5 @@
-import { ScopeOffsets } from "../common/types";
+import type { Scope } from "../common/types";
+import { createScope } from "./scope";
 
 export const walker = document.createTreeWalker(document);
 
@@ -64,24 +65,24 @@ export function trimWalkString(walkString: string): string {
   return walkString.slice(0, end + 1);
 }
 
-let currentWalkIndex = 0;
-
-export function walk(startNode: Node, walkCodes: string, scope: unknown[]) {
+export function walk(startNode: Node, walkCodes: string, scope: Scope) {
   walker.currentNode = startNode;
-  currentWalkIndex = 0;
-  walkInternal(walkCodes, scope);
+  walkInternal(walkCodes, scope, 0, 0, true);
   walker.currentNode = document.documentElement;
 }
 
 function walkInternal(
   walkCodes: string,
-  scope: unknown[],
-  currentScopeIndex = ScopeOffsets.BEGIN_DATA,
-  childScopeIndex = ScopeOffsets.BEGIN_DATA
+  scope: Scope,
+  currentWalkIndex: number,
+  size: number,
+  root?: boolean
 ) {
   let value: number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
+  let currentScopeIndex = 0;
+  let childCount = 0;
 
   while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
     currentMultiplier = storedMultiplier;
@@ -111,17 +112,17 @@ function walkInternal(
       }
     } else if (value >= WalkCodes.Open) {
       value = WalkRangeSizes.Open * currentMultiplier + value - WalkCodes.Open;
-      childScopeIndex = walkInternal(
+      currentWalkIndex = walkInternal(
         walkCodes,
-        scope,
-        childScopeIndex,
-        childScopeIndex + value
+        root ? scope : (scope[size - childCount++] = createScope(value, scope)),
+        currentWalkIndex,
+        value
       )!;
     } else if (value >= WalkCodes.Skip) {
       currentScopeIndex +=
         WalkRangeSizes.Skip * currentMultiplier + value - WalkCodes.Skip;
     } else if (value === WalkCodes.Close) {
-      return childScopeIndex;
+      return currentWalkIndex;
     } else if (value === WalkCodes.Get) {
       scope[currentScopeIndex++] = walker.currentNode;
     } else {
@@ -152,4 +153,6 @@ function walkInternal(
       current.parentNode!.replaceChild(walker.currentNode = scope[currentScopeIndex++] = document.createTextNode(""), current);
     } */
   }
+
+  return currentWalkIndex;
 }

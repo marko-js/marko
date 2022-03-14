@@ -1,27 +1,27 @@
-import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, read as _read, on as _on, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, on as _on, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate_show(show = _read(5)) {
-  _on(4, "click", _read(6));
+function _hydrate_show(_scope, show = _scope[5]) {
+  _on(_scope, 4, "click", _scope[6]);
 }
 
-const _onclick = function () {
-  const show = _read(5);
+const _onclick = function (_scope) {
+  const show = _scope[5];
 
-  _queue(_apply_show, 0, !show);
+  _queue(_scope, _apply_show, 0, !show);
 };
 
-function _apply_show(show) {
-  if (_write(5, show)) {
-    _setConditionalRenderer(0, show ? _if : null);
+function _apply_show(_scope, show) {
+  if (_write(_scope, 5, show)) {
+    _setConditionalRenderer(_scope, 0, show ? _if : null);
 
-    _write(6, _bind(_onclick));
+    _write(_scope, 6, _bind(_scope, _onclick));
 
-    _hydrate_show();
+    _hydrate_show(_scope);
   }
 }
 
-function _apply() {
-  _apply_show(true);
+function _apply(_scope) {
+  _apply_show(_scope, true);
 }
 
 const _if = _createRenderer("Hello!", "", null);

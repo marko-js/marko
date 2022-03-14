@@ -3,8 +3,8 @@ var _return;
 return _return;
 import { setConditionalRenderer as _setConditionalRenderer, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_show(show) {
-  if (_write(4, show)) _setConditionalRenderer(0, show ? _if2 : _if);
+function _apply_show(_scope, show) {
+  if (_write(_scope, 4, show)) _setConditionalRenderer(_scope, 0, show ? _if2 : _if);
 }
 
 const _if2 = _createRenderer("", "", null),

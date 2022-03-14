@@ -1,6 +1,6 @@
 import { apply as _child, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
 
-function _apply() {
+function _apply(_scope) {
   _child();
 }
 

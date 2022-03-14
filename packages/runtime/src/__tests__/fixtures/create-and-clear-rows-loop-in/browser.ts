@@ -1,10 +1,10 @@
 import {
   data,
-  read,
   write,
   setLoopIn,
   createRenderer,
   createRenderFn,
+  Scope,
 } from "../../../dom/index";
 import { over, get, next, open, close } from "../../utils/walks";
 
@@ -36,11 +36,11 @@ const enum Index {
   INPUT_CHILDREN = 4,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.DIV]: HTMLDivElement;
   [Index.LOOP]: HTMLDivElement;
   [Index.INPUT_CHILDREN]: Input["children"];
-};
+}>;
 
 // <div>
 //   <for|key, child| in=input.children>
@@ -51,18 +51,19 @@ type scope = {
 export const template = `<div></div>`;
 export const walks = open(5) + get + over(1) + close;
 
-export const execInputChildren = () => {
+export const execInputChildren = (scope: ComponentScope) => {
   setLoopIn(
+    scope,
     Index.LOOP,
-    read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
+    scope[Index.INPUT_CHILDREN] as Input["children"],
     iter0,
     iter0_execItem as any
   );
 };
 
-export const execDynamicInput = (input: Input) => {
-  if (write(Index.INPUT_CHILDREN, input.children)) {
-    execInputChildren();
+export const execDynamicInput = (scope: ComponentScope, input: Input) => {
+  if (write(scope, Index.INPUT_CHILDREN, input.children)) {
+    execInputChildren(scope);
   }
 };
 
@@ -75,7 +76,11 @@ const enum Iter0Index {
 
 type Entry<T> = NonNullable<{ [K in keyof T]: [K, T[K]] }[keyof T]>;
 
-// type iterScope = [Text, Entry<Input["children"]>[0]];
+type IterScope = Scope<{
+  _: ComponentScope;
+  [Iter0Index.TEXT]: Text;
+  [Iter0Index.CHILD]: Entry<Input["children"]>[0];
+}>;
 
 const iter0 = createRenderer(
   " ",
@@ -84,8 +89,11 @@ const iter0 = createRenderer(
   0
 );
 
-const iter0_execItem = ([, child]: Entry<Input["children"]>) => {
-  if (write(Iter0Index.CHILD, child)) {
-    data(Iter0Index.TEXT, child);
+const iter0_execItem = (
+  scope: IterScope,
+  [, child]: Entry<Input["children"]>
+) => {
+  if (write(scope, Iter0Index.CHILD, child)) {
+    data(scope, Iter0Index.TEXT, child);
   }
 };

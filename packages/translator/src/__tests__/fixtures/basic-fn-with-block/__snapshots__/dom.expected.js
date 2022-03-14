@@ -1,29 +1,28 @@
-import { queue as _queue, write as _write, read as _read, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate_count(count = _read(2)) {
-  _on(0, "click", _read(3));
+function _hydrate_count(_scope, count = _scope[2]) {
+  _on(_scope, 0, "click", _scope[3]);
 }
 
-const _onclick = function () {
-  const count = _read(2);
-
+const _onclick = function (_scope) {
+  const count = _scope[2];
   {
-    _queue(_apply_count, 0, count + 1);
+    _queue(_scope, _apply_count, 0, count + 1);
   }
 };
 
-function _apply_count(count) {
-  if (_write(2, count)) {
-    _write(3, _bind(_onclick));
+function _apply_count(_scope, count) {
+  if (_write(_scope, 2, count)) {
+    _write(_scope, 3, _bind(_scope, _onclick));
 
-    _data(1, count);
+    _data(_scope, 1, count);
 
-    _hydrate_count();
+    _hydrate_count(_scope);
   }
 }
 
-function _apply() {
-  _apply_count(0);
+function _apply(_scope) {
+  _apply_count(_scope, 0);
 }
 
 export const template = "<button><!></button>";

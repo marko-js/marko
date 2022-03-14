@@ -1,4 +1,4 @@
-import { attr, createRenderFn, write, read } from "../../../dom/index";
+import { attr, createRenderFn, write, Scope } from "../../../dom/index";
 import { get, over, open, close } from "../../utils/walks";
 
 export const inputs = [
@@ -27,22 +27,25 @@ const enum Index {
   INPUT_VALUE = 1,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.DIV]: HTMLDivElement;
   [Index.INPUT_VALUE]: typeof inputs[number]["value"];
-};
+}>;
 
 // <div a=0 b=input.value/>
 export const template = `<div a=0></div>`;
 export const walks = open(2) + get + over(1) + close;
 
-export const execInputValue = () => {
-  attr(Index.DIV, "b", read<scope, Index.INPUT_VALUE>(Index.INPUT_VALUE));
+export const execInputValue = (scope: ComponentScope) => {
+  attr(scope, Index.DIV, "b", scope[Index.INPUT_VALUE]);
 };
 
-export const execDynamicInput = (input: typeof inputs[number]) => {
-  if (write(Index.INPUT_VALUE, input.value)) {
-    execInputValue();
+export const execDynamicInput = (
+  scope: ComponentScope,
+  input: typeof inputs[number]
+) => {
+  if (write(scope, Index.INPUT_VALUE, input.value)) {
+    execInputValue(scope);
   }
 };
 

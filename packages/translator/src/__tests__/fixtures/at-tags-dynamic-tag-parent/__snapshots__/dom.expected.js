@@ -1,4 +1,4 @@
-_dynamicTag(x, {
+_dynamicTag(_scope, x, {
   header: {
     class: "my-header",
 

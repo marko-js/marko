@@ -1,13 +1,13 @@
 let _thing;
 
-import { write as _write, setConditionalRenderer as _setConditionalRenderer, readInOwner as _readInOwner, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, setConditionalRenderer as _setConditionalRenderer, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
 
-function _apply_x(x = _readInOwner(0)) {
-  _setConditionalRenderer(0, x ? _if : null);
+function _apply_x(_scope, x = _scope._[0]) {
+  _setConditionalRenderer(_scope, 0, x ? _if : null);
 }
 
-function _apply() {
+function _apply(_scope) {
   _customTag();
 }
 

@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
-import { currentProgramPath } from "../visitors/program";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import type { ReferenceGroup } from "./apply-hydrate";
 
 export function importRuntime(name: string) {
@@ -40,19 +40,11 @@ function getRuntimePath(output: string) {
 }
 
 export function callRead(reference: Reserve, targetSectionId: number) {
-  const diff = getScopeDepthDifference(reference, targetSectionId);
-  switch (diff) {
-    case 0:
-      return callRuntime("read", t.numericLiteral(reference.id));
-    case 1:
-      return callRuntime("readInOwner", t.numericLiteral(reference.id));
-    default:
-      return callRuntime(
-        "readInOwner",
-        t.numericLiteral(reference.id),
-        t.numericLiteral(diff)
-      );
-  }
+  return t.memberExpression(
+    getScopeExpression(reference, targetSectionId),
+    t.numericLiteral(reference.id),
+    true
+  );
 }
 
 export function callQueue(
@@ -61,26 +53,20 @@ export function callQueue(
   value: t.Expression,
   targetSectionId: number
 ) {
-  const diff = getScopeDepthDifference(reference, targetSectionId);
-  switch (diff) {
-    case 0:
-      return callRuntime("queue", identifier, queuePriority, value);
-    case 1:
-      return callRuntime("queueInOwner", identifier, queuePriority, value);
-    default:
-      return callRuntime(
-        "queueInOwner",
-        identifier,
-        queuePriority,
-        value,
-        t.numericLiteral(diff)
-      );
-  }
+  return callRuntime(
+    "queue",
+    getScopeExpression(reference, targetSectionId),
+    identifier,
+    queuePriority,
+    value
+  );
 }
 
-function getScopeDepthDifference(reference: Reserve, sectionId: number) {
-  if (reference.sectionId !== sectionId) {
-    return 1;
+function getScopeExpression(reference: Reserve, sectionId: number) {
+  const diff = reference.sectionId !== sectionId ? 1 : 0;
+  let scope: t.Expression = scopeIdentifier;
+  for (let i = 0; i < diff; i++) {
+    scope = t.memberExpression(scope, t.identifier("_"));
   }
-  return 0;
+  return scope;
 }

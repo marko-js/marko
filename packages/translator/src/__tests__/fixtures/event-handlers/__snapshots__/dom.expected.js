@@ -1,20 +1,20 @@
 import { apply as _child, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
-import { write as _write, read as _read, on as _on, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, on as _on, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate() {
-  _on(0, "click", _read(1));
+function _hydrate(_scope) {
+  _on(_scope, 0, "click", _scope[1]);
 }
 
-const _temp = () => {
+const _temp = _scope => {
   console.log("hello world");
 };
 
-function _apply() {
+function _apply(_scope) {
   _child();
 
-  _write(1, _bind(_temp));
+  _write(_scope, 1, _bind(_scope, _temp));
 
-  _hydrate();
+  _hydrate(_scope);
 }
 
 export const template = `${_child_template}<div class=hi></div>`;

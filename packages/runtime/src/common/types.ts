@@ -8,22 +8,15 @@ export type HydrateInstance = [
   number // offset
 ];
 
-export type Scope = [
-  Scope | undefined, // OWNER_SCOPE
-  number | undefined, // OWNER_OFFSET
-  ...unknown[]
-] & {
+export type Scope<
+  T extends { [x: number]: unknown } = { [x: number]: unknown }
+> = [...unknown[]] & {
   ___id: number;
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;
-};
-
-export const enum ScopeOffsets {
-  OWNER_SCOPE = 0,
-  OWNER_OFFSET = 1,
-  BEGIN_DATA = 2,
-}
+  _: Scope | undefined;
+} & T;
 
 export const enum HydrateSymbols {
   SCOPE_START = "^",

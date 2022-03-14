@@ -8,6 +8,7 @@ import { ReserveType, reserveScope } from "../util/reserve";
 import { addStatement } from "../util/apply-hydrate";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
+import { scopeIdentifier } from "./program";
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
@@ -64,6 +65,7 @@ export default {
           t.expressionStatement(
             callRuntime(
               method as DOMMethod,
+              scopeIdentifier,
               t.numericLiteral(reserve!.id!),
               placeholder.node.value
             )

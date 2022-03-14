@@ -7,7 +7,7 @@ import {
 } from "../util/sections";
 import { Reserve, compareReserves } from "../util/reserve";
 import * as sorted from "../util/sorted-arr";
-import { currentProgramPath } from "../visitors/program";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 
 export interface ReferenceGroup {
@@ -126,7 +126,7 @@ export function writeApplyGroups(sectionId: number) {
             binding,
             t.expressionStatement(
               // TODO: might need to queue in a child scope
-              callRuntime("queue", identifier, queuePriority)
+              callRuntime("queue", scopeIdentifier, identifier, queuePriority)
             )
           );
         }
@@ -154,7 +154,7 @@ export function writeApplyGroups(sectionId: number) {
             sectionId,
             undefined,
             t.expressionStatement(
-              callRuntime("queue", identifier, queuePriority)
+              callRuntime("queue", scopeIdentifier, identifier, queuePriority)
             )
           );
         }
@@ -163,7 +163,12 @@ export function writeApplyGroups(sectionId: number) {
         params = [param];
         body = t.blockStatement([
           t.ifStatement(
-            callRuntime("write", t.numericLiteral(references.id), param),
+            callRuntime(
+              "write",
+              scopeIdentifier,
+              t.numericLiteral(references.id),
+              param
+            ),
             statements.length === 1
               ? statements[0]
               : t.blockStatement(statements)
@@ -175,12 +180,11 @@ export function writeApplyGroups(sectionId: number) {
       body = t.blockStatement(statements);
     }
 
-    const [result] = currentProgramPath.pushContainer(
+    const [fnPath] = currentProgramPath.pushContainer(
       "body",
-      t.functionDeclaration(identifier, params, body)
+      t.functionDeclaration(identifier, [scopeIdentifier, ...params], body)
     );
-
-    result.traverse(bindFunctionsVisitor, { root: result, sectionId });
+    fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
   }
 
   const offset = groups[0].references ? 0 : 1;
@@ -196,7 +200,7 @@ export function writeHydrateGroups(sectionId: number) {
   const groups = getHydrate(sectionId);
   for (let i = groups.length; i--; ) {
     const { identifier, references, statements } = groups[i];
-    const params = references
+    const params: Parameters<typeof t.functionDeclaration>[1] = references
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
             t.identifier(binding.name),
@@ -205,16 +209,21 @@ export function writeHydrateGroups(sectionId: number) {
         )
       : [];
 
-    currentProgramPath.pushContainer(
+    const [fnPath] = currentProgramPath.pushContainer(
       "body",
-      t.functionDeclaration(identifier, params, t.blockStatement(statements))
+      t.functionDeclaration(
+        identifier,
+        [scopeIdentifier, ...params],
+        t.blockStatement(statements)
+      )
     );
+    fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
 
     addStatement(
       "apply",
       sectionId,
       references,
-      t.expressionStatement(t.callExpression(identifier, []))
+      t.expressionStatement(t.callExpression(identifier, [scopeIdentifier]))
     );
   }
 }
@@ -297,7 +306,7 @@ function bindFunction(
   const { extra } = node;
   const references = extra?.references;
   const program = fn.hub.file.path;
-  const id = program.scope.generateUidIdentifier(extra?.name);
+  const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 
   if (references) {
     if (node.body.type !== "BlockStatement") {
@@ -318,10 +327,13 @@ function bindFunction(
   }
 
   root.insertBefore(
-    t.variableDeclaration("const", [t.variableDeclarator(id, node)])
+    t.variableDeclaration("const", [
+      t.variableDeclarator(functionIdentifier, node),
+    ])
   );
 
-  fn.replaceWith(callRuntime("bind", id));
+  node.params.unshift(scopeIdentifier);
+  fn.replaceWith(callRuntime("bind", scopeIdentifier, functionIdentifier));
 }
 
 export function getDefaultApply(sectionId: number) {

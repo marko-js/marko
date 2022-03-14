@@ -1,16 +1,9 @@
-import { Scope, ScopeOffsets } from "../common/types";
+import type { Scope } from "../common/types";
 import { Context, setContext } from "../common/context";
 import { queue } from "./queue";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
-import {
-  createScope,
-  getEmptyScope,
-  destroyScope,
-  read,
-  runWithScope,
-  write,
-} from "./scope";
+import { createScope, getEmptyScope, destroyScope, write } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
 
 export const enum ConditionalIndex {
@@ -20,68 +13,61 @@ export const enum ConditionalIndex {
   CONTEXT = 3,
 }
 
-type Conditional = {
-  [ConditionalIndex.REFERENCE_NODE]: Element | Comment;
-  [ConditionalIndex.SCOPE]: Scope;
-  [ConditionalIndex.RENDERER]: Renderer;
-  [ConditionalIndex.CONTEXT]: typeof Context;
-};
-
-export function queueInBranch(
+export function queueInBranch<S extends Scope, CS extends Scope>(
+  scope: S,
   conditionalIndex: number,
-  branch: Renderer,
-  fn: () => void,
+  branch: Renderer<CS>,
+  fn: (scope: CS) => void,
   priority: number,
   closurePriority: number
 ) {
-  queue(() => {
-    if (read(conditionalIndex + ConditionalIndex.RENDERER) === branch) {
-      queue(
-        fn,
-        priority,
-        undefined,
-        read(conditionalIndex + ConditionalIndex.SCOPE) as Scope,
-        ScopeOffsets.BEGIN_DATA
-      );
-    }
-  }, closurePriority);
+  queue(
+    scope,
+    () => {
+      if (scope[conditionalIndex + ConditionalIndex.RENDERER] === branch) {
+        queue(
+          scope[conditionalIndex + ConditionalIndex.SCOPE] as CS,
+          fn,
+          priority
+        );
+      }
+    },
+    closurePriority
+  );
 }
 
-export function setConditionalRenderer(
+export function setConditionalRenderer<ChildScope extends Scope>(
+  scope: Scope,
   conditionalIndex: number,
-  newRenderer: Renderer | undefined,
+  newRenderer: Renderer<ChildScope> | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
-    let newScope: Scope;
-    let prevScope = read<Conditional, ConditionalIndex.SCOPE>(
+  if (write(scope, conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
+    let newScope: ChildScope;
+    let prevScope = scope[
       conditionalIndex + ConditionalIndex.SCOPE
-    );
+    ] as ChildScope;
 
     if (newRenderer) {
       setContext(
-        read(conditionalIndex + ConditionalIndex.CONTEXT) as typeof Context
+        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
       );
-      write(
-        conditionalIndex + ConditionalIndex.SCOPE,
-        (newScope = createScope(newRenderer.___size))
-      );
+      newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] = createScope(
+        newRenderer.___size,
+        scope
+      ) as ChildScope;
       initRenderer(newRenderer, newScope);
       prevScope =
         prevScope ||
         getEmptyScope(
-          read<Conditional, ConditionalIndex.REFERENCE_NODE>(
-            conditionalIndex + ConditionalIndex.REFERENCE_NODE
-          ) as Comment
+          scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
         );
       setContext(null);
     } else {
       newScope = getEmptyScope(
-        read<Conditional, ConditionalIndex.REFERENCE_NODE>(
-          conditionalIndex + ConditionalIndex.REFERENCE_NODE
-        ) as Comment
-      );
-      write(conditionalIndex + ConditionalIndex.SCOPE, undefined);
+        scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
+      ) as ChildScope;
+      scope[conditionalIndex + ConditionalIndex.SCOPE] = undefined;
     }
 
     fragment.___insertBefore(
@@ -94,25 +80,23 @@ export function setConditionalRenderer(
 }
 
 export function setConditionalRendererOnlyChild(
+  scope: Scope,
   conditionalIndex: number,
   newRenderer: Renderer | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  if (write(conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
-    const referenceNode = read<Conditional, ConditionalIndex.REFERENCE_NODE>(
+  if (write(scope, conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
+    const referenceNode = scope[
       conditionalIndex + ConditionalIndex.REFERENCE_NODE
-    ) as Element;
+    ] as Element;
     referenceNode.textContent = "";
 
     if (newRenderer) {
       setContext(
-        read(conditionalIndex + ConditionalIndex.CONTEXT) as typeof Context
+        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
       );
-      let newScope: Scope;
-      write(
-        conditionalIndex + ConditionalIndex.SCOPE,
-        (newScope = createScope(newRenderer.___size))
-      );
+      const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
+        createScope(newRenderer.___size, scope));
       initRenderer(newRenderer, newScope);
       fragment.___insertBefore(newScope, referenceNode, null);
       setContext(null);
@@ -133,55 +117,53 @@ export const enum LoopIndex {
   CONTEXT = 3,
 }
 
-type Loop = {
-  [LoopIndex.REFERENCE_NODE]: Element | Comment;
-  [LoopIndex.SCOPE_ARRAY]: Scope[];
-  [LoopIndex.SCOPE_MAP]: Map<unknown, Scope>;
-  [LoopIndex.CONTEXT]: typeof Context;
-};
-
 export function queueForEach(
+  scope: Scope,
   loopIndex: number,
-  fn: () => void,
+  fn: (scope: Scope) => void,
   priority: number,
   closurePriority: number
 ) {
-  queue(() => {
-    const scopes = read<Loop, LoopIndex.SCOPE_ARRAY>(
-      loopIndex + LoopIndex.SCOPE_ARRAY
-    );
-    if (scopes !== emptyMarkerArray) {
-      for (const scope of scopes) {
-        queue(fn, priority, undefined, scope, ScopeOffsets.BEGIN_DATA);
+  queue(
+    scope,
+    () => {
+      const childScopes = scope[loopIndex + LoopIndex.SCOPE_ARRAY] as Scope[];
+      if (childScopes !== emptyMarkerArray) {
+        for (const childScope of childScopes) {
+          queue(childScope, fn, priority);
+        }
       }
-    }
-  }, closurePriority);
+    },
+    closurePriority
+  );
 }
 
-export function setLoopOf<T>(
+export function setLoopOf<T, ChildScope extends Scope>(
+  scope: Scope,
   loopIndex: number,
   newValues: T[],
-  renderer: Renderer,
+  renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
-  applyFn?: (item: T, index: number, array: T[]) => void,
+  applyFn?: (scope: ChildScope, item: T, index: number, array: T[]) => void,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  let newMap: Map<unknown, Scope>;
+  let newMap: Map<unknown, ChildScope>;
   let newArray: Scope[];
   const len = newValues.length;
-  const referenceNode = read<Loop, LoopIndex.REFERENCE_NODE>(
-    loopIndex + LoopIndex.REFERENCE_NODE
-  );
+  const referenceNode = scope[loopIndex + LoopIndex.REFERENCE_NODE] as
+    | Element
+    | Comment
+    | Text;
   // TODO: compiler should use only comment so the text check can be removed
   const referenceIsMarker =
     referenceNode.nodeType === 8 /* Comment */ ||
     referenceNode.nodeType === 3; /* Text */
   const oldMap =
-    read<Loop, LoopIndex.SCOPE_MAP>(loopIndex + LoopIndex.SCOPE_MAP) ||
+    (scope[loopIndex + LoopIndex.SCOPE_MAP] as Map<unknown, ChildScope>) ||
     (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
-    read<Loop, LoopIndex.SCOPE_ARRAY>(loopIndex + LoopIndex.SCOPE_ARRAY) ||
-    (referenceIsMarker ? emptyMarkerArray : (emptyArray as Scope[]));
+    (scope[loopIndex + LoopIndex.SCOPE_ARRAY] as ChildScope[]) ||
+    (referenceIsMarker ? emptyMarkerArray : (emptyArray as ChildScope[]));
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
   let needsReconciliation = true; // TODO: len !== oldArray.length;
@@ -189,14 +171,14 @@ export function setLoopOf<T>(
   if (len > 0) {
     newMap = new Map();
     newArray = [];
-    setContext(read(loopIndex + LoopIndex.CONTEXT) as typeof Context);
+    setContext(scope[loopIndex + LoopIndex.CONTEXT] as typeof Context);
     for (let index = 0; index < len; index++) {
       const item = newValues[index];
       const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
       if (!childScope) {
-        childScope = createScope(renderer.___size);
-        initRenderer(renderer, childScope);
+        childScope = createScope(renderer.___size, scope) as ChildScope;
+        initRenderer<ChildScope>(renderer, childScope);
         // TODO: once we can track moves
         // needsReconciliation = true;
       } else {
@@ -204,15 +186,7 @@ export function setLoopOf<T>(
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
       if (applyFn) {
-        runWithScope(
-          applyFn as any,
-          ScopeOffsets.BEGIN_DATA,
-          childScope,
-          undefined,
-          item,
-          index,
-          newArray
-        );
+        applyFn(childScope, item, index, newValues);
       }
       newMap.set(key, childScope);
       newArray.push(childScope);
@@ -252,17 +226,23 @@ export function setLoopOf<T>(
     reconcile(parentNode, oldArray, newArray!, afterReference, fragment);
   }
 
-  write(loopIndex + LoopIndex.SCOPE_MAP, newMap);
-  write(loopIndex + LoopIndex.SCOPE_ARRAY, newArray);
+  scope[loopIndex + LoopIndex.SCOPE_MAP] = newMap;
+  scope[loopIndex + LoopIndex.SCOPE_ARRAY] = newArray;
 }
 
-export function setLoopFromTo(
+export function setLoopFromTo<ChildScope extends Scope>(
+  scope: Scope,
   loopIndex: number,
   from: number,
   to: number,
   step: number,
-  renderer: Renderer,
-  applyFn?: (item: number, index: number, array: number[]) => void
+  renderer: Renderer<ChildScope>,
+  applyFn?: (
+    scope: ChildScope,
+    item: number,
+    index: number,
+    array: number[]
+  ) => void
 ) {
   const range: number[] = [];
 
@@ -270,20 +250,25 @@ export function setLoopFromTo(
     range.push(i);
   }
 
-  setLoopOf(loopIndex, range, renderer, keyFromTo, applyFn);
+  setLoopOf(scope, loopIndex, range, renderer, keyFromTo, applyFn);
 }
 
 function keyFromTo(item: number) {
   return item;
 }
 
-export function setLoopIn(
+export function setLoopIn<ChildScope extends Scope>(
+  scope: Scope,
   loopIndex: number,
   object: Record<string, unknown>,
-  renderer: Renderer,
-  applyFn?: (item: [key: string, value: unknown], index: number) => void
+  renderer: Renderer<ChildScope>,
+  applyFn?: (
+    scope: ChildScope,
+    item: [key: string, value: unknown],
+    index: number
+  ) => void
 ) {
-  setLoopOf(loopIndex, Object.entries(object), renderer, keyIn, applyFn);
+  setLoopOf(scope, loopIndex, Object.entries(object), renderer, keyIn, applyFn);
 }
 
 function keyIn(item: [string, unknown]) {

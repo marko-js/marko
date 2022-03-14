@@ -1,16 +1,14 @@
 import {
   on,
-  register,
   createRenderer,
   createRenderFn,
   setConditionalRenderer,
   data,
   queue,
   write,
-  read,
   bind,
-  readInOwner,
   queueInBranch,
+  Scope,
 } from "../../../dom/index";
 
 import { get, next, over, open, close } from "../../utils/walks";
@@ -35,13 +33,13 @@ const enum Priority {
   MESSAGE_SHOW = 2,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.BUTTON]: HTMLButtonElement;
   [Index.COMMENT]: Comment;
   [Index.CONDITIONAL]: Comment;
   [Index.SHOW]: boolean;
   [Index.MESSAGE]: string;
-};
+}>;
 
 // <let/show = true/>
 // <let/message = "hi"/>
@@ -50,30 +48,37 @@ type scope = {
 
 export const template = `<button></button><!>`;
 export const walks = open(7) + get + over(1) + get + over(1) + close;
-export const render = () => {
-  _apply_show(true);
-  _apply_message("hi");
-  _hydrate();
+export const render = (scope: ComponentScope) => {
+  _apply_show(scope, true);
+  _apply_message(scope, "hi");
+  _hydrate(scope);
 };
 
-export const _hydrate = register("", () => {
-  on(Index.BUTTON, "click", bind(_onclick));
-});
-
-const _onclick = () => {
-  queue(_apply_message, Priority.MESSAGE, "bye");
-  queue(_apply_show, Priority.SHOW, !read<scope, Index.SHOW>(Index.SHOW));
+export const _hydrate = (scope: ComponentScope) => {
+  on(scope, Index.BUTTON, "click", bind(scope, _onclick));
 };
 
-const _apply_show = (value: scope[Index.SHOW]) => {
-  if (write(Index.SHOW, value)) {
-    setConditionalRenderer(Index.CONDITIONAL, value ? _if : undefined);
+const _onclick = (scope: ComponentScope) => {
+  queue(scope, _apply_message, Priority.MESSAGE, "bye");
+  queue(scope, _apply_show, Priority.SHOW, !scope[Index.SHOW]);
+};
+
+const _apply_show = (
+  scope: ComponentScope,
+  value: ComponentScope[Index.SHOW]
+) => {
+  if (write(scope, Index.SHOW, value)) {
+    setConditionalRenderer(scope, Index.CONDITIONAL, value ? _if : undefined);
   }
 };
 
-const _apply_message = (value: scope[Index.MESSAGE]) => {
-  if (write(Index.MESSAGE, value)) {
+const _apply_message = (
+  scope: ComponentScope,
+  value: ComponentScope[Index.MESSAGE]
+) => {
+  if (write(scope, Index.MESSAGE, value)) {
     queueInBranch(
+      scope,
       Index.CONDITIONAL,
       _if,
       _apply_message2,
@@ -83,8 +88,8 @@ const _apply_message = (value: scope[Index.MESSAGE]) => {
   }
 };
 
-const _apply_message2 = () => {
-  data(Branch0Index.TEXT, readInOwner<scope, Index.MESSAGE>(Index.MESSAGE));
+const _apply_message2 = (scope: Branch0Scope) => {
+  data(scope, Branch0Index.TEXT, scope._[Index.MESSAGE]);
 };
 
 export default createRenderFn(template, walks, render, 0);
@@ -97,13 +102,16 @@ const enum Branch0Priority {
   MESSAGE = 0,
 }
 
-// type Branch0Scope = [Text];
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [Branch0Index.TEXT]: Text;
+}>;
 
 const _if = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  () => {
-    queue(_apply_message2, Branch0Priority.MESSAGE);
+  (scope: Branch0Scope) => {
+    queue(scope, _apply_message2, Branch0Priority.MESSAGE);
   },
   0
 );

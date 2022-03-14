@@ -17,6 +17,7 @@ import {
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
+import { scopeIdentifier } from "../../visitors/program";
 
 export default {
   analyze: {
@@ -111,6 +112,7 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
   setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) =>
     callRuntime(
       "queueInBranch",
+      scopeIdentifier,
       t.numericLiteral(reserve.id),
       writer.getRenderer(bodySectionId),
       identifier,
@@ -162,6 +164,7 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
         t.expressionStatement(
           callRuntime(
             "setConditionalRenderer",
+            scopeIdentifier,
             t.numericLiteral(extra.reserve!.id),
             expr
           )

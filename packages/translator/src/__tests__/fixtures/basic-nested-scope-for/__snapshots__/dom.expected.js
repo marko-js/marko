@@ -1,49 +1,49 @@
-import { queueInOwner as _queueInOwner, write as _write, read as _read, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, readInOwner as _readInOwner, queue as _queue, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate_num(num = _read(2)) {
-  _on(0, "click", _read(3));
+function _hydrate_num(_scope, num = _scope[2]) {
+  _on(_scope, 0, "click", _scope[3]);
 }
 
-function _applyWith_selected_num(selected = _readInOwner(4), num = _read(2)) {
-  _attr(0, "data-selected", selected === num);
+function _applyWith_selected_num(_scope, selected = _scope._[4], num = _scope[2]) {
+  _attr(_scope, 0, "data-selected", selected === num);
 
-  _attr(0, "data-multiple", num % selected === 0);
+  _attr(_scope, 0, "data-multiple", num % selected === 0);
 }
 
-const _onclick = function () {
-  const num = _read(2);
+const _onclick = function (_scope) {
+  const num = _scope[2];
 
-  _queueInOwner(_apply_selected, 0, num);
+  _queue(_scope._, _apply_selected, 0, num);
 };
 
-function _apply_num(num) {
-  if (_write(2, num)) {
-    _write(3, _bind(_onclick));
+function _apply_num(_scope, num) {
+  if (_write(_scope, 2, num)) {
+    _write(_scope, 3, _bind(_scope, _onclick));
 
-    _data(1, num);
+    _data(_scope, 1, num);
 
-    _hydrate_num();
+    _hydrate_num(_scope);
 
-    _queue(_applyWith_selected_num, 2);
+    _queue(_scope, _applyWith_selected_num, 2);
   }
 }
 
-function _apply_selected2(selected = _readInOwner(4)) {
-  _queue(_applyWith_selected_num, 2);
+function _apply_selected2(_scope, selected = _scope._[4]) {
+  _queue(_scope, _applyWith_selected_num, 2);
 }
 
-function _apply2() {
-  _queue(_apply_selected2, 0);
+function _apply2(_scope) {
+  _queue(_scope, _apply_selected2, 0);
 }
 
-function _apply_selected(selected) {
-  if (_write(4, selected)) _queueForEach(0, _apply_selected2, 0, 3);
+function _apply_selected(_scope, selected) {
+  if (_write(_scope, 4, selected)) _queueForEach(_scope, 0, _apply_selected2, 0, 3);
 }
 
-function _apply() {
-  _apply_selected(0);
+function _apply(_scope) {
+  _apply_selected(_scope, 0);
 
-  _setLoopOf(0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], _for, null, _apply_num);
+  _setLoopOf(_scope, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], _for, null, _apply_num);
 }
 
 const _for = _createRenderer("<button><!></button>", " D%", _apply2);

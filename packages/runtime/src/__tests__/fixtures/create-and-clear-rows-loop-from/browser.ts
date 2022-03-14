@@ -4,7 +4,7 @@ import {
   createRenderer,
   createRenderFn,
   write,
-  read,
+  Scope,
 } from "../../../dom/index";
 import { over, get, next, open, close } from "../../utils/walks";
 
@@ -36,13 +36,13 @@ const enum Index {
   INPUT_STEP = 6,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.DIV]: HTMLDivElement;
   [Index.LOOP]: HTMLDivElement;
   [Index.INPUT_FROM]: Input["from"];
   [Index.INPUT_TO]: Input["to"];
   [Index.INPUT_STEP]: Input["step"];
-};
+}>;
 
 // <div>
 //   <for|child| from=input.from to=input.to step=input.step>
@@ -53,22 +53,23 @@ type scope = {
 export const template = `<div></div>`;
 export const walks = open(7) + get + over(1) + close;
 
-export const execInputFromToStep = () => {
+export const execInputFromToStep = (scope: ComponentScope) => {
   setLoopFromTo(
+    scope,
     Index.LOOP,
-    read<scope, Index.INPUT_FROM>(Index.INPUT_FROM),
-    read<scope, Index.INPUT_TO>(Index.INPUT_TO),
-    read<scope, Index.INPUT_STEP>(Index.INPUT_STEP),
+    scope[Index.INPUT_FROM] as number,
+    scope[Index.INPUT_TO] as number,
+    scope[Index.INPUT_STEP] as number,
     iter0,
     iter0_execItem
   );
 };
 
-export const execDynamicInput = (input: Input) => {
-  write(Index.INPUT_FROM, input.from);
-  write(Index.INPUT_TO, input.to);
-  write(Index.INPUT_STEP, input.step);
-  execInputFromToStep();
+export const execDynamicInput = (scope: ComponentScope, input: Input) => {
+  write(scope, Index.INPUT_FROM, input.from);
+  write(scope, Index.INPUT_TO, input.to);
+  write(scope, Index.INPUT_STEP, input.step);
+  execInputFromToStep(scope);
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
@@ -78,10 +79,11 @@ const enum Iter0Index {
   ITEM = 1,
 }
 
-// type iterScope = {
-//   [Iter0Index.TEXT]: Text;
-//   [Iter0Index.ITEM]: number;
-// };
+type IterScope = Scope<{
+  _: ComponentScope;
+  [Iter0Index.TEXT]: Text;
+  [Iter0Index.ITEM]: number;
+}>;
 
 const iter0 = createRenderer(
   " ",
@@ -90,8 +92,8 @@ const iter0 = createRenderer(
   0
 );
 
-const iter0_execItem = (item: number) => {
-  if (write(Iter0Index.ITEM, item)) {
-    data(Iter0Index.TEXT, item);
+const iter0_execItem = (scope: IterScope, item: number) => {
+  if (write(scope, Iter0Index.ITEM, item)) {
+    data(scope, Iter0Index.TEXT, item);
   }
 };

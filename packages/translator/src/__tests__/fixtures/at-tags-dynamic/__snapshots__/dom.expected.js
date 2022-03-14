@@ -15,7 +15,7 @@ _col.push({
 import { write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
 
-function _apply() {
+function _apply(_scope) {
   _hello();
 }
 

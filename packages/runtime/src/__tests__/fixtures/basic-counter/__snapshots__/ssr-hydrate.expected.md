@@ -1,5 +1,5 @@
 # Write
-  <!M^0><body><!M#2 0 2><button><!M#1 0 3>0</button></body><!M/0><script>(M$h=[]).push((b,s)=>({"0":[,,,,0]}),["counter",2,0,])</script>
+  <!M^0><body><!M#0 0 0><button><!M#1 0 1>0</button></body><!M/0><script>(M$h=[]).push((b,s)=>({"0":[,,0]}),["counter",0,])</script>
 
 
 # Render "End"
@@ -8,13 +8,13 @@
 <html>
   <head />
   <body>
-    <!--M#2 0 2-->
+    <!--M#0 0 0-->
     <button>
-      <!--M#1 0 3-->
+      <!--M#1 0 1-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,,,0]}),["counter",2,0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["counter",0,])
     </script>
   </body>
   <!--M/0-->
@@ -43,13 +43,13 @@ inserted #document/html1/body1/script2/#text0
 <html>
   <head />
   <body>
-    <!--M#2 0 2-->
+    <!--M#0 0 0-->
     <button>
-      <!--M#1 0 3-->
+      <!--M#1 0 1-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,,,0]}),["counter",2,0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["counter",0,])
     </script>
   </body>
   <!--M/0-->
@@ -70,13 +70,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#2 0 2-->
+    <!--M#0 0 0-->
     <button>
-      <!--M#1 0 3-->
+      <!--M#1 0 1-->
       1
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,,,0]}),["counter",2,0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["counter",0,])
     </script>
   </body>
   <!--M/0-->
@@ -97,13 +97,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#2 0 2-->
+    <!--M#0 0 0-->
     <button>
-      <!--M#1 0 3-->
+      <!--M#1 0 1-->
       2
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,,,0]}),["counter",2,0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["counter",0,])
     </script>
   </body>
   <!--M/0-->
@@ -124,13 +124,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#2 0 2-->
+    <!--M#0 0 0-->
     <button>
-      <!--M#1 0 3-->
+      <!--M#1 0 1-->
       3
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,,,0]}),["counter",2,0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["counter",0,])
     </script>
   </body>
   <!--M/0-->

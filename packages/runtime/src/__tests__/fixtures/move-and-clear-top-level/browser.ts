@@ -1,10 +1,10 @@
 import {
   data,
-  read,
   write,
   setLoopOf,
   createRenderer,
   createRenderFn,
+  Scope,
 } from "../../../dom/index";
 import { open, close, next, over, get } from "../../utils/walks";
 
@@ -54,11 +54,11 @@ const enum Index {
   INPUT_CHILDREN = 4,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.COMMENT]: Comment;
   [Index.LOOP]: Comment;
   [Index.INPUT_CHILDREN]: Input["children"];
-};
+}>;
 
 // <for|child| of=input.children by(c) { return c.id }>
 //   ${child.text}
@@ -67,19 +67,20 @@ type scope = {
 export const template = `<!>`;
 export const walks = open(5) + get + over(1) + close;
 
-export const execInputChildren = () => {
+export const execInputChildren = (scope: ComponentScope) => {
   setLoopOf(
+    scope,
     Index.LOOP,
-    read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
+    scope[Index.INPUT_CHILDREN] as Input["children"],
     iter0,
     (i) => "" + (i as Input["children"][number]).id,
     iter0_execItem
   );
 };
 
-export const execDynamicInput = (input: Input) => {
-  if (write(Index.INPUT_CHILDREN, input.children)) {
-    execInputChildren();
+export const execDynamicInput = (scope: ComponentScope, input: Input) => {
+  if (write(scope, Index.INPUT_CHILDREN, input.children)) {
+    execInputChildren(scope);
   }
 };
 
@@ -90,7 +91,11 @@ const enum Iter0Index {
   ITEM = 1,
 }
 
-// type iterScope = [Text, Input["children"][number]];
+type IterScope = Scope<{
+  _: ComponentScope;
+  [Iter0Index.TEXT]: Text;
+  [Iter0Index.ITEM]: Input["children"][number];
+}>;
 
 const iter0 = createRenderer(
   " ",
@@ -99,8 +104,8 @@ const iter0 = createRenderer(
   0
 );
 
-const iter0_execItem = (item: Input["children"][number]) => {
-  if (write(Iter0Index.ITEM, item)) {
-    data(Iter0Index.TEXT, item.text);
+const iter0_execItem = (scope: IterScope, item: Input["children"][number]) => {
+  if (write(scope, Iter0Index.ITEM, item)) {
+    data(scope, Iter0Index.TEXT, item.text);
   }
 };

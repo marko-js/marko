@@ -1,35 +1,35 @@
-import { queue as _queue, write as _write, read as _read, on as _on, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrateWith_x_y(x = _read(3), y = _read(4)) {
-  _on(0, "click", _read(5));
+function _hydrateWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
+  _on(_scope, 0, "click", _scope[5]);
 }
 
-function _applyWith_x_y(x = _read(3), y = _read(4)) {
-  _write(5, _queue(_apply_x, 0, y = x + y));
+function _applyWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
+  _write(_scope, 5, _queue(_scope, _apply_x, 0, y = x + y));
 
-  _hydrateWith_x_y();
+  _hydrateWith_x_y(_scope);
 }
 
-function _apply_y(y) {
-  if (_write(4, y)) {
-    _data(2, y);
+function _apply_y(_scope, y) {
+  if (_write(_scope, 4, y)) {
+    _data(_scope, 2, y);
 
-    _queue(_applyWith_x_y, 2);
+    _queue(_scope, _applyWith_x_y, 2);
   }
 }
 
-function _apply_x(x) {
-  if (_write(3, x)) {
-    _data(1, x);
+function _apply_x(_scope, x) {
+  if (_write(_scope, 3, x)) {
+    _data(_scope, 1, x);
 
-    _queue(_applyWith_x_y, 2);
+    _queue(_scope, _applyWith_x_y, 2);
   }
 }
 
-function _apply() {
-  _apply_x(1);
+function _apply(_scope) {
+  _apply_x(_scope, 1);
 
-  _apply_y(1);
+  _apply_y(_scope, 1);
 }
 
 export const template = "<div><!></div><!>";

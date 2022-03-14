@@ -1,12 +1,12 @@
 import { Scope, HydrateSymbols } from "../common/types";
-import { bind, runWithScope } from "./scope";
+import { bind } from "./scope";
 
-type HydrateFn = () => void;
+type HydrateFn<S extends Scope = Scope> = (scope: S) => void;
 
 const fnsById: Record<string, HydrateFn> = {};
 const SCOPE_ID_MULTIPLIER = 2 ** 16;
 
-export function register<F extends HydrateFn>(id: string, fn: F) {
+export function register<F extends HydrateFn<Scope<any>>>(id: string, fn: F) {
   fnsById[id] = fn;
   return fn;
 }
@@ -27,10 +27,10 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const scopeLookup: Record<number, Scope> = {};
   const stack: number[] = [];
   const fakeArray = { push: hydrate };
-  const bindFunction = (fnId: string, offset: number, scopeId: number) => {
+  const bindFunction = (fnId: string, scopeId: number) => {
     const fn = fnsById[fnId];
     const scope = scopeLookup[scopeId];
-    return bind(fn, offset, scope);
+    return bind(scope, fn);
   };
 
   Object.defineProperty(window, hydrateVar, {
@@ -135,11 +135,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     for (let i = 0; i < calls.length; i += 3) {
-      runWithScope(
-        fnsById[calls[i]]!,
-        calls[i + 1] as number,
-        scopeLookup[calls[i + 2] as number]
-      );
+      fnsById[calls[i]]!(scopeLookup[calls[i + 1] as number]!);
     }
   }
 }

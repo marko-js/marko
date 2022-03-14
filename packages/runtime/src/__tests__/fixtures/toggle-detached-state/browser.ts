@@ -1,13 +1,12 @@
 import {
   data,
-  read,
   write,
   queue,
-  readInOwner,
   setConditionalRenderer,
   createRenderer,
   createRenderFn,
   queueInBranch,
+  Scope,
 } from "../../../dom/index";
 import { next, get, over, open, close } from "../../utils/walks";
 
@@ -41,12 +40,12 @@ const enum PRIORITY {
   closure_value = 2,
 }
 
-type SCOPE = {
+type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
   [INDEX.visible]: Input["visible"];
   [INDEX.value]: Input["value"];
-};
+}>;
 
 // <attrs/{ visible, value }/>
 // <div>
@@ -58,15 +57,17 @@ type SCOPE = {
 export const template = `<div><!></div>`;
 export const walks = open(6) + next(1) + get + over(1) + close;
 
-export const execInputVisible = () => {
+export const execInputVisible = (scope: ComponentScope) => {
   setConditionalRenderer(
+    scope,
     INDEX.conditional,
-    read(INDEX.visible) ? branch0 : undefined
+    scope[INDEX.visible] ? branch0 : undefined
   );
 };
 
-export const execInputValue = () => {
+export const execInputValue = (scope: ComponentScope) => {
   queueInBranch(
+    scope,
     INDEX.conditional,
     branch0,
     execInputValueBranch0,
@@ -75,16 +76,19 @@ export const execInputValue = () => {
   );
 };
 
-function execInputValueBranch0() {
-  data(INDEX_BRANCH0.text, readInOwner<SCOPE, INDEX.value>(INDEX.value)!.name);
+function execInputValueBranch0(scope: Branch0Scope) {
+  data(scope, INDEX_BRANCH0.text, scope._[INDEX.value]!.name);
 }
 
-export const execDynamicInput = (input: typeof inputs[number]) => {
-  if (write(INDEX.visible, input.visible)) {
-    execInputVisible();
+export const execDynamicInput = (
+  scope: ComponentScope,
+  input: typeof inputs[number]
+) => {
+  if (write(scope, INDEX.visible, input.visible)) {
+    execInputVisible(scope);
   }
-  if (write(INDEX.value, input.value)) {
-    execInputValue();
+  if (write(scope, INDEX.value, input.value)) {
+    execInputValue(scope);
   }
 };
 
@@ -98,15 +102,16 @@ const enum PRIORITY_BRANCH0 {
   value = 0,
 }
 
-// type Branch0Scope = {
-//   [Branch0Index.TEXT]: Text
-// };
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.text]: Text;
+}>;
 
 const branch0 = createRenderer(
   "<span> </span>",
   open(1) + next(1) + get + next(1) + close,
-  () => {
-    queue(execInputValueBranch0, PRIORITY_BRANCH0.value);
+  (scope: Branch0Scope) => {
+    queue(scope, execInputValueBranch0, PRIORITY_BRANCH0.value);
   },
   0
 );

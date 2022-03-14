@@ -1,6 +1,6 @@
 import { apply as _counter, template as _counter_template, walks as _counter_walks } from "./components/counter.marko";
 
-function _apply() {
+function _apply(_scope) {
   _counter();
 }
 

@@ -7,6 +7,7 @@ import { addStatement, bindingToApplyGroup } from "../util/apply-hydrate";
 import { callQueue } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
   translate(tag) {
@@ -57,7 +58,9 @@ export default {
         "apply",
         sectionId,
         defaultAttr.extra?.valueReferences,
-        t.expressionStatement(t.callExpression(applyId, [defaultAttr.value]))
+        t.expressionStatement(
+          t.callExpression(applyId, [scopeIdentifier, defaultAttr.value])
+        )
       );
 
       replaceAssignments(

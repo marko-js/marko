@@ -1,10 +1,10 @@
 import {
   data,
-  read,
   write,
   setLoopOf,
   createRenderer,
   createRenderFn,
+  Scope,
 } from "../../../dom/index";
 import { next, over, get, open, close } from "../../utils/walks";
 
@@ -54,11 +54,11 @@ const enum Index {
   INPUT_CHILDREN = 4,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.DIV]: HTMLDivElement;
   [Index.LOOP]: HTMLDivElement;
   [Index.INPUT_CHILDREN]: Input["children"];
-};
+}>;
 
 // <div>
 //   <for|child| of=input.children by(c) { return c.id }>
@@ -69,19 +69,20 @@ type scope = {
 export const template = `<div></div>`;
 export const walks = open(5) + get + over(1) + close;
 
-export const execInputChildren = () => {
+export const execInputChildren = (scope: ComponentScope) => {
   setLoopOf(
+    scope,
     Index.LOOP,
-    read<scope, Index.INPUT_CHILDREN>(Index.INPUT_CHILDREN),
+    scope[Index.INPUT_CHILDREN] as Input["children"],
     iter0,
     (i) => "" + (i as Input["children"][number]).id,
     iter0_execItem
   );
 };
 
-export const execDynamicInput = (input: Input) => {
-  if (write(Index.INPUT_CHILDREN, input.children)) {
-    execInputChildren();
+export const execDynamicInput = (scope: ComponentScope, input: Input) => {
+  if (write(scope, Index.INPUT_CHILDREN, input.children)) {
+    execInputChildren(scope);
   }
 };
 
@@ -93,7 +94,12 @@ const enum Iter0Index {
   ITEM_TEXT = 2,
 }
 
-// type iterScope = [Text, Input["children"][number], string];
+type IterScope = Scope<{
+  _: ComponentScope;
+  [Iter0Index.TEXT]: Text;
+  [Iter0Index.ITEM]: Input["children"][number];
+  [Iter0Index.ITEM_TEXT]: Input["children"][number]["text"];
+}>;
 
 const iter0 = createRenderer(
   " ",
@@ -102,10 +108,10 @@ const iter0 = createRenderer(
   0
 );
 
-const iter0_execItem = (item: Input["children"][number]) => {
-  if (write(Iter0Index.ITEM, item)) {
-    if (write(Iter0Index.ITEM_TEXT, item.text)) {
-      data(Iter0Index.TEXT, read(Iter0Index.ITEM_TEXT));
+const iter0_execItem = (scope: IterScope, item: IterScope[Iter0Index.ITEM]) => {
+  if (write(scope, Iter0Index.ITEM, item)) {
+    if (write(scope, Iter0Index.ITEM_TEXT, item.text)) {
+      data(scope, Iter0Index.TEXT, scope[Iter0Index.ITEM_TEXT]);
     }
   }
 };

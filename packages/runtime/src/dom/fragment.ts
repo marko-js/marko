@@ -1,4 +1,4 @@
-import { Scope, ScopeOffsets } from "../common/types";
+import type { Scope } from "../common/types";
 import { ConditionalIndex, LoopIndex, emptyMarkerArray } from "./control-flow";
 
 export type DOMFragment = {
@@ -85,14 +85,10 @@ function getFirstNode(
   }
 
   return typeof indexOrNode === "number"
-    ? !(scopeOrScopes = currentScope[
-        indexOrNode + ConditionalIndex.SCOPE + ScopeOffsets.BEGIN_DATA
-      ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
-      ? (currentScope[
-          indexOrNode +
-            ConditionalIndex.REFERENCE_NODE +
-            ScopeOffsets.BEGIN_DATA
-        ] as Comment)
+    ? !(scopeOrScopes = currentScope[indexOrNode + ConditionalIndex.SCOPE] as
+        | Scope
+        | Scope[]) || scopeOrScopes === emptyMarkerArray
+      ? (currentScope[indexOrNode + ConditionalIndex.REFERENCE_NODE] as Comment)
       : (last ? getLastNode : getFirstNode)(
           (scopeOrScopes as Scope).___id
             ? (scopeOrScopes as Scope)

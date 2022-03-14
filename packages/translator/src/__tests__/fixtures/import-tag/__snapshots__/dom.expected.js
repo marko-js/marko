@@ -2,12 +2,12 @@ import "./foo";
 import { b as c } from "./bar";
 import baz from "./components/baz.marko";
 
-_dynamicTag(baz, null);
+_dynamicTag(_scope, baz, null);
 
 import { dynamicTag as _dynamicTag, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply() {
-  _data(0, c);
+function _apply(_scope) {
+  _data(_scope, 0, c);
 }
 
 export const template = "<!>";

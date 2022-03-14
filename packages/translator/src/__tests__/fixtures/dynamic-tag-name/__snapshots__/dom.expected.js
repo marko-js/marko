@@ -1,36 +1,36 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
 
-_dynamicTag(renderBody, {
+_dynamicTag(_scope, renderBody, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(x, {
+_dynamicTag(_scope, x, {
   class: ["a", "b"],
   other: other
 });
 
 const _tagName = show ? "div" : null;
 
-_dynamicTag(_tagName, {
+_dynamicTag(_scope, _tagName, {
   class: ["a", "b"],
   other: other
 });
 
 const _tagName2 = show && "div";
 
-_dynamicTag(_tagName2, {
+_dynamicTag(_scope, _tagName2, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(large ? "h1" : "h2", {
+_dynamicTag(_scope, large ? "h1" : "h2", {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(showTagA ? tagA : tagB, {
+_dynamicTag(_scope, showTagA ? tagA : tagB, {
   class: ["a", "b"],
   other: other,
   class: ["a", "b"],
@@ -39,78 +39,78 @@ _dynamicTag(showTagA ? tagA : tagB, {
 
 const _tagName3 = showTagA && tagA;
 
-_dynamicTag(_tagName3, {
+_dynamicTag(_scope, _tagName3, {
   class: ["a", "b"],
   other: other
 });
 
 const _tagName4 = showTagA && tagA;
 
-_dynamicTag(_tagName4, {
+_dynamicTag(_scope, _tagName4, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(tag || tagA, {
+_dynamicTag(_scope, tag || tagA, {
   class: ["a", "b"],
   other: other
 });
 
 const _tagName5 = largeHeading || "h2";
 
-_dynamicTag(_tagName5, {
+_dynamicTag(_scope, _tagName5, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(global.x = "a" + "b", {
+_dynamicTag(_scope, global.x = "a" + "b", {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag("h" + level, {
+_dynamicTag(_scope, "h" + level, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(`h${level}`, {
+_dynamicTag(_scope, `h${level}`, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(tagConstA, {
+_dynamicTag(_scope, tagConstA, {
   class: ["a", "b"],
   other: other
 });
 
-_dynamicTag(tagConstB, {
+_dynamicTag(_scope, tagConstB, {
   class: ["a", "b"],
   other: other
 });
 
 import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_tagConstB(tagConstB) {
-  if (_write(19, tagConstB)) {}
+function _apply_tagConstB(_scope, tagConstB) {
+  if (_write(_scope, 19, tagConstB)) {}
 }
 
-function _apply_tagConstA(tagConstA) {
-  if (_write(18, tagConstA)) {}
+function _apply_tagConstA(_scope, tagConstA) {
+  if (_write(_scope, 18, tagConstA)) {}
 }
 
-function _apply_largeHeading(largeHeading) {
-  if (_write(17, largeHeading)) {}
+function _apply_largeHeading(_scope, largeHeading) {
+  if (_write(_scope, 17, largeHeading)) {}
 }
 
-function _apply_isLarge(isLarge) {
-  if (_write(13, isLarge)) _apply_largeHeading(isLarge && "h1");
+function _apply_isLarge(_scope, isLarge) {
+  if (_write(_scope, 13, isLarge)) _apply_largeHeading(isLarge && "h1");
 }
 
-function _apply_show(show) {
-  if (_write(11, show)) _apply_tagConstB(show ? "div" : null);
+function _apply_show(_scope, show) {
+  if (_write(_scope, 11, show)) _apply_tagConstB(show ? "div" : null);
 }
 
-function _apply() {
+function _apply(_scope) {
   _apply_tagConstA("a");
 }
 

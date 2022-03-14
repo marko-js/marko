@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
-import { callRuntime, getHTMLRuntime } from "../../util/runtime";
+import { callRuntime, getHTMLRuntime, callRead } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
@@ -10,6 +10,7 @@ import { ReserveType, reserveScope } from "../../util/reserve";
 import { addStatement } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
+import { scopeIdentifier } from "../program";
 
 export default {
   analyze: {
@@ -73,7 +74,11 @@ export default {
       write`<${name.node}`;
 
       if (hasSpread) {
-        const attrsCallExpr = callRuntime("attrs", attrsToObject(tag)!);
+        const attrsCallExpr = callRuntime(
+          "attrs",
+          scopeIdentifier,
+          attrsToObject(tag)!
+        );
 
         if (isHTML) {
           write`${attrsCallExpr}`;
@@ -125,7 +130,12 @@ export default {
                     sectionId,
                     valueReferences,
                     t.expressionStatement(
-                      callRuntime("write", reserveIndex, value.node)
+                      callRuntime(
+                        "write",
+                        scopeIdentifier,
+                        reserveIndex,
+                        value.node
+                      )
                     )
                   );
 
@@ -136,9 +146,10 @@ export default {
                     t.expressionStatement(
                       callRuntime(
                         "on",
+                        scopeIdentifier,
                         visitIndex!,
                         t.stringLiteral(name.slice(2)),
-                        callRuntime("read", reserveIndex)
+                        callRead(extra.reserve!, sectionId)
                       )
                     )
                   );
@@ -150,6 +161,7 @@ export default {
                     t.expressionStatement(
                       callRuntime(
                         "attr",
+                        scopeIdentifier,
                         visitIndex!,
                         t.stringLiteral(name),
                         value.node

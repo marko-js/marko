@@ -1,43 +1,42 @@
-import { queue as _queue, write as _write, read as _read, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrateWith_a_b(a = _read(2), b = _read(3)) {
-  _on(0, "click", _read(4));
+function _hydrateWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
+  _on(_scope, 0, "click", _scope[4]);
 }
 
-const _onclick = a => {
-  const b = _read(3);
-
+const _onclick = (_scope, a) => {
+  const b = _scope[3];
   return b;
 };
 
-const _onclick2 = function () {
-  const a = _read(2);
+const _onclick2 = function (_scope) {
+  const a = _scope[2];
 
-  _queue(_apply_a, 0, a.map(_bind(_onclick)));
+  _queue(_scope, _apply_a, 0, a.map(_bind(_scope, _onclick)));
 };
 
-function _applyWith_a_b(a = _read(2), b = _read(3)) {
-  _write(4, _bind(_onclick2));
+function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
+  _write(_scope, 4, _bind(_scope, _onclick2));
 
-  _hydrateWith_a_b();
+  _hydrateWith_a_b(_scope);
 }
 
-function _apply_b(b) {
-  if (_write(3, b)) _queue(_applyWith_a_b, 2);
+function _apply_b(_scope, b) {
+  if (_write(_scope, 3, b)) _queue(_scope, _applyWith_a_b, 2);
 }
 
-function _apply_a(a) {
-  if (_write(2, a)) {
-    _data(1, a.join(""));
+function _apply_a(_scope, a) {
+  if (_write(_scope, 2, a)) {
+    _data(_scope, 1, a.join(""));
 
-    _queue(_applyWith_a_b, 2);
+    _queue(_scope, _applyWith_a_b, 2);
   }
 }
 
-function _apply() {
-  _apply_a([0]);
+function _apply(_scope) {
+  _apply_a(_scope, [0]);
 
-  _apply_b(1);
+  _apply_b(_scope, 1);
 }
 
 export const template = "<button><!></button>";

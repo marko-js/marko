@@ -1,12 +1,11 @@
 import {
   data,
   setConditionalRenderer,
-  read,
   write,
   createRenderer,
   createRenderFn,
-  readInOwner,
   queueInBranch,
+  Scope,
 } from "../../../dom/index";
 import { next, over, get, open, close } from "../../utils/walks";
 
@@ -36,11 +35,11 @@ const enum PRIORITY {
   closure_value = 1,
 }
 
-type SCOPE = {
+type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
   [INDEX.value]: typeof inputs[number]["value"];
-};
+}>;
 
 // <attrs/{ value }/>
 // <div>
@@ -54,12 +53,14 @@ type SCOPE = {
 export const template = `<div><span></span><!><span></span></div>`;
 export const walks = open(5) + next(2) + get + over(2) + close;
 
-export const _apply_value = () => {
+export const _apply_value = (scope: ComponentScope) => {
   setConditionalRenderer(
+    scope,
     INDEX.conditional,
-    read(INDEX.value) ? branch0 : undefined
+    scope[INDEX.value] ? branch0 : undefined
   );
   queueInBranch(
+    scope,
     INDEX.conditional,
     branch0,
     _apply_value2,
@@ -68,13 +69,16 @@ export const _apply_value = () => {
   );
 };
 
-function _apply_value2() {
-  data(INDEX_BRANCH0.text, readInOwner<SCOPE, INDEX.value>(INDEX.value));
+function _apply_value2(scope: Branch0Scope) {
+  data(scope, INDEX_BRANCH0.text, scope._[INDEX.value]);
 }
 
-export const _applyAttrs = (input: typeof inputs[number]) => {
-  if (write(INDEX.value, input.value)) {
-    _apply_value();
+export const _applyAttrs = (
+  scope: ComponentScope,
+  input: typeof inputs[number]
+) => {
+  if (write(scope, INDEX.value, input.value)) {
+    _apply_value(scope);
   }
 };
 
@@ -88,9 +92,10 @@ const enum PRIORITY_BRANCH0 {
   value = 0,
 }
 
-// type Branch0Scope = {
-//   [Branch0Index.TEXT]: Text
-// };
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.text]: Text;
+}>;
 
 const branch0 = createRenderer(
   "<span> </span>",

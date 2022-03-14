@@ -1,29 +1,29 @@
-import { setConditionalRenderer as _setConditionalRenderer, read as _read, queue as _queue, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setConditionalRenderer as _setConditionalRenderer, queue as _queue, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _applyWith_x_y(x = _read(14), y = _read(15)) {
-  _setConditionalRenderer(8, x ? _if5 : y ? _if4 : _if3);
+function _applyWith_x_y(_scope, x = _scope[14], y = _scope[15]) {
+  _setConditionalRenderer(_scope, 8, x ? _if5 : y ? _if4 : _if3);
 }
 
-function _applyWith_a_b(a = _read(12), b = _read(13)) {
-  _setConditionalRenderer(0, a + b ? _if : null);
+function _applyWith_a_b(_scope, a = _scope[12], b = _scope[13]) {
+  _setConditionalRenderer(_scope, 0, a + b ? _if : null);
 
-  _setConditionalRenderer(4, (a, b) ? _if2 : null);
+  _setConditionalRenderer(_scope, 4, (a, b) ? _if2 : null);
 }
 
-function _apply_y(y) {
-  if (_write(15, y)) _queue(_applyWith_x_y, 5);
+function _apply_y(_scope, y) {
+  if (_write(_scope, 15, y)) _queue(_scope, _applyWith_x_y, 5);
 }
 
-function _apply_x(x) {
-  if (_write(14, x)) _queue(_applyWith_x_y, 5);
+function _apply_x(_scope, x) {
+  if (_write(_scope, 14, x)) _queue(_scope, _applyWith_x_y, 5);
 }
 
-function _apply_b(b) {
-  if (_write(13, b)) _queue(_applyWith_a_b, 4);
+function _apply_b(_scope, b) {
+  if (_write(_scope, 13, b)) _queue(_scope, _applyWith_a_b, 4);
 }
 
-function _apply_a(a) {
-  if (_write(12, a)) _queue(_applyWith_a_b, 4);
+function _apply_a(_scope, a) {
+  if (_write(_scope, 12, a)) _queue(_scope, _applyWith_a_b, 4);
 }
 
 const _if = _createRenderer("Hello", "", null),

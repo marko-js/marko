@@ -1,14 +1,7 @@
 import type { Scope } from "../common/types";
-import {
-  runWithScope,
-  currentScope,
-  currentOffset,
-  getOwnerScope,
-  ownerOffset,
-} from "./scope";
 import { schedule } from "./schedule";
 
-type ExecFn = (arg?: any) => void;
+type ExecFn = (scope: Scope, arg?: any) => void;
 
 let queuedFns: unknown[] = [];
 let queuedNext: unknown[] = [];
@@ -16,20 +9,18 @@ let queuedNext: unknown[] = [];
 const enum QueueOffsets {
   FN = 0,
   SCOPE = 1,
-  OFFSET = 2,
-  PRIORITY = 3,
-  ARGUMENT = 4,
-  TOTAL = 5,
+  PRIORITY = 2,
+  ARGUMENT = 3,
+  TOTAL = 4,
 }
 
 export function queue<T extends ExecFn>(
+  scope: Scope,
   fn: T,
   localPriority = 0,
-  argument: Parameters<T>[0] = undefined,
-  scope = currentScope,
-  offset = currentOffset
+  argument: Parameters<T>[1] = undefined
 ) {
-  const priority = scope.___id + offset + localPriority;
+  const priority = scope.___id + localPriority;
   const index = findQueueIndex(priority);
 
   // index is where the function should be in the queue
@@ -43,19 +34,9 @@ export function queue<T extends ExecFn>(
 
     queuedFns[index + QueueOffsets.FN] = fn;
     queuedFns[index + QueueOffsets.SCOPE] = scope;
-    queuedFns[index + QueueOffsets.OFFSET] = offset;
     queuedFns[index + QueueOffsets.PRIORITY] = priority;
   }
   queuedFns[index + QueueOffsets.ARGUMENT] = argument;
-}
-
-export function queueInOwner<T extends ExecFn>(
-  fn: T,
-  localPriority?: number,
-  argument?: Parameters<T>[0],
-  ownerLevel?: number
-) {
-  queue(fn, localPriority, argument, getOwnerScope(ownerLevel), ownerOffset);
 }
 
 export function withQueueNext(fn: () => unknown) {
@@ -69,11 +50,8 @@ export function withQueueNext(fn: () => unknown) {
 export function run() {
   if (queuedFns.length) {
     for (let i = 0; i < queuedFns.length; i += QueueOffsets.TOTAL) {
-      runWithScope(
-        queuedFns[i + QueueOffsets.FN] as ExecFn,
-        queuedFns[i + QueueOffsets.OFFSET] as number,
+      (queuedFns[i + QueueOffsets.FN] as ExecFn)(
         queuedFns[i + QueueOffsets.SCOPE] as Scope,
-        undefined,
         queuedFns[i + QueueOffsets.ARGUMENT]
       );
     }

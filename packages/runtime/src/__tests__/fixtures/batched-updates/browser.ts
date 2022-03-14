@@ -1,12 +1,11 @@
 import {
   on,
   data,
-  register,
   createRenderFn,
   queue,
   bind,
-  read,
   write,
+  Scope,
 } from "../../../dom/index";
 import { get, next, open, close } from "../../utils/walks";
 
@@ -24,13 +23,13 @@ const enum Index {
   SUM_AB = 4,
 }
 
-type scope = {
+type ComponentScope = Scope<{
   [Index.BUTTON]: HTMLButtonElement;
   [Index.TEXT]: Text;
   [Index.A]: number;
   [Index.B]: number;
   [Index.SUM_AB]: number;
-};
+}>;
 
 // <let/a = 0/>
 // <let/b = 0/>
@@ -38,40 +37,40 @@ type scope = {
 
 export const template = `<button> </button>`;
 export const walks = open(4) + get + next(1) + get + next(1) + close;
-export const render = () => {
-  execA(0);
-  execB(0);
-  hydrate();
+export const render = (scope: ComponentScope) => {
+  execA(scope, 0);
+  execB(scope, 0);
+  hydrate(scope);
 };
 
-export const hydrate = register("", () => {
-  on(Index.BUTTON, "click", bind(clickHandler));
-});
-
-const clickHandler = () => {
-  queue(execA, Index.A, read<scope, Index.A>(Index.A) + 1);
-  queue(execB, Index.B, read<scope, Index.B>(Index.B) + 1);
+export const hydrate = (scope: ComponentScope) => {
+  on(scope, Index.BUTTON, "click", bind(scope, clickHandler));
 };
 
-const execA = (value: number) => {
-  if (write(Index.A, value)) {
-    queue(execAB, Index.SUM_AB);
+const clickHandler = (scope: ComponentScope) => {
+  queue(scope, execA, Index.A, scope[Index.A] + 1);
+  queue(scope, execB, Index.B, scope[Index.B] + 1);
+};
+
+const execA = (scope: ComponentScope, value: number) => {
+  if (write(scope, Index.A, value)) {
+    queue(scope, execAB, Index.SUM_AB);
   }
 };
 
-const execB = (value: number) => {
-  if (write(Index.B, value)) {
-    queue(execAB, Index.SUM_AB);
+const execB = (scope: ComponentScope, value: number) => {
+  if (write(scope, Index.B, value)) {
+    queue(scope, execAB, Index.SUM_AB);
   }
 };
 
-const execAB = () => {
-  execSumAB(read<scope, Index.A>(Index.A) + read<scope, Index.B>(Index.B));
+const execAB = (scope: ComponentScope) => {
+  execSumAB(scope, scope[Index.A] + scope[Index.B]);
 };
 
-const execSumAB = (value: number) => {
-  if (write(Index.SUM_AB, value)) {
-    data(Index.TEXT, value);
+const execSumAB = (scope: ComponentScope, value: number) => {
+  if (write(scope, Index.SUM_AB, value)) {
+    data(scope, Index.TEXT, value);
   }
 };
 

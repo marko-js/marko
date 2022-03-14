@@ -9,111 +9,111 @@
 <for from=0 to=10/>
 import { data as _data, setLoopOf as _setLoopOf, attr as _attr, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_i7(i) {
-  if (_write(3, i)) {
-    _attr(0, "key", i);
+function _apply_i7(_scope, i) {
+  if (_write(_scope, 3, i)) {
+    _attr(_scope, 0, "key", i);
 
-    _data(1, i);
+    _data(_scope, 1, i);
 
-    _attr(2, "key", `other-${i}`);
+    _attr(_scope, 2, "key", `other-${i}`);
   }
 }
 
-function _apply_i6(i) {
-  if (_write(3, i)) {
-    _attr(0, "key", i);
+function _apply_i6(_scope, i) {
+  if (_write(_scope, 3, i)) {
+    _attr(_scope, 0, "key", i);
 
-    _data(1, i);
+    _data(_scope, 1, i);
 
-    _attr(2, "key", `other-${i}`);
+    _attr(_scope, 2, "key", `other-${i}`);
   }
 }
 
-function _apply_i5(i) {
-  if (_write(7, i)) {
-    _attr(0, "key", i);
+function _apply_i5(_scope, i) {
+  if (_write(_scope, 7, i)) {
+    _attr(_scope, 0, "key", i);
 
-    _data(1, i);
+    _data(_scope, 1, i);
 
-    _attr(2, "key", `other-${i}`);
+    _attr(_scope, 2, "key", `other-${i}`);
   }
 }
 
-function _apply_val5(val) {
-  if (_write(5, val)) _data(2, val);
+function _apply_val5(_scope, val) {
+  if (_write(_scope, 5, val)) _data(_scope, 2, val);
 }
 
-function _apply_key2(key) {
-  if (_write(4, key)) {
-    _attr(0, "key", key);
+function _apply_key2(_scope, key) {
+  if (_write(_scope, 4, key)) {
+    _attr(_scope, 0, "key", key);
 
-    _data(1, key);
+    _data(_scope, 1, key);
 
-    _attr(3, "key", `other-${key}`);
+    _attr(_scope, 3, "key", `other-${key}`);
   }
 }
 
-function _apply_list(list) {
-  if (_write(5, list)) _data(1, list.length);
+function _apply_list(_scope, list) {
+  if (_write(_scope, 5, list)) _data(_scope, 1, list.length);
 }
 
-function _apply_i4(i) {
-  if (_write(4, i)) _attr(0, "key", i);
+function _apply_i4(_scope, i) {
+  if (_write(_scope, 4, i)) _attr(_scope, 0, "key", i);
 }
 
-function _apply_val4(val) {
-  if (_write(3, val)) _data(2, val);
+function _apply_val4(_scope, val) {
+  if (_write(_scope, 3, val)) _data(_scope, 2, val);
 }
 
-function _apply_i3(i) {
-  if (_write(5, i)) {
-    _attr(0, "key", i);
+function _apply_i3(_scope, i) {
+  if (_write(_scope, 5, i)) {
+    _attr(_scope, 0, "key", i);
 
-    _data(1, i);
+    _data(_scope, 1, i);
 
-    _attr(3, "key", `other-${i}`);
+    _attr(_scope, 3, "key", `other-${i}`);
   }
 }
 
-function _apply_val3(val) {
-  if (_write(4, val)) _data(2, val);
+function _apply_val3(_scope, val) {
+  if (_write(_scope, 4, val)) _data(_scope, 2, val);
 }
 
-function _apply_i2(i) {
-  if (_write(1, i)) _data(0, i);
+function _apply_i2(_scope, i) {
+  if (_write(_scope, 1, i)) _data(_scope, 0, i);
 }
 
-function _apply_val2(val) {
-  if (_write(3, val)) _data(1, val);
+function _apply_val2(_scope, val) {
+  if (_write(_scope, 3, val)) _data(_scope, 1, val);
 }
 
-function _apply_key(key) {
-  if (_write(2, key)) _data(0, key);
+function _apply_key(_scope, key) {
+  if (_write(_scope, 2, key)) _data(_scope, 0, key);
 }
 
-function _apply_i(i) {
-  if (_write(3, i)) _data(0, i);
+function _apply_i(_scope, i) {
+  if (_write(_scope, 3, i)) _data(_scope, 0, i);
 }
 
-function _apply_val(val) {
-  if (_write(2, val)) _data(1, val);
+function _apply_val(_scope, val) {
+  if (_write(_scope, 2, val)) _data(_scope, 1, val);
 }
 
-function _apply_obj(obj) {
-  if (_write(41, obj)) {}
+function _apply_obj(_scope, obj) {
+  if (_write(_scope, 41, obj)) {}
 }
 
-function _apply_arr(arr) {
-  if (_write(40, arr)) {
-    _setLoopOf(0, arr, _for, null, _apply_val);
+function _apply_arr(_scope, arr) {
+  if (_write(_scope, 40, arr)) {
+    _setLoopOf(_scope, 0, arr, _for, null, _apply_val);
 
-    _setLoopOf(12, arr, _for2, null, _apply_val3);
+    _setLoopOf(_scope, 12, arr, _for2, null, _apply_val3);
 
-    _setLoopOf(16, arr, _for3, null, _apply_val4);
+    _setLoopOf(_scope, 16, arr, _for3, null, _apply_val4);
   }
 }
 
-function _apply() {
+function _apply(_scope) {
   _apply_arr([1, 2, 3]);
 
   _apply_obj({

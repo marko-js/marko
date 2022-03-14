@@ -13,6 +13,7 @@ import { ReserveType, reserveScope } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze: {
@@ -137,6 +138,7 @@ const translateDOM = {
     setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) => {
       return callRuntime(
         "queueForEach",
+        scopeIdentifier,
         t.numericLiteral(reserve!.id),
         identifier,
         queuePriority,
@@ -167,6 +169,7 @@ const translateDOM = {
         t.expressionStatement(
           callRuntime(
             "setLoopOf",
+            scopeIdentifier,
             t.numericLiteral(reserve!.id),
             ofAttrValue,
             rendererId,

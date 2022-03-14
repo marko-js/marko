@@ -6,6 +6,7 @@ import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import { getSectionId } from "../../util/sections";
+import { scopeIdentifier } from "../program";
 
 export default {
   translate: {
@@ -23,6 +24,8 @@ export default {
 
       if (isOutputHTML()) {
         writer.flushInto(tag);
+      } else {
+        args.unshift(scopeIdentifier);
       }
 
       if (renderBodyProp) {

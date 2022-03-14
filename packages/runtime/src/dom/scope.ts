@@ -1,18 +1,14 @@
 import { withQueueNext } from "./queue";
-import { Scope, ScopeOffsets } from "../common/types";
+import type { Scope } from "../common/types";
 
-export let currentScope: Scope;
-export let currentOffset: number;
-export let ownerOffset: number;
 const CLIENT_SCOPE_ID_BIT = 2 ** 52;
 const SCOPE_ID_MULTIPLIER = 2 ** 16;
 let scopeId = 0;
 
-export function createScope(size: number): Scope {
+export function createScope(size: number, owner?: Scope): Scope {
   const scope = new Array(size) as Scope;
   scope.___id = CLIENT_SCOPE_ID_BIT + SCOPE_ID_MULTIPLIER * scopeId++;
-  scope[ScopeOffsets.OWNER_SCOPE] = currentScope;
-  scope[ScopeOffsets.OWNER_OFFSET] = currentOffset;
+  scope._ = owner;
   return scope;
 }
 
@@ -22,114 +18,29 @@ export function getEmptyScope(marker?: Comment) {
   return emptyScope;
 }
 
-export function read<
-  LocalScope extends Record<number, unknown>,
-  I extends number = number
->(localIndex: I, scope = currentScope, offset = currentOffset) {
-  return scope[offset + localIndex] as LocalScope[typeof localIndex];
-}
-
-export function write(
+export function write<S extends Scope>(
+  scope: S,
   localIndex: number,
-  value: unknown,
-  scope = currentScope,
-  offset = currentOffset
+  value: unknown
 ) {
-  if (scope[offset + localIndex] !== value) {
-    scope[offset + localIndex] = value;
+  if (scope[localIndex] !== value) {
+    scope[localIndex] = value;
     return 1;
   }
   return 0;
 }
 
-export function readInOwner<
-  S extends Record<number, unknown>,
-  I extends number
->(localIndex: I, ownerLevel?: number) {
-  return read<S, I>(localIndex, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function writeInOwner(
-  localIndex: number,
-  value: unknown,
-  ownerLevel?: number
-) {
-  write(localIndex, value, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function getOwnerScope(ownerLevel = 1) {
-  let scope = currentScope;
-  ownerOffset = currentOffset;
-  while (ownerLevel--) {
-    const nextScope = scope[ownerOffset - 2]! as Scope;
-    ownerOffset = scope[ownerOffset - 1]! as number;
-    scope = nextScope;
-  }
-  return scope;
-}
-
-export function bind(
-  fn: (...args: unknown[]) => unknown,
-  boundOffset = currentOffset,
-  boundScope = currentScope
+export function bind<S extends Scope>(
+  boundScope: S,
+  fn: (scope: S, ...args: unknown[]) => unknown
 ) {
   return fn.length
-    ? (...args: unknown[]) => runWithScope(fn, boundOffset, boundScope, args)
-    : () => runWithScope(fn, boundOffset, boundScope);
-}
-
-export function runWithScope(
-  fn: (...args: unknown[]) => unknown,
-  offset: number,
-  scope: Scope,
-  spreadArgs: undefined,
-  arg1: unknown,
-  arg2?: unknown,
-  arg3?: unknown
-): void;
-export function runWithScope(
-  fn: (...args: unknown[]) => unknown,
-  offset: number,
-  scope: Scope,
-  spreadArgs: unknown[]
-): void;
-export function runWithScope(
-  fn: (...args: unknown[]) => unknown,
-  offset: number,
-  scope: Scope
-): void;
-export function runWithScope(
-  fn: (...args: unknown[]) => unknown,
-  offset = ScopeOffsets.BEGIN_DATA,
-  scope: Scope = currentScope,
-  spreadArgs?: unknown[],
-  arg1?: unknown,
-  arg2?: unknown,
-  arg3?: unknown
-) {
-  const previousScope = currentScope;
-  const previousOffset = currentOffset;
-  currentScope = scope;
-  currentOffset = offset;
-  try {
-    return !spreadArgs ? fn(arg1, arg2, arg3) : fn(...spreadArgs);
-  } finally {
-    currentScope = previousScope;
-    currentOffset = previousOffset;
-  }
-}
-
-export function runInChild(fn: () => void, offset: number) {
-  currentOffset += offset;
-  try {
-    fn();
-  } finally {
-    currentOffset -= offset;
-  }
+    ? (...args: unknown[]) => fn(boundScope, ...args)
+    : () => fn(boundScope);
 }
 
 export function destroyScope(scope: Scope) {
-  scope[ScopeOffsets.OWNER_SCOPE]?.___cleanup?.delete(scope);
+  scope._?.___cleanup?.delete(scope);
 
   const cleanup = scope.___cleanup;
   if (cleanup) {
@@ -144,14 +55,10 @@ export function destroyScope(scope: Scope) {
   return scope;
 }
 
-export function onDestroy(localIndex: number) {
-  const parentScope = currentScope[ScopeOffsets.OWNER_SCOPE];
+export function onDestroy(scope: Scope, localIndex: number) {
+  const parentScope = scope._;
   if (parentScope) {
-    (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(
-      currentScope
-    );
+    (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(scope);
   }
-  (currentScope.___cleanup = currentScope.___cleanup || new Set()).add(
-    currentOffset + localIndex
-  );
+  (scope.___cleanup = scope.___cleanup || new Set()).add(localIndex);
 }

@@ -5,10 +5,9 @@ import {
   createRenderFn,
   dynamicFragment,
   write,
-  read,
   queue,
-  readInOwner,
   queueInBranch,
+  Scope,
 } from "../../../dom/index";
 import { next, over, get, open, close, skip } from "../../utils/walks";
 
@@ -58,13 +57,13 @@ const enum PRIORITY {
   closure_value2 = 4,
 }
 
-type SCOPE = {
+type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
   [INDEX.show]: Input["show"];
   [INDEX.value1]: Input["value1"];
   [INDEX.value2]: Input["value2"];
-};
+}>;
 
 // <attrs/{show, value1, value2}/>
 // <div>
@@ -77,16 +76,18 @@ type SCOPE = {
 export const template = `<div><!></div>`;
 export const walks = open(7) + next(1) + get + over(1) + close;
 
-export const _apply_show = () => {
+export const _apply_show = (scope: ComponentScope) => {
   setConditionalRenderer(
+    scope,
     INDEX.conditional,
-    read<SCOPE, INDEX.show>(INDEX.show) ? branch0 : undefined,
+    scope[INDEX.show] ? branch0 : undefined,
     dynamicFragment
   );
 };
 
-export const _apply_value1 = () => {
+export const _apply_value1 = (scope: ComponentScope) => {
   queueInBranch(
+    scope,
     INDEX.conditional,
     branch0,
     execInputValue1Branch0,
@@ -95,12 +96,14 @@ export const _apply_value1 = () => {
   );
 };
 
-export const execInputValue1Branch0 = () => {
+export const execInputValue1Branch0 = (scope: Branch0Scope) => {
   setConditionalRenderer(
+    scope,
     INDEX_BRANCH0.conditional1,
-    readInOwner<SCOPE, INDEX.value1>(INDEX.value1) ? branch0_0 : undefined
+    scope._[INDEX.value1] ? branch0_0 : undefined
   );
   queueInBranch(
+    scope,
     INDEX_BRANCH0.conditional1,
     branch0_0,
     execInputValue1Branch0_0,
@@ -109,8 +112,9 @@ export const execInputValue1Branch0 = () => {
   );
 };
 
-export const execInputValue2 = () => {
+export const execInputValue2 = (scope: ComponentScope) => {
   queueInBranch(
+    scope,
     INDEX.conditional,
     branch0,
     execInputValue2Branch0,
@@ -119,12 +123,14 @@ export const execInputValue2 = () => {
   );
 };
 
-export const execInputValue2Branch0 = () => {
+export const execInputValue2Branch0 = (scope: Branch0Scope) => {
   setConditionalRenderer(
+    scope,
     INDEX_BRANCH0.conditional2,
-    readInOwner<SCOPE, INDEX.value2>(INDEX.value2) ? branch0_1 : undefined
+    scope._[INDEX.value2] ? branch0_1 : undefined
   );
   queueInBranch(
+    scope,
     INDEX_BRANCH0.conditional2,
     branch0_1,
     execInputValue2Branch0_1,
@@ -133,18 +139,18 @@ export const execInputValue2Branch0 = () => {
   );
 };
 
-const execInputValue1Branch0_0 = () => {
-  data(INDEX_BRANCH0_0.text, readInOwner<SCOPE, INDEX.value1>(INDEX.value1, 2));
+const execInputValue1Branch0_0 = (scope: Branch0_0Scope) => {
+  data(scope, INDEX_BRANCH0_0.text, scope._._[INDEX.value1]);
 };
 
-const execInputValue2Branch0_1 = () => {
-  data(INDEX_BRANCH0_1.text, readInOwner<SCOPE, INDEX.value2>(INDEX.value2, 2));
+const execInputValue2Branch0_1 = (scope: Branch0_1Scope) => {
+  data(scope, INDEX_BRANCH0_1.text, scope._._[INDEX.value2]);
 };
 
-export const execDynamicInput = (input: Input) => {
-  write(INDEX.show, input.show) && _apply_show();
-  write(INDEX.value1, input.value1) && _apply_value1();
-  write(INDEX.value2, input.value2) && execInputValue2();
+export const execDynamicInput = (scope: ComponentScope, input: Input) => {
+  write(scope, INDEX.show, input.show) && _apply_show(scope);
+  write(scope, INDEX.value1, input.value1) && _apply_value1(scope);
+  write(scope, INDEX.value2, input.value2) && execInputValue2(scope);
 };
 
 export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
@@ -163,19 +169,20 @@ const enum PRIORITY_BRANCH0 {
   closure_value2 = 3,
 }
 
-// type Branch0Scope = {
-//   [Branch0Index.COMMENT1]: Comment;
-//   [Branch0Index.CONDITIONAL1]: Comment;
-//   [Branch0Index.COMMENT2]: Comment;
-//   [Branch0Index.CONDITIONAL2]: Comment;
-// };
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.comment1]: Comment;
+  [INDEX_BRANCH0.conditional1]: Comment;
+  [INDEX_BRANCH0.comment2]: Comment;
+  [INDEX_BRANCH0.conditional2]: Comment;
+}>;
 
 const branch0 = createRenderer(
   "<!><!>",
   open(8) + get + over(1) + skip(3) + get + over(1) + close,
-  () => {
-    queue(execInputValue1Branch0, PRIORITY_BRANCH0.value1);
-    queue(execInputValue2Branch0, PRIORITY_BRANCH0.value2);
+  (scope: Branch0Scope) => {
+    queue(scope, execInputValue1Branch0, PRIORITY_BRANCH0.value1);
+    queue(scope, execInputValue2Branch0, PRIORITY_BRANCH0.value2);
   },
   0,
   0,
@@ -191,9 +198,10 @@ const enum PRIORITY_BRANCH0_0 {
   value1 = 0,
 }
 
-// type Branch0_0Scope = {
-//   [Branch0_0Index.TEXT]: Text;
-// };
+type Branch0_0Scope = Scope<{
+  _: Branch0Scope;
+  [INDEX_BRANCH0_0.text]: Text;
+}>;
 
 const branch0_0 = createRenderer(
   "<span> </span>",
@@ -210,9 +218,10 @@ const enum PRIORITY_BRANCH0_1 {
   value2 = 1,
 }
 
-// type Branch0_1Scope = {
-//   [Branch0_1Index.TEXT]: Text;
-// };
+type Branch0_1Scope = Scope<{
+  _: Branch0Scope;
+  [INDEX_BRANCH0_1.text]: Text;
+}>;
 
 // OPTIMIZATION: these two branches have the same renderer arguments
 // so they could share the same renderer instance

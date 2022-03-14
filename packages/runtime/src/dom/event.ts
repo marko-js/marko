@@ -1,5 +1,4 @@
-import { read } from "./scope";
-
+import type { Scope } from "../common/types";
 type Unset = false | null | undefined;
 type EventNames = keyof GlobalEventHandlersEventMap;
 
@@ -18,8 +17,8 @@ export function on<
   H extends
     | Unset
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void)
->(elIndex: number, type: T, handler: H) {
-  const el = read(elIndex) as Element;
+>(scope: Scope, elIndex: number, type: T, handler: H) {
+  const el = scope[elIndex] as Element;
   const delegated = delegatedByType.get(type);
 
   if (delegated) {

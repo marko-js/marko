@@ -1,5 +1,5 @@
-import { Scope, ScopeOffsets } from "../common/types";
-import { createScope, runWithScope } from "./scope";
+import type { Scope } from "../common/types";
+import { createScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queue, run } from "./queue";
 
@@ -10,10 +10,10 @@ const enum NodeType {
   DocumentFragment = 11,
 }
 
-export type Renderer = {
+export type Renderer<S extends Scope = Scope> = {
   ___template: string;
   ___walks: string | undefined;
-  ___render: RenderFn | undefined;
+  ___render: RenderFn<S> | undefined;
   ___clone: () => Node;
   ___size: number;
   ___hasUserEffects: 0 | 1;
@@ -23,14 +23,20 @@ export type Renderer = {
 };
 
 type Input = Record<string, unknown>;
-type RenderFn = () => void;
-type DynamicInputFn<I extends Input> = (input: I) => void;
+type RenderFn<S extends Scope = Scope> = (scope: S) => void;
+type DynamicInputFn<S extends Scope, I extends Input> = (
+  scope: S,
+  input: I
+) => void;
 type RenderResult<I extends Input> = Node & {
   update: (input: I) => void;
   destroy: () => void;
 };
 
-export function initRenderer(renderer: Renderer, scope: Scope) {
+export function initRenderer<S extends Scope = Scope>(
+  renderer: Renderer<S>,
+  scope: S
+) {
   const dom = renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment
@@ -48,7 +54,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
       ? dom.lastChild!
       : (dom as ChildNode);
   if (renderer.___render) {
-    runWithScope(renderer.___render, ScopeOffsets.BEGIN_DATA, scope);
+    renderer.___render(scope);
   }
   if (renderer.___dynamicStartNodeOffset !== undefined) {
     scope.___startNode = renderer.___dynamicStartNodeOffset;
@@ -59,17 +65,17 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
   return dom;
 }
 
-export function createRenderFn<I extends Input>(
+export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
-  render?: RenderFn,
+  render?: RenderFn<S>,
   size?: number,
-  dynamicInput?: DynamicInputFn<I>,
+  dynamicInput?: DynamicInputFn<S, I>,
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
-  const renderer = createRenderer(
+  const renderer = createRenderer<S>(
     template,
     walks,
     render,
@@ -79,18 +85,18 @@ export function createRenderFn<I extends Input>(
     dynamicEndNodeOffset
   );
   return (input: I): RenderResult<I> => {
-    const scope = createScope(size!);
+    const scope = createScope(size!) as S;
     const dom = initRenderer(renderer, scope) as RenderResult<I>;
 
     if (dynamicInput) {
-      queue(dynamicInput, -1, input, scope, ScopeOffsets.BEGIN_DATA);
+      queue(scope, dynamicInput, -1, input);
     }
 
     run();
 
     dom.update = (newInput: I) => {
       if (dynamicInput) {
-        queue(dynamicInput, -1, newInput, scope, ScopeOffsets.BEGIN_DATA);
+        queue(scope, dynamicInput, -1, newInput);
         run();
       }
     };
@@ -103,15 +109,15 @@ export function createRenderFn<I extends Input>(
   };
 }
 
-export function createRenderer<R extends RenderFn>(
+export function createRenderer<S extends Scope>(
   template: string,
   walks?: string,
-  render?: R,
+  render?: RenderFn<S>,
   size = 0,
   hasUserEffects: 0 | 1 = 0,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
-): Renderer {
+): Renderer<S> {
   return {
     ___template: template,
     ___walks: walks && trimWalkString(walks),

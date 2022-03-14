@@ -1,14 +1,7 @@
 import type { Scope } from "../common/types";
-import {
-  runWithScope,
-  currentScope,
-  currentOffset,
-  getOwnerScope,
-  ownerOffset,
-} from "./scope";
 import { schedule } from "./schedule";
 
-type ExecFn = (arg?: any) => void;
+type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
 let queuedFns: unknown[] = [];
 let queuedFnsMap: Map<number, unknown> = new Map();
@@ -19,19 +12,17 @@ let queuedNextMap: Map<number, unknown> = new Map();
 const enum QueueOffsets {
   FN = 0,
   SCOPE = 1,
-  OFFSET = 2,
-  PRIORITY = 3,
-  TOTAL = 4,
+  PRIORITY = 2,
+  TOTAL = 3,
 }
 
-export function queue<T extends ExecFn>(
+export function queue<S extends Scope, T extends ExecFn<S>>(
+  scope: S,
   fn: T,
   localPriority = 0,
-  argument: Parameters<T>[0] = undefined,
-  scope = currentScope,
-  offset = currentOffset
+  argument: Parameters<T>[1] = undefined
 ) {
-  const priority = scope.___id + offset + localPriority;
+  const priority = scope.___id + localPriority;
   if (!queuedFnsMap.has(priority)) {
     schedule();
 
@@ -47,27 +38,20 @@ export function queue<T extends ExecFn>(
 
     queuedFns[currentIndex + QueueOffsets.FN] = fn;
     queuedFns[currentIndex + QueueOffsets.SCOPE] = scope;
-    queuedFns[currentIndex + QueueOffsets.OFFSET] = offset;
     queuedFns[currentIndex + QueueOffsets.PRIORITY] = priority;
   }
   queuedFnsMap.set(priority, argument);
 }
 
-export function queueInOwner<T extends ExecFn>(
-  fn: T,
-  localPriority?: number,
-  argument?: Parameters<T>[0],
-  ownerLevel?: number
+export function withQueueNext<S extends Scope>(
+  fn: (scope?: S) => unknown,
+  scope?: S
 ) {
-  queue(fn, localPriority, argument, getOwnerScope(ownerLevel), ownerOffset);
-}
-
-export function withQueueNext(fn: () => unknown) {
   const current = queuedFns;
   const currentMap = queuedFnsMap;
   queuedFns = queuedNext;
   queuedFnsMap = queuedNextMap;
-  const result = fn();
+  const result = fn(scope);
   queuedFns = current;
   queuedFnsMap = currentMap;
   return result;
@@ -76,7 +60,7 @@ export function withQueueNext(fn: () => unknown) {
 export function run() {
   if (queuedFns.length) {
     while (queuedFns.length) {
-      const [fn, scope, offset, priority] = queuedFns as [
+      const [fn, scope, priority] = queuedFns as [
         ExecFn,
         Scope,
         number,
@@ -88,7 +72,7 @@ export function run() {
       // so this allows (some) things to work in the meantime
       const value = queuedFnsMap.get(priority);
       queuedFnsMap.delete(priority);
-      runWithScope(fn, offset, scope, undefined, value);
+      fn(scope, value);
     }
     queuedFns = queuedNext;
     queuedFnsMap = queuedNextMap;

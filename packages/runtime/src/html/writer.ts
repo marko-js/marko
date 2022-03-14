@@ -1,6 +1,6 @@
 import type { Writable } from "stream";
 import { Context, setContext } from "../common/context";
-import { Renderer, Scope, ScopeOffsets, HydrateSymbols } from "../common/types";
+import { Renderer, Scope, HydrateSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
@@ -47,7 +47,7 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
           ? (Object.assign([], { ___id: 0 }) as any as Scope)
           : nullScope;
         hydrateRoot && write(markScopeStart(scope));
-        renderer(input, scope, ScopeOffsets.BEGIN_DATA);
+        renderer(input, scope);
         hydrateRoot && write(markScopeEnd(scope));
       } finally {
         renderedPromises = $_promises;
@@ -70,8 +70,8 @@ export function write(data: string) {
   $_buffer!.content += data;
 }
 
-export function writeCall(fnId: string, offset: number, scopeId: number) {
-  $_buffer!.calls += `"${fnId}",${offset},${scopeId},`;
+export function writeCall(fnId: string, scopeId: number) {
+  $_buffer!.calls += `"${fnId}",${scopeId},`;
 }
 
 export function writeScope(scope: Scope) {

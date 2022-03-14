@@ -29,17 +29,9 @@ export { init, register } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queue, queueInOwner, run } from "./queue";
+export { queue, run } from "./queue";
 
-export {
-  read,
-  write,
-  readInOwner,
-  writeInOwner,
-  bind,
-  runWithScope,
-  runInChild,
-} from "./scope";
+export { write, bind } from "./scope";
 
 export type { Scope } from "../common/types";
 

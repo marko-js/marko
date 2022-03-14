@@ -6,6 +6,7 @@ import { startSection } from "../../util/sections";
 import { assignFinalIds } from "../../util/reserve";
 
 export let currentProgramPath: t.NodePath<t.Program>;
+export let scopeIdentifier: t.Identifier;
 
 export default {
   analyze: {
@@ -22,6 +23,7 @@ export default {
   translate: {
     enter(program: t.NodePath<t.Program>) {
       currentProgramPath = program;
+      scopeIdentifier = program.scope.generateUidIdentifier("scope");
     },
     exit(program: t.NodePath<t.Program>) {
       if (isOutputHTML()) {
