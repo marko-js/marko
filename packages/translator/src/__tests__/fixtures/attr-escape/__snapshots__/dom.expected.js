@@ -1,7 +1,7 @@
 import { classAttr as _classAttr, attr as _attr, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply(_scope) {
-  _classAttr(0, input.className);
+  _classAttr(_scope, 0, input.className);
 
   _attr(_scope, 0, "foo", 'a' + input.foo + 'b');
 

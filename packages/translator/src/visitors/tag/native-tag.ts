@@ -107,7 +107,12 @@ export default {
                   sectionId,
                   valueReferences,
                   t.expressionStatement(
-                    callRuntime(helper, visitIndex!, value.node)
+                    callRuntime(
+                      helper,
+                      scopeIdentifier,
+                      visitIndex!,
+                      value.node
+                    )
                   )
                 );
               }
