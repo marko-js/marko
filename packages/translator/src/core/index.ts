@@ -4,6 +4,7 @@ import IfTag from "./condition/if";
 import ElseIfTag from "./condition/else-if";
 import ElseTag from "./condition/else";
 import ConstTag from "./const";
+import EffectTag from "./effect";
 import ForTag from "./for";
 import GetTag from "./get";
 import HTMLCommentTag from "./html-comment";
@@ -24,6 +25,7 @@ export default {
   "<for>": ForTag,
   "<let>": LetTag,
   "<const>": ConstTag,
+  "<effect>": EffectTag,
   "<html-comment>": HTMLCommentTag,
   "<tag>": TagTag,
   "<set>": SetTag,
