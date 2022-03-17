@@ -1,4 +1,4 @@
-import { queue as _queue, write as _write, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, queueHydrate as _queueHydrate, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_num(_scope, num = _scope[2]) {
   _on(_scope, 0, "click", _scope[3]);
@@ -22,7 +22,7 @@ function _apply_num(_scope, num) {
 
     _data(_scope, 1, num);
 
-    _hydrate_num(_scope);
+    _queueHydrate(_scope, _hydrate_num);
 
     _queue(_scope, _applyWith_selected_num, 2);
   }

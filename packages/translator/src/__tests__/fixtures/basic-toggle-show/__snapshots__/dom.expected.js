@@ -1,4 +1,4 @@
-import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, on as _on, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, on as _on, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_show(_scope, show = _scope[5]) {
   _on(_scope, 4, "click", _scope[6]);
@@ -16,7 +16,7 @@ function _apply_show(_scope, show) {
 
     _write(_scope, 6, _bind(_scope, _onclick));
 
-    _hydrate_show(_scope);
+    _queueHydrate(_scope, _hydrate_show);
   }
 }
 

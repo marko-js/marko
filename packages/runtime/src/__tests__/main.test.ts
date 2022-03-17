@@ -130,8 +130,7 @@ describe("runtime", () => {
 
           document.body.appendChild(container);
 
-          const instance = render(input);
-          container.appendChild(instance);
+          const instance = render(input, container);
 
           initialHTML = getNormalizedHtml(container);
           tracker.logUpdate(input);

@@ -1,4 +1,4 @@
-import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueHydrate as _queueHydrate, queueInBranch as _queueInBranch, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_clickCount(_scope, clickCount = _scope._[4]) {
   _on(_scope, 0, "click", _scope[2]);
@@ -15,7 +15,7 @@ function _apply_clickCount2(_scope, clickCount = _scope._[4]) {
 
   _data(_scope, 1, clickCount);
 
-  _hydrate_clickCount(_scope);
+  _queueHydrate(_scope, _hydrate_clickCount);
 }
 
 function _apply2(_scope) {

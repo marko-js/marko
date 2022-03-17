@@ -1,4 +1,4 @@
-import { queue as _queue, write as _write, on as _on, data as _data, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_count(_scope, count = _scope[2]) {
   _on(_scope, 0, "click", _scope[3]);
@@ -17,7 +17,7 @@ function _apply_count(_scope, count) {
 
     _data(_scope, 1, count);
 
-    _hydrate_count(_scope);
+    _queueHydrate(_scope, _hydrate_count);
   }
 }
 

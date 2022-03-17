@@ -223,7 +223,9 @@ export function writeHydrateGroups(sectionId: number) {
       "apply",
       sectionId,
       references,
-      t.expressionStatement(t.callExpression(identifier, [scopeIdentifier]))
+      t.expressionStatement(
+        callRuntime("queueHydrate", scopeIdentifier, identifier)
+      )
     );
   }
 }

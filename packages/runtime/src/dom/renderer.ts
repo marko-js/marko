@@ -2,6 +2,7 @@ import type { Scope } from "../common/types";
 import { createScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queue, run } from "./queue";
+import { queueHydrate } from ".";
 
 const enum NodeType {
   Element = 1,
@@ -28,7 +29,7 @@ type DynamicInputFn<S extends Scope, I extends Input> = (
   scope: S,
   input: I
 ) => void;
-type RenderResult<I extends Input> = Node & {
+type RenderResult<I extends Input> = {
   update: (input: I) => void;
   destroy: () => void;
 };
@@ -84,9 +85,13 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );
-  return (input: I): RenderResult<I> => {
+  return (input: I, element: Element): RenderResult<I> => {
+    queueHydrate(null as unknown as Scope, () => {
+      element.replaceChildren(dom);
+    });
+
     const scope = createScope(size!) as S;
-    const dom = initRenderer(renderer, scope) as RenderResult<I>;
+    const dom = initRenderer(renderer, scope);
 
     if (dynamicInput) {
       queue(scope, dynamicInput, -1, input);
@@ -94,18 +99,17 @@ export function createRenderFn<I extends Input, S extends Scope>(
 
     run();
 
-    dom.update = (newInput: I) => {
-      if (dynamicInput) {
-        queue(scope, dynamicInput, -1, newInput);
-        run();
-      }
+    return {
+      update: (newInput: I) => {
+        if (dynamicInput) {
+          queue(scope, dynamicInput, -1, newInput);
+          run();
+        }
+      },
+      destroy: () => {
+        // TODO
+      },
     };
-
-    dom.destroy = () => {
-      // TODO
-    };
-
-    return dom;
   };
 }
 

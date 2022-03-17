@@ -1,4 +1,4 @@
-import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_message2(_scope, message = _scope._[5]) {
   _data(_scope, 0, message.text);
@@ -35,7 +35,7 @@ function _apply(_scope) {
 
   _write(_scope, 7, _bind(_scope, _temp2));
 
-  _hydrate(_scope);
+  _queueHydrate(_scope, _hydrate);
 }
 
 const _if = _createRenderer("<!>", "%", _apply2);

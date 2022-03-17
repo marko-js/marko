@@ -100,10 +100,8 @@ describe("translator", () => {
 
           document.body.appendChild(container);
 
-          const instance = render(input);
+          const instance = render(input, container);
           throwErrors();
-
-          container.appendChild(instance);
           tracker.logUpdate(input);
 
           for (const update of steps) {

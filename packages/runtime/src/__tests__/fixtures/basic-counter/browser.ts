@@ -3,6 +3,7 @@ import {
   createRenderFn,
   on,
   queue,
+  queueHydrate,
   write,
   bind,
   Scope,
@@ -28,7 +29,7 @@ export const template = `<button> </button>`;
 export const walks = open(3) + get + next(1) + get + next(1) + close;
 export const render = (scope: ComponentScope) => {
   renderClickCount(scope, 0);
-  hydrate(scope);
+  queueHydrate(scope, hydrate);
 };
 
 export const hydrate = (scope: ComponentScope) => {

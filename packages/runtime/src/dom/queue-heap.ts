@@ -3,11 +3,9 @@ import { schedule } from "./schedule";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
-let queuedFns: unknown[] = [];
-let queuedFnsMap: Map<number, unknown> = new Map();
-
-let queuedNext: unknown[] = [];
-let queuedNextMap: Map<number, unknown> = new Map();
+const queuedFns: unknown[] = [];
+const queuedFnsMap: Map<number, unknown> = new Map();
+let queuedFnsHydrate: Array<Scope | ExecFn> = [];
 
 const enum QueueOffsets {
   FN = 0,
@@ -43,18 +41,11 @@ export function queue<S extends Scope, T extends ExecFn<S>>(
   queuedFnsMap.set(priority, argument);
 }
 
-export function withQueueNext<S extends Scope>(
-  fn: (scope?: S) => unknown,
-  scope?: S
+export function queueHydrate<S extends Scope, T extends ExecFn<S>>(
+  scope: S,
+  fn: T
 ) {
-  const current = queuedFns;
-  const currentMap = queuedFnsMap;
-  queuedFns = queuedNext;
-  queuedFnsMap = queuedNextMap;
-  const result = fn(scope);
-  queuedFns = current;
-  queuedFnsMap = currentMap;
-  return result;
+  queuedFnsHydrate.push(scope, fn as unknown as ExecFn);
 }
 
 export function run() {
@@ -74,10 +65,14 @@ export function run() {
       queuedFnsMap.delete(priority);
       fn(scope, value);
     }
-    queuedFns = queuedNext;
-    queuedFnsMap = queuedNextMap;
-    queuedNext = [];
-    queuedNextMap = new Map();
+    // TODO: determine if it's faster to delete from the map
+    // or just create a new one after the above loop
+  }
+  if (queuedFnsHydrate.length) {
+    for (let i = 0; i < queuedFnsHydrate.length; i += 2) {
+      (queuedFnsHydrate[i + 1] as ExecFn)(queuedFnsHydrate[i] as Scope);
+    }
+    queuedFnsHydrate = [];
   }
 }
 

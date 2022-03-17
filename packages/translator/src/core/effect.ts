@@ -6,6 +6,7 @@ import { addStatement } from "../util/apply-hydrate";
 import { callRuntime } from "../util/runtime";
 import { getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze(tag) {
@@ -47,6 +48,7 @@ export default {
         t.expressionStatement(
           callRuntime(
             "userEffect",
+            scopeIdentifier,
             t.numericLiteral(cleanupIndex),
             defaultAttr.value
           )

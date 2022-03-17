@@ -1,4 +1,4 @@
-import { withQueueNext } from "./queue";
+import { queueHydrate } from "./queue";
 import type { Scope } from "../common/types";
 
 const CLIENT_SCOPE_ID_BIT = 2 ** 52;
@@ -46,7 +46,7 @@ export function destroyScope(scope: Scope) {
   if (cleanup) {
     for (const instance of cleanup) {
       if (typeof instance === "number") {
-        withQueueNext(scope[instance] as () => void);
+        queueHydrate(scope, scope[instance] as () => void);
       } else {
         destroyScope(instance);
       }

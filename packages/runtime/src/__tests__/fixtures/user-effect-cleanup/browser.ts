@@ -3,6 +3,7 @@ import {
   createRenderFn,
   userEffect,
   queue,
+  queueHydrate,
   write,
   bind,
   Scope,
@@ -86,7 +87,7 @@ export const execDynamicInput = (
   input: typeof inputs[0]
 ) => {
   if (write(scope, Index.INPUT_VALUE, input.value)) {
-    hydrateInputValue(scope);
+    queueHydrate(scope, hydrateInputValue);
   }
 };
 

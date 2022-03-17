@@ -1,29 +1,32 @@
-import { queue as _queue, userEffect as _userEffect, write as _write, read as _read, on as _on, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, userEffect as _userEffect, write as _write, on as _on, bind as _bind, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate_clickCount(clickCount = _read(1)) {
-  _userEffect(2, function () {
-    document.getElementById("button").textContent = clickCount;
-  });
-
-  _on(0, "click", _read(3));
-}
-
-const _onclick = function () {
-  const clickCount = _read(1);
-
-  _queue(_apply_clickCount, 0, clickCount + 1);
+const _temp = function (_scope) {
+  const clickCount = _scope[1];
+  document.getElementById("button").textContent = clickCount;
 };
 
-function _apply_clickCount(clickCount) {
-  if (_write(1, clickCount)) {
-    _write(3, _bind(_onclick));
+function _hydrate_clickCount(_scope, clickCount = _scope[1]) {
+  _userEffect(_scope, 2, _bind(_scope, _temp));
 
-    _hydrate_clickCount();
+  _on(_scope, 0, "click", _scope[3]);
+}
+
+const _onclick = function (_scope) {
+  const clickCount = _scope[1];
+
+  _queue(_scope, _apply_clickCount, 0, clickCount + 1);
+};
+
+function _apply_clickCount(_scope, clickCount) {
+  if (_write(_scope, 1, clickCount)) {
+    _write(_scope, 3, _bind(_scope, _onclick));
+
+    _queueHydrate(_scope, _hydrate_clickCount);
   }
 }
 
-function _apply() {
-  _apply_clickCount(0);
+function _apply(_scope) {
+  _apply_clickCount(_scope, 0);
 }
 
 export const template = "<div><button id=button>0</button></div>";

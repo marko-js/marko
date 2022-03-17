@@ -1,4 +1,4 @@
-import { queue as _queue, data as _data, setLoopOf as _setLoopOf, write as _write, on as _on, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, data as _data, setLoopOf as _setLoopOf, write as _write, on as _on, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_item(_scope, item) {
   if (_write(_scope, 1, item)) _data(_scope, 0, item);
@@ -26,7 +26,7 @@ const _onclick = function (_scope) {
 function _applyWith_id_items(_scope, id = _scope[6], items = _scope[7]) {
   _write(_scope, 8, _bind(_scope, _onclick));
 
-  _hydrateWith_id_items(_scope);
+  _queueHydrate(_scope, _hydrateWith_id_items);
 }
 
 const _onclick2 = function (_scope) {
@@ -41,7 +41,7 @@ function _apply_items(_scope, items) {
 
     _write(_scope, 9, _bind(_scope, _onclick2));
 
-    _hydrate_items(_scope);
+    _queueHydrate(_scope, _hydrate_items);
 
     _queue(_scope, _applyWith_id_items, 2);
   }

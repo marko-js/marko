@@ -29,7 +29,7 @@ export { init, register } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queue, run } from "./queue";
+export { queue, queueHydrate, run } from "./queue";
 
 export { write, bind } from "./scope";
 

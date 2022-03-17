@@ -1,6 +1,5 @@
 import type { Renderer } from "./renderer";
 import { onDestroy, write } from "./scope";
-import { withQueueNext } from "./queue";
 import { styleValue, classValue } from "../common/helpers";
 import type { Scope } from "../common/types";
 
@@ -157,9 +156,9 @@ export function userEffect<S extends Scope>(
   fn: EffectFn<S>
 ) {
   const cleanup = scope[index] as ReturnType<EffectFn<S>>;
-  const nextCleanup = withQueueNext(fn as any, scope);
+  const nextCleanup = fn(scope);
   if (cleanup) {
-    withQueueNext(cleanup);
+    cleanup();
   } else {
     onDestroy(scope, index);
   }
@@ -175,7 +174,7 @@ export function lifecycle(
 ) {
   const mounted = scope[index];
   if (!mounted) {
-    if (mount) withQueueNext(mount);
+    if (mount) mount();
     onDestroy(scope, index + 1);
   }
   if (mounted && update) update();
