@@ -7,7 +7,7 @@ import {
   queueInBranch,
   Scope,
 } from "../../../dom/index";
-import { next, over, get, open, close } from "../../utils/walks";
+import { next, over, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -51,7 +51,7 @@ type ComponentScope = Scope<{
 // </div>
 
 export const template = `<div><span></span><span></span><!></div>`;
-export const walks = open(5) + next(3) + get + over(1) + close;
+export const walks = next(3) + get + over(1);
 
 export const _apply_value = (scope: ComponentScope) => {
   setConditionalRenderer(
@@ -82,7 +82,7 @@ export const _applyAttrs = (
   }
 };
 
-export default createRenderFn(template, walks, undefined, 0, _applyAttrs);
+export default createRenderFn(template, walks, undefined, _applyAttrs);
 
 const enum INDEX_BRANCH0 {
   text = 0,
@@ -99,7 +99,7 @@ type Branch0Scope = Scope<{
 
 const branch0 = createRenderer(
   "<span> </span>",
-  open(1) + next(1) + get + next(1) + close,
+  next(1) + get + next(1),
   undefined, // optimization (value will always be set in _apply_value)
   0
 );

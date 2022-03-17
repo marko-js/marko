@@ -1,5 +1,5 @@
 import { data, write, createRenderFn, Scope } from "../../../dom/index";
-import { after, over, open, close } from "../../utils/walks";
+import { after, over } from "../../utils/walks";
 
 const enum Index {
   TEXT = 0,
@@ -13,7 +13,7 @@ type ComponentScope = Scope<{
 
 // Static ${input.value}
 export const template = "Static ";
-export const walks = open(2) + after + over(1) + close;
+export const walks = after + over(1);
 
 export const execInputValue = (scope: ComponentScope) => {
   data(scope, Index.TEXT, scope[Index.INPUT_VALUE]);
@@ -28,4 +28,4 @@ export const execDynamicInput = (
   }
 };
 
-export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, execDynamicInput);

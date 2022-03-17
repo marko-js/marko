@@ -7,7 +7,7 @@ import {
   write,
   Scope,
 } from "../../../dom/index";
-import { get, next, open, close } from "../../utils/walks";
+import { get, next } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -36,7 +36,7 @@ type ComponentScope = Scope<{
 // <button onclick() { a++; b++; }>${a + b}</button>
 
 export const template = `<button> </button>`;
-export const walks = open(4) + get + next(1) + get + next(1) + close;
+export const walks = get + next(1) + get + next(1);
 export const render = (scope: ComponentScope) => {
   execA(scope, 0);
   execB(scope, 0);
@@ -74,4 +74,4 @@ const execSumAB = (scope: ComponentScope, value: number) => {
   }
 };
 
-export default createRenderFn(template, walks, render, 0);
+export default createRenderFn(template, walks, render);

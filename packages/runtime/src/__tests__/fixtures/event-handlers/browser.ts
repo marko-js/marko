@@ -7,7 +7,7 @@ import {
   bind,
   Scope,
 } from "../../../dom/index";
-import { get, next, open, close } from "../../utils/walks";
+import { get, next } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -33,7 +33,7 @@ type ComponentScope = Scope<{
 // <button onclick=(clickCount < 1 ? (() => clickCount++) : false)>${clickCount}</button>
 
 export const template = `<button> </button>`;
-export const walks = open(3) + get + next(1) + get + next(1) + close;
+export const walks = get + next(1) + get + next(1);
 export const render = (scope: ComponentScope) => {
   execClickCount(scope, 0);
 };
@@ -65,4 +65,4 @@ const clickHandler = (scope: ComponentScope) => {
   queue(scope, execClickCount, Index.CLICK_COUNT, scope[Index.CLICK_COUNT] + 1);
 };
 
-export default createRenderFn(template, walks, render, 0);
+export default createRenderFn(template, walks, render);

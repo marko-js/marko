@@ -14,12 +14,12 @@ function _apply_a(_scope, a) {
 }
 
 function _apply(_scope) {
-  _customTag();
+  _customTag(_scope[0]);
 }
 
 const _temp = _createRenderer("<div><!> <!> <!></div>", "D%c%c%", null);
 
 export const template = `${_customTag_template}`;
-export const walks = `${_customTag_walks}`;
+export const walks = `/${_customTag_walks}`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

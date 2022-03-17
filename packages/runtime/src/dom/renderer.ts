@@ -16,7 +16,6 @@ export type Renderer<S extends Scope = Scope> = {
   ___walks: string | undefined;
   ___render: RenderFn<S> | undefined;
   ___clone: () => Node;
-  ___size: number;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
   ___dynamicStartNodeOffset: number | undefined;
@@ -70,7 +69,6 @@ export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
   render?: RenderFn<S>,
-  size?: number,
   dynamicInput?: DynamicInputFn<S, I>,
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
@@ -80,7 +78,6 @@ export function createRenderFn<I extends Input, S extends Scope>(
     template,
     walks,
     render,
-    size,
     hasUserEffects,
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
@@ -90,7 +87,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
       element.replaceChildren(dom);
     });
 
-    const scope = createScope(size!) as S;
+    const scope = createScope() as S;
     const dom = initRenderer(renderer, scope);
 
     if (dynamicInput) {
@@ -117,7 +114,6 @@ export function createRenderer<S extends Scope>(
   template: string,
   walks?: string,
   render?: RenderFn<S>,
-  size = 0,
   hasUserEffects: 0 | 1 = 0,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
@@ -127,7 +123,6 @@ export function createRenderer<S extends Scope>(
     ___walks: walks && trimWalkString(walks),
     ___render: render,
     ___clone: _clone,
-    ___size: size,
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,

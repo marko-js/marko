@@ -9,7 +9,7 @@ import {
   Scope,
 } from "../../../dom/index";
 import { wait } from "../../utils/resolve";
-import { get, next, open, close } from "../../utils/walks";
+import { get, next } from "../../utils/walks";
 
 export const inputs = [{ value: 0 }, wait(4), { value: 1 }, wait(4)] as const;
 
@@ -39,7 +39,7 @@ type ComponentScope = Scope<{
 //   return () => b = previousValue;
 // }/>
 export const template = `<div> </div>`;
-export const walks = open(5) + next(1) + get + next(1) + close;
+export const walks = next(1) + get + next(1);
 export const render = (scope: ComponentScope) => {
   execA(scope, 0);
   execB(scope, 0);
@@ -91,4 +91,4 @@ export const execDynamicInput = (
   }
 };
 
-export default createRenderFn(template, walks, render, 0, execDynamicInput);
+export default createRenderFn(template, walks, render, execDynamicInput);

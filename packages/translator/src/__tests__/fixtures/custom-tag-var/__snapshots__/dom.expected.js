@@ -6,10 +6,10 @@ function _apply_data(_scope, data) {
 }
 
 function _apply(_scope) {
-  _child();
+  _child(_scope[2]);
 }
 
 export const template = `${_child_template}<!>`;
-export const walks = `${_child_walks}%b`;
+export const walks = `1${_child_walks}%b`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

@@ -11,7 +11,7 @@ import {
   Scope,
 } from "../../../dom/index";
 
-import { get, next, over, open, close } from "../../utils/walks";
+import { get, next, over } from "../../utils/walks";
 
 const click = (container: Element) => {
   container.querySelector("button")!.click();
@@ -47,7 +47,7 @@ type ComponentScope = Scope<{
 // <if=show><span>${message}</span></if>
 
 export const template = `<button></button><!>`;
-export const walks = open(7) + get + over(1) + get + over(1) + close;
+export const walks = get + over(1) + get + over(1);
 export const render = (scope: ComponentScope) => {
   _apply_show(scope, true);
   _apply_message(scope, "hi");
@@ -92,7 +92,7 @@ const _apply_message2 = (scope: Branch0Scope) => {
   data(scope, Branch0Index.TEXT, scope._[Index.MESSAGE]);
 };
 
-export default createRenderFn(template, walks, render, 0);
+export default createRenderFn(template, walks, render);
 
 const enum Branch0Index {
   TEXT = 0,
@@ -112,6 +112,5 @@ const _if = createRenderer(
   next(1) + get + next(1),
   (scope: Branch0Scope) => {
     queue(scope, _apply_message2, Branch0Priority.MESSAGE);
-  },
-  0
+  }
 );

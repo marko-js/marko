@@ -1,5 +1,5 @@
 import { attr, createRenderFn, write, Scope } from "../../../dom/index";
-import { get, over, open, close } from "../../utils/walks";
+import { get, over } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -34,7 +34,7 @@ type ComponentScope = Scope<{
 
 // <div a=0 b=input.value/>
 export const template = `<div a=0></div>`;
-export const walks = open(2) + get + over(1) + close;
+export const walks = get + over(1);
 
 export const execInputValue = (scope: ComponentScope) => {
   attr(scope, Index.DIV, "b", scope[Index.INPUT_VALUE]);
@@ -49,4 +49,4 @@ export const execDynamicInput = (
   }
 };
 
-export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, execDynamicInput);

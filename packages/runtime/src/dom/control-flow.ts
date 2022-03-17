@@ -53,7 +53,6 @@ export function setConditionalRenderer<ChildScope extends Scope>(
         scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
       );
       newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] = createScope(
-        newRenderer.___size,
         scope
       ) as ChildScope;
       initRenderer(newRenderer, newScope);
@@ -96,7 +95,7 @@ export function setConditionalRendererOnlyChild(
         scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
       );
       const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
-        createScope(newRenderer.___size, scope));
+        createScope(scope));
       initRenderer(newRenderer, newScope);
       fragment.___insertBefore(newScope, referenceNode, null);
       setContext(null);
@@ -177,7 +176,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
       const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
       if (!childScope) {
-        childScope = createScope(renderer.___size, scope) as ChildScope;
+        childScope = createScope(scope) as ChildScope;
         initRenderer<ChildScope>(renderer, childScope);
         // TODO: once we can track moves
         // needsReconciliation = true;

@@ -6,7 +6,7 @@ import {
   write,
   Scope,
 } from "../../../dom/index";
-import { over, get, next, open, close } from "../../utils/walks";
+import { over, get, next } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -51,7 +51,7 @@ type ComponentScope = Scope<{
 // </div>
 
 export const template = `<div></div>`;
-export const walks = open(7) + get + over(1) + close;
+export const walks = get + over(1);
 
 export const execInputFromToStep = (scope: ComponentScope) => {
   setLoopFromTo(
@@ -72,7 +72,7 @@ export const execDynamicInput = (scope: ComponentScope, input: Input) => {
   execInputFromToStep(scope);
 };
 
-export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, execDynamicInput);
 
 const enum Iter0Index {
   TEXT = 0,
@@ -85,12 +85,7 @@ type IterScope = Scope<{
   [Iter0Index.ITEM]: number;
 }>;
 
-const iter0 = createRenderer(
-  " ",
-  open(4) + get + next(1) + close,
-  undefined,
-  0
-);
+const iter0 = createRenderer(" ", get + next(1), undefined, 0);
 
 const iter0_execItem = (scope: IterScope, item: number) => {
   if (write(scope, Iter0Index.ITEM, item)) {

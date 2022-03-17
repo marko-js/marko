@@ -5,7 +5,7 @@ export const before = String.fromCharCode(WalkCodes.Before);
 export const after = String.fromCharCode(WalkCodes.After);
 export const replace = String.fromCharCode(WalkCodes.Replace);
 export const inside = String.fromCharCode(WalkCodes.Inside);
-export const close = String.fromCharCode(WalkCodes.Close);
+export const endChild = String.fromCharCode(WalkCodes.EndChild);
 
 export function next(value: number) {
   return toCharString(value, WalkCodes.Next, WalkRangeSizes.Next);
@@ -19,8 +19,8 @@ export function out(value: number) {
   return toCharString(value, WalkCodes.Out, WalkRangeSizes.Out);
 }
 
-export function open(value: number) {
-  return toCharString(value, WalkCodes.Open, WalkRangeSizes.Open);
+export function beginChild(value: number) {
+  return toCharString(value, WalkCodes.BeginChild, WalkRangeSizes.BeginChild);
 }
 
 export function skip(value: number) {

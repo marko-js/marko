@@ -9,7 +9,7 @@ import {
   queueInBranch,
   Scope,
 } from "../../../dom/index";
-import { next, over, get, open, close, skip } from "../../utils/walks";
+import { next, over, get, skip } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -74,7 +74,7 @@ type ComponentScope = Scope<{
 // </div>
 
 export const template = `<div><!></div>`;
-export const walks = open(7) + next(1) + get + over(1) + close;
+export const walks = next(1) + get + over(1);
 
 export const _apply_show = (scope: ComponentScope) => {
   setConditionalRenderer(
@@ -153,7 +153,7 @@ export const execDynamicInput = (scope: ComponentScope, input: Input) => {
   write(scope, INDEX.value2, input.value2) && execInputValue2(scope);
 };
 
-export default createRenderFn(template, walks, undefined, 0, execDynamicInput);
+export default createRenderFn(template, walks, undefined, execDynamicInput);
 
 const enum INDEX_BRANCH0 {
   comment1 = 0,
@@ -179,12 +179,11 @@ type Branch0Scope = Scope<{
 
 const branch0 = createRenderer(
   "<!><!>",
-  open(8) + get + over(1) + skip(3) + get + over(1) + close,
+  get + over(1) + skip(3) + get + over(1),
   (scope: Branch0Scope) => {
     queue(scope, execInputValue1Branch0, PRIORITY_BRANCH0.value1);
     queue(scope, execInputValue2Branch0, PRIORITY_BRANCH0.value2);
   },
-  0,
   0,
   0,
   4
@@ -205,7 +204,7 @@ type Branch0_0Scope = Scope<{
 
 const branch0_0 = createRenderer(
   "<span> </span>",
-  open(1) + next(1) + get + next(1) + close,
+  next(1) + get + next(1),
   undefined,
   0
 );
@@ -227,7 +226,7 @@ type Branch0_1Scope = Scope<{
 // so they could share the same renderer instance
 const branch0_1 = createRenderer(
   "<span> </span>",
-  open(1) + next(1) + get + next(1) + close,
+  next(1) + get + next(1),
   undefined,
   0
 );

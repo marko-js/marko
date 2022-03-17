@@ -5,14 +5,14 @@ const CLIENT_SCOPE_ID_BIT = 2 ** 52;
 const SCOPE_ID_MULTIPLIER = 2 ** 16;
 let scopeId = 0;
 
-export function createScope(size: number, owner?: Scope): Scope {
-  const scope = new Array(size) as Scope;
+export function createScope(owner?: Scope): Scope {
+  const scope = [] as unknown as Scope;
   scope.___id = CLIENT_SCOPE_ID_BIT + SCOPE_ID_MULTIPLIER * scopeId++;
   scope._ = owner;
   return scope;
 }
 
-const emptyScope = createScope(0);
+const emptyScope = createScope();
 export function getEmptyScope(marker?: Comment) {
   emptyScope.___startNode = emptyScope.___endNode = marker;
   return emptyScope;

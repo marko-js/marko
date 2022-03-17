@@ -29,13 +29,13 @@ export const enum WalkCodes {
   After = 35,
   Inside = 36,
   Replace = 37,
-  Close = 38,
+  EndChild = 38,
 
   Skip = 40,
   SkipEnd = 46,
 
-  Open = 47,
-  OpenEnd = 66,
+  BeginChild = 47,
+  BeginChildEnd = 66,
 
   Next = 67,
   NextEnd = 91,
@@ -52,7 +52,7 @@ export const enum WalkCodes {
 
 export const enum WalkRangeSizes {
   Skip = 7, // 40 through 46
-  Open = 20, // 47 through 66
+  BeginChild = 20, // 47 through 66
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
@@ -67,22 +67,19 @@ export function trimWalkString(walkString: string): string {
 
 export function walk(startNode: Node, walkCodes: string, scope: Scope) {
   walker.currentNode = startNode;
-  walkInternal(walkCodes, scope, 0, 0, true);
+  walkInternal(walkCodes, scope, 0);
   walker.currentNode = document.documentElement;
 }
 
 function walkInternal(
   walkCodes: string,
   scope: Scope,
-  currentWalkIndex: number,
-  size: number,
-  root?: boolean
+  currentWalkIndex: number
 ) {
   let value: number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
-  let childCount = 0;
 
   while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
     currentMultiplier = storedMultiplier;
@@ -110,18 +107,20 @@ function walkInternal(
       while (value--) {
         walker.nextNode();
       }
-    } else if (value >= WalkCodes.Open) {
-      value = WalkRangeSizes.Open * currentMultiplier + value - WalkCodes.Open;
+    } else if (value >= WalkCodes.BeginChild) {
+      value =
+        WalkRangeSizes.BeginChild * currentMultiplier +
+        value -
+        WalkCodes.BeginChild;
       currentWalkIndex = walkInternal(
         walkCodes,
-        root ? scope : (scope[size - childCount++] = createScope(value, scope)),
-        currentWalkIndex,
-        value
+        (scope[value] = createScope(scope)),
+        currentWalkIndex
       )!;
     } else if (value >= WalkCodes.Skip) {
       currentScopeIndex +=
         WalkRangeSizes.Skip * currentMultiplier + value - WalkCodes.Skip;
-    } else if (value === WalkCodes.Close) {
+    } else if (value === WalkCodes.EndChild) {
       return currentWalkIndex;
     } else if (value === WalkCodes.Get) {
       scope[currentScopeIndex++] = walker.currentNode;

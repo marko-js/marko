@@ -10,10 +10,15 @@ import translateVar from "../../util/translate-var";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
-import { callRuntime } from "../../util/runtime";
-import { startSection, getSectionId } from "../../util/sections";
+import { callRuntime, callRead } from "../../util/runtime";
+import {
+  startSection,
+  getSectionId,
+  getOrCreateSectionId,
+} from "../../util/sections";
 import trackReferences from "../../util/references";
 import { addStatement } from "../../util/apply-hydrate";
+import { reserveScope, ReserveType } from "../../util/reserve";
 
 export default {
   analyze: {
@@ -23,6 +28,15 @@ export default {
       const body = tag.get("body");
       if (body.get("body").length) {
         startSection(body);
+      }
+
+      if (getTagDef(tag)?.template) {
+        reserveScope(
+          ReserveType.Store,
+          getOrCreateSectionId(tag),
+          tag.node,
+          "child"
+        );
       }
     },
   },
@@ -39,6 +53,7 @@ export default {
       const isHTML = isOutputHTML();
       const { node } = tag;
       const write = writer.writeTo(tag);
+      const binding = node.extra.reserve!;
       let tagIdentifier: t.Expression;
 
       if (isHTML) {
@@ -73,6 +88,7 @@ export default {
           )}`;
           walks.injectWalks(
             tag,
+            binding.id,
             importNamed(file, relativePath, "walks", `${tagName}_walks`)
           );
         }
@@ -163,7 +179,9 @@ export default {
             "apply",
             tagSectionId,
             undefined,
-            t.expressionStatement(t.callExpression(tagIdentifier, []))
+            t.expressionStatement(
+              t.callExpression(tagIdentifier, [callRead(binding, tagSectionId)])
+            )
           );
           tag.remove();
         }
