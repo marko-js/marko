@@ -1,4 +1,4 @@
-import { createParser, OpenTagEnding } from "htmljs-parser";
+import { createParser } from "htmljs-parser";
 import * as t from "../babel-types";
 import {
   parseScript,
@@ -202,32 +202,35 @@ export function parseMarko(file) {
     },
     onTagName(part) {
       const tagName = parseTemplateString(part);
-      let tagDef;
-
-      if (t.isStringLiteral(tagName)) {
-        const literalTagName = tagName.value || (tagName.value = "div");
-        if (literalTagName === "%") {
-          throw file.buildCodeFrameError(
-            tagName,
-            "<% scriptlets %> are no longer supported."
-          );
-        }
-
-        tagDef = getTagDefForTagName(file, literalTagName);
-      }
-
       const node = t.markoTag(tagName, [], t.markoTagBody());
       node.start = part.start - (part.concise ? 0 : 1); // Account for leading `<`.
       node.end = part.end;
 
-      if (
-        !preservingWhitespaceUntil &&
-        tagDef?.parseOptions?.preserveWhitespace
-      ) {
-        preservingWhitespaceUntil = node;
+      if (t.isStringLiteral(tagName)) {
+        let literalTagName = tagName.value;
+
+        switch (literalTagName) {
+          case "pre":
+          case "style":
+          case "script":
+          case "textarea":
+            preservingWhitespaceUntil = node;
+            break;
+
+          case "%":
+            throw file.buildCodeFrameError(
+              tagName,
+              "<% scriptlets %> are no longer supported."
+            );
+
+          case "":
+            literalTagName = tagName.value = "div";
+            break;
+        }
+
+        node.tagDef = getTagDefForTagName(file, literalTagName);
       }
 
-      node.tagDef = tagDef;
       enterTag(node);
     },
     onTagShorthandId(part) {
@@ -393,10 +396,7 @@ export function parseMarko(file) {
         currentShorthandId = undefined;
       }
 
-      if (
-        part.ending & OpenTagEnding.code ||
-        node.tagDef?.parseOptions?.rawOpenTag
-      ) {
+      if (node.tagDef?.parseOptions?.rawOpenTag) {
         node.rawValue = parser.read({
           start: node.name.start,
           end: part.start

@@ -57,10 +57,7 @@
         "snippet": "area ${1:shape=\"${2:default}\"} coords=\"$3\" ${4:href=\"${5:https://}\"}"
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<article>": {
     "html": true,
@@ -102,10 +99,7 @@
         "snippet": "base href=\"${1:https://}\" target=\"${2:_top}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<bdi>": {
     "html": true,
@@ -155,10 +149,7 @@
   },
   "<br>": {
     "html": true,
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<button>": {
     "@autofocus": "#html-autofocus",
@@ -209,10 +200,7 @@
   "<col>": {
     "@span": "#html-span",
     "html": true,
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<colgroup>": {
     "@span": "#html-span",
@@ -276,10 +264,7 @@
         "snippet": "embed type=\"${1:video/quicktime}\" src=\"${2:https://}\" width=\"${3:300}\" height=\"${4:300}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<fieldset>": {
     "@disabled": "#html-disabled",
@@ -356,10 +341,7 @@
   },
   "<hr>": {
     "html": true,
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<html>": {
     "html": true,
@@ -426,10 +408,7 @@
         "snippet": "img src=\"$1\" alt=\"$2\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<input>": {
     "@accept": "#html-accept",
@@ -471,10 +450,7 @@
         "triggerAutocompleteAfterInsert": true
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<ins>": {
     "@cite": "#html-cite",
@@ -533,10 +509,7 @@
         "snippet": "link rel=\"import\" href=\"$1\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<map>": {
     "@name": "#html-name",
@@ -563,10 +536,7 @@
         "snippet": "meta name=\"${1:name}\" content=\"${2:content}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<meter>": {
     "@form": "#html-form",
@@ -660,19 +630,13 @@
         "snippet": "param name=\"${1:foo}\" value=\"${2:bar}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<picture>": {
     "html": true,
     "attribute-groups": ["html-attributes"]
   },
   "<pre>": {
-    "parse-options": {
-      "preserveWhitespace": true
-    },
     "html": true,
     "attribute-groups": ["html-attributes"]
   },
@@ -719,9 +683,6 @@
     "attribute-groups": ["html-attributes"]
   },
   "<script>": {
-    "parse-options": {
-      "preserveWhitespace": true
-    },
     "@async": "#html-async",
     "@crossorigin": "#html-crossorigin",
     "@defer": "#html-defer",
@@ -771,10 +732,7 @@
         "snippet": "source src=\"${1:https://}\" type=\"${2:mime/type}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<span>": {
     "html": true,
@@ -785,9 +743,6 @@
     "attribute-groups": ["html-attributes"]
   },
   "<style>": {
-    "parse-options": {
-      "preserveWhitespace": true
-    },
     "@disabled": "#html-disabled",
     "@media": "#html-media",
     "@nonce": "#html-nonce",
@@ -823,9 +778,6 @@
     "attribute-groups": ["html-attributes"]
   },
   "<textarea>": {
-    "parse-options": {
-      "preserveWhitespace": true
-    },
     "@autocomplete": "#html-autocomplete",
     "@autofocus": "#html-autofocus",
     "@cols": "#html-cols",
@@ -888,10 +840,7 @@
         "snippet": "track kind=\"${1:subtitles}\" src=\"${2:sampleSubtitles_en.srt}\" srclang=\"${3:en}\""
       }
     ],
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "<u>": {
     "html": true,
@@ -928,10 +877,7 @@
   },
   "<wbr>": {
     "html": true,
-    "attribute-groups": ["html-attributes"],
-    "parse-options": {
-      "openTagOnly": true
-    }
+    "attribute-groups": ["html-attributes"]
   },
   "attribute-groups": {
     "html-attributes": {
