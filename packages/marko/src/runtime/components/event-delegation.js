@@ -79,16 +79,6 @@ function addDelegatedEventHandlerToHost(eventType, host) {
     (host.body || host).addEventListener(
       eventType,
       (listeners[eventType] = function (event) {
-        var propagationStopped = false;
-
-        // Monkey-patch to fix #97
-        var oldStopPropagation = event.stopPropagation;
-
-        event.stopPropagation = function () {
-          oldStopPropagation.call(event);
-          propagationStopped = true;
-        };
-
         var curNode = event.target;
         if (!curNode) {
           return;
@@ -111,15 +101,29 @@ function addDelegatedEventHandlerToHost(eventType, host) {
         // Attributes will have the following form:
         // on<event_type>("<target_method>|<component_id>")
 
-        do {
-          if ((target = getEventFromEl(curNode, propName))) {
-            delegateEvent(curNode, propName, target, event);
+        if (event.bubbles) {
+          var propagationStopped = false;
 
-            if (propagationStopped) {
-              break;
+          // Monkey-patch to fix #97
+          var oldStopPropagation = event.stopPropagation;
+
+          event.stopPropagation = function () {
+            oldStopPropagation.call(event);
+            propagationStopped = true;
+          };
+
+          do {
+            if ((target = getEventFromEl(curNode, propName))) {
+              delegateEvent(curNode, propName, target, event);
+
+              if (propagationStopped) {
+                break;
+              }
             }
-          }
-        } while ((curNode = curNode.parentNode) && curNode.getAttribute);
+          } while ((curNode = curNode.parentNode) && curNode.getAttribute);
+        } else if ((target = getEventFromEl(curNode, propName))) {
+          delegateEvent(curNode, propName, target, event);
+        }
       }),
       true
     );
