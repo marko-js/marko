@@ -38,9 +38,13 @@ function _apply(_scope) {
   _queueHydrate(_scope, _hydrate);
 }
 
-const _if = _createRenderer("<!>", "%", _apply2);
+const _if = _createRenderer("<!>",
+/* replace */
+"%", _apply2);
 
 export const template = "<button>hide</button><!>";
-export const walks = " b%+b";
+export const walks =
+/* get, over(1), replace, skip(3), over(1) */
+" b%+b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

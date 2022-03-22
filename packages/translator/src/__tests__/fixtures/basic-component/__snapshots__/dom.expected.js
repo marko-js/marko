@@ -6,6 +6,8 @@ function _apply(_scope) {
 
 import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 export const template = `<div>${_counter_template}</div>`;
-export const walks = `D/${_counter_walks}l`;
+export const walks =
+/* next(1), beginChild(0), _counter_walks, endChild, out(1) */
+`D/${_counter_walks}&l`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

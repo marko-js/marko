@@ -9,6 +9,8 @@ import { createRenderer as _createRenderer, createRenderFn as _createRenderFn } 
 const _temp = _createRenderer("This is the body content", "", null);
 
 export const template = `${_child_template}`;
-export const walks = `/${_child_walks}`;
+export const walks =
+/* beginChild(0), _child_walks, endChild */
+`/${_child_walks}&`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

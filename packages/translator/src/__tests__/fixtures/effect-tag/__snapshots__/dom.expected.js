@@ -18,6 +18,8 @@ function _apply(_scope) {
 }
 
 export const template = "<div id=ref>0</div>";
-export const walks = "b";
+export const walks =
+/* over(1) */
+"b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

@@ -9,6 +9,8 @@ function _apply(_scope) {
 }
 
 export const template = "<div></div>";
-export const walks = " b";
+export const walks =
+/* get, over(1) */
+" b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

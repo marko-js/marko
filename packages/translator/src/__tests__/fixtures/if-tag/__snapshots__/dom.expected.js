@@ -33,6 +33,8 @@ const _if = _createRenderer("Hello", "", null),
       _if3 = _createRenderer("C", "", null);
 
 export const template = "<!><!><div><!></div>";
-export const walks = "%+b%+bD%+l";
+export const walks =
+/* replace, skip(3), over(1), replace, skip(3), over(1), next(1), replace, skip(3), out(1) */
+"%+b%+bD%+l";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

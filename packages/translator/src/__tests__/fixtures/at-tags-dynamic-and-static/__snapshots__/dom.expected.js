@@ -10,6 +10,8 @@ const _temp = _createRenderer("", "", null),
       _temp2 = _createRenderer("", "", null);
 
 export const template = `${_hello_template}`;
-export const walks = `/${_hello_walks}`;
+export const walks =
+/* beginChild(0), _hello_walks, endChild */
+`/${_hello_walks}&`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

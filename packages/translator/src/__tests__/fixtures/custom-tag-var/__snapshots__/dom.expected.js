@@ -10,6 +10,8 @@ function _apply(_scope) {
 }
 
 export const template = `${_child_template}<!>`;
-export const walks = `1${_child_walks}%b`;
+export const walks =
+/* beginChild(2), _child_walks, endChild, replace, over(1) */
+`1${_child_walks}&%b`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

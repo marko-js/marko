@@ -11,10 +11,14 @@ function _apply(_scope) {
   _customTag(_scope[1]);
 }
 
-const _temp2 = _createRenderer("<!>", "%+", null),
+const _temp2 = _createRenderer("<!>",
+/* replace, skip(3) */
+"%+", null),
       _if = _createRenderer("", "", null);
 
 export const template = `${_customTag_template}`;
-export const walks = `0${_customTag_walks}`;
+export const walks =
+/* beginChild(1), _customTag_walks, endChild */
+`0${_customTag_walks}&`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

@@ -27,6 +27,8 @@ function _apply(_scope) {
 const _if = _createRenderer("Hello!", "", null);
 
 export const template = "<div><!><button>Toggle</button></div>";
-export const walks = "D%+b l";
+export const walks =
+/* next(1), replace, skip(3), over(1), get, out(1) */
+"D%+b l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

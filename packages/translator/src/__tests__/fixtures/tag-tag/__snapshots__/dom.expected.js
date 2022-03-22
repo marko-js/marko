@@ -10,7 +10,9 @@ function _apply_input(_scope, input) {
   if (_write(_scope, 1, input)) _data(_scope, 0, input.name);
 }
 
-const _temp = _createRenderer("Hello <!>", "b%", null);
+const _temp = _createRenderer("Hello <!>",
+/* over(1), replace */
+"b%", null);
 
 export const template = "";
 export const walks = "";

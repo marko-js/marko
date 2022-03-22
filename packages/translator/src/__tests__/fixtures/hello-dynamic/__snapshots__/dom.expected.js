@@ -13,6 +13,8 @@ function _apply_name(_scope, name) {
 }
 
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
-export const walks = "b%c%c%c";
+export const walks =
+/* over(1), replace, over(2), replace, over(2), replace, over(2) */
+"b%c%c%c";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

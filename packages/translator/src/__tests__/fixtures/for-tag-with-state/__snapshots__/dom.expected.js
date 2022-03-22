@@ -30,10 +30,16 @@ function _apply(_scope) {
   _apply_arrB(_scope, [1, 2, 3]);
 }
 
-const _for = _createRenderer("<div><!>: <!></div>", "D%c%", null),
-      _for2 = _createRenderer("<div><!>: <!></div>", "D%c%", null);
+const _for = _createRenderer("<div><!>: <!></div>",
+/* next(1), replace, over(2), replace */
+"D%c%", null),
+      _for2 = _createRenderer("<div><!>: <!></div>",
+/* next(1), replace, over(2), replace */
+"D%c%", null);
 
 export const template = "<!><!>";
-export const walks = "%+b%+b";
+export const walks =
+/* replace, skip(3), over(1), replace, skip(3), over(1) */
+"%+b%+b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

@@ -30,6 +30,8 @@ function _apply(_scope) {
 }
 
 export const template = "<div><button id=button>0</button></div>";
-export const walks = "D l";
+export const walks =
+/* next(1), get, out(1) */
+"D l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

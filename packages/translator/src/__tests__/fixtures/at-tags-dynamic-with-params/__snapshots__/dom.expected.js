@@ -15,11 +15,17 @@ function _apply2(_scope) {
   _hello(_scope[1]);
 }
 
-const _temp2 = _createRenderer("<!>", "%+", null),
+const _temp2 = _createRenderer("<!>",
+/* replace, skip(3) */
+"%+", null),
       _if = _createRenderer("", "", null),
-      _temp3 = _createRenderer("", "%", _apply);
+      _temp3 = _createRenderer("",
+/* replace */
+"%", _apply);
 
 export const template = `${_hello_template}`;
-export const walks = `0${_hello_walks}`;
+export const walks =
+/* beginChild(1), _hello_walks, endChild */
+`0${_hello_walks}&`;
 export const apply = _apply2;
 export default _createRenderFn(template, walks, apply);

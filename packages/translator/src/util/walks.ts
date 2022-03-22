@@ -12,6 +12,10 @@ const [getWalks] = createSectionState<(string | t.Expression)[]>(
   "walks",
   () => [""]
 );
+const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
+  "walkComment",
+  () => []
+);
 const [getSteps] = createSectionState<Step[]>("steps", () => []);
 
 export enum WalkCodes {
@@ -55,6 +59,27 @@ export enum Step {
   exit,
 }
 
+const walkCodeToName = {
+  [WalkCodes.Get]: "get",
+  [WalkCodes.Before]: "before",
+  [WalkCodes.After]: "after",
+  [WalkCodes.Inside]: "inside",
+  [WalkCodes.Replace]: "replace",
+  [WalkCodes.EndChild]: "endChild",
+  [WalkCodes.Skip]: "skip",
+  [WalkCodes.BeginChild]: "beginChild",
+  [WalkCodes.Next]: "next",
+  [WalkCodes.Over]: "over",
+  [WalkCodes.Out]: "out",
+  [WalkCodes.Multiplier]: "multiplier",
+  [WalkCodes.SkipEnd]: "skipEnd",
+  [WalkCodes.BeginChildEnd]: "beginChildEnd",
+  [WalkCodes.NextEnd]: "nextEnd",
+  [WalkCodes.OverEnd]: "overEnd",
+  [WalkCodes.OutEnd]: "outEnd",
+  [WalkCodes.MultiplierEnd]: "multiplierEnd",
+};
+
 type VisitCodes =
   | WalkCodes.Get
   | WalkCodes.Before
@@ -80,8 +105,14 @@ export function injectWalks(
   expr: t.Expression
 ) {
   const walks = getWalks(getSectionId(path));
+  const walkComment = getWalkComment(getSectionId(path));
+  walkComment.push(
+    `${walkCodeToName[WalkCodes.BeginChild]}(${childIndex})`,
+    (expr as t.Identifier).name,
+    walkCodeToName[WalkCodes.EndChild]
+  );
   appendLiteral(walks, nCodeString(WalkCodes.BeginChild, childIndex));
-  walks.push(expr, "");
+  walks.push(expr, String.fromCharCode(WalkCodes.EndChild));
 }
 
 export function visit(
@@ -98,6 +129,7 @@ export function visit(
   const sectionId = getSectionId(path);
   const steps = getSteps(sectionId);
   const walks = getWalks(sectionId);
+  const walkComment = getWalkComment(sectionId);
 
   if (code && isOutputHTML()) {
     writeTo(path)`${callRuntime(
@@ -135,6 +167,7 @@ export function visit(
 
       for (const walk of walks) {
         if (walk !== current) {
+          walkComment.push(`${walkCodeToName[current]}(${count})`);
           walkString += nCodeString(current, count);
           current = walk;
           count = 1;
@@ -143,6 +176,7 @@ export function visit(
         }
       }
 
+      walkComment.push(`${walkCodeToName[current]}(${count})`);
       walkString += nCodeString(current, count);
       steps.length = 0;
     }
@@ -151,10 +185,12 @@ export function visit(
       if (code !== WalkCodes.Get) {
         writeTo(path)`<!>`;
       }
+      walkComment.push(`${walkCodeToName[code]}`);
       walkString += String.fromCharCode(code);
     }
 
     if (reserve?.size) {
+      walkComment.push(`${walkCodeToName[WalkCodes.Skip]}(${reserve.size})`);
       walkString += nCodeString(WalkCodes.Skip, reserve.size);
     }
 
@@ -197,5 +233,15 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 }
 
 export function getWalkString(sectionId: number) {
-  return toTemplateOrStringLiteral(getWalks(sectionId)) || t.stringLiteral("");
+  const walkLiteral =
+    toTemplateOrStringLiteral(getWalks(sectionId)) || t.stringLiteral("");
+  if ((walkLiteral as t.StringLiteral).value !== "") {
+    walkLiteral.leadingComments = [
+      {
+        type: "CommentBlock",
+        value: " " + getWalkComment(sectionId).join(", ") + " ",
+      } as t.CommentBlock,
+    ] as const;
+  }
+  return walkLiteral;
 }

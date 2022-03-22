@@ -9,6 +9,8 @@ function _apply(_scope) {
 }
 
 export const template = "<!> <!>";
-export const walks = "%c%b";
+export const walks =
+/* replace, over(2), replace, over(1) */
+"%c%b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

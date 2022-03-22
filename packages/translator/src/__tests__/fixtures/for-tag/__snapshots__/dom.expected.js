@@ -123,19 +123,39 @@ function _apply(_scope) {
   });
 }
 
-const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>", "D%c%", null),
-      _temp4 = _createRenderer("<div><!>: <!></div><div></div><div></div>", "D%c%", null),
-      _temp5 = _createRenderer("<div><!></div><div></div><div></div>", "D%", null),
-      _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>", " D%c%lb ", null),
-      _for3 = _createRenderer("<div><!>: <!></div>", " D%c%", null),
-      _temp6 = _createRenderer("<div><!>: <!></div><div></div><div></div>", " D%c%lb ", null),
-      _temp7 = _createRenderer("<div><!></div><div></div><div></div><!>", " D%lb b%+", null),
-      _temp8 = _createRenderer("<div><!></div><div></div><div></div>", " D%lb ", null),
-      _temp9 = _createRenderer("<div><!></div><div></div><div></div>", " D%lb ", null),
+const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+/* next(1), replace, over(2), replace */
+"D%c%", null),
+      _temp4 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+/* next(1), replace, over(2), replace */
+"D%c%", null),
+      _temp5 = _createRenderer("<div><!></div><div></div><div></div>",
+/* next(1), replace */
+"D%", null),
+      _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+/* get, next(1), replace, over(2), replace, out(1), over(1), get */
+" D%c%lb ", null),
+      _for3 = _createRenderer("<div><!>: <!></div>",
+/* get, next(1), replace, over(2), replace */
+" D%c%", null),
+      _temp6 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+/* get, next(1), replace, over(2), replace, out(1), over(1), get */
+" D%c%lb ", null),
+      _temp7 = _createRenderer("<div><!></div><div></div><div></div><!>",
+/* get, next(1), replace, out(1), over(1), get, over(1), replace, skip(3) */
+" D%lb b%+", null),
+      _temp8 = _createRenderer("<div><!></div><div></div><div></div>",
+/* get, next(1), replace, out(1), over(1), get */
+" D%lb ", null),
+      _temp9 = _createRenderer("<div><!></div><div></div><div></div>",
+/* get, next(1), replace, out(1), over(1), get */
+" D%lb ", null),
       _temp10 = _createRenderer("Hello", "", null),
       _temp11 = _createRenderer("Hello", "", null);
 
 export const template = "<!><!><!><!><!><!><!><!><!><!>";
-export const walks = "%+b%+b%+b%+b%+b%+b%+b%+b%+b%+b";
+export const walks =
+/* replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1), replace, skip(3), over(1) */
+"%+b%+b%+b%+b%+b%+b%+b%+b%+b%+b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

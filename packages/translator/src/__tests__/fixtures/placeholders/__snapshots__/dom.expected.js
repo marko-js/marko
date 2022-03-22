@@ -13,6 +13,8 @@ function _apply(_scope) {
 }
 
 export const template = "<div><div>a</div><!>Hello Text &lt;a/><!><!><script>\n    Hello &lt;b> &lt;/script>\n  </script></div>";
-export const walks = "Db%c%c%l";
+export const walks =
+/* next(1), over(1), replace, over(2), replace, over(2), replace, out(1) */
+"Db%c%c%l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

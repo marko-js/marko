@@ -13,6 +13,8 @@ function _apply_x(_scope, x) {
 }
 
 export const template = "<!></span></div>";
-export const walks = "E%m";
+export const walks =
+/* next(2), replace, out(2) */
+"E%m";
 export const apply = null;
 export default _createRenderFn(template, walks, apply);

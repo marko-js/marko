@@ -17,9 +17,13 @@ function _apply(_scope) {
   _customTag(_scope[0]);
 }
 
-const _temp = _createRenderer("<div><!> <!> <!></div>", "D%c%c%", null);
+const _temp = _createRenderer("<div><!> <!> <!></div>",
+/* next(1), replace, over(2), replace, over(2), replace */
+"D%c%c%", null);
 
 export const template = `${_customTag_template}`;
-export const walks = `/${_customTag_walks}`;
+export const walks =
+/* beginChild(0), _customTag_walks, endChild */
+`/${_customTag_walks}&`;
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);
