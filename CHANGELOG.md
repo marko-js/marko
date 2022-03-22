@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.1](https://github.com/marko-js/marko/compare/v5.20.0...v5.20.1) (2022-03-22)
+
+
+### Bug Fixes
+
+* prevent bubbling non bubbling events ([#1781](https://github.com/marko-js/marko/issues/1781)) ([7c4de65](https://github.com/marko-js/marko/commit/7c4de6549532f39b8cd4ad70691dfa4e9efe9cd7))
+
+
+
+
+
 # [5.20.0](https://github.com/marko-js/marko/compare/v5.19.3...v5.20.0) (2022-03-11)
 
 
