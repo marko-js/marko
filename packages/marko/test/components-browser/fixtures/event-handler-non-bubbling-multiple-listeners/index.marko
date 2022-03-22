@@ -1,0 +1,16 @@
+class {
+	onCreate() {
+		this.rootCallCount = 0;
+		this.fooCallCount = 0;
+	}
+	focusRoot() {
+		this.rootCallCount++;
+	}
+	focusFoo() {
+		this.fooCallCount++;
+	}
+}
+
+<div key="root" tabindex=-1 onFocus("focusRoot")>
+	<input key="foo" type="text" onFocus("focusFoo")>
+</div>
