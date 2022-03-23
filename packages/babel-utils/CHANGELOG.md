@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.2](https://github.com/marko-js/marko/compare/v5.20.1...v5.20.2) (2022-03-23)
+
+
+### Bug Fixes
+
+* **babel-utils:** missing prop types on TagDefinition ([5d8abd5](https://github.com/marko-js/marko/commit/5d8abd53d8fc87e16cf69abe0b0a596606023268))
+
+
+
+
+
 # [5.20.0](https://github.com/marko-js/marko/compare/v5.19.3...v5.20.0) (2022-03-11)
 
 
