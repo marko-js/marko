@@ -5,6 +5,7 @@ import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import createBrowser from "./utils/create-browser";
 import createMutationTracker from "./utils/track-mutations";
+import glob from "tiny-glob";
 
 type TestConfig = {
   steps?: unknown[];
@@ -36,8 +37,19 @@ describe("translator", () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
       const templateFile = resolve("template.marko");
-      const snapJS = (fn: () => unknown) => snap(fn, ".js", fixtureDir);
       const snapMD = (fn: () => unknown) => snap(fn, ".md", fixtureDir);
+      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
+        await snap(
+          () => compileCode(templateFile, compilerConfig),
+          ".js",
+          fixtureDir
+        );
+        const additionalMarkoFiles = await glob(resolve("*/**/*.marko"));
+        for (const file of additionalMarkoFiles) {
+          const name = path.relative(fixtureDir, file).replace(".marko", ".js");
+          await snap(() => compileCode(file, compilerConfig), name, fixtureDir);
+        }
+      };
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -48,11 +60,11 @@ describe("translator", () => {
       })();
 
       (config.skip_html ? it.skip : it)("html", () =>
-        snapJS(() => compileCode(templateFile, htmlConfig))
+        snapAllTemplates(htmlConfig)
       );
 
       (config.skip_dom ? it.skip : it)("dom", () =>
-        snapJS(() => compileCode(templateFile, domConfig))
+        snapAllTemplates(domConfig)
       );
 
       (config.skip_csr ? it.skip : it)("csr", async () => {
