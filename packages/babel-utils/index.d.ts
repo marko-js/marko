@@ -46,6 +46,9 @@ export interface TagDefinition {
   htmlType?: "html" | "svg" | "math";
   html: boolean;
   name: string;
+  isNestedTag?: boolean;
+  isRepeated?: boolean;
+  targetProperty?: string;
   taglibId: string;
   template: string;
   renderer: string;
