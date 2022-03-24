@@ -6,13 +6,17 @@ import tryLoadTranslator from "../util/try-load-translator";
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
 
+import markoHTMLTaglib from "./marko-html.json";
+import markoSVGTaglib from "./marko-svg.json";
+import markoMathTaglib from "./marko-math.json";
+
 const registeredTaglibs = [];
 const loadedTranslatorsTaglibs = new Map();
 let lookupCache = Object.create(null);
 
-register(require.resolve("./marko-html.json"), require("./marko-html.json"));
-register(require.resolve("./marko-svg.json"), require("./marko-svg.json"));
-register(require.resolve("./marko-math.json"), require("./marko-math.json"));
+register("marko/html", markoHTMLTaglib);
+register("marko/svg", markoSVGTaglib);
+register("marko/math", markoMathTaglib);
 
 export function buildLookup(dirname, requestedTranslator) {
   const translator = tryLoadTranslator(requestedTranslator);
