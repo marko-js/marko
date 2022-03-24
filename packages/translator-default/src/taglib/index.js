@@ -1,4 +1,6 @@
+import coreTaglib from "./core";
+import migrateTaglib from "./migrate";
 export default [
-  [require.resolve("./core/marko.json"), require("./core/marko.json")],
-  [require.resolve("./migrate/marko.json"), require("./migrate/marko.json")]
+  ["marko/core", coreTaglib],
+  ["marko/migrate", migrateTaglib]
 ];

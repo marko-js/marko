@@ -1,6 +1,5 @@
 import fs from "fs";
 import { getRootPackage } from "lasso-package-root";
-import { CachedInputFileSystem } from "enhanced-resolve";
 
 let config;
 const globalThis = typeof window === "undefined" ? global : window;
@@ -100,10 +99,7 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     /**
      * Use a different file system object, eg webpacks CachedInputFileSystem or lasso-caching-fs
      */
-    fileSystem: new CachedInputFileSystem(
-      fs,
-      60000 /* We manually purge but the duration is required */
-    ),
+    fileSystem: fs,
     /**
      * By default Marko 5 outputs esm, you can optionally specify commonjs.
      *

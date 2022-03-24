@@ -93,40 +93,23 @@ function buildResult(babelResult) {
   return { ast, map, code, meta };
 }
 
-let scheduledClear = false;
-let clearingDefaultFs = false;
 let clearingDefaultCache = false;
 function scheduleDefaultClear(config) {
-  if (!scheduledClear) {
-    clearingDefaultCache = isDefaultCache(config);
-    clearingDefaultFs = isDefaultFS(config);
-
-    if (clearingDefaultCache || clearingDefaultFs) {
-      scheduledClear = true;
-      setImmediate(_clearDefaults);
-    }
+  if (
+    !clearingDefaultCache &&
+    (clearingDefaultCache = isDefaultCache(config))
+  ) {
+    setImmediate(_clearDefaults);
   }
 }
 
 export function _clearDefaults() {
-  if (clearingDefaultCache) {
-    clearingDefaultCache = false;
-    globalConfig.cache.clear();
-  }
-
-  if (clearingDefaultFs) {
-    clearingDefaultFs = false;
-    globalConfig.fileSystem.purge();
-  }
-  scheduledClear = false;
+  clearingDefaultCache = false;
+  globalConfig.cache.clear();
 }
 
 function isDefaultCache(config) {
   return !config.cache || config.cache === globalConfig.cache;
-}
-
-function isDefaultFS(config) {
-  return getFs(config) === globalConfig.fileSystem;
 }
 
 function getFs(config) {
