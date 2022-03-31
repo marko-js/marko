@@ -1,6 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
-import { Tag, assertAllowedAttributes, assertNoVar } from "@marko/babel-utils";
+import {
+  Tag,
+  assertAllowedAttributes,
+  assertNoVar,
+  getTagDef,
+} from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
@@ -19,10 +24,11 @@ import { scopeIdentifier } from "../visitors/program";
 export default {
   analyze: {
     enter(tag) {
+      const isOnlyChild = checkOnlyChild(tag);
       reserveScope(
         ReserveType.Visit,
         getOrCreateSectionId(tag),
-        tag.node,
+        isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node,
         "for",
         3
       );
@@ -44,8 +50,13 @@ export default {
         return;
       }
 
-      walks.visit(tag, walks.WalkCodes.Replace);
-      walks.enterShallow(tag);
+      const {
+        extra: { isOnlyChild },
+      } = tag.node;
+      if (!isOnlyChild) {
+        walks.visit(tag, walks.WalkCodes.Replace);
+        walks.enterShallow(tag);
+      }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
@@ -131,8 +142,11 @@ const translateDOM = {
     const {
       attributes,
       body: { params },
-      extra: { reserve },
+      extra: { isOnlyChild },
     } = node;
+    const {
+      extra: { reserve },
+    } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
     const ofAttr = findName(attributes, "of");
     const byAttr = findName(attributes, "by");
 
@@ -352,4 +366,16 @@ function validateFor(tag: t.NodePath<t.MarkoTag>) {
       "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute."
     );
   }
+}
+
+function checkOnlyChild(tag: t.NodePath<t.MarkoTag>) {
+  tag.node.extra ??= {} as any;
+  if (
+    t.isMarkoTag(tag.parentPath?.parent) &&
+    getTagDef(tag.parentPath!.parentPath! as t.NodePath<t.MarkoTag>)?.html
+  ) {
+    return (tag.node.extra.isOnlyChild =
+      (tag.parent as t.MarkoTagBody).body.length === 1);
+  }
+  return (tag.node.extra.isOnlyChild = false);
 }
