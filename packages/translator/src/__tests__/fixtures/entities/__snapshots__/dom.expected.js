@@ -3,5 +3,5 @@ export const template = "Hello John &amp; Suzy Invalid Entity: &b ; Valid Numeri
 export const walks =
 /* over(1) */
 "b";
-export const apply = null;
+export const apply = function () {};
 export default _createRenderFn(template, walks, apply);

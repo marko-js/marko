@@ -57,7 +57,11 @@ export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function trackReferencesForBindings(sectionId: number, path: t.NodePath<any>) {
+export function trackReferencesForBindings(
+  sectionId: number,
+  path: t.NodePath<any>,
+  reserveType: ReserveType = ReserveType.Store
+) {
   const scope = path.scope;
   const bindings = path.getBindingIdentifiers() as unknown as Record<
     string,
@@ -66,12 +70,7 @@ function trackReferencesForBindings(sectionId: number, path: t.NodePath<any>) {
   for (const name in bindings) {
     const references = scope.getBinding(name)!.referencePaths;
     const identifier = bindings[name];
-    const binding = reserveScope(
-      ReserveType.Store,
-      sectionId,
-      identifier,
-      name
-    );
+    const binding = reserveScope(reserveType, sectionId, identifier, name);
 
     for (const reference of references) {
       const fnRoot = getFnRoot(reference.scope.path);

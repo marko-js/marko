@@ -90,24 +90,24 @@ _dynamicTag(_scope, tagConstB, {
 
 import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_tagConstB(_scope, tagConstB) {
-  if (_write(_scope, 19, tagConstB)) {}
-}
-
-function _apply_tagConstA(_scope, tagConstA) {
-  if (_write(_scope, 18, tagConstA)) {}
-}
-
-function _apply_largeHeading(_scope, largeHeading) {
-  if (_write(_scope, 17, largeHeading)) {}
-}
-
 function _apply_isLarge(_scope, isLarge) {
-  if (_write(_scope, 13, isLarge)) _apply_largeHeading(isLarge && "h1");
+  if (_write(_scope, 16, isLarge)) _apply_largeHeading(isLarge && "h1");
 }
 
 function _apply_show(_scope, show) {
-  if (_write(_scope, 11, show)) _apply_tagConstB(show ? "div" : null);
+  if (_write(_scope, 14, show)) _apply_tagConstB(show ? "div" : null);
+}
+
+function _apply_tagConstB(_scope, tagConstB) {
+  if (_write(_scope, 11, tagConstB)) {}
+}
+
+function _apply_tagConstA(_scope, tagConstA) {
+  if (_write(_scope, 10, tagConstA)) {}
+}
+
+function _apply_largeHeading(_scope, largeHeading) {
+  if (_write(_scope, 9, largeHeading)) {}
 }
 
 function _apply(_scope) {
@@ -116,7 +116,34 @@ function _apply(_scope) {
 
 const _temp = _createRenderer("Body content", "", null);
 
+export const applyAttrs = function (_scope, {
+  renderBody,
+  x,
+  show,
+  showTagA,
+  isLarge,
+  tag,
+  level,
+  other
+}) {
+  _apply_renderBody(_scope, renderBody);
+
+  _apply_x(_scope, x);
+
+  _apply_show(_scope, show);
+
+  _apply_showTagA(_scope, showTagA);
+
+  _apply_isLarge(_scope, isLarge);
+
+  _apply_tag(_scope, tag);
+
+  _apply_level(_scope, level);
+
+  _apply_other(_scope, other);
+};
+export { _apply_renderBody, _apply_x, _apply_show, _apply_showTagA, _apply_isLarge, _apply_tag, _apply_level, _apply_other };
 export const template = "";
 export const walks = "";
 export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export default _createRenderFn(template, walks, apply, applyAttrs);

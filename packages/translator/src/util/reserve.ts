@@ -2,12 +2,13 @@ import type { types as t } from "@marko/compiler";
 import { createSectionState, forEachSectionId } from "./sections";
 
 const [getReservesByType] = createSectionState<
-  [Reserve[] | undefined, Reserve[] | undefined]
->("reservesByType", () => [undefined, undefined]);
+  [Reserve[] | undefined, Reserve[] | undefined, Reserve[] | undefined]
+>("reservesByType", () => [undefined, undefined, undefined]);
 
 export const enum ReserveType {
   Visit = 0,
   Store = 1,
+  Attr = 2,
 }
 
 export interface Reserve {
@@ -16,6 +17,7 @@ export interface Reserve {
   name: string;
   size: number;
   id: number;
+  exportName?: string;
 }
 
 declare module "@marko/compiler/dist/types" {

@@ -18,9 +18,9 @@ export default {
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const tagBodySectionId = getSectionId(tag.get("body"));
-      const attrsObject = attrsToObject(tag, true) || t.nullLiteral();
+      const attrsObject = attrsToObject(tag, true);
       const renderBodyProp = getRenderBodyProp(attrsObject);
-      const args: t.Expression[] = [node.name, attrsObject];
+      const args: t.Expression[] = [node.name, attrsObject || t.nullLiteral()];
 
       if (isOutputHTML()) {
         writer.flushInto(tag);

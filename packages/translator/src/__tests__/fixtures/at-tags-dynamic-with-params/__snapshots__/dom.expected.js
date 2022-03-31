@@ -7,12 +7,12 @@ function _apply(_scope) {
   _data(_scope, 0, y);
 }
 
-function _apply_x(_scope, x = _scope._[0]) {
+function _apply_x(_scope, x = _scope._[1]) {
   _setConditionalRenderer(_scope, 0, x ? _if : null);
 }
 
 function _apply2(_scope) {
-  _hello(_scope[1]);
+  _hello(_scope[0]);
 }
 
 const _temp2 = _createRenderer("<!>",
@@ -23,9 +23,15 @@ const _temp2 = _createRenderer("<!>",
 /* replace */
 "%", _apply);
 
+export const applyAttrs = function (_scope, {
+  x
+}) {
+  _apply_x2(_scope, x);
+};
+export { _apply_x2 as _apply_x };
 export const template = `${_hello_template}`;
 export const walks =
-/* beginChild(1), _hello_walks, endChild */
-`0${_hello_walks}&`;
+/* beginChild(0), _hello_walks, endChild */
+`/${_hello_walks}&`;
 export const apply = _apply2;
-export default _createRenderFn(template, walks, apply);
+export default _createRenderFn(template, walks, apply, applyAttrs);

@@ -16,5 +16,5 @@ export const template = "<!></span></div>";
 export const walks =
 /* next(2), replace, out(2) */
 "E%m";
-export const apply = null;
+export const apply = function () {};
 export default _createRenderFn(template, walks, apply);

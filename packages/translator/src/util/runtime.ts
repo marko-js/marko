@@ -16,7 +16,7 @@ export function callRuntime<A extends Parameters<typeof t.callExpression>[1]>(
     | keyof typeof import("@marko/runtime-fluurt/src/html"),
   ...args: A
 ) {
-  return t.callExpression(importRuntime(name as string), args);
+  return t.callExpression(importRuntime(name as string), args.filter(Boolean));
 }
 
 export function getHTMLRuntime() {

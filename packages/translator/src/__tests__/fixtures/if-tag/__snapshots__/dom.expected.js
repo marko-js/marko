@@ -32,9 +32,24 @@ const _if = _createRenderer("Hello", "", null),
       _if4 = _createRenderer("B", "", null),
       _if3 = _createRenderer("C", "", null);
 
+export const applyAttrs = function (_scope, {
+  a,
+  b,
+  x,
+  y
+}) {
+  _apply_a(_scope, a);
+
+  _apply_b(_scope, b);
+
+  _apply_x(_scope, x);
+
+  _apply_y(_scope, y);
+};
+export { _apply_a, _apply_b, _apply_x, _apply_y };
 export const template = "<!><!><div><!></div>";
 export const walks =
 /* replace, skip(3), over(1), replace, skip(3), over(1), next(1), replace, skip(3), out(1) */
 "%+b%+bD%+l";
-export const apply = null;
-export default _createRenderFn(template, walks, apply);
+export const apply = function () {};
+export default _createRenderFn(template, walks, apply, applyAttrs);

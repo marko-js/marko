@@ -1,9 +1,13 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import { forEachSectionId, getSectionId } from "../../util/sections";
-import { writeAllStatementGroups } from "../../util/apply-hydrate";
+import {
+  bindingToApplyGroup,
+  writeAllStatementGroups,
+} from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
+import { scopeIdentifier } from ".";
 
 export default {
   translate: {
@@ -13,6 +17,8 @@ export default {
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
       const applyIdentifier = t.identifier("apply");
+      const applyAttrsIdentifier = t.identifier("applyAttrs");
+      const { attrs } = program.node.extra;
       const { walks, writes, apply } = writer.getSectionMeta(sectionId);
 
       writeAllStatementGroups();
@@ -38,6 +44,48 @@ export default {
         );
       }
 
+      if (attrs) {
+        const exportSpecifiers: t.ExportSpecifier[] = [];
+        program.node.body.push(
+          t.exportNamedDeclaration(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                applyAttrsIdentifier,
+                t.functionExpression(
+                  null,
+                  [scopeIdentifier, attrs.var as any],
+                  t.blockStatement(
+                    Object.keys(attrs.bindings).map((name) => {
+                      const bindingIdentifier = attrs.bindings[name];
+                      const exportName =
+                        bindingIdentifier.extra!.reserve!.exportName!;
+                      const { identifier: applyIdentifier } =
+                        bindingToApplyGroup(
+                          bindingIdentifier.extra!.reserve!,
+                          sectionId
+                        );
+                      exportSpecifiers.push(
+                        t.exportSpecifier(
+                          applyIdentifier,
+                          t.identifier(exportName)
+                        )
+                      );
+                      return t.expressionStatement(
+                        t.callExpression(applyIdentifier, [
+                          scopeIdentifier,
+                          bindingIdentifier,
+                        ])
+                      );
+                    })
+                  )
+                )
+              ),
+            ])
+          ),
+          t.exportNamedDeclaration(null, exportSpecifiers)
+        );
+      }
+
       program.node.body.push(
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
@@ -54,7 +102,12 @@ export default {
         ),
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
-            t.variableDeclarator(applyIdentifier, apply!),
+            t.variableDeclarator(
+              applyIdentifier,
+              t.isNullLiteral(apply)
+                ? t.functionExpression(null, [], t.blockStatement([]))
+                : apply
+            ),
           ])
         ),
         t.exportDefaultDeclaration(
@@ -62,7 +115,8 @@ export default {
             "createRenderFn",
             templateIdentifier,
             walksIdentifier,
-            applyIdentifier
+            applyIdentifier,
+            attrs! && applyAttrsIdentifier
           )
         )
       );

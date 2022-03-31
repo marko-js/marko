@@ -4,6 +4,7 @@ import {
   importNamed,
   importDefault,
   resolveRelativePath,
+  loadFileForTag,
 } from "@marko/babel-utils";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import translateVar from "../../util/translate-var";
@@ -55,6 +56,7 @@ export default {
       const write = writer.writeTo(tag);
       const binding = node.extra.reserve!;
       let tagIdentifier: t.Expression;
+      let tagAttrsIdentifier: t.Expression | undefined;
 
       if (isHTML) {
         writer.flushInto(tag);
@@ -67,6 +69,8 @@ export default {
         const tagDef = getTagDef(tag);
         const template = tagDef?.template;
         const relativePath = template && resolveRelativePath(file, template);
+        const childFile = loadFileForTag(tag)!;
+        const childProgram = childFile.ast.program;
 
         if (!relativePath) {
           throw tag
@@ -80,6 +84,14 @@ export default {
           tagIdentifier = importDefault(file, relativePath, tagName);
         } else {
           tagIdentifier = importNamed(file, relativePath, "apply", tagName);
+          if (childProgram.extra.attrs) {
+            tagAttrsIdentifier = importNamed(
+              file,
+              relativePath,
+              "applyAttrs",
+              `${tagName}_attrs`
+            );
+          }
           write`${importNamed(
             file,
             relativePath,
@@ -183,6 +195,19 @@ export default {
               t.callExpression(tagIdentifier, [callRead(binding, tagSectionId)])
             )
           );
+          if (attrsObject && tagAttrsIdentifier) {
+            addStatement(
+              "apply",
+              tagSectionId,
+              attrsObject.extra.references,
+              t.expressionStatement(
+                t.callExpression(tagAttrsIdentifier, [
+                  callRead(binding, tagSectionId),
+                  attrsObject,
+                ])
+              )
+            );
+          }
           tag.remove();
         }
       }

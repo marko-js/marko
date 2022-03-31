@@ -12,9 +12,18 @@ function _apply_name(_scope, name) {
   }
 }
 
+export const applyAttrs = function (_scope, {
+  name,
+  missing
+}) {
+  _apply_name(_scope, name);
+
+  _apply_missing(_scope, missing);
+};
+export { _apply_name, _apply_missing };
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
 export const walks =
 /* over(1), replace, over(2), replace, over(2), replace, over(2) */
 "b%c%c%c";
-export const apply = null;
-export default _createRenderFn(template, walks, apply);
+export const apply = function () {};
+export default _createRenderFn(template, walks, apply, applyAttrs);

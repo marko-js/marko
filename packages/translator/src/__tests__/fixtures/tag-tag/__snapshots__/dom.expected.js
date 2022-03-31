@@ -16,5 +16,5 @@ const _temp = _createRenderer("Hello <!>",
 
 export const template = "";
 export const walks = "";
-export const apply = null;
+export const apply = function () {};
 export default _createRenderFn(template, walks, apply);

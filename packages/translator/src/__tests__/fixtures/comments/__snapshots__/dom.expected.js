@@ -3,5 +3,5 @@ export const template = "<div><!--abc--><!--[if lt IE 9]><script src=\"...\"></s
 export const walks =
 /* over(1) */
 "b";
-export const apply = null;
+export const apply = function () {};
 export default _createRenderFn(template, walks, apply);
