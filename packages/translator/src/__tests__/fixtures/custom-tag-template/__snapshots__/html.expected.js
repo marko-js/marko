@@ -1,11 +1,18 @@
+import { nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./hello.marko";
-import { register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("packages/translator/src/__tests__/fixtures/custom-tag-template/template.marko", input => {
+const _renderer = input => {
   _hello({
-    name: "Frank"
+    name: "Frank",
+
+    renderBody() {
+      const _scope = _nextScopeId();
+    }
+
   });
-});
+
+  const _scope = _nextScopeId();
+};
 
 export default _renderer;
 export const render = _createRenderer(_renderer);

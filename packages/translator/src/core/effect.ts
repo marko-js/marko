@@ -2,7 +2,10 @@ import { types as t } from "@marko/compiler";
 import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { addStatement } from "../util/apply-hydrate";
+import {
+  addStatement,
+  ensureHydrateReferenceGroup,
+} from "../util/apply-hydrate";
 import { callRuntime } from "../util/runtime";
 import { getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
@@ -38,8 +41,8 @@ export default {
         );
     }
 
+    const sectionId = getSectionId(tag);
     if (isOutputDOM()) {
-      const sectionId = getSectionId(tag);
       const cleanupIndex = tag.node.extra!.reserve!.id;
       addStatement(
         "hydrate",
@@ -53,6 +56,11 @@ export default {
             defaultAttr.value
           )
         )
+      );
+    } else {
+      ensureHydrateReferenceGroup(
+        sectionId,
+        defaultAttr.extra?.valueReferences
       );
     }
 

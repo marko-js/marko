@@ -1,8 +1,10 @@
-import { dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("packages/translator/src/__tests__/fixtures/custom-tag-render-body/components/child/index.marko", input => {
+const _renderer = input => {
   _dynamicTag(input.renderBody, null);
-});
+
+  const _scope = _nextScopeId();
+};
 
 export default _renderer;
 export const render = _createRenderer(_renderer);

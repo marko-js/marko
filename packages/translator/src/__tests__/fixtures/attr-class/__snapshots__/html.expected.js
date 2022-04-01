@@ -1,7 +1,7 @@
-import { markHydrateNode as _markHydrateNode, classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, classAttr as _classAttr, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 
-const _renderer = _register("packages/translator/src/__tests__/fixtures/attr-class/template.marko", input => {
+const _renderer = input => {
   const {
     c,
     d
@@ -16,11 +16,21 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/attr-cla
     class: ["a", {
       b: c,
       d
-    }]
+    }],
+
+    renderBody() {
+      const _scope = _nextScopeId();
+    }
+
   });
 
   _customTag({
-    class: ["a", false, "b"]
+    class: ["a", false, "b"],
+
+    renderBody() {
+      const _scope = _nextScopeId();
+    }
+
   });
 
   _dynamicTag(input.test, {
@@ -40,7 +50,9 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/attr-cla
 
     }
   });
-});
+
+  const _scope = _nextScopeId();
+};
 
 export default _renderer;
 export const render = _createRenderer(_renderer);

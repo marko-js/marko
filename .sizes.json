@@ -14,19 +14,19 @@
     {
       "name": "counter",
       "user": {
-        "min": 382,
-        "gzip": 272,
-        "brotli": 237
+        "min": 404,
+        "gzip": 294,
+        "brotli": 257
       },
       "runtime": {
-        "min": 4187,
-        "gzip": 2010,
-        "brotli": 1793
+        "min": 4237,
+        "gzip": 2031,
+        "brotli": 1809
       },
       "total": {
-        "min": 4569,
-        "gzip": 2282,
-        "brotli": 2030
+        "min": 4641,
+        "gzip": 2325,
+        "brotli": 2066
       }
     }
   ]

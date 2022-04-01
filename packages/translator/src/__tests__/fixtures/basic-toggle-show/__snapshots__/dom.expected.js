@@ -1,8 +1,10 @@
-import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, on as _on, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, write as _write, on as _on, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_show(_scope, show = _scope[5]) {
   _on(_scope, 4, "click", _scope[6]);
 }
+
+_register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_0", _hydrate_show);
 
 const _onclick = function (_scope) {
   const show = _scope[5];

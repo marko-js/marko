@@ -18,7 +18,10 @@ import {
   getOrCreateSectionId,
 } from "../../util/sections";
 import trackReferences from "../../util/references";
-import { addStatement } from "../../util/apply-hydrate";
+import {
+  addStatement,
+  writeHTMLHydrateStatements,
+} from "../../util/apply-hydrate";
 import { reserveScope, ReserveType } from "../../util/reserve";
 
 export default {
@@ -50,7 +53,8 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const tagSectionId = getSectionId(tag);
-      const tagBodySectionId = getSectionId(tag.get("body"));
+      const tagBody = tag.get("body");
+      const tagBodySectionId = getSectionId(tagBody);
       const isHTML = isOutputHTML();
       const { node } = tag;
       const write = writer.writeTo(tag);
@@ -60,6 +64,7 @@ export default {
 
       if (isHTML) {
         writer.flushInto(tag);
+        writeHTMLHydrateStatements(tagBody);
       }
 
       if (t.isStringLiteral(node.name)) {

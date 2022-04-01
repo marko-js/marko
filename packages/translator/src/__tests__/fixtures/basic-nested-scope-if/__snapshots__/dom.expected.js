@@ -1,8 +1,10 @@
-import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueHydrate as _queueHydrate, queueInBranch as _queueInBranch, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, register as _register, queueHydrate as _queueHydrate, queueInBranch as _queueInBranch, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_clickCount(_scope, clickCount = _scope._[4]) {
   _on(_scope, 0, "click", _scope[2]);
 }
+
+_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_0", _hydrate_clickCount);
 
 const _onclick = function (_scope) {
   const clickCount = _scope._[4];

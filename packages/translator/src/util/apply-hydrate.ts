@@ -4,11 +4,13 @@ import {
   getSectionId,
   createSectionState,
   forEachSectionIdReverse,
+  getOrCreateSectionId,
 } from "../util/sections";
 import { Reserve, compareReserves } from "../util/reserve";
 import * as sorted from "../util/sorted-arr";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
+import { getTemplateId } from "@marko/babel-utils";
 
 export interface ReferenceGroup {
   identifier: t.Identifier;
@@ -54,6 +56,37 @@ export function addStatement(
     statements.push(statement);
   }
   return isNew ? 1 : 0;
+}
+
+export function ensureHydrateReferenceGroup(
+  targetSectionId: number,
+  references: References
+) {
+  const groups = getHydrate(targetSectionId);
+  const existingGroup = getGroupByReferences(groups, references);
+  if (!existingGroup) {
+    const identifier = t.identifier(
+      generateReferenceGroupName("hydrate", references)
+    );
+    const group: ReferenceGroup = {
+      identifier,
+      references,
+      statements: [],
+      queuePriority: t.numericLiteral(-1),
+    };
+    sorted.insert(compareReferenceGroups, groups, group);
+  }
+}
+
+function getHydrateRegisterId(sectionId: number, referenceGroupId: number) {
+  const {
+    markoOpts: { optimize },
+    opts: { filename },
+  } = currentProgramPath.hub.file;
+  return `${getTemplateId(
+    optimize,
+    filename as string
+  )}_${sectionId}_${referenceGroupId}`;
 }
 
 export function bindingToApplyGroup(binding: Reserve, sectionId: number) {
@@ -209,14 +242,20 @@ export function writeHydrateGroups(sectionId: number) {
         )
       : [];
 
-    const [fnPath] = currentProgramPath.pushContainer(
-      "body",
+    const [fnPath] = currentProgramPath.pushContainer("body", [
       t.functionDeclaration(
         identifier,
         [scopeIdentifier, ...params],
         t.blockStatement(statements)
-      )
-    );
+      ),
+      t.expressionStatement(
+        callRuntime(
+          "register",
+          t.stringLiteral(getHydrateRegisterId(sectionId, i)),
+          identifier
+        )
+      ),
+    ]);
     fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
 
     addStatement(
@@ -227,6 +266,37 @@ export function writeHydrateGroups(sectionId: number) {
         callRuntime("queueHydrate", scopeIdentifier, identifier)
       )
     );
+  }
+}
+
+export function writeHTMLHydrateStatements(
+  path: t.NodePath<t.MarkoTagBody | t.Program>
+) {
+  const sectionId = getOrCreateSectionId(path);
+  const groups = getHydrate(sectionId);
+  path.pushContainer(
+    "body",
+    t.variableDeclaration("const", [
+      t.variableDeclarator(scopeIdentifier, callRuntime("nextScopeId")),
+    ])
+  );
+  for (let i = groups.length; i--; ) {
+    path.pushContainer("body", [
+      t.expressionStatement(
+        callRuntime(
+          "writeHydrateCall",
+          scopeIdentifier,
+          t.stringLiteral(getHydrateRegisterId(sectionId, i))
+        )
+      ),
+      t.expressionStatement(
+        callRuntime(
+          "writeHydrateScope",
+          scopeIdentifier,
+          t.objectExpression([])
+        )
+      ),
+    ]);
   }
 }
 

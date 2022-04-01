@@ -6,6 +6,15 @@ import register from "@marko/compiler/register";
 import createBrowser from "./utils/create-browser";
 import createMutationTracker from "./utils/track-mutations";
 import glob from "tiny-glob";
+import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
+import createTrackMutations from "./utils/track-mutations";
+import type { Writable } from "stream";
+
+const runtimeId = "M";
+const reorderRuntimeString = String(reorderRuntime).replace(
+  "RUNTIME_ID",
+  runtimeId
+);
 
 type TestConfig = {
   steps?: unknown[];
@@ -66,6 +75,82 @@ describe("translator", () => {
       (config.skip_dom ? it.skip : it)("dom", () =>
         snapAllTemplates(domConfig)
       );
+
+      (config.skip_ssr ? it.skip : it)("ssr", async () => {
+        await snapMD(async () => {
+          const serverTemplate = require(templateFile);
+
+          let buffer = "";
+          // let flushCount = 0;
+
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              extensions: {},
+            }),
+          });
+          const document = browser.window.document;
+          // const test = browser.require(testFile);
+          // const input = test.default[0];
+
+          document.open();
+
+          const tracker = createTrackMutations(browser.window, document);
+          const { /*run,*/ init } = browser.require(
+            "@marko/runtime-fluurt/src/dom"
+          ) as typeof import("@marko/runtime-fluurt/src/dom");
+
+          browser.require(templateFile);
+          await serverTemplate.render({} /*input*/, {
+            write(data: string) {
+              buffer += data;
+              tracker.log(
+                `# Write\n${indent(
+                  data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+                )}`
+              );
+            },
+            flush() {
+              // tracker.logUpdate("Flush");
+              // document.write(buffer);
+              // buffer = "";
+            },
+            end(data?: string) {
+              document.write(buffer + (data || ""));
+              document.close();
+              tracker.logUpdate("End");
+              init();
+              // browser.require(hydrateFile);
+              tracker.logUpdate("Hydrate");
+            },
+            emit(type: string, ...args: unknown[]) {
+              // console.log(...args);
+              tracker.log(
+                `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+              );
+            },
+          } as Writable & { flush(): void });
+
+          // hydratedHTML = getNormalizedHtml(document.body);
+
+          // for (const update of test.default.slice(1)) {
+          //   if (isWait(update)) {
+          //     await update();
+          //   } else if (typeof update === "function") {
+          //     update(document.documentElement);
+          //     run();
+          //     tracker.logUpdate(update);
+          //   } else {
+          //     // if new input is detected, stop testing
+          //     // this will be covered by the client tests
+          //     break;
+          //   }
+          // }
+
+          return tracker.getLogs();
+        });
+      });
 
       (config.skip_csr ? it.skip : it)("csr", async () => {
         await snapMD(async () => {
@@ -139,3 +224,44 @@ describe("translator", () => {
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;
 }
+
+function indent(data: unknown) {
+  return String(data)
+    .split("\n")
+    .map((line) => `  ${line}`)
+    .join("\n");
+}
+
+// function getNormalizedHtml(container: Element) {
+//   const clone = container.cloneNode(true) as Element;
+
+//   const treeWalker = container.ownerDocument!.createTreeWalker(clone);
+//   const nodesToRemove: ChildNode[] = [];
+
+//   while (treeWalker.nextNode()) {
+//     const node = treeWalker.currentNode;
+//     if (node.nodeType === 8 || isIgnoredTag(node as Element)) {
+//       nodesToRemove.push(node as ChildNode);
+//     } else if ((node as Element).tagName === "TEXTAREA") {
+//       node.textContent = (node as HTMLTextAreaElement).value;
+//     }
+//   }
+
+//   nodesToRemove.forEach((n) => n.remove());
+//   // clone.innerHTML = clone.innerHTML;
+//   clone.normalize();
+
+//   return clone.innerHTML.trim();
+// }
+
+// function isIgnoredTag(node: Element) {
+//   switch (node.tagName) {
+//     case "LINK":
+//     case "TITLE":
+//     case "STYLE":
+//     case "SCRIPT":
+//       return true;
+//     default:
+//       return false;
+//   }
+// }

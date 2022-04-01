@@ -1,13 +1,20 @@
 import "./foo";
 import { b as c } from "./bar";
 import baz from "./components/baz.marko";
-import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { nextScopeId as _nextScopeId, markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = _register("packages/translator/src/__tests__/fixtures/import-tag/template.marko", input => {
-  baz();
+const _renderer = input => {
+  baz({
+    renderBody() {
+      const _scope = _nextScopeId();
+    }
+
+  });
 
   _write(`${_markHydrateNode(0)}${_escapeXML(c)}`);
-});
+
+  const _scope = _nextScopeId();
+};
 
 export default _renderer;
 export const render = _createRenderer(_renderer);

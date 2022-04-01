@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { writeHTMLHydrateStatements } from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 
@@ -7,6 +8,7 @@ export default {
   translate: {
     exit(program: t.NodePath<t.Program>) {
       flushInto(program);
+      writeHTMLHydrateStatements(program);
 
       const renderContent: t.Statement[] = [];
 
@@ -22,13 +24,9 @@ export default {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             rendererId,
-            callRuntime(
-              "register",
-              t.stringLiteral(program.hub.file.metadata.marko.id),
-              t.arrowFunctionExpression(
-                [t.identifier("input")],
-                t.blockStatement(renderContent)
-              )
+            t.arrowFunctionExpression(
+              [t.identifier("input")],
+              t.blockStatement(renderContent)
             )
           ),
         ]),

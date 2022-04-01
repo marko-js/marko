@@ -1,4 +1,4 @@
-import { queue as _queue, data as _data, setLoopOf as _setLoopOf, write as _write, on as _on, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, data as _data, setLoopOf as _setLoopOf, write as _write, on as _on, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_item(_scope, item) {
   if (_write(_scope, 1, item)) _data(_scope, 0, item);
@@ -8,9 +8,13 @@ function _hydrateWith_id_items(_scope, id = _scope[6], items = _scope[7]) {
   _on(_scope, 4, "click", _scope[8]);
 }
 
+_register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_1", _hydrateWith_id_items);
+
 function _hydrate_items(_scope, items = _scope[7]) {
   _on(_scope, 5, "click", _scope[9]);
 }
+
+_register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_0", _hydrate_items);
 
 const _onclick = function (_scope) {
   const id = _scope[6],

@@ -1,8 +1,10 @@
-import { queue as _queue, write as _write, on as _on, data as _data, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, data as _data, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_count(_scope, count = _scope[2]) {
   _on(_scope, 0, "click", _scope[3]);
 }
+
+_register("packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0", _hydrate_count);
 
 const _onclick = function (_scope) {
   const count = _scope[2];

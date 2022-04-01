@@ -1,8 +1,10 @@
-import { queue as _queue, write as _write, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, queueHydrate as _queueHydrate, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, write as _write, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, register as _register, queueHydrate as _queueHydrate, bind as _bind, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_num(_scope, num = _scope[2]) {
   _on(_scope, 0, "click", _scope[3]);
 }
+
+_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_0", _hydrate_num);
 
 function _applyWith_selected_num(_scope, selected = _scope._[4], num = _scope[2]) {
   _attr(_scope, 0, "data-selected", selected === num);

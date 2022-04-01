@@ -7,7 +7,10 @@ import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope } from "../../util/reserve";
-import { addStatement } from "../../util/apply-hydrate";
+import {
+  addStatement,
+  ensureHydrateReferenceGroup,
+} from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { scopeIdentifier } from "../program";
@@ -121,59 +124,61 @@ export default {
             default:
               if (confident) {
                 write`${getHTMLRuntime().attr(name, computed)}`;
-              } else if (isHTML && !name.startsWith("on")) {
-                write`${callRuntime(
-                  "attr",
-                  t.stringLiteral(name),
-                  value.node
-                )}`;
-              } else {
+              } else if (isHTML) {
                 if (name.startsWith("on")) {
-                  const reserveIndex = t.numericLiteral(extra.reserve!.id);
-                  addStatement(
-                    "apply",
-                    sectionId,
-                    valueReferences,
-                    t.expressionStatement(
-                      callRuntime(
-                        "write",
-                        scopeIdentifier,
-                        reserveIndex,
-                        value.node
-                      )
-                    )
-                  );
-
-                  addStatement(
-                    "hydrate",
-                    sectionId,
-                    extra.valueReferences,
-                    t.expressionStatement(
-                      callRuntime(
-                        "on",
-                        scopeIdentifier,
-                        visitIndex!,
-                        t.stringLiteral(name.slice(2)),
-                        callRead(extra.reserve!, sectionId)
-                      )
-                    )
-                  );
+                  ensureHydrateReferenceGroup(sectionId, extra.valueReferences);
                 } else {
-                  addStatement(
-                    "apply",
-                    sectionId,
-                    valueReferences,
-                    t.expressionStatement(
-                      callRuntime(
-                        "attr",
-                        scopeIdentifier,
-                        visitIndex!,
-                        t.stringLiteral(name),
-                        value.node
-                      )
-                    )
-                  );
+                  write`${callRuntime(
+                    "attr",
+                    t.stringLiteral(name),
+                    value.node
+                  )}`;
                 }
+              } else if (name.startsWith("on")) {
+                const reserveIndex = t.numericLiteral(extra.reserve!.id);
+                addStatement(
+                  "apply",
+                  sectionId,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      "write",
+                      scopeIdentifier,
+                      reserveIndex,
+                      value.node
+                    )
+                  )
+                );
+
+                addStatement(
+                  "hydrate",
+                  sectionId,
+                  extra.valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      "on",
+                      scopeIdentifier,
+                      visitIndex!,
+                      t.stringLiteral(name.slice(2)),
+                      callRead(extra.reserve!, sectionId)
+                    )
+                  )
+                );
+              } else {
+                addStatement(
+                  "apply",
+                  sectionId,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      "attr",
+                      scopeIdentifier,
+                      visitIndex!,
+                      t.stringLiteral(name),
+                      value.node
+                    )
+                  )
+                );
               }
 
               break;
