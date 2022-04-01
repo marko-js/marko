@@ -6,27 +6,27 @@
     {
       "name": "*",
       "total": {
-        "min": 10500,
-        "gzip": 4686,
-        "brotli": 4211
+        "min": 10516,
+        "gzip": 4694,
+        "brotli": 4215
       }
     },
     {
       "name": "counter",
       "user": {
         "min": 382,
-        "gzip": 271,
+        "gzip": 272,
         "brotli": 237
       },
       "runtime": {
-        "min": 4191,
+        "min": 4187,
         "gzip": 2010,
-        "brotli": 1791
+        "brotli": 1793
       },
       "total": {
-        "min": 4573,
-        "gzip": 2281,
-        "brotli": 2028
+        "min": 4569,
+        "gzip": 2282,
+        "brotli": 2030
       }
     }
   ]

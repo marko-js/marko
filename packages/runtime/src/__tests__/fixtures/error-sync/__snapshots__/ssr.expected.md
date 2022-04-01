@@ -1,5 +1,5 @@
 # Write
-  <!M^0>a
+  a
 
 
 # Emit error
@@ -8,7 +8,6 @@
 
 # Render "End"
 ```html
-<!--M^0-->
 <html>
   <head />
   <body>
@@ -19,9 +18,8 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/#text0
 ```

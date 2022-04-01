@@ -16,9 +16,10 @@ export {
   fork,
   tryPlaceholder,
   tryCatch,
-  markScopeOffset,
-  writeCall,
-  writeScope,
+  nextScopeId,
+  markHydrateNode,
+  writeHydrateCall,
+  writeHydrateScope,
 } from "./writer";
 
 export { register } from "./serializer";

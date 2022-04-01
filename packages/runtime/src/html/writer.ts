@@ -1,6 +1,6 @@
 import type { Writable } from "stream";
 import { Context, setContext } from "../common/context";
-import { Renderer, Scope, HydrateSymbols } from "../common/types";
+import { Renderer, HydrateSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
@@ -11,6 +11,7 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 );
 
 type MaybeFlushable = Writable & { flush?(): void };
+type PartialScope = Record<number, unknown> | unknown[];
 let $_buffer: Buffer | null = null;
 let $_stream: MaybeFlushable | null = null;
 let $_flush: typeof flushToStream | null = null;
@@ -27,13 +28,7 @@ export function nextId() {
   return id;
 }
 
-const nullScope = new Proxy([], {
-  set() {
-    return false;
-  },
-}) as any as Scope;
-
-export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
+export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
   return async (input: Input, stream: MaybeFlushable) => {
     $_buffer = createBuffer();
@@ -43,12 +38,7 @@ export function createRenderer(renderer: Renderer, hydrateRoot?: boolean) {
     try {
       let renderedPromises: typeof $_promises;
       try {
-        const scope = hydrateRoot
-          ? (Object.assign([], { ___id: 0 }) as any as Scope)
-          : nullScope;
-        hydrateRoot && write(markScopeStart(scope));
-        renderer(input, scope);
-        hydrateRoot && write(markScopeEnd(scope));
+        renderer(input);
       } finally {
         renderedPromises = $_promises;
         $_flush();
@@ -70,13 +60,13 @@ export function write(data: string) {
   $_buffer!.content += data;
 }
 
-export function writeCall(fnId: string, scopeId: number) {
-  $_buffer!.calls += `"${fnId}",${scopeId},`;
-}
-
-export function writeScope(scope: Scope) {
-  $_buffer!.scopes = $_buffer!.scopes || {};
-  $_buffer!.scopes[scope.___id] = scope;
+function flushToStream() {
+  writeHydrateScript();
+  $_stream!.write($_buffer!.content);
+  if ($_stream!.flush) {
+    $_stream!.flush();
+  }
+  clearBuffer($_buffer!);
 }
 
 export function fork<T>(
@@ -250,28 +240,7 @@ export function tryPlaceholder(
   mergeBuffers(asyncBuffer, originalBuffer);
 }
 
-const lastIndex = new WeakMap();
-export function markScopeOffset(index: number, scope: Scope) {
-  const offset = index - (lastIndex.get(scope) || 0);
-  lastIndex.set(scope, index);
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset} ${scope.___id} ${index}>`;
-  }
-  return `<!${runtimeId}${HydrateSymbols.SCOPE_OFFSET}${offset}>`;
-}
-
-export function markScopeStart(scope: Scope) {
-  return `<!${runtimeId}${HydrateSymbols.SCOPE_START}${scope.___id}>`;
-}
-
-export function markScopeEnd(scope: Scope) {
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    return `<!${runtimeId}${HydrateSymbols.SCOPE_END}${scope.___id}>`;
-  }
-  return `<!${runtimeId}${HydrateSymbols.SCOPE_END}>`;
-}
+/* Async */
 
 export function markReplaceStart(id: number) {
   return ($_buffer!.content += `<!${marker(id)}>`);
@@ -279,28 +248,6 @@ export function markReplaceStart(id: number) {
 
 export function markReplaceEnd(id: number) {
   return ($_buffer!.content += `<!${marker(id)}/>`);
-}
-
-function flushToStream() {
-  if ($_buffer!.calls || $_buffer!.scopes) {
-    let isFirstFlush;
-    let serializer = streamSerializers.get($_stream!);
-    if ((isFirstFlush = !serializer)) {
-      streamSerializers.set($_stream!, (serializer = new Serializer()));
-    }
-    $_buffer!.content += `<script>${
-      isFirstFlush
-        ? `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
-        : runtimeId + HydrateSymbols.VAR_HYDRATE
-    }.push(${serializer.stringify($_buffer!.scopes)},[${
-      $_buffer!.calls
-    }])</script>`;
-  }
-  $_stream!.write($_buffer!.content);
-  if ($_stream!.flush) {
-    $_stream!.flush();
-  }
-  clearBuffer($_buffer!);
 }
 
 function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
@@ -318,10 +265,63 @@ function marker(id: number) {
   return `${runtimeId}$${id}`;
 }
 
+/* Hydration */
+
+const scopeIds: WeakMap<MaybeFlushable, number> = new WeakMap();
+
+export function nextScopeId() {
+  const id = scopeIds.get($_stream!)! + 1 || 0;
+  scopeIds.set($_stream!, id);
+  return id;
+}
+
+export function writeHydrateCall(scopeId: number, fnId: string) {
+  $_buffer!.calls += `"${fnId}",${scopeId},`;
+}
+
+export function writeHydrateScope(scopeId: number, scope: PartialScope) {
+  $_buffer!.scopes = $_buffer!.scopes || {};
+  $_buffer!.scopes[scopeId] = scope;
+}
+
+export function markHydrateNode(scopeId: number, index: number) {
+  // TODO: can we only include the scope id when it differs from the prvious node marker?
+  return `<!${runtimeId}${HydrateSymbols.NODE}${index} ${scopeId}>`;
+}
+
+export function markHydrateSectionStart(scopeId: number) {
+  return `<!${runtimeId}${HydrateSymbols.SECTION_START}${scopeId}>`;
+}
+
+export function markHydrateSectionEnd(scopeId: number) {
+  // eslint-disable-next-line no-constant-condition
+  if ("MARKO_DEBUG") {
+    return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId}>`;
+  }
+  return `<!${runtimeId}${HydrateSymbols.SECTION_END}>`;
+}
+
+function writeHydrateScript() {
+  if ($_buffer!.calls || $_buffer!.scopes) {
+    let isFirstFlush;
+    let serializer = streamSerializers.get($_stream!);
+    if ((isFirstFlush = !serializer)) {
+      streamSerializers.set($_stream!, (serializer = new Serializer()));
+    }
+    $_buffer!.content += `<script>${
+      isFirstFlush
+        ? `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
+        : runtimeId + HydrateSymbols.VAR_HYDRATE
+    }.push(${serializer.stringify($_buffer!.scopes)},[${
+      $_buffer!.calls
+    }])</script>`;
+  }
+}
+
 interface Buffer {
   content: string;
   calls: string;
-  scopes: Record<string, unknown[]> | null;
+  scopes: Record<string, PartialScope> | null;
 }
 
 function createBuffer() {

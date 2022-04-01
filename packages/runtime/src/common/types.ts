@@ -18,10 +18,12 @@ export type Scope<
   _: Scope | undefined;
 } & T;
 
+// TODO: SECTION_SIBLING that is both a SECTION_START and a SECTION_END (<for> siblings)
+//       NODE that doesn't have a sectionId and uses the previous sectionId
 export const enum HydrateSymbols {
-  SCOPE_START = "^",
-  SCOPE_END = "/",
-  SCOPE_OFFSET = "#",
+  SECTION_START = "^",
+  SECTION_END = "/",
+  NODE = "#",
   PLACEHOLDER_START = "",
   PLACEHOLDER_END = "",
   REPLACEMENT_ID = "",

@@ -22,7 +22,6 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
   let currentScope: Scope;
-  let currentOffset: number;
   let currentNode: Node;
   const scopeLookup: Record<number, Scope> = {};
   const stack: number[] = [];
@@ -87,37 +86,26 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       if (nodeValue?.startsWith(`${runtimeId}`)) {
         const token = nodeValue[runtimeLength];
         const data = parseInt(nodeValue.slice(runtimeLength + 1));
-        if (token === HydrateSymbols.SCOPE_OFFSET) {
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            const [offset, scopeId, index] = nodeValue
-              .slice(runtimeLength + 1)
-              .split(" ");
-            if (
-              parseInt(scopeId) * SCOPE_ID_MULTIPLIER !==
-              currentScope.___id
-            ) {
-              throw new Error("INVALID_MARKER_NESTING: " + nodeValue);
-            }
-            if (parseInt(offset) + currentOffset !== parseInt(index)) {
-              throw new Error("SCOPE_OFFSET_MISMATCH: " + nodeValue);
-            }
-          }
+        if (token === HydrateSymbols.NODE) {
           const node = currentNode.nextSibling;
           // currentNode.parentNode!.removeChild(currentNode);
-          currentScope[(currentOffset += data)] = node;
-        } else if (token === HydrateSymbols.SCOPE_START) {
+          // TODO: only do this for a certain type of HydrateSymbols.NODE marker
+          const scopeId = parseInt(
+            nodeValue.slice(nodeValue.lastIndexOf(" ") + 1)
+          );
+          const scope = scopeLookup[scopeId];
+          scope[data] = node;
+        } else if (token === HydrateSymbols.SECTION_START) {
           if (currentScope) {
-            stack.push(currentScope.___id, currentOffset);
+            stack.push(currentScope.___id);
           }
           currentScope = scopeLookup[data]!;
-          currentOffset = 0;
           if (!currentScope) {
             scopeLookup[data] = currentScope = [] as unknown as Scope;
             currentScope.___id = data * SCOPE_ID_MULTIPLIER;
           }
           currentScope.___startNode = currentNode as ChildNode;
-        } else if (token === HydrateSymbols.SCOPE_END) {
+        } else if (token === HydrateSymbols.SECTION_END) {
           // eslint-disable-next-line no-constant-condition
           if ("MARKO_DEBUG") {
             if (data * SCOPE_ID_MULTIPLIER !== currentScope.___id) {
@@ -125,7 +113,6 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
             }
           }
           currentScope.___endNode = currentNode as ChildNode;
-          currentOffset = stack.pop() as number;
           currentScope = scopeLookup[stack.pop() as number]!;
           // eslint-disable-next-line no-constant-condition
         } else if ("MARKO_DEBUG") {
@@ -134,7 +121,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       }
     }
 
-    for (let i = 0; i < calls.length; i += 3) {
+    for (let i = 0; i < calls.length; i += 2) {
       fnsById[calls[i]]!(scopeLookup[calls[i + 1] as number]!);
     }
   }

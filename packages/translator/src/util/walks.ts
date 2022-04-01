@@ -133,7 +133,7 @@ export function visit(
 
   if (code && isOutputHTML()) {
     writeTo(path)`${callRuntime(
-      "markScopeOffset",
+      "markHydrateNode",
       t.numericLiteral(reserve!.id)
     )}`;
   } else {

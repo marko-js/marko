@@ -1,4 +1,4 @@
-import { markScopeOffset as _markScopeOffset, escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 
 const _renderer = _register("packages/translator/src/__tests__/fixtures/custom-tag-parameters/template.marko", input => {
@@ -6,7 +6,7 @@ const _renderer = _register("packages/translator/src/__tests__/fixtures/custom-t
     renderBody(a, b, {
       c
     }) {
-      _write(`<div>${_markScopeOffset(0)}${_escapeXML(a)} ${_markScopeOffset(1)}${_escapeXML(b)} ${_markScopeOffset(2)}${_escapeXML(c)}</div>`);
+      _write(`<div>${_markHydrateNode(0)}${_escapeXML(a)} ${_markHydrateNode(1)}${_escapeXML(b)} ${_markHydrateNode(2)}${_escapeXML(c)}</div>`);
     }
 
   });

@@ -38,7 +38,7 @@ describe("runtime", () => {
         async () => {
           await snapMD(async () => {
             const serverTemplate = require(serverFile);
-            const render = createRenderer(serverTemplate.default, true);
+            const render = createRenderer(serverTemplate.default);
 
             let buffer = "";
             let flushCount = 0;

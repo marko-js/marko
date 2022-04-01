@@ -1,22 +1,29 @@
-import type { Scope } from "../../../common/types";
-import { write, markScopeOffset, writeScope, writeCall } from "../../../html";
+import {
+  write,
+  markHydrateNode,
+  nextScopeId,
+  writeHydrateScope,
+  writeHydrateCall,
+} from "../../../html";
 
-export default (_input: unknown, currentScope: Scope) => {
+export default () => {
   write("<body>");
-  counter(_input, currentScope);
+  counter();
   write("</body>");
 };
 
-const counter = (_input: unknown, currentScope: Scope) => {
+const counter = () => {
   const count = 0;
+  const scopeId = nextScopeId();
 
-  currentScope[2] = count;
   write(
-    `${markScopeOffset(0, currentScope)}<button>${markScopeOffset(
-      1,
-      currentScope
+    `${markHydrateNode(scopeId, 0)}<button>${markHydrateNode(
+      scopeId,
+      1
     )}${count}</button>`
   );
-  writeScope(currentScope);
-  writeCall("counter", currentScope.___id);
+
+  // eslint-disable-next-line no-sparse-arrays
+  writeHydrateScope(scopeId, [, , count]);
+  writeHydrateCall(scopeId, "counter");
 };
