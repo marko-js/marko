@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import assert from "assert";
 import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
@@ -9,6 +10,7 @@ import glob from "tiny-glob";
 import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import createTrackMutations from "./utils/track-mutations";
 import type { Writable } from "stream";
+import type { DOMWindow } from "jsdom";
 
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -68,6 +70,9 @@ describe("translator", () => {
         }
       })();
 
+      let initialHTML: string;
+      let hydratedHTML: string;
+
       (config.skip_html ? it.skip : it)("html", () =>
         snapAllTemplates(htmlConfig)
       );
@@ -91,8 +96,8 @@ describe("translator", () => {
             }),
           });
           const document = browser.window.document;
-          // const test = browser.require(testFile);
-          // const input = test.default[0];
+          const throwErrors = trackErrors(browser.window);
+          const [input, ...steps] = config.steps || [];
 
           document.open();
 
@@ -102,7 +107,7 @@ describe("translator", () => {
           ) as typeof import("@marko/runtime-fluurt/src/dom");
 
           browser.require(templateFile);
-          await serverTemplate.render({} /*input*/, {
+          await serverTemplate.render(input, {
             write(data: string) {
               buffer += data;
               tracker.log(
@@ -121,6 +126,7 @@ describe("translator", () => {
               document.close();
               tracker.logUpdate("End");
               init();
+              throwErrors();
               // browser.require(hydrateFile);
               tracker.logUpdate("Hydrate");
             },
@@ -132,21 +138,21 @@ describe("translator", () => {
             },
           } as Writable & { flush(): void });
 
-          // hydratedHTML = getNormalizedHtml(document.body);
+          hydratedHTML = getNormalizedHtml(document.body);
 
-          // for (const update of test.default.slice(1)) {
-          //   if (isWait(update)) {
-          //     await update();
-          //   } else if (typeof update === "function") {
-          //     update(document.documentElement);
-          //     run();
-          //     tracker.logUpdate(update);
-          //   } else {
-          //     // if new input is detected, stop testing
-          //     // this will be covered by the client tests
-          //     break;
-          //   }
-          // }
+          for (const update of steps) {
+            if (typeof update === "function") {
+              await update(document.documentElement);
+              run();
+              tracker.logUpdate(update);
+            } else {
+              // if new input is detected, stop testing
+              // this will be covered by the client tests
+              break;
+            }
+
+            throwErrors();
+          }
 
           return tracker.getLogs();
         });
@@ -164,26 +170,7 @@ describe("translator", () => {
 
           const { window } = browser;
           const { document } = window;
-          const errors: Set<Error> = new Set();
-          const throwErrors = () => {
-            switch (errors.size) {
-              case 0:
-                return;
-              case 1:
-                throw [...errors][0];
-              default:
-                throw new AggregateError(errors);
-            }
-          };
-
-          window.addEventListener("error", (ev) => {
-            errors.add(ev.error.detail || ev.error);
-            ev.preventDefault();
-          });
-          window.addEventListener("unhandledrejection", (ev) => {
-            errors.add(ev.reason.detail || ev.reason);
-            ev.preventDefault();
-          });
+          const throwErrors = trackErrors(window);
 
           const [input, ...steps] = config.steps || [];
           const { run } = browser.require(
@@ -198,6 +185,7 @@ describe("translator", () => {
           document.body.appendChild(container);
 
           const instance = render(input, container);
+          initialHTML = getNormalizedHtml(container);
           throwErrors();
           tracker.logUpdate(input);
 
@@ -217,6 +205,10 @@ describe("translator", () => {
           return tracker.getLogs();
         });
       });
+
+      (config.skip_ssr || config.skip_csr ? it.skip : it)("equivalent", () => {
+        assert.strictEqual(hydratedHTML, initialHTML);
+      });
     });
   }
 });
@@ -232,36 +224,61 @@ function indent(data: unknown) {
     .join("\n");
 }
 
-// function getNormalizedHtml(container: Element) {
-//   const clone = container.cloneNode(true) as Element;
+function trackErrors(window: DOMWindow) {
+  const errors: Set<Error> = new Set();
+  const throwErrors = () => {
+    switch (errors.size) {
+      case 0:
+        return;
+      case 1:
+        throw [...errors][0];
+      default:
+        throw new AggregateError(errors);
+    }
+  };
 
-//   const treeWalker = container.ownerDocument!.createTreeWalker(clone);
-//   const nodesToRemove: ChildNode[] = [];
+  window.addEventListener("error", (ev) => {
+    errors.add(ev.error.detail || ev.error);
+    ev.preventDefault();
+  });
+  window.addEventListener("unhandledrejection", (ev) => {
+    errors.add(ev.reason.detail || ev.reason);
+    ev.preventDefault();
+  });
 
-//   while (treeWalker.nextNode()) {
-//     const node = treeWalker.currentNode;
-//     if (node.nodeType === 8 || isIgnoredTag(node as Element)) {
-//       nodesToRemove.push(node as ChildNode);
-//     } else if ((node as Element).tagName === "TEXTAREA") {
-//       node.textContent = (node as HTMLTextAreaElement).value;
-//     }
-//   }
+  return throwErrors;
+}
 
-//   nodesToRemove.forEach((n) => n.remove());
-//   // clone.innerHTML = clone.innerHTML;
-//   clone.normalize();
+function getNormalizedHtml(container: Element) {
+  const clone = container.cloneNode(true) as Element;
 
-//   return clone.innerHTML.trim();
-// }
+  const treeWalker = container.ownerDocument!.createTreeWalker(clone);
+  const nodesToRemove: ChildNode[] = [];
 
-// function isIgnoredTag(node: Element) {
-//   switch (node.tagName) {
-//     case "LINK":
-//     case "TITLE":
-//     case "STYLE":
-//     case "SCRIPT":
-//       return true;
-//     default:
-//       return false;
-//   }
-// }
+  while (treeWalker.nextNode()) {
+    const node = treeWalker.currentNode;
+    if (node.nodeType === 8 || isIgnoredTag(node as Element)) {
+      nodesToRemove.push(node as ChildNode);
+    } else if ((node as Element).tagName === "TEXTAREA") {
+      node.textContent = (node as HTMLTextAreaElement).value;
+    }
+  }
+
+  nodesToRemove.forEach((n) => n.remove());
+  // clone.innerHTML = clone.innerHTML;
+  clone.normalize();
+
+  return clone.innerHTML.trim();
+}
+
+function isIgnoredTag(node: Element) {
+  switch (node.tagName) {
+    case "LINK":
+    case "TITLE":
+    case "STYLE":
+    case "SCRIPT":
+      return true;
+    default:
+      return false;
+  }
+}
