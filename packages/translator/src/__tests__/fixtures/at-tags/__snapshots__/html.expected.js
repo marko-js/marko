@@ -2,6 +2,8 @@ import { write as _write, nextScopeId as _nextScopeId, createRenderer as _create
 import _hello from "./components/hello/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   _hello({
     foo: {
       renderBody() {
@@ -15,8 +17,6 @@ const _renderer = input => {
     }
 
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

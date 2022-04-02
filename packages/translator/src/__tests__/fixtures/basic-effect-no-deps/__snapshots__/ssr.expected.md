@@ -1,5 +1,5 @@
 # Write
-  <script>(M$h=[]).push((b,s)=>({"0":{}}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])</script>
+  <script>(M$h=[]).push((b,s)=>({"0":[]}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])</script>
 
 
 # Render "End"
@@ -7,7 +7,7 @@
 <html>
   <head>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":{}}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[]}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])
     </script>
   </head>
   <body />
@@ -29,7 +29,7 @@ inserted html0/body1
 <html>
   <head>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":{}}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[]}),["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0",0,])
     </script>
   </head>
   <body

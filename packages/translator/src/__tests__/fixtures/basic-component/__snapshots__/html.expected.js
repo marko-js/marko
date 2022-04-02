@@ -2,6 +2,8 @@ import { write as _write, nextScopeId as _nextScopeId, createRenderer as _create
 import _counter from "./components/counter.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   _write("<div>");
 
   _counter({
@@ -12,8 +14,6 @@ const _renderer = input => {
   });
 
   _write("</div>");
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

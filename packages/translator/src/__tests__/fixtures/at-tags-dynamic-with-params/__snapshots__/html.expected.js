@@ -2,24 +2,24 @@ import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _esc
 import _hello from "./components/hello/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   let _item;
 
-  _write(`${_markHydrateNode(0)}`);
+  const _scope = _nextScopeId();
+
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   if (x) _item = {
     renderBody(y) {
-      _write(`${_markHydrateNode(0)}${_escapeXML(y)}`);
+      _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(y)}`);
     }
 
   };
 
-  const _scope = _nextScopeId();
-
   _hello({
     item: _item
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

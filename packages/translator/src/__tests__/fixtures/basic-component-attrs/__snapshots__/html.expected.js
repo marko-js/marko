@@ -2,6 +2,8 @@ import { nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "
 import _myButton from "./components/my-button.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   const clickCount = 0;
 
   _myButton({
@@ -15,8 +17,6 @@ const _renderer = input => {
     }
 
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

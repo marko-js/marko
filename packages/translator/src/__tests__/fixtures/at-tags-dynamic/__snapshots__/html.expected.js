@@ -2,13 +2,18 @@ import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _esc
 import _hello from "./components/hello/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   const _col = [];
+
+  const _scope = _nextScopeId();
+
   const _item = [];
 
-  _write(`${_markHydrateNode(0)}`);
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   for (const color of ["red", "blue", "green"]) {
-    _write(`${_markHydrateNode(0)}`);
+    _write(`${_markHydrateNode(_scope, 0)}`);
 
     if (color === "red") _item.push({
       style: {
@@ -31,7 +36,7 @@ const _renderer = input => {
     });
   }
 
-  _write(`${_markHydrateNode(0)}`);
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   let _i = 0;
 
@@ -39,14 +44,14 @@ const _renderer = input => {
     let i = _i++;
     const _row = [];
 
-    _write(`${_markHydrateNode(0)}`);
+    _write(`${_markHydrateNode(_scope, 0)}`);
 
     for (const row of col) {
       _row.push({
         row: row,
 
         renderBody() {
-          _write(`${_markHydrateNode(0)}${_escapeXML(row)}`);
+          _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(row)}`);
         }
 
       });
@@ -70,16 +75,12 @@ const _renderer = input => {
     }
   });
 
-  const _scope = _nextScopeId();
-
   _hello({
     list: {
       item: _item
     },
     col: _col
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

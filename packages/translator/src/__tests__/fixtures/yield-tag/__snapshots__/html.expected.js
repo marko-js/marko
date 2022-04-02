@@ -3,12 +3,12 @@ import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _n
 const _renderer = input => {
   var _return;
 
-  _write(`${_markHydrateNode(0)}`);
+  const _scope = _nextScopeId();
+
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   if (show) _return = 1;else _return = 2;
   return _return;
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

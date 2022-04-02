@@ -2,6 +2,8 @@ import { nextScopeId as _nextScopeId, markHydrateNode as _markHydrateNode, escap
 import _child from "./components/child/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   const data = _child({
     renderBody() {
       const _scope = _nextScopeId();
@@ -9,9 +11,7 @@ const _renderer = input => {
 
   });
 
-  _write(`${_markHydrateNode(0)}${_escapeXML(data)}`);
-
-  const _scope = _nextScopeId();
+  _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(data)}`);
 };
 
 export default _renderer;

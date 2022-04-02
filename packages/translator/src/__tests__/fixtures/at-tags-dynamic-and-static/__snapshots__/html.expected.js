@@ -2,9 +2,13 @@ import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _n
 import _hello from "./components/hello/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   const _item = [];
 
-  _write(`${_markHydrateNode(0)}`);
+  const _scope = _nextScopeId();
+
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   for (const a in {
     a: 1,
@@ -13,14 +17,10 @@ const _renderer = input => {
     _item.push({});
   }
 
-  const _scope = _nextScopeId();
-
   _hello({
     item: _item,
     other: {}
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

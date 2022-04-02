@@ -3,10 +3,10 @@ import { nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "
 const _renderer = input => {
   var _return;
 
+  const _scope = _nextScopeId();
+
   _return = 1;
   return _return;
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

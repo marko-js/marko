@@ -102,7 +102,7 @@ describe("translator", () => {
           document.open();
 
           const tracker = createTrackMutations(browser.window, document);
-          const { /*run,*/ init } = browser.require(
+          const { run, init } = browser.require(
             "@marko/runtime-fluurt/src/dom"
           ) as typeof import("@marko/runtime-fluurt/src/dom");
 

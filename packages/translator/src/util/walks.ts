@@ -7,6 +7,7 @@ import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { writeTo } from "./writer";
+import { scopeIdentifier } from "../visitors/program";
 
 const [getWalks] = createSectionState<(string | t.Expression)[]>(
   "walks",
@@ -134,6 +135,7 @@ export function visit(
   if (code && isOutputHTML()) {
     writeTo(path)`${callRuntime(
       "markHydrateNode",
+      scopeIdentifier,
       t.numericLiteral(reserve!.id)
     )}`;
   } else {

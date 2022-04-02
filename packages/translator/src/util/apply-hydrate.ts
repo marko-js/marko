@@ -274,30 +274,59 @@ export function writeHTMLHydrateStatements(
 ) {
   const sectionId = getOrCreateSectionId(path);
   const groups = getHydrate(sectionId);
-  path.pushContainer(
+
+  path.unshiftContainer(
     "body",
     t.variableDeclaration("const", [
       t.variableDeclarator(scopeIdentifier, callRuntime("nextScopeId")),
     ])
   );
+
+  if (!groups.length) return;
+
+  const refs: Reserve[] = [];
+
   for (let i = groups.length; i--; ) {
-    path.pushContainer("body", [
+    const { references } = groups[i];
+    if (references) {
+      if (Array.isArray(references)) {
+        for (const ref of references) {
+          sorted.insert(compareReserves, refs, ref);
+        }
+      } else {
+        sorted.insert(compareReserves, refs, references);
+      }
+    }
+    path.pushContainer(
+      "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateCall",
           scopeIdentifier,
           t.stringLiteral(getHydrateRegisterId(sectionId, i))
         )
-      ),
-      t.expressionStatement(
-        callRuntime(
-          "writeHydrateScope",
-          scopeIdentifier,
-          t.objectExpression([])
-        )
-      ),
-    ]);
+      )
+    );
   }
+
+  path.pushContainer(
+    "body",
+    t.expressionStatement(
+      callRuntime(
+        "writeHydrateScope",
+        scopeIdentifier,
+        t.arrayExpression(
+          refs.reduce((acc, ref) => {
+            while (acc.length < ref.id) {
+              acc.push(null);
+            }
+            acc.push(t.identifier(ref.name));
+            return acc;
+          }, [] as Array<null | t.Identifier>)
+        )
+      )
+    )
+  );
 }
 
 /**

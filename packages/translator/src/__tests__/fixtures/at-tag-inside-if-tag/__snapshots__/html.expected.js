@@ -2,9 +2,13 @@ import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _n
 import _customTag from "./components/custom-tag/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   let _thing;
 
-  _write(`${_markHydrateNode(0)}`);
+  const _scope = _nextScopeId();
+
+  _write(`${_markHydrateNode(_scope, 0)}`);
 
   if (x) _thing = {
     x: 1,
@@ -15,13 +19,9 @@ const _renderer = input => {
 
   };
 
-  const _scope = _nextScopeId();
-
   _customTag({
     thing: _thing
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

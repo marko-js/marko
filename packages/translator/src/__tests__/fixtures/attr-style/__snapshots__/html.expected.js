@@ -2,7 +2,9 @@ import { markHydrateNode as _markHydrateNode, styleAttr as _styleAttr, write as 
 import _customTag from "./components/custom-tag.marko";
 
 const _renderer = input => {
-  _write(`${_markHydrateNode(0)}<div${_styleAttr({
+  const _scope = _nextScopeId();
+
+  _write(`${_markHydrateNode(_scope, 0)}<div${_styleAttr({
     color: color
   })}></div><div style=width:100px></div><div style="color: green"></div>`);
 
@@ -49,8 +51,6 @@ const _renderer = input => {
     }
 
   }/>
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

@@ -2,6 +2,8 @@ import { nextScopeId as _nextScopeId, markHydrateNode as _markHydrateNode, write
 import _child from "./components/child/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   _child({
     class: "hi",
     onclick: () => {
@@ -14,13 +16,11 @@ const _renderer = input => {
 
   });
 
-  _write(`${_markHydrateNode(0)}<div class=hi></div>`);
-
-  const _scope = _nextScopeId();
+  _write(`${_markHydrateNode(_scope, 0)}<div class=hi></div>`);
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0_0");
 
-  _writeHydrateScope(_scope, {});
+  _writeHydrateScope(_scope, []);
 };
 
 export default _renderer;

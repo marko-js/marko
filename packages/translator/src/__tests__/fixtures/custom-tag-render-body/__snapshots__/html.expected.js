@@ -2,18 +2,18 @@ import { write as _write, nextScopeId as _nextScopeId, createRenderer as _create
 import _child from "./components/child/index.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   _child({
     name: "World",
 
     renderBody() {
-      _write("This is the body content");
-
       const _scope = _nextScopeId();
+
+      _write("This is the body content");
     }
 
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;

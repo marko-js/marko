@@ -2,6 +2,8 @@ import { nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "
 import _hello from "./hello.marko";
 
 const _renderer = input => {
+  const _scope = _nextScopeId();
+
   _hello({
     name: "Frank",
 
@@ -10,8 +12,6 @@ const _renderer = input => {
     }
 
   });
-
-  const _scope = _nextScopeId();
 };
 
 export default _renderer;
