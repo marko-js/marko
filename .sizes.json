@@ -28,6 +28,24 @@
         "gzip": 2325,
         "brotli": 2066
       }
+    },
+    {
+      "name": "counter 💧",
+      "user": {
+        "min": 330,
+        "gzip": 249,
+        "brotli": 231
+      },
+      "runtime": {
+        "min": 5079,
+        "gzip": 2419,
+        "brotli": 2138
+      },
+      "total": {
+        "min": 5409,
+        "gzip": 2668,
+        "brotli": 2369
+      }
     }
   ]
 }

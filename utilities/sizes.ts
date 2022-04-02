@@ -6,6 +6,7 @@ import assert from "assert";
 import { OutputChunk, rollup } from "rollup";
 import { table } from "table";
 import { terser } from "rollup-plugin-terser";
+import hypothetical from "rollup-plugin-hypothetical";
 import * as compiler from "@marko/compiler";
 
 interface Sizes {
@@ -151,13 +152,18 @@ async function getResults(examples: Record<string, string>) {
   ];
 
   for (const [exampleName, examplePath] of Object.entries(examples)) {
-    const [user, runtime, total] = await bundleExample(examplePath);
-    results.push({
-      name: exampleName,
-      user,
-      runtime,
-      total,
-    });
+    for (const hydrate of ["", " 💧"]) {
+      const [user, runtime, total] = await bundleExample(
+        examplePath,
+        !!hydrate
+      );
+      results.push({
+        name: exampleName + hydrate,
+        user,
+        runtime,
+        total,
+      });
+    }
   }
 
   return results;
@@ -186,9 +192,9 @@ function addSizes(all) {
   return total;
 }
 
-async function bundleExample(examplePath: string) {
+async function bundleExample(examplePath: string, hydrate: boolean) {
   const bundle = await rollup({
-    input: examplePath,
+    input: hydrate ? "./hydrate.js" : examplePath,
     manualChunks(id) {
       if (id === runtimePath) {
         return "runtime";
@@ -220,6 +226,15 @@ async function bundleExample(examplePath: string) {
           return null;
         },
       },
+      hydrate &&
+        hypothetical({
+          files: {
+            "./hydrate.js": `import ${JSON.stringify(
+              examplePath
+            )}; import { init } from "@marko/runtime-fluurt/dist/dom"; init();`,
+          },
+          allowFallthrough: true,
+        }),
       terser({ compress: {}, mangle: { module: true } }),
     ],
   });
