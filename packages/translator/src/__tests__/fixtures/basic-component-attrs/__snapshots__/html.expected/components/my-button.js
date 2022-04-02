@@ -7,7 +7,7 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_0");
 
-  _writeHydrateScope(_scope, [,,, onclick]);
+  _writeHydrateScope(_scope, [,, onclick]);
 };
 
 export default _renderer;

@@ -1,10 +1,4 @@
-import { queue as _queue, write as _write, on as _on, data as _data, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-
-function _hydrateWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
-  _on(_scope, 0, "click", _scope[4]);
-}
-
-_register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_0", _hydrateWith_a_b);
+import { queue as _queue, on as _on, data as _data, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _onclick = (_scope, a) => {
   const b = _scope[3];
@@ -17,9 +11,13 @@ const _onclick2 = function (_scope) {
   _queue(_scope, _apply_a, 0, a.map(_bind(_scope, _onclick)));
 };
 
-function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
-  _write(_scope, 4, _bind(_scope, _onclick2));
+function _hydrateWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
+  _on(_scope, 0, "click", _bind(_scope, _onclick2));
+}
 
+_register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_0", _hydrateWith_a_b);
+
+function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
   _queueHydrate(_scope, _hydrateWith_a_b);
 }
 

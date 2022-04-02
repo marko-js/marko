@@ -1,14 +1,12 @@
-import { queue as _queue, write as _write, on as _on, data as _data, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, on as _on, data as _data, register as _register, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrateWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
-  _on(_scope, 0, "click", _scope[5]);
+  _on(_scope, 0, "click", _queue(_scope, _apply_x, 0, y = x + y));
 }
 
 _register("packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_0", _hydrateWith_x_y);
 
 function _applyWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
-  _write(_scope, 5, _queue(_scope, _apply_x, 0, y = x + y));
-
   _queueHydrate(_scope, _hydrateWith_x_y);
 }
 

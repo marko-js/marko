@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
-import { callRuntime, getHTMLRuntime, callRead } from "../../util/runtime";
+import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
@@ -33,7 +33,6 @@ export default {
 
           if (name.startsWith("on")) {
             sectionId ??= getOrCreateSectionId(tag);
-            reserveScope(ReserveType.Store, sectionId, attrNode, name);
           } else if (!evaluate(attr).confident) {
             sectionId ??= getOrCreateSectionId(tag);
           }
@@ -92,7 +91,7 @@ export default {
         // TODO: this should iterate backward and filter out duplicated attrs.
         for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
           const name = attr.node.name;
-          const extra = attr.node.extra;
+          const extra = attr.node.extra ?? {};
           const value = attr.get("value");
           const { confident, computed, valueReferences } = extra;
 
@@ -135,21 +134,6 @@ export default {
                   )}`;
                 }
               } else if (name.startsWith("on")) {
-                const reserveIndex = t.numericLiteral(extra.reserve!.id);
-                addStatement(
-                  "apply",
-                  sectionId,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "write",
-                      scopeIdentifier,
-                      reserveIndex,
-                      value.node
-                    )
-                  )
-                );
-
                 addStatement(
                   "hydrate",
                   sectionId,
@@ -160,7 +144,7 @@ export default {
                       scopeIdentifier,
                       visitIndex!,
                       t.stringLiteral(name.slice(2)),
-                      callRead(extra.reserve!, sectionId)
+                      value.node
                     )
                   )
                 );
