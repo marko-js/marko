@@ -1,8 +1,0 @@
-packages/translator-default/test/fixtures/error-style-block-multiple/template.marko(5,1): A Marko file can only contain a single inline style block.
-  3 | }
-  4 | 
-> 5 | style {
-    | ^^^^^
-  6 |   span { color: green }
-  7 | }
-  8 | 

@@ -1,4 +1,4 @@
-import { createParser } from "htmljs-parser";
+import { createParser, TagType } from "htmljs-parser";
 import * as t from "../babel-types";
 import {
   parseScript,
@@ -203,35 +203,42 @@ export function parseMarko(file) {
     onTagName(part) {
       const tagName = parseTemplateString(part);
       const node = t.markoTag(tagName, [], t.markoTagBody());
+      let parseType = TagType.html;
       node.start = part.start - (part.concise ? 0 : 1); // Account for leading `<`.
       node.end = part.end;
 
       if (t.isStringLiteral(tagName)) {
-        let literalTagName = tagName.value;
+        const literalTagName = tagName.value || (tagName.value = "div");
 
-        switch (literalTagName) {
-          case "pre":
-          case "style":
-          case "script":
-          case "textarea":
-            preservingWhitespaceUntil = node;
-            break;
-
-          case "%":
-            throw file.buildCodeFrameError(
-              tagName,
-              "<% scriptlets %> are no longer supported."
-            );
-
-          case "":
-            literalTagName = tagName.value = "div";
-            break;
+        if (literalTagName === "%") {
+          throw file.buildCodeFrameError(
+            tagName,
+            "<% scriptlets %> are no longer supported."
+          );
         }
 
-        node.tagDef = getTagDefForTagName(file, literalTagName);
+        const parseOptions = (node.tagDef = getTagDefForTagName(
+          file,
+          literalTagName
+        ))?.parseOptions;
+
+        if (parseOptions) {
+          if (parseOptions.preserveWhitespace) {
+            preservingWhitespaceUntil = node;
+          }
+
+          if (parseOptions.statement) {
+            parseType = TagType.statement;
+          } else if (parseOptions.openTagOnly) {
+            parseType = TagType.void;
+          } else if (parseOptions.text) {
+            parseType = TagType.text;
+          }
+        }
       }
 
       enterTag(node);
+      return parseType;
     },
     onTagShorthandId(part) {
       currentShorthandId = parseTemplateString(part);
@@ -329,6 +336,7 @@ export function parseMarko(file) {
     onOpenTagEnd(part) {
       const { node } = currentTag;
       const { attributes } = node;
+      const parseOptions = node.tagDef?.parseOptions;
       endAttr();
 
       if (currentShorthandClassNames) {
@@ -396,11 +404,23 @@ export function parseMarko(file) {
         currentShorthandId = undefined;
       }
 
-      if (node.tagDef?.parseOptions?.rawOpenTag) {
-        node.rawValue = parser.read({
-          start: node.name.start,
-          end: part.start
-        });
+      if (parseOptions) {
+        if (parseOptions.rawOpenTag) {
+          node.rawValue = parser.read({
+            start: node.name.start,
+            end: part.start
+          });
+        }
+
+        if (
+          part.selfClosed ||
+          parseOptions.statement ||
+          parseOptions.openTagOnly
+        ) {
+          this.onCloseTag(part);
+        }
+      } else if (part.selfClosed) {
+        this.onCloseTag(part);
       }
     },
     onCloseTag(part) {

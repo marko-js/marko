@@ -60,12 +60,11 @@ export interface TagDefinition {
   transformers?: PluginDefinition<t.MarkoTag>[];
   migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
-    rootOnly?: boolean,
-    rawOpenTag?: boolean,
+    text?: boolean,
     openTagOnly?: boolean,
-    ignoreAttributes?: boolean,
-    relaxRequireCommas?: boolean,
-    state?: "html" | "static-text" | "parsed-text" | "cdata"
+    statement?: boolean,
+    rawOpenTag?: boolean,
+    preserveWhitespace?: boolean
   }
 }
 
