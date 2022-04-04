@@ -103,9 +103,9 @@ export function setConditionalRendererOnlyChild(
   }
 }
 
-const emptyMarkerMap = new Map();
-export const emptyMarkerArray = [getEmptyScope()];
-emptyMarkerMap.set(Symbol("empty"), getEmptyScope());
+const emptyMarkerMap = /* @__PURE__ */ (() =>
+  new Map().set(Symbol("empty"), getEmptyScope()))();
+export const emptyMarkerArray = [/* @__PURE__ */ getEmptyScope()];
 const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 

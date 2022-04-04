@@ -1,12 +1,15 @@
 import { run } from "./queue";
 
-const { port1, port2 } = new MessageChannel();
-export let isScheduled: boolean;
+const port2 = /* @__PURE__ */ (() => {
+  const { port1, port2 } = new MessageChannel();
+  port1.onmessage = () => {
+    isScheduled = false;
+    run();
+  };
+  return port2;
+})();
 
-port1.onmessage = () => {
-  isScheduled = false;
-  run();
-};
+export let isScheduled: boolean;
 
 export function schedule() {
   if (!isScheduled) {

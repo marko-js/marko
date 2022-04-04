@@ -147,7 +147,7 @@ async function getResults(examples: Record<string, string>) {
   const results: Result[] = [
     {
       name: "*",
-      total: await getSizesForSrc(fs.readFileSync(runtimePath, "utf-8")),
+      total: (await bundleExample(runtimePath, false))[2], // await getSizesForSrc(fs.readFileSync(runtimePath, "utf-8")),
     },
   ];
 
@@ -246,11 +246,11 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
   const userCodeChunks = output.filter(
     (o) => o !== runtimeChunk && "code" in o
   ) as OutputChunk[];
-  const runtimeSize = await getSizesForSrc(runtimeChunk.code);
+  const runtimeSize = runtimeChunk && (await getSizesForSrc(runtimeChunk.code));
   const userSize = addSizes(
     await Promise.all(userCodeChunks.map((chunk) => getSizesForSrc(chunk.code)))
   );
-  const totalSize = addSizes([userSize, runtimeSize]);
+  const totalSize = addSizes([userSize, runtimeSize].filter(Boolean));
   return [userSize, runtimeSize, totalSize];
 }
 

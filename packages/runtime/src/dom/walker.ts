@@ -1,7 +1,7 @@
 import type { Scope } from "../common/types";
 import { createScope } from "./scope";
 
-export const walker = document.createTreeWalker(document);
+export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, Inside, or Replace

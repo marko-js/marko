@@ -74,7 +74,7 @@ export function attrs(scope: Scope, elementIndex: number, index: number) {
 }
 
 const doc = document;
-const parser = doc.createElement("template");
+const parser = /* @__PURE__ */ doc.createElement("template");
 
 export function html(scope: Scope, value: string, index: number) {
   const firstChild = scope[index] as Node & ChildNode;

@@ -120,7 +120,7 @@ export function createRenderer<S extends Scope>(
 ): Renderer<S> {
   return {
     ___template: template,
-    ___walks: walks && trimWalkString(walks),
+    ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
     ___render: render,
     ___clone: _clone,
     ___hasUserEffects: hasUserEffects,
@@ -155,7 +155,7 @@ function _clone(this: Renderer) {
 }
 
 const doc = document;
-const parser = doc.createElement("template");
+const parser = /* @__PURE__ */ doc.createElement("template");
 
 function parse(template: string, ensureFragment?: boolean) {
   let node: Node | null;

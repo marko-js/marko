@@ -55,6 +55,10 @@ export default ["dist/debug", "dist"].flatMap((env) =>
                 mangle: {
                   module: true,
                 },
+                format: {
+                  comments: /^\s*@__/,
+                  preserve_annotations: true,
+                },
               }),
             ]
           : []),
