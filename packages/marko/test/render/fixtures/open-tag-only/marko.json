@@ -1,0 +1,8 @@
+{
+  "<test-open-tag-only>": {
+    "html": true,
+    "parse-options": {
+      "openTagOnly": true
+    }
+  }
+}
