@@ -133,7 +133,7 @@ export function createRenderer<S extends Scope>(
 function _clone(this: Renderer) {
   let sourceNode: Node | null | undefined = this.___sourceNode;
   if (!sourceNode) {
-    if ("MARKO_DEBUG" && this.___template === undefined) {
+    if (MARKO_DEBUG && this.___template === undefined) {
       throw new Error(
         "The renderer does not have a template to clone: " +
           JSON.stringify(this)

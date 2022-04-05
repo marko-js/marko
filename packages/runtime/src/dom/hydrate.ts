@@ -106,16 +106,14 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           }
           currentScope.___startNode = currentNode as ChildNode;
         } else if (token === HydrateSymbols.SECTION_END) {
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
+          if (MARKO_DEBUG) {
             if (data * SCOPE_ID_MULTIPLIER !== currentScope.___id) {
               throw new Error("SCOPE_END_MISMATCH: " + nodeValue);
             }
           }
           currentScope.___endNode = currentNode as ChildNode;
           currentScope = scopeLookup[stack.pop() as number]!;
-          // eslint-disable-next-line no-constant-condition
-        } else if ("MARKO_DEBUG") {
+        } else if (MARKO_DEBUG) {
           throw new Error("MALFORMED MARKER: " + nodeValue);
         }
       }

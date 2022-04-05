@@ -27,13 +27,16 @@
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "peerDependencies": {
+    "@marko/compiler": "^5.19.1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x/tree/master/packages/translator"
   },
   "scripts": {
     "build": "npm run build:types && npm run build:js",
-    "build:js": "rollup -c --configPlugin 'esbuild-transform={loader:\"ts\",include:/\\.ts$/}'",
+    "build:js": "node -r esbuild-register esbuild.ts",
     "build:types": "tsc -b",
     "prepublishOnly": "npm run build"
   },

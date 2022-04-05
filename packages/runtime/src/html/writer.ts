@@ -294,8 +294,7 @@ export function markHydrateSectionStart(scopeId: number) {
 }
 
 export function markHydrateSectionEnd(scopeId: number) {
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
+  if (MARKO_DEBUG) {
     return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId}>`;
   }
   return `<!${runtimeId}${HydrateSymbols.SECTION_END}>`;

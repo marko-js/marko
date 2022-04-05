@@ -70,8 +70,7 @@ function getFirstNode(
 ): Node & ChildNode {
   let scopeOrScopes: Scope | Scope[];
 
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
+  if (MARKO_DEBUG) {
     if (
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: Unreachable code error

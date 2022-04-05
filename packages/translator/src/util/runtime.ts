@@ -5,6 +5,8 @@ import type { Reserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import type { ReferenceGroup } from "./apply-hydrate";
 
+declare const MARKO_SRC: boolean;
+
 export function importRuntime(name: string) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
@@ -34,8 +36,7 @@ function getRuntime(output: string): unknown {
 function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
   return `@marko/runtime-fluurt/${
-    // eslint-disable-next-line no-constant-condition
-    "MARKO_SRC" ? "src" : optimize ? "dist" : "dist/debug"
+    MARKO_SRC ? "src" : optimize ? "dist" : "dist/debug"
   }/${output}`;
 }
 

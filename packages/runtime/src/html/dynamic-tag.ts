@@ -45,7 +45,7 @@ export function dynamicTag(
       }
 
       write(`</${tag}>`);
-    } else if ("MARKO_DEBUG" && renderBody) {
+    } else if (MARKO_DEBUG && renderBody) {
       throw new Error(
         `A renderBody was provided for a "${tag}" tag, which cannot have children.`
       );
@@ -64,8 +64,7 @@ export function dynamicTag(
           : { renderBody, ...input }
         : input
     );
-    // eslint-disable-next-line no-constant-condition
-  } else if ("MARKO_DEBUG") {
+  } else if (MARKO_DEBUG) {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }
 }

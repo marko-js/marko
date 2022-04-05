@@ -98,7 +98,7 @@ function walkInternal(
     } else if (value >= WalkCodes.Over) {
       value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
       while (value--) {
-        if (!walker.nextSibling() && !walker.nextNode() && "MARKO_DEBUG") {
+        if (!walker.nextSibling() && !walker.nextNode() && MARKO_DEBUG) {
           throw new Error("No more nodes to walk");
         }
       }
@@ -136,7 +136,7 @@ function walkInternal(
         if (value === WalkCodes.After) {
           parentNode.insertBefore(newNode, current.nextSibling);
         } else {
-          if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+          if (MARKO_DEBUG && value !== WalkCodes.Replace) {
             throw new Error(`Unknown walk code: ${value}`);
           }
           parentNode.replaceChild(newNode, current);
@@ -145,7 +145,7 @@ function walkInternal(
         walker.currentNode = newNode;
       }
     } /* else {
-      if ("MARKO_DEBUG" && value !== WalkCodes.Replace) {
+      if (MARKO_DEBUG && value !== WalkCodes.Replace) {
         throw new Error(`Unknown walk code: ${value}`);
       }
       const current = walker.currentNode;

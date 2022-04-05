@@ -4,5 +4,5 @@
   "enable-source-maps": true,
   "watchFiles": ["packages/*/src/**/*.ts", "packages/*/src/**/*.marko"],
   "watchIgnore": [".git", "node_modules", "__snapshots__"],
-  "require": ["esbuild-register", "mocha-snap"]
+  "require": ["./esbuild-register", "mocha-snap"]
 }
