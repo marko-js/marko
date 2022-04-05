@@ -20,8 +20,8 @@ const _temp2 = _createRenderer("<!>",
 "%+", null),
       _if = _createRenderer("", "", null),
       _temp3 = _createRenderer("",
-/* replace */
-"%", _apply);
+/* get */
+" ", _apply);
 
 export const applyAttrs = function (_scope, {
   x

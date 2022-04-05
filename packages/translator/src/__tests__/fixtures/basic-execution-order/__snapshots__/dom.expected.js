@@ -38,9 +38,9 @@ function _apply(_scope) {
   _queueHydrate(_scope, _hydrate);
 }
 
-const _if = _createRenderer("<!>",
-/* replace */
-"%", _apply2);
+const _if = _createRenderer(" ",
+/* get */
+" ", _apply2);
 
 export const template = "<button>hide</button><!>";
 export const walks =

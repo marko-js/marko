@@ -5,7 +5,7 @@ const _renderer = ({
 }) => {
   const _scope = _nextScopeId();
 
-  _write(`<div><div>a</div>${_markHydrateNode(_scope, 0)}${_escapeXML(x)}Hello Text &lt;a/>${_markHydrateNode(_scope, 1)}${_toString(x)}Hello HTML <a/><script>
+  _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(x)}<span>${_markHydrateNode(_scope, 1)}${_escapeXML(x)}<div></div></span><div><div>a</div>${_markHydrateNode(_scope, 2)}${_escapeXML(x)}Hello Text &lt;a/>${_markHydrateNode(_scope, 3)}${_toString(x)}Hello HTML <a/><script>
     Hello &lt;b> &lt;/script>
   </script></div>`);
 };

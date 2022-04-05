@@ -57,9 +57,9 @@ function _apply(_scope) {
   _apply_items(_scope, []);
 }
 
-const _for = _createRenderer("<!>",
-/* replace */
-"%", null);
+const _for = _createRenderer(" ",
+/* get */
+" ", null);
 
 export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const walks =

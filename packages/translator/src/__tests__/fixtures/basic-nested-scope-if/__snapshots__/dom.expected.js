@@ -34,9 +34,9 @@ function _apply(_scope) {
   _apply_clickCount(_scope, 0);
 }
 
-const _if = _createRenderer("<button><!></button>",
-/* get, next(1), replace */
-" D%", _apply2);
+const _if = _createRenderer("<button> </button>",
+/* get, next(1), get */
+" D ", _apply2);
 
 export const template = "<div><!></div>";
 export const walks =

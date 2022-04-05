@@ -1,8 +1,8 @@
 import Other from "./other.marko";
 
-_dynamicTag(_scope, Other, {}, _createRenderer("<!></span>",
-/* next(1), replace */
-"D%", () => {
+_dynamicTag(_scope, Other, {}, _createRenderer(" </span>",
+/* next(1), get */
+"D ", () => {
   _write("<span>");
 
   const message = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-relative-path/other.marko");
@@ -14,9 +14,9 @@ function _apply_message(_scope, message) {
   if (_write(_scope, 1, message)) _data(_scope, 0, message);
 }
 
-const _temp = _createRenderer("<!></span>",
-/* next(1), replace */
-"D%", null);
+const _temp = _createRenderer(" </span>",
+/* next(1), get */
+"D ", null);
 
 export const template = "";
 export const walks = "";

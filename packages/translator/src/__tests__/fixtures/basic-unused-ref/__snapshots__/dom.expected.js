@@ -36,9 +36,9 @@ function _apply(_scope) {
   _apply_clickCount(_scope, 0);
 }
 
-export const template = "<div><button><!></button></div>";
+export const template = "<div><button> </button></div>";
 export const walks =
-/* next(1), get, next(1), replace, out(2) */
-"D D%m";
+/* next(1), get, next(1), get, out(2) */
+"D D m";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

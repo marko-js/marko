@@ -23,9 +23,9 @@ export const applyAttrs = function (_scope, {
   _apply_text(_scope, text);
 };
 export { _apply_onclick, _apply_text };
-export const template = "<button><!></button>";
+export const template = "<button> </button>";
 export const walks =
-/* get, next(1), replace, out(1) */
-" D%l";
+/* get, next(1), get, out(1) */
+" D l";
 export const apply = function () {};
 export default _createRenderFn(template, walks, apply, applyAttrs);

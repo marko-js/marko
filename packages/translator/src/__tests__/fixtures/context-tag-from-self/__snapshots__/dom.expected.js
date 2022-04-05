@@ -12,9 +12,9 @@ function _apply_x(_scope, x) {
   if (_write(_scope, 1, x)) _data(_scope, 0, x);
 }
 
-export const template = "<!></span></div>";
+export const template = " </span></div>";
 export const walks =
-/* next(2), replace, out(2) */
-"E%m";
+/* next(2), get, out(2) */
+"E m";
 export const apply = function () {};
 export default _createRenderFn(template, walks, apply);

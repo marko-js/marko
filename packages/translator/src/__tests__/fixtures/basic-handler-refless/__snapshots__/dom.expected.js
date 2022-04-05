@@ -20,9 +20,9 @@ function _apply(_scope) {
   _queueHydrate(_scope, _hydrate);
 }
 
-export const template = "<button><!></button>";
+export const template = "<button> </button>";
 export const walks =
-/* get, next(1), replace, out(1) */
-" D%l";
+/* get, next(1), get, out(1) */
+" D l";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

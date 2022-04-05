@@ -9,9 +9,9 @@ function _apply(_scope) {
   _other(_scope[0]);
 }
 
-const _temp = _createRenderer("<!></span>",
-/* next(1), replace */
-"D%", null);
+const _temp = _createRenderer(" </span>",
+/* next(1), get */
+"D ", null);
 
 export const template = `${_other_template}`;
 export const walks =

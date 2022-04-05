@@ -100,9 +100,9 @@ function _apply_comments(_scope, comments) {
   if (_write(_scope, 4, comments)) _setLoopOf(_scope, 0, comments, _for, null, _apply_comment);
 }
 
-const _for = _createRenderer("<li><span><!></span><button><!></button><!></li>",
-/* get, next(2), replace, out(1), get, next(1), replace, out(1), replace, skip(3) */
-" E%l D%l%+", _apply),
+const _for = _createRenderer("<li><span> </span><button> </button><!></li>",
+/* get, next(2), get, out(1), get, next(1), get, out(1), replace, skip(3) */
+" E l D l%+", _apply),
       _if = _createRenderer(`${_comments_template}`,
 /* beginChild(0), _comments_walks, endChild */
 `/${_comments_walks}&`, _apply2);
@@ -116,9 +116,9 @@ export const applyAttrs = function (_scope, {
   _apply_path2(_scope, path);
 };
 export { _apply_comments, _apply_path2 as _apply_path };
-export const template = "<ul><!></ul>";
+export const template = "<ul></ul>";
 export const walks =
-/* next(1), replace, skip(3), out(1) */
-"D%+l";
+/* get, skip(3), over(1) */
+" +b";
 export const apply = function () {};
 export default _createRenderFn(template, walks, apply, applyAttrs);

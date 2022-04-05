@@ -7,7 +7,7 @@ const _renderer = ({
 }) => {
   const _scope = _nextScopeId();
 
-  _write(`<ul>${_markHydrateNode(_scope, 0)}`);
+  _write(`${_markHydrateNode(_scope, 0)}<ul>`);
 
   let _i = 0;
 

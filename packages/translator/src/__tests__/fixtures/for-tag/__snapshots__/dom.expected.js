@@ -129,9 +129,9 @@ const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>",
       _temp4 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* next(1), replace, over(2), replace */
 "D%c%", null),
-      _temp5 = _createRenderer("<div><!></div><div></div><div></div>",
-/* next(1), replace */
-"D%", null),
+      _temp5 = _createRenderer("<div> </div><div></div><div></div>",
+/* next(1), get */
+"D ", null),
       _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* get, next(1), replace, over(2), replace, out(1), over(1), get */
 " D%c%lb ", null),
@@ -141,15 +141,15 @@ const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>",
       _temp6 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* get, next(1), replace, over(2), replace, out(1), over(1), get */
 " D%c%lb ", null),
-      _temp7 = _createRenderer("<div><!></div><div></div><div></div><!>",
-/* get, next(1), replace, out(1), over(1), get, over(1), replace, skip(3) */
-" D%lb b%+", null),
-      _temp8 = _createRenderer("<div><!></div><div></div><div></div>",
-/* get, next(1), replace, out(1), over(1), get */
-" D%lb ", null),
-      _temp9 = _createRenderer("<div><!></div><div></div><div></div>",
-/* get, next(1), replace, out(1), over(1), get */
-" D%lb ", null),
+      _temp7 = _createRenderer("<div> </div><div></div><div></div><!>",
+/* get, next(1), get, out(1), over(1), get, over(1), replace, skip(3) */
+" D lb b%+", null),
+      _temp8 = _createRenderer("<div> </div><div></div><div></div>",
+/* get, next(1), get, out(1), over(1), get */
+" D lb ", null),
+      _temp9 = _createRenderer("<div> </div><div></div><div></div>",
+/* get, next(1), get, out(1), over(1), get */
+" D lb ", null),
       _temp10 = _createRenderer("Hello", "", null),
       _temp11 = _createRenderer("Hello", "", null);
 

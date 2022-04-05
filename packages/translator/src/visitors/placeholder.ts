@@ -55,7 +55,7 @@ export default {
       if (extra.needsMarker) {
         walks.visit(placeholder, walks.WalkCodes.Replace);
       } else {
-        write` `;
+        if (!isHTML) write` `;
         walks.visit(placeholder, walks.WalkCodes.Get);
       }
 

@@ -14,9 +14,9 @@ function _apply(_scope) {
   _apply_y(1);
 }
 
-export const template = "<div><!></div><!>";
+export const template = "<div> </div><!>";
 export const walks =
-/* next(1), replace, out(1), replace, over(1) */
-"D%l%b";
+/* next(1), get, out(1), replace, over(1) */
+"D l%b";
 export const apply = _apply;
 export default _createRenderFn(template, walks, apply);
