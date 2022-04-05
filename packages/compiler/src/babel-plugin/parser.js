@@ -72,7 +72,7 @@ export function parseMarko(file) {
     }
 
     const [{ start }] = quasis;
-    const end = quasis[quasis.length - 1].end - 1;
+    const end = quasis[quasis.length - 1].end;
     return parseExpression(
       file,
       `\`${parser.read({ start, end })}\``,
