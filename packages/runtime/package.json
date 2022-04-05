@@ -22,7 +22,7 @@
   "scripts": {
     "build": "npm run build:types && npm run build:js",
     "build:js": "node -r esbuild-register esbuild.ts",
-    "build:types": "tsc -b",
+    "build:types": "tsc -d",
     "prepublishOnly": "npm run build"
   }
 }

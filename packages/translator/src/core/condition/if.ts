@@ -3,7 +3,11 @@ import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import * as sorted from "../../util/sorted-arr";
-import { addStatement, setQueueBuilder } from "../../util/apply-hydrate";
+import {
+  addStatement,
+  setQueueBuilder,
+  writeHTMLHydrateStatements,
+} from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
@@ -96,7 +100,8 @@ const BRANCHES_LOOKUP = new WeakMap<
 >();
 
 export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
-  const bodySectionId = getSectionId(tag.get("body"));
+  const tagBody = tag.get("body");
+  const bodySectionId = getSectionId(tagBody);
   const nextTag = tag.getNextSibling();
   const isLast = !(
     isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
@@ -123,6 +128,7 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
 
   if (isOutputHTML()) {
     writer.flushInto(tag);
+    writeHTMLHydrateStatements(tagBody);
   }
 
   if (isLast) {

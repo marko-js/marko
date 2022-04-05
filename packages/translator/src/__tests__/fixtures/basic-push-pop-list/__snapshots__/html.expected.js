@@ -9,6 +9,8 @@ const _renderer = input => {
   _write(`<div>${_markHydrateNode(_scope, 0)}`);
 
   for (const item of items) {
+    const _scope = _nextScopeId();
+
     _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(item)}`);
   }
 

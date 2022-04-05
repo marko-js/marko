@@ -2,7 +2,16 @@ import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
 import { markHydrateNode as _markHydrateNode, attr as _attr, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = input => {
+const _renderer = ({
+  renderBody,
+  x,
+  show,
+  showTagA,
+  isLarge,
+  tag,
+  level,
+  other
+}) => {
   const _scope = _nextScopeId();
 
   <${renderBody} class=["a", "b"] other=other/>

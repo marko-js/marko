@@ -6,9 +6,9 @@
     {
       "name": "*",
       "total": {
-        "min": 9174,
-        "gzip": 4102,
-        "brotli": 3749
+        "min": 9194,
+        "gzip": 4113,
+        "brotli": 3759
       }
     },
     {
@@ -33,18 +33,18 @@
       "name": "counter 💧",
       "user": {
         "min": 249,
-        "gzip": 196,
-        "brotli": 176
+        "gzip": 195,
+        "brotli": 194
       },
       "runtime": {
-        "min": 2149,
-        "gzip": 1168,
-        "brotli": 1043
+        "min": 2169,
+        "gzip": 1180,
+        "brotli": 1061
       },
       "total": {
-        "min": 2398,
-        "gzip": 1364,
-        "brotli": 1219
+        "min": 2418,
+        "gzip": 1375,
+        "brotli": 1255
       }
     }
   ]

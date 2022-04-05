@@ -93,7 +93,9 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
           const scopeId = parseInt(
             nodeValue.slice(nodeValue.lastIndexOf(" ") + 1)
           );
-          const scope = scopeLookup[scopeId];
+          const scope = (scopeLookup[scopeId] = scopeLookup[scopeId] || {
+            ___id: scopeId * SCOPE_ID_MULTIPLIER,
+          });
           scope[data] = node;
         } else if (token === HydrateSymbols.SECTION_START) {
           if (currentScope) {

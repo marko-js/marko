@@ -7,7 +7,11 @@ const _renderer = input => {
 
   _write(`<div>${_markHydrateNode(_scope, 0)}`);
 
-  if (show) _write("Hello!");
+  if (show) {
+    const _scope = _nextScopeId();
+
+    _write("Hello!");
+  }
 
   _write(`${_markHydrateNode(_scope, 4)}<button>Toggle</button></div>`);
 

@@ -12,6 +12,8 @@ const _renderer = input => {
   for (const val of arrA) {
     let i = _i++;
 
+    const _scope = _nextScopeId();
+
     _write(`<div>${_markHydrateNode(_scope, 0)}${_escapeXML(i)}: ${_markHydrateNode(_scope, 1)}${_escapeXML(val)}</div>`);
   }
 
@@ -23,6 +25,8 @@ const _renderer = input => {
 
   for (const val of arrB) {
     let i = _i2++;
+
+    const _scope = _nextScopeId();
 
     _write(`<div>${_markHydrateNode(_scope, 0)}${_escapeXML(i)}: ${_markHydrateNode(_scope, 1)}${_escapeXML(val)}</div>`);
   }

@@ -1,19 +1,44 @@
 import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = input => {
+const _renderer = ({
+  a,
+  b,
+  x,
+  y
+}) => {
   const _scope = _nextScopeId();
 
   _write(`${_markHydrateNode(_scope, 0)}`);
 
-  if (a + b) _write("Hello");
+  if (a + b) {
+    const _scope = _nextScopeId();
+
+    _write("Hello");
+  }
 
   _write(`${_markHydrateNode(_scope, 4)}`);
 
-  if (a, b) _write("World");
+  if (a, b) {
+    const _scope = _nextScopeId();
+
+    _write("World");
+  }
 
   _write(`<div>${_markHydrateNode(_scope, 8)}`);
 
-  if (x) _write("A");else if (y) _write("B");else _write("C");
+  if (x) {
+    const _scope = _nextScopeId();
+
+    _write("A");
+  } else if (y) {
+    const _scope = _nextScopeId();
+
+    _write("B");
+  } else {
+    const _scope = _nextScopeId();
+
+    _write("C");
+  }
 
   _write("</div>");
 };

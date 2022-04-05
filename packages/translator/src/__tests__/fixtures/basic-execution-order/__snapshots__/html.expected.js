@@ -10,7 +10,11 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 0)}<button>hide</button>${_markHydrateNode(_scope, 1)}`);
 
-  if (show) _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(message.text)}`);
+  if (show) {
+    const _scope = _nextScopeId();
+
+    _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(message.text)}`);
+  }
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0_0");
 

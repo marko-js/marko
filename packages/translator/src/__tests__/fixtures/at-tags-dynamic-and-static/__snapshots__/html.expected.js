@@ -14,6 +14,8 @@ const _renderer = input => {
     a: 1,
     b: 2
   }) {
+    const _scope = _nextScopeId();
+
     _item.push({});
   }
 

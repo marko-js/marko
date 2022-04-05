@@ -20,12 +20,13 @@ export default {
       }
 
       const rendererId = program.scope.generateUidIdentifier("renderer");
+      const { attrs } = program.node.extra;
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
             rendererId,
             t.arrowFunctionExpression(
-              [t.identifier("input")],
+              [attrs ? (attrs.var as any) : t.identifier("input")],
               t.blockStatement(renderContent)
             )
           ),

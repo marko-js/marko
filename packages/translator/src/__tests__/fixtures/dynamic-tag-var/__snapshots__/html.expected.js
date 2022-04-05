@@ -1,7 +1,10 @@
 import child from "./components/child/index.marko";
 import { nextScopeId as _nextScopeId, markHydrateNode as _markHydrateNode, write as _write, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
-const _renderer = input => {
+const _renderer = ({
+  show,
+  dynamic
+}) => {
   const _scope = _nextScopeId();
 
   const data1 = child({

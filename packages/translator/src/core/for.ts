@@ -7,6 +7,7 @@ import {
   addStatement,
   bindingToApplyGroup,
   setQueueBuilder,
+  writeHTMLHydrateStatements,
 } from "../util/apply-hydrate";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
@@ -185,6 +186,7 @@ const translateDOM = {
 
 const translateHTML = {
   exit(tag: t.NodePath<t.MarkoTag>) {
+    const tagBody = tag.get("body");
     const { node } = tag;
     const {
       attributes,
@@ -199,6 +201,7 @@ const translateHTML = {
     let forNode: t.Node | t.Node[];
 
     writer.flushInto(tag);
+    writeHTMLHydrateStatements(tagBody);
 
     if (inAttr) {
       const [keyParam, valParam] = params;
