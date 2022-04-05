@@ -106,7 +106,7 @@ const iter0 = createRenderer(" ", get + next(1), undefined, 0);
 const iter0_execItem = (scope: IterScope, item: IterScope[Iter0Index.ITEM]) => {
   if (write(scope, Iter0Index.ITEM, item)) {
     if (write(scope, Iter0Index.ITEM_TEXT, item.text)) {
-      data(scope, Iter0Index.TEXT, scope[Iter0Index.ITEM_TEXT]);
+      data(scope[Iter0Index.TEXT], scope[Iter0Index.ITEM_TEXT]);
     }
   }
 };

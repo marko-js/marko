@@ -68,7 +68,7 @@ export const _apply_value = (scope: ComponentScope) => {
 };
 
 function _apply_value2(scope: Branch0Scope) {
-  data(scope, INDEX_BRANCH0.text, scope._[INDEX.value]);
+  data(scope[INDEX_BRANCH0.text], scope._[INDEX.value]);
 }
 
 export const _applyAttrs = (

@@ -89,6 +89,6 @@ const iter0 = createRenderer(" ", get + next(1), undefined, 0);
 
 const iter0_execItem = (scope: IterScope, item: number) => {
   if (write(scope, Iter0Index.ITEM, item)) {
-    data(scope, Iter0Index.TEXT, item);
+    data(scope[Iter0Index.TEXT], item);
   }
 };

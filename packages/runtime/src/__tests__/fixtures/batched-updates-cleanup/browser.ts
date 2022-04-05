@@ -55,7 +55,7 @@ export const render = (scope: ComponentScope) => {
 };
 
 export const _hydrate = (scope: ComponentScope) => {
-  on(scope, Index.BUTTON, "click", bind(scope, _onclick));
+  on(scope[Index.BUTTON], "click", bind(scope, _onclick));
 };
 
 const _onclick = (scope: ComponentScope) => {
@@ -89,7 +89,7 @@ const _apply_message = (
 };
 
 const _apply_message2 = (scope: Branch0Scope) => {
-  data(scope, Branch0Index.TEXT, scope._[Index.MESSAGE]);
+  data(scope[Branch0Index.TEXT], scope._[Index.MESSAGE]);
 };
 
 export default createRenderFn(template, walks, render);

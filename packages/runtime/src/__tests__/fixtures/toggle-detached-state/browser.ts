@@ -77,7 +77,7 @@ export const execInputValue = (scope: ComponentScope) => {
 };
 
 function execInputValueBranch0(scope: Branch0Scope) {
-  data(scope, INDEX_BRANCH0.text, scope._[INDEX.value]!.name);
+  data(scope[INDEX_BRANCH0.text], scope._[INDEX.value]!.name);
 }
 
 export const execDynamicInput = (

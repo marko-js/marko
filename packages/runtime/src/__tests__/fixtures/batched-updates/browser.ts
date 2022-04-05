@@ -44,7 +44,7 @@ export const render = (scope: ComponentScope) => {
 };
 
 export const hydrate = (scope: ComponentScope) => {
-  on(scope, Index.BUTTON, "click", bind(scope, clickHandler));
+  on(scope[Index.BUTTON], "click", bind(scope, clickHandler));
 };
 
 const clickHandler = (scope: ComponentScope) => {
@@ -70,7 +70,7 @@ const execAB = (scope: ComponentScope) => {
 
 const execSumAB = (scope: ComponentScope, value: number) => {
   if (write(scope, Index.SUM_AB, value)) {
-    data(scope, Index.TEXT, value);
+    data(scope[Index.TEXT], value);
   }
 };
 

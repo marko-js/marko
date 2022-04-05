@@ -7,13 +7,13 @@ const _onclick = function (_scope) {
 };
 
 function _hydrate_clickCount(_scope, clickCount = _scope._[4]) {
-  _on(_scope, 0, "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
 _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_0", _hydrate_clickCount);
 
 function _apply_clickCount2(_scope, clickCount = _scope._[4]) {
-  _data(_scope, 1, clickCount);
+  _data(_scope[1], clickCount);
 
   _queueHydrate(_scope, _hydrate_clickCount);
 }

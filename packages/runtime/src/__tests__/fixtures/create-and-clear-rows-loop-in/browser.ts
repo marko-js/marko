@@ -89,6 +89,6 @@ const iter0_execItem = (
   [, child]: Entry<Input["children"]>
 ) => {
   if (write(scope, Iter0Index.CHILD, child)) {
-    data(scope, Iter0Index.TEXT, child);
+    data(scope[Iter0Index.TEXT], child);
   }
 };

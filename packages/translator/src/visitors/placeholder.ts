@@ -72,8 +72,11 @@ export default {
           t.expressionStatement(
             callRuntime(
               method as DOMMethod,
-              scopeIdentifier,
-              t.numericLiteral(reserve!.id!),
+              t.memberExpression(
+                scopeIdentifier,
+                t.numericLiteral(reserve!.id!),
+                true
+              ),
               placeholder.node.value
             )
           )

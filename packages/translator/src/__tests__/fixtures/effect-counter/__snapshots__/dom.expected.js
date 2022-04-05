@@ -14,7 +14,7 @@ const _onclick = function (_scope) {
 function _hydrate_clickCount(_scope, clickCount = _scope[1]) {
   _userEffect(_scope, 2, _bind(_scope, _temp));
 
-  _on(_scope, 0, "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
 _register("packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_0", _hydrate_clickCount);

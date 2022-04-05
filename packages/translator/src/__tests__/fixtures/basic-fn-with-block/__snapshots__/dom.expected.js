@@ -8,14 +8,14 @@ const _onclick = function (_scope) {
 };
 
 function _hydrate_count(_scope, count = _scope[2]) {
-  _on(_scope, 0, "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
 _register("packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0", _hydrate_count);
 
 function _apply_count(_scope, count) {
   if (_write(_scope, 2, count)) {
-    _data(_scope, 1, count);
+    _data(_scope[1], count);
 
     _queueHydrate(_scope, _hydrate_count);
   }

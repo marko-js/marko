@@ -14,14 +14,8 @@ export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
-export function attr(
-  scope: Scope,
-  elementIndex: number,
-  name: string,
-  value: unknown
-) {
+export function attr(element: Element, name: string, value: unknown) {
   const normalizedValue = normalizeAttrValue(value);
-  const element = scope[elementIndex] as Element;
   if (normalizedValue === undefined) {
     element.removeAttribute(name);
   } else {
@@ -29,16 +23,15 @@ export function attr(
   }
 }
 
-export function classAttr(scope: Scope, elementIndex: number, value: unknown) {
-  attr(scope, elementIndex, "class", classValue(value) || false);
+export function classAttr(element: Element, value: unknown) {
+  attr(element, "class", classValue(value) || false);
 }
 
-export function styleAttr(scope: Scope, elementIndex: number, value: unknown) {
-  attr(scope, elementIndex, "style", styleValue(value) || false);
+export function styleAttr(element: Element, value: unknown) {
+  attr(element, "style", styleValue(value) || false);
 }
 
-export function data(scope: Scope, textOrCommentIndex: number, value: unknown) {
-  const node = scope[textOrCommentIndex] as Text | Comment;
+export function data(node: Text | Comment, value: unknown) {
   const normalizedValue = normalizeString(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -49,11 +42,12 @@ export function data(scope: Scope, textOrCommentIndex: number, value: unknown) {
 export function attrs(scope: Scope, elementIndex: number, index: number) {
   const nextAttrs = scope[index] as Record<string, unknown>;
   const prevAttrs = scope[index + 1] as Record<string, unknown> | undefined;
+  const element = scope[elementIndex] as Element;
 
   if (prevAttrs) {
     for (const name in prevAttrs) {
       if (!(nextAttrs && name in nextAttrs)) {
-        (scope[elementIndex] as Element).removeAttribute(name);
+        element.removeAttribute(name);
       }
     }
   }
@@ -61,11 +55,11 @@ export function attrs(scope: Scope, elementIndex: number, index: number) {
   for (const name in nextAttrs) {
     if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
       if (name === "class") {
-        classAttr(scope, elementIndex, nextAttrs[name]);
+        classAttr(element, nextAttrs[name]);
       } else if (name === "style") {
-        styleAttr(scope, elementIndex, nextAttrs[name]);
+        styleAttr(element, nextAttrs[name]);
       } else if (name !== "renderBody") {
-        attr(scope, elementIndex, name, nextAttrs[name]);
+        attr(element, name, nextAttrs[name]);
       }
     }
   }
@@ -116,8 +110,8 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
   scope[index + 1] = nextProps;
 }
 
-export function innerHTML(scope: Scope, elementIndex: number, value: string) {
-  (scope[elementIndex] as Element).innerHTML = normalizeString(value);
+export function innerHTML(element: Element, value: string) {
+  element.innerHTML = normalizeString(value);
 }
 
 export function dynamicTagString(tag: string, input: Record<string, unknown>) {

@@ -4,7 +4,7 @@ import { data as _data, write as _write, setConditionalRenderer as _setCondition
 import { apply as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
 
 function _apply(_scope) {
-  _data(_scope, 0, y);
+  _data(_scope[0], y);
 }
 
 function _apply_x(_scope, x = _scope._[1]) {

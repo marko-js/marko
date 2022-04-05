@@ -6,45 +6,45 @@
     {
       "name": "*",
       "total": {
-        "min": 9194,
-        "gzip": 4113,
-        "brotli": 3759
+        "min": 9152,
+        "gzip": 4104,
+        "brotli": 3745
       }
     },
     {
       "name": "counter",
       "user": {
-        "min": 390,
-        "gzip": 278,
-        "brotli": 248
+        "min": 392,
+        "gzip": 283,
+        "brotli": 252
       },
       "runtime": {
-        "min": 3094,
-        "gzip": 1492,
-        "brotli": 1350
+        "min": 3076,
+        "gzip": 1487,
+        "brotli": 1342
       },
       "total": {
-        "min": 3484,
+        "min": 3468,
         "gzip": 1770,
-        "brotli": 1598
+        "brotli": 1594
       }
     },
     {
       "name": "counter 💧",
       "user": {
-        "min": 249,
-        "gzip": 195,
-        "brotli": 194
+        "min": 251,
+        "gzip": 199,
+        "brotli": 181
       },
       "runtime": {
-        "min": 2169,
-        "gzip": 1180,
-        "brotli": 1061
+        "min": 2151,
+        "gzip": 1174,
+        "brotli": 1046
       },
       "total": {
-        "min": 2418,
-        "gzip": 1375,
-        "brotli": 1255
+        "min": 2402,
+        "gzip": 1373,
+        "brotli": 1227
       }
     }
   ]

@@ -37,7 +37,7 @@ export const template = `<div a=0></div>`;
 export const walks = get + over(1);
 
 export const execInputValue = (scope: ComponentScope) => {
-  attr(scope, Index.DIV, "b", scope[Index.INPUT_VALUE]);
+  attr(scope[Index.DIV], "b", scope[Index.INPUT_VALUE]);
 };
 
 export const execDynamicInput = (

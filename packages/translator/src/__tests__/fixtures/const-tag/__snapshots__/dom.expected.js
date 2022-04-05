@@ -1,11 +1,11 @@
 import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_y(_scope, y) {
-  if (_write(_scope, 3, y)) _data(_scope, 1, y);
+  if (_write(_scope, 3, y)) _data(_scope[1], y);
 }
 
 function _apply_x(_scope, x) {
-  if (_write(_scope, 2, x)) _data(_scope, 0, x);
+  if (_write(_scope, 2, x)) _data(_scope[0], x);
 }
 
 function _apply(_scope) {

@@ -140,11 +140,11 @@ export const execInputValue2Branch0 = (scope: Branch0Scope) => {
 };
 
 const execInputValue1Branch0_0 = (scope: Branch0_0Scope) => {
-  data(scope, INDEX_BRANCH0_0.text, scope._._[INDEX.value1]);
+  data(scope[INDEX_BRANCH0_0.text], scope._._[INDEX.value1]);
 };
 
 const execInputValue2Branch0_1 = (scope: Branch0_1Scope) => {
-  data(scope, INDEX_BRANCH0_1.text, scope._._[INDEX.value2]);
+  data(scope[INDEX_BRANCH0_1.text], scope._._[INDEX.value2]);
 };
 
 export const execDynamicInput = (scope: ComponentScope, input: Input) => {

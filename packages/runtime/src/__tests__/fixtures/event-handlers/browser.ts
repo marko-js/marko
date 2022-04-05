@@ -43,7 +43,7 @@ const execClickCount = (
   value: ComponentScope[Index.CLICK_COUNT]
 ) => {
   if (write(scope, Index.CLICK_COUNT, value)) {
-    data(scope, Index.BUTTON_TEXT, value);
+    data(scope[Index.BUTTON_TEXT], value);
     execClickHandler(scope, value <= 1 ? bind(scope, clickHandler) : false);
   }
 };
@@ -58,7 +58,7 @@ const execClickHandler = (
 };
 
 export const attachEventHandler = (scope: ComponentScope) => {
-  on(scope, Index.BUTTON, "click", scope[Index.EVENT_HANDLER] as () => void);
+  on(scope[Index.BUTTON], "click", scope[Index.EVENT_HANDLER] as () => void);
 };
 
 const clickHandler = (scope: ComponentScope) => {

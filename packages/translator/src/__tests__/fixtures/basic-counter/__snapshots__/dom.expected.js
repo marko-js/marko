@@ -7,14 +7,14 @@ const _onclick = function (_scope) {
 };
 
 function _hydrate_clickCount(_scope, clickCount = _scope[2]) {
-  _on(_scope, 0, "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
 _register("packages/translator/src/__tests__/fixtures/basic-counter/template.marko_0_0", _hydrate_clickCount);
 
 function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 2, clickCount)) {
-    _data(_scope, 1, clickCount);
+    _data(_scope[1], clickCount);
 
     _queueHydrate(_scope, _hydrate_clickCount);
   }

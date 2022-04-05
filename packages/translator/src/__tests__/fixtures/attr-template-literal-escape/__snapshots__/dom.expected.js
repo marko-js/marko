@@ -1,7 +1,7 @@
 import { attr as _attr, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_name(_scope, name) {
-  if (_write(_scope, 1, name)) _attr(_scope, 0, "foo", `Hello ${name}`);
+  if (_write(_scope, 1, name)) _attr(_scope[0], "foo", `Hello ${name}`);
 }
 
 export const applyAttrs = function (_scope, {

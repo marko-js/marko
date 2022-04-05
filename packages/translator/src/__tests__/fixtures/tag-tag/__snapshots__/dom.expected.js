@@ -7,7 +7,7 @@ _dynamicTag(_scope, MyTag, {
 import { data as _data, dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_input(_scope, input) {
-  if (_write(_scope, 1, input)) _data(_scope, 0, input.name);
+  if (_write(_scope, 1, input)) _data(_scope[0], input.name);
 }
 
 const _temp = _createRenderer("Hello <!>",

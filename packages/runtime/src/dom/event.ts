@@ -1,4 +1,3 @@
-import type { Scope } from "../common/types";
 type Unset = false | null | undefined;
 type EventNames = keyof GlobalEventHandlersEventMap;
 
@@ -17,14 +16,13 @@ export function on<
   H extends
     | Unset
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void)
->(scope: Scope, elIndex: number, type: T, handler: H) {
-  const el = scope[elIndex] as Element;
+>(element: Element, type: T, handler: H) {
   const delegated = delegatedByType.get(type);
 
   if (delegated) {
-    delegated.set(el, handler);
+    delegated.set(element, handler);
   } else {
-    delegatedByType.set(type, new WeakMap([[el, handler]]));
+    delegatedByType.set(type, new WeakMap([[element, handler]]));
     document.addEventListener(type, handleDelegated, eventOpts);
   }
 }

@@ -2,18 +2,18 @@ import { data as _data, html as _html, write as _write, createRenderFn as _creat
 
 function _apply_x(_scope, x) {
   if (_write(_scope, 5, x)) {
-    _data(_scope, 0, x);
+    _data(_scope[0], x);
 
-    _data(_scope, 1, x);
+    _data(_scope[1], x);
 
-    _data(_scope, 2, x);
+    _data(_scope[2], x);
 
-    _html(_scope, 3, x);
+    _html(_scope[3], x);
   }
 }
 
 function _apply(_scope) {
-  _html(_scope, 4, "Hello HTML <a/>");
+  _html(_scope[4], "Hello HTML <a/>");
 }
 
 export const applyAttrs = function (_scope, {

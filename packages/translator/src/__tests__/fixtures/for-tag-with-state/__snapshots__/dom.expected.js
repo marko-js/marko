@@ -1,19 +1,19 @@
 import { data as _data, setLoopOf as _setLoopOf, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_i2(_scope, i) {
-  if (_write(_scope, 3, i)) _data(_scope, 0, i);
+  if (_write(_scope, 3, i)) _data(_scope[0], i);
 }
 
 function _apply_val2(_scope, val) {
-  if (_write(_scope, 2, val)) _data(_scope, 1, val);
+  if (_write(_scope, 2, val)) _data(_scope[1], val);
 }
 
 function _apply_i(_scope, i) {
-  if (_write(_scope, 3, i)) _data(_scope, 0, i);
+  if (_write(_scope, 3, i)) _data(_scope[0], i);
 }
 
 function _apply_val(_scope, val) {
-  if (_write(_scope, 2, val)) _data(_scope, 1, val);
+  if (_write(_scope, 2, val)) _data(_scope[1], val);
 }
 
 function _apply_arrB(_scope, arrB) {

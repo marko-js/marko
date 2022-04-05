@@ -31,7 +31,7 @@ const _onclick = function (_scope) {
 };
 
 function _hydrate_open(_scope, open = _scope[11]) {
-  _on(_scope, 2, "click", _bind(_scope, _onclick));
+  _on(_scope[2], "click", _bind(_scope, _onclick));
 }
 
 _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_0", _hydrate_open);
@@ -42,9 +42,9 @@ function _applyWith_path_i(_scope, path = _scope._[5], i = _scope[9]) {
 
 function _apply_open(_scope, open) {
   if (_write(_scope, 11, open)) {
-    _attr(_scope, 0, "hidden", !open);
+    _attr(_scope[0], "hidden", !open);
 
-    _data(_scope, 3, open ? "[-]" : "[+]");
+    _data(_scope[3], open ? "[-]" : "[+]");
 
     _queueHydrate(_scope, _hydrate_open);
   }
@@ -52,7 +52,7 @@ function _apply_open(_scope, open) {
 
 function _apply_id(_scope, id) {
   if (_write(_scope, 10, id)) {
-    _attr(_scope, 0, "id", id);
+    _attr(_scope[0], "id", id);
 
     _queueInBranch(_scope, 4, _if, _apply_id2, 1, 3);
   }
@@ -64,7 +64,7 @@ function _apply_i(_scope, i) {
 
 function _apply_comment(_scope, comment) {
   if (_write(_scope, 8, comment)) {
-    _data(_scope, 1, comment.text);
+    _data(_scope[1], comment.text);
 
     _setConditionalRenderer(_scope, 4, comment.comments ? _if : null);
 

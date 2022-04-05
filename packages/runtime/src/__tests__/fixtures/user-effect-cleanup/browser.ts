@@ -66,7 +66,7 @@ function execConcatAB(
   value: ComponentScope[Index.CONCAT_AB]
 ) {
   if (write(scope, Index.CONCAT_AB, value)) {
-    data(scope, Index.DIV_TEXT, value);
+    data(scope[Index.DIV_TEXT], value);
   }
 }
 

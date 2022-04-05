@@ -111,8 +111,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       helper,
-                      scopeIdentifier,
-                      visitIndex!,
+                      t.memberExpression(scopeIdentifier, visitIndex!, true),
                       value.node
                     )
                   )
@@ -141,8 +140,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "on",
-                      scopeIdentifier,
-                      visitIndex!,
+                      t.memberExpression(scopeIdentifier, visitIndex!, true),
                       t.stringLiteral(name.slice(2)),
                       value.node
                     )
@@ -156,8 +154,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "attr",
-                      scopeIdentifier,
-                      visitIndex!,
+                      t.memberExpression(scopeIdentifier, visitIndex!, true),
                       t.stringLiteral(name),
                       value.node
                     )

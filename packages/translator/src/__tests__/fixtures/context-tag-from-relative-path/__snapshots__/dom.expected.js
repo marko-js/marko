@@ -11,7 +11,7 @@ _dynamicTag(_scope, Other, {}, _createRenderer(" </span>",
 import { write as _write, getInContext as _getInContext, data as _data, createRenderer as _createRenderer, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_message(_scope, message) {
-  if (_write(_scope, 1, message)) _data(_scope, 0, message);
+  if (_write(_scope, 1, message)) _data(_scope[0], message);
 }
 
 const _temp = _createRenderer(" </span>",

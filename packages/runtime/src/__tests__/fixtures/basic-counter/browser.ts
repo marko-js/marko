@@ -33,7 +33,7 @@ export const render = (scope: ComponentScope) => {
 };
 
 export const hydrate = (scope: ComponentScope) => {
-  on(scope, Index.BUTTON, "click", bind(scope, clickHandler));
+  on(scope[Index.BUTTON], "click", bind(scope, clickHandler));
 };
 
 const renderClickCount = (
@@ -41,7 +41,7 @@ const renderClickCount = (
   value: ComponentScope[Index.CLICK_COUNT]
 ) => {
   if (write(scope, Index.CLICK_COUNT, value)) {
-    data(scope, Index.BUTTON_TEXT, value);
+    data(scope[Index.BUTTON_TEXT], value);
   }
 };
 
