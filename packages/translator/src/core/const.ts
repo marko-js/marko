@@ -5,6 +5,7 @@ import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import { getSectionId } from "../util/sections";
 import { addStatement, bindingToApplyGroup } from "../util/apply-hydrate";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
   translate(tag) {
@@ -52,7 +53,7 @@ export default {
               t.callExpression(
                 bindingToApplyGroup(identifiers[0].extra.reserve!, sectionId)
                   .identifier,
-                [defaultAttr.value]
+                [scopeIdentifier, defaultAttr.value]
               )
             )
           : [

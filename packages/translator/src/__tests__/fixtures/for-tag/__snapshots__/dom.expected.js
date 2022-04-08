@@ -114,9 +114,9 @@ function _apply_arr(_scope, arr) {
 }
 
 function _apply(_scope) {
-  _apply_arr([1, 2, 3]);
+  _apply_arr(_scope, [1, 2, 3]);
 
-  _apply_obj({
+  _apply_obj(_scope, {
     a: 1,
     b: 1,
     c: 1

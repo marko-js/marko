@@ -31,7 +31,7 @@ function _apply_unused_(_scope, unused_1) {
 function _apply(_scope) {
   _apply_unused_(_scope, 123);
 
-  _apply_unused_2(456);
+  _apply_unused_2(_scope, 456);
 
   _apply_clickCount(_scope, 0);
 }

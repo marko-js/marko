@@ -25,7 +25,7 @@ function _apply_arrA(_scope, arrA) {
 }
 
 function _apply(_scope) {
-  _apply_arrA([1, 2, 3]);
+  _apply_arrA(_scope, [1, 2, 3]);
 
   _apply_arrB(_scope, [1, 2, 3]);
 }

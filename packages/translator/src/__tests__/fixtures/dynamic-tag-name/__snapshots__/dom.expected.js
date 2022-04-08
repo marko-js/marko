@@ -91,11 +91,11 @@ _dynamicTag(_scope, tagConstB, {
 import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_isLarge(_scope, isLarge) {
-  if (_write(_scope, 16, isLarge)) _apply_largeHeading(isLarge && "h1");
+  if (_write(_scope, 16, isLarge)) _apply_largeHeading(_scope, isLarge && "h1");
 }
 
 function _apply_show(_scope, show) {
-  if (_write(_scope, 14, show)) _apply_tagConstB(show ? "div" : null);
+  if (_write(_scope, 14, show)) _apply_tagConstB(_scope, show ? "div" : null);
 }
 
 function _apply_tagConstB(_scope, tagConstB) {
@@ -111,7 +111,7 @@ function _apply_largeHeading(_scope, largeHeading) {
 }
 
 function _apply(_scope) {
-  _apply_tagConstA("a");
+  _apply_tagConstA(_scope, "a");
 }
 
 const _temp = _createRenderer("Body content", "", null);
