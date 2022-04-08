@@ -1,6 +1,6 @@
 import { queue as _queue, data as _data, setLoopOf as _setLoopOf, on as _on, write as _write, register as _register, bind as _bind, queueHydrate as _queueHydrate, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_item(_scope, item) {
+function _apply1_item(_scope, item) {
   if (_write(_scope, 1, item)) _data(_scope[0], item);
 }
 
@@ -39,7 +39,7 @@ function _applyWith_id_items(_scope, id = _scope[6], items = _scope[7]) {
 
 function _apply_items(_scope, items) {
   if (_write(_scope, 7, items)) {
-    _setLoopOf(_scope, 0, items, _for, null, _apply_item);
+    _setLoopOf(_scope, 0, items, _for, null, _apply1_item);
 
     _queueHydrate(_scope, _hydrate_items);
 

@@ -6,27 +6,27 @@ const _onclick = function (_scope) {
   _queue(_scope._, _apply_clickCount, 0, clickCount + 1);
 };
 
-function _hydrate_clickCount(_scope, clickCount = _scope._[4]) {
+function _hydrate1_clickCount(_scope, clickCount = _scope._[4]) {
   _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _hydrate_clickCount);
+_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _hydrate1_clickCount);
 
-function _apply_clickCount2(_scope, clickCount = _scope._[4]) {
+function _apply1_clickCount(_scope, clickCount = _scope._[4]) {
   _data(_scope[1], clickCount);
 
-  _queueHydrate(_scope, _hydrate_clickCount);
+  _queueHydrate(_scope, _hydrate1_clickCount);
 }
 
 function _apply2(_scope) {
-  _queue(_scope, _apply_clickCount2, 0);
+  _queue(_scope, _apply1_clickCount, 0);
 }
 
 function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 4, clickCount)) {
     _setConditionalRenderer(_scope, 0, clickCount < 3 ? _if : null);
 
-    _queueInBranch(_scope, 0, _if, _apply_clickCount2, 0, 1);
+    _queueInBranch(_scope, 0, _if, _apply1_clickCount, 0, 1);
   }
 }
 

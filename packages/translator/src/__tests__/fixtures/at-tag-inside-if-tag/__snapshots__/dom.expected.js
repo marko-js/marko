@@ -3,7 +3,7 @@ let _thing;
 import { write as _write, setConditionalRenderer as _setConditionalRenderer, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
 
-function _apply_x(_scope, x = _scope._[1]) {
+function _apply1_x(_scope, x = _scope._[1]) {
   _setConditionalRenderer(_scope, 0, x ? _if : null);
 }
 
@@ -19,9 +19,9 @@ const _temp2 = _createRenderer("<!>",
 export const applyAttrs = function (_scope, {
   x
 }) {
-  _apply_x2(_scope, x);
+  _apply_x(_scope, x);
 };
-export { _apply_x2 as _apply_x };
+export { _apply_x };
 export const template = `${_customTag_template}`;
 export const walks =
 /* beginChild(0), _customTag_walks, endChild */

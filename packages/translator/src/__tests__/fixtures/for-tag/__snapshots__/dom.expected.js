@@ -9,7 +9,7 @@
 <for from=0 to=10/>
 import { data as _data, setLoopOf as _setLoopOf, attr as _attr, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_i7(_scope, i) {
+function _apply9_i(_scope, i) {
   if (_write(_scope, 3, i)) {
     _attr(_scope[0], "key", i);
 
@@ -19,7 +19,7 @@ function _apply_i7(_scope, i) {
   }
 }
 
-function _apply_i6(_scope, i) {
+function _apply8_i(_scope, i) {
   if (_write(_scope, 3, i)) {
     _attr(_scope[0], "key", i);
 
@@ -29,7 +29,7 @@ function _apply_i6(_scope, i) {
   }
 }
 
-function _apply_i5(_scope, i) {
+function _apply7_i(_scope, i) {
   if (_write(_scope, 7, i)) {
     _attr(_scope[0], "key", i);
 
@@ -39,11 +39,11 @@ function _apply_i5(_scope, i) {
   }
 }
 
-function _apply_val5(_scope, val) {
+function _apply6_val(_scope, val) {
   if (_write(_scope, 5, val)) _data(_scope[2], val);
 }
 
-function _apply_key2(_scope, key) {
+function _apply6_key(_scope, key) {
   if (_write(_scope, 4, key)) {
     _attr(_scope[0], "key", key);
 
@@ -53,19 +53,19 @@ function _apply_key2(_scope, key) {
   }
 }
 
-function _apply_list(_scope, list) {
+function _apply5_list(_scope, list) {
   if (_write(_scope, 5, list)) _data(_scope[1], list.length);
 }
 
-function _apply_i4(_scope, i) {
+function _apply5_i(_scope, i) {
   if (_write(_scope, 4, i)) _attr(_scope[0], "key", i);
 }
 
-function _apply_val4(_scope, val) {
+function _apply5_val(_scope, val) {
   if (_write(_scope, 3, val)) _data(_scope[2], val);
 }
 
-function _apply_i3(_scope, i) {
+function _apply4_i(_scope, i) {
   if (_write(_scope, 5, i)) {
     _attr(_scope[0], "key", i);
 
@@ -75,27 +75,27 @@ function _apply_i3(_scope, i) {
   }
 }
 
-function _apply_val3(_scope, val) {
+function _apply4_val(_scope, val) {
   if (_write(_scope, 4, val)) _data(_scope[2], val);
 }
 
-function _apply_i2(_scope, i) {
+function _apply3_i(_scope, i) {
   if (_write(_scope, 1, i)) _data(_scope[0], i);
 }
 
-function _apply_val2(_scope, val) {
+function _apply2_val(_scope, val) {
   if (_write(_scope, 3, val)) _data(_scope[1], val);
 }
 
-function _apply_key(_scope, key) {
+function _apply2_key(_scope, key) {
   if (_write(_scope, 2, key)) _data(_scope[0], key);
 }
 
-function _apply_i(_scope, i) {
+function _apply1_i(_scope, i) {
   if (_write(_scope, 3, i)) _data(_scope[0], i);
 }
 
-function _apply_val(_scope, val) {
+function _apply1_val(_scope, val) {
   if (_write(_scope, 2, val)) _data(_scope[1], val);
 }
 
@@ -105,11 +105,11 @@ function _apply_obj(_scope, obj) {
 
 function _apply_arr(_scope, arr) {
   if (_write(_scope, 40, arr)) {
-    _setLoopOf(_scope, 0, arr, _for, null, _apply_val);
+    _setLoopOf(_scope, 0, arr, _for, null, _apply1_val);
 
-    _setLoopOf(_scope, 12, arr, _for2, null, _apply_val3);
+    _setLoopOf(_scope, 12, arr, _for2, null, _apply4_val);
 
-    _setLoopOf(_scope, 16, arr, _for3, null, _apply_val4);
+    _setLoopOf(_scope, 16, arr, _for3, null, _apply5_val);
   }
 }
 

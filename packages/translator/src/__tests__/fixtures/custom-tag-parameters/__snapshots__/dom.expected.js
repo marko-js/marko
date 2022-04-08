@@ -1,15 +1,15 @@
 import { data as _data, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
-function _apply_c(_scope, c) {
+function _apply1_c(_scope, c) {
   if (_write(_scope, 5, c)) _data(_scope[2], c);
 }
 
-function _apply_b(_scope, b) {
+function _apply1_b(_scope, b) {
   if (_write(_scope, 4, b)) _data(_scope[1], b);
 }
 
-function _apply_a(_scope, a) {
+function _apply1_a(_scope, a) {
   if (_write(_scope, 3, a)) _data(_scope[0], a);
 }
 

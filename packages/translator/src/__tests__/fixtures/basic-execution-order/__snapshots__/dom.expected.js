@@ -1,11 +1,11 @@
 import { queue as _queue, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_message2(_scope, message = _scope._[5]) {
+function _apply1_message(_scope, message = _scope._[5]) {
   _data(_scope[0], message.text);
 }
 
 function _apply2(_scope) {
-  _queue(_scope, _apply_message2, 0);
+  _queue(_scope, _apply1_message, 0);
 }
 
 const _temp2 = function (_scope) {
@@ -25,7 +25,7 @@ function _apply_show(_scope, show) {
 }
 
 function _apply_message(_scope, message) {
-  if (_write(_scope, 5, message)) _queueInBranch(_scope, 1, _if, _apply_message2, 0, 1);
+  if (_write(_scope, 5, message)) _queueInBranch(_scope, 1, _if, _apply1_message, 0, 1);
 }
 
 function _apply(_scope) {

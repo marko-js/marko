@@ -47,7 +47,7 @@ export function addStatement(
   const existingGroup = getGroupByReferences(groups, references);
   const isNew = !existingGroup;
   const { statements } = isNew
-    ? createAndInsertGroup(type, groups, references)
+    ? createAndInsertGroup(type, groups, targetSectionId, references)
     : existingGroup;
 
   if (Array.isArray(statement)) {
@@ -66,7 +66,7 @@ export function ensureHydrateReferenceGroup(
   const existingGroup = getGroupByReferences(groups, references);
   if (!existingGroup) {
     const identifier = t.identifier(
-      generateReferenceGroupName("hydrate", references)
+      generateReferenceGroupName("hydrate", targetSectionId, references)
     );
     const group: ReferenceGroup = {
       identifier,
@@ -100,16 +100,19 @@ export function bindingToApplyGroup(binding: Reserve, sectionId: number) {
   const applyGroups = getApply(sectionId);
   const group =
     getGroupByReferences(applyGroups, binding) ??
-    createAndInsertGroup("apply", applyGroups, binding);
+    createAndInsertGroup("apply", applyGroups, sectionId, binding);
   return group;
 }
 
 function createAndInsertGroup(
   type: "apply" | "hydrate",
   groups: ReferenceGroup[],
+  sectionId: number,
   references: References
 ) {
-  const identifier = t.identifier(generateReferenceGroupName(type, references));
+  const identifier = t.identifier(
+    generateReferenceGroupName(type, sectionId, references)
+  );
   const group: ReferenceGroup = {
     identifier,
     references,
@@ -380,9 +383,10 @@ function compareReferenceGroups(
 
 function generateReferenceGroupName(
   type: "apply" | "hydrate",
+  sectionId: number,
   references: References
 ) {
-  let name = type;
+  let name = type + (sectionId || "");
 
   if (references) {
     if (Array.isArray(references)) {

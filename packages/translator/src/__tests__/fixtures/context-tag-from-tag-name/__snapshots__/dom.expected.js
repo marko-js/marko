@@ -1,7 +1,7 @@
 import { write as _write, getInContext as _getInContext, data as _data, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _other, template as _other_template, walks as _other_walks } from "./components/other.marko";
 
-function _apply_message(_scope, message) {
+function _apply1_message(_scope, message) {
   if (_write(_scope, 1, message)) _data(_scope[0], message);
 }
 
