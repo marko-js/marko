@@ -10,7 +10,7 @@ function _hydrate_num(_scope, num = _scope[2]) {
   _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_0", _hydrate_num);
+_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _hydrate_num);
 
 function _applyWith_selected_num(_scope, selected = _scope._[4], num = _scope[2]) {
   _attr(_scope[0], "data-selected", selected === num);

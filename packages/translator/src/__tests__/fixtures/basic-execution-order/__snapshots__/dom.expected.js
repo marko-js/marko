@@ -18,7 +18,7 @@ function _hydrate(_scope) {
   _on(_scope[0], "click", _bind(_scope, _temp2));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0_0", _hydrate);
+_register("packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0", _hydrate);
 
 function _apply_show(_scope, show) {
   if (_write(_scope, 6, show)) _setConditionalRenderer(_scope, 1, show ? _if : null);

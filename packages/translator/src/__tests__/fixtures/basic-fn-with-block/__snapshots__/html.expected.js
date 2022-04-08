@@ -7,7 +7,7 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}${_escapeXML(count)}</button>`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count");
 
   _writeHydrateScope(_scope, [,, count]);
 };

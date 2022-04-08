@@ -3,7 +3,7 @@ import { nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, wri
 const _renderer = input => {
   const _scope = _nextScopeId();
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0");
 
   _writeHydrateScope(_scope, []);
 };

@@ -1,5 +1,5 @@
 # Write
-  <div><!M#0 1><button><!M#1 1>0</button></div><script>(M$h=[]).push((b,s)=>({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_0",1,])</script>
+  <div><!M#0 1><button><!M#1 1>0</button></div><script>(M$h=[]).push((b,s)=>({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",1,])</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_0",1,])
+      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",1,])
     </script>
   </body>
 </html>
@@ -49,7 +49,7 @@ inserted html0/body1/script1/#text0
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_0",1,])
+      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",1,])
     </script>
   </body>
 </html>
@@ -76,7 +76,7 @@ container.querySelector("button").click();
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_0",1,])
+      (M$h=[]).push((b,s)=&gt;({"1":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",1,])
     </script>
   </body>
 </html>

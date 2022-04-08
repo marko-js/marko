@@ -12,7 +12,7 @@ const _renderer = input => {
 
     _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}${_escapeXML(clickCount)}</button>`);
 
-    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_0");
+    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
 
     _writeHydrateScope(_scope, [,,,, clickCount]);
   }

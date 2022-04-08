@@ -15,7 +15,7 @@ function _hydrateWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
   _on(_scope[0], "click", _bind(_scope, _onclick2));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_0", _hydrateWith_a_b);
+_register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b", _hydrateWith_a_b);
 
 function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
   _queueHydrate(_scope, _hydrateWith_a_b);

@@ -18,7 +18,7 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 0)}<div class=hi></div>`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0");
 
   _writeHydrateScope(_scope, []);
 };

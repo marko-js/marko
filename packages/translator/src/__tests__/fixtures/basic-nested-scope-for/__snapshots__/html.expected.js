@@ -12,7 +12,7 @@ const _renderer = input => {
 
     _write(`${_markHydrateNode(_scope, 0)}<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_markHydrateNode(_scope, 1)}${_escapeXML(num)}</button>`);
 
-    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_0");
+    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
 
     _writeHydrateScope(_scope, [,, num]);
   }

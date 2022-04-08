@@ -10,7 +10,7 @@ function _hydrate_show(_scope, show = _scope[5]) {
   _on(_scope[4], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_0", _hydrate_show);
+_register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show", _hydrate_show);
 
 function _apply_show(_scope, show) {
   if (_write(_scope, 5, show)) {

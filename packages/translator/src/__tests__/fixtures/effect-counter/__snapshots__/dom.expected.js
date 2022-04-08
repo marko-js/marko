@@ -17,7 +17,7 @@ function _hydrate_clickCount(_scope, clickCount = _scope[1]) {
   _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_0", _hydrate_clickCount);
+_register("packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount", _hydrate_clickCount);
 
 function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 1, clickCount)) _queueHydrate(_scope, _hydrate_clickCount);

@@ -7,7 +7,7 @@ const _renderer = input => {
 
   _write(`<div>${_markHydrateNode(_scope, 0)}<button id=button>0</button></div>`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount");
 
   _writeHydrateScope(_scope, [, clickCount]);
 };

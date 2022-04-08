@@ -9,7 +9,7 @@ function _hydrate(_scope) {
   _on(_scope[0], "click", _bind(_scope, _temp));
 }
 
-_register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0_0", _hydrate);
+_register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0", _hydrate);
 
 function _apply(_scope) {
   _child(_scope[1]);

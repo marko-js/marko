@@ -7,7 +7,7 @@ const _renderer = input => {
 
   _write("<div id=ref>0</div>");
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-tag/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-tag/template.marko_0_x");
 
   _writeHydrateScope(_scope, [x]);
 };

@@ -8,7 +8,7 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 0)}<div>${_markHydrateNode(_scope, 1)}${_escapeXML(x)}</div>${_markHydrateNode(_scope, 2)}${_escapeXML(y)}`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y");
 
   _writeHydrateScope(_scope, [,,, x, y]);
 };

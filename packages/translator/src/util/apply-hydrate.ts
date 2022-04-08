@@ -78,15 +78,22 @@ export function ensureHydrateReferenceGroup(
   }
 }
 
-function getHydrateRegisterId(sectionId: number, referenceGroupId: number) {
+function getHydrateRegisterId(sectionId: number, references: References) {
   const {
     markoOpts: { optimize },
     opts: { filename },
   } = currentProgramPath.hub.file;
-  return `${getTemplateId(
-    optimize,
-    filename as string
-  )}_${sectionId}_${referenceGroupId}`;
+  let name = "";
+  if (references) {
+    if (Array.isArray(references)) {
+      for (const ref of references) {
+        name += `_${ref.name}`;
+      }
+    } else {
+      name += `_${references.name}`;
+    }
+  }
+  return `${getTemplateId(optimize, filename as string)}_${sectionId}${name}`;
 }
 
 export function bindingToApplyGroup(binding: Reserve, sectionId: number) {
@@ -251,7 +258,7 @@ export function writeHydrateGroups(sectionId: number) {
       t.expressionStatement(
         callRuntime(
           "register",
-          t.stringLiteral(getHydrateRegisterId(sectionId, i)),
+          t.stringLiteral(getHydrateRegisterId(sectionId, references)),
           identifier
         )
       ),
@@ -303,7 +310,7 @@ export function writeHTMLHydrateStatements(
         callRuntime(
           "writeHydrateCall",
           scopeIdentifier,
-          t.stringLiteral(getHydrateRegisterId(sectionId, i))
+          t.stringLiteral(getHydrateRegisterId(sectionId, references))
         )
       )
     );

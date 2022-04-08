@@ -16,9 +16,9 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 4)}<button id=add>Add</button>${_markHydrateNode(_scope, 5)}<button id=remove>Remove</button></div>`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_1");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items");
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items");
 
   _writeHydrateScope(_scope, [,,,,,, id, items]);
 };

@@ -8,7 +8,7 @@ function _hydrate(_scope) {
   _on(_scope[0], "click", _bind(_scope, _temp));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0_0", _hydrate);
+_register("packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0", _hydrate);
 
 function _apply_data(_scope, data) {
   if (_write(_scope, 2, data)) _data(_scope[1], data);

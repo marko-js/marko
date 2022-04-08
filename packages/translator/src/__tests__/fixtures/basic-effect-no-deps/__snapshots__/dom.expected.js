@@ -8,7 +8,7 @@ function _hydrate(_scope) {
   _userEffect(_scope, 0, _bind(_scope, _temp));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0_0", _hydrate);
+_register("packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0", _hydrate);
 
 function _apply(_scope) {
   _queueHydrate(_scope, _hydrate);

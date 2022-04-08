@@ -1,5 +1,5 @@
 # Write
-  <!M#0 0><button><!M#1 0>0</button><script>(M$h=[]).push((b,s)=>({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])</script>
+  <!M#0 0><button><!M#1 0>0</button><script>(M$h=[]).push((b,s)=>({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])
     </script>
   </body>
 </html>
@@ -44,7 +44,7 @@ inserted html1/body1/script1/#text0
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])
     </script>
   </body>
 </html>
@@ -69,7 +69,7 @@ container.querySelector("button").click();
       1
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])
     </script>
   </body>
 </html>
@@ -94,7 +94,7 @@ container.querySelector("button").click();
       2
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])
     </script>
   </body>
 </html>
@@ -119,7 +119,7 @@ container.querySelector("button").click();
       3
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_0",0,])
+      (M$h=[]).push((b,s)=&gt;({"0":[,,0]}),["packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",0,])
     </script>
   </body>
 </html>

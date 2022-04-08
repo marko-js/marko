@@ -37,7 +37,7 @@ const _renderer = ({
 
     _write("</li>");
 
-    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_0");
+    _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
 
     _writeHydrateScope(_scope, [,,,,,,,,,,, open]);
   }

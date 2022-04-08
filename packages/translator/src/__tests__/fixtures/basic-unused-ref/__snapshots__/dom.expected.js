@@ -10,7 +10,7 @@ function _hydrate_clickCount(_scope, clickCount = _scope[4]) {
   _on(_scope[0], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_0", _hydrate_clickCount);
+_register("packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _hydrate_clickCount);
 
 function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 4, clickCount)) {

@@ -15,7 +15,7 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 4)}<button>Toggle</button></div>`);
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show");
 
   _writeHydrateScope(_scope, [,,,,, show]);
 };

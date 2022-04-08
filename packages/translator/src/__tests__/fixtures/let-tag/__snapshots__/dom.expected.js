@@ -4,7 +4,7 @@ function _hydrateWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
   _on(_scope[0], "click", _queue(_scope, _apply_x, 0, y = x + y));
 }
 
-_register("packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_0", _hydrateWith_x_y);
+_register("packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y", _hydrateWith_x_y);
 
 function _applyWith_x_y(_scope, x = _scope[3], y = _scope[4]) {
   _queueHydrate(_scope, _hydrateWith_x_y);

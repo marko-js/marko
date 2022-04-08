@@ -4,7 +4,7 @@ function _hydrate_onclick(_scope, onclick = _scope[2]) {
   _on(_scope[0], "click", onclick);
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_0", _hydrate_onclick);
+_register("packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onclick", _hydrate_onclick);
 
 function _apply_text(_scope, text) {
   if (_write(_scope, 3, text)) _data(_scope[1], text);

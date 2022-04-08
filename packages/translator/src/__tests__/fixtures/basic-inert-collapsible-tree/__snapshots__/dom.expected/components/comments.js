@@ -34,7 +34,7 @@ function _hydrate_open(_scope, open = _scope[11]) {
   _on(_scope[2], "click", _bind(_scope, _onclick));
 }
 
-_register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_0", _hydrate_open);
+_register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _hydrate_open);
 
 function _applyWith_path_i(_scope, path = _scope._[5], i = _scope[9]) {
   _apply_id(_scope, `${path}-${i}`);

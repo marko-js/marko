@@ -16,7 +16,7 @@ const _renderer = input => {
     _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(message.text)}`);
   }
 
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0_0");
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0");
 
   _writeHydrateScope(_scope, []);
 };

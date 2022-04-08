@@ -14,9 +14,9 @@
     {
       "name": "counter",
       "user": {
-        "min": 392,
-        "gzip": 283,
-        "brotli": 252
+        "min": 401,
+        "gzip": 288,
+        "brotli": 255
       },
       "runtime": {
         "min": 3076,
@@ -24,17 +24,17 @@
         "brotli": 1342
       },
       "total": {
-        "min": 3468,
-        "gzip": 1770,
-        "brotli": 1594
+        "min": 3477,
+        "gzip": 1775,
+        "brotli": 1597
       }
     },
     {
       "name": "counter 💧",
       "user": {
-        "min": 251,
-        "gzip": 199,
-        "brotli": 181
+        "min": 260,
+        "gzip": 206,
+        "brotli": 183
       },
       "runtime": {
         "min": 2151,
@@ -42,9 +42,9 @@
         "brotli": 1046
       },
       "total": {
-        "min": 2402,
-        "gzip": 1373,
-        "brotli": 1227
+        "min": 2411,
+        "gzip": 1380,
+        "brotli": 1229
       }
     }
   ]
