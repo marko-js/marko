@@ -1,8 +1,17 @@
 import type { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import { exitBranch } from "./if";
+import { exitBranchTranslate, exitBranchAnalyze } from "./if";
+import customTag from "../../visitors/tag/custom-tag";
 
 export default {
+  analyze: {
+    enter(tag) {
+      customTag.analyze.enter(tag);
+    },
+    exit(tag) {
+      exitBranchAnalyze(tag);
+    },
+  },
   translate: {
     enter(tag) {
       const { node } = tag;
@@ -31,7 +40,7 @@ export default {
       }
     },
     exit(tag) {
-      exitBranch(tag);
+      exitBranchTranslate(tag);
     },
   },
   attributes: {},

@@ -10,7 +10,6 @@ import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
   addStatement,
-  bindingToApplyGroup,
   setQueueBuilder,
   writeHTMLHydrateStatements,
 } from "../util/apply-hydrate";
@@ -20,6 +19,7 @@ import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import { scopeIdentifier } from "../visitors/program";
+import { getReferenceGroup } from "../util/references";
 
 export default {
   analyze: {
@@ -150,13 +150,13 @@ const translateDOM = {
     const ofAttr = findName(attributes, "of");
     const byAttr = findName(attributes, "by");
 
-    setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) => {
+    setQueueBuilder(tag, ({ apply, index }, closurePriority) => {
       return callRuntime(
         "queueForEach",
         scopeIdentifier,
         t.numericLiteral(reserve!.id),
-        identifier,
-        queuePriority,
+        apply,
+        t.numericLiteral(index),
         closurePriority
       );
     });
@@ -189,8 +189,7 @@ const translateDOM = {
             ofAttrValue,
             rendererId,
             byAttr ? byAttr.value! : t.nullLiteral(),
-            bindingToApplyGroup(valParam.extra.reserve!, bodySectionId)
-              .identifier
+            getReferenceGroup(bodySectionId, valParam.extra.reserve).apply
           )
         )
       );

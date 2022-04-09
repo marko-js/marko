@@ -99,10 +99,6 @@ function _apply1_val(_scope, val) {
   if (_write(_scope, 2, val)) _data(_scope[1], val);
 }
 
-function _apply_obj(_scope, obj) {
-  if (_write(_scope, 41, obj)) {}
-}
-
 function _apply_arr(_scope, arr) {
   if (_write(_scope, 40, arr)) {
     _setLoopOf(_scope, 0, arr, _for, null, _apply1_val);

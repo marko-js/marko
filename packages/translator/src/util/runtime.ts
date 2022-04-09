@@ -3,7 +3,7 @@ import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import type { ReferenceGroup } from "./apply-hydrate";
+import type { ReferenceGroup } from "./references";
 
 declare const MARKO_SRC: boolean;
 
@@ -49,7 +49,7 @@ export function callRead(reference: Reserve, targetSectionId: number) {
 }
 
 export function callQueue(
-  { identifier, queuePriority }: ReferenceGroup,
+  { apply, index }: ReferenceGroup,
   reference: Reserve,
   value: t.Expression,
   targetSectionId: number
@@ -57,8 +57,8 @@ export function callQueue(
   return callRuntime(
     "queue",
     getScopeExpression(reference, targetSectionId),
-    identifier,
-    queuePriority,
+    apply,
+    t.numericLiteral(index - 1),
     value
   );
 }

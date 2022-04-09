@@ -1,31 +1,27 @@
 import { types as t } from "@marko/compiler";
-import type { References } from "../util/references";
+import { getReferenceGroup, ReferenceGroup } from "../util/references";
 import {
   getSectionId,
   createSectionState,
   forEachSectionIdReverse,
   getOrCreateSectionId,
 } from "../util/sections";
-import { Reserve, compareReserves } from "../util/reserve";
-import * as sorted from "../util/sorted-arr";
+import { Reserve, insertReserve } from "../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";
-
-export interface ReferenceGroup {
-  identifier: t.Identifier;
-  references: References;
-  statements: t.Statement[];
-  queuePriority: t.NumericLiteral;
-}
 
 export type queueBuilder = (
   group: ReferenceGroup,
   closurePriority: t.NumericLiteral
 ) => t.Expression;
 
-const [getApply] = createSectionState<ReferenceGroup[]>("apply", () => []);
-const [getHydrate] = createSectionState<ReferenceGroup[]>("hydrate", () => []);
+const [getApplyStatements] = createSectionState<
+  Array<t.Statement[] | undefined>
+>("applyStatements", () => []);
+const [getHydrateStatements] = createSectionState<
+  Array<t.Statement[] | undefined>
+>("hydrateStatements", () => []);
 const [getQueueBuilder, _setQueueBuilder] =
   createSectionState<queueBuilder>("queue");
 
@@ -39,46 +35,27 @@ export function setQueueBuilder(
 export function addStatement(
   type: "apply" | "hydrate",
   targetSectionId: number,
-  references: References,
+  references: ReferenceGroup | undefined,
   statement: t.Statement | t.Statement[]
 ) {
-  const groups =
-    type === "apply" ? getApply(targetSectionId) : getHydrate(targetSectionId);
-  const existingGroup = getGroupByReferences(groups, references);
-  const isNew = !existingGroup;
-  const { statements } = isNew
-    ? createAndInsertGroup(type, groups, targetSectionId, references)
-    : existingGroup;
+  const statementsIndex = references?.index ?? 0;
+  const allStatements =
+    type === "apply"
+      ? getApplyStatements(targetSectionId)
+      : getHydrateStatements(targetSectionId);
+  const statements = (allStatements[statementsIndex] ??= []);
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
   } else {
     statements.push(statement);
   }
-  return isNew ? 1 : 0;
 }
 
-export function ensureHydrateReferenceGroup(
-  targetSectionId: number,
-  references: References
+function getHydrateRegisterId(
+  sectionId: number,
+  references: ReferenceGroup["references"]
 ) {
-  const groups = getHydrate(targetSectionId);
-  const existingGroup = getGroupByReferences(groups, references);
-  if (!existingGroup) {
-    const identifier = t.identifier(
-      generateReferenceGroupName("hydrate", targetSectionId, references)
-    );
-    const group: ReferenceGroup = {
-      identifier,
-      references,
-      statements: [],
-      queuePriority: t.numericLiteral(-1),
-    };
-    sorted.insert(compareReferenceGroups, groups, group);
-  }
-}
-
-function getHydrateRegisterId(sectionId: number, references: References) {
   const {
     markoOpts: { optimize },
     opts: { filename },
@@ -96,43 +73,6 @@ function getHydrateRegisterId(sectionId: number, references: References) {
   return `${getTemplateId(optimize, filename as string)}_${sectionId}${name}`;
 }
 
-export function bindingToApplyGroup(binding: Reserve, sectionId: number) {
-  const applyGroups = getApply(sectionId);
-  const group =
-    getGroupByReferences(applyGroups, binding) ??
-    createAndInsertGroup("apply", applyGroups, sectionId, binding);
-  return group;
-}
-
-function createAndInsertGroup(
-  type: "apply" | "hydrate",
-  groups: ReferenceGroup[],
-  sectionId: number,
-  references: References
-) {
-  const identifier = t.identifier(
-    generateReferenceGroupName(type, sectionId, references)
-  );
-  const group: ReferenceGroup = {
-    identifier,
-    references,
-    statements: [],
-    queuePriority: t.numericLiteral(NaN),
-  };
-  sorted.insert(compareReferenceGroups, groups, group);
-  return group;
-}
-
-function getGroupByReferences(
-  groups: ReferenceGroup[],
-  references: References
-) {
-  const groupIndex = sorted.findIndex(compareReferenceGroups, groups, {
-    references,
-  } as ReferenceGroup);
-  return groups[groupIndex];
-}
-
 export function writeAllStatementGroups() {
   forEachSectionIdReverse((sectionId) => {
     writeHydrateGroups(sectionId);
@@ -141,14 +81,19 @@ export function writeAllStatementGroups() {
 }
 
 export function writeApplyGroups(sectionId: number) {
-  const groups = getApply(sectionId);
-  if (!groups.length) return;
+  const allStatements = getApplyStatements(sectionId);
+  if (!allStatements.length) return;
 
   const closurePriorities = [];
 
-  for (let i = groups.length; i--; ) {
-    const group = groups[i];
-    const { identifier, references, statements, queuePriority } = group;
+  for (let i = allStatements.length; i--; ) {
+    const statements = allStatements[i] ?? [];
+
+    if (i === 0 && !statements.length) continue;
+
+    const referenceGroup = getReferenceGroup(sectionId, i);
+    const { references, apply: identifier } = referenceGroup;
+    const queuePriority = t.numericLiteral(i - 1);
     let params: (t.Identifier | t.RestElement | t.Pattern)[];
     let body: t.BlockStatement;
 
@@ -163,10 +108,10 @@ export function writeApplyGroups(sectionId: number) {
         body = t.blockStatement(statements);
 
         for (const binding of references) {
-          i += addStatement(
+          addStatement(
             "apply",
             sectionId,
-            binding,
+            getReferenceGroup(sectionId, binding),
             t.expressionStatement(
               // TODO: might need to queue in a child scope
               callRuntime("queue", scopeIdentifier, identifier, queuePriority)
@@ -186,13 +131,13 @@ export function writeApplyGroups(sectionId: number) {
         if (factory) {
           const closurePriority = t.numericLiteral(NaN);
           closurePriorities.push(closurePriority);
-          i += addStatement(
+          addStatement(
             "apply",
             references.sectionId,
-            references,
-            t.expressionStatement(factory(group, closurePriority))
+            getReferenceGroup(references.sectionId, references),
+            t.expressionStatement(factory(referenceGroup, closurePriority))
           );
-          i += addStatement(
+          addStatement(
             "apply",
             sectionId,
             undefined,
@@ -230,19 +175,19 @@ export function writeApplyGroups(sectionId: number) {
     fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
   }
 
-  const offset = groups[0].references ? 0 : 1;
-  for (let i = offset; i < groups.length; i++) {
-    groups[i].queuePriority.value = i - offset;
-  }
   for (let i = 0; i < closurePriorities.length; i++) {
-    closurePriorities[i].value = i + groups.length - offset;
+    closurePriorities[i].value = i + allStatements.length;
   }
 }
 
 export function writeHydrateGroups(sectionId: number) {
-  const groups = getHydrate(sectionId);
-  for (let i = groups.length; i--; ) {
-    const { identifier, references, statements } = groups[i];
+  const allStatements = getHydrateStatements(sectionId);
+  for (let i = allStatements.length; i--; ) {
+    const statements = allStatements[i];
+    if (!statements?.length) continue;
+
+    const referenceGroup = getReferenceGroup(sectionId, i)!;
+    const { references, hydrate: identifier } = referenceGroup;
     const params: Parameters<typeof t.functionDeclaration>[1] = references
       ? (Array.isArray(references) ? references : [references]).map((binding) =>
           t.assignmentPattern(
@@ -271,7 +216,7 @@ export function writeHydrateGroups(sectionId: number) {
     addStatement(
       "apply",
       sectionId,
-      references,
+      getReferenceGroup(sectionId, references),
       t.expressionStatement(
         callRuntime("queueHydrate", scopeIdentifier, identifier)
       )
@@ -279,11 +224,18 @@ export function writeHydrateGroups(sectionId: number) {
   }
 }
 
+export function addHTMLHydrateCall(
+  sectionId: number,
+  references?: ReferenceGroup
+) {
+  addStatement("hydrate", sectionId, references, undefined as any);
+}
+
 export function writeHTMLHydrateStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>
 ) {
   const sectionId = getOrCreateSectionId(path);
-  const groups = getHydrate(sectionId);
+  const allStatements = getHydrateStatements(sectionId);
 
   path.unshiftContainer(
     "body",
@@ -292,31 +244,33 @@ export function writeHTMLHydrateStatements(
     ])
   );
 
-  if (!groups.length) return;
+  if (!allStatements.length) return;
 
   const refs: Reserve[] = [];
 
-  for (let i = groups.length; i--; ) {
-    const { references } = groups[i];
-    if (references) {
-      if (Array.isArray(references)) {
-        for (const ref of references) {
-          sorted.insert(compareReserves, refs, ref);
+  for (let i = allStatements.length; i--; ) {
+    if (allStatements[i]?.length) {
+      const { references } = getReferenceGroup(sectionId, i)!;
+      if (references) {
+        if (Array.isArray(references)) {
+          for (const ref of references) {
+            insertReserve(refs, ref);
+          }
+        } else {
+          insertReserve(refs, references);
         }
-      } else {
-        sorted.insert(compareReserves, refs, references);
       }
-    }
-    path.pushContainer(
-      "body",
-      t.expressionStatement(
-        callRuntime(
-          "writeHydrateCall",
-          scopeIdentifier,
-          t.stringLiteral(getHydrateRegisterId(sectionId, references))
+      path.pushContainer(
+        "body",
+        t.expressionStatement(
+          callRuntime(
+            "writeHydrateCall",
+            scopeIdentifier,
+            t.stringLiteral(getHydrateRegisterId(sectionId, references))
+          )
         )
-      )
-    );
+      );
+    }
   }
 
   path.pushContainer(
@@ -339,69 +293,6 @@ export function writeHTMLHydrateStatements(
   );
 }
 
-/**
- * reference group priority is sorted by number of references,
- * then if needed by reference order.
- */
-function compareReferenceGroups(
-  { references: a }: ReferenceGroup,
-  { references: b }: ReferenceGroup
-) {
-  if (a) {
-    if (b) {
-      if (Array.isArray(a)) {
-        if (Array.isArray(b)) {
-          const len = a.length;
-          const lenDelta = len - b.length;
-          if (lenDelta !== 0) {
-            return lenDelta;
-          }
-
-          for (let i = 0; i < len; i++) {
-            const compareResult = compareReserves(a[i], b[i]);
-            if (compareResult !== 0) {
-              return compareResult;
-            }
-          }
-
-          return 0;
-        } else {
-          return 1;
-        }
-      } else if (Array.isArray(b)) {
-        return -1;
-      } else {
-        return compareReserves(a, b);
-      }
-    } else {
-      return 1;
-    }
-  } else {
-    return b ? -1 : 0;
-  }
-}
-
-function generateReferenceGroupName(
-  type: "apply" | "hydrate",
-  sectionId: number,
-  references: References
-) {
-  let name = type + (sectionId || "");
-
-  if (references) {
-    if (Array.isArray(references)) {
-      name += "With";
-      for (const ref of references) {
-        name += `_${ref.name}`;
-      }
-    } else {
-      name += `_${references.name}`;
-    }
-  }
-
-  return currentProgramPath.scope.generateUid(name);
-}
-
 const bindFunctionsVisitor: t.Visitor<{
   root: t.NodePath<any>;
   sectionId: number;
@@ -416,7 +307,7 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  const references = extra?.references;
+  const references = extra?.references?.references;
   const program = fn.hub.file.path;
   const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 
@@ -449,8 +340,8 @@ function bindFunction(
 }
 
 export function getDefaultApply(sectionId: number) {
-  const [firstApply] = getApply(sectionId);
-  const defaultApply =
-    firstApply && !firstApply.references && firstApply.identifier;
-  return defaultApply || t.nullLiteral();
+  const [firstApplyStatements] = getApplyStatements(sectionId);
+  return firstApplyStatements
+    ? getReferenceGroup(sectionId, 0).apply
+    : t.nullLiteral();
 }

@@ -1,5 +1,6 @@
 import type { types as t } from "@marko/compiler";
 import { createSectionState, forEachSectionId } from "./sections";
+import { createSortedCollection } from "./sorted-arr";
 
 const [getReservesByType] = createSectionState<
   [Reserve[] | undefined, Reserve[] | undefined, Reserve[] | undefined]
@@ -17,7 +18,7 @@ export interface Reserve {
   name: string;
   size: number;
   id: number;
-  exportName?: string;
+  exportIdentifier?: t.Identifier;
 }
 
 declare module "@marko/compiler/dist/types" {
@@ -99,3 +100,6 @@ export function assignFinalIds() {
 export function compareReserves(a: Reserve, b: Reserve) {
   return a.sectionId - b.sectionId || a.type - b.type || a.id - b.id;
 }
+
+export const { insert: insertReserve } =
+  createSortedCollection(compareReserves);

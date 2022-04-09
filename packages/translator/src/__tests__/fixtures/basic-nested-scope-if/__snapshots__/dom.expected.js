@@ -26,7 +26,7 @@ function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 4, clickCount)) {
     _setConditionalRenderer(_scope, 0, clickCount < 3 ? _if : null);
 
-    _queueInBranch(_scope, 0, _if, _apply1_clickCount, 0, 1);
+    _queueInBranch(_scope, 0, _if, _apply1_clickCount, 1, 2);
   }
 }
 

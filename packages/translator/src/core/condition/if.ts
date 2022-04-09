@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
-import * as sorted from "../../util/sorted-arr";
 import {
   addStatement,
   setQueueBuilder,
@@ -12,16 +11,12 @@ import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import {
-  Reserve,
-  ReserveType,
-  reserveScope,
-  compareReserves,
-} from "../../util/reserve";
+import { ReserveType, reserveScope } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
 import { scopeIdentifier } from "../../visitors/program";
+import { mergeReferenceGroups, ReferenceGroup } from "../../util/references";
 
 export default {
   analyze: {
@@ -37,6 +32,7 @@ export default {
     },
     exit(tag) {
       analyzeAttributeTags(tag);
+      exitBranchAnalyze(tag);
     },
   },
   translate: {
@@ -78,7 +74,7 @@ export default {
       }
     },
     exit(tag) {
-      exitBranch(tag);
+      exitBranchTranslate(tag);
     },
   },
   attributes: {},
@@ -99,29 +95,54 @@ const BRANCHES_LOOKUP = new WeakMap<
   }[]
 >();
 
-export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
-  const tagBody = tag.get("body");
-  const bodySectionId = getSectionId(tagBody);
+function getBranches(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
+  const branches = BRANCHES_LOOKUP.get(tag) ?? [];
   const nextTag = tag.getNextSibling();
   const isLast = !(
     isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
   );
-  const branches = BRANCHES_LOOKUP.get(tag) || [];
-  const reserve = tag.node.extra.reserve!;
 
   branches.push({
     tag,
     sectionId: bodySectionId,
   });
 
-  setQueueBuilder(tag, ({ identifier, queuePriority }, closurePriority) =>
+  if (!isLast) {
+    BRANCHES_LOOKUP.set(nextTag as t.NodePath<t.MarkoTag>, branches);
+  }
+
+  return [isLast, branches] as const;
+}
+
+export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
+  const sectionId = getOrCreateSectionId(tag);
+  const tagBody = tag.get("body");
+  const bodySectionId = getOrCreateSectionId(tagBody);
+  const [isLast, branches] = getBranches(tag, bodySectionId);
+  if (isLast) {
+    branches[0].tag.node.extra.conditionalReferences = mergeReferenceGroups(
+      sectionId,
+      branches
+        .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
+        .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"])
+    );
+  }
+}
+
+export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
+  const tagBody = tag.get("body");
+  const bodySectionId = getSectionId(tagBody);
+  const reserve = tag.node.extra.reserve!;
+  const [isLast, branches] = getBranches(tag, bodySectionId);
+
+  setQueueBuilder(tag, ({ apply, index }, closurePriority) =>
     callRuntime(
       "queueInBranch",
       scopeIdentifier,
       t.numericLiteral(reserve.id),
       writer.getRenderer(bodySectionId),
-      identifier,
-      queuePriority,
+      apply,
+      t.numericLiteral(index),
       closurePriority
     )
   );
@@ -135,7 +156,6 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
     if (isOutputDOM()) {
       const sectionId = getSectionId(tag);
       const { extra } = branches[0].tag.node;
-      const refs: Reserve[] = [];
       let expr: t.Expression = t.nullLiteral();
 
       for (let i = branches.length; i--; ) {
@@ -146,17 +166,6 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
         tag.remove();
 
         if (testAttr) {
-          const curRefs = testAttr.extra.valueReferences;
-          if (curRefs) {
-            if (Array.isArray(curRefs)) {
-              for (const ref of curRefs) {
-                sorted.insert(compareReserves, refs, ref);
-              }
-            } else {
-              sorted.insert(compareReserves, refs, curRefs);
-            }
-          }
-
           expr = t.conditionalExpression(testAttr.value, id, expr);
         } else {
           expr = id;
@@ -166,7 +175,9 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
       addStatement(
         "apply",
         sectionId,
-        refs.length === 0 ? undefined : refs.length === 1 ? refs[0] : refs,
+        // TODO: It's possible this group may not exist because the `refs`,
+        // created above, is a unique group that wasn't found during analyze
+        extra.conditionalReferences as ReferenceGroup,
         t.expressionStatement(
           callRuntime(
             "setConditionalRenderer",
@@ -177,6 +188,8 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
         )
       );
     } else {
+      const nextTag = tag.getNextSibling();
+
       let statement: t.Statement | undefined;
       for (let i = branches.length; i--; ) {
         const { tag } = branches[i];
@@ -194,7 +207,5 @@ export function exitBranch(tag: t.NodePath<t.MarkoTag>) {
 
       nextTag.insertBefore(statement!);
     }
-  } else {
-    BRANCHES_LOOKUP.set(nextTag as t.NodePath<t.MarkoTag>, branches);
   }
 }

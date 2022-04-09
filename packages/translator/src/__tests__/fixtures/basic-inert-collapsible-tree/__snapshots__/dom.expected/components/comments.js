@@ -16,7 +16,7 @@ function _apply2_comment(_scope, comment = _scope._[8]) {
   _queue(_scope, _apply2With_comment_id, 2);
 }
 
-function _apply2(_scope) {
+function _apply3(_scope) {
   _comments(_scope[0]);
 
   _queue(_scope, _apply2_id, 1);
@@ -54,7 +54,7 @@ function _apply1_id(_scope, id) {
   if (_write(_scope, 10, id)) {
     _attr(_scope[0], "id", id);
 
-    _queueInBranch(_scope, 4, _if, _apply2_id, 1, 3);
+    _queueInBranch(_scope, 4, _if, _apply2_id, 2, 4);
   }
 }
 
@@ -68,7 +68,7 @@ function _apply1_comment(_scope, comment) {
 
     _setConditionalRenderer(_scope, 4, comment.comments ? _if : null);
 
-    _queueInBranch(_scope, 4, _if, _apply2_comment, 0, 4);
+    _queueInBranch(_scope, 4, _if, _apply2_comment, 1, 5);
   }
 }
 
@@ -76,24 +76,14 @@ function _apply1_path(_scope, path = _scope._[5]) {
   _queue(_scope, _apply1With_path_i, 5);
 }
 
-function _apply1_path(_scope, path = _scope._[5]) {
-  _queue(_scope, _apply1With_path_i, 5);
-}
-
-function _apply(_scope) {
+function _apply2(_scope) {
   _apply1_open(_scope, true);
-
-  _queue(_scope, _apply1_path, 0);
 
   _queue(_scope, _apply1_path, 0);
 }
 
 function _apply_path(_scope, path) {
-  if (_write(_scope, 5, path)) {
-    _queueForEach(_scope, 0, _apply1_path, 0, 6);
-
-    _queueForEach(_scope, 0, _apply1_path, 0, 7);
-  }
+  if (_write(_scope, 5, path)) _queueForEach(_scope, 0, _apply1_path, 1, 7);
 }
 
 function _apply_comments(_scope, comments) {
@@ -102,10 +92,10 @@ function _apply_comments(_scope, comments) {
 
 const _for = _createRenderer("<li><span> </span><button> </button><!></li>",
 /* get, next(2), get, out(1), get, next(1), get, out(1), replace, skip(3) */
-" E l D l%+", _apply),
+" E l D l%+", _apply2),
       _if = _createRenderer(`${_comments_template}`,
 /* beginChild(0), _comments_walks, endChild */
-`/${_comments_walks}&`, _apply2);
+`/${_comments_walks}&`, _apply3);
 
 export const applyAttrs = function (_scope, {
   comments,

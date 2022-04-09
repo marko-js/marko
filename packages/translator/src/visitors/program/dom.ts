@@ -1,13 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import { forEachSectionId, getSectionId } from "../../util/sections";
-import {
-  bindingToApplyGroup,
-  writeAllStatementGroups,
-} from "../../util/apply-hydrate";
+import { writeAllStatementGroups } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
 import { scopeIdentifier } from ".";
+import { getReferenceGroup } from "../../util/references";
 
 export default {
   translate: {
@@ -57,17 +55,14 @@ export default {
                   t.blockStatement(
                     Object.keys(attrs.bindings).map((name) => {
                       const bindingIdentifier = attrs.bindings[name];
-                      const exportName =
-                        bindingIdentifier.extra!.reserve!.exportName!;
-                      const { identifier: applyIdentifier } =
-                        bindingToApplyGroup(
-                          bindingIdentifier.extra!.reserve!,
-                          sectionId
-                        );
+                      const { apply: applyIdentifier } = getReferenceGroup(
+                        sectionId,
+                        bindingIdentifier.extra!.reserve
+                      );
                       exportSpecifiers.push(
                         t.exportSpecifier(
                           applyIdentifier,
-                          t.identifier(exportName)
+                          bindingIdentifier.extra!.reserve!.exportIdentifier!
                         )
                       );
                       return t.expressionStatement(

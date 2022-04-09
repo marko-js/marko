@@ -94,8 +94,20 @@ function _apply_isLarge(_scope, isLarge) {
   if (_write(_scope, 16, isLarge)) _apply_largeHeading(_scope, isLarge && "h1");
 }
 
+function _apply_showTagA(_scope, showTagA) {
+  if (_write(_scope, 15, showTagA)) {}
+}
+
 function _apply_show(_scope, show) {
   if (_write(_scope, 14, show)) _apply_tagConstB(_scope, show ? "div" : null);
+}
+
+function _apply_x(_scope, x) {
+  if (_write(_scope, 13, x)) {}
+}
+
+function _apply_renderBody(_scope, renderBody) {
+  if (_write(_scope, 12, renderBody)) {}
 }
 
 function _apply_tagConstB(_scope, tagConstB) {

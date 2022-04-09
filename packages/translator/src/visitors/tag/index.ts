@@ -58,7 +58,7 @@ export default {
       analyzeAttributeTags(tag);
       switch (type) {
         case TagNameTypes.CustomTag:
-          // CustomTag.analyze.exit(tag);
+          CustomTag.analyze.exit(tag);
           break;
         case TagNameTypes.AttributeTag:
           // AttributeTag.analyze.exit(tag);

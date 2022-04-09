@@ -7,10 +7,7 @@ import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope } from "../../util/reserve";
-import {
-  addStatement,
-  ensureHydrateReferenceGroup,
-} from "../../util/apply-hydrate";
+import { addStatement, addHTMLHydrateCall } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { scopeIdentifier } from "../program";
@@ -124,7 +121,7 @@ export default {
                 write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
                 if (name.startsWith("on")) {
-                  ensureHydrateReferenceGroup(sectionId, extra.valueReferences);
+                  addHTMLHydrateCall(sectionId, extra.valueReferences);
                 } else {
                   write`${callRuntime(
                     "attr",

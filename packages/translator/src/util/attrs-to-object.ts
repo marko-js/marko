@@ -1,16 +1,14 @@
 import { types as t } from "@marko/compiler";
 import toPropertyName from "./to-property-name";
-import * as sorted from "./sorted-arr";
-import { compareReserves } from "./reserve";
-import type { References } from "./references";
+import type { ReferenceGroup } from "./references";
 
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
   withRenderBody = false
-): (t.Expression & { extra: { references: References } }) | undefined {
+): t.Expression | undefined {
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
-  const resultExtra: { references?: References } = (result.extra = {});
+  const resultExtra: { references?: ReferenceGroup } = (result.extra = {});
 
   for (const attr of node.attributes) {
     const value = attr.value!;
@@ -21,28 +19,6 @@ export default function attrsToObject(
       result.properties.push(
         t.objectProperty(toPropertyName(attr.name), value)
       );
-    }
-
-    const references = attr.extra?.valueReferences;
-
-    if (references) {
-      if (Array.isArray(references)) {
-        for (const binding of references) {
-          sorted.insertProp(
-            compareReserves,
-            resultExtra,
-            `references`,
-            binding
-          );
-        }
-      } else {
-        sorted.insertProp(
-          compareReserves,
-          resultExtra,
-          `references`,
-          references
-        );
-      }
     }
   }
 
@@ -85,7 +61,7 @@ export default function attrsToObject(
       }
     }
 
-    return result as t.Expression & { extra: { references: References } };
+    return result as t.Expression;
   }
 }
 

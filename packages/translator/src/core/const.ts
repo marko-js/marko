@@ -4,7 +4,8 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import { getSectionId } from "../util/sections";
-import { addStatement, bindingToApplyGroup } from "../util/apply-hydrate";
+import { addStatement } from "../util/apply-hydrate";
+import { getReferenceGroup } from "../util/references";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
@@ -51,8 +52,8 @@ export default {
         identifiers.length === 1
           ? t.expressionStatement(
               t.callExpression(
-                bindingToApplyGroup(identifiers[0].extra.reserve!, sectionId)
-                  .identifier,
+                getReferenceGroup(sectionId, identifiers[0].extra.reserve)
+                  .apply,
                 [scopeIdentifier, defaultAttr.value]
               )
             )
@@ -63,8 +64,8 @@ export default {
               ...identifiers.map((identifier) =>
                 t.expressionStatement(
                   t.callExpression(
-                    bindingToApplyGroup(identifier.extra.reserve!, sectionId)
-                      .identifier,
+                    getReferenceGroup(sectionId, identifier.extra.reserve)
+                      .apply,
                     [t.identifier(identifier.name)]
                   )
                 )

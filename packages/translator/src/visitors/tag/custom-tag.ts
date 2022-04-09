@@ -17,7 +17,10 @@ import {
   getSectionId,
   getOrCreateSectionId,
 } from "../../util/sections";
-import trackReferences from "../../util/references";
+import trackReferences, {
+  mergeReferenceGroups,
+  ReferenceGroup,
+} from "../../util/references";
 import {
   addStatement,
   writeHTMLHydrateStatements,
@@ -40,6 +43,20 @@ export default {
           getOrCreateSectionId(tag),
           tag.node,
           "child"
+        );
+      }
+    },
+    exit(tag: t.NodePath<t.MarkoTag>) {
+      // TODO: only if dynamic attributes
+      const tagDef = getTagDef(tag);
+      const template = tagDef?.template;
+      const sectionId = getOrCreateSectionId(tag);
+      if (template) {
+        tag.node.extra.attrsReferences = mergeReferenceGroups(
+          sectionId,
+          tag.node.attributes
+            .filter((attr) => attr.extra?.valueReferences)
+            .map((attr) => [attr.extra, "valueReferences"])
         );
       }
     },
@@ -204,7 +221,7 @@ export default {
             addStatement(
               "apply",
               tagSectionId,
-              attrsObject.extra.references,
+              tag.node.extra.attrsReferences as ReferenceGroup,
               t.expressionStatement(
                 t.callExpression(tagAttrsIdentifier, [
                   callRead(binding, tagSectionId),

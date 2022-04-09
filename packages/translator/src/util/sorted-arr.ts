@@ -1,8 +1,8 @@
-export function insert<T extends unknown[]>(
+function insertInArray<T extends unknown[]>(
   compare: (a: T[number], b: T[number]) => number,
   arr: T,
   val: T[number]
-) {
+): T {
   const len = arr.length;
   let max = len;
   let pos = 0;
@@ -10,7 +10,7 @@ export function insert<T extends unknown[]>(
   while (pos < max) {
     const mid = (pos + max) >>> 1;
     const compareResult = compare(arr[mid], val);
-    if (compareResult === 0) return;
+    if (compareResult === 0) return arr;
     if (compareResult > 0) max = mid;
     else pos = mid + 1;
   }
@@ -23,12 +23,14 @@ export function insert<T extends unknown[]>(
   }
 
   arr[len] = cur;
+
+  return arr;
 }
 
-export function findIndex<T extends unknown[]>(
-  compare: (a: T[number], b: T[number]) => number,
-  arr: T,
-  val: T[number]
+export function findIndex<V>(
+  compare: (a: V, b: V) => number,
+  arr: V[],
+  val: V
 ) {
   let max = arr.length;
   let pos = 0;
@@ -44,33 +46,30 @@ export function findIndex<T extends unknown[]>(
   return -1;
 }
 
-type KeysWithValueType<T, M> = keyof {
-  [K in keyof T as string extends K
-    ? never
-    : number extends K
-    ? never
-    : T[K] extends undefined | M | M[]
-    ? K
-    : never]: never;
-};
+export function createSortedCollection<V>(compare: (a: V, b: V) => number) {
+  return {
+    insert(data: undefined | V | V[], val: V, immutable = false): V | V[] {
+      if (data) {
+        if (Array.isArray(data)) {
+          return insertInArray(compare, immutable ? [...data] : data, val);
+        } else {
+          const compareResult = compare(data, val);
 
-export function insertProp<
-  V,
-  T extends Record<string, unknown>,
-  K extends string extends K ? keyof T : KeysWithValueType<T, V>
->(compare: (a: V, b: V) => number, data: T, key: K & keyof T, val: V) {
-  const cur = data[key] as undefined | V | V[];
-  if (cur) {
-    if (Array.isArray(cur)) {
-      insert(compare, cur, val);
-    } else {
-      const compareResult = compare(cur, val);
-
-      if (compareResult !== 0) {
-        (data[key] as V[]) = compareResult < 0 ? [cur, val] : [val, cur];
+          if (compareResult !== 0) {
+            return compareResult < 0 ? [data, val] : [val, data];
+          }
+        }
       }
-    }
-  } else {
-    (data[key] as V) = val;
-  }
+      return val;
+    },
+    find(data: undefined | V | V[], val: V) {
+      if (data) {
+        if (Array.isArray(data)) {
+          return data[findIndex(compare, data, val)];
+        } else {
+          return data === val ? data : undefined;
+        }
+      }
+    },
+  };
 }

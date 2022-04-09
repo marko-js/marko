@@ -4,6 +4,7 @@ import programHTML from "./html";
 import programDOM from "./dom";
 import { startSection } from "../../util/sections";
 import { assignFinalIds } from "../../util/reserve";
+import { finalizeReferences } from "../../util/references";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
@@ -24,6 +25,7 @@ export default {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit() {
       assignFinalIds();
+      finalizeReferences();
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
