@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.4](https://github.com/marko-js/marko/compare/v5.20.3...v5.20.4) (2022-04-11)
+
+
+### Bug Fixes
+
+* autoloading translators ([5eda8f3](https://github.com/marko-js/marko/commit/5eda8f388a9d0d253f4cda5c13bd5e716cbbc18d))
+
+
+
+
+
 ## [5.20.3](https://github.com/marko-js/marko/compare/v5.20.2...v5.20.3) (2022-03-24)
 
 **Note:** Version bump only for package marko-project
