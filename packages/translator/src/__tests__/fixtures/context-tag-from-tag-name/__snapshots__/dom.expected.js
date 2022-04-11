@@ -9,13 +9,14 @@ function _apply(_scope) {
   _other(_scope[0]);
 }
 
-const _temp = _createRenderer(" </span>",
-/* next(1), get */
-"D ", null);
-
 export const template = `${_other_template}`;
 export const walks =
 /* beginChild(0), _other_walks, endChild */
 `/${_other_walks}&`;
 export const apply = _apply;
+
+const _temp = _createRenderer(" </span>",
+/* next(1), get */
+"D ", null);
+
 export default _createRenderFn(template, walks, apply);

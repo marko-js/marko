@@ -15,14 +15,6 @@ function _apply(_scope) {
   _hello(_scope[0]);
 }
 
-const _temp2 = _createRenderer("<!>",
-/* replace, skip(3) */
-"%+", null),
-      _if = _createRenderer("", "", null),
-      _temp3 = _createRenderer("",
-/* get */
-" ", _apply4);
-
 export const applyAttrs = function (_scope, {
   x
 }) {
@@ -34,4 +26,13 @@ export const walks =
 /* beginChild(0), _hello_walks, endChild */
 `/${_hello_walks}&`;
 export const apply = _apply;
+
+const _temp2 = _createRenderer("<!>",
+/* replace, skip(3) */
+"%+", null),
+      _if = _createRenderer("", "", null),
+      _temp3 = _createRenderer("",
+/* get */
+" ", _apply4);
+
 export default _createRenderFn(template, walks, apply, applyAttrs);

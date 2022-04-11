@@ -53,8 +53,6 @@ function _apply(_scope) {
   _customTag(_scope[4]);
 }
 
-const _temp = _createRenderer("", "", null);
-
 export const applyAttrs = function (_scope, input) {
   _apply_input(_scope, input);
 };
@@ -64,4 +62,7 @@ export const walks =
 /* get, over(3), beginChild(3), _customTag_walks, endChild, beginChild(4), _customTag_walks, endChild */
 ` d2${_customTag_walks}&3${_customTag_walks}&`;
 export const apply = _apply;
+
+const _temp = _createRenderer("", "", null);
+
 export default _createRenderFn(template, walks, apply, applyAttrs);

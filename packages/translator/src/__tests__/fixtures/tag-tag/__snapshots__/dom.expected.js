@@ -10,11 +10,12 @@ function _apply1_input(_scope, input) {
   if (_write(_scope, 1, input)) _data(_scope[0], input.name);
 }
 
+export const template = "";
+export const walks = "";
+export const apply = function () {};
+
 const _temp = _createRenderer("Hello <!>",
 /* over(1), replace */
 "b%", null);
 
-export const template = "";
-export const walks = "";
-export const apply = function () {};
 export default _createRenderFn(template, walks, apply);

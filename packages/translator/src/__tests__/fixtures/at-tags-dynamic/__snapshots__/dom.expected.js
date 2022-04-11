@@ -19,6 +19,12 @@ function _apply(_scope) {
   _hello(_scope[0]);
 }
 
+export const template = `${_hello_template}`;
+export const walks =
+/* beginChild(0), _hello_walks, endChild */
+`/${_hello_walks}&`;
+export const apply = _apply;
+
 const _temp = _createRenderer("", "", null),
       _temp2 = _createRenderer("", "", null),
       _temp3 = _createRenderer("", "", null),
@@ -29,9 +35,4 @@ const _temp = _createRenderer("", "", null),
       _temp8 = _createRenderer("", "", null),
       _temp9 = _createRenderer("", "", null);
 
-export const template = `${_hello_template}`;
-export const walks =
-/* beginChild(0), _hello_walks, endChild */
-`/${_hello_walks}&`;
-export const apply = _apply;
 export default _createRenderFn(template, walks, apply);

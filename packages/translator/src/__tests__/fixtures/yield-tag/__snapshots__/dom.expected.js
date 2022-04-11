@@ -7,9 +7,6 @@ function _apply_show(_scope, show) {
   if (_write(_scope, 4, show)) _setConditionalRenderer(_scope, 0, show ? _if2 : _if);
 }
 
-const _if2 = _createRenderer("", "", null),
-      _if = _createRenderer("", "", null);
-
 export const applyAttrs = function (_scope, {
   show
 }) {
@@ -21,4 +18,8 @@ export const walks =
 /* replace, skip(3), over(1) */
 "%+b";
 export const apply = function () {};
+
+const _if2 = _createRenderer("", "", null),
+      _if = _createRenderer("", "", null);
+
 export default _createRenderFn(template, walks, apply, applyAttrs);

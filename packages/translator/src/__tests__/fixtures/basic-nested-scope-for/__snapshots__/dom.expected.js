@@ -46,13 +46,14 @@ function _apply(_scope) {
   _setLoopOf(_scope, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], _for, null, _apply1_num);
 }
 
-const _for = _createRenderer("<button> </button>",
-/* get, next(1), get */
-" D ", _apply2);
-
 export const template = "<!>";
 export const walks =
 /* replace, skip(3), over(1) */
 "%+b";
 export const apply = _apply;
+
+const _for = _createRenderer("<button> </button>",
+/* get, next(1), get */
+" D ", _apply2);
+
 export default _createRenderFn(template, walks, apply);

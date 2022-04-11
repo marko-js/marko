@@ -126,8 +126,6 @@ function _apply(_scope) {
   _apply_tagConstA(_scope, "a");
 }
 
-const _temp = _createRenderer("Body content", "", null);
-
 export const applyAttrs = function (_scope, {
   renderBody,
   x,
@@ -158,4 +156,7 @@ export { _apply_renderBody, _apply_x, _apply_show, _apply_showTagA, _apply_isLar
 export const template = "";
 export const walks = "";
 export const apply = _apply;
+
+const _temp = _createRenderer("Body content", "", null);
+
 export default _createRenderFn(template, walks, apply, applyAttrs);

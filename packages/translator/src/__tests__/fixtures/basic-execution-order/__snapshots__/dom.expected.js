@@ -38,13 +38,14 @@ function _apply(_scope) {
   _queueHydrate(_scope, _hydrate);
 }
 
-const _if = _createRenderer(" ",
-/* get */
-" ", _apply2);
-
 export const template = "<button>hide</button><!>";
 export const walks =
 /* get, over(1), replace, skip(3), over(1) */
 " b%+b";
 export const apply = _apply;
+
+const _if = _createRenderer(" ",
+/* get */
+" ", _apply2);
+
 export default _createRenderFn(template, walks, apply);

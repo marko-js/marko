@@ -26,12 +26,6 @@ function _apply_a(_scope, a) {
   if (_write(_scope, 12, a)) _queue(_scope, _applyWith_a_b, 4);
 }
 
-const _if = _createRenderer("Hello", "", null),
-      _if2 = _createRenderer("World", "", null),
-      _if5 = _createRenderer("A", "", null),
-      _if4 = _createRenderer("B", "", null),
-      _if3 = _createRenderer("C", "", null);
-
 export const applyAttrs = function (_scope, {
   a,
   b,
@@ -52,4 +46,11 @@ export const walks =
 /* replace, skip(3), over(1), replace, skip(3), over(1), next(1), replace, skip(3), out(1) */
 "%+b%+bD%+l";
 export const apply = function () {};
+
+const _if = _createRenderer("Hello", "", null),
+      _if2 = _createRenderer("World", "", null),
+      _if5 = _createRenderer("A", "", null),
+      _if4 = _createRenderer("B", "", null),
+      _if3 = _createRenderer("C", "", null);
+
 export default _createRenderFn(template, walks, apply, applyAttrs);

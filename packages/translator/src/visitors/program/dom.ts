@@ -36,12 +36,6 @@ export default {
         }
       });
 
-      if (childRendererDeclarators.length) {
-        program.node.body.push(
-          t.variableDeclaration("const", childRendererDeclarators)
-        );
-      }
-
       if (attrs) {
         const exportSpecifiers: t.ExportSpecifier[] = [];
         program.node.body.push(
@@ -104,7 +98,16 @@ export default {
                 : apply
             ),
           ])
-        ),
+        )
+      );
+
+      if (childRendererDeclarators.length) {
+        program.node.body.push(
+          t.variableDeclaration("const", childRendererDeclarators)
+        );
+      }
+
+      program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
             "createRenderFn",

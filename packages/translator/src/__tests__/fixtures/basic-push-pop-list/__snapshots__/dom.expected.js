@@ -57,13 +57,14 @@ function _apply(_scope) {
   _apply_items(_scope, []);
 }
 
-const _for = _createRenderer(" ",
-/* get */
-" ", null);
-
 export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const walks =
 /* next(1), replace, skip(3), over(1), get, over(1), get, out(1) */
 "D%+b b l";
 export const apply = _apply;
+
+const _for = _createRenderer(" ",
+/* get */
+" ", null);
+
 export default _createRenderFn(template, walks, apply);
