@@ -52,8 +52,8 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      * Allows configuring Marko to compile to different runtimes.
      */
     translator: (() => {
-      const translatorReg = /^(@\/marko\/|marko-)translator-/;
-      let translator = "@marko/translator-default";
+      const translatorReg = /^(@marko\/|marko-)translator-/;
+      let translator;
       let pkg;
 
       try {
@@ -93,7 +93,7 @@ if (globalThis[MARKO_CONFIG_KEY]) {
         }
       }
 
-      return translator;
+      return translator || "@marko/translator-default";
     })(),
 
     /**
