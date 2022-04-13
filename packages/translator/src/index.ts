@@ -7,6 +7,7 @@ import MarkoCDATA from "./visitors/cdata";
 import MarkoText from "./visitors/text";
 import MarkoTag from "./visitors/tag";
 import MarkoPlaceholder from "./visitors/placeholder";
+import MarkoScriptlet from "./visitors/scriptlet";
 import MarkoComment from "./visitors/comment";
 import coreTagLib from "./core";
 
@@ -21,6 +22,7 @@ const visitors = {
   MarkoText: MarkoText,
   MarkoTag: MarkoTag,
   MarkoPlaceholder: MarkoPlaceholder,
+  MarkoScriptlet: MarkoScriptlet,
   MarkoComment: MarkoComment,
 };
 
