@@ -1,5 +1,5 @@
 {
-  "include": ["packages/*/src/**/*"],
+  "include": ["packages/*/src/**/*", "types/types.d.ts"],
   "compilerOptions": {
     "lib": ["dom", "ESNext"],
     "strict": true,

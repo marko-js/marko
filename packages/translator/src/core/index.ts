@@ -1,4 +1,5 @@
 import ImportTag from "./import";
+import ExportTag from "./export";
 import AttrsTag from "./attrs";
 import IfTag from "./condition/if";
 import ElseIfTag from "./condition/else-if";
@@ -18,6 +19,7 @@ import { taglibId } from "../util/is-core-tag";
 export default {
   taglibId,
   "<import>": ImportTag,
+  "<export>": ExportTag,
   "<attrs>": AttrsTag,
   "<if>": IfTag,
   "<else-if>": ElseIfTag,
