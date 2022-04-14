@@ -182,24 +182,39 @@ export function parseMarko(file) {
         );
       }
 
+      let tagNameNode;
+
+      if (tagNameExpression) {
+        tagNameNode = parseExpression(
+          file,
+          tagNameExpression,
+          tagNameStartPos + 2 /* ${ */
+        );
+
+        if (t.isStringLiteral(tagNameNode)) {
+          // convert to template literal just so that we don't mistake it for a native tag.
+          tagNameNode = t.templateLiteral(
+            [
+              t.templateElement({
+                raw: tagNameNode.value,
+                cooked: tagNameNode.value
+              })
+            ],
+            []
+          );
+        }
+      } else {
+        tagNameNode = withLoc(
+          file,
+          t.stringLiteral(tagName),
+          tagNameStartPos,
+          tagNameStartPos + tagName.length
+        );
+      }
+
       const node = withLoc(
         file,
-        t.markoTag(
-          tagNameExpression
-            ? parseExpression(
-                file,
-                tagNameExpression,
-                tagNameStartPos + 2 /* ${ */
-              )
-            : withLoc(
-                file,
-                t.stringLiteral(tagName),
-                tagNameStartPos,
-                tagNameStartPos + tagName.length
-              ),
-          [],
-          t.markoTagBody()
-        ),
+        t.markoTag(tagNameNode, [], t.markoTagBody()),
         pos,
         endPos
       );
