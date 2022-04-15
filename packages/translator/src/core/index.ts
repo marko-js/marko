@@ -14,6 +14,7 @@ import SetTag from "./set";
 import StyleTag from "./style";
 import TagTag from "./tag";
 import YieldTag from "./yield";
+import NoopTag from "./noop";
 import { taglibId } from "../util/is-core-tag";
 
 export default {
@@ -34,4 +35,6 @@ export default {
   "<get>": GetTag,
   "<yield>": YieldTag,
   "<style>": StyleTag,
+  "<async-reorderer>": NoopTag,
+  "<init-widgets>": NoopTag,
 };
