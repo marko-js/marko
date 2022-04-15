@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.5](https://github.com/marko-js/marko/compare/v5.20.4...v5.20.5) (2022-04-15)
+
+
+### Bug Fixes
+
+* removing some nullish static attributes on native tags with spreads ([bae0d66](https://github.com/marko-js/marko/commit/bae0d66afa7724930dd56eec803d3de25f413770))
+* **translator-default:** string literals in dynamic tags incorrectly doing component lookup ([28aa2e8](https://github.com/marko-js/marko/commit/28aa2e84c1f7335f77c2d0ef29d30453401e7b0d))
+
+
+
+
+
 ## [5.20.4](https://github.com/marko-js/marko/compare/v5.20.3...v5.20.4) (2022-04-11)
 
 **Note:** Version bump only for package @marko/translator-default
