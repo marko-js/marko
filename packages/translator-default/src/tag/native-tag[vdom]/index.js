@@ -30,19 +30,30 @@ export function tagArguments(path, isStatic) {
     handlers
   } = node;
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
+  const attrs = path.get("attributes");
+  const seen = new Set();
+  const len = attrs.length;
+  const hasSpread = attrs.some(attr => !attr.node.name);
   let runtimeFlags = 0;
 
-  path.get("attributes").forEach(attr => {
+  for (let i = len; i--; ) {
+    const attr = attrs[i];
+    const { name } = attr.node;
+    if (seen.has(name)) {
+      if (!hasSpread) attr.remove();
+    }
+
+    seen.add(name);
     const { confident, computed } = evaluateAttr(attr);
 
     if (confident) {
       if (computed == null || computed === false) {
-        attr.remove();
+        if (!hasSpread) attr.remove();
       } else {
         attr.set("value", t.stringLiteral(computed));
       }
     }
-  });
+  }
 
   let attrsObj = getAttrs(path, true, true);
 

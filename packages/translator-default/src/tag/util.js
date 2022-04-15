@@ -63,7 +63,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
         t.objectProperty(t.stringLiteral(targetProperty), value)
       );
     } else {
-      properties.push(t.spreadElement(value));
+      mergeSpread(properties, value);
     }
   }
 
@@ -192,5 +192,19 @@ function findLastIndex(arr, check) {
     if (check(arr[i])) {
       return i;
     }
+  }
+}
+
+function mergeSpread(properties, value) {
+  if (t.isObjectExpression(value)) {
+    for (const prop of value.properties) {
+      if (t.isSpreadElement(prop)) {
+        mergeSpread(properties, prop.argument);
+      } else {
+        properties.push(prop);
+      }
+    }
+  } else {
+    properties.push(t.spreadElement(value));
   }
 }
