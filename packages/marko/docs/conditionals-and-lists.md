@@ -4,7 +4,7 @@ While HTML itself does not support conditionally displaying elements or repeatin
 
 ## Conditionals
 
-The `<if>` tag recieves an [argument](./syntax.md#arguments) which is used to determine if its body content should be present.
+The `<if>` tag receives an [argument](./syntax.md#arguments) which is used to determine if its body content should be present.
 
 ```marko
 <if(user.loggedOut)>
