@@ -10,11 +10,11 @@ import MarkoPlaceholder from "./visitors/placeholder";
 import MarkoScriptlet from "./visitors/scriptlet";
 import MarkoComment from "./visitors/comment";
 import coreTagLib from "./core";
-
-export const taglibs = [[__dirname, coreTagLib]];
+import ReferencedIdentifier from "./visitors/referenced-identifier";
 
 const visitors = {
   Program: Program,
+  ReferencedIdentifier: ReferencedIdentifier,
   ImportDeclaration: ImportDeclaration,
   MarkoDocumentType: MarkoDocumentType,
   MarkoDeclaration: MarkoDeclaration,
@@ -26,7 +26,9 @@ const visitors = {
   MarkoComment: MarkoComment,
 };
 
-const getVisitorOfType = (typename: "analyze" | "translate"): t.Visitor =>
+const getVisitorOfType = (
+  typename: "migrate" | "analyze" | "translate"
+): t.Visitor =>
   Object.entries(visitors).reduce((visitor, [name, value]) => {
     if (typename in value) {
       visitor[name] = (value as any)[typename];
@@ -36,6 +38,15 @@ const getVisitorOfType = (typename: "analyze" | "translate"): t.Visitor =>
 
 export const analyze = getVisitorOfType("analyze");
 export const translate = getVisitorOfType("translate");
+export const taglibs = [
+  [
+    __dirname,
+    {
+      ...coreTagLib,
+      migrate: getVisitorOfType("migrate"),
+    },
+  ],
+];
 
 /* eslint-disable @typescript-eslint/no-empty-interface */
 declare module "@marko/compiler/dist/types" {

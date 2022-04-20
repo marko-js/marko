@@ -15,6 +15,16 @@ const previousProgramPath: WeakMap<
 > = new WeakMap();
 
 export default {
+  migrate: {
+    enter(program: t.NodePath<t.Program>) {
+      previousProgramPath.set(program, currentProgramPath);
+      currentProgramPath = program;
+    },
+    exit() {
+      currentProgramPath.scope.crawl();
+      currentProgramPath = previousProgramPath.get(currentProgramPath)!;
+    },
+  },
   analyze: {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);

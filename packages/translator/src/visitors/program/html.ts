@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { writeHTMLHydrateStatements } from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
+import isStatic from "../../util/is-static";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default {
@@ -46,16 +47,3 @@ export default {
     },
   },
 };
-
-function isStatic(path: t.NodePath<any>) {
-  if (path.isImportDeclaration()) {
-    return true;
-  }
-  if (path.isExportDeclaration()) {
-    return true;
-  }
-
-  // TODO include more cases here.
-
-  return false;
-}
