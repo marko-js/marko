@@ -14,6 +14,7 @@ import SetTag from "./set";
 import StyleTag from "./style";
 import TagTag from "./tag";
 import YieldTag from "./yield";
+import StaticTag from "./static";
 import NoopTag from "./noop";
 import { taglibId } from "../util/is-core-tag";
 
@@ -37,4 +38,5 @@ export default {
   "<style>": StyleTag,
   "<async-reorderer>": NoopTag,
   "<init-widgets>": NoopTag,
+  "<static>": StaticTag,
 };

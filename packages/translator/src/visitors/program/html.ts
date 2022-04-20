@@ -17,6 +17,8 @@ export default {
         if (!isStatic(child)) {
           renderContent.push(child.node);
           child.remove();
+        } else if (child.isMarkoScriptlet()) {
+          child.replaceWithMultiple(child.node.body);
         }
       }
 
