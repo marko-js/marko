@@ -12,7 +12,7 @@ export default {
       addStatement(
         "apply",
         getSectionId(scriptlet),
-        scriptlet.node.extra!.bodyReferences as ReferenceGroup,
+        scriptlet.node.extra?.bodyReferences as ReferenceGroup,
         scriptlet.node.body
       );
     }

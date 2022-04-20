@@ -19,11 +19,13 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 );
 
 type TestConfig = {
+  context?: Record<string, unknown>;
   steps?: unknown[];
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
   skip_ssr?: boolean;
+  skip_hydrate?: boolean;
 };
 
 const baseConfig: compiler.Config = {
@@ -106,8 +108,7 @@ describe("translator", () => {
             "@marko/runtime-fluurt/src/dom"
           ) as typeof import("@marko/runtime-fluurt/src/dom");
 
-          browser.require(templateFile);
-          await serverTemplate.render(input, {
+          await serverTemplate.render(input, config.context, {
             write(data: string) {
               buffer += data;
               tracker.log(
@@ -125,10 +126,12 @@ describe("translator", () => {
               document.write(buffer + (data || ""));
               document.close();
               tracker.logUpdate("End");
-              init();
-              throwErrors();
-              // browser.require(hydrateFile);
-              tracker.logUpdate("Hydrate");
+              if (!config.skip_hydrate) {
+                browser.require(templateFile);
+                init();
+                throwErrors();
+                tracker.logUpdate("Hydrate");
+              }
             },
             emit(type: string, ...args: unknown[]) {
               // console.log(...args);

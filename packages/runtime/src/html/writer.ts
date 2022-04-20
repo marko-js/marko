@@ -1,5 +1,5 @@
 import type { Writable } from "stream";
-import { Context, setContext } from "../common/context";
+import { Context, setContext, pushContext } from "../common/context";
 import { Renderer, HydrateSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
@@ -30,10 +30,15 @@ export function nextId() {
 
 export function createRenderer(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
-  return async (input: Input, stream: MaybeFlushable) => {
+  return async (
+    input: Input = {},
+    context: Record<string, unknown> = {},
+    stream: MaybeFlushable
+  ) => {
     $_buffer = createBuffer();
     $_stream = stream;
     $_flush = flushToStream;
+    pushContext("$", context);
 
     try {
       let renderedPromises: typeof $_promises;

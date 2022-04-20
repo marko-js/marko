@@ -53,7 +53,7 @@ describe("runtime", () => {
 
             const tracker = createTrackMutations(browser.window, document);
 
-            await render(input, {
+            await render(input, {}, {
               write(data: string) {
                 buffer += data;
                 tracker.log(
