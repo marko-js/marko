@@ -20,7 +20,7 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 
 type TestConfig = {
   context?: Record<string, unknown>;
-  steps?: unknown[];
+  steps?: unknown[] | (() => Promise<unknown[]>);
   skip_dom?: boolean;
   skip_html?: boolean;
   skip_csr?: boolean;
@@ -99,7 +99,10 @@ describe("translator", () => {
           });
           const document = browser.window.document;
           const throwErrors = trackErrors(browser.window);
-          const [input, ...steps] = config.steps || [];
+          const [input, ...steps] =
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || [];
 
           document.open();
 
@@ -175,7 +178,10 @@ describe("translator", () => {
           const { document } = window;
           const throwErrors = trackErrors(window);
 
-          const [input, ...steps] = config.steps || [];
+          const [input, ...steps] =
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || [];
           const { run } = browser.require(
             "@marko/runtime-fluurt/src/dom"
           ) as typeof import("../../../runtime/src/dom");

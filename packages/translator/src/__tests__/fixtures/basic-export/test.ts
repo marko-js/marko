@@ -1,7 +1,5 @@
-import { v } from "./template.marko";
-
-export const steps = [
+export const steps = () => [
   {
-    value: v,
+    value: require("./template.marko").v,
   },
 ];
