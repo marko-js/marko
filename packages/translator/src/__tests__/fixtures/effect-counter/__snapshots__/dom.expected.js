@@ -1,9 +1,4 @@
-import { queue as _queue, userEffect as _userEffect, on as _on, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-
-const _temp = function (_scope) {
-  const clickCount = _scope[1];
-  document.getElementById("button").textContent = clickCount;
-};
+import { queue as _queue, on as _on, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _onclick = function (_scope) {
   const clickCount = _scope[1];
@@ -12,7 +7,7 @@ const _onclick = function (_scope) {
 };
 
 function _hydrate_clickCount(_scope, clickCount = _scope[1]) {
-  _userEffect(_scope, 2, _bind(_scope, _temp));
+  document.getElementById("button").textContent = clickCount;
 
   _on(_scope[0], "click", _bind(_scope, _onclick));
 }

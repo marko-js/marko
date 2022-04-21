@@ -41,18 +41,32 @@ export default {
     const sectionId = getSectionId(tag);
     if (isOutputDOM()) {
       const cleanupIndex = tag.node.extra!.reserve!.id;
+      const { value } = defaultAttr;
+      let inlineStatements = null;
+      if (
+        t.isFunctionExpression(value) ||
+        (t.isArrowFunctionExpression(value) && t.isBlockStatement(value.body))
+      ) {
+        inlineStatements = (value.body as t.BlockStatement).body;
+        t.traverse(value.body, (node) => {
+          if (t.isReturnStatement(node)) {
+            inlineStatements = null;
+          }
+        });
+      }
       addStatement(
         "hydrate",
         sectionId,
         defaultAttr.extra?.valueReferences,
-        t.expressionStatement(
-          callRuntime(
-            "userEffect",
-            scopeIdentifier,
-            t.numericLiteral(cleanupIndex),
-            defaultAttr.value
+        inlineStatements ||
+          t.expressionStatement(
+            callRuntime(
+              "userEffect",
+              scopeIdentifier,
+              t.numericLiteral(cleanupIndex),
+              defaultAttr.value
+            )
           )
-        )
       );
     } else {
       addHTMLHydrateCall(sectionId, defaultAttr.extra?.valueReferences);
