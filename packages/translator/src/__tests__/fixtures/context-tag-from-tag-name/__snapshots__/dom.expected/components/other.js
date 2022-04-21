@@ -5,7 +5,11 @@ _dynamicTag(_scope, input.renderBody, null);
 _popContext();
 
 import { pushContext as _pushContext, dynamicTag as _dynamicTag, popContext as _popContext, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+export const applyAttrs = function (_scope, input) {
+  _apply_input(_scope, input);
+};
+export { _apply_input };
 export const template = "";
 export const walks = "";
 export const apply = function () {};
-export default _createRenderFn(template, walks, apply);
+export default _createRenderFn(template, walks, apply, applyAttrs);

@@ -1,7 +1,11 @@
-import { apply as _hello, template as _hello_template, walks as _hello_walks } from "./hello.marko";
+import { apply as _hello, applyAttrs as _hello_attrs, template as _hello_template, walks as _hello_walks } from "./hello.marko";
 
 function _apply(_scope) {
   _hello(_scope[0]);
+
+  _hello_attrs(_scope[0], {
+    name: "Frank"
+  });
 }
 
 export const template = `${_hello_template}`;

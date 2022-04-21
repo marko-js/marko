@@ -1,7 +1,11 @@
-import { apply as _child, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
+import { apply as _child, applyAttrs as _child_attrs, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
 
 function _apply(_scope) {
   _child(_scope[0]);
+
+  _child_attrs(_scope[0], {
+    name: "World"
+  });
 }
 
 import { createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
