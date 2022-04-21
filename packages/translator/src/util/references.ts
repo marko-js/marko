@@ -250,6 +250,7 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
     case "MarkoAttribute":
     case "MarkoSpreadAttribute":
     case "MarkoPlaceholder":
+    case "MarkoScriptlet":
       return true;
     default:
       return false;
