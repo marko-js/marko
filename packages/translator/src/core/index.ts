@@ -16,6 +16,7 @@ import TagTag from "./tag";
 import YieldTag from "./yield";
 import StaticTag from "./static";
 import NoopTag from "./noop";
+import FlushHereAndAfter from "./__flush_here_and_after__";
 import { taglibId } from "../util/is-core-tag";
 
 export default {
@@ -39,4 +40,5 @@ export default {
   "<async-reorderer>": NoopTag,
   "<init-widgets>": NoopTag,
   "<static>": StaticTag,
+  "<__flush_here_and_after__>": FlushHereAndAfter,
 };
