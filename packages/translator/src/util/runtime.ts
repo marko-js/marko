@@ -37,7 +37,7 @@ function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
   return `@marko/runtime-fluurt/${
     MARKO_SRC ? "src" : optimize ? "dist" : "dist/debug"
-  }/${output}`;
+  }/${output === "html" ? "html" : "dom"}`;
 }
 
 export function callRead(reference: Reserve, targetSectionId: number) {
