@@ -80,11 +80,14 @@ export function writeAllStatementGroups() {
   });
 }
 
+const [getClosurePriorities] = createSectionState<Array<t.NumericLiteral>>(
+  "closurePriorities",
+  () => []
+);
+
 export function writeApplyGroups(sectionId: number) {
   const allStatements = getApplyStatements(sectionId);
   if (!allStatements.length) return;
-
-  const closurePriorities = [];
 
   for (let i = allStatements.length; i--; ) {
     const statements = allStatements[i] ?? [];
@@ -130,7 +133,7 @@ export function writeApplyGroups(sectionId: number) {
         const factory = getQueueBuilder(sectionId);
         if (factory) {
           const closurePriority = t.numericLiteral(NaN);
-          closurePriorities.push(closurePriority);
+          getClosurePriorities(references.sectionId).push(closurePriority);
           addStatement(
             "apply",
             references.sectionId,
@@ -175,6 +178,7 @@ export function writeApplyGroups(sectionId: number) {
     fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
   }
 
+  const closurePriorities = getClosurePriorities(sectionId);
   for (let i = 0; i < closurePriorities.length; i++) {
     closurePriorities[i].value = i + allStatements.length;
   }

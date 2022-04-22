@@ -25,7 +25,7 @@ function _apply_show(_scope, show) {
 }
 
 function _apply_message(_scope, message) {
-  if (_write(_scope, 5, message)) _queueInBranch(_scope, 1, _if, _apply1_message, 1, 2);
+  if (_write(_scope, 5, message)) _queueInBranch(_scope, 1, _if, _apply1_message, 1, 3);
 }
 
 function _apply(_scope) {

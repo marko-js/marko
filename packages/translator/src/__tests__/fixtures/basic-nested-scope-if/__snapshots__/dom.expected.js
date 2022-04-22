@@ -1,4 +1,12 @@
-import { queue as _queue, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, register as _register, bind as _bind, queueHydrate as _queueHydrate, queueInBranch as _queueInBranch, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queue as _queue, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply2_clickCount(_scope, clickCount = _scope._[4]) {
+  _data(_scope[0], clickCount);
+}
+
+function _apply3(_scope) {
+  _queue(_scope, _apply2_clickCount, 0);
+}
 
 const _onclick = function (_scope) {
   const clickCount = _scope._[4];
@@ -24,9 +32,11 @@ function _apply2(_scope) {
 
 function _apply_clickCount(_scope, clickCount) {
   if (_write(_scope, 4, clickCount)) {
-    _setConditionalRenderer(_scope, 0, clickCount < 3 ? _if : null);
+    _setConditionalRenderer(_scope, 0, clickCount < 3 ? _if2 : _if);
 
-    _queueInBranch(_scope, 0, _if, _apply1_clickCount, 1, 2);
+    _queueInBranch(_scope, 0, _if, _apply2_clickCount, 1, 2);
+
+    _queueInBranch(_scope, 0, _if2, _apply1_clickCount, 1, 3);
   }
 }
 
@@ -40,8 +50,11 @@ export const walks =
 "D%+l";
 export const apply = _apply;
 
-const _if = _createRenderer("<button> </button>",
+const _if2 = _createRenderer("<button> </button>",
 /* get, next(1), get */
-" D ", _apply2);
+" D ", _apply2),
+      _if = _createRenderer("<span>The button was clicked <!> times.</span>",
+/* next(1), over(1), replace */
+"Db%", _apply3);
 
 export default _createRenderFn(template, walks, apply);

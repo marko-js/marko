@@ -15,6 +15,10 @@ const _renderer = input => {
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
 
     _writeHydrateScope(_scope, [,,,, clickCount]);
+  } else {
+    const _scope = _nextScopeId();
+
+    _write(`<span>The button was clicked ${_markHydrateNode(_scope, 0)}${_escapeXML(clickCount)} times.</span>`);
   }
 
   _write("</div>");

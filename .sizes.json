@@ -52,7 +52,7 @@
       "name": "comments",
       "user": {
         "min": 1232,
-        "gzip": 628,
+        "gzip": 629,
         "brotli": 576
       },
       "runtime": {
@@ -62,7 +62,7 @@
       },
       "total": {
         "min": 6891,
-        "gzip": 3320,
+        "gzip": 3321,
         "brotli": 3031
       }
     },

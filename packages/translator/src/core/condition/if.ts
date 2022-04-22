@@ -132,20 +132,7 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
 export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const bodySectionId = getSectionId(tagBody);
-  const reserve = tag.node.extra.reserve!;
   const [isLast, branches] = getBranches(tag, bodySectionId);
-
-  setQueueBuilder(tag, ({ apply, index }, closurePriority) =>
-    callRuntime(
-      "queueInBranch",
-      scopeIdentifier,
-      t.numericLiteral(reserve.id),
-      writer.getRenderer(bodySectionId),
-      apply,
-      t.numericLiteral(index),
-      closurePriority
-    )
-  );
 
   if (isOutputHTML()) {
     writer.flushInto(tag);
@@ -162,6 +149,18 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         const { tag, sectionId } = branches[i];
         const [testAttr] = tag.node.attributes;
         const id = writer.getRenderer(sectionId, "if");
+
+        setQueueBuilder(tag, ({ apply, index }, closurePriority) => {
+          return callRuntime(
+            "queueInBranch",
+            scopeIdentifier,
+            t.numericLiteral(extra.reserve!.id),
+            writer.getRenderer(sectionId),
+            apply,
+            t.numericLiteral(index),
+            closurePriority
+          );
+        });
 
         tag.remove();
 

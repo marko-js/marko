@@ -19,11 +19,11 @@ function _apply2(_scope) {
 }
 
 function _apply_b(_scope, b) {
-  if (_write(_scope, 5, b)) _queueInBranch(_scope, 0, _if, _apply1_b, 2, 4);
+  if (_write(_scope, 5, b)) _queueInBranch(_scope, 0, _if, _apply1_b, 2, 3);
 }
 
 function _apply_a(_scope, a) {
-  if (_write(_scope, 4, a)) _queueInBranch(_scope, 0, _if, _apply1_a, 1, 5);
+  if (_write(_scope, 4, a)) _queueInBranch(_scope, 0, _if, _apply1_a, 1, 4);
 }
 
 function _apply(_scope) {

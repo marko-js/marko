@@ -54,7 +54,7 @@ function _apply1_id(_scope, id) {
   if (_write(_scope, 10, id)) {
     _attr(_scope[0], "id", id);
 
-    _queueInBranch(_scope, 4, _if, _apply2_id, 2, 4);
+    _queueInBranch(_scope, 4, _if, _apply2_id, 2, 7);
   }
 }
 
@@ -68,7 +68,7 @@ function _apply1_comment(_scope, comment) {
 
     _setConditionalRenderer(_scope, 4, comment.comments ? _if : null);
 
-    _queueInBranch(_scope, 4, _if, _apply2_comment, 1, 5);
+    _queueInBranch(_scope, 4, _if, _apply2_comment, 1, 8);
   }
 }
 
@@ -83,7 +83,7 @@ function _apply2(_scope) {
 }
 
 function _apply_path(_scope, path) {
-  if (_write(_scope, 5, path)) _queueForEach(_scope, 0, _apply1_path, 1, 7);
+  if (_write(_scope, 5, path)) _queueForEach(_scope, 0, _apply1_path, 1, 3);
 }
 
 function _apply_comments(_scope, comments) {
