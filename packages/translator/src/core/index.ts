@@ -37,8 +37,9 @@ export default {
   "<get>": GetTag,
   "<yield>": YieldTag,
   "<style>": StyleTag,
-  "<async-reorderer>": NoopTag,
+  "<await-reorderer>": NoopTag,
   "<init-widgets>": NoopTag,
+  "<init-components>": NoopTag,
   "<static>": StaticTag,
   "<__flush_here_and_after__>": FlushHereAndAfter,
 };
