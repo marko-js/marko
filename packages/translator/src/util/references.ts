@@ -161,6 +161,8 @@ function updateReferenceGroup(
     currentGroup.count--;
   }
 
+  getOrCreateReferenceGroup(sectionId, newBinding);
+
   path.node.extra![extraKey] = getOrCreateReferenceGroup(
     sectionId,
     newReferences
