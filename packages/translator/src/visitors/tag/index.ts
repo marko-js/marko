@@ -155,7 +155,7 @@ export default {
       if (
         extra.tagNameDynamic &&
         tagNameType !== TagNameTypes.DynamicTag &&
-        !isOutputHTML()
+        (!isOutputHTML() || tagNameType === undefined)
       ) {
         // DOM implementation requires non strings actually be a dynamic tag call.
         tagNameType = TagNameTypes.DynamicTag;

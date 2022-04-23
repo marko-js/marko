@@ -23,7 +23,7 @@ export default {
       const args: t.Expression[] = [node.name, attrsObject || t.nullLiteral()];
 
       if (isOutputHTML()) {
-        writer.flushInto(tag);
+        writer.flushBefore(tag);
       } else {
         args.unshift(scopeIdentifier);
       }

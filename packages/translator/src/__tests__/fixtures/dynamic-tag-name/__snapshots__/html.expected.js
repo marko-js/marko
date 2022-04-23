@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { markHydrateNode as _markHydrateNode, attr as _attr, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, markHydrateNode as _markHydrateNode, attr as _attr, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = ({
   renderBody,
@@ -14,8 +14,15 @@ const _renderer = ({
 }) => {
   const _scope = _nextScopeId();
 
-  <${renderBody} class=["a", "b"] other=other/>
-  <${x} class=["a", "b"] other=other/>
+  _dynamicTag(renderBody, {
+    class: ["a", "b"],
+    other: other
+  });
+
+  _dynamicTag(x, {
+    class: ["a", "b"],
+    other: other
+  });
 
   const _tagName = show ? "div" : null;
 
