@@ -1,7 +1,7 @@
 import path from "path";
 import getComponentFiles from "../../util/get-component-files";
 
-const STYLE_REG = /^style(?:\.([^\s]+))?\s*\{/;
+const STYLE_REG = /^style((?:\.[^\s\\/:*?"<>|({]+)+)?\s*\{/;
 
 export default function (tag) {
   const { hub, node } = tag;
@@ -36,7 +36,7 @@ export default function (tag) {
       );
   }
 
-  const [startContent, type = "css"] = matchedBlock;
+  const [startContent, type = ".css"] = matchedBlock;
   const codeSartOffset = startContent.length;
   const codeEndOffset = rawValue.lastIndexOf("}");
   const code = rawValue.slice(codeSartOffset, codeEndOffset);
@@ -44,13 +44,13 @@ export default function (tag) {
   const start = node.extra && node.extra.nameStart;
 
   deps.push({
-    type,
+    type: type.slice(1),
     code,
     style: true,
     startPos: start + codeSartOffset,
     endPos: start + codeEndOffset,
     path: `./${base}`,
-    virtualPath: `./${base}.${type}`
+    virtualPath: `./${base + type}`
   });
 
   tag.remove();
