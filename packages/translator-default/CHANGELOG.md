@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.6](https://github.com/marko-js/marko/compare/v5.20.5...v5.20.6) (2022-04-25)
+
+
+### Bug Fixes
+
+* issue with style tag with variable treated as block ([e82df08](https://github.com/marko-js/marko/commit/e82df080072841842b42dd424bfc45a567bf5b6c))
+
+
+
+
+
 ## [5.20.5](https://github.com/marko-js/marko/compare/v5.20.4...v5.20.5) (2022-04-15)
 
 
