@@ -22,7 +22,7 @@ export type Config = {
   writeVersionComment?: boolean;
   ignoreUnrecognizedTags?: boolean;
   sourceMaps?: boolean | "inline" | "both";
-  translator?: string;
+  translator?: any;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
   resolveVirtualDependency?(filename: string, dep: { virtualPath: string, code: string, map?: SourceMap }): string;
@@ -30,6 +30,8 @@ export type Config = {
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
+  /** @deprecated */
+  meta?: boolean;
   babelConfig?: {
     ast?: boolean | null;
     code?: boolean | null;

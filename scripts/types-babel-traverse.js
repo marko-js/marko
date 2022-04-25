@@ -46,16 +46,11 @@ fs.readFile(
       marko: {
         id: string,
         tags: string[],
-        deps: Array<string | { type: string, code: string, path: string, virtualPath: string }>,
+        deps: Array<string | { type: string, code: string, path: string, virtualPath: string, [x:string]: unknown }>,
         watchFiles: string[]
       }
     },
-    markoOpts: {
-        output: "html" | "dom",
-        optimize: boolean,
-        fileSystem: typeof import("fs"),
-        cache: Map<unknown, unknown>
-    }
+    markoOpts: import('@marko/compiler').Config
 }
 
 ${HUB_INTERFACE}
