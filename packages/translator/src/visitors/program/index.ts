@@ -1,10 +1,11 @@
-import type { types as t } from "@marko/compiler";
-import { isOutputHTML } from "../../util/marko-config";
+import { types as t } from "@marko/compiler";
+import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
 import programHTML from "./html";
 import programDOM from "./dom";
 import { startSection } from "../../util/sections";
 import { assignFinalIds } from "../../util/reserve";
 import { finalizeReferences } from "../../util/references";
+import { callRuntime } from "../../util/runtime";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
@@ -44,6 +45,18 @@ export default {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       scopeIdentifier = program.scope.generateUidIdentifier("scope");
+      if (getMarkoOpts().output === ("hydrate" as "html")) {
+        program.skip();
+        program.node.body = [];
+        program.node.body.push(
+          t.importDeclaration(
+            [],
+            t.stringLiteral(program.hub.file.opts.filename as string)
+          ),
+          t.expressionStatement(callRuntime("init"))
+        );
+        return;
+      }
     },
     exit(program: t.NodePath<t.Program>) {
       if (isOutputHTML()) {
