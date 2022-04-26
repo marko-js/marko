@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.7](https://github.com/marko-js/marko/compare/v5.20.6...v5.20.7) (2022-04-26)
+
+
+### Bug Fixes
+
+* set cache entry before analysis to prevent infinite recursion ([d327864](https://github.com/marko-js/marko/commit/d3278640dbc403221c070f4529f18e9a05a60370))
+
+
+
+
+
 ## [5.20.6](https://github.com/marko-js/marko/compare/v5.20.5...v5.20.6) (2022-04-25)
 
 
