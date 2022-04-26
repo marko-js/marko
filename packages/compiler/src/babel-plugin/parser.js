@@ -66,7 +66,21 @@ export function parseMarko(file) {
       case 1: {
         if (emptyRange(quasis[0]) && emptyRange(quasis[1])) {
           const [{ value }] = expressions;
-          return parseExpression(file, parser.read(value), value.start);
+          const result = parseExpression(file, parser.read(value), value.start);
+          if (t.isStringLiteral(result)) {
+            // convert to template literal just so that we don't mistake it for a native tag if this is a tag name.
+            return t.templateLiteral(
+              [
+                t.templateElement({
+                  raw: result.value,
+                  cooked: result.value
+                })
+              ],
+              []
+            );
+          } else {
+            return result;
+          }
         }
       }
     }
