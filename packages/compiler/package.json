@@ -16,7 +16,7 @@
     "@marko/babel-utils": "^5.20.8",
     "complain": "^1.6.0",
     "he": "^1.2.0",
-    "htmljs-parser": "^2.11.1",
+    "htmljs-parser": "^3.3.1",
     "jsesc": "^3.0.2",
     "lasso-package-root": "^1.0.1",
     "property-handlers": "^1.1.1",

@@ -23,11 +23,8 @@ export default {
   "<import>": {
     "node-factory": parseImport,
     "parse-options": {
-      rootOnly: true,
-      rawOpenTag: true,
-      openTagOnly: true,
-      ignoreAttributes: true,
-      relaxRequireCommas: true
+      statement: true,
+      rawOpenTag: true
     },
     autocomplete: [
       {
@@ -43,11 +40,8 @@ export default {
   "<export>": {
     "node-factory": parseExport,
     "parse-options": {
-      rootOnly: true,
-      rawOpenTag: true,
-      openTagOnly: true,
-      ignoreAttributes: true,
-      relaxRequireCommas: true
+      statement: true,
+      rawOpenTag: true
     },
     autocomplete: [
       {
@@ -63,10 +57,8 @@ export default {
   "<class>": {
     "node-factory": parseClass,
     "parse-options": {
-      rootOnly: true,
-      rawOpenTag: true,
-      openTagOnly: true,
-      ignoreAttributes: true
+      statement: true,
+      rawOpenTag: true
     },
     autocomplete: [
       {
@@ -82,10 +74,8 @@ export default {
   "<static>": {
     "node-factory": parseStatic,
     "parse-options": {
-      rootOnly: true,
-      rawOpenTag: true,
-      openTagOnly: true,
-      ignoreAttributes: true
+      statement: true,
+      rawOpenTag: true
     },
     autocomplete: [
       {
@@ -262,7 +252,7 @@ export default {
   "<html-comment>": {
     "code-generator": translateHTMLComment,
     "parse-options": {
-      state: "parsed-text"
+      text: true
     },
     attributes: {},
     autocomplete: [
@@ -390,11 +380,7 @@ export default {
   "<module-code>": {
     "node-factory": parseModuleCode,
     "parse-options": {
-      rootOnly: true,
-      rawOpenTag: true,
-      openTagOnly: true,
-      ignoreAttributes: true,
-      relaxRequireCommas: true
+      rawOpenTag: true
     }
   },
   "<*>": {

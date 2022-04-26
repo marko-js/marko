@@ -60,12 +60,11 @@ export interface TagDefinition {
   transformers?: PluginDefinition<t.MarkoTag>[];
   migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
-    rootOnly?: boolean,
-    rawOpenTag?: boolean,
+    text?: boolean,
     openTagOnly?: boolean,
-    ignoreAttributes?: boolean,
-    relaxRequireCommas?: boolean,
-    state?: "html" | "static-text" | "parsed-text" | "cdata"
+    statement?: boolean,
+    rawOpenTag?: boolean,
+    preserveWhitespace?: boolean
   }
 }
 
@@ -190,7 +189,7 @@ type Loc = { line: number; column: number };
 type LocRange = { start: Loc; end: Loc };
 
 export function getLoc(file: t.BabelFile, pos: number): Loc;
-export function getLocRange(file: t.BabelFile, pos: number): LocRange;
+export function getLocRange(file: t.BabelFile, start: number, end: number): LocRange;
 export function withLoc<T extends t.Node>(
   file: t.BabelFile,
   node: T,

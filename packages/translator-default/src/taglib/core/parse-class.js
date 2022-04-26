@@ -29,7 +29,7 @@ export default function (path) {
       );
   }
 
-  const parsed = parseExpression(file, code, start);
+  const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start);
 
   if (parsed.id) {
     throw file.buildCodeFrameError(

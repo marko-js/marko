@@ -1,5 +1,5 @@
-packages/translator-default/test/fixtures/error-import-tag-root-only/template.marko(2,3): "import" tags must be at the root of your Marko template.
+packages/translator-default/test/fixtures/error-import-tag-root-only/template.marko(2,4): The "import" tag is reserved and cannot be used as an HTML tag.
   1 | <div>
 > 2 |   <import x from "y"/>
-    |   ^^^^^^^
+    |    ^^^^^^
   3 | </div>

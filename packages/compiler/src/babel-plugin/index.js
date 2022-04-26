@@ -1,7 +1,7 @@
 import path from "path";
 import { createHash } from "crypto";
 import * as t from "../babel-types";
-import { getLoc, getTemplateId } from "@marko/babel-utils";
+import { getTemplateId } from "@marko/babel-utils";
 import { visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";
 import { parseMarko } from "./parser";
@@ -178,13 +178,6 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   file.markoOpts = markoOpts;
   file.___taglibLookup = taglibLookup;
   file.___getMarkoFile = getMarkoFile;
-
-  file.ast.start = file.ast.program.start = 0;
-  file.ast.end = file.ast.program.end = code.length - 1;
-  file.ast.loc = file.ast.program.loc = {
-    start: { line: 0, column: 0 },
-    end: getLoc(file, file.ast.end)
-  };
 
   parseMarko(file);
 

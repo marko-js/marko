@@ -720,6 +720,7 @@
   },
   "<script>": {
     "parse-options": {
+      "text": true,
       "preserveWhitespace": true
     },
     "@async": "#html-async",
@@ -786,6 +787,7 @@
   },
   "<style>": {
     "parse-options": {
+      "text": true,
       "preserveWhitespace": true
     },
     "@disabled": "#html-disabled",
@@ -824,6 +826,7 @@
   },
   "<textarea>": {
     "parse-options": {
+      "text": true,
       "preserveWhitespace": true
     },
     "@autocomplete": "#html-autocomplete",

@@ -20,7 +20,7 @@ const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
   out.w("<div id=shorthand></div>");
   out.w(`<div${(0, _attr.default)("id", dynamic)}></div>`);
-  out.w(`<div${(0, _attr.default)("id", "partial-" + dynamic)}></div>`);
+  out.w(`<div${(0, _attr.default)("id", `partial-${dynamic}`)}></div>`);
 }, {
   t: _marko_componentType,
   i: true,

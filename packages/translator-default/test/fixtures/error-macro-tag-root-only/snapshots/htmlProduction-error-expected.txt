@@ -1,5 +1,0 @@
-packages/translator-default/test/fixtures/error-macro-tag-root-only/template.marko(2,3): "static" tags must be at the root of your Marko template.
-  1 | <div>
-> 2 |   <static { console.log(x) }/>
-    |   ^^^^^^^
-  3 | </div>
