@@ -26,6 +26,13 @@ import {
   writeHTMLHydrateStatements,
 } from "../../util/apply-hydrate";
 import { reserveScope, ReserveType } from "../../util/reserve";
+import { currentProgramPath } from "../program";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    hasInteractiveChild?: boolean;
+  }
+}
 
 export default {
   analyze: {
@@ -44,6 +51,16 @@ export default {
           tag.node,
           "child"
         );
+      }
+
+      const childFile = loadFileForTag(tag)!;
+      const childProgramExtra = childFile?.ast.program.extra;
+      const hasInteractiveChild =
+        childProgramExtra?.isInteractive ||
+        childProgramExtra?.hasInteractiveChild;
+
+      if (hasInteractiveChild) {
+        (currentProgramPath.node.extra ?? {}).hasInteractiveChild = true;
       }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {

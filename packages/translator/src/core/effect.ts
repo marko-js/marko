@@ -6,12 +6,19 @@ import { addStatement, addHTMLHydrateCall } from "../util/apply-hydrate";
 import { callRuntime } from "../util/runtime";
 import { getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
-import { scopeIdentifier } from "../visitors/program";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    isInteractive?: boolean;
+  }
+}
 
 export default {
   analyze(tag) {
     const sectionId = getSectionId(tag);
     reserveScope(ReserveType.Store, sectionId, tag.node, "cleanup");
+    (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },
   translate(tag) {
     const { node } = tag;

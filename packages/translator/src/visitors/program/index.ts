@@ -48,13 +48,18 @@ export default {
       if (getMarkoOpts().output === ("hydrate" as "html")) {
         program.skip();
         program.node.body = [];
-        program.node.body.push(
-          t.importDeclaration(
-            [],
-            t.stringLiteral(program.hub.file.opts.filename as string)
-          ),
-          t.expressionStatement(callRuntime("init"))
-        );
+        if (
+          program.node.extra.hasInteractiveChild ||
+          program.node.extra.isInteractive
+        ) {
+          program.node.body.push(
+            t.importDeclaration(
+              [],
+              t.stringLiteral(program.hub.file.opts.filename as string)
+            ),
+            t.expressionStatement(callRuntime("init"))
+          );
+        }
         return;
       }
     },

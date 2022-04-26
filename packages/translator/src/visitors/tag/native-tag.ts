@@ -10,7 +10,13 @@ import { ReserveType, reserveScope } from "../../util/reserve";
 import { addStatement, addHTMLHydrateCall } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
-import { scopeIdentifier } from "../program";
+import { currentProgramPath, scopeIdentifier } from "../program";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    isInteractive?: boolean;
+  }
+}
 
 export default {
   analyze: {
@@ -30,6 +36,7 @@ export default {
 
           if (name.startsWith("on")) {
             sectionId ??= getOrCreateSectionId(tag);
+            (currentProgramPath.node.extra ?? {}).isInteractive = true;
           } else if (!evaluate(attr).confident) {
             sectionId ??= getOrCreateSectionId(tag);
           }
