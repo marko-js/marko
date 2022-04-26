@@ -16,7 +16,7 @@ type Dep = {
 
 export type Config = {
   output?: "html" | "dom" | "hydrate" | "migrate" | "source";
-  runtimeId?: string;
+  runtimeId?: string | null;
   ast?: boolean;
   code?: boolean;
   writeVersionComment?: boolean;
@@ -25,7 +25,7 @@ export type Config = {
   translator?: any;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
-  resolveVirtualDependency?(filename: string, dep: { virtualPath: string, code: string, map?: SourceMap }): string;
+  resolveVirtualDependency?: ((filename: string, dep: { virtualPath: string, code: string, map?: SourceMap }) => string) | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   optimize?: boolean;
   cache?: Map<unknown, unknown>;

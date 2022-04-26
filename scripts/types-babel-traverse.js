@@ -50,7 +50,7 @@ fs.readFile(
         watchFiles: string[]
       }
     },
-    markoOpts: import('@marko/compiler').Config
+    markoOpts: Required<import('@marko/compiler').Config>
 }
 
 ${HUB_INTERFACE}

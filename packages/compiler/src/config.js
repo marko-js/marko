@@ -13,7 +13,7 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     output: "html",
 
     // Override the runtimeid used when calling `marko/components.init` in the `hydrate` output.
-    runtimeId: undefined,
+    runtimeId: null,
 
     // Have Marko provide the final AST in the compile result.
     ast: false,
@@ -118,7 +118,7 @@ if (globalThis[MARKO_CONFIG_KEY]) {
      * Maps a virtual dependency to a resolved file which can be implemented
      * for specific bundlers.
      */
-    resolveVirtualDependency: undefined,
+    resolveVirtualDependency: null,
 
     /**
      * Compiling a Marko template may require other (used) Marko templates to compile.
