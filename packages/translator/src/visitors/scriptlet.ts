@@ -19,6 +19,7 @@ export default {
           scriptlet.node.extra?.bodyReferences as ReferenceGroup,
           scriptlet.node.body
         );
+        scriptlet.remove();
       }
     }
   },
