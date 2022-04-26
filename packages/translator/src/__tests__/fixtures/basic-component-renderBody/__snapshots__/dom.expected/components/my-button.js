@@ -8,6 +8,10 @@ function _hydrate_onclick(_scope, onclick = _scope[1]) {
 
 _register("packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onclick", _hydrate_onclick);
 
+function _apply_renderBody(_scope, renderBody) {
+  if (_write(_scope, 2, renderBody)) {}
+}
+
 function _apply_onclick(_scope, onclick) {
   if (_write(_scope, 1, onclick)) _queueHydrate(_scope, _hydrate_onclick);
 }

@@ -90,6 +90,18 @@ _dynamicTag(_scope, tagConstB, {
 
 import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
+function _apply_other(_scope, other) {
+  if (_write(_scope, 19, other)) {}
+}
+
+function _apply_level(_scope, level) {
+  if (_write(_scope, 18, level)) {}
+}
+
+function _apply_tag(_scope, tag) {
+  if (_write(_scope, 17, tag)) {}
+}
+
 function _apply_isLarge(_scope, isLarge) {
   if (_write(_scope, 16, isLarge)) _apply_largeHeading(_scope, isLarge && "h1");
 }

@@ -10,6 +10,10 @@ function _apply1_input(_scope, input) {
   if (_write(_scope, 1, input)) _data(_scope[0], input.name);
 }
 
+function _apply_MyTag(_scope, MyTag) {
+  if (_write(_scope, 0, MyTag)) {}
+}
+
 export const template = "";
 export const walks = "";
 export const apply = function () {};

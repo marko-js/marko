@@ -1,6 +1,11 @@
 _dynamicTag(_scope, input.renderBody, null);
 
-import { dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_input(_scope, input) {
+  if (_write(_scope, 0, input)) {}
+}
+
 export const applyAttrs = function (_scope, input) {
   _apply_input(_scope, input);
 };

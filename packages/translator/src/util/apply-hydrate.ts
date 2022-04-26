@@ -87,9 +87,11 @@ const [getClosurePriorities] = createSectionState<Array<t.NumericLiteral>>(
 
 export function writeApplyGroups(sectionId: number) {
   const allStatements = getApplyStatements(sectionId);
-  if (!allStatements.length) return;
+  const numReferenceGroups =
+    currentProgramPath.node.extra!.referenceGroups![sectionId]!.length;
+  if (!numReferenceGroups) return;
 
-  for (let i = allStatements.length; i--; ) {
+  for (let i = numReferenceGroups; i--; ) {
     const statements = allStatements[i] ?? [];
 
     if (i === 0 && !statements.length) continue;

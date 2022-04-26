@@ -11,6 +11,10 @@ function _apply1_x(_scope, x = _scope._[1]) {
   _setConditionalRenderer(_scope, 0, x ? _if : null);
 }
 
+function _apply_x(_scope, x) {
+  if (_write(_scope, 1, x)) {}
+}
+
 function _apply(_scope) {
   _hello(_scope[0]);
 }

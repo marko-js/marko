@@ -12,7 +12,24 @@ const _tagName2 = show && "div";
 
 const el1 = _dynamicTag(_scope, _tagName2, null);
 
-import { dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_dynamic(_scope, dynamic) {
+  if (_write(_scope, 4, dynamic)) {}
+}
+
+function _apply_show(_scope, show) {
+  if (_write(_scope, 3, show)) {}
+}
+
+function _apply_data2(_scope, data2) {
+  if (_write(_scope, 2, data2)) {}
+}
+
+function _apply_data(_scope, data1) {
+  if (_write(_scope, 1, data1)) {}
+}
+
 export const applyAttrs = function (_scope, {
   show,
   dynamic

@@ -18,6 +18,11 @@ _dynamicTag(_scope, x, {
 });
 
 import { write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_x(_scope, x) {
+  if (_write(_scope, 0, x)) {}
+}
+
 export const applyAttrs = function (_scope, {
   x
 }) {

@@ -4,7 +4,12 @@ _dynamicTag(_scope, input.renderBody, null);
 
 _popContext();
 
-import { pushContext as _pushContext, dynamicTag as _dynamicTag, popContext as _popContext, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { pushContext as _pushContext, dynamicTag as _dynamicTag, popContext as _popContext, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+function _apply_input(_scope, input) {
+  if (_write(_scope, 0, input)) {}
+}
+
 export const applyAttrs = function (_scope, input) {
   _apply_input(_scope, input);
 };
