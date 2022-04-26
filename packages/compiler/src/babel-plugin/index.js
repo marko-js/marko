@@ -229,15 +229,20 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     }
   }
 
-  if (translator.analyze) {
-    traverseAll(file, translator.analyze);
-  }
-
   compileCache.set(cacheKey, {
     time: Date.now(),
     file,
     contentHash
   });
+
+  if (translator.analyze) {
+    try {
+      traverseAll(file, translator.analyze);
+    } catch (e) {
+      compileCache.delete(cacheKey);
+      throw e;
+    }
+  }
 
   return file;
 }
