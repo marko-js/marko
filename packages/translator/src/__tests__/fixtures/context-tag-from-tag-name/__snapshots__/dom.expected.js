@@ -2,7 +2,9 @@ import { write as _write, getInContext as _getInContext, data as _data, createRe
 import { apply as _other, applyAttrs as _other_attrs, template as _other_template, walks as _other_walks } from "./components/other.marko";
 
 function _apply1_message(_scope, message) {
-  if (_write(_scope, 1, message)) _data(_scope[0], message);
+  if (_write(_scope, 1, message)) {
+    _data(_scope[0], message);
+  }
 }
 
 const _temp = _scope => {

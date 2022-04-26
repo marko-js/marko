@@ -2,15 +2,21 @@ import { data as _data, write as _write, createRenderer as _createRenderer, crea
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
 function _apply1_c(_scope, c) {
-  if (_write(_scope, 5, c)) _data(_scope[2], c);
+  if (_write(_scope, 5, c)) {
+    _data(_scope[2], c);
+  }
 }
 
 function _apply1_b(_scope, b) {
-  if (_write(_scope, 4, b)) _data(_scope[1], b);
+  if (_write(_scope, 4, b)) {
+    _data(_scope[1], b);
+  }
 }
 
 function _apply1_a(_scope, a) {
-  if (_write(_scope, 3, a)) _data(_scope[0], a);
+  if (_write(_scope, 3, a)) {
+    _data(_scope[0], a);
+  }
 }
 
 function _apply(_scope) {

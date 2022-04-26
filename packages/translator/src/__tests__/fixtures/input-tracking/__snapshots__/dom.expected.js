@@ -14,11 +14,15 @@ function _apply_input(_scope, input) {
 }
 
 function _apply_b(_scope, b) {
-  if (_write(_scope, 3, b)) _data(_scope[1], b);
+  if (_write(_scope, 3, b)) {
+    _data(_scope[1], b);
+  }
 }
 
 function _apply_a(_scope, a) {
-  if (_write(_scope, 2, a)) _data(_scope[0], a);
+  if (_write(_scope, 2, a)) {
+    _data(_scope[0], a);
+  }
 }
 
 export const applyAttrs = function (_scope, input) {

@@ -1,7 +1,9 @@
 import { data as _data, html as _html, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_missing(_scope, missing) {
-  if (_write(_scope, 4, missing)) _html(_scope[2], missing);
+  if (_write(_scope, 4, missing)) {
+    _html(_scope[2], missing);
+  }
 }
 
 function _apply_name(_scope, name) {

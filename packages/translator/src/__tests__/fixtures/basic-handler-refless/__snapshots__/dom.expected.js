@@ -11,7 +11,9 @@ function _hydrate(_scope) {
 _register("packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0", _hydrate);
 
 function _apply_data(_scope, data) {
-  if (_write(_scope, 2, data)) _data(_scope[1], data);
+  if (_write(_scope, 2, data)) {
+    _data(_scope[1], data);
+  }
 }
 
 function _apply(_scope) {

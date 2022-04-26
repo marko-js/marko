@@ -7,11 +7,15 @@ function _hydrate_onclick(_scope, onclick = _scope[2]) {
 _register("packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onclick", _hydrate_onclick);
 
 function _apply_text(_scope, text) {
-  if (_write(_scope, 3, text)) _data(_scope[1], text);
+  if (_write(_scope, 3, text)) {
+    _data(_scope[1], text);
+  }
 }
 
 function _apply_onclick(_scope, onclick) {
-  if (_write(_scope, 2, onclick)) _queueHydrate(_scope, _hydrate_onclick);
+  if (_write(_scope, 2, onclick)) {
+    _queueHydrate(_scope, _hydrate_onclick);
+  }
 }
 
 export const applyAttrs = function (_scope, {

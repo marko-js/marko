@@ -2,7 +2,9 @@ import { apply as _comments, applyAttrs as _comments_attrs, template as _comment
 import { write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_input(_scope, input) {
-  if (_write(_scope, 1, input)) _comments_attrs(_scope[0], input);
+  if (_write(_scope, 1, input)) {
+    _comments_attrs(_scope[0], input);
+  }
 }
 
 function _apply(_scope) {

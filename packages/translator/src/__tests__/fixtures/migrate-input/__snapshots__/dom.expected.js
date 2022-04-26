@@ -1,7 +1,9 @@
 import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_input(_scope, input) {
-  if (_write(_scope, 1, input)) _data(_scope[0], input.x);
+  if (_write(_scope, 1, input)) {
+    _data(_scope[0], input.x);
+  }
 }
 
 export const applyAttrs = function (_scope, input) {

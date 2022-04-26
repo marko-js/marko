@@ -50,11 +50,15 @@ function _apply_input(_scope, input) {
 }
 
 function _apply_d(_scope, d) {
-  if (_write(_scope, 2, d)) _queue(_scope, _applyWith_c_d, 3);
+  if (_write(_scope, 2, d)) {
+    _queue(_scope, _applyWith_c_d, 3);
+  }
 }
 
 function _apply_c(_scope, c) {
-  if (_write(_scope, 1, c)) _queue(_scope, _applyWith_c_d, 3);
+  if (_write(_scope, 1, c)) {
+    _queue(_scope, _applyWith_c_d, 3);
+  }
 }
 
 function _apply(_scope) {

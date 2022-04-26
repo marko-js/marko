@@ -37,7 +37,9 @@ function _apply2(_scope) {
 }
 
 function _apply_selected(_scope, selected) {
-  if (_write(_scope, 4, selected)) _queueForEach(_scope, 0, _apply1_selected, 1, 2);
+  if (_write(_scope, 4, selected)) {
+    _queueForEach(_scope, 0, _apply1_selected, 1, 2);
+  }
 }
 
 function _apply(_scope) {

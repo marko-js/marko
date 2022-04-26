@@ -3,7 +3,9 @@ const _$global = _getInContext("$");
 import { getInContext as _getInContext, data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply__$global(_scope, _$global) {
-  if (_write(_scope, 1, _$global)) _data(_scope[0], _$global.x);
+  if (_write(_scope, 1, _$global)) {
+    _data(_scope[0], _$global.x);
+  }
 }
 
 export const template = "<div><span> </span></div>";

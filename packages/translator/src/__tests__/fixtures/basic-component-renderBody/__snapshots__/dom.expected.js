@@ -12,9 +12,11 @@ const _onclick = function (_scope) {
 };
 
 function _apply_clickCount(_scope, clickCount) {
-  if (_write(_scope, 0, clickCount)) _myButton_attrs(_scope[1], {
-    onclick: _bind(_scope, _onclick)
-  });
+  if (_write(_scope, 0, clickCount)) {
+    _myButton_attrs(_scope[1], {
+      onclick: _bind(_scope, _onclick)
+    });
+  }
 }
 
 function _apply(_scope) {

@@ -21,11 +21,15 @@ function _hydrate(_scope) {
 _register("packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0", _hydrate);
 
 function _apply_show(_scope, show) {
-  if (_write(_scope, 6, show)) _setConditionalRenderer(_scope, 1, show ? _if : null);
+  if (_write(_scope, 6, show)) {
+    _setConditionalRenderer(_scope, 1, show ? _if : null);
+  }
 }
 
 function _apply_message(_scope, message) {
-  if (_write(_scope, 5, message)) _queueInBranch(_scope, 1, _if, _apply1_message, 1, 3);
+  if (_write(_scope, 5, message)) {
+    _queueInBranch(_scope, 1, _if, _apply1_message, 1, 3);
+  }
 }
 
 function _apply(_scope) {

@@ -13,7 +13,9 @@ function _apply_renderBody(_scope, renderBody) {
 }
 
 function _apply_onclick(_scope, onclick) {
-  if (_write(_scope, 1, onclick)) _queueHydrate(_scope, _hydrate_onclick);
+  if (_write(_scope, 1, onclick)) {
+    _queueHydrate(_scope, _hydrate_onclick);
+  }
 }
 
 export const applyAttrs = function (_scope, {

@@ -7,7 +7,9 @@ function _hydrate_x(_scope, x = _scope[0]) {
 _register("packages/translator/src/__tests__/fixtures/effect-tag/template.marko_0_x", _hydrate_x);
 
 function _apply_x(_scope, x) {
-  if (_write(_scope, 0, x)) _queueHydrate(_scope, _hydrate_x);
+  if (_write(_scope, 0, x)) {
+    _queueHydrate(_scope, _hydrate_x);
+  }
 }
 
 function _apply(_scope) {

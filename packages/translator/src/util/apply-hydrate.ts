@@ -162,9 +162,7 @@ export function writeApplyGroups(sectionId: number) {
               t.numericLiteral(references.id),
               param
             ),
-            statements.length === 1
-              ? statements[0]
-              : t.blockStatement(statements)
+            t.blockStatement(statements)
           ),
         ]);
       }

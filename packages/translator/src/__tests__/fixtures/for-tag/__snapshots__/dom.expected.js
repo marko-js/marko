@@ -40,7 +40,9 @@ function _apply7_i(_scope, i) {
 }
 
 function _apply6_val(_scope, val) {
-  if (_write(_scope, 5, val)) _data(_scope[2], val);
+  if (_write(_scope, 5, val)) {
+    _data(_scope[2], val);
+  }
 }
 
 function _apply6_key(_scope, key) {
@@ -54,15 +56,21 @@ function _apply6_key(_scope, key) {
 }
 
 function _apply5_list(_scope, list) {
-  if (_write(_scope, 5, list)) _data(_scope[1], list.length);
+  if (_write(_scope, 5, list)) {
+    _data(_scope[1], list.length);
+  }
 }
 
 function _apply5_i(_scope, i) {
-  if (_write(_scope, 4, i)) _attr(_scope[0], "key", i);
+  if (_write(_scope, 4, i)) {
+    _attr(_scope[0], "key", i);
+  }
 }
 
 function _apply5_val(_scope, val) {
-  if (_write(_scope, 3, val)) _data(_scope[2], val);
+  if (_write(_scope, 3, val)) {
+    _data(_scope[2], val);
+  }
 }
 
 function _apply4_i(_scope, i) {
@@ -76,27 +84,39 @@ function _apply4_i(_scope, i) {
 }
 
 function _apply4_val(_scope, val) {
-  if (_write(_scope, 4, val)) _data(_scope[2], val);
+  if (_write(_scope, 4, val)) {
+    _data(_scope[2], val);
+  }
 }
 
 function _apply3_i(_scope, i) {
-  if (_write(_scope, 1, i)) _data(_scope[0], i);
+  if (_write(_scope, 1, i)) {
+    _data(_scope[0], i);
+  }
 }
 
 function _apply2_val(_scope, val) {
-  if (_write(_scope, 3, val)) _data(_scope[1], val);
+  if (_write(_scope, 3, val)) {
+    _data(_scope[1], val);
+  }
 }
 
 function _apply2_key(_scope, key) {
-  if (_write(_scope, 2, key)) _data(_scope[0], key);
+  if (_write(_scope, 2, key)) {
+    _data(_scope[0], key);
+  }
 }
 
 function _apply1_i(_scope, i) {
-  if (_write(_scope, 3, i)) _data(_scope[0], i);
+  if (_write(_scope, 3, i)) {
+    _data(_scope[0], i);
+  }
 }
 
 function _apply1_val(_scope, val) {
-  if (_write(_scope, 2, val)) _data(_scope[1], val);
+  if (_write(_scope, 2, val)) {
+    _data(_scope[1], val);
+  }
 }
 
 function _apply_obj(_scope, obj) {

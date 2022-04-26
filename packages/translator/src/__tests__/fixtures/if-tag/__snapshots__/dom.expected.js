@@ -11,19 +11,27 @@ function _applyWith_a_b(_scope, a = _scope[12], b = _scope[13]) {
 }
 
 function _apply_y(_scope, y) {
-  if (_write(_scope, 15, y)) _queue(_scope, _applyWith_x_y, 5);
+  if (_write(_scope, 15, y)) {
+    _queue(_scope, _applyWith_x_y, 5);
+  }
 }
 
 function _apply_x(_scope, x) {
-  if (_write(_scope, 14, x)) _queue(_scope, _applyWith_x_y, 5);
+  if (_write(_scope, 14, x)) {
+    _queue(_scope, _applyWith_x_y, 5);
+  }
 }
 
 function _apply_b(_scope, b) {
-  if (_write(_scope, 13, b)) _queue(_scope, _applyWith_a_b, 4);
+  if (_write(_scope, 13, b)) {
+    _queue(_scope, _applyWith_a_b, 4);
+  }
 }
 
 function _apply_a(_scope, a) {
-  if (_write(_scope, 12, a)) _queue(_scope, _applyWith_a_b, 4);
+  if (_write(_scope, 12, a)) {
+    _queue(_scope, _applyWith_a_b, 4);
+  }
 }
 
 export const applyAttrs = function (_scope, {

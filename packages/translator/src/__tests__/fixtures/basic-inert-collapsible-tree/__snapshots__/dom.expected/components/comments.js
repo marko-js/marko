@@ -59,7 +59,9 @@ function _apply1_id(_scope, id) {
 }
 
 function _apply1_i(_scope, i) {
-  if (_write(_scope, 9, i)) _queue(_scope, _apply1With_path_i, 5);
+  if (_write(_scope, 9, i)) {
+    _queue(_scope, _apply1With_path_i, 5);
+  }
 }
 
 function _apply1_comment(_scope, comment) {
@@ -83,11 +85,15 @@ function _apply2(_scope) {
 }
 
 function _apply_path(_scope, path) {
-  if (_write(_scope, 5, path)) _queueForEach(_scope, 0, _apply1_path, 1, 3);
+  if (_write(_scope, 5, path)) {
+    _queueForEach(_scope, 0, _apply1_path, 1, 3);
+  }
 }
 
 function _apply_comments(_scope, comments) {
-  if (_write(_scope, 4, comments)) _setLoopOf(_scope, 0, comments, _for, null, _apply1_comment);
+  if (_write(_scope, 4, comments)) {
+    _setLoopOf(_scope, 0, comments, _for, null, _apply1_comment);
+  }
 }
 
 export const applyAttrs = function (_scope, {

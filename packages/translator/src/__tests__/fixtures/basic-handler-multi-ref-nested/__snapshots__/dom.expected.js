@@ -22,7 +22,9 @@ function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
 }
 
 function _apply_b(_scope, b) {
-  if (_write(_scope, 3, b)) _queue(_scope, _applyWith_a_b, 2);
+  if (_write(_scope, 3, b)) {
+    _queue(_scope, _applyWith_a_b, 2);
+  }
 }
 
 function _apply_a(_scope, a) {

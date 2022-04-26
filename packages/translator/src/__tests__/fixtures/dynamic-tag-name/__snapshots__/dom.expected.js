@@ -103,7 +103,9 @@ function _apply_tag(_scope, tag) {
 }
 
 function _apply_isLarge(_scope, isLarge) {
-  if (_write(_scope, 16, isLarge)) _apply_largeHeading(_scope, isLarge && "h1");
+  if (_write(_scope, 16, isLarge)) {
+    _apply_largeHeading(_scope, isLarge && "h1");
+  }
 }
 
 function _apply_showTagA(_scope, showTagA) {
@@ -111,7 +113,9 @@ function _apply_showTagA(_scope, showTagA) {
 }
 
 function _apply_show(_scope, show) {
-  if (_write(_scope, 14, show)) _apply_tagConstB(_scope, show ? "div" : null);
+  if (_write(_scope, 14, show)) {
+    _apply_tagConstB(_scope, show ? "div" : null);
+  }
 }
 
 function _apply_x(_scope, x) {
