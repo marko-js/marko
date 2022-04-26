@@ -9,6 +9,7 @@ import {
 import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
 import { assertNoBodyContent } from "../util/assert";
+import { isOutputHTML } from "../util/marko-config";
 
 export default {
   translate(tag) {
@@ -92,14 +93,19 @@ export default {
       }
     }
 
-    tag.replaceWith(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          node.var,
-          callRuntime("getInContext", t.stringLiteral(refId))
-        ),
-      ])
-    );
+    if (isOutputHTML()) {
+      tag.replaceWith(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            node.var,
+            callRuntime("getInContext", t.stringLiteral(refId))
+          ),
+        ])
+      );
+    } else {
+      // TODO: add support for DOM output
+      tag.remove();
+    }
   },
   autocomplete: [
     {

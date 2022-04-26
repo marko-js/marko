@@ -1,9 +1,5 @@
 const MyTag = input => {};
 
-_dynamicTag(_scope, MyTag, {
-  name: "World"
-});
-
 import { data as _data, dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply1_input(_scope, input) {

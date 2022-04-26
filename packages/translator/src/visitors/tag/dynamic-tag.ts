@@ -53,8 +53,10 @@ export default {
       if (node.var) {
         translateVar(tag, dynamicTagExpr);
         tag.remove();
-      } else {
+      } else if (isOutputHTML()) {
         tag.replaceWith(t.expressionStatement(dynamicTagExpr))[0].skip();
+      } else {
+        tag.remove();
       }
     },
   },

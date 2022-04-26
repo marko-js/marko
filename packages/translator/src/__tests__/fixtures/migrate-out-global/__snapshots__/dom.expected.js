@@ -1,6 +1,4 @@
-const _$global = _getInContext("$");
-
-import { getInContext as _getInContext, data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply__$global(_scope, _$global) {
   if (_write(_scope, 1, _$global)) {

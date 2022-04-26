@@ -1,21 +1,3 @@
-_dynamicTag(_scope, input.test, {
-  class: ["a", {
-    b: c,
-    d
-  }],
-  test: {
-    class: ["a", {
-      b: c,
-      d
-    }],
-
-    renderBody() {
-      _write("Hello");
-    }
-
-  }
-});
-
 import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, queue as _queue, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 

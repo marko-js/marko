@@ -1,22 +1,3 @@
-_dynamicTag(_scope, x, {
-  header: {
-    class: "my-header",
-
-    renderBody() {
-      _write("Header content");
-    }
-
-  },
-  footer: {
-    class: "my-footer",
-
-    renderBody() {
-      _write("Footer content");
-    }
-
-  }
-});
-
 import { write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _apply_x(_scope, x) {

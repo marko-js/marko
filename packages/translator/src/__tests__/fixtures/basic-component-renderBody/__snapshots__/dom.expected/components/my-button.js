@@ -1,5 +1,3 @@
-_dynamicTag(_scope, renderBody, null);
-
 import { on as _on, dynamicTag as _dynamicTag, register as _register, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _hydrate_onclick(_scope, onclick = _scope[1]) {
