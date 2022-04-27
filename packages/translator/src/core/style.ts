@@ -1,6 +1,9 @@
 import path from "path";
 import { assertNoParams, assertNoVar, Tag } from "@marko/babel-utils";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getMarkoOpts } from "../util/marko-config";
+import { currentProgramPath } from "../visitors/program";
+import { types as t } from "@marko/compiler";
 
 export default {
   translate(tag) {
@@ -44,14 +47,25 @@ export default {
       );
     }
 
-    file.metadata.marko.deps.push({
-      type,
-      code: markoText.node.value,
-      startPos: markoText.node.start!,
-      endPos: markoText.node.end!,
-      path: `./${base}`,
-      style: `./${base}.${type}`,
-    } as unknown as typeof file.metadata.marko.deps[0]);
+    const { resolveVirtualDependency } = getMarkoOpts();
+
+    if (resolveVirtualDependency) {
+      const importPath = resolveVirtualDependency(
+        file.opts.filename as string,
+        {
+          type,
+          code: markoText.node.value,
+          startPos: markoText.node.start!,
+          endPos: markoText.node.end!,
+          path: `./${base}`,
+          virtualPath: `./${base}.${type}`,
+        } as any
+      );
+      currentProgramPath.pushContainer(
+        "body",
+        t.importDeclaration([], t.stringLiteral(importPath))
+      );
+    }
 
     tag.remove();
   },

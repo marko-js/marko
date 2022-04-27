@@ -47,18 +47,17 @@ export default {
       scopeIdentifier = program.scope.generateUidIdentifier("scope");
       if (getMarkoOpts().output === ("hydrate" as "html")) {
         program.skip();
-        program.node.body = [];
+        program.node.body = [
+          t.importDeclaration(
+            [],
+            t.stringLiteral(program.hub.file.opts.filename as string)
+          ),
+        ];
         if (
           program.node.extra.hasInteractiveChild ||
           program.node.extra.isInteractive
         ) {
-          program.node.body.push(
-            t.importDeclaration(
-              [],
-              t.stringLiteral(program.hub.file.opts.filename as string)
-            ),
-            t.expressionStatement(callRuntime("init"))
-          );
+          program.node.body.push(t.expressionStatement(callRuntime("init")));
         }
         return;
       }
