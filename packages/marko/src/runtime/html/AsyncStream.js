@@ -114,7 +114,7 @@ AsyncStream.enableAsyncStackTrace = function () {
 
 var proto = (AsyncStream.prototype = {
   constructor: AsyncStream,
-  ___host: typeof window === "object" && document,
+  ___host: typeof document === "object" && document,
   ___isOut: true,
 
   sync: function () {

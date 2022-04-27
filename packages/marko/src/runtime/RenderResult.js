@@ -66,7 +66,7 @@ var proto = (RenderResult.prototype = {
   toString: function () {
     return this.___out.toString();
   },
-  document: typeof window === "object" && document
+  document: typeof document === "object" && document
 });
 
 Object.defineProperty(proto, "html", {

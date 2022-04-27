@@ -53,7 +53,7 @@ function AsyncVDOMBuilder(globalData, parentNode, parentOut) {
 
 var proto = (AsyncVDOMBuilder.prototype = {
   ___isOut: true,
-  ___host: typeof window === "object" && document,
+  ___host: typeof document === "object" && document,
 
   bc: function (component, key, ownerComponent) {
     var vComponent = new VComponent(component, key, ownerComponent);
