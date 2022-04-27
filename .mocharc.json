@@ -1,0 +1,5 @@
+{
+  "enable-source-maps": true,
+  "watchFiles": ["src/**/*.js", "src/**/*.marko"],
+  "require": ["@babel/register"]
+}

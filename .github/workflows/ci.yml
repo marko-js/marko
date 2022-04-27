@@ -2,29 +2,85 @@ name: CI
 
 on:
   pull_request:
-    paths-ignore: ["*.md"]
+    types: [opened, synchronize]
+    paths-ignore: ["**.md"]
   push:
-    branches: ["main"]
-    paths-ignore: ["*.md"]
+    branches: [main, v3, v4]
+    paths-ignore: ["**.md"]
 
 jobs:
-  build:
+  format:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [12.x, 14.x, 15.x]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Use node@${{ matrix.node }}
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v3
         with:
-          node-version: ${{ matrix.node }}
+          ref: ${{ github.head_ref }}
+      - name: Use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Lint code
-        run: npm run lint
+      - name: Format Code
+        run: npm run format
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci] format"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+    runs-on: ubuntu-latest
+    name: "test: node@${{ matrix.node }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [14, 16, 18]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Use node@${{ matrix.node }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - name: Install dependencies
+        if: ${{ matrix.node == 14 }}
+        run: npx npm@8 ci
+      - name: Install dependencies
+        if: ${{ matrix.node != 14 }}
+        run: npm ci
       - name: Run tests
         run: npm run ci:test
       - name: Report code coverage
-        run: npm run ci:report
+        uses: codecov/codecov-action@v2
+  release:
+    runs-on: ubuntu-latest
+    needs: [format, test]
+    if: ${{ github.repository == 'marko-js/marko' && github.event_name == 'push' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          createGithubReleases: true
+          version: npm run version
+          publish: npm run publish
+          commit: "[ci] release"
+          title: "[ci] release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

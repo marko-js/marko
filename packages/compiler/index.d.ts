@@ -25,7 +25,12 @@ export type Config = {
   translator?: any;
   fileSystem?: typeof import("fs");
   modules?: "esm" | "cjs";
-  resolveVirtualDependency?: ((filename: string, dep: { virtualPath: string, code: string, map?: SourceMap }) => string) | null;
+  resolveVirtualDependency?:
+    | ((
+        filename: string,
+        dep: { virtualPath: string; code: string; map?: SourceMap }
+      ) => string)
+    | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
@@ -48,10 +53,7 @@ export type MarkoMeta = {
   component?: string;
   watchFiles: string[];
   tags?: string[];
-  deps: Array<
-    | string
-    | Dep
-  >;
+  deps: Array<string | Dep>;
 };
 
 export type CompileResult = {
@@ -85,12 +87,18 @@ export function compileFileSync(
   config?: Config
 ): CompileResult;
 
-export function getRuntimeEntryFiles(output: string, translator?: string | undefined): string[];
+export function getRuntimeEntryFiles(
+  output: string,
+  translator?: string | undefined
+): string[];
 
 export namespace taglib {
   export function excludeDir(dirname: string): void;
   export function excludePackage(packageName: string): void;
-  export function register(id: string, props: { [x:string]: unknown }): void;
-  export function buildLookup(dirname: string, translator?: unknown): TaglibLookup
+  export function register(id: string, props: { [x: string]: unknown }): void;
+  export function buildLookup(
+    dirname: string,
+    translator?: unknown
+  ): TaglibLookup;
   export function clearCaches(): void;
 }
