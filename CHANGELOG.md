@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [5.20.9](https://github.com/marko-js/marko/compare/v5.20.8...v5.20.9) (2022-04-27)
+
+
+### Bug Fixes
+
+* some environments (deno) provide a window but not a document ([e523252](https://github.com/marko-js/marko/commit/e52325234b9f3e7d430b4191f87486df7b13c497))
+
+
+
+
+
 ## [5.20.8](https://github.com/marko-js/marko/compare/v5.20.7...v5.20.8) (2022-04-26)
 
 
