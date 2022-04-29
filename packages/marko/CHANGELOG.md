@@ -1,1777 +1,982 @@
 # Change Log
 
-## [5.20.9](https://github.com/marko-js/marko/compare/v5.20.8...v5.20.9) (2022-04-27)
+## 5.21.0
 
+### Minor Changes
+
+- [#1787](https://github.com/marko-js/marko/pull/1787) [`dd9009d66`](https://github.com/marko-js/marko/commit/dd9009d665f4f660d106aa0c3364e34ca3561abc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrades the compiler to use the latest major release of `htmljs-parser` bringing in the improvements listed here:
+  https://github.com/marko-js/htmljs-parser/pull/93
+
+### Patch Changes
+
+- Updated dependencies [[`dd9009d66`](https://github.com/marko-js/marko/commit/dd9009d665f4f660d106aa0c3364e34ca3561abc)]:
+  - @marko/compiler@5.21.0
+  - @marko/translator-default@6.0.0
+
+## [5.20.9](https://github.com/marko-js/marko/compare/v5.20.8...v5.20.9) (2022-04-27)
 
 ### Bug Fixes
 
-* some environments (deno) provide a window but not a document ([e523252](https://github.com/marko-js/marko/commit/e52325234b9f3e7d430b4191f87486df7b13c497))
-
-
-
-
+- some environments (deno) provide a window but not a document ([e523252](https://github.com/marko-js/marko/commit/e52325234b9f3e7d430b4191f87486df7b13c497))
 
 ## [5.20.8](https://github.com/marko-js/marko/compare/v5.20.7...v5.20.8) (2022-04-26)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.20.7](https://github.com/marko-js/marko/compare/v5.20.6...v5.20.7) (2022-04-26)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.20.6](https://github.com/marko-js/marko/compare/v5.20.5...v5.20.6) (2022-04-25)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.20.5](https://github.com/marko-js/marko/compare/v5.20.4...v5.20.5) (2022-04-15)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.20.4](https://github.com/marko-js/marko/compare/v5.20.3...v5.20.4) (2022-04-11)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.20.3](https://github.com/marko-js/marko/compare/v5.20.2...v5.20.3) (2022-03-24)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.20.1](https://github.com/marko-js/marko/compare/v5.20.0...v5.20.1) (2022-03-22)
-
 
 ### Bug Fixes
 
-* prevent bubbling non bubbling events ([#1781](https://github.com/marko-js/marko/issues/1781)) ([7c4de65](https://github.com/marko-js/marko/commit/7c4de6549532f39b8cd4ad70691dfa4e9efe9cd7))
-
-
-
-
+- prevent bubbling non bubbling events ([#1781](https://github.com/marko-js/marko/issues/1781)) ([7c4de65](https://github.com/marko-js/marko/commit/7c4de6549532f39b8cd4ad70691dfa4e9efe9cd7))
 
 ## [5.19.3](https://github.com/marko-js/marko/compare/v5.19.2...v5.19.3) (2022-03-08)
 
-
 ### Bug Fixes
 
-* performance hit in development mode because continually parsing stack trace ([#1777](https://github.com/marko-js/marko/issues/1777)) ([cb99f92](https://github.com/marko-js/marko/commit/cb99f921660f206ef6e14f7c9ab5757be6375ab0))
-
-
-
-
+- performance hit in development mode because continually parsing stack trace ([#1777](https://github.com/marko-js/marko/issues/1777)) ([cb99f92](https://github.com/marko-js/marko/commit/cb99f921660f206ef6e14f7c9ab5757be6375ab0))
 
 ## [5.19.2](https://github.com/marko-js/marko/compare/v5.19.1...v5.19.2) (2022-03-08)
 
-
 ### Bug Fixes
 
-* avoid deprecation warning for markoc cli ([800861b](https://github.com/marko-js/marko/commit/800861b88ec097a8e7b89fcedb3c4d3a59542ec0))
-
-
-
-
+- avoid deprecation warning for markoc cli ([800861b](https://github.com/marko-js/marko/commit/800861b88ec097a8e7b89fcedb3c4d3a59542ec0))
 
 # [5.19.0](https://github.com/marko-js/marko/compare/v5.18.2...v5.19.0) (2022-01-28)
 
-
 ### Features
 
-* support analyze field in marko.json ([#1769](https://github.com/marko-js/marko/issues/1769)) ([981f7f3](https://github.com/marko-js/marko/commit/981f7f39f932533178c538f8fc2788ea6f93d909))
-
-
-
-
+- support analyze field in marko.json ([#1769](https://github.com/marko-js/marko/issues/1769)) ([981f7f3](https://github.com/marko-js/marko/commit/981f7f39f932533178c538f8fc2788ea6f93d909))
 
 ## [5.18.2](https://github.com/marko-js/marko/compare/v5.18.1...v5.18.2) (2022-01-25)
 
-
 ### Bug Fixes
 
-* update invalid docs link ([3e67bfe](https://github.com/marko-js/marko/commit/3e67bfe1e52da5ae077613a804ea5ef6b4c3d8f4))
-
-
-
-
+- update invalid docs link ([3e67bfe](https://github.com/marko-js/marko/commit/3e67bfe1e52da5ae077613a804ea5ef6b4c3d8f4))
 
 ## [5.18.1](https://github.com/marko-js/marko/compare/v5.18.0...v5.18.1) (2022-01-25)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.18.0](https://github.com/marko-js/marko/compare/v5.17.10...v5.18.0) (2022-01-24)
-
 
 ### Features
 
-* add shorthand for dynamic tag names from identifier ([#1766](https://github.com/marko-js/marko/issues/1766)) ([94e4fd8](https://github.com/marko-js/marko/commit/94e4fd818bffaf798298317e6813d369a3c7f413))
-
-
-
-
+- add shorthand for dynamic tag names from identifier ([#1766](https://github.com/marko-js/marko/issues/1766)) ([94e4fd8](https://github.com/marko-js/marko/commit/94e4fd818bffaf798298317e6813d369a3c7f413))
 
 ## [5.17.10](https://github.com/marko-js/marko/compare/v5.17.9...v5.17.10) (2022-01-14)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.17.9](https://github.com/marko-js/marko/compare/v5.17.8...v5.17.9) (2022-01-07)
-
 
 ### Bug Fixes
 
-* improve error handling in web workers ([8611e42](https://github.com/marko-js/marko/commit/8611e42fc90c5f9ec3f39e9da5e040a531f72052))
-
-
-
-
+- improve error handling in web workers ([8611e42](https://github.com/marko-js/marko/commit/8611e42fc90c5f9ec3f39e9da5e040a531f72052))
 
 ## [5.17.8](https://github.com/marko-js/marko/compare/v5.17.7...v5.17.8) (2022-01-06)
 
-
 ### Bug Fixes
 
-* setTimeout issue in webworkers ([d838e4d](https://github.com/marko-js/marko/commit/d838e4d3974ec2ad7df7fddf0fc0d8096853b3e8))
-
-
-
-
+- setTimeout issue in webworkers ([d838e4d](https://github.com/marko-js/marko/commit/d838e4d3974ec2ad7df7fddf0fc0d8096853b3e8))
 
 ## [5.17.7](https://github.com/marko-js/marko/compare/v5.17.6...v5.17.7) (2022-01-06)
 
-
 ### Bug Fixes
 
-* improve cloudflare (workers) support ([185d71b](https://github.com/marko-js/marko/commit/185d71b08282ded4d178e0f6ada6f6d21e9b4b31))
-
-
-
-
+- improve cloudflare (workers) support ([185d71b](https://github.com/marko-js/marko/commit/185d71b08282ded4d178e0f6ada6f6d21e9b4b31))
 
 ## [5.17.6](https://github.com/marko-js/marko/compare/v5.17.5...v5.17.6) (2022-01-02)
 
-
 ### Bug Fixes
 
-* use full file extension for compiler imports ([#1762](https://github.com/marko-js/marko/issues/1762)) ([041011a](https://github.com/marko-js/marko/commit/041011afceb581a64169c4ee370b31448a81c0e7))
-
-
-
-
+- use full file extension for compiler imports ([#1762](https://github.com/marko-js/marko/issues/1762)) ([041011a](https://github.com/marko-js/marko/commit/041011afceb581a64169c4ee370b31448a81c0e7))
 
 ## [5.17.5](https://github.com/marko-js/marko/compare/v5.17.4...v5.17.5) (2021-11-24)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.17.4](https://github.com/marko-js/marko/compare/v5.17.3...v5.17.4) (2021-11-17)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.17.3](https://github.com/marko-js/marko/compare/v5.17.2...v5.17.3) (2021-10-30)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.17.2](https://github.com/marko-js/marko/compare/v5.17.1...v5.17.2) (2021-10-26)
-
 
 ### Bug Fixes
 
-* ensure host element always a document or shadow root ([#1751](https://github.com/marko-js/marko/issues/1751)) ([d719724](https://github.com/marko-js/marko/commit/d719724c9b3ee4ea904ad0d583925ac8205007fb))
-
-
-
-
+- ensure host element always a document or shadow root ([#1751](https://github.com/marko-js/marko/issues/1751)) ([d719724](https://github.com/marko-js/marko/commit/d719724c9b3ee4ea904ad0d583925ac8205007fb))
 
 ## [5.17.1](https://github.com/marko-js/marko/compare/v5.17.0...v5.17.1) (2021-10-25)
 
-
 ### Bug Fixes
 
-* prefer delegating events from document.body ([f51ac21](https://github.com/marko-js/marko/commit/f51ac21a1116aacc97bd9a8b3009da368ce81f61))
-
-
-
-
+- prefer delegating events from document.body ([f51ac21](https://github.com/marko-js/marko/commit/f51ac21a1116aacc97bd9a8b3009da368ce81f61))
 
 # [5.17.0](https://github.com/marko-js/marko/compare/v5.16.1...v5.17.0) (2021-10-25)
 
-
 ### Features
 
-* improve shadow root support ([#1749](https://github.com/marko-js/marko/issues/1749)) ([955ea00](https://github.com/marko-js/marko/commit/955ea006b89ee303d25f415d88962cd3b6f020f8))
-
-
-
-
+- improve shadow root support ([#1749](https://github.com/marko-js/marko/issues/1749)) ([955ea00](https://github.com/marko-js/marko/commit/955ea006b89ee303d25f415d88962cd3b6f020f8))
 
 ## [5.16.1](https://github.com/marko-js/marko/compare/v5.16.0...v5.16.1) (2021-10-22)
 
-
 ### Bug Fixes
 
-* regression with identical tag name & taglib deduping ([a8d85d7](https://github.com/marko-js/marko/commit/a8d85d7771378d0e995c988cabe4b511ab95dc3d))
-
-
-
-
+- regression with identical tag name & taglib deduping ([a8d85d7](https://github.com/marko-js/marko/commit/a8d85d7771378d0e995c988cabe4b511ab95dc3d))
 
 # [5.16.0](https://github.com/marko-js/marko/compare/v5.15.12...v5.16.0) (2021-10-11)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.12](https://github.com/marko-js/marko/compare/v5.15.11...v5.15.12) (2021-10-04)
-
 
 ### Bug Fixes
 
-* issue with hydrating adjacent text nodes ([#1746](https://github.com/marko-js/marko/issues/1746)) ([4b8057a](https://github.com/marko-js/marko/commit/4b8057a027de16e3f6c040ef446e69f07d86bdc3))
-
-
-
-
+- issue with hydrating adjacent text nodes ([#1746](https://github.com/marko-js/marko/issues/1746)) ([4b8057a](https://github.com/marko-js/marko/commit/4b8057a027de16e3f6c040ef446e69f07d86bdc3))
 
 ## [5.15.11](https://github.com/marko-js/marko/compare/v5.15.10...v5.15.11) (2021-09-29)
 
-
 ### Bug Fixes
 
-* normalize file opts similar to babel ([86310e6](https://github.com/marko-js/marko/commit/86310e603985ed96cba523fb07e25a0852cff8e6))
-
-
-
-
+- normalize file opts similar to babel ([86310e6](https://github.com/marko-js/marko/commit/86310e603985ed96cba523fb07e25a0852cff8e6))
 
 ## [5.15.10](https://github.com/marko-js/marko/compare/v5.15.9...v5.15.10) (2021-09-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.9](https://github.com/marko-js/marko/compare/v5.15.8...v5.15.9) (2021-09-05)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.15.8](https://github.com/marko-js/marko/compare/v5.15.7...v5.15.8) (2021-09-05)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.7](https://github.com/marko-js/marko/compare/v5.15.6...v5.15.7) (2021-09-03)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.15.6](https://github.com/marko-js/marko/compare/v5.15.5...v5.15.6) (2021-09-03)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.5](https://github.com/marko-js/marko/compare/v5.15.4...v5.15.5) (2021-08-26)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.15.4](https://github.com/marko-js/marko/compare/v5.15.3...v5.15.4) (2021-08-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.2](https://github.com/marko-js/marko/compare/v5.15.1...v5.15.2) (2021-08-06)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.15.1](https://github.com/marko-js/marko/compare/v5.15.0...v5.15.1) (2021-07-30)
-
 
 ### Bug Fixes
 
-* **marko:** issue with HMR enabled using split components ([ab8706c](https://github.com/marko-js/marko/commit/ab8706c56cb1e1eef180207dcb510e9c85076501))
-
-
-
-
+- **marko:** issue with HMR enabled using split components ([ab8706c](https://github.com/marko-js/marko/commit/ab8706c56cb1e1eef180207dcb510e9c85076501))
 
 # [5.15.0](https://github.com/marko-js/marko/compare/v5.14.2...v5.15.0) (2021-07-28)
 
-
 ### Features
 
-* expose @marko/compiler/register api ([5726899](https://github.com/marko-js/marko/commit/572689909618939585e93c1a0d1ab101ff73aefd))
-
-
-
-
+- expose @marko/compiler/register api ([5726899](https://github.com/marko-js/marko/commit/572689909618939585e93c1a0d1ab101ff73aefd))
 
 ## [5.14.2](https://github.com/marko-js/marko/compare/v5.14.1...v5.14.2) (2021-07-28)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.14.1](https://github.com/marko-js/marko/compare/v5.14.0...v5.14.1) (2021-07-26)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.14.0](https://github.com/marko-js/marko/compare/v5.13.0...v5.14.0) (2021-07-24)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.13.0](https://github.com/marko-js/marko/compare/v5.12.1...v5.13.0) (2021-07-23)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.12.1](https://github.com/marko-js/marko/compare/v5.12.0...v5.12.1) (2021-07-21)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.12.0](https://github.com/marko-js/marko/compare/v5.11.3...v5.12.0) (2021-07-12)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.11.3](https://github.com/marko-js/marko/compare/v5.11.2...v5.11.3) (2021-07-08)
-
 
 ### Bug Fixes
 
-* allow key attribute to pass through for attribute tags ([ab52ae4](https://github.com/marko-js/marko/commit/ab52ae4c41fd94f27b397507423b3da4343bd9a5))
-
-
-
-
+- allow key attribute to pass through for attribute tags ([ab52ae4](https://github.com/marko-js/marko/commit/ab52ae4c41fd94f27b397507423b3da4343bd9a5))
 
 ## [5.11.2](https://github.com/marko-js/marko/compare/v5.11.1...v5.11.2) (2021-07-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.11.1](https://github.com/marko-js/marko/compare/v5.11.0...v5.11.1) (2021-07-07)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.11.0](https://github.com/marko-js/marko/compare/v5.10.7...v5.11.0) (2021-07-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.10.7](https://github.com/marko-js/marko/compare/v5.10.6...v5.10.7) (2021-06-23)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.10.6](https://github.com/marko-js/marko/compare/v5.10.5...v5.10.6) (2021-06-10)
-
 
 ### Bug Fixes
 
-* **translator-default:** issue with user defined component var ([a36cfd1](https://github.com/marko-js/marko/commit/a36cfd1bbbc213ea7889b5f59aec61e94cc5598c))
-
-
-
-
+- **translator-default:** issue with user defined component var ([a36cfd1](https://github.com/marko-js/marko/commit/a36cfd1bbbc213ea7889b5f59aec61e94cc5598c))
 
 ## [5.10.5](https://github.com/marko-js/marko/compare/v5.10.4...v5.10.5) (2021-06-08)
 
-
 ### Bug Fixes
 
-* **marko:** issue with dynamic tag name string and no renderbody ([69e8514](https://github.com/marko-js/marko/commit/69e8514e33d68705ccf76de8ec82efebfd31b1bc))
-
-
-
-
+- **marko:** issue with dynamic tag name string and no renderbody ([69e8514](https://github.com/marko-js/marko/commit/69e8514e33d68705ccf76de8ec82efebfd31b1bc))
 
 ## [5.10.4](https://github.com/marko-js/marko/compare/v5.10.3...v5.10.4) (2021-05-19)
 
-
 ### Bug Fixes
 
-* **marko:** issue when last mode stream ends too early ([318044f](https://github.com/marko-js/marko/commit/318044fce27cdaffe344fb0ea075a9451cb7abd9))
-
-
-
-
+- **marko:** issue when last mode stream ends too early ([318044f](https://github.com/marko-js/marko/commit/318044fce27cdaffe344fb0ea075a9451cb7abd9))
 
 ## [5.10.3](https://github.com/marko-js/marko/compare/v5.10.2...v5.10.3) (2021-05-14)
 
-
 ### Bug Fixes
 
-* false values are removed from style string. closes [#1692](https://github.com/marko-js/marko/issues/1692) ([#1693](https://github.com/marko-js/marko/issues/1693)) ([ac140d4](https://github.com/marko-js/marko/commit/ac140d4628836f6371982e3a7f4099fa31d89ec4))
-
-
-
-
+- false values are removed from style string. closes [#1692](https://github.com/marko-js/marko/issues/1692) ([#1693](https://github.com/marko-js/marko/issues/1693)) ([ac140d4](https://github.com/marko-js/marko/commit/ac140d4628836f6371982e3a7f4099fa31d89ec4))
 
 ## [5.10.2](https://github.com/marko-js/marko/compare/v5.10.1...v5.10.2) (2021-05-04)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.10.1](https://github.com/marko-js/marko/compare/v5.10.0...v5.10.1) (2021-05-04)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.10.0](https://github.com/marko-js/marko/compare/v5.9.0...v5.10.0) (2021-04-30)
-
 
 ### Features
 
-* **marko:** leverage new runtime api for node-require hook ([67fb144](https://github.com/marko-js/marko/commit/67fb144c5c1c662b6fd89b1d52c420988f36365a))
-* add new HMR runtime ([a873762](https://github.com/marko-js/marko/commit/a87376299952c8f9fc5c3d467c571acc0956bfb3))
-
-
-
-
+- **marko:** leverage new runtime api for node-require hook ([67fb144](https://github.com/marko-js/marko/commit/67fb144c5c1c662b6fd89b1d52c420988f36365a))
+- add new HMR runtime ([a873762](https://github.com/marko-js/marko/commit/a87376299952c8f9fc5c3d467c571acc0956bfb3))
 
 # [5.9.0](https://github.com/marko-js/marko/compare/v5.8.4...v5.9.0) (2021-04-21)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.8.4](https://github.com/marko-js/marko/compare/v5.8.3...v5.8.4) (2021-04-19)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.8.3](https://github.com/marko-js/marko/compare/v5.8.2...v5.8.3) (2021-04-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.8.2](https://github.com/marko-js/marko/compare/v5.8.1...v5.8.2) (2021-04-18)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.8.1](https://github.com/marko-js/marko/compare/v5.8.0...v5.8.1) (2021-04-16)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.8.0](https://github.com/marko-js/marko/compare/v5.7.0...v5.8.0) (2021-04-16)
-
 
 ### Features
 
-* add new hydrateIncludeImports option ([#1686](https://github.com/marko-js/marko/issues/1686)) ([db84f91](https://github.com/marko-js/marko/commit/db84f913b47e4372c84c09a34ca8529b646b7869))
-
-
-
-
+- add new hydrateIncludeImports option ([#1686](https://github.com/marko-js/marko/issues/1686)) ([db84f91](https://github.com/marko-js/marko/commit/db84f913b47e4372c84c09a34ca8529b646b7869))
 
 # [5.7.0](https://github.com/marko-js/marko/compare/v5.6.2...v5.7.0) (2021-04-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.6.2](https://github.com/marko-js/marko/compare/v5.6.1...v5.6.2) (2021-03-30)
-
 
 ### Bug Fixes
 
-* **translator-default:** some bundlers not supporting hoisted imports ([0233d04](https://github.com/marko-js/marko/commit/0233d042206233ebaaf2ee551b8a926589c7f02f))
-
-
-
-
+- **translator-default:** some bundlers not supporting hoisted imports ([0233d04](https://github.com/marko-js/marko/commit/0233d042206233ebaaf2ee551b8a926589c7f02f))
 
 # [5.6.0](https://github.com/marko-js/marko/compare/v5.5.4...v5.6.0) (2021-03-27)
 
-
 ### Features
 
-* flush_here_and_after tag ([#1681](https://github.com/marko-js/marko/issues/1681)) ([9d01322](https://github.com/marko-js/marko/commit/9d0132281a89b804fe847e98f915aab951ba78a7))
-
-
-
-
+- flush_here_and_after tag ([#1681](https://github.com/marko-js/marko/issues/1681)) ([9d01322](https://github.com/marko-js/marko/commit/9d0132281a89b804fe847e98f915aab951ba78a7))
 
 ## [5.5.4](https://github.com/marko-js/marko/compare/v5.5.3...v5.5.4) (2021-03-22)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.5.3](https://github.com/marko-js/marko/compare/v5.5.2...v5.5.3) (2021-03-22)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.5.2](https://github.com/marko-js/marko/compare/v5.5.1...v5.5.2) (2021-03-19)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.5.1](https://github.com/marko-js/marko/compare/v5.5.0...v5.5.1) (2021-03-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.5.0](https://github.com/marko-js/marko/compare/v5.4.2...v5.5.0) (2021-03-18)
-
 
 ### Bug Fixes
 
-* **compiler:** use provided FS for taglib building ([#1674](https://github.com/marko-js/marko/issues/1674)) ([edb570e](https://github.com/marko-js/marko/commit/edb570eda4b3d544795536bf81613f6c97c9859a))
-* **marko:** issue with async hydrate after final flush ([#1677](https://github.com/marko-js/marko/issues/1677)) ([f2fbaa6](https://github.com/marko-js/marko/commit/f2fbaa6de25c9f6bc2f85a0df6deac057c25b3bd))
-* correct Marko debug mode for ci tests ([031ca0d](https://github.com/marko-js/marko/commit/031ca0d93fa77a3405b95467e7a98f2c5a8120de))
-
+- **compiler:** use provided FS for taglib building ([#1674](https://github.com/marko-js/marko/issues/1674)) ([edb570e](https://github.com/marko-js/marko/commit/edb570eda4b3d544795536bf81613f6c97c9859a))
+- **marko:** issue with async hydrate after final flush ([#1677](https://github.com/marko-js/marko/issues/1677)) ([f2fbaa6](https://github.com/marko-js/marko/commit/f2fbaa6de25c9f6bc2f85a0df6deac057c25b3bd))
+- correct Marko debug mode for ci tests ([031ca0d](https://github.com/marko-js/marko/commit/031ca0d93fa77a3405b95467e7a98f2c5a8120de))
 
 ### Features
 
-* add hydrate option ([#1673](https://github.com/marko-js/marko/issues/1673)) ([a4e7013](https://github.com/marko-js/marko/commit/a4e701355efcd93971eb46988f5e990f4517796f))
-
-
-
-
+- add hydrate option ([#1673](https://github.com/marko-js/marko/issues/1673)) ([a4e7013](https://github.com/marko-js/marko/commit/a4e701355efcd93971eb46988f5e990f4517796f))
 
 # [5.3.0](https://github.com/marko-js/marko/compare/v5.2.4...v5.3.0) (2021-03-08)
 
-
 ### Features
 
-* **marko:** support lazy loading hydrated components ([7e14181](https://github.com/marko-js/marko/commit/7e14181d0d01977745eb5fb551aa0068b462aae7))
-
-
-
-
+- **marko:** support lazy loading hydrated components ([7e14181](https://github.com/marko-js/marko/commit/7e14181d0d01977745eb5fb551aa0068b462aae7))
 
 ## [5.2.4](https://github.com/marko-js/marko/compare/v5.2.3...v5.2.4) (2021-03-08)
 
-
 ### Bug Fixes
 
-* **marko:** issue with delegating events from text nodes ([787578e](https://github.com/marko-js/marko/commit/787578ed60b15cf3b8abfc65b2f24c0418c7a442))
-
-
-
-
+- **marko:** issue with delegating events from text nodes ([787578e](https://github.com/marko-js/marko/commit/787578ed60b15cf3b8abfc65b2f24c0418c7a442))
 
 ## [5.2.3](https://github.com/marko-js/marko/compare/v5.2.2...v5.2.3) (2021-03-05)
 
-
 ### Bug Fixes
 
-* **marko:** issue with MARKO_DEBUG and a const ([c17f9fc](https://github.com/marko-js/marko/commit/c17f9fc5521412e24838d7ec78bee000c511064f))
-
-
-
-
+- **marko:** issue with MARKO_DEBUG and a const ([c17f9fc](https://github.com/marko-js/marko/commit/c17f9fc5521412e24838d7ec78bee000c511064f))
 
 ## [5.2.2](https://github.com/marko-js/marko/compare/v5.2.1...v5.2.2) (2021-03-01)
 
-
 ### Bug Fixes
 
-* add some additional missing deps from marko to @marko/compiler ([65ac580](https://github.com/marko-js/marko/commit/65ac580e57cb42ab94adc447c9b59744a69c8b64))
-
-
-
-
+- add some additional missing deps from marko to @marko/compiler ([65ac580](https://github.com/marko-js/marko/commit/65ac580e57cb42ab94adc447c9b59744a69c8b64))
 
 ## [5.2.1](https://github.com/marko-js/marko/compare/v5.2.0...v5.2.1) (2021-03-01)
 
-
 ### Bug Fixes
 
-* **compiler:** add missing dependency after moving taglib code ([ae843f1](https://github.com/marko-js/marko/commit/ae843f1b802fcbc1c7347247247a3c8551f6cfd2))
-
-
-
-
+- **compiler:** add missing dependency after moving taglib code ([ae843f1](https://github.com/marko-js/marko/commit/ae843f1b802fcbc1c7347247247a3c8551f6cfd2))
 
 # [5.2.0](https://github.com/marko-js/marko/compare/v5.1.21...v5.2.0) (2021-03-01)
 
-
 ### Features
 
-* move taglib apis into compiler source code ([f7cbb1b](https://github.com/marko-js/marko/commit/f7cbb1b5719ce767b7970ca7264a081010e8e65a))
-
-
-
-
+- move taglib apis into compiler source code ([f7cbb1b](https://github.com/marko-js/marko/commit/f7cbb1b5719ce767b7970ca7264a081010e8e65a))
 
 ## [5.1.20](https://github.com/marko-js/marko/compare/v5.1.19...v5.1.20) (2021-02-26)
 
-
 ### Bug Fixes
 
-* **marko:** circular dep issue with browser-refresh ([a704210](https://github.com/marko-js/marko/commit/a704210c272500b9aa36f90ca5c2f63cff85a7a7))
-
-
-
-
+- **marko:** circular dep issue with browser-refresh ([a704210](https://github.com/marko-js/marko/commit/a704210c272500b9aa36f90ca5c2f63cff85a7a7))
 
 ## [5.1.19](https://github.com/marko-js/marko/compare/v5.1.18...v5.1.19) (2021-02-26)
 
-
 ### Bug Fixes
 
-* **marko:** bring back hot-reload when node-require hook used ([8d856a0](https://github.com/marko-js/marko/commit/8d856a0250a1f2522f06a91a11c2d73c6a05e7b2))
-* move @marko/babel-types into compiler ([5369a63](https://github.com/marko-js/marko/commit/5369a63e0ce66c422981893525ff6c9bcbd461dd))
-
-
-
-
+- **marko:** bring back hot-reload when node-require hook used ([8d856a0](https://github.com/marko-js/marko/commit/8d856a0250a1f2522f06a91a11c2d73c6a05e7b2))
+- move @marko/babel-types into compiler ([5369a63](https://github.com/marko-js/marko/commit/5369a63e0ce66c422981893525ff6c9bcbd461dd))
 
 ## [5.1.18](https://github.com/marko-js/marko/compare/v5.1.17...v5.1.18) (2021-02-21)
 
-
 ### Bug Fixes
 
-* **marko:** add back missing preserve-name & remove-dashes config ([4283178](https://github.com/marko-js/marko/commit/428317863d0a1d563019715194064a3cdd7c26d0))
-
-
-
-
+- **marko:** add back missing preserve-name & remove-dashes config ([4283178](https://github.com/marko-js/marko/commit/428317863d0a1d563019715194064a3cdd7c26d0))
 
 ## [5.1.17](https://github.com/marko-js/marko/compare/v5.1.16...v5.1.17) (2021-02-18)
 
-
 ### Bug Fixes
 
-* improve windows support for taglib finder ([58f6568](https://github.com/marko-js/marko/commit/58f6568da8fca1cdf09034c7dd18e7cfb1fdb902))
-
-
-
-
+- improve windows support for taglib finder ([58f6568](https://github.com/marko-js/marko/commit/58f6568da8fca1cdf09034c7dd18e7cfb1fdb902))
 
 ## [5.1.16](https://github.com/marko-js/marko/compare/v5.1.15...v5.1.16) (2021-02-17)
 
-
 ### Bug Fixes
 
-* **marko:** simplify client-reorder runtime loading login to inline code ([#1661](https://github.com/marko-js/marko/issues/1661)) ([5d0a74a](https://github.com/marko-js/marko/commit/5d0a74a616d6f5d6bdf97a9c041b0c56d9a0d862))
-
-
-
-
+- **marko:** simplify client-reorder runtime loading login to inline code ([#1661](https://github.com/marko-js/marko/issues/1661)) ([5d0a74a](https://github.com/marko-js/marko/commit/5d0a74a616d6f5d6bdf97a9c041b0c56d9a0d862))
 
 ## [5.1.15](https://github.com/marko-js/marko/compare/v5.1.14...v5.1.15) (2021-02-13)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.14](https://github.com/marko-js/marko/compare/v5.1.13...v5.1.14) (2021-02-12)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 ## [5.1.13](https://github.com/marko-js/marko/compare/v5.1.12...v5.1.13) (2021-02-12)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.12](https://github.com/marko-js/marko/compare/v5.1.11...v5.1.12) (2021-02-12)
-
 
 ### Bug Fixes
 
-* **marko:** avoid prematurely resolving taglib paths ([29f3cbe](https://github.com/marko-js/marko/commit/29f3cbeccf07108d05e600a2a12dab2a3a0fa6a9))
-
-
-
-
+- **marko:** avoid prematurely resolving taglib paths ([29f3cbe](https://github.com/marko-js/marko/commit/29f3cbeccf07108d05e600a2a12dab2a3a0fa6a9))
 
 ## [5.1.11](https://github.com/marko-js/marko/compare/v5.1.10...v5.1.11) (2021-02-11)
 
-
 ### Bug Fixes
 
-* prevent potential race condition while tag scanning ([cafa138](https://github.com/marko-js/marko/commit/cafa138f28a5e2fbe9fbc74cc05fb4152e36d911))
-
-
-
-
+- prevent potential race condition while tag scanning ([cafa138](https://github.com/marko-js/marko/commit/cafa138f28a5e2fbe9fbc74cc05fb4152e36d911))
 
 ## [5.1.10](https://github.com/marko-js/marko/compare/v5.1.9...v5.1.10) (2021-02-05)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.9](https://github.com/marko-js/marko/compare/v5.1.8...v5.1.9) (2021-02-03)
-
 
 ### Bug Fixes
 
-* **marko:** default export in esm mode for marko/component ([9b144e1](https://github.com/marko-js/marko/commit/9b144e13ea3413884fdda698fa854caca111858d))
-* **marko:** drop ie10 only runtime code ([2125bf6](https://github.com/marko-js/marko/commit/2125bf6ae991120cf27662b139b3080a93d05416))
-* **marko:** include default export in esm marko/components ([ed5fbc2](https://github.com/marko-js/marko/commit/ed5fbc2299a500851f7b9e23a9737a23285e4840))
-
-
-
-
+- **marko:** default export in esm mode for marko/component ([9b144e1](https://github.com/marko-js/marko/commit/9b144e13ea3413884fdda698fa854caca111858d))
+- **marko:** drop ie10 only runtime code ([2125bf6](https://github.com/marko-js/marko/commit/2125bf6ae991120cf27662b139b3080a93d05416))
+- **marko:** include default export in esm marko/components ([ed5fbc2](https://github.com/marko-js/marko/commit/ed5fbc2299a500851f7b9e23a9737a23285e4840))
 
 ## [5.1.8](https://github.com/marko-js/marko/compare/v5.1.7...v5.1.8) (2021-02-02)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.7](https://github.com/marko-js/marko/compare/v5.1.6...v5.1.7) (2021-02-01)
-
 
 ### Bug Fixes
 
-* allow passing 'dom' output instead of 'vdom' ([9c11a9b](https://github.com/marko-js/marko/commit/9c11a9be187c728b46caca9a37a9b383cc20ce1b))
-
-
-
-
+- allow passing 'dom' output instead of 'vdom' ([9c11a9b](https://github.com/marko-js/marko/commit/9c11a9be187c728b46caca9a37a9b383cc20ce1b))
 
 ## [5.1.6](https://github.com/marko-js/marko/compare/v5.1.5...v5.1.6) (2021-01-29)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.5](https://github.com/marko-js/marko/compare/v5.1.4...v5.1.5) (2021-01-28)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.4](https://github.com/marko-js/marko/compare/v5.1.3...v5.1.4) (2021-01-27)
-
 
 ### Bug Fixes
 
-* docs link ([69abe9a](https://github.com/marko-js/marko/commit/69abe9a299e106f5ea0ef3c7a14b0fc5d3542a6b))
-
-
-
-
+- docs link ([69abe9a](https://github.com/marko-js/marko/commit/69abe9a299e106f5ea0ef3c7a14b0fc5d3542a6b))
 
 ## [5.1.3](https://github.com/marko-js/marko/compare/v5.1.2...v5.1.3) (2021-01-27)
 
-
 ### Bug Fixes
 
-* enable inline sourcemaps by default with dev mode require hook ([6571a11](https://github.com/marko-js/marko/commit/6571a1124047e10ccf0b7a4b131fbe860ce008bb))
-
-
-
-
+- enable inline sourcemaps by default with dev mode require hook ([6571a11](https://github.com/marko-js/marko/commit/6571a1124047e10ccf0b7a4b131fbe860ce008bb))
 
 ## [5.1.2](https://github.com/marko-js/marko/compare/v5.1.1...v5.1.2) (2021-01-26)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 ## [5.1.1](https://github.com/marko-js/marko/compare/v5.1.0...v5.1.1) (2021-01-26)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.1.0](https://github.com/marko-js/marko/compare/v5.0.0-next.82...v5.1.0) (2021-01-26)
-
 
 ### Features
 
-* no longer publish as 'next' dist-tag ([8113e25](https://github.com/marko-js/marko/commit/8113e250d823000810d0fa13d76efc4cc69f4ad1))
-
-
-
-
+- no longer publish as 'next' dist-tag ([8113e25](https://github.com/marko-js/marko/commit/8113e250d823000810d0fa13d76efc4cc69f4ad1))
 
 # [5.0.0-next.82](https://github.com/marko-js/marko/compare/v5.0.0-next.81...v5.0.0-next.82) (2021-01-21)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.81](https://github.com/marko-js/marko/compare/v5.0.0-next.80...v5.0.0-next.81) (2021-01-20)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.80](https://github.com/marko-js/marko/compare/v5.0.0-next.79...v5.0.0-next.80) (2021-01-19)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.79](https://github.com/marko-js/marko/compare/v5.0.0-next.78...v5.0.0-next.79) (2021-01-19)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.78](https://github.com/marko-js/marko/compare/v5.0.0-next.77...v5.0.0-next.78) (2021-01-19)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.77](https://github.com/marko-js/marko/compare/v5.0.0-next.76...v5.0.0-next.77) (2021-01-19)
-
 
 ### Bug Fixes
 
-* force commonjs modules for load api ([bd84dad](https://github.com/marko-js/marko/commit/bd84dadca72c4d5e6ae7ed62211e543211a29a5f))
-
-
-
-
+- force commonjs modules for load api ([bd84dad](https://github.com/marko-js/marko/commit/bd84dadca72c4d5e6ae7ed62211e543211a29a5f))
 
 # [5.0.0-next.76](https://github.com/marko-js/marko/compare/v5.0.0-next.75...v5.0.0-next.76) (2021-01-15)
 
-
 ### Features
 
-* improve analysis for stateful tag parameters ([#1648](https://github.com/marko-js/marko/issues/1648)) ([8c34cb4](https://github.com/marko-js/marko/commit/8c34cb4be6bd571f6013f50dc6808e3d9de10763))
-
-
-
-
+- improve analysis for stateful tag parameters ([#1648](https://github.com/marko-js/marko/issues/1648)) ([8c34cb4](https://github.com/marko-js/marko/commit/8c34cb4be6bd571f6013f50dc6808e3d9de10763))
 
 # [5.0.0-next.75](https://github.com/marko-js/marko/compare/v5.0.0-next.74...v5.0.0-next.75) (2021-01-14)
 
-
 ### Bug Fixes
 
-* issue with using flags before defined ([8628d01](https://github.com/marko-js/marko/commit/8628d01ef82816a482e57938fbecde3e3c64c357))
-
-
-
-
+- issue with using flags before defined ([8628d01](https://github.com/marko-js/marko/commit/8628d01ef82816a482e57938fbecde3e3c64c357))
 
 # [5.0.0-next.74](https://github.com/marko-js/marko/compare/v5.0.0-next.73...v5.0.0-next.74) (2021-01-14)
 
-
 ### Bug Fixes
 
-* runtime mismatch check ([892f9d0](https://github.com/marko-js/marko/commit/892f9d0f10bb76d0c33ed11204c36f6edc40253c))
-
-
-
-
+- runtime mismatch check ([892f9d0](https://github.com/marko-js/marko/commit/892f9d0f10bb76d0c33ed11204c36f6edc40253c))
 
 # [5.0.0-next.73](https://github.com/marko-js/marko/compare/v5.0.0-next.72...v5.0.0-next.73) (2021-01-14)
 
-
 ### Bug Fixes
 
-* use same debug check for compiler and runtime ([#1647](https://github.com/marko-js/marko/issues/1647)) ([0c8632f](https://github.com/marko-js/marko/commit/0c8632fe92d06b27d0741fa2d5a2b599f0890693))
-
-
-
-
+- use same debug check for compiler and runtime ([#1647](https://github.com/marko-js/marko/issues/1647)) ([0c8632f](https://github.com/marko-js/marko/commit/0c8632fe92d06b27d0741fa2d5a2b599f0890693))
 
 # [5.0.0-next.72](https://github.com/marko-js/marko/compare/v5.0.0-next.71...v5.0.0-next.72) (2021-01-13)
 
-
 ### Bug Fixes
 
-* issue with only renderBody being serialized ([8c0e045](https://github.com/marko-js/marko/commit/8c0e045af9820ee26f606ee626b8a51579aded94))
-
-
-
-
+- issue with only renderBody being serialized ([8c0e045](https://github.com/marko-js/marko/commit/8c0e045af9820ee26f606ee626b8a51579aded94))
 
 # [5.0.0-next.71](https://github.com/marko-js/marko/compare/v5.0.0-next.70...v5.0.0-next.71) (2021-01-12)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.70](https://github.com/marko-js/marko/compare/v5.0.0-next.69...v5.0.0-next.70) (2020-12-16)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.69](https://github.com/marko-js/marko/compare/v5.0.0-next.68...v5.0.0-next.69) (2020-12-14)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.68](https://github.com/marko-js/marko/compare/v5.0.0-next.67...v5.0.0-next.68) (2020-12-11)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.67](https://github.com/marko-js/marko/compare/v5.0.0-next.66...v5.0.0-next.67) (2020-12-09)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.66](https://github.com/marko-js/marko/compare/v5.0.0-next.65...v5.0.0-next.66) (2020-12-08)
-
 
 ### Bug Fixes
 
-* renderbody with dynamic attrs ([6c33c0f](https://github.com/marko-js/marko/commit/6c33c0fcf1f240e50ce7bccbb10ea1efb0daaed3))
-
-
-
-
+- renderbody with dynamic attrs ([6c33c0f](https://github.com/marko-js/marko/commit/6c33c0fcf1f240e50ce7bccbb10ea1efb0daaed3))
 
 # [5.0.0-next.65](https://github.com/marko-js/marko/compare/v5.0.0-next.64...v5.0.0-next.65) (2020-12-02)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.64](https://github.com/marko-js/marko/compare/v5.0.0-next.63...v5.0.0-next.64) (2020-12-02)
-
 
 ### Bug Fixes
 
-* **babel-types:** support scope analysis for tag variables ([c527474](https://github.com/marko-js/marko/commit/c5274740b5fde01b85b8b46381fadf2fc75245f2))
-
-
-
-
+- **babel-types:** support scope analysis for tag variables ([c527474](https://github.com/marko-js/marko/commit/c5274740b5fde01b85b8b46381fadf2fc75245f2))
 
 # [5.0.0-next.63](https://github.com/marko-js/marko/compare/v5.0.0-next.62...v5.0.0-next.63) (2020-12-01)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.62](https://github.com/marko-js/marko/compare/v5.0.0-next.61...v5.0.0-next.62) (2020-12-01)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.61](https://github.com/marko-js/marko/compare/v5.0.0-next.60...v5.0.0-next.61) (2020-12-01)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.60](https://github.com/marko-js/marko/compare/v5.0.0-next.59...v5.0.0-next.60) (2020-11-22)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.59](https://github.com/marko-js/marko/compare/v5.0.0-next.58...v5.0.0-next.59) (2020-11-21)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.58](https://github.com/marko-js/marko/compare/v5.0.0-next.57...v5.0.0-next.58) (2020-11-20)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.57](https://github.com/marko-js/marko/compare/v5.0.0-next.56...v5.0.0-next.57) (2020-11-20)
-
 
 ### Features
 
-* add parser support for tag variables ([#1630](https://github.com/marko-js/marko/issues/1630)) ([43c4433](https://github.com/marko-js/marko/commit/43c4433cb026f7eace199203e15d1050a53dc35d))
-
-
-
-
+- add parser support for tag variables ([#1630](https://github.com/marko-js/marko/issues/1630)) ([43c4433](https://github.com/marko-js/marko/commit/43c4433cb026f7eace199203e15d1050a53dc35d))
 
 # [5.0.0-next.56](https://github.com/marko-js/marko/compare/v5.0.0-next.55...v5.0.0-next.56) (2020-11-20)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.55](https://github.com/marko-js/marko/compare/v5.0.0-next.54...v5.0.0-next.55) (2020-11-19)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.54](https://github.com/marko-js/marko/compare/v5.0.0-next.53...v5.0.0-next.54) (2020-11-17)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.52](https://github.com/marko-js/marko/compare/v5.0.0-next.51...v5.0.0-next.52) (2020-11-12)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.51](https://github.com/marko-js/marko/compare/v5.0.0-next.50...v5.0.0-next.51) (2020-11-11)
-
 
 ### Bug Fixes
 
-* regression with no-update-body with no renderBody ([1e89057](https://github.com/marko-js/marko/commit/1e890574bd23035eb1d22ae78672c3a0e9dd4563))
-
+- regression with no-update-body with no renderBody ([1e89057](https://github.com/marko-js/marko/commit/1e890574bd23035eb1d22ae78672c3a0e9dd4563))
 
 ### Features
 
-* cached compilations, nested tag analysis ([74d5f10](https://github.com/marko-js/marko/commit/74d5f104b8f35178c399ab5c3514c33f8b63cdf0))
-
-
-
-
+- cached compilations, nested tag analysis ([74d5f10](https://github.com/marko-js/marko/commit/74d5f104b8f35178c399ab5c3514c33f8b63cdf0))
 
 # [5.0.0-next.50](https://github.com/marko-js/marko/compare/v5.0.0-next.49...v5.0.0-next.50) (2020-10-12)
 
-
 ### Bug Fixes
 
-* no longer use fragments for preserved native els ([22e9322](https://github.com/marko-js/marko/commit/22e9322a7e72b50812ab223f70bf9e68aee2208d))
-* regression serializing empty component data with custom runtimeid ([7ee0cd1](https://github.com/marko-js/marko/commit/7ee0cd1f0aacda8c9b04b583320951ce406a9143))
-* **translator-default:** owner component missing for text nodes ([50b4e97](https://github.com/marko-js/marko/commit/50b4e9746b4fc5158d35ba78110199de4a4e7956))
-
-
-
-
+- no longer use fragments for preserved native els ([22e9322](https://github.com/marko-js/marko/commit/22e9322a7e72b50812ab223f70bf9e68aee2208d))
+- regression serializing empty component data with custom runtimeid ([7ee0cd1](https://github.com/marko-js/marko/commit/7ee0cd1f0aacda8c9b04b583320951ce406a9143))
+- **translator-default:** owner component missing for text nodes ([50b4e97](https://github.com/marko-js/marko/commit/50b4e9746b4fc5158d35ba78110199de4a4e7956))
 
 # [5.0.0-next.49](https://github.com/marko-js/marko/compare/v5.0.0-next.48...v5.0.0-next.49) (2020-09-28)
 
-
 ### Bug Fixes
 
-* **marko:** output esm for module-code ([db4793d](https://github.com/marko-js/marko/commit/db4793df11c08b7d8f8b3cf5591528f35fd643d9))
-
+- **marko:** output esm for module-code ([db4793d](https://github.com/marko-js/marko/commit/db4793df11c08b7d8f8b3cf5591528f35fd643d9))
 
 ### Performance Improvements
 
-* misc optimizations ([#1610](https://github.com/marko-js/marko/issues/1610)) ([bf393c8](https://github.com/marko-js/marko/commit/bf393c85ad8ed663db8daad64afdcd423e668c46))
-
-
-
-
+- misc optimizations ([#1610](https://github.com/marko-js/marko/issues/1610)) ([bf393c8](https://github.com/marko-js/marko/commit/bf393c85ad8ed663db8daad64afdcd423e668c46))
 
 # [5.0.0-next.48](https://github.com/marko-js/marko/compare/v5.0.0-next.47...v5.0.0-next.48) (2020-09-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.47](https://github.com/marko-js/marko/compare/v5.0.0-next.46...v5.0.0-next.47) (2020-09-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.46](https://github.com/marko-js/marko/compare/v5.0.0-next.45...v5.0.0-next.46) (2020-09-17)
-
 
 ### Bug Fixes
 
-* only include template path with meta option enabled ([e1b39e1](https://github.com/marko-js/marko/commit/e1b39e18c430b86e2406187958d5503d83a7d79a))
-
+- only include template path with meta option enabled ([e1b39e1](https://github.com/marko-js/marko/commit/e1b39e18c430b86e2406187958d5503d83a7d79a))
 
 ### Performance Improvements
 
-* prevent bundlers from pulling in setImmediate shim ([585d6be](https://github.com/marko-js/marko/commit/585d6be9c288b2a0306d2ffcd36d15e8e17a03d9))
-* remove unecessary function for template load api ([33ae635](https://github.com/marko-js/marko/commit/33ae635fec6ad4383347c7ce9e640251937a8d64))
-
-
-
-
+- prevent bundlers from pulling in setImmediate shim ([585d6be](https://github.com/marko-js/marko/commit/585d6be9c288b2a0306d2ffcd36d15e8e17a03d9))
+- remove unecessary function for template load api ([33ae635](https://github.com/marko-js/marko/commit/33ae635fec6ad4383347c7ce9e640251937a8d64))
 
 # [5.0.0-next.45](https://github.com/marko-js/marko/compare/v5.0.0-next.44...v5.0.0-next.45) (2020-08-26)
 
-
 ### Bug Fixes
 
-* regression with manual component init with custom runtimeid ([ec6e670](https://github.com/marko-js/marko/commit/ec6e670dbca30116947372198203b9c72c46a714))
-
-
-
-
+- regression with manual component init with custom runtimeid ([ec6e670](https://github.com/marko-js/marko/commit/ec6e670dbca30116947372198203b9c72c46a714))
 
 # [5.0.0-next.44](https://github.com/marko-js/marko/compare/v5.0.0-next.43...v5.0.0-next.44) (2020-08-26)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.43](https://github.com/marko-js/marko/compare/v5.0.0-next.42...v5.0.0-next.43) (2020-08-20)
-
 
 ### Bug Fixes
 
-* issue with hydrating body-only content ([c975b87](https://github.com/marko-js/marko/commit/c975b878ccce93ab64caa3c2feef0fb160194282))
-
-
-
-
+- issue with hydrating body-only content ([c975b87](https://github.com/marko-js/marko/commit/c975b878ccce93ab64caa3c2feef0fb160194282))
 
 # [5.0.0-next.42](https://github.com/marko-js/marko/compare/v5.0.0-next.41...v5.0.0-next.42) (2020-08-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.41](https://github.com/marko-js/marko/compare/v5.0.0-next.40...v5.0.0-next.41) (2020-08-18)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.40](https://github.com/marko-js/marko/compare/v5.0.0-next.39...v5.0.0-next.40) (2020-08-12)
-
 
 ### Bug Fixes
 
-* component type use relative path in dev mode ([7b7a4f9](https://github.com/marko-js/marko/commit/7b7a4f9637648c7ded113fd132ce3ce5f2785e0a))
-
-
-
-
+- component type use relative path in dev mode ([7b7a4f9](https://github.com/marko-js/marko/commit/7b7a4f9637648c7ded113fd132ce3ce5f2785e0a))
 
 # [5.0.0-next.39](https://github.com/marko-js/marko/compare/v5.0.0-next.38...v5.0.0-next.39) (2020-08-10)
 
-
 ### Bug Fixes
 
-* invalid missing closing svg tags ([47a9834](https://github.com/marko-js/marko/commit/47a98341a2bdb4ae136495c5e3976dfe7c24a77c))
-
-
-
-
+- invalid missing closing svg tags ([47a9834](https://github.com/marko-js/marko/commit/47a98341a2bdb4ae136495c5e3976dfe7c24a77c))
 
 # [5.0.0-next.38](https://github.com/marko-js/marko/compare/v5.0.0-next.37...v5.0.0-next.38) (2020-08-10)
 
-
 ### Bug Fixes
 
-* add support for nested tag long hand properties ([#1592](https://github.com/marko-js/marko/issues/1592)) ([36c501c](https://github.com/marko-js/marko/commit/36c501ce440f90f6409394b38ed49e185e82d239))
-* set default value for textarea when created ([#1593](https://github.com/marko-js/marko/issues/1593)) ([00a0a55](https://github.com/marko-js/marko/commit/00a0a5527d19e7e145b367a415677dc9d41474cd))
-
-
-
-
+- add support for nested tag long hand properties ([#1592](https://github.com/marko-js/marko/issues/1592)) ([36c501c](https://github.com/marko-js/marko/commit/36c501ce440f90f6409394b38ed49e185e82d239))
+- set default value for textarea when created ([#1593](https://github.com/marko-js/marko/issues/1593)) ([00a0a55](https://github.com/marko-js/marko/commit/00a0a5527d19e7e145b367a415677dc9d41474cd))
 
 # [5.0.0-next.37](https://github.com/marko-js/marko/compare/v5.0.0-next.36...v5.0.0-next.37) (2020-08-05)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.36](https://github.com/marko-js/marko/compare/v5.0.0-next.35...v5.0.0-next.36) (2020-08-05)
-
 
 ### Features
 
-* expose watch file meta data ([#1591](https://github.com/marko-js/marko/issues/1591)) ([f14e46a](https://github.com/marko-js/marko/commit/f14e46a1f3ddd01f659a0f86678773fb12a7f1a5))
-
-
-
-
+- expose watch file meta data ([#1591](https://github.com/marko-js/marko/issues/1591)) ([f14e46a](https://github.com/marko-js/marko/commit/f14e46a1f3ddd01f659a0f86678773fb12a7f1a5))
 
 # [5.0.0-next.35](https://github.com/marko-js/marko/compare/v5.0.0-next.34...v5.0.0-next.35) (2020-08-04)
 
-
 ### Bug Fixes
 
-* lint and format scripts ([57b66ef](https://github.com/marko-js/marko/commit/57b66ef39782ea249d3cf7913ec8242d0baf5535))
-
-
-
-
+- lint and format scripts ([57b66ef](https://github.com/marko-js/marko/commit/57b66ef39782ea249d3cf7913ec8242d0baf5535))
 
 # [5.0.0-next.34](https://github.com/marko-js/marko/compare/v5.0.0-next.33...v5.0.0-next.34) (2020-08-04)
 
-
 ### Bug Fixes
 
-* allow <await> in sync mode ([#1589](https://github.com/marko-js/marko/issues/1589)) ([f91bd37](https://github.com/marko-js/marko/commit/f91bd37ec22f45861d11931f696d1edc5e84165c))
-* diffing dynamic attributes with mismatched keys ([#1587](https://github.com/marko-js/marko/issues/1587)) ([4b8cce4](https://github.com/marko-js/marko/commit/4b8cce41c7f3a020142e2d3e3d1e194ab64ffe65))
-* issue with hydrating no-update-if content ([#1581](https://github.com/marko-js/marko/issues/1581)) ([457f3d4](https://github.com/marko-js/marko/commit/457f3d4acb480e5382fdfa30d0c1d4ea0062c4cc))
-
-
-
-
+- allow <await> in sync mode ([#1589](https://github.com/marko-js/marko/issues/1589)) ([f91bd37](https://github.com/marko-js/marko/commit/f91bd37ec22f45861d11931f696d1edc5e84165c))
+- diffing dynamic attributes with mismatched keys ([#1587](https://github.com/marko-js/marko/issues/1587)) ([4b8cce4](https://github.com/marko-js/marko/commit/4b8cce41c7f3a020142e2d3e3d1e194ab64ffe65))
+- issue with hydrating no-update-if content ([#1581](https://github.com/marko-js/marko/issues/1581)) ([457f3d4](https://github.com/marko-js/marko/commit/457f3d4acb480e5382fdfa30d0c1d4ea0062c4cc))
 
 # [5.0.0-next.33](https://github.com/marko-js/marko/compare/v5.0.0-next.32...v5.0.0-next.33) (2020-08-03)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.32](https://github.com/marko-js/marko/compare/v5.0.0-next.31...v5.0.0-next.32) (2020-07-31)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.31](https://github.com/marko-js/marko/compare/v5.0.0-next.30...v5.0.0-next.31) (2020-07-31)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.30](https://github.com/marko-js/marko/compare/v5.0.0-next.29...v5.0.0-next.30) (2020-07-29)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.29](https://github.com/marko-js/marko/compare/v5.0.0-next.28...v5.0.0-next.29) (2020-07-29)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.28](https://github.com/marko-js/marko/compare/v5.0.0-next.27...v5.0.0-next.28) (2020-07-27)
-
 
 ### Bug Fixes
 
-* better errors, track deps and cleanup for import shorthand ([00464f2](https://github.com/marko-js/marko/commit/00464f27b2fef2a454745b424e3cce18c76ae33f))
-
+- better errors, track deps and cleanup for import shorthand ([00464f2](https://github.com/marko-js/marko/commit/00464f27b2fef2a454745b424e3cce18c76ae33f))
 
 ### Features
 
-* add new syntax for dynamic component import ([e9b4cd6](https://github.com/marko-js/marko/commit/e9b4cd61acff70d7d0d0d49cab7034e000493346))
-
-
-
-
+- add new syntax for dynamic component import ([e9b4cd6](https://github.com/marko-js/marko/commit/e9b4cd61acff70d7d0d0d49cab7034e000493346))
 
 # [5.0.0-next.27](https://github.com/marko-js/marko/compare/v5.0.0-next.26...v5.0.0-next.27) (2020-07-24)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.26](https://github.com/marko-js/marko/compare/v5.0.0-next.25...v5.0.0-next.26) (2020-07-24)
-
 
 ### Bug Fixes
 
-* docs paths ([583197e](https://github.com/marko-js/marko/commit/583197e2555258e101bb7e5e14134117cbd072e2))
-
-
-
-
+- docs paths ([583197e](https://github.com/marko-js/marko/commit/583197e2555258e101bb7e5e14134117cbd072e2))
 
 # [5.0.0-next.25](https://github.com/marko-js/marko/compare/v5.0.0-next.24...v5.0.0-next.25) (2020-07-23)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.24](https://github.com/marko-js/marko/compare/v5.0.0-next.23...v5.0.0-next.24) (2020-07-22)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.23](https://github.com/marko-js/marko/compare/v5.0.0-next.22...v5.0.0-next.23) (2020-07-14)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.22](https://github.com/marko-js/marko/compare/v5.0.0-next.21...v5.0.0-next.22) (2020-07-10)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.21](https://github.com/marko-js/marko/compare/v5.0.0-next.20...v5.0.0-next.21) (2020-07-07)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.20](https://github.com/marko-js/marko/compare/v5.0.0-next.19...v5.0.0-next.20) (2020-07-07)
 
 **Note:** Version bump only for package marko
-
-
-
-
 
 # [5.0.0-next.19](https://github.com/marko-js/marko/compare/v5.0.0-next.18...v5.0.0-next.19) (2020-07-06)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.18](https://github.com/marko-js/marko/compare/v5.0.0-next.17...v5.0.0-next.18) (2020-05-27)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.17](https://github.com/marko-js/marko/compare/v5.0.0-next.16...v5.0.0-next.17) (2020-05-27)
-
 
 ### Bug Fixes
 
-* additional taglib cleanup for website support ([f462d8a](https://github.com/marko-js/marko/commit/f462d8ad95c1d438561f028a7d2a79accccbe739))
-
-
-
-
+- additional taglib cleanup for website support ([f462d8a](https://github.com/marko-js/marko/commit/f462d8ad95c1d438561f028a7d2a79accccbe739))
 
 # [5.0.0-next.16](https://github.com/marko-js/marko/compare/v5.0.0-next.15...v5.0.0-next.16) (2020-05-27)
 
-
 ### Features
 
-* website compatibility fixes ([4390fd1](https://github.com/marko-js/marko/commit/4390fd1654d7b2753d2af899917ced7b3a395bc2))
-
-
-
-
+- website compatibility fixes ([4390fd1](https://github.com/marko-js/marko/commit/4390fd1654d7b2753d2af899917ced7b3a395bc2))
 
 # [5.0.0-next.15](https://github.com/marko-js/marko/compare/v5.0.0-next.14...v5.0.0-next.15) (2020-05-26)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.14](https://github.com/marko-js/marko/compare/v5.0.0-next.13...v5.0.0-next.14) (2020-05-26)
-
 
 ### Bug Fixes
 
-* improve browser support for website ([#1574](https://github.com/marko-js/marko/issues/1574)) ([9df798a](https://github.com/marko-js/marko/commit/9df798af5e71b71881995b6e06a9fb1b30b6fac2))
-
-
-
-
+- improve browser support for website ([#1574](https://github.com/marko-js/marko/issues/1574)) ([9df798a](https://github.com/marko-js/marko/commit/9df798af5e71b71881995b6e06a9fb1b30b6fac2))
 
 # [5.0.0-next.13](https://github.com/marko-js/marko/compare/v5.0.0-next.12...v5.0.0-next.13) (2020-05-20)
 
-
 ### Bug Fixes
 
-* nextTick timing regression ([#1573](https://github.com/marko-js/marko/issues/1573)) ([7f35078](https://github.com/marko-js/marko/commit/7f35078dda057c6f83282d37edea6044f02657f3))
-* **marko:** prevent loading main entry by default ([61c954e](https://github.com/marko-js/marko/commit/61c954ef0ed1fc1d3b44b878ea1dbb0f79a9b718))
-
-
-
-
+- nextTick timing regression ([#1573](https://github.com/marko-js/marko/issues/1573)) ([7f35078](https://github.com/marko-js/marko/commit/7f35078dda057c6f83282d37edea6044f02657f3))
+- **marko:** prevent loading main entry by default ([61c954e](https://github.com/marko-js/marko/commit/61c954ef0ed1fc1d3b44b878ea1dbb0f79a9b718))
 
 # [5.0.0-next.12](https://github.com/marko-js/marko/compare/v5.0.0-next.11...v5.0.0-next.12) (2020-05-19)
 
-
 ### Bug Fixes
 
-* components not always initializing inside client-reorder await ([#1566](https://github.com/marko-js/marko/issues/1566)) ([da31ead](https://github.com/marko-js/marko/commit/da31ead17959e0e4bbbd806690d368127636b094))
-* data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/issues/1564)) ([0a227d0](https://github.com/marko-js/marko/commit/0a227d0c7c27821df551c1367e160793dc9e234e))
-
-
-
-
+- components not always initializing inside client-reorder await ([#1566](https://github.com/marko-js/marko/issues/1566)) ([da31ead](https://github.com/marko-js/marko/commit/da31ead17959e0e4bbbd806690d368127636b094))
+- data-marko attributes under 'no-update' with <await> ([#1564](https://github.com/marko-js/marko/issues/1564)) ([0a227d0](https://github.com/marko-js/marko/commit/0a227d0c7c27821df551c1367e160793dc9e234e))
 
 # [5.0.0-next.11](https://github.com/marko-js/marko/compare/v5.0.0-next.10...v5.0.0-next.11) (2020-04-27)
 
-
 ### Bug Fixes
 
-* regression with unquoted attribute with trailing slash ([#1561](https://github.com/marko-js/marko/issues/1561)) ([128b68a](https://github.com/marko-js/marko/commit/128b68aefcec8d99b7c508e4cea2336207f574da))
-* split components under preserved root resetting ___isPreserved ([#1559](https://github.com/marko-js/marko/issues/1559)) ([dd9f7ac](https://github.com/marko-js/marko/commit/dd9f7aca848df88e46cf5087d932966eaaaa1681))
-
-
-
-
+- regression with unquoted attribute with trailing slash ([#1561](https://github.com/marko-js/marko/issues/1561)) ([128b68a](https://github.com/marko-js/marko/commit/128b68aefcec8d99b7c508e4cea2336207f574da))
+- split components under preserved root resetting \_\_\_isPreserved ([#1559](https://github.com/marko-js/marko/issues/1559)) ([dd9f7ac](https://github.com/marko-js/marko/commit/dd9f7aca848df88e46cf5087d932966eaaaa1681))
 
 # [5.0.0-next.10](https://github.com/marko-js/marko/compare/v5.0.0-next.9...v5.0.0-next.10) (2020-04-23)
 
-
 ### Bug Fixes
 
-* switch safe renderer to use nextTick for errors ([#1554](https://github.com/marko-js/marko/issues/1554)) ([900e7b1](https://github.com/marko-js/marko/commit/900e7b1f1d94380ae997ebd408272ecb24b77193))
-
+- switch safe renderer to use nextTick for errors ([#1554](https://github.com/marko-js/marko/issues/1554)) ([900e7b1](https://github.com/marko-js/marko/commit/900e7b1f1d94380ae997ebd408272ecb24b77193))
 
 ### Performance Improvements
 
-* minify runtime comments, remove unnecessary attr quotes ([#1557](https://github.com/marko-js/marko/issues/1557)) ([2882626](https://github.com/marko-js/marko/commit/28826265f88c9f038886945471584f1b4b3b9be6))
-
-
-
-
+- minify runtime comments, remove unnecessary attr quotes ([#1557](https://github.com/marko-js/marko/issues/1557)) ([2882626](https://github.com/marko-js/marko/commit/28826265f88c9f038886945471584f1b4b3b9be6))
 
 # [5.0.0-next.9](https://github.com/marko-js/marko/compare/v5.0.0-next.8...v5.0.0-next.9) (2020-04-16)
 
-
 ### Bug Fixes
 
-* add devmode warning for removing fragment markers ([#1541](https://github.com/marko-js/marko/issues/1541)) ([de27b4a](https://github.com/marko-js/marko/commit/de27b4af4c99efb5a9494e42f305160cda81348d))
-* implement missing methods for void-writer ([#1540](https://github.com/marko-js/marko/issues/1540)) ([b50f93c](https://github.com/marko-js/marko/commit/b50f93c0240bb1dd43dd4f0f12e2a5afff57f915))
-* improve micro task helper ([2129451](https://github.com/marko-js/marko/commit/21294511e9fd7a9bd2db3683d9f123baedf886b7))
-* issue with keys under ssr no-update root ([#1527](https://github.com/marko-js/marko/issues/1527)) ([480bc77](https://github.com/marko-js/marko/commit/480bc77433835f960a9a58fee4e6a52c0f188571))
-* regression with nullish values in partial string attribute values ([#1537](https://github.com/marko-js/marko/issues/1537)) ([144c352](https://github.com/marko-js/marko/commit/144c352863b75b75d513c8f080b8b19881e5dbde))
-* spread attrs for native tag preserves case ([#1530](https://github.com/marko-js/marko/issues/1530)) ([6b3156f](https://github.com/marko-js/marko/commit/6b3156f80832356baf0dc93e6753246ab852367f))
-
+- add devmode warning for removing fragment markers ([#1541](https://github.com/marko-js/marko/issues/1541)) ([de27b4a](https://github.com/marko-js/marko/commit/de27b4af4c99efb5a9494e42f305160cda81348d))
+- implement missing methods for void-writer ([#1540](https://github.com/marko-js/marko/issues/1540)) ([b50f93c](https://github.com/marko-js/marko/commit/b50f93c0240bb1dd43dd4f0f12e2a5afff57f915))
+- improve micro task helper ([2129451](https://github.com/marko-js/marko/commit/21294511e9fd7a9bd2db3683d9f123baedf886b7))
+- issue with keys under ssr no-update root ([#1527](https://github.com/marko-js/marko/issues/1527)) ([480bc77](https://github.com/marko-js/marko/commit/480bc77433835f960a9a58fee4e6a52c0f188571))
+- regression with nullish values in partial string attribute values ([#1537](https://github.com/marko-js/marko/issues/1537)) ([144c352](https://github.com/marko-js/marko/commit/144c352863b75b75d513c8f080b8b19881e5dbde))
+- spread attrs for native tag preserves case ([#1530](https://github.com/marko-js/marko/issues/1530)) ([6b3156f](https://github.com/marko-js/marko/commit/6b3156f80832356baf0dc93e6753246ab852367f))
 
 ### Features
 
-* improve serialization across multiple writes ([#1542](https://github.com/marko-js/marko/issues/1542)) ([45e42df](https://github.com/marko-js/marko/commit/45e42dfd84a86dd3377a4d2968191b7dde8388d2))
-
+- improve serialization across multiple writes ([#1542](https://github.com/marko-js/marko/issues/1542)) ([45e42df](https://github.com/marko-js/marko/commit/45e42dfd84a86dd3377a4d2968191b7dde8388d2))
 
 ### Performance Improvements
 
-* misc improvements ([#1535](https://github.com/marko-js/marko/issues/1535)) ([1fed43e](https://github.com/marko-js/marko/commit/1fed43e24133ea6a43448237296e491a17a4b497))
-* optimize dynamic tag when types are statically known ([#1550](https://github.com/marko-js/marko/issues/1550)) ([4719405](https://github.com/marko-js/marko/commit/47194054de15eeb19247a8f50926ac81c6d03671))
-* optimize merge html attrs ([#1538](https://github.com/marko-js/marko/issues/1538)) ([792aa6a](https://github.com/marko-js/marko/commit/792aa6a7b702baba0599524cb30f7ca52e277dae))
-* optimize serializing renderBody & legacy widgets ([#1539](https://github.com/marko-js/marko/issues/1539)) ([eb9e156](https://github.com/marko-js/marko/commit/eb9e156116ab46b329ff9d32514fe298e38fad3d))
-* skip serializing instance props & state for non split components ([#1546](https://github.com/marko-js/marko/issues/1546)) ([75fd1b0](https://github.com/marko-js/marko/commit/75fd1b018f3ecc408258ec2f4e97337e3c69a8c9))
-
-
-
-
+- misc improvements ([#1535](https://github.com/marko-js/marko/issues/1535)) ([1fed43e](https://github.com/marko-js/marko/commit/1fed43e24133ea6a43448237296e491a17a4b497))
+- optimize dynamic tag when types are statically known ([#1550](https://github.com/marko-js/marko/issues/1550)) ([4719405](https://github.com/marko-js/marko/commit/47194054de15eeb19247a8f50926ac81c6d03671))
+- optimize merge html attrs ([#1538](https://github.com/marko-js/marko/issues/1538)) ([792aa6a](https://github.com/marko-js/marko/commit/792aa6a7b702baba0599524cb30f7ca52e277dae))
+- optimize serializing renderBody & legacy widgets ([#1539](https://github.com/marko-js/marko/issues/1539)) ([eb9e156](https://github.com/marko-js/marko/commit/eb9e156116ab46b329ff9d32514fe298e38fad3d))
+- skip serializing instance props & state for non split components ([#1546](https://github.com/marko-js/marko/issues/1546)) ([75fd1b0](https://github.com/marko-js/marko/commit/75fd1b018f3ecc408258ec2f4e97337e3c69a8c9))
 
 # [5.0.0-next.8](https://github.com/marko-js/marko/compare/v5.0.0-next.7...v5.0.0-next.8) (2020-03-17)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.7](https://github.com/marko-js/marko/compare/v5.0.0-next.6...v5.0.0-next.7) (2020-03-17)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.6](https://github.com/marko-js/marko/compare/v5.0.0-next.5...v5.0.0-next.6) (2020-03-16)
-
 
 ### Bug Fixes
 
-* don't serialize component boundary keys if the owner isn't hydrated ([#1525](https://github.com/marko-js/marko/issues/1525)) ([ab3d2a7](https://github.com/marko-js/marko/commit/ab3d2a7b0b4bb5ab05e78d4bba17efe4d3f58afa))
-
+- don't serialize component boundary keys if the owner isn't hydrated ([#1525](https://github.com/marko-js/marko/issues/1525)) ([ab3d2a7](https://github.com/marko-js/marko/commit/ab3d2a7b0b4bb5ab05e78d4bba17efe4d3f58afa))
 
 ### Features
 
-* all vnodes have owner components ([#1517](https://github.com/marko-js/marko/issues/1517)) ([585b2f1](https://github.com/marko-js/marko/commit/585b2f1de7797f909f1204f7c52c4b6891f8e156))
-
-
-
-
+- all vnodes have owner components ([#1517](https://github.com/marko-js/marko/issues/1517)) ([585b2f1](https://github.com/marko-js/marko/commit/585b2f1de7797f909f1204f7c52c4b6891f8e156))
 
 # [5.0.0-next.5](https://github.com/marko-js/marko/compare/v5.0.0-next.4...v5.0.0-next.5) (2020-02-26)
 
-
 ### Bug Fixes
 
-* always include nested contexts when serializing ([#1515](https://github.com/marko-js/marko/issues/1515)) ([84aa30e](https://github.com/marko-js/marko/commit/84aa30ee6d04732f4a9f3349f61b12a72a980016))
-* set preserve false under new rerender roots ([#1513](https://github.com/marko-js/marko/issues/1513)) ([c00a02c](https://github.com/marko-js/marko/commit/c00a02c44633d10ea23284e6b1222476d7134361))
-
-
-
-
+- always include nested contexts when serializing ([#1515](https://github.com/marko-js/marko/issues/1515)) ([84aa30e](https://github.com/marko-js/marko/commit/84aa30ee6d04732f4a9f3349f61b12a72a980016))
+- set preserve false under new rerender roots ([#1513](https://github.com/marko-js/marko/issues/1513)) ([c00a02c](https://github.com/marko-js/marko/commit/c00a02c44633d10ea23284e6b1222476d7134361))
 
 # [5.0.0-next.4](https://github.com/marko-js/marko/compare/v5.0.0-next.3...v5.0.0-next.4) (2020-02-25)
 
-
 ### Bug Fixes
 
-* improve node locations in sourcemaps ([#1512](https://github.com/marko-js/marko/issues/1512)) ([f4a39e9](https://github.com/marko-js/marko/commit/f4a39e91ca90aa734882ba234119ade3b0436e73))
-
-
-
-
+- improve node locations in sourcemaps ([#1512](https://github.com/marko-js/marko/issues/1512)) ([f4a39e9](https://github.com/marko-js/marko/commit/f4a39e91ca90aa734882ba234119ade3b0436e73))
 
 # [5.0.0-next.3](https://github.com/marko-js/marko/compare/v5.0.0-next.2...v5.0.0-next.3) (2020-02-25)
 
-
 ### Bug Fixes
 
-* only use minprops on runtime code ([#1511](https://github.com/marko-js/marko/issues/1511)) ([eb7441f](https://github.com/marko-js/marko/commit/eb7441f78779272577d8a19433644c0440ac6b80))
-
-
-
-
+- only use minprops on runtime code ([#1511](https://github.com/marko-js/marko/issues/1511)) ([eb7441f](https://github.com/marko-js/marko/commit/eb7441f78779272577d8a19433644c0440ac6b80))
 
 # [5.0.0-next.2](https://github.com/marko-js/marko/compare/v5.0.0-next.1...v5.0.0-next.2) (2020-02-25)
 
 **Note:** Version bump only for package marko
 
-
-
-
-
 # [5.0.0-next.1](https://github.com/marko-js/marko/compare/v4.18.48...v5.0.0-next.1) (2020-02-25)
-
 
 ### chore
 
-* delete deprecated apis/tests ([c163054](https://github.com/marko-js/marko/commit/c1630543fba7ca136d5986b4c19ecaa7f7fccb82))
-
+- delete deprecated apis/tests ([c163054](https://github.com/marko-js/marko/commit/c1630543fba7ca136d5986b4c19ecaa7f7fccb82))
 
 ### Features
 
-* update apis/tests for new compiler ([ea6736d](https://github.com/marko-js/marko/commit/ea6736d085839debf91979be4f901d79dca9d2bd))
-
+- update apis/tests for new compiler ([ea6736d](https://github.com/marko-js/marko/commit/ea6736d085839debf91979be4f901d79dca9d2bd))
 
 ### BREAKING CHANGES
 
-* api for compile-time tags has changed.
-This affects tranformer/node-factory/code-generator tags.
+- api for compile-time tags has changed.
+  This affects tranformer/node-factory/code-generator tags.
 
 Co-authored-by: Michael Rawlings <mirawlings@ebay.com>
 Co-authored-by: Dylan Piercey <dpiercey@ebay.com>
 Co-authored-by: Andrew Gliga <agliga@ebay.com>
-* The following deprecated apis have been removed:
-- Deprecated top-level entrypoints of the `marko` package
-- The marko@3/marko-widgets@6 legacy compatibility layer
-- Auto-migratable syntax and api changes to the core tags
+
+- The following deprecated apis have been removed:
+
+* Deprecated top-level entrypoints of the `marko` package
+* The marko@3/marko-widgets@6 legacy compatibility layer
+* Auto-migratable syntax and api changes to the core tags
 
 Co-authored-by: Michael Rawlings <mirawlings@ebay.com>
 Co-authored-by: Dylan Piercey <dpiercey@ebay.com>
-
-
-
-
 
 # Changelog
 
