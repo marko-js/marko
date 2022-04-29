@@ -1,11 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@1.7.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    {
-      "repo": "marko-js/marko"
-    }
-  ],
+  "changelog": ["@changesets/changelog-github", { "repo": "marko-js/marko" }],
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  },
   "updateInternalDependencies": "patch",
   "baseBranch": "main",
   "access": "public",
