@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@1.7.0/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    {
+      "repo": "marko-js/marko"
+    }
+  ],
+  "updateInternalDependencies": "patch",
+  "baseBranch": "main",
+  "access": "public",
+  "commit": false,
+  "linked": [],
+  "ignore": [],
+  "fixed": []
+}

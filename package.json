@@ -2,22 +2,21 @@
   "name": "marko-project",
   "private": true,
   "scripts": {
-    "build": "lerna exec --parallel -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --source-maps --env-name=production && npm run build:types",
-    "build:watch": "npm run build -- --watch",
+    "build": "npm exec --ws -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production && npm run build:types",
     "build:types": "node scripts/types-babel-types.mjs > packages/compiler/dist/types.d.ts && node scripts/types-babel-traverse.js > packages/compiler/dist/traverse.d.ts",
-    "postinstall": "lerna bootstrap --hoist",
-    "prepack": "ENTRY=main:npm npm run set-entry",
-    "postpack": "ENTRY=main:dev npm run set-entry",
-    "release": "npm run build && lerna publish",
-    "test": "mocha --timeout 10000 -r @babel/register \"packages/*/test/{*.test.js,*/*.test.js}\"",
+    "publish": "ENTRY=main:npm npm run set-entry && npm run build && changeset publish && ENTRY=main:dev npm run set-entry",
+    "change": "changeset add",
+    "test": "mocha \"packages/*/test/{*.test.js,*/*.test.js}\"",
     "test:watch": "npm run mocha -- --recursive --watch",
-    "clean": "lerna clean && rm -rf ./packages/*/dist",
-    "format": "eslint -f visualstudio --fix . && prettier \"**/*.{json,md,js}\" --write",
-    "lint": "eslint -f visualstudio . && prettier \"**/*.{js,json,css,md}\" -l",
-    "ci:test": "npm run lint && cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" MARKO_DEBUG=1 NODE_ENV=test nyc --reporter=text npm test",
+    "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write",
+    "lint": "npm run lint:eslint && npm run lint:prettier -- -l",
+    "lint:eslint": "eslint -f visualstudio .",
+    "lint:prettier": "prettier \"./**/*{.ts,.js,.json,.md,.yml}\"",
+    "ci:test": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" MARKO_DEBUG=1 NODE_ENV=test nyc --reporter=text npm test",
     "ci:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "report": "nyc report --reporter=html && open ./coverage/index.html",
-    "set-entry": "lerna exec -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)"
+    "set-entry": "npm exec --ws -- dot-json package.json main $\\(dot-json package.json $ENTRY\\)",
+    "version": "changeset version"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
@@ -27,16 +26,14 @@
     "@babel/plugin-transform-runtime": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
     "@babel/register": "^7.16.0",
-    "@commitlint/cli": "^12.1.0",
-    "@commitlint/config-conventional": "^12.1.0",
-    "@commitlint/config-lerna-scopes": "^12.1.0",
+    "@changesets/changelog-github": "^0.4.4",
+    "@changesets/cli": "^2.22.0",
     "@ebay/browserslist-config": "^1.2.0",
     "@types/babel__traverse": "^7.14.2",
     "babel-plugin-istanbul": "^6.1.1",
     "babel-plugin-minprops": "^2.0.1",
     "bluebird": "^3.7.2",
     "chai": "^4.3.4",
-    "codecov": "^3.8.1",
     "cross-env": "^7.0.3",
     "diffable-html": "^4.0.0",
     "dot-json": "^1.2.2",
@@ -45,8 +42,8 @@
     "express": "^4.17.1",
     "husky": "^4.3.8",
     "it-fails": "^1.0.5",
-    "jsdom-context-require": "^2.0.1",
-    "lerna": "^4.0.0",
+    "jsdom": "^19.0.0",
+    "jsdom-context-require": "^4.0.4",
     "lint-staged": "^10.5.4",
     "mocha": "^8.3.2",
     "mocha-autotest": "^1.1.0",
@@ -55,5 +52,8 @@
     "shell-quote": "^1.7.2",
     "through": "^2.3.8",
     "through2": "^4.0.2"
-  }
+  },
+  "workspaces": [
+    "./packages/*"
+  ]
 }

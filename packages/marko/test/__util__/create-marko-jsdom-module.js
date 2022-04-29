@@ -29,9 +29,9 @@ module.exports = function (dir, html, options) {
     beforeParse(window, browser) {
       window.global = window;
       window.alert = () => {};
-      window.onerror = error => {
-        browser.error = browser.error || error;
-      };
+      window.addEventListener("error", e => {
+        browser.error = browser.error || e.error;
+      });
       browser.require("complain").log = (...args) =>
         require("complain").log(...args);
       globals.forEach(function (k) {
