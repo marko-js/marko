@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.2
+
+### Patch Changes
+
+- [#1794](https://github.com/marko-js/marko/pull/1794) [`b9d26355f`](https://github.com/marko-js/marko/commit/b9d26355fa9bc334a96cea32c3ac90d70673c8a5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add file extensions to getRuntimeEntryFiles helper.
+
 ## 5.21.1
 
 ### Patch Changes
