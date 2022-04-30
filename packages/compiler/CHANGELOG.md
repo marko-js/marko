@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.21.1
+
+### Patch Changes
+
+- [#1792](https://github.com/marko-js/marko/pull/1792) [`c9107ea7f`](https://github.com/marko-js/marko/commit/c9107ea7f6fc69df10700114fe35b7b494414194) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix broken previous release where the "main" field for package.json files was not correctly updated when published
+
+- Updated dependencies [[`c9107ea7f`](https://github.com/marko-js/marko/commit/c9107ea7f6fc69df10700114fe35b7b494414194)]:
+  - @marko/babel-utils@5.21.1
+
 ## 5.21.0
 
 ### Minor Changes
