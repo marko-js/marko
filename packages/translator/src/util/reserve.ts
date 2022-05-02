@@ -58,11 +58,18 @@ export function reserveScope(
     | t.MarkoTagBody,
   name: string,
   size = 0
-) {
+): Reserve {
   const extra = (node.extra ??= {} as typeof node.extra);
 
   if (extra.reserve) {
-    throw new Error("Unable to reserve multiple scopes for a node.");
+    const reserve = extra.reserve as Reserve;
+    if (size && reserve.size) {
+      throw new Error("Unable to reserve multiple scopes for a node");
+    } else {
+      reserve.size = size;
+      reserve.name += "_" + name;
+    }
+    return reserve;
   }
 
   const reservesByType = getReservesByType(sectionId);

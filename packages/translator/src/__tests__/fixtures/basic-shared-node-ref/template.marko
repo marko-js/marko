@@ -1,0 +1,9 @@
+<let/open = true/>
+<let/list = [1,2,3]/>
+<ul hidden=!open>
+  <for|x| of=[1,2,3] by(x) { return x }>
+    <li>${x}</li>
+  </for>
+</ul>
+<button#toggle onclick() { open=!open }>Toggle</button>
+<button#reverse onclick() { list = [].concat(list).reverse() }>Reverse</button>
