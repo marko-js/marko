@@ -70,7 +70,7 @@ function getHydrateRegisterId(
       name += `_${references.name}`;
     }
   }
-  return `${getTemplateId(optimize, filename as string)}_${sectionId}${name}`;
+  return getTemplateId(optimize, `${filename}_${sectionId}${name}`);
 }
 
 export function writeAllStatementGroups() {
