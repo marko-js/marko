@@ -22,7 +22,10 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items");
 
-  _writeHydrateScope(_scope, [,,,,,, id, items]);
+  _writeHydrateScope(_scope, {
+    6: id,
+    7: items
+  });
 };
 
 export default _renderer;

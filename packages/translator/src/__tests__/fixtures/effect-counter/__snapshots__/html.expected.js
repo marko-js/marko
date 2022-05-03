@@ -9,7 +9,9 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount");
 
-  _writeHydrateScope(_scope, [, clickCount]);
+  _writeHydrateScope(_scope, {
+    1: clickCount
+  });
 };
 
 export default _renderer;

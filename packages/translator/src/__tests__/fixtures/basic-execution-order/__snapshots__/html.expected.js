@@ -18,7 +18,7 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0");
 
-  _writeHydrateScope(_scope, []);
+  _writeHydrateScope(_scope, {});
 };
 
 export default _renderer;

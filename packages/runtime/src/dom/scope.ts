@@ -6,7 +6,7 @@ const SCOPE_ID_MULTIPLIER = 2 ** 16;
 let scopeId = 0;
 
 export function createScope(owner?: Scope): Scope {
-  const scope = [] as unknown as Scope;
+  const scope = {} as Scope;
   scope.___id = CLIENT_SCOPE_ID_BIT + SCOPE_ID_MULTIPLIER * scopeId++;
   scope._ = owner;
   return scope;

@@ -17,7 +17,9 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show");
 
-  _writeHydrateScope(_scope, [,,,,, show]);
+  _writeHydrateScope(_scope, {
+    5: show
+  });
 };
 
 export default _renderer;

@@ -10,7 +10,10 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b");
 
-  _writeHydrateScope(_scope, [,, a, b]);
+  _writeHydrateScope(_scope, {
+    2: a,
+    3: b
+  });
 };
 
 export default _renderer;

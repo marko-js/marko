@@ -283,14 +283,13 @@ export function writeHTMLHydrateStatements(
       callRuntime(
         "writeHydrateScope",
         scopeIdentifier,
-        t.arrayExpression(
+        t.objectExpression(
           refs.reduce((acc, ref) => {
-            while (acc.length < ref.id) {
-              acc.push(null);
-            }
-            acc.push(t.identifier(ref.name));
+            acc.push(
+              t.objectProperty(t.numericLiteral(ref.id), t.identifier(ref.name))
+            );
             return acc;
-          }, [] as Array<null | t.Identifier>)
+          }, [] as Array<t.ObjectProperty>)
         )
       )
     )

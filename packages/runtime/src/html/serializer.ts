@@ -320,8 +320,8 @@ export class Serializer {
 }
 
 function toObjectKey(name: string) {
-  const invalidIdentifierPos = getInvalidIdentifierPos(name);
-  return invalidIdentifierPos === -1 ? name : quote(name, invalidIdentifierPos);
+  const invalidPropertyPos = getInvalidPropertyPos(name);
+  return invalidPropertyPos === -1 ? name : quote(name, invalidPropertyPos);
 }
 
 function toAssignment(parent: string, key: string | number) {
@@ -334,31 +334,31 @@ function toPropertyAccess(key: string | number) {
     : "." + key;
 }
 
-function getInvalidIdentifierPos(name: string) {
+function getInvalidPropertyPos(name: string) {
   let char = name[0];
-  if (
-    !(
-      (char >= "a" && char <= "z") ||
-      (char >= "A" && char <= "Z") ||
-      char === "$" ||
-      char === "_"
-    )
-  ) {
-    return 0;
-  }
-
-  for (let i = 1, len = name.length; i < len; i++) {
-    char = name[i];
-    if (
-      !(
-        (char >= "a" && char <= "z") ||
-        (char >= "A" && char <= "Z") ||
-        (char >= "0" && char <= "9") ||
-        char === "$" ||
-        char === "_"
-      )
-    ) {
-      return i;
+  if (char >= "0" && char <= "9") {
+    // numeric
+    for (let i = 1, len = name.length; i < len; i++) {
+      char = name[i];
+      if (!(char >= "0" && char <= "9")) {
+        return i;
+      }
+    }
+  } else {
+    // or valid identifier
+    for (let i = 0, len = name.length; i < len; i++) {
+      char = name[i];
+      if (
+        !(
+          (char >= "a" && char <= "z") ||
+          (char >= "A" && char <= "Z") ||
+          (char >= "0" && char <= "9") ||
+          char === "$" ||
+          char === "_"
+        )
+      ) {
+        return i;
+      }
     }
   }
 

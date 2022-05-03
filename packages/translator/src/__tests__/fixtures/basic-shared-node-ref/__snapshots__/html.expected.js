@@ -22,7 +22,10 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open");
 
-  _writeHydrateScope(_scope, [,,,,,, open, list]);
+  _writeHydrateScope(_scope, {
+    6: open,
+    7: list
+  });
 };
 
 export default _renderer;

@@ -10,7 +10,10 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y");
 
-  _writeHydrateScope(_scope, [,,, x, y]);
+  _writeHydrateScope(_scope, {
+    3: x,
+    4: y
+  });
 };
 
 export default _renderer;

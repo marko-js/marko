@@ -14,7 +14,9 @@ const _renderer = input => {
 
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
 
-    _writeHydrateScope(_scope, [,, num]);
+    _writeHydrateScope(_scope, {
+      2: num
+    });
 
     _maybeFlush();
   }

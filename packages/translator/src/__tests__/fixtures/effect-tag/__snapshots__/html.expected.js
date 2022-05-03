@@ -9,7 +9,9 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/effect-tag/template.marko_0_x");
 
-  _writeHydrateScope(_scope, [x]);
+  _writeHydrateScope(_scope, {
+    0: x
+  });
 };
 
 export default _renderer;

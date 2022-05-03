@@ -9,7 +9,9 @@ const _renderer = input => {
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count");
 
-  _writeHydrateScope(_scope, [,, count]);
+  _writeHydrateScope(_scope, {
+    2: count
+  });
 };
 
 export default _renderer;
