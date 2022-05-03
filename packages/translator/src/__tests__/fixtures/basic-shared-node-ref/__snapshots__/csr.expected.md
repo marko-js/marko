@@ -103,13 +103,13 @@ container.querySelector("#reverse").click();
 ```html
 <ul>
   <li>
-    1
+    3
   </li>
   <li>
     2
   </li>
   <li>
-    3
+    1
   </li>
 </ul>
 <button
@@ -126,5 +126,8 @@ container.querySelector("#reverse").click();
 
 # Mutations
 ```
-
+removed ul0/li1 after ul0/li2
+inserted ul0/li1
+removed ul0/li0 after ul0/li2
+inserted ul0/li0
 ```

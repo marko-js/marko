@@ -30,8 +30,14 @@ function _hydrate_open(_scope, open = _scope[6]) {
 
 _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _hydrate_open);
 
+const _temp2 = function (_scope, x) {
+  return x;
+};
+
 function _apply_list(_scope, list) {
   if (_write(_scope, 7, list)) {
+    _setLoopOf(_scope, 0, list, _for, _bind(_scope, _temp2), _apply1_x);
+
     _queueHydrate(_scope, _hydrate_list);
   }
 }
@@ -44,16 +50,10 @@ function _apply_open(_scope, open) {
   }
 }
 
-const _temp2 = function (_scope, x) {
-  return x;
-};
-
 function _apply(_scope) {
   _apply_open(_scope, true);
 
   _apply_list(_scope, [1, 2, 3]);
-
-  _setLoopOf(_scope, 0, [1, 2, 3], _for, _bind(_scope, _temp2), _apply1_x);
 }
 
 export const template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";

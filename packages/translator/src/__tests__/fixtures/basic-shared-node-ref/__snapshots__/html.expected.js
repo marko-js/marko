@@ -8,7 +8,7 @@ const _renderer = input => {
 
   _write(`${_markHydrateNode(_scope, 0)}<ul${_attr("hidden", !open)}>`);
 
-  for (const x of [1, 2, 3]) {
+  for (const x of list) {
     const _scope = _nextScopeId();
 
     _write(`<li>${_markHydrateNode(_scope, 0)}${_escapeXML(x)}</li>`);
