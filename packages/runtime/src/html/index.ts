@@ -13,6 +13,7 @@ export { dynamicTag } from "./dynamic-tag";
 export {
   createRenderer,
   write,
+  maybeFlush,
   fork,
   tryPlaceholder,
   tryCatch,

@@ -1,4 +1,4 @@
-import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _escapeXML, nextScopeId as _nextScopeId, attr as _attr, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _escapeXML, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, attr as _attr, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = input => {
   const _scope = _nextScopeId();
@@ -20,6 +20,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`<div>${_markHydrateNode(_scope, 0)}${_escapeXML(i)}: ${_markHydrateNode(_scope, 1)}${_escapeXML(val)}</div><div></div><div></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 4)}`);
@@ -30,6 +32,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`<div>${_markHydrateNode(_scope, 0)}${_escapeXML(key)}: ${_markHydrateNode(_scope, 1)}${_escapeXML(val)}</div><div></div><div></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 8)}`);
@@ -40,6 +44,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`<div>${_markHydrateNode(_scope, 0)}${_escapeXML(i)}</div><div></div><div></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 12)}`);
@@ -52,6 +58,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`${_markHydrateNode(_scope, 0)}<div${_attr("key", i)}>${_markHydrateNode(_scope, 1)}${_escapeXML(i)}: ${_markHydrateNode(_scope, 2)}${_escapeXML(val)}</div><div></div>${_markHydrateNode(_scope, 3)}<div${_attr("key", `other-${i}`)}></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 16)}`);
@@ -65,6 +73,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`${_markHydrateNode(_scope, 0)}<div${_attr("key", i)}>${_markHydrateNode(_scope, 1)}${_escapeXML(list.length)}: ${_markHydrateNode(_scope, 2)}${_escapeXML(val)}</div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 20)}`);
@@ -75,6 +85,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`${_markHydrateNode(_scope, 0)}<div${_attr("key", key)}>${_markHydrateNode(_scope, 1)}${_escapeXML(key)}: ${_markHydrateNode(_scope, 2)}${_escapeXML(val)}</div><div></div>${_markHydrateNode(_scope, 3)}<div${_attr("key", `other-${key}`)}></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 24)}`);
@@ -92,7 +104,11 @@ const _renderer = input => {
       const _scope = _nextScopeId();
 
       _write(`${_markHydrateNode(_scope, 0)}<div${_attr("key", i)}>${_markHydrateNode(_scope, 1)}${_escapeXML(i)}</div><div></div>${_markHydrateNode(_scope, 2)}<div${_attr("key", `other-${i}`)}></div>`);
+
+      _maybeFlush();
     }
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 28)}`);
@@ -103,6 +119,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write(`${_markHydrateNode(_scope, 0)}<div${_attr("key", i)}>${_markHydrateNode(_scope, 1)}${_escapeXML(i)}</div><div></div>${_markHydrateNode(_scope, 2)}<div${_attr("key", `other-${i}`)}></div>`);
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 32)}`);
@@ -111,6 +129,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write("Hello");
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 36)}`);
@@ -119,6 +139,8 @@ const _renderer = input => {
     const _scope = _nextScopeId();
 
     _write("Hello");
+
+    _maybeFlush();
   }
 };
 

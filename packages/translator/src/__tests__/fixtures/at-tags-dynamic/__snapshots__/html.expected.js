@@ -1,4 +1,4 @@
-import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, escapeXML as _escapeXML, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, escapeXML as _escapeXML, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
 
 const _renderer = input => {
@@ -44,6 +44,8 @@ const _renderer = input => {
 
       });
     }
+
+    _maybeFlush();
   }
 
   _write(`${_markHydrateNode(_scope, 0)}`);
@@ -70,12 +72,16 @@ const _renderer = input => {
         }
 
       });
+
+      _maybeFlush();
     }
 
     _col.push({
       x: i,
       row: _row
     });
+
+    _maybeFlush();
   }
 
   _col.push({

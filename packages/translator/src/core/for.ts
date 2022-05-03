@@ -327,6 +327,8 @@ const translateHTML = {
       );
     }
 
+    block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
+
     tag.replaceWithMultiple(([] as t.Node[]).concat(forNode!));
   },
 };

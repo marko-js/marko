@@ -1,4 +1,4 @@
-import { markHydrateNode as _markHydrateNode, write as _write, attr as _attr, escapeXML as _escapeXML, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, write as _write, attr as _attr, escapeXML as _escapeXML, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, maybeFlush as _maybeFlush, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _comments from "./comments.marko";
 
 const _renderer = ({
@@ -40,6 +40,8 @@ const _renderer = ({
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
 
     _writeHydrateScope(_scope, [,,,,,,,,,,, open]);
+
+    _maybeFlush();
   }
 
   _write("</ul>");

@@ -65,6 +65,16 @@ export function write(data: string) {
   $_buffer!.content += data;
 }
 
+const TARGET_BUFFER_SIZE = 64000;
+export function maybeFlush() {
+  if (
+    $_flush === flushToStream &&
+    $_buffer!.content.length > TARGET_BUFFER_SIZE
+  ) {
+    flushToStream();
+  }
+}
+
 function flushToStream() {
   writeHydrateScript();
   $_stream!.write($_buffer!.content);

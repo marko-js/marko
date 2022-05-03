@@ -1,4 +1,4 @@
-import { markHydrateNode as _markHydrateNode, write as _write, attr as _attr, escapeXML as _escapeXML, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, write as _write, attr as _attr, escapeXML as _escapeXML, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, maybeFlush as _maybeFlush, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = input => {
   const _scope = _nextScopeId();
@@ -15,6 +15,8 @@ const _renderer = input => {
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
 
     _writeHydrateScope(_scope, [,, num]);
+
+    _maybeFlush();
   }
 };
 
