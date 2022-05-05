@@ -3,6 +3,7 @@ import {
   data,
   createRenderFn,
   queue,
+  queueHydrate,
   bind,
   write,
   Scope,
@@ -40,7 +41,7 @@ export const walks = get + next(1) + get + next(1);
 export const render = (scope: ComponentScope) => {
   execA(scope, 0);
   execB(scope, 0);
-  hydrate(scope);
+  queueHydrate(scope, hydrate);
 };
 
 export const hydrate = (scope: ComponentScope) => {

@@ -8,6 +8,7 @@ import {
   write,
   bind,
   queueInBranch,
+  queueHydrate,
   Scope,
 } from "../../../dom/index";
 
@@ -51,7 +52,7 @@ export const walks = get + over(1) + get + over(1);
 export const render = (scope: ComponentScope) => {
   _apply_show(scope, true);
   _apply_message(scope, "hi");
-  _hydrate(scope);
+  queueHydrate(scope, _hydrate);
 };
 
 export const _hydrate = (scope: ComponentScope) => {

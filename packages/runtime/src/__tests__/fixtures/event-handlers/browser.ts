@@ -3,6 +3,7 @@ import {
   createRenderFn,
   on,
   queue,
+  queueHydrate,
   write,
   bind,
   Scope,
@@ -53,7 +54,7 @@ const execClickHandler = (
   value: ComponentScope[Index.EVENT_HANDLER]
 ) => {
   if (write(scope, Index.EVENT_HANDLER, value)) {
-    attachEventHandler(scope);
+    queueHydrate(scope, attachEventHandler);
   }
 };
 

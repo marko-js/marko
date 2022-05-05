@@ -1,9 +1,9 @@
 type Unset = false | null | undefined;
 type EventNames = keyof GlobalEventHandlersEventMap;
 
-const delegatedByType = new Map<
-  string,
-  WeakMap<Element, Unset | ((...args: any[]) => void)>
+const delegationRoots = new WeakMap<
+  Node,
+  Map<string, WeakMap<Element, Unset | ((...args: any[]) => void)>>
 >();
 
 const eventOpts: AddEventListenerOptions = {
@@ -17,22 +17,28 @@ export function on<
     | Unset
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void)
 >(element: Element, type: T, handler: H) {
-  const delegated = delegatedByType.get(type);
-
-  if (delegated) {
-    delegated.set(element, handler);
-  } else {
-    delegatedByType.set(type, new WeakMap([[element, handler]]));
-    document.addEventListener(type, handleDelegated, eventOpts);
+  const delegationRoot = element.getRootNode();
+  let delegationEvents = delegationRoots.get(delegationRoot);
+  if (!delegationEvents) {
+    delegationRoots.set(delegationRoot, (delegationEvents = new Map()));
   }
+  let delegationHandlers = delegationEvents.get(type);
+  if (!delegationHandlers) {
+    delegationEvents!.set(type, (delegationHandlers = new WeakMap()));
+    delegationRoot.addEventListener(type, handleDelegated, eventOpts);
+  }
+
+  delegationHandlers.set(element, handler);
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   let target = ev.target as Element | null;
-  const delegated = delegatedByType.get(ev.type)!;
-
   if (target) {
-    let handler = delegated.get(target);
+    const delegationRoot = target.getRootNode();
+    const delegationEvents = delegationRoots.get(delegationRoot);
+    const delegationHandlers = delegationEvents!.get(ev.type!);
+
+    let handler = delegationHandlers!.get(target);
 
     if (ev.bubbles) {
       while (
@@ -40,7 +46,7 @@ function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
         !ev.cancelBubble &&
         (target = target!.parentElement!)
       ) {
-        handler = delegated.get(target);
+        handler = delegationHandlers!.get(target);
       }
     }
 
