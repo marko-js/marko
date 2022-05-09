@@ -16,7 +16,7 @@
     "ci:report": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "report": "nyc report --reporter=html && open ./coverage/index.html",
     "set-entry": "npm exec --ws -c 'dot-json package.json main $(dot-json package.json $ENTRY)'",
-    "version": "changeset version"
+    "version": "changeset version && npm i --package-lock-only"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
