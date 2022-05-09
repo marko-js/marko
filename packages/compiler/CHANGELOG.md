@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.2
+
+### Patch Changes
+
+- [#1797](https://github.com/marko-js/marko/pull/1797) [`5921c2297`](https://github.com/marko-js/marko/commit/5921c2297297698c4026f0a4d077c364c42e038a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Pin a newer version of htmljs-parser that fixes some parser bugs. See: https://github.com/marko-js/htmljs-parser/pull/103
+
 ## 5.21.1
 
 ### Patch Changes
