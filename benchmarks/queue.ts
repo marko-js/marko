@@ -11,8 +11,12 @@ import {
   queue as queueHeap2,
   run as runHeap2,
 } from "../packages/runtime/src/dom/queue-heap-2";
+import {
+  queue as queueDumb,
+  run as runDumb,
+} from "../packages/runtime/src/dom/queue-dumb";
 
-const SPACE = 2 ** 8;
+const SPACE = 1; //2 ** 8;
 const dummyScope = Object.assign([], { ___id: 0 }) as any;
 function dummyFunction() {}
 
@@ -48,6 +52,7 @@ const suite = new Benchmark.Suite();
   suite.add(`queue-sorted-insert-${exec.name}`, () =>
     exec(queueSortedInsert, runSortedInsert)
   );
+  suite.add(`queue-dumb-${exec.name}`, () => exec(queueDumb, runDumb));
 });
 
 suite
