@@ -162,15 +162,20 @@ export function userEffect<S extends Scope>(
 export function lifecycle(
   scope: Scope,
   index: number,
-  mount?: () => void,
-  update?: () => void,
-  destroy?: () => void
-) {
-  const mounted = scope[index];
-  if (!mounted) {
-    if (mount) mount();
-    onDestroy(scope, index + 1);
+  thisObj: Record<string, unknown> & {
+    onMount?: () => void;
+    onUpdate?: () => void;
+    onDestroy?: () => void;
   }
-  if (mounted && update) update();
-  scope[index + 1] = destroy;
+) {
+  let storedThis = scope[index] as typeof thisObj;
+  if (!storedThis) {
+    storedThis = scope[index] = thisObj;
+    scope[index + 1] = () => storedThis.onDestroy?.();
+    onDestroy(scope, index + 1);
+    storedThis.onMount?.();
+  } else {
+    Object.assign(storedThis, thisObj);
+    storedThis.onUpdate?.();
+  }
 }
