@@ -83,12 +83,19 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicEndNodeOffset
   );
   return (input: I, element: Element): RenderResult<I> => {
-    queueHydrate(null as unknown as Scope, () => {
-      element.replaceChildren(dom);
-    });
-
     const scope = createScope() as S;
-    const dom = initRenderer(renderer, scope);
+
+    queue(
+      scope,
+      () => {
+        queueHydrate(scope, () => {
+          element.replaceChildren(dom);
+        });
+
+        const dom = initRenderer(renderer, scope);
+      },
+      -2
+    );
 
     if (dynamicInput) {
       queue(scope, dynamicInput, -1, input);
