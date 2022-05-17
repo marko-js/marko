@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.3
+
+### Patch Changes
+
+- [#1800](https://github.com/marko-js/marko/pull/1800) [`c352de67e`](https://github.com/marko-js/marko/commit/c352de67ecb19d45d9c6874a8ba048fb656bb562) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: update deps, inline babel helper removed from latest version
+
 ## 5.21.2
 
 ### Patch Changes
