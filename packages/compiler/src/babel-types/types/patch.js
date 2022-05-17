@@ -1,7 +1,7 @@
 /* eslint-disable no-import-assign */
 import * as babelTypes from "@babel/types";
-import builder from "@babel/types/lib/builders/builder";
 import defineType from "@babel/types/lib/definitions/utils";
+import validate from "@babel/types/lib/validators/validate";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
 import definitions, { MARKO_TYPES, MARKO_ALIAS_TYPES } from "./definitions";
@@ -37,7 +37,7 @@ MARKO_TYPES.forEach(typeName => {
   babelTypes[checkKey] = (node, opts) => is(typeName, node, opts);
   babelTypes[assertKey] = (node, opts) => assert(typeName, node, opts);
   babelTypes[typeName] = babelTypes[lowerName] = function () {
-    return builder.apply(typeName, arguments);
+    return builder(typeName, arguments);
   };
 });
 
@@ -68,4 +68,38 @@ function assert(typeName, node, opts) {
       )}, but instead got "${node.type}".`
     );
   }
+}
+
+function builder(type, args) {
+  const definition = definitions[type];
+  const keys = definition.builder;
+  const countArgs = args.length;
+  if (countArgs > keys.length) {
+    throw new Error(
+      `${type}: Too many arguments passed. Received ${countArgs} but can receive no more than ${keys.length}`
+    );
+  }
+
+  const node = { type };
+
+  for (let i = 0; i < keys.length; ++i) {
+    const key = keys[i];
+    const field = definition.fields[key];
+
+    let arg;
+    if (i < countArgs) arg = args[i];
+    if (arg === undefined) {
+      arg = Array.isArray(field.default) ? [] : field.default;
+    }
+
+    node[key] = arg;
+  }
+
+  // (assume all enumerable properties are own)
+  // eslint-disable-next-line guard-for-in
+  for (const key in node) {
+    validate(node, key, node[key]);
+  }
+
+  return node;
 }
