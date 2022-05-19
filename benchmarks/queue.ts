@@ -12,9 +12,9 @@ import {
   run as runHeap2,
 } from "../packages/runtime/src/dom/queue-heap-2";
 import {
-  queue as queueDumb,
-  run as runDumb,
-} from "../packages/runtime/src/dom/queue-dumb";
+  queue as queueNaive,
+  run as runNaive,
+} from "../packages/runtime/src/dom/queue-naive";
 import {
   queue as queueDeferredSort,
   run as runDeferredSort,
@@ -84,13 +84,13 @@ function nested(queue, run) {
 
 const suite = new Benchmark.Suite();
 
-[/*ordered, tiered, reverse, */ nested].forEach((exec) => {
+[ordered, tiered, reverse, nested].forEach((exec) => {
   suite.add(`queue-heap-${exec.name}`, () => exec(queueHeap, runHeap));
   suite.add(`queue-heap-2-${exec.name}`, () => exec(queueHeap2, runHeap2));
   suite.add(`queue-sorted-insert-${exec.name}`, () =>
     exec(queueSortedInsert, runSortedInsert)
   );
-  suite.add(`queue-dumb-${exec.name}`, () => exec(queueDumb, runDumb));
+  suite.add(`queue-naive-${exec.name}`, () => exec(queueNaive, runNaive));
   suite.add(`queue-deferred-sort-${exec.name}`, () =>
     exec(queueDeferredSort, runDeferredSort)
   );
