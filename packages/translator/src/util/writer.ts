@@ -8,17 +8,15 @@ import { getWalkString } from "./walks";
 import { getDefaultApply } from "./apply-hydrate";
 import { currentProgramPath } from "../visitors/program";
 
-const [_getRenderer] = createSectionState<t.Identifier>("renderer", () =>
-  currentProgramPath.scope.generateUidIdentifier()
+const [getRenderer] = createSectionState<t.Identifier>(
+  "renderer",
+  (sectionId: number) => {
+    const name = currentProgramPath.node.extra.sectionNames![sectionId];
+    return t.identifier(name);
+  }
 );
 
-export function getRenderer(sectionId: number, name?: string) {
-  const renderer = _getRenderer(sectionId);
-  if (name) {
-    renderer.name = currentProgramPath.scope.generateUid(name);
-  }
-  return renderer;
-}
+export { getRenderer };
 
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",

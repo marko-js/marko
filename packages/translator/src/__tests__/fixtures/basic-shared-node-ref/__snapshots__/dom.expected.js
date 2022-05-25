@@ -1,6 +1,6 @@
 import { queue as _queue, attr as _attr, data as _data, setLoopOf as _setLoopOf, on as _on, write as _write, register as _register, bind as _bind, queueHydrate as _queueHydrate, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply1_x(_scope, x) {
+function _apply$forBody_x(_scope, x) {
   if (_write(_scope, 1, x)) {
     _data(_scope[0], x);
   }
@@ -30,13 +30,13 @@ function _hydrate_open(_scope, open = _scope[6]) {
 
 _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _hydrate_open);
 
-const _temp2 = function (_scope, x) {
+const _temp = function (_scope, x) {
   return x;
 };
 
 function _apply_list(_scope, list) {
   if (_write(_scope, 7, list)) {
-    _setLoopOf(_scope, 0, list, _for, _bind(_scope, _temp2), _apply1_x);
+    _setLoopOf(_scope, 0, list, _forBody, _bind(_scope, _temp), _apply$forBody_x);
 
     _queueHydrate(_scope, _hydrate_list);
   }
@@ -62,7 +62,7 @@ export const walks =
 " +b b b";
 export const apply = _apply;
 
-const _for = _createRenderer("<li> </li>",
+const _forBody = _createRenderer("<li> </li>",
 /* next(1), get */
 "D ", null);
 

@@ -172,7 +172,7 @@ const translateDOM = {
         );
       }
 
-      const rendererId = writer.getRenderer(bodySectionId, "for");
+      const rendererId = writer.getRenderer(bodySectionId);
 
       tag.remove();
 

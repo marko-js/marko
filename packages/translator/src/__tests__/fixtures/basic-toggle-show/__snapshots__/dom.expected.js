@@ -14,7 +14,7 @@ _register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template
 
 function _apply_show(_scope, show) {
   if (_write(_scope, 5, show)) {
-    _setConditionalRenderer(_scope, 0, show ? _if : null);
+    _setConditionalRenderer(_scope, 0, show ? _ifBody : null);
 
     _queueHydrate(_scope, _hydrate_show);
   }
@@ -30,6 +30,6 @@ export const walks =
 "D%+b l";
 export const apply = _apply;
 
-const _if = _createRenderer("Hello!", "", null);
+const _ifBody = _createRenderer("Hello!", "", null);
 
 export default _createRenderFn(template, walks, apply);

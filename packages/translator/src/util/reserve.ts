@@ -2,9 +2,10 @@ import type { types as t } from "@marko/compiler";
 import { createSectionState, forEachSectionId } from "./sections";
 import { createSortedCollection } from "./sorted-arr";
 
-const [getReservesByType] = createSectionState<
-  [Reserve[] | undefined, Reserve[] | undefined, Reserve[] | undefined]
->("reservesByType", () => [undefined, undefined, undefined]);
+const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
+  "reservesByType",
+  () => [undefined, undefined, undefined]
+);
 
 export const enum ReserveType {
   Visit = 0,

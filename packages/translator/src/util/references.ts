@@ -369,7 +369,11 @@ function generateReferenceGroupName(
   sectionId: number,
   references: ReferenceGroup["references"]
 ) {
-  let name = type + (sectionId || "");
+  let name =
+    type +
+    (sectionId
+      ? currentProgramPath.node.extra.sectionNames![sectionId].replace("_", "$")
+      : "");
 
   if (references) {
     if (Array.isArray(references)) {

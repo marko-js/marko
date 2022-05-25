@@ -148,7 +148,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       for (let i = branches.length; i--; ) {
         const { tag, sectionId } = branches[i];
         const [testAttr] = tag.node.attributes;
-        const id = writer.getRenderer(sectionId, "if");
+        const id = writer.getRenderer(sectionId);
 
         setQueueBuilder(tag, ({ apply, index }, closurePriority) => {
           return callRuntime(

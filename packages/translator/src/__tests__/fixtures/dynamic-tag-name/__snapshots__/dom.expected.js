@@ -96,6 +96,6 @@ export const template = "";
 export const walks = "";
 export const apply = _apply;
 
-const _temp = _createRenderer("Body content", "", null);
+const _dynamicBody2 = _createRenderer("Body content", "", null);
 
 export default _createRenderFn(template, walks, apply, applyAttrs);

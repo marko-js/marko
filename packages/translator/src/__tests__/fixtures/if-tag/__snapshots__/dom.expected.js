@@ -1,13 +1,13 @@
 import { setConditionalRenderer as _setConditionalRenderer, queue as _queue, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 function _applyWith_x_y(_scope, x = _scope[14], y = _scope[15]) {
-  _setConditionalRenderer(_scope, 8, x ? _if5 : y ? _if4 : _if3);
+  _setConditionalRenderer(_scope, 8, x ? _ifBody3 : y ? _elseIfBody : _elseBody);
 }
 
 function _applyWith_a_b(_scope, a = _scope[12], b = _scope[13]) {
-  _setConditionalRenderer(_scope, 0, a + b ? _if : null);
+  _setConditionalRenderer(_scope, 0, a + b ? _ifBody : null);
 
-  _setConditionalRenderer(_scope, 4, (a, b) ? _if2 : null);
+  _setConditionalRenderer(_scope, 4, (a, b) ? _ifBody2 : null);
 }
 
 function _apply_y(_scope, y) {
@@ -55,10 +55,10 @@ export const walks =
 "%+b%+bD%+l";
 export const apply = function () {};
 
-const _if = _createRenderer("Hello", "", null),
-      _if2 = _createRenderer("World", "", null),
-      _if5 = _createRenderer("A", "", null),
-      _if4 = _createRenderer("B", "", null),
-      _if3 = _createRenderer("C", "", null);
+const _ifBody = _createRenderer("Hello", "", null),
+      _ifBody2 = _createRenderer("World", "", null),
+      _ifBody3 = _createRenderer("A", "", null),
+      _elseIfBody = _createRenderer("B", "", null),
+      _elseBody = _createRenderer("C", "", null);
 
 export default _createRenderFn(template, walks, apply, applyAttrs);

@@ -1,7 +1,7 @@
 import { write as _write, data as _data, createRenderer as _createRenderer, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _other, applyAttrs as _other_attrs, template as _other_template, walks as _other_walks } from "./components/other.marko";
 
-function _apply1_message(_scope, message) {
+function _apply$otherBody_message(_scope, message) {
   if (_write(_scope, 1, message)) {
     _data(_scope[0], message);
   }
@@ -27,7 +27,7 @@ export const walks =
 `/${_other_walks}&`;
 export const apply = _apply;
 
-const _temp2 = _createRenderer(" </span>",
+const _otherBody = _createRenderer(" </span>",
 /* next(1), get */
 "D ", null);
 

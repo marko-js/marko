@@ -1,7 +1,7 @@
 import { data as _data, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _layout, applyAttrs as _layout_attrs, template as _layout_template, walks as _layout_walks } from "./components/layout.marko";
 
-function _apply1_name(_scope, name = _scope._[1]) {
+function _apply$layoutBody_name(_scope, name = _scope._[1]) {
   _data(_scope[0], name);
 }
 
@@ -25,7 +25,7 @@ export const walks =
 `/${_layout_walks}&`;
 export const apply = _apply;
 
-const _temp = _createRenderer("<h1>Hello <!></h1>",
+const _layoutBody = _createRenderer("<h1>Hello <!></h1>",
 /* next(1), over(1), replace */
 "Db%", null);
 

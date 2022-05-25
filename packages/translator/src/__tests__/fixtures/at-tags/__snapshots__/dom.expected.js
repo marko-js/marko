@@ -11,6 +11,6 @@ export const walks =
 `/${_hello_walks}&`;
 export const apply = _apply;
 
-const _temp = _createRenderer("", "", null);
+const _helloBody = _createRenderer("", "", null);
 
 export default _createRenderFn(template, walks, apply);

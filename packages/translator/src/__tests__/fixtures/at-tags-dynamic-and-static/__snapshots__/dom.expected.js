@@ -1,7 +1,7 @@
 import { apply as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
 import { write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply2_a(_scope, a) {
+function _apply$forBody_a(_scope, a) {
   if (_write(_scope, 0, a)) {}
 }
 
@@ -15,7 +15,7 @@ export const walks =
 `/${_hello_walks}&`;
 export const apply = _apply;
 
-const _temp = _createRenderer("", "", null),
-      _temp2 = _createRenderer("", "", null);
+const _helloBody = _createRenderer("", "", null),
+      _forBody = _createRenderer("", "", null);
 
 export default _createRenderFn(template, walks, apply);

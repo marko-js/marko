@@ -5,7 +5,7 @@ import { setConditionalRenderer as _setConditionalRenderer, write as _write, cre
 
 function _apply_show(_scope, show) {
   if (_write(_scope, 4, show)) {
-    _setConditionalRenderer(_scope, 0, show ? _if2 : _if);
+    _setConditionalRenderer(_scope, 0, show ? _ifBody : _elseBody);
   }
 }
 
@@ -21,7 +21,7 @@ export const walks =
 "%+b";
 export const apply = function () {};
 
-const _if2 = _createRenderer("", "", null),
-      _if = _createRenderer("", "", null);
+const _ifBody = _createRenderer("", "", null),
+      _elseBody = _createRenderer("", "", null);
 
 export default _createRenderFn(template, walks, apply, applyAttrs);

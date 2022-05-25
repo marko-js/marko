@@ -1,14 +1,14 @@
 import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, queue as _queue, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
-function _apply1With_c_d(_scope, c = _scope._[1], d = _scope._[2]) {}
+function _apply$dynamicBody2With_c_d(_scope, c = _scope._[1], d = _scope._[2]) {}
 
-function _apply1_d(_scope, d = _scope._[2]) {
-  _queue(_scope, _apply1With_c_d, 2);
+function _apply$dynamicBody2_d(_scope, d = _scope._[2]) {
+  _queue(_scope, _apply$dynamicBody2With_c_d, 2);
 }
 
-function _apply1_c(_scope, c = _scope._[1]) {
-  _queue(_scope, _apply1With_c_d, 2);
+function _apply$dynamicBody2_c(_scope, c = _scope._[1]) {
+  _queue(_scope, _apply$dynamicBody2With_c_d, 2);
 }
 
 function _applyWith_c_d(_scope, c = _scope[1], d = _scope[2]) {
@@ -59,6 +59,6 @@ export const walks =
 ` d2${_customTag_walks}&3${_customTag_walks}&`;
 export const apply = _apply;
 
-const _temp = _createRenderer("", "", null);
+const _dynamicBody2 = _createRenderer("", "", null);
 
 export default _createRenderFn(template, walks, apply, applyAttrs);

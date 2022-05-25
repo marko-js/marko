@@ -15,6 +15,6 @@ export const walks =
 `/${_child_walks}&`;
 export const apply = _apply;
 
-const _temp = _createRenderer("This is the body content", "", null);
+const _childBody = _createRenderer("This is the body content", "", null);
 
 export default _createRenderFn(template, walks, apply);

@@ -9,7 +9,7 @@
 <for from=0 to=10/>
 import { data as _data, setLoopOf as _setLoopOf, attr as _attr, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply9_i(_scope, i) {
+function _apply$forBody9_i(_scope, i) {
   if (_write(_scope, 3, i)) {
     _attr(_scope[0], "key", i);
 
@@ -19,7 +19,7 @@ function _apply9_i(_scope, i) {
   }
 }
 
-function _apply8_i(_scope, i) {
+function _apply$forBody8_i(_scope, i) {
   if (_write(_scope, 3, i)) {
     _attr(_scope[0], "key", i);
 
@@ -29,7 +29,7 @@ function _apply8_i(_scope, i) {
   }
 }
 
-function _apply7_i(_scope, i) {
+function _apply$forBody7_i(_scope, i) {
   if (_write(_scope, 7, i)) {
     _attr(_scope[0], "key", i);
 
@@ -39,13 +39,13 @@ function _apply7_i(_scope, i) {
   }
 }
 
-function _apply6_val(_scope, val) {
+function _apply$forBody6_val(_scope, val) {
   if (_write(_scope, 5, val)) {
     _data(_scope[2], val);
   }
 }
 
-function _apply6_key(_scope, key) {
+function _apply$forBody6_key(_scope, key) {
   if (_write(_scope, 4, key)) {
     _attr(_scope[0], "key", key);
 
@@ -55,25 +55,25 @@ function _apply6_key(_scope, key) {
   }
 }
 
-function _apply5_list(_scope, list) {
+function _apply$forBody5_list(_scope, list) {
   if (_write(_scope, 5, list)) {
     _data(_scope[1], list.length);
   }
 }
 
-function _apply5_i(_scope, i) {
+function _apply$forBody5_i(_scope, i) {
   if (_write(_scope, 4, i)) {
     _attr(_scope[0], "key", i);
   }
 }
 
-function _apply5_val(_scope, val) {
+function _apply$forBody5_val(_scope, val) {
   if (_write(_scope, 3, val)) {
     _data(_scope[2], val);
   }
 }
 
-function _apply4_i(_scope, i) {
+function _apply$forBody4_i(_scope, i) {
   if (_write(_scope, 5, i)) {
     _attr(_scope[0], "key", i);
 
@@ -83,37 +83,37 @@ function _apply4_i(_scope, i) {
   }
 }
 
-function _apply4_val(_scope, val) {
+function _apply$forBody4_val(_scope, val) {
   if (_write(_scope, 4, val)) {
     _data(_scope[2], val);
   }
 }
 
-function _apply3_i(_scope, i) {
+function _apply$forBody3_i(_scope, i) {
   if (_write(_scope, 1, i)) {
     _data(_scope[0], i);
   }
 }
 
-function _apply2_val(_scope, val) {
+function _apply$forBody2_val(_scope, val) {
   if (_write(_scope, 3, val)) {
     _data(_scope[1], val);
   }
 }
 
-function _apply2_key(_scope, key) {
+function _apply$forBody2_key(_scope, key) {
   if (_write(_scope, 2, key)) {
     _data(_scope[0], key);
   }
 }
 
-function _apply1_i(_scope, i) {
+function _apply$forBody_i(_scope, i) {
   if (_write(_scope, 3, i)) {
     _data(_scope[0], i);
   }
 }
 
-function _apply1_val(_scope, val) {
+function _apply$forBody_val(_scope, val) {
   if (_write(_scope, 2, val)) {
     _data(_scope[1], val);
   }
@@ -125,11 +125,11 @@ function _apply_obj(_scope, obj) {
 
 function _apply_arr(_scope, arr) {
   if (_write(_scope, 40, arr)) {
-    _setLoopOf(_scope, 0, arr, _for, null, _apply1_val);
+    _setLoopOf(_scope, 0, arr, _forBody, null, _apply$forBody_val);
 
-    _setLoopOf(_scope, 12, arr, _for2, null, _apply4_val);
+    _setLoopOf(_scope, 12, arr, _forBody4, null, _apply$forBody4_val);
 
-    _setLoopOf(_scope, 16, arr, _for3, null, _apply5_val);
+    _setLoopOf(_scope, 16, arr, _forBody5, null, _apply$forBody5_val);
   }
 }
 
@@ -149,34 +149,34 @@ export const walks =
 "%+b%+b%+b%+b%+b%+b%+b%+b%+b%+b";
 export const apply = _apply;
 
-const _for = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+const _forBody = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* next(1), replace, over(2), replace */
 "D%c%", null),
-      _temp4 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+      _forBody2 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* next(1), replace, over(2), replace */
 "D%c%", null),
-      _temp5 = _createRenderer("<div> </div><div></div><div></div>",
+      _forBody3 = _createRenderer("<div> </div><div></div><div></div>",
 /* next(1), get */
 "D ", null),
-      _for2 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+      _forBody4 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* get, next(1), replace, over(2), replace, out(1), over(1), get */
 " D%c%lb ", null),
-      _for3 = _createRenderer("<div><!>: <!></div>",
+      _forBody5 = _createRenderer("<div><!>: <!></div>",
 /* get, next(1), replace, over(2), replace */
 " D%c%", null),
-      _temp6 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
+      _forBody6 = _createRenderer("<div><!>: <!></div><div></div><div></div>",
 /* get, next(1), replace, over(2), replace, out(1), over(1), get */
 " D%c%lb ", null),
-      _temp7 = _createRenderer("<div> </div><div></div><div></div><!>",
+      _forBody7 = _createRenderer("<div> </div><div></div><div></div><!>",
 /* get, next(1), get, out(1), over(1), get, over(1), replace, skip(3) */
 " D lb b%+", null),
-      _temp8 = _createRenderer("<div> </div><div></div><div></div>",
+      _forBody8 = _createRenderer("<div> </div><div></div><div></div>",
 /* get, next(1), get, out(1), over(1), get */
 " D lb ", null),
-      _temp9 = _createRenderer("<div> </div><div></div><div></div>",
+      _forBody9 = _createRenderer("<div> </div><div></div><div></div>",
 /* get, next(1), get, out(1), over(1), get */
 " D lb ", null),
-      _temp10 = _createRenderer("Hello", "", null),
-      _temp11 = _createRenderer("Hello", "", null);
+      _forBody10 = _createRenderer("Hello", "", null),
+      _forBody11 = _createRenderer("Hello", "", null);
 
 export default _createRenderFn(template, walks, apply);

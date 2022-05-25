@@ -6,6 +6,7 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     nextSectionId?: number;
     sectionId?: number;
+    sectionNames?: string[];
   }
 
   export interface MarkoTagBodyExtra {
@@ -19,8 +20,17 @@ export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
 
   if (sectionId === undefined) {
     const programExtra = (path.hub.file.path.node.extra ??= {});
+    const sectionNameNode = (path.parent as t.MarkoTag)?.name;
+    const sectionName =
+      (sectionNameNode as t.StringLiteral)?.value ??
+      (sectionNameNode as t.Identifier)?.name ??
+      "dynamic";
     sectionId = extra.sectionId = programExtra.nextSectionId || 0;
-    programExtra.nextSectionId = sectionId + 1;
+    programExtra.nextSectionId = sectionId + 1; // currentProgramPath.scope.generateUid(path.node.name);
+    programExtra.sectionNames = programExtra.sectionNames ?? [];
+    programExtra.sectionNames[sectionId] = currentProgramPath.scope.generateUid(
+      sectionName + "Body"
+    );
   }
 
   return sectionId;
@@ -59,11 +69,15 @@ export function getParentSectionId(path: t.NodePath) {
   return getSectionId(path.parentPath!);
 }
 
-export function createSectionState<T = unknown>(key: string, init?: () => T) {
+export function createSectionState<T = unknown>(
+  key: string,
+  init?: ((sectionId: number) => T) | (() => T)
+) {
   return [
     (sectionId: number): T => {
       const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
-      const sectionData = (arrayOfSectionData[sectionId] ??= init && init());
+      const sectionData = (arrayOfSectionData[sectionId] ??=
+        init && init(sectionId));
       return sectionData as T;
     },
     (sectionId: number, value: T): void => {
