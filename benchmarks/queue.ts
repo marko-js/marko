@@ -20,6 +20,12 @@ import {
   run as runDeferredSort,
 } from "../packages/runtime/src/dom/queue-deferred-sort";
 
+function queueImmediate(scope, fn, priority) {
+  fn(scope);
+}
+
+function runImmediate() {}
+
 const SPACE = 2 ** 8;
 const dummyScope = Object.assign([], { ___id: 0 }) as any;
 function dummyFunction() {}
@@ -90,9 +96,13 @@ const suite = new Benchmark.Suite();
   suite.add(`queue-sorted-insert-${exec.name}`, () =>
     exec(queueSortedInsert, runSortedInsert)
   );
-  suite.add(`queue-naive-${exec.name}`, () => exec(queueNaive, runNaive));
   suite.add(`queue-deferred-sort-${exec.name}`, () =>
     exec(queueDeferredSort, runDeferredSort)
+  );
+  // Baselines - do not guarantee correct order
+  suite.add(`queue-naive-${exec.name}`, () => exec(queueNaive, runNaive));
+  suite.add(`queue-immediate-${exec.name}`, () =>
+    exec(queueImmediate, runImmediate)
   );
 });
 
