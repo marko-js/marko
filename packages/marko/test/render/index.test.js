@@ -126,6 +126,10 @@ async function runRenderTest(fixture) {
         isVDOM
       );
 
+      if (main.sync) {
+        out.sync();
+      }
+
       await template.render(templateData, out).end();
 
       if (isVDOM) {
