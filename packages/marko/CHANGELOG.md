@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.2
+
+### Patch Changes
+
+- [#1804](https://github.com/marko-js/marko/pull/1804) [`af8c944a3`](https://github.com/marko-js/marko/commit/af8c944a38d19529e71fb0ecd312ca7ef358e554) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when internal <**flush_here_and_after**> tag (used by bundler plugins) is used in sync mode.
+
 ## 5.21.1
 
 ### Patch Changes
