@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.4
+
+### Patch Changes
+
+- [#1806](https://github.com/marko-js/marko/pull/1806) [`04adc2d24`](https://github.com/marko-js/marko/commit/04adc2d24eb0111d6e4a8bd760d420199240cb2f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where attribute shorthand methods would have incorrect sourcemap position.
+
 ## 5.21.3
 
 ### Patch Changes
