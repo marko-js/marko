@@ -326,12 +326,18 @@ export function parseMarko(file) {
     },
 
     onAttrMethod(part) {
-      const prefix = "function";
       currentAttr.end = part.end;
-      currentAttr.value = parseExpression(
-        file,
-        prefix + parser.read(part),
-        part.start - prefix.length
+      currentAttr.value = withLoc(
+        t.functionExpression(
+          undefined,
+          parseExpression(
+            file,
+            `${parser.read(part.params)}=>{}`,
+            part.params.start
+          ).params,
+          parseScript(file, parser.read(part.body), part.body.start).body[0]
+        ),
+        part
       );
     },
 
