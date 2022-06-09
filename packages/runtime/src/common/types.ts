@@ -15,6 +15,7 @@ export type Scope<
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;
+  ___client: boolean;
   _: Scope | undefined;
 } & T;
 

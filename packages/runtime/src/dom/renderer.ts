@@ -1,8 +1,8 @@
 import type { Scope } from "../common/types";
+import type { Signal } from "./signals";
 import { createScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
-import { queue, run } from "./queue";
-import { queueHydrate } from ".";
+import { queueHydrate, runHydrate } from "./queue";
 
 const enum NodeType {
   Element = 1,
@@ -24,10 +24,6 @@ export type Renderer<S extends Scope = Scope> = {
 
 type Input = Record<string, unknown>;
 type RenderFn<S extends Scope = Scope> = (scope: S) => void;
-type DynamicInputFn<S extends Scope, I extends Input> = (
-  scope: S,
-  input: I
-) => void;
 type RenderResult<I extends Input> = {
   update: (input: I) => void;
   destroy: () => void;
@@ -69,7 +65,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
   render?: RenderFn<S>,
-  dynamicInput?: DynamicInputFn<S, I>,
+  dynamicInput?: Signal,
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
@@ -84,30 +80,23 @@ export function createRenderFn<I extends Input, S extends Scope>(
   );
   return (input: I, element: Element): RenderResult<I> => {
     const scope = createScope() as S;
-
-    queue(
-      scope,
-      () => {
-        queueHydrate(scope, () => {
-          element.replaceChildren(dom);
-        });
-
-        const dom = initRenderer(renderer, scope);
-      },
-      -2
-    );
+    queueHydrate(scope, () => {
+      element.replaceChildren(dom);
+    });
+    const dom = initRenderer(renderer, scope);
 
     if (dynamicInput) {
-      queue(scope, dynamicInput, -1, input);
+      dynamicInput.___apply(scope, input);
     }
 
-    run();
+    runHydrate();
 
     return {
       update: (newInput: I) => {
         if (dynamicInput) {
-          queue(scope, dynamicInput, -1, newInput);
-          run();
+          dynamicInput.___mark(scope);
+          dynamicInput.___apply(scope, newInput);
+          runHydrate();
         }
       },
       destroy: () => {

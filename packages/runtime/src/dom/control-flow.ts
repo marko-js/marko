@@ -1,6 +1,5 @@
 import type { Scope } from "../common/types";
 import { Context, setContext } from "../common/context";
-import { queue } from "./queue";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import { createScope, getEmptyScope, destroyScope, write } from "./scope";
@@ -11,29 +10,6 @@ export const enum ConditionalIndex {
   SCOPE = 1,
   RENDERER = 2,
   CONTEXT = 3,
-}
-
-export function queueInBranch<S extends Scope, CS extends Scope>(
-  scope: S,
-  conditionalIndex: number,
-  branch: Renderer<CS>,
-  fn: (scope: CS) => void,
-  priority: number,
-  closurePriority: number
-) {
-  queue(
-    scope,
-    () => {
-      if (scope[conditionalIndex + ConditionalIndex.RENDERER] === branch) {
-        queue(
-          scope[conditionalIndex + ConditionalIndex.SCOPE] as CS,
-          fn,
-          priority
-        );
-      }
-    },
-    closurePriority
-  );
 }
 
 export function setConditionalRenderer<ChildScope extends Scope>(
@@ -114,27 +90,6 @@ export const enum LoopIndex {
   SCOPE_ARRAY = 1,
   SCOPE_MAP = 2,
   CONTEXT = 3,
-}
-
-export function queueForEach(
-  scope: Scope,
-  loopIndex: number,
-  fn: (scope: Scope) => void,
-  priority: number,
-  closurePriority: number
-) {
-  queue(
-    scope,
-    () => {
-      const childScopes = scope[loopIndex + LoopIndex.SCOPE_ARRAY] as Scope[];
-      if (childScopes !== emptyMarkerArray) {
-        for (const childScope of childScopes) {
-          queue(childScope, fn, priority);
-        }
-      }
-    },
-    closurePriority
-  );
 }
 
 export function setLoopOf<T, ChildScope extends Scope>(

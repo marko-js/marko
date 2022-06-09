@@ -2,10 +2,10 @@ import {
   on,
   data,
   createRenderFn,
-  queue,
+  source,
+  derivation,
   queueHydrate,
   bind,
-  write,
   Scope,
 } from "../../../dom/index";
 import { get, next } from "../../utils/walks";
@@ -20,8 +20,14 @@ const enum Index {
   BUTTON = 0,
   TEXT = 1,
   A = 2,
-  B = 3,
-  SUM_AB = 4,
+  A_MARK = 3,
+  A_STALE = 4,
+  B = 5,
+  B_MARK = 6,
+  B_STALE = 7,
+  SUM_AB = 8,
+  SUM_AB_MARK = 9,
+  SUM_AB_STALE = 10
 }
 
 type ComponentScope = Scope<{
@@ -38,9 +44,9 @@ type ComponentScope = Scope<{
 
 export const template = `<button> </button>`;
 export const walks = get + next(1) + get + next(1);
-export const render = (scope: ComponentScope) => {
-  execA(scope, 0);
-  execB(scope, 0);
+export const setup = (scope: ComponentScope) => {
+  setA(scope, 0);
+  setB(scope, 0);
   queueHydrate(scope, hydrate);
 };
 
@@ -49,30 +55,14 @@ export const hydrate = (scope: ComponentScope) => {
 };
 
 const clickHandler = (scope: ComponentScope) => {
-  queue(scope, execA, Index.A, scope[Index.A] + 1);
-  queue(scope, execB, Index.B, scope[Index.B] + 1);
+  queueA(scope, scope[Index.A] + 1);
+  queueB(scope, scope[Index.B] + 1);
 };
 
-const execA = (scope: ComponentScope, value: number) => {
-  if (write(scope, Index.A, value)) {
-    queue(scope, execAB, Index.SUM_AB);
-  }
-};
+const sumAB = derivation(Index.SUM_AB, 2, [], (scope: ComponentScope) => scope[Index.A] + scope[Index.B], (scope: ComponentScope, value: number) => {
+  data(scope[Index.TEXT], value);
+});
+const [setA, queueA] = source(Index.A, 1, [sumAB]);
+const [setB, queueB] = source(Index.B, 1, [sumAB]);
 
-const execB = (scope: ComponentScope, value: number) => {
-  if (write(scope, Index.B, value)) {
-    queue(scope, execAB, Index.SUM_AB);
-  }
-};
-
-const execAB = (scope: ComponentScope) => {
-  execSumAB(scope, scope[Index.A] + scope[Index.B]);
-};
-
-const execSumAB = (scope: ComponentScope, value: number) => {
-  if (write(scope, Index.SUM_AB, value)) {
-    data(scope[Index.TEXT], value);
-  }
-};
-
-export default createRenderFn(template, walks, render);
+export default createRenderFn(template, walks, setup);

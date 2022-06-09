@@ -1,8 +1,6 @@
 export {
   setConditionalRenderer,
   setConditionalRendererOnlyChild,
-  queueInBranch,
-  queueForEach,
   setLoopOf,
   setLoopFromTo,
   setLoopIn,
@@ -36,3 +34,5 @@ export { write, bind } from "./scope";
 export type { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";
+
+export { source, derivation, closure, inConditionalScope } from "./signals";
