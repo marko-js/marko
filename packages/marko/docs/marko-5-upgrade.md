@@ -56,10 +56,9 @@ yarn upgrade marko@^5
 >
 > ```js
 > const template = require("./template.marko");
->
-> // Should become
+> // Should become:
 > const template = require("./template.marko").default;
 >
-> // If you are already using es modules things remain the same
+> // If already using ES Modules, things remain the same:
 > import template from "./template.marko";
 > ```

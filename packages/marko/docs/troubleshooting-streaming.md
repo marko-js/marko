@@ -44,10 +44,10 @@ Content Delivery Networks (CDNs) consider efficient streaming one of their best 
 For extreme cases where [Node streams very small HTML chunks with its built-in compression modules](https://github.com/marko-js/marko/pull/1641), you may need to tweak the compressor stream settings. Here’s an example with `createGzip` and its `Z_PARTIAL_FLUSH` flag:
 
 ```js
-const http = require("http");
-const zlib = require("zlib");
+import http from "http";
+import zlib from "zlib";
 
-const markoTemplate = require("./something.marko");
+import markoTemplate from "./something.marko";
 
 http
   .createServer(function (request, response) {

@@ -621,7 +621,9 @@ Marko compiles component to JavaScript modules that export an API for rendering
 the component as shown below:
 
 ```js
-require("./components/greeting")
+import greetingComponent from "./components/greeting";
+
+greetingComponent
   .renderSync({ name: "Frank" })
   .appendTo(document.body);
 ```
@@ -630,7 +632,9 @@ The same UI component can be rendered to a stream such as a writable HTTP
 response stream:
 
 ```js
-require("./components/hello").render({ name: "John" }, res);
+import helloComponent from "./components/hello";
+
+helloComponent.render({ name: "John" }, res);
 ```
 
 > The users of a Marko UI component do not need to know that the component was
@@ -738,23 +742,71 @@ the server or in the browser. For example, given the following template:
 #### Compiled for the server:
 
 ```js
-var marko_template = require("marko/html").t(__filename),
-  marko_helpers = require("marko/runtime/html/helpers"),
-  marko_escapeXml = marko_helpers.x;
+import { t as _t } from "marko/dist/runtime/html/index.js";
 
-function render(input, out) {
-  out.w("<div>Hello " + marko_escapeXml(input.name) + "!</div>");
-}
+const _marko_componentType = "yYhiHwOg",
+  _marko_template = _t(_marko_componentType);
+
+_marko_template.path = "/components/index.marko";
+export default _marko_template;
+import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
+const _marko_component = {};
+_marko_template._ = _marko_renderer(
+  function (input, out, _componentDef, _component, state) {
+    out.w(`<div>Hello ${_marko_escapeXml(input.name)}!</div>`);
+  },
+  {
+    t: _marko_componentType,
+    i: true,
+  },
+  _marko_component
+);
+_marko_template.meta = {
+  id: _marko_componentType,
+};
 ```
 
 #### Compiled for the browser:
 
 ```js
-var marko_template = require("marko/vdom").t(__filename);
+import { t as _t } from "marko/dist/runtime/vdom/index.js";
 
-function render(input, out) {
-  out.e("DIV", null, 3).t("Hello ").t(input.name).t("!");
-}
+const _marko_componentType = "yYhiHwOg",
+  _marko_template = _t(_marko_componentType);
+
+_marko_template.path = "/components/index.marko";
+export default _marko_template;
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
+
+_marko_registerComponent(_marko_componentType, () => _marko_template);
+
+const _marko_component = {};
+_marko_template._ = _marko_renderer(
+  function (input, out, _componentDef, _component, state) {
+    out.be("div", null, "0", _component, null, 0);
+    out.t("Hello ", _component);
+    out.t(input.name, _component);
+    out.t("!", _component);
+    out.ee();
+  },
+  {
+    t: _marko_componentType,
+    i: true,
+  },
+  _marko_component
+);
+import _marko_defineComponent from "marko/dist/runtime/components/defineComponent.js";
+_marko_template.Component = _marko_defineComponent(
+  _marko_component,
+  _marko_template._
+);
+_marko_template.meta = {
+  id: _marko_componentType,
+};
+
+
 ```
 
 ### Compile-time code transforms

@@ -57,28 +57,70 @@ Given the following template:
 The compiled output is optimized for streaming HTML output on the server:
 
 ```js
-var marko_template = require("marko/html").t(__filename),
-  marko_helpers = require("marko/runtime/html/helpers"),
-  marko_escapeXml = marko_helpers.x;
+import { t as _t } from "marko/dist/runtime/html/index.js";
 
-function render(input, out) {
-  out.w("<div>Hello " + marko_escapeXml(input.name) + "!</div>");
-}
+const _marko_componentType = "6dINFehc",
+  _marko_template = _t(_marko_componentType);
+
+_marko_template.path = "/pages/index.marko";
+export default _marko_template;
+import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
+const _marko_component = {};
+_marko_template._ = _marko_renderer(
+  function (input, out, _componentDef, _component, state) {
+    out.w(`<div>Hello ${_marko_escapeXml(input.name)}!</div>`);
+  },
+  {
+    t: _marko_componentType,
+    i: true,
+  },
+  _marko_component
+);
+_marko_template.meta = {
+  id: _marko_componentType,
+};
 ```
 
 #### Compiled for the browser
 
 <!-- prettier-ignore -->
 ```js
-var marko_template = require("marko/vdom").t(__filename);
+import { t as _t } from "marko/dist/runtime/vdom/index.js";
 
-function render(input, out) {
-  out
-    .e("DIV", null, 3)
-    .t("Hello ")
-    .t(input.name)
-    .t("!");
-}
+const _marko_componentType = "yYhiHwOg",
+  _marko_template = _t(_marko_componentType);
+
+_marko_template.path = "/components/index.marko";
+export default _marko_template;
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
+
+_marko_registerComponent(_marko_componentType, () => _marko_template);
+
+const _marko_component = {};
+_marko_template._ = _marko_renderer(
+  function (input, out, _componentDef, _component, state) {
+    out.be("div", null, "0", _component, null, 0);
+    out.t("Hello ", _component);
+    out.t(input.name, _component);
+    out.t("!", _component);
+    out.ee();
+  },
+  {
+    t: _marko_componentType,
+    i: true,
+  },
+  _marko_component
+);
+import _marko_defineComponent from "marko/dist/runtime/components/defineComponent.js";
+_marko_template.Component = _marko_defineComponent(
+  _marko_component,
+  _marko_template._
+);
+_marko_template.meta = {
+  id: _marko_componentType,
+};
 ```
 
 The compiled output is optimized for virtual DOM rendering in the browser:
@@ -101,21 +143,47 @@ based on the JavaScript object that is provided. The compiled code that imports
 the `styleAttr` helper is shown below:
 
 ```js
-var marko_styleAttr = require("marko/runtime/vdom/helper-styleAttr");
+import { t as _t } from "marko/dist/runtime/vdom/index.js";
 
-function render(input, out) {
-  var color = "red";
-  out.e(
-    "DIV",
-    {
-      style: marko_styleAttr({
-        backgroundColor: color
-      })
-    },
-    0,
-    4
-  );
-}
+const _marko_componentType = "yYhiHwOg",
+  _marko_template = _t(_marko_componentType);
+
+_marko_template.path = "/components/index.marko";
+export default _marko_template;
+import _marko_renderer from "marko/dist/runtime/components/renderer.js";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
+
+_marko_registerComponent(_marko_componentType, () => _marko_template);
+
+const _marko_component = {};
+_marko_template._ = _marko_renderer(
+  function (input, out, _componentDef, _component, state) {
+    var color = "red";
+    out.e(
+      "div",
+      {
+        style: "background-color:red;",
+      },
+      "0",
+      _component,
+      0,
+      1
+    );
+  },
+  {
+    t: _marko_componentType,
+    i: true,
+  },
+  _marko_component
+);
+import _marko_defineComponent from "marko/dist/runtime/components/defineComponent.js";
+_marko_template.Component = _marko_defineComponent(
+  _marko_component,
+  _marko_template._
+);
+_marko_template.meta = {
+  id: _marko_componentType,
+};
 ```
 
 ### High performance server-side rendering

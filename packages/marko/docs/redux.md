@@ -54,8 +54,8 @@ module.exports = function (state, action) {
 In `counter.marko`, the imported store module exports a Redux store created with the following code:
 
 ```js
-const redux = require("redux");
-const counter = require("./reducer");
+import redux from "redux";
+import counter from "./reducer";
 
 module.exports = redux.createStore(counter);
 ```

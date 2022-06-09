@@ -130,7 +130,7 @@ import I18nPlugin from "i18n-webpack-plugin";
 
 const languages = {
   en: null,
-  de: require("./de.json")
+  de: import("./de.json")
 };
 
 const markoPlugin = new MarkoPlugin();
