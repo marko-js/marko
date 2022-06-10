@@ -73,12 +73,12 @@ _marko_template._ = _marko_renderer(
   },
   {
     t: _marko_componentType,
-    i: true,
+    i: true
   },
   _marko_component
 );
 _marko_template.meta = {
-  id: _marko_componentType,
+  id: _marko_componentType
 };
 ```
 
@@ -162,7 +162,7 @@ _marko_template._ = _marko_renderer(
     out.e(
       "div",
       {
-        style: "background-color:red;",
+        style: "background-color:red;"
       },
       "0",
       _component,
@@ -172,7 +172,7 @@ _marko_template._ = _marko_renderer(
   },
   {
     t: _marko_componentType,
-    i: true,
+    i: true
   },
   _marko_component
 );
@@ -182,7 +182,7 @@ _marko_template.Component = _marko_defineComponent(
   _marko_template._
 );
 _marko_template.meta = {
-  id: _marko_componentType,
+  id: _marko_componentType
 };
 ```
 
