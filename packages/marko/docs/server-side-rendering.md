@@ -74,7 +74,7 @@ _routes/index/template.marko_
 If a JavaScript module bundler other than Lasso is being used then you will need to add some client-side code to bootstrap your application in the browser by doing the following:
 
 1.  Load/import/require all of the UI components that were rendered on the server (loading the top-level UI component is typically sufficient)
-2.  Call `require('marko/components').init()` <!-- TODO: do we want this docs section anymore? --> 
+2.  Call `require('marko/components').init()` <!-- TODO: do we want this docs section anymore? -->
 
 For example, if `client.js` is the entry point for your client-side application:
 

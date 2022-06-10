@@ -623,9 +623,7 @@ the component as shown below:
 ```js
 import greetingComponent from "./components/greeting";
 
-greetingComponent
-  .renderSync({ name: "Frank" })
-  .appendTo(document.body);
+greetingComponent.renderSync({ name: "Frank" }).appendTo(document.body);
 ```
 
 The same UI component can be rendered to a stream such as a writable HTTP
@@ -758,12 +756,12 @@ _marko_template._ = _marko_renderer(
   },
   {
     t: _marko_componentType,
-    i: true,
+    i: true
   },
   _marko_component
 );
 _marko_template.meta = {
-  id: _marko_componentType,
+  id: _marko_componentType
 };
 ```
 
@@ -793,7 +791,7 @@ _marko_template._ = _marko_renderer(
   },
   {
     t: _marko_componentType,
-    i: true,
+    i: true
   },
   _marko_component
 );
@@ -803,10 +801,8 @@ _marko_template.Component = _marko_defineComponent(
   _marko_template._
 );
 _marko_template.meta = {
-  id: _marko_componentType,
+  id: _marko_componentType
 };
-
-
 ```
 
 ### Compile-time code transforms
