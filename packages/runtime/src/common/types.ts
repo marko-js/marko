@@ -12,6 +12,7 @@ export type Scope<
   T extends { [x: number]: unknown } = { [x: number]: unknown }
 > = [...unknown[]] & {
   ___id: number;
+  ___attrs: unknown;
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;

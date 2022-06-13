@@ -3,8 +3,9 @@ import {
   setConditionalRendererOnlyChild,
   createRenderer,
   createRenderFn,
-  write,
-  queueInBranch,
+  derivation,
+  closure,
+  inConditionalScope,
   Scope,
 } from "../../../dom/index";
 import { get, next, over } from "../../utils/walks";
@@ -27,19 +28,27 @@ export const inputs = [
 const enum INDEX {
   comment = 0,
   conditional = 0,
+  conditional_scope = 1,
   value = 4,
-}
-
-const enum PRIORITY {
-  value = 0,
-  closure_value = 1,
 }
 
 type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
   [INDEX.value]: typeof inputs[number]["value"];
+  ["___attrs"]: typeof inputs[number];
 }>;
+
+const enum INDEX_BRANCH0 {
+  text = 0,
+  value = 1
+}
+
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.text]: Text;
+}>;
+
 
 // <attrs/{ value }/>
 // <div>
@@ -51,49 +60,21 @@ type ComponentScope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-export const _apply_value = (scope: ComponentScope) => {
+const value$if = closure(INDEX_BRANCH0.value, 1, 1, INDEX.value, [], (scope: Branch0Scope, value: string) => {
+  data(scope[INDEX_BRANCH0.text], value);
+})
+export const value_subscribers = [inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])];
+export const value_action = (scope: ComponentScope, value: string | boolean) => {
   setConditionalRendererOnlyChild(
     scope,
     INDEX.conditional,
-    scope[INDEX.value] ? branch0 : undefined
+    value ? branch0 : undefined
   );
-  queueInBranch(
-    scope,
-    INDEX.conditional,
-    branch0,
-    _apply_value2,
-    PRIORITY_BRANCH0.value,
-    PRIORITY.closure_value
-  );
-};
-
-function _apply_value2(scope: Branch0Scope) {
-  data(scope[INDEX_BRANCH0.text], scope._[INDEX.value]);
 }
+const value = derivation(INDEX.value, 1, value_subscribers, (scope: ComponentScope) => scope["___attrs"].value, value_action);
+export const attrs_subscribers = [value];
 
-export const _applyAttrs = (
-  scope: ComponentScope,
-  input: typeof inputs[number]
-) => {
-  if (write(scope, INDEX.value, input.value)) {
-    _apply_value(scope);
-  }
-};
-
-export default createRenderFn(template, walks, undefined, _applyAttrs);
-
-const enum INDEX_BRANCH0 {
-  text = 0,
-}
-
-const enum PRIORITY_BRANCH0 {
-  value = 0,
-}
-
-type Branch0Scope = Scope<{
-  _: ComponentScope;
-  [INDEX_BRANCH0.text]: Text;
-}>;
+export default createRenderFn(template, walks, undefined, attrs_subscribers);
 
 const branch0 = createRenderer(
   "<span> </span>",

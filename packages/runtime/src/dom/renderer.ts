@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import type { Signal } from "./signals";
+import { Signal, derivation } from "./signals";
 import { createScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
@@ -65,7 +65,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
   render?: RenderFn<S>,
-  dynamicInput?: Signal,
+  attrs_subscribers?: Signal[],
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
@@ -78,6 +78,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );
+  const attrs = attrs_subscribers && derivation("___attrs", 1, attrs_subscribers);
   return (input: I, element: Element): RenderResult<I> => {
     const scope = createScope() as S;
     queueHydrate(scope, () => {
@@ -85,17 +86,18 @@ export function createRenderFn<I extends Input, S extends Scope>(
     });
     const dom = initRenderer(renderer, scope);
 
-    if (dynamicInput) {
-      dynamicInput.___apply(scope, input);
+    debugger;
+    if (attrs) {
+      attrs.___apply(scope, input);
     }
 
     runHydrate();
 
     return {
       update: (newInput: I) => {
-        if (dynamicInput) {
-          dynamicInput.___mark(scope);
-          dynamicInput.___apply(scope, newInput);
+        if (attrs) {
+          attrs.___mark(scope);
+          attrs.___apply(scope, newInput);
           runHydrate();
         }
       },

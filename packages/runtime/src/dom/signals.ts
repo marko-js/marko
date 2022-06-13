@@ -21,35 +21,51 @@ export function source<S extends Scope = Scope, V = unknown>(accessor: number, d
   return [signal.___apply, (scope, value) => queue<S, V>(scope, signal, value)];
 }
 
-// TODO: should closures always have a defaultMark of 2?
-export function closure<S extends Scope = Scope, V = unknown>(accessor: number, defaultMark: number, ownerCount: number, ownerIndex: number, subscribers: Signal[], action?: (scope: S, value: V) => void): Signal<S, V> {
+// TODO: should closures always have a defaultMark of 2? (maybe no because we can optimize it to be 1 in some cases?)
+export function closure<S extends Scope = Scope, V = unknown>(valueAccessor: number, defaultMark: number, ownerLevel: number, ownerValueAccessor: number, subscribers: Signal[], action?: (scope: S, value: V) => void): Signal<S, V> {
   // TODO: consider passing a getter for the value instead of undefined
-  const signal = derivation(accessor, defaultMark, subscribers, undefined, action);
+  const signal = derivation(valueAccessor, defaultMark, subscribers, undefined, action);
   const apply = signal.___apply;
+  const markAccessor = valueAccessor + SignalOffsets.MARK;
+  const ownerMarkAccessor = ownerValueAccessor + SignalOffsets.MARK;
   signal.___apply = (scope: S, value?: V, stale = true) => {
     let owner = scope._!;
-    for(let i = 1; i < ownerCount; i++) owner = owner._!;
-    if (scope[accessor + SignalOffsets.MARK] === undefined) {
-      const ownerMark = owner[ownerIndex + SignalOffsets.MARK];
+    for(let i = 1; i < ownerLevel; i++) owner = owner._!;
+    if (scope[markAccessor] === undefined) {
+      const ownerMark = owner[ownerMarkAccessor];
       if ((ownerMark === undefined && !owner.___client) || ownerMark === 0) {
         // we hit this branch when we're creating a new scope that closes over a value that has already run.
         // (it could have run on the server, earlier in setup, in the current batch, or in a previous batch)
         // the defaultMark includes this value, so we decrement our mark since the value could not.
         // (this scope did not exist at the time the value ran)
-        decrementMark(scope, accessor + SignalOffsets.MARK, defaultMark);
+        // decrementMark(scope, accessor + SignalOffsets.MARK, defaultMark);
         // TODO: if closure defaultMark is always 2,
-        // scope[accessor + SignalOffsets.MARK] = 1;
+        scope[markAccessor] = 1;
       }
     }
-    apply(scope, owner[ownerIndex] as V, stale);
+    apply(scope, owner[ownerValueAccessor] as V, stale);
   };
   return signal;
 }
 
-export function derivation<S extends Scope = Scope, V = unknown>(accessor: number, defaultMark: number, subscribers: Signal[], compute?: (scope: S) => V, action?: (scope: S, value: V) => void): Signal<S, V> {
+export function child<S extends Scope = Scope, V = unknown>(childAccessor: number, defaultMark: number, valueAccessor: number, subscribers: Signal[], compute?: (scope: Scope) => V, action?: (scope: Scope, value: V) => void): Signal<S, V> {
+  const signal = derivation(valueAccessor, defaultMark, subscribers, compute, action);
+  return {
+    ___mark(scope: Scope) {
+      signal.___mark(scope[childAccessor] as Scope);
+    },
+    ___apply(scope: Scope, value: unknown, stale: boolean) {
+      signal.___apply(scope[childAccessor] as Scope, value, stale);
+    }
+  }
+}
+
+export function derivation<S extends Scope = Scope, V = unknown>(valueAccessor: number, defaultMark: number, subscribers: Signal[], compute?: (scope: S) => V, action?: (scope: S, value: V) => void): Signal<S, V> {
+  const markAccessor = valueAccessor + SignalOffsets.MARK;
+  const staleAccessor = valueAccessor + SignalOffsets.STALE;
   return {
     ___mark(scope) {
-      const mark = scope[accessor + SignalOffsets.MARK] = (scope[accessor + SignalOffsets.MARK] as number || 0) + 1;
+      const mark = scope[markAccessor] = (scope[markAccessor] as number || 0) + 1;
       if (mark === 1) {
         for (const subscriber of subscribers) {
           subscriber.___mark(scope);
@@ -58,15 +74,15 @@ export function derivation<S extends Scope = Scope, V = unknown>(accessor: numbe
     },
     ___apply(scope: S, value?: V, stale = true) {
       if (stale) {
-        scope[accessor + SignalOffsets.STALE] = true;
+        scope[staleAccessor] = true;
       }
-      if (!decrementMark(scope, accessor + SignalOffsets.MARK, defaultMark)) {
+      if (!decrementMark(scope, markAccessor, defaultMark)) {
         let downstreamStale = false;
-        if (scope[accessor + SignalOffsets.STALE]) {
-          scope[accessor + SignalOffsets.STALE] = false;
+        if (scope[staleAccessor]) {
+          scope[staleAccessor] = false;
           value = compute ? compute(scope) : value;
-          if (scope[accessor + SignalOffsets.VALUE] !== value) {
-            scope[accessor + SignalOffsets.VALUE] = value;
+          if (scope[valueAccessor] !== value) {
+            scope[valueAccessor] = value;
             action?.(scope, value!);
             downstreamStale = true
           }
