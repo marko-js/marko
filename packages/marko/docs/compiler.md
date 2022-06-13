@@ -294,7 +294,7 @@ The hook will also receive a `types` object that matches the [@babel/types](http
 Here is an example hook:
 
 ```js
-module.exports = (tag, types) => {
+export default (tag, types) => {
   if (types.isStringLiteral(tag.node.name)) {
     console.log(`Found a tag called ${tag.node.name.value}`);
     tag.remove();

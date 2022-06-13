@@ -3,23 +3,23 @@
 Marko allows any Marko template/UI component to be rendered on the server or in the browser. A page can be rendered to a `Writable` stream such as an HTTP response stream as shown below:
 
 ```js
-var template = require("./template"); // Import ./template.marko
+import template from "./template.marko";
 
-module.exports = function (req, res) {
+export default function (req, res) {
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   template.render({ name: "Frank" }, res);
-};
+}
 ```
 
 Marko can also provide you with a `Readable` stream.
 
 ```js
-var template = require("./template"); // Import ./template.marko
+import template from "./template.marko");
 
-module.exports = function (req) {
+export default function (req) {
   // Return a Readable stream for someone to do something with:
   return template.stream({ name: "Frank" });
-};
+}
 ```
 
 > **ProTip:** Marko also provides server-side framework integrations:
@@ -70,6 +70,8 @@ _routes/index/template.marko_
 > - [ui-components-playground](https://github.com/marko-js/examples/tree/master/examples/ui-components-playground)
 
 ### Bootstrapping: Non-Lasso
+
+<!-- QUESTION: do we even want this section anymore? Is this only for people trying to integrate Marko with a new/unsupported bundler? -->
 
 If a JavaScript module bundler other than Lasso is being used then you will need to add some client-side code to bootstrap your application in the browser by doing the following:
 

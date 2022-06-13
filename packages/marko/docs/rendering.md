@@ -1,11 +1,11 @@
 # Rendering
 
-To render a Marko view, you need to `require` it.
+To render a Marko view, you need to `import` it.
 
 _example.js_
 
 ```js
-var fancyButton = require("./components/fancy-button");
+import fancyButton from "./components/fancy-button.marko";
 ```
 
 > **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko CLI](https://github.com/marko-js/cli). If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md) or [`rollup`](./rollup.md).
@@ -15,13 +15,13 @@ Once you have a view, you can pass input data and render it:
 _example.js_
 
 ```js
-var button = require("./components/fancy-button");
-var html = button.renderToString({ label: "Click me!" });
+import button from "./components/fancy-button.marko";
+const html = button.renderToString({ label: "Click me!" });
 
 console.log(html);
 ```
 
-The input data becomes available as `input` within a view, so if `fancy-button.marko` looked like this:
+The data passed to `renderToString` becomes available as `input` in the component, so if `fancy-button.marko` looked like this:
 
 _./components/fancy-button.marko_
 
@@ -51,7 +51,7 @@ Many of these methods return a [`RenderResult`](#renderresult) which is an objec
 Using `renderSync` forces the render to complete synchronously. If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 var result = view.renderSync({});
 
 result.appendTo(document.body);
@@ -67,7 +67,7 @@ result.appendTo(document.body);
 The `render` method returns an async `out` which is used to generate HTML on the server or a virtual DOM in the browser. In either case, the async `out` has a `then` method that follows the Promises/A+ spec, so it can be used as if it were a Promise. This promise resolves to a [`RenderResult`](#renderresult).
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 var resultPromise = view.render({});
 
 resultPromise.then(result => {
@@ -85,7 +85,7 @@ resultPromise.then(result => {
 | return value   | `AsyncStream`/`AsyncVDOMBuilder` | the async `out` render target                  |
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 
 view.render({}, (err, result) => {
   result.appendTo(document.body);
@@ -103,8 +103,8 @@ view.render({}, (err, result) => {
 The HTML output is written to the passed `stream`.
 
 ```js
-var http = require("http");
-var view = require("./view"); // Import `./view.marko`
+import http from "http";
+import view from "./view.marko";
 
 http.createServer((req, res) => {
   res.setHeader("content-type", "text/html");
@@ -123,7 +123,7 @@ http.createServer((req, res) => {
 The `render` method also allows passing an existing async `out`. If you do this, `render` will not automatically end the async `out` (this allows rendering a view in the middle of another view). If the async `out` won't be ended by other means, you are responsible for ending it.
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 var out = view.createOut();
 
 view.render({}, out);
@@ -145,7 +145,7 @@ out.end();
 Returns an HTML string and forces the render to complete synchronously. If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 var html = view.renderToString({});
 
 document.body.innerHTML = html;
@@ -162,7 +162,7 @@ document.body.innerHTML = html;
 An HTML string is passed to the callback.
 
 ```js
-var view = require("./view"); // Import `./view.marko`
+import view from "./view.marko";
 
 view.renderToString({}, (err, html) => {
   document.body.innerHTML = html;
@@ -171,15 +171,17 @@ view.renderToString({}, (err, html) => {
 
 ### `stream(input)`
 
-The `stream` method returns a node.js style stream of the output HTML. This method is available on the server, but is not available by default in the browser. If you need to use streams in the browser, you may `require('marko/stream')` as part of your client-side bundle.
+The `stream` method returns a Node.js-style stream of the output HTML.
 
 ```js
-var fs = require("fs");
-var view = require("./view"); // Import `./view.marko`
-var writeStream = fs.createWriteStream("output.html");
+import fs from "fs";
+import view from "./view.marko";
+const writeStream = fs.createWriteStream("output.html");
 
 view.stream({}).pipe(writeStream);
 ```
+
+This method is available on the server, but not available by default in the browser. If you need to use streams in the browser, you may `import 'marko/stream'` as part of your client-side bundle.
 
 ## RenderResult
 
@@ -207,7 +209,9 @@ view.stream({}).pipe(writeStream);
 
 ## Global data
 
-If you need to make data available globally to all views that are rendered as the result of a call to one of the above render methods, you can pass the data as a `$global` property on the input data object. This object will be removed from `input` and merged into the `out.global` property.
+If you need to make data available to all rendered views, use the `$global` property on the input data object. This property will be removed from `input` and merged into the `out.global` property.
+
+Global values persist across renders.
 
 ```js
 view.render({
@@ -217,25 +221,30 @@ view.render({
 });
 ```
 
-To prevent sensitive data to be accidentally shipped to the browser, by default **none of the keys** in `out.global` is going to be sent to the browser. If you want the data to be serialized and ship to the frontend you need to specify it in `serializedGlobals` inside the `$global` object and they persist across re-renderings.
-The values need to be serializable.
+> **Warning:** Use `$global` with caution; it is visible in any component.
+
+### Sending global data to browsers
+
+⚠️ To prevent accidentally exposing sensitive data, by default **no keys** in `out.global` are sent to browsers. To serialize data to the frontend, name the desired properties in `$global.serializedGlobals`.
+
+Values must be serializable by [the `warp10` module](https://www.npmjs.com/package/warp10).
 
 ```js
+import page from "./index.marko";
+
 app.get("/", (req, res) => {
   const ua = req.get("User-Agent");
-  const isIos = !!ua.match(/iPad|iPhone/);
-  const isAndroid = !!ua.match(/Android/);
 
-  require("./index.marko").render(
+  page.render(
     {
       $global: {
-        isIos, // isPad is serialized and available on the server and the browser in out.global.isPad
-        isAndroid, // isAndroid is serialized and available on the server and the browser in out.global.isAndroid
-        req, // req is going to be available only server side and will not be serialized because in not present in serializedGlobals below
+        isIos: /iPad|iPhone/.test(ua), // Serialized and available on the server and browser as `out.global.isIos`
+        isAndroid: /Android/.test(ua), // Serialized and available on the server and browser as `out.global.isAndroid`
+        req, // Only available server-side and not serialized, because it’s not in `serializedGlobals`
 
         serializedGlobals: {
-          isIos: true, // Tell marko to serialize isIos above
-          isAndroid: true // Tell marko to serialize isAndroid above
+          isIos: true, // Tell Marko to serialize `isIos`
+          isAndroid: true // Tell Marko to serialize `isAndroid`
         }
       }
     },
@@ -244,6 +253,4 @@ app.get("/", (req, res) => {
 });
 ```
 
-Use `$global` with judgement. It is global and visible in any component.
-
-Check [this PR](https://github.com/marko-js/marko/pull/672) for more details.
+For details, check [#672: “Serialize only input and state on top-level server-rendered UI components”](https://github.com/marko-js/marko/pull/672).

@@ -107,7 +107,7 @@ counter/
 In your `component.js` file, export the component’s class:
 
 ```js
-module.exports = class {
+export default class {
   onCreate() {
     this.state = {
       count: 0
@@ -141,7 +141,7 @@ And in your `style.css`, define the styles:
 If you target browsers that does not support classes, a plain object of methods can be exported:
 
 ```js
-module.exports = {
+export default {
   onCreate: function () {
     this.state = {
       count: 0
@@ -214,7 +214,7 @@ class {
 `component-browser.js`
 
 ```js
-module.exports = {
+export default {
   shout() {
     alert(`My favorite number is ${this.number}!`);
   }

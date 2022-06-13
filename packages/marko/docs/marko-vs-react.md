@@ -617,20 +617,22 @@ style.less {
 
 ### API
 
-Marko compiles component to JavaScript modules that export an API for rendering
-the component as shown below:
+Marko compiles components to JavaScript modules with exported API for rendering,
+as shown below:
 
 ```js
-require("./components/greeting")
+import greetingComponent from "./components/greeting.marko";
+greetingComponent
   .renderSync({ name: "Frank" })
   .appendTo(document.body);
 ```
 
-The same UI component can be rendered to a stream such as a writable HTTP
+The same UI component can render to streams, such as a writable HTTP
 response stream:
 
 ```js
-require("./components/hello").render({ name: "John" }, res);
+import greetingComponent from "./components/greeting.marko";
+greetingComponent.render({ name: "John" }, res);
 ```
 
 > The users of a Marko UI component do not need to know that the component was
@@ -736,6 +738,8 @@ the server or in the browser. For example, given the following template:
 ```
 
 #### Compiled for the server:
+
+<!--QUESTION: should these also be updated for the newer, uglier outputs? -->
 
 ```js
 var marko_template = require("marko/html").t(__filename),

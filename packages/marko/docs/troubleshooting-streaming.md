@@ -35,7 +35,7 @@ Content Delivery Networks (CDNs) consider efficient streaming one of their best 
 
 - Some [Akamai features designed to mitigate slow backends can ironically slow down fast chunked responses](https://community.akamai.com/customers/s/question/0D50f00006n975d/enabling-chunked-transfer-encoding-responses). Try toggling off Adaptive Acceleration, Ion, mPulse, Prefetch, and/or similar performance features. Also check for the following in the configuration:
 
-  ```html
+  ```xml
   <network:http.buffer-response-v2>off</network:http.buffer-response-v2>
   ```
 
@@ -44,10 +44,10 @@ Content Delivery Networks (CDNs) consider efficient streaming one of their best 
 For extreme cases where [Node streams very small HTML chunks with its built-in compression modules](https://github.com/marko-js/marko/pull/1641), you may need to tweak the compressor stream settings. Here’s an example with `createGzip` and its `Z_PARTIAL_FLUSH` flag:
 
 ```js
-const http = require("http");
-const zlib = require("zlib");
+import http from "http";
+import zlib from "zlib";
 
-const markoTemplate = require("./something.marko");
+import markoTemplate from "./something.marko";
 
 http
   .createServer(function (request, response) {

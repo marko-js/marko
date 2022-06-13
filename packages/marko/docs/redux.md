@@ -17,7 +17,7 @@ The partial code below shows how a Marko UI component can connect to a Redux sto
 ### `counter.marko`
 
 ```marko
-import store from './store';
+import store from './store.js';
 
 class {
   onMount () {
@@ -40,7 +40,7 @@ class {
 ### `reducer.js`
 
 ```js
-module.exports = function (state, action) {
+export default function (state, action) {
   state = state || { value: 0 };
 
   // Additional reducer logic here…
@@ -54,8 +54,8 @@ module.exports = function (state, action) {
 In `counter.marko`, the imported store module exports a Redux store created with the following code:
 
 ```js
-const redux = require("redux");
-const counter = require("./reducer");
+import redux from "redux";
+import counter from "./reducer.js";
 
-module.exports = redux.createStore(counter);
+export default redux.createStore(counter);
 ```
