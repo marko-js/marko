@@ -28,7 +28,7 @@ Marko makes it easy to keep your component’s class and styles next to the HTML
 
 ## Server-side rendering
 
-A UI component can be rendered on the server or in the browser, but stateful component instances will be automatically mounted to the DOM in the browser for both. If a UI component tree is rendered on the server, then Marko will recreate the UI component tree in the browser with no extra code required. For more details, please see [Server-side rendering](/docs/server-side-rendering/).
+A UI component can be rendered on the server or in the browser, but stateful component instances will be automatically mounted to the DOM in the browser for both. If a UI component tree is rendered on the server, then Marko will recreate the UI component tree in the browser with no extra code required. For more details, please see [Rendering](/docs/rendering/).
 
 ## Single-file components
 
