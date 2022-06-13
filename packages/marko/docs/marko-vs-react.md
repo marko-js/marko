@@ -617,7 +617,7 @@ style.less {
 
 ### API
 
-Marko compiles components to JavaScript modules with exported API for rendering,
+Marko compiles components to JavaScript modules that export their rendering APIs,
 as shown below:
 
 ```js
