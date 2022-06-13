@@ -621,8 +621,8 @@ Marko compiles components to JavaScript modules that export their rendering APIs
 as shown below:
 
 ```js
-import greetingComponent from "./components/greeting.marko";
-greetingComponent
+import Greeting from "./components/greeting.marko";
+Greeting
   .renderSync({ name: "Frank" })
   .appendTo(document.body);
 ```
@@ -631,8 +631,8 @@ The same UI component can render to streams, such as a writable HTTP
 response stream:
 
 ```js
-import greetingComponent from "./components/greeting.marko";
-greetingComponent.render({ name: "John" }, res);
+import Greeting from "./components/greeting.marko";
+Greeting.render({ name: "John" }, res);
 ```
 
 > The users of a Marko UI component do not need to know that the component was
