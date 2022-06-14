@@ -21,7 +21,7 @@ let currentBatch: unknown[] = [];
 let currentHydrate: unknown[] = [];
 
 
-export function queue<S extends Scope = Scope, V = unknown>(scope: S, signal: Signal<S, V>, value: V) {
+export function queue(scope: Scope, signal: Signal, value: unknown) {
   schedule();
   signal.___mark(scope);
   currentBatch.push(scope, signal, value);

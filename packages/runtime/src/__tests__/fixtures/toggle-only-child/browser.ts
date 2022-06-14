@@ -35,6 +35,7 @@ const enum INDEX {
 type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
+  [INDEX.conditional_scope]: Branch0Scope | undefined;
   [INDEX.value]: typeof inputs[number]["value"];
   ["___attrs"]: typeof inputs[number];
 }>;

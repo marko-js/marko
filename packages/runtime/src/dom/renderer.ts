@@ -86,7 +86,6 @@ export function createRenderFn<I extends Input, S extends Scope>(
     });
     const dom = initRenderer(renderer, scope);
 
-    debugger;
     if (attrs) {
       attrs.___apply(scope, input);
     }

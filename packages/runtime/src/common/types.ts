@@ -9,7 +9,7 @@ export type HydrateInstance = [
 ];
 
 export type Scope<
-  T extends { [x: number]: unknown } = { [x: number]: unknown }
+  T extends { [x: string | number]: unknown } = { [x: string | number]: unknown }
 > = [...unknown[]] & {
   ___id: number;
   ___attrs: unknown;
@@ -18,6 +18,7 @@ export type Scope<
   ___cleanup: Set<number | Scope> | undefined;
   ___client: boolean;
   _: Scope | undefined;
+  [x: string | number]: any;
 } & T;
 
 // TODO: SECTION_SIBLING that is both a SECTION_START and a SECTION_END (<for> siblings)
