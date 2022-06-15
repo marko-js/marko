@@ -1,5 +1,6 @@
 import type { Scope } from "../common/types";
 import { queue } from "./queue";
+import type { Renderer } from "./renderer";
 
 export type Signal = {
   ___mark: (scope: Scope) => void,
@@ -38,8 +39,6 @@ export function closure<S extends Scope, V>(valueAccessor: string | number, defa
         // (it could have run on the server, earlier in setup, in the current batch, or in a previous batch)
         // the defaultMark includes this value, so we decrement our mark since the value could not.
         // (this scope did not exist at the time the value ran)
-        // decrementMark(scope, accessor + SignalOffsets.MARK, defaultMark);
-        // TODO: if closure defaultMark is always 2,
         scope[markAccessor] = 1;
       }
     }
@@ -76,7 +75,10 @@ export function derivation<S extends Scope, V>(valueAccessor: string | number, d
       if (stale) {
         scope[staleAccessor] = true;
       }
-      if (!decrementMark(scope, markAccessor, defaultMark)) {
+      if (scope[markAccessor] === undefined) {
+        scope[markAccessor] = defaultMark;
+      }
+      if (scope[markAccessor] === 1) {
         let downstreamStale = false;
         if (scope[staleAccessor]) {
           scope[staleAccessor] = false;
@@ -91,15 +93,9 @@ export function derivation<S extends Scope, V>(valueAccessor: string | number, d
           subscriber.___apply(scope, undefined, downstreamStale);
         }
       }
+      scope[markAccessor]--;
     }
   }
-}
-
-function decrementMark(scope: Scope, markAccessor: number, defaultMark: number): number {
-  if (scope[markAccessor] === undefined) {
-    scope[markAccessor] = defaultMark;
-  }
-  return --(scope[markAccessor] as number);
 }
 
 // const [_setCount, _queueCount] = source("count", [inDynamicScope(_apply$forBody_count, "for")]);
@@ -163,18 +159,20 @@ export function inLoopScope<S extends Scope>(subscriber: Signal, getLoopScopes: 
   }
 }
 
-export function inRenderBody(renderBodyIndex: number): Signal {
+export function inRenderBody(renderBodyIndex: number, childScopeAccessor: number): Signal {
   return {
     ___mark(scope: Scope) {
-      const { closures } = scope[renderBodyIndex] as { closures: Signal[] };
-      for (const signal of closures) {
-        signal.___mark(scope);
+      const childScope = scope[childScopeAccessor] as Scope;
+      const signals = (scope[renderBodyIndex] as Renderer)?.___closureSignals ?? [];
+      for (const signal of signals) {
+        signal.___mark(childScope);
       }
     },
     ___apply(scope: Scope) {
-      const { closures } = scope[renderBodyIndex] as { closures: Signal[] };
-      for (const signal of closures) {
-        signal.___apply(scope, false);
+      const childScope = scope[childScopeAccessor] as Scope;
+      const signals = (scope[renderBodyIndex] as Renderer)?.___closureSignals ?? [];
+      for (const signal of signals) {
+        signal.___apply(childScope, false);
       }
     }
   }

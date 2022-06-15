@@ -1,6 +1,6 @@
 import {
   data,
-  setConditionalRendererOnlyChild,
+  conditionalOnlyChild,
   createRenderer,
   createRenderFn,
   derivation,
@@ -29,7 +29,7 @@ const enum INDEX {
   comment = 0,
   conditional = 0,
   conditional_scope = 1,
-  value = 4,
+  value = 6,
 }
 
 type ComponentScope = Scope<{
@@ -61,25 +61,19 @@ type Branch0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-const value$if = closure(INDEX_BRANCH0.value, 1, 1, INDEX.value, [], (scope: Branch0Scope, value: string) => {
+const value$if = closure(INDEX_BRANCH0.value, 2, 1, INDEX.value, [], (scope: Branch0Scope, value: string) => {
   data(scope[INDEX_BRANCH0.text], value);
 })
-export const value_subscribers = [inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])];
-export const value_action = (scope: ComponentScope, value: string | boolean) => {
-  setConditionalRendererOnlyChild(
-    scope,
-    INDEX.conditional,
-    value ? branch0 : undefined
-  );
-}
-const value = derivation(INDEX.value, 1, value_subscribers, (scope: ComponentScope) => scope["___attrs"].value, value_action);
+const _if = conditionalOnlyChild(INDEX.conditional, 1, (scope: ComponentScope) => scope[INDEX.value] ? _ifBody : undefined);
+export const value_subscribers = [_if, inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])];
+const value = derivation(INDEX.value, 1, value_subscribers, (scope: ComponentScope) => scope["___attrs"].value);
 export const attrs_subscribers = [value];
 
 export default createRenderFn(template, walks, undefined, attrs_subscribers);
 
-const branch0 = createRenderer(
+const _ifBody = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  undefined, // optimization (value will always be set in _apply_value)
-  0
+  undefined, // optimization (value will always be set in _apply_value),
+  [value$if]
 );

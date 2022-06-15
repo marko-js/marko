@@ -2,7 +2,7 @@ import {
   on,
   createRenderer,
   createRenderFn,
-  setConditionalRenderer,
+  conditional,
   data,
   bind,
   source,
@@ -25,12 +25,12 @@ const enum INDEX {
   comment = 1,
   conditional = 1,
   conditional_scope = 2,
-  show = 5,
-  show_mark = 6,
-  show_stale = 7,
-  message = 8,
-  message_mark = 9,
-  message_stale = 10
+  show = 7,
+  show_mark = 8,
+  show_stale = 9,
+  message = 10,
+  message_mark = 11,
+  message_stale = 12
 }
 
 type ComponentScope = Scope<{
@@ -79,14 +79,15 @@ const _onclick = (scope: ComponentScope) => {
 const _message$if = closure(INDEX_BRANCH0.message, 2, 1, INDEX.message, [], (scope: Branch0Scope, message: string) => {
   data(scope[INDEX_BRANCH0.text], message);
 })
-const [_setShow, _queueShow] = source(INDEX.show, 1, [inConditionalScope(_message$if, s => s[INDEX.conditional_scope])], (scope: ComponentScope, show: boolean) => {
-  setConditionalRenderer(scope, INDEX.conditional, show ? _if : undefined);
-})
+const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) => scope[INDEX.show] ? _ifBody : undefined);
+const [_setShow, _queueShow] = source(INDEX.show, 1, [_if])
 const [_setMessage, _queueMessage] = source(INDEX.message, 1, [inConditionalScope(_message$if, s => s[INDEX.conditional_scope])])
 
 export default createRenderFn(template, walks, setup);
 
-const _if = createRenderer(
+const _ifBody = createRenderer(
   "<span> </span>",
-  next(1) + get + next(1)
+  next(1) + get + next(1),
+  undefined,
+  [_message$if]
 );

@@ -1,12 +1,13 @@
 import {
   data,
-  setConditionalRenderer,
+  conditional,
+  conditionalOnlyChild,
+  inConditionalScope,
   createRenderer,
   createRenderFn,
   dynamicFragment,
-  write,
-  queue,
-  queueInBranch,
+  closure,
+  derivation,
   Scope,
 } from "../../../dom/index";
 import { next, over, get, skip } from "../../utils/walks";
@@ -44,17 +45,10 @@ type Input = typeof inputs[number];
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  show = 4,
-  value1 = 5,
-  value2 = 6,
-}
-
-const enum PRIORITY {
-  show = 0,
-  value1 = 1,
-  value2 = 2,
-  closure_value1 = 3,
-  closure_value2 = 4,
+  conditional_scope = 1,
+  show = 6,
+  value1 = 9,
+  value2 = 12,
 }
 
 type ComponentScope = Scope<{
@@ -63,6 +57,46 @@ type ComponentScope = Scope<{
   [INDEX.show]: Input["show"];
   [INDEX.value1]: Input["value1"];
   [INDEX.value2]: Input["value2"];
+  ["___attrs"]: Input;
+}>;
+
+const enum INDEX_IF0 {
+  comment1 = 0,
+  conditional1 = 0,
+  conditional1_scope = 1,
+  comment2 = 6,
+  conditional2 = 6,
+  conditional2_scope = 7,
+  value1 = 12,
+  value2 = 15
+}
+
+type If0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_IF0.comment1]: Comment;
+  [INDEX_IF0.conditional1]: Comment;
+  [INDEX_IF0.comment2]: Comment;
+  [INDEX_IF0.conditional2]: Comment;
+}>;
+
+const enum INDEX_IF1 {
+  text = 0,
+  value1 = 1,
+}
+
+type If1Scope = Scope<{
+  _: If0Scope;
+  [INDEX_IF1.text]: Text;
+}>;
+
+const enum INDEX_IF2 {
+  text = 0,
+  value2 = 1,
+}
+
+type If2Scope = Scope<{
+  _: If0Scope;
+  [INDEX_IF2.text]: Text;
 }>;
 
 // <attrs/{show, value1, value2}/>
@@ -73,160 +107,137 @@ type ComponentScope = Scope<{
 //   </if>
 // </div>
 
-export const template = `<div><!></div>`;
-export const walks = next(1) + get + over(1);
+export const template = `<div></div>`;
+export const walks = get + over(1);
 
-export const _apply_show = (scope: ComponentScope) => {
-  setConditionalRenderer(
-    scope,
-    INDEX.conditional,
-    scope[INDEX.show] ? branch0 : undefined,
-    dynamicFragment
-  );
-};
+const value2$if2 = closure(
+  INDEX_IF2.value2, 
+  2, 
+  1, 
+  INDEX_IF0.value2, 
+  [], 
+  (scope: If2Scope, value: string) => {
+    data(scope[INDEX_IF2.text], value);
+  }
+);
 
-export const _apply_value1 = (scope: ComponentScope) => {
-  queueInBranch(
-    scope,
-    INDEX.conditional,
-    branch0,
-    execInputValue1Branch0,
-    PRIORITY_BRANCH0.value1,
-    PRIORITY.closure_value1
-  );
-};
+const value1$if1 = closure(
+  INDEX_IF1.value1,
+  2,
+  1,
+  INDEX_IF0.value1,
+  [],
+  (scope: If1Scope, value: string) => {
+    data(scope[INDEX_IF1.text], value);
+  }
+);
 
-export const execInputValue1Branch0 = (scope: Branch0Scope) => {
-  setConditionalRenderer(
-    scope,
-    INDEX_BRANCH0.conditional1,
-    scope._[INDEX.value1] ? branch0_0 : undefined
-  );
-  queueInBranch(
-    scope,
-    INDEX_BRANCH0.conditional1,
-    branch0_0,
-    execInputValue1Branch0_0,
-    PRIORITY_BRANCH0_0.value1,
-    PRIORITY_BRANCH0.closure_value1
-  );
-};
+const _if2 = conditional(
+  INDEX_IF0.conditional2,
+  1,
+  (scope: If0Scope) => scope[INDEX_IF0.value2] ? ifBody2 : undefined
+);
 
-export const execInputValue2 = (scope: ComponentScope) => {
-  queueInBranch(
-    scope,
-    INDEX.conditional,
-    branch0,
-    execInputValue2Branch0,
-    PRIORITY_BRANCH0.value2,
-    PRIORITY.closure_value2
-  );
-};
+const _if1 = conditional(
+  INDEX_IF0.conditional1,
+  1,
+  (scope: If0Scope) => scope[INDEX_IF0.value1] ? ifBody1 : undefined
+);
 
-export const execInputValue2Branch0 = (scope: Branch0Scope) => {
-  setConditionalRenderer(
-    scope,
-    INDEX_BRANCH0.conditional2,
-    scope._[INDEX.value2] ? branch0_1 : undefined
-  );
-  queueInBranch(
-    scope,
-    INDEX_BRANCH0.conditional2,
-    branch0_1,
-    execInputValue2Branch0_1,
-    PRIORITY_BRANCH0_1.value2,
-    PRIORITY_BRANCH0.closure_value2
-  );
-};
+const value2$if0 = closure(
+  INDEX_IF0.value2,
+  2,
+  1,
+  INDEX.value2,
+  [
+    _if2,
+    inConditionalScope(value2$if2, (scope: If0Scope) => scope[INDEX_IF0.conditional2_scope])
+  ]
+);
 
-const execInputValue1Branch0_0 = (scope: Branch0_0Scope) => {
-  data(scope[INDEX_BRANCH0_0.text], scope._._[INDEX.value1]);
-};
+const value1$if0 = closure(
+  INDEX_IF0.value1,
+  2,
+  1,
+  INDEX.value1,
+  [
+    _if1,
+    inConditionalScope(value1$if1, (scope: If0Scope) => scope[INDEX_IF0.conditional1_scope])
+  ]
+);
 
-const execInputValue2Branch0_1 = (scope: Branch0_1Scope) => {
-  data(scope[INDEX_BRANCH0_1.text], scope._._[INDEX.value2]);
-};
+const _if0 = conditionalOnlyChild(
+  INDEX.conditional,
+  1,
+  (scope: ComponentScope) => scope[INDEX.show] ? ifBody0 : undefined,
+  dynamicFragment
+);
 
-export const execDynamicInput = (scope: ComponentScope, input: Input) => {
-  write(scope, INDEX.show, input.show) && _apply_show(scope);
-  write(scope, INDEX.value1, input.value1) && _apply_value1(scope);
-  write(scope, INDEX.value2, input.value2) && execInputValue2(scope);
-};
+export const value2_subscribers = [
+  inConditionalScope(value2$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+];
 
-export default createRenderFn(template, walks, undefined, execDynamicInput);
+const value2 = derivation(
+  INDEX.value2,
+  1,
+  value2_subscribers,
+  (scope: ComponentScope) => scope["___attrs"].value2
+);
 
-const enum INDEX_BRANCH0 {
-  comment1 = 0,
-  conditional1 = 0,
-  comment2 = 4,
-  conditional2 = 4,
-}
+export const value1_subscribers = [
+  inConditionalScope(value1$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+];
 
-const enum PRIORITY_BRANCH0 {
-  value1 = 0,
-  value2 = 1,
-  closure_value1 = 2,
-  closure_value2 = 3,
-}
+const value1 = derivation(
+  INDEX.value1,
+  1,
+  value1_subscribers,
+  (scope: ComponentScope) => scope["___attrs"].value1
+);
 
-type Branch0Scope = Scope<{
-  _: ComponentScope;
-  [INDEX_BRANCH0.comment1]: Comment;
-  [INDEX_BRANCH0.conditional1]: Comment;
-  [INDEX_BRANCH0.comment2]: Comment;
-  [INDEX_BRANCH0.conditional2]: Comment;
-}>;
+export const show_subscribers = [_if0];
 
-const branch0 = createRenderer(
+const show = derivation(
+  INDEX.show,
+  1,
+  show_subscribers,
+  (scope: ComponentScope) => scope["___attrs"].show
+);
+
+export const attrs_subscribers = [
+  show,
+  value1,
+  value2
+];
+
+export default createRenderFn(template, walks, undefined, attrs_subscribers);
+
+// export const attrs_subscribers = [
+//   attr(INDEX.show, show_subscribers, (attrs: Input) => attrs.show),
+//   attr(INDEX.value1, value1_subscribers, (attrs: Input) => attrs.value1),
+//   attr(INDEX.value2, value2_subscribers, (attrs: Input) => attrs.value2),
+// ]
+
+const ifBody0 = createRenderer(
   "<!><!>",
-  get + over(1) + skip(3) + get + over(1),
-  (scope: Branch0Scope) => {
-    queue(scope, execInputValue1Branch0, PRIORITY_BRANCH0.value1);
-    queue(scope, execInputValue2Branch0, PRIORITY_BRANCH0.value2);
-  },
+  get + over(1) + skip(5) + get + over(1),
+  undefined,
+  [value1$if0, value2$if0],
   0,
-  0,
-  4
+  INDEX_IF0.conditional1,
+  INDEX_IF0.conditional2
 );
 
-const enum INDEX_BRANCH0_0 {
-  text = 0,
-}
-
-const enum PRIORITY_BRANCH0_0 {
-  value1 = 0,
-}
-
-type Branch0_0Scope = Scope<{
-  _: Branch0Scope;
-  [INDEX_BRANCH0_0.text]: Text;
-}>;
-
-const branch0_0 = createRenderer(
+const ifBody1 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined,
-  0
+  [value1$if1]
 );
 
-const enum INDEX_BRANCH0_1 {
-  text = 0,
-}
-
-const enum PRIORITY_BRANCH0_1 {
-  value2 = 1,
-}
-
-type Branch0_1Scope = Scope<{
-  _: Branch0Scope;
-  [INDEX_BRANCH0_1.text]: Text;
-}>;
-
-// OPTIMIZATION: these two branches have the same renderer arguments
-// so they could share the same renderer instance
-const branch0_1 = createRenderer(
+const ifBody2 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined,
-  0
+  [value2$if2]
 );

@@ -15,6 +15,7 @@ export type Renderer<S extends Scope = Scope> = {
   ___template: string;
   ___walks: string | undefined;
   ___render: RenderFn<S> | undefined;
+  ___closureSignals: Signal[],
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
@@ -74,6 +75,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
     template,
     walks,
     render,
+    [],
     hasUserEffects,
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
@@ -111,6 +113,7 @@ export function createRenderer<S extends Scope>(
   template: string,
   walks?: string,
   render?: RenderFn<S>,
+  closureSignals: Signal[] = [],
   hasUserEffects: 0 | 1 = 0,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
@@ -120,6 +123,7 @@ export function createRenderer<S extends Scope>(
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
     ___render: render,
     ___clone: _clone,
+    ___closureSignals: closureSignals,
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,

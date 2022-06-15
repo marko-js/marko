@@ -2,14 +2,33 @@ import type { Scope } from "../common/types";
 import { Context, setContext } from "../common/context";
 import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
-import { createScope, getEmptyScope, destroyScope, write } from "./scope";
+import { createScope, getEmptyScope, destroyScope } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
+import { derivation, inRenderBody } from "./signals";
 
 export const enum ConditionalIndex {
   REFERENCE_NODE = 0,
   SCOPE = 1,
   RENDERER = 2,
-  CONTEXT = 3,
+  RENDERER_MARK = 3,
+  RENDERER_STALE = 4,
+  CONTEXT = 5
+}
+
+export function conditional<S extends Scope>(nodeAccessor: number, defaultMark: number, computeRenderer: (scope: S) => Renderer | undefined, fragment?: DOMFragment) {
+  const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
+  const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
+  return derivation(rendererAccessor, defaultMark, [inRenderBody(rendererAccessor, childScopeAccessor)], computeRenderer, (scope: S, renderer?: Renderer) => {
+    setConditionalRenderer(scope, nodeAccessor, renderer, fragment)
+  });
+}
+
+export function conditionalOnlyChild<S extends Scope>(nodeAccessor: number, defaultMark: number, computeRenderer: (scope: S) => Renderer | undefined, fragment?: DOMFragment) {
+  const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
+  const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
+  return derivation(rendererAccessor, defaultMark, [inRenderBody(rendererAccessor, childScopeAccessor)], computeRenderer, (scope: S, renderer?: Renderer) => {
+    setConditionalRendererOnlyChild(scope, nodeAccessor, renderer, fragment)
+  });
 }
 
 export function setConditionalRenderer<ChildScope extends Scope>(
@@ -18,40 +37,40 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   newRenderer: Renderer<ChildScope> | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  if (write(scope, conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
-    let newScope: ChildScope;
-    let prevScope = scope[
-      conditionalIndex + ConditionalIndex.SCOPE
-    ] as ChildScope;
+  let newScope: ChildScope;
+  let prevScope = scope[
+    conditionalIndex + ConditionalIndex.SCOPE
+  ] as ChildScope;
 
-    if (newRenderer) {
-      setContext(
-        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
-      );
-      newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] = createScope(
-        scope
-      ) as ChildScope;
-      initRenderer(newRenderer, newScope);
-      prevScope =
-        prevScope ||
-        getEmptyScope(
-          scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
-        );
-      setContext(null);
-    } else {
-      newScope = getEmptyScope(
-        scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
-      ) as ChildScope;
-      scope[conditionalIndex + ConditionalIndex.SCOPE] = undefined;
-    }
-
-    fragment.___insertBefore(
-      newScope,
-      fragment.___getParentNode(prevScope),
-      fragment.___getFirstNode(prevScope)
+  if (newRenderer) {
+    setContext(
+      scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
     );
-    fragment.___remove(prevScope);
+    newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] = createScope(
+      scope
+    ) as ChildScope;
+    initRenderer(newRenderer, newScope);
+    prevScope =
+      prevScope ||
+      getEmptyScope(
+        scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
+      );
+    setContext(null);
+  } else {
+    newScope = getEmptyScope(
+      scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
+    ) as ChildScope;
+    scope[conditionalIndex + ConditionalIndex.SCOPE] = undefined;
   }
+
+  debugger;
+
+  fragment.___insertBefore(
+    newScope,
+    fragment.___getParentNode(prevScope),
+    fragment.___getFirstNode(prevScope)
+  );
+  fragment.___remove(prevScope);
 }
 
 export function setConditionalRendererOnlyChild(
@@ -60,22 +79,20 @@ export function setConditionalRendererOnlyChild(
   newRenderer: Renderer | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  if (write(scope, conditionalIndex + ConditionalIndex.RENDERER, newRenderer)) {
-    const referenceNode = scope[
-      conditionalIndex + ConditionalIndex.REFERENCE_NODE
-    ] as Element;
-    referenceNode.textContent = "";
+  const referenceNode = scope[
+    conditionalIndex + ConditionalIndex.REFERENCE_NODE
+  ] as Element;
+  referenceNode.textContent = "";
 
-    if (newRenderer) {
-      setContext(
-        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
-      );
-      const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
-        createScope(scope));
-      initRenderer(newRenderer, newScope);
-      fragment.___insertBefore(newScope, referenceNode, null);
-      setContext(null);
-    }
+  if (newRenderer) {
+    setContext(
+      scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
+    );
+    const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
+      createScope(scope));
+    initRenderer(newRenderer, newScope);
+    fragment.___insertBefore(newScope, referenceNode, null);
+    setContext(null);
   }
 }
 

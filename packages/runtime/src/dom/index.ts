@@ -1,6 +1,6 @@
 export {
-  setConditionalRenderer,
-  setConditionalRendererOnlyChild,
+  conditional,
+  conditionalOnlyChild,
   setLoopOf,
   setLoopFromTo,
   setLoopIn,
