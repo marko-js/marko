@@ -214,7 +214,7 @@ If you need to make data available to all rendered views, use the `$global` prop
 Global values persist across renders.
 
 ```js
-view.render({
+View.render({
   $global: {
     flags: ["mobile"]
   }
