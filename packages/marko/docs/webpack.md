@@ -116,21 +116,22 @@ export default {
   },
 ```
 
-## Multiple client side compilers
+## Multiple client-side compilers
 
-Sometimes you need to have multiple compilers for your client side bundles. For example with [`i18n`](https://github.com/webpack/webpack/tree/master/examples/i18n) or [even shipping dynamic runtime bundles to the browser](https://github.com/eBay/arc/tree/master/packages/arc-webpack).
+Sometimes you need multiple compilers for your client-side bundles. For example, with [`i18n`](https://github.com/webpack/webpack/tree/master/examples/i18n) or [even shipping dynamic runtime bundles to the browser](https://github.com/eBay/arc/tree/master/packages/arc-webpack).
 
-The Marko webpack browser plugin can be passed to multiple webpack compilers. At runtime you can provide a `$global.buildName` when rendering which will cause assets from the webpack compiler with that name to be included in the page.
+The `@marko/webpack` plugin’s `.browser` property can be passed to multiple Webpack compilers. While rendering at runtime, you can provide a `$global.buildName` property to choose which assets from the Webpack compiler are included in the page.
 
-For example with the webpack i18n plugin you might have a config like the following:
+For example, with the Webpack internationalization plugin, you might have a config like the following:
 
 ```js
 import MarkoPlugin from "@marko/webpack/plugin";
 import I18nPlugin from "i18n-webpack-plugin";
+import germanTranslations from "./de.json";
 
 const languages = {
   en: null,
-  de: require("./de.json")
+  de: germanTranslations
 };
 
 const markoPlugin = new MarkoPlugin();
@@ -167,20 +168,19 @@ export default [
 ];
 ```
 
-With the above config you can render your top level Marko template server side with a `$global.buildName`, like so:
+With the above config, you can render your top-level Marko template server-side with a `$global.buildName` like so:
 
 ```javascript
 template.render({ $global: { buildName: "Browser-de" } });
 ```
 
-This will automatically send assets for the German language.
-Of course in this case you'll want to conditionally send the appropriate assets given a users locale. This can be some simply, like so:
+That will automatically send German assets. However, what you _probably_ want instead of always serving German is conditionally sending appropriate assets for a user’s locale. This can be done like so:
 
 ```javascript
 template.render({ $global: { buildName: `Browser-${req.language}` } });
 ```
 
-Note: If a bundle with the provided name does not exist an error will be thrown.
+**Note:** If a bundle with the provided `buildName` does not exist, an error is thrown.
 
 ## Multiple copies of Marko
 

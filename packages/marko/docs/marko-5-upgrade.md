@@ -52,14 +52,13 @@ or
 yarn upgrade marko@^5
 ```
 
-> **Note**: Marko 5 has changed to using ES Modules. This means if you are using CJS modules to `require` a Marko template you will need to use the default property exported.
+> **Note**: Marko 5 has changed to using ES Modules. This means if you are using CJS modules to `require` a Marko template you will need to use the `.default` property exported.
 >
 > ```js
 > const template = require("./template.marko");
->
-> // Should become
+> // …should become:
 > const template = require("./template.marko").default;
 >
-> // If you are already using es modules things remain the same
+> // If already using ES Modules, things remain the same:
 > import template from "./template.marko";
 > ```

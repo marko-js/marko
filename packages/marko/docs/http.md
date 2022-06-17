@@ -7,13 +7,13 @@ project for a working example.
 
 ```js
 import http from "http";
-import template from "./index.marko";
+import Template from "./index.marko";
 
 const port = 8080;
 const server = http.createServer();
 
 server.on("request", (req, res) => {
-  template.render(
+  Template.render(
     {
       name: "Frank",
       count: 30,

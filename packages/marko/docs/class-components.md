@@ -28,7 +28,7 @@ Marko makes it easy to keep your component’s class and styles next to the HTML
 
 ## Server-side rendering
 
-A UI component can be rendered on the server or in the browser, but stateful component instances will be automatically mounted to the DOM in the browser for both. If a UI component tree is rendered on the server, then Marko will recreate the UI component tree in the browser with no extra code required. For more details, please see [Server-side rendering](/docs/server-side-rendering/).
+A UI component can be rendered on the server or in the browser, but stateful component instances will be automatically mounted to the DOM in the browser for both. If a UI component tree is rendered on the server, then Marko will recreate the UI component tree in the browser with no extra code required. For more details, please see [Rendering](/docs/rendering/).
 
 ## Single-file components
 
@@ -107,7 +107,7 @@ counter/
 In your `component.js` file, export the component’s class:
 
 ```js
-module.exports = class {
+export default class {
   onCreate() {
     this.state = {
       count: 0
@@ -116,7 +116,7 @@ module.exports = class {
   increment() {
     this.state.count++;
   }
-};
+}
 ```
 
 In your `index.marko` file, you can reference methods from that class with `on-*` attributes:
@@ -141,7 +141,7 @@ And in your `style.css`, define the styles:
 If you target browsers that does not support classes, a plain object of methods can be exported:
 
 ```js
-module.exports = {
+export default {
   onCreate: function () {
     this.state = {
       count: 0
@@ -214,7 +214,7 @@ class {
 `component-browser.js`
 
 ```js
-module.exports = {
+export default {
   shout() {
     alert(`My favorite number is ${this.number}!`);
   }

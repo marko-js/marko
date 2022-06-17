@@ -5,21 +5,19 @@ project for a working example.
 
 ## Usage
 
-When using Marko with [Cloudflare Workers](https://workers.cloudflare.com/) you need to make sure that Marko is loaded with a `worker` [export condition](https://nodejs.org/api/packages.html#conditional-exports). Most bundlers support the ability to define export conditions.
+When using Marko with [Cloudflare Workers](https://workers.cloudflare.com/), make sure that Marko is loaded with a `worker` [export condition](https://nodejs.org/api/packages.html#conditional-exports). Most bundlers support defining export conditions.
 
-After that point the `template.stream` will now return a worker compatible [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream).
-
-You can then simply respond with the returned stream.
+After that point, imported `.marko` files will export a `.stream` method that returns a worker compatible [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream). You can then respond with that returned stream:
 
 ```js
-import template from "./index.marko";
+import Template from "./index.marko";
 
 addEventListener("fetch", event => {
   event.respondWith(handleRequest(event.request));
 });
 
 async function handleRequest(request) {
-  return new Response(template.stream(), {
+  return new Response(Template.stream(), {
     headers: {
       status: 200,
       headers: { "content-type": "text/html;charset=UTF-8" }

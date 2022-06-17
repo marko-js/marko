@@ -243,9 +243,8 @@ $ const searchResultsPromise = searchService.performSearch(keywords);
 Can’t decide if you want to do server-side rendering or client-side rendering?
 Why are we even talking about this in 2017? It doesn’t matter. Seriously, just
 do both. Marko makes this a no-brainer since you can render a Marko template
-directly to a stream (oh, and Marko will [automatically mount UI
-components](http://markojs.com/docs/server-side-rendering/) rendered on the
-server when the page loads in the browser):
+directly to a stream (oh, and Marko will automatically mount UI
+components rendered on the server when the page loads in the browser):
 
 ```js
 require("@marko/compiler/register"); // require .marko files!

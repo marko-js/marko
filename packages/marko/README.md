@@ -39,7 +39,7 @@ number of times the button has been clicked.
 ```marko
 class {
     onCreate() {
-        this.state = { count:0 };
+        this.state = { count: 0 };
     }
     increment() {
         this.state.count++;
@@ -48,12 +48,12 @@ class {
 
 style {
     .count {
-        color:#09c;
-        font-size:3em;
+        color: #09c;
+        font-size: 3em;
     }
     .example-button {
-        font-size:1em;
-        padding:0.5em;
+        font-size: 1em;
+        padding: 0.5em;
     }
 }
 
@@ -85,7 +85,7 @@ component style:
 **component.js**
 
 ```js
-module.exports = {
+export default {
   onCreate() {
     this.state = { count: 0 };
   },

@@ -617,20 +617,20 @@ style.less {
 
 ### API
 
-Marko compiles component to JavaScript modules that export an API for rendering
-the component as shown below:
+Marko compiles components to JavaScript modules that export their rendering APIs,
+as shown below:
 
 ```js
-require("./components/greeting")
-  .renderSync({ name: "Frank" })
-  .appendTo(document.body);
+import Greeting from "./components/greeting.marko";
+Greeting.renderSync({ name: "Frank" }).appendTo(document.body);
 ```
 
-The same UI component can be rendered to a stream such as a writable HTTP
+The same UI component can render to streams, such as a writable HTTP
 response stream:
 
 ```js
-require("./components/hello").render({ name: "John" }, res);
+import Greeting from "./components/greeting.marko";
+Greeting.render({ name: "John" }, res);
 ```
 
 > The users of a Marko UI component do not need to know that the component was
