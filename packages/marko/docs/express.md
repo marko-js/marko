@@ -30,14 +30,14 @@ By using `res.marko` you'll automatically have access to `req`, `res`, `app`, `a
 ```javascript
 import express from "express";
 import markoPlugin from "@marko/express";
-import template from "./template.marko";
+import Template from "./template.marko";
 
 const app = express();
 
 app.use(markoPlugin()); //enable res.marko(template, data)
 
 app.get("/", function (req, res) {
-  res.marko(template, {
+  res.marko(Template, {
     name: "Frank",
     count: 30,
     colors: ["red", "green", "blue"]

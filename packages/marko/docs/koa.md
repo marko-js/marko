@@ -13,13 +13,13 @@ npm install koa marko --save
 
 ```javascript
 import Koa from "koa";
-import template from "./index.marko";
+import Template from "./index.marko";
 
 const app = new Koa();
 
 app.use((ctx, next) => {
   ctx.type = "html";
-  ctx.body = template.stream({
+  ctx.body = Template.stream({
     name: "Frank",
     count: 30,
     colors: ["red", "green", "blue"]

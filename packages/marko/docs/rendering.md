@@ -5,7 +5,7 @@ To render a Marko view, you need to `import` it.
 _example.js_
 
 ```js
-import fancyButton from "./components/fancy-button.marko";
+import FancyButton from "./components/fancy-button.marko";
 ```
 
 > **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko CLI](https://github.com/marko-js/cli). If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md) or [`rollup`](./rollup.md).
@@ -15,8 +15,8 @@ Once you have a view, you can pass input data and render it:
 _example.js_
 
 ```js
-import button from "./components/fancy-button.marko";
-const html = button.renderToString({ label: "Click me!" });
+import FancyButton from "./components/fancy-button.marko";
+const html = FancyButton.renderToString({ label: "Click me!" });
 
 console.log(html);
 ```
@@ -51,8 +51,8 @@ Many of these methods return a [`RenderResult`](#renderresult) which is an objec
 Using `renderSync` forces the render to complete synchronously. If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-import view from "./view.marko";
-var result = view.renderSync({});
+import View from "./view.marko";
+var result = View.renderSync({});
 
 result.appendTo(document.body);
 ```
@@ -67,8 +67,8 @@ result.appendTo(document.body);
 The `render` method returns an async `out` which is used to generate HTML on the server or a virtual DOM in the browser. In either case, the async `out` has a `then` method that follows the Promises/A+ spec, so it can be used as if it were a Promise. This promise resolves to a [`RenderResult`](#renderresult).
 
 ```js
-import view from "./view.marko";
-var resultPromise = view.render({});
+import View from "./view.marko";
+var resultPromise = View.render({});
 
 resultPromise.then(result => {
   result.appendTo(document.body);
@@ -85,9 +85,9 @@ resultPromise.then(result => {
 | return value   | `AsyncStream`/`AsyncVDOMBuilder` | the async `out` render target                  |
 
 ```js
-import view from "./view.marko";
+import View from "./view.marko";
 
-view.render({}, (err, result) => {
+View.render({}, (err, result) => {
   result.appendTo(document.body);
 });
 ```
@@ -104,11 +104,11 @@ The HTML output is written to the passed `stream`.
 
 ```js
 import http from "http";
-import view from "./view.marko";
+import View from "./view.marko";
 
 http.createServer((req, res) => {
   res.setHeader("content-type", "text/html");
-  view.render({}, res);
+  View.render({}, res);
 });
 ```
 
@@ -123,10 +123,10 @@ http.createServer((req, res) => {
 The `render` method also allows passing an existing async `out`. If you do this, `render` will not automatically end the async `out` (this allows rendering a view in the middle of another view). If the async `out` won't be ended by other means, you are responsible for ending it.
 
 ```js
-import view from "./view.marko";
-var out = view.createOut();
+import View from "./view.marko";
+var out = View.createOut();
 
-view.render({}, out);
+View.render({}, out);
 
 out.on("finish", () => {
   console.log(out.getOutput());
@@ -145,8 +145,8 @@ out.end();
 Returns an HTML string and forces the render to complete synchronously. If a tag attempts to run asynchronously, an error will be thrown.
 
 ```js
-import view from "./view.marko";
-var html = view.renderToString({});
+import View from "./view.marko";
+var html = View.renderToString({});
 
 document.body.innerHTML = html;
 ```
@@ -162,9 +162,9 @@ document.body.innerHTML = html;
 An HTML string is passed to the callback.
 
 ```js
-import view from "./view.marko";
+import View from "./view.marko";
 
-view.renderToString({}, (err, html) => {
+View.renderToString({}, (err, html) => {
   document.body.innerHTML = html;
 });
 ```
@@ -175,10 +175,10 @@ The `stream` method returns a Node.js-style stream of the output HTML.
 
 ```js
 import fs from "fs";
-import view from "./view.marko";
+import View from "./view.marko";
 const writeStream = fs.createWriteStream("output.html");
 
-view.stream({}).pipe(writeStream);
+View.stream({}).pipe(writeStream);
 ```
 
 This method is available on the server, but not available by default in the browser. If you need to use streams in the browser, you may `import 'marko/stream'` as part of your client-side bundle.
@@ -230,12 +230,12 @@ view.render({
 Values must be serializable by [the `warp10` module](https://www.npmjs.com/package/warp10).
 
 ```js
-import page from "./index.marko";
+import Page from "./index.marko";
 
 app.get("/", (req, res) => {
   const ua = req.get("User-Agent");
 
-  page.render(
+  Page.render(
     {
       $global: {
         isIos: /iPad|iPhone/.test(ua), // Serialized and available on the server and browser as `out.global.isIos`
