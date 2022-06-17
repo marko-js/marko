@@ -622,9 +622,7 @@ as shown below:
 
 ```js
 import Greeting from "./components/greeting.marko";
-Greeting
-  .renderSync({ name: "Frank" })
-  .appendTo(document.body);
+Greeting.renderSync({ name: "Frank" }).appendTo(document.body);
 ```
 
 The same UI component can render to streams, such as a writable HTTP

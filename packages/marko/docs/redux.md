@@ -46,7 +46,7 @@ export default function (state, action) {
   // Additional reducer logic here…
 
   return state;
-};
+}
 ```
 
 ### `store.js`

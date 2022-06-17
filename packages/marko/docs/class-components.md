@@ -116,7 +116,7 @@ export default class {
   increment() {
     this.state.count++;
   }
-};
+}
 ```
 
 In your `index.marko` file, you can reference methods from that class with `on-*` attributes:
