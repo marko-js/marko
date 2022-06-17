@@ -739,8 +739,6 @@ the server or in the browser. For example, given the following template:
 
 #### Compiled for the server:
 
-<!--QUESTION: should these also be updated for the newer, uglier outputs? -->
-
 ```js
 var marko_template = require("marko/html").t(__filename),
   marko_helpers = require("marko/runtime/html/helpers"),

@@ -56,32 +56,6 @@ Given the following template:
 
 The compiled output is optimized for streaming HTML output on the server:
 
-<!-- QUESTION: Should these examples be updated for the current output, which is a lot uglier?
-
-import { t as _t } from "marko/dist/runtime/html/index.js";
-
-const _marko_componentType = "yYhiHwOg",
-  _marko_template = _t(_marko_componentType);
-
-_marko_template.path = "/components/index.marko";
-export default _marko_template;
-import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
-import _marko_renderer from "marko/dist/runtime/components/renderer.js";
-const _marko_component = {};
-_marko_template._ = _marko_renderer(
-  function (input, out, _componentDef, _component, state) {
-    out.w(`<div>Hello ${_marko_escapeXml(input.name)}!</div>`);
-  },
-  {
-    t: _marko_componentType,
-    i: true,
-  },
-  _marko_component
-);
-_marko_template.meta = {
-  id: _marko_componentType,
-};
--->
 ```js
 var marko_template = require("marko/html").t(__filename),
   marko_helpers = require("marko/runtime/html/helpers"),
