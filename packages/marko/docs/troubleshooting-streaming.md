@@ -47,12 +47,12 @@ For extreme cases where [Node streams very small HTML chunks with its built-in c
 import http from "http";
 import zlib from "zlib";
 
-import markoTemplate from "./something.marko";
+import MarkoTemplate from "./something.marko";
 
 http
   .createServer(function (request, response) {
     response.writeHead(200, { "content-type": "text/html;charset=utf-8" });
-    const templateStream = markoTemplate.stream({});
+    const templateStream = MarkoTemplate.stream({});
     const gzipStream = zlib.createGzip({
       flush: zlib.constants.Z_PARTIAL_FLUSH
     });
