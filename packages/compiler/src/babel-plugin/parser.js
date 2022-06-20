@@ -10,8 +10,9 @@ const noop = () => {};
 const emptyRange = part => part.start === part.end;
 const isAttrTag = tag => tag.name.value?.[0] === "@";
 const toBabelPosition = ({ line, character }) => ({
+  // Babel lines start at 1 and use "column" instead of "character".
   line: line + 1,
-  column: character ? character - 1 : character
+  column: character
 });
 
 export function parseMarko(file) {
@@ -28,8 +29,6 @@ export function parseMarko(file) {
   let onNext = noop;
   const positionAt = index => toBabelPosition(parser.positionAt(index));
   const locationAt = range => {
-    // Babel columns start at 0, but that is silly.
-    // Here we normalize the parsers 1 based columns.
     const { start, end } = parser.locationAt(range);
     return {
       start: toBabelPosition(start),
