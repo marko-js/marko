@@ -59,6 +59,10 @@ export function child<S extends Scope, V>(childAccessor: string | number, defaul
   }
 }
 
+export function inputAttr<S extends Scope, A, V>(valueAccessor: string | number,  subscribers: Signal[], compute: (attrs: A) => V, action?: (scope: S, value: V) => void) {
+  return derivation(valueAccessor, 1, subscribers, (scope: S) => compute(scope.___attrs as A), action);
+}
+
 export function derivation<S extends Scope, V>(valueAccessor: string | number, defaultMark: number, subscribers: Signal[], compute?: (scope: S) => V, action?: (scope: S, value: V) => void): Signal {
   const markAccessor = valueAccessor as number + SignalOffsets.MARK;
   const staleAccessor = valueAccessor as number + SignalOffsets.STALE;

@@ -7,7 +7,7 @@ import {
   createRenderFn,
   dynamicFragment,
   closure,
-  derivation,
+  inputAttr,
   Scope,
 } from "../../../dom/index";
 import { next, over, get, skip } from "../../utils/walks";
@@ -177,46 +177,19 @@ export const value2_subscribers = [
   inConditionalScope(value2$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
 ];
 
-const value2 = derivation(
-  INDEX.value2,
-  1,
-  value2_subscribers,
-  (scope: ComponentScope) => scope["___attrs"].value2
-);
-
 export const value1_subscribers = [
   inConditionalScope(value1$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
 ];
 
-const value1 = derivation(
-  INDEX.value1,
-  1,
-  value1_subscribers,
-  (scope: ComponentScope) => scope["___attrs"].value1
-);
-
 export const show_subscribers = [_if0];
 
-const show = derivation(
-  INDEX.show,
-  1,
-  show_subscribers,
-  (scope: ComponentScope) => scope["___attrs"].show
-);
-
 export const attrs_subscribers = [
-  show,
-  value1,
-  value2
-];
+  inputAttr(INDEX.show, show_subscribers, (attrs: Input) => attrs.show),
+  inputAttr(INDEX.value1, value1_subscribers, (attrs: Input) => attrs.value1),
+  inputAttr(INDEX.value2, value2_subscribers, (attrs: Input) => attrs.value2),
+]
 
 export default createRenderFn(template, walks, undefined, attrs_subscribers);
-
-// export const attrs_subscribers = [
-//   attr(INDEX.show, show_subscribers, (attrs: Input) => attrs.show),
-//   attr(INDEX.value1, value1_subscribers, (attrs: Input) => attrs.value1),
-//   attr(INDEX.value2, value2_subscribers, (attrs: Input) => attrs.value2),
-// ]
 
 const ifBody0 = createRenderer(
   "<!><!>",

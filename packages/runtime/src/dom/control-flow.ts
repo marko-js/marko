@@ -63,8 +63,6 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     scope[conditionalIndex + ConditionalIndex.SCOPE] = undefined;
   }
 
-  debugger;
-
   fragment.___insertBefore(
     newScope,
     fragment.___getParentNode(prevScope),

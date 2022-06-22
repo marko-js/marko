@@ -35,4 +35,4 @@ export type { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";
 
-export { source, derivation, closure, inConditionalScope } from "./signals";
+export { source, derivation, closure, inputAttr, inConditionalScope } from "./signals";
