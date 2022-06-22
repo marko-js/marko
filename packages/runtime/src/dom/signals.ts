@@ -59,8 +59,12 @@ export function child<S extends Scope, V>(childAccessor: string | number, defaul
   }
 }
 
-export function inputAttr<S extends Scope, A, V>(valueAccessor: string | number,  subscribers: Signal[], compute: (attrs: A) => V, action?: (scope: S, value: V) => void) {
+export function inputAttr<S extends Scope, A, V>(valueAccessor: string | number, subscribers: Signal[], compute: (attrs: A) => V, action?: (scope: S, value: V) => void) {
   return derivation(valueAccessor, 1, subscribers, (scope: S) => compute(scope.___attrs as A), action);
+}
+
+export function param<S extends Scope, P, V>(valueAccessor: string | number, subscribers: Signal[], compute: (params: P) => V, action?: (scope: S, value: V) => void) {
+  return derivation(valueAccessor, 1, subscribers, (scope: S) => compute(scope.___params as P), action);
 }
 
 export function derivation<S extends Scope, V>(valueAccessor: string | number, defaultMark: number, subscribers: Signal[], compute?: (scope: S) => V, action?: (scope: S, value: V) => void): Signal {
@@ -180,6 +184,13 @@ export function inRenderBody(renderBodyIndex: number, childScopeAccessor: number
       }
     }
   }
+}
+
+export function markOnly(subscriber: Signal) {
+  return {
+    ___mark: subscriber.___mark,
+    ___apply: () => {}
+  };
 }
 
 // export function derivedSource(source:) {

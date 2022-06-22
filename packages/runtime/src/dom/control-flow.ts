@@ -4,7 +4,7 @@ import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import { createScope, getEmptyScope, destroyScope } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
-import { derivation, inRenderBody } from "./signals";
+import { derivation, inLoopScope, inRenderBody, markOnly, Signal } from "./signals";
 
 export const enum ConditionalIndex {
   REFERENCE_NODE = 0,
@@ -104,7 +104,35 @@ export const enum LoopIndex {
   REFERENCE_NODE = 0,
   SCOPE_ARRAY = 1,
   SCOPE_MAP = 2,
-  CONTEXT = 3,
+  VALUE = 3,
+  VALUE_MARK = 4,
+  VALUE_STALE = 5,
+  CONTEXT = 6,
+}
+
+export function loop<S extends Scope, T>(
+  nodeAccessor: number, 
+  defaultMark: number, 
+  renderer: Renderer, 
+  paramSubscribers: Signal[],
+  compute: (scope: S) => [T[], (x: T) => unknown],
+  fragment?: DOMFragment,
+) {
+  const childScopesAccessor = nodeAccessor + LoopIndex.SCOPE_ARRAY;
+  const valueAccessor = nodeAccessor + LoopIndex.VALUE;
+  const params = derivation("___params", 1, paramSubscribers);
+  return derivation(
+    valueAccessor, 
+    defaultMark, 
+    [
+      ...renderer.___closureSignals.map(signal => inLoopScope(signal, (s) => s[childScopesAccessor])),
+      markOnly(inLoopScope(params, (s) => s[childScopesAccessor]))
+    ], 
+    compute, 
+    (scope, [newValues, keyFn]) => {
+      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, params, fragment)
+    }
+  );
 }
 
 export function setLoopOf<T, ChildScope extends Scope>(
@@ -113,7 +141,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
-  applyFn?: (scope: ChildScope, item: T, index: number, array: T[]) => void,
+  params?: Signal,
   fragment: DOMFragment = singleNodeFragment
 ) {
   let newMap: Map<unknown, ChildScope>;
@@ -154,8 +182,8 @@ export function setLoopOf<T, ChildScope extends Scope>(
         // TODO: track if any childScope has changed index
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
-      if (applyFn) {
-        applyFn(childScope, item, index, newValues);
+      if (params) {
+        params.___apply(childScope, [item, index, newValues], true);
       }
       newMap.set(key, childScope);
       newArray.push(childScope);
@@ -199,45 +227,22 @@ export function setLoopOf<T, ChildScope extends Scope>(
   scope[loopIndex + LoopIndex.SCOPE_ARRAY] = newArray;
 }
 
-export function setLoopFromTo<ChildScope extends Scope>(
-  scope: Scope,
-  loopIndex: number,
-  from: number,
-  to: number,
-  step: number,
-  renderer: Renderer<ChildScope>,
-  applyFn?: (
-    scope: ChildScope,
-    item: number,
-    index: number,
-    array: number[]
-  ) => void
-) {
+export function computeLoopFromTo(from: number, to: number, step: number) {
   const range: number[] = [];
 
   for (let i = from; i <= to; i += step) {
     range.push(i);
   }
 
-  setLoopOf(scope, loopIndex, range, renderer, keyFromTo, applyFn);
+  return [range, keyFromTo];
 }
 
 function keyFromTo(item: number) {
   return item;
 }
 
-export function setLoopIn<ChildScope extends Scope>(
-  scope: Scope,
-  loopIndex: number,
-  object: Record<string, unknown>,
-  renderer: Renderer<ChildScope>,
-  applyFn?: (
-    scope: ChildScope,
-    item: [key: string, value: unknown],
-    index: number
-  ) => void
-) {
-  setLoopOf(scope, loopIndex, Object.entries(object), renderer, keyIn, applyFn);
+export function computeLoopIn(object: Record<string, unknown>) {
+  return [Object.entries(object), keyIn];
 }
 
 function keyIn(item: [string, unknown]) {
