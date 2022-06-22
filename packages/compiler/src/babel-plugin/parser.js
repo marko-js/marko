@@ -213,7 +213,7 @@ export function parseMarko(file) {
         )
       );
     },
-    onTagName(part) {
+    onOpenTagName(part) {
       const tagName = parseTemplateString(part);
       const node = t.markoTag(tagName, [], t.markoTagBody());
       let parseType = TagType.html;
@@ -436,13 +436,13 @@ export function parseMarko(file) {
           parseOptions.statement ||
           parseOptions.openTagOnly
         ) {
-          this.onCloseTag(part);
+          this.onCloseTagEnd(part);
         }
       } else if (part.selfClosed) {
-        this.onCloseTag(part);
+        this.onCloseTagEnd(part);
       }
     },
-    onCloseTag(part) {
+    onCloseTagEnd(part) {
       const { node } = currentTag;
       const parserPlugin = node.tagDef?.parser;
       if (preservingWhitespaceUntil === node) {
