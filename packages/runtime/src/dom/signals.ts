@@ -186,6 +186,7 @@ export function inRenderBody(renderBodyIndex: number, childScopeAccessor: number
   }
 }
 
+// TODO: markOnlyWhenStale?
 export function markOnly(subscriber: Signal) {
   return {
     ___mark: subscriber.___mark,

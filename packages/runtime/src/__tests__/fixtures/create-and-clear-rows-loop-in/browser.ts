@@ -1,12 +1,14 @@
 import {
   data,
-  write,
-  setLoopIn,
+  loop,
+  computeLoopIn,
+  inputAttr,
+  param,
   createRenderer,
   createRenderFn,
   Scope,
 } from "../../../dom/index";
-import { over, get, next } from "../../utils/walks";
+import { next, get } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -30,65 +32,59 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
-const enum Index {
-  DIV = 0,
-  LOOP = 0,
-  INPUT_CHILDREN = 4,
+const enum INDEX {
+  div = 0,
+  loop = 0,
+  children = 7,
 }
 
 type ComponentScope = Scope<{
-  [Index.DIV]: HTMLDivElement;
-  [Index.LOOP]: HTMLDivElement;
-  [Index.INPUT_CHILDREN]: Input["children"];
+  [INDEX.div]: HTMLDivElement;
+  [INDEX.loop]: HTMLDivElement;
+  [INDEX.children]: Input["children"];
 }>;
 
+const enum INDEX_FOR0 {
+  textNode = 0,
+  text = 1,
+}
+
+type For0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_FOR0.textNode]: Text;
+  [INDEX_FOR0.text]: Input["children"]["1" | "2" | "3"];
+}>;
+
+// <attrs/{ children }/>
 // <div>
-//   <for|key, child| in=input.children>
-//     ${child}
+//   <for|key, text| in=children>
+//     ${text}
 //   </for>
 // </div>
 
 export const template = `<div></div>`;
-export const walks = get + over(1);
+export const walks = get + next(1);
 
-export const execInputChildren = (scope: ComponentScope) => {
-  setLoopIn(
-    scope,
-    Index.LOOP,
-    scope[Index.INPUT_CHILDREN] as Input["children"],
-    iter0,
-    iter0_execItem as any
-  );
-};
+const text$forBody0 = param(INDEX_FOR0.text, [], ([[key, text]]: [["1"|"2"|"3", Input["children"]["1"|"2"|"3"]]]) => text, (scope: For0Scope, text: For0Scope[INDEX_FOR0.text]) => {
+  data(scope[INDEX_FOR0.textNode], text);
+});
 
-export const execDynamicInput = (scope: ComponentScope, input: Input) => {
-  if (write(scope, Index.INPUT_CHILDREN, input.children)) {
-    execInputChildren(scope);
-  }
-};
+const forBody0 = createRenderer(" ", get + next(1));
 
-export default createRenderFn(template, walks, undefined, execDynamicInput);
+const for0 = loop(
+  INDEX.loop, 
+  1, 
+  forBody0,
+  [text$forBody0],
+  (scope: ComponentScope) => computeLoopIn(scope[INDEX.children])
+);
 
-const enum Iter0Index {
-  TEXT = 0,
-  CHILD = 1,
-}
+export const children_subscribers = [
+  for0
+]
 
-type Entry<T> = NonNullable<{ [K in keyof T]: [K, T[K]] }[keyof T]>;
+export const attrs_subscribers = [
+  inputAttr(INDEX.children, children_subscribers, (attrs: Input) => attrs.children)
+]
 
-type IterScope = Scope<{
-  _: ComponentScope;
-  [Iter0Index.TEXT]: Text;
-  [Iter0Index.CHILD]: Entry<Input["children"]>[0];
-}>;
-
-const iter0 = createRenderer(" ", get + next(1), undefined, 0);
-
-const iter0_execItem = (
-  scope: IterScope,
-  [, child]: Entry<Input["children"]>
-) => {
-  if (write(scope, Iter0Index.CHILD, child)) {
-    data(scope[Iter0Index.TEXT], child);
-  }
-};
+export default createRenderFn(template, walks, undefined, attrs_subscribers);

@@ -1,12 +1,15 @@
 import {
   data,
-  setLoopFromTo,
+  loop,
+  computeLoopFromTo,
+  inputAttr,
+  param,
   createRenderer,
   createRenderFn,
-  write,
   Scope,
 } from "../../../dom/index";
-import { over, get, next } from "../../utils/walks";
+import { next, get } from "../../utils/walks";
+
 
 export const inputs = [
   {
@@ -28,67 +31,74 @@ export const inputs = [
 
 type Input = typeof inputs[number];
 
-const enum Index {
-  DIV = 0,
-  LOOP = 0,
-  INPUT_FROM = 4,
-  INPUT_TO = 5,
-  INPUT_STEP = 6,
+const enum INDEX {
+  div = 0,
+  loop = 0,
+  from = 7,
+  to = 10,
+  step = 13,
 }
 
 type ComponentScope = Scope<{
-  [Index.DIV]: HTMLDivElement;
-  [Index.LOOP]: HTMLDivElement;
-  [Index.INPUT_FROM]: Input["from"];
-  [Index.INPUT_TO]: Input["to"];
-  [Index.INPUT_STEP]: Input["step"];
+  [INDEX.div]: HTMLDivElement;
+  [INDEX.loop]: HTMLDivElement;
+  [INDEX.from]: Input["from"];
+  [INDEX.to]: Input["to"];
+  [INDEX.step]: Input["step"];
 }>;
 
+const enum INDEX_FOR0 {
+  textNode = 0,
+  n = 1,
+}
+
+type For0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_FOR0.textNode]: Text;
+  [INDEX_FOR0.n]: number;
+}>;
+
+
+// <attrs/{ from, to, step }/>
 // <div>
-//   <for|child| from=input.from to=input.to step=input.step>
-//     ${child.text}
+//   <for|n| from=input.from to=input.to step=input.step>
+//     ${n}
 //   </for>
 // </div>
 
 export const template = `<div></div>`;
-export const walks = get + over(1);
+export const walks = get + next(1);
 
-export const execInputFromToStep = (scope: ComponentScope) => {
-  setLoopFromTo(
-    scope,
-    Index.LOOP,
-    scope[Index.INPUT_FROM] as number,
-    scope[Index.INPUT_TO] as number,
-    scope[Index.INPUT_STEP] as number,
-    iter0,
-    iter0_execItem
-  );
-};
+const n$forBody0 = param(INDEX_FOR0.n, [], ([n]: [number]) => n, (scope: For0Scope, n: For0Scope[INDEX_FOR0.n]) => {
+  data(scope[INDEX_FOR0.textNode], n);
+});
 
-export const execDynamicInput = (scope: ComponentScope, input: Input) => {
-  write(scope, Index.INPUT_FROM, input.from);
-  write(scope, Index.INPUT_TO, input.to);
-  write(scope, Index.INPUT_STEP, input.step);
-  execInputFromToStep(scope);
-};
+const forBody0 = createRenderer(" ", get + next(1));
 
-export default createRenderFn(template, walks, undefined, execDynamicInput);
+const for0 = loop(
+  INDEX.loop, 
+  3, 
+  forBody0,
+  [n$forBody0],
+  (scope: ComponentScope) => computeLoopFromTo(scope[INDEX.from], scope[INDEX.to], scope[INDEX.step])
+);
 
-const enum Iter0Index {
-  TEXT = 0,
-  ITEM = 1,
-}
+export const from_subscribers = [
+  for0
+]
 
-type IterScope = Scope<{
-  _: ComponentScope;
-  [Iter0Index.TEXT]: Text;
-  [Iter0Index.ITEM]: number;
-}>;
+export const to_subscribers = [
+  for0
+]
 
-const iter0 = createRenderer(" ", get + next(1), undefined, 0);
+export const step_subscribers = [
+  for0
+]
 
-const iter0_execItem = (scope: IterScope, item: number) => {
-  if (write(scope, Iter0Index.ITEM, item)) {
-    data(scope[Iter0Index.TEXT], item);
-  }
-};
+export const attrs_subscribers = [
+  inputAttr(INDEX.from, from_subscribers, (attrs: Input) => attrs.from),
+  inputAttr(INDEX.to, to_subscribers, (attrs: Input) => attrs.to),
+  inputAttr(INDEX.step, step_subscribers, (attrs: Input) => attrs.step)
+]
+
+export default createRenderFn(template, walks, undefined, attrs_subscribers);

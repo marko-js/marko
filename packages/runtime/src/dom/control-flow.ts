@@ -234,15 +234,19 @@ export function computeLoopFromTo(from: number, to: number, step: number) {
     range.push(i);
   }
 
-  return [range, keyFromTo];
+  return [range, keyFromTo] as [number[], typeof keyFromTo];
 }
 
 function keyFromTo(item: number) {
   return item;
 }
 
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
 export function computeLoopIn(object: Record<string, unknown>) {
-  return [Object.entries(object), keyIn];
+  return [Object.entries(object), keyIn] as [Entries<typeof object>, typeof keyIn];
 }
 
 function keyIn(item: [string, unknown]) {
