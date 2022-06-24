@@ -37,12 +37,13 @@ const translatorPath = path.join(
 );
 const configPath = path.join(__dirname, "../.sizes.json");
 const shouldWrite = process.argv.includes("--write");
+const skipExamples = process.argv.includes("--no-examples");
 
 run(configPath).catch(console.error);
 
 async function run(configPath: string) {
   const { examples, results: previous } = loadData(configPath);
-  const current = await getResults(examples);
+  const current = await getResults(skipExamples ? {} : examples);
   const measure = (process.env.MEASURE as undefined | keyof Sizes) || "gzip";
 
   console.log(measure);
