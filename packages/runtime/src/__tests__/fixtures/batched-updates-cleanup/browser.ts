@@ -6,6 +6,8 @@ import {
   data,
   bind,
   source,
+  setSource,
+  queueSource,
   closure,
   inConditionalScope,
   queueHydrate,
@@ -62,8 +64,8 @@ type Branch0Scope = Scope<{
 export const template = `<button></button><!>`;
 export const walks = get + over(1) + get + over(1);
 export const setup = (scope: ComponentScope) => {
-  _setMessage(scope, "hi");
-  _setShow(scope, true);
+  setSource(scope, _message, "hi");
+  setSource(scope, _show, true);
   queueHydrate(scope, _hydrate);
 };
 
@@ -72,16 +74,16 @@ export const _hydrate = (scope: ComponentScope) => {
 };
 
 const _onclick = (scope: ComponentScope) => {
-  _queueMessage(scope, "bye");
-  _queueShow(scope, !scope[INDEX.show]);
+  queueSource(scope, _message, "bye");
+  queueSource(scope, _show, !scope[INDEX.show]);
 };
 
-const _message$if = closure(INDEX_BRANCH0.message, 2, 1, INDEX.message, [], (scope: Branch0Scope, message: string) => {
+const _message$if = closure(INDEX_BRANCH0.message, 1, INDEX.message, [], (scope: Branch0Scope, message: string) => {
   data(scope[INDEX_BRANCH0.text], message);
 })
 const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) => scope[INDEX.show] ? _ifBody : undefined);
-const [_setShow, _queueShow] = source(INDEX.show, 1, [_if])
-const [_setMessage, _queueMessage] = source(INDEX.message, 1, [inConditionalScope(_message$if, s => s[INDEX.conditional_scope])])
+const _show = source(INDEX.show, [_if])
+const _message = source(INDEX.message, [inConditionalScope(_message$if, s => s[INDEX.conditional_scope])])
 
 export default createRenderFn(template, walks, setup);
 

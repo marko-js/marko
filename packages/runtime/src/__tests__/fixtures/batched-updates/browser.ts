@@ -3,6 +3,8 @@ import {
   data,
   createRenderFn,
   source,
+  setSource,
+  queueSource,
   derivation,
   queueHydrate,
   bind,
@@ -45,8 +47,8 @@ type ComponentScope = Scope<{
 export const template = `<button> </button>`;
 export const walks = get + next(1) + get + next(1);
 export const setup = (scope: ComponentScope) => {
-  setA(scope, 0);
-  setB(scope, 0);
+  setSource(scope, _a, 0);
+  setSource(scope, _b, 0);
   queueHydrate(scope, hydrate);
 };
 
@@ -55,14 +57,14 @@ export const hydrate = (scope: ComponentScope) => {
 };
 
 const clickHandler = (scope: ComponentScope) => {
-  queueA(scope, scope[Index.A] + 1);
-  queueB(scope, scope[Index.B] + 1);
+  queueSource(scope, _a, scope[Index.A] + 1);
+  queueSource(scope, _b, scope[Index.B] + 1);
 };
 
 const sumAB = derivation(Index.SUM_AB, 2, [], (scope: ComponentScope) => scope[Index.A] + scope[Index.B], (scope: ComponentScope, value: number) => {
   data(scope[Index.TEXT], value);
 });
-const [setA, queueA] = source(Index.A, 1, [sumAB]);
-const [setB, queueB] = source(Index.B, 1, [sumAB]);
+const _a = source(Index.A, [sumAB]);
+const _b = source(Index.B, [sumAB]);
 
 export default createRenderFn(template, walks, setup);

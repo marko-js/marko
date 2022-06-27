@@ -41,7 +41,7 @@ export function data(node: Text | Comment, value: unknown) {
 
 export function attrs(scope: Scope, elementIndex: number, index: number) {
   const nextAttrs = scope[index] as Record<string, unknown>;
-  const prevAttrs = scope[index + 1] as Record<string, unknown> | undefined;
+  const prevAttrs = scope[index + "-"] as Record<string, unknown> | undefined;
   const element = scope[elementIndex] as Element;
 
   if (prevAttrs) {
@@ -64,7 +64,7 @@ export function attrs(scope: Scope, elementIndex: number, index: number) {
     }
   }
 
-  scope[index + 1] = nextAttrs;
+  scope[index + "-"] = nextAttrs;
 }
 
 const doc = document;
@@ -72,14 +72,14 @@ const parser = /* @__PURE__ */ doc.createElement("template");
 
 export function html(scope: Scope, value: string, index: number) {
   const firstChild = scope[index] as Node & ChildNode;
-  const lastChild = (scope[index + 1] || firstChild) as Node & ChildNode;
+  const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
 
   parser.innerHTML = value || " ";
   const newContent = parser.content;
   write(scope, index, newContent.firstChild);
-  write(scope, index + 1, newContent.lastChild);
+  write(scope, index + "-" as any as number, newContent.lastChild);
   parentNode.insertBefore(newContent, firstChild);
 
   let current = firstChild;
@@ -92,7 +92,7 @@ export function html(scope: Scope, value: string, index: number) {
 
 export function props(scope: Scope, nodeIndex: number, index: number) {
   const nextProps = scope[index] as Record<string, unknown>;
-  const prevProps = scope[index + 1] as Record<string, unknown> | undefined;
+  const prevProps = scope[index + "-"] as Record<string, unknown> | undefined;
   const node = scope[nodeIndex] as Node;
 
   if (prevProps) {
@@ -107,7 +107,7 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
     (node as any)[name] = nextProps[name];
   }
 
-  scope[index + 1] = nextProps;
+  scope[index + "-"] = nextProps;
 }
 
 export function innerHTML(element: Element, value: string) {

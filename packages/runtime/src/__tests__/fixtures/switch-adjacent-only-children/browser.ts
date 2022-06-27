@@ -1,8 +1,9 @@
 import {
   data,
   loop,
-  inputAttr,
-  param,
+  source,
+  setSource,
+  destructureSources,
   createRenderer,
   createRenderFn,
   Scope,
@@ -83,7 +84,7 @@ type For0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + next(1);
 
-const child$forBody0 = param(INDEX_FOR0.text, [], ([{ text }]: [Input["children"][number]]) => text, (scope: For0Scope, text: For0Scope[INDEX_FOR0.text]) => {
+const text$forBody0 = source(INDEX_FOR0.text, [], (scope: For0Scope, text: For0Scope[INDEX_FOR0.text]) => {
   data(scope[INDEX_FOR0.textNode], text);
 });
 
@@ -93,16 +94,20 @@ const for0 = loop(
   INDEX.loop, 
   1, 
   forBody0,
-  [child$forBody0],
-  (scope: ComponentScope) => [scope[INDEX.children].filter(Boolean), (i: Input["children"][number]) => "" + i.id]
+  [text$forBody0],
+  (scope: For0Scope, [{ text }]) => setSource(scope, text$forBody0, text),
+  (scope: ComponentScope) => [scope[INDEX.children], (i: Input["children"][number]) => "" + i.id]
 );
 
 export const children_subscribers = [
   for0
 ]
 
-export const attrs_subscribers = [
-  inputAttr(INDEX.children, children_subscribers, (attrs: Input) => attrs.children)
-]
+const _children = source(INDEX.children, children_subscribers);
 
-export default createRenderFn(template, walks, undefined, attrs_subscribers);
+export const attrs = destructureSources([_children], (scope: ComponentScope, { children }: Input) => {
+  setSource(scope, _children, children);
+});
+
+export default createRenderFn(template, walks, undefined, attrs);
+

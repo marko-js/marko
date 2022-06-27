@@ -2,24 +2,34 @@ import {
   data,
   createRenderFn,
   userEffect,
-  queue,
   queueHydrate,
-  write,
   bind,
   Scope,
+  queueSource,
+  setSource,
+  derivation,
+  source,
+  destructureSources,
 } from "../../../dom/index";
 import { wait } from "../../utils/resolve";
 import { get, next } from "../../utils/walks";
 
 export const inputs = [{ value: 0 }, wait(4), { value: 1 }, wait(4)] as const;
 
+type Input = { value: number };
+
 const enum Index {
   DIV_TEXT = 0,
   INPUT_VALUE = 1,
-  A = 2,
-  B = 3,
-  CONCAT_AB = 4,
-  EFFECT_CLEANUP = 5,
+  INPUT_VALUE_MARK = 2,
+  A = 3,
+  A_MARK = 4,
+  B = 5,
+  B_MARK = 6,
+  CONCAT_AB = 7,
+  CONCAT_AB_MARK = 8,
+  CONCAT_AB_STALE = 9,
+  EFFECT_CLEANUP = 10,
 }
 
 type ComponentScope = Scope<{
@@ -40,35 +50,18 @@ type ComponentScope = Scope<{
 // }/>
 export const template = `<div> </div>`;
 export const walks = next(1) + get + next(1);
-export const render = (scope: ComponentScope) => {
-  execA(scope, 0);
-  execB(scope, 0);
+export const setup = (scope: ComponentScope) => {
+  setSource(scope, _a, 0);
+  setSource(scope, _b, 0);
 };
 
-function execA(scope: ComponentScope, value: ComponentScope[Index.A]) {
-  if (write(scope, Index.A, value)) {
-    queue(scope, execAB, Index.CONCAT_AB);
-  }
-}
+const _ab = derivation(Index.CONCAT_AB, 2, [], (scope) => "" + scope[Index.A] + scope[Index.B], (scope, ab) => {
+  data(scope[Index.DIV_TEXT], ab);
+})
 
-function execB(scope: ComponentScope, value: ComponentScope[Index.B]) {
-  if (write(scope, Index.B, value)) {
-    queue(scope, execAB, Index.CONCAT_AB);
-  }
-}
+const _a = source(Index.A, [_ab]);
 
-function execAB(scope: ComponentScope) {
-  execConcatAB(scope, "" + scope[Index.A] + scope[Index.B]);
-}
-
-function execConcatAB(
-  scope: ComponentScope,
-  value: ComponentScope[Index.CONCAT_AB]
-) {
-  if (write(scope, Index.CONCAT_AB, value)) {
-    data(scope[Index.DIV_TEXT], value);
-  }
-}
+const _b = source(Index.B, [_ab]);
 
 export const hydrateInputValue = (scope: ComponentScope) => {
   userEffect(scope, Index.EFFECT_CLEANUP, effectFn);
@@ -76,19 +69,21 @@ export const hydrateInputValue = (scope: ComponentScope) => {
 
 const effectFn = (scope: ComponentScope) => {
   const previousValue = scope[Index.INPUT_VALUE] + 1;
-  queue(scope, execA, Index.A, previousValue);
+  queueSource(scope, _a, previousValue);
   return bind(scope, () => {
-    queue(scope, execB, Index.B, previousValue);
+    queueSource(scope, _b, previousValue);
   });
 };
 
-export const execDynamicInput = (
-  scope: ComponentScope,
-  input: typeof inputs[0]
-) => {
-  if (write(scope, Index.INPUT_VALUE, input.value)) {
-    queueHydrate(scope, hydrateInputValue);
-  }
-};
+export const value_subscribers = [];
+export const value_action = (scope: ComponentScope) => {
+  queueHydrate(scope, hydrateInputValue);
+}
 
-export default createRenderFn(template, walks, render, execDynamicInput);
+const _value = source(Index.INPUT_VALUE, value_subscribers, value_action);
+
+export const attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
+  setSource(scope, _value, value);
+});
+
+export default createRenderFn(template, walks, setup, attrs);

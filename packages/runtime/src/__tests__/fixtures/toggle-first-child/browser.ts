@@ -1,13 +1,16 @@
 import {
   data,
-  setConditionalRenderer,
-  write,
+  conditional,
   createRenderer,
   createRenderFn,
-  queueInBranch,
+  source,
+  closure,
+  inConditionalScope,
   Scope,
+  destructureSources,
+  setSource,
 } from "../../../dom/index";
-import { next, over, get } from "../../utils/walks";
+import { get, next, over } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -24,21 +27,30 @@ export const inputs = [
   },
 ];
 
+type Input = typeof inputs[number];
+
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  value = 4,
-}
-
-const enum PRIORITY {
-  value = 0,
-  closure_value = 1,
+  conditional_scope = 1,
+  value = 6,
 }
 
 type ComponentScope = Scope<{
   [INDEX.comment]: Comment;
   [INDEX.conditional]: Comment;
-  [INDEX.value]: typeof inputs[number]["value"];
+  [INDEX.conditional_scope]: Branch0Scope | undefined;
+  [INDEX.value]: Input["value"];
+}>;
+
+const enum INDEX_BRANCH0 {
+  text = 0,
+  value = 1
+}
+
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.text]: Text;
 }>;
 
 // <attrs/{ value }/>
@@ -53,53 +65,38 @@ type ComponentScope = Scope<{
 export const template = `<div><!><span></span><span></span></div>`;
 export const walks = next(1) + get + over(3);
 
-export const _apply_value = (scope: ComponentScope) => {
-  setConditionalRenderer(
-    scope,
-    INDEX.conditional,
-    scope[INDEX.value] ? branch0 : undefined
-  );
-  queueInBranch(
-    scope,
-    INDEX.conditional,
-    branch0,
-    _apply_value2,
-    PRIORITY_BRANCH0.value,
-    PRIORITY.closure_value
-  );
-};
-
-function _apply_value2(scope: Branch0Scope) {
-  data(scope[INDEX_BRANCH0.text], scope._[INDEX.value]);
-}
-
-export const _applyAttrs = (
-  scope: ComponentScope,
-  input: typeof inputs[number]
-) => {
-  if (write(scope, INDEX.value, input.value)) {
-    _apply_value(scope);
+const value$if = closure(
+  INDEX_BRANCH0.value,
+  1, 
+  INDEX.value, 
+  [], 
+  (scope: Branch0Scope, value: string) => {
+    data(scope[INDEX_BRANCH0.text], value);
   }
-};
+);
 
-export default createRenderFn(template, walks, undefined, _applyAttrs);
+const _if = conditional(
+  INDEX.conditional, 
+  1, 
+  (scope: ComponentScope) => scope[INDEX.value] ? _ifBody : undefined
+);
 
-const enum INDEX_BRANCH0 {
-  text = 0,
-}
+export const value_subscribers = [
+  _if, 
+  inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+];
 
-const enum PRIORITY_BRANCH0 {
-  value = 0,
-}
+const _value = source(INDEX.value, value_subscribers);
 
-type Branch0Scope = Scope<{
-  _: ComponentScope;
-  [INDEX_BRANCH0.text]: Text;
-}>;
+export const attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
+  setSource(scope, _value, value);
+});
 
-const branch0 = createRenderer(
+export default createRenderFn(template, walks, undefined, attrs);
+
+const _ifBody = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  undefined, // optimization (value will always be set in _apply_value)
-  0
+  undefined, // optimization (value will always be set in _apply_value),
+  [value$if]
 );

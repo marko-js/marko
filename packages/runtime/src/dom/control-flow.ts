@@ -4,7 +4,7 @@ import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import { createScope, getEmptyScope, destroyScope } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
-import { derivation, inLoopScope, inRenderBody, markOnly, Signal } from "./signals";
+import { derivation, destructureSources, inLoopScope, inRenderBody, Signal } from "./signals";
 
 export const enum ConditionalIndex {
   REFERENCE_NODE = 0,
@@ -110,27 +110,28 @@ export const enum LoopIndex {
   CONTEXT = 6,
 }
 
-export function loop<S extends Scope, T>(
+export function loop<S extends Scope, C extends Scope, T>(
   nodeAccessor: number, 
   defaultMark: number, 
   renderer: Renderer, 
   paramSubscribers: Signal[],
+  setParams: (scope: C, params: [T, number, T[]]) => void,
   compute: (scope: S) => [T[], (x: T) => unknown],
   fragment?: DOMFragment,
 ) {
+  const params = destructureSources(paramSubscribers, setParams);
   const childScopesAccessor = nodeAccessor + LoopIndex.SCOPE_ARRAY;
   const valueAccessor = nodeAccessor + LoopIndex.VALUE;
-  const params = derivation("___params", 1, paramSubscribers);
   return derivation(
     valueAccessor, 
     defaultMark, 
     [
       ...renderer.___closureSignals.map(signal => inLoopScope(signal, (s) => s[childScopesAccessor])),
-      markOnly(inLoopScope(params, (s) => s[childScopesAccessor]))
+      inLoopScope(params, (s) => s[childScopesAccessor])
     ], 
     compute, 
     (scope, [newValues, keyFn]) => {
-      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, params, fragment)
+      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, setParams, fragment)
     }
   );
 }
@@ -141,7 +142,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
-  params?: Signal,
+  setParams?: (scope: ChildScope, params: [T, number, T[]]) => void,
   fragment: DOMFragment = singleNodeFragment
 ) {
   let newMap: Map<unknown, ChildScope>;
@@ -182,8 +183,8 @@ export function setLoopOf<T, ChildScope extends Scope>(
         // TODO: track if any childScope has changed index
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
-      if (params) {
-        params.___apply(childScope, [item, index, newValues], true);
+      if (setParams) {
+        setParams(childScope, [item, index, newValues]);
       }
       newMap.set(key, childScope);
       newArray.push(childScope);

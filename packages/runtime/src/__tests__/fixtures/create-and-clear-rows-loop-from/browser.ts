@@ -2,8 +2,9 @@ import {
   data,
   loop,
   computeLoopFromTo,
-  inputAttr,
-  param,
+  source,
+  destructureSources,
+  setSource,
   createRenderer,
   createRenderFn,
   Scope,
@@ -69,7 +70,7 @@ type For0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + next(1);
 
-const n$forBody0 = param(INDEX_FOR0.n, [], ([n]: [number]) => n, (scope: For0Scope, n: For0Scope[INDEX_FOR0.n]) => {
+const n$forBody0 = source(INDEX_FOR0.n, [], (scope: For0Scope, n: For0Scope[INDEX_FOR0.n]) => {
   data(scope[INDEX_FOR0.textNode], n);
 });
 
@@ -80,6 +81,7 @@ const for0 = loop(
   3, 
   forBody0,
   [n$forBody0],
+  (scope: For0Scope, [n]) => setSource(scope, n$forBody0, n),
   (scope: ComponentScope) => computeLoopFromTo(scope[INDEX.from], scope[INDEX.to], scope[INDEX.step])
 );
 
@@ -95,10 +97,14 @@ export const step_subscribers = [
   for0
 ]
 
-export const attrs_subscribers = [
-  inputAttr(INDEX.from, from_subscribers, (attrs: Input) => attrs.from),
-  inputAttr(INDEX.to, to_subscribers, (attrs: Input) => attrs.to),
-  inputAttr(INDEX.step, step_subscribers, (attrs: Input) => attrs.step)
-]
+const _from = source(INDEX.from, from_subscribers);
+const _to = source(INDEX.to, to_subscribers);
+const _step = source(INDEX.step, step_subscribers);
 
-export default createRenderFn(template, walks, undefined, attrs_subscribers);
+export const attrs = destructureSources([_from, _to, _step], (scope: ComponentScope, { from, to, step }: Input) => {
+  setSource(scope, _from, from);
+  setSource(scope, _to, to);
+  setSource(scope, _step, step);
+});
+
+export default createRenderFn(template, walks, undefined, attrs);

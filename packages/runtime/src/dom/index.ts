@@ -27,7 +27,7 @@ export { init, register } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queue, queueHydrate, run } from "./queue";
+export { queueSource, queueHydrate, run } from "./queue";
 
 export { write, bind } from "./scope";
 
@@ -35,5 +35,5 @@ export type { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";
 
-export { source, derivation, closure, inputAttr, param, inConditionalScope } from "./signals";
+export { setSource, source, destructureSources, derivation, closure, inConditionalScope } from "./signals";
 

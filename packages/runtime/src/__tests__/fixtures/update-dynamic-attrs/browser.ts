@@ -1,4 +1,4 @@
-import { attrs, createRenderFn, write, Scope } from "../../../dom/index";
+import { attrs, createRenderFn, Scope, destructureSources, setSource, source } from "../../../dom/index";
 import { get, over } from "../../utils/walks";
 
 export const inputs = [
@@ -19,31 +19,31 @@ export const inputs = [
   },
 ];
 
-const enum Index {
-  DIV = 0,
-  INPUT_VALUE = 1,
+type Input = typeof inputs[number];
+
+const enum INDEX {
+  div = 0,
+  value = 1,
 }
 
 type ComponentScope = Scope<{
-  [Index.DIV]: HTMLDivElement;
-  [Index.INPUT_VALUE]: typeof inputs[number]["value"];
+  [INDEX.div]: HTMLDivElement;
+  [INDEX.value]: typeof inputs[number]["value"];
 }>;
 
 // <div ...input.value/>
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-export const execInputValue = (scope: ComponentScope) => {
-  attrs(scope, Index.DIV, Index.INPUT_VALUE);
-};
+export const value_subscribers = [];
+export const value_action = (scope: ComponentScope) => {
+  attrs(scope, INDEX.div, INDEX.value);
+}
 
-export const execDynamicInput = (
-  scope: ComponentScope,
-  input: typeof inputs[number]
-) => {
-  if (write(scope, Index.INPUT_VALUE, input.value)) {
-    execInputValue(scope);
-  }
-};
+const _value = source(INDEX.value, value_subscribers, value_action);
 
-export default createRenderFn(template, walks, undefined, execDynamicInput);
+export const _attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
+  setSource(scope, _value, value);
+});
+
+export default createRenderFn(template, walks, undefined, _attrs);

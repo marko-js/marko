@@ -3,10 +3,12 @@ import {
   conditionalOnlyChild,
   createRenderer,
   createRenderFn,
-  inputAttr,
+  source,
   closure,
   inConditionalScope,
   Scope,
+  destructureSources,
+  setSource,
 } from "../../../dom/index";
 import { get, next, over } from "../../utils/walks";
 
@@ -63,8 +65,7 @@ export const template = `<div></div>`;
 export const walks = get + over(1);
 
 const value$if = closure(
-  INDEX_BRANCH0.value, 
-  2, 
+  INDEX_BRANCH0.value,
   1, 
   INDEX.value, 
   [], 
@@ -84,11 +85,13 @@ export const value_subscribers = [
   inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])
 ];
 
-export const attrs_subscribers = [
-  inputAttr(INDEX.value, value_subscribers, (attrs: Input) => attrs.value)
-];
+const _value = source(INDEX.value, value_subscribers);
 
-export default createRenderFn(template, walks, undefined, attrs_subscribers);
+export const attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
+  setSource(scope, _value, value);
+});
+
+export default createRenderFn(template, walks, undefined, attrs);
 
 const _ifBody = createRenderer(
   "<span> </span>",

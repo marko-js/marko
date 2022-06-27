@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { Signal, derivation } from "./signals";
+import type { Signal } from "./signals";
 import { createScope } from "./scope";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
@@ -66,7 +66,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
   render?: RenderFn<S>,
-  attrs_subscribers?: Signal[],
+  attrs?: Signal,
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
@@ -80,7 +80,6 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );
-  const attrs = attrs_subscribers && derivation("___attrs", 1, attrs_subscribers);
   return (input: I, element: Element): RenderResult<I> => {
     const scope = createScope() as S;
     queueHydrate(scope, () => {

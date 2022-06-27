@@ -1,14 +1,16 @@
 import {
   data,
-  write,
-  queue,
-  setConditionalRenderer,
+  conditional,
   createRenderer,
   createRenderFn,
-  queueInBranch,
+  source,
+  closure,
+  inConditionalScope,
   Scope,
+  destructureSources,
+  setSource,
 } from "../../../dom/index";
-import { next, get, over } from "../../utils/walks";
+import { get, next, over } from "../../utils/walks";
 
 export const inputs = [
   {
@@ -30,14 +32,9 @@ type Input = typeof inputs[number];
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  visible = 4,
-  value = 5,
-}
-
-const enum PRIORITY {
-  visible = 0,
-  value = 1,
-  closure_value = 2,
+  conditional_scope = 1,
+  visible = 6,
+  value = 8,
 }
 
 type ComponentScope = Scope<{
@@ -45,6 +42,16 @@ type ComponentScope = Scope<{
   [INDEX.conditional]: Comment;
   [INDEX.visible]: Input["visible"];
   [INDEX.value]: Input["value"];
+}>;
+
+const enum INDEX_BRANCH0 {
+  text = 0,
+  value = 1
+}
+
+type Branch0Scope = Scope<{
+  _: ComponentScope;
+  [INDEX_BRANCH0.text]: Text;
 }>;
 
 // <attrs/{ visible, value }/>
@@ -57,61 +64,43 @@ type ComponentScope = Scope<{
 export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
 
-export const execInputVisible = (scope: ComponentScope) => {
-  setConditionalRenderer(
-    scope,
-    INDEX.conditional,
-    scope[INDEX.visible] ? branch0 : undefined
-  );
-};
-
-export const execInputValue = (scope: ComponentScope) => {
-  queueInBranch(
-    scope,
-    INDEX.conditional,
-    branch0,
-    execInputValueBranch0,
-    PRIORITY_BRANCH0.value,
-    PRIORITY.closure_value
-  );
-};
-
-function execInputValueBranch0(scope: Branch0Scope) {
-  data(scope[INDEX_BRANCH0.text], scope._[INDEX.value]!.name);
-}
-
-export const execDynamicInput = (
-  scope: ComponentScope,
-  input: typeof inputs[number]
-) => {
-  if (write(scope, INDEX.visible, input.visible)) {
-    execInputVisible(scope);
+const value$if = closure(
+  INDEX_BRANCH0.value,
+  1, 
+  INDEX.value, 
+  [], 
+  (scope: Branch0Scope, value: { name: string }) => {
+    data(scope[INDEX_BRANCH0.text], value.name);
   }
-  if (write(scope, INDEX.value, input.value)) {
-    execInputValue(scope);
-  }
-};
+);
 
-export default createRenderFn(template, walks, undefined, execDynamicInput);
+const _if = conditional(
+  INDEX.conditional, 
+  1, 
+  (scope: ComponentScope) => scope[INDEX.visible] ? _ifBody : undefined
+);
 
-const enum INDEX_BRANCH0 {
-  text = 0,
-}
+export const value_subscribers = [
+  inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+];
 
-const enum PRIORITY_BRANCH0 {
-  value = 0,
-}
+export const visible_subscribers = [
+  _if,
+];
 
-type Branch0Scope = Scope<{
-  _: ComponentScope;
-  [INDEX_BRANCH0.text]: Text;
-}>;
+const _value = source(INDEX.value, value_subscribers);
+const _visible = source(INDEX.visible, visible_subscribers);
 
-const branch0 = createRenderer(
+export const attrs = destructureSources([_value, _visible], (scope: ComponentScope, { visible, value }: Input) => {
+  setSource(scope, _value, value);
+  setSource(scope, _visible, visible);
+});
+
+export default createRenderFn(template, walks, undefined, attrs);
+
+const _ifBody = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
-  (scope: Branch0Scope) => {
-    queue(scope, execInputValueBranch0, PRIORITY_BRANCH0.value);
-  },
-  0
+  undefined, // optimization (value will always be set in _apply_value),
+  [value$if]
 );

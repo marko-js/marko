@@ -7,8 +7,10 @@ import {
   createRenderFn,
   dynamicFragment,
   closure,
-  inputAttr,
   Scope,
+  destructureSources,
+  source,
+  setSource,
 } from "../../../dom/index";
 import { next, over, get, skip } from "../../utils/walks";
 
@@ -113,8 +115,7 @@ export const walks = get + over(1);
 const value2$if2 = closure(
   INDEX_IF2.value2, 
   2, 
-  1, 
-  INDEX_IF0.value2, 
+  INDEX.value2, 
   [], 
   (scope: If2Scope, value: string) => {
     data(scope[INDEX_IF2.text], value);
@@ -124,8 +125,7 @@ const value2$if2 = closure(
 const value1$if1 = closure(
   INDEX_IF1.value1,
   2,
-  1,
-  INDEX_IF0.value1,
+  INDEX.value1,
   [],
   (scope: If1Scope, value: string) => {
     data(scope[INDEX_IF1.text], value);
@@ -135,18 +135,17 @@ const value1$if1 = closure(
 const _if2 = conditional(
   INDEX_IF0.conditional2,
   1,
-  (scope: If0Scope) => scope[INDEX_IF0.value2] ? ifBody2 : undefined
+  (scope: If0Scope) => scope._[INDEX.value2] ? ifBody2 : undefined
 );
 
 const _if1 = conditional(
   INDEX_IF0.conditional1,
   1,
-  (scope: If0Scope) => scope[INDEX_IF0.value1] ? ifBody1 : undefined
+  (scope: If0Scope) => scope._[INDEX.value1] ? ifBody1 : undefined
 );
 
 const value2$if0 = closure(
   INDEX_IF0.value2,
-  2,
   1,
   INDEX.value2,
   [
@@ -157,7 +156,6 @@ const value2$if0 = closure(
 
 const value1$if0 = closure(
   INDEX_IF0.value1,
-  2,
   1,
   INDEX.value1,
   [
@@ -183,13 +181,17 @@ export const value1_subscribers = [
 
 export const show_subscribers = [_if0];
 
-export const attrs_subscribers = [
-  inputAttr(INDEX.show, show_subscribers, (attrs: Input) => attrs.show),
-  inputAttr(INDEX.value1, value1_subscribers, (attrs: Input) => attrs.value1),
-  inputAttr(INDEX.value2, value2_subscribers, (attrs: Input) => attrs.value2),
-]
+const _show = source(INDEX.show, show_subscribers);
+const _value1 = source(INDEX.value1, value1_subscribers);
+const _value2 = source(INDEX.value2, value2_subscribers);
 
-export default createRenderFn(template, walks, undefined, attrs_subscribers);
+export const attrs = destructureSources([_show, _value1, _value2], (scope: ComponentScope, { show, value1, value2 }: Input) => {
+  setSource(scope, _show, show);
+  setSource(scope, _value1, value1);
+  setSource(scope, _value2, value2);
+});
+
+export default createRenderFn(template, walks, undefined, attrs);
 
 const ifBody0 = createRenderer(
   "<!><!>",

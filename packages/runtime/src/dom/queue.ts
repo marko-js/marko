@@ -21,7 +21,7 @@ let currentBatch: unknown[] = [];
 let currentHydrate: unknown[] = [];
 
 
-export function queue(scope: Scope, signal: Signal, value: unknown) {
+export function queueSource(scope: Scope, signal: Signal, value: unknown) {
   schedule();
   signal.___mark(scope);
   currentBatch.push(scope, signal, value);
@@ -40,7 +40,7 @@ export function run() {
       const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
       const signal = currentBatch[i + BatchOffsets.SIGNAL] as Signal;
       const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
-      signal.___apply(scope, value, true);
+      signal.___apply(scope, value);
     }
   } finally {
     currentBatch = [];

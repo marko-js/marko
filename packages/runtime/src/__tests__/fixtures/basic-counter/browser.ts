@@ -4,6 +4,8 @@ import {
   on,
   source,
   queueHydrate,
+  setSource,
+  queueSource,
   bind,
   Scope,
 } from "../../../dom/index";
@@ -31,7 +33,7 @@ type ComponentScope = Scope<{
 export const template = `<button> </button>`;
 export const walks = get + next(1) + get + next(1);
 export const setup = (scope: ComponentScope) => {
-  setClickCount(scope, 0);
+  setSource(scope, _clickCount, 0);
   queueHydrate(scope, hydrate);
 };
 
@@ -39,13 +41,14 @@ export const hydrate = (scope: ComponentScope) => {
   on(scope[Index.BUTTON], "click", bind(scope, clickHandler));
 };
 
-const [setClickCount, queueClickCount] = source(Index.CLICK_COUNT, 1, [], (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
+const _clickCount = source(Index.CLICK_COUNT, [], (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
   data(scope[Index.BUTTON_TEXT], value);
 });
 
 const clickHandler = (scope: ComponentScope) => {
-  queueClickCount(
+  queueSource(
     scope,
+    _clickCount,
     scope[Index.CLICK_COUNT] + 1
   );
 };
