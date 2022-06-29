@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.2
+
+### Patch Changes
+
+- [#1820](https://github.com/marko-js/marko/pull/1820) [`0a207fbf1`](https://github.com/marko-js/marko/commit/0a207fbf1515fcd6d4045b527c9eb16babb96032) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with child template analysis not properly resolving nested node_modules with components.
+
 ## 5.21.1
 
 ### Patch Changes
