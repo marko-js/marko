@@ -122,12 +122,16 @@ class Normalizer {
     try {
       if (elNode.rawTagNameExpression) {
         tagName = builder.parseExpression(elNode.rawTagNameExpression);
-      } else if (
-        context.ignoreUnrecognizedTags &&
-        !elNode.parentNode.tagDef &&
-        !elNode.parentNode.rawTagNameExpression
-      ) {
-        tagName = tagName.replace(/^@/, "at_"); // escapes @tags inside unrecognized tags
+      } else if (context.ignoreUnrecognizedTags && tagName[0] === "@") {
+        let owner = elNode.parentNode;
+
+        while (owner && /^(?:for|while|if|else(?:-if))$/.test(owner.tagName)) {
+          owner = owner.parentNode;
+        }
+
+        if (!owner || !(owner.rawTagNameExpression || owner.tagDef)) {
+          tagName = "at_" + tagName.slice(1); // escapes @tags inside unrecognized tags
+        }
       }
     } catch (e) {
       const type = elNode.rawTagNameExpression === "()" ? "Missing" : "Invalid";
