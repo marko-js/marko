@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.5](https://github.com/marko-js/marko/compare/v4.24.4...v4.24.5) (2022-07-14)
+
+
+### Bug Fixes
+
+* ignoreUnrecognizedTags attr tags under control flow ([8e0aaf2](https://github.com/marko-js/marko/commit/8e0aaf227d4e192e3c02b494995f1f2682c4cbc3))
+
 ### [4.24.4](https://github.com/marko-js/marko/compare/v4.24.3...v4.24.4) (2022-03-22)
 
 
