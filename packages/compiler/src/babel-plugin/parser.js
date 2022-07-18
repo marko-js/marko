@@ -334,7 +334,11 @@ export function parseMarko(file) {
             `${parser.read(part.params)}=>{}`,
             part.params.start
           ).params,
-          parseScript(file, parser.read(part.body), part.body.start).body[0]
+          parseExpression(
+            file,
+            `()=>${parser.read(part.body)}`,
+            part.params.start + "()=>".length
+          ).body
         ),
         part
       );
