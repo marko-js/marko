@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.3
+
+### Patch Changes
+
+- [#1824](https://github.com/marko-js/marko/pull/1824) [`2f6459d2c`](https://github.com/marko-js/marko/commit/2f6459d2c421ac82c4627c90f1c50cb229a99d33) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where shorthand attribute methods could not have a "return" statement.
+
 ## 5.21.2
 
 ### Patch Changes
