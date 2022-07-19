@@ -128,7 +128,7 @@ Whether source maps should be output with the compiled templates.
 #### `meta`
 
 Type: `boolean`<br>
-Default: `false,
+Default: `false`
 
 _Deprecated_. This option inlines the metadata in the output Javascript code. Metadata should be accessed instead from the `CompileResult`.
 
