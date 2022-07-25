@@ -65,6 +65,15 @@ var args = require("argly")
       type: "boolean",
       description: "Only print warnings and errors"
     },
+    "--migrate -m": {
+      type: "boolean",
+      description:
+        "Run any migrations that exist for the provided template and write changes to disk"
+    },
+    "--strip-types -t": {
+      type: "boolean",
+      description: "Strip all type information from the compiled template"
+    },
     "--browser -b": {
       type: "boolean",
       description: "Browser output"
@@ -123,12 +132,15 @@ var isForBrowser = false;
 if (args.browser) {
   output = "dom";
   isForBrowser = true;
+} else if (args.migrate) {
+  output = "migrate";
 }
 
 var compileOptions = {
   output: output,
   browser: isForBrowser,
   sourceOnly: false,
+  stripTypes: args.stripTypes,
   sourceMaps: args.sourceMaps || false,
   compilerType: "markoc",
   compilerVersion: markoPkgVersion || markocPkgVersion
@@ -325,7 +337,7 @@ if (args.clean) {
     }
 
     found[path] = true;
-    var outPath = path + ".js";
+    var outPath = args.migrate ? path : path + ".js";
 
     if (!args.quiet)
       console.log(

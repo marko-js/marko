@@ -16,6 +16,7 @@ type Dep = {
 
 export type Config = {
   output?: "html" | "dom" | "hydrate" | "migrate" | "source";
+  stripTypes?: boolean;
   runtimeId?: string | null;
   ast?: boolean;
   code?: boolean;

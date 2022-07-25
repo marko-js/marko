@@ -89,6 +89,17 @@ Default: false
 
 Set to true to have the compiler provide the `ast` in it's output.
 
+#### `stripTypes`
+
+Type: `boolean|undefined`<br>
+Default: undefined
+
+Remove all typescript types from the output when `true`.
+If the value is `undefined`, the default, the compiler will remove types if
+the `output` option is not `source` or `migrate`.
+
+For example to run migrations _and_ strip types you can set both `output: "migrate"` and `stripTypes: true`.
+
 #### `runtimeId`
 
 Type: `string`<br>
