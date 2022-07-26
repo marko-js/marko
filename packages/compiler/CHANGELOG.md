@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.1
+
+### Patch Changes
+
+- [#1830](https://github.com/marko-js/marko/pull/1830) [`efd6da235`](https://github.com/marko-js/marko/commit/efd6da23587567ddf035c06a9ab82472ca1683bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with parsing type definitions for tag variables
+
 ## 5.22.0
 
 ### Minor Changes
