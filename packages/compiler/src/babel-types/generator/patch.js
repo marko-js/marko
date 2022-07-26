@@ -171,6 +171,10 @@ Object.assign(Printer.prototype, {
       if (node.var) {
         this.token("/");
         this.print(node.var, node);
+
+        if (node.var.typeAnnotation) {
+          this.print(node.var.typeAnnotation, node.var);
+        }
       }
 
       if (node.arguments && node.arguments.length) {

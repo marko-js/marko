@@ -2,4 +2,4 @@ import type test from "./test";
 static type alias = test;
 
 $ const x: alias = "hello!";
-<div>Hello</div>
+<div class=(window as any).x as string>Hello</div>
