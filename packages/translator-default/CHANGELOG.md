@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.4
+
+### Patch Changes
+
+- [#1827](https://github.com/marko-js/marko/pull/1827) [`ae0c003a5`](https://github.com/marko-js/marko/commit/ae0c003a545a3610330b44c677a7521990c90b05) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where there was whitespace or a comment between else/else-if tags.
+
 ## 5.21.3
 
 ### Patch Changes
