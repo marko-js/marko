@@ -15,6 +15,13 @@ if (globalThis[MARKO_CONFIG_KEY]) {
     // Override the runtimeid used when calling `marko/components.init` in the `hydrate` output.
     runtimeId: null,
 
+    /**
+     * Remove all typescript types from the output.
+     * By default, the compiler will remove types from the output if the
+     * `output` option is not `source` or `migrate`.
+     */
+    stripTypes: undefined,
+
     // Have Marko provide the final AST in the compile result.
     ast: false,
 

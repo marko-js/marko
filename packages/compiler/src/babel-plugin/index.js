@@ -102,6 +102,7 @@ export default (api, markoOpts) => {
             undefined;
 
         metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
+        file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
         setFS(prevFS);
       }
