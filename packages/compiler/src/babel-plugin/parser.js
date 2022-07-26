@@ -267,9 +267,9 @@ export function parseMarko(file) {
     onTagVar(part) {
       currentTag.node.var = parseExpression(
         file,
-        `${parser.read(part.value)}=1`,
-        part.value.start
-      ).left;
+        `(${parser.read(part.value)})=>{}`,
+        part.value.start - 1
+      ).params[0];
     },
 
     onTagParams(part) {
