@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.0
+
+### Minor Changes
+
+- [#1826](https://github.com/marko-js/marko/pull/1826) [`e285cbbd1`](https://github.com/marko-js/marko/commit/e285cbbd1092afb1e669156777a3a9ccd46affb2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support removing typescript types.
+
 ## 5.21.7
 
 ### Patch Changes
