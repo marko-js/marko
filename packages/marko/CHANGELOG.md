@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.4
+
+### Patch Changes
+
+- [#1832](https://github.com/marko-js/marko/pull/1832) [`20dd7b088`](https://github.com/marko-js/marko/commit/20dd7b08800d49fe99badd4faa540bcfefa7b681) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update markoc cli to allow striping types.
+
 ## 5.21.3
 
 ### Patch Changes
