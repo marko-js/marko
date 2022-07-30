@@ -1,5 +1,8 @@
 "use strict";
 
+var escapeDoubleQuotes =
+  require("../../../runtime/html/helpers/escape-quotes").___escapeDoubleQuotes;
+
 module.exports = function (input, out) {
   // We cannot call beginSync() when using renderSync(). In this case we will
   // ignore the await-reorderer tag.
@@ -54,13 +57,30 @@ module.exports = function (input, out) {
             global._afRuntime = true;
           }
 
-          asyncOut.write(
-            '<div id="af' +
-              awaitInfo.id +
-              '" style="display:none">' +
-              result.toString() +
-              "</div>"
-          );
+          if (global.cspNonce) {
+            asyncOut.write(
+              '<style nonce="' +
+                escapeDoubleQuotes(global.cspNonce) +
+                '">' +
+                "#af" +
+                awaitInfo.id +
+                "{display:none;}" +
+                "</style>" +
+                '<div id="af' +
+                awaitInfo.id +
+                '">' +
+                result.toString() +
+                "</div>"
+            );
+          } else {
+            asyncOut.write(
+              '<div id="af' +
+                awaitInfo.id +
+                '" style="display:none">' +
+                result.toString() +
+                "</div>"
+            );
+          }
 
           asyncOut.script(
             "$af(" +
