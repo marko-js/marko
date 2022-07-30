@@ -337,7 +337,7 @@ export function parseMarko(file) {
           parseExpression(
             file,
             `()=>${parser.read(part.body)}`,
-            part.params.start + "()=>".length
+            part.body.start - 4
           ).body
         ),
         part
