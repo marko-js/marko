@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.21.5
+
+### Patch Changes
+
+- [#1836](https://github.com/marko-js/marko/pull/1836) [`ec57ebde5`](https://github.com/marko-js/marko/commit/ec57ebde52f5da16524f5275f923eedc8c0ab19a) Thanks [@vwong](https://github.com/vwong)! - Avoid inline styles when using tight Content Security Policy
+
+* [#1837](https://github.com/marko-js/marko/pull/1837) [`63161abed`](https://github.com/marko-js/marko/commit/63161abed5fa071e88d06646bf0f55f0c6852b54) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with source map position for shorthand attribute methods.
+
+* Updated dependencies [[`63161abed`](https://github.com/marko-js/marko/commit/63161abed5fa071e88d06646bf0f55f0c6852b54)]:
+  - @marko/compiler@5.22.2
+
 ## 5.21.4
 
 ### Patch Changes
