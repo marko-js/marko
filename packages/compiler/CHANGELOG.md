@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.3
+
+### Patch Changes
+
+- [#1839](https://github.com/marko-js/marko/pull/1839) [`1df553e45`](https://github.com/marko-js/marko/commit/1df553e45829c7e0d754c5fec2c7d65e74c89457) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade HTMLJS-Parser.
+
 ## 5.22.2
 
 ### Patch Changes
