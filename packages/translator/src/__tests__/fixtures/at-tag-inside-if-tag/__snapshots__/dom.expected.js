@@ -1,35 +1,33 @@
 let _thing;
 
-import { write as _write, setConditionalRenderer as _setConditionalRenderer, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
+import { write as _write, createRenderer as _createRenderer, conditional as _conditional, closure as _closure, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
 
-function _apply$customTagBody_x(_scope, x = _scope._[1]) {
-  _setConditionalRenderer(_scope, 0, x ? _ifBody : null);
-}
+const _ifBody = _createRenderer("", "");
 
-function _apply_x(_scope, x) {
-  if (_write(_scope, 1, x)) {}
-}
+const _if$customTagBody = _conditional(0, 1, (_scope, x = _scope._[1]) => x ? _ifBody : null);
 
-function _apply(_scope) {
+const _x$customTagBody = _closure(1, 1, [_if$customTagBody]);
+
+const _customTagBody = _createRenderer("<!>",
+/* replace, skip(5) */
+"%-", null, [_x$customTagBody]);
+
+const _x = _source(1, []);
+
+const _setup = _scope => {
   _customTag(_scope[0]);
-}
-
-export const applyAttrs = function (_scope, {
-  x
-}) {
-  _apply_x(_scope, x);
 };
-export { _apply_x };
+
+export const attrs = _destructureSources([_x], (_scope, {
+  x
+}) => {
+  _setSource(_scope, _x, x);
+});
+export { _x as _apply_x };
 export const template = `${_customTag_template}`;
 export const walks =
 /* beginChild(0), _customTag_walks, endChild */
 `/${_customTag_walks}&`;
-export const apply = _apply;
-
-const _customTagBody = _createRenderer("<!>",
-/* replace, skip(3) */
-"%+", null),
-      _ifBody = _createRenderer("", "", null);
-
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup, attrs);

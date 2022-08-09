@@ -3,12 +3,11 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { addStatement } from "../util/apply-hydrate";
-import { callQueue } from "../util/runtime";
+import { initSource, queueSource, addStatement } from "../util/apply-hydrate";
+import { callRuntime } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";
 import { scopeIdentifier } from "../visitors/program";
-import { getReferenceGroup } from "../util/references";
 
 export default {
   translate(tag) {
@@ -52,24 +51,26 @@ export default {
     if (isOutputDOM()) {
       const sectionId = getSectionId(tag);
       const binding = tagVar.extra.reserve!;
-      const referenceGroup = getReferenceGroup(sectionId, binding);
+      const source = initSource(binding);
       // TODO: add defined guard if bindings exist.
       addStatement(
         "apply",
         sectionId,
         defaultAttr.extra?.valueReferences,
         t.expressionStatement(
-          t.callExpression(referenceGroup.apply, [
+          callRuntime(
+            "setSource",
             scopeIdentifier,
-            defaultAttr.value,
-          ])
+            source.identifier,
+            defaultAttr.value
+          )
         )
       );
 
       replaceAssignments(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
-          callQueue(referenceGroup, binding, value, getSectionId(assignment))
+          queueSource(source, value, getSectionId(assignment))
       );
     } else {
       translateVar(tag, defaultAttr.value);

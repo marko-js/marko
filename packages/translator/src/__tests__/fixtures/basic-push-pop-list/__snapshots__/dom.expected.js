@@ -1,74 +1,58 @@
-import { queue as _queue, data as _data, setLoopOf as _setLoopOf, on as _on, write as _write, register as _register, bind as _bind, queueHydrate as _queueHydrate, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, data as _data, on as _on, source as _source, createRenderer as _createRenderer, subscriber as _subscriber, register as _register, queueHydrate as _queueHydrate, loop as _loop, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply$forBody_item(_scope, item) {
-  if (_write(_scope, 1, item)) {
-    _data(_scope[0], item);
-  }
-}
-
-const _onclick = function (_scope) {
-  const id = _scope[6],
-        items = _scope[7];
-  // TODO: nested writes ([...items, id++]) don't work
-  const nextId = id + 1;
-
-  _queue(_scope, _apply_id, 0, nextId);
-
-  _queue(_scope, _apply_items, 1, [...items, nextId]);
-};
-
-function _hydrateWith_id_items(_scope, id = _scope[6], items = _scope[7]) {
-  _on(_scope[4], "click", _bind(_scope, _onclick));
-}
-
-_register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _hydrateWith_id_items);
-
-const _onclick2 = function (_scope) {
-  const items = _scope[7];
-
-  _queue(_scope, _apply_items, 1, items.slice(0, -1));
-};
-
-function _hydrate_items(_scope, items = _scope[7]) {
-  _on(_scope[5], "click", _bind(_scope, _onclick2));
-}
-
-_register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _hydrate_items);
-
-function _applyWith_id_items(_scope, id = _scope[6], items = _scope[7]) {
-  _queueHydrate(_scope, _hydrateWith_id_items);
-}
-
-function _apply_items(_scope, items) {
-  if (_write(_scope, 7, items)) {
-    _setLoopOf(_scope, 0, items, _forBody, null, _apply$forBody_item);
-
-    _queueHydrate(_scope, _hydrate_items);
-
-    _queue(_scope, _applyWith_id_items, 2);
-  }
-}
-
-function _apply_id(_scope, id) {
-  if (_write(_scope, 6, id)) {
-    _queue(_scope, _applyWith_id_items, 2);
-  }
-}
-
-function _apply(_scope) {
-  _apply_id(_scope, 0);
-
-  _apply_items(_scope, []);
-}
-
-export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
-export const walks =
-/* next(1), replace, skip(3), over(1), get, over(1), get, out(1) */
-"D%+b b l";
-export const apply = _apply;
+const _item$forBody = _source(1, [], (_scope, item) => _data(_scope[0], item));
 
 const _forBody = _createRenderer(" ",
 /* get */
-" ", null);
+" ");
 
-export default _createRenderFn(template, walks, apply);
+const _onclick = function (_scope) {
+  const id = _scope[9],
+        items = _scope[10];
+  // TODO: nested writes ([...items, id++]) don't work
+  const nextId = id + 1;
+
+  _queueSource(_scope, _id, nextId);
+
+  _queueSource(_scope, _items, [...items, nextId]);
+};
+
+const _hydrate_expr_id_items = _register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _scope => {
+  const id = _scope[9],
+        items = _scope[10];
+
+  _on(_scope[7], "click", _bind(_scope, _onclick));
+});
+
+const _expr_id_items = _subscriber([], 2, (_scope, id = _scope[9], items = _scope[10]) => _queueHydrate(_scope, _hydrate_expr_id_items));
+
+const _for = _loop(0, 1, _forBody, [_item$forBody], (_scope, [item]) => _setSource(_scope, _item$forBody, item), (_scope, items = _scope[10]) => [items, null]);
+
+const _onclick2 = function (_scope) {
+  const items = _scope[10];
+
+  _queueSource(_scope, _items, items.slice(0, -1));
+};
+
+const _hydrate_items = _register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _scope => {
+  const items = _scope[10];
+
+  _on(_scope[8], "click", _bind(_scope, _onclick2));
+});
+
+const _items = _source(10, [_for, _expr_id_items], (_scope, items) => _queueHydrate(_scope, _hydrate_items));
+
+const _id = _source(9, [_expr_id_items]);
+
+const _setup = _scope => {
+  _setSource(_scope, _id, 0);
+
+  _setSource(_scope, _items, []);
+};
+
+export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
+export const walks =
+/* next(1), replace, skip(6), over(1), get, over(1), get, out(1) */
+"D%.b b l";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

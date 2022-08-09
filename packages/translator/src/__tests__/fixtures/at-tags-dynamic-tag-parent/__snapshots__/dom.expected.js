@@ -1,18 +1,16 @@
-import { write as _write, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, dynamicTag as _dynamicTag, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_x(_scope, x) {
-  if (_write(_scope, 0, x)) {}
-}
+const _x = _source(0, []);
 
-export const applyAttrs = function (_scope, {
+export const attrs = _destructureSources([_x], (_scope, {
   x
-}) {
-  _apply_x(_scope, x);
-};
-export { _apply_x };
+}) => {
+  _setSource(_scope, _x, x);
+});
+export { _x as _apply_x };
 export const template = "Body content";
 export const walks =
 /* over(3) */
 "d";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

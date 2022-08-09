@@ -56,7 +56,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       walker.currentNode = doc;
     }
 
-    const scopes = scopesFn(bindFunction, scopeLookup);
+    const scopes = scopesFn?.(bindFunction, scopeLookup);
 
     /**
      * Loop over all the new hydration scopes and see if a previous walk

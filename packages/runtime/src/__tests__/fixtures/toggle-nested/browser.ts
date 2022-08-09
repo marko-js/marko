@@ -47,7 +47,6 @@ type Input = typeof inputs[number];
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  conditional_scope = 1,
   show = 6,
   value1 = 9,
   value2 = 12,
@@ -65,12 +64,8 @@ type ComponentScope = Scope<{
 const enum INDEX_IF0 {
   comment1 = 0,
   conditional1 = 0,
-  conditional1_scope = 1,
   comment2 = 6,
   conditional2 = 6,
-  conditional2_scope = 7,
-  value1 = 12,
-  value2 = 15
 }
 
 type If0Scope = Scope<{
@@ -83,7 +78,6 @@ type If0Scope = Scope<{
 
 const enum INDEX_IF1 {
   text = 0,
-  value1 = 1,
 }
 
 type If1Scope = Scope<{
@@ -93,7 +87,6 @@ type If1Scope = Scope<{
 
 const enum INDEX_IF2 {
   text = 0,
-  value2 = 1,
 }
 
 type If2Scope = Scope<{
@@ -113,17 +106,15 @@ export const template = `<div></div>`;
 export const walks = get + over(1);
 
 const value2$if2 = closure(
-  INDEX_IF2.value2, 
-  2, 
-  INDEX.value2, 
-  [], 
+  2,
+  INDEX.value2,
+  [],
   (scope: If2Scope, value: string) => {
     data(scope[INDEX_IF2.text], value);
   }
 );
 
 const value1$if1 = closure(
-  INDEX_IF1.value1,
   2,
   INDEX.value1,
   [],
@@ -132,51 +123,37 @@ const value1$if1 = closure(
   }
 );
 
-const _if2 = conditional(
-  INDEX_IF0.conditional2,
-  1,
-  (scope: If0Scope) => scope._[INDEX.value2] ? ifBody2 : undefined
+const _if2 = conditional(INDEX_IF0.conditional2, 1, (scope: If0Scope) => {
+  return scope._[INDEX.value2] ? ifBody2 : undefined;
+});
+
+const _if1 = conditional(INDEX_IF0.conditional1, 1, (scope: If0Scope) =>
+  scope._[INDEX.value1] ? ifBody1 : undefined
 );
 
-const _if1 = conditional(
-  INDEX_IF0.conditional1,
-  1,
-  (scope: If0Scope) => scope._[INDEX.value1] ? ifBody1 : undefined
-);
+const value2$if0 = closure(1, INDEX.value2, [
+  _if2,
+  inConditionalScope(value2$if2, INDEX_IF0.conditional2),
+]);
 
-const value2$if0 = closure(
-  INDEX_IF0.value2,
-  1,
-  INDEX.value2,
-  [
-    _if2,
-    inConditionalScope(value2$if2, (scope: If0Scope) => scope[INDEX_IF0.conditional2_scope])
-  ]
-);
-
-const value1$if0 = closure(
-  INDEX_IF0.value1,
-  1,
-  INDEX.value1,
-  [
-    _if1,
-    inConditionalScope(value1$if1, (scope: If0Scope) => scope[INDEX_IF0.conditional1_scope])
-  ]
-);
+const value1$if0 = closure(1, INDEX.value1, [
+  _if1,
+  inConditionalScope(value1$if1, INDEX_IF0.conditional1),
+]);
 
 const _if0 = conditionalOnlyChild(
   INDEX.conditional,
   1,
-  (scope: ComponentScope) => scope[INDEX.show] ? ifBody0 : undefined,
+  (scope: ComponentScope) => (scope[INDEX.show] ? ifBody0 : undefined),
   dynamicFragment
 );
 
 export const value2_subscribers = [
-  inConditionalScope(value2$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+  inConditionalScope(value2$if0, INDEX.conditional),
 ];
 
 export const value1_subscribers = [
-  inConditionalScope(value1$if0, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+  inConditionalScope(value1$if0, INDEX.conditional),
 ];
 
 export const show_subscribers = [_if0];
@@ -185,11 +162,14 @@ const _show = source(INDEX.show, show_subscribers);
 const _value1 = source(INDEX.value1, value1_subscribers);
 const _value2 = source(INDEX.value2, value2_subscribers);
 
-export const attrs = destructureSources([_show, _value1, _value2], (scope: ComponentScope, { show, value1, value2 }: Input) => {
-  setSource(scope, _show, show);
-  setSource(scope, _value1, value1);
-  setSource(scope, _value2, value2);
-});
+export const attrs = destructureSources(
+  [_show, _value1, _value2],
+  (scope: ComponentScope, { show, value1, value2 }: Input) => {
+    setSource(scope, _show, show);
+    setSource(scope, _value1, value1);
+    setSource(scope, _value2, value2);
+  }
+);
 
 export default createRenderFn(template, walks, undefined, attrs);
 

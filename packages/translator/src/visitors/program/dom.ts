@@ -1,11 +1,10 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
-import { forEachSectionId, getSectionId } from "../../util/sections";
-import { writeAllStatementGroups } from "../../util/apply-hydrate";
+import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
+import { getClosures, getSignal, writeSignals } from "../../util/apply-hydrate";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
 import { scopeIdentifier } from ".";
-import { getReferenceGroup } from "../../util/references";
 
 export default {
   translate: {
@@ -14,58 +13,77 @@ export default {
       const sectionId = getSectionId(program);
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
-      const applyIdentifier = t.identifier("apply");
-      const applyAttrsIdentifier = t.identifier("applyAttrs");
+      const setupIdentifier = t.identifier("setup");
+      const attrsSignalIdentifier = t.identifier("attrs");
       const { attrs } = program.node.extra;
       const { walks, writes, apply } = writer.getSectionMeta(sectionId);
 
-      writeAllStatementGroups();
+      forEachSectionIdReverse((childSectionId) => {
+        writeSignals(childSectionId);
 
-      const childRendererDeclarators: t.VariableDeclarator[] = [];
-      forEachSectionId((childSectionId) => {
         if (childSectionId !== sectionId) {
           const { walks, writes, apply } =
             writer.getSectionMeta(childSectionId);
+          const closures = getClosures(childSectionId);
           const identifier = writer.getRenderer(childSectionId);
-          childRendererDeclarators.push(
-            t.variableDeclarator(
-              identifier,
-              callRuntime("createRenderer", writes, walks, apply)
-            )
+          program.node.body.push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                identifier,
+                callRuntime(
+                  "createRenderer",
+                  writes,
+                  walks,
+                  apply,
+                  closures.length && t.arrayExpression(closures)
+                )
+              ),
+            ])
           );
         }
       });
 
       if (attrs) {
         const exportSpecifiers: t.ExportSpecifier[] = [];
+        const subscribers: t.Identifier[] = [];
+        const statements: t.Statement[] = [];
+
+        for (const name in attrs.bindings) {
+          const bindingIdentifier = attrs.bindings[name];
+          const signalIdentifier = getSignal(
+            sectionId,
+            bindingIdentifier.extra.reserve
+          ).identifier;
+          exportSpecifiers.push(
+            t.exportSpecifier(
+              signalIdentifier,
+              bindingIdentifier.extra!.reserve!.exportIdentifier!
+            )
+          );
+          subscribers.push(signalIdentifier);
+          statements.push(
+            t.expressionStatement(
+              callRuntime(
+                "setSource",
+                scopeIdentifier,
+                signalIdentifier,
+                bindingIdentifier
+              )
+            )
+          );
+        }
+
         program.node.body.push(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
               t.variableDeclarator(
-                applyAttrsIdentifier,
-                t.functionExpression(
-                  null,
-                  [scopeIdentifier, attrs.var as any],
-                  t.blockStatement(
-                    Object.keys(attrs.bindings).map((name) => {
-                      const bindingIdentifier = attrs.bindings[name];
-                      const { apply: applyIdentifier } = getReferenceGroup(
-                        sectionId,
-                        bindingIdentifier.extra!.reserve
-                      );
-                      exportSpecifiers.push(
-                        t.exportSpecifier(
-                          applyIdentifier,
-                          bindingIdentifier.extra!.reserve!.exportIdentifier!
-                        )
-                      );
-                      return t.expressionStatement(
-                        t.callExpression(applyIdentifier, [
-                          scopeIdentifier,
-                          bindingIdentifier,
-                        ])
-                      );
-                    })
+                attrsSignalIdentifier,
+                callRuntime(
+                  "destructureSources",
+                  t.arrayExpression(subscribers),
+                  t.arrowFunctionExpression(
+                    [scopeIdentifier, attrs.var as any],
+                    t.blockStatement(statements)
                   )
                 )
               ),
@@ -92,8 +110,8 @@ export default {
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              applyIdentifier,
-              t.isNullLiteral(apply)
+              setupIdentifier,
+              t.isNullLiteral(apply) || !apply
                 ? t.functionExpression(null, [], t.blockStatement([]))
                 : apply
             ),
@@ -101,20 +119,14 @@ export default {
         )
       );
 
-      if (childRendererDeclarators.length) {
-        program.node.body.push(
-          t.variableDeclaration("const", childRendererDeclarators)
-        );
-      }
-
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
             "createRenderFn",
             templateIdentifier,
             walksIdentifier,
-            applyIdentifier,
-            attrs! && applyAttrsIdentifier
+            setupIdentifier,
+            attrs! && attrsSignalIdentifier
           )
         )
       );

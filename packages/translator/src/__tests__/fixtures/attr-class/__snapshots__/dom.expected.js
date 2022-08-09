@@ -1,64 +1,31 @@
-import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, queue as _queue, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-import { apply as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
+import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, createRenderer as _createRenderer, subscriber as _subscriber, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
-function _apply$dynamicBody2With_c_d(_scope, c = _scope._[1], d = _scope._[2]) {}
+const _dynamicBody2 = _createRenderer("", "");
 
-function _apply$dynamicBody2_d(_scope, d = _scope._[2]) {
-  _queue(_scope, _apply$dynamicBody2With_c_d, 2);
-}
+const _expr_c_d = _subscriber([], 2, (_scope, c = _scope[1], d = _scope[2]) => _classAttr(_scope[0], ["a", {
+  b: c,
+  d
+}]));
 
-function _apply$dynamicBody2_c(_scope, c = _scope._[1]) {
-  _queue(_scope, _apply$dynamicBody2With_c_d, 2);
-}
+const _input = _source(5, []);
 
-function _applyWith_c_d(_scope, c = _scope[1], d = _scope[2]) {
-  _classAttr(_scope[0], ["a", {
-    b: c,
-    d
-  }]);
-}
+const _d = "SIGNAL NOT INITIALIZED";
+const _c = "SIGNAL NOT INITIALIZED";
 
-function _apply_input(_scope, input) {
-  if (_write(_scope, 5, input)) {
-    const {
-      c,
-      d
-    } = input;
-
-    _apply_c(c);
-
-    _apply_d(d);
-  }
-}
-
-function _apply_d(_scope, d) {
-  if (_write(_scope, 2, d)) {
-    _queue(_scope, _applyWith_c_d, 3);
-  }
-}
-
-function _apply_c(_scope, c) {
-  if (_write(_scope, 1, c)) {
-    _queue(_scope, _applyWith_c_d, 3);
-  }
-}
-
-function _apply(_scope) {
+const _setup = _scope => {
   _customTag(_scope[3]);
 
   _customTag(_scope[4]);
-}
-
-export const applyAttrs = function (_scope, input) {
-  _apply_input(_scope, input);
 };
-export { _apply_input };
+
+export const attrs = _destructureSources([_input], (_scope, input) => {
+  _setSource(_scope, _input, input);
+});
+export { _input as _apply_input };
 export const template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}`;
 export const walks =
 /* get, over(3), beginChild(3), _customTag_walks, endChild, beginChild(4), _customTag_walks, endChild */
 ` d2${_customTag_walks}&3${_customTag_walks}&`;
-export const apply = _apply;
-
-const _dynamicBody2 = _createRenderer("", "", null);
-
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup, attrs);

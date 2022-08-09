@@ -4,30 +4,72 @@ import { reconcile } from "./reconcile";
 import { Renderer, initRenderer } from "./renderer";
 import { createScope, getEmptyScope, destroyScope } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
-import { derivation, destructureSources, inLoopScope, inRenderBody, Signal } from "./signals";
+import {
+  derivation,
+  destructureSources,
+  inRenderBody,
+  Signal,
+  wrapSignal,
+} from "./signals";
 
 export const enum ConditionalIndex {
   REFERENCE_NODE = 0,
   SCOPE = 1,
   RENDERER = 2,
-  RENDERER_MARK = 3,
-  RENDERER_STALE = 4,
-  CONTEXT = 5
+  CONTEXT = 3,
 }
 
-export function conditional<S extends Scope>(nodeAccessor: number, defaultMark: number, computeRenderer: (scope: S) => Renderer | undefined, fragment?: DOMFragment) {
+export function conditional<S extends Scope>(
+  nodeAccessor: number,
+  defaultMark: number,
+  computeRenderer: (scope: S) => Renderer | undefined,
+  fragment?: DOMFragment
+) {
   const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
   const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
-  return derivation(rendererAccessor, defaultMark, [inRenderBody(rendererAccessor, childScopeAccessor)], computeRenderer, (scope: S, renderer?: Renderer) => {
-    setConditionalRenderer(scope, nodeAccessor, renderer, fragment)
-  });
+  return derivation(
+    rendererAccessor,
+    defaultMark,
+    [inRenderBody(rendererAccessor, childScopeAccessor)],
+    computeRenderer,
+    (scope: S, renderer?: Renderer) => {
+      setConditionalRenderer(scope, nodeAccessor, renderer, fragment);
+    }
+  );
 }
 
-export function conditionalOnlyChild<S extends Scope>(nodeAccessor: number, defaultMark: number, computeRenderer: (scope: S) => Renderer | undefined, fragment?: DOMFragment) {
+export function conditionalOnlyChild<S extends Scope>(
+  nodeAccessor: number,
+  defaultMark: number,
+  computeRenderer: (scope: S) => Renderer | undefined,
+  fragment?: DOMFragment
+) {
   const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
   const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
-  return derivation(rendererAccessor, defaultMark, [inRenderBody(rendererAccessor, childScopeAccessor)], computeRenderer, (scope: S, renderer?: Renderer) => {
-    setConditionalRendererOnlyChild(scope, nodeAccessor, renderer, fragment)
+  return derivation(
+    rendererAccessor,
+    defaultMark,
+    [inRenderBody(rendererAccessor, childScopeAccessor)],
+    computeRenderer,
+    (scope: S, renderer?: Renderer) => {
+      setConditionalRendererOnlyChild(scope, nodeAccessor, renderer, fragment);
+    }
+  );
+}
+
+export function inConditionalScope<S extends Scope>(
+  subscriber: Signal,
+  conditionalNodeAccessor: number | string /* branch?: Renderer */
+): Signal {
+  const scopeAccessor =
+    (conditionalNodeAccessor as number) + ConditionalIndex.SCOPE;
+  // const rendererAccessor = conditionalNodeAccessor as number + ConditionalIndex.RENDERER;
+  return wrapSignal((methodName) => (scope, extraArg) => {
+    const conditionalScope = scope[scopeAccessor] as S;
+    // const conditionalRenderer = scope[rendererAccessor] as Renderer;
+    if (conditionalScope /* && conditionalRenderer === branch */) {
+      subscriber[methodName](conditionalScope, extraArg);
+    }
   });
 }
 
@@ -111,29 +153,51 @@ export const enum LoopIndex {
 }
 
 export function loop<S extends Scope, C extends Scope, T>(
-  nodeAccessor: number, 
-  defaultMark: number, 
-  renderer: Renderer, 
+  nodeAccessor: number,
+  defaultMark: number,
+  renderer: Renderer,
   paramSubscribers: Signal[],
   setParams: (scope: C, params: [T, number, T[]]) => void,
   compute: (scope: S) => [T[], (x: T) => unknown],
-  fragment?: DOMFragment,
+  fragment?: DOMFragment
 ) {
   const params = destructureSources(paramSubscribers, setParams);
-  const childScopesAccessor = nodeAccessor + LoopIndex.SCOPE_ARRAY;
   const valueAccessor = nodeAccessor + LoopIndex.VALUE;
   return derivation(
-    valueAccessor, 
-    defaultMark, 
+    valueAccessor,
+    defaultMark,
     [
-      ...renderer.___closureSignals.map(signal => inLoopScope(signal, (s) => s[childScopesAccessor])),
-      inLoopScope(params, (s) => s[childScopesAccessor])
-    ], 
-    compute, 
+      ...renderer.___closureSignals.map((signal) =>
+        inLoopScope(signal, nodeAccessor)
+      ),
+      inLoopScope(params, nodeAccessor),
+    ],
+    compute,
     (scope, [newValues, keyFn]) => {
-      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, setParams, fragment)
+      setLoopOf(
+        scope,
+        nodeAccessor,
+        newValues,
+        renderer,
+        keyFn,
+        setParams,
+        fragment
+      );
     }
   );
+}
+
+export function inLoopScope<S extends Scope>(
+  subscriber: Signal,
+  loopNodeAccessor: number
+): Signal {
+  const loopScopeAccessor = loopNodeAccessor + LoopIndex.SCOPE_ARRAY;
+  return wrapSignal((methodName) => (scope, extraArg) => {
+    const loopScopes = (scope as S)[loopScopeAccessor] ?? [];
+    for (const loopScope of loopScopes) {
+      subscriber[methodName](loopScope, extraArg);
+    }
+  });
 }
 
 export function setLoopOf<T, ChildScope extends Scope>(
@@ -247,7 +311,10 @@ type Entries<T> = {
 }[keyof T][];
 
 export function computeLoopIn(object: Record<string, unknown>) {
-  return [Object.entries(object), keyIn] as [Entries<typeof object>, typeof keyIn];
+  return [Object.entries(object), keyIn] as [
+    Entries<typeof object>,
+    typeof keyIn
+  ];
 }
 
 function keyIn(item: [string, unknown]) {

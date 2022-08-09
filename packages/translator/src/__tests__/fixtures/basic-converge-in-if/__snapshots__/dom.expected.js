@@ -1,51 +1,32 @@
-import { data as _data, setConditionalRenderer as _setConditionalRenderer, queue as _queue, queueInBranch as _queueInBranch, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, data as _data, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply$ifBodyWith_a_b(_scope, a = _scope._[4], b = _scope._[5]) {
-  _data(_scope[0], a + b);
-}
+const _expr_a_b$ifBody = _subscriber([], 2, (_scope, a = _scope._[6], b = _scope._[7]) => _data(_scope[0], a + b));
 
-function _apply$ifBody_b(_scope, b = _scope._[5]) {
-  _queue(_scope, _apply$ifBodyWith_a_b, 2);
-}
+const _b$ifBody = _closure(1, 7, [_expr_a_b$ifBody]);
 
-function _apply$ifBody_a(_scope, a = _scope._[4]) {
-  _queue(_scope, _apply$ifBodyWith_a_b, 2);
-}
-
-function _apply$ifBody(_scope) {
-  _queue(_scope, _apply$ifBody_b, 1);
-
-  _queue(_scope, _apply$ifBody_a, 0);
-}
-
-function _apply_b(_scope, b) {
-  if (_write(_scope, 5, b)) {
-    _queueInBranch(_scope, 0, _ifBody, _apply$ifBody_b, 2, 3);
-  }
-}
-
-function _apply_a(_scope, a) {
-  if (_write(_scope, 4, a)) {
-    _queueInBranch(_scope, 0, _ifBody, _apply$ifBody_a, 1, 4);
-  }
-}
-
-function _apply(_scope) {
-  _apply_a(_scope, 0);
-
-  _apply_b(_scope, 0);
-
-  _setConditionalRenderer(_scope, 0, true ? _ifBody : null);
-}
-
-export const template = "<!>";
-export const walks =
-/* replace, skip(3), over(1) */
-"%+b";
-export const apply = _apply;
+const _a$ifBody = _closure(1, 6, [_expr_a_b$ifBody]);
 
 const _ifBody = _createRenderer(" ",
 /* get */
-" ", _apply$ifBody);
+" ", null, [_a$ifBody, _b$ifBody]);
 
-export default _createRenderFn(template, walks, apply);
+const _if = _conditional(0, 1, _scope => true ? _ifBody : null);
+
+const _b = _source(7, [_inConditionalScope(_b$ifBody, 0)]);
+
+const _a = _source(6, [_inConditionalScope(_a$ifBody, 0)]);
+
+const _setup = _scope => {
+  _setSource(_scope, _a, 0);
+
+  _setSource(_scope, _b, 0);
+
+  _notifySignal(_scope, _if);
+};
+
+export const template = "<!>";
+export const walks =
+/* replace, skip(5), over(1) */
+"%-b";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

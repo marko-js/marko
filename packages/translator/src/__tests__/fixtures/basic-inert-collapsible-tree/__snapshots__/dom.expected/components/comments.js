@@ -1,121 +1,83 @@
-import { queue as _queue, attr as _attr, data as _data, on as _on, setConditionalRenderer as _setConditionalRenderer, setLoopOf as _setLoopOf, queueInBranch as _queueInBranch, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-import { apply as _comments, applyAttrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
+import { setSource as _setSource, queueSource as _queueSource, attr as _attr, data as _data, on as _on, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, bind as _bind, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
 
-function _apply$ifBodyWith_comment_id(_scope, comment = _scope._[8], id = _scope._[10]) {
-  _comments_attrs(_scope[0], {
-    comments: comment.comments,
-    path: id
-  });
-}
+const _expr_comment_id$ifBody = _subscriber([_comments_attrs], 2, (_scope, comment = _scope._[10], id = _scope._[12]) => _setSource(_scope[0], _comments_attrs, {
+  comments: comment.comments,
+  path: id
+}));
 
-function _apply$ifBody_id(_scope, id = _scope._[10]) {
-  _queue(_scope, _apply$ifBodyWith_comment_id, 2);
-}
+const _id$ifBody = _closure(1, 12, [_expr_comment_id$ifBody]);
 
-function _apply$ifBody_comment(_scope, comment = _scope._[8]) {
-  _queue(_scope, _apply$ifBodyWith_comment_id, 2);
-}
+const _comment$ifBody = _closure(1, 10, [_expr_comment_id$ifBody]);
 
-function _apply$ifBody(_scope) {
-  _comments(_scope[0]);
+const _setup$ifBody = _scope => {
+  _comments2(_scope[0]);
+};
 
-  _queue(_scope, _apply$ifBody_id, 1);
+const _ifBody = _createRenderer(`${_comments_template}`,
+/* beginChild(0), _comments_walks, endChild */
+`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]);
 
-  _queue(_scope, _apply$ifBody_comment, 0);
-}
+const _if$forBody = _conditional(4, 1, (_scope, comment = _scope[10]) => comment.comments ? _ifBody : null);
 
 const _onclick = function (_scope) {
-  const open = _scope[11];
+  const open = _scope[13];
 
-  _queue(_scope, _apply$forBody_open, 4, !open);
+  _queueSource(_scope, _open$forBody, !open);
 };
 
-function _hydrate$forBody_open(_scope, open = _scope[11]) {
+const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => {
+  const open = _scope[13];
+
   _on(_scope[2], "click", _bind(_scope, _onclick));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _hydrate$forBody_open);
+const _open$forBody = _source(13, [], (_scope, open) => {
+  _attr(_scope[0], "hidden", !open);
 
-function _apply$forBodyWith_path_i(_scope, path = _scope._[5], i = _scope[9]) {
-  _apply$forBody_id(_scope, `${path}-${i}`);
-}
+  _data(_scope[3], open ? "[-]" : "[+]");
 
-function _apply$forBody_open(_scope, open) {
-  if (_write(_scope, 11, open)) {
-    _attr(_scope[0], "hidden", !open);
+  _queueHydrate(_scope, _hydrate_open$forBody);
+});
 
-    _data(_scope[3], open ? "[-]" : "[+]");
+const _id$forBody = _derivation(12, 2, [_inConditionalScope(_id$ifBody, 4)], (_scope, path = _scope._[8], i = _scope[11]) => `${path}-${i}`, (_scope, id) => _attr(_scope[0], "id", id));
 
-    _queueHydrate(_scope, _hydrate$forBody_open);
-  }
-}
+const _i$forBody = _source(11, [_id$forBody]);
 
-function _apply$forBody_id(_scope, id) {
-  if (_write(_scope, 10, id)) {
-    _attr(_scope[0], "id", id);
+const _comment$forBody = _source(10, [_if$forBody, _inConditionalScope(_comment$ifBody, 4)], (_scope, comment) => _data(_scope[1], comment.text));
 
-    _queueInBranch(_scope, 4, _ifBody, _apply$ifBody_id, 2, 7);
-  }
-}
+const _path$forBody = _closure(1, 8, [_id$forBody]);
 
-function _apply$forBody_i(_scope, i) {
-  if (_write(_scope, 9, i)) {
-    _queue(_scope, _apply$forBodyWith_path_i, 5);
-  }
-}
-
-function _apply$forBody_comment(_scope, comment) {
-  if (_write(_scope, 8, comment)) {
-    _data(_scope[1], comment.text);
-
-    _setConditionalRenderer(_scope, 4, comment.comments ? _ifBody : null);
-
-    _queueInBranch(_scope, 4, _ifBody, _apply$ifBody_comment, 1, 8);
-  }
-}
-
-function _apply$forBody_path(_scope, path = _scope._[5]) {
-  _queue(_scope, _apply$forBodyWith_path_i, 5);
-}
-
-function _apply$forBody(_scope) {
-  _apply$forBody_open(_scope, true);
-
-  _queue(_scope, _apply$forBody_path, 0);
-}
-
-function _apply_path(_scope, path) {
-  if (_write(_scope, 5, path)) {
-    _queueForEach(_scope, 0, _apply$forBody_path, 1, 3);
-  }
-}
-
-function _apply_comments(_scope, comments) {
-  if (_write(_scope, 4, comments)) {
-    _setLoopOf(_scope, 0, comments, _forBody, null, _apply$forBody_comment);
-  }
-}
-
-export const applyAttrs = function (_scope, {
-  comments,
-  path = "c"
-}) {
-  _apply_comments(_scope, comments);
-
-  _apply_path(_scope, path);
+const _setup$forBody = _scope => {
+  _setSource(_scope, _open$forBody, true);
 };
-export { _apply_comments, _apply_path };
-export const template = "<ul></ul>";
-export const walks =
-/* get, skip(3), over(1) */
-" +b";
-export const apply = function () {};
 
 const _forBody = _createRenderer("<li><span> </span><button> </button><!></li>",
-/* get, next(2), get, out(1), get, next(1), get, out(1), replace, skip(3) */
-" E l D l%+", _apply$forBody),
-      _ifBody = _createRenderer(`${_comments_template}`,
-/* beginChild(0), _comments_walks, endChild */
-`/${_comments_walks}&`, _apply$ifBody);
+/* get, next(2), get, out(1), get, next(1), get, out(1), replace, skip(5) */
+" E l D l%-", _setup$forBody, [_path$forBody]);
 
-export default _createRenderFn(template, walks, apply, applyAttrs);
+const _for = _loop(0, 1, _forBody, [_comment$forBody, _i$forBody], (_scope, [comment, i]) => {
+  _setSource(_scope, _comment$forBody, comment);
+
+  _setSource(_scope, _i$forBody, i);
+}, (_scope, comments = _scope[7]) => [comments, null]);
+
+const _path = _source(8, [_inLoopScope(_path$forBody, 0)]);
+
+const _comments = _source(7, [_for]);
+
+export const attrs = _destructureSources([_comments, _path], (_scope, {
+  comments,
+  path = "c"
+}) => {
+  _setSource(_scope, _comments, comments);
+
+  _setSource(_scope, _path, path);
+});
+export { _comments as _apply_comments, _path as _apply_path };
+export const template = "<ul></ul>";
+export const walks =
+/* get, skip(6), over(1) */
+" .b";
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

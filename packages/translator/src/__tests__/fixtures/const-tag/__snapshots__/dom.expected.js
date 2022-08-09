@@ -1,26 +1,18 @@
-import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, derivation as _derivation, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_y(_scope, y) {
-  if (_write(_scope, 3, y)) {
-    _data(_scope[1], y);
-  }
-}
+const _y = _derivation(3, 1, [], _scope => 1, (_scope, y) => _data(_scope[1], y));
 
-function _apply_x(_scope, x) {
-  if (_write(_scope, 2, x)) {
-    _data(_scope[0], x);
-  }
-}
+const _x = _derivation(2, 1, [], _scope => 1, (_scope, x) => _data(_scope[0], x));
 
-function _apply(_scope) {
-  _apply_x(_scope, 1);
+const _setup = _scope => {
+  _notifySignal(_scope, _x);
 
-  _apply_y(_scope, 1);
-}
+  _notifySignal(_scope, _y);
+};
 
 export const template = "<div> </div><!>";
 export const walks =
 /* next(1), get, out(1), replace, over(1) */
 "D l%b";
-export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

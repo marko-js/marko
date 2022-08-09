@@ -1,32 +1,27 @@
-import { queue as _queue, on as _on, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _onclick = function (_scope) {
   const clickCount = _scope[1];
 
-  _queue(_scope, _apply_clickCount, 0, clickCount + 1);
+  _queueSource(_scope, _clickCount, clickCount + 1);
 };
 
-function _hydrate_clickCount(_scope, clickCount = _scope[1]) {
+const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount", _scope => {
+  const clickCount = _scope[1];
   document.getElementById("button").textContent = clickCount;
 
   _on(_scope[0], "click", _bind(_scope, _onclick));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount", _hydrate_clickCount);
+const _clickCount = _source(1, [], (_scope, clickCount) => _queueHydrate(_scope, _hydrate_clickCount));
 
-function _apply_clickCount(_scope, clickCount) {
-  if (_write(_scope, 1, clickCount)) {
-    _queueHydrate(_scope, _hydrate_clickCount);
-  }
-}
-
-function _apply(_scope) {
-  _apply_clickCount(_scope, 0);
-}
+const _setup = _scope => {
+  _setSource(_scope, _clickCount, 0);
+};
 
 export const template = "<div><button id=button>0</button></div>";
 export const walks =
 /* next(1), get, out(1) */
 "D l";
-export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

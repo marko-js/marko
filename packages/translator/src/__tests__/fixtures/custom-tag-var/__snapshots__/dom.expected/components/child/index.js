@@ -4,6 +4,6 @@ var _return;
 return _return;
 export const template = "";
 export const walks = "";
-export const apply = function () {};
+export const setup = function () {};
 import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export default _createRenderFn(template, walks, apply);
+export default _createRenderFn(template, walks, setup);

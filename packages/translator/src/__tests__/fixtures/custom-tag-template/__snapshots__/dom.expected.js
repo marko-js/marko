@@ -1,17 +1,19 @@
-import { apply as _hello, applyAttrs as _hello_attrs, template as _hello_template, walks as _hello_walks } from "./hello.marko";
+import { setup as _hello, attrs as _hello_attrs, template as _hello_template, walks as _hello_walks } from "./hello.marko";
+import { setSource as _setSource, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply(_scope) {
+const _setup = _scope => {
   _hello(_scope[0]);
 
-  _hello_attrs(_scope[0], {
+  _setSource(_scope[0], _hello_attrs, {
     name: "Frank"
   });
-}
+
+  _notifySignal(_scope, _hello_attrs);
+};
 
 export const template = `${_hello_template}`;
 export const walks =
 /* beginChild(0), _hello_walks, endChild */
 `/${_hello_walks}&`;
-export const apply = _apply;
-import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

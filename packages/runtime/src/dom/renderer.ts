@@ -14,8 +14,8 @@ const enum NodeType {
 export type Renderer<S extends Scope = Scope> = {
   ___template: string;
   ___walks: string | undefined;
-  ___render: RenderFn<S> | undefined;
-  ___closureSignals: Signal[],
+  ___setup: SetupFn<S> | undefined;
+  ___closureSignals: Signal[];
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
@@ -24,7 +24,7 @@ export type Renderer<S extends Scope = Scope> = {
 };
 
 type Input = Record<string, unknown>;
-type RenderFn<S extends Scope = Scope> = (scope: S) => void;
+type SetupFn<S extends Scope = Scope> = (scope: S) => void;
 type RenderResult<I extends Input> = {
   update: (input: I) => void;
   destroy: () => void;
@@ -50,8 +50,8 @@ export function initRenderer<S extends Scope = Scope>(
     dom.nodeType === NodeType.DocumentFragment
       ? dom.lastChild!
       : (dom as ChildNode);
-  if (renderer.___render) {
-    renderer.___render(scope);
+  if (renderer.___setup) {
+    renderer.___setup(scope);
   }
   if (renderer.___dynamicStartNodeOffset !== undefined) {
     scope.___startNode = renderer.___dynamicStartNodeOffset;
@@ -65,7 +65,7 @@ export function initRenderer<S extends Scope = Scope>(
 export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
-  render?: RenderFn<S>,
+  setup?: SetupFn<S>,
   attrs?: Signal,
   hasUserEffects?: 0 | 1,
   dynamicStartNodeOffset?: number,
@@ -74,7 +74,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   const renderer = createRenderer<S>(
     template,
     walks,
-    render,
+    setup,
     [],
     hasUserEffects,
     dynamicStartNodeOffset,
@@ -111,7 +111,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
 export function createRenderer<S extends Scope>(
   template: string,
   walks?: string,
-  render?: RenderFn<S>,
+  setup?: SetupFn<S>,
   closureSignals: Signal[] = [],
   hasUserEffects: 0 | 1 = 0,
   dynamicStartNodeOffset?: number,
@@ -120,7 +120,7 @@ export function createRenderer<S extends Scope>(
   return {
     ___template: template,
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
-    ___render: render,
+    ___setup: setup,
     ___clone: _clone,
     ___closureSignals: closureSignals,
     ___hasUserEffects: hasUserEffects,

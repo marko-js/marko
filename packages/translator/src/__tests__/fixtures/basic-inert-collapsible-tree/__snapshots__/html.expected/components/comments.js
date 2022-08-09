@@ -40,7 +40,7 @@ const _renderer = ({
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
 
     _writeHydrateScope(_scope, {
-      11: open
+      13: open
     });
 
     _maybeFlush();

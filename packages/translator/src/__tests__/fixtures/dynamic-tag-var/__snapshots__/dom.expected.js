@@ -12,34 +12,22 @@ const _tagName2 = show && "div";
 
 const el1 = _dynamicTag(_scope, _tagName2, null);
 
-import { dynamicTag as _dynamicTag, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTag as _dynamicTag, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_dynamic(_scope, dynamic) {
-  if (_write(_scope, 4, dynamic)) {}
-}
+const _dynamic = _source(4, []);
 
-function _apply_show(_scope, show) {
-  if (_write(_scope, 3, show)) {}
-}
+const _show = _source(3, []);
 
-function _apply_data2(_scope, data2) {
-  if (_write(_scope, 2, data2)) {}
-}
-
-function _apply_data(_scope, data1) {
-  if (_write(_scope, 1, data1)) {}
-}
-
-export const applyAttrs = function (_scope, {
+export const attrs = _destructureSources([_show, _dynamic], (_scope, {
   show,
   dynamic
-}) {
-  _apply_show(_scope, show);
+}) => {
+  _setSource(_scope, _show, show);
 
-  _apply_dynamic(_scope, dynamic);
-};
-export { _apply_show, _apply_dynamic };
+  _setSource(_scope, _dynamic, dynamic);
+});
+export { _show as _apply_show, _dynamic as _apply_dynamic };
 export const template = "";
 export const walks = "";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

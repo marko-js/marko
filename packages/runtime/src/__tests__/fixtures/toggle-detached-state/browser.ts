@@ -32,7 +32,6 @@ type Input = typeof inputs[number];
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  conditional_scope = 1,
   visible = 6,
   value = 8,
 }
@@ -46,7 +45,7 @@ type ComponentScope = Scope<{
 
 const enum INDEX_BRANCH0 {
   text = 0,
-  value = 1
+  value = 1,
 }
 
 type Branch0Scope = Scope<{
@@ -65,36 +64,34 @@ export const template = `<div><!></div>`;
 export const walks = next(1) + get + over(1);
 
 const value$if = closure(
-  INDEX_BRANCH0.value,
-  1, 
-  INDEX.value, 
-  [], 
+  1,
+  INDEX.value,
+  [],
   (scope: Branch0Scope, value: { name: string }) => {
     data(scope[INDEX_BRANCH0.text], value.name);
   }
 );
 
-const _if = conditional(
-  INDEX.conditional, 
-  1, 
-  (scope: ComponentScope) => scope[INDEX.visible] ? _ifBody : undefined
+const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) =>
+  scope[INDEX.visible] ? _ifBody : undefined
 );
 
 export const value_subscribers = [
-  inConditionalScope(value$if, (scope: ComponentScope) => scope[INDEX.conditional_scope])
+  inConditionalScope(value$if, INDEX.conditional),
 ];
 
-export const visible_subscribers = [
-  _if,
-];
+export const visible_subscribers = [_if];
 
 const _value = source(INDEX.value, value_subscribers);
 const _visible = source(INDEX.visible, visible_subscribers);
 
-export const attrs = destructureSources([_value, _visible], (scope: ComponentScope, { visible, value }: Input) => {
-  setSource(scope, _value, value);
-  setSource(scope, _visible, visible);
-});
+export const attrs = destructureSources(
+  [_value, _visible],
+  (scope: ComponentScope, { visible, value }: Input) => {
+    setSource(scope, _value, value);
+    setSource(scope, _visible, visible);
+  }
+);
 
 export default createRenderFn(template, walks, undefined, attrs);
 

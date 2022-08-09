@@ -1,30 +1,22 @@
-import { queue as _queue, on as _on, data as _data, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data2, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-const _temp = function (_scope) {
-  _queue(_scope, _apply_data, 0, 1);
+const _data = _source(2, [], (_scope, data) => _data2(_scope[1], data));
+
+const _temp2 = function (_scope) {
+  _queueSource(_scope, _data, 1);
 };
 
-function _hydrate(_scope) {
-  _on(_scope[0], "click", _bind(_scope, _temp));
-}
+const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0", _scope => _on(_scope[0], "click", _bind(_scope, _temp2)));
 
-_register("packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0", _hydrate);
+const _setup = _scope => {
+  _setSource(_scope, _data, 0);
 
-function _apply_data(_scope, data) {
-  if (_write(_scope, 2, data)) {
-    _data(_scope[1], data);
-  }
-}
-
-function _apply(_scope) {
-  _apply_data(_scope, 0);
-
-  _queueHydrate(_scope, _hydrate);
-}
+  _queueHydrate(_scope, _hydrate_setup);
+};
 
 export const template = "<button> </button>";
 export const walks =
 /* get, next(1), get, out(1) */
 " D l";
-export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

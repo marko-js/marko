@@ -26,13 +26,12 @@ const enum INDEX {
   button = 0,
   comment = 1,
   conditional = 1,
-  conditional_scope = 2,
   show = 7,
   show_mark = 8,
   show_stale = 9,
   message = 10,
   message_mark = 11,
-  message_stale = 12
+  message_stale = 12,
 }
 
 type ComponentScope = Scope<{
@@ -47,13 +46,13 @@ const enum INDEX_BRANCH0 {
   text = 0,
   message = 1,
   message_mark = 2,
-  message_stale = 3
+  message_stale = 3,
 }
 
 type Branch0Scope = Scope<{
   _: ComponentScope;
   [INDEX_BRANCH0.text]: Text;
-  [INDEX_BRANCH0.message]: string
+  [INDEX_BRANCH0.message]: string;
 }>;
 
 // <let/show = true/>
@@ -78,12 +77,21 @@ const _onclick = (scope: ComponentScope) => {
   queueSource(scope, _show, !scope[INDEX.show]);
 };
 
-const _message$if = closure(INDEX_BRANCH0.message, 1, INDEX.message, [], (scope: Branch0Scope, message: string) => {
-  data(scope[INDEX_BRANCH0.text], message);
-})
-const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) => scope[INDEX.show] ? _ifBody : undefined);
-const _show = source(INDEX.show, [_if])
-const _message = source(INDEX.message, [inConditionalScope(_message$if, s => s[INDEX.conditional_scope])])
+const _message$if = closure(
+  1,
+  INDEX.message,
+  [],
+  (scope: Branch0Scope, message: string) => {
+    data(scope[INDEX_BRANCH0.text], message);
+  }
+);
+const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) =>
+  scope[INDEX.show] ? _ifBody : undefined
+);
+const _show = source(INDEX.show, [_if]);
+const _message = source(INDEX.message, [
+  inConditionalScope(_message$if, INDEX.conditional),
+]);
 
 export default createRenderFn(template, walks, setup);
 

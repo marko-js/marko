@@ -23,6 +23,7 @@ import trackReferences, {
 } from "../../util/references";
 import {
   addStatement,
+  getSignal,
   writeHTMLHydrateStatements,
 } from "../../util/apply-hydrate";
 import { reserveScope, ReserveType } from "../../util/reserve";
@@ -94,7 +95,7 @@ export default {
       const write = writer.writeTo(tag);
       const binding = node.extra.reserve!;
       let tagIdentifier: t.Expression;
-      let tagAttrsIdentifier: t.Expression | undefined;
+      let tagAttrsIdentifier: t.Identifier | undefined;
 
       if (isHTML) {
         writer.flushInto(tag);
@@ -122,12 +123,12 @@ export default {
         if (isHTML) {
           tagIdentifier = importDefault(file, relativePath, tagName);
         } else {
-          tagIdentifier = importNamed(file, relativePath, "apply", tagName);
+          tagIdentifier = importNamed(file, relativePath, "setup", tagName);
           if (childProgram.extra.attrs) {
             tagAttrsIdentifier = importNamed(
               file,
               relativePath,
-              "applyAttrs",
+              "attrs",
               `${tagName}_attrs`
             );
           }
@@ -235,15 +236,21 @@ export default {
             )
           );
           if (attrsObject && tagAttrsIdentifier) {
+            getSignal(
+              tagSectionId,
+              (tag.node.extra.attrsReferences as ReferenceGroup).references
+            ).subscribers.push(tagAttrsIdentifier);
             addStatement(
               "apply",
               tagSectionId,
               tag.node.extra.attrsReferences as ReferenceGroup,
               t.expressionStatement(
-                t.callExpression(tagAttrsIdentifier, [
+                callRuntime(
+                  "setSource",
                   callRead(binding, tagSectionId),
-                  attrsObject,
-                ])
+                  t.identifier(tagAttrsIdentifier.name),
+                  attrsObject
+                )
               )
             );
           }

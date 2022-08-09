@@ -1,9 +1,11 @@
 export {
   conditional,
   conditionalOnlyChild,
+  inConditionalScope,
   loop,
   computeLoopFromTo,
   computeLoopIn,
+  inLoopScope,
 } from "./control-flow";
 
 export {
@@ -35,5 +37,12 @@ export type { Scope } from "../common/types";
 
 export { createRenderer, createRenderFn } from "./renderer";
 
-export { setSource, source, destructureSources, derivation, closure, inConditionalScope } from "./signals";
-
+export {
+  setSource,
+  notifySignal,
+  source,
+  destructureSources,
+  derivation,
+  subscriber,
+  closure,
+} from "./signals";

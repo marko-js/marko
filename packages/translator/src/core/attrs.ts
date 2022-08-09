@@ -7,6 +7,7 @@ import {
 import { ReserveType } from "../util/reserve";
 import { getOrCreateSectionId } from "../util/sections";
 import { currentProgramPath } from "../visitors/program";
+import { initSource } from "../util/apply-hydrate";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -43,6 +44,13 @@ export default {
     }
   },
   translate(tag) {
+    const bindings = currentProgramPath.node.extra?.attrs?.bindings;
+    if (bindings) {
+      for (const key in bindings) {
+        initSource(bindings[key].extra!.reserve!);
+      }
+    }
+
     tag.remove();
   },
   attributes: {},
@@ -68,7 +76,6 @@ function getPathsToId(varNode:t.Identifier | t.ObjectPattern) {
         paths[property.key.name] = getPathsToId(property.value);
       }
     }
-    debugger;
     return paths;
   }
 }

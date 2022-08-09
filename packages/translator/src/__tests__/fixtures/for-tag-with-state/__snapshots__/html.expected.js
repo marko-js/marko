@@ -21,7 +21,7 @@ const _renderer = input => {
 
   const arrB = [1, 2, 3];
 
-  _write(`${_markHydrateNode(_scope, 4)}`);
+  _write(`${_markHydrateNode(_scope, 7)}`);
 
   let _i2 = 0;
 

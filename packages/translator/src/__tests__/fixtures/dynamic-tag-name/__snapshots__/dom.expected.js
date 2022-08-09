@@ -11,61 +11,37 @@ const _tagName4 = showTagA && tagA;
 
 const _tagName5 = largeHeading || "h2";
 
-import { dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTag as _dynamicTag, createRenderer as _createRenderer, source as _source, derivation as _derivation, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_other(_scope, other) {
-  if (_write(_scope, 19, other)) {}
-}
+const _dynamicBody2 = _createRenderer("Body content", "");
 
-function _apply_level(_scope, level) {
-  if (_write(_scope, 18, level)) {}
-}
+const _other = _source(19, []);
 
-function _apply_tag(_scope, tag) {
-  if (_write(_scope, 17, tag)) {}
-}
+const _level = _source(18, []);
 
-function _apply_isLarge(_scope, isLarge) {
-  if (_write(_scope, 16, isLarge)) {
-    _apply_largeHeading(_scope, isLarge && "h1");
-  }
-}
+const _tag = _source(17, []);
 
-function _apply_showTagA(_scope, showTagA) {
-  if (_write(_scope, 15, showTagA)) {}
-}
+const _isLarge = _source(16, [_largeHeading]);
 
-function _apply_show(_scope, show) {
-  if (_write(_scope, 14, show)) {
-    _apply_tagConstB(_scope, show ? "div" : null);
-  }
-}
+const _showTagA = _source(15, []);
 
-function _apply_x(_scope, x) {
-  if (_write(_scope, 13, x)) {}
-}
+const _show = _source(14, [_tagConstB]);
 
-function _apply_renderBody(_scope, renderBody) {
-  if (_write(_scope, 12, renderBody)) {}
-}
+const _x = _source(13, []);
 
-function _apply_tagConstB(_scope, tagConstB) {
-  if (_write(_scope, 11, tagConstB)) {}
-}
+const _renderBody = _source(12, []);
 
-function _apply_tagConstA(_scope, tagConstA) {
-  if (_write(_scope, 10, tagConstA)) {}
-}
+const _tagConstB = _derivation(11, 1, [], (_scope, show = _scope[14]) => show ? "div" : null);
 
-function _apply_largeHeading(_scope, largeHeading) {
-  if (_write(_scope, 9, largeHeading)) {}
-}
+const _tagConstA = _derivation(10, 1, [], _scope => "a");
 
-function _apply(_scope) {
-  _apply_tagConstA(_scope, "a");
-}
+const _largeHeading = _derivation(9, 1, [], (_scope, isLarge = _scope[16]) => isLarge && "h1");
 
-export const applyAttrs = function (_scope, {
+const _setup = _scope => {
+  _notifySignal(_scope, _tagConstA);
+};
+
+export const attrs = _destructureSources([_renderBody, _x, _show, _showTagA, _isLarge, _tag, _level, _other], (_scope, {
   renderBody,
   x,
   show,
@@ -74,28 +50,25 @@ export const applyAttrs = function (_scope, {
   tag,
   level,
   other
-}) {
-  _apply_renderBody(_scope, renderBody);
+}) => {
+  _setSource(_scope, _renderBody, renderBody);
 
-  _apply_x(_scope, x);
+  _setSource(_scope, _x, x);
 
-  _apply_show(_scope, show);
+  _setSource(_scope, _show, show);
 
-  _apply_showTagA(_scope, showTagA);
+  _setSource(_scope, _showTagA, showTagA);
 
-  _apply_isLarge(_scope, isLarge);
+  _setSource(_scope, _isLarge, isLarge);
 
-  _apply_tag(_scope, tag);
+  _setSource(_scope, _tag, tag);
 
-  _apply_level(_scope, level);
+  _setSource(_scope, _level, level);
 
-  _apply_other(_scope, other);
-};
-export { _apply_renderBody, _apply_x, _apply_show, _apply_showTagA, _apply_isLarge, _apply_tag, _apply_level, _apply_other };
+  _setSource(_scope, _other, other);
+});
+export { _renderBody as _apply_renderBody, _x as _apply_x, _show as _apply_show, _showTagA as _apply_showTagA, _isLarge as _apply_isLarge, _tag as _apply_tag, _level as _apply_level, _other as _apply_other };
 export const template = "";
 export const walks = "";
-export const apply = _apply;
-
-const _dynamicBody2 = _createRenderer("Body content", "", null);
-
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup, attrs);

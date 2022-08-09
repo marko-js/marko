@@ -1,61 +1,48 @@
-import { queue as _queue, on as _on, attr as _attr, data as _data, setLoopOf as _setLoopOf, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, queueForEach as _queueForEach, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, attr as _attr, data as _data, subscriber as _subscriber, inLoopScope as _inLoopScope, closure as _closure, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderer as _createRenderer, loop as _loop, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+const _expr_selected_num$forBody = _subscriber([], 2, (_scope, selected = _scope._[7], num = _scope[2]) => {
+  _attr(_scope[0], "data-selected", selected === num);
+
+  _attr(_scope[0], "data-multiple", num % selected === 0);
+});
+
+const _selected$forBody = _closure(1, 7, [_expr_selected_num$forBody]);
 
 const _onclick = function (_scope) {
   const num = _scope[2];
 
-  _queue(_scope._, _apply_selected, 0, num);
+  _queueSource(_scope._, _selected, num);
 };
 
-function _hydrate$forBody_num(_scope, num = _scope[2]) {
+const _hydrate_num$forBody = _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => {
+  const num = _scope[2];
+
   _on(_scope[0], "click", _bind(_scope, _onclick));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _hydrate$forBody_num);
+const _num$forBody = _source(2, [_expr_selected_num$forBody], (_scope, num) => {
+  _data(_scope[1], num);
 
-function _apply$forBodyWith_selected_num(_scope, selected = _scope._[4], num = _scope[2]) {
-  _attr(_scope[0], "data-selected", selected === num);
-
-  _attr(_scope[0], "data-multiple", num % selected === 0);
-}
-
-function _apply$forBody_num(_scope, num) {
-  if (_write(_scope, 2, num)) {
-    _data(_scope[1], num);
-
-    _queueHydrate(_scope, _hydrate$forBody_num);
-
-    _queue(_scope, _apply$forBodyWith_selected_num, 2);
-  }
-}
-
-function _apply$forBody_selected(_scope, selected = _scope._[4]) {
-  _queue(_scope, _apply$forBodyWith_selected_num, 2);
-}
-
-function _apply$forBody(_scope) {
-  _queue(_scope, _apply$forBody_selected, 0);
-}
-
-function _apply_selected(_scope, selected) {
-  if (_write(_scope, 4, selected)) {
-    _queueForEach(_scope, 0, _apply$forBody_selected, 1, 2);
-  }
-}
-
-function _apply(_scope) {
-  _apply_selected(_scope, 0);
-
-  _setLoopOf(_scope, 0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], _forBody, null, _apply$forBody_num);
-}
-
-export const template = "<!>";
-export const walks =
-/* replace, skip(3), over(1) */
-"%+b";
-export const apply = _apply;
+  _queueHydrate(_scope, _hydrate_num$forBody);
+});
 
 const _forBody = _createRenderer("<button> </button>",
 /* get, next(1), get */
-" D ", _apply$forBody);
+" D ", null, [_selected$forBody]);
 
-export default _createRenderFn(template, walks, apply);
+const _for = _loop(0, 1, _forBody, [_num$forBody], (_scope, [num]) => _setSource(_scope, _num$forBody, num), _scope => [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], null]);
+
+const _selected = _source(7, [_inLoopScope(_selected$forBody, 0)]);
+
+const _setup = _scope => {
+  _setSource(_scope, _selected, 0);
+
+  _notifySignal(_scope, _for);
+};
+
+export const template = "<!>";
+export const walks =
+/* replace, skip(6), over(1) */
+"%.b";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

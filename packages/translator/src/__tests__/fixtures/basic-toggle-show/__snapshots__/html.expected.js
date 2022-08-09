@@ -13,12 +13,12 @@ const _renderer = input => {
     _write("Hello!");
   }
 
-  _write(`${_markHydrateNode(_scope, 4)}<button>Toggle</button></div>`);
+  _write(`${_markHydrateNode(_scope, 6)}<button>Toggle</button></div>`);
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show");
 
   _writeHydrateScope(_scope, {
-    5: show
+    7: show
   });
 };
 

@@ -1,58 +1,46 @@
-import { data as _data, setLoopOf as _setLoopOf, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, setSource as _setSource, source as _source, createRenderer as _createRenderer, loop as _loop, derivation as _derivation, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply$forBody2_i(_scope, i) {
-  if (_write(_scope, 3, i)) {
-    _data(_scope[0], i);
-  }
-}
+const _i$forBody2 = _source(3, [], (_scope, i) => _data(_scope[0], i));
 
-function _apply$forBody2_val(_scope, val) {
-  if (_write(_scope, 2, val)) {
-    _data(_scope[1], val);
-  }
-}
+const _val$forBody2 = _source(2, [], (_scope, val) => _data(_scope[1], val));
 
-function _apply$forBody_i(_scope, i) {
-  if (_write(_scope, 3, i)) {
-    _data(_scope[0], i);
-  }
-}
+const _forBody2 = _createRenderer("<div><!>: <!></div>",
+/* next(1), replace, over(2), replace */
+"D%c%");
 
-function _apply$forBody_val(_scope, val) {
-  if (_write(_scope, 2, val)) {
-    _data(_scope[1], val);
-  }
-}
+const _i$forBody = _source(3, [], (_scope, i) => _data(_scope[0], i));
 
-function _apply_arrB(_scope, arrB) {
-  if (_write(_scope, 9, arrB)) {
-    _setLoopOf(_scope, 4, arrB, _forBody2, null, _apply$forBody2_val);
-  }
-}
-
-function _apply_arrA(_scope, arrA) {
-  if (_write(_scope, 8, arrA)) {
-    _setLoopOf(_scope, 0, arrA, _forBody, null, _apply$forBody_val);
-  }
-}
-
-function _apply(_scope) {
-  _apply_arrA(_scope, [1, 2, 3]);
-
-  _apply_arrB(_scope, [1, 2, 3]);
-}
-
-export const template = "<!><!>";
-export const walks =
-/* replace, skip(3), over(1), replace, skip(3), over(1) */
-"%+b%+b";
-export const apply = _apply;
+const _val$forBody = _source(2, [], (_scope, val) => _data(_scope[1], val));
 
 const _forBody = _createRenderer("<div><!>: <!></div>",
 /* next(1), replace, over(2), replace */
-"D%c%", null),
-      _forBody2 = _createRenderer("<div><!>: <!></div>",
-/* next(1), replace, over(2), replace */
-"D%c%", null);
+"D%c%");
 
-export default _createRenderFn(template, walks, apply);
+const _for2 = _loop(7, 1, _forBody2, [_val$forBody2, _i$forBody2], (_scope, [val, i]) => {
+  _setSource(_scope, _val$forBody2, val);
+
+  _setSource(_scope, _i$forBody2, i);
+}, (_scope, arrB = _scope[15]) => [arrB, null]);
+
+const _for = _loop(0, 1, _forBody, [_val$forBody, _i$forBody], (_scope, [val, i]) => {
+  _setSource(_scope, _val$forBody, val);
+
+  _setSource(_scope, _i$forBody, i);
+}, (_scope, arrA = _scope[14]) => [arrA, null]);
+
+const _arrB = _source(15, [_for2]);
+
+const _arrA = _derivation(14, 1, [_for], _scope => [1, 2, 3]);
+
+const _setup = _scope => {
+  _setSource(_scope, _arrB, [1, 2, 3]);
+
+  _notifySignal(_scope, _arrA);
+};
+
+export const template = "<!><!>";
+export const walks =
+/* replace, skip(6), over(1), replace, skip(6), over(1) */
+"%.b%.b";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

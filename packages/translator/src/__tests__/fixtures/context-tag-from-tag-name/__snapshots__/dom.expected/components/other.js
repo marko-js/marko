@@ -2,17 +2,15 @@ _pushContext("packages/translator/src/__tests__/fixtures/context-tag-from-tag-na
 
 _popContext();
 
-import { pushContext as _pushContext, dynamicTag as _dynamicTag, popContext as _popContext, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { pushContext as _pushContext, dynamicTag as _dynamicTag, popContext as _popContext, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_input(_scope, input) {
-  if (_write(_scope, 0, input)) {}
-}
+const _input = _source(0, []);
 
-export const applyAttrs = function (_scope, input) {
-  _apply_input(_scope, input);
-};
-export { _apply_input };
+export const attrs = _destructureSources([_input], (_scope, input) => {
+  _setSource(_scope, _input, input);
+});
+export { _input as _apply_input };
 export const template = "";
 export const walks = "";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

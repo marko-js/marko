@@ -13,50 +13,33 @@ _col.push({
 });
 
 import { write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-import { apply as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
+import { setup as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
 
-function _apply$rowBody_row(_scope, row = _scope._[0]) {}
+const _rowBody = _createRenderer("", "");
 
-function _apply$forBody3_row(_scope, row) {
-  if (_write(_scope, 0, row)) {}
-}
+const _forBody3 = _createRenderer("", "");
 
-function _apply$colBody_col(_scope, col = _scope._[0]) {}
+const _colBody = _createRenderer("", "");
 
-function _apply$forBody2_i(_scope, i) {
-  if (_write(_scope, 1, i)) {}
-}
+const _forBody2 = _createRenderer("", "");
 
-function _apply$forBody2_col(_scope, col) {
-  if (_write(_scope, 0, col)) {}
-}
+const _elseBody = _createRenderer("", "");
 
-function _apply$elseBody_color(_scope, color = _scope._[4]) {}
+const _ifBody = _createRenderer("", "");
 
-function _apply$ifBody_color(_scope, color = _scope._[4]) {}
+const _forBody = _createRenderer("", "");
 
-function _apply$forBody_color(_scope, color) {
-  if (_write(_scope, 4, color)) {}
-}
+const _listBody = _createRenderer("", "");
 
-function _apply(_scope) {
+const _helloBody = _createRenderer("", "");
+
+const _setup = _scope => {
   _hello(_scope[0]);
-}
+};
 
 export const template = `${_hello_template}`;
 export const walks =
 /* beginChild(0), _hello_walks, endChild */
 `/${_hello_walks}&`;
-export const apply = _apply;
-
-const _helloBody = _createRenderer("", "", null),
-      _listBody = _createRenderer("", "", null),
-      _forBody = _createRenderer("", "", null),
-      _ifBody = _createRenderer("", "", null),
-      _elseBody = _createRenderer("", "", null),
-      _forBody2 = _createRenderer("", "", null),
-      _colBody = _createRenderer("", "", null),
-      _forBody3 = _createRenderer("", "", null),
-      _rowBody = _createRenderer("", "", null);
-
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

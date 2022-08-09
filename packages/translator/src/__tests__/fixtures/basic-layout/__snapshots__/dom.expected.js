@@ -1,32 +1,27 @@
-import { data as _data, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-import { apply as _layout, applyAttrs as _layout_attrs, template as _layout_template, walks as _layout_walks } from "./components/layout.marko";
+import { data as _data, closure as _closure, createRenderer as _createRenderer, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setup as _layout, attrs as _layout_attrs, template as _layout_template, walks as _layout_walks } from "./components/layout.marko";
 
-function _apply$layoutBody_name(_scope, name = _scope._[1]) {
-  _data(_scope[0], name);
-}
+const _name$layoutBody = _closure(1, 1, [], (_scope, name) => _data(_scope[0], name));
 
-function _apply_name(_scope, name) {
-  if (_write(_scope, 1, name)) {}
-}
+const _layoutBody = _createRenderer("<h1>Hello <!></h1>",
+/* next(1), over(1), replace */
+"Db%", null, [_name$layoutBody]);
 
-function _apply(_scope) {
+const _name = _source(1, []);
+
+const _setup = _scope => {
   _layout(_scope[0]);
-}
-
-export const applyAttrs = function (_scope, {
-  name
-}) {
-  _apply_name(_scope, name);
 };
-export { _apply_name };
+
+export const attrs = _destructureSources([_name], (_scope, {
+  name
+}) => {
+  _setSource(_scope, _name, name);
+});
+export { _name as _apply_name };
 export const template = `${_layout_template}`;
 export const walks =
 /* beginChild(0), _layout_walks, endChild */
 `/${_layout_walks}&`;
-export const apply = _apply;
-
-const _layoutBody = _createRenderer("<h1>Hello <!></h1>",
-/* next(1), over(1), replace */
-"Db%", null);
-
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup, attrs);

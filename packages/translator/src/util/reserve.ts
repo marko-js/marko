@@ -109,5 +109,5 @@ export function compareReserves(a: Reserve, b: Reserve) {
   return a.sectionId - b.sectionId || a.type - b.type || a.id - b.id;
 }
 
-export const { insert: insertReserve } =
+export const { insert: insertReserve, count: countReserves } =
   createSortedCollection(compareReserves);

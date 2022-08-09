@@ -9,7 +9,9 @@ export type HydrateInstance = [
 ];
 
 export type Scope<
-  T extends { [x: string | number]: unknown } = { [x: string | number]: unknown }
+  T extends { [x: string | number]: unknown } = {
+    [x: string | number]: unknown;
+  }
 > = [...unknown[]] & {
   ___id: number;
   ___attrs: unknown;
@@ -32,4 +34,10 @@ export const enum HydrateSymbols {
   REPLACEMENT_ID = "",
   VAR_HYDRATE = "$h",
   VAR_REORDER_RUNTIME = "$r",
+}
+
+export const enum AccessorChars {
+  DYNAMIC = "?",
+  MARK = "#",
+  STALE = "&",
 }

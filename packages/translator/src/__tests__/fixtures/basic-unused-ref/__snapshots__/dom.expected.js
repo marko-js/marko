@@ -1,44 +1,38 @@
-import { queue as _queue, on as _on, data as _data, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, notifySignal as _notifySignal, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _onclick = function (_scope) {
   const clickCount = _scope[4];
 
-  _queue(_scope, _apply_clickCount, 2, clickCount + 1);
+  _queueSource(_scope, _clickCount, clickCount + 1);
 };
 
-function _hydrate_clickCount(_scope, clickCount = _scope[4]) {
+const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _scope => {
+  const clickCount = _scope[4];
+
   _on(_scope[0], "click", _bind(_scope, _onclick));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _hydrate_clickCount);
+const _clickCount = _source(4, [], (_scope, clickCount) => {
+  _data(_scope[1], clickCount);
 
-function _apply_clickCount(_scope, clickCount) {
-  if (_write(_scope, 4, clickCount)) {
-    _data(_scope[1], clickCount);
+  _queueHydrate(_scope, _hydrate_clickCount);
+});
 
-    _queueHydrate(_scope, _hydrate_clickCount);
-  }
-}
+const _unused_2 = _derivation(3, 1, [], _scope => 456);
 
-function _apply_unused_2(_scope, unused_2) {
-  if (_write(_scope, 3, unused_2)) {}
-}
+const _unused_ = _source(2, []);
 
-function _apply_unused_(_scope, unused_1) {
-  if (_write(_scope, 2, unused_1)) {}
-}
+const _setup = _scope => {
+  _setSource(_scope, _unused_, 123);
 
-function _apply(_scope) {
-  _apply_unused_(_scope, 123);
+  _setSource(_scope, _clickCount, 0);
 
-  _apply_unused_2(_scope, 456);
-
-  _apply_clickCount(_scope, 0);
-}
+  _notifySignal(_scope, _unused_2);
+};
 
 export const template = "<div><button> </button></div>";
 export const walks =
 /* next(1), get, next(1), get, out(2) */
 "D D m";
-export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

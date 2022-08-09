@@ -48,18 +48,18 @@ const _renderer = ({
 
   const _tagName3 = showTagA && tagA;
 
-  function _renderBody() {
+  function _renderBody2() {
     const _scope = _nextScopeId();
   }
 
   if (_tagName3) _tagName3({
     class: ["a", "b"],
     other: other
-  });else _renderBody();
+  });else _renderBody2();
 
   const _tagName4 = showTagA && tagA;
 
-  function _renderBody2() {
+  function _renderBody3() {
     const _scope = _nextScopeId();
 
     _write("Body content");
@@ -68,7 +68,7 @@ const _renderer = ({
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other
-  });else _renderBody2();
+  });else _renderBody3();
   (tag || tagA)({
     class: ["a", "b"],
     other: other,

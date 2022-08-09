@@ -71,5 +71,10 @@ export function createSortedCollection<V>(compare: (a: V, b: V) => number) {
         }
       }
     },
+    count(data: undefined | V | V[]) {
+      if (data === undefined) return 0;
+      if (!Array.isArray(data)) return 1;
+      return data.length;
+    },
   };
 }

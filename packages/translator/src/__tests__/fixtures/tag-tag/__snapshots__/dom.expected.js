@@ -1,23 +1,13 @@
 const MyTag = input => {};
 
-import { data as _data, dynamicTag as _dynamicTag, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-
-function _apply$tagBody_input(_scope, input) {
-  if (_write(_scope, 1, input)) {
-    _data(_scope[0], input.name);
-  }
-}
-
-function _apply_MyTag(_scope, MyTag) {
-  if (_write(_scope, 0, MyTag)) {}
-}
-
-export const template = "";
-export const walks = "";
-export const apply = function () {};
+import { data as _data, dynamicTag as _dynamicTag, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _input$tagBody = "SIGNAL NOT INITIALIZED";
 
 const _tagBody = _createRenderer("Hello <!>",
 /* over(1), replace */
-"b%", null);
+"b%");
 
-export default _createRenderFn(template, walks, apply);
+export const template = "";
+export const walks = "";
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup);

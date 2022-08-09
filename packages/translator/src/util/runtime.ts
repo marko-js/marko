@@ -3,22 +3,23 @@ import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import type { ReferenceGroup } from "./references";
 
 declare const MARKO_SRC: boolean;
+
+type Falsy = false | 0 | "" | null | undefined;
 
 export function importRuntime(name: string) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
 }
 
-export function callRuntime<A extends Parameters<typeof t.callExpression>[1]>(
+export function callRuntime(
   name:
     | keyof typeof import("@marko/runtime-fluurt/src/dom")
     | keyof typeof import("@marko/runtime-fluurt/src/html"),
-  ...args: A
+  ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
-  return t.callExpression(importRuntime(name as string), args.filter(Boolean));
+  return t.callExpression(importRuntime(name as string), filterArguments(args));
 }
 
 export function getHTMLRuntime() {
@@ -49,16 +50,15 @@ export function callRead(reference: Reserve, targetSectionId: number) {
 }
 
 export function callQueue(
-  { apply, index }: ReferenceGroup,
+  identifier: t.Identifier,
   reference: Reserve,
   value: t.Expression,
   targetSectionId: number
 ) {
   return callRuntime(
-    "queue",
+    "queueSource",
     getScopeExpression(reference, targetSectionId),
-    apply,
-    t.numericLiteral(index - 1),
+    identifier,
     value
   );
 }
@@ -70,4 +70,15 @@ function getScopeExpression(reference: Reserve, sectionId: number) {
     scope = t.memberExpression(scope, t.identifier("_"));
   }
   return scope;
+}
+
+function filterArguments<A>(args: (A | Falsy)[]) {
+  const filteredArgs = [];
+  for (let i = args.length; i--; ) {
+    const arg = args[i];
+    if (arg || filteredArgs.length) {
+      filteredArgs[i] = arg || t.nullLiteral();
+    }
+  }
+  return filteredArgs as A[];
 }

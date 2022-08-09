@@ -3,10 +3,7 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { getSectionId } from "../util/sections";
-import { addStatement } from "../util/apply-hydrate";
-import { getReferenceGroup } from "../util/references";
-import { scopeIdentifier } from "../visitors/program";
+import { initDerivation } from "../util/apply-hydrate";
 
 export default {
   translate(tag) {
@@ -41,37 +38,45 @@ export default {
     }
 
     if (isOutputDOM()) {
-      const sectionId = getSectionId(tag);
       const identifiers = Object.values(
         tag.get("var").getBindingIdentifiers()
       ) as t.Identifier[];
-      addStatement(
-        "apply",
-        sectionId,
-        defaultAttr.extra?.valueReferences,
-        identifiers.length === 1
-          ? t.expressionStatement(
-              t.callExpression(
-                getReferenceGroup(sectionId, identifiers[0].extra.reserve)
-                  .apply,
-                [scopeIdentifier, defaultAttr.value]
-              )
-            )
-          : [
-              t.variableDeclaration("const", [
-                t.variableDeclarator(node.var, defaultAttr.value),
-              ]),
-              ...identifiers.map((identifier) =>
-                t.expressionStatement(
-                  t.callExpression(
-                    getReferenceGroup(sectionId, identifier.extra.reserve)
-                      .apply,
-                    [t.identifier(identifier.name)]
-                  )
-                )
-              ),
-            ]
-      );
+      if (identifiers.length === 1) {
+        initDerivation(
+          identifiers[0].extra.reserve!,
+          defaultAttr.extra?.valueReferences?.references,
+          defaultAttr.value
+        );
+      }
+
+      // const sectionId = getSectionId(tag);
+      // addStatement(
+      //   "apply",
+      //   sectionId,
+      //   defaultAttr.extra?.valueReferences,
+      //   identifiers.length === 1
+      //     ? t.expressionStatement(
+      //         t.callExpression(
+      //           getReferenceGroup(sectionId, identifiers[0].extra.reserve)
+      //             .apply,
+      //           [scopeIdentifier, defaultAttr.value]
+      //         )
+      //       )
+      //     : [
+      //         t.variableDeclaration("const", [
+      //           t.variableDeclarator(node.var, defaultAttr.value),
+      //         ]),
+      //         ...identifiers.map((identifier) =>
+      //           t.expressionStatement(
+      //             t.callExpression(
+      //               getReferenceGroup(sectionId, identifier.extra.reserve)
+      //                 .apply,
+      //               [t.identifier(identifier.name)]
+      //             )
+      //           )
+      //         ),
+      //       ]
+      // );
     } else {
       translateVar(tag, defaultAttr.value);
     }

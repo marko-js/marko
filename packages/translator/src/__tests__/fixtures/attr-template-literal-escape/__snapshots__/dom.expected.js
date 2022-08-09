@@ -1,20 +1,16 @@
-import { attr as _attr, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { attr as _attr, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_name(_scope, name) {
-  if (_write(_scope, 1, name)) {
-    _attr(_scope[0], "foo", `Hello ${name}`);
-  }
-}
+const _name = _source(1, [], (_scope, name) => _attr(_scope[0], "foo", `Hello ${name}`));
 
-export const applyAttrs = function (_scope, {
+export const attrs = _destructureSources([_name], (_scope, {
   name
-}) {
-  _apply_name(_scope, name);
-};
-export { _apply_name };
+}) => {
+  _setSource(_scope, _name, name);
+});
+export { _name as _apply_name };
 export const template = "<div></div>";
 export const walks =
 /* get, over(1) */
 " b";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

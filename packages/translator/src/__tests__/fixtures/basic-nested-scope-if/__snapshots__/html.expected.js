@@ -15,7 +15,7 @@ const _renderer = input => {
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
 
     _writeHydrateScope(_scope, {
-      4: clickCount
+      6: clickCount
     });
   } else {
     const _scope = _nextScopeId();

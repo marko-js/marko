@@ -15,7 +15,7 @@ const _renderer = input => {
     _maybeFlush();
   }
 
-  _write(`</div><div>${_markHydrateNode(_scope, 4)}`);
+  _write(`</div><div>${_markHydrateNode(_scope, 7)}`);
 
   for (const val of arrA) {
     const _scope = _nextScopeId();

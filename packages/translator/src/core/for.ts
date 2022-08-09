@@ -9,17 +9,25 @@ import {
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
-  addStatement,
-  setQueueBuilder,
+  getSignal,
+  initSource,
+  setSubscriberBuilder,
+  subscribe,
   writeHTMLHydrateStatements,
+  getComputeFn,
 } from "../util/apply-hydrate";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
-import { ReserveType, reserveScope } from "../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  countReserves,
+  Reserve,
+} from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
+import type { ReferenceGroup } from "../util/references";
 import { scopeIdentifier } from "../visitors/program";
-import { getReferenceGroup } from "../util/references";
 
 export default {
   analyze: {
@@ -30,7 +38,7 @@ export default {
         getOrCreateSectionId(tag),
         isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node,
         "for",
-        3
+        6
       );
       customTag.analyze.enter(tag);
     },
@@ -144,21 +152,15 @@ const translateDOM = {
       body: { params },
       extra: { isOnlyChild },
     } = node;
+    const paramsPath = tag.get("body").get("params");
     const {
       extra: { reserve },
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
     const ofAttr = findName(attributes, "of");
     const byAttr = findName(attributes, "by");
 
-    setQueueBuilder(tag, ({ apply, index }, closurePriority) => {
-      return callRuntime(
-        "queueForEach",
-        scopeIdentifier,
-        t.numericLiteral(reserve!.id),
-        apply,
-        t.numericLiteral(index),
-        closurePriority
-      );
+    setSubscriberBuilder(tag, (signal: t.Expression) => {
+      return callRuntime("inLoopScope", signal, t.numericLiteral(reserve!.id));
     });
 
     if (ofAttr) {
@@ -176,23 +178,87 @@ const translateDOM = {
 
       tag.remove();
 
-      addStatement(
-        "apply",
-        sectionId,
-        // TODO: should merge byAttr refereces with ofAttr references
-        ofAttr.extra?.valueReferences,
-        t.expressionStatement(
-          callRuntime(
-            "setLoopOf",
-            scopeIdentifier,
-            t.numericLiteral(reserve!.id),
-            ofAttrValue,
-            rendererId,
-            byAttr ? byAttr.value! : t.nullLiteral(),
-            getReferenceGroup(bodySectionId, valParam.extra.reserve).apply
+      const references = (ofAttr.extra?.valueReferences as ReferenceGroup)
+        ?.references;
+      const signal = getSignal(sectionId, reserve);
+      signal.build = () => {
+        const bindings: Record<string, t.Identifier> = paramsPath.reduce(
+          (paramsLookup, param) => {
+            return Object.assign(paramsLookup, param.getBindingIdentifiers());
+          },
+          {}
+        );
+        return callRuntime(
+          "loop",
+          t.numericLiteral(reserve!.id),
+          t.numericLiteral(countReserves(references) || 1),
+          rendererId,
+          t.arrayExpression(
+            Object.values(bindings).map(
+              (binding) =>
+                getSignal(bodySectionId, binding.extra.reserve).identifier
+            )
+          ),
+          t.arrowFunctionExpression(
+            [scopeIdentifier, t.arrayPattern(params)],
+            t.blockStatement(
+              Object.values(bindings).map((binding) => {
+                return t.expressionStatement(
+                  callRuntime(
+                    "setSource",
+                    scopeIdentifier,
+                    getSignal(bodySectionId, binding.extra.reserve).identifier,
+                    binding
+                  )
+                );
+              })
+            )
+          ),
+          getComputeFn(
+            sectionId,
+            t.arrayExpression([
+              ofAttrValue,
+              byAttr ? byAttr.value! : t.nullLiteral(),
+            ]),
+            references
           )
-        )
-      );
+        );
+      };
+      subscribe(references, signal);
+
+      for (const param of params) {
+        initSource(param.extra?.reserve as Reserve);
+      }
+
+      // valParam.extra.reserve
+
+      // export function loop<S extends Scope, C extends Scope, T>(
+      //   nodeAccessor: number,
+      //   defaultMark: number,
+      //   renderer: Renderer,
+      //   paramSubscribers: Signal[],
+      //   setParams: (scope: C, params: [T, number, T[]]) => void,
+      //   compute: (scope: S) => [T[], (x: T) => unknown],
+      //   fragment?: DOMFragment,
+      // ) {
+
+      // addStatement(
+      //   "apply",
+      //   sectionId,
+      //   // TODO: should merge byAttr refereces with ofAttr references
+      //   ofAttr.extra?.valueReferences,
+      //   t.expressionStatement(
+      //     callRuntime(
+      //       "setLoopOf",
+      //       scopeIdentifier,
+      //       t.numericLiteral(reserve!.id),
+      //       ofAttrValue,
+      //       rendererId,
+      //       byAttr ? byAttr.value! : t.nullLiteral(),
+      //       getReferenceGroup(bodySectionId, valParam.extra.reserve).apply
+      //     )
+      //   )
+      // );
     }
   },
 };

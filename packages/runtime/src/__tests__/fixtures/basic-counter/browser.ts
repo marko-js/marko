@@ -16,7 +16,6 @@ const enum Index {
   BUTTON_TEXT = 1,
   CLICK_COUNT = 2,
   CLICK_COUNT_MARK = 3,
-  CLICK_COUNT_STALE = 4,
 }
 
 type ComponentScope = Scope<{
@@ -24,7 +23,6 @@ type ComponentScope = Scope<{
   [Index.BUTTON_TEXT]: Text;
   [Index.CLICK_COUNT]: number;
   [Index.CLICK_COUNT_MARK]: number;
-  [Index.CLICK_COUNT_STALE]: boolean;
 }>;
 
 // <let/clickCount = 0/>
@@ -41,16 +39,16 @@ export const hydrate = (scope: ComponentScope) => {
   on(scope[Index.BUTTON], "click", bind(scope, clickHandler));
 };
 
-const _clickCount = source(Index.CLICK_COUNT, [], (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
-  data(scope[Index.BUTTON_TEXT], value);
-});
+const _clickCount = source(
+  Index.CLICK_COUNT,
+  [],
+  (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
+    data(scope[Index.BUTTON_TEXT], value);
+  }
+);
 
 const clickHandler = (scope: ComponentScope) => {
-  queueSource(
-    scope,
-    _clickCount,
-    scope[Index.CLICK_COUNT] + 1
-  );
+  queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
 };
 
 export default createRenderFn(template, walks, setup);

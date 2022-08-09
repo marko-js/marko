@@ -1,60 +1,44 @@
-import { queue as _queue, on as _on, data as _data, setConditionalRenderer as _setConditionalRenderer, queueInBranch as _queueInBranch, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, register as _register, queueHydrate as _queueHydrate, bind as _bind, conditional as _conditional, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply$elseBody_clickCount(_scope, clickCount = _scope._[4]) {
-  _data(_scope[0], clickCount);
-}
+const _clickCount$elseBody = _closure(1, 6, [], (_scope, clickCount) => _data(_scope[0], clickCount));
 
-function _apply$elseBody(_scope) {
-  _queue(_scope, _apply$elseBody_clickCount, 0);
-}
+const _elseBody = _createRenderer("<span>The button was clicked <!> times.</span>",
+/* next(1), over(1), replace */
+"Db%", null, [_clickCount$elseBody]);
 
 const _onclick = function (_scope) {
-  const clickCount = _scope._[4];
+  const clickCount = _scope._[6];
 
-  _queue(_scope._, _apply_clickCount, 0, clickCount + 1);
+  _queueSource(_scope._, _clickCount, clickCount + 1);
 };
 
-function _hydrate$ifBody_clickCount(_scope, clickCount = _scope._[4]) {
+const _hydrate_clickCount$ifBody = _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _scope => {
+  const clickCount = _scope._[6];
+
   _on(_scope[0], "click", _bind(_scope, _onclick));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _hydrate$ifBody_clickCount);
-
-function _apply$ifBody_clickCount(_scope, clickCount = _scope._[4]) {
+const _clickCount$ifBody = _closure(1, 6, [], (_scope, clickCount) => {
   _data(_scope[1], clickCount);
 
-  _queueHydrate(_scope, _hydrate$ifBody_clickCount);
-}
-
-function _apply$ifBody(_scope) {
-  _queue(_scope, _apply$ifBody_clickCount, 0);
-}
-
-function _apply_clickCount(_scope, clickCount) {
-  if (_write(_scope, 4, clickCount)) {
-    _setConditionalRenderer(_scope, 0, clickCount < 3 ? _ifBody : _elseBody);
-
-    _queueInBranch(_scope, 0, _elseBody, _apply$elseBody_clickCount, 1, 2);
-
-    _queueInBranch(_scope, 0, _ifBody, _apply$ifBody_clickCount, 1, 3);
-  }
-}
-
-function _apply(_scope) {
-  _apply_clickCount(_scope, 0);
-}
-
-export const template = "<div><!></div>";
-export const walks =
-/* next(1), replace, skip(3), out(1) */
-"D%+l";
-export const apply = _apply;
+  _queueHydrate(_scope, _hydrate_clickCount$ifBody);
+});
 
 const _ifBody = _createRenderer("<button> </button>",
 /* get, next(1), get */
-" D ", _apply$ifBody),
-      _elseBody = _createRenderer("<span>The button was clicked <!> times.</span>",
-/* next(1), over(1), replace */
-"Db%", _apply$elseBody);
+" D ", null, [_clickCount$ifBody]);
 
-export default _createRenderFn(template, walks, apply);
+const _if = _conditional(0, 1, (_scope, clickCount = _scope[6]) => clickCount < 3 ? _ifBody : _elseBody);
+
+const _clickCount = _source(6, [_if, _inConditionalScope(_clickCount$elseBody, 0), _inConditionalScope(_clickCount$ifBody, 0)]);
+
+const _setup = _scope => {
+  _setSource(_scope, _clickCount, 0);
+};
+
+export const template = "<div><!></div>";
+export const walks =
+/* next(1), replace, skip(5), out(1) */
+"D%-l";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

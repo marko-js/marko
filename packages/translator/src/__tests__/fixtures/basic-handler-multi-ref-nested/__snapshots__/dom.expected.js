@@ -1,4 +1,4 @@
-import { queue as _queue, on as _on, data as _data, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, subscriber as _subscriber, register as _register, queueHydrate as _queueHydrate, source as _source, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _onclick = (_scope, a) => {
   const b = _scope[3];
@@ -8,42 +8,31 @@ const _onclick = (_scope, a) => {
 const _onclick2 = function (_scope) {
   const a = _scope[2];
 
-  _queue(_scope, _apply_a, 0, a.map(_bind(_scope, _onclick)));
+  _queueSource(_scope, _a, a.map(_bind(_scope, _onclick)));
 };
 
-function _hydrateWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
+const _hydrate_expr_a_b = _register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b", _scope => {
+  const a = _scope[2],
+        b = _scope[3];
+
   _on(_scope[0], "click", _bind(_scope, _onclick2));
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b", _hydrateWith_a_b);
+const _expr_a_b = _subscriber([], 2, (_scope, a = _scope[2], b = _scope[3]) => _queueHydrate(_scope, _hydrate_expr_a_b));
 
-function _applyWith_a_b(_scope, a = _scope[2], b = _scope[3]) {
-  _queueHydrate(_scope, _hydrateWith_a_b);
-}
+const _b = _source(3, [_expr_a_b]);
 
-function _apply_b(_scope, b) {
-  if (_write(_scope, 3, b)) {
-    _queue(_scope, _applyWith_a_b, 2);
-  }
-}
+const _a = _source(2, [_expr_a_b], (_scope, a) => _data(_scope[1], a.join("")));
 
-function _apply_a(_scope, a) {
-  if (_write(_scope, 2, a)) {
-    _data(_scope[1], a.join(""));
+const _setup = _scope => {
+  _setSource(_scope, _a, [0]);
 
-    _queue(_scope, _applyWith_a_b, 2);
-  }
-}
-
-function _apply(_scope) {
-  _apply_a(_scope, [0]);
-
-  _apply_b(_scope, 1);
-}
+  _setSource(_scope, _b, 1);
+};
 
 export const template = "<button> </button>";
 export const walks =
 /* get, next(1), get, out(1) */
 " D l";
-export const apply = _apply;
-export default _createRenderFn(template, walks, apply);
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

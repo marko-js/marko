@@ -5,7 +5,7 @@ import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
-import { getDefaultApply } from "./apply-hydrate";
+import { getSetup } from "./apply-hydrate";
 import { currentProgramPath } from "../visitors/program";
 
 const [getRenderer] = createSectionState<t.Identifier>(
@@ -78,7 +78,7 @@ export function flushInto(
 export function getSectionMeta(sectionId: number) {
   const writes = getWrites(sectionId);
   return {
-    apply: getDefaultApply(sectionId),
+    apply: getSetup(sectionId),
     walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
   };

@@ -3,19 +3,20 @@ import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import {
-  addStatement,
-  setQueueBuilder,
+  subscribe,
+  getComputeFn,
+  getSignal,
+  setSubscriberBuilder,
   writeHTMLHydrateStatements,
 } from "../../util/apply-hydrate";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import { ReserveType, reserveScope } from "../../util/reserve";
+import { ReserveType, reserveScope, countReserves } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
-import { scopeIdentifier } from "../../visitors/program";
 import { mergeReferenceGroups, ReferenceGroup } from "../../util/references";
 
 export default {
@@ -26,7 +27,7 @@ export default {
         getOrCreateSectionId(tag),
         tag.node,
         "if",
-        3
+        5
       );
       customTag.analyze.enter(tag);
     },
@@ -150,15 +151,12 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         const [testAttr] = tag.node.attributes;
         const id = writer.getRenderer(sectionId);
 
-        setQueueBuilder(tag, ({ apply, index }, closurePriority) => {
+        setSubscriberBuilder(tag, (subscriber) => {
           return callRuntime(
-            "queueInBranch",
-            scopeIdentifier,
-            t.numericLiteral(extra.reserve!.id),
-            writer.getRenderer(sectionId),
-            apply,
-            t.numericLiteral(index),
-            closurePriority
+            "inConditionalScope",
+            subscriber,
+            t.numericLiteral(extra.reserve!.id)
+            /*writer.getRenderer(sectionId)*/
           );
         });
 
@@ -171,21 +169,18 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      addStatement(
-        "apply",
-        sectionId,
-        // TODO: It's possible this group may not exist because the `refs`,
-        // created above, is a unique group that wasn't found during analyze
-        extra.conditionalReferences as ReferenceGroup,
-        t.expressionStatement(
-          callRuntime(
-            "setConditionalRenderer",
-            scopeIdentifier,
-            t.numericLiteral(extra.reserve!.id),
-            expr
-          )
-        )
-      );
+      const references = (extra.conditionalReferences as ReferenceGroup)
+        .references;
+      const signal = getSignal(sectionId, extra.reserve);
+      signal.build = () => {
+        return callRuntime(
+          "conditional",
+          t.numericLiteral(extra.reserve!.id),
+          t.numericLiteral(countReserves(references) || 1),
+          getComputeFn(sectionId, expr, references)
+        );
+      };
+      subscribe(references, signal);
     } else {
       const nextTag = tag.getNextSibling();
 

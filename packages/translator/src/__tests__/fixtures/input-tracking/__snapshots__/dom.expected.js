@@ -1,37 +1,16 @@
-import { data as _data, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _apply_input(_scope, input) {
-  if (_write(_scope, 4, input)) {
-    const {
-      a,
-      b
-    } = input;
+const _input = _source(4, []);
 
-    _apply_a(a);
-
-    _apply_b(b);
-  }
-}
-
-function _apply_b(_scope, b) {
-  if (_write(_scope, 3, b)) {
-    _data(_scope[1], b);
-  }
-}
-
-function _apply_a(_scope, a) {
-  if (_write(_scope, 2, a)) {
-    _data(_scope[0], a);
-  }
-}
-
-export const applyAttrs = function (_scope, input) {
-  _apply_input(_scope, input);
-};
-export { _apply_input };
+const _b = "SIGNAL NOT INITIALIZED";
+const _a = "SIGNAL NOT INITIALIZED";
+export const attrs = _destructureSources([_input], (_scope, input) => {
+  _setSource(_scope, _input, input);
+});
+export { _input as _apply_input };
 export const template = "<!> <!>";
 export const walks =
 /* replace, over(2), replace, over(1) */
 "%c%b";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

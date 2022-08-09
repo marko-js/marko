@@ -16,7 +16,7 @@ const _renderer = ({
     _write("Hello");
   }
 
-  _write(`${_markHydrateNode(_scope, 4)}`);
+  _write(`${_markHydrateNode(_scope, 6)}`);
 
   if (a, b) {
     const _scope = _nextScopeId();
@@ -24,7 +24,7 @@ const _renderer = ({
     _write("World");
   }
 
-  _write(`<div>${_markHydrateNode(_scope, 8)}`);
+  _write(`<div>${_markHydrateNode(_scope, 12)}`);
 
   if (x) {
     const _scope = _nextScopeId();

@@ -1,35 +1,30 @@
-import { queue as _queue, setConditionalRenderer as _setConditionalRenderer, on as _on, register as _register, bind as _bind, queueHydrate as _queueHydrate, write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, on as _on, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+
+const _ifBody = _createRenderer("Hello!", "");
+
+const _if = _conditional(0, 1, (_scope, show = _scope[7]) => show ? _ifBody : null);
 
 const _onclick = function (_scope) {
-  const show = _scope[5];
+  const show = _scope[7];
 
-  _queue(_scope, _apply_show, 0, !show);
+  _queueSource(_scope, _show, !show);
 };
 
-function _hydrate_show(_scope, show = _scope[5]) {
-  _on(_scope[4], "click", _bind(_scope, _onclick));
-}
+const _hydrate_show = _register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show", _scope => {
+  const show = _scope[7];
 
-_register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show", _hydrate_show);
+  _on(_scope[6], "click", _bind(_scope, _onclick));
+});
 
-function _apply_show(_scope, show) {
-  if (_write(_scope, 5, show)) {
-    _setConditionalRenderer(_scope, 0, show ? _ifBody : null);
+const _show = _source(7, [_if], (_scope, show) => _queueHydrate(_scope, _hydrate_show));
 
-    _queueHydrate(_scope, _hydrate_show);
-  }
-}
-
-function _apply(_scope) {
-  _apply_show(_scope, true);
-}
+const _setup = _scope => {
+  _setSource(_scope, _show, true);
+};
 
 export const template = "<div><!><button>Toggle</button></div>";
 export const walks =
-/* next(1), replace, skip(3), over(1), get, out(1) */
-"D%+b l";
-export const apply = _apply;
-
-const _ifBody = _createRenderer("Hello!", "", null);
-
-export default _createRenderFn(template, walks, apply);
+/* next(1), replace, skip(5), over(1), get, out(1) */
+"D%-b l";
+export const setup = _setup;
+export default _createRenderFn(template, walks, setup);

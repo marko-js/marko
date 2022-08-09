@@ -1,35 +1,27 @@
-import { on as _on, data as _data, register as _register, queueHydrate as _queueHydrate, write as _write, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, data as _data, source as _source, register as _register, queueHydrate as _queueHydrate, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-function _hydrate_onclick(_scope, onclick = _scope[2]) {
+const _text = _source(3, [], (_scope, text) => _data(_scope[1], text));
+
+const _hydrate_onclick = _register("packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onclick", _scope => {
+  const onclick = _scope[2];
+
   _on(_scope[0], "click", onclick);
-}
+});
 
-_register("packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onclick", _hydrate_onclick);
+const _onclick = _source(2, [], (_scope, onclick) => _queueHydrate(_scope, _hydrate_onclick));
 
-function _apply_text(_scope, text) {
-  if (_write(_scope, 3, text)) {
-    _data(_scope[1], text);
-  }
-}
-
-function _apply_onclick(_scope, onclick) {
-  if (_write(_scope, 2, onclick)) {
-    _queueHydrate(_scope, _hydrate_onclick);
-  }
-}
-
-export const applyAttrs = function (_scope, {
+export const attrs = _destructureSources([_onclick, _text], (_scope, {
   onclick,
   text
-}) {
-  _apply_onclick(_scope, onclick);
+}) => {
+  _setSource(_scope, _onclick, onclick);
 
-  _apply_text(_scope, text);
-};
-export { _apply_onclick, _apply_text };
+  _setSource(_scope, _text, text);
+});
+export { _onclick as _apply_onclick, _text as _apply_text };
 export const template = "<button> </button>";
 export const walks =
 /* get, next(1), get, out(1) */
 " D l";
-export const apply = function () {};
-export default _createRenderFn(template, walks, apply, applyAttrs);
+export const setup = function () {};
+export default _createRenderFn(template, walks, setup, attrs);

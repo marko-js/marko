@@ -16,15 +16,15 @@ const _renderer = input => {
     _maybeFlush();
   }
 
-  _write(`${_markHydrateNode(_scope, 4)}<button id=add>Add</button>${_markHydrateNode(_scope, 5)}<button id=remove>Remove</button></div>`);
-
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items");
+  _write(`${_markHydrateNode(_scope, 7)}<button id=add>Add</button>${_markHydrateNode(_scope, 8)}<button id=remove>Remove</button></div>`);
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items");
 
+  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items");
+
   _writeHydrateScope(_scope, {
-    6: id,
-    7: items
+    9: id,
+    10: items
   });
 };
 

@@ -16,15 +16,15 @@ const _renderer = input => {
     _maybeFlush();
   }
 
-  _write(`</ul>${_markHydrateNode(_scope, 4)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 5)}<button id=reverse>Reverse</button>`);
+  _write(`</ul>${_markHydrateNode(_scope, 7)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 8)}<button id=reverse>Reverse</button>`);
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list");
 
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open");
 
   _writeHydrateScope(_scope, {
-    6: open,
-    7: list
+    9: open,
+    10: list
   });
 };
 
