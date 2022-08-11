@@ -11,7 +11,10 @@ export function resolveRelativePath(file, request) {
   }
 
   if (file.markoOpts.optimize) {
-    request = request.replace(/(^|\/)marko\/src\//, "$1marko/dist/");
+    request = request.replace(
+      /(^|\/node-modules\/)marko\/src\//,
+      "$1marko/dist/"
+    );
   }
 
   return request;
