@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.3
+
+### Patch Changes
+
+- [#1845](https://github.com/marko-js/marko/pull/1845) [`65bab8e6d`](https://github.com/marko-js/marko/commit/65bab8e6df02e6fd485a45d9a9c2200545f21479) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where Marko runtime was being incorrectly matched when swapping from dev to prod runtimes.
+
 ## 5.21.2
 
 ### Patch Changes
