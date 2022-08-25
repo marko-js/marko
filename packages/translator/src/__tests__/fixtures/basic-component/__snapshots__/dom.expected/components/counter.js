@@ -9,10 +9,10 @@ const _onclick = function (_scope) {
 const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount", _scope => {
   const clickCount = _scope[2];
 
-  _on(_scope[0], "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _onclick));
 });
 
-const _clickCount = _source(2, [], (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_source(2, [], (_scope, clickCount) => {
   _data(_scope[1], clickCount);
 
   _queueHydrate(_scope, _hydrate_clickCount);
@@ -27,4 +27,4 @@ export const walks =
 /* get, next(1), get, out(1) */
 " D l";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

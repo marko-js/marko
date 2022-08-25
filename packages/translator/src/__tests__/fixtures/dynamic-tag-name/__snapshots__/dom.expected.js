@@ -13,35 +13,35 @@ const _tagName5 = largeHeading || "h2";
 
 import { dynamicTag as _dynamicTag, createRenderer as _createRenderer, source as _source, derivation as _derivation, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-const _dynamicBody2 = _createRenderer("Body content", "");
+const _dynamicBody2 = /* @__PURE__ */_createRenderer("Body content", "");
 
-const _other = _source(19, []);
+const _other = /* @__PURE__ */_source(19, []);
 
-const _level = _source(18, []);
+const _level = /* @__PURE__ */_source(18, []);
 
-const _tag = _source(17, []);
+const _tag = /* @__PURE__ */_source(17, []);
 
-const _isLarge = _source(16, [_largeHeading]);
+const _isLarge = /* @__PURE__ */_source(16, [_largeHeading]);
 
-const _showTagA = _source(15, []);
+const _showTagA = /* @__PURE__ */_source(15, []);
 
-const _show = _source(14, [_tagConstB]);
+const _show = /* @__PURE__ */_source(14, [_tagConstB]);
 
-const _x = _source(13, []);
+const _x = /* @__PURE__ */_source(13, []);
 
-const _renderBody = _source(12, []);
+const _renderBody = /* @__PURE__ */_source(12, []);
 
-const _tagConstB = _derivation(11, 1, [], (_scope, show = _scope[14]) => show ? "div" : null);
+const _tagConstB = /* @__PURE__ */_derivation(11, 1, [], (_scope, show = _scope[14]) => show ? "div" : null);
 
-const _tagConstA = _derivation(10, 1, [], _scope => "a");
+const _tagConstA = /* @__PURE__ */_derivation(10, 1, [], _scope => "a");
 
-const _largeHeading = _derivation(9, 1, [], (_scope, isLarge = _scope[16]) => isLarge && "h1");
+const _largeHeading = /* @__PURE__ */_derivation(9, 1, [], (_scope, isLarge = _scope[16]) => isLarge && "h1");
 
 const _setup = _scope => {
   _notifySignal(_scope, _tagConstA);
 };
 
-export const attrs = _destructureSources([_renderBody, _x, _show, _showTagA, _isLarge, _tag, _level, _other], (_scope, {
+export const attrs = /* @__PURE__ */_destructureSources([_renderBody, _x, _show, _showTagA, _isLarge, _tag, _level, _other], (_scope, {
   renderBody,
   x,
   show,
@@ -71,4 +71,4 @@ export { _renderBody as _apply_renderBody, _x as _apply_x, _show as _apply_show,
 export const template = "";
 export const walks = "";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);

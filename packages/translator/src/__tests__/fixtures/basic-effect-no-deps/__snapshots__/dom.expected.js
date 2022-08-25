@@ -9,4 +9,4 @@ const _setup = _scope => {
 export const template = "";
 export const walks = "";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

@@ -4,7 +4,7 @@ const _c$customTagBody = "SIGNAL NOT INITIALIZED";
 const _b$customTagBody = "SIGNAL NOT INITIALIZED";
 const _a$customTagBody = "SIGNAL NOT INITIALIZED";
 
-const _customTagBody = _createRenderer("<div><!> <!> <!></div>",
+const _customTagBody = /* @__PURE__ */_createRenderer("<div><!> <!> <!></div>",
 /* next(1), replace, over(2), replace, over(2), replace */
 "D%c%c%");
 
@@ -17,4 +17,4 @@ export const walks =
 /* beginChild(0), _customTag_walks, endChild */
 `/${_customTag_walks}&`;
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

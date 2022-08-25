@@ -5,7 +5,7 @@ const _temp = _scope => {
   console.log("hello world");
 };
 
-const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0", _scope => _on(_scope[0], "click", _bind(_scope, _temp)));
+const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0", _scope => _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _temp)));
 
 const _temp3 = _scope => {
   console.log("hello world");
@@ -16,7 +16,7 @@ const _setup = _scope => {
 
   _setSource(_scope[1], _child_attrs, {
     class: "hi",
-    onclick: _bind(_scope, _temp3)
+    onclick: /* @__PURE__ */_bind(_scope, _temp3)
   });
 
   _notifySignal(_scope, _child_attrs);
@@ -29,4 +29,4 @@ export const walks =
 /* beginChild(1), _child_walks, endChild, get, over(1) */
 `0${_child_walks}& b`;
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

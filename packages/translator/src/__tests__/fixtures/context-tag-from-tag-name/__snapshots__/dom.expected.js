@@ -2,7 +2,7 @@ import { write as _write, data as _data, createRenderer as _createRenderer, setS
 import { setup as _other, attrs as _other_attrs, template as _other_template, walks as _other_walks } from "./components/other.marko";
 const _message$otherBody = "SIGNAL NOT INITIALIZED";
 
-const _otherBody = _createRenderer(" </span>",
+const _otherBody = /* @__PURE__ */_createRenderer(" </span>",
 /* next(1), get */
 "D ");
 
@@ -14,9 +14,9 @@ const _setup = _scope => {
   _other(_scope[0]);
 
   _setSource(_scope[0], _other_attrs, {
-    renderBody: _createRenderer(" </span>",
+    renderBody: /* @__PURE__ */_createRenderer(" </span>",
     /* next(1), get */
-    "D ", _bind(_scope, _temp))
+    "D ", /* @__PURE__ */_bind(_scope, _temp))
   });
 
   _notifySignal(_scope, _other_attrs);
@@ -27,4 +27,4 @@ export const walks =
 /* beginChild(0), _other_walks, endChild */
 `/${_other_walks}&`;
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

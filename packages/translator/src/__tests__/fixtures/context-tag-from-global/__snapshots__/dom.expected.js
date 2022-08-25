@@ -7,4 +7,4 @@ export const walks =
 /* next(2), get, out(2) */
 "E m";
 export const setup = function () {};
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

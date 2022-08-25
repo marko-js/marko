@@ -8,6 +8,23 @@ declare const MARKO_SRC: boolean;
 
 type Falsy = false | 0 | "" | null | undefined;
 
+const pureFunctions: Array<
+  keyof typeof import("@marko/runtime-fluurt/src/dom")
+> = [
+  "createRenderFn",
+  "createRenderer",
+  "source",
+  "derivation",
+  "subscriber",
+  "closure",
+  "loop",
+  "conditional",
+  "destructureSources",
+  "bind",
+  "inLoopScope",
+  "inConditionalScope",
+];
+
 export function importRuntime(name: string) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
@@ -19,7 +36,23 @@ export function callRuntime(
     | keyof typeof import("@marko/runtime-fluurt/src/html"),
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
-  return t.callExpression(importRuntime(name as string), filterArguments(args));
+  const callExpression = t.callExpression(
+    importRuntime(name as string),
+    filterArguments(args)
+  );
+  if (
+    pureFunctions.includes(
+      name as keyof typeof import("@marko/runtime-fluurt/src/dom")
+    )
+  ) {
+    callExpression.leadingComments = [
+      {
+        type: "CommentBlock",
+        value: ` @__PURE__ `,
+      } as t.CommentBlock,
+    ];
+  }
+  return callExpression;
 }
 
 export function getHTMLRuntime() {

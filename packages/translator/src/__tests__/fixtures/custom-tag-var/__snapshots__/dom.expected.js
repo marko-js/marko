@@ -11,4 +11,4 @@ export const walks =
 /* beginChild(2), _child_walks, endChild, replace, over(1) */
 `1${_child_walks}&%b`;
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

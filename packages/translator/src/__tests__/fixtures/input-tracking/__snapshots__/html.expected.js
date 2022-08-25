@@ -12,4 +12,4 @@ const _renderer = input => {
 };
 
 export default _renderer;
-export const render = _createRenderer(_renderer);
+export const render = /* @__PURE__ */_createRenderer(_renderer);

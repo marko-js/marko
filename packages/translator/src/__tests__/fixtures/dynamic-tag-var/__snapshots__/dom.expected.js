@@ -14,11 +14,11 @@ const el1 = _dynamicTag(_scope, _tagName2, null);
 
 import { dynamicTag as _dynamicTag, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-const _dynamic = _source(4, []);
+const _dynamic = /* @__PURE__ */_source(4, []);
 
-const _show = _source(3, []);
+const _show = /* @__PURE__ */_source(3, []);
 
-export const attrs = _destructureSources([_show, _dynamic], (_scope, {
+export const attrs = /* @__PURE__ */_destructureSources([_show, _dynamic], (_scope, {
   show,
   dynamic
 }) => {
@@ -30,4 +30,4 @@ export { _show as _apply_show, _dynamic as _apply_dynamic };
 export const template = "";
 export const walks = "";
 export const setup = function () {};
-export default _createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);

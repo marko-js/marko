@@ -13,4 +13,4 @@ export const walks =
 /* replace, over(2), replace, over(1) */
 "%c%b";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

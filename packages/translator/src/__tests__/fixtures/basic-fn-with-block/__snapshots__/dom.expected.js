@@ -10,10 +10,10 @@ const _onclick = function (_scope) {
 const _hydrate_count = _register("packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count", _scope => {
   const count = _scope[2];
 
-  _on(_scope[0], "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _onclick));
 });
 
-const _count = _source(2, [], (_scope, count) => {
+const _count = /* @__PURE__ */_source(2, [], (_scope, count) => {
   _data(_scope[1], count);
 
   _queueHydrate(_scope, _hydrate_count);
@@ -28,4 +28,4 @@ export const walks =
 /* get, next(1), get, out(1) */
 " D l";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

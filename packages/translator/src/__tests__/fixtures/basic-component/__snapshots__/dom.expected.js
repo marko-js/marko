@@ -10,4 +10,4 @@ export const walks =
 `D/${_counter_walks}&l`;
 export const setup = _setup;
 import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

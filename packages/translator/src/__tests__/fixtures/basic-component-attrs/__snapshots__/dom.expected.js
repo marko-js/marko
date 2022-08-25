@@ -7,9 +7,9 @@ const _onclick = function (_scope) {
   _queueSource(_scope, _clickCount, clickCount + 1);
 };
 
-const _clickCount = _source(0, [_myButton_attrs], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
+const _clickCount = /* @__PURE__ */_source(0, [_myButton_attrs], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
   text: clickCount,
-  onclick: _bind(_scope, _onclick)
+  onclick: /* @__PURE__ */_bind(_scope, _onclick)
 }));
 
 const _setup = _scope => {
@@ -23,4 +23,4 @@ export const walks =
 /* beginChild(1), _myButton_walks, endChild */
 `0${_myButton_walks}&`;
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

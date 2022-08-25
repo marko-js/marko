@@ -9,18 +9,18 @@ const _onclick = function (_scope) {
 const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _scope => {
   const clickCount = _scope[4];
 
-  _on(_scope[0], "click", _bind(_scope, _onclick));
+  _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _onclick));
 });
 
-const _clickCount = _source(4, [], (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_source(4, [], (_scope, clickCount) => {
   _data(_scope[1], clickCount);
 
   _queueHydrate(_scope, _hydrate_clickCount);
 });
 
-const _unused_2 = _derivation(3, 1, [], _scope => 456);
+const _unused_2 = /* @__PURE__ */_derivation(3, 1, [], _scope => 456);
 
-const _unused_ = _source(2, []);
+const _unused_ = /* @__PURE__ */_source(2, []);
 
 const _setup = _scope => {
   _setSource(_scope, _unused_, 123);
@@ -35,4 +35,4 @@ export const walks =
 /* next(1), get, next(1), get, out(2) */
 "D D m";
 export const setup = _setup;
-export default _createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup);

@@ -17,4 +17,4 @@ const _renderer = ({
 };
 
 export default _renderer;
-export const render = _createRenderer(_renderer);
+export const render = /* @__PURE__ */_createRenderer(_renderer);
