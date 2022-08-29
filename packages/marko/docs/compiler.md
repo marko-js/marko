@@ -29,7 +29,7 @@ type CompileResult = {
 
 - `code`: The compiled output of executable JavaScript code.
 - `map`: [A source map, used for debugging.](https://firefox-source-docs.mozilla.org/devtools-user/debugger/how_to/use_a_source_map/index.html)
-- `meta`: Metadata gathered while compiling — nothing terribly useful, probably going to get deprecated. 
+- `meta`: Metadata gathered while compiling — nothing terribly useful, probably going to get deprecated.
   - Data about child dependencies. Was useful back when it was primarily the bundlers that handled tree-shaking out server components. Now that happens in the compiler, so we don’t use this anymore and therefore might become inaccurate in the future.
   - A list of `watchFiles`: files that were used to compile the template (e.g. `marko.json`). Used to tell bundlers which files should be watched in dev mode.
 
@@ -72,11 +72,9 @@ const asyncResult = await compiler.compile(
   "./src/index.marko",
   { modules: "cjs" }
 );
-const syncResult = compiler.compileSync(
-  "<h1>Hello!</>", 
-  "./src/index.marko",
-  { modules: "cjs"}
-);
+const syncResult = compiler.compileSync("<h1>Hello!</>", "./src/index.marko", {
+  modules: "cjs"
+});
 ```
 
 ### Options
@@ -400,6 +398,7 @@ Marko parses in two steps to stay flexible with the ever-changing syntax of Java
 To hook into the `parse` stage, use [the `parse` option in the `marko.json` file](https://markojs.com/docs/marko-json/#paths).
 
 > **Note**: The `parse` hook deviates from the other compiler hooks:
+>
 > - It does not support the `enter` & `exit` API.
 > - You _must return_ a replacement AST node.
 
