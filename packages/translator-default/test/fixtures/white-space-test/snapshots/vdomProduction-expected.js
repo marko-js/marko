@@ -6,9 +6,9 @@ const _marko_componentType = "TRrwGTtp",
 export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
 
-const _marko_node = _marko_createElement("div", null, "0", null, 4, 0).e("div", null, null, null, 3, 0).t("Hello ").e("div", null, null, null, 1, 0).t(" ").t(" World").e("div", null, null, null, 1, 0).t(" Hello").e("pre", null, null, null, 1, 0).t("\n    This should  \n      be preserved\n  ").e("div", null, null, null, 1, 0).e("div", null, null, null, 1, 0).t("Hello ");
+const _marko_node = _marko_createElement("div", null, "0", null, 4, 0).e("div", null, "1", null, 3, 0).t("Hello ").e("div", null, "2", null, 1, 0).t(" ").t(" World").e("div", null, "3", null, 1, 0).t(" Hello").e("pre", null, "4", null, 1, 0).t("\n    This should  \n      be preserved\n  ").e("div", null, "5", null, 1, 0).e("div", null, "6", null, 1, 0).t("Hello ");
 
-const _marko_node2 = _marko_createElement("div", null, "2", null, 0, 0);
+const _marko_node2 = _marko_createElement("div", null, "8", null, 0, 0);
 
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
@@ -18,7 +18,7 @@ _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.n(_marko_node, _component);
-  out.be("div", null, "1", _component, null, 0);
+  out.be("div", null, "7", _component, null, 0);
   scriptletA();
   scriptletB();
   out.t("Hello ", _component);
