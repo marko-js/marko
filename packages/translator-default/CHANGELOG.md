@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.6
+
+### Patch Changes
+
+- [#1849](https://github.com/marko-js/marko/pull/1849) [`26dbb84f9`](https://github.com/marko-js/marko/commit/26dbb84f90ffa35b7d346b3c11ae24e92c2d47f4) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: autokey all nodes under a static root
+
 ## 5.21.5
 
 ### Patch Changes
