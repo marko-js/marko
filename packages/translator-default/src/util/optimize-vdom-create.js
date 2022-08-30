@@ -29,8 +29,7 @@ const mergeStaticCreateVisitor = {
     );
   },
   MarkoTag(path, state) {
-    if (path.node.attributes.find(a => a.name === "key"))
-      getKeyManager(path).resolveKey(path);
+    getKeyManager(path).resolveKey(path);
     const writeArgs = tagArguments(path, true);
     state.currentRoot = t.callExpression(
       t.memberExpression(state.currentRoot, t.identifier("e")),
