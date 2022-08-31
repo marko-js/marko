@@ -1,7 +1,7 @@
 # Compiler
 
 > **Warning**:
-> The compiler API and hooks do not adhere to the [semantic versioning](https://semver.org) rules of Marko’s template and runtime APIs. ***Breaking changes may be introduced outside of the `marko` package’s major versions.*** They’re intended for advanced integrations or userland experimentation with new language features.
+> The compiler API and hooks do not adhere to the [semantic versioning](https://semver.org) rules of Marko’s template and runtime APIs. **_Breaking changes may be introduced outside of the `marko` package’s major versions._** They’re intended for advanced integrations or userland experimentation with new language features.
 
 ## Compile API
 
