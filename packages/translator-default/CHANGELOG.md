@@ -1,5 +1,32 @@
 # Change Log
 
+## 5.21.6
+
+### Patch Changes
+
+- [#1849](https://github.com/marko-js/marko/pull/1849) [`26dbb84f9`](https://github.com/marko-js/marko/commit/26dbb84f90ffa35b7d346b3c11ae24e92c2d47f4) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: autokey all nodes under a static root
+
+## 5.21.5
+
+### Patch Changes
+
+- [#1845](https://github.com/marko-js/marko/pull/1845) [`65bab8e6d`](https://github.com/marko-js/marko/commit/65bab8e6df02e6fd485a45d9a9c2200545f21479) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where Marko runtime was being incorrectly matched when swapping from dev to prod runtimes.
+
+- Updated dependencies [[`65bab8e6d`](https://github.com/marko-js/marko/commit/65bab8e6df02e6fd485a45d9a9c2200545f21479)]:
+  - @marko/babel-utils@5.21.3
+
+## 5.21.4
+
+### Patch Changes
+
+- [#1827](https://github.com/marko-js/marko/pull/1827) [`ae0c003a5`](https://github.com/marko-js/marko/commit/ae0c003a545a3610330b44c677a7521990c90b05) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where there was whitespace or a comment between else/else-if tags.
+
+## 5.21.3
+
+### Patch Changes
+
+- [#1824](https://github.com/marko-js/marko/pull/1824) [`2f6459d2c`](https://github.com/marko-js/marko/commit/2f6459d2c421ac82c4627c90f1c50cb229a99d33) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where shorthand attribute methods could not have a "return" statement.
+
 ## 5.21.2
 
 ### Patch Changes

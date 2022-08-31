@@ -265,8 +265,16 @@ Optional attributes for `<await>`:
 | ---------------: | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |        `timeout` | integer | An optional timeout. If reached, rejects the promise with a `TimeoutError`.                                                                                                   |
 |           `name` | string  | Improves debugging and ensures ordering with the `show-after` attribute.                                                                                                      |
-|     `show-after` | string  | Another `<await>` tag’s `name`. With `client-reorder`, ensures that the current `<await>` block will always show after the named `<await>`.                                   |
+|     `show-after` | string  | Another `<await>` tag’s `name`. Use with `client-reorder` to ensure that the current `<await>` will always render alongside or after the named `<await>`.                     |
 | `client-reorder` | boolean | If true, anything after this `<await>` will be server-rendered before the Promise completes, then the fulfilled Promise’s result will be updated with client-side JavaScript. |
+
+Regardless of these attributes, the promise is executed as eagerly as possible. The attributes control how to coordinate rendering with the rest of the page:
+
+- `client-reorder` prevents `<await>` blocks from delaying the HTTP stream, at the expense of making their rendering rely on client-side JS. Useful for making non-critical page sections not block HTML streaming of important content.
+
+- Using `show-after` with `client-reorder` ensures that the current `<await>` block will always render simultaneously with or after the named `<await>`. Useful for cutting down on [layout shift](https://web.dev/debug-layout-shifts/). `<@placeholder>`s can help fine-tune the user experience while loading.
+
+- `timeout` is useful for limiting non-critical content from slowing down the rest of the page too much.
 
 > **Pro Tip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
 >

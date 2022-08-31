@@ -1,6 +1,9 @@
 export * as types from "./babel-types";
 import path from "path";
 import * as babel from "@babel/core";
+import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
+import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
+import tsPlugin from "@babel/plugin-transform-typescript";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
@@ -55,7 +58,25 @@ export function getRuntimeEntryFiles(output, requestedTranslator) {
 
 function loadBabelConfig(filename, config) {
   const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
-  const requiredPlugins = [[corePlugin, markoConfig]];
+
+  if (markoConfig.stripTypes === undefined) {
+    markoConfig.stripTypes =
+      markoConfig.output !== "source" && markoConfig.output !== "migrate";
+  }
+
+  const requiredPlugins = [
+    [corePlugin, markoConfig],
+    [
+      markoConfig.stripTypes ? tsPlugin : tsSyntaxPlugin,
+      {
+        isTSX: false,
+        allowNamespaces: true,
+        optimizeConstEnums: true,
+        onlyRemoveTypeImports: true,
+        disallowAmbiguousJSXLike: false
+      }
+    ]
+  ];
   const baseBabelConfig = {
     filenameRelative: filename
       ? path.relative(process.cwd(), filename)
@@ -70,10 +91,7 @@ function loadBabelConfig(filename, config) {
   };
 
   if (markoConfig.modules === "cjs") {
-    requiredPlugins.push([
-      require.resolve("@babel/plugin-transform-modules-commonjs"),
-      { loose: true }
-    ]);
+    requiredPlugins.push([cjsPlugin, { loose: true }]);
   }
 
   baseBabelConfig.plugins = requiredPlugins.concat(

@@ -1,5 +1,69 @@
 # Change Log
 
+## 5.21.9
+
+### Patch Changes
+
+- [#1845](https://github.com/marko-js/marko/pull/1845) [`65bab8e6d`](https://github.com/marko-js/marko/commit/65bab8e6df02e6fd485a45d9a9c2200545f21479) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where Marko runtime was being incorrectly matched when swapping from dev to prod runtimes.
+
+- Updated dependencies [[`65bab8e6d`](https://github.com/marko-js/marko/commit/65bab8e6df02e6fd485a45d9a9c2200545f21479)]:
+  - @marko/compiler@5.22.6
+  - @marko/translator-default@5.21.5
+
+## 5.21.8
+
+### Patch Changes
+
+- [#1843](https://github.com/marko-js/marko/pull/1843) [`963f08ce9`](https://github.com/marko-js/marko/commit/963f08ce92e56f1d210068bedd5fc033b6db71c0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade htmljs-parser.
+
+- Updated dependencies [[`963f08ce9`](https://github.com/marko-js/marko/commit/963f08ce92e56f1d210068bedd5fc033b6db71c0)]:
+  - @marko/compiler@5.22.5
+
+## 5.21.7
+
+### Patch Changes
+
+- [#1841](https://github.com/marko-js/marko/pull/1841) [`26cd305ea`](https://github.com/marko-js/marko/commit/26cd305ea4391fb4846c07d5ba4984cc152584e7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade htmljs-parser.
+
+- Updated dependencies [[`26cd305ea`](https://github.com/marko-js/marko/commit/26cd305ea4391fb4846c07d5ba4984cc152584e7)]:
+  - @marko/compiler@5.22.4
+
+## 5.21.6
+
+### Patch Changes
+
+- [#1839](https://github.com/marko-js/marko/pull/1839) [`1df553e45`](https://github.com/marko-js/marko/commit/1df553e45829c7e0d754c5fec2c7d65e74c89457) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade HTMLJS-Parser.
+
+- Updated dependencies [[`1df553e45`](https://github.com/marko-js/marko/commit/1df553e45829c7e0d754c5fec2c7d65e74c89457)]:
+  - @marko/compiler@5.22.3
+
+## 5.21.5
+
+### Patch Changes
+
+- [#1836](https://github.com/marko-js/marko/pull/1836) [`ec57ebde5`](https://github.com/marko-js/marko/commit/ec57ebde52f5da16524f5275f923eedc8c0ab19a) Thanks [@vwong](https://github.com/vwong)! - Avoid inline styles when using tight Content Security Policy
+
+* [#1837](https://github.com/marko-js/marko/pull/1837) [`63161abed`](https://github.com/marko-js/marko/commit/63161abed5fa071e88d06646bf0f55f0c6852b54) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with source map position for shorthand attribute methods.
+
+* Updated dependencies [[`63161abed`](https://github.com/marko-js/marko/commit/63161abed5fa071e88d06646bf0f55f0c6852b54)]:
+  - @marko/compiler@5.22.2
+
+## 5.21.4
+
+### Patch Changes
+
+- [#1832](https://github.com/marko-js/marko/pull/1832) [`20dd7b088`](https://github.com/marko-js/marko/commit/20dd7b08800d49fe99badd4faa540bcfefa7b681) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update markoc cli to allow striping types.
+
+## 5.21.3
+
+### Patch Changes
+
+- [#1824](https://github.com/marko-js/marko/pull/1824) [`2f6459d2c`](https://github.com/marko-js/marko/commit/2f6459d2c421ac82c4627c90f1c50cb229a99d33) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where shorthand attribute methods could not have a "return" statement.
+
+- Updated dependencies [[`2f6459d2c`](https://github.com/marko-js/marko/commit/2f6459d2c421ac82c4627c90f1c50cb229a99d33)]:
+  - @marko/compiler@5.21.7
+  - @marko/translator-default@5.21.3
+
 ## 5.21.2
 
 ### Patch Changes

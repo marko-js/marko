@@ -3,10 +3,8 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize]
-    paths-ignore: ["**.md"]
   push:
     branches: [main, v3, v4]
-    paths-ignore: ["**.md"]
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}"

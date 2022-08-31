@@ -16,6 +16,15 @@ export function buildIfStatement(path, args) {
 
   let nextPath = path.getNextSibling();
 
+  while (
+    nextPath.isMarkoComment() ||
+    (nextPath.isMarkoText() && /^\s*$/.test(nextPath.node.value))
+  ) {
+    const ignorePath = nextPath;
+    nextPath = nextPath.getNextSibling();
+    ignorePath.remove();
+  }
+
   // Provide the if statement to the next part of the if chain.
   if (nextPath.isMarkoTag()) {
     const nextTagName = nextPath.get("name");
