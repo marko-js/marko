@@ -124,7 +124,7 @@ components/
 
 This allows you to create components that have other files associated with them and keep those files together in the directory structure.
 
-> **ProTip:**
+> **ProTip**:
 > You can take advantage of nested `components/` directories to create "subcomponents" that are only available to the component that contains them.
 >
 > ```dir

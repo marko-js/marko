@@ -123,7 +123,7 @@ You can also pass an optional `step` attribute, which defaults to 1 otherwise. `
 </ol>
 ```
 
-> **ProTip:** This syntax is for generating numbers from nothing. Don’t use it to iterate over an object, like so:
+> **ProTip**: This syntax is for generating numbers from nothing. Don’t use it to iterate over an object, like so:
 >
 > ```marko
 > <!-- Inefficient code, do not copy -->
@@ -138,7 +138,7 @@ You can also pass an optional `step` attribute, which defaults to 1 otherwise. `
 
 ## `<while>`
 
-> **Warning:** Using `<while>` is not recommended. Instead, replicate it with [an iterable and `<for>`](#iterating-over-a-list).
+> **Warning**: Using `<while>` is not recommended. Instead, replicate it with [an iterable and `<for>`](#iterating-over-a-list).
 >
 > In the future, Marko may restrict value mutation during rendering, for runtime optimizations.
 
@@ -224,7 +224,7 @@ Macros receive input like components do, including [a `renderBody` for provided 
 <h1>Hello!</h1>
 ```
 
-> **ProTip:** You can use a macro inside itself for recursive layouts, like displaying directory contents.
+> **ProTip**: You can use a macro inside itself for recursive layouts, like displaying directory contents.
 
 ## `<await>`
 

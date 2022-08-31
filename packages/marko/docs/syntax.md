@@ -3,9 +3,9 @@
 Marko is HTML _re-imagined_ as a language for building dynamic and reactive user interfaces.
 Just about any valid HTML is valid Marko, but Marko extends the HTML language to allow building modern applications in a declarative way.
 
-> **ProTip:** Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see the documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
+> **ProTip**: Marko also supports a [beautiful concise syntax](./concise.md). If you'd prefer to see the documentation using this syntax, just click the `switch syntax` button in the corner of any Marko code sample.
 
-> **Note:** Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text. The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
+> **Note**: Text at the root of a template (outside any tags) must be prefixed with the [concise syntax's `--`](./concise.md#text) to denote it is text. The parser starts in concise mode and would otherwise try to parse what you meant to be text as a concise tag declaration.
 >
 > ```marko
 > -- Root level text
@@ -42,7 +42,7 @@ These values are automatically escaped so you don't accidentally insert maliciou
 </div>
 ```
 
-> **ProTip:** If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
+> **ProTip**: If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
 >
 > ```marko
 > <div>
@@ -70,7 +70,7 @@ In marko attributes are parsed as JavaScript expressions (instead of just string
 
 Attributes that are passed to a custom tag are received as it's [`input`](https://markojs.com/docs/class-components/#input).
 
-> **Note:** Although in most cases you won't see a difference, strings are parsed as JavaScript strings, not HTML strings. Where this comes up most often is using the `pattern` attribute with the `<input>` tag: you need to "double escape" your regex escape sequences much like you were passing a string to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) (or you can use a literal `/regex/`).
+> **Note**: Although in most cases you won't see a difference, strings are parsed as JavaScript strings, not HTML strings. Where this comes up most often is using the `pattern` attribute with the `<input>` tag: you need to "double escape" your regex escape sequences much like you were passing a string to the [`RegExp` constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) (or you can use a literal `/regex/`).
 >
 > _Marko Source:_
 >
@@ -142,7 +142,7 @@ Similarly, when only an attribute name is defined, it is equivalent to specifyin
 <custom-menu expanded=true/>
 ```
 
-> **ProTip:**
+> **ProTip**:
 > You can take advantage of the way Marko handles boolean attributes to conditionally render attributes:
 >
 > _Marko Source:_
@@ -194,7 +194,7 @@ _HTML Output:_
 <a class="active" href="https://ebay.com/" target="_blank">eBay</a>
 ```
 
-> **ProTip:**
+> **ProTip**:
 > With spread attributes order matters.
 > You can take advantage of this to implement both default attributes, and enforced attributes.
 >
@@ -202,7 +202,7 @@ _HTML Output:_
 > <custom-tag ...defaults ...userSupplied class="overridden"/>
 > ```
 
-> **ProTip:**
+> **ProTip**:
 > You can provide `undefined` to a spread attribute which will output nothing.
 
 ### Style attribute
@@ -294,7 +294,7 @@ In the following example, `<mouse>` provides a parameter which we have named `po
 
 > `<mouse>` would [render its body](./body-content.md) and provide the position similar to this: `<${input.renderBody} x=0 y=0/>`.
 
-> **ProTip:** Tag `|parameters|` are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
+> **ProTip**: Tag `|parameters|` are treated as regular JavaScript function parameters. This means you can destructure, set default values, etc.
 >
 > ```marko
 > <mouse|{ x, y }|>
@@ -302,7 +302,7 @@ In the following example, `<mouse>` provides a parameter which we have named `po
 > </mouse>
 > ```
 
-> **Note:** Parameters are not available to attributes, only to the tag body.
+> **Note**: Parameters are not available to attributes, only to the tag body.
 >
 > ```marko
 > <mouse|position| something=position>
@@ -368,7 +368,7 @@ $ const MyTag = href ? 'a' : 'button';
 <MyTag/>
 ```
 
-> **ProTip:**
+> **ProTip**:
 > If you find that you have a wrapper element that is conditional, but whose body should always be rendered then you can use a null dynamic tag. For example, to only render a wrapping `<a>` tag if there is a valid URL then you could do the following:
 >
 > _Marko Source:_
@@ -406,7 +406,7 @@ import componentB from "<component-b>";
 <${useA ? componentA : componentB}/>
 ```
 
-> **ProTip:**
+> **ProTip**:
 > You can also switch between a normal HTML tag and a component:
 >
 > ```marko
@@ -417,7 +417,7 @@ import componentB from "<component-b>";
 > </>
 > ```
 
-> **Note:** You cannot reference a Marko custom tag using a name string:
+> **Note**: You cannot reference a Marko custom tag using a name string:
 >
 > _Marko Source:_
 >
@@ -477,7 +477,7 @@ These body sections are also commonly used to create layouts:
 
 These tags are passed to the custom tag as objects with a `renderBody`, it can then [render its body content](./body-content.md).
 
-> **Note:**
+> **Note**:
 > Attribute tags can have their own parameters, but like attributes, they cannot access the parameters of their parent tag:
 >
 > ```marko
@@ -522,7 +522,7 @@ $ {
 }
 ```
 
-> **ProTip:** Any JavaScript statement can be used here, even `debugger`:
+> **ProTip**: Any JavaScript statement can be used here, even `debugger`:
 >
 > ```marko
 > <div>
@@ -531,7 +531,7 @@ $ {
 > </div>
 > ```
 
-> **ProTip:** If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
+> **ProTip**: If necessary, you can escape `$` using a backslash to have it be treated as text instead of a placeholder token:
 >
 > ```marko
 > <p>You can run JS in a Marko template like this:</p>
@@ -540,7 +540,7 @@ $ {
 > </code>
 > ```
 
-> **ProTip:** If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](#importing-external-files) it.
+> **ProTip**: If you find yourself writing a lot of inline JS, consider moving it out to an external file and then [`import`](#importing-external-files) it.
 
 ### Static JavaScript
 

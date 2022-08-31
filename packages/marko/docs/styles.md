@@ -14,7 +14,7 @@ style {
 
 These blocks add global css to the page. The above example will not style just the `<div>` in the component, but all divs on the page. Because of this we recommend following a naming convention such as [BEM](http://getbem.com/introduction/). Marko will likely provide a way to automatically scope these styles to the current component [in the future](https://github.com/marko-js/marko/issues/666).
 
-> **Note:** Style blocks (unlike `<style>` tags) do not support `${placeholders}` and must be static.
+> **Note**: Style blocks (unlike `<style>` tags) do not support `${placeholders}` and must be static.
 
 ## Preprocessors
 

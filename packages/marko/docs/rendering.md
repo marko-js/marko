@@ -8,7 +8,7 @@ _example.js_
 import FancyButton from "./components/fancy-button.marko";
 ```
 
-> **Note:** If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko CLI](https://github.com/marko-js/cli). If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md) or [`rollup`](./rollup.md).
+> **Note**: If you are targeting node.js, you will need to enable the [require extension](./installing.md#require-marko-views) in order to require `.marko` files or you will need to precompile all of your templates using [Marko CLI](https://github.com/marko-js/cli). If you are targeting the browser, you will need to use a bundler like [`lasso`](./lasso.md), [`webpack`](./webpack.md) or [`rollup`](./rollup.md).
 
 Once you have a view, you can pass input data and render it:
 
@@ -221,7 +221,7 @@ View.render({
 });
 ```
 
-> **Warning:** Use `$global` with caution; it is visible in any component.
+> **Warning**: Use `$global` with caution; it is visible in any component.
 
 ### Sending global data to browsers
 

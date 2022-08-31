@@ -1,6 +1,6 @@
 # Compiler
 
-> **Note:**
+> **Note**:
 > The compiler is an advanced API intended for integrating with build tools (webpack, rollup, etc.) and experimenting with new language features in userland. It's best to use existing official plugins and the standard tag library when possible.
 
 ## Compile API
@@ -351,7 +351,7 @@ These migrations run automatically in the background and can be written to disk 
 
 To hook into the `migrate` stage you can use the `migrate` option in the `marko.json` file.
 
-> **Note:**
+> **Note**:
 > To make the compiler to stop at this point and output the migrated template rather than continuing on to produce the JavaScript output, pass `"migrate"` as the value for the `output` compilation option.
 
 ### Transform
