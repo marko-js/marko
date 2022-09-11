@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === "production") {
   loadTemplate = () => import("./dist");
 } else {
   // Hookup the vite dev server.
-  const vite = await createViteServer({
+  const vite = await createServer({
     server: { middlewareMode: true }
   });
 
