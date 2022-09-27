@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.7
+
+### Patch Changes
+
+- [#1853](https://github.com/marko-js/marko/pull/1853) [`76771598e`](https://github.com/marko-js/marko/commit/76771598e83f143697c9a2bca3869f3c9fcf6ab1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Enable the meta option for the compiler when @marko/compiler/register is used. This makes usage with lasso easier.
+
 ## 5.22.6
 
 ### Patch Changes
