@@ -12,8 +12,11 @@ function register({ extensions = require.extensions, ...options } = {}) {
       compiler.compileFileSync(
         filename,
         Object.assign(
-          // eslint-disable-next-line no-constant-condition
-          { sourceMaps: "MARKO_DEBUG" ? "inline" : false },
+          {
+            meta: true,
+            // eslint-disable-next-line no-constant-condition
+            sourceMaps: "MARKO_DEBUG" ? "inline" : false
+          },
           options,
           requiredOptions
         )
