@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.8
+
+### Patch Changes
+
+- [#1855](https://github.com/marko-js/marko/pull/1855) [`760824659`](https://github.com/marko-js/marko/commit/76082465962b99c6b6f364104c2f135901534c0a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix browser-refresh client support when using @marko/compiler/register
+
 ## 5.22.7
 
 ### Patch Changes
