@@ -1,8 +1,8 @@
 import type { Scope } from "../common/types";
-import { Context, setContext } from "../common/context";
+import type { Context } from "../common/context";
 import { reconcile } from "./reconcile";
-import { Renderer, initRenderer } from "./renderer";
-import { createScope, getEmptyScope, destroyScope } from "./scope";
+import { Renderer, createScopeWithRenderer } from "./renderer";
+import { getEmptyScope, destroyScope } from "./scope";
 import { DOMFragment, singleNodeFragment } from "./fragment";
 import {
   derivation,
@@ -85,19 +85,17 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   ] as ChildScope;
 
   if (newRenderer) {
-    setContext(
-      scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
-    );
-    newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] = createScope(
-      scope
-    ) as ChildScope;
-    initRenderer(newRenderer, newScope);
+    newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] =
+      createScopeWithRenderer(
+        newRenderer,
+        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context,
+        scope
+      ) as ChildScope;
     prevScope =
       prevScope ||
       getEmptyScope(
         scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
       );
-    setContext(null);
   } else {
     newScope = getEmptyScope(
       scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
@@ -125,14 +123,13 @@ export function setConditionalRendererOnlyChild(
   referenceNode.textContent = "";
 
   if (newRenderer) {
-    setContext(
-      scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context
-    );
     const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
-      createScope(scope));
-    initRenderer(newRenderer, newScope);
+      createScopeWithRenderer(
+        newRenderer,
+        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context,
+        scope
+      ));
     fragment.___insertBefore(newScope, referenceNode, null);
-    setContext(null);
   }
 }
 
@@ -233,14 +230,16 @@ export function setLoopOf<T, ChildScope extends Scope>(
   if (len > 0) {
     newMap = new Map();
     newArray = [];
-    setContext(scope[loopIndex + LoopIndex.CONTEXT] as typeof Context);
     for (let index = 0; index < len; index++) {
       const item = newValues[index];
       const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
       if (!childScope) {
-        childScope = createScope(scope) as ChildScope;
-        initRenderer<ChildScope>(renderer, childScope);
+        childScope = createScopeWithRenderer(
+          renderer,
+          scope[loopIndex + LoopIndex.CONTEXT] as typeof Context,
+          scope
+        ) as ChildScope;
         // TODO: once we can track moves
         // needsReconciliation = true;
       } else {
@@ -253,7 +252,6 @@ export function setLoopOf<T, ChildScope extends Scope>(
       newMap.set(key, childScope);
       newArray.push(childScope);
     }
-    setContext(null);
   } else {
     if (referenceIsMarker) {
       newMap = emptyMarkerMap;

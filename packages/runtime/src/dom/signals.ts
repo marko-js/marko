@@ -1,11 +1,13 @@
 import { Scope, AccessorChars } from "../common/types";
-import { write } from "./scope";
+import { bindSignal, write } from "./scope";
 import type { Renderer } from "./renderer";
 
 export type Signal = {
   ___mark(scope: Scope): void;
   ___notify(scope: Scope, stale: boolean): void;
   ___apply(scope: Scope, data?: unknown): void;
+  ___subscribe?(scope: Scope): void;
+  ___unsubscribe?(scope: Scope): void;
 };
 
 let accessorId = 0;
@@ -215,6 +217,45 @@ export function closure<S extends Scope, V>(
     getDefaultMark,
     apply
   );
+}
+
+export function dynamicClosure<S extends Scope, V>(
+  ownerLevel: number,
+  providerValueAccessor: string | number,
+  subscribers: Signal[],
+  action?: (scope: S, value: V) => void
+): Signal {
+  const providerSubscriptionsAccessor =
+    providerValueAccessor + AccessorChars.SUBSCRIBERS;
+
+  const signal = {
+    ...closure(ownerLevel, providerValueAccessor, subscribers, action),
+    ___subscribe(scope: Scope) {
+      const ownerScope = getOwnerScope(scope, ownerLevel);
+      ownerScope[providerSubscriptionsAccessor] ??= new Set();
+      ownerScope[providerSubscriptionsAccessor].add(bindSignal(scope, signal));
+    },
+    ___unsubscribe(scope: Scope) {
+      const ownerScope = getOwnerScope(scope, ownerLevel);
+      (ownerScope[providerSubscriptionsAccessor] as Set<Signal>)?.delete(
+        bindSignal(scope, signal)
+      );
+    },
+  };
+
+  return signal;
+}
+
+export function dynamicSubscribers(valueAccessor: string | number) {
+  const subscriptionsAccessor = valueAccessor + AccessorChars.SUBSCRIBERS;
+  return wrapSignal((methodName) => (scope, extraArg) => {
+    const subscribers = scope[subscriptionsAccessor];
+    if (subscribers) {
+      for (const subscriber of subscribers) {
+        subscriber[methodName](scope, extraArg);
+      }
+    }
+  });
 }
 
 function getOwnerScope(scope: Scope, level: number) {

@@ -1,5 +1,7 @@
 import { queueHydrate } from "./queue";
 import type { Scope } from "../common/types";
+import type { Renderer } from "./renderer";
+import { Signal, wrapSignal } from "./signals";
 
 const CLIENT_SCOPE_ID_BIT = 2 ** 52;
 const SCOPE_ID_MULTIPLIER = 2 ** 16;
@@ -40,6 +42,32 @@ export function bind<S extends Scope>(
     : () => fn(boundScope);
 }
 
+export function bindRenderer<S extends Scope>(
+  ownerScope: S,
+  renderer: Renderer
+): Renderer {
+  return {
+    ...renderer,
+    ___owner: ownerScope,
+  };
+}
+
+export function bindSignal<S extends Scope>(
+  boundScope: S,
+  signal: Signal
+): Signal {
+  boundScope.___boundSignals ??= new Map();
+  let boundSignal = boundScope.___boundSignals.get(signal);
+  if (!boundSignal) {
+    boundSignal = wrapSignal(
+      (methodName) => (_scope, extraArg) =>
+        signal[methodName](boundScope, extraArg)
+    );
+    boundScope.___boundSignals.set(signal, boundSignal);
+  }
+  return boundSignal;
+}
+
 export function destroyScope(scope: Scope) {
   scope._?.___cleanup?.delete(scope);
 
@@ -51,6 +79,12 @@ export function destroyScope(scope: Scope) {
       } else {
         destroyScope(instance);
       }
+    }
+  }
+  const closureSignals = scope.___renderer?.___closureSignals;
+  if (closureSignals) {
+    for (const signal of closureSignals) {
+      signal.___unsubscribe?.(scope);
     }
   }
   return scope;

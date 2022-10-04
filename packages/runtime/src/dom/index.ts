@@ -17,7 +17,6 @@ export {
   classAttr,
   styleAttr,
   props,
-  dynamicTag,
   userEffect,
 } from "./dom";
 
@@ -45,4 +44,6 @@ export {
   derivation,
   subscriber,
   closure,
+  dynamicClosure,
+  dynamicSubscribers,
 } from "./signals";

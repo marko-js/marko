@@ -1,3 +1,6 @@
+import type { Signal } from "../dom/signals";
+import type { Renderer as ClientRenderer } from "../dom/renderer";
+
 export type Renderer = (...args: unknown[]) => unknown;
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
@@ -19,6 +22,8 @@ export type Scope<
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | Scope> | undefined;
   ___client: boolean;
+  ___boundSignals: Map<Signal, Signal> | undefined;
+  ___renderer: ClientRenderer | undefined;
   _: Scope | undefined;
   [x: string | number]: any;
 } & T;
@@ -40,4 +45,5 @@ export const enum AccessorChars {
   DYNAMIC = "?",
   MARK = "#",
   STALE = "&",
+  SUBSCRIBERS = "*",
 }

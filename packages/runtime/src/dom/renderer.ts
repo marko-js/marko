@@ -1,6 +1,7 @@
 import type { Scope } from "../common/types";
 import type { Signal } from "./signals";
 import { createScope } from "./scope";
+import { Context, setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
 
@@ -21,6 +22,8 @@ export type Renderer<S extends Scope = Scope> = {
   ___sourceNode: Node | undefined;
   ___dynamicStartNodeOffset: number | undefined;
   ___dynamicEndNodeOffset: number | undefined;
+  ___attrs: Signal | undefined;
+  ___owner: Scope | undefined;
 };
 
 type Input = Record<string, unknown>;
@@ -29,6 +32,22 @@ type RenderResult<I extends Input> = {
   update: (input: I) => void;
   destroy: () => void;
 };
+
+export function createScopeWithRenderer<S extends Scope = Scope>(
+  renderer: Renderer<S>,
+  context: typeof Context,
+  ownerScope?: Scope
+) {
+  setContext(context);
+  const newScope = createScope(renderer.___owner || ownerScope) as S;
+  for (const signal of renderer.___closureSignals) {
+    signal.___subscribe?.(newScope);
+  }
+  newScope.___renderer = renderer as Renderer;
+  initRenderer<S>(renderer, newScope);
+  setContext(null);
+  return newScope;
+}
 
 export function initRenderer<S extends Scope = Scope>(
   renderer: Renderer<S>,
@@ -80,7 +99,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );
-  return (input: I, element: Element): RenderResult<I> => {
+  return Object.assign((input: I, element: Element): RenderResult<I> => {
     const scope = createScope() as S;
     queueHydrate(scope, () => {
       element.replaceChildren(dom);
@@ -105,7 +124,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
         // TODO
       },
     };
-  };
+  }, renderer);
 }
 
 export function createRenderer<S extends Scope>(
@@ -127,6 +146,8 @@ export function createRenderer<S extends Scope>(
     ___sourceNode: undefined,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
     ___dynamicEndNodeOffset: dynamicEndNodeOffset,
+    ___attrs: undefined,
+    ___owner: undefined,
   };
 }
 
