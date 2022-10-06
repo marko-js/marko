@@ -24,7 +24,7 @@ export { on } from "./event";
 
 export { staticNodesFragment, dynamicFragment } from "./fragment";
 
-export { init, register } from "./hydrate";
+export { init, register, hydrateSubscription } from "./hydrate";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 

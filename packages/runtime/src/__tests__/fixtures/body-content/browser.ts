@@ -14,6 +14,7 @@ import {
   createRenderer,
   conditional,
   dynamicSubscribers,
+  hydrateSubscription,
 } from "../../../dom/index";
 import { bindRenderer } from "../../../dom/scope";
 import { get, next, beginChild, endChild } from "../../utils/walks";
@@ -88,12 +89,11 @@ export const FancyButton = createRenderFn(
 // Main
 /////////////////////////
 // <let/clickCount = 0/>
-// <FancyButton onclick() { clickCount++ }>${clickCount}</FancyButton>
+// <FancyButton onclick() { clickCount++ }>${input.clickCount}</FancyButton>
 
 const enum Index {
   FANCYBUTTON_SCOPE = 0,
   CLICK_COUNT = 1,
-  LISTENERS = 2,
 }
 
 type ComponentScope = Scope<{
@@ -118,7 +118,7 @@ const _clickCount = source(Index.CLICK_COUNT, [
   dynamicSubscribers(Index.CLICK_COUNT),
 ]);
 
-const clickHandler = (scope: ComponentScope) => {
+export const clickHandler = (scope: ComponentScope) => {
   queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
 };
 
@@ -138,6 +138,12 @@ const enum RenderBody$Index {
 type RenderBody$Scope = Scope<{
   [RenderBody$Index.TEXT]: Text;
 }>;
+
+export const subscribe_clickCount$renderBody = hydrateSubscription(
+  clickCount$renderBody,
+  1,
+  Index.CLICK_COUNT
+);
 
 const renderBody = createRenderer(" ", get + next(1), undefined, [
   clickCount$renderBody,

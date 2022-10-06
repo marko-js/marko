@@ -97,3 +97,9 @@ export function onDestroy(scope: Scope, localIndex: number) {
   }
   (scope.___cleanup = scope.___cleanup || new Set()).add(localIndex);
 }
+
+export function getOwnerScope(scope: Scope, level: number) {
+  let ownerScope = scope._!;
+  for (let i = 1; i++ < level; ) ownerScope = ownerScope._!;
+  return ownerScope;
+}

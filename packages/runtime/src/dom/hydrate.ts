@@ -1,14 +1,21 @@
-import { Scope, HydrateSymbols } from "../common/types";
-import { bind } from "./scope";
+import { Scope, HydrateSymbols, AccessorChars } from "../common/types";
+import type { Renderer } from "./renderer";
+import {
+  bind as bindFunction,
+  bindRenderer,
+  bindSignal,
+  getOwnerScope,
+} from "./scope";
+import type { Signal } from "./signals";
 
 type HydrateFn<S extends Scope = Scope> = (scope: S) => void;
 
-const fnsById: Record<string, HydrateFn> = {};
+const registeredObjects = new Map<string, HydrateFn | Signal | Renderer>();
 const SCOPE_ID_MULTIPLIER = 2 ** 16;
 
-export function register<F extends HydrateFn<Scope<any>>>(id: string, fn: F) {
-  fnsById[id] = fn;
-  return fn;
+export function register<T>(id: string, obj: T): T {
+  registeredObjects.set(id, obj as any);
+  return obj;
 }
 
 const doc = document;
@@ -26,10 +33,15 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const scopeLookup: Record<number, Scope> = {};
   const stack: number[] = [];
   const fakeArray = { push: hydrate };
-  const bindFunction = (fnId: string, scopeId: number) => {
-    const fn = fnsById[fnId];
-    const scope = scopeLookup[scopeId];
-    return bind(scope, fn);
+  const bind = (registryId: string, scope: Scope) => {
+    const obj = registeredObjects.get(registryId);
+    if ((obj as Renderer).___template) {
+      return bindRenderer(scope, obj as Renderer);
+    } else if ((obj as Signal).___mark) {
+      return bindSignal(scope, obj as Signal);
+    } else {
+      return bindFunction(scope, obj as HydrateFn);
+    }
   };
 
   Object.defineProperty(window, hydrateVar, {
@@ -46,7 +58,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
 
   function hydrate(
     scopesFn: (
-      b: typeof bindFunction,
+      b: typeof bind,
       s: typeof scopeLookup,
       ...rest: unknown[]
     ) => Record<string, Scope>,
@@ -56,7 +68,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       walker.currentNode = doc;
     }
 
-    const scopes = scopesFn?.(bindFunction, scopeLookup);
+    const scopes = scopesFn?.(bind, scopeLookup);
 
     /**
      * Loop over all the new hydration scopes and see if a previous walk
@@ -70,7 +82,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
 
       if (storedScope !== scope) {
         if (storedScope) {
-          Object.assign(scope, storedScope);
+          scopeLookup[scopeId] = Object.assign(scope, storedScope);
         } else {
           scope.___id = scopeId * SCOPE_ID_MULTIPLIER;
           scopeLookup[scopeId] = scope;
@@ -122,7 +134,37 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      fnsById[calls[i]]!(scopeLookup[calls[i + 1] as number]!);
+      (registeredObjects.get(calls[i] as string) as HydrateFn)!(
+        scopeLookup[calls[i + 1] as number]!
+      );
     }
   }
+}
+
+export function hydrateSubscription(
+  signal: Signal,
+  ownerLevel: number,
+  ownerValueAccessor: string | number
+) {
+  const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
+  const ownerSubscribersAccessor =
+    ownerValueAccessor + AccessorChars.SUBSCRIBERS;
+
+  return (subscriberScope: Scope) => {
+    const ownerScope = getOwnerScope(subscriberScope, ownerLevel);
+    const boundSignal = bindSignal(subscriberScope, signal);
+    const ownerMark = ownerScope[ownerMarkAccessor];
+    (ownerScope[ownerSubscribersAccessor] ??= new Set()).add(boundSignal);
+
+    // TODO: if the mark is not undefined, it means the value was updated clientside
+    // before this subscriber was flushed.
+    if (ownerMark === 0) {
+      // the value has finished updating
+      // we should trigger an update to `signal`
+    } else if (ownerMark >= 1) {
+      // the value is queued for update
+      // we should mark `signal` and let it be updated when the owner is updated
+    }
+    ``;
+  };
 }

@@ -1,5 +1,5 @@
 # Write
-  <body><!M#0 0><button><!M#1 0>0</button></body><script>(M$h=[]).push((b,s)=>({0:[,,0]}),["counter",0,])</script>
+  <body><!M#0 1><button><!M#0 2>0</button></body><script>(M$h=[]).push((b,s,h)=>({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])</script>
 
 
 # Render "End"
@@ -7,13 +7,13 @@
 <html>
   <head />
   <body>
-    <!--M#0 0-->
+    <!--M#0 1-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 2-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
     </script>
   </body>
 </html>
@@ -38,13 +38,13 @@ inserted #document/html0/body1/script2/#text0
 <html>
   <head />
   <body>
-    <!--M#0 0-->
+    <!--M#0 1-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 2-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
     </script>
   </body>
 </html>
@@ -63,13 +63,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
+    <!--M#0 1-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 2-->
       1
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
     </script>
   </body>
 </html>
@@ -88,13 +88,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
+    <!--M#0 1-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 2-->
       2
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
     </script>
   </body>
 </html>
@@ -113,13 +113,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
+    <!--M#0 1-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 2-->
       3
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
     </script>
   </body>
 </html>

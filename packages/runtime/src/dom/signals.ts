@@ -1,5 +1,5 @@
 import { Scope, AccessorChars } from "../common/types";
-import { bindSignal, write } from "./scope";
+import { bindSignal, getOwnerScope, write } from "./scope";
 import type { Renderer } from "./renderer";
 
 export type Signal = {
@@ -256,12 +256,6 @@ export function dynamicSubscribers(valueAccessor: string | number) {
       }
     }
   });
-}
-
-function getOwnerScope(scope: Scope, level: number) {
-  let ownerScope = scope._!;
-  for (let i = 1; i++ < level; ) ownerScope = ownerScope._!;
-  return ownerScope;
 }
 
 // function getOwnerScope(scope: Scope, level: number) {

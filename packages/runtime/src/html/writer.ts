@@ -11,7 +11,7 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 );
 
 type MaybeFlushable = Writable & { flush?(): void };
-type PartialScope = Record<number, unknown> | unknown[];
+type PartialScope = Record<string | number, unknown> | unknown[];
 let $_buffer: Buffer | null = null;
 let $_stream: MaybeFlushable | null = null;
 let $_flush: typeof flushToStream | null = null;

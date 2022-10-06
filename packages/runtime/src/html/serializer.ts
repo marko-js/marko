@@ -8,26 +8,22 @@ const REF_START_CHARS_LEN = REF_START_CHARS.length;
 const REF_CHARS =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_";
 const REF_CHARS_LEN = REF_CHARS.length;
-const SYMBOL_FN_ID = Symbol("FN_ID");
-const SYMBOL_SCOPE_ID = Symbol("SCOPE_ID");
-const SYMBOL_OFFSET = Symbol("OFFSET");
+const SYMBOL_REGISTRY_ID = Symbol("REGISTRY_ID");
+const SYMBOL_SCOPE = Symbol("SCOPE");
 
-type SerializableFn = ((...args: unknown[]) => unknown) & {
-  [SYMBOL_FN_ID]: string;
-  [SYMBOL_SCOPE_ID]: string;
-  [SYMBOL_OFFSET]: number;
+type Serializable<T> = T & {
+  [SYMBOL_REGISTRY_ID]: string;
+  [SYMBOL_SCOPE]: Record<string, unknown>;
 };
 
-export function register(
-  fn: (...args: unknown[]) => unknown,
-  fnId: string,
-  scopeId: string,
-  offset: number
-): SerializableFn {
-  (fn as SerializableFn)[SYMBOL_FN_ID] = fnId;
-  (fn as SerializableFn)[SYMBOL_SCOPE_ID] = scopeId;
-  (fn as SerializableFn)[SYMBOL_OFFSET] = offset;
-  return fn as SerializableFn;
+export function register<T>(
+  entry: T,
+  registryId: string,
+  scope: Record<string, unknown>
+): Serializable<T> {
+  (entry as Serializable<T>)[SYMBOL_REGISTRY_ID] = registryId;
+  (entry as Serializable<T>)[SYMBOL_SCOPE] = scope;
+  return entry as Serializable<T>;
 }
 
 export function stringify(root: unknown) {
@@ -180,7 +176,7 @@ export class Serializer {
         }
         break;
       case "function": {
-        return this.writeFunction(cur as SerializableFn);
+        return this.writeFunction(cur as Serializable<(...args: any[]) => any>);
       }
 
       default:
@@ -190,15 +186,17 @@ export class Serializer {
     return true;
   }
 
-  writeFunction(fn: SerializableFn) {
-    const {
-      [SYMBOL_FN_ID]: fnId,
-      [SYMBOL_SCOPE_ID]: scopeId,
-      [SYMBOL_OFFSET]: offset,
-    } = fn;
-    if (fnId && scopeId && offset != null) {
+  writeFunction(fn: Serializable<(...args: any[]) => any>) {
+    const { [SYMBOL_REGISTRY_ID]: registryId, [SYMBOL_SCOPE]: scope } = fn;
+    if (registryId && scope != null) {
       // ASSERT: fnId and scopeId don't need `quote` escaping
-      this.BUFFER.push(`${PARAM_BIND}("${fnId}",${offset},"${scopeId}")`);
+      const ref = this.getRef(scope, "", undefined);
+      if (ref === true || ref === false) {
+        throw new Error(
+          "The scope has not yet been defined or is circular. This needs to be fixed in the serializer."
+        );
+      }
+      this.BUFFER.push(`${PARAM_BIND}("${registryId}",${ref})`);
       return true;
     }
     return false;
