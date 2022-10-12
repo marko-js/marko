@@ -12,6 +12,10 @@ function loadTaglibFromFile(filePath) {
   return loaders.loadTaglibFromFile(filePath);
 }
 
+function loadTaglibFromDir(filePath) {
+  return loaders.loadTaglibFromDir(filePath);
+}
+
 function clearCache() {
   cache.clear();
 }
@@ -34,4 +38,5 @@ exports.clearCache = clearCache;
 exports.createTaglib = createTaglib;
 exports.loadTaglibFromProps = loadTaglibFromProps;
 exports.loadTaglibFromFile = loadTaglibFromFile;
+exports.loadTaglibFromDir = loadTaglibFromDir;
 exports.loadTag = loadTag;
