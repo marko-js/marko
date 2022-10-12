@@ -1,3 +1,3 @@
-Invalid tag file: packages/translator-default/test/fixtures/error-missing-entry-marko-tag-json/components/some-tag/marko-tag.json. Neither a renderer or a template was found for tag. {
-  "@a": "string"
-}
+packages/translator-default/test/fixtures/error-missing-entry-marko-tag-json/template.marko(1,2): Unable to find entry point for custom tag <some-tag>.
+> 1 | <some-tag/>
+    |  ^^^^^^^^

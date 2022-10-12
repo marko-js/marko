@@ -4,10 +4,6 @@ var resolveFrom = require("resolve-from").silent;
 var taglibFS = require("../fs");
 var taglibLoader = require("../loader");
 var lassoPackageRoot = require("lasso-package-root");
-var scanTagsDir = require("../loader/scanTagsDir");
-var DependencyChain = require("../loader/DependencyChain");
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
 var findCache = {};
 var excludedDirs = {};
 var excludedPackages = {};
@@ -65,9 +61,6 @@ function find(dirname, registeredTaglibs) {
   var added = {};
 
   var helper = {
-    alreadyAdded: function (taglibId) {
-      return hasOwnProperty.call(added, taglibId);
-    },
     addTaglib: function (taglib) {
       if (added[taglib.id]) {
         return;
@@ -99,22 +92,10 @@ function find(dirname, registeredTaglibs) {
       }
 
       if (!taglib || taglib.tagsDir === undefined) {
-        let componentsPath = nodePath.join(curDirname, "components");
+        const componentsPath = nodePath.join(curDirname, "components");
 
-        if (
-          existsSync(componentsPath) &&
-          !excludedDirs[componentsPath] &&
-          !helper.alreadyAdded(componentsPath)
-        ) {
-          let taglib = taglibLoader.createTaglib(componentsPath);
-          scanTagsDir(
-            componentsPath,
-            nodePath.dirname(componentsPath),
-            "components",
-            taglib,
-            new DependencyChain([componentsPath])
-          );
-          helper.addTaglib(taglib);
+        if (existsSync(componentsPath) && !excludedDirs[componentsPath]) {
+          helper.addTaglib(taglibLoader.loadTaglibFromDir(curDirname));
         }
       }
     }
