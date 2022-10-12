@@ -18,6 +18,7 @@ exports.loadTagFromProps = require("./loadTagFromProps");
 exports.loadTagFromFile = require("./loadTagFromFile");
 exports.loadTaglibFromProps = require("./loadTaglibFromProps");
 exports.loadTaglibFromFile = require("./loadTaglibFromFile");
+exports.loadTaglibFromDir = require("./loadTaglibFromDir");
 exports.loadAttributes = require("./loadAttributes");
 exports.isSupportedAttributeProperty = isSupportedAttributeProperty;
 exports.isSupportedTagProperty = isSupportedTagProperty;
