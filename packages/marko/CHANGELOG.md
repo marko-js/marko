@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.6](https://github.com/marko-js/marko/compare/v4.24.5...v4.24.6) (2022-10-12)
+
+
+### Bug Fixes
+
+* improve tag dir scanning cache ([#1859](https://github.com/marko-js/marko/issues/1859)) ([412e2eb](https://github.com/marko-js/marko/commit/412e2eb77a57772dfd619756b40d962425332748))
+
 ### [4.24.5](https://github.com/marko-js/marko/compare/v4.24.4...v4.24.5) (2022-07-14)
 
 
