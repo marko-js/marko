@@ -1,18 +1,10 @@
 import child from "./components/child/index.marko";
 
-const data1 = _dynamicTag(_scope, child, null);
-
 const _tagName = show && child;
-
-const data2 = _dynamicTag(_scope, _tagName, null);
-
-const data3 = _dynamicTag(_scope, dynamic, null);
 
 const _tagName2 = show && "div";
 
-const el1 = _dynamicTag(_scope, _tagName2, null);
-
-import { dynamicTag as _dynamicTag, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _dynamic = /* @__PURE__ */_source(4, []);
 

@@ -1,5 +1,5 @@
 import Other from "./other.marko";
-import { write as _write, data as _data, createRenderer as _createRenderer, dynamicTag as _dynamicTag, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, data as _data, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _message$OtherBody = "SIGNAL NOT INITIALIZED";
 
 const _OtherBody = /* @__PURE__ */_createRenderer(" </span>",

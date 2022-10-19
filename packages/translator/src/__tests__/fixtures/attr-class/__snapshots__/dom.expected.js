@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, write as _write, dynamicTag as _dynamicTag, createRenderer as _createRenderer, subscriber as _subscriber, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { classAttr as _classAttr, write as _write, createRenderer as _createRenderer, subscriber as _subscriber, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 
 const _dynamicBody2 = /* @__PURE__ */_createRenderer("", "");

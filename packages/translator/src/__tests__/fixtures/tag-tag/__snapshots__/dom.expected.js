@@ -1,6 +1,6 @@
 const MyTag = input => {};
 
-import { data as _data, dynamicTag as _dynamicTag, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _input$tagBody = "SIGNAL NOT INITIALIZED";
 
 const _tagBody = /* @__PURE__ */_createRenderer("Hello <!>",

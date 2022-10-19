@@ -1,7 +1,7 @@
 import "./foo";
 import { b as c } from "./bar";
 import baz from "./components/baz.marko";
-import { dynamicTag as _dynamicTag, data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _setup = _scope => {
   _data(_scope[0], c);

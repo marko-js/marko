@@ -11,7 +11,7 @@ const _tagName4 = showTagA && tagA;
 
 const _tagName5 = largeHeading || "h2";
 
-import { dynamicTag as _dynamicTag, createRenderer as _createRenderer, source as _source, derivation as _derivation, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { createRenderer as _createRenderer, source as _source, derivation as _derivation, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _dynamicBody2 = /* @__PURE__ */_createRenderer("Body content", "");
 
