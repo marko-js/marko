@@ -1,16 +1,5 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-
-const _tagName = show ? "div" : null;
-
-const _tagName2 = show && "div";
-
-const _tagName3 = showTagA && tagA;
-
-const _tagName4 = showTagA && tagA;
-
-const _tagName5 = largeHeading || "h2";
-
 import { derivation as _derivation, source as _source, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _tagConstB = /* @__PURE__ */_derivation(10, 1, [], (_scope, show = _scope[2]) => show ? "div" : null);

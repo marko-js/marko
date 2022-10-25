@@ -1,9 +1,4 @@
 import child from "./components/child/index.marko";
-
-const _tagName = show && child;
-
-const _tagName2 = show && "div";
-
 import { source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _dynamic = /* @__PURE__ */_source(1, []);

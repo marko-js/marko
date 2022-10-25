@@ -12,6 +12,7 @@ import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import AttributeTag from "./attribute-tag";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import { isOutputHTML } from "../../util/marko-config";
 
 export default {
   analyze: {
@@ -106,7 +107,8 @@ export default {
       if (
         extra.tagNameDynamic &&
         extra.tagNameNullable &&
-        !tag.get("name").isIdentifier()
+        !tag.get("name").isIdentifier() &&
+        isOutputHTML()
       ) {
         const tagNameId = tag.scope.generateUidIdentifier("tagName");
         const [tagNameVarPath] = tag.insertBefore(
