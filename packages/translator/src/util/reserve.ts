@@ -10,7 +10,6 @@ const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
 export const enum ReserveType {
   Visit = 0,
   Store = 1,
-  Attr = 2,
 }
 
 export interface Reserve {

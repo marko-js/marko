@@ -11,31 +11,31 @@ const _tagName4 = showTagA && tagA;
 
 const _tagName5 = largeHeading || "h2";
 
-import { createRenderer as _createRenderer, source as _source, derivation as _derivation, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { createRenderer as _createRenderer, derivation as _derivation, source as _source, notifySignal as _notifySignal, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _dynamicBody2 = /* @__PURE__ */_createRenderer("Body content", "");
 
-const _other = /* @__PURE__ */_source(19, []);
+const _tagConstB = /* @__PURE__ */_derivation(19, 1, [], (_scope, show = _scope[11]) => show ? "div" : null);
 
-const _level = /* @__PURE__ */_source(18, []);
+const _tagConstA = /* @__PURE__ */_derivation(18, 1, [], _scope => "a");
 
-const _tag = /* @__PURE__ */_source(17, []);
+const _largeHeading = /* @__PURE__ */_derivation(17, 1, [], (_scope, isLarge = _scope[13]) => isLarge && "h1");
 
-const _isLarge = /* @__PURE__ */_source(16, [_largeHeading]);
+const _other = /* @__PURE__ */_source(16, []);
 
-const _showTagA = /* @__PURE__ */_source(15, []);
+const _level = /* @__PURE__ */_source(15, []);
 
-const _show = /* @__PURE__ */_source(14, [_tagConstB]);
+const _tag = /* @__PURE__ */_source(14, []);
 
-const _x = /* @__PURE__ */_source(13, []);
+const _isLarge = /* @__PURE__ */_source(13, [_largeHeading]);
 
-const _renderBody = /* @__PURE__ */_source(12, []);
+const _showTagA = /* @__PURE__ */_source(12, []);
 
-const _tagConstB = /* @__PURE__ */_derivation(11, 1, [], (_scope, show = _scope[14]) => show ? "div" : null);
+const _show = /* @__PURE__ */_source(11, [_tagConstB]);
 
-const _tagConstA = /* @__PURE__ */_derivation(10, 1, [], _scope => "a");
+const _x = /* @__PURE__ */_source(10, []);
 
-const _largeHeading = /* @__PURE__ */_derivation(9, 1, [], (_scope, isLarge = _scope[16]) => isLarge && "h1");
+const _renderBody = /* @__PURE__ */_source(9, []);
 
 const _setup = _scope => {
   _notifySignal(_scope, _tagConstA);

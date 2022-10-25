@@ -13,18 +13,18 @@ const _itemBody = /* @__PURE__ */_createRenderer("",
 
 const _ifBody = /* @__PURE__ */_createRenderer("", "");
 
-const _if$helloBody = /* @__PURE__ */_conditional(0, 1, (_scope, x = _scope._[1]) => x ? _ifBody : null);
+const _if$helloBody = /* @__PURE__ */_conditional(0, 1, (_scope, x = _scope._[0]) => x ? _ifBody : null);
 
-const _x$helloBody = /* @__PURE__ */_closure(1, 1, [_if$helloBody]);
+const _x$helloBody = /* @__PURE__ */_closure(1, 0, [_if$helloBody]);
 
 const _helloBody = /* @__PURE__ */_createRenderer("<!>",
 /* replace, skip(5) */
 "%-", null, [_x$helloBody]);
 
-const _x = /* @__PURE__ */_source(1, []);
+const _x = /* @__PURE__ */_source(0, []);
 
 const _setup = _scope => {
-  _hello(_scope[0]);
+  _hello(_scope[1]);
 };
 
 export const attrs = /* @__PURE__ */_destructureSources([_x], (_scope, {
@@ -35,7 +35,7 @@ export const attrs = /* @__PURE__ */_destructureSources([_x], (_scope, {
 export { _x as _apply_x };
 export const template = `${_hello_template}`;
 export const walks =
-/* beginChild(0), _hello_walks, endChild */
-`/${_hello_walks}&`;
+/* beginChild(1), _hello_walks, endChild */
+`0${_hello_walks}&`;
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);

@@ -27,7 +27,7 @@ export default {
         t.Identifier
       >;
       const sectionId = getOrCreateSectionId(tag);
-      trackReferencesForBindings(sectionId, varPath, ReserveType.Attr);
+      trackReferencesForBindings(sectionId, varPath, ReserveType.Store);
       for (const key in bindings) {
         const binding = bindings[key].extra!.reserve!;
         binding!.exportIdentifier = getReferenceGroup(

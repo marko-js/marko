@@ -6,9 +6,9 @@ const _tagName2 = show && "div";
 
 import { source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
-const _dynamic = /* @__PURE__ */_source(4, []);
+const _dynamic = /* @__PURE__ */_source(2, []);
 
-const _show = /* @__PURE__ */_source(3, []);
+const _show = /* @__PURE__ */_source(1, []);
 
 export const attrs = /* @__PURE__ */_destructureSources([_show, _dynamic], (_scope, {
   show,
