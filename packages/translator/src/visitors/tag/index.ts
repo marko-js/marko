@@ -6,7 +6,6 @@ import {
   Plugin,
 } from "@marko/babel-utils";
 import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
-import { isOutputHTML } from "../../util/marko-config";
 import * as hooks from "../../util/plugin-hooks";
 import NativeTag from "./native-tag";
 import CustomTag from "./custom-tag";
@@ -104,28 +103,23 @@ export default {
         }
       }
 
-      let { tagNameType } = extra;
+      if (
+        extra.tagNameDynamic &&
+        extra.tagNameNullable &&
+        !tag.get("name").isIdentifier()
+      ) {
+        const tagNameId = tag.scope.generateUidIdentifier("tagName");
+        const [tagNameVarPath] = tag.insertBefore(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(tagNameId, tag.node.name),
+          ])
+        );
 
-      if (extra.tagNameDynamic) {
-        if (extra.tagNameNullable && !tag.get("name").isIdentifier()) {
-          const tagNameId = tag.scope.generateUidIdentifier("tagName");
-          const [tagNameVarPath] = tag.insertBefore(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(tagNameId, tag.node.name),
-            ])
-          );
-
-          tagNameVarPath.skip();
-          tag.set("name", tagNameId);
-        }
-
-        if (tagNameType !== TagNameTypes.DynamicTag && !isOutputHTML()) {
-          // DOM implementation requires non strings actually be a dynamic tag call.
-          tagNameType = TagNameTypes.DynamicTag;
-        }
+        tagNameVarPath.skip();
+        tag.set("name", tagNameId);
       }
 
-      switch (tagNameType) {
+      switch (extra.tagNameType) {
         case TagNameTypes.NativeTag:
           NativeTag.translate.enter(tag);
           break;
@@ -149,19 +143,7 @@ export default {
         return;
       }
 
-      const { extra } = tag.node;
-      let { tagNameType } = extra;
-
-      if (
-        extra.tagNameDynamic &&
-        tagNameType !== TagNameTypes.DynamicTag &&
-        (!isOutputHTML() || tagNameType === undefined)
-      ) {
-        // DOM implementation requires non strings actually be a dynamic tag call.
-        tagNameType = TagNameTypes.DynamicTag;
-      }
-
-      switch (tagNameType) {
+      switch (tag.node.extra.tagNameType) {
         case TagNameTypes.NativeTag:
           NativeTag.translate.exit(tag);
           break;

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isNativeTag } from "@marko/babel-utils";
+import { isOutputHTML } from "./marko-config";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -168,9 +169,14 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      extra.tagNameType = type!;
+      // // DOM implementation requires non strings actually be a dynamic tag call.
+      extra.tagNameType = isOutputHTML() ? type! : TagNameTypes.DynamicTag;
       extra.tagNameNullable = nullable;
       extra.tagNameDynamic = true;
+    }
+
+    if (extra.tagNameType === undefined) {
+      extra.tagNameType = TagNameTypes.DynamicTag;
     }
   }
 
