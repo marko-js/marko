@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.8
+
+### Patch Changes
+
+- [#1862](https://github.com/marko-js/marko/pull/1862) [`30e0ea43d`](https://github.com/marko-js/marko/commit/30e0ea43d56e0a3c59748eae32a0ab85921c1aeb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid mutating component instance in HMR mode. (Improves support in tags api preview)
+
 ## 5.21.7
 
 ### Patch Changes
