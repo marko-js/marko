@@ -7,6 +7,7 @@ var updateManager = require("../components/update-manager");
 var createTemplate = runtime.t;
 var createComponent = registry.___createComponent;
 var registered = {};
+var instancesByType = {};
 var queue;
 
 runtime.t = function (typeName) {
@@ -16,7 +17,7 @@ runtime.t = function (typeName) {
 
   var renderFn;
   var template = (registered[typeName] = createTemplate(typeName));
-  var instances = (template.___instances = []);
+  var instances = (instancesByType[typeName] = []);
   Object.defineProperty(template, "_", {
     get: function () {
       return renderFn && proxyRenderer;
@@ -75,11 +76,10 @@ runtime.t = function (typeName) {
 };
 
 registry.___createComponent = function (typeName, id) {
-  var template = registered[typeName];
+  var instances = instancesByType[typeName];
   var instance = createComponent(typeName, id);
 
-  if (template) {
-    var instances = template.___instances;
+  if (instances) {
     instances.push(instance);
     instance.once("destroy", function () {
       if (!instance.___hmrDestroyed) {
