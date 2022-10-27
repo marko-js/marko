@@ -21,6 +21,7 @@ const pureFunctions: Array<
   "conditional",
   "destructureSources",
   "bind",
+  "bindRenderer",
   "inLoopScope",
   "inConditionalScope",
 ];

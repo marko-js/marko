@@ -42,6 +42,8 @@ const _renderer = ({
 
   });
 
+  _write(`${_markHydrateNode(_scope, 1)}`);
+
   _dynamicTag(test, {
     style: {
       color: "green"

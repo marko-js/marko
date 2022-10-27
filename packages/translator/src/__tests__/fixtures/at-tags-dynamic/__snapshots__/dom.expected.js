@@ -1,18 +1,5 @@
 const _col = [];
-
-_col.push({
-  outside: true,
-  row: {
-    row: -1,
-
-    renderBody() {
-      _write("Outside");
-    }
-
-  }
-});
-
-import { write as _write, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, bindRenderer as _bindRenderer, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
 
 const _rowBody = /* @__PURE__ */_createRenderer("", "");

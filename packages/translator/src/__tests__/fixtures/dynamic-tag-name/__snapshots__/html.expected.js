@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, markHydrateNode as _markHydrateNode, attr as _attr, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { markHydrateNode as _markHydrateNode, write as _write, dynamicTag as _dynamicTag, attr as _attr, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const _renderer = ({
   renderBody,
@@ -14,10 +14,14 @@ const _renderer = ({
 }) => {
   const _scope = _nextScopeId();
 
+  _write(`${_markHydrateNode(_scope, 0)}`);
+
   _dynamicTag(renderBody, {
     class: ["a", "b"],
     other: other
   });
+
+  _write(`${_markHydrateNode(_scope, 6)}`);
 
   _dynamicTag(x, {
     class: ["a", "b"],
@@ -26,13 +30,13 @@ const _renderer = ({
 
   const _tagName = show ? "div" : null;
 
-  if (_tagName) _write(`${_markHydrateNode(_scope, 0)}<${_tagName} class="a b"${_attr("other", other)}></${_tagName}>`);
+  if (_tagName) _write(`${_markHydrateNode(_scope, 12)}<${_tagName} class="a b"${_attr("other", other)}></${_tagName}>`);
 
   const _tagName2 = show && "div";
 
-  if (_tagName2) _write(`${_markHydrateNode(_scope, 1)}<${_tagName2} class="a b"${_attr("other", other)}></${_tagName2}>`);
+  if (_tagName2) _write(`${_markHydrateNode(_scope, 13)}<${_tagName2} class="a b"${_attr("other", other)}></${_tagName2}>`);
 
-  _write(`${_markHydrateNode(_scope, 2)}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>`);
+  _write(`${_markHydrateNode(_scope, 14)}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>`);
 
   (showTagA ? tagA : tagB)({
     class: ["a", "b"],
@@ -82,13 +86,13 @@ const _renderer = ({
 
   const _tagName5 = largeHeading || "h2";
 
-  if (_tagName5) _write(`${_markHydrateNode(_scope, 3)}<${_tagName5} class="a b"${_attr("other", other)}></${_tagName5}>`);
+  if (_tagName5) _write(`${_markHydrateNode(_scope, 15)}<${_tagName5} class="a b"${_attr("other", other)}></${_tagName5}>`);
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
 
-  _write(`${_markHydrateNode(_scope, 4)}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, 5)}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, 6)}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, 7)}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>`);
+  _write(`${_markHydrateNode(_scope, 16)}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, 17)}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, 18)}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, 19)}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>`);
 
-  if (tagConstB) _write(`${_markHydrateNode(_scope, 8)}<${tagConstB} class="a b"${_attr("other", other)}></${tagConstB}>`);
+  if (tagConstB) _write(`${_markHydrateNode(_scope, 20)}<${tagConstB} class="a b"${_attr("other", other)}></${tagConstB}>`);
 };
 
 export default _renderer;

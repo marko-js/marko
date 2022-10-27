@@ -1,7 +1,7 @@
-import { setSource as _setSource, queueSource as _queueSource, data as _data, closure as _closure, createRenderer as _createRenderer, source as _source, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, dynamicSubscribers as _dynamicSubscribers, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, source as _source, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _myButton, attrs as _myButton_attrs, template as _myButton_template, walks as _myButton_walks } from "./components/my-button.marko";
 
-const _clickCount$myButtonBody = /* @__PURE__ */_closure(1, 0, [], (_scope, clickCount) => _data(_scope[0], clickCount));
+const _clickCount$myButtonBody = _dynamicClosure(1, 0, [], (_scope, clickCount) => _data(_scope[0], clickCount));
 
 const _myButtonBody = /* @__PURE__ */_createRenderer(" ",
 /* get */
@@ -13,8 +13,9 @@ const _onclick = function (_scope) {
   _queueSource(_scope, _clickCount, clickCount + 1);
 };
 
-const _clickCount = /* @__PURE__ */_source(0, [_myButton_attrs], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
-  onclick: /* @__PURE__ */_bind(_scope, _onclick)
+const _clickCount = /* @__PURE__ */_source(0, [_myButton_attrs, _dynamicSubscribers(0)], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
+  onclick: /* @__PURE__ */_bind(_scope, _onclick),
+  renderBody: /* @__PURE__ */_bindRenderer(_scope, _myButtonBody)
 }));
 
 const _setup = _scope => {

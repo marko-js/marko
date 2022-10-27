@@ -8,6 +8,7 @@ import {
   setSource,
   queueSource,
   bind,
+  bindRenderer,
   Scope,
   destructureSources,
   dynamicClosure,
@@ -16,7 +17,6 @@ import {
   dynamicSubscribers,
   hydrateSubscription,
 } from "../../../dom/index";
-import { bindRenderer } from "../../../dom/scope";
 import { get, next, beginChild, endChild } from "../../utils/walks";
 
 ////////////////////////////////////////////////////

@@ -27,7 +27,7 @@ import {
   writeHTMLHydrateStatements,
 } from "../../util/apply-hydrate";
 import { reserveScope, ReserveType } from "../../util/reserve";
-import { currentProgramPath } from "../program";
+import { currentProgramPath, scopeIdentifier } from "../program";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -193,24 +193,22 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     importNamed(file, relativePath, "walks", `${tagName}_walks`)
   );
 
-  const attrsObject = attrsToObject(tag, true);
-  const renderBodyProp = getRenderBodyProp(attrsObject);
+  let attrsObject = attrsToObject(tag);
 
-  if (renderBodyProp) {
-    const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
-    (attrsObject as t.ObjectExpression).properties.pop();
+  if (tagBodySectionId !== tagSectionId) {
+    attrsObject ??= t.objectExpression([]);
     (attrsObject as t.ObjectExpression).properties.push(
       t.objectProperty(
         t.identifier("renderBody"),
         callRuntime(
-          "createRenderer",
-          writes || t.stringLiteral(""),
-          walks || t.stringLiteral(""),
-          t.arrowFunctionExpression(renderBodyProp.params, renderBodyProp.body)
+          "bindRenderer",
+          scopeIdentifier,
+          writer.getRenderer(tagBodySectionId)
         )
       )
     );
   }
+
   addStatement(
     "apply",
     tagSectionId,

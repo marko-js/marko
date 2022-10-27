@@ -35,6 +35,8 @@ const _renderer = input => {
 
   });
 
+  _write(`${_markHydrateNode(_scope, 1)}`);
+
   _dynamicTag(input.test, {
     class: ["a", {
       b: c,

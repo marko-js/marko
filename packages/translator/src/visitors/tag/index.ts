@@ -18,6 +18,7 @@ export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const tagDef = getTagDef(tag);
+      const type = analyzeTagNameType(tag);
       const hook = tagDef?.analyzer?.hook as Plugin;
 
       if (hook) {
@@ -25,7 +26,7 @@ export default {
         return;
       }
 
-      switch (analyzeTagNameType(tag)) {
+      switch (type) {
         case TagNameTypes.NativeTag:
           NativeTag.analyze.enter(tag);
           break;
@@ -36,7 +37,7 @@ export default {
           // AttributeTag.analyze.enter(tag);
           break;
         case TagNameTypes.DynamicTag:
-          // DynamicTag.analyze.enter(tag);
+          DynamicTag.analyze.enter(tag);
           break;
       }
     },

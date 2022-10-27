@@ -6,7 +6,7 @@ const _renderer = ({
 }) => {
   const _scope = _nextScopeId();
 
-  _write(`${_markHydrateNode(_scope, 0)}<button>`);
+  _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}`);
 
   _dynamicTag(renderBody, null);
 
@@ -15,7 +15,7 @@ const _renderer = ({
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onclick");
 
   _writeHydrateScope(_scope, {
-    1: onclick
+    7: onclick
   });
 };
 

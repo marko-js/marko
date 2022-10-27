@@ -24,14 +24,16 @@ type Signal = {
   hydrate: t.Statement[];
   subscribers: t.Expression[];
   closures: Map<number /* sectionId */, Signal>;
+  hasDynamicSubscribers?: true;
 };
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map()
 );
-const [getSubscribeBuilder, _setSubscribeBuilder] =
-  createSectionState<subscribeBuilder>("queue");
+const [getSubscribeBuilder, _setSubscribeBuilder] = createSectionState<
+  subscribeBuilder | undefined
+>("queue");
 export const [getClosures] = createSectionState<t.Expression[]>(
   "closures",
   () => []
@@ -98,10 +100,16 @@ export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
         const provider = getSignal(reserve.sectionId, reserve);
         if (builder) {
           provider.subscribers.push(builder(signal.identifier));
+        } else if (!provider.hasDynamicSubscribers) {
+          provider.hasDynamicSubscribers = true;
+          provider.subscribers.push(
+            callRuntime("dynamicSubscribers", t.numericLiteral(reserve.id))
+          );
         }
 
         return callRuntime(
-          "closure",
+          // TODO: this should use `closure` for <if> and <for>
+          builder ? "closure" : "dynamicClosure",
           // TODO: read from an owner multiple levels up
           t.numericLiteral(1),
           t.numericLiteral(reserve.id),
@@ -391,7 +399,7 @@ function sortSignals(a: Signal, b: Signal) {
   const aReserves = getReserves(a);
   const bReserves = getReserves(b);
 
-  for (let i = Math.max(aReserves.length, bReserves.length); i >= 0; i--) {
+  for (let i = Math.max(aReserves.length, bReserves.length) - 1; i >= 0; i--) {
     const diff = (bReserves[i] ?? -1) - (aReserves[i] ?? -1);
     if (diff !== 0) return diff;
   }

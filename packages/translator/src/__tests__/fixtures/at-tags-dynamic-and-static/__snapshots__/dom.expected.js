@@ -1,5 +1,5 @@
 import { setup as _hello, template as _hello_template, walks as _hello_walks } from "./components/hello/index.marko";
-import { createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { bindRenderer as _bindRenderer, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 
 const _forBody = /* @__PURE__ */_createRenderer("", "");
 

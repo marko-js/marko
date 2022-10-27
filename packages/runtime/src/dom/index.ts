@@ -30,7 +30,7 @@ export { pushContext, popContext, getInContext } from "../common/context";
 
 export { queueSource, queueHydrate, run } from "./queue";
 
-export { write, bind } from "./scope";
+export { write, bind, bindRenderer } from "./scope";
 
 export type { Scope } from "../common/types";
 

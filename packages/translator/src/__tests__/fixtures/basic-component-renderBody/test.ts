@@ -1,4 +1,7 @@
-export const steps = [{}];
+export const steps = [{}, click, click, click];
 
-export const skip_hydrate = true;
-export const skip_csr = true;
+function click(container: Element) {
+  container.querySelector("button")!.click();
+}
+
+export const skip_ssr = true;
