@@ -79,7 +79,7 @@ export function html(scope: Scope, value: string, index: number) {
   parser.innerHTML = value || " ";
   const newContent = parser.content;
   write(scope, index, newContent.firstChild);
-  write(scope, index + "-" as any as number, newContent.lastChild);
+  write(scope, (index + "-") as any as number, newContent.lastChild);
   parentNode.insertBefore(newContent, firstChild);
 
   let current = firstChild;

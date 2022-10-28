@@ -45,20 +45,27 @@ export const hydrateEventHandler = (scope: ComponentScope) => {
   on(scope[Index.BUTTON], "click", scope[Index.EVENT_HANDLER]);
 };
 
-const _eventHandler = derivation(Index.EVENT_HANDLER, 1, [], (scope: ComponentScope) => scope[Index.CLICK_COUNT] <= 1 ? bind(scope, clickHandler) : false, (scope: ComponentScope) => {
-  queueHydrate(scope, hydrateEventHandler);
-})
+const _eventHandler = derivation(
+  Index.EVENT_HANDLER,
+  1,
+  [],
+  (scope: ComponentScope) =>
+    scope[Index.CLICK_COUNT] <= 1 ? bind(scope, clickHandler) : false,
+  (scope: ComponentScope) => {
+    queueHydrate(scope, hydrateEventHandler);
+  }
+);
 
-const _clickCount = source(Index.CLICK_COUNT, [_eventHandler], (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
-  data(scope[Index.BUTTON_TEXT], value);
-});
+const _clickCount = source(
+  Index.CLICK_COUNT,
+  [_eventHandler],
+  (scope: ComponentScope, value: ComponentScope[Index.CLICK_COUNT]) => {
+    data(scope[Index.BUTTON_TEXT], value);
+  }
+);
 
 const clickHandler = (scope: ComponentScope) => {
-  queueSource(
-    scope,
-    _clickCount,
-    scope[Index.CLICK_COUNT] + 1
-  );
+  queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
 };
 
 export default createRenderFn(template, walks, setup);

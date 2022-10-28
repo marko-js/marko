@@ -55,9 +55,15 @@ export const setup = (scope: ComponentScope) => {
   setSource(scope, _b, 0);
 };
 
-const _ab = derivation(Index.CONCAT_AB, 2, [], (scope) => "" + scope[Index.A] + scope[Index.B], (scope, ab) => {
-  data(scope[Index.DIV_TEXT], ab);
-})
+const _ab = derivation(
+  Index.CONCAT_AB,
+  2,
+  [],
+  (scope) => "" + scope[Index.A] + scope[Index.B],
+  (scope, ab) => {
+    data(scope[Index.DIV_TEXT], ab);
+  }
+);
 
 const _a = source(Index.A, [_ab]);
 
@@ -78,12 +84,15 @@ const effectFn = (scope: ComponentScope) => {
 export const value_subscribers = [];
 export const value_action = (scope: ComponentScope) => {
   queueHydrate(scope, hydrateInputValue);
-}
+};
 
 const _value = source(Index.INPUT_VALUE, value_subscribers, value_action);
 
-export const attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
-  setSource(scope, _value, value);
-});
+export const attrs = destructureSources(
+  [_value],
+  (scope: ComponentScope, { value }: Input) => {
+    setSource(scope, _value, value);
+  }
+);
 
 export default createRenderFn(template, walks, setup, attrs);

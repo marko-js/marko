@@ -6,20 +6,19 @@ const enum BatchOffsets {
   SCOPE = 0,
   SIGNAL = 1,
   VALUE = 2,
-  TOTAL = 3
+  TOTAL = 3,
 }
 
 const enum HydrateOffsets {
   SCOPE = 0,
   FN = 1,
-  TOTAL = 2
+  TOTAL = 2,
 }
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
 let currentBatch: unknown[] = [];
 let currentHydrate: unknown[] = [];
-
 
 export function queueSource(scope: Scope, signal: Signal, value: unknown) {
   schedule();
@@ -50,9 +49,9 @@ export function run() {
 
 export function runHydrate() {
   try {
-    for (let i = 0; i < currentHydrate.length; i+=HydrateOffsets.TOTAL) {
+    for (let i = 0; i < currentHydrate.length; i += HydrateOffsets.TOTAL) {
       const scope = currentHydrate[i] as Scope;
-      const fn = currentHydrate[i+1] as (scope: Scope) => void;
+      const fn = currentHydrate[i + 1] as (scope: Scope) => void;
       fn(scope);
     }
   } finally {

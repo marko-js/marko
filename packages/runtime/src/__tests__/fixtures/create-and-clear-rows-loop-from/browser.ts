@@ -11,7 +11,6 @@ import {
 } from "../../../dom/index";
 import { next, get } from "../../utils/walks";
 
-
 export const inputs = [
   {
     from: 0,
@@ -59,7 +58,6 @@ type For0Scope = Scope<{
   [INDEX_FOR0.n]: number;
 }>;
 
-
 // <attrs/{ from, to, step }/>
 // <div>
 //   <for|n| from=input.from to=input.to step=input.step>
@@ -70,41 +68,43 @@ type For0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + next(1);
 
-const n$forBody0 = source(INDEX_FOR0.n, [], (scope: For0Scope, n: For0Scope[INDEX_FOR0.n]) => {
-  data(scope[INDEX_FOR0.textNode], n);
-});
+const n$forBody0 = source(
+  INDEX_FOR0.n,
+  [],
+  (scope: For0Scope, n: For0Scope[INDEX_FOR0.n]) => {
+    data(scope[INDEX_FOR0.textNode], n);
+  }
+);
 
 const forBody0 = createRenderer(" ", get + next(1));
 
 const for0 = loop(
-  INDEX.loop, 
-  3, 
+  INDEX.loop,
+  3,
   forBody0,
   [n$forBody0],
   (scope: For0Scope, [n]) => setSource(scope, n$forBody0, n),
-  (scope: ComponentScope) => computeLoopFromTo(scope[INDEX.from], scope[INDEX.to], scope[INDEX.step])
+  (scope: ComponentScope) =>
+    computeLoopFromTo(scope[INDEX.from], scope[INDEX.to], scope[INDEX.step])
 );
 
-export const from_subscribers = [
-  for0
-]
+export const from_subscribers = [for0];
 
-export const to_subscribers = [
-  for0
-]
+export const to_subscribers = [for0];
 
-export const step_subscribers = [
-  for0
-]
+export const step_subscribers = [for0];
 
 const _from = source(INDEX.from, from_subscribers);
 const _to = source(INDEX.to, to_subscribers);
 const _step = source(INDEX.step, step_subscribers);
 
-export const attrs = destructureSources([_from, _to, _step], (scope: ComponentScope, { from, to, step }: Input) => {
-  setSource(scope, _from, from);
-  setSource(scope, _to, to);
-  setSource(scope, _step, step);
-});
+export const attrs = destructureSources(
+  [_from, _to, _step],
+  (scope: ComponentScope, { from, to, step }: Input) => {
+    setSource(scope, _from, from);
+    setSource(scope, _to, to);
+    setSource(scope, _step, step);
+  }
+);
 
 export default createRenderFn(template, walks, undefined, attrs);

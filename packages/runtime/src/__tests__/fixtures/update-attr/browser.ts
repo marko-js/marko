@@ -1,4 +1,11 @@
-import { attr, createRenderFn, Scope, source, destructureSources, setSource } from "../../../dom/index";
+import {
+  attr,
+  createRenderFn,
+  Scope,
+  source,
+  destructureSources,
+  setSource,
+} from "../../../dom/index";
 import { get, over } from "../../utils/walks";
 
 export const inputs = [
@@ -40,14 +47,20 @@ export const template = `<div a=0></div>`;
 export const walks = get + over(1);
 
 export const value_subscribers = [];
-export const value_action = (scope: ComponentScope, value: ComponentScope[INDEX.value]) => {
+export const value_action = (
+  scope: ComponentScope,
+  value: ComponentScope[INDEX.value]
+) => {
   attr(scope[INDEX.div], "b", value);
-}
+};
 
 const _value = source(INDEX.value, value_subscribers, value_action);
 
-export const attrs = destructureSources([_value], (scope: ComponentScope, { value }: Input) => {
-  setSource(scope, _value, value);
-});
+export const attrs = destructureSources(
+  [_value],
+  (scope: ComponentScope, { value }: Input) => {
+    setSource(scope, _value, value);
+  }
+);
 
 export default createRenderFn(template, walks, undefined, attrs);

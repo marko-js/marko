@@ -29,7 +29,7 @@ const enum Index {
   B_STALE = 7,
   SUM_AB = 8,
   SUM_AB_MARK = 9,
-  SUM_AB_STALE = 10
+  SUM_AB_STALE = 10,
 }
 
 type ComponentScope = Scope<{
@@ -61,9 +61,15 @@ const clickHandler = (scope: ComponentScope) => {
   queueSource(scope, _b, scope[Index.B] + 1);
 };
 
-const sumAB = derivation(Index.SUM_AB, 2, [], (scope: ComponentScope) => scope[Index.A] + scope[Index.B], (scope: ComponentScope, value: number) => {
-  data(scope[Index.TEXT], value);
-});
+const sumAB = derivation(
+  Index.SUM_AB,
+  2,
+  [],
+  (scope: ComponentScope) => scope[Index.A] + scope[Index.B],
+  (scope: ComponentScope, value: number) => {
+    data(scope[Index.TEXT], value);
+  }
+);
 const _a = source(Index.A, [sumAB]);
 const _b = source(Index.B, [sumAB]);
 

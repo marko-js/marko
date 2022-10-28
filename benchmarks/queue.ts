@@ -20,7 +20,7 @@ import {
   run as runDeferredSort,
 } from "../packages/runtime/src/dom/queue-deferred-sort";
 
-function queueImmediate(scope, fn, priority) {
+function queueImmediate(scope, fn) {
   fn(scope);
 }
 

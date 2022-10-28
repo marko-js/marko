@@ -88,29 +88,37 @@ type For0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-const text$forBody0 = source(INDEX_FOR0.text, [], (scope: For0Scope, text: For0Scope[INDEX_FOR0.text]) => {
-  data(scope[INDEX_FOR0.textNode], text);
-});
+const text$forBody0 = source(
+  INDEX_FOR0.text,
+  [],
+  (scope: For0Scope, text: For0Scope[INDEX_FOR0.text]) => {
+    data(scope[INDEX_FOR0.textNode], text);
+  }
+);
 
 const forBody0 = createRenderer(" ", get + next(1));
 
 const for0 = loop(
-  INDEX.loop, 
-  1, 
+  INDEX.loop,
+  1,
   forBody0,
   [text$forBody0],
   (scope: For0Scope, [{ text }]) => setSource(scope, text$forBody0, text),
-  (scope: ComponentScope) => [scope[INDEX.children], (i: Input["children"][number]) => "" + i.id]
+  (scope: ComponentScope) => [
+    scope[INDEX.children],
+    (i: Input["children"][number]) => "" + i.id,
+  ]
 );
 
-export const children_subscribers = [
-  for0
-]
+export const children_subscribers = [for0];
 
 const _children = source(INDEX.children, children_subscribers);
 
-export const attrs = destructureSources([_children], (scope: ComponentScope, { children }: Input) => {
-  setSource(scope, _children, children);
-});
+export const attrs = destructureSources(
+  [_children],
+  (scope: ComponentScope, { children }: Input) => {
+    setSource(scope, _children, children);
+  }
+);
 
 export default createRenderFn(template, walks, undefined, attrs);
