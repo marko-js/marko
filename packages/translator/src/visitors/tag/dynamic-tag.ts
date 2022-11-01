@@ -42,12 +42,16 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
-      const attrsObject = attrsToObject(tag, true);
-      const renderBodyProp = getRenderBodyProp(attrsObject);
-      const args: t.Expression[] = [node.name, attrsObject || t.nullLiteral()];
 
       if (isOutputHTML()) {
         writer.flushInto(tag);
+        const attrsObject = attrsToObject(tag, true);
+        const renderBodyProp = getRenderBodyProp(attrsObject);
+        const args: t.Expression[] = [
+          node.name,
+          attrsObject || t.nullLiteral(),
+        ];
+
         if (renderBodyProp) {
           (attrsObject as t.ObjectExpression).properties.pop();
 
