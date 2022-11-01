@@ -3,7 +3,7 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { initSource, queueSource, addStatement } from "../util/apply-hydrate";
+import { initSource, queueSource, addStatement } from "../util/signals";
 import { callRuntime } from "../util/runtime";
 import replaceAssignments from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";

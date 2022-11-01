@@ -1,12 +1,12 @@
 import { types as t } from "@marko/compiler";
-import type { ReferenceGroup } from "../util/references";
+import type { ReferenceGroup } from "./references";
 import {
   getSectionId,
   createSectionState,
   forEachSectionIdReverse,
   getOrCreateSectionId,
-} from "../util/sections";
-import { Reserve, insertReserve } from "../util/reserve";
+} from "./sections";
+import { Reserve, insertReserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";

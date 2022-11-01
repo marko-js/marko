@@ -5,7 +5,7 @@ import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
-import { getSetup } from "./apply-hydrate";
+import { getSetup } from "./signals";
 import { currentProgramPath } from "../visitors/program";
 
 const [getRenderer] = createSectionState<t.Identifier>(

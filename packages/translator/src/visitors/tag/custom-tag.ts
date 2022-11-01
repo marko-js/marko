@@ -25,7 +25,7 @@ import {
   addStatement,
   getSignal,
   writeHTMLHydrateStatements,
-} from "../../util/apply-hydrate";
+} from "../../util/signals";
 import { reserveScope, ReserveType } from "../../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../program";
 

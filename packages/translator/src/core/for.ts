@@ -15,7 +15,7 @@ import {
   subscribe,
   writeHTMLHydrateStatements,
   getComputeFn,
-} from "../util/apply-hydrate";
+} from "../util/signals";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
 import {
   ReserveType,

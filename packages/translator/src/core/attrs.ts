@@ -7,7 +7,7 @@ import {
 import { ReserveType } from "../util/reserve";
 import { getOrCreateSectionId } from "../util/sections";
 import { currentProgramPath } from "../visitors/program";
-import { initSource } from "../util/apply-hydrate";
+import { initSource } from "../util/signals";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {

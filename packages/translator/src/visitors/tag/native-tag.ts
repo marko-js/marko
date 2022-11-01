@@ -7,7 +7,7 @@ import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope } from "../../util/reserve";
-import { addStatement, addHTMLHydrateCall } from "../../util/apply-hydrate";
+import { addStatement, addHTMLHydrateCall } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { currentProgramPath, scopeIdentifier } from "../program";

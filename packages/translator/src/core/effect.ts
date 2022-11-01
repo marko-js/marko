@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { addStatement, addHTMLHydrateCall } from "../util/apply-hydrate";
+import { addStatement, addHTMLHydrateCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
 import { getSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";

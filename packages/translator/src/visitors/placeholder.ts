@@ -5,7 +5,7 @@ import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
 import { getSectionId, getOrCreateSectionId } from "../util/sections";
 import { ReserveType, reserveScope } from "../util/reserve";
-import { addStatement } from "../util/apply-hydrate";
+import { addStatement } from "../util/signals";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import { scopeIdentifier } from "./program";

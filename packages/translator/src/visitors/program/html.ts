@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { writeHTMLHydrateStatements } from "../../util/apply-hydrate";
+import { writeHTMLHydrateStatements } from "../../util/signals";
 import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 import isStatic from "../../util/is-static";

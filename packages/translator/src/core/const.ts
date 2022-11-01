@@ -3,7 +3,7 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { initDerivation } from "../util/apply-hydrate";
+import { initDerivation } from "../util/signals";
 
 export default {
   translate(tag) {

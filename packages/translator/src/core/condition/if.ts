@@ -8,7 +8,7 @@ import {
   getSignal,
   setSubscriberBuilder,
   writeHTMLHydrateStatements,
-} from "../../util/apply-hydrate";
+} from "../../util/signals";
 import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";

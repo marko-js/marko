@@ -7,7 +7,7 @@ import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputHTML } from "../../util/marko-config";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import { getComputeFn, getSignal, subscribe } from "../../util/apply-hydrate";
+import { getComputeFn, getSignal, subscribe } from "../../util/signals";
 import {
   countReserves,
   Reserve,

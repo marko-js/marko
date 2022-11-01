@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
-import { getClosures, getSignal, writeSignals } from "../../util/apply-hydrate";
+import { getClosures, getSignal, writeSignals } from "../../util/signals";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
 import { scopeIdentifier } from ".";
