@@ -42,6 +42,7 @@ export {
   source,
   destructureSources,
   derivation,
+  nextTagId,
   subscriber,
   closure,
   dynamicClosure,

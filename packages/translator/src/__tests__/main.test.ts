@@ -277,7 +277,7 @@ function getNormalizedHtml(container: Element) {
   // clone.innerHTML = clone.innerHTML;
   clone.normalize();
 
-  return clone.innerHTML.trim();
+  return clone.innerHTML.trim().replace(/[cs]\d+/g, "%id");
 }
 
 function isIgnoredTag(node: Element) {

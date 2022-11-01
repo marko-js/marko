@@ -18,14 +18,21 @@ let $_flush: typeof flushToStream | null = null;
 let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
   null;
 
-const uids: WeakMap<MaybeFlushable, number> = new WeakMap();
-const runtimeFlushed: WeakSet<MaybeFlushable> = new WeakSet();
-const streamSerializers: WeakMap<MaybeFlushable, Serializer> = new WeakMap();
+let $_ids: {
+  scope: number;
+  tag: number;
+  placeholder: number;
+} | null = null;
 
-export function nextId() {
-  const id = uids.get($_stream!)! + 1 || 0;
-  uids.set($_stream!, id);
-  return id;
+const runtimeFlushed = new WeakSet<MaybeFlushable>();
+const streamSerializers = new WeakMap<MaybeFlushable, Serializer>();
+
+export function nextTagId() {
+  return "s" + $_ids!.tag++;
+}
+
+export function nextPlaceholderId() {
+  return $_ids!.placeholder++;
 }
 
 export function createRenderer(renderer: Renderer) {
@@ -38,6 +45,7 @@ export function createRenderer(renderer: Renderer) {
     $_buffer = createBuffer();
     $_stream = stream;
     $_flush = flushToStream;
+    $_ids = { scope: 0, tag: 0, placeholder: 0 };
     pushContext("$", context);
 
     try {
@@ -135,7 +143,7 @@ export function tryCatch(
   renderBody: () => void,
   renderError: (err: Error) => void
 ) {
-  const id = nextId();
+  const id = nextPlaceholderId();
   let err: Error | null = null;
 
   const originalPromises = $_promises;
@@ -234,7 +242,7 @@ export function tryPlaceholder(
     }
 
     if (contentPromises.length) {
-      const id = nextId();
+      const id = nextPlaceholderId();
       $_promises = $_promises || [];
       $_promises.push(
         Object.assign(
@@ -282,12 +290,8 @@ function marker(id: number) {
 
 /* Hydration */
 
-const scopeIds: WeakMap<MaybeFlushable, number> = new WeakMap();
-
 export function nextScopeId() {
-  const id = scopeIds.get($_stream!)! + 1 || 0;
-  scopeIds.set($_stream!, id);
-  return id;
+  return $_ids!.scope++;
 }
 
 export function writeHydrateCall(scopeId: number, fnId: string) {
@@ -366,7 +370,7 @@ function clearBuffer(buffer: Buffer) {
 }
 
 function clearScope() {
-  $_buffer = $_promises = $_stream = $_flush = null;
+  $_buffer = $_promises = $_stream = $_flush = $_ids = null;
   setContext(null);
 }
 
@@ -378,6 +382,7 @@ function resolveWithScope<T>(
   const originalStream = $_stream;
   const originalBuffer = $_buffer;
   const originalFlush = $_flush;
+  const originalIds = $_ids;
   const originalContext = Context;
 
   return promise.then(
@@ -386,6 +391,7 @@ function resolveWithScope<T>(
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;
+        $_ids = originalIds;
 
         try {
           setContext(originalContext);
@@ -401,6 +407,7 @@ function resolveWithScope<T>(
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;
+        $_ids = originalIds;
 
         try {
           setContext(originalContext);

@@ -298,3 +298,8 @@ export function inRenderBody(
     }
   });
 }
+
+let tagId = 0;
+export function nextTagId() {
+  return "c" + tagId++;
+}

@@ -17,6 +17,7 @@ export {
   fork,
   tryPlaceholder,
   tryCatch,
+  nextTagId,
   nextScopeId,
   markHydrateNode,
   writeHydrateCall,
