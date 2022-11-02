@@ -8,7 +8,7 @@ import _marko_attr from "marko/dist/runtime/html/helpers/attr.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
-  out.w(`<div default></div><div></div><div${_marko_attr("default", abc)}></div>`);
+  out.w(`<div value></div><div></div><div${_marko_attr("value", abc)}></div>`);
 }, {
   t: _marko_componentType,
   i: true

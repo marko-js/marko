@@ -293,7 +293,7 @@ export function parseMarko(file) {
       endAttr();
       currentTag.node.attributes.push(
         (currentAttr = t.markoAttribute(
-          name || "default",
+          name || "value",
           t.booleanLiteral(true),
           modifier,
           undefined,

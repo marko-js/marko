@@ -16,7 +16,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   }, out, _componentDef, "0");
 
   _marko_tag(_customTag, {
-    "default": function () {
+    "value": function () {
       console.log("again");
     }
   }, out, _componentDef, "1");
