@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.23.0
+
+### Minor Changes
+
+- [#1865](https://github.com/marko-js/marko/pull/1865) [`797e90489`](https://github.com/marko-js/marko/commit/797e90489359e1e87a9756da5082c1e085555546) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Changes the "default" attributes name to be "value". This is technically a breaking change, but it primarily only impacts the tags-api-preview which will also be getting a release to support this change.
+
 ## 5.22.10
 
 ### Patch Changes
