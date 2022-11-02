@@ -12,11 +12,11 @@ _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.e("div", {
-    "default": ""
+    "value": ""
   }, "0", _component, 0, 0);
   out.e("div", null, "1", _component, 0, 0);
   out.e("div", {
-    "default": abc
+    "value": abc
   }, "2", _component, 0, 0);
 }, {
   t: _marko_componentType,

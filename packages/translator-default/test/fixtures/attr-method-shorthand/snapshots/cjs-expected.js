@@ -26,7 +26,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     }
   }, out, _componentDef, "0");
   (0, _renderTag.default)(_customTag2.default, {
-    "default": function () {
+    "value": function () {
       console.log("again");
     }
   }, out, _componentDef, "1");

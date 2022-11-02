@@ -7,7 +7,7 @@ export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
 
 const _marko_node = _marko_createElement("div", {
-  "default": ""
+  "value": ""
 }, "0", null, 0, 0);
 
 const _marko_node2 = _marko_createElement("div", null, "1", null, 0, 0);
@@ -22,7 +22,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.n(_marko_node, _component);
   out.n(_marko_node2, _component);
   out.e("div", {
-    "default": abc
+    "value": abc
   }, "2", _component, 0, 0);
 }, {
   t: _marko_componentType,
