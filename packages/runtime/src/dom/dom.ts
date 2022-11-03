@@ -1,7 +1,7 @@
 import type { Renderer } from "./renderer";
 import { onDestroy, write } from "./scope";
 import { styleValue, classValue } from "../common/helpers";
-import type { Scope } from "../common/types";
+import { AccessorChars, Scope } from "../common/types";
 
 export const enum NodeType {
   Element = 1,
@@ -171,8 +171,8 @@ export function lifecycle(
   let storedThis = scope[index] as typeof thisObj;
   if (!storedThis) {
     storedThis = scope[index] = thisObj;
-    scope[index + 1] = () => storedThis.onDestroy?.();
-    onDestroy(scope, index + 1);
+    scope[AccessorChars.CLEANUP + index] = () => storedThis.onDestroy?.();
+    onDestroy(scope, AccessorChars.CLEANUP + index);
     storedThis.onMount?.();
   } else {
     Object.assign(storedThis, thisObj);

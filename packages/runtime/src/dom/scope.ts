@@ -74,10 +74,10 @@ export function destroyScope(scope: Scope) {
   const cleanup = scope.___cleanup;
   if (cleanup) {
     for (const instance of cleanup) {
-      if (typeof instance === "number") {
-        queueHydrate(scope, scope[instance] as () => void);
-      } else {
+      if (typeof instance === "object") {
         destroyScope(instance);
+      } else {
+        queueHydrate(scope, scope[instance] as () => void);
       }
     }
   }
@@ -90,7 +90,7 @@ export function destroyScope(scope: Scope) {
   return scope;
 }
 
-export function onDestroy(scope: Scope, localIndex: number) {
+export function onDestroy(scope: Scope, localIndex: number | string) {
   const parentScope = scope._;
   if (parentScope) {
     (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(scope);

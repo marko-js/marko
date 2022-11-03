@@ -108,7 +108,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     fragment.___getParentNode(prevScope),
     fragment.___getFirstNode(prevScope)
   );
-  fragment.___remove(prevScope);
+  fragment.___remove(destroyScope(prevScope));
 }
 
 export function setConditionalRendererOnlyChild(
@@ -117,6 +117,7 @@ export function setConditionalRendererOnlyChild(
   newRenderer: Renderer | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
+  const prevScope = scope[conditionalIndex + ConditionalIndex.SCOPE] as Scope;
   const referenceNode = scope[
     conditionalIndex + ConditionalIndex.REFERENCE_NODE
   ] as Element;
@@ -131,6 +132,8 @@ export function setConditionalRendererOnlyChild(
       ));
     fragment.___insertBefore(newScope, referenceNode, null);
   }
+
+  prevScope && destroyScope(prevScope);
 }
 
 const emptyMarkerMap = /* @__PURE__ */ (() =>

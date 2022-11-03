@@ -1,0 +1,7 @@
+<let/x=0/>
+<lifecycle
+  onMount() { document.getElementById("ref").textContent = "Mount " + x; }
+  onUpdate() { document.getElementById("ref").textContent = "Update " + x; }
+/>
+<div#ref/>
+<button#increment onclick() { x++ }>Increment</button>

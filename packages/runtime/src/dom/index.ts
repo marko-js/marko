@@ -18,6 +18,7 @@ export {
   styleAttr,
   props,
   userEffect,
+  lifecycle,
 } from "./dom";
 
 export { on } from "./event";

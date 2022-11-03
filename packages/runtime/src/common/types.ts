@@ -20,7 +20,7 @@ export type Scope<
   ___attrs: unknown;
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
-  ___cleanup: Set<number | Scope> | undefined;
+  ___cleanup: Set<number | string | Scope> | undefined;
   ___client: boolean;
   ___boundSignals: Map<Signal, Signal> | undefined;
   ___renderer: ClientRenderer | undefined;
@@ -46,4 +46,5 @@ export const enum AccessorChars {
   MARK = "#",
   STALE = "&",
   SUBSCRIBERS = "*",
+  CLEANUP = "-",
 }
