@@ -31,7 +31,7 @@ const counter = () => {
       writeHydrateScope(bodyScopeId, { _: scope });
       writeHydrateCall(bodyScopeId, "subscribe_clickCount$renderBody");
     },
-    onclick: register(() => {}, "clickHandler", scope),
+    onclick: register(() => {}, "clickHandler", scopeId),
   });
 
   // eslint-disable-next-line no-sparse-arrays

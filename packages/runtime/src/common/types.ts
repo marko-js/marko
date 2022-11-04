@@ -33,6 +33,7 @@ export type Scope<
 export const enum HydrateSymbols {
   SECTION_START = "^",
   SECTION_END = "/",
+  SECTION_SINGLE_NODES_END = "|",
   NODE = "#",
   PLACEHOLDER_START = "",
   PLACEHOLDER_END = "",

@@ -18,21 +18,21 @@ let $_flush: typeof flushToStream | null = null;
 let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
   null;
 
-let $_ids: {
-  scope: number;
-  tag: number;
-  placeholder: number;
+let $_streamData: {
+  scopeId: number;
+  tagId: number;
+  placeholderId: number;
+  scopeLookup: Map<number, PartialScope>;
+  runtimeFlushed: boolean;
+  serializer?: Serializer;
 } | null = null;
 
-const runtimeFlushed = new WeakSet<MaybeFlushable>();
-const streamSerializers = new WeakMap<MaybeFlushable, Serializer>();
-
 export function nextTagId() {
-  return "s" + $_ids!.tag++;
+  return "s" + $_streamData!.tagId++;
 }
 
 export function nextPlaceholderId() {
-  return $_ids!.placeholder++;
+  return $_streamData!.placeholderId++;
 }
 
 export function createRenderer(renderer: Renderer) {
@@ -45,7 +45,14 @@ export function createRenderer(renderer: Renderer) {
     $_buffer = createBuffer();
     $_stream = stream;
     $_flush = flushToStream;
-    $_ids = { scope: 0, tag: 0, placeholder: 0 };
+    $_streamData = {
+      scopeId: 0,
+      tagId: 0,
+      placeholderId: 0,
+      scopeLookup: new Map(),
+      runtimeFlushed: false,
+      serializer: undefined,
+    };
     pushContext("$", context);
 
     try {
@@ -275,9 +282,9 @@ export function markReplaceEnd(id: number) {
 
 function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
   let runtimeCall = runtimeId + HydrateSymbols.VAR_REORDER_RUNTIME;
-  if (!runtimeFlushed.has($_stream!)) {
+  if (!$_streamData!.runtimeFlushed) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
-    runtimeFlushed.add($_stream!);
+    $_streamData!.runtimeFlushed = true;
   }
   $_buffer!.content += `<t id="${marker(id)}">`;
   render(data);
@@ -291,7 +298,7 @@ function marker(id: number) {
 /* Hydration */
 
 export function nextScopeId() {
-  return $_ids!.scope++;
+  return $_streamData!.scopeId++;
 }
 
 export function writeHydrateCall(scopeId: number, fnId: string) {
@@ -301,6 +308,7 @@ export function writeHydrateCall(scopeId: number, fnId: string) {
 export function writeHydrateScope(scopeId: number, scope: PartialScope) {
   $_buffer!.scopes = $_buffer!.scopes || {};
   $_buffer!.scopes[scopeId] = scope;
+  $_streamData!.scopeLookup.set(scopeId, scope);
 }
 
 export function markHydrateNode(scopeId: number, index: number) {
@@ -308,23 +316,32 @@ export function markHydrateNode(scopeId: number, index: number) {
   return `<!${runtimeId}${HydrateSymbols.NODE}${index} ${scopeId}>`;
 }
 
-export function markHydrateSectionStart(scopeId: number) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_START}${scopeId}>`;
+export function markHydrateScopeStart(scopeId: number, key?: string) {
+  return `<!${runtimeId}${HydrateSymbols.SECTION_START}${scopeId}${
+    key ? " " + key : ""
+  }>`;
 }
 
-export function markHydrateSectionEnd(scopeId: number) {
-  if (MARKO_DEBUG) {
-    return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId}>`;
-  }
-  return `<!${runtimeId}${HydrateSymbols.SECTION_END}>`;
+export function markHydrateControlEnd(scopeId: number, index: number) {
+  return `<!${runtimeId}${HydrateSymbols.SECTION_END}${index} ${scopeId}>`;
+}
+
+export function markHydrateControlSingleNodeEnd(
+  scopeId: number,
+  index: number,
+  childScopeIds: number | number[]
+) {
+  return `<!${runtimeId}${HydrateSymbols.SECTION_SINGLE_NODES_END}${index} ${scopeId} ${childScopeIds}>`;
 }
 
 function writeHydrateScript() {
   if ($_buffer!.calls || $_buffer!.scopes) {
     let isFirstFlush;
-    let serializer = streamSerializers.get($_stream!);
+    let serializer = $_streamData!.serializer;
     if ((isFirstFlush = !serializer)) {
-      streamSerializers.set($_stream!, (serializer = new Serializer()));
+      serializer = $_streamData!.serializer = new Serializer(
+        $_streamData!.scopeLookup
+      );
     }
     $_buffer!.content += `<script>${
       isFirstFlush
@@ -370,7 +387,7 @@ function clearBuffer(buffer: Buffer) {
 }
 
 function clearScope() {
-  $_buffer = $_promises = $_stream = $_flush = $_ids = null;
+  $_buffer = $_promises = $_stream = $_flush = $_streamData = null;
   setContext(null);
 }
 
@@ -382,7 +399,7 @@ function resolveWithScope<T>(
   const originalStream = $_stream;
   const originalBuffer = $_buffer;
   const originalFlush = $_flush;
-  const originalIds = $_ids;
+  const originalIds = $_streamData;
   const originalContext = Context;
 
   return promise.then(
@@ -391,7 +408,7 @@ function resolveWithScope<T>(
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;
-        $_ids = originalIds;
+        $_streamData = originalIds;
 
         try {
           setContext(originalContext);
@@ -407,7 +424,7 @@ function resolveWithScope<T>(
         $_stream = originalStream;
         $_buffer = originalBuffer;
         $_flush = originalFlush;
-        $_ids = originalIds;
+        $_streamData = originalIds;
 
         try {
           setContext(originalContext);

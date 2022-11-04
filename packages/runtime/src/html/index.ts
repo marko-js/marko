@@ -22,8 +22,11 @@ export {
   markHydrateNode,
   writeHydrateCall,
   writeHydrateScope,
+  markHydrateScopeStart,
+  markHydrateControlEnd,
+  markHydrateControlSingleNodeEnd,
 } from "./writer";
 
-export { register } from "./serializer";
+export { register, SYMBOL_OWNER } from "./serializer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

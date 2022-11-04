@@ -10,24 +10,25 @@ const REF_CHARS =
 const REF_CHARS_LEN = REF_CHARS.length;
 const SYMBOL_REGISTRY_ID = Symbol("REGISTRY_ID");
 const SYMBOL_SCOPE = Symbol("SCOPE");
+export const SYMBOL_OWNER = Symbol("OWNER");
 
 type Serializable<T> = T & {
   [SYMBOL_REGISTRY_ID]: string;
-  [SYMBOL_SCOPE]: Record<string, unknown>;
+  [SYMBOL_SCOPE]?: number;
 };
 
-export function register<T>(
+export function register<T extends (...args: any[]) => any>(
   entry: T,
   registryId: string,
-  scope: Record<string, unknown>
+  scopeId?: number
 ): Serializable<T> {
   (entry as Serializable<T>)[SYMBOL_REGISTRY_ID] = registryId;
-  (entry as Serializable<T>)[SYMBOL_SCOPE] = scope;
+  (entry as Serializable<T>)[SYMBOL_SCOPE] = scopeId;
   return entry as Serializable<T>;
 }
 
 export function stringify(root: unknown) {
-  return new Serializer().stringify(root);
+  return new Serializer(new Map()).stringify(root);
 }
 export class Serializer {
   // TODO: hoist these back out?
@@ -39,8 +40,10 @@ export class Serializer {
   // These stay
   PARENTS: WeakMap<object, object> = new WeakMap();
   KEYS: WeakMap<object, number | string> = new WeakMap();
+  scopeLookup: Map<number, any>;
 
-  constructor() {
+  constructor(scopeLookup: Map<number, any>) {
+    this.scopeLookup = scopeLookup;
     this.BUFFER.pop();
   }
 
@@ -187,26 +190,45 @@ export class Serializer {
   }
 
   writeFunction(fn: Serializable<(...args: any[]) => any>) {
-    const { [SYMBOL_REGISTRY_ID]: registryId, [SYMBOL_SCOPE]: scope } = fn;
-    if (registryId && scope != null) {
+    const { [SYMBOL_REGISTRY_ID]: registryId, [SYMBOL_SCOPE]: scopeId } = fn;
+    if (registryId) {
       // ASSERT: fnId and scopeId don't need `quote` escaping
-      const ref = this.getRef(scope, "", undefined);
+      const scope =
+        scopeId !== undefined
+          ? this.scopeLookup.get(scopeId) ?? false
+          : undefined;
+      const ref = scope && this.getRef(scope, "", undefined);
       if (ref === true || ref === false) {
         throw new Error(
           "The scope has not yet been defined or is circular. This needs to be fixed in the serializer."
         );
       }
-      this.BUFFER.push(`${PARAM_BIND}("${registryId}",${ref})`);
+      this.BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
       return true;
     }
     return false;
   }
 
-  writeObject(obj: Record<string, unknown>) {
+  writeObject(obj: Record<string | symbol, unknown>) {
     const { STACK, BUFFER } = this;
 
     let sep = "{";
     STACK.push(obj);
+
+    if (SYMBOL_OWNER in obj) {
+      BUFFER.push("{_:");
+      if (
+        this.writeProp(
+          this.scopeLookup.get(obj[SYMBOL_OWNER] as number),
+          "_",
+          obj
+        )
+      ) {
+        sep = ",";
+      } else {
+        BUFFER.pop();
+      }
+    }
 
     for (const key in obj) {
       if (hasOwnProperty.call(obj, key)) {
