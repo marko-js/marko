@@ -89,9 +89,9 @@ function getFirstNode(
         | Scope[]) || scopeOrScopes === emptyMarkerArray
       ? (currentScope[indexOrNode + ConditionalIndex.REFERENCE_NODE] as Comment)
       : (last ? getLastNode : getFirstNode)(
-          (scopeOrScopes as Scope).___id
-            ? (scopeOrScopes as Scope)
-            : (scopeOrScopes[last ? scopeOrScopes.length - 1 : 0] as Scope)
+          Array.isArray(scopeOrScopes)
+            ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
+            : scopeOrScopes
         )
     : indexOrNode;
 }

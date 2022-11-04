@@ -3,13 +3,8 @@ import type { Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { Signal, wrapSignal } from "./signals";
 
-const CLIENT_SCOPE_ID_BIT = 2 ** 52;
-const SCOPE_ID_MULTIPLIER = 2 ** 16;
-let scopeId = 0;
-
 export function createScope(owner?: Scope): Scope {
   const scope = {} as Scope;
-  scope.___id = CLIENT_SCOPE_ID_BIT + SCOPE_ID_MULTIPLIER * scopeId++;
   scope.___client = true;
   scope._ = owner;
   return scope;

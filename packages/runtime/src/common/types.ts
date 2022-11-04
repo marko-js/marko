@@ -16,7 +16,6 @@ export type Scope<
     [x: string | number]: unknown;
   }
 > = [...unknown[]] & {
-  ___id: number;
   ___attrs: unknown;
   ___startNode: (Node & ChildNode) | number | undefined;
   ___endNode: (Node & ChildNode) | number | undefined;
