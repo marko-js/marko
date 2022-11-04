@@ -4,17 +4,65 @@ import { getNodePath } from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
+import reorderRuntime from "../../../../runtime/src/html/reorder-runtime";
+const runtimeId = "M";
+const reorderRuntimeString = String(reorderRuntime).replace(
+  "RUNTIME_ID",
+  runtimeId
+);
+
 export default function createMutationTracker(
   window: JSDOM["window"],
   container: ParentNode
 ) {
   const result: string[] = [];
+  const sanitizedResult: string[] = [];
   let currentRecords: MutationRecord[] | null = null;
+  const tracker = {
+    beginUpdate() {
+      currentRecords = [];
+    },
+    dropUpdate() {
+      observer.takeRecords();
+      currentRecords = null;
+    },
+    log(message: string) {
+      result.push(message);
+    },
+    logUpdate(update: unknown) {
+      if (currentRecords) {
+        currentRecords = currentRecords.concat(observer.takeRecords());
+      } else {
+        currentRecords = observer.takeRecords();
+      }
+      result.push(
+        getStatusString(cloneAndNormalize(container), currentRecords, update)
+      );
+      sanitizedResult.push(
+        getStatusString(
+          cloneAndSanitize(window, container),
+          currentRecords,
+          update,
+          true
+        )
+      );
+      currentRecords = null;
+    },
+    getRawLogs(sanitized?: boolean) {
+      return sanitized ? sanitizedResult : result;
+    },
+    getLogs(sanitized?: boolean) {
+      return (sanitized ? sanitizedResult : result).join("\n\n\n");
+    },
+    cleanup() {
+      observer.disconnect();
+    },
+  };
   const observer = new window.MutationObserver((records) => {
     if (currentRecords) {
       currentRecords = currentRecords.concat(records);
     } else {
-      result.push(getStatusString(container, records, "ASYNC"));
+      tracker.logUpdate("ASYNC");
     }
   });
   observer.observe(container, {
@@ -25,58 +73,55 @@ export default function createMutationTracker(
     childList: true,
     subtree: true,
   });
-  return {
-    beginUpdate() {
-      currentRecords = [];
-    },
-    dropUpdate() {
-      observer.takeRecords();
-      currentRecords = null;
-    },
-    getUpdate(update: unknown) {
-      if (currentRecords) {
-        currentRecords = currentRecords.concat(observer.takeRecords());
-      } else {
-        currentRecords = observer.takeRecords();
-      }
-      const updateString = getStatusString(container, currentRecords, update);
-      currentRecords = null;
-      return updateString;
-    },
-    log(message: string) {
-      result.push(message);
-    },
-    logUpdate(update: unknown) {
-      result.push(this.getUpdate(update));
-    },
-    getRawLogs() {
-      return result;
-    },
-    getLogs() {
-      return result.join("\n\n\n");
-    },
-    cleanup() {
-      observer.disconnect();
-    },
-  };
+
+  return tracker;
+}
+
+function cloneAndNormalize(container: ParentNode) {
+  const clone = container.cloneNode(true);
+  clone.normalize();
+  return clone;
+}
+
+function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
+  if (!(container as any).TEST_ROOT) {
+    container = window.document.body;
+  }
+  const clone = container.cloneNode(true);
+  const treeWalker = window.document.createTreeWalker(clone);
+  const nodesToRemove: ChildNode[] = [];
+
+  while (treeWalker.nextNode()) {
+    const node = treeWalker.currentNode;
+    if (node.nodeType === 8 || isSanitizedTag(node as Element)) {
+      nodesToRemove.push(node as ChildNode);
+    } else if ((node as Element).tagName === "TEXTAREA") {
+      node.textContent = (node as HTMLTextAreaElement).value;
+    }
+  }
+
+  nodesToRemove.forEach((n) => n.remove());
+
+  clone.normalize();
+
+  return clone;
 }
 
 function getStatusString(
-  container: ParentNode,
+  container: Node,
   records: MutationRecord[],
-  update: unknown
+  update: unknown,
+  omitMutations?: boolean
 ) {
-  const clone = container.cloneNode(true);
-  clone.normalize();
-
-  return `# Render ${
+  const updateString =
     typeof update === "function"
       ? `\n${update
           .toString()
           .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
           .replace(/^ {4}/gm, "")}\n`
-      : JSON.stringify(update)
-  }\n\`\`\`html\n${Array.from(clone.childNodes)
+      : JSON.stringify(update);
+
+  const formattedHTML = Array.from(container.childNodes)
     .map((child) =>
       format(child, {
         plugins: [DOMElement, DOMCollection],
@@ -84,10 +129,16 @@ function getStatusString(
     )
     .filter(Boolean)
     .join("\n")
-    .trim()}\n\`\`\`\n\n# Mutations\n\`\`\`\n${records
-    .map(formatMutationRecord)
-    .filter(Boolean)
-    .join("\n")}\n\`\`\``;
+    .trim();
+
+  return `# Render ${updateString}\n\`\`\`html\n${formattedHTML}\n\`\`\`${
+    omitMutations
+      ? ""
+      : `\n\n# Mutations\n\`\`\`\n${records
+          .map(formatMutationRecord)
+          .filter(Boolean)
+          .join("\n")}\n\`\`\``
+  }`;
 }
 
 function formatMutationRecord(record: MutationRecord) {
@@ -120,8 +171,13 @@ function formatMutationRecord(record: MutationRecord) {
       }
 
       return `${getNodePath(target)}: ${JSON.stringify(
-        oldValue || ""
-      )} => ${JSON.stringify(target.nodeValue || "")}`;
+        (oldValue || "").replace(reorderRuntimeString, "REORDER_RUNTIME")
+      )} => ${JSON.stringify(
+        (target.nodeValue || "").replace(
+          reorderRuntimeString,
+          "REORDER_RUNTIME"
+        )
+      )}`;
     }
 
     case "childList": {
@@ -150,5 +206,17 @@ function formatMutationRecord(record: MutationRecord) {
 
       return details.join("\n");
     }
+  }
+}
+
+function isSanitizedTag(node: Element) {
+  switch (node.tagName) {
+    case "LINK":
+    case "TITLE":
+    case "STYLE":
+    case "SCRIPT":
+      return true;
+    default:
+      return false;
   }
 }

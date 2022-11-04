@@ -28,6 +28,11 @@ type TestConfig = {
   skip_hydrate?: boolean;
 };
 
+type Result = {
+  browser: ReturnType<typeof createBrowser>;
+  tracker: ReturnType<typeof createMutationTracker>;
+};
+
 const baseConfig: compiler.Config = {
   translator: require.resolve(".."),
   babelConfig: {
@@ -63,6 +68,7 @@ describe("translator", () => {
           await snap(() => compileCode(file, compilerConfig), name, fixtureDir);
         }
       };
+
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -72,151 +78,203 @@ describe("translator", () => {
         }
       })();
 
-      let initialHTML: string;
-      let hydratedHTML: string;
+      let ssrResult: Result;
+      let csrResult: Result;
+      let hydrateResult: Result;
 
-      (config.skip_html ? it.skip : it)("html", () =>
-        snapAllTemplates(htmlConfig)
-      );
+      const ssr = async () => {
+        if (ssrResult) return ssrResult;
 
-      (config.skip_dom ? it.skip : it)("dom", () =>
-        snapAllTemplates(domConfig)
-      );
+        const serverTemplate = require(templateFile);
 
-      (config.skip_ssr ? it.skip : it)("ssr", async () => {
-        await snapMD(async () => {
-          const serverTemplate = require(templateFile);
+        let buffer = "";
+        // let flushCount = 0;
 
-          let buffer = "";
-          // let flushCount = 0;
+        const browser = createBrowser({
+          dir: __dirname,
+          extensions: register({
+            ...domConfig,
+            extensions: {},
+          }),
+        });
+        const document = browser.window.document;
+        const [input] =
+          typeof config.steps === "function"
+            ? await config.steps()
+            : config.steps || [];
 
-          const browser = createBrowser({
-            dir: __dirname,
-            extensions: register({
-              ...domConfig,
-              extensions: {},
-            }),
-          });
-          const document = browser.window.document;
-          const throwErrors = trackErrors(browser.window);
-          const [input, ...steps] =
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || [];
+        document.open();
 
-          document.open();
+        const tracker = createTrackMutations(browser.window, document);
 
-          const tracker = createTrackMutations(browser.window, document);
-          const { run, init } = browser.require(
-            "@marko/runtime-fluurt/src/dom"
-          ) as typeof import("@marko/runtime-fluurt/src/dom");
+        await serverTemplate.render(input, config.context, {
+          write(data: string) {
+            buffer += data;
+            tracker.log(
+              `# Write\n${indent(
+                data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+              )}`
+            );
+          },
+          flush() {
+            // tracker.logUpdate("Flush");
+            // document.write(buffer);
+            // buffer = "";
+          },
+          end(data?: string) {
+            document.write(buffer + (data || ""));
+            document.close();
+            tracker.logUpdate("End");
+          },
+          emit(type: string, ...args: unknown[]) {
+            // console.log(...args);
+            tracker.log(
+              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+            );
+          },
+        } as Writable & { flush(): void });
 
-          await serverTemplate.render(input, config.context, {
-            write(data: string) {
-              buffer += data;
-              tracker.log(
-                `# Write\n${indent(
-                  data.replace(reorderRuntimeString, "REORDER_RUNTIME")
-                )}`
-              );
-            },
-            flush() {
-              // tracker.logUpdate("Flush");
-              // document.write(buffer);
-              // buffer = "";
-            },
-            end(data?: string) {
-              document.write(buffer + (data || ""));
-              document.close();
-              tracker.logUpdate("End");
-              if (!config.skip_hydrate) {
-                browser.require(templateFile);
-                init();
-                throwErrors();
-                tracker.logUpdate("Hydrate");
-              }
-            },
-            emit(type: string, ...args: unknown[]) {
-              // console.log(...args);
-              tracker.log(
-                `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
-              );
-            },
-          } as Writable & { flush(): void });
+        tracker.cleanup();
 
-          hydratedHTML = getNormalizedHtml(document.body);
+        return (ssrResult = { browser, tracker });
+      };
 
-          for (const update of steps) {
-            if (typeof update === "function") {
-              await update(document.documentElement);
-              run();
-              tracker.logUpdate(update);
-            } else {
-              // if new input is detected, stop testing
-              // this will be covered by the client tests
-              break;
-            }
+      const csr = async () => {
+        if (csrResult) return csrResult;
 
-            throwErrors();
+        const browser = createBrowser({
+          dir: __dirname,
+          extensions: register({
+            ...domConfig,
+            extensions: {},
+          }),
+        });
+
+        const { window } = browser;
+        const { document } = window;
+        const throwErrors = trackErrors(window);
+
+        const [input, ...steps] =
+          typeof config.steps === "function"
+            ? await config.steps()
+            : config.steps || [];
+        const { run } = browser.require(
+          "@marko/runtime-fluurt/src/dom"
+        ) as typeof import("../../../runtime/src/dom");
+        const render = browser.require(templateFile).default;
+        const container = Object.assign(document.createElement("div"), {
+          TEST_ROOT: true,
+        });
+        const tracker = createMutationTracker(browser.window, container);
+
+        document.body.appendChild(container);
+
+        const instance = render(input, container);
+        throwErrors();
+        tracker.logUpdate(input);
+
+        for (const update of steps) {
+          if (typeof update === "function") {
+            await update(document.documentElement);
+            run();
+            tracker.logUpdate(update);
+          } else {
+            instance.update(update);
+            tracker.logUpdate(update);
           }
 
-          return tracker.getLogs();
-        });
-      });
-
-      (config.skip_csr ? it.skip : it)("csr", async () => {
-        await snapMD(async () => {
-          const browser = createBrowser({
-            dir: __dirname,
-            extensions: register({
-              ...domConfig,
-              extensions: {},
-            }),
-          });
-
-          const { window } = browser;
-          const { document } = window;
-          const throwErrors = trackErrors(window);
-
-          const [input, ...steps] =
-            typeof config.steps === "function"
-              ? await config.steps()
-              : config.steps || [];
-          const { run } = browser.require(
-            "@marko/runtime-fluurt/src/dom"
-          ) as typeof import("../../../runtime/src/dom");
-          const render = browser.require(templateFile).default;
-          const container = Object.assign(document.createElement("div"), {
-            TEST_ROOT: true,
-          });
-          const tracker = createMutationTracker(browser.window, container);
-
-          document.body.appendChild(container);
-
-          const instance = render(input, container);
-          initialHTML = getNormalizedHtml(container);
           throwErrors();
-          tracker.logUpdate(input);
+        }
 
-          for (const update of steps) {
-            if (typeof update === "function") {
-              await update(document.documentElement);
-              run();
-              tracker.logUpdate(update);
-            } else {
-              instance.update(update);
-              tracker.logUpdate(update);
-            }
+        tracker.cleanup();
 
-            throwErrors();
+        return (csrResult = { browser, tracker });
+      };
+
+      const hydrate = async () => {
+        if (hydrateResult) return hydrateResult;
+        const { browser, tracker } = await ssr();
+        const { window } = browser;
+        const { document } = window;
+        const throwErrors = trackErrors(window);
+        // TODO: separate ssr/hydrate snapshots by using a new tracker
+        // const tracker = createTrackMutations(window, document);
+        const [_, ...steps] =
+          typeof config.steps === "function"
+            ? await config.steps()
+            : config.steps || [];
+
+        const { run, init } = browser.require(
+          "@marko/runtime-fluurt/src/dom"
+        ) as typeof import("@marko/runtime-fluurt/src/dom");
+
+        if (!config.skip_hydrate) {
+          browser.require(templateFile);
+          init();
+          throwErrors();
+          // TODO: switch to logUpdate(input) to match csr?
+          tracker.logUpdate("Hydrate");
+        }
+
+        for (const update of steps) {
+          if (typeof update === "function") {
+            await update(document.documentElement);
+            run();
+            tracker.logUpdate(update);
+          } else {
+            // if new input is detected, stop testing
+            // this will be covered by the client tests
+            break;
           }
 
-          return tracker.getLogs();
+          throwErrors();
+        }
+
+        tracker.cleanup();
+
+        return (hydrateResult = { browser, tracker });
+      };
+
+      describe("compile", () => {
+        (config.skip_html ? it.skip : it)("html", () =>
+          snapAllTemplates(htmlConfig)
+        );
+
+        (config.skip_dom ? it.skip : it)("dom", () =>
+          snapAllTemplates(domConfig)
+        );
+      });
+
+      describe("render", () => {
+        (config.skip_ssr ? it.skip : it)("ssr", async () => {
+          await snapMD(async () => (await hydrate()).tracker.getLogs());
+        });
+
+        // (config.skip_ssr || config.skip_hydrate ? it.skip : it)("ssr", async () => {
+        //   await snapMD(async () => (await hydrate()).tracker.getLogs());
+        // });
+
+        (config.skip_csr ? it.skip : it)("csr", async () => {
+          await snapMD(async () => (await csr()).tracker.getLogs());
         });
       });
 
-      (config.skip_ssr || config.skip_csr ? it.skip : it)("equivalent", () => {
-        assert.strictEqual(hydratedHTML, initialHTML);
+      describe("sanitized", () => {
+        (config.skip_ssr || config.skip_csr || config.skip_hydrate
+          ? it.skip
+          : it)("equivalent", async () => {
+          assert.strictEqual(
+            (await csr()).tracker
+              .getRawLogs(true)[0]
+              .replace(/# Render.*?\n/, "")
+              .replace(/[cs]\d+/g, "%id"),
+            (await hydrate()).tracker
+              .getRawLogs(true)
+              .find((log) => log.startsWith(`# Render "Hydrate"`))!
+              .replace(/# Render.*?\n/, "")
+              .replace(/[cs]\d+/g, "%id")
+          );
+        });
       });
     });
   }
@@ -256,38 +314,4 @@ function trackErrors(window: DOMWindow) {
   });
 
   return throwErrors;
-}
-
-function getNormalizedHtml(container: Element) {
-  const clone = container.cloneNode(true) as Element;
-
-  const treeWalker = container.ownerDocument!.createTreeWalker(clone);
-  const nodesToRemove: ChildNode[] = [];
-
-  while (treeWalker.nextNode()) {
-    const node = treeWalker.currentNode;
-    if (node.nodeType === 8 || isIgnoredTag(node as Element)) {
-      nodesToRemove.push(node as ChildNode);
-    } else if ((node as Element).tagName === "TEXTAREA") {
-      node.textContent = (node as HTMLTextAreaElement).value;
-    }
-  }
-
-  nodesToRemove.forEach((n) => n.remove());
-  // clone.innerHTML = clone.innerHTML;
-  clone.normalize();
-
-  return clone.innerHTML.trim().replace(/[cs]\d+/g, "%id");
-}
-
-function isIgnoredTag(node: Element) {
-  switch (node.tagName) {
-    case "LINK":
-    case "TITLE":
-    case "STYLE":
-    case "SCRIPT":
-      return true;
-    default:
-      return false;
-  }
 }
