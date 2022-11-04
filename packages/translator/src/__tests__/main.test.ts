@@ -193,13 +193,12 @@ describe("translator", () => {
 
       const hydrate = async () => {
         if (hydrateResult) return hydrateResult;
-        const { browser, tracker } = await ssr();
+        const { browser } = await ssr();
         const { window } = browser;
         const { document } = window;
         const throwErrors = trackErrors(window);
-        // TODO: separate ssr/hydrate snapshots by using a new tracker
-        // const tracker = createTrackMutations(window, document);
-        const [_, ...steps] =
+        const tracker = createTrackMutations(window, document);
+        const [input, ...steps] =
           typeof config.steps === "function"
             ? await config.steps()
             : config.steps || [];
@@ -212,8 +211,7 @@ describe("translator", () => {
           browser.require(templateFile);
           init();
           throwErrors();
-          // TODO: switch to logUpdate(input) to match csr?
-          tracker.logUpdate("Hydrate");
+          tracker.logUpdate(input);
         }
 
         for (const update of steps) {
@@ -247,12 +245,15 @@ describe("translator", () => {
 
       describe("render", () => {
         (config.skip_ssr ? it.skip : it)("ssr", async () => {
-          await snapMD(async () => (await hydrate()).tracker.getLogs());
+          await snapMD(async () => (await ssr()).tracker.getLogs());
         });
 
-        // (config.skip_ssr || config.skip_hydrate ? it.skip : it)("ssr", async () => {
-        //   await snapMD(async () => (await hydrate()).tracker.getLogs());
-        // });
+        (config.skip_ssr || config.skip_hydrate ? it.skip : it)(
+          "hydrate",
+          async () => {
+            await snapMD(async () => (await hydrate()).tracker.getLogs());
+          }
+        );
 
         (config.skip_csr ? it.skip : it)("csr", async () => {
           await snapMD(async () => (await csr()).tracker.getLogs());
@@ -264,15 +265,8 @@ describe("translator", () => {
           ? it.skip
           : it)("equivalent", async () => {
           assert.strictEqual(
-            (await csr()).tracker
-              .getRawLogs(true)[0]
-              .replace(/# Render.*?\n/, "")
-              .replace(/[cs]\d+/g, "%id"),
-            (await hydrate()).tracker
-              .getRawLogs(true)
-              .find((log) => log.startsWith(`# Render "Hydrate"`))!
-              .replace(/# Render.*?\n/, "")
-              .replace(/[cs]\d+/g, "%id")
+            (await csr()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id"),
+            (await hydrate()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id")
           );
         });
       });

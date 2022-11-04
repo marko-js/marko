@@ -27,24 +27,3 @@ inserted html0/body1/div0/span0
 inserted html0/body1/div0/span0/#comment0
 inserted html0/body1/div0/span0/#text1
 ```
-
-
-# Render "Hydrate"
-```html
-<html>
-  <head />
-  <body>
-    <div>
-      <span>
-        <!--M#0 0-->
-        1
-      </span>
-    </div>
-  </body>
-</html>
-```
-
-# Mutations
-```
-
-```
