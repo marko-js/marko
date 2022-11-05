@@ -25,13 +25,13 @@
 
 # Mutations
 ```
-inserted html0
-inserted html0/head0
-inserted html0/body1
-inserted html0/body1/div0
-inserted html0/body1/#comment1
-inserted html0/body1/button2
-inserted html0/body1/button2/#text0
-inserted html0/body1/script3
-inserted html0/body1/script3/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/div0
+inserted #document/html0/body1/#comment1
+inserted #document/html0/body1/button2
+inserted #document/html0/body1/button2/#text0
+inserted #document/html0/body1/script3
+inserted #document/html0/body1/script3/#text0
 ```

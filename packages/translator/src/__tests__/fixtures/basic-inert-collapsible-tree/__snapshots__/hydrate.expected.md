@@ -135,8 +135,8 @@ container.querySelector(`#c-${id} > button`).click();
 
 # Mutations
 ```
-html1/body1/ul0/li1: attr(hidden) null => "true"
-html1/body1/ul0/li1/button2/#text1: "[-]" => "[+]"
+#document/html1/body1/ul0/li1: attr(hidden) null => "true"
+#document/html1/body1/ul0/li1/button2/#text1: "[-]" => "[+]"
 ```
 
 
@@ -207,8 +207,8 @@ container.querySelector(`#c-${id} > button`).click();
 
 # Mutations
 ```
-html1/body1/ul0/li1: attr(hidden) "true" => null
-html1/body1/ul0/li1/button2/#text1: "[+]" => "[-]"
+#document/html1/body1/ul0/li1: attr(hidden) "true" => null
+#document/html1/body1/ul0/li1/button2/#text1: "[+]" => "[-]"
 ```
 
 
@@ -280,8 +280,8 @@ container.querySelector(`#c-${id} > button`).click();
 
 # Mutations
 ```
-html1/body1/ul0/li1/ul5/li1: attr(hidden) null => "true"
-html1/body1/ul0/li1/ul5/li1/button2/#text1: "[-]" => "[+]"
+#document/html1/body1/ul0/li1/ul5/li1: attr(hidden) null => "true"
+#document/html1/body1/ul0/li1/ul5/li1/button2/#text1: "[-]" => "[+]"
 ```
 
 
@@ -354,6 +354,6 @@ container.querySelector(`#c-${id} > button`).click();
 
 # Mutations
 ```
-html1/body1/ul0/li3: attr(hidden) null => "true"
-html1/body1/ul0/li3/button2/#text1: "[-]" => "[+]"
+#document/html1/body1/ul0/li3: attr(hidden) null => "true"
+#document/html1/body1/ul0/li3/button2/#text1: "[-]" => "[+]"
 ```

@@ -23,7 +23,7 @@
 
 # Mutations
 ```
-inserted html0/body1/div0/#text0
+inserted #document/html0/body1/div0/#text0
 ```
 
 
@@ -54,8 +54,8 @@ container.querySelector("#increment")?.click();
 
 # Mutations
 ```
-removed  in html0/body1/div0
-inserted html0/body1/div0/#text0
+removed #text in #document/html0/body1/div0
+inserted #document/html0/body1/div0/#text0
 ```
 
 
@@ -86,6 +86,6 @@ container.querySelector("#increment")?.click();
 
 # Mutations
 ```
-removed  in html0/body1/div0
-inserted html0/body1/div0/#text0
+removed #text in #document/html0/body1/div0
+inserted #document/html0/body1/div0/#text0
 ```

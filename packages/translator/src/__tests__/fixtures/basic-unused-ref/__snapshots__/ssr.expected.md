@@ -23,14 +23,14 @@
 
 # Mutations
 ```
-inserted html0
-inserted html0/head0
-inserted html0/body1
-inserted html0/body1/div0
-inserted html0/body1/div0/#comment0
-inserted html0/body1/div0/button1
-inserted html0/body1/div0/button1/#comment0
-inserted html0/body1/div0/button1/#text1
-inserted html0/body1/script1
-inserted html0/body1/script1/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/div0
+inserted #document/html0/body1/div0/#comment0
+inserted #document/html0/body1/div0/button1
+inserted #document/html0/body1/div0/button1/#comment0
+inserted #document/html0/body1/div0/button1/#text1
+inserted #document/html0/body1/script1
+inserted #document/html0/body1/script1/#text0
 ```

@@ -12,7 +12,7 @@
 # Mutations
 ```
 inserted div0
-removed  in div0/button0
+removed #text in div0/button0
 inserted div0/button0/#text0
 ```
 
@@ -32,7 +32,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in div0/button0
+removed #text in div0/button0
 inserted div0/button0/#text0
 ```
 
@@ -52,7 +52,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in div0/button0
+removed #text in div0/button0
 inserted div0/button0/#text0
 ```
 
@@ -72,6 +72,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in div0/button0
+removed #text in div0/button0
 inserted div0/button0/#text0
 ```

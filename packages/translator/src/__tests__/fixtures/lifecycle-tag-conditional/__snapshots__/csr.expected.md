@@ -47,7 +47,7 @@ container.querySelector("#increment")?.click();
 
 # Mutations
 ```
-removed  in div1
+removed #text in div1
 inserted div1/#text0
 ```
 
@@ -76,8 +76,8 @@ container.querySelector("#toggle")?.click();
 # Mutations
 ```
 inserted #text0
-removed  after #text0
-removed  in div1
+removed #text after #text0
+removed #text in div1
 inserted div1/#text0
 ```
 
@@ -133,7 +133,7 @@ container.querySelector("#toggle")?.click();
 # Mutations
 ```
 inserted #text0
-removed  after #text0
-removed  in div1
+removed #text after #text0
+removed #text in div1
 inserted div1/#text0
 ```

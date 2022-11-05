@@ -37,7 +37,7 @@ container.querySelector("#increment")?.click();
 
 # Mutations
 ```
-removed  in div0
+removed #text in div0
 inserted div0/#text0
 ```
 
@@ -60,6 +60,6 @@ container.querySelector("#increment")?.click();
 
 # Mutations
 ```
-removed  in div0
+removed #text in div0
 inserted div0/#text0
 ```

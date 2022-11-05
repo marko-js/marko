@@ -46,5 +46,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-html0/body1/div0/button1/#text1: "0" => "1"
+#document/html0/body1/div0/button1/#text1: "0" => "1"
 ```

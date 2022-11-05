@@ -16,10 +16,10 @@
 
 # Mutations
 ```
-inserted #comment0
-inserted #comment1
-inserted html2
-inserted html2/head0
-inserted html2/body1
-inserted html2/body1/#text0
+inserted #document/#comment0
+inserted #document/#comment1
+inserted #document/html2
+inserted #document/html2/head0
+inserted #document/html2/body1
+inserted #document/html2/body1/#text0
 ```

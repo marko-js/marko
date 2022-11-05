@@ -42,7 +42,7 @@ container.querySelector("#add").click();
 # Mutations
 ```
 inserted div0/#text0
-removed  before div0/#text0
+removed #text before div0/#text0
 ```
 
 
@@ -92,7 +92,7 @@ container.querySelector("#remove").click();
 
 # Mutations
 ```
-removed  after div0/#text0
+removed #text after div0/#text0
 ```
 
 

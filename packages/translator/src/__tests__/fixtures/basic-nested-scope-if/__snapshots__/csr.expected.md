@@ -61,6 +61,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 inserted div0/span0
-removed  after div0/span0
+removed button after div0/span0
 div0/span0/#text1: "" => "3"
 ```

@@ -1,13 +1,8 @@
 export function getNodePath(node: Node) {
   const parts: string[] = [];
   let cur: Node | null = node;
-
   while (cur) {
     const { parentNode } = cur;
-
-    if (!parentNode || (cur as any).TEST_ROOT) {
-      break;
-    }
 
     let name = getTypeName(cur);
     const index = parentNode
@@ -18,7 +13,16 @@ export function getNodePath(node: Node) {
       name += `${index}`;
     }
 
+    // if ((cur as any).data) {
+    //   name += `(${(cur as any).data})`;
+    // }
+
     parts.unshift(name);
+
+    if (!parentNode || (parentNode as any).TEST_ROOT) {
+      break;
+    }
+
     cur = parentNode as Node;
   }
 

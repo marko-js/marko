@@ -14,5 +14,5 @@
 
 # Mutations
 ```
-html0/body1: attr(class) null => "no-deps"
+#document/html0/body1: attr(class) null => "no-deps"
 ```

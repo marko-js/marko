@@ -19,10 +19,10 @@
 
 # Mutations
 ```
-inserted #comment0
-inserted html1
-inserted html1/head0
-inserted html1/body1
-inserted html1/body1/h10
-inserted html1/body1/h10/#text0
+inserted #document/#comment0
+inserted #document/html1
+inserted #document/html1/head0
+inserted #document/html1/body1
+inserted #document/html1/body1/h10
+inserted #document/html1/body1/h10/#text0
 ```

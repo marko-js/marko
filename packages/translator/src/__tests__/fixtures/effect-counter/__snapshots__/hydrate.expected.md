@@ -20,8 +20,8 @@
 
 # Mutations
 ```
-removed  in html0/body1/div0/button1
-inserted html0/body1/div0/button1/#text0
+removed #text in #document/html0/body1/div0/button1
+inserted #document/html0/body1/div0/button1/#text0
 ```
 
 
@@ -49,8 +49,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in html0/body1/div0/button1
-inserted html0/body1/div0/button1/#text0
+removed #text in #document/html0/body1/div0/button1
+inserted #document/html0/body1/div0/button1/#text0
 ```
 
 
@@ -78,8 +78,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in html0/body1/div0/button1
-inserted html0/body1/div0/button1/#text0
+removed #text in #document/html0/body1/div0/button1
+inserted #document/html0/body1/div0/button1/#text0
 ```
 
 
@@ -107,6 +107,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-removed  in html0/body1/div0/button1
-inserted html0/body1/div0/button1/#text0
+removed #text in #document/html0/body1/div0/button1
+inserted #document/html0/body1/div0/button1/#text0
 ```
