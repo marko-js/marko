@@ -55,7 +55,8 @@ describe("translator", () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
       const templateFile = resolve("template.marko");
-      const snapMD = (fn: () => unknown) => snap(fn, ".md", fixtureDir);
+      const snapMD = (fn: () => unknown, postfix = "") =>
+        snap(fn, `${postfix}.md`, fixtureDir);
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         await snap(
           () => compileCode(templateFile, compilerConfig),
@@ -261,6 +262,24 @@ describe("translator", () => {
       });
 
       describe("sanitized", () => {
+        (config.skip_ssr ? it.skip : it)("ssr-sanitized", async () => {
+          await snapMD(async () => (await ssr()).tracker.getLogs(true), "");
+        });
+
+        (config.skip_ssr || config.skip_hydrate ? it.skip : it)(
+          "hydrate-sanitized",
+          async () => {
+            await snapMD(
+              async () => (await hydrate()).tracker.getLogs(true),
+              ""
+            );
+          }
+        );
+
+        (config.skip_csr ? it.skip : it)("csr-sanitized", async () => {
+          await snapMD(async () => (await csr()).tracker.getLogs(true), "");
+        });
+
         (config.skip_ssr || config.skip_csr || config.skip_hydrate
           ? it.skip
           : it)("equivalent", async () => {

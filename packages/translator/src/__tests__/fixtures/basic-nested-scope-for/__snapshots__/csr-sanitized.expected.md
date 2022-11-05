@@ -1,0 +1,195 @@
+# Render {}
+```html
+<button>
+  1
+</button>
+<button>
+  2
+</button>
+<button>
+  3
+</button>
+<button>
+  4
+</button>
+<button>
+  5
+</button>
+<button>
+  6
+</button>
+<button>
+  7
+</button>
+<button>
+  8
+</button>
+<button>
+  9
+</button>
+<button>
+  10
+</button>
+<button>
+  11
+</button>
+<button>
+  12
+</button>
+```
+
+
+# Render 
+(c) => click(c, 2)
+
+```html
+<button>
+  1
+</button>
+<button
+  data-multiple="true"
+  data-selected="true"
+>
+  2
+</button>
+<button>
+  3
+</button>
+<button
+  data-multiple="true"
+>
+  4
+</button>
+<button>
+  5
+</button>
+<button
+  data-multiple="true"
+>
+  6
+</button>
+<button>
+  7
+</button>
+<button
+  data-multiple="true"
+>
+  8
+</button>
+<button>
+  9
+</button>
+<button
+  data-multiple="true"
+>
+  10
+</button>
+<button>
+  11
+</button>
+<button
+  data-multiple="true"
+>
+  12
+</button>
+```
+
+
+# Render 
+(c) => click(c, 3)
+
+```html
+<button>
+  1
+</button>
+<button>
+  2
+</button>
+<button
+  data-multiple="true"
+  data-selected="true"
+>
+  3
+</button>
+<button>
+  4
+</button>
+<button>
+  5
+</button>
+<button
+  data-multiple="true"
+>
+  6
+</button>
+<button>
+  7
+</button>
+<button>
+  8
+</button>
+<button
+  data-multiple="true"
+>
+  9
+</button>
+<button>
+  10
+</button>
+<button>
+  11
+</button>
+<button
+  data-multiple="true"
+>
+  12
+</button>
+```
+
+
+# Render 
+(c) => click(c, 5)
+
+```html
+<button>
+  1
+</button>
+<button>
+  2
+</button>
+<button>
+  3
+</button>
+<button>
+  4
+</button>
+<button
+  data-multiple="true"
+  data-selected="true"
+>
+  5
+</button>
+<button>
+  6
+</button>
+<button>
+  7
+</button>
+<button>
+  8
+</button>
+<button>
+  9
+</button>
+<button
+  data-multiple="true"
+>
+  10
+</button>
+<button>
+  11
+</button>
+<button>
+  12
+</button>
+```
