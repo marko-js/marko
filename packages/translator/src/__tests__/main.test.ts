@@ -58,12 +58,7 @@ describe("translator", () => {
       const snapMD = (fn: () => unknown, postfix = "") =>
         snap(fn, `${postfix}.md`, fixtureDir);
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
-        await snap(
-          () => compileCode(templateFile, compilerConfig),
-          ".js",
-          fixtureDir
-        );
-        const additionalMarkoFiles = await glob(resolve("*/**/*.marko"));
+        const additionalMarkoFiles = await glob(resolve("**/*.marko"));
         for (const file of additionalMarkoFiles) {
           const name = path.relative(fixtureDir, file).replace(".marko", ".js");
           await snap(() => compileCode(file, compilerConfig), name, fixtureDir);
