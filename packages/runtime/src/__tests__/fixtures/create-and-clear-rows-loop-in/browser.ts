@@ -11,27 +11,9 @@ import {
 } from "../../../dom/index";
 import { next, get } from "../../utils/walks";
 
-export const inputs = [
-  {
-    children: {
-      "1": "a",
-      "2": "b",
-      "3": "c",
-    },
-  },
-  {
-    children: {},
-  },
-  {
-    children: {
-      "1": "a",
-      "2": "b",
-      "3": "c",
-    },
-  },
-];
+import type { steps } from "./test";
 
-type Input = typeof inputs[number];
+type Input = typeof steps[number];
 
 const enum INDEX {
   div = 0,

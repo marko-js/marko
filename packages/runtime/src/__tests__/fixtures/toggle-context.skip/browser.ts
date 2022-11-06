@@ -14,21 +14,6 @@
 // } from "../../../../src/dom/index";
 // import { get, next, over } from "../../utils/walks";
 
-// export const inputs = [
-//   {
-//     visible: false,
-//     value: "Hi"
-//   },
-//   {
-//     visible: true,
-//     value: "Hi"
-//   },
-//   {
-//     visible: true,
-//     value: "Bye"
-//   }
-// ];
-
 // export const template = `<div><!></div>`;
 // export const walks = next(1) + get + over(1);
 // export const hydrate = register(

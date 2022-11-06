@@ -10,10 +10,7 @@ import {
   source,
   destructureSources,
 } from "../../../dom/index";
-import { wait } from "../../utils/resolve";
 import { get, next } from "../../utils/walks";
-
-export const inputs = [{ value: 0 }, wait(4), { value: 1 }, wait(4)] as const;
 
 type Input = { value: number };
 
@@ -27,7 +24,7 @@ const enum Index {
 
 type ComponentScope = Scope<{
   [Index.DIV_TEXT]: Text;
-  [Index.INPUT_VALUE]: typeof inputs[0 | 2]["value"];
+  [Index.INPUT_VALUE]: Input["value"];
   [Index.A]: number;
   [Index.LIFECYCLE]: () => void;
 }>;

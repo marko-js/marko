@@ -1,2 +1,14 @@
-import { inputs } from "./browser";
-export default inputs;
+export const steps = [
+  {
+    value: { name: "Jack" },
+    visible: true,
+  },
+  {
+    value: undefined,
+    visible: false,
+  },
+  {
+    value: { name: "Jake" },
+    visible: true,
+  },
+];

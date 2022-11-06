@@ -1,4 +1,7 @@
-// import { inputs } from "./browser";
-// export default inputs;
+// const click = (container: Element) => {
+//   container.querySelector("button")!.click();
+// };
 
-export {};
+// export const steps = [{}, click, click] as const;
+
+export const steps = [{}];

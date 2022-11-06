@@ -7,26 +7,9 @@ import {
   source,
 } from "../../../dom/index";
 import { get, over } from "../../utils/walks";
+import type { steps } from "./test";
 
-export const inputs = [
-  {
-    value: { a: 1, b: 2 },
-  },
-  {
-    value: { b: 2, c: 3 },
-  },
-  {
-    value: {},
-  },
-  {
-    value: null,
-  },
-  {
-    value: { a: 1 },
-  },
-];
-
-type Input = typeof inputs[number];
+type Input = typeof steps[number];
 
 const enum INDEX {
   div = 0,
@@ -35,7 +18,7 @@ const enum INDEX {
 
 type ComponentScope = Scope<{
   [INDEX.div]: HTMLDivElement;
-  [INDEX.value]: typeof inputs[number]["value"];
+  [INDEX.value]: Input["value"];
 }>;
 
 // <div ...input.value/>

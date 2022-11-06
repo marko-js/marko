@@ -13,36 +13,9 @@ import {
   setSource,
 } from "../../../dom/index";
 import { next, over, get, skip } from "../../utils/walks";
+import type { steps } from "./test";
 
-export const inputs = [
-  {
-    show: false,
-    value1: "Hello",
-    value2: "World",
-  },
-  {
-    show: true,
-    value1: "Hello",
-    value2: "World",
-  },
-  {
-    show: true,
-    value1: false,
-    value2: "World",
-  },
-  {
-    show: true,
-    value1: "Goodbye",
-    value2: "World",
-  },
-  {
-    show: false,
-    value1: "Goodbye",
-    value2: "World",
-  },
-];
-
-type Input = typeof inputs[number];
+type Input = typeof steps[number];
 
 const enum INDEX {
   comment = 0,

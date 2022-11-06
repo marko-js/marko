@@ -9,46 +9,9 @@ import {
   Scope,
 } from "../../../dom/index";
 import { next, get } from "../../utils/walks";
+import type { steps } from "./test";
 
-export const inputs = [
-  {
-    children: [
-      {
-        id: 1,
-        text: "a",
-      },
-      {
-        id: 2,
-        text: "b",
-      },
-      {
-        id: 3,
-        text: "c",
-      },
-    ],
-  },
-  {
-    children: [],
-  },
-  {
-    children: [
-      {
-        id: 1,
-        text: "a",
-      },
-      {
-        id: 2,
-        text: "b",
-      },
-      {
-        id: 3,
-        text: "c",
-      },
-    ],
-  },
-];
-
-type Input = typeof inputs[number];
+type Input = typeof steps[number];
 
 const enum INDEX {
   div = 0,

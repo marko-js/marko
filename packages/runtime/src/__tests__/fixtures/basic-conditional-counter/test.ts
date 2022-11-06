@@ -5,4 +5,4 @@ const toggle = (container: Element) => {
   container.querySelector<HTMLButtonElement>("button.toggle")!.click();
 };
 
-export default [{}, increment, toggle, increment, toggle, increment];
+export const steps = [{}, increment, toggle, increment, toggle, increment];

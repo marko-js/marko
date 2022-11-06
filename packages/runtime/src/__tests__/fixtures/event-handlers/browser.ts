@@ -12,12 +12,6 @@ import {
 } from "../../../dom/index";
 import { get, next } from "../../utils/walks";
 
-const click = (container: Element) => {
-  container.querySelector("button")!.click();
-};
-
-export const inputs = [{}, click, click, click] as const;
-
 const enum Index {
   BUTTON = 0,
   BUTTON_TEXT = 1,

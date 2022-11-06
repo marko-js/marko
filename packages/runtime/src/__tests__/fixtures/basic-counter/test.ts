@@ -2,4 +2,4 @@ const click = (container: Element) => {
   container.querySelector("button")!.click();
 };
 
-export default [{}, click, click, click];
+export const steps = [{}, click, click, click];

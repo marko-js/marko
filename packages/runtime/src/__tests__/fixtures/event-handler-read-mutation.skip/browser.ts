@@ -11,12 +11,6 @@
 // } from "../../../../src/dom/index";
 // import { get as getNode, over } from "../../utils/walks";
 
-// const click = (container: Element) => {
-//   container.querySelector("button")!.click();
-// };
-
-// export const inputs = [{}, click, click] as const;
-
 // export const template = `<button></button>`;
 // export const walks = getNode + over(1);
 // export const hydrate = register(__dirname.split("/").pop()!, () => {

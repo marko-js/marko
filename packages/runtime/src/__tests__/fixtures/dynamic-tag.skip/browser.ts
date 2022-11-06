@@ -10,7 +10,7 @@
 // import { get, over, inside } from "../../utils/walks";
 // import { Renderer } from "../../../../src/dom/dom";
 
-// export const inputs = [
+// export const steps = [
 //   {
 //     tag: "span"
 //   },

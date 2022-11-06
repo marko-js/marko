@@ -1,4 +1,4 @@
-export default [
+export const steps = [
   {
     value: "Dynamic 1",
   },

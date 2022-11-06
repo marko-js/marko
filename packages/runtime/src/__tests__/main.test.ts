@@ -47,7 +47,7 @@ describe("runtime", () => {
             const document = browser.window.document;
             const test = browser.require(testFile);
             const hydrateIndex = test.hydrateFlush;
-            const input = test.default[0];
+            const input = test.steps[0];
 
             document.open();
 
@@ -94,7 +94,7 @@ describe("runtime", () => {
                 "../dom/index"
               ) as typeof import("../dom/index");
 
-              for (const update of test.default.slice(1)) {
+              for (const update of test.steps.slice(1)) {
                 if (isWait(update)) {
                   await update();
                 } else if (typeof update === "function") {
@@ -118,7 +118,7 @@ describe("runtime", () => {
           const browser = createBrowser({ dir: __dirname });
           const document = browser.window.document;
           const test = browser.require(testFile);
-          const input = test.default[0];
+          const input = test.steps[0];
           const { run } = browser.require(
             "../dom/index"
           ) as typeof import("../dom/index");
@@ -135,7 +135,7 @@ describe("runtime", () => {
           initialHTML = getNormalizedHtml(container);
           tracker.logUpdate(input);
 
-          for (const update of test.default.slice(1)) {
+          for (const update of test.steps.slice(1)) {
             if (isWait(update)) {
               await update();
             } else if (typeof update === "function") {

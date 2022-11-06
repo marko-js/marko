@@ -1,4 +1,16 @@
-// import { inputs } from "./browser";
-// export default inputs;
+// export const steps = [
+//   {
+//     visible: false,
+//     value: "Hi"
+//   },
+//   {
+//     visible: true,
+//     value: "Hi"
+//   },
+//   {
+//     visible: true,
+//     value: "Bye"
+//   }
+// ];
 
-export {};
+export const steps = [{}];
