@@ -26,6 +26,9 @@ type TestConfig = {
   skip_csr?: boolean;
   skip_ssr?: boolean;
   skip_hydrate?: boolean;
+  manual_csr?: boolean;
+  manual_ssr?: boolean;
+  manual_hydrate?: boolean;
 };
 
 type Result = {
@@ -54,9 +57,12 @@ describe("translator", () => {
     describe(entry, () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
+      const serverFile = resolve("server.ts");
+      const hydrateFile = resolve("hydrate.ts");
+      const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
-      const snapMD = (fn: () => unknown, postfix = "") =>
-        snap(fn, `${postfix}.md`, fixtureDir);
+      const hasTemplate = fs.existsSync(templateFile);
+      const snapMD = (fn: () => unknown) => snap(fn, `.md`, fixtureDir);
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"));
         for (const file of additionalMarkoFiles) {
@@ -78,10 +84,29 @@ describe("translator", () => {
       let csrResult: Result;
       let hydrateResult: Result;
 
+      const skipHTML = !hasTemplate || config.skip_html;
+      const skipDOM = !hasTemplate || config.skip_dom;
+
+      const manualSSR = skipHTML || config.manual_ssr;
+      const manualCSR = skipDOM || config.manual_csr;
+      const manualHydrate = skipHTML || skipDOM || config.manual_hydrate;
+
+      const skipSSR =
+        !(manualSSR ? fs.existsSync(serverFile) : hasTemplate) ||
+        config.skip_ssr;
+      const skipCSR =
+        !(manualCSR ? fs.existsSync(browserFile) : hasTemplate) ||
+        config.skip_csr;
+      const skipHydrate =
+        !(manualHydrate ? fs.existsSync(hydrateFile) : hasTemplate) ||
+        config.skip_hydrate ||
+        skipSSR ||
+        skipCSR;
+
       const ssr = async () => {
         if (ssrResult) return ssrResult;
 
-        const serverTemplate = require(templateFile);
+        const serverTemplate = require(manualSSR ? serverFile : templateFile);
 
         let buffer = "";
         // let flushCount = 0;
@@ -157,7 +182,9 @@ describe("translator", () => {
         const { run } = browser.require(
           "@marko/runtime-fluurt/src/dom"
         ) as typeof import("../../../runtime/src/dom");
-        const render = browser.require(templateFile).default;
+        const render = browser.require(
+          manualCSR ? browserFile : templateFile
+        ).default;
         const container = Object.assign(document.createElement("div"), {
           TEST_ROOT: true,
         });
@@ -203,12 +230,10 @@ describe("translator", () => {
           "@marko/runtime-fluurt/src/dom"
         ) as typeof import("@marko/runtime-fluurt/src/dom");
 
-        if (!config.skip_hydrate) {
-          browser.require(templateFile);
-          init();
-          throwErrors();
-          tracker.logUpdate(input);
-        }
+        browser.require(manualHydrate ? hydrateFile : templateFile);
+        init();
+        throwErrors();
+        tracker.logUpdate(input);
 
         for (const update of steps) {
           if (typeof update === "function") {
@@ -230,54 +255,39 @@ describe("translator", () => {
       };
 
       describe("compile", () => {
-        (config.skip_html ? it.skip : it)("html", () =>
-          snapAllTemplates(htmlConfig)
-        );
+        (skipHTML ? it.skip : it)("html", () => snapAllTemplates(htmlConfig));
 
-        (config.skip_dom ? it.skip : it)("dom", () =>
-          snapAllTemplates(domConfig)
-        );
+        (skipDOM ? it.skip : it)("dom", () => snapAllTemplates(domConfig));
       });
 
       describe("render", () => {
-        (config.skip_ssr ? it.skip : it)("ssr", async () => {
+        (skipSSR ? it.skip : it)("ssr", async () => {
           await snapMD(async () => (await ssr()).tracker.getLogs());
         });
 
-        (config.skip_ssr || config.skip_hydrate ? it.skip : it)(
-          "hydrate",
-          async () => {
-            await snapMD(async () => (await hydrate()).tracker.getLogs());
-          }
-        );
+        (skipHydrate ? it.skip : it)("hydrate", async () => {
+          await snapMD(async () => (await hydrate()).tracker.getLogs());
+        });
 
-        (config.skip_csr ? it.skip : it)("csr", async () => {
+        (skipCSR ? it.skip : it)("csr", async () => {
           await snapMD(async () => (await csr()).tracker.getLogs());
         });
       });
 
       describe("sanitized", () => {
-        (config.skip_ssr ? it.skip : it)("ssr-sanitized", async () => {
-          await snapMD(async () => (await ssr()).tracker.getLogs(true), "");
+        (skipSSR ? it.skip : it)("ssr-sanitized", async () => {
+          await snapMD(async () => (await ssr()).tracker.getLogs(true));
         });
 
-        (config.skip_ssr || config.skip_hydrate ? it.skip : it)(
-          "hydrate-sanitized",
-          async () => {
-            await snapMD(
-              async () => (await hydrate()).tracker.getLogs(true),
-              ""
-            );
-          }
-        );
-
-        (config.skip_csr ? it.skip : it)("csr-sanitized", async () => {
-          await snapMD(async () => (await csr()).tracker.getLogs(true), "");
+        (skipHydrate ? it.skip : it)("hydrate-sanitized", async () => {
+          await snapMD(async () => (await hydrate()).tracker.getLogs(true));
         });
 
-        (config.skip_ssr || config.skip_csr || config.skip_hydrate
-          ? it.skip
-          : it)("equivalent", async () => {
+        (skipCSR ? it.skip : it)("csr-sanitized", async () => {
+          await snapMD(async () => (await csr()).tracker.getLogs(true));
+        });
+
+        (skipCSR || skipHydrate ? it.skip : it)("equivalent", async () => {
           assert.strictEqual(
             (await csr()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id"),
             (await hydrate()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id")
