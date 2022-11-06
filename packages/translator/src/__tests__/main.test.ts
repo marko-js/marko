@@ -288,9 +288,16 @@ describe("translator", () => {
         });
 
         (skipCSR || skipHydrate ? it.skip : it)("equivalent", async () => {
+          const hydrateLogs = (await hydrate()).tracker.getRawLogs(true);
+          // when the steps for a test contains more than one input,
+          // the updates are not run for the hydrate test
+          // so we trim the csrLogs to match the number of hydrateLogs
+          const csrLogs = (await csr()).tracker
+            .getRawLogs(true)
+            .slice(0, hydrateLogs.length);
           assert.strictEqual(
-            (await csr()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id"),
-            (await hydrate()).tracker.getLogs(true).replace(/[cs]\d+/g, "%id")
+            csrLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
+            hydrateLogs.join("\n\n").replace(/[cs]\d+/g, "%id")
           );
         });
       });
