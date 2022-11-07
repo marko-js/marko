@@ -7,7 +7,7 @@ import {
   createRenderer,
   createRenderFn,
   Scope,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { next, over, get } from "../../utils/walks";
 import type { steps } from "./test";
 

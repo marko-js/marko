@@ -1,4 +1,4 @@
-import { tryCatch, write, fork } from "../../../html/index";
+import { tryCatch, write, fork } from "@marko/runtime-fluurt/src/html";
 import { resolveAfter, rejectAfter } from "../../utils/resolve";
 
 const renderer = () => {

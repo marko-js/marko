@@ -1,4 +1,4 @@
-import { tryCatch, write } from "../../../html/index";
+import { tryCatch, write } from "@marko/runtime-fluurt/src/html";
 
 const renderer = () => {
   write("a");

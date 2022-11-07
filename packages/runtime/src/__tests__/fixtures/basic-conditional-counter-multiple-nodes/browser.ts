@@ -13,7 +13,7 @@ import {
   queueHydrate,
   Scope,
   staticNodesFragment,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 
 import { get, next, over, replace } from "../../utils/walks";
 

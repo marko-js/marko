@@ -12,7 +12,7 @@ import {
   inConditionalScope,
   queueHydrate,
   Scope,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 
 import { get, next, over } from "../../utils/walks";
 

@@ -7,7 +7,7 @@ import {
   markHydrateControlSingleNodeEnd,
   register,
   SYMBOL_OWNER,
-} from "../../../html";
+} from "@marko/runtime-fluurt/src/html";
 
 export default () => {
   write("<body>");

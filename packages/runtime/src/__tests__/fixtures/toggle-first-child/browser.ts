@@ -9,7 +9,7 @@ import {
   Scope,
   destructureSources,
   setSource,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
 

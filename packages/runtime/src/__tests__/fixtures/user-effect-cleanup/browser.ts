@@ -10,7 +10,7 @@ import {
   derivation,
   source,
   destructureSources,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { get, next } from "../../utils/walks";
 
 type Input = { value: number };

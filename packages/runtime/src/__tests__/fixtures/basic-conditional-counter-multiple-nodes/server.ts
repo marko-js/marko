@@ -8,7 +8,7 @@ import {
   SYMBOL_OWNER,
   markHydrateControlEnd,
   markHydrateScopeStart,
-} from "../../../html";
+} from "@marko/runtime-fluurt/src/html";
 
 export default () => {
   write("<body>");

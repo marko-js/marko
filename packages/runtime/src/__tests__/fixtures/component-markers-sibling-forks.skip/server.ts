@@ -1,4 +1,4 @@
-import { write, fork } from "../../../html/index";
+import { write, fork } from "@marko/runtime-fluurt/src/html";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {

@@ -16,7 +16,7 @@ import {
   conditional,
   dynamicSubscribers,
   hydrateSubscription,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { get, next, beginChild, endChild } from "../../utils/walks";
 
 ////////////////////////////////////////////////////

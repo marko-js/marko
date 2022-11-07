@@ -1,4 +1,4 @@
-import { write, fork, tryPlaceholder } from "../../../html/index";
+import { write, fork, tryPlaceholder } from "@marko/runtime-fluurt/src/html";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {

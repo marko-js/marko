@@ -1,4 +1,4 @@
-import { write } from "../../../html/index";
+import { write } from "@marko/runtime-fluurt/src/html";
 
 const renderer = () => {
   write("a");

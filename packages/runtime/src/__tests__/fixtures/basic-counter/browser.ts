@@ -8,7 +8,7 @@ import {
   queueSource,
   bind,
   Scope,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { get, next } from "../../utils/walks";
 
 const enum Index {

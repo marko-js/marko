@@ -5,7 +5,7 @@ import {
   source,
   destructureSources,
   setSource,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { get, over } from "../../utils/walks";
 import type { steps } from "./test";
 

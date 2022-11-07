@@ -5,7 +5,7 @@ import {
   source,
   destructureSources,
   setSource,
-} from "../../../dom/index";
+} from "@marko/runtime-fluurt/src/dom";
 import { after, over } from "../../utils/walks";
 
 type Input = { value: string };

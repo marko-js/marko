@@ -5,7 +5,7 @@ import {
   writeHydrateScope,
   writeHydrateCall,
   register,
-} from "../../../html";
+} from "@marko/runtime-fluurt/src/html";
 
 export default () => {
   write("<body>");
