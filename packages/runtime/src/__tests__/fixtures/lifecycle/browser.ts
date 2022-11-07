@@ -1,4 +1,3 @@
-import { lifecycle } from "../../../dom/dom";
 import {
   data,
   createRenderFn,
@@ -9,6 +8,7 @@ import {
   setSource,
   source,
   destructureSources,
+  lifecycle,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, next } from "../../utils/walks";
 
