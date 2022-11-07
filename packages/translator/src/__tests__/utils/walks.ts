@@ -1,4 +1,4 @@
-import { WalkCodes, WalkRangeSizes } from "../../../../runtime/src/dom/walker";
+import { WalkCodes, WalkRangeSizes } from "../../util/walks";
 
 export const get = String.fromCharCode(WalkCodes.Get);
 export const before = String.fromCharCode(WalkCodes.Before);
