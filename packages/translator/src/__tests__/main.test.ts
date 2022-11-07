@@ -12,6 +12,7 @@ import createTrackMutations from "./utils/track-mutations";
 import { isWait } from "./utils/resolve";
 import type { Writable } from "stream";
 import type { DOMWindow } from "jsdom";
+import { createRenderer } from "@marko/runtime-fluurt/src/html";
 
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -108,6 +109,8 @@ describe("translator", () => {
         if (ssrResult) return ssrResult;
 
         const serverTemplate = require(manualSSR ? serverFile : templateFile);
+        const render =
+          serverTemplate.render ?? createRenderer(serverTemplate.default);
 
         let buffer = "";
         // let flushCount = 0;
@@ -129,7 +132,7 @@ describe("translator", () => {
 
         const tracker = createTrackMutations(browser.window, document);
 
-        await serverTemplate.render(input, config.context, {
+        await render(input, config.context, {
           write(data: string) {
             buffer += data;
             tracker.log(
