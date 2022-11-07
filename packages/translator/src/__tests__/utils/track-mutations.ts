@@ -62,6 +62,7 @@ export default function createMutationTracker(
     if (currentRecords) {
       currentRecords = currentRecords.concat(records);
     } else {
+      currentRecords = records;
       tracker.logUpdate("ASYNC");
     }
   });

@@ -9,6 +9,7 @@ import createMutationTracker from "./utils/track-mutations";
 import glob from "tiny-glob";
 import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import createTrackMutations from "./utils/track-mutations";
+import { isWait } from "./utils/resolve";
 import type { Writable } from "stream";
 import type { DOMWindow } from "jsdom";
 
@@ -197,7 +198,9 @@ describe("translator", () => {
         tracker.logUpdate(input);
 
         for (const update of steps) {
-          if (typeof update === "function") {
+          if (isWait(update)) {
+            await update();
+          } else if (typeof update === "function") {
             await update(document.documentElement);
             run();
             tracker.logUpdate(update);
@@ -236,7 +239,9 @@ describe("translator", () => {
         tracker.logUpdate(input);
 
         for (const update of steps) {
-          if (typeof update === "function") {
+          if (isWait(update)) {
+            await update();
+          } else if (typeof update === "function") {
             await update(document.documentElement);
             run();
             tracker.logUpdate(update);
