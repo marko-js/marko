@@ -302,7 +302,7 @@ export function nextScopeId() {
 }
 
 export function writeHydrateCall(scopeId: number, fnId: string) {
-  $_buffer!.calls += `"${fnId}",${scopeId},`;
+  $_buffer!.calls += `${scopeId},"${fnId}",`;
 }
 
 export function writeHydrateScope(scopeId: number, scope: PartialScope) {
@@ -313,7 +313,7 @@ export function writeHydrateScope(scopeId: number, scope: PartialScope) {
 
 export function markHydrateNode(scopeId: number, index: number) {
   // TODO: can we only include the scope id when it differs from the prvious node marker?
-  return `<!${runtimeId}${HydrateSymbols.NODE}${index} ${scopeId}>`;
+  return `<!${runtimeId}${HydrateSymbols.NODE}${scopeId} ${index}>`;
 }
 
 export function markHydrateScopeStart(scopeId: number, key?: string) {
@@ -323,7 +323,7 @@ export function markHydrateScopeStart(scopeId: number, key?: string) {
 }
 
 export function markHydrateControlEnd(scopeId: number, index: number) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_END}${index} ${scopeId}>`;
+  return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId} ${index}>`;
 }
 
 export function markHydrateControlSingleNodeEnd(
@@ -331,7 +331,7 @@ export function markHydrateControlSingleNodeEnd(
   index: number,
   childScopeIds: number | number[]
 ) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_SINGLE_NODES_END}${index} ${scopeId} ${childScopeIds}>`;
+  return `<!${runtimeId}${HydrateSymbols.SECTION_SINGLE_NODES_END}${scopeId} ${index} ${childScopeIds}>`;
 }
 
 function writeHydrateScript() {

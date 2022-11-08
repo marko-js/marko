@@ -3,13 +3,13 @@
 <html>
   <head />
   <body>
-    <!--M#0 1-->
+    <!--M#1 0-->
     <button>
-      <!--M#0 2-->
+      <!--M#2 0-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
   </body>
 </html>
@@ -28,13 +28,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 1-->
+    <!--M#1 0-->
     <button>
-      <!--M#0 2-->
+      <!--M#2 0-->
       1
     </button>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
   </body>
 </html>
@@ -53,13 +53,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 1-->
+    <!--M#1 0-->
     <button>
-      <!--M#0 2-->
+      <!--M#2 0-->
       2
     </button>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
   </body>
 </html>
@@ -78,13 +78,13 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#0 1-->
+    <!--M#1 0-->
     <button>
-      <!--M#0 2-->
+      <!--M#2 0-->
       3
     </button>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),["subscribe_clickCount$renderBody",2,"FancyButton$onclick_hydrate",1,])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
   </body>
 </html>

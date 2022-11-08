@@ -5,11 +5,11 @@
   <body>
     <!--M#0 0-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       0
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),[0,"counter",])
     </script>
   </body>
 </html>
@@ -30,11 +30,11 @@ container.querySelector("button").click();
   <body>
     <!--M#0 0-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       1
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),[0,"counter",])
     </script>
   </body>
 </html>
@@ -55,11 +55,11 @@ container.querySelector("button").click();
   <body>
     <!--M#0 0-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       2
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),[0,"counter",])
     </script>
   </body>
 </html>
@@ -80,11 +80,11 @@ container.querySelector("button").click();
   <body>
     <!--M#0 0-->
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       3
     </button>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),["counter",0,])
+      (M$h=[]).push((b,s)=&gt;({0:[,,0]}),[0,"counter",])
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <body><!M#0 0><button class="inc"></button><!M#1 0><button class="toggle"></button><!M^1>The count is <!M#0 1>0<!M/2 0></body><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])</script>
+  <body><!M#0 0><button class="inc"></button><!M#0 1><button class="toggle"></button><!M^1>The count is <!M#1 0>0<!M/0 2></body><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])</script>
 
 
 # Render "End"
@@ -11,17 +11,17 @@
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
     <!--M^1-->
     The count is 
-    <!--M#0 1-->
+    <!--M#1 0-->
     0
-    <!--M/2 0-->
+    <!--M/0 2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>

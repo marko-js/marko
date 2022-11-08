@@ -7,9 +7,9 @@
     {
       "name": "*",
       "total": {
-        "min": 11528,
-        "gzip": 4902,
-        "brotli": 4477
+        "min": 11419,
+        "gzip": 4891,
+        "brotli": 4452
       }
     },
     {
@@ -34,18 +34,18 @@
       "name": "counter 💧",
       "user": {
         "min": 229,
-        "gzip": 194,
-        "brotli": 190
+        "gzip": 195,
+        "brotli": 170
       },
       "runtime": {
-        "min": 2616,
-        "gzip": 1290,
-        "brotli": 1147
+        "min": 2502,
+        "gzip": 1282,
+        "brotli": 1138
       },
       "total": {
-        "min": 2845,
-        "gzip": 1484,
-        "brotli": 1337
+        "min": 2731,
+        "gzip": 1477,
+        "brotli": 1308
       }
     },
     {
@@ -71,17 +71,17 @@
       "user": {
         "min": 315,
         "gzip": 242,
-        "brotli": 219
+        "brotli": 225
       },
       "runtime": {
-        "min": 7794,
-        "gzip": 3519,
-        "brotli": 3197
+        "min": 7685,
+        "gzip": 3511,
+        "brotli": 3190
       },
       "total": {
-        "min": 8109,
-        "gzip": 3761,
-        "brotli": 3416
+        "min": 8000,
+        "gzip": 3753,
+        "brotli": 3415
       }
     }
   ]

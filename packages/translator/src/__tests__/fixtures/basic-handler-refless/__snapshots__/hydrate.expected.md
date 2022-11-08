@@ -5,11 +5,11 @@
   <head />
   <body>
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       0
     </button>
     <script>
-      (M$h=[]).push(null,["packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",0,])
+      (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])
     </script>
   </body>
 </html>
@@ -30,11 +30,11 @@ container.querySelector("button").click();
   <head />
   <body>
     <button>
-      <!--M#1 0-->
+      <!--M#0 1-->
       1
     </button>
     <script>
-      (M$h=[]).push(null,["packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",0,])
+      (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <script>(M$h=[]).push(null,["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",0,])</script>
+  <script>(M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])</script>
 
 
 # Render "End"
@@ -7,7 +7,7 @@
 <html>
   <head>
     <script>
-      (M$h=[]).push(null,["packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",0,])
+      (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])
     </script>
   </head>
   <body />

@@ -7,17 +7,17 @@
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
     <!--M^1-->
     The count is 
-    <!--M#0 1-->
+    <!--M#1 0-->
     0
-    <!--M/2 0-->
+    <!--M/0 2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -40,17 +40,17 @@ container.querySelector("button.inc").click();
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
     <!--M^1-->
     The count is 
-    <!--M#0 1-->
+    <!--M#1 0-->
     1
-    <!--M/2 0-->
+    <!--M/0 2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -73,13 +73,13 @@ container.querySelector("button.toggle").click();
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
-    <!--M/2 0-->
+    <!--M/0 2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -107,13 +107,13 @@ container.querySelector("button.inc").click();
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
-    <!--M/2 0-->
+    <!--M/0 2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -136,13 +136,13 @@ container.querySelector("button.toggle").click();
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
     The count is 2
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -168,13 +168,13 @@ container.querySelector("button.inc").click();
     <button
       class="inc"
     />
-    <!--M#1 0-->
+    <!--M#0 1-->
     <button
       class="toggle"
     />
     The count is 3
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),["counter",0,])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>

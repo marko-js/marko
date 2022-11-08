@@ -12,7 +12,7 @@
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),["packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",0,])
+      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -41,7 +41,7 @@ container.querySelector("button").click();
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),["packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",0,])
+      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -70,7 +70,7 @@ container.querySelector("button").click();
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),["packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",0,])
+      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -99,7 +99,7 @@ container.querySelector("button").click();
       </button>
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),["packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",0,])
+      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount",])
     </script>
   </body>
 </html>

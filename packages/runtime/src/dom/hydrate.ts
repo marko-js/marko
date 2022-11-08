@@ -27,7 +27,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
   let currentScopeId: number;
-  let currentNode: Node;
+  let currentNode: Node & ChildNode;
   const scopeLookup: Record<number, Scope> = {};
   const getScope = (id: number) =>
     scopeLookup[id] ?? (scopeLookup[id] = {} as Scope);
@@ -87,52 +87,44 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       }
     }
 
-    while ((currentNode = walker.nextNode()!)) {
+    while ((currentNode = walker.nextNode() as ChildNode)) {
       const nodeValue = currentNode.nodeValue;
       if (nodeValue?.startsWith(`${runtimeId}`)) {
         const token = nodeValue[runtimeLength];
-        const data = parseInt(nodeValue.slice(runtimeLength + 1));
+        const scopeId = parseInt(nodeValue.slice(runtimeLength + 1));
+        const scope = getScope(scopeId);
+        const data = nodeValue.slice(nodeValue.indexOf(" ") + 1);
+
         if (token === HydrateSymbols.NODE) {
-          const node = currentNode.nextSibling;
-          // currentNode.parentNode!.removeChild(currentNode);
-          // TODO: only do this for a certain type of HydrateSymbols.NODE marker
-          const scopeId = parseInt(
-            nodeValue.slice(nodeValue.lastIndexOf(" ") + 1)
-          );
-          const scope = getScope(scopeId);
-          scope[data] = node;
+          scope[data] = currentNode.nextSibling;
         } else if (token === HydrateSymbols.SECTION_START) {
           stack.push(currentScopeId);
-          getScope((currentScopeId = data)).___startNode =
-            currentNode as ChildNode;
+          currentScopeId = scopeId;
+          scope.___startNode = currentNode;
         } else if (token === HydrateSymbols.SECTION_END) {
-          const scopeId = parseInt(
-            nodeValue.slice(nodeValue.lastIndexOf(" ") + 1)
-          );
+          scope[data] = currentNode;
           if (scopeId < currentScopeId) {
-            getScope(currentScopeId).___endNode = (
-              currentNode as ChildNode
-            ).previousSibling!;
+            scopeLookup[currentScopeId].___endNode =
+              currentNode.previousSibling!;
             currentScopeId = stack.pop()!;
           }
-          const scope = getScope(scopeId);
-          scope[data] = currentNode;
         } else if (token === HydrateSymbols.SECTION_SINGLE_NODES_END) {
-          const scopeId = parseInt(nodeValue.slice(nodeValue.indexOf(" ") + 1));
-          const scope = getScope(scopeId);
-          scope[data] = currentNode;
+          scope[parseInt(data)] = currentNode;
           // https://jsben.ch/dR7uk
           const childScopeIds = JSON.parse(
-            "[" + nodeValue.slice(nodeValue.lastIndexOf(" ") + 1) + "]"
+            "[" + data.slice(data.indexOf(" ") + 1) + "]"
           );
           for (let i = childScopeIds.length - 1; i >= 0; i--) {
             const childScope = getScope(childScopeIds[i]);
+            // TODO: consider whether the single node optimization
+            // should only apply to elements which means could
+            // use previousElementSibling instead of a while loop
             while (
               (currentNode = currentNode.previousSibling!).nodeType ===
               8 /* Node.COMMENT_NODE */
             );
-            childScope.___startNode = childScope.___endNode =
-              currentNode as ChildNode;
+            // TODO: consider only setting ___startNode?
+            childScope.___startNode = childScope.___endNode = currentNode;
           }
         } else if (MARKO_DEBUG) {
           throw new Error("MALFORMED MARKER: " + nodeValue);
@@ -141,8 +133,8 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      (registeredObjects.get(calls[i] as string) as HydrateFn)!(
-        scopeLookup[calls[i + 1] as number]!
+      (registeredObjects.get(calls[i + 1] as string) as HydrateFn)!(
+        scopeLookup[calls[i] as number]!
       );
     }
   }
@@ -172,6 +164,5 @@ export function hydrateSubscription(
       // the value is queued for update
       // we should mark `signal` and let it be updated when the owner is updated
     }
-    ``;
   };
 }
