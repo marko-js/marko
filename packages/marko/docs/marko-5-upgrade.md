@@ -24,7 +24,7 @@ or
 yarn upgrade marko@^4
 ```
 
-> Note: Do NOT run `npm install marko` (without the `@^4`). This will put you on Marko 5 and we're not quite there yet.
+> **Note**: Do NOT run `npm install marko` (without the `@^4`). This will put you on Marko 5 and we're not quite there yet.
 
 ## Step 2 - Deal with deprecations
 
