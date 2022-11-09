@@ -55,7 +55,7 @@ The output HTML would be:
 </ol>
 ```
 
-> **Pro Tip**: `<for>`’s `of` attribute can loop over any iterable, just like JavaScript’s [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of). This includes strings, `NodeList`s, `Set`s… any object with zero-indexed numeric properties and a `.length`, basically.
+> **ProTip**: `<for>`’s `of` attribute can loop over any iterable, just like JavaScript’s [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of). This includes strings, `NodeList`s, `Set`s… any object with zero-indexed numeric properties and a `.length`, basically.
 
 ### Iterating over an object’s properties
 
@@ -276,7 +276,7 @@ Regardless of these attributes, the promise is executed as eagerly as possible. 
 
 - `timeout` is useful for limiting non-critical content from slowing down the rest of the page too much.
 
-> **Pro Tip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
+> **ProTip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
 >
 > ```marko
 > <await(slowPromise) timeout=5000>
