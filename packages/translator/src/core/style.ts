@@ -1,5 +1,5 @@
 import path from "path";
-import { assertNoParams, assertNoVar, Tag } from "@marko/babel-utils";
+import { assertNoParams, importDefault, Tag } from "@marko/babel-utils";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts } from "../util/marko-config";
 import { currentProgramPath } from "../visitors/program";
@@ -11,7 +11,6 @@ export default {
       hub: { file },
     } = tag;
 
-    assertNoVar(tag);
     assertNoParams(tag);
     assertNoSpreadAttrs(tag);
 
@@ -19,11 +18,19 @@ export default {
     const attrs = tag.get("attributes");
 
     const base = path.basename(file.opts.sourceFileName as string);
+
     const typeAttr = attrs.find(
       (attr) => attr.isMarkoAttribute() && attr.node.name === "type"
     );
+    const classAttr = attrs.find(
+      (attr) => attr.isMarkoAttribute() && attr.node.name === "class"
+    );
 
-    if (typeAttr) {
+    if (typeAttr && classAttr) {
+      throw classAttr.buildCodeFrameError(
+        `<style> must only use "type" or "class" and not both.`
+      );
+    } else if (typeAttr) {
       const typeValue = typeAttr.get("value");
       if (typeValue.isStringLiteral()) {
         type = typeValue.node.value;
@@ -32,10 +39,23 @@ export default {
           `<style> "type" attribute can only be a string literal.`
         );
       }
+    } else if (classAttr) {
+      const classValue = classAttr.get("value");
+      if (classValue.isStringLiteral()) {
+        type = classValue.node.value;
+      } else {
+        throw classValue.buildCodeFrameError(
+          `<style> "class" attribute can only be a string literal.`
+        );
+      }
     }
 
     if (type === "text/css") {
       type = "css";
+    }
+
+    if (tag.node.var && !type.startsWith("module")) {
+      type = "module." + type;
     }
 
     const body = tag.get("body").get("body");
@@ -61,10 +81,31 @@ export default {
           virtualPath: `./${base}.${type}`,
         } as any
       );
-      currentProgramPath.pushContainer(
-        "body",
-        t.importDeclaration([], t.stringLiteral(importPath))
-      );
+
+      if (!tag.node.var) {
+        currentProgramPath.pushContainer(
+          "body",
+          t.importDeclaration([], t.stringLiteral(importPath))
+        );
+      } else if (t.isIdentifier(tag.node.var)) {
+        currentProgramPath.pushContainer(
+          "body",
+          t.importDeclaration(
+            [t.importDefaultSpecifier(tag.node.var)],
+            t.stringLiteral(importPath)
+          )
+        );
+      } else {
+        currentProgramPath.pushContainer(
+          "body",
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              tag.node.var,
+              importDefault(file, importPath, "style")
+            ),
+          ])
+        );
+      }
     }
 
     tag.remove();

@@ -67,9 +67,16 @@ describe("translator", () => {
       const snapMD = (fn: () => unknown) => snap(fn, `.md`, fixtureDir);
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"));
+        const finalConfig: compiler.Config = {
+          ...compilerConfig,
+          resolveVirtualDependency(_filename, { code, virtualPath }) {
+            return `virtual:${virtualPath} ${code}`;
+          },
+        };
+
         for (const file of additionalMarkoFiles) {
           const name = path.relative(fixtureDir, file).replace(".marko", ".js");
-          await snap(() => compileCode(file, compilerConfig), name, fixtureDir);
+          await snap(() => compileCode(file, finalConfig), name, fixtureDir);
         }
       };
 
