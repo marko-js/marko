@@ -30,7 +30,8 @@ export default {
     },
   },
   parseOptions: {
-    state: "parsed-text",
+    // TODO: fix the types for Tag or parseOptions or something
+    text: true,
   },
   attributes: {},
   autocomplete: [

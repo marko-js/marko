@@ -1,5 +1,4 @@
 var _return;
-
 <yield=1/>
 return _return;
 export const template = "";
