@@ -5,7 +5,7 @@ const _renderer = input => {
   const clickCount = 0;
   _myButton({
     text: clickCount,
-    onclick: function () {
+    onClick: function () {
       clickCount++;
     },
     renderBody() {

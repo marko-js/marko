@@ -11,7 +11,7 @@ const _setup = _scope => {
   _child(_scope[1]);
   _setSource(_scope[1], _child_attrs, {
     class: "hi",
-    onclick: /* @__PURE__ */_bind(_scope, _temp3)
+    onClick: /* @__PURE__ */_bind(_scope, _temp3)
   });
   _notifySignal(_scope, _child_attrs);
   _queueHydrate(_scope, _hydrate_setup);

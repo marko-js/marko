@@ -34,7 +34,7 @@ export default {
           const attrNode = attr.node;
           const { name } = attrNode;
 
-          if (name.startsWith("on")) {
+          if (isEventHandler(name)) {
             sectionId ??= getOrCreateSectionId(tag);
             (currentProgramPath.node.extra ?? {}).isInteractive = true;
           } else if (!evaluate(attr).confident) {
@@ -127,7 +127,7 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
-                if (name.startsWith("on")) {
+                if (isEventHandler(name)) {
                   addHTMLHydrateCall(sectionId, extra.valueReferences);
                 } else {
                   write`${callRuntime(
@@ -136,7 +136,7 @@ export default {
                     value.node
                   )}`;
                 }
-              } else if (name.startsWith("on")) {
+              } else if (isEventHandler(name)) {
                 addStatement(
                   "hydrate",
                   sectionId,
@@ -145,7 +145,7 @@ export default {
                     callRuntime(
                       "on",
                       t.memberExpression(scopeIdentifier, visitIndex!, true),
-                      t.stringLiteral(name.slice(2)),
+                      t.stringLiteral(getEventHandlerName(name)),
                       value.node
                     )
                   )
@@ -235,4 +235,14 @@ function isSpreadAttr(
   attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>
 ): attr is t.NodePath<t.MarkoAttribute> {
   return attr.type === "MarkoSpreadAttribute";
+}
+
+function isEventHandler(propName: string) {
+  return /^on[A-Z-]/.test(propName);
+}
+
+function getEventHandlerName(propName: string) {
+  return propName.charAt(2) === "-"
+    ? propName.slice(3)
+    : propName.charAt(2).toLowerCase() + propName.slice(3);
 }

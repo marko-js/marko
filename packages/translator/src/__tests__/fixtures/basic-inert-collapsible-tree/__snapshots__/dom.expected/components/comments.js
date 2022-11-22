@@ -11,13 +11,13 @@ const _setup$ifBody = _scope => {
 };
 const _ifBody = /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild(0), _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]);
 const _if$forBody = /* @__PURE__ */_conditional(4, 1, (_scope, comment = _scope[10]) => comment.comments ? _ifBody : null);
-const _onclick = function (_scope) {
+const _onClick = function (_scope) {
   const open = _scope[13];
   _queueSource(_scope, _open$forBody, !open);
 };
 const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => {
   const open = _scope[13];
-  _on(_scope[2], "click", /* @__PURE__ */_bind(_scope, _onclick));
+  _on(_scope[2], "click", /* @__PURE__ */_bind(_scope, _onClick));
 });
 const _open$forBody = /* @__PURE__ */_source(13, [], (_scope, open) => {
   _attr(_scope[0], "hidden", !open);

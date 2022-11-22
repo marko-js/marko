@@ -4,13 +4,13 @@ const _expr_selected_num$forBody = /* @__PURE__ */_subscriber([], 2, (_scope, se
   _attr(_scope[0], "data-multiple", num % selected === 0);
 });
 const _selected$forBody = /* @__PURE__ */_closure(1, 7, [_expr_selected_num$forBody]);
-const _onclick = function (_scope) {
+const _onClick = function (_scope) {
   const num = _scope[2];
   _queueSource(_scope._, _selected, num);
 };
 const _hydrate_num$forBody = _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => {
   const num = _scope[2];
-  _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _onclick));
+  _on(_scope[0], "click", /* @__PURE__ */_bind(_scope, _onClick));
 });
 const _num$forBody = /* @__PURE__ */_source(2, [_expr_selected_num$forBody], (_scope, num) => {
   _data(_scope[1], num);

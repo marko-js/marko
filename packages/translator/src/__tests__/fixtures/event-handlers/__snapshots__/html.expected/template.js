@@ -4,7 +4,7 @@ const _renderer = input => {
   const _scope = _nextScopeId();
   _child({
     class: "hi",
-    onclick: () => {
+    onClick: () => {
       console.log("hello world");
     },
     renderBody() {

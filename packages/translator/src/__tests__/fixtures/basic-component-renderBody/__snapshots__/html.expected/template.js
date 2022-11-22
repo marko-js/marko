@@ -4,7 +4,7 @@ const _renderer = input => {
   const _scope = _nextScopeId();
   const clickCount = 0;
   _myButton({
-    onclick: function () {
+    onClick: function () {
       clickCount++;
     },
     renderBody() {

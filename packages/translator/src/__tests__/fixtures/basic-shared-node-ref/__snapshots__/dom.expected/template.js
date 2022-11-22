@@ -5,22 +5,22 @@ const _temp3 = function (_scope, x) {
   return x;
 };
 const _ul_for = /* @__PURE__ */_loop(0, 1, _forBody, [_x$forBody], (_scope, [x]) => _setSource(_scope, _x$forBody, x), (_scope, list = _scope[10]) => [list, /* @__PURE__ */_bind(_scope, _temp3)]);
-const _onclick = function (_scope) {
+const _onClick = function (_scope) {
   const list = _scope[10];
   _queueSource(_scope, _list, [].concat(list).reverse());
 };
 const _hydrate_list = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => {
   const list = _scope[10];
-  _on(_scope[8], "click", /* @__PURE__ */_bind(_scope, _onclick));
+  _on(_scope[8], "click", /* @__PURE__ */_bind(_scope, _onClick));
 });
 const _list = /* @__PURE__ */_source(10, [_ul_for], (_scope, list) => _queueHydrate(_scope, _hydrate_list));
-const _onclick2 = function (_scope) {
+const _onClick2 = function (_scope) {
   const open = _scope[9];
   _queueSource(_scope, _open, !open);
 };
 const _hydrate_open = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => {
   const open = _scope[9];
-  _on(_scope[7], "click", /* @__PURE__ */_bind(_scope, _onclick2));
+  _on(_scope[7], "click", /* @__PURE__ */_bind(_scope, _onClick2));
 });
 const _open = /* @__PURE__ */_source(9, [], (_scope, open) => {
   _attr(_scope[0], "hidden", !open);

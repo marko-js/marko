@@ -5,7 +5,7 @@
     <let/open=true/>
     <li id=id hidden=!open>
       <span>${comment.text}</span>
-      <button onclick() { open = !open }>
+      <button onClick() { open = !open }>
         ${open ? "[-]" : "[+]"}
       </button>
       <if=comment.comments>
