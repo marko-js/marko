@@ -51,12 +51,12 @@ app.listen(8080);
 ```
 
 > **Note**: Older versions of `@marko/express` used to also attach Express’s `app`, `req`, and `res` objects onto `out.global`. This meant uncontrolled network data could cause new and exciting surprises in your app code. Nowadays we recommend explicitly accessing the specific pieces of the HTTP exchange you’re interested in, like this:
-> 
+>
 > ```js
 > app.get("/", function (req, res) {
 >   res.marko(template, {
 >     params: req.params,
->     submitted: req.method === 'POST' && req.body
+>     submitted: req.method === "POST" && req.body
 >   });
 > });
 > ```
