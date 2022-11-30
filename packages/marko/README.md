@@ -111,6 +111,7 @@ ul.example-list
   for|color| of=[a, b, c]
     li -- ${color}
 ```
+
 <td>
 
 ```marko
@@ -120,6 +121,7 @@ ul.example-list
   </for>
 </ul>
 ```
+
 </table>
 
 ## Getting Started
@@ -138,9 +140,10 @@ ul.example-list
   
   Ask and answer [StackOverflow questions with the `#marko` tag](https://stackoverflow.com/questions/tagged/marko)<td>
 
-  Come [hang out in our Discord chat](https://discord.gg/RFGxYGs), ask questions, and discuss project direction<td>
-  
-  [Tweet to `@MarkoDevTeam`](https://twitter.com/MarkoDevTeam), or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)
+Come [hang out in our Discord chat](https://discord.gg/RFGxYGs), ask questions, and discuss project direction<td>
+
+[Tweet to `@MarkoDevTeam`](https://twitter.com/MarkoDevTeam), or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)
+
 </table>
 
 ### Contributors
