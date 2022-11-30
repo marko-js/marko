@@ -25,7 +25,7 @@ npm install marko express @marko/express --save
 
 ### Skip the view engine
 
-Express’s builtin view engine may be asynchronous, but it doesn’t support streaming — see [Rediscovering Progressive HTML Rendering](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/) for why that’s important. So instead, we [bypass Express’s view engine](https://strongloop.com/strongblog/bypassing-express-view-rendering-for-speed-and-modularity/) to use `@marko/express` instead.
+Express’s builtin view engine may be asynchronous, but it doesn’t support streaming — see [Rediscovering Progressive HTML Rendering](https://tech.ebayinc.com/engineering/async-fragments-rediscovering-progressive-html-rendering-with-marko/) for why that’s important. So instead, we [bypass Express’s view engine](https://strongloop.com/strongblog/bypassing-express-view-rendering-for-speed-and-modularity/) to use `@marko/express` instead.
 
 [The `@marko/express` package](https://www.npmjs.com/package/@marko/express) adds a `res.marko()` method to [Express’s response object](https://expressjs.com/en/api.html#res). This method works like [`res.render()`](https://expressjs.com/en/api.html#res.render), but without the restrictions of Express’s view engine, letting you take full advantage of Marko’s streaming and modular template organization.
 

@@ -24,7 +24,7 @@ Marko makes it easy to keep your component’s class and styles next to the HTML
 
 - **View** - The HTML template for your UI component. Receives input properties and states, and renders to either server-side HTML or browser-side virtual DOM nodes.
 - **Client-side behavior** - A JavaScript `class` with methods and properties for initialization, event handling (including DOM events, custom events and lifecycle events), and state management.
-- **Styles** - Cascading StyleSheets, including support for CSS preprocessors like [Less](http://lesscss.org/) or [Sass](https://sass-lang.com/).
+- **Styles** - Cascading StyleSheets, including support for CSS preprocessors like [Less](https://lesscss.org/) or [Sass](https://sass-lang.com/).
 
 ## Server-side rendering
 

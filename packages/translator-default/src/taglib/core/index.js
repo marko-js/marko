@@ -368,8 +368,7 @@ export default {
     autocomplete: [
       {
         snippet: "await-reorderer",
-        descriptionMoreURL:
-          "http://markojs.com/docs/marko/async-taglib/#<code>&ltawait-reorderer><code>"
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
       }
     ]
   },
@@ -391,12 +390,10 @@ export default {
         {
           displayText: 'key="<method>"',
           snippet: 'key="${1:method}"',
-          descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
+          descriptionMoreURL: "https://markojs.com/docs/class-components/#key"
         },
         {
-          descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/get-started/#referencing-nested-components"
+          descriptionMoreURL: "https://markojs.com/docs/class-components/#key"
         }
       ]
     },
@@ -434,7 +431,7 @@ export default {
       autocomplete: [
         {
           descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+            "https://markojs.com/docs/class-components/#no-update"
         }
       ]
     },
@@ -444,7 +441,7 @@ export default {
       autocomplete: [
         {
           descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+            "https://markojs.com/docs/class-components/#no-update-body"
         }
       ]
     },
@@ -454,7 +451,7 @@ export default {
         {
           snippet: "no-update-if(${1:condition})",
           descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+            "https://markojs.com/docs/class-components/#no-update-if"
         }
       ]
     },
@@ -464,7 +461,7 @@ export default {
         {
           snippet: "no-update-body-if(${1:condition})",
           descriptionMoreURL:
-            "http://markojs.com/docs/marko-components/#preserving-dom-nodes-during-re-render"
+            "https://markojs.com/docs/class-components/#no-update-body-if"
         }
       ]
     }
