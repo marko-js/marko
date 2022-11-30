@@ -1,84 +1,75 @@
-<h1 align="center">
-    <a href="https://markojs.com/"><img src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" alt="Marko" width="250" /></a>
-</h1>
+<div align="center">
 
-<p align="center">
-    <strong>A declarative, HTML-based language that makes building web apps fun 🔥</strong>
-</p>
+# [<img alt="Marko" src="https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-medium-cropped.png" width="250">](https://markojs.com/)
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/marko"><img alt="NPM" src="https://img.shields.io/npm/v/marko.svg"/></a>
-  <a href="https://discord.gg/RFGxYGs"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-7188da.svg"/></a>
-  <a href="https://github.com/marko-js/marko/actions/workflows/ci.yml">
-    <img src="https://github.com/marko-js/marko/actions/workflows/ci.yml/badge.svg" alt="Build status"/>
-  </a>
-  <a href="https://codecov.io/gh/marko-js/marko"><img alt="Coverage Status" src="https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg"/></a>
-  <a href="http://npm-stat.com/charts.html?package=marko"><img alt="Downloads" src="https://img.shields.io/npm/dm/marko.svg"/></a>
-</p>
+**A declarative, HTML-based language that makes building web apps fun 🔥**
 
-<p align="center">
-    <a href="https://markojs.com/docs/getting-started/">Docs</a> ∙ <a href="https://markojs.com/try-online/">Try Online</a> ∙ <a href="#contributors">Contribute</a> ∙ <a href="#community--support">Get Support</a>
-</p>
+[![NPM](https://img.shields.io/npm/v/marko.svg)](https://www.npmjs.com/package/marko)
+[![Discord Chat](https://img.shields.io/badge/discord-chat-7188da.svg)](https://discord.gg/RFGxYGs)
+[![Continuous Integration status](https://github.com/marko-js/marko/actions/workflows/ci.yml/badge.svg)](https://github.com/marko-js/marko/actions/workflows/ci.yml)
+[![Code coverage %](https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg)](https://codecov.io/gh/marko-js/marko)
+[![# of monthly downloads](https://img.shields.io/npm/dm/marko.svg)](https://npm-stat.com/charts.html?package=marko)
 
-# Intro
+[Docs](https://markojs.com/docs/getting-started/) ∙ [Try Online](https://markojs.com/try-online/) ∙ [Contribute](#contributors) ∙ [Get Support](#community--support)
 
-Marko is HTML _re-imagined_ as a language for building dynamic and reactive user interfaces.
-Just about any valid HTML is valid Marko, but Marko extends the HTML language to allow
-building modern applications in a declarative way.
+</div>
 
-Among these extensions are [conditionals](https://markojs.com/docs/conditionals-and-lists/#conditionals), [lists](https://markojs.com/docs/conditionals-and-lists/#lists), [state](https://markojs.com/docs/state/), and [components](https://markojs.com/docs/class-components/).
-Marko supports both single-file components and components broken into separate files.
+## Intro
 
-## Single file component
+Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [control flow](https://markojs.com/docs/conditionals-and-lists/), [state](https://markojs.com/docs/state/), and [components](https://markojs.com/docs/class-components/).
 
-The following single-file component renders a button and a counter with the
-number of times the button has been clicked.
+Marko supports both single-file components and components across separate files.
+
+### Single-file component
+
+The following renders a button and a counter of how many times the button has been pressed:
 
 **click-count.marko**
 
 ```marko
 class {
-    onCreate() {
-        this.state = { count: 0 };
-    }
-    increment() {
-        this.state.count++;
-    }
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.state.count++;
+  }
 }
 
 style {
-    .count {
-        color: #09c;
-        font-size: 3em;
-    }
-    .example-button {
-        font-size: 1em;
-        padding: 0.5em;
-    }
+  .count {
+    color: #09c;
+    font-size: 3em;
+  }
+  .press-me {
+    padding: 0.5em;
+  }
 }
 
-<div.count>
-    ${state.count}
-</div>
-<button.example-button on-click('increment')>
-    Click me!
+<output.count>
+  ${state.count}
+</output>
+<button.press-me on-click('increment')>
+  Press me!
 </button>
 ```
 
-## Multi-file component
+### Multi-file component
 
-The same component as above split into an `index.marko` template file,
-`component.js` containing your component logic, and `style.css` containing your
-component style:
+The same component as above, but split into:
+
+- `index.marko` template file
+- `component.js` component JS logic file
+- `style.css` component styles file
 
 **index.marko**
 
 ```marko
-<div.count>
-    ${state.count}
-</div>
-<button.example-button on-click('increment')>
-    Click me!
+<output.count>
+  ${state.count}
+</output>
+<button.press-me on-click('increment')>
+  Press me!
 </button>
 ```
 
@@ -102,59 +93,65 @@ export default {
   color: #09c;
   font-size: 3em;
 }
-.example-button {
-  font-size: 1em;
+.press-me {
   padding: 0.5em;
 }
 ```
 
 ## Concise Syntax
 
-Marko also supports a beautifully concise syntax as an alternative to its HTML
-syntax. Find out more about the [concise syntax here](https://markojs.com/docs/concise/).
+Marko also supports [a beautifully concise syntax as an alternative](https://markojs.com/docs/concise/) to its HTML syntax:
+
+<table><thead><tr><th>Concise syntax<th>HTML syntax
+<tbody><tr>
+<td>
 
 ```marko
-<!-- Marko HTML syntax -->
+ul.example-list
+  for|color| of=[a, b, c]
+    li -- ${color}
+```
+<td>
+
+```marko
 <ul class="example-list">
-    <for|color| of=['a', 'b', 'c']>
-        <li>${color}</li>
-    </for>
+  <for|color| of=[a, b, c]>
+    <li>${color}</li>
+  </for>
 </ul>
 ```
+</table>
 
-```marko
-// Marko concise syntax
-ul.example-list
-    for|color| of=['a', 'b', 'c']
-        li -- ${color}
-```
-
-# Getting Started
+## Getting Started
 
 1. `npm install marko`
 2. Read the [docs](https://markojs.com/docs/getting-started/)
 
-# Community & Support
+## Community & Support
 
-| <a alt="See Marko questions on Stack Overflow" href="https://stackoverflow.com/questions/tagged/marko"><img src="https://user-images.githubusercontent.com/1958812/56055468-619b3e00-5d0e-11e9-92ae-200c212cafb8.png" height="50px"/></a> | <a alt="Chat with us on Discord" href="https://discord.gg/RFGxYGs"><img src="https://user-images.githubusercontent.com/4985201/89313514-6edbea80-d62d-11ea-8447-ca2fd8983661.png" height="55px"/></a> | <a alt="Tweet about Marko" href="https://twitter.com/intent/tweet?hashtags=markojs"><img src="https://user-images.githubusercontent.com/1958812/56055707-07e74380-5d0f-11e9-8a59-d529fbb5a81e.png" height="40px"/></a> |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ask and answer StackOverflow questions with the [`marko` tag](https://stackoverflow.com/questions/tagged/marko)                                                                                                                           | Come hang out in our Discord chat room, ask questions, and discuss project direction                                                                                                                  | Tweet to [`@MarkoDevTeam`](https://twitter.com/MarkoDevTeam) or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)                                                                          |
+<table>
+<thead><tr>
+  <th><img alt="Stack Overflow" src="https://user-images.githubusercontent.com/1958812/56055468-619b3e00-5d0e-11e9-92ae-200c212cafb8.png" width="205"> 
+  <th><img alt="Discord" src="https://user-images.githubusercontent.com/4985201/89313514-6edbea80-d62d-11ea-8447-ca2fd8983661.png" width="162">
+  <th><img alt="Twitter" src="https://user-images.githubusercontent.com/1958812/56055707-07e74380-5d0f-11e9-8a59-d529fbb5a81e.png" width="53">
+<tbody><tr><td>
+  
+  Ask and answer [StackOverflow questions with the `#marko` tag](https://stackoverflow.com/questions/tagged/marko)<td>
 
-# Contributors
+  Come [hang out in our Discord chat](https://discord.gg/RFGxYGs), ask questions, and discuss project direction<td>
+  
+  [Tweet to `@MarkoDevTeam`](https://twitter.com/MarkoDevTeam), or with the [`#markojs` hashtag](https://twitter.com/search?q=%23markojs&f=live)
+</table>
+
+### Contributors
 
 Marko would not be what it is without all those who have contributed ✨
 
-<a href="https://github.com/marko-js/marko/graphs/contributors">
-    <img src="https://opencollective.com/marko-js/contributors.svg?width=890&button=false"/>
-</a>
+[![All marko-js/marko GitHub contributors](https://opencollective.com/marko-js/contributors.svg?width=890&button=false)](https://github.com/marko-js/marko/graphs/contributors)
 
-## Get Involved!
+### Get Involved!
 
 - Pull requests are welcome!
-- Read [`CONTRIBUTING.md`](.github/CONTRIBUTING.md) and check out our [bite-sized](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Adifficulty%3Abite-sized) and [help-wanted](https://github.com/marko-js/marko/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ahelp-wanted) issues
-- Submit github issues for any feature enhancements, bugs or documentation problems
-- By participating in this project you agree to abide by its [Code of Conduct](https://ebay.github.io/codeofconduct).
-
-# License
-
-MIT
+- Submit [GitHub issues](https://github.com/marko-js/marko/issues) for any feature enhancements, bugs, or documentation problems
+- [Read the Contribution Tips and Guidelines](.github/CONTRIBUTING.md)
+- Participants in this project agree to abide by [its Code of Conduct](https://github.com/eBay/.github/blob/main/CODE_OF_CONDUCT.md)
