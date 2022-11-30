@@ -257,7 +257,7 @@ _HTML Output:_
 
 ### Shorthand attributes
 
-Marko provides a shorthand for declaring classes and ids on an element, including interpolation.  Given `size` is the string `small`:
+Marko provides a shorthand for declaring classes and ids on an element, including interpolation. Given `size` is the string `small`:
 
 _Marko Source:_
 
