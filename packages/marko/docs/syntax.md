@@ -257,7 +257,7 @@ _HTML Output:_
 
 ### Shorthand attributes
 
-Marko provides a shorthand for declaring classes and ids on an element:
+Marko provides a shorthand for declaring classes and ids on an element, including interpolation.  Given `size` is the string `small`:
 
 _Marko Source:_
 
@@ -265,6 +265,7 @@ _Marko Source:_
 <div.my-class/>
 <span#my-id/>
 <button#submit.primary.large/>
+<button.button--${size}></button>
 ```
 
 Renders the following HTML:
@@ -276,6 +277,7 @@ _HTML Output:_
 <div class="my-class"></div>
 <span id="my-id"></span>
 <button id="submit" class="primary large"></button>
+<button class="button--small"></button>
 ```
 
 ## Parameters
