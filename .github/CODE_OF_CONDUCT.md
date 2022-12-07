@@ -1,6 +1,6 @@
 # Code of Conduct
 
-This project adheres to the [eBay Code of Conduct](http://ebay.github.io/codeofconduct).
+This project adheres to the [eBay Code of Conduct](https://github.com/eBay/.github/blob/main/CODE_OF_CONDUCT.md).
 By participating in this project you agree to abide by its terms.
 
 - Be friendly and patient.
@@ -19,4 +19,4 @@ By participating in this project you agree to abide by its terms.
 
 - Remember that we’re different. The strength of our community comes from its diversity, people from a wide range of backgrounds. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn’t mean that they’re wrong. Don’t forget that it is human to err and blaming each other doesn’t get us anywhere. Instead, focus on helping to resolve issues and learning from mistakes.
 
-Please visit http://ebay.github.io/codeofconduct for the full code of conduct.
+Please visit https://github.com/eBay/.github/blob/main/CODE_OF_CONDUCT.md for the full code of conduct.

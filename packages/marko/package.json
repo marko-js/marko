@@ -27,7 +27,7 @@
     "bin": {
         "markoc": "bin/markoc"
     },
-    "homepage": "http://markojs.com/",
+    "homepage": "https://markojs.com/",
     "logo": {
         "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
     },

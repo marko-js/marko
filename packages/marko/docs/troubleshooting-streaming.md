@@ -16,7 +16,7 @@
 
 ### NGiNX
 
-Most of NGiNX’s relevant parameters are inside [its builtin `http_proxy` module](http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering):
+Most of NGiNX’s relevant parameters are inside [its builtin `http_proxy` module](https://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_buffering):
 
 ```nginx
 proxy_http_version 1.1; # 1.0 by default
