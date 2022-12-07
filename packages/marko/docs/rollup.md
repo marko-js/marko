@@ -1,155 +1,309 @@
 # Marko + Rollup
 
-# Installation
+This is Marko’s official integration plugin for [the Rollup bundler](https://rollupjs.org/).
 
-```console
-npm install @marko/rollup rollup @rollup/plugin-node-resolve @rollup/plugin-commonjs -D
+## Installation
+
+```sh
+npm install --save-dev \
+  @marko/rollup \
+  rollup \
+  @rollup/plugin-node-resolve \
+  @rollup/plugin-commonjs
 ```
 
-# Basic example config
+> **Note**: The Marko runtime is CommonJS, so don’t forget the `@rollup/plugin-commonjs` package!
 
-**Note: The Marko runtime is authored in commonjs, this means the `@rollup/plugin-commonjs` is required!**
+## Configuration
 
-```javascript
+`@marko/rollup` exports two methods for use in [Rollup configuration files](https://rollupjs.org/guide/en/#configuration-files): `.browser()` and `.server()`.
+
+You _probably_ want to use both, since that’ll get you…
+
+- Automatic [`input` entrypoint configuration](https://rollupjs.org/guide/en/#input) for route-based bundle splitting
+- Complete control over asset loading with [the `<rollup>` tag](#rollup-tag)
+- The strengths behind why Marko exists in the first place: cooperation between servers and browsers for high performance in both
+
+> **ProTip**: You _could_ use only `.browser()` or only `.server()` to build a completely client-side-rendered or server-side-rendered app. That would be a little odd, but you could.
+
+### Config example
+
+```js
 import nodeResolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import marko from "@marko/rollup";
 
-export default {
-  ...,
+const sharedPlugins = [
+  commonjs({
+    extensions: [".js", ".marko"]
+  }),
+  // If using Marko’s `style {}` blocks, you’ll need an appropriate plugin, like npmjs.com/rollup-plugin-postcss
+  postcss({ external: true })
+]
+
+const serverAssetsConfig = {
+  input: "src/start-server.js",
   plugins: [
-    marko.browser(),
-    nodeResolve({
-      browser: true,
-      extensions: [".js", ".marko"]
-    }),
-    // NOTE: The Marko runtime uses commonjs so this plugin is also required.
-    commonjs({
-      extensions: [".js", ".marko"]
-    }),
-    // If using `style` blocks with Marko you must use an appropriate plugin.
-    postcss({
-      external: true
-    })
+    marko.server(),
+    nodeResolve({ preferBuiltins: true })
+    ...sharedPlugins
   ]
 };
+const browsersAssetsConfig = {
+  plugins: [
+    marko.browser(),
+    nodeResolve({ browser: true })
+    ...sharedPlugins
+  ]
+};
+
+export default [serverAssetsConfig, browsersAssetsConfig];
 ```
 
-Likewise, if bundling the components for the server use `marko.server()` as the plugin.
+### Advanced config example
 
-# Linked config
+The following configuration file is long and hairy, which may be upsetting to some viewers. However, it does show how to accomplish the following:
 
-If you use _both_ the `server` and `browser` plugins (in a [multi rollup config setup](https://rollupjs.org/guide/en/#configuration-files:~:text=export%20an%20array)) `@marko/rollup` will go into a _linked_ mode.
-In the linked mode you will have access to the [`<rollup>` tag](#rollup-tag) on the server, and the browser config
-will automatically have the [`input`](https://rollupjs.org/guide/en/#input) option set.
+- Support for Rollup’s watch mode
+- A bundle analyzer
+- The ability to `import` JSON files to use their data
+- The ability to `import` image files to use their asset URLs for `img[src]` and such
+- Dead-code elimination for development-only code
+- Static compression of assets for something like [NGiNX’s `gzip_static`](https://nginx.org/en/docs/http/ngx_http_gzip_static_module.html)
+- A CSS preprocessor (Sass, in this case)
+- Browserslist to automatically configure:
+  - Babel for JS transpilation
+  - Autoprefixer for CSS transpilation
 
-```javascript
-export default [{
-  // Config object for bundling server assets.
-  input: "src/your-server-entry.js",
-  plugins: [
-    marko.server()
-    ...
-  ]
-}, {
-  // Config object for bundling browser assets.
-  plugins: [
-    marko.browser()
-    ...
-  ]
-}];
+<details><summary>Big ugly production-esque Rollup config</summary>
+
+```js
+import { builtinModules } from "module";
+import path from "path";
+import autoprefixer from "autoprefixer";
+import babelPlugin from "@rollup/plugin-babel";
+import commonjsPlugin from "@rollup/plugin-commonjs";
+import jsonPlugin from "@rollup/plugin-json";
+import markoPlugin from "@marko/rollup";
+import nodeResolvePlugin from "@rollup/plugin-node-resolve";
+import replacePlugin from "@rollup/plugin-replace";
+import runPlugin from "@rollup/plugin-run";
+import stylesPlugin from "rollup-plugin-styles";
+import urlPlugin from "@rollup/plugin-url";
+import pkg from "./package.json";
+
+const __DEV__ = process.env.NODE_ENV === "development";
+const __PROD__ = !__DEV__;
+
+const isWatch = Boolean(process.env.ROLLUP_WATCH);
+
+const publicPath = "/s/"; // Guess what character is only 5 bits under HPACK
+const assetFileNames = "[name]-[hash][extname]";
+
+const externalDependencies = [
+  ...Object.keys(pkg.dependencies),
+  ...builtinModules
+];
+
+process.env.SASS_PATH = "./:./node_modules";
+
+export default (async () => [
+  compiler("server", {
+    input: "index.js",
+    output: {
+      dir: "built/server/",
+      assetFileNames: `../browser/${assetFileNames}`,
+      format: "cjs",
+      sourcemap: true
+    },
+    external: id =>
+      externalDependencies.some(
+        dependency => id === dependency || id.startsWith(dependency + "/")
+      ),
+    plugins: [isWatch && runPlugin({ execArgv: ["--enable-source-maps"] })]
+  }),
+
+  compiler("browser", {
+    output: {
+      dir: "built/browser/",
+      chunkFileNames: __PROD__ ? "[name]-[hash].js" : null,
+      entryFileNames: __PROD__ ? "[name]-[hash].js" : null,
+      assetFileNames,
+      sourcemap: true,
+      sourcemapExcludeSources: __PROD__
+    },
+    plugins: [
+      stylesPlugin({
+        mode: "extract",
+        sourceMap: true,
+        config: {
+          target: "browserslist:css",
+          plugins: [autoprefixer({ env: "css" })]
+        },
+        minimize: __PROD__,
+        url: {
+          publicPath,
+          hash: assetFileNames
+        }
+      }),
+      __PROD__ && (await import("rollup-plugin-terser")).terser(),
+      __PROD__ &&
+        (await import("rollup-plugin-gzip")).default({
+          filter: /\.(?:js|css|svg|json|xml|txt)$/,
+          minSize: 1024,
+          gzipOptions: {
+            level: 9,
+            memLevel: 9
+          }
+        }),
+      __PROD__ &&
+        !isWatch &&
+        (await import("rollup-plugin-visualizer")).default(),
+      __PROD__ &&
+        !isWatch && {
+          name: "bundle-visualizer-location",
+          writeBundle() {
+            console.info(
+              `📊 Bundle visualizer at \x1b[4;36mfile://${path.join(
+                __dirname,
+                "../../",
+                bundleAnalyzerFilename
+              )}\x1b[0m`
+            );
+          }
+        }
+    ]
+  })
+])();
+
+function compiler(target, config) {
+  const isBrowser = target === "browser";
+  const browserslistEnv = isBrowser ? "js" : "server";
+  const babelConfig = {
+    comments: false,
+    browserslistEnv,
+    compact: false,
+    babelrc: false,
+    caller: { target }
+  };
+  if (isBrowser) {
+    babelConfig.presets = [
+      [
+        "@babel/preset-env",
+        {
+          browserslistEnv,
+          bugfixes: true
+        }
+      ]
+    ];
+  }
+
+  return {
+    ...config,
+    preserveEntrySignatures: false,
+    plugins: [
+      markoPlugin[target]({ babelConfig }),
+      nodeResolvePlugin({
+        browser: isBrowser,
+        preferBuiltins: !isBrowser
+      }),
+      commonjsPlugin(),
+      replacePlugin({
+        preventAssignment: true,
+        values: { __DEV__, __PROD__ }
+      }),
+      babelPlugin({
+        babelHelpers: "bundled",
+        ...babelConfig
+      }),
+      jsonPlugin(),
+      urlPlugin({
+        publicPath,
+        destDir: "built/browser/",
+        fileName: assetFileNames,
+        include: "**/*.{svg,png,jpg,jpeg}",
+        limit: 0, // Never Base64 & inline
+        emitFiles: !isBrowser
+      }),
+      ...config.plugins
+    ]
+  };
+}
 ```
+
+</details>
 
 ## `<rollup>` tag
 
-In a [linked setup](#linked-config) you have access to the `<rollup>` tag which will provide two [tag parameters](https://markojs.com/docs/syntax/#parameters) that allow you to write out the asset links for your server rendered app.
+Using both `.server()` and `.browser()` enables **the `<rollup>` tag**, which gives you complete control over how your app loads assets. That lets you do things like:
 
-The first parameter `entry` is the generated `input` name that the server plugin gave to the browser compiler.
-You can use it to find the corresponding entry chunk from rollups build.
+- [Critical CSS](https://web.dev/extract-critical-css/) for components as they write out within a kB budget, or [as components first appear on the page](https://jakearchibald.com/2016/link-in-body/#a-simpler-better-way), or any other style-loading mad science
+- [`module`/`nomodule` scripts](https://philipwalton.com/articles/using-native-javascript-modules-in-production-today/) for smaller bundles in modern browsers
+- [Content-Security Policy `nonce`s](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/nonce) or [Subresource `integrity` hashes](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+- Anything a web page can do, really. You can even combine `<rollup>` with [the `serialize` option](#options.serialize) to be as fancy as you wanna be.
 
-The second parameter `output` is an array of `AssetInfo | ChunkInfo` objects with most of the same properties returned from rollup's [`generateBundle` hook](https://rollupjs.org/guide/en/#generatebundle). Some properties have been stripped, notably `code` and `map` since they would be too large to inline directly. A `size` property is also available for all chunks to allow you to be able to filter out empty chunks, or inline chunks of certain size.
+The `<rollup>` tag provides two [tag parameters](https://markojs.com/docs/syntax/#parameters):
+
+1. `entry` is the generated `input` string that the `server` plugin gave to the `browser` plugin. You can use it to find the corresponding entry chunk from Rollup’s `output` (the next parameter).
+
+2. `output` is an array of `AssetInfo | ChunkInfo` objects with most of [the data returned from Rollup's `generateBundle` hook](https://rollupjs.org/guide/en/#generatebundle). Some properties are omitted, like `code` and `map`, since they’re often too large to inline directly. However, each chunk also has a `size` property, to let you filter out empty chunks, inline code yourself below a certain size, or other delightful devilishness.
+
+For example, using the `entry` name and properties of `output` items to load scripts:
 
 ```marko
 <head>
   <rollup|entry, output|>
     $ const entryChunk = output.find(chunk => chunk.name === entry);
 
-    <if(entryChunk.size /* skip scripts all together if empty js file */)>
+    <if(entryChunk.size /* only load non-empty JS entry points */)>
       <for|fileName| of=entryChunk.imports>
-        <link rel="modulepreload" href=fileName/>
+        <link rel="modulepreload" href=fileName />
       </for>
 
-      <script async type="module" src=entryChunk.fileName/>
+      <script async type="module" src=entryChunk.fileName></script>
     </if>
   </rollup>
 </head>
 ```
 
-Ultimately it is up to you to map the chunk data (sometimes referred to as a manifest) into the `<link>`'s and `<script>`'s rendered by your application.
+> **Note**: It’s up to you to transform the chunk data (also called the **manifest**) into `<link>`s, `<script>`s, and other HTML to load assets. Opting into complete control means we can’t do any of it for you.
 
-If your rollup browser config contains multiple `output` options, or you have multiple browser configs, all of the `chunks` for each `output` are passed into the `<rollup>` tag.
+If your Rollup `browser` config contains multiple `output` options, or you have multiple `browser` configs, every `output`’s chunk is passed to the `<rollup>` tag.
 
-For example if you have an `esm` and `iife` build:
-
-```javascript
-{
-  plugins: [
-    marko.browser()
-    ...
-  ],
-  output: [
-    { dir: 'dist/iife', format: 'iife' },
-    { dir: 'dist/esm', format: 'esm' }
-  ]
-}
-```
-
-we could access the assets from both builds:
-
-```marko
-<head>
-  <rollup|entry, iifeOutput, esmOutput|>
-    $ const iifeEntryChunk = iifeOutput.find(chunk => chunk.name === entry);
-    $ const esmEntryChunk = esmOutput.find(chunk => chunk.name === entry);
-
-    <script async type="module" src=esmEntryChunk.fileName/>
-    <script nomodule src=iifeEntryChunk.fileName></script>
-  </rollup>
-</head>
-```
-
-and _boom_ you now have a [`module/nomodule` setup](https://philipwalton.com/articles/using-native-javascript-modules-in-production-today/).
-
-# Top level components
-
-Marko was designed to send as little JavaScript to the browser as possible. One of the ways we do this is by automatically determining which templates in your app should be shipped to the browser. When rendering a template on the server, it is only necessary to bundle the styles and interactive components rendered by that template.
-
-To send the minimal amount of Marko templates to the browser you can provide a Marko template directly as the `input`.
-This will also automatically invoke code to initialize the components in the browser, so there is no need to call
-`template.render` yourself in the browser.
-
-> Note: if you are using _linked_ plugins then the server plugin will automatically tell the browser compiler which Marko templates to load.
+For example, if you have both `esm` and `iife` build outputs configured:
 
 ```js
-export default {
-  input: "./my-marko-page.marko",
-  plugins: [
-    marko.browser(),
-    ...
-  ],
-  ...
+{
+  output: [
+    { dir: "dist/iife", format: "iife" },
+    { dir: "dist/esm", format: "esm" }
+  ];
 }
 ```
+
+…you could cross-reference assets from both…
+
+```marko
+<rollup|entry, iifeOutput, esmOutput|>
+  $ const iifeEntryChunk = iifeOutput.find(chunk => chunk.name === entry);
+  $ const esmEntryChunk = esmOutput.find(chunk => chunk.name === entry);
+
+  <script src=esmEntryChunk.fileName type="module" async></script>
+  <script src=iifeEntryChunk.fileName nomodule async></script>
+</rollup>
+```
+
+…and _boom:_ you now have [a `module`/`nomodule` setup](https://philipwalton.com/articles/using-native-javascript-modules-in-production-today/).
 
 ## Options
 
-Both the `server` and `browser` plugins can receive the same options.
+### `options.babelConfig`
 
-### options.babelConfig
+Both the `.server()` and `.browser()` plugins accept this option.
 
-You can manually override the Babel configuration used by passing a `babelConfig` object to the `@marko/rollup` plugin. By default Babels regular [config file resolution](https://babeljs.io/docs/en/config-files) will be used.
+You can manually override the builtin Babel configuration by passing a `babelConfig` object. By default, [Babel’s regular config file resolution](https://babeljs.io/docs/en/config-files) will be used.
 
-```javascript
+```js
 marko.browser({
   babelConfig: {
     presets: ["@babel/preset-env"]
@@ -157,42 +311,40 @@ marko.browser({
 });
 ```
 
-### options.runtimeId
+### `options.runtimeId`
 
-In some cases you may want to embed multiple isolated copies of Marko on the page. Since Marko relies on some `window` properties to initialize this can cause issues. For example, by default Marko will read the server rendered hydration code from `window.$components`. In Marko you can change these `window` properties by rendering with `{ $global: { runtimeId: "MY_MARKO_RUNTIME_ID" } }` as input on the server side.
+Both the `.server()` and `.browser()` plugins accept this option. In fact, you _really_ want to use it with both simultaneously.
 
-This plugin exposes a `runtimeId` option produces output that automatically sets `$global.runtimeId` on the server side and initializes properly in the browser.
+In some cases, you may want to embed multiple isolated copies of Marko on the page. (If you can’t think of why, then don’t worry about this option.)
+
+Since Marko uses some `window` properties to initialize, multiple instances can cause issues. For example, by default Marko checks `window.$components` for server-rendered hydration. Usually you can change these `window` properties by [rendering with `{ $global: { runtimeId: "MY_MARKO_RUNTIME_ID" } }` as input](https://markojs.com/docs/rendering/#global-data) on the server, but since `@marko/rollup` usually writes the autoinitialization code for you, instead this plugin exposes a `runtimeId` option to automatically set `$global.runtimeId` to initialize properly in the browser:
 
 ```js
 const runtimeId = "MY_MARKO_RUNTIME_ID";
-// Make sure the `runtimeId` is the same across all of your plugins!
+// Make the `runtimeId` the same across `server` and `browser`, or it’ll error!
 marko.server({ runtimeId });
 marko.browser({ runtimeId });
 ```
 
-### options.serialize
+### `options.serialize`
 
-This option is only available for the `browser` plugin. It allows you to transform the list of chunks serialzed in a [_linked config_](#linked-config) to include whatever you like.
-For example if you _did_ want to include the `code` property from the rollup chunk, to say inline some content, the following would work:
+This option is only available for the `.browser()` plugin. It lets you inspect and transform the `output` chunks before they’re passed to [the `<rollup>` tag](#rollup-tag).
+
+For example, if you _did_ want to include the `code` property from the Rollup chunk — say, to inline code small enough that it’s not worth the overhead of an HTTP request, you’d try something like the following:
 
 ```js
 marko.browser({
   serialize(output) {
-    return output.map(chunk =>
-      chunk.type === "asset"
-        ? {
-            type: "asset",
-            fileName: chunk.fileName
-          }
+    return output.map(({ type, fileName, isEntry, code }) =>
+      type === "asset"
+        ? { type, fileName }
         : {
-            type: "chunk",
-            name: chunk.name,
-            isEntry: chunk.isEntry,
-            fileName: chunk.fileName,
-            code:
-              chunk.code.replace(/^\s+$/, "").length < 1024
-                ? chunk.code
-                : undefined // only inline small code chunks
+            type,
+            name,
+            isEntry,
+            fileName,
+            // only inline code chunks below 1kB
+            inline: code.trim().length < 1024 && code
           }
     );
   }
