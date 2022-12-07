@@ -6,7 +6,7 @@
 
 # 10 Awesome Marko Features
 
-[Marko](http://markojs.com/) is a friendly and super fast UI library that makes
+[Marko](https://markojs.com/) is a friendly and super fast UI library that makes
 building web apps<br> fun! In celebration of rapidly approaching [5,000 stars on
 GitHub](https://github.com/marko-js/marko) (the ultimate open source vanity
 metric), here are 10 features that will make you more productive in no
@@ -89,7 +89,7 @@ Do you see references to “Marko” in the snippet above? Yeah, me neither.
 
 Is your component becoming too large? Do you prefer separating your CSS,
 JavaScript, and markup code? No problem. You can easily [rip out your code into
-multiple files](http://markojs.com/docs/class-components/#multi-file-components):
+multiple files](https://markojs.com/docs/class-components/#multi-file-components):
 
 ```
 components/
@@ -223,7 +223,7 @@ $ {
 Node.js is asynchronous. Browsers are asynchronous. Why should rendering be
 synchronous? Pass your promise along to your template and Marko will
 asynchronously render parts of your view. Turns out, [this is good for
-performance](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/).
+performance](https://tech.ebayinc.com/engineering/async-fragments-rediscovering-progressive-html-rendering-with-marko/).
 
 ```marko
 $ const searchResultsPromise = searchService.performSearch(keywords);

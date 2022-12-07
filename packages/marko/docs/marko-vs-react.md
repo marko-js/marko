@@ -7,7 +7,7 @@
 > This article was published March 2017. Both frameworks have gone through several updates since. You can find the original ["Marko vs React: An In-depth Look" article here](https://hackernoon.com/marko-vs-react-an-in-depth-look-767de0a5f9a6)!
 
 In this article we will take an in-depth look at the differences and
-similarities between [Marko](http://markojs.com/) and React from the perspective
+similarities between [Marko](https://markojs.com/) and React from the perspective
 of the maintainers of Marko.
 
 On the surface, Marko and React have a lot in common and both are trying to
@@ -27,7 +27,7 @@ weight:
 Because the Marko JavaScript library is much smaller than React, it will require
 less time to load and parse and this will drastically improve page load times on
 slow connections or on older devices. Based on [our
-benchmarks](http://markojs.com/#benchmarks), Marko consistently outperforms
+benchmarks](https://markojs.com/#benchmarks), Marko consistently outperforms
 React by a significant margin on both the server and in the browser.
 
 ### Example
@@ -82,7 +82,7 @@ class Counter extends React.Component {
 }
 ```
 
-<span class="figcaption_hack">[▶ Try Online](http://codepen.io/mlrawlings/pen/wJXOWR?editors=0010)</span>
+<span class="figcaption_hack">[▶ Try Online](https://codepen.io/mlrawlings/pen/wJXOWR?editors=0010)</span>
 
 #### Marko
 
@@ -115,7 +115,7 @@ $ var count = state.count;
 ```
 
 <span class="figcaption_hack">[▶ Try
-Online](http://markojs.com/try-online/?gist=8fe46bc5866605aca0dfeec202604011)</span>
+Online](https://markojs.com/try-online/?gist=8fe46bc5866605aca0dfeec202604011)</span>
 
 ### Similarities
 
@@ -151,7 +151,7 @@ At a high level here are some differences:
   targets).
 - **Improved performance:** Marko supports asynchronous rendering with [early
   flushing of
-  HTML](http://www.ebaytechblog.com/2014/12/08/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
+  HTML](https://tech.ebayinc.com/engineering/async-fragments-rediscovering-progressive-html-rendering-with-marko/)
   for improvements in actual and perceived page load times.
 - **Improved performance:** React requires an additional client-side re-render if
   a page is initially rendered on the server while Marko does not.
@@ -164,7 +164,7 @@ At a high level here are some differences:
 #### Differences in syntax
 
 - **Improved ease of use:** Marko uses the
-  [HTML-JS](http://markojs.com/docs/syntax/) syntax and the
+  [HTML-JS](https://markojs.com/docs/syntax/) syntax and the
   [JSX](https://facebook.github.io/react/docs/jsx-in-depth.html) syntax is offered
   for React.
 - **Improved ease of use:** Marko supports both a concise syntax and a familiar
@@ -246,9 +246,9 @@ At a high level here are some differences:
 - **Marko limitation:** Marko has no support for native mobile similar to React
   Native (although with Marko VDOM rendering, this is possible).
 - **Marko limitation:** Marko requires a JavaScript module bundler (such as
-  [Lasso](http://markojs.com/docs/lasso/),
-  [Webpack](http://markojs.com/docs/webpack/),
-  [Rollup](http://markojs.com/docs/rollup/)
+  [Lasso](https://markojs.com/docs/lasso/),
+  [Webpack](https://markojs.com/docs/webpack/),
+  [Rollup](https://markojs.com/docs/rollup/)
   since Marko UI components compile down to JavaScript modules. (we consider using
   a JavaScript module bundler a best practice)
 
@@ -261,7 +261,7 @@ between Marko and React.
 
 Both Marko and React JSX allow HTML markup and JavaScript to be combined into a
 single file and both support building web applications based on UI components.
-Marko utilizes an [HTML-JS syntax](http://markojs.com/docs/syntax/) while most
+Marko utilizes an [HTML-JS syntax](https://markojs.com/docs/syntax/) while most
 React apps use the JSX syntax.
 
 > React JSX makes JavaScript more like HTML and Marko makes HTML more like
@@ -372,7 +372,7 @@ documentation](https://facebook.github.io/react/docs/introducing-jsx.html#specif
 > For example, `class` becomes `className` in JSX, and `tabindex` becomes `tabIndex`.
 
 As a result of this caveat for React, [tools for converting HTML to JSX
-exist](http://magic.reactjs.net/htmltojsx.htm).
+exist](https://magic.reactjs.net/htmltojsx.htm).
 
 #### React JSX
 
@@ -679,7 +679,7 @@ export default function HelloGoodBye(props) {
 #### Marko
 
 Marko supports a mechanism for [automatically discovering custom
-tags](http://markojs.com/docs/custom-tags/#discovering-tags) for UI components
+tags](https://markojs.com/docs/custom-tags/#discovering-tags) for UI components
 based on the project directory structure. Marko walks up the directory tree to
 discover all directories and it will also automatically discover custom tags
 exported by installed packages. This approach negates the need for explicitly
@@ -710,7 +710,7 @@ tags.
 ### Async
 
 Even after rendering has started, Marko allows parts of the view to be rendered
-asynchronously using the [`<await>`](http://markojs.com/docs/core-tags#await)
+asynchronously using the [`<await>`](https://markojs.com/docs/core-tags#await)
 tag as shown in the following Marko template:
 
 ```marko
@@ -828,7 +828,7 @@ your code readable.
 ### Why Marko?
 
 Here are just a few reasons you should consider using
-[Marko](http://markojs.com/) over React:
+[Marko](https://markojs.com/) over React:
 
 - Marko requires much less boilerplate.
 - Marko has much better performance based on our benchmarks.
@@ -849,6 +849,6 @@ Here are just a few reasons you should consider using
   [Discord](https://discord.gg/RFGxYGs).
 
 Interested in learning more about Marko? If so, you can get additional
-information on the [Marko website](http://markojs.com/). Join the conversation
+information on the [Marko website](https://markojs.com/). Join the conversation
 and contribute on [GitHub](https://github.com/marko-js/marko) and follow us on
 [Twitter](https://twitter.com/MarkoDevTeam).
