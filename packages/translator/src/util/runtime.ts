@@ -97,7 +97,7 @@ export function callQueue(
   );
 }
 
-function getScopeExpression(reference: Reserve, sectionId: number) {
+export function getScopeExpression(reference: Reserve, sectionId: number) {
   const diff = reference.sectionId !== sectionId ? 1 : 0;
   let scope: t.Expression = scopeIdentifier;
   for (let i = 0; i < diff; i++) {

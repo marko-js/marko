@@ -237,7 +237,7 @@ function getFnRoot(path: t.NodePath<t.Node>) {
 
   while (!isFunctionExpression(curPath)) {
     if (isMarkoPath(curPath)) return;
-    curPath = curPath.parentPath!;
+    curPath = (curPath as t.NodePath<t.Node>).parentPath!;
   }
 
   return curPath as

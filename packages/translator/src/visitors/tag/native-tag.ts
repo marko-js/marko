@@ -2,7 +2,12 @@ import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
-import { callRuntime, getHTMLRuntime } from "../../util/runtime";
+import {
+  callRead,
+  callRuntime,
+  getHTMLRuntime,
+  getScopeExpression,
+} from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
@@ -11,6 +16,7 @@ import { addStatement, addHTMLHydrateCall } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { currentProgramPath, scopeIdentifier } from "../program";
+import type { Identifier } from "@marko/compiler/babel-types";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -23,9 +29,7 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const attrs = tag.get("attributes");
-      let sectionId: number | undefined = tag.has("var")
-        ? getOrCreateSectionId(tag)
-        : undefined;
+      let sectionId = tag.has("var") ? getOrCreateSectionId(tag) : undefined;
 
       if (attrs.some(isSpreadAttr)) {
         // TODO
@@ -43,13 +47,12 @@ export default {
         }
       }
 
+      const name = node.var
+        ? (node.var as t.Identifier).name
+        : (node.name as t.StringLiteral).value;
+
       if (sectionId !== undefined) {
-        reserveScope(
-          ReserveType.Visit,
-          sectionId,
-          node,
-          (node.name as t.StringLiteral).value
-        );
+        reserveScope(ReserveType.Visit, sectionId, node, name);
       }
     },
   },
@@ -64,11 +67,69 @@ export default {
       const write = writer.writeTo(tag);
       const sectionId = getSectionId(tag);
 
-      if (isHTML) {
-        if (extra.tagNameNullable) {
-          writer.flushBefore(tag);
+      // TODO: throw error if var is not an identifier (like let)
+
+      if (isHTML && extra.tagNameNullable) {
+        writer.flushBefore(tag);
+      }
+
+      if (tag.has("var")) {
+        if (isHTML) {
+          translateVar(
+            tag,
+            t.arrowFunctionExpression(
+              [],
+              t.blockStatement([
+                t.throwStatement(
+                  t.newExpression(t.identifier("Error"), [
+                    t.stringLiteral("Cannot reference DOM node from server"),
+                  ])
+                ),
+              ])
+            )
+          );
+        } else {
+          const varName = (tag.node.var as Identifier).name;
+          const references = tag.scope.getBinding(varName)!.referencePaths;
+          let createElFunction = undefined;
+          for (const reference of references) {
+            const referenceSectionId = getSectionId(reference);
+            if (reference.parentPath?.isCallExpression()) {
+              reference.parentPath.replaceWith(
+                t.expressionStatement(
+                  callRead(extra.reserve!, referenceSectionId)
+                )
+              );
+            } else {
+              createElFunction ??= t.identifier(varName + "_getter");
+              reference.replaceWith(
+                callRuntime(
+                  "bind",
+                  getScopeExpression(extra.reserve!, referenceSectionId),
+                  createElFunction
+                )
+              );
+            }
+          }
+          if (createElFunction) {
+            currentProgramPath.pushContainer(
+              "body",
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  createElFunction,
+                  t.arrowFunctionExpression(
+                    [scopeIdentifier],
+                    t.memberExpression(
+                      scopeIdentifier,
+                      t.numericLiteral(extra.reserve!.id),
+                      true
+                    )
+                  )
+                ),
+              ])
+            );
+          }
         }
-        translateVar(tag, t.unaryExpression("void", t.numericLiteral(0)));
       }
 
       let visitIndex: t.NumericLiteral | undefined;
@@ -128,7 +189,7 @@ export default {
                 write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
                 if (isEventHandler(name)) {
-                  addHTMLHydrateCall(sectionId, extra.valueReferences);
+                  addHTMLHydrateCall(sectionId, valueReferences);
                 } else {
                   write`${callRuntime(
                     "attr",
@@ -140,7 +201,7 @@ export default {
                 addStatement(
                   "hydrate",
                   sectionId,
-                  extra.valueReferences,
+                  valueReferences,
                   t.expressionStatement(
                     callRuntime(
                       "on",

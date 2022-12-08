@@ -19,7 +19,9 @@ const _renderer = ({
   _write(`${_markHydrateNode(_scope, 0)}`);
   const data3 = _dynamicTag(dynamic, null);
   const _tagName2 = show && "div";
-  const el1 = void 0;
+  const el1 = () => {
+    throw new Error("Cannot reference DOM node from server");
+  };
   if (_tagName2) _write(`${_markHydrateNode(_scope, 6)}<${_tagName2}></${_tagName2}>`);
 };
 export default _renderer;

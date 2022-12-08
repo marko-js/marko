@@ -61,7 +61,7 @@ export const enum WalkRangeSizes {
 
 export function trimWalkString(walkString: string): string {
   let end = walkString.length;
-  while (walkString.charCodeAt(--end) > WalkCodes.Replace);
+  while (walkString.charCodeAt(--end) > WalkCodes.BeginChildEnd);
   return walkString.slice(0, end + 1);
 }
 
@@ -98,9 +98,7 @@ function walkInternal(
     } else if (value >= WalkCodes.Over) {
       value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
       while (value--) {
-        if (!walker.nextSibling() && !walker.nextNode() && MARKO_DEBUG) {
-          throw new Error("No more nodes to walk");
-        }
+        !walker.nextSibling() && !walker.nextNode();
       }
     } else if (value >= WalkCodes.Next) {
       value = WalkRangeSizes.Next * currentMultiplier + value - WalkCodes.Next;
