@@ -10,12 +10,60 @@ import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import { initContextConsumer } from "../util/signals";
+import customTag from "../visitors/tag/custom-tag";
+import { currentProgramPath } from "../visitors/program";
+import { getOrCreateSectionId } from "../util/sections";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    closures?: boolean;
+    contextProviders?: string[];
+  }
+}
 
 export default {
+  analyze: {
+    enter(tag) {
+      const sectionId = getOrCreateSectionId(tag);
+      if (sectionId === 0) {
+        (currentProgramPath.node.extra ??= {}).closures = true;
+      }
+
+      // TODO: resolve default parameter and push to (currentProgramPath.node.extra ??= {}).contextProviders
+
+      customTag.analyze.enter(tag);
+
+      // const {
+      //   node,
+      //   hub: { file },
+      // } = tag;
+      // if (file.markoOpts.output !== 'html') {
+      //   const [defaultAttr] = node.attributes;
+
+      //   if (defaultAttr === undefined) {
+      //     const scriptlet = t.markoScriptlet([
+      //       t.variableDeclaration("const", [
+      //         t.variableDeclarator(
+      //           node.var!,
+      //           callRuntime("getInContext", t.stringLiteral('$'))
+      //         ),
+      //       ])
+      //     ],false);
+
+      //     tag.replaceWith(scriptlet);
+      //   }
+      // }
+    },
+    exit: customTag.analyze.exit,
+  },
   translate(tag) {
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    writer.flushBefore(tag);
+
+    if (isOutputHTML()) {
+      writer.flushBefore(tag);
+    }
 
     const {
       node,
@@ -103,7 +151,21 @@ export default {
         ])
       );
     } else {
-      // TODO: add support for DOM output
+      const identifiers = Object.values(
+        tag.get("var").getBindingIdentifiers()
+      ) as t.Identifier[];
+
+      // if (refId === '$') {
+      //   const scriptlet = tag as unknown as t.NodePath<t.MarkoScriptlet>;
+      //   addStatement(
+      //     "apply",
+      //     getSectionId(scriptlet),
+      //     scriptlet.node.extra?.bodyReferences as ReferenceGroup,
+      //     scriptlet.node.body
+      //   );
+      // } else {
+      initContextConsumer(refId, identifiers[0].extra!.reserve!);
+      // }
       tag.remove();
     }
   },

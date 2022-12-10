@@ -1,5 +1,4 @@
 import type { Scope } from "../common/types";
-import type { Context } from "../common/context";
 import { reconcile } from "./reconcile";
 import { Renderer, createScopeWithRenderer } from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
@@ -88,7 +87,8 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context,
+        (scope[conditionalIndex + ConditionalIndex.CONTEXT] ||=
+          scope.___context),
         scope
       ) as ChildScope;
     prevScope =
@@ -127,7 +127,8 @@ export function setConditionalRendererOnlyChild(
     const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        scope[conditionalIndex + ConditionalIndex.CONTEXT] as typeof Context,
+        (scope[conditionalIndex + ConditionalIndex.CONTEXT] ||=
+          scope.___context),
         scope
       ));
     fragment.___insertBefore(newScope, referenceNode, null);
@@ -240,7 +241,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
       if (!childScope) {
         childScope = createScopeWithRenderer(
           renderer,
-          scope[loopIndex + LoopIndex.CONTEXT] as typeof Context,
+          (scope[loopIndex + LoopIndex.CONTEXT] ||= scope.___context),
           scope
         ) as ChildScope;
         // TODO: once we can track moves

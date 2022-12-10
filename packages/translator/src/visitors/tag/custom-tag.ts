@@ -23,6 +23,7 @@ import trackReferences, {
 } from "../../util/references";
 import {
   addStatement,
+  getClosures,
   getSignal,
   writeHTMLHydrateStatements,
 } from "../../util/signals";
@@ -192,6 +193,16 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     binding.id,
     importNamed(file, relativePath, "walks", `${tagName}_walks`)
   );
+
+  if (childProgram.extra.closures) {
+    getClosures(tagSectionId).push(
+      callRuntime(
+        "inChildMany",
+        importNamed(file, relativePath, "closures", `${tagName}_closures`),
+        t.numericLiteral(binding.id)
+      )
+    );
+  }
 
   let attrsObject = attrsToObject(tag);
 

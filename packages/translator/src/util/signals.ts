@@ -34,7 +34,7 @@ const [getSignals] = createSectionState<Map<unknown, Signal>>(
 const [getSubscribeBuilder, _setSubscribeBuilder] = createSectionState<
   subscribeBuilder | undefined
 >("queue");
-export const [getClosures] = createSectionState<t.Expression[]>(
+export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
   "closures",
   () => []
 );
@@ -167,6 +167,73 @@ export function initDerivation(
     );
   };
   subscribe(providers, signal);
+  return signal;
+}
+
+export function initContextProvider(
+  templateId: string,
+  reserve: Reserve,
+  providers: undefined | Reserve | Reserve[],
+  compute: t.Expression,
+  renderer: t.Identifier
+) {
+  const sectionId = reserve.sectionId;
+  const scopeAccessor = t.numericLiteral(reserve.id);
+  const valueAccessor = t.numericLiteral(reserve.id + 1);
+
+  const signal = getSignal(sectionId, reserve);
+  signal.build = () => {
+    return callRuntime(
+      "derivation",
+      valueAccessor,
+      t.numericLiteral(Array.isArray(providers) ? providers.length : 1),
+      t.arrayExpression(signal.subscribers),
+      getComputeFn(sectionId, compute, providers),
+      t.arrowFunctionExpression(
+        [scopeIdentifier, t.identifier(reserve.name)],
+        t.blockStatement(signal.render)
+      )
+    );
+  };
+  subscribe(providers, signal);
+  signal.subscribers.push(callRuntime("dynamicSubscribers", valueAccessor));
+
+  addStatement(
+    "apply",
+    reserve.sectionId,
+    undefined,
+    t.expressionStatement(
+      callRuntime(
+        "initContextProvider",
+        scopeIdentifier,
+        scopeAccessor,
+        valueAccessor,
+        t.stringLiteral(templateId),
+        renderer
+      )
+    )
+  );
+
+  return signal;
+}
+
+export function initContextConsumer(templateId: string, reserve: Reserve) {
+  const sectionId = reserve.sectionId;
+  const signal = getSignal(sectionId, reserve);
+  getClosures(sectionId).push(signal.identifier);
+  signal.build = () => {
+    return callRuntime(
+      "contextClosure",
+      t.numericLiteral(reserve.id),
+      t.stringLiteral(templateId),
+      t.arrayExpression(signal.subscribers),
+      t.arrowFunctionExpression(
+        [scopeIdentifier, t.identifier(reserve.name)],
+        t.blockStatement(signal.render)
+      )
+    );
+  };
+
   return signal;
 }
 

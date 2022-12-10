@@ -112,7 +112,7 @@ function walkInternal(
         WalkCodes.BeginChild;
       currentWalkIndex = walkInternal(
         walkCodes,
-        (scope[value] = createScope(scope)),
+        (scope[value] = createScope(scope.___context)),
         currentWalkIndex
       )!;
     } else if (value >= WalkCodes.Skip) {

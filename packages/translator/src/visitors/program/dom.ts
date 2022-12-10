@@ -15,6 +15,7 @@ export default {
       const walksIdentifier = t.identifier("walks");
       const setupIdentifier = t.identifier("setup");
       const attrsSignalIdentifier = t.identifier("attrs");
+      const closuresIdentifier = t.identifier("closures");
       const { attrs } = program.node.extra;
       const { walks, writes, apply } = writer.getSectionMeta(sectionId);
 
@@ -93,6 +94,8 @@ export default {
         );
       }
 
+      const closures = getClosures(sectionId);
+
       program.node.body.push(
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
@@ -118,6 +121,18 @@ export default {
           ])
         )
       );
+      if (closures.length) {
+        program.node.body.push(
+          t.exportNamedDeclaration(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                closuresIdentifier,
+                t.arrayExpression(closures)
+              ),
+            ])
+          )
+        );
+      }
 
       program.node.body.push(
         t.exportDefaultDeclaration(
@@ -126,7 +141,8 @@ export default {
             templateIdentifier,
             walksIdentifier,
             setupIdentifier,
-            attrs! && attrsSignalIdentifier
+            attrs! && attrsSignalIdentifier,
+            closures.length && closuresIdentifier
           )
         )
       );

@@ -35,7 +35,11 @@ export { write, bind, bindRenderer } from "./scope";
 
 export type { Scope } from "../common/types";
 
-export { createRenderer, createRenderFn } from "./renderer";
+export {
+  createRenderer,
+  createRenderFn,
+  initContextProvider,
+} from "./renderer";
 
 export {
   setSource,
@@ -48,4 +52,6 @@ export {
   closure,
   dynamicClosure,
   dynamicSubscribers,
+  contextClosure,
+  inChildMany,
 } from "./signals";

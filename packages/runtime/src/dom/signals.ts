@@ -186,14 +186,24 @@ export function child<S extends Scope, V>(
 }
 
 export function closure<S extends Scope, V>(
-  ownerLevel: number,
-  providerValueAccessor: string | number,
+  ownerLevel: number | ((scope: Scope) => Scope),
+  providerAccessor: string | number | ((scope: Scope) => string | number),
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
-  const providerMarkAccessor = providerValueAccessor + AccessorChars.MARK;
+  const getOwner =
+    typeof ownerLevel === "function"
+      ? ownerLevel
+      : (scope: Scope) => getOwnerScope(scope, ownerLevel);
+  const getProviderAccessor =
+    typeof providerAccessor === "function"
+      ? providerAccessor
+      : () => providerAccessor;
+
   const getDefaultMark = (scope: Scope) => {
-    const ownerScope = getOwnerScope(scope, ownerLevel);
+    const ownerScope = getOwner(scope);
+    const providerMarkAccessor =
+      getProviderAccessor(scope) + AccessorChars.MARK;
     const providerMark = ownerScope[providerMarkAccessor];
     const providerHasRun =
       (providerMark === undefined && !ownerScope.___client) ||
@@ -205,10 +215,9 @@ export function closure<S extends Scope, V>(
     return providerHasRun ? 1 : 2;
   };
   const apply = (scope: Scope) => {
-    action?.(
-      scope as S,
-      getOwnerScope(scope, ownerLevel)[providerValueAccessor]
-    );
+    const ownerScope = getOwner(scope);
+    const providerValueAccessor = getProviderAccessor(scope);
+    action?.(scope as S, ownerScope[providerValueAccessor]);
     notifySubscribers(scope, true, subscribers);
   };
   return baseSubscriber(
@@ -220,23 +229,33 @@ export function closure<S extends Scope, V>(
 }
 
 export function dynamicClosure<S extends Scope, V>(
-  ownerLevel: number,
-  providerValueAccessor: string | number,
+  ownerLevel: number | ((scope: Scope) => Scope),
+  providerAccessor: string | number | ((scope: Scope) => string | number),
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
-  const providerSubscriptionsAccessor =
-    providerValueAccessor + AccessorChars.SUBSCRIBERS;
+  const getOwner =
+    typeof ownerLevel === "function"
+      ? ownerLevel
+      : (scope: Scope) => getOwnerScope(scope, ownerLevel);
+  const getProviderAccessor =
+    typeof providerAccessor === "function"
+      ? providerAccessor
+      : () => providerAccessor;
 
   const signal = {
-    ...closure(ownerLevel, providerValueAccessor, subscribers, action),
+    ...closure(ownerLevel, providerAccessor, subscribers, action),
     ___subscribe(scope: Scope) {
-      const ownerScope = getOwnerScope(scope, ownerLevel);
+      const ownerScope = getOwner(scope);
+      const providerSubscriptionsAccessor =
+        getProviderAccessor(scope) + AccessorChars.SUBSCRIBERS;
       ownerScope[providerSubscriptionsAccessor] ??= new Set();
       ownerScope[providerSubscriptionsAccessor].add(bindSignal(scope, signal));
     },
     ___unsubscribe(scope: Scope) {
-      const ownerScope = getOwnerScope(scope, ownerLevel);
+      const ownerScope = getOwner(scope);
+      const providerSubscriptionsAccessor =
+        getProviderAccessor(scope) + AccessorChars.SUBSCRIBERS;
       (ownerScope[providerSubscriptionsAccessor] as Set<Signal>)?.delete(
         bindSignal(scope, signal)
       );
@@ -258,6 +277,23 @@ export function dynamicSubscribers(valueAccessor: string | number) {
   });
 }
 
+export function contextClosure<S extends Scope, V>(
+  valueAccessor: number | string,
+  contextKey: string,
+  subscribers: Signal[],
+  action?: (scope: S, value: V) => void
+): Signal {
+  return dynamicClosure(
+    (scope) => scope.___context![contextKey][0],
+    (scope) => scope.___context![contextKey][1],
+    subscribers,
+    (scope: Scope, value: V) => {
+      scope[valueAccessor] = value;
+      action?.(scope as S, value);
+    }
+  );
+}
+
 // function getOwnerScope(scope: Scope, level: number) {
 //   for(; level--;) scope = scope._!;
 //   return scope;
@@ -275,6 +311,23 @@ export function wrapSignal(
   };
 }
 
+export function wrapSignalWithSubscription(
+  wrapper: (
+    methodName:
+      | "___mark"
+      | "___notify"
+      | "___apply"
+      | "___subscribe"
+      | "___unsubscribe"
+  ) => (scope: Scope, arg?: any) => void
+) {
+  return {
+    ...wrapSignal(wrapper),
+    ___subscribe: wrapper("___subscribe"),
+    ___unsubscribe: wrapper("___unsubscribe"),
+  };
+}
+
 export function inChild<S extends Scope>(
   subscriber: Signal,
   getChildScope: (s: S) => Scope
@@ -283,6 +336,18 @@ export function inChild<S extends Scope>(
     (methodName) => (scope, extraArg) =>
       subscriber[methodName](getChildScope(scope as S), extraArg)
   );
+}
+
+export function inChildMany(
+  subscribers: Signal[],
+  childScopeAccessor: number
+): Signal {
+  return wrapSignalWithSubscription((methodName) => (scope, extraArg) => {
+    const childScope = scope[childScopeAccessor] as Scope;
+    for (const signal of subscribers) {
+      signal[methodName]?.(childScope, extraArg);
+    }
+  });
 }
 
 export function inRenderBody(

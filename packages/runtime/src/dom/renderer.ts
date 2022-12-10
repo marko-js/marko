@@ -1,9 +1,10 @@
-import type { Scope } from "../common/types";
+import type { Scope, ScopeContext } from "../common/types";
 import type { Signal } from "./signals";
 import { createScope } from "./scope";
-import { Context, setContext } from "../common/context";
+import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
+import { DOMFragment, singleNodeFragment } from "./fragment";
 
 const enum NodeType {
   Element = 1,
@@ -35,18 +36,44 @@ type RenderResult<I extends Input> = {
 
 export function createScopeWithRenderer<S extends Scope = Scope>(
   renderer: Renderer<S>,
-  context: typeof Context,
+  context: ScopeContext,
   ownerScope?: Scope
 ) {
   setContext(context);
-  const newScope = createScope(renderer.___owner || ownerScope) as S;
+  const newScope = createScope(context as ScopeContext) as S;
+  newScope._ = renderer.___owner || ownerScope;
+  newScope.___renderer = renderer as Renderer;
+  initRenderer<S>(renderer, newScope);
   for (const signal of renderer.___closureSignals) {
     signal.___subscribe?.(newScope);
   }
-  newScope.___renderer = renderer as Renderer;
-  initRenderer<S>(renderer, newScope);
   setContext(null);
   return newScope;
+}
+
+export function initContextProvider(
+  scope: Scope,
+  scopeAccessor: number,
+  valueAccessor: number,
+  contextKey: string,
+  renderer: Renderer,
+  fragment: DOMFragment = singleNodeFragment
+) {
+  const node: Node = scope[scopeAccessor];
+  const newScope = createScopeWithRenderer(
+    renderer,
+    {
+      ...scope.___context,
+      [contextKey]: [scope, valueAccessor],
+    },
+    scope
+  );
+
+  fragment.___insertBefore(newScope, node.parentNode!, node.nextSibling);
+
+  for (const signal of renderer.___closureSignals) {
+    signal.___notify(newScope, true);
+  }
 }
 
 export function initRenderer<S extends Scope = Scope>(
@@ -86,7 +113,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   walks: string,
   setup?: SetupFn<S>,
   attrs?: Signal,
-  hasUserEffects?: 0 | 1,
+  closureSignals?: Signal[],
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
@@ -94,8 +121,8 @@ export function createRenderFn<I extends Input, S extends Scope>(
     template,
     walks,
     setup,
-    [],
-    hasUserEffects,
+    closureSignals,
+    0,
     dynamicStartNodeOffset,
     dynamicEndNodeOffset
   );

@@ -11,6 +11,8 @@ export type HydrateInstance = [
   number // offset
 ];
 
+export type ScopeContext = Record<string, [Scope, number | string]>;
+
 export type Scope<
   T extends { [x: string | number]: unknown } = {
     [x: string | number]: unknown;
@@ -23,6 +25,7 @@ export type Scope<
   ___client: boolean;
   ___boundSignals: Map<Signal, Signal> | undefined;
   ___renderer: ClientRenderer | undefined;
+  ___context: ScopeContext | undefined;
   _: Scope | undefined;
   [x: string | number]: any;
 } & T;

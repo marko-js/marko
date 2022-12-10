@@ -1,12 +1,12 @@
 import { queueHydrate } from "./queue";
-import type { Scope } from "../common/types";
+import type { Scope, ScopeContext } from "../common/types";
 import type { Renderer } from "./renderer";
 import { Signal, wrapSignal } from "./signals";
 
-export function createScope(owner?: Scope): Scope {
+export function createScope(context?: ScopeContext): Scope {
   const scope = {} as Scope;
   scope.___client = true;
-  scope._ = owner;
+  scope.___context = context;
   return scope;
 }
 

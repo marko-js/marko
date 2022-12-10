@@ -12,7 +12,7 @@ import ForTag from "./for";
 import GetTag from "./get";
 import HTMLCommentTag from "./html-comment";
 import LetTag from "./let";
-import SetTag from "./set";
+import PutTag from "./put";
 import StyleTag from "./style";
 import TagTag from "./tag";
 import YieldTag from "./yield";
@@ -37,7 +37,7 @@ export default {
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
   "<tag>": TagTag,
-  "<set>": SetTag,
+  "<put>": PutTag,
   "<get>": GetTag,
   "<yield>": YieldTag,
   "<style>": StyleTag,
