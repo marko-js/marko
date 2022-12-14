@@ -16,7 +16,7 @@
 
 ## Intro
 
-Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [control flow](https://markojs.com/docs/conditionals-and-lists/), [state](https://markojs.com/docs/state/), and [components](https://markojs.com/docs/class-components/).
+Marko is HTML _reimagined_ as a language for building dynamic and reactive user interfaces. Almost any valid HTML is valid Marko, and Marko extends HTML for building modern applications more declaratively. Among these extensions are [conditionals and lists](https://markojs.com/docs/conditionals-and-lists/), [state](https://markojs.com/docs/state/), and [components](https://markojs.com/docs/class-components/).
 
 Marko supports both single-file components and components across separate files.
 
