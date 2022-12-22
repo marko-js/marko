@@ -1,6 +1,6 @@
 import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   _customTag({
     renderBody(a, b, {

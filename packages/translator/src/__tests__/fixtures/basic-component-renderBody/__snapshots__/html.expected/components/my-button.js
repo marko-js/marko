@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, write as _write, dynamicTag as _dy
 const _renderer = ({
   onClick,
   renderBody
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}`);
   _dynamicTag(renderBody, null);

@@ -52,6 +52,8 @@ export {
   closure,
   dynamicClosure,
   dynamicSubscribers,
+  setTagVar,
+  tagVarSignal,
   contextClosure,
   inChildMany,
 } from "./signals";

@@ -1,6 +1,6 @@
 import { nextScopeId as _nextScopeId, markHydrateNode as _markHydrateNode, write as _write, writeHydrateCall as _writeHydrateCall, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _child from "./components/child/index.marko";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   _child({
     class: "hi",

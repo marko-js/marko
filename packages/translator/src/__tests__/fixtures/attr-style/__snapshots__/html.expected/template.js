@@ -3,7 +3,7 @@ import _customTag from "./components/custom-tag.marko";
 const _renderer = ({
   color,
   test
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}<div${_styleAttr({
     color: color

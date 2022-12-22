@@ -1,5 +1,5 @@
 import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _escapeXML, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const id = 0;
   const items = [];

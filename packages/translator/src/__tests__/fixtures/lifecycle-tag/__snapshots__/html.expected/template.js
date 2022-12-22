@@ -1,5 +1,5 @@
 import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const x = 0;
   _write(`<div id=ref></div>${_markHydrateNode(_scope, 0)}<button id=increment>Increment</button>`);

@@ -4,7 +4,7 @@ const _renderer = ({
   b,
   x,
   y
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}`);
   if (a + b) {

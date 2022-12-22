@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, toString 
 const _renderer = ({
   name,
   missing
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`Hello ${_markHydrateNode(_scope, 0)}${_escapeXML(name)}! Hello ${_markHydrateNode(_scope, 1)}${_toString(name)}! Hello ${_markHydrateNode(_scope, 2)}${_toString(missing)}!`);
 };

@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as 
 const _renderer = ({
   onClick,
   text
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}${_escapeXML(text)}</button>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onClick");

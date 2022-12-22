@@ -11,6 +11,7 @@ import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";
 import type { NodePath } from "@marko/compiler/babel-types";
+import { returnId } from "../core/return";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 
@@ -19,13 +20,23 @@ type Signal = {
   reserve: Reserve;
   sectionId: number;
   build: () => t.Expression;
-  // TODO: rename "apply" to "render"
+  register?: boolean;
   render: t.Statement[];
   hydrate: t.Statement[];
   subscribers: t.Expression[];
   closures: Map<number /* sectionId */, Signal>;
   hasDynamicSubscribers?: true;
 };
+
+/** TODO: temporary location - duplicated from "@marko/runtime-fluurt/src/common/types" */
+const enum AccessorChars {
+  DYNAMIC = "?",
+  MARK = "#",
+  STALE = "&",
+  SUBSCRIBERS = "*",
+  CLEANUP = "-",
+  TAG_VARIABLE = "/",
+}
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
@@ -38,6 +49,14 @@ export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
   "closures",
   () => []
 );
+
+const [forceHydrateScope, _setForceHydrateScope] = createSectionState<
+  undefined | true
+>("forceHydrateScope");
+
+export function setForceHydrateScope(sectionId: number) {
+  _setForceHydrateScope(sectionId, true);
+}
 
 export function setSubscriberBuilder(
   tag: t.NodePath<t.MarkoTag>,
@@ -361,7 +380,7 @@ export function addStatement(
   }
 }
 
-function getHydrateRegisterId(
+export function getHydrateRegisterId(
   sectionId: number,
   references: ReferenceGroup["references"]
 ) {
@@ -398,7 +417,14 @@ export function writeSignals(sectionId: number) {
   const declarations = Array.from(signals.values())
     .sort(sortSignals)
     .flatMap((signal) => {
-      const value = signal.build();
+      let value = signal.build();
+      if (signal.register) {
+        value = callRuntime(
+          "register",
+          t.stringLiteral(getHydrateRegisterId(sectionId, signal.reserve)),
+          value
+        );
+      }
       const signalDeclarator = t.variableDeclarator(signal.identifier, value);
       let hydrateDeclarator;
       if (signal.hydrate.length) {
@@ -640,7 +666,8 @@ export function addHTMLHydrateCall(
 }
 
 export function writeHTMLHydrateStatements(
-  path: t.NodePath<t.MarkoTagBody | t.Program>
+  path: t.NodePath<t.MarkoTagBody | t.Program>,
+  tagVarIdentifier?: t.Identifier
 ) {
   const sectionId = getOrCreateSectionId(path);
   const allSignals = Array.from(getSignals(sectionId).values());
@@ -651,8 +678,6 @@ export function writeHTMLHydrateStatements(
       t.variableDeclarator(scopeIdentifier, callRuntime("nextScopeId")),
     ])
   );
-
-  if (!allSignals.length) return;
 
   const refs: Reserve[] = [];
 
@@ -681,24 +706,30 @@ export function writeHTMLHydrateStatements(
     }
   }
 
-  if (refs.length) {
+  const serializedProperties = refs.reduce((acc, ref) => {
+    acc.push(
+      t.objectProperty(t.numericLiteral(ref.id), t.identifier(ref.name))
+    );
+    return acc;
+  }, [] as Array<t.ObjectProperty>);
+
+  if (tagVarIdentifier && returnId(sectionId) !== undefined) {
+    serializedProperties.push(
+      t.objectProperty(
+        t.stringLiteral(AccessorChars.TAG_VARIABLE),
+        tagVarIdentifier
+      )
+    );
+  }
+
+  if (serializedProperties.length || forceHydrateScope(sectionId)) {
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateScope",
           scopeIdentifier,
-          t.objectExpression(
-            refs.reduce((acc, ref) => {
-              acc.push(
-                t.objectProperty(
-                  t.numericLiteral(ref.id),
-                  t.identifier(ref.name)
-                )
-              );
-              return acc;
-            }, [] as Array<t.ObjectProperty>)
-          )
+          t.objectExpression(serializedProperties)
         )
       )
     );

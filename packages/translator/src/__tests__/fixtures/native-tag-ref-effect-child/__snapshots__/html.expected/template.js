@@ -1,6 +1,6 @@
 import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _helloSetter from "./components/hello-setter.marko";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const el = () => {
     throw new Error("Cannot reference DOM node from server");

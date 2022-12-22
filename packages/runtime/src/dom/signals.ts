@@ -311,6 +311,22 @@ export function wrapSignal(
   };
 }
 
+export function setTagVar(
+  scope: Scope,
+  childIndex: string | number,
+  tagVarSignal: Signal
+) {
+  scope[childIndex][AccessorChars.TAG_VARIABLE] = bindSignal(
+    scope,
+    tagVarSignal
+  );
+}
+
+export const tagVarSignal = wrapSignal(
+  (methodName) => (scope, extraArg) =>
+    scope[AccessorChars.TAG_VARIABLE]?.[methodName](null, extraArg)
+);
+
 export function wrapSignalWithSubscription(
   wrapper: (
     methodName:

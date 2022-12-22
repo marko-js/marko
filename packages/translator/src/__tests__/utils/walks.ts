@@ -1,4 +1,39 @@
-import { WalkCodes, WalkRangeSizes } from "../../util/walks";
+// TODO: These are duped, but when deduped they break everything
+enum WalkCodes {
+  Get = 32,
+  Before = 33,
+  After = 35,
+  Inside = 36,
+  Replace = 37,
+  EndChild = 38,
+
+  Skip = 40,
+  SkipEnd = 46,
+
+  BeginChild = 47,
+  BeginChildEnd = 66,
+
+  Next = 67,
+  NextEnd = 91,
+
+  Over = 97,
+  OverEnd = 106,
+
+  Out = 107,
+  OutEnd = 116,
+
+  Multiplier = 117,
+  MultiplierEnd = 126,
+}
+
+enum WalkRangeSizes {
+  Skip = 7, // 40 through 46
+  BeginChild = 20, // 47 through 66
+  Next = 20, // 67 through 91
+  Over = 10, // 97 through 106
+  Out = 10, // 107 through 116
+  Multiplier = 10, // 117 through 126
+}
 
 export const get = String.fromCharCode(WalkCodes.Get);
 export const before = String.fromCharCode(WalkCodes.Before);

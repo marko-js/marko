@@ -15,7 +15,7 @@ import LetTag from "./let";
 import PutTag from "./put";
 import StyleTag from "./style";
 import TagTag from "./tag";
-import YieldTag from "./yield";
+import ReturnTag from "./return";
 import StaticTag from "./static";
 import NoopTag from "./noop";
 import FlushHereAndAfter from "./__flush_here_and_after__";
@@ -39,7 +39,7 @@ export default {
   "<tag>": TagTag,
   "<put>": PutTag,
   "<get>": GetTag,
-  "<yield>": YieldTag,
+  "<return>": ReturnTag,
   "<style>": StyleTag,
   "<await-reorderer>": NoopTag,
   "<init-widgets>": NoopTag,

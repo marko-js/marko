@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _n
 import _customTag from "./components/custom-tag/index.marko";
 const _renderer = ({
   x
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   let _thing;
   const _scope = _nextScopeId();

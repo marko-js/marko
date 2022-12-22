@@ -10,7 +10,7 @@ const _renderer = ({
   tag,
   level,
   other
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}`);
   _dynamicTag(renderBody, {

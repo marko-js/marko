@@ -41,12 +41,15 @@ export default {
       const identifiers = Object.values(
         tag.get("var").getBindingIdentifiers()
       ) as t.Identifier[];
+      // TODO: optimize for cases like `const/x=y`
       if (identifiers.length === 1) {
         initDerivation(
           identifiers[0].extra.reserve!,
           defaultAttr.extra?.valueReferences?.references,
           defaultAttr.value
         );
+      } else {
+        // TODO: handle destructuring
       }
 
       // const sectionId = getSectionId(tag);

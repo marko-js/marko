@@ -1,5 +1,5 @@
 import { write as _write, pushContext as _pushContext, markHydrateNode as _markHydrateNode, getInContext as _getInContext, escapeXML as _escapeXML, nextScopeId as _nextScopeId, popContext as _popContext, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const show = true;
   _write("<div>");

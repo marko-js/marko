@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _esc
 import _hello from "./components/hello/index.marko";
 const _renderer = ({
   x
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   let _item;
   const _scope = _nextScopeId();

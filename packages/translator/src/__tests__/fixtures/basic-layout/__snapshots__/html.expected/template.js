@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as 
 import _layout from "./components/layout.marko";
 const _renderer = ({
   name
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _layout({
     renderBody() {

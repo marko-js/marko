@@ -1,7 +1,7 @@
 import { markHydrateNode as _markHydrateNode, write as _write, dynamicTag as _dynamicTag, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = ({
   renderBody
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`<body>${_markHydrateNode(_scope, 0)}`);
   _dynamicTag(renderBody, null);

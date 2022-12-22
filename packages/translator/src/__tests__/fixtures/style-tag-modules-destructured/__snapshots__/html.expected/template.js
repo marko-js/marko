@@ -1,6 +1,6 @@
 import _style from "virtual:./template.marko.module.css \n  .content {\n    color: green;\n  }\n";
 import { markHydrateNode as _markHydrateNode, classAttr as _classAttr, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const {
     content

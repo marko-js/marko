@@ -1,6 +1,6 @@
 import { pushContext as _pushContext, nextScopeId as _nextScopeId, popContext as _popContext, markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _child from "./components/child.marko";
-const _renderer = input => {
+const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const x = 123;
   _pushContext("packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko", x);

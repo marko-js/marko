@@ -3,7 +3,7 @@ import _comments from "./comments.marko";
 const _renderer = ({
   comments,
   path = "c"
-}) => {
+}, _tagVar) => {
   const _scope = _nextScopeId();
   _write(`${_markHydrateNode(_scope, 0)}<ul>`);
   let _i = 0;

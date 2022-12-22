@@ -24,7 +24,10 @@ import trackReferences, {
 import {
   addStatement,
   getClosures,
+  getHydrateRegisterId,
   getSignal,
+  initSource,
+  setForceHydrateScope,
   writeHTMLHydrateStatements,
 } from "../../util/signals";
 import { reserveScope, ReserveType } from "../../util/reserve";
@@ -158,7 +161,25 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       )[0]
       .skip();
   } else if (tagVar) {
-    translateVar(tag, callExpression(tagIdentifier, attrsObject));
+    translateVar(
+      tag,
+      callExpression(
+        tagIdentifier,
+        attrsObject,
+        callRuntime(
+          "register",
+          t.arrowFunctionExpression([], t.blockStatement([])),
+          t.stringLiteral(
+            getHydrateRegisterId(
+              getSectionId(tag),
+              (node.var as t.Identifier).extra?.reserve
+            )
+          ),
+          scopeIdentifier
+        )
+      )
+    );
+    setForceHydrateScope(getSectionId(tag));
     tag.remove();
   } else {
     tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
@@ -220,6 +241,26 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
   }
 
+  if (node.var) {
+    const source = initSource(
+      // TODO: support destructuring
+      (node.var as t.Identifier).extra.reserve!
+    );
+    source.register = true;
+    addStatement(
+      "apply",
+      tagSectionId,
+      undefined,
+      t.expressionStatement(
+        callRuntime(
+          "setTagVar",
+          scopeIdentifier,
+          t.numericLiteral(binding.id),
+          source.identifier
+        )
+      )
+    );
+  }
   addStatement(
     "apply",
     tagSectionId,

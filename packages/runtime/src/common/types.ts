@@ -50,4 +50,5 @@ export const enum AccessorChars {
   STALE = "&",
   SUBSCRIBERS = "*",
   CLEANUP = "-",
+  TAG_VARIABLE = "/",
 }
