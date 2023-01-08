@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.22.1
+
+### Patch Changes
+
+- [#1875](https://github.com/marko-js/marko/pull/1875) [`b744720db`](https://github.com/marko-js/marko/commit/b744720db5483633643c5a75bd2eedc37aa9ff25) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrades "magic-string" module (used for css sourcemaps) to avoid deprecation warning.
+
+- Updated dependencies [[`b744720db`](https://github.com/marko-js/marko/commit/b744720db5483633643c5a75bd2eedc37aa9ff25)]:
+  - @marko/translator-default@5.22.1
+  - @marko/compiler@5.23.1
+
 ## 5.22.0
 
 ### Minor Changes
@@ -2902,7 +2912,7 @@ Example usage:
 ```javascript
 var template = require("marko").load(require.resolve("./template.marko"));
 
-exports.renderer = function(input, out) {
+exports.renderer = function (input, out) {
   var tabs = input.tabs;
 
   // Tabs will be in the following form:
