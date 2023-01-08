@@ -1,8 +1,6 @@
 import { t as _t } from "marko/src/runtime/html/index.js";
-
 const _marko_componentType = "packages/translator-default/test/fixtures/at-tags/template.marko",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";

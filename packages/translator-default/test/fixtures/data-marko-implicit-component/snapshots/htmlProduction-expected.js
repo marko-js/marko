@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "qc7Y7xBI",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
 import _marko_props from "marko/dist/runtime/html/helpers/data-marko.js";

@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "TKoJdMQb",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_class_merge from "marko/dist/runtime/helpers/class-value.js";
 import _marko_attr from "marko/dist/runtime/html/helpers/attr.js";
@@ -16,18 +14,15 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     b: c,
     d
   }]))}></div><div class="a b"></div><div class="a b c"></div>`);
-
   _marko_tag(_customTag, {
     "class": ["a", {
       b: c,
       d
     }]
   }, out, _componentDef, "3");
-
   _marko_tag(_customTag, {
     "class": ["a", false, "b"]
   }, out, _componentDef, "4");
-
   _marko_dynamic_tag(out, input.test, () => ({
     "class": ["a", {
       b: c,

@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "7zxvsBE8",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_props from "marko/dist/runtime/html/helpers/data-marko.js";
 import _customTag from "./components/custom-tag.marko";
@@ -17,11 +15,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   })}></div><div${_marko_props(out, _componentDef, {
     "oncamelcasedevent": _componentDef.d("camelcasedevent", "handle", false)
   })} onmouseout=someStringHandler></div>`);
-
   _marko_tag(_customTag, {}, out, _componentDef, "3", [["thing", "handleThing", false, [a, b, ...d]]]);
-
   _marko_tag(_customTag, {}, out, _componentDef, "4", [["Dashed-cased-Event", "handle", false]]);
-
   _marko_tag(_customTag, {}, out, _componentDef, "5", [["camelcasedEvent", "handle", false]]);
 }, {
   t: _marko_componentType,
