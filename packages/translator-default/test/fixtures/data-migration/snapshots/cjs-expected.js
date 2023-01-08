@@ -2,22 +2,14 @@
 
 exports.__esModule = true;
 exports.default = void 0;
-
 var _index = require("marko/src/runtime/html/index.js");
-
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
-
 var _test2 = _interopRequireDefault(require("./test.marko"));
-
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 const _marko_componentType = "packages/translator-default/test/fixtures/data-migration/template.marko",
-      _marko_template = (0, _index.t)(_marko_componentType);
-
+  _marko_template = (0, _index.t)(_marko_componentType);
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
@@ -33,23 +25,19 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w("Hello ");
   out.w((0, _escapeXml.x)(input.name));
   out.w("<span>");
-
   () => {
     data;
     const data = "foo";
     console.log(data);
   };
-
   out.w("Hello ");
   out.w((0, _escapeXml.x)(input));
   out.w("</span>");
-
   if (true) {
     const data = "bar";
     out.w("Hello ");
     out.w("bar");
   }
-
   out.w("</div>");
 }, {
   t: _marko_componentType,

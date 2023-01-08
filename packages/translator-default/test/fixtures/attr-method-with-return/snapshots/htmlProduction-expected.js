@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "+mnrnsox",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _test from "./components/test.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";

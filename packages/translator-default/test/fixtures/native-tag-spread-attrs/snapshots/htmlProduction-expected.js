@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "+Vkh85NW",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_attrs from "marko/dist/runtime/html/helpers/attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";

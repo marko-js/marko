@@ -1,8 +1,6 @@
 import { t as _t } from "marko/src/runtime/html/index.js";
-
 const _marko_componentType = "packages/translator-default/test/fixtures/typescript-basic/template.marko",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_class_merge from "marko/src/runtime/helpers/class-value.js";
 import _marko_attr from "marko/src/runtime/html/helpers/attr.js";

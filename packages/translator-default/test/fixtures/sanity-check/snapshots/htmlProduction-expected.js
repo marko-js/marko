@@ -1,17 +1,13 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "OLFRWJ/R",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import a from "b";
 doThings();
 andStuff();
-
 function more() {
   abc();
 }
-
 import _marko_escapeStyle from "marko/dist/runtime/html/helpers/escape-style-placeholder.js";
 import _marko_escapeScript from "marko/dist/runtime/html/helpers/escape-script-placeholder.js";
 import _marko_attr from "marko/dist/runtime/html/helpers/attr.js";
@@ -26,15 +22,12 @@ const _marko_component = {
   onCreate() {
     this.stuff();
   }
-
 };
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   out.w(`<style id=css>\n  div {\n    color: ${_marko_escapeStyle(x)};\n  }\n</style><script>\n  var y = ${_marko_escapeScript(x)};\n</script>`);
-
   function _thing(out, stuff) {
     out.w(`<div${_marko_attr("x", stuff.x)}></div>`);
   }
-
   var b = thing;
   let c = thing;
   out.w(`<div${_marko_attr("b", b)}${_marko_attr("c", c)}>`);
@@ -47,21 +40,17 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     b: c,
     d
   }]))} style=a:b;></div><input type=text>`);
-
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");
   }, null, null, _componentDef, "@x");
-
   _marko_dynamic_tag(out, _thing, () => ({
     "x": 1
   }), null, null, null, _componentDef, "11");
-
   _marko_tag(_other, {
     "renderBody": (out, a) => {
       out.w("<div></div>");
     }
   }, out, _componentDef, "12", [["click", "handleClick", false, [a, b, ...d]]]);
-
   _marko_tag(_other, {
     "x": 1,
     ...thing,
@@ -85,7 +74,6 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.w("<div></div>");
     }
   }, out, _componentDef, "14");
-
   out.w(`<div${_marko_attrs({
     "class": "b c",
     "a": {
@@ -96,7 +84,6 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     ...f(),
     "id": "a"
   })}>${_marko_escapeXml(a)}<!--abc--><div c=1></div><div d=1></div>`);
-
   if (x === a) {
     out.w(`a ${_marko_escapeXml(b)}`);
   } else if (x === 2) {
@@ -104,19 +91,15 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   } else {
     out.w("c");
   }
-
   out.w(`</div><div b=1></div><div>123 abc 123</div><span${_marko_attrs(abc)}></span>`);
-
   if (cond) {
     out.w(`Hello ${_marko_escapeXml(planet)}`);
   }
-
   for (let _steps = (10 - 0) / 2, _step = 0; _step <= _steps; _step++) {
     const i = 0 + _step * 2;
     const _keyScope = `[${i}]`;
     out.w("<div c=1></div>");
   }
-
   for (const key in obj) {
     const val = obj[key];
     const _keyScope2 = `[${key}]`;
