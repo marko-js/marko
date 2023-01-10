@@ -25,3 +25,5 @@ export const steps = [
     value2: "World",
   },
 ];
+export const skip_ssr = true;
+export const skip_hydrate = true;

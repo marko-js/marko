@@ -22,7 +22,7 @@ type ComponentScope = Scope<{
 }>;
 
 // <attrs/{ value }/>
-// <em>Testing</em> $!{input.value}
+// <em>Testing</em> $!{value}
 export const template = "<em>Testing</em> <!>";
 export const walks = over(2) + get + over(1);
 

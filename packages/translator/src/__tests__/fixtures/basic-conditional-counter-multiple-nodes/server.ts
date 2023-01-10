@@ -18,8 +18,8 @@ export default () => {
 
 // <let/show = true/>
 // <let/count = 0/>
-// <button.inc onclick() { count++; }/>
-// <button.toggle onclick() { show = !show; }/>
+// <button.inc onClick() { count++; }/>
+// <button.toggle onClick() { show = !show; }/>
 // <if=show>The count is ${count}</if>
 
 const counter = () => {

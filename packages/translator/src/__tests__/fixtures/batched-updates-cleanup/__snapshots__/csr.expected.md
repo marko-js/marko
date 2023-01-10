@@ -17,11 +17,10 @@ container.querySelector("button").click();
 
 ```html
 <button />
-<!---->
 ```
 
 # Mutations
 ```
-inserted #comment1
-removed span after #comment1
+inserted #text1
+removed span after #text1
 ```

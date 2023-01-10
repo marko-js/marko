@@ -11,15 +11,15 @@ inserted #text0, #text1, #text2
 
 # Render {"children":[]}
 ```html
-<!---->
+
 ```
 
 # Mutations
 ```
-inserted #comment0
+inserted #text0
 removed #text before #text
 removed #text before #text
-removed #text before #comment0
+removed #text before #text0
 ```
 
 
@@ -33,5 +33,5 @@ abc
 inserted #text0
 inserted #text1
 inserted #text2
-removed #comment before #text0
+removed #text before #text0
 ```

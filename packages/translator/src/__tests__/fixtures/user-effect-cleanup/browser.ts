@@ -38,11 +38,12 @@ type ComponentScope = Scope<{
   [Index.EFFECT_CLEANUP]: () => void;
 }>;
 
+// <attrs/{ value }/>
 // <let/a = 0/>
 // <let/b = 0/>
 // <div>${"" + a + b}</div>
 // <effect() {
-//   const previousValue = a = input.value + 1;
+//   const previousValue = a = value + 1;
 //   return () => b = previousValue;
 // }/>
 export const template = `<div> </div>`;

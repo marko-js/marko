@@ -17,7 +17,7 @@ export default () => {
 // Main
 /////////////////////////
 // <let/clickCount = 0/>
-// <FancyButton onclick() { clickCount++ }>${clickCount}</FancyButton>
+// <FancyButton onClick() { clickCount++ }>${clickCount}</FancyButton>
 
 const counter = () => {
   const count = 0;
@@ -31,7 +31,7 @@ const counter = () => {
       writeHydrateScope(bodyScopeId, { _: scope });
       writeHydrateCall(bodyScopeId, "subscribe_clickCount$renderBody");
     },
-    onclick: register(() => {}, "clickHandler", scopeId),
+    onClick: register(() => {}, "clickHandler", scopeId),
   });
 
   // eslint-disable-next-line no-sparse-arrays
@@ -46,10 +46,10 @@ const counter = () => {
 
 const FancyButton = ({
   renderBody,
-  onclick,
+  onClick,
 }: {
   renderBody(): void;
-  onclick(): void;
+  onClick(): void;
 }) => {
   const scopeId = nextScopeId();
 
@@ -60,6 +60,6 @@ const FancyButton = ({
   write(`</button>`);
 
   // eslint-disable-next-line no-sparse-arrays
-  writeHydrateScope(scopeId, { 7: onclick });
+  writeHydrateScope(scopeId, { 7: onClick });
   writeHydrateCall(scopeId, "FancyButton$onclick_hydrate");
 };

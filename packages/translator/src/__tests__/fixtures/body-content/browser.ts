@@ -88,7 +88,7 @@ export const FancyButton = createRenderFn(
 // Main
 /////////////////////////
 // <let/clickCount = 0/>
-// <FancyButton onclick() { clickCount++ }>${input.clickCount}</FancyButton>
+// <FancyButton onClick() { clickCount++ }>${input.clickCount}</FancyButton>
 
 const enum Index {
   FANCYBUTTON_SCOPE = 0,

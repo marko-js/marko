@@ -46,8 +46,8 @@ type Branch0Scope = Scope<{
 
 // <let/show = true/>
 // <let/count = 0/>
-// <button.inc onclick() { count++; }/>
-// <button.toggle onclick() { show = !show; }/>
+// <button.inc onClick() { count++; }/>
+// <button.toggle onClick() { show = !show; }/>
 // <if=show><span>${count}</span></if>
 
 export const template = `<button class="inc"></button><button class="toggle"></button><!>`;

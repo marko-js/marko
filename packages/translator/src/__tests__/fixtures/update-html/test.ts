@@ -9,3 +9,5 @@ export const steps = [
     value: "<div/>",
   },
 ];
+export const skip_ssr = true;
+export const skip_hydrate = true;

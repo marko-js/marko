@@ -1,6 +1,6 @@
 {
   "parserPlugins": ["objectRestSpread", "typescript"],
-  "reporter": ["text", "lcov"],
+  "reporter": ["text-summary", "lcov"],
   "include": ["packages/*/src/**/*.ts", "packages/*/src/**/*.marko"],
   "exclude": ["**/__tests__", "packages/runtime/src/html/reorder-runtime.ts"]
 }

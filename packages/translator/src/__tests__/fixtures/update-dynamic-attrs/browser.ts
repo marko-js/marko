@@ -21,7 +21,8 @@ type ComponentScope = Scope<{
   [INDEX.value]: Input["value"];
 }>;
 
-// <div ...input.value/>
+// <attrs/{ value }/>
+// <div ...value/>
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
