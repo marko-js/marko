@@ -70,15 +70,22 @@ export default {
           getSectionId(placeholder),
           valueReferences,
           t.expressionStatement(
-            callRuntime(
-              method as DOMMethod,
-              t.memberExpression(
-                scopeIdentifier,
-                t.numericLiteral(reserve!.id!),
-                true
-              ),
-              placeholder.node.value
-            )
+            method === "data"
+              ? callRuntime(
+                  "data",
+                  t.memberExpression(
+                    scopeIdentifier,
+                    t.numericLiteral(reserve!.id!),
+                    true
+                  ),
+                  placeholder.node.value
+                )
+              : callRuntime(
+                  "html",
+                  scopeIdentifier,
+                  placeholder.node.value,
+                  t.numericLiteral(reserve!.id!)
+                )
           )
         );
       }

@@ -3,10 +3,10 @@ const _x = /* @__PURE__ */_source(5, [], (_scope, x) => {
   _data(_scope[0], x);
   _data(_scope[1], x);
   _data(_scope[2], x);
-  _html(_scope[3], x);
+  _html(_scope, x, 3);
 });
 const _setup = _scope => {
-  _html(_scope[4], "Hello HTML <a/>");
+  _html(_scope, "Hello HTML <a/>", 4);
 };
 export const attrs = /* @__PURE__ */_destructureSources([_x], (_scope, {
   x
