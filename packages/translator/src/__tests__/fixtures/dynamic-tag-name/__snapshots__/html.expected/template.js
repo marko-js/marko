@@ -23,9 +23,11 @@ const _renderer = ({
     other: other
   });
   const _tagName = show ? "div" : null;
-  if (_tagName) _write(`${_markHydrateNode(_scope, 12)}<${_tagName} class="a b"${_attr("other", other)}></${_tagName}>`);
+  if (_tagName) _write(`${_markHydrateNode(_scope, 12)}<${_tagName} class="a b"${_attr("other", other)}>`);
+  if (_tagName) _write(`</${_tagName}>`);
   const _tagName2 = show && "div";
-  if (_tagName2) _write(`${_markHydrateNode(_scope, 13)}<${_tagName2} class="a b"${_attr("other", other)}></${_tagName2}>`);
+  if (_tagName2) _write(`${_markHydrateNode(_scope, 13)}<${_tagName2} class="a b"${_attr("other", other)}>`);
+  if (_tagName2) _write(`</${_tagName2}>`);
   _write(`${_markHydrateNode(_scope, 14)}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>`);
   (showTagA ? tagA : tagB)({
     class: ["a", "b"],
@@ -62,11 +64,13 @@ const _renderer = ({
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
-  if (_tagName5) _write(`${_markHydrateNode(_scope, 15)}<${_tagName5} class="a b"${_attr("other", other)}></${_tagName5}>`);
+  if (_tagName5) _write(`${_markHydrateNode(_scope, 15)}<${_tagName5} class="a b"${_attr("other", other)}>`);
+  if (_tagName5) _write(`</${_tagName5}>`);
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
   _write(`${_markHydrateNode(_scope, 16)}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, 17)}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, 18)}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, 19)}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>`);
-  if (tagConstB) _write(`${_markHydrateNode(_scope, 20)}<${tagConstB} class="a b"${_attr("other", other)}></${tagConstB}>`);
+  if (tagConstB) _write(`${_markHydrateNode(_scope, 20)}<${tagConstB} class="a b"${_attr("other", other)}>`);
+  if (tagConstB) _write(`</${tagConstB}>`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

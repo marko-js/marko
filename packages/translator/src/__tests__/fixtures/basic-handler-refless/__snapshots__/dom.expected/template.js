@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data2, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data2, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _data = /* @__PURE__ */_source(2, [], (_scope, data) => _data2(_scope[1], data));
 const _temp2 = function (_scope) {
   _queueSource(_scope, _data, 1);

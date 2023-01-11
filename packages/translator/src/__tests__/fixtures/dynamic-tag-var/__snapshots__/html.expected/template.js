@@ -22,7 +22,8 @@ const _renderer = ({
   const el1 = () => {
     throw new Error("Cannot reference DOM node from server");
   };
-  if (_tagName2) _write(`${_markHydrateNode(_scope, 6)}<${_tagName2}></${_tagName2}>`);
+  if (_tagName2) _write(`${_markHydrateNode(_scope, 6)}<${_tagName2}>`);
+  if (_tagName2) _write(`</${_tagName2}>`);
   _writeHydrateScope(_scope, {});
 };
 export default _renderer;

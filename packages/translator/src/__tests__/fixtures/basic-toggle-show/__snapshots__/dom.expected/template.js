@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, on as _on, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _ifBody = /* @__PURE__ */_createRenderer("Hello!", "");
 const _if = /* @__PURE__ */_conditional(0, 1, (_scope, show = _scope[7]) => show ? _ifBody : null);
 const _onClick = function (_scope) {

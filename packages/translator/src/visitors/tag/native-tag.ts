@@ -232,8 +232,6 @@ export default {
         }
       }
 
-      let emptyBody = false;
-
       if (tagDef && tagDef.parseOptions?.openTagOnly) {
         switch (tagDef.htmlType) {
           case "svg":
@@ -244,13 +242,8 @@ export default {
             write`>`;
             break;
         }
-
-        emptyBody = true;
-      } else if (tag.node.body.body.length) {
-        write`>`;
       } else {
-        write`></${name.node}>`;
-        emptyBody = true;
+        write`>`;
       }
 
       if (isHTML && extra.tagNameNullable) {
@@ -259,16 +252,12 @@ export default {
           .skip();
       }
 
-      if (emptyBody) {
-        walks.enterShallow(tag);
-        tag.remove();
-      } else {
-        walks.enter(tag);
-      }
+      walks.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { extra } = tag.node;
       const isHTML = isOutputHTML();
+      const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushInto(tag);
@@ -276,8 +265,11 @@ export default {
 
       tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
 
-      writer.writeTo(tag)`</${tag.node.name}>`;
+      if (!openTagOnly) {
+        writer.writeTo(tag)`</${tag.node.name}>`;
+      }
 
+      // dynamic tag stuff
       if (isHTML && extra.tagNameNullable) {
         tag
           .insertBefore(

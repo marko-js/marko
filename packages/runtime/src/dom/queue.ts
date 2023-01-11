@@ -20,10 +20,11 @@ type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 let currentBatch: unknown[] = [];
 let currentHydrate: unknown[] = [];
 
-export function queueSource(scope: Scope, signal: Signal, value: unknown) {
+export function queueSource<T>(scope: Scope, signal: Signal, value: T) {
   schedule();
   signal.___mark(scope);
   currentBatch.push(scope, signal, value);
+  return value;
 }
 
 export function queueHydrate<S extends Scope, T extends ExecFn<S>>(

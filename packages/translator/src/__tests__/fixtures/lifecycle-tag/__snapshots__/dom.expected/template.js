@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, lifecycle as _lifecycle, on as _on, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _onMount = function (_scope) {
   const x = _scope[1];
   document.getElementById("ref").textContent = "Mount " + x;

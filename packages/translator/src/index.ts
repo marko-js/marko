@@ -2,6 +2,8 @@ import type { types as t } from "@marko/compiler";
 import Program from "./visitors/program";
 import ImportDeclaration from "./visitors/import-declaration";
 import MarkoDocumentType from "./visitors/document-type";
+import AssignmentExpression from "./visitors/assignment-expression";
+import UpdateExpression from "./visitors/update-expression";
 import MarkoDeclaration from "./visitors/declaration";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoText from "./visitors/text";
@@ -13,17 +15,19 @@ import coreTagLib from "./core";
 import ReferencedIdentifier from "./visitors/referenced-identifier";
 
 const visitors = {
-  Program: Program,
-  ReferencedIdentifier: ReferencedIdentifier,
-  ImportDeclaration: ImportDeclaration,
-  MarkoDocumentType: MarkoDocumentType,
-  MarkoDeclaration: MarkoDeclaration,
-  MarkoCDATA: MarkoCDATA,
-  MarkoText: MarkoText,
-  MarkoTag: MarkoTag,
-  MarkoPlaceholder: MarkoPlaceholder,
-  MarkoScriptlet: MarkoScriptlet,
-  MarkoComment: MarkoComment,
+  Program,
+  AssignmentExpression,
+  UpdateExpression,
+  ReferencedIdentifier,
+  ImportDeclaration,
+  MarkoDocumentType,
+  MarkoDeclaration,
+  MarkoCDATA,
+  MarkoText,
+  MarkoTag,
+  MarkoPlaceholder,
+  MarkoScriptlet,
+  MarkoComment,
 };
 
 const getVisitorOfType = (

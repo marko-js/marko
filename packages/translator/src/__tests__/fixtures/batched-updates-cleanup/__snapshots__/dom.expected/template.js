@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _message$ifBody = /* @__PURE__ */_closure(1, 8, [], (_scope, message) => _data(_scope[0], message));
 const _ifBody = /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", null, [_message$ifBody]);
 const _if = /* @__PURE__ */_conditional(1, 1, (_scope, show = _scope[7]) => show ? _ifBody : null);

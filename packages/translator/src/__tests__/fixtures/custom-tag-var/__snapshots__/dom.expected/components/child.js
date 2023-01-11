@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, tagVarSignal as _tagVarSignal, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data, tagVarSignal as _tagVarSignal, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _onClick = function (_scope) {
   const x = _scope[2];
   _queueSource(_scope, _x, x + 1);

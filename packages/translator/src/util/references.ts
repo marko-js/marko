@@ -103,7 +103,17 @@ export function trackReferencesForBindings(
     t.Identifier
   >;
   for (const name in bindings) {
-    const references = scope.getBinding(name)!.referencePaths;
+    const references = scope.getBinding(name)!.referencePaths.concat(
+      /*
+        https://github.com/babel/babel/issues/11313
+        We need this so we can handle `+=` and friends
+      */
+      scope
+        .getBinding(name)!
+        .constantViolations.filter(
+          (path) => path.isAssignmentExpression() && path.node.operator !== "="
+        )
+    );
     const identifier = bindings[name];
     const binding = reserveScope(reserveType, sectionId, identifier, name);
 

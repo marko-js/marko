@@ -5,7 +5,7 @@ import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import { initSource, queueSource, addStatement } from "../util/signals";
 import { callRuntime } from "../util/runtime";
-import replaceAssignments from "../util/replace-assignments";
+import { registerAssignmentReplacer } from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";
 import { scopeIdentifier } from "../visitors/program";
 
@@ -67,7 +67,7 @@ export default {
         )
       );
 
-      replaceAssignments(
+      registerAssignmentReplacer(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
           queueSource(source, value, getSectionId(assignment))

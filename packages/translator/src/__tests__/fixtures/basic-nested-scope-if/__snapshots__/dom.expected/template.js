@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, on as _on, data as _data, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, register as _register, queueHydrate as _queueHydrate, bind as _bind, conditional as _conditional, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, register as _register, queueHydrate as _queueHydrate, bind as _bind, conditional as _conditional, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _clickCount$elseBody = /* @__PURE__ */_closure(1, 6, [], (_scope, clickCount) => _data(_scope[0], clickCount));
 const _elseBody = /* @__PURE__ */_createRenderer("<span>The button was clicked <!> times.</span>", /* next(1), over(1), replace */"Db%", null, [_clickCount$elseBody]);
 const _onClick = function (_scope) {

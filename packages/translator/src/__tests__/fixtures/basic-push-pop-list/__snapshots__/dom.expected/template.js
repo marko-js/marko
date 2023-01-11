@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, data as _data, on as _on, source as _source, createRenderer as _createRenderer, subscriber as _subscriber, register as _register, queueHydrate as _queueHydrate, loop as _loop, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, data as _data, on as _on, queueSource as _queueSource, source as _source, createRenderer as _createRenderer, subscriber as _subscriber, register as _register, queueHydrate as _queueHydrate, loop as _loop, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _item$forBody = /* @__PURE__ */_source(1, [], (_scope, item) => _data(_scope[0], item));
 const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ");
 const _onClick = function (_scope) {

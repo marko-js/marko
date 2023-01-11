@@ -1,4 +1,4 @@
-import { setSource as _setSource, queueSource as _queueSource, dynamicSubscribers as _dynamicSubscribers, initContextProvider as _initContextProvider, inChildMany as _inChildMany, on as _on, data as _data, createRenderer as _createRenderer, derivation as _derivation, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, dynamicSubscribers as _dynamicSubscribers, initContextProvider as _initContextProvider, inChildMany as _inChildMany, on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, derivation as _derivation, source as _source, register as _register, queueHydrate as _queueHydrate, bind as _bind, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _child, template as _child_template, walks as _child_walks, closures as _child_closures } from "./components/child.marko";
 const _setup$putBody = _scope => {
   _child(_scope[0]);
