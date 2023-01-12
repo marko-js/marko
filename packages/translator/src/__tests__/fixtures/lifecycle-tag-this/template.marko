@@ -1,0 +1,12 @@
+<let/x=0/>
+<lifecycle
+  onMount() {
+    this.onUpdate();
+    }
+  onUpdate() {
+    document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
+    this.cur = x;
+  }
+/>
+<div#ref/>
+<button#increment onClick() { x++; }>Increment</button>

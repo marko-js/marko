@@ -20,66 +20,70 @@ export default {
     reserveScope(ReserveType.Store, sectionId, tag.node, "cleanup");
     (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },
-  translate(tag) {
-    const { node } = tag;
-    const [defaultAttr] = node.attributes;
+  translate: {
+    exit(tag) {
+      const { node } = tag;
+      const [defaultAttr] = node.attributes;
 
-    assertNoParams(tag);
-    assertNoBodyContent(tag);
+      assertNoParams(tag);
+      assertNoBodyContent(tag);
 
-    if (!defaultAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'effect' tag requires a default attribute.");
-    }
-
-    if (
-      node.attributes.length > 1 ||
-      !t.isMarkoAttribute(defaultAttr) ||
-      (!defaultAttr.default && defaultAttr.name !== "default")
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The 'effect' tag only supports the 'default' attribute."
-        );
-    }
-
-    const sectionId = getSectionId(tag);
-    if (isOutputDOM()) {
-      const cleanupIndex = tag.node.extra!.reserve!.id;
-      const { value } = defaultAttr;
-      let inlineStatements = null;
-      if (
-        t.isFunctionExpression(value) ||
-        (t.isArrowFunctionExpression(value) && t.isBlockStatement(value.body))
-      ) {
-        inlineStatements = (value.body as t.BlockStatement).body;
-        t.traverse(value.body, (node) => {
-          if (t.isReturnStatement(node)) {
-            inlineStatements = null;
-          }
-        });
+      if (!defaultAttr) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The 'effect' tag requires a default attribute."
+          );
       }
-      addStatement(
-        "hydrate",
-        sectionId,
-        defaultAttr.extra?.valueReferences,
-        inlineStatements ||
-          t.expressionStatement(
-            callRuntime(
-              "userEffect",
-              scopeIdentifier,
-              t.numericLiteral(cleanupIndex),
-              defaultAttr.value
-            )
-          )
-      );
-    } else {
-      addHTMLHydrateCall(sectionId, defaultAttr.extra?.valueReferences);
-    }
 
-    tag.remove();
+      if (
+        node.attributes.length > 1 ||
+        !t.isMarkoAttribute(defaultAttr) ||
+        (!defaultAttr.default && defaultAttr.name !== "default")
+      ) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The 'effect' tag only supports the 'default' attribute."
+          );
+      }
+
+      const sectionId = getSectionId(tag);
+      if (isOutputDOM()) {
+        const cleanupIndex = tag.node.extra!.reserve!.id;
+        const { value } = defaultAttr;
+        let inlineStatements = null;
+        if (
+          t.isFunctionExpression(value) ||
+          (t.isArrowFunctionExpression(value) && t.isBlockStatement(value.body))
+        ) {
+          inlineStatements = (value.body as t.BlockStatement).body;
+          t.traverse(value.body, (node) => {
+            if (t.isReturnStatement(node)) {
+              inlineStatements = null;
+            }
+          });
+        }
+        addStatement(
+          "hydrate",
+          sectionId,
+          defaultAttr.extra?.valueReferences,
+          inlineStatements ||
+            t.expressionStatement(
+              callRuntime(
+                "userEffect",
+                scopeIdentifier,
+                t.numericLiteral(cleanupIndex),
+                defaultAttr.value
+              )
+            )
+        );
+      } else {
+        addHTMLHydrateCall(sectionId, defaultAttr.extra?.valueReferences);
+      }
+
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [

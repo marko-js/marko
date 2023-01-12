@@ -163,19 +163,20 @@ export function lifecycle(
   scope: Scope,
   index: number,
   thisObj: Record<string, unknown> & {
-    onMount?: () => void;
-    onUpdate?: () => void;
-    onDestroy?: () => void;
+    onMount?: (this: unknown) => void;
+    onUpdate?: (this: unknown) => void;
+    onDestroy?: (this: unknown) => void;
   }
 ) {
   let storedThis = scope[index] as typeof thisObj;
   if (!storedThis) {
     storedThis = scope[index] = thisObj;
-    scope[AccessorChars.CLEANUP + index] = () => storedThis.onDestroy?.();
+    scope[AccessorChars.CLEANUP + index] = () =>
+      storedThis.onDestroy?.call(storedThis);
     onDestroy(scope, AccessorChars.CLEANUP + index);
-    storedThis.onMount?.();
+    storedThis.onMount?.call(storedThis);
   } else {
     Object.assign(storedThis, thisObj);
-    storedThis.onUpdate?.();
+    storedThis.onUpdate?.call(storedThis);
   }
 }

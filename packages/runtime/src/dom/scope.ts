@@ -30,11 +30,15 @@ export function write<S extends Scope>(
 
 export function bind<S extends Scope>(
   boundScope: S,
-  fn: (scope: S, ...args: unknown[]) => unknown
+  fn: (this: unknown, scope: S, ...args: unknown[]) => unknown
 ) {
   return fn.length
-    ? (...args: unknown[]) => fn(boundScope, ...args)
-    : () => fn(boundScope);
+    ? function bound(this: unknown, ...args: unknown[]) {
+        return fn.call(this, boundScope, ...args);
+      }
+    : function bound(this: unknown) {
+        return fn.call(this, boundScope);
+      };
 }
 
 export function bindRenderer<S extends Scope>(

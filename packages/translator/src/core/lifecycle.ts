@@ -39,48 +39,50 @@ export default {
       );
     },
   },
-  translate(tag) {
-    const { node } = tag;
+  translate: {
+    exit(tag) {
+      const { node } = tag;
 
-    assertNoParams(tag);
-    assertNoBodyContent(tag);
+      assertNoParams(tag);
+      assertNoBodyContent(tag);
 
-    // TODO: Check attributes?
-    // if (
-    //   node.attributes.length > 1 ||
-    //   !t.isMarkoAttribute(defaultAttr) ||
-    //   (!defaultAttr.default && defaultAttr.name !== "default")
-    // ) {
-    //   throw tag
-    //     .get("name")
-    //     .buildCodeFrameError(
-    //       "The 'lifecycle' tag only supports the 'default' attribute."
-    //     );
-    // }
+      // TODO: Check attributes?
+      // if (
+      //   node.attributes.length > 1 ||
+      //   !t.isMarkoAttribute(defaultAttr) ||
+      //   (!defaultAttr.default && defaultAttr.name !== "default")
+      // ) {
+      //   throw tag
+      //     .get("name")
+      //     .buildCodeFrameError(
+      //       "The 'lifecycle' tag only supports the 'default' attribute."
+      //     );
+      // }
 
-    const sectionId = getSectionId(tag);
+      const sectionId = getSectionId(tag);
 
-    if (isOutputDOM()) {
-      const attrsObject = attrsToObject(tag);
-      const instanceIndex = tag.node.extra!.reserve!.id;
-      addStatement(
-        "hydrate",
-        sectionId,
-        node.extra.attrsReferences,
-        t.expressionStatement(
-          callRuntime(
-            "lifecycle",
-            scopeIdentifier,
-            t.numericLiteral(instanceIndex),
-            attrsObject
+      if (isOutputDOM()) {
+        const attrsObject = attrsToObject(tag);
+        const instanceIndex = tag.node.extra!.reserve!.id;
+        addStatement(
+          "hydrate",
+          sectionId,
+          node.extra.attrsReferences,
+          t.expressionStatement(
+            callRuntime(
+              "lifecycle",
+              scopeIdentifier,
+              t.numericLiteral(instanceIndex),
+              attrsObject
+            )
           )
-        )
-      );
-    } else {
-      addHTMLHydrateCall(sectionId, node.extra.attrsReferences);
-    }
+        );
+      } else {
+        addHTMLHydrateCall(sectionId, node.extra.attrsReferences);
+      }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [
