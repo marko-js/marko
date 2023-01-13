@@ -270,14 +270,35 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     )
   );
   if (attrsObject && tagAttrsIdentifier) {
+    let attrsSubscriber: t.CallExpression | t.Identifier = callRuntime(
+      "inChild",
+      tagAttrsIdentifier,
+      t.numericLiteral(binding.id)
+    );
+
+    if (!tag.node.extra.attrsReferences.references) {
+      // hoist out the call to `inChild` if it's going into the setup function
+      const tagAttrsIdentifierInChild =
+        currentProgramPath.scope.generateUidIdentifier(
+          `${tagName}_attrs_inChild`
+        );
+      currentProgramPath.pushContainer(
+        "body",
+        t.variableDeclaration("const", [
+          t.variableDeclarator(tagAttrsIdentifierInChild, attrsSubscriber),
+        ])
+      );
+      attrsSubscriber = tagAttrsIdentifierInChild;
+    }
+
     getSignal(
       tagSectionId,
       (tag.node.extra.attrsReferences as ReferenceGroup).references
-    ).subscribers.push(tagAttrsIdentifier);
+    ).subscribers.push(attrsSubscriber);
     addStatement(
       "apply",
       tagSectionId,
-      tag.node.extra.attrsReferences as ReferenceGroup,
+      tag.node.extra.attrsReferences,
       t.expressionStatement(
         callRuntime(
           "setSource",

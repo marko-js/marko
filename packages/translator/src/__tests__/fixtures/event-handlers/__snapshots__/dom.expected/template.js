@@ -1,5 +1,6 @@
 import { setup as _child, attrs as _child_attrs, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
-import { setSource as _setSource, on as _on, notifySignal as _notifySignal, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { inChild as _inChild, setSource as _setSource, on as _on, notifySignal as _notifySignal, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _child_attrs_inChild = _inChild(_child_attrs, 1);
 const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/event-handlers/template.marko_0", _scope => _on(_scope[0], "click", () => {
   console.log("hello world");
 }));
@@ -11,7 +12,7 @@ const _setup = _scope => {
       console.log("hello world");
     }
   });
-  _notifySignal(_scope, _child_attrs);
+  _notifySignal(_scope, _child_attrs_inChild);
   _queueHydrate(_scope, _hydrate_setup);
 };
 export const template = `${_child_template}<div class=hi></div>`;

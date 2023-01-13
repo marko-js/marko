@@ -56,4 +56,5 @@ export {
   tagVarSignal,
   contextClosure,
   inChildMany,
+  inChild,
 } from "./signals";

@@ -28,6 +28,18 @@ export function write<S extends Scope>(
   return 0;
 }
 
+function binder<T>(bind: (scope: Scope, value: T) => T) {
+  return (scope: Scope, value: T) => {
+    scope.___bound ??= new Map();
+    let bound = scope.___bound.get(value) as T;
+    if (!bound) {
+      bound = bind(scope, value);
+      scope.___bound.set(value, bound);
+    }
+    return bound;
+  };
+}
+
 export function bind<S extends Scope>(
   boundScope: S,
   fn: (this: unknown, scope: S, ...args: unknown[]) => unknown
@@ -41,31 +53,20 @@ export function bind<S extends Scope>(
       };
 }
 
-export function bindRenderer<S extends Scope>(
-  ownerScope: S,
-  renderer: Renderer
-): Renderer {
-  return {
+export const bindRenderer = binder(
+  (ownerScope, renderer: Renderer): Renderer => ({
     ...renderer,
     ___owner: ownerScope,
-  };
-}
+  })
+);
 
-export function bindSignal<S extends Scope>(
-  boundScope: S,
-  signal: Signal
-): Signal {
-  boundScope.___boundSignals ??= new Map();
-  let boundSignal = boundScope.___boundSignals.get(signal);
-  if (!boundSignal) {
-    boundSignal = wrapSignal(
+export const bindSignal = binder(
+  (boundScope, signal: Signal): Signal =>
+    wrapSignal(
       (methodName) => (_scope, extraArg) =>
         signal[methodName](boundScope, extraArg)
-    );
-    boundScope.___boundSignals.set(signal, boundSignal);
-  }
-  return boundSignal;
-}
+    )
+);
 
 export function destroyScope(scope: Scope) {
   scope._?.___cleanup?.delete(scope);

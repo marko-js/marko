@@ -182,7 +182,7 @@ export function child<S extends Scope, V>(
     compute,
     action
   );
-  return inChild(childDerivation, (scope: Scope) => scope[childAccessor]);
+  return inChild(childDerivation, childAccessor);
 }
 
 export function closure<S extends Scope, V>(
@@ -344,13 +344,13 @@ export function wrapSignalWithSubscription(
   };
 }
 
-export function inChild<S extends Scope>(
+export function inChild(
   subscriber: Signal,
-  getChildScope: (s: S) => Scope
+  childScopeAccessor: Accessor
 ): Signal {
   return wrapSignal(
     (methodName) => (scope, extraArg) =>
-      subscriber[methodName](getChildScope(scope as S), extraArg)
+      subscriber[methodName](scope[childScopeAccessor], extraArg)
   );
 }
 

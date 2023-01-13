@@ -1,6 +1,6 @@
-import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, inChild as _inChild, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
-const _expr_comment_id$ifBody = /* @__PURE__ */_subscriber([_comments_attrs], 2, (_scope, comment = _scope._[10], id = _scope._[12]) => _setSource(_scope[0], _comments_attrs, {
+const _expr_comment_id$ifBody = /* @__PURE__ */_subscriber([_inChild(_comments_attrs, 0)], 2, (_scope, comment = _scope._[10], id = _scope._[12]) => _setSource(_scope[0], _comments_attrs, {
   comments: comment.comments,
   path: id
 }));

@@ -1,6 +1,6 @@
-import { setSource as _setSource, queueSource as _queueSource, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, queueSource as _queueSource, inChild as _inChild, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _myButton, attrs as _myButton_attrs, template as _myButton_template, walks as _myButton_walks } from "./components/my-button.marko";
-const _clickCount = /* @__PURE__ */_source(0, [_myButton_attrs], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
+const _clickCount = /* @__PURE__ */_source(0, [_inChild(_myButton_attrs, 1)], (_scope, clickCount) => _setSource(_scope[1], _myButton_attrs, {
   text: clickCount,
   onClick: function () {
     const clickCount = _scope[0];

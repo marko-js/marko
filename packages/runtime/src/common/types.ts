@@ -1,4 +1,3 @@
-import type { Signal } from "../dom/signals";
 import type { Renderer as ClientRenderer } from "../dom/renderer";
 
 export type Renderer = (...args: unknown[]) => unknown;
@@ -23,7 +22,7 @@ export type Scope<
   ___endNode: (Node & ChildNode) | number | undefined;
   ___cleanup: Set<number | string | Scope> | undefined;
   ___client: boolean;
-  ___boundSignals: Map<Signal, Signal> | undefined;
+  ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
   ___context: ScopeContext | undefined;
   _: Scope | undefined;
