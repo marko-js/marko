@@ -209,7 +209,8 @@ export default {
                       t.stringLiteral(getEventHandlerName(name)),
                       value.node
                     )
-                  )
+                  ),
+                  value.node
                 );
               } else {
                 addStatement(

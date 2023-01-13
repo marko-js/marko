@@ -17,12 +17,13 @@ export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 
 type Signal = {
   identifier: t.Identifier;
-  reserve: Reserve;
+  reserve: undefined | Reserve | Reserve[];
   sectionId: number;
   build: () => t.Expression;
   register?: boolean;
   render: t.Statement[];
   hydrate: t.Statement[];
+  hydrateInlineReferences: undefined | Reserve | Reserve[];
   subscribers: t.Expression[];
   closures: Map<number /* sectionId */, Signal>;
   hasDynamicSubscribers?: true;
@@ -83,6 +84,7 @@ export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
         sectionId,
         render: [],
         hydrate: [],
+        hydrateInlineReferences: undefined,
         subscribers: [],
       } as any as Signal)
     );
@@ -361,14 +363,29 @@ export function finalizeSignalArgs(args: t.Expression[]) {
     }
   }
 }
-
+export function addStatement(
+  type: "hydrate",
+  targetSectionId: number,
+  references: ReferenceGroup | undefined,
+  statement: t.Statement | t.Statement[],
+  originalNodes: t.Expression | t.Expression[],
+  isInlined?: boolean
+): void;
+export function addStatement(
+  type: "apply",
+  targetSectionId: number,
+  references: ReferenceGroup | undefined,
+  statement: t.Statement | t.Statement[]
+): void;
 export function addStatement(
   // TODO: rename "apply" to "render"
   type: "apply" | "hydrate",
   targetSectionId: number,
   references: ReferenceGroup | undefined,
-  statement: t.Statement | t.Statement[]
-) {
+  statement: t.Statement | t.Statement[],
+  originalNodes?: t.Expression | t.Expression[],
+  isInlined?: boolean
+): void {
   const reserve = references?.references;
   const signal = getSignal(targetSectionId, reserve);
   const statements = (signal[type === "apply" ? "render" : "hydrate"] ??= []);
@@ -378,6 +395,36 @@ export function addStatement(
   } else {
     statements.push(statement);
   }
+
+  if (type === "hydrate") {
+    if (Array.isArray(originalNodes)) {
+      for (const node of originalNodes) {
+        if (isInlined || !t.isFunction(node)) {
+          addHydrateReferences(signal, node);
+        }
+      }
+    } else {
+      if (isInlined || !t.isFunction(originalNodes)) {
+        addHydrateReferences(signal, originalNodes!);
+      }
+    }
+  }
+}
+
+export function addHydrateReferences(signal: Signal, expression: t.Expression) {
+  const references = (expression as t.FunctionExpression).extra?.references
+    ?.references;
+  let refs = signal.hydrateInlineReferences;
+  if (references) {
+    if (Array.isArray(references)) {
+      for (const ref of references) {
+        refs = insertReserve(refs, ref);
+      }
+    } else {
+      refs = insertReserve(refs, references as Reserve);
+    }
+  }
+  signal.hydrateInlineReferences = refs;
 }
 
 export function getHydrateRegisterId(
@@ -432,13 +479,13 @@ export function writeSignals(sectionId: number) {
           "_hydrate" + signal.identifier.name
         );
 
-        if (signal.reserve) {
+        if (signal.hydrateInlineReferences) {
           signal.hydrate.unshift(
             t.variableDeclaration(
               "const",
-              (Array.isArray(signal.reserve)
-                ? signal.reserve
-                : [signal.reserve]
+              (Array.isArray(signal.hydrateInlineReferences)
+                ? signal.hydrateInlineReferences
+                : [signal.hydrateInlineReferences]
               ).map((binding) =>
                 t.variableDeclarator(
                   t.identifier(binding.name),
@@ -662,7 +709,7 @@ export function addHTMLHydrateCall(
   sectionId: number,
   references?: ReferenceGroup
 ) {
-  addStatement("hydrate", sectionId, references, undefined as any);
+  addStatement("hydrate", sectionId, references, undefined as any, []);
 }
 
 export function writeHTMLHydrateStatements(
@@ -754,13 +801,6 @@ function bindFunction(
   const program = fn.hub.file.path;
   const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 
-  let parent: NodePath | null = fn.parentPath;
-  while (parent) {
-    if (parent.isFunction()) break;
-    if (parent === root) return;
-    parent = parent.parentPath;
-  }
-
   if (references) {
     if (node.body.type !== "BlockStatement") {
       node.body = t.blockStatement([t.returnStatement(node.body)]);
@@ -777,6 +817,13 @@ function bindFunction(
         )
       )
     );
+  }
+
+  let parent: NodePath | null = fn.parentPath;
+  while (parent) {
+    if (parent.isFunction()) return;
+    if (parent === root) return;
+    parent = parent.parentPath;
   }
 
   root.insertBefore(

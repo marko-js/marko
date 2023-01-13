@@ -1,4 +1,4 @@
-import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, bind as _bind, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_subscriber([_comments_attrs], 2, (_scope, comment = _scope._[10], id = _scope._[12]) => _setSource(_scope[0], _comments_attrs, {
   comments: comment.comments,
@@ -11,14 +11,10 @@ const _setup$ifBody = _scope => {
 };
 const _ifBody = /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild(0), _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]);
 const _if$forBody = /* @__PURE__ */_conditional(4, 1, (_scope, comment = _scope[10]) => comment.comments ? _ifBody : null);
-const _onClick = function (_scope) {
+const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope[2], "click", function () {
   const open = _scope[13];
   _queueSource(_scope, _open$forBody, !open);
-};
-const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => {
-  const open = _scope[13];
-  _on(_scope[2], "click", /* @__PURE__ */_bind(_scope, _onClick));
-});
+}));
 const _open$forBody = /* @__PURE__ */_source(13, [], (_scope, open) => {
   _attr(_scope[0], "hidden", !open);
   _data(_scope[3], open ? "[-]" : "[+]");

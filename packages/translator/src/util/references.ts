@@ -130,17 +130,18 @@ export function trackReferencesForBindings(
       const fnRoot = getFnRoot(reference.scope.path);
       const exprRoot = getExprRoot(fnRoot || reference);
       const markoRoot = exprRoot.parentPath;
+      const immediateRoot = fnRoot ?? exprRoot;
 
-      if (fnRoot) {
-        const name = (fnRoot.node as t.FunctionExpression).id?.name;
+      if (immediateRoot) {
+        const name = (immediateRoot.node as t.FunctionExpression).id?.name;
 
         if (!name) {
           if (markoRoot.isMarkoAttribute() && !markoRoot.node.default) {
-            (fnRoot.node.extra ??= {}).name = markoRoot.node.name;
+            (immediateRoot.node.extra ??= {}).name = markoRoot.node.name;
           }
         }
 
-        updateReferenceGroup(fnRoot, "references", binding);
+        updateReferenceGroup(immediateRoot, "references", binding);
       }
 
       updateReferenceGroup(
@@ -153,7 +154,7 @@ export function trackReferencesForBindings(
 }
 
 function updateReferenceGroup(
-  path: t.NodePath<t.Marko | t.ArrowFunctionExpression | t.FunctionExpression>,
+  path: t.NodePath,
   extraKey: string,
   newBinding: Reserve
 ) {

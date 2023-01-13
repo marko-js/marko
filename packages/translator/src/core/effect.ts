@@ -76,7 +76,9 @@ export default {
                 t.numericLiteral(cleanupIndex),
                 defaultAttr.value
               )
-            )
+            ),
+          value,
+          !!inlineStatements
         );
       } else {
         addHTMLHydrateCall(sectionId, defaultAttr.extra?.valueReferences);

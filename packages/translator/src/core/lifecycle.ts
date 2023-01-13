@@ -75,7 +75,8 @@ export default {
               t.numericLiteral(instanceIndex),
               attrsObject
             )
-          )
+          ),
+          node.attributes.map((a) => a.value)
         );
       } else {
         addHTMLHydrateCall(sectionId, node.extra.attrsReferences);
