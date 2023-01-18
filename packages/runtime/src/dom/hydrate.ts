@@ -96,7 +96,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
         const data = nodeValue.slice(nodeValue.indexOf(" ") + 1);
 
         if (token === HydrateSymbols.NODE) {
-          scope[data] = currentNode.nextSibling;
+          scope[data] = currentNode.previousSibling;
         } else if (token === HydrateSymbols.SECTION_START) {
           stack.push(currentScopeId);
           currentScopeId = scopeId;

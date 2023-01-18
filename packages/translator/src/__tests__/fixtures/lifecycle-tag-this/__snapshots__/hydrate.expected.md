@@ -8,12 +8,12 @@
     >
       x=0, was=undefined
     </div>
-    <!--M#0 0-->
     <button
       id="increment"
     >
       Increment
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
@@ -39,12 +39,12 @@ container.querySelector("#increment")?.click();
     >
       x=1, was=0
     </div>
-    <!--M#0 0-->
     <button
       id="increment"
     >
       Increment
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
@@ -71,12 +71,12 @@ container.querySelector("#increment")?.click();
     >
       x=2, was=1
     </div>
-    <!--M#0 0-->
     <button
       id="increment"
     >
       Increment
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>

@@ -27,7 +27,7 @@ const counter = () => {
   FancyButton({
     renderBody() {
       const bodyScopeId = nextScopeId();
-      write(`${markHydrateNode(bodyScopeId, 0)}${count}`);
+      write(`${count}${markHydrateNode(bodyScopeId, 0)}`);
       writeHydrateScope(bodyScopeId, { _: scope });
       writeHydrateCall(bodyScopeId, "subscribe_clickCount$renderBody");
     },
@@ -53,11 +53,11 @@ const FancyButton = ({
 }) => {
   const scopeId = nextScopeId();
 
-  write(`${markHydrateNode(scopeId, 0)}<button>`);
+  write(`<button>`);
 
   renderBody();
 
-  write(`</button>`);
+  write(`</button>${markHydrateNode(scopeId, 0)}`);
 
   // eslint-disable-next-line no-sparse-arrays
   writeHydrateScope(scopeId, { 7: onClick });

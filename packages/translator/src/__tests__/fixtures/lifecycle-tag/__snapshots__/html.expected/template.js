@@ -2,7 +2,7 @@ import { markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _n
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const x = 0;
-  _write(`<div id=ref></div>${_markHydrateNode(_scope, 0)}<button id=increment>Increment</button>`);
+  _write(`<div id=ref></div><button id=increment>Increment</button>${_markHydrateNode(_scope, 0)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/lifecycle-tag/template.marko_0_x");
   _writeHydrateScope(_scope, {
     1: x

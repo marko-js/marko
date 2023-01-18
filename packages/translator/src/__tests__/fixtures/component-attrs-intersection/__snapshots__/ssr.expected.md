@@ -1,5 +1,5 @@
 # Write
-  <div><!M#1 0>0</div><!M#0 0><button></button><script>(M$h=[]).push((b,s)=>({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])</script>
+  <div>0<!M#1 0></div><button></button><!M#0 0><script>(M$h=[]).push((b,s)=>({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])</script>
 
 
 # Render "End"
@@ -8,11 +8,11 @@
   <head />
   <body>
     <div>
-      <!--M#1 0-->
       0
+      <!--M#1 0-->
     </div>
-    <!--M#0 0-->
     <button />
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
     </script>
@@ -26,10 +26,10 @@ inserted #document/html0
 inserted #document/html0/head0
 inserted #document/html0/body1
 inserted #document/html0/body1/div0
-inserted #document/html0/body1/div0/#comment0
-inserted #document/html0/body1/div0/#text1
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/button2
+inserted #document/html0/body1/div0/#text0
+inserted #document/html0/body1/div0/#comment1
+inserted #document/html0/body1/button1
+inserted #document/html0/body1/#comment2
 inserted #document/html0/body1/script3
 inserted #document/html0/body1/script3/#text0
 ```

@@ -1,29 +1,29 @@
 # Render {}
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button
       id="addTwo"
     >
-      <!--M#0 1-->
       0
+      <!--M#0 1-->
     </button>
-    <!--M#0 2-->
+    <!--M#0 0-->
     <button
       id="triple"
     >
-      <!--M#0 3-->
       0
+      <!--M#0 3-->
     </button>
-    <!--M#0 4-->
+    <!--M#0 2-->
     <button
       id="cube"
     >
-      <!--M#0 5-->
       0
+      <!--M#0 5-->
     </button>
+    <!--M#0 4-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{6:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
@@ -41,30 +41,30 @@
 container.querySelector("#addTwo").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button
       id="addTwo"
     >
-      <!--M#0 1-->
       2
+      <!--M#0 1-->
     </button>
-    <!--M#0 2-->
+    <!--M#0 0-->
     <button
       id="triple"
     >
-      <!--M#0 3-->
       2
+      <!--M#0 3-->
     </button>
-    <!--M#0 4-->
+    <!--M#0 2-->
     <button
       id="cube"
     >
-      <!--M#0 5-->
       2
+      <!--M#0 5-->
     </button>
+    <!--M#0 4-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{6:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
@@ -74,9 +74,9 @@ container.querySelector("#addTwo").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "0" => "2"
-#document/html1/body1/button2/#text1: "0" => "2"
-#document/html1/body1/button4/#text1: "0" => "2"
+#document/html0/body1/button0/#text0: "0" => "2"
+#document/html0/body1/button2/#text0: "0" => "2"
+#document/html0/body1/button4/#text0: "0" => "2"
 ```
 
 
@@ -84,30 +84,30 @@ container.querySelector("#addTwo").click();
 container.querySelector("#triple").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button
       id="addTwo"
     >
-      <!--M#0 1-->
       6
+      <!--M#0 1-->
     </button>
-    <!--M#0 2-->
+    <!--M#0 0-->
     <button
       id="triple"
     >
-      <!--M#0 3-->
       6
+      <!--M#0 3-->
     </button>
-    <!--M#0 4-->
+    <!--M#0 2-->
     <button
       id="cube"
     >
-      <!--M#0 5-->
       6
+      <!--M#0 5-->
     </button>
+    <!--M#0 4-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{6:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
@@ -117,9 +117,9 @@ container.querySelector("#triple").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "2" => "6"
-#document/html1/body1/button2/#text1: "2" => "6"
-#document/html1/body1/button4/#text1: "2" => "6"
+#document/html0/body1/button0/#text0: "2" => "6"
+#document/html0/body1/button2/#text0: "2" => "6"
+#document/html0/body1/button4/#text0: "2" => "6"
 ```
 
 
@@ -127,30 +127,30 @@ container.querySelector("#triple").click();
 container.querySelector("#cube").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button
       id="addTwo"
     >
-      <!--M#0 1-->
       216
+      <!--M#0 1-->
     </button>
-    <!--M#0 2-->
+    <!--M#0 0-->
     <button
       id="triple"
     >
-      <!--M#0 3-->
       216
+      <!--M#0 3-->
     </button>
-    <!--M#0 4-->
+    <!--M#0 2-->
     <button
       id="cube"
     >
-      <!--M#0 5-->
       216
+      <!--M#0 5-->
     </button>
+    <!--M#0 4-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{6:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
@@ -160,7 +160,7 @@ container.querySelector("#cube").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "6" => "216"
-#document/html1/body1/button2/#text1: "6" => "216"
-#document/html1/body1/button4/#text1: "6" => "216"
+#document/html0/body1/button0/#text0: "6" => "216"
+#document/html0/body1/button2/#text0: "6" => "216"
+#document/html0/body1/button4/#text0: "6" => "216"
 ```

@@ -1,17 +1,17 @@
 # Write
-  <!M#0 0><button><!M#0 1>0</button><script>(M$h=[]).push((b,s)=>({0:{2:[0],3:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])</script>
+  <button>0<!M#0 1></button><!M#0 0><script>(M$h=[]).push((b,s)=>({0:{2:[0],3:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])</script>
 
 
 # Render "End"
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       0
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{2:[0],3:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])
     </script>
@@ -21,13 +21,13 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/button0
-inserted #document/html1/body1/button0/#comment0
-inserted #document/html1/body1/button0/#text1
-inserted #document/html1/body1/script1
-inserted #document/html1/body1/script1/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/button0
+inserted #document/html0/body1/button0/#text0
+inserted #document/html0/body1/button0/#comment1
+inserted #document/html0/body1/#comment1
+inserted #document/html0/body1/script2
+inserted #document/html0/body1/script2/#text0
 ```

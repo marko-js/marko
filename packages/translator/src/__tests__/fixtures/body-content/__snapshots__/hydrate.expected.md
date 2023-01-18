@@ -3,11 +3,11 @@
 <html>
   <head />
   <body>
-    <!--M#1 0-->
     <button>
-      <!--M#2 0-->
       0
+      <!--M#2 0-->
     </button>
+    <!--M#1 0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
@@ -28,11 +28,11 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#1 0-->
     <button>
-      <!--M#2 0-->
       1
+      <!--M#2 0-->
     </button>
+    <!--M#1 0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
@@ -42,7 +42,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html0/body1/button1/#text1: "0" => "1"
+#document/html0/body1/button0/#text0: "0" => "1"
 ```
 
 
@@ -53,11 +53,11 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#1 0-->
     <button>
-      <!--M#2 0-->
       2
+      <!--M#2 0-->
     </button>
+    <!--M#1 0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
@@ -67,7 +67,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html0/body1/button1/#text1: "1" => "2"
+#document/html0/body1/button0/#text0: "1" => "2"
 ```
 
 
@@ -78,11 +78,11 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M#1 0-->
     <button>
-      <!--M#2 0-->
       3
+      <!--M#2 0-->
     </button>
+    <!--M#1 0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={1:0},1:{7:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_hydrate",])
     </script>
@@ -92,5 +92,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html0/body1/button1/#text1: "2" => "3"
+#document/html0/body1/button0/#text0: "2" => "3"
 ```

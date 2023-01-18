@@ -6,7 +6,9 @@ import toTemplateOrStringLiteral, {
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
-import { currentProgramPath } from "../visitors/program";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { isOutputHTML } from "./marko-config";
+import { ReserveType } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",
@@ -82,4 +84,22 @@ export function getSectionMeta(sectionId: number) {
     walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
   };
+}
+
+export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
+  const { reserve } = path.node.extra;
+
+  if (reserve?.type !== ReserveType.Visit) {
+    throw path.buildCodeFrameError(
+      "Tried to mark a node that was not determined to need a mark during analyze."
+    );
+  }
+
+  if (isOutputHTML()) {
+    writeTo(path)`${callRuntime(
+      "markHydrateNode",
+      scopeIdentifier,
+      t.numericLiteral(reserve!.id)
+    )}`;
+  }
 }

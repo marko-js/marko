@@ -1,10 +1,9 @@
 # Write
-  <!M#0 0><h1 class="a b">Hello World</h1>
+  <h1 class="a b">Hello World</h1>
 
 
 # Render "End"
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
@@ -19,10 +18,9 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/h10
-inserted #document/html1/body1/h10/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/h10
+inserted #document/html0/body1/h10/#text0
 ```

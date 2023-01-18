@@ -1,5 +1,5 @@
 # Write
-  Static <!M#0 0>Dynamic 1
+  Static <!>Dynamic 1<!M#0 0>
 
 
 # Render "End"
@@ -8,8 +8,9 @@
   <head />
   <body>
     Static 
-    <!--M#0 0-->
+    <!---->
     Dynamic 1
+    <!--M#0 0-->
   </body>
 </html>
 ```
@@ -22,4 +23,5 @@ inserted #document/html0/body1
 inserted #document/html0/body1/#text0
 inserted #document/html0/body1/#comment1
 inserted #document/html0/body1/#text2
+inserted #document/html0/body1/#comment3
 ```

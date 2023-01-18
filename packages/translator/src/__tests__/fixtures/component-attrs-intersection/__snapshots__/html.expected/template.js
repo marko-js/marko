@@ -9,7 +9,7 @@ const _renderer = (input, _tagVar) => {
       const _scope = _nextScopeId();
     }
   });
-  _write(`${_markHydrateNode(_scope, 0)}<button></button>`);
+  _write(`<button></button>${_markHydrateNode(_scope, 0)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count");
   _writeHydrateScope(_scope, {
     1: count

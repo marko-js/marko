@@ -1,26 +1,26 @@
 # Write
-  <!M#0 0><button><!M#0 1>0</button>used to be <span><!M#0 2>0</span> which should be the same as <span><!M#0 3>0</span><script>(M$h=[]).push((b,s)=>({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])</script>
+  <button>0<!M#0 1></button><!M#0 0>used to be <span>0<!M#0 2></span> which should be the same as <span>0<!M#0 3></span><script>(M$h=[]).push((b,s)=>({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])</script>
 
 
 # Render "End"
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       0
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     used to be 
     <span>
-      <!--M#0 2-->
       0
+      <!--M#0 2-->
     </span>
      which should be the same as 
     <span>
-      <!--M#0 3-->
       0
+      <!--M#0 3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -31,21 +31,21 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/button0
-inserted #document/html1/body1/button0/#comment0
-inserted #document/html1/body1/button0/#text1
-inserted #document/html1/body1/#text1
-inserted #document/html1/body1/span2
-inserted #document/html1/body1/span2/#comment0
-inserted #document/html1/body1/span2/#text1
-inserted #document/html1/body1/#text3
-inserted #document/html1/body1/span4
-inserted #document/html1/body1/span4/#comment0
-inserted #document/html1/body1/span4/#text1
-inserted #document/html1/body1/script5
-inserted #document/html1/body1/script5/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/button0
+inserted #document/html0/body1/button0/#text0
+inserted #document/html0/body1/button0/#comment1
+inserted #document/html0/body1/#comment1
+inserted #document/html0/body1/#text2
+inserted #document/html0/body1/span3
+inserted #document/html0/body1/span3/#text0
+inserted #document/html0/body1/span3/#comment1
+inserted #document/html0/body1/#text4
+inserted #document/html0/body1/span5
+inserted #document/html0/body1/span5/#text0
+inserted #document/html0/body1/span5/#comment1
+inserted #document/html0/body1/script6
+inserted #document/html0/body1/script6/#text0
 ```

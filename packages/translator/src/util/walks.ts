@@ -2,12 +2,10 @@ import { types as t } from "@marko/compiler";
 import { createSectionState, getSectionId } from "../util/sections";
 import { ReserveType } from "../util/reserve";
 import { isOutputHTML } from "./marko-config";
-import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { writeTo } from "./writer";
-import { scopeIdentifier } from "../visitors/program";
 
 const [getWalks] = createSectionState<(string | t.Expression)[]>(
   "walks",
@@ -127,77 +125,73 @@ export function visit(
     );
   }
 
+  if (isOutputHTML()) {
+    return;
+  }
+
   const sectionId = getSectionId(path);
   const steps = getSteps(sectionId);
   const walks = getWalks(sectionId);
   const walkComment = getWalkComment(sectionId);
 
-  if (code && isOutputHTML()) {
-    writeTo(path)`${callRuntime(
-      "markHydrateNode",
-      scopeIdentifier,
-      t.numericLiteral(reserve!.id)
-    )}`;
-  } else {
-    let walkString = "";
+  let walkString = "";
 
-    if (steps.length) {
-      const walks: WalkCodes[] = [];
-      let depth = 0;
+  if (steps.length) {
+    const walks: WalkCodes[] = [];
+    let depth = 0;
 
-      for (const step of steps) {
-        if (step === Step.enter) {
-          depth++;
-          walks.push(WalkCodes.Next);
+    for (const step of steps) {
+      if (step === Step.enter) {
+        depth++;
+        walks.push(WalkCodes.Next);
+      } else {
+        depth--;
+        if (depth >= 0) {
+          // delete back to and including previous NEXT
+          walks.length = walks.lastIndexOf(WalkCodes.Next);
+          walks.push(WalkCodes.Over);
         } else {
-          depth--;
-          if (depth >= 0) {
-            // delete back to and including previous NEXT
-            walks.length = walks.lastIndexOf(WalkCodes.Next);
-            walks.push(WalkCodes.Over);
-          } else {
-            // delete back to previous OUT
-            walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
-            walks.push(WalkCodes.Out);
-            depth = 0;
-          }
+          // delete back to previous OUT
+          walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
+          walks.push(WalkCodes.Out);
+          depth = 0;
         }
       }
+    }
 
-      let current = walks[0];
-      let count = 0;
+    let current = walks[0];
+    let count = 0;
 
-      for (const walk of walks) {
-        if (walk !== current) {
-          walkComment.push(`${walkCodeToName[current]}(${count})`);
-          walkString += nCodeString(current, count);
-          current = walk;
-          count = 1;
-        } else {
-          count++;
-        }
+    for (const walk of walks) {
+      if (walk !== current) {
+        walkComment.push(`${walkCodeToName[current]}(${count})`);
+        walkString += nCodeString(current, count);
+        current = walk;
+        count = 1;
+      } else {
+        count++;
       }
-
-      walkComment.push(`${walkCodeToName[current]}(${count})`);
-      walkString += nCodeString(current, count);
-      steps.length = 0;
     }
 
-    if (code !== undefined) {
-      if (code !== WalkCodes.Get) {
-        writeTo(path)`<!>`;
-      }
-      walkComment.push(`${walkCodeToName[code]}`);
-      walkString += String.fromCharCode(code);
-    }
-
-    if (reserve?.size) {
-      walkComment.push(`${walkCodeToName[WalkCodes.Skip]}(${reserve.size})`);
-      walkString += nCodeString(WalkCodes.Skip, reserve.size);
-    }
-
-    appendLiteral(walks, walkString);
+    walkComment.push(`${walkCodeToName[current]}(${count})`);
+    walkString += nCodeString(current, count);
+    steps.length = 0;
   }
+
+  if (code !== undefined) {
+    if (code !== WalkCodes.Get) {
+      writeTo(path)`<!>`;
+    }
+    walkComment.push(`${walkCodeToName[code]}`);
+    walkString += String.fromCharCode(code);
+  }
+
+  if (reserve?.size) {
+    walkComment.push(`${walkCodeToName[WalkCodes.Skip]}(${reserve.size})`);
+    walkString += nCodeString(WalkCodes.Skip, reserve.size);
+  }
+
+  appendLiteral(walks, walkString);
 }
 
 function nCodeString(code: WalkCodes, number: number) {

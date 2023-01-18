@@ -1,9 +1,9 @@
-import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const x = 1;
   const y = 1;
-  _write(`${_markHydrateNode(_scope, 0)}<button>${_markHydrateNode(_scope, 1)}${_escapeXML(x)}</button>${_markHydrateNode(_scope, 2)}${_escapeXML(y)}`);
+  _write(`<button>${_escapeXML(x)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}${_escapeXML(y)}${_markHydrateNode(_scope, 2)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y");
   _writeHydrateScope(_scope, {
     3: x,

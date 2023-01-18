@@ -1,13 +1,13 @@
 # Render {}
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       0
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{2:[0],3:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])
     </script>
@@ -25,14 +25,14 @@
 container.querySelector("button").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       1
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{2:[0],3:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])
     </script>
@@ -42,5 +42,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "0" => "1"
+#document/html0/body1/button0/#text0: "0" => "1"
 ```

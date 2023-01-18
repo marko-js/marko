@@ -4,8 +4,9 @@
   <head />
   <body>
     Static 
-    <!--M#0 0-->
+    <!---->
     Dynamic 1
+    <!--M#0 0-->
   </body>
 </html>
 ```

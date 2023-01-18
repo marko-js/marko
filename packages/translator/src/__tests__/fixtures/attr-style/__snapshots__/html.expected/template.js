@@ -1,13 +1,13 @@
-import { markHydrateNode as _markHydrateNode, styleAttr as _styleAttr, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { styleAttr as _styleAttr, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = ({
   color,
   test
 }, _tagVar) => {
   const _scope = _nextScopeId();
-  _write(`${_markHydrateNode(_scope, 0)}<div${_styleAttr({
+  _write(`<div${_styleAttr({
     color: color
-  })}></div><div style=width:100px></div><div style="color: green"></div>`);
+  })}></div>${_markHydrateNode(_scope, 0)}<div style=width:100px></div><div style="color: green"></div>`);
   _customTag({
     style: {
       color: color
@@ -30,7 +30,6 @@ const _renderer = ({
       const _scope = _nextScopeId();
     }
   });
-  _write(`${_markHydrateNode(_scope, 1)}`);
   _dynamicTag(test, {
     style: {
       color: "green"

@@ -1,12 +1,12 @@
-import { markHydrateNode as _markHydrateNode, write as _write, escapeXML as _escapeXML, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = ({
   value
 }, _tagVar) => {
   const _scope = _nextScopeId();
-  _write(`<div>${_markHydrateNode(_scope, 0)}`);
+  _write("<div>");
   if (value) {
     const _scope = _nextScopeId();
-    _write(`<span>${_markHydrateNode(_scope, 0)}${_escapeXML(value)}</span>`);
+    _write(`<span>${_escapeXML(value)}${_markHydrateNode(_scope, 0)}</span>`);
   }
   _write("<span></span><span></span></div>");
 };

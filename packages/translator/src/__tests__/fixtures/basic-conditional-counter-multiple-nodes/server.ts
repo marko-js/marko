@@ -30,22 +30,18 @@ const counter = () => {
   let childRenderer;
 
   write(
-    `${markHydrateNode(
+    `<button class="inc"></button>${markHydrateNode(
       scopeId,
       0
-    )}<button class="inc"></button>${markHydrateNode(
-      scopeId,
-      1
-    )}<button class="toggle"></button>`
+    )}<button class="toggle"></button>${markHydrateNode(scopeId, 1)}`
   );
 
   if (show) {
     const childScopeId = nextScopeId();
     write(
-      `${markHydrateScopeStart(childScopeId)}The count is ${markHydrateNode(
-        childScopeId,
-        0
-      )}${count}`
+      `${markHydrateScopeStart(
+        childScopeId
+      )}The count is <!>${count}${markHydrateNode(childScopeId, 0)}`
     );
     childRenderer = register(() => {}, "ifBody");
     writeHydrateScope(childScopeId, (childScope = { [SYMBOL_OWNER]: scopeId }));

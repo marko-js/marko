@@ -1,5 +1,5 @@
 # Write
-  <div><!M#1 0><button><!M#1 1>0</button></div><script>(M$h=[]).push((b,s)=>({1:{2:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])</script>
+  <div><button>0<!M#1 1></button><!M#1 0></div><script>(M$h=[]).push((b,s)=>({1:{2:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])</script>
 
 
 # Render "End"
@@ -8,11 +8,11 @@
   <head />
   <body>
     <div>
-      <!--M#1 0-->
       <button>
-        <!--M#1 1-->
         0
+        <!--M#1 1-->
       </button>
+      <!--M#1 0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({1:{2:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
@@ -27,10 +27,10 @@ inserted #document/html0
 inserted #document/html0/head0
 inserted #document/html0/body1
 inserted #document/html0/body1/div0
-inserted #document/html0/body1/div0/#comment0
-inserted #document/html0/body1/div0/button1
-inserted #document/html0/body1/div0/button1/#comment0
-inserted #document/html0/body1/div0/button1/#text1
+inserted #document/html0/body1/div0/button0
+inserted #document/html0/body1/div0/button0/#text0
+inserted #document/html0/body1/div0/button0/#comment1
+inserted #document/html0/body1/div0/#comment1
 inserted #document/html0/body1/script1
 inserted #document/html0/body1/script1/#text0
 ```

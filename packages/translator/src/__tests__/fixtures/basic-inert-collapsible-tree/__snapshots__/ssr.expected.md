@@ -1,63 +1,60 @@
 # Write
-  <!M#1 0><ul><!M#2 0><li id=c-0><span><!M#2 1>Hello World</span><!M#2 2><button><!M#2 3>[-]</button><!M#2 4><!M#4 0><ul><!M#5 0><li id=c-0-0><span><!M#5 1>testing 123</span><!M#5 2><button><!M#5 3>[-]</button><!M#5 4></li></ul></li><!M#6 0><li id=c-1><span><!M#6 1>Goodbye World</span><!M#6 2><button><!M#6 3>[-]</button><!M#6 4></li></ul><script>(M$h=[]).push((b,s)=>({2:{13:!0},5:{13:!0},6:{13:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])</script>
+  <ul><li id=c-0><span>Hello World<!M#2 1></span><button>[-]<!M#2 3></button><!M#2 2><ul><li id=c-0-0><span>testing 123<!M#5 1></span><button>[-]<!M#5 3></button><!M#5 2></li><!M#5 0></ul><!M#4 0></li><!M#2 0><li id=c-1><span>Goodbye World<!M#6 1></span><button>[-]<!M#6 3></button><!M#6 2></li><!M#6 0></ul><!M#1 0><script>(M$h=[]).push((b,s)=>({2:{13:!0},5:{13:!0},6:{13:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])</script>
 
 
 # Render "End"
 ```html
-<!--M#1 0-->
 <html>
   <head />
   <body>
     <ul>
-      <!--M#2 0-->
       <li
         id="c-0"
       >
         <span>
-          <!--M#2 1-->
           Hello World
+          <!--M#2 1-->
         </span>
-        <!--M#2 2-->
         <button>
-          <!--M#2 3-->
           [-]
+          <!--M#2 3-->
         </button>
-        <!--M#2 4-->
-        <!--M#4 0-->
+        <!--M#2 2-->
         <ul>
-          <!--M#5 0-->
           <li
             id="c-0-0"
           >
             <span>
-              <!--M#5 1-->
               testing 123
+              <!--M#5 1-->
             </span>
-            <!--M#5 2-->
             <button>
-              <!--M#5 3-->
               [-]
+              <!--M#5 3-->
             </button>
-            <!--M#5 4-->
+            <!--M#5 2-->
           </li>
+          <!--M#5 0-->
         </ul>
+        <!--M#4 0-->
       </li>
-      <!--M#6 0-->
+      <!--M#2 0-->
       <li
         id="c-1"
       >
         <span>
-          <!--M#6 1-->
           Goodbye World
+          <!--M#6 1-->
         </span>
-        <!--M#6 2-->
         <button>
-          <!--M#6 3-->
           [-]
+          <!--M#6 3-->
         </button>
-        <!--M#6 4-->
+        <!--M#6 2-->
       </li>
+      <!--M#6 0-->
     </ul>
+    <!--M#1 0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({2:{13:!0},5:{13:!0},6:{13:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])
     </script>
@@ -67,43 +64,40 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/ul0
-inserted #document/html1/body1/ul0/#comment0
-inserted #document/html1/body1/ul0/li1
-inserted #document/html1/body1/ul0/li1/span0
-inserted #document/html1/body1/ul0/li1/span0/#comment0
-inserted #document/html1/body1/ul0/li1/span0/#text1
-inserted #document/html1/body1/ul0/li1/#comment1
-inserted #document/html1/body1/ul0/li1/button2
-inserted #document/html1/body1/ul0/li1/button2/#comment0
-inserted #document/html1/body1/ul0/li1/button2/#text1
-inserted #document/html1/body1/ul0/li1/#comment3
-inserted #document/html1/body1/ul0/li1/#comment4
-inserted #document/html1/body1/ul0/li1/ul5
-inserted #document/html1/body1/ul0/li1/ul5/#comment0
-inserted #document/html1/body1/ul0/li1/ul5/li1
-inserted #document/html1/body1/ul0/li1/ul5/li1/span0
-inserted #document/html1/body1/ul0/li1/ul5/li1/span0/#comment0
-inserted #document/html1/body1/ul0/li1/ul5/li1/span0/#text1
-inserted #document/html1/body1/ul0/li1/ul5/li1/#comment1
-inserted #document/html1/body1/ul0/li1/ul5/li1/button2
-inserted #document/html1/body1/ul0/li1/ul5/li1/button2/#comment0
-inserted #document/html1/body1/ul0/li1/ul5/li1/button2/#text1
-inserted #document/html1/body1/ul0/li1/ul5/li1/#comment3
-inserted #document/html1/body1/ul0/#comment2
-inserted #document/html1/body1/ul0/li3
-inserted #document/html1/body1/ul0/li3/span0
-inserted #document/html1/body1/ul0/li3/span0/#comment0
-inserted #document/html1/body1/ul0/li3/span0/#text1
-inserted #document/html1/body1/ul0/li3/#comment1
-inserted #document/html1/body1/ul0/li3/button2
-inserted #document/html1/body1/ul0/li3/button2/#comment0
-inserted #document/html1/body1/ul0/li3/button2/#text1
-inserted #document/html1/body1/ul0/li3/#comment3
-inserted #document/html1/body1/script1
-inserted #document/html1/body1/script1/#text0
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/ul0
+inserted #document/html0/body1/ul0/li0
+inserted #document/html0/body1/ul0/li0/span0
+inserted #document/html0/body1/ul0/li0/span0/#text0
+inserted #document/html0/body1/ul0/li0/span0/#comment1
+inserted #document/html0/body1/ul0/li0/button1
+inserted #document/html0/body1/ul0/li0/button1/#text0
+inserted #document/html0/body1/ul0/li0/button1/#comment1
+inserted #document/html0/body1/ul0/li0/#comment2
+inserted #document/html0/body1/ul0/li0/ul3
+inserted #document/html0/body1/ul0/li0/ul3/li0
+inserted #document/html0/body1/ul0/li0/ul3/li0/span0
+inserted #document/html0/body1/ul0/li0/ul3/li0/span0/#text0
+inserted #document/html0/body1/ul0/li0/ul3/li0/span0/#comment1
+inserted #document/html0/body1/ul0/li0/ul3/li0/button1
+inserted #document/html0/body1/ul0/li0/ul3/li0/button1/#text0
+inserted #document/html0/body1/ul0/li0/ul3/li0/button1/#comment1
+inserted #document/html0/body1/ul0/li0/ul3/li0/#comment2
+inserted #document/html0/body1/ul0/li0/ul3/#comment1
+inserted #document/html0/body1/ul0/li0/#comment4
+inserted #document/html0/body1/ul0/#comment1
+inserted #document/html0/body1/ul0/li2
+inserted #document/html0/body1/ul0/li2/span0
+inserted #document/html0/body1/ul0/li2/span0/#text0
+inserted #document/html0/body1/ul0/li2/span0/#comment1
+inserted #document/html0/body1/ul0/li2/button1
+inserted #document/html0/body1/ul0/li2/button1/#text0
+inserted #document/html0/body1/ul0/li2/button1/#comment1
+inserted #document/html0/body1/ul0/li2/#comment2
+inserted #document/html0/body1/ul0/#comment3
+inserted #document/html0/body1/#comment1
+inserted #document/html0/body1/script2
+inserted #document/html0/body1/script2/#text0
 ```

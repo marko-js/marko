@@ -4,11 +4,11 @@
   <head />
   <body>
     <div>
-      <!--M#1 0-->
       <button>
-        <!--M#1 1-->
         0
+        <!--M#1 1-->
       </button>
+      <!--M#1 0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({1:{2:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
@@ -31,11 +31,11 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M#1 0-->
       <button>
-        <!--M#1 1-->
         1
+        <!--M#1 1-->
       </button>
+      <!--M#1 0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({1:{2:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
@@ -46,5 +46,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html0/body1/div0/button1/#text1: "0" => "1"
+#document/html0/body1/div0/button0/#text0: "0" => "1"
 ```

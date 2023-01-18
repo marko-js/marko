@@ -7,9 +7,9 @@
     {
       "name": "*",
       "total": {
-        "min": 12300,
-        "gzip": 5180,
-        "brotli": 4738
+        "min": 12304,
+        "gzip": 5179,
+        "brotli": 4751
       }
     },
     {
@@ -35,17 +35,17 @@
       "user": {
         "min": 207,
         "gzip": 182,
-        "brotli": 152
+        "brotli": 153
       },
       "runtime": {
-        "min": 2635,
-        "gzip": 1333,
-        "brotli": 1191
+        "min": 2639,
+        "gzip": 1330,
+        "brotli": 1188
       },
       "total": {
-        "min": 2842,
-        "gzip": 1515,
-        "brotli": 1343
+        "min": 2846,
+        "gzip": 1512,
+        "brotli": 1341
       }
     },
     {
@@ -71,16 +71,16 @@
       "user": {
         "min": 943,
         "gzip": 585,
-        "brotli": 538
+        "brotli": 537
       },
       "runtime": {
-        "min": 7966,
-        "gzip": 3606,
-        "brotli": 3279
+        "min": 7970,
+        "gzip": 3605,
+        "brotli": 3280
       },
       "total": {
-        "min": 8909,
-        "gzip": 4191,
+        "min": 8913,
+        "gzip": 4190,
         "brotli": 3817
       }
     }

@@ -1,16 +1,15 @@
 # Write
-  <!M#1 0><span><!M#2 0>Hello</span>
+  <span>Hello<!M#2 0></span>
 
 
 # Render "End"
 ```html
-<!--M#1 0-->
 <html>
   <head />
   <body>
     <span>
-      <!--M#2 0-->
       Hello
+      <!--M#2 0-->
     </span>
   </body>
 </html>
@@ -18,11 +17,10 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/span0
-inserted #document/html1/body1/span0/#comment0
-inserted #document/html1/body1/span0/#text1
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/span0
+inserted #document/html0/body1/span0/#text0
+inserted #document/html0/body1/span0/#comment1
 ```

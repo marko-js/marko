@@ -1,5 +1,5 @@
 # Write
-  <em>Testing</em> <!M#0 0>Hello <strong>World</strong>
+  <em>Testing</em> <!>Hello <strong>World</strong><!M#0 0>
 
 
 # Render "End"
@@ -11,11 +11,12 @@
       Testing
     </em>
      
-    <!--M#0 0-->
+    <!---->
     Hello 
     <strong>
       World
     </strong>
+    <!--M#0 0-->
   </body>
 </html>
 ```
@@ -32,4 +33,5 @@ inserted #document/html0/body1/#comment2
 inserted #document/html0/body1/#text3
 inserted #document/html0/body1/strong4
 inserted #document/html0/body1/strong4/#text0
+inserted #document/html0/body1/#comment5
 ```

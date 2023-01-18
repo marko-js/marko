@@ -1,22 +1,22 @@
 # Render {}
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       0
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     used to be 
     <span>
-      <!--M#0 2-->
       0
+      <!--M#0 2-->
     </span>
      which should be the same as 
     <span>
-      <!--M#0 3-->
       0
+      <!--M#0 3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -35,23 +35,23 @@
 container.querySelector("button").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       1
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     used to be 
     <span>
-      <!--M#0 2-->
       0
+      <!--M#0 2-->
     </span>
      which should be the same as 
     <span>
-      <!--M#0 3-->
       0
+      <!--M#0 3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -62,7 +62,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "0" => "1"
+#document/html0/body1/button0/#text0: "0" => "1"
 ```
 
 
@@ -70,23 +70,23 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       2
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     used to be 
     <span>
-      <!--M#0 2-->
       1
+      <!--M#0 2-->
     </span>
      which should be the same as 
     <span>
-      <!--M#0 3-->
       1
+      <!--M#0 3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -97,9 +97,9 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "1" => "2"
-#document/html1/body1/span2/#text1: "0" => "1"
-#document/html1/body1/span4/#text1: "0" => "1"
+#document/html0/body1/button0/#text0: "1" => "2"
+#document/html0/body1/span3/#text0: "0" => "1"
+#document/html0/body1/span5/#text0: "0" => "1"
 ```
 
 
@@ -107,23 +107,23 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 
 ```html
-<!--M#0 0-->
 <html>
   <head />
   <body>
     <button>
-      <!--M#0 1-->
       3
+      <!--M#0 1-->
     </button>
+    <!--M#0 0-->
     used to be 
     <span>
-      <!--M#0 2-->
       2
+      <!--M#0 2-->
     </span>
      which should be the same as 
     <span>
-      <!--M#0 3-->
       2
+      <!--M#0 3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{4:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -134,7 +134,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-#document/html1/body1/button0/#text1: "2" => "3"
-#document/html1/body1/span2/#text1: "1" => "2"
-#document/html1/body1/span4/#text1: "1" => "2"
+#document/html0/body1/button0/#text0: "2" => "3"
+#document/html0/body1/span3/#text0: "1" => "2"
+#document/html0/body1/span5/#text0: "1" => "2"
 ```

@@ -3,10 +3,10 @@ const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const show = true;
   const message = "hi";
-  _write(`${_markHydrateNode(_scope, 0)}<button></button>${_markHydrateNode(_scope, 1)}`);
+  _write(`<button></button>${_markHydrateNode(_scope, 0)}`);
   if (show) {
     const _scope = _nextScopeId();
-    _write(`<span>${_markHydrateNode(_scope, 0)}${_escapeXML(message)}</span>`);
+    _write(`<span>${_escapeXML(message)}${_markHydrateNode(_scope, 0)}</span>`);
   }
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
   _writeHydrateScope(_scope, {

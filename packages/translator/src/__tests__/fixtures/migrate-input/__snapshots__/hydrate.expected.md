@@ -5,8 +5,8 @@
   <body>
     <div>
       <span>
-        <!--M#0 0-->
         1
+        <!--M#0 0-->
       </span>
     </div>
   </body>

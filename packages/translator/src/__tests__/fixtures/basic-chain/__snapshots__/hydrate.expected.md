@@ -4,8 +4,8 @@
   <head />
   <body>
     <div>
-      <!--M#0 0-->
       6
+      <!--M#0 0-->
     </div>
   </body>
 </html>

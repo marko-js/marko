@@ -64,6 +64,7 @@ export default {
           method as HTMLMethod | DOMMethod,
           placeholder.node.value
         )}`;
+        writer.markNode(placeholder);
       } else {
         addStatement(
           "apply",

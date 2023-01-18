@@ -3,17 +3,17 @@
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <span>
-      <!--M#1 0-->
       0
+      <!--M#1 0-->
     </span>
     <!--M|0 2 1-->
     <script>
@@ -36,17 +36,17 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <span>
-      <!--M#1 0-->
       1
+      <!--M#1 0-->
     </span>
     <!--M|0 2 1-->
     <script>
@@ -58,7 +58,7 @@ container.querySelector("button.inc").click();
 
 # Mutations
 ```
-#document/html0/body1/span4/#text1: "0" => "1"
+#document/html0/body1/span4/#text0: "0" => "1"
 ```
 
 
@@ -69,14 +69,14 @@ container.querySelector("button.toggle").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <!--M|0 2 1-->
     <script>
       (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
@@ -100,14 +100,14 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <!--M|0 2 1-->
     <script>
       (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
@@ -129,14 +129,14 @@ container.querySelector("button.toggle").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <span>
       2
     </span>
@@ -162,14 +162,14 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M#0 0-->
     <button
       class="inc"
     />
-    <!--M#0 1-->
+    <!--M#0 0-->
     <button
       class="toggle"
     />
+    <!--M#0 1-->
     <span>
       3
     </span>

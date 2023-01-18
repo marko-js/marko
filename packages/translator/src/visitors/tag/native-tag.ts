@@ -279,6 +279,10 @@ export default {
           .skip();
       }
 
+      if (extra.reserve) {
+        writer.markNode(tag);
+      }
+
       walks.exit(tag);
       tag.remove();
     },

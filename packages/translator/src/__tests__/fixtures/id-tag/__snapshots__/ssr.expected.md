@@ -1,5 +1,5 @@
 # Write
-  <div><!M#0 0>s0</div><!M#0 1>s1
+  <div>s0<!M#0 0></div>s1<!M#0 1>
 
 
 # Render "End"
@@ -8,11 +8,11 @@
   <head />
   <body>
     <div>
-      <!--M#0 0-->
       s0
+      <!--M#0 0-->
     </div>
-    <!--M#0 1-->
     s1
+    <!--M#0 1-->
   </body>
 </html>
 ```
@@ -23,8 +23,8 @@ inserted #document/html0
 inserted #document/html0/head0
 inserted #document/html0/body1
 inserted #document/html0/body1/div0
-inserted #document/html0/body1/div0/#comment0
-inserted #document/html0/body1/div0/#text1
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/#text2
+inserted #document/html0/body1/div0/#text0
+inserted #document/html0/body1/div0/#comment1
+inserted #document/html0/body1/#text1
+inserted #document/html0/body1/#comment2
 ```

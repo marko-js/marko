@@ -1,5 +1,5 @@
 # Write
-  <body><!M#1 0><h1>Hello <!M#2 0>World</h1></body>
+  <body><h1>Hello <!>World<!M#2 0></h1></body>
 
 
 # Render "End"
@@ -7,11 +7,11 @@
 <html>
   <head />
   <body>
-    <!--M#1 0-->
     <h1>
       Hello 
-      <!--M#2 0-->
+      <!---->
       World
+      <!--M#2 0-->
     </h1>
   </body>
 </html>
@@ -22,9 +22,9 @@
 inserted #document/html0
 inserted #document/html0/head0
 inserted #document/html0/body1
-inserted #document/html0/body1/#comment0
-inserted #document/html0/body1/h11
-inserted #document/html0/body1/h11/#text0
-inserted #document/html0/body1/h11/#comment1
-inserted #document/html0/body1/h11/#text2
+inserted #document/html0/body1/h10
+inserted #document/html0/body1/h10/#text0
+inserted #document/html0/body1/h10/#comment1
+inserted #document/html0/body1/h10/#text2
+inserted #document/html0/body1/h10/#comment3
 ```

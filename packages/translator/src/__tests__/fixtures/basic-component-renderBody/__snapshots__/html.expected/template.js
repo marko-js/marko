@@ -1,4 +1,4 @@
-import { markHydrateNode as _markHydrateNode, escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _myButton from "./components/my-button.marko";
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
@@ -9,7 +9,7 @@ const _renderer = (input, _tagVar) => {
     },
     renderBody() {
       const _scope = _nextScopeId();
-      _write(`${_markHydrateNode(_scope, 0)}${_escapeXML(clickCount)}`);
+      _write(`${_escapeXML(clickCount)}${_markHydrateNode(_scope, 0)}`);
     }
   });
 };
