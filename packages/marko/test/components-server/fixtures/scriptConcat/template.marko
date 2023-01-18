@@ -1,0 +1,17 @@
+import { setImmediate } from "timers";
+static function tick() {
+	return new Promise(resolve => setImmediate(() => setImmediate(resolve)));
+}
+
+<!-- Should merge scripts in the same writer.-->
+$ out.script("console.log('hello')");
+$ out.script("console.log('world')");
+
+<!-- Should merge scripts in different writers.-->
+<await(tick())>
+	<@then>
+		$ out.script("console.log('again')");
+	</>
+</await>
+
+$ out.script("console.log('and again')");

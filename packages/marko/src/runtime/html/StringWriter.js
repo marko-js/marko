@@ -27,7 +27,13 @@ StringWriter.prototype = {
 
   merge: function (otherWriter) {
     this._content += otherWriter._content;
-    this._scripts += otherWriter._scripts;
+
+    if (otherWriter._scripts) {
+      this._scripts = this._scripts
+        ? this._scripts + ";" + otherWriter._scripts
+        : otherWriter._scripts;
+    }
+
     if (otherWriter._data) {
       if (this._data) {
         for (const key in otherWriter._data) {
