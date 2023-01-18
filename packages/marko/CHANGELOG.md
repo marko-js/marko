@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.22.2
+
+### Patch Changes
+
+- [#1880](https://github.com/marko-js/marko/pull/1880) [`c4cce33e8`](https://github.com/marko-js/marko/commit/c4cce33e8c917af7c45ffc64d748e88364a0b91a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix an issue where merging scripts (via the out.script api) was not properly inserting delimeters when scripts are added in different async writers.
+
+- Updated dependencies [[`c4cce33e8`](https://github.com/marko-js/marko/commit/c4cce33e8c917af7c45ffc64d748e88364a0b91a)]:
+  - @marko/compiler@5.23.2
+  - @marko/translator-default@5.22.2
+
 ## 5.22.1
 
 ### Patch Changes
