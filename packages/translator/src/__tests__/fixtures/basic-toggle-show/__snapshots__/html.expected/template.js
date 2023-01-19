@@ -7,10 +7,10 @@ const _renderer = (input, _tagVar) => {
     const _scope = _nextScopeId();
     _write("Hello!");
   }
-  _write(`<button>Toggle</button>${_markHydrateNode(_scope, 6)}</div>`);
+  _write(`<button>Toggle</button>${_markHydrateNode(_scope, 1)}</div>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show");
   _writeHydrateScope(_scope, {
-    7: show
+    2: show
   });
 };
 export default _renderer;

@@ -10,10 +10,10 @@ const _renderer = (input, _tagVar) => {
     }
   });
   _popContext();
-  _write(`<button id=increment>${_escapeXML(x)}${_markHydrateNode(_scope, 3)}</button>${_markHydrateNode(_scope, 2)}`);
+  _write(`<button id=increment>${_escapeXML(x)}${_markHydrateNode(_scope, 2)}</button>${_markHydrateNode(_scope, 1)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x");
   _writeHydrateScope(_scope, {
-    4: x
+    3: x
   });
 };
 export default _renderer;

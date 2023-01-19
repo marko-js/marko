@@ -8,7 +8,7 @@ const _itemBody = /* @__PURE__ */_createRenderer("", /* get */" ", _setup$itemBo
 const _ifBody = /* @__PURE__ */_createRenderer("", "");
 const _if$helloBody = /* @__PURE__ */_conditional(0, 1, (_scope, x = _scope._[0]) => x ? _ifBody : null);
 const _x$helloBody = _dynamicClosure(1, 0, [_if$helloBody]);
-const _helloBody = /* @__PURE__ */_createRenderer("<!>", /* replace, skip(5) */"%-", null, [_x$helloBody]);
+const _helloBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", null, [_x$helloBody]);
 const _x = /* @__PURE__ */_source(0, [_dynamicSubscribers(0)]);
 const _setup = _scope => {
   _hello(_scope[1]);

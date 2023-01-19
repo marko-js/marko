@@ -46,8 +46,8 @@ const counter = () => {
 
   // eslint-disable-next-line no-sparse-arrays
   writeHydrateScope(scopeId, {
-    [2 + 1]: childScope,
-    [2 + 2]: childRenderer,
+    [2 + "!"]: childScope,
+    [2 + "("]: childRenderer,
     8: show,
     9: count,
   });

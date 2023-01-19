@@ -31,9 +31,6 @@ export const enum WalkCodes {
   Replace = 37,
   EndChild = 38,
 
-  Skip = 40,
-  SkipEnd = 46,
-
   BeginChild = 47,
   BeginChildEnd = 66,
 
@@ -51,7 +48,6 @@ export const enum WalkCodes {
 }
 
 export const enum WalkRangeSizes {
-  Skip = 7, // 40 through 46
   BeginChild = 20, // 47 through 66
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
@@ -115,9 +111,6 @@ function walkInternal(
         (scope[value] = createScope(scope.___context)),
         currentWalkIndex
       )!;
-    } else if (value >= WalkCodes.Skip) {
-      currentScopeIndex +=
-        WalkRangeSizes.Skip * currentMultiplier + value - WalkCodes.Skip;
     } else if (value === WalkCodes.EndChild) {
       return currentWalkIndex;
     } else if (value === WalkCodes.Get) {

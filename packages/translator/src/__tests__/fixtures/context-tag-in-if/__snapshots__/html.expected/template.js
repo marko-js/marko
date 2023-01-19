@@ -11,10 +11,10 @@ const _renderer = (input, _tagVar) => {
     _write(`${_escapeXML(x)}${_markHydrateNode(_scope, 0)}</span>`);
   }
   _popContext();
-  _write(`<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 2)}</div>`);
+  _write(`<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 1)}</div>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show");
   _writeHydrateScope(_scope, {
-    3: show
+    2: show
   });
 };
 export default _renderer;

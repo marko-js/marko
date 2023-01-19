@@ -17,7 +17,7 @@
     </span>
     <!--M|0 2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ container.querySelector("button.inc").click();
     </span>
     <!--M|0 2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -79,7 +79,7 @@ container.querySelector("button.toggle").click();
     <!--M#0 1-->
     <!--M|0 2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -110,7 +110,7 @@ container.querySelector("button.inc").click();
     <!--M#0 1-->
     <!--M|0 2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -141,7 +141,7 @@ container.querySelector("button.toggle").click();
       2
     </span>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>
@@ -174,7 +174,7 @@ container.querySelector("button.inc").click();
       3
     </span>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={3:j={},4:b("ifBody"),8:!0,9:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>

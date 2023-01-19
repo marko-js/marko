@@ -37,6 +37,14 @@ const enum AccessorChars {
   SUBSCRIBERS = "*",
   CLEANUP = "-",
   TAG_VARIABLE = "/",
+  COND_SCOPE = "!",
+  LOOP_SCOPE_ARRAY = "!",
+  COND_CONTEXT = "^",
+  LOOP_CONTEXT = "^",
+  COND_RENDERER = "(",
+  LOOP_SCOPE_MAP = "(",
+  LOOP_VALUE = ")",
+  CONTEXT_VALUE = ":",
 }
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -200,7 +208,9 @@ export function initContextProvider(
 ) {
   const sectionId = reserve.sectionId;
   const scopeAccessor = t.numericLiteral(reserve.id);
-  const valueAccessor = t.numericLiteral(reserve.id + 1);
+  const valueAccessor = t.stringLiteral(
+    `${reserve.id}${AccessorChars.CONTEXT_VALUE}`
+  );
 
   const signal = getSignal(sectionId, reserve);
   signal.build = () => {

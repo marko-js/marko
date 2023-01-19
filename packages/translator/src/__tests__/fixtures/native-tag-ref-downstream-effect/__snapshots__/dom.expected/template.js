@@ -9,6 +9,6 @@ const _setup = _scope => {
   _notifySignal(_scope, _if);
 };
 export const template = "<div></div><!>";
-export const walks = /* get, over(1), replace, skip(5), over(1) */" b%-b";
+export const walks = /* get, over(1), replace, over(1) */" b%b";
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup);

@@ -50,4 +50,12 @@ export const enum AccessorChars {
   SUBSCRIBERS = "*",
   CLEANUP = "-",
   TAG_VARIABLE = "/",
+  COND_SCOPE = "!",
+  LOOP_SCOPE_ARRAY = "!",
+  COND_CONTEXT = "^",
+  LOOP_CONTEXT = "^",
+  COND_RENDERER = "(",
+  LOOP_SCOPE_MAP = "(",
+  LOOP_VALUE = ")",
+  CONTEXT_VALUE = ":",
 }

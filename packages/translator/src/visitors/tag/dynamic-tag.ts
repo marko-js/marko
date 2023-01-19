@@ -24,8 +24,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(tag),
         tag.node as any as t.Identifier,
-        "dynamicTagName",
-        5
+        "dynamicTagName"
       );
 
       customTag.analyze.enter(tag);

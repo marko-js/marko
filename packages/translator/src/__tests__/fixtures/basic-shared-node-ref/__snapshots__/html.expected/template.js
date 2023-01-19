@@ -9,12 +9,12 @@ const _renderer = (input, _tagVar) => {
     _write(`<li>${_escapeXML(x)}${_markHydrateNode(_scope, 0)}</li>`);
     _maybeFlush();
   }
-  _write(`</ul>${_markHydrateNode(_scope, 0)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 7)}<button id=reverse>Reverse</button>${_markHydrateNode(_scope, 8)}`);
+  _write(`</ul>${_markHydrateNode(_scope, 0)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 1)}<button id=reverse>Reverse</button>${_markHydrateNode(_scope, 2)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list");
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open");
   _writeHydrateScope(_scope, {
-    9: open,
-    10: list
+    3: open,
+    4: list
   });
 };
 export default _renderer;

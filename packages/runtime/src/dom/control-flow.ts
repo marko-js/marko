@@ -1,4 +1,4 @@
-import type { Scope } from "../common/types";
+import { AccessorChars, Scope } from "../common/types";
 import { reconcile } from "./reconcile";
 import { Renderer, createScopeWithRenderer } from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
@@ -11,21 +11,14 @@ import {
   wrapSignal,
 } from "./signals";
 
-export const enum ConditionalIndex {
-  REFERENCE_NODE = 0,
-  SCOPE = 1,
-  RENDERER = 2,
-  CONTEXT = 3,
-}
-
 export function conditional<S extends Scope>(
   nodeAccessor: number,
   defaultMark: number,
   computeRenderer: (scope: S) => Renderer | undefined,
   fragment?: DOMFragment
 ) {
-  const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
-  const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
+  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   return derivation(
     rendererAccessor,
     defaultMark,
@@ -43,8 +36,8 @@ export function conditionalOnlyChild<S extends Scope>(
   computeRenderer: (scope: S) => Renderer | undefined,
   fragment?: DOMFragment
 ) {
-  const childScopeAccessor = nodeAccessor + ConditionalIndex.SCOPE;
-  const rendererAccessor = nodeAccessor + ConditionalIndex.RENDERER;
+  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   return derivation(
     rendererAccessor,
     defaultMark,
@@ -58,11 +51,10 @@ export function conditionalOnlyChild<S extends Scope>(
 
 export function inConditionalScope<S extends Scope>(
   subscriber: Signal,
-  conditionalNodeAccessor: number | string /* branch?: Renderer */
+  nodeAccessor: number | string /* branch?: Renderer */
 ): Signal {
-  const scopeAccessor =
-    (conditionalNodeAccessor as number) + ConditionalIndex.SCOPE;
-  // const rendererAccessor = conditionalNodeAccessor as number + ConditionalIndex.RENDERER;
+  const scopeAccessor = (nodeAccessor as number) + AccessorChars.COND_SCOPE;
+  // const rendererAccessor = nodeAccessor as number + AccessorChars.COND_RENDERER;
   return wrapSignal((methodName) => (scope, extraArg) => {
     const conditionalScope = scope[scopeAccessor] as S;
     // const conditionalRenderer = scope[rendererAccessor] as Renderer;
@@ -74,33 +66,24 @@ export function inConditionalScope<S extends Scope>(
 
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
-  conditionalIndex: number,
+  nodeAccessor: number,
   newRenderer: Renderer<ChildScope> | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
   let newScope: ChildScope;
-  let prevScope = scope[
-    conditionalIndex + ConditionalIndex.SCOPE
-  ] as ChildScope;
+  let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
 
   if (newRenderer) {
-    newScope = scope[conditionalIndex + ConditionalIndex.SCOPE] =
+    newScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        (scope[conditionalIndex + ConditionalIndex.CONTEXT] ||=
-          scope.___context),
+        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
         scope
       ) as ChildScope;
-    prevScope =
-      prevScope ||
-      getEmptyScope(
-        scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
-      );
+    prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
   } else {
-    newScope = getEmptyScope(
-      scope[conditionalIndex + ConditionalIndex.REFERENCE_NODE] as Comment
-    ) as ChildScope;
-    scope[conditionalIndex + ConditionalIndex.SCOPE] = undefined;
+    newScope = getEmptyScope(scope[nodeAccessor] as Comment) as ChildScope;
+    scope[nodeAccessor + AccessorChars.COND_SCOPE] = undefined;
   }
 
   fragment.___insertBefore(
@@ -113,22 +96,19 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
 export function setConditionalRendererOnlyChild(
   scope: Scope,
-  conditionalIndex: number,
+  nodeAccessor: number,
   newRenderer: Renderer | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
-  const prevScope = scope[conditionalIndex + ConditionalIndex.SCOPE] as Scope;
-  const referenceNode = scope[
-    conditionalIndex + ConditionalIndex.REFERENCE_NODE
-  ] as Element;
+  const prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
+  const referenceNode = scope[nodeAccessor] as Element;
   referenceNode.textContent = "";
 
   if (newRenderer) {
-    const newScope = (scope[conditionalIndex + ConditionalIndex.SCOPE] =
+    const newScope = (scope[nodeAccessor + AccessorChars.COND_SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        (scope[conditionalIndex + ConditionalIndex.CONTEXT] ||=
-          scope.___context),
+        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
         scope
       ));
     fragment.___insertBefore(newScope, referenceNode, null);
@@ -143,16 +123,6 @@ export const emptyMarkerArray = [/* @__PURE__ */ getEmptyScope()];
 const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
-export const enum LoopIndex {
-  REFERENCE_NODE = 0,
-  SCOPE_ARRAY = 1,
-  SCOPE_MAP = 2,
-  VALUE = 3,
-  VALUE_MARK = 4,
-  VALUE_STALE = 5,
-  CONTEXT = 6,
-}
-
 export function loop<S extends Scope, C extends Scope, T>(
   nodeAccessor: number,
   defaultMark: number,
@@ -163,7 +133,7 @@ export function loop<S extends Scope, C extends Scope, T>(
   fragment?: DOMFragment
 ) {
   const params = destructureSources(paramSubscribers, setParams);
-  const valueAccessor = nodeAccessor + LoopIndex.VALUE;
+  const valueAccessor = nodeAccessor + AccessorChars.LOOP_VALUE;
   return derivation(
     valueAccessor,
     defaultMark,
@@ -192,7 +162,7 @@ export function inLoopScope<S extends Scope>(
   subscriber: Signal,
   loopNodeAccessor: number
 ): Signal {
-  const loopScopeAccessor = loopNodeAccessor + LoopIndex.SCOPE_ARRAY;
+  const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   return wrapSignal((methodName) => (scope, extraArg) => {
     const loopScopes = (scope as S)[loopScopeAccessor] ?? [];
     for (const loopScope of loopScopes) {
@@ -203,7 +173,7 @@ export function inLoopScope<S extends Scope>(
 
 export function setLoopOf<T, ChildScope extends Scope>(
   scope: Scope,
-  loopIndex: number,
+  nodeAccessor: number,
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
@@ -213,19 +183,18 @@ export function setLoopOf<T, ChildScope extends Scope>(
   let newMap: Map<unknown, ChildScope>;
   let newArray: Scope[];
   const len = newValues.length;
-  const referenceNode = scope[loopIndex + LoopIndex.REFERENCE_NODE] as
-    | Element
-    | Comment
-    | Text;
+  const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
   // TODO: compiler should use only comment so the text check can be removed
   const referenceIsMarker =
     referenceNode.nodeType === 8 /* Comment */ ||
     referenceNode.nodeType === 3; /* Text */
   const oldMap =
-    (scope[loopIndex + LoopIndex.SCOPE_MAP] as Map<unknown, ChildScope>) ||
-    (referenceIsMarker ? emptyMarkerMap : emptyMap);
+    (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] as Map<
+      unknown,
+      ChildScope
+    >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
-    (scope[loopIndex + LoopIndex.SCOPE_ARRAY] as ChildScope[]) ||
+    (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] as ChildScope[]) ||
     (referenceIsMarker ? emptyMarkerArray : (emptyArray as ChildScope[]));
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
@@ -241,7 +210,8 @@ export function setLoopOf<T, ChildScope extends Scope>(
       if (!childScope) {
         childScope = createScopeWithRenderer(
           renderer,
-          (scope[loopIndex + LoopIndex.CONTEXT] ||= scope.___context),
+          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||=
+            scope.___context),
           scope
         ) as ChildScope;
         // TODO: once we can track moves
@@ -290,8 +260,8 @@ export function setLoopOf<T, ChildScope extends Scope>(
     reconcile(parentNode, oldArray, newArray!, afterReference, fragment);
   }
 
-  scope[loopIndex + LoopIndex.SCOPE_MAP] = newMap;
-  scope[loopIndex + LoopIndex.SCOPE_ARRAY] = newArray;
+  scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] = newMap;
+  scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] = newArray;
 }
 
 export function computeLoopFromTo(from: number, to: number, step: number) {

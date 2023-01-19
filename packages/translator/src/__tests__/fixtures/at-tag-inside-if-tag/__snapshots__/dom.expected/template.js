@@ -4,7 +4,7 @@ import { setup as _customTag, template as _customTag_template, walks as _customT
 const _ifBody = /* @__PURE__ */_createRenderer("", "");
 const _if$customTagBody = /* @__PURE__ */_conditional(0, 1, (_scope, x = _scope._[0]) => x ? _ifBody : null);
 const _x$customTagBody = _dynamicClosure(1, 0, [_if$customTagBody]);
-const _customTagBody = /* @__PURE__ */_createRenderer("<!>", /* replace, skip(5) */"%-", null, [_x$customTagBody]);
+const _customTagBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", null, [_x$customTagBody]);
 const _x = /* @__PURE__ */_source(0, [_dynamicSubscribers(0)]);
 const _setup = _scope => {
   _customTag(_scope[1]);

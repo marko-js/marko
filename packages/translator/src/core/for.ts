@@ -37,8 +37,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(tag),
         isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node,
-        "for",
-        6
+        "for"
       );
       customTag.analyze.enter(tag);
     },

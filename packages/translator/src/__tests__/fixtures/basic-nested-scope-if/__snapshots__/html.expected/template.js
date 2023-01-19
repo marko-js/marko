@@ -8,7 +8,7 @@ const _renderer = (input, _tagVar) => {
     _write(`<button>${_escapeXML(clickCount)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
     _writeHydrateScope(_scope, {
-      6: clickCount
+      1: clickCount
     });
   } else {
     const _scope = _nextScopeId();

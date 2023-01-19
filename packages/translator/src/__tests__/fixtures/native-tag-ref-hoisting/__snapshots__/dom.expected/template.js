@@ -7,6 +7,6 @@ const _setup = _scope => {
   _queueHydrate(_scope, _hydrate_setup);
 };
 export const template = "<!>";
-export const walks = /* replace, skip(5), over(1) */"%-b";
+export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup);

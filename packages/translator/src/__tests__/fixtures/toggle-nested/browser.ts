@@ -12,7 +12,7 @@ import {
   source,
   setSource,
 } from "@marko/runtime-fluurt/src/dom";
-import { next, over, get, skip } from "../../utils/walks";
+import { next, over, get } from "../../utils/walks";
 import type { steps } from "./test";
 
 type Input = typeof steps[number];
@@ -20,9 +20,9 @@ type Input = typeof steps[number];
 const enum INDEX {
   comment = 0,
   conditional = 0,
-  show = 6,
-  value1 = 9,
-  value2 = 12,
+  show = 1,
+  value1 = 2,
+  value2 = 3,
 }
 
 type ComponentScope = Scope<{
@@ -37,8 +37,8 @@ type ComponentScope = Scope<{
 const enum INDEX_IF0 {
   comment1 = 0,
   conditional1 = 0,
-  comment2 = 6,
-  conditional2 = 6,
+  comment2 = 1,
+  conditional2 = 1,
 }
 
 type If0Scope = Scope<{
@@ -148,7 +148,7 @@ export default createRenderFn(template, walks, undefined, attrs);
 
 const ifBody0 = createRenderer(
   "<!><!>",
-  get + over(1) + skip(5) + get + over(1),
+  get + over(1) + get + over(1),
   undefined,
   [value1$if0, value2$if0],
   0,

@@ -58,10 +58,6 @@ export function beginChild(value: number) {
   return toCharString(value, WalkCodes.BeginChild, WalkRangeSizes.BeginChild);
 }
 
-export function skip(value: number) {
-  return toCharString(value, WalkCodes.Skip, WalkRangeSizes.Skip);
-}
-
 function toCharString(value: number, startCode: number, rangeSize: number) {
   let string = "";
 

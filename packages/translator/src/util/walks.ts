@@ -25,9 +25,6 @@ export enum WalkCodes {
   Replace = 37,
   EndChild = 38,
 
-  Skip = 40,
-  SkipEnd = 46,
-
   BeginChild = 47,
   BeginChildEnd = 66,
 
@@ -65,13 +62,11 @@ const walkCodeToName = {
   [WalkCodes.Inside]: "inside",
   [WalkCodes.Replace]: "replace",
   [WalkCodes.EndChild]: "endChild",
-  [WalkCodes.Skip]: "skip",
   [WalkCodes.BeginChild]: "beginChild",
   [WalkCodes.Next]: "next",
   [WalkCodes.Over]: "over",
   [WalkCodes.Out]: "out",
   [WalkCodes.Multiplier]: "multiplier",
-  [WalkCodes.SkipEnd]: "skipEnd",
   [WalkCodes.BeginChildEnd]: "beginChildEnd",
   [WalkCodes.NextEnd]: "nextEnd",
   [WalkCodes.OverEnd]: "overEnd",
@@ -186,11 +181,6 @@ export function visit(
     walkString += String.fromCharCode(code);
   }
 
-  if (reserve?.size) {
-    walkComment.push(`${walkCodeToName[WalkCodes.Skip]}(${reserve.size})`);
-    walkString += nCodeString(WalkCodes.Skip, reserve.size);
-  }
-
   appendLiteral(walks, walkString);
 }
 
@@ -204,8 +194,6 @@ function nCodeString(code: WalkCodes, number: number) {
       return toCharString(number, code, WalkRangeSizes.Out);
     case WalkCodes.BeginChild:
       return toCharString(number, code, WalkRangeSizes.BeginChild);
-    case WalkCodes.Skip:
-      return toCharString(number, code, WalkRangeSizes.Skip);
     default:
       throw new Error(`Unexpected walk code: ${code}`);
   }

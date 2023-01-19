@@ -1,5 +1,5 @@
-import type { Scope } from "../common/types";
-import { ConditionalIndex, LoopIndex, emptyMarkerArray } from "./control-flow";
+import { AccessorChars, Scope } from "../common/types";
+import { emptyMarkerArray } from "./control-flow";
 
 export type DOMFragment = {
   ___insertBefore: (
@@ -65,7 +65,7 @@ export const dynamicFragment: DOMFragment = {
 
 function getFirstNode(
   currentScope: Scope,
-  indexOrNode: (Node & ChildNode) | number = currentScope.___startNode!,
+  nodeOrAccessor: (Node & ChildNode) | number = currentScope.___startNode!,
   last?: boolean
 ): Node & ChildNode {
   let scopeOrScopes: Scope | Scope[];
@@ -74,26 +74,23 @@ function getFirstNode(
     if (
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore: Unreachable code error
-      ConditionalIndex.SCOPE !== LoopIndex.SCOPE_ARRAY ||
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Unreachable code error
-      ConditionalIndex.REFERENCE_NODE !== LoopIndex.REFERENCE_NODE
+      AccessorChars.COND_SCOPE !== AccessorChars.LOOP_SCOPE_ARRAY
     ) {
       throw new Error("Offset mismatch between conditionals and loops");
     }
   }
 
-  return typeof indexOrNode === "number"
-    ? !(scopeOrScopes = currentScope[indexOrNode + ConditionalIndex.SCOPE] as
-        | Scope
-        | Scope[]) || scopeOrScopes === emptyMarkerArray
-      ? (currentScope[indexOrNode + ConditionalIndex.REFERENCE_NODE] as Comment)
+  return typeof nodeOrAccessor === "number"
+    ? !(scopeOrScopes = currentScope[
+        nodeOrAccessor + AccessorChars.COND_SCOPE
+      ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
+      ? (currentScope[nodeOrAccessor] as Comment)
       : (last ? getLastNode : getFirstNode)(
           Array.isArray(scopeOrScopes)
             ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
             : scopeOrScopes
         )
-    : indexOrNode;
+    : nodeOrAccessor;
 }
 
 function getLastNode(currentScope: Scope) {

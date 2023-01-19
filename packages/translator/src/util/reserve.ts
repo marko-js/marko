@@ -16,7 +16,6 @@ export interface Reserve {
   type: ReserveType;
   sectionId: number;
   name: string;
-  size: number;
   id: number;
   exportIdentifier?: t.Identifier;
 }
@@ -56,19 +55,13 @@ export function reserveScope(
     | t.MarkoPlaceholder
     | t.Identifier
     | t.MarkoTagBody,
-  name: string,
-  size = 0
+  name: string
 ): Reserve {
   const extra = (node.extra ??= {} as typeof node.extra);
 
   if (extra.reserve) {
     const reserve = extra.reserve as Reserve;
-    if (size && reserve.size) {
-      throw new Error("Unable to reserve multiple scopes for a node");
-    } else {
-      reserve.size = size;
-      reserve.name += "_" + name;
-    }
+    reserve.name += "_" + name;
     return reserve;
   }
 
@@ -76,7 +69,6 @@ export function reserveScope(
   const reserve = (extra.reserve = {
     id: 0,
     type,
-    size,
     name,
     sectionId,
   });
@@ -97,7 +89,7 @@ export function assignFinalIds() {
       if (reserves) {
         for (const reserve of reserves) {
           reserve.id = curIndex;
-          curIndex += reserve.size + 1;
+          curIndex += 1;
         }
       }
     }

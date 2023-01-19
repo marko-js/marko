@@ -7,6 +7,6 @@ const _setup = _scope => {
   _notifySignal(_scope, _dynamicTagName);
 };
 export const template = "<!>";
-export const walks = /* replace, skip(5), over(1) */"%-b";
+export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup);

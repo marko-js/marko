@@ -187,7 +187,7 @@ export function child<S extends Scope, V>(
 
 export function closure<S extends Scope, V>(
   ownerLevel: number | ((scope: Scope) => Scope),
-  providerAccessor: string | number | ((scope: Scope) => string | number),
+  providerAccessor: Accessor | ((scope: Scope) => Accessor),
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
@@ -230,7 +230,7 @@ export function closure<S extends Scope, V>(
 
 export function dynamicClosure<S extends Scope, V>(
   ownerLevel: number | ((scope: Scope) => Scope),
-  providerAccessor: string | number | ((scope: Scope) => string | number),
+  providerAccessor: Accessor | ((scope: Scope) => Accessor),
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
@@ -265,7 +265,7 @@ export function dynamicClosure<S extends Scope, V>(
   return signal;
 }
 
-export function dynamicSubscribers(valueAccessor: string | number) {
+export function dynamicSubscribers(valueAccessor: Accessor) {
   const subscriptionsAccessor = valueAccessor + AccessorChars.SUBSCRIBERS;
   return wrapSignal((methodName) => (scope, extraArg) => {
     const subscribers = scope[subscriptionsAccessor];
@@ -278,7 +278,7 @@ export function dynamicSubscribers(valueAccessor: string | number) {
 }
 
 export function contextClosure<S extends Scope, V>(
-  valueAccessor: number | string,
+  valueAccessor: Accessor,
   contextKey: string,
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
@@ -313,10 +313,10 @@ export function wrapSignal(
 
 export function setTagVar(
   scope: Scope,
-  childIndex: string | number,
+  childAccessor: Accessor,
   tagVarSignal: Signal
 ) {
-  scope[childIndex][AccessorChars.TAG_VARIABLE] = bindSignal(
+  scope[childAccessor][AccessorChars.TAG_VARIABLE] = bindSignal(
     scope,
     tagVarSignal
   );
@@ -356,7 +356,7 @@ export function inChild(
 
 export function inChildMany(
   subscribers: Signal[],
-  childScopeAccessor: number
+  childScopeAccessor: Accessor
 ): Signal {
   return wrapSignalWithSubscription((methodName) => (scope, extraArg) => {
     const childScope = scope[childScopeAccessor] as Scope;
@@ -367,8 +367,8 @@ export function inChildMany(
 }
 
 export function inRenderBody(
-  renderBodyIndex: number,
-  childScopeAccessor: number
+  renderBodyIndex: Accessor,
+  childScopeAccessor: Accessor
 ): Signal {
   return wrapSignal((methodName) => (scope, extraArg) => {
     const childScope = scope[childScopeAccessor] as Scope;

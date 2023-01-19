@@ -10,7 +10,7 @@ const _renderer = (input, _tagVar) => {
   }
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
   _writeHydrateScope(_scope, {
-    7: show
+    2: show
   });
 };
 export default _renderer;

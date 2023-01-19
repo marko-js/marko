@@ -7,15 +7,15 @@ const _renderer = (input, _tagVar) => {
     const _scope = _nextScopeId();
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x");
     _writeHydrateScope(_scope, {
-      8: x
+      3: x
     });
   }
-  _write(`<div id=ref></div><button id=increment>Increment</button>${_markHydrateNode(_scope, 6)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 7)}`);
+  _write(`<div id=ref></div><button id=increment>Increment</button>${_markHydrateNode(_scope, 1)}<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 2)}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_show");
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x");
   _writeHydrateScope(_scope, {
-    8: x,
-    9: show
+    3: x,
+    4: show
   });
 };
 export default _renderer;

@@ -4,12 +4,12 @@ const _setup$putBody = _scope => {
   _child(_scope[0]);
 };
 const _putBody = /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild(0), _child_walks, endChild */`/${_child_walks}&`, _setup$putBody, [_inChildMany(_child_closures, 0)]);
-const _put = /* @__PURE__ */_derivation(1, 1, [_dynamicSubscribers(1)], _scope => 123);
+const _put = /* @__PURE__ */_derivation("0:", 1, [_dynamicSubscribers("0:")], _scope => 123);
 const _setup = _scope => {
-  _initContextProvider(_scope, 0, 1, "packages/translator/src/__tests__/fixtures/context-tag-static/template.marko", _putBody);
+  _initContextProvider(_scope, 0, "0:", "packages/translator/src/__tests__/fixtures/context-tag-static/template.marko", _putBody);
   _notifySignal(_scope, _put);
 };
 export const template = "<!>";
-export const walks = /* replace, skip(1), over(1) */"%)b";
+export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup);
