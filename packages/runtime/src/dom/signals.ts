@@ -1,4 +1,4 @@
-import { Scope, AccessorChars } from "../common/types";
+import { Scope, AccessorChars, Accessor } from "../common/types";
 import { bindSignal, getOwnerScope, write } from "./scope";
 import type { Renderer } from "./renderer";
 
@@ -11,8 +11,6 @@ export type Signal = {
 };
 
 let accessorId = 0;
-
-type Accessor = string | number;
 
 function markSubscribers(scope: Scope, subscribers: Signal[]) {
   for (const subscriber of subscribers) {
@@ -57,7 +55,7 @@ export function source<S extends Scope, V>(
   action?: (scope: S, value: V) => void
 ): Signal {
   const markAccessor = valueAccessor + AccessorChars.MARK;
-  return {
+  const signal: Signal = {
     ___mark(scope) {
       scope[markAccessor] = 1;
       markSubscribers(scope, subscribers);
@@ -73,13 +71,24 @@ export function source<S extends Scope, V>(
       scope[markAccessor] = 0;
     },
   };
+
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "source", {
+      valueAccessor,
+      markAccessor,
+      subscribers,
+      action,
+    });
+  }
+
+  return signal;
 }
 
 export function destructureSources<S extends Scope, V>(
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
-  return {
+  const signal: Signal = {
     ___mark(scope) {
       markSubscribers(scope, subscribers);
     },
@@ -90,6 +99,12 @@ export function destructureSources<S extends Scope, V>(
     },
     ___apply: action as (scope: Scope, data: unknown) => void,
   };
+
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "destructureSources", { subscribers, action });
+  }
+
+  return signal;
 }
 
 // export function derivedSource?() {
@@ -106,7 +121,7 @@ function baseSubscriber<S extends Scope>(
 ): Signal {
   const markAccessor: Accessor = accessorId + AccessorChars.MARK;
   const staleAccessor: Accessor = accessorId + AccessorChars.STALE;
-  return {
+  const signal: Signal = {
     ___mark(scope) {
       const mark = (scope[markAccessor] = (scope[markAccessor] || 0) + 1);
       if (mark === 1) {
@@ -140,6 +155,19 @@ function baseSubscriber<S extends Scope>(
       }
     },
   };
+
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "baseSubscriber", {
+      accessorId,
+      markAccessor,
+      staleAccessor,
+      subscribers,
+      defaultMark,
+      apply,
+    });
+  }
+
+  return signal;
 }
 
 export function subscriber<S extends Scope>(
@@ -147,12 +175,18 @@ export function subscriber<S extends Scope>(
   defaultMark: number,
   apply: (scope: S) => void
 ): Signal {
-  return baseSubscriber(
+  const signal: Signal = baseSubscriber(
     AccessorChars.DYNAMIC + accessorId++,
     subscribers,
     defaultMark,
     apply
   );
+
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "subscriber", { subscribers, defaultMark, apply });
+  }
+
+  return signal;
 }
 
 export function derivation<S extends Scope, V>(
@@ -162,9 +196,24 @@ export function derivation<S extends Scope, V>(
   compute: (scope: S) => V,
   action?: (scope: S, value: V) => void
 ): Signal {
-  return baseSubscriber(valueAccessor, subscribers, defaultMark, (scope: S) => {
-    applyValue(scope, compute(scope), valueAccessor, subscribers, action);
-  });
+  const signal = baseSubscriber(
+    valueAccessor,
+    subscribers,
+    defaultMark,
+    (scope: S) => {
+      applyValue(scope, compute(scope), valueAccessor, subscribers, action);
+    }
+  );
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "derivation", {
+      valueAccessor,
+      defaultMark,
+      subscribers,
+      compute,
+      action,
+    });
+  }
+  return signal;
 }
 
 export function child<S extends Scope, V>(
@@ -182,7 +231,18 @@ export function child<S extends Scope, V>(
     compute,
     action
   );
-  return inChild(childDerivation, childAccessor);
+  const signal: Signal = inChild(childDerivation, childAccessor);
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "child", {
+      childAccessor,
+      valueAccessor,
+      defaultMark,
+      subscribers,
+      compute,
+      action,
+    });
+  }
+  return signal;
 }
 
 export function closure<S extends Scope, V>(
@@ -220,12 +280,22 @@ export function closure<S extends Scope, V>(
     action?.(scope as S, ownerScope[providerValueAccessor]);
     notifySubscribers(scope, true, subscribers);
   };
-  return baseSubscriber(
+  const signal: Signal = baseSubscriber(
     AccessorChars.DYNAMIC + accessorId++,
     subscribers,
     getDefaultMark,
     apply
   );
+
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "closure", {
+      ownerLevel,
+      providerAccessor,
+      subscribers,
+      action,
+    });
+  }
+  return signal;
 }
 
 export function dynamicClosure<S extends Scope, V>(
@@ -262,12 +332,21 @@ export function dynamicClosure<S extends Scope, V>(
     },
   };
 
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "derivation", {
+      ownerLevel,
+      providerAccessor,
+      subscribers,
+      action,
+    });
+  }
+
   return signal;
 }
 
 export function dynamicSubscribers(valueAccessor: Accessor) {
   const subscriptionsAccessor = valueAccessor + AccessorChars.SUBSCRIBERS;
-  return wrapSignal((methodName) => (scope, extraArg) => {
+  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
     const subscribers = scope[subscriptionsAccessor];
     if (subscribers) {
       for (const subscriber of subscribers) {
@@ -275,6 +354,13 @@ export function dynamicSubscribers(valueAccessor: Accessor) {
       }
     }
   });
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "dynamicSubscribers", {
+      valueAccessor,
+      subscriptionsAccessor,
+    });
+  }
+  return signal;
 }
 
 export function contextClosure<S extends Scope, V>(
@@ -283,7 +369,7 @@ export function contextClosure<S extends Scope, V>(
   subscribers: Signal[],
   action?: (scope: S, value: V) => void
 ): Signal {
-  return dynamicClosure(
+  const signal: Signal = dynamicClosure(
     (scope) => scope.___context![contextKey][0],
     (scope) => scope.___context![contextKey][1],
     subscribers,
@@ -292,6 +378,15 @@ export function contextClosure<S extends Scope, V>(
       action?.(scope as S, value);
     }
   );
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "contextClosure", {
+      valueAccessor,
+      contextKey,
+      subscribers,
+      action,
+    });
+  }
+  return signal;
 }
 
 // function getOwnerScope(scope: Scope, level: number) {
@@ -304,11 +399,15 @@ export function wrapSignal(
     methodName: "___mark" | "___notify" | "___apply"
   ) => (scope: Scope, arg?: any) => void
 ) {
-  return {
+  const signal: Signal = {
     ___mark: wrapper("___mark"),
     ___notify: wrapper("___notify"),
     ___apply: wrapper("___apply"),
   };
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "wrapSignal", { wrapper });
+  }
+  return signal;
 }
 
 export function setTagVar(
@@ -327,6 +426,10 @@ export const tagVarSignal = wrapSignal(
     scope[AccessorChars.TAG_VARIABLE]?.[methodName](null, extraArg)
 );
 
+if (MARKO_DEBUG) {
+  setDebugInfo(tagVarSignal, "tagVar", {});
+}
+
 export function wrapSignalWithSubscription(
   wrapper: (
     methodName:
@@ -337,40 +440,54 @@ export function wrapSignalWithSubscription(
       | "___unsubscribe"
   ) => (scope: Scope, arg?: any) => void
 ) {
-  return {
+  const signal: Signal = {
     ...wrapSignal(wrapper),
     ___subscribe: wrapper("___subscribe"),
     ___unsubscribe: wrapper("___unsubscribe"),
   };
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "wrapSignalWithSubscription", { wrapper });
+  }
+  return signal;
 }
 
 export function inChild(
   subscriber: Signal,
   childScopeAccessor: Accessor
 ): Signal {
-  return wrapSignal(
+  const signal: Signal = wrapSignal(
     (methodName) => (scope, extraArg) =>
       subscriber[methodName](scope[childScopeAccessor], extraArg)
   );
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "inChild", { subscriber, childScopeAccessor });
+  }
+  return signal;
 }
 
 export function inChildMany(
   subscribers: Signal[],
   childScopeAccessor: Accessor
 ): Signal {
-  return wrapSignalWithSubscription((methodName) => (scope, extraArg) => {
-    const childScope = scope[childScopeAccessor] as Scope;
-    for (const signal of subscribers) {
-      signal[methodName]?.(childScope, extraArg);
+  const signal: Signal = wrapSignalWithSubscription(
+    (methodName) => (scope, extraArg) => {
+      const childScope = scope[childScopeAccessor] as Scope;
+      for (const signal of subscribers) {
+        signal[methodName]?.(childScope, extraArg);
+      }
     }
-  });
+  );
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "inChildMany", { subscribers, childScopeAccessor });
+  }
+  return signal;
 }
 
 export function inRenderBody(
   renderBodyIndex: Accessor,
   childScopeAccessor: Accessor
 ): Signal {
-  return wrapSignal((methodName) => (scope, extraArg) => {
+  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
     const childScope = scope[childScopeAccessor] as Scope;
     const signals =
       (scope[renderBodyIndex] as Renderer)?.___closureSignals ?? [];
@@ -378,9 +495,32 @@ export function inRenderBody(
       signal[methodName](childScope, extraArg);
     }
   });
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "inRenderBody", {
+      renderBodyIndex,
+      childScopeAccessor,
+    });
+  }
+  return signal;
 }
 
 let tagId = 0;
 export function nextTagId() {
   return "c" + tagId++;
+}
+
+function setDebugInfo(
+  signal: Signal,
+  type: string,
+  data: Record<string, unknown>
+) {
+  const signalCopy = { ...signal };
+  for (const key in signal) {
+    delete (signal as any)[key];
+  }
+  Object.setPrototypeOf(
+    signal,
+    new Function(`return new (class ${type} {})()`)()
+  );
+  Object.assign(signal, data, signalCopy, data);
 }

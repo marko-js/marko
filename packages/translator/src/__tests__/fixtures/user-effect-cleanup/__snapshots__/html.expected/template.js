@@ -5,10 +5,10 @@ const _renderer = ({
   const _scope = _nextScopeId();
   const a = 0;
   const b = 0;
-  _write(`<div>${_escapeXML("" + a + b)}${_markHydrateNode(_scope, 0)}</div>`);
+  _write(`<div>${_escapeXML("" + a + b)}${_markHydrateNode(_scope, "#text/0")}</div>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_value");
   _writeHydrateScope(_scope, {
-    1: value
+    "value": value
   });
 };
 export default _renderer;

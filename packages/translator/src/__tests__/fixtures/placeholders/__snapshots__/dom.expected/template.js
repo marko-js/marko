@@ -1,12 +1,12 @@
 import { data as _data, html as _html, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _x = /* @__PURE__ */_source(5, [], (_scope, x) => {
-  _data(_scope[0], x);
-  _data(_scope[1], x);
-  _data(_scope[2], x);
-  _html(_scope, x, 3);
+const _x = /* @__PURE__ */_source("x", [], (_scope, x) => {
+  _data(_scope["#text/0"], x);
+  _data(_scope["#text/1"], x);
+  _data(_scope["#text/2"], x);
+  _html(_scope, x, "#text/3");
 });
 const _setup = _scope => {
-  _html(_scope, "Hello HTML <a/>", 4);
+  _html(_scope, "Hello HTML <a/>", "#text/4");
 };
 export const attrs = /* @__PURE__ */_destructureSources([_x], (_scope, {
   x

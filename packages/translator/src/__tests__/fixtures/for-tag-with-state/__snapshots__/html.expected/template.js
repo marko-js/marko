@@ -6,7 +6,7 @@ const _renderer = (input, _tagVar) => {
   for (const val of arrA) {
     let i = _i++;
     const _scope = _nextScopeId();
-    _write(`<div>${_escapeXML(i)}${_markHydrateNode(_scope, 0)}: <!>${_escapeXML(val)}${_markHydrateNode(_scope, 1)}</div>`);
+    _write(`<div>${_escapeXML(i)}${_markHydrateNode(_scope, "#text/0")}: <!>${_escapeXML(val)}${_markHydrateNode(_scope, "#text/1")}</div>`);
     _maybeFlush();
   }
   const arrB = [1, 2, 3];
@@ -14,7 +14,7 @@ const _renderer = (input, _tagVar) => {
   for (const val of arrB) {
     let i = _i2++;
     const _scope = _nextScopeId();
-    _write(`<div>${_escapeXML(i)}${_markHydrateNode(_scope, 0)}: <!>${_escapeXML(val)}${_markHydrateNode(_scope, 1)}</div>`);
+    _write(`<div>${_escapeXML(i)}${_markHydrateNode(_scope, "#text/0")}: <!>${_escapeXML(val)}${_markHydrateNode(_scope, "#text/1")}</div>`);
     _maybeFlush();
   }
 };

@@ -1,5 +1,5 @@
 import { data as _data, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _input = /* @__PURE__ */_source(1, [], (_scope, input) => _data(_scope[0], input.name));
+const _input = /* @__PURE__ */_source("input", [], (_scope, input) => _data(_scope["#text/0"], input.name));
 export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
   _setSource(_scope, _input, input);
 });

@@ -26,7 +26,6 @@ export enum WalkCodes {
   EndChild = 38,
 
   BeginChild = 47,
-  BeginChildEnd = 66,
 
   Next = 67,
   NextEnd = 91,
@@ -42,8 +41,6 @@ export enum WalkCodes {
 }
 
 export enum WalkRangeSizes {
-  Skip = 7, // 40 through 46
-  BeginChild = 20, // 47 through 66
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
@@ -67,7 +64,6 @@ const walkCodeToName = {
   [WalkCodes.Over]: "over",
   [WalkCodes.Out]: "out",
   [WalkCodes.Multiplier]: "multiplier",
-  [WalkCodes.BeginChildEnd]: "beginChildEnd",
   [WalkCodes.NextEnd]: "nextEnd",
   [WalkCodes.OverEnd]: "overEnd",
   [WalkCodes.OutEnd]: "outEnd",
@@ -93,19 +89,15 @@ export function enterShallow(path: t.NodePath<any>) {
   getSteps(getSectionId(path)).push(Step.enter, Step.exit);
 }
 
-export function injectWalks(
-  path: t.NodePath<any>,
-  childIndex: number,
-  expr: t.Expression
-) {
+export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
   const walks = getWalks(getSectionId(path));
   const walkComment = getWalkComment(getSectionId(path));
   walkComment.push(
-    `${walkCodeToName[WalkCodes.BeginChild]}(${childIndex})`,
+    `${walkCodeToName[WalkCodes.BeginChild]}`,
     (expr as t.Identifier).name,
     walkCodeToName[WalkCodes.EndChild]
   );
-  appendLiteral(walks, nCodeString(WalkCodes.BeginChild, childIndex));
+  appendLiteral(walks, String.fromCharCode(WalkCodes.BeginChild));
   walks.push(expr, String.fromCharCode(WalkCodes.EndChild));
 }
 
@@ -192,8 +184,6 @@ function nCodeString(code: WalkCodes, number: number) {
       return toCharString(number, code, WalkRangeSizes.Over);
     case WalkCodes.Out:
       return toCharString(number, code, WalkRangeSizes.Out);
-    case WalkCodes.BeginChild:
-      return toCharString(number, code, WalkRangeSizes.BeginChild);
     default:
       throw new Error(`Unexpected walk code: ${code}`);
   }

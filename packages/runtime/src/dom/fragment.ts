@@ -1,4 +1,4 @@
-import { AccessorChars, Scope } from "../common/types";
+import { Accessor, AccessorChars, Scope } from "../common/types";
 import { emptyMarkerArray } from "./control-flow";
 
 export type DOMFragment = {
@@ -65,7 +65,7 @@ export const dynamicFragment: DOMFragment = {
 
 function getFirstNode(
   currentScope: Scope,
-  nodeOrAccessor: (Node & ChildNode) | number = currentScope.___startNode!,
+  nodeOrAccessor: (Node & ChildNode) | Accessor = currentScope.___startNode!,
   last?: boolean
 ): Node & ChildNode {
   let scopeOrScopes: Scope | Scope[];
@@ -80,17 +80,17 @@ function getFirstNode(
     }
   }
 
-  return typeof nodeOrAccessor === "number"
-    ? !(scopeOrScopes = currentScope[
+  return typeof nodeOrAccessor === "object"
+    ? nodeOrAccessor
+    : !(scopeOrScopes = currentScope[
         nodeOrAccessor + AccessorChars.COND_SCOPE
       ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
-      ? (currentScope[nodeOrAccessor] as Comment)
-      : (last ? getLastNode : getFirstNode)(
-          Array.isArray(scopeOrScopes)
-            ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
-            : scopeOrScopes
-        )
-    : nodeOrAccessor;
+    ? (currentScope[nodeOrAccessor] as Comment)
+    : (last ? getLastNode : getFirstNode)(
+        Array.isArray(scopeOrScopes)
+          ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
+          : scopeOrScopes
+      );
 }
 
 function getLastNode(currentScope: Scope) {

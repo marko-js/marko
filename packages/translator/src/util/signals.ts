@@ -6,7 +6,7 @@ import {
   forEachSectionIdReverse,
   getOrCreateSectionId,
 } from "./sections";
-import { Reserve, insertReserve } from "./reserve";
+import { Reserve, insertReserve, getNodeLiteral } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";
@@ -132,7 +132,7 @@ export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
         } else if (!provider.hasDynamicSubscribers) {
           provider.hasDynamicSubscribers = true;
           provider.subscribers.push(
-            callRuntime("dynamicSubscribers", t.numericLiteral(reserve.id))
+            callRuntime("dynamicSubscribers", getNodeLiteral(reserve))
           );
         }
 
@@ -141,7 +141,7 @@ export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
           builder ? "closure" : "dynamicClosure",
           // TODO: read from an owner multiple levels up
           t.numericLiteral(1),
-          t.numericLiteral(reserve.id),
+          getNodeLiteral(reserve),
           t.arrayExpression(signal.subscribers),
           t.arrowFunctionExpression(
             [scopeIdentifier, t.identifier(reserve.name)],
@@ -164,7 +164,7 @@ export function initSource(reserve: Reserve) {
   signal.build = () => {
     return callRuntime(
       "source",
-      t.numericLiteral(reserve.id),
+      getNodeLiteral(reserve),
       t.arrayExpression(signal.subscribers),
       t.arrowFunctionExpression(
         [scopeIdentifier, t.identifier(reserve.name)],
@@ -185,7 +185,7 @@ export function initDerivation(
   signal.build = () => {
     return callRuntime(
       "derivation",
-      t.numericLiteral(reserve.id),
+      getNodeLiteral(reserve),
       t.numericLiteral(Array.isArray(providers) ? providers.length : 1),
       t.arrayExpression(signal.subscribers),
       getComputeFn(sectionId, compute, providers),
@@ -207,7 +207,7 @@ export function initContextProvider(
   renderer: t.Identifier
 ) {
   const sectionId = reserve.sectionId;
-  const scopeAccessor = t.numericLiteral(reserve.id);
+  const scopeAccessor = getNodeLiteral(reserve);
   const valueAccessor = t.stringLiteral(
     `${reserve.id}${AccessorChars.CONTEXT_VALUE}`
   );
@@ -255,7 +255,7 @@ export function initContextConsumer(templateId: string, reserve: Reserve) {
   signal.build = () => {
     return callRuntime(
       "contextClosure",
-      t.numericLiteral(reserve.id),
+      getNodeLiteral(reserve),
       t.stringLiteral(templateId),
       t.arrayExpression(signal.subscribers),
       t.arrowFunctionExpression(
@@ -648,7 +648,7 @@ function getMappedId(reserve: Reserve) {
 //         newPaths = currentProgramPath.pushContainer(
 //           "body",
 //           t.variableDeclaration("const", [
-//             t.variableDeclarator(identifier, callRuntime("source", t.numericLiteral(references.id), t.arrayExpression(), renderFn))
+//             t.variableDeclarator(identifier, callRuntime("source", getNodeLiteral(references), t.arrayExpression(), renderFn))
 //           ])
 //         );
 //       }
@@ -764,9 +764,7 @@ export function writeHTMLHydrateStatements(
   }
 
   const serializedProperties = refs.reduce((acc, ref) => {
-    acc.push(
-      t.objectProperty(t.numericLiteral(ref.id), t.identifier(ref.name))
-    );
+    acc.push(t.objectProperty(getNodeLiteral(ref), t.identifier(ref.name)));
     return acc;
   }, [] as Array<t.ObjectProperty>);
 

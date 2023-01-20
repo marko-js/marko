@@ -18,8 +18,8 @@ export type Scope<
   }
 > = [...unknown[]] & {
   ___attrs: unknown;
-  ___startNode: (Node & ChildNode) | number | undefined;
-  ___endNode: (Node & ChildNode) | number | undefined;
+  ___startNode: (Node & ChildNode) | Accessor | undefined;
+  ___endNode: (Node & ChildNode) | Accessor | undefined;
   ___cleanup: Set<number | string | Scope> | undefined;
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;
@@ -59,3 +59,5 @@ export const enum AccessorChars {
   LOOP_VALUE = ")",
   CONTEXT_VALUE = ":",
 }
+
+export type Accessor = string | number;

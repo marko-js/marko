@@ -9,8 +9,8 @@ const _setup$ifBody = _scope => {
   _notifySignal(_scope, _tagVarSignal);
 };
 const _ifBody = /* @__PURE__ */_createRenderer("", "", _setup$ifBody);
-const _if = /* @__PURE__ */_conditional(0, 1, (_scope, show = _scope[1]) => show ? _ifBody : _elseBody);
-const _show = /* @__PURE__ */_source(1, [_if]);
+const _if = /* @__PURE__ */_conditional("#text/0", 1, (_scope, show = _scope["show"]) => show ? _ifBody : _elseBody);
+const _show = /* @__PURE__ */_source("show", [_if]);
 export const attrs = /* @__PURE__ */_destructureSources([_show], (_scope, {
   show
 }) => {

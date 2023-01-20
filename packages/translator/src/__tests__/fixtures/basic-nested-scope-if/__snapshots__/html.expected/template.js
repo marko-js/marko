@@ -5,14 +5,14 @@ const _renderer = (input, _tagVar) => {
   _write("<div>");
   if (clickCount < 3) {
     const _scope = _nextScopeId();
-    _write(`<button>${_escapeXML(clickCount)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
+    _write(`<button>${_escapeXML(clickCount)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}`);
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
     _writeHydrateScope(_scope, {
-      1: clickCount
+      "clickCount": clickCount
     });
   } else {
     const _scope = _nextScopeId();
-    _write(`<span>The button was clicked <!>${_escapeXML(clickCount)}${_markHydrateNode(_scope, 0)} times.</span>`);
+    _write(`<span>The button was clicked <!>${_escapeXML(clickCount)}${_markHydrateNode(_scope, "#text/0")} times.</span>`);
   }
   _write("</div>");
 };

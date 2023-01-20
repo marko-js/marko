@@ -9,7 +9,7 @@ import attrsToObject from "../util/attrs-to-object";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferenceGroups, ReferenceGroup } from "../util/references";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import { reserveScope, ReserveType } from "../util/reserve";
+import { getNodeLiteral, reserveScope, ReserveType } from "../util/reserve";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -63,7 +63,6 @@ export default {
 
       if (isOutputDOM()) {
         const attrsObject = attrsToObject(tag);
-        const instanceIndex = tag.node.extra!.reserve!.id;
         addStatement(
           "hydrate",
           sectionId,
@@ -72,7 +71,7 @@ export default {
             callRuntime(
               "lifecycle",
               scopeIdentifier,
-              t.numericLiteral(instanceIndex),
+              getNodeLiteral(tag.node.extra!.reserve!),
               attrsObject
             )
           ),

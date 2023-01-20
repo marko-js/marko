@@ -1,5 +1,5 @@
 # Write
-  <div><span>123<!M#1 0></span><button id=toggle>Toggle</button><!M#0 1></div><script>(M$h=[]).push((b,s)=>({0:{2:!0}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])</script>
+  <div><span>123<!M#1 #text/0></span><button id=toggle>Toggle</button><!M#0 #button/1></div><script>(M$h=[]).push((b,s)=>({0:{show:!0}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])</script>
 
 
 # Render "End"
@@ -10,17 +10,17 @@
     <div>
       <span>
         123
-        <!--M#1 0-->
+        <!--M#1 #text/0-->
       </span>
       <button
         id="toggle"
       >
         Toggle
       </button>
-      <!--M#0 1-->
+      <!--M#0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{2:!0}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])
+      (M$h=[]).push((b,s)=&gt;({0:{show:!0}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])
     </script>
   </body>
 </html>

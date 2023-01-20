@@ -5,7 +5,7 @@ const _renderer = (input, _tagVar) => {
   const {
     x
   } = _getInContext("$");
-  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, 0)}</span></div>`);
+  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, "#text/0")}</span></div>`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

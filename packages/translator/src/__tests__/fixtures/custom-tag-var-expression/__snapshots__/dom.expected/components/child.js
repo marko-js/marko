@@ -1,5 +1,5 @@
 import { setSource as _setSource, tagVarSignal as _tagVarSignal, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _x = /* @__PURE__ */_source(0, [_tagVarSignal], (_scope, x) => _setSource(_scope, _tagVarSignal, x + 3));
+const _x = /* @__PURE__ */_source("x", [_tagVarSignal], (_scope, x) => _setSource(_scope, _tagVarSignal, x + 3));
 const _setup = _scope => {
   _setSource(_scope, _x, 1);
 };

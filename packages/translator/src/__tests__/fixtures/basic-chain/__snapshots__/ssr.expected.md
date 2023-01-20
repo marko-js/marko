@@ -1,5 +1,5 @@
 # Write
-  <div>6<!M#0 0></div>
+  <div>6<!M#0 #text/0></div>
 
 
 # Render "End"
@@ -9,7 +9,7 @@
   <body>
     <div>
       6
-      <!--M#0 0-->
+      <!--M#0 #text/0-->
     </div>
   </body>
 </html>

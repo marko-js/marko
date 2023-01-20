@@ -5,7 +5,7 @@ const _renderer = (input, _tagVar) => {
   const b = 0;
   if (true) {
     const _scope = _nextScopeId();
-    _write(`${_escapeXML(a + b)}${_markHydrateNode(_scope, 0)}`);
+    _write(`${_escapeXML(a + b)}${_markHydrateNode(_scope, "#text/0")}`);
   }
 };
 export default _renderer;

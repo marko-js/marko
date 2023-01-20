@@ -30,7 +30,7 @@ import {
   setForceHydrateScope,
   writeHTMLHydrateStatements,
 } from "../../util/signals";
-import { reserveScope, ReserveType } from "../../util/reserve";
+import { getNodeLiteral, reserveScope, ReserveType } from "../../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
 declare module "@marko/compiler/dist/types" {
@@ -51,10 +51,10 @@ export default {
 
       if (getTagDef(tag)?.template) {
         reserveScope(
-          ReserveType.Store,
+          ReserveType.Visit,
           getOrCreateSectionId(tag),
           tag.node,
-          "child"
+          "#childScope"
         );
       }
 
@@ -211,7 +211,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   write`${importNamed(file, relativePath, "template", `${tagName}_template`)}`;
   walks.injectWalks(
     tag,
-    binding.id,
     importNamed(file, relativePath, "walks", `${tagName}_walks`)
   );
 
@@ -220,7 +219,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       callRuntime(
         "inChildMany",
         importNamed(file, relativePath, "closures", `${tagName}_closures`),
-        t.numericLiteral(binding.id)
+        getNodeLiteral(binding)
       )
     );
   }
@@ -255,7 +254,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "setTagVar",
           scopeIdentifier,
-          t.numericLiteral(binding.id),
+          getNodeLiteral(binding),
           source.identifier
         )
       )
@@ -273,7 +272,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     let attrsSubscriber: t.CallExpression | t.Identifier = callRuntime(
       "inChild",
       tagAttrsIdentifier,
-      t.numericLiteral(binding.id)
+      getNodeLiteral(binding)
     );
 
     if (!tag.node.extra.attrsReferences.references) {

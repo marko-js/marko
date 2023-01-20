@@ -9,7 +9,7 @@ const _renderer = (input, _tagVar) => {
   _write(`<div${_classAttr(["a", {
     b: c,
     d
-  }])}></div>${_markHydrateNode(_scope, 0)}<div class="a b"></div><div class="a b c"></div>`);
+  }])}></div>${_markHydrateNode(_scope, "#div/0")}<div class="a b"></div><div class="a b c"></div>`);
   _customTag({
     class: ["a", {
       b: c,

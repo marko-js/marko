@@ -1,6 +1,6 @@
 import { nextTagId as _nextTagId, data as _data, derivation as _derivation, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _y = /* @__PURE__ */_derivation(3, 1, [], _scope => _nextTagId(), (_scope, y) => _data(_scope[1], y));
-const _x = /* @__PURE__ */_derivation(2, 1, [], _scope => _nextTagId(), (_scope, x) => _data(_scope[0], x));
+const _y = /* @__PURE__ */_derivation("y", 1, [], _scope => _nextTagId(), (_scope, y) => _data(_scope["#text/1"], y));
+const _x = /* @__PURE__ */_derivation("x", 1, [], _scope => _nextTagId(), (_scope, x) => _data(_scope["#text/0"], x));
 const _setup = _scope => {
   _notifySignal(_scope, _x);
   _notifySignal(_scope, _y);

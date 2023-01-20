@@ -8,13 +8,13 @@ const _renderer = (input, _tagVar) => {
     const _scope = _nextScopeId();
     _write("<span>");
     const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko");
-    _write(`${_escapeXML(x)}${_markHydrateNode(_scope, 0)}</span>`);
+    _write(`${_escapeXML(x)}${_markHydrateNode(_scope, "#text/0")}</span>`);
   }
   _popContext();
-  _write(`<button id=toggle>Toggle</button>${_markHydrateNode(_scope, 1)}</div>`);
+  _write(`<button id=toggle>Toggle</button>${_markHydrateNode(_scope, "#button/1")}</div>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show");
   _writeHydrateScope(_scope, {
-    2: show
+    "show": show
   });
 };
 export default _renderer;

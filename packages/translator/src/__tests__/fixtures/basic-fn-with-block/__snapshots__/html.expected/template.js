@@ -2,10 +2,10 @@ import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, write as 
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const count = 0;
-  _write(`<button>${_escapeXML(count)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
+  _write(`<button>${_escapeXML(count)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count");
   _writeHydrateScope(_scope, {
-    2: count
+    "count": count
   });
 };
 export default _renderer;

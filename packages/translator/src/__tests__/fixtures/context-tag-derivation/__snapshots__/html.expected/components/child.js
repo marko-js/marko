@@ -4,7 +4,7 @@ const _renderer = (input, _tagVar) => {
   _write("<div>");
   const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-derivation/template.marko");
   const y = x;
-  _write(`${_escapeXML(y)}${_markHydrateNode(_scope, 0)}</div>`);
+  _write(`${_escapeXML(y)}${_markHydrateNode(_scope, "#text/0")}</div>`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

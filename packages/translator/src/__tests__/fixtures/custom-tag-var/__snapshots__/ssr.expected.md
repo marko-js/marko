@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!M#1 1></button><!M#1 0><div>1<!M#0 0></div><script>(M$h=[]).push((b,s,h)=>({0:h={},1:{2:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])</script>
+  <button class=inc>1<!M#1 #text/1></button><!M#1 #button/0><div>1<!M#0 #text/1></div><script>(M$h=[]).push((b,s,h)=>({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])</script>
 
 
 # Render "End"
@@ -11,15 +11,15 @@
       class="inc"
     >
       1
-      <!--M#1 1-->
+      <!--M#1 #text/1-->
     </button>
-    <!--M#1 0-->
+    <!--M#1 #button/0-->
     <div>
       1
-      <!--M#0 0-->
+      <!--M#0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{2:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])
     </script>
   </body>
 </html>

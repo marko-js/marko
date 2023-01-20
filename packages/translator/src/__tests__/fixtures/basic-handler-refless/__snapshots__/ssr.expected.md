@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M#0 1></button><!M#0 0><script>(M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])</script>
+  <button>0<!M#0 #text/1></button><!M#0 #button/0><script>(M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])</script>
 
 
 # Render "End"
@@ -9,9 +9,9 @@
   <body>
     <button>
       0
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
       (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])
     </script>

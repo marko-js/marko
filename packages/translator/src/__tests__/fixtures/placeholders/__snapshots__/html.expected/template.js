@@ -3,7 +3,7 @@ const _renderer = ({
   x
 }, _tagVar) => {
   const _scope = _nextScopeId();
-  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, 0)}<span>${_escapeXML(x)}${_markHydrateNode(_scope, 1)}<div></div></span><div><div>a</div>${_escapeXML(x)}${_markHydrateNode(_scope, 2)}Hello Text &lt;a/>${_toString(x)}${_markHydrateNode(_scope, 3)}Hello HTML <a/><script>
+  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, "#text/0")}<span>${_escapeXML(x)}${_markHydrateNode(_scope, "#text/1")}<div></div></span><div><div>a</div>${_escapeXML(x)}${_markHydrateNode(_scope, "#text/2")}Hello Text &lt;a/>${_toString(x)}${_markHydrateNode(_scope, "#text/3")}Hello HTML <a/><script>
     <!>Hello &lt;b> &lt;/script>
   </script></div>`);
 };

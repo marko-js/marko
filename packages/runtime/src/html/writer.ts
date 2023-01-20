@@ -1,6 +1,6 @@
 import type { Writable } from "stream";
 import { Context, setContext, pushContext } from "../common/context";
-import { Renderer, HydrateSymbols } from "../common/types";
+import { Renderer, HydrateSymbols, Accessor } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
@@ -311,7 +311,7 @@ export function writeHydrateScope(scopeId: number, scope: PartialScope) {
   $_streamData!.scopeLookup.set(scopeId, scope);
 }
 
-export function markHydrateNode(scopeId: number, index: number) {
+export function markHydrateNode(scopeId: number, index: Accessor) {
   // TODO: can we only include the scope id when it differs from the prvious node marker?
   return `<!${runtimeId}${HydrateSymbols.NODE}${scopeId} ${index}>`;
 }
@@ -322,13 +322,13 @@ export function markHydrateScopeStart(scopeId: number, key?: string) {
   }>`;
 }
 
-export function markHydrateControlEnd(scopeId: number, index: number) {
+export function markHydrateControlEnd(scopeId: number, index: Accessor) {
   return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId} ${index}>`;
 }
 
 export function markHydrateControlSingleNodeEnd(
   scopeId: number,
-  index: number,
+  index: Accessor,
   childScopeIds: number | number[]
 ) {
   return `<!${runtimeId}${HydrateSymbols.SECTION_SINGLE_NODES_END}${scopeId} ${index} ${childScopeIds}>`;

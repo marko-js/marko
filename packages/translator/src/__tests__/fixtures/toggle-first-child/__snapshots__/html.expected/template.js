@@ -6,7 +6,7 @@ const _renderer = ({
   _write("<div>");
   if (value) {
     const _scope = _nextScopeId();
-    _write(`<span>${_escapeXML(value)}${_markHydrateNode(_scope, 0)}</span>`);
+    _write(`<span>${_escapeXML(value)}${_markHydrateNode(_scope, "#text/0")}</span>`);
   }
   _write("<span></span><span></span></div>");
 };

@@ -3,7 +3,7 @@ const _renderer = ({
   value
 }, _tagVar) => {
   const _scope = _nextScopeId();
-  _write(`<div a=0${_attr("b", value)}></div>${_markHydrateNode(_scope, 0)}`);
+  _write(`<div a=0${_attr("b", value)}></div>${_markHydrateNode(_scope, "#div/0")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

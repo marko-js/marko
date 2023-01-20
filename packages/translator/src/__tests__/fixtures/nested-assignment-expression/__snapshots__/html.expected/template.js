@@ -4,10 +4,10 @@ const _renderer = (input, _tagVar) => {
   const clickCount = 0;
   const lastCount = 0;
   const lastCount2 = 0;
-  _write(`<button>${_escapeXML(clickCount)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}used to be <span>${_escapeXML(lastCount)}${_markHydrateNode(_scope, 2)}</span> which should be the same as <span>${_escapeXML(lastCount2)}${_markHydrateNode(_scope, 3)}</span>`);
+  _write(`<button>${_escapeXML(clickCount)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}used to be <span>${_escapeXML(lastCount)}${_markHydrateNode(_scope, "#text/2")}</span> which should be the same as <span>${_escapeXML(lastCount2)}${_markHydrateNode(_scope, "#text/3")}</span>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount");
   _writeHydrateScope(_scope, {
-    4: clickCount
+    "clickCount": clickCount
   });
 };
 export default _renderer;

@@ -1,5 +1,5 @@
 # Write
-  <ul><li id=c-0><span>Hello World<!M#2 1></span><button>[-]<!M#2 3></button><!M#2 2><ul><li id=c-0-0><span>testing 123<!M#5 1></span><button>[-]<!M#5 3></button><!M#5 2></li><!M#5 0></ul><!M#4 0></li><!M#2 0><li id=c-1><span>Goodbye World<!M#6 1></span><button>[-]<!M#6 3></button><!M#6 2></li><!M#6 0></ul><!M#1 0><script>(M$h=[]).push((b,s)=>({2:{8:!0},5:{8:!0},6:{8:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])</script>
+  <ul><li id=c-0><span>Hello World<!M#2 #text/1></span><button>[-]<!M#2 #text/3></button><!M#2 #button/2><ul><li id=c-0-0><span>testing 123<!M#5 #text/1></span><button>[-]<!M#5 #text/3></button><!M#5 #button/2></li><!M#5 #li/0></ul><!M#4 #ul/0></li><!M#2 #li/0><li id=c-1><span>Goodbye World<!M#6 #text/1></span><button>[-]<!M#6 #text/3></button><!M#6 #button/2></li><!M#6 #li/0></ul><!M#1 #ul/0><script>(M$h=[]).push((b,s)=>({2:{open:!0},5:{open:!0},6:{open:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])</script>
 
 
 # Render "End"
@@ -13,50 +13,50 @@
       >
         <span>
           Hello World
-          <!--M#2 1-->
+          <!--M#2 #text/1-->
         </span>
         <button>
           [-]
-          <!--M#2 3-->
+          <!--M#2 #text/3-->
         </button>
-        <!--M#2 2-->
+        <!--M#2 #button/2-->
         <ul>
           <li
             id="c-0-0"
           >
             <span>
               testing 123
-              <!--M#5 1-->
+              <!--M#5 #text/1-->
             </span>
             <button>
               [-]
-              <!--M#5 3-->
+              <!--M#5 #text/3-->
             </button>
-            <!--M#5 2-->
+            <!--M#5 #button/2-->
           </li>
-          <!--M#5 0-->
+          <!--M#5 #li/0-->
         </ul>
-        <!--M#4 0-->
+        <!--M#4 #ul/0-->
       </li>
-      <!--M#2 0-->
+      <!--M#2 #li/0-->
       <li
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M#6 1-->
+          <!--M#6 #text/1-->
         </span>
         <button>
           [-]
-          <!--M#6 3-->
+          <!--M#6 #text/3-->
         </button>
-        <!--M#6 2-->
+        <!--M#6 #button/2-->
       </li>
-      <!--M#6 0-->
+      <!--M#6 #li/0-->
     </ul>
-    <!--M#1 0-->
+    <!--M#1 #ul/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({2:{8:!0},5:{8:!0},6:{8:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])
+      (M$h=[]).push((b,s)=&gt;({2:{open:!0},5:{open:!0},6:{open:!0}}),[5,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",2,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",6,"packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open",])
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <div>123<!M#1 0></div><button id=increment>123<!M#0 2></button><!M#0 1><script>(M$h=[]).push((b,s)=>({0:{3:123}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x",])</script>
+  <div>123<!M#1 #text/0></div><button id=increment>123<!M#0 #text/2></button><!M#0 #button/1><script>(M$h=[]).push((b,s)=>({0:{x:123}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -9,17 +9,17 @@
   <body>
     <div>
       123
-      <!--M#1 0-->
+      <!--M#1 #text/0-->
     </div>
     <button
       id="increment"
     >
       123
-      <!--M#0 2-->
+      <!--M#0 #text/2-->
     </button>
-    <!--M#0 1-->
+    <!--M#0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{3:123}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:123}}),[0,"packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x",])
     </script>
   </body>
 </html>

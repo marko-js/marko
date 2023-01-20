@@ -1,7 +1,7 @@
 import { setSource as _setSource, data as _data, derivation as _derivation, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _z = /* @__PURE__ */_derivation(3, 1, [], (_scope, y = _scope[2]) => y * 3, (_scope, z) => _data(_scope[0], z));
-const _y = /* @__PURE__ */_derivation(2, 1, [_z], (_scope, x = _scope[1]) => x * 2);
-const _x = /* @__PURE__ */_source(1, [_y]);
+const _z = /* @__PURE__ */_derivation("z", 1, [], (_scope, y = _scope["y"]) => y * 3, (_scope, z) => _data(_scope["#text/0"], z));
+const _y = /* @__PURE__ */_derivation("y", 1, [_z], (_scope, x = _scope["x"]) => x * 2);
+const _x = /* @__PURE__ */_source("x", [_y]);
 const _setup = _scope => {
   _setSource(_scope, _x, 1);
 };

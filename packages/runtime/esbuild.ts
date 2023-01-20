@@ -6,9 +6,10 @@ Promise.all(
   ["dist/debug", "dist"].flatMap((env) =>
     ["dom", "html"].flatMap((name) => {
       (["esm", "cjs"] as const).map(async (format) => {
-        await esbuild.build({
+        const result = await esbuild.build({
           bundle: true,
           entryPoints: [`src/${name}/index.ts`],
+          metafile: true,
           outfile: `${env}/${name}/index.${format}.js`,
           format,
           define:
@@ -18,6 +19,10 @@ Promise.all(
           sourcemap: true,
         });
         const pkgDir = `${env}/${name}`;
+        await fs.promises.writeFile(
+          `${pkgDir}/meta.${format}.json`,
+          JSON.stringify(result.metafile)
+        );
         await fs.promises.writeFile(
           `${pkgDir}/package.json`,
           JSON.stringify(

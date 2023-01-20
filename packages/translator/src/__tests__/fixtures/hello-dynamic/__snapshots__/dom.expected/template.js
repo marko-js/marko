@@ -1,8 +1,8 @@
 import { data as _data, html as _html, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _missing = /* @__PURE__ */_source(4, [], (_scope, missing) => _html(_scope, missing, 2));
-const _name = /* @__PURE__ */_source(3, [], (_scope, name) => {
-  _data(_scope[0], name);
-  _html(_scope, name, 1);
+const _missing = /* @__PURE__ */_source("missing", [], (_scope, missing) => _html(_scope, missing, "#text/2"));
+const _name = /* @__PURE__ */_source("name", [], (_scope, name) => {
+  _data(_scope["#text/0"], name);
+  _html(_scope, name, "#text/1");
 });
 export const attrs = /* @__PURE__ */_destructureSources([_name, _missing], (_scope, {
   name,

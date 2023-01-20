@@ -16,9 +16,9 @@ import type { steps } from "./test";
 type Input = typeof steps[number];
 
 const enum INDEX {
-  div = 0,
-  loop = 0,
-  children = 7,
+  div = "#div/0",
+  loop = "#div/0",
+  children = "children",
 }
 
 type ComponentScope = Scope<{
@@ -28,8 +28,8 @@ type ComponentScope = Scope<{
 }>;
 
 const enum INDEX_FOR0 {
-  textNode = 0,
-  text = 1,
+  textNode = "#text/0",
+  text = "text",
 }
 
 type For0Scope = Scope<{

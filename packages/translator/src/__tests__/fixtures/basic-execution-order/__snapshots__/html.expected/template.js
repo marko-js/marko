@@ -5,10 +5,10 @@ const _renderer = (input, _tagVar) => {
     text: "hi"
   };
   const show = true;
-  _write(`<button>hide</button>${_markHydrateNode(_scope, 0)}`);
+  _write(`<button>hide</button>${_markHydrateNode(_scope, "#button/0")}`);
   if (show) {
     const _scope = _nextScopeId();
-    _write(`${_escapeXML(message.text)}${_markHydrateNode(_scope, 0)}`);
+    _write(`${_escapeXML(message.text)}${_markHydrateNode(_scope, "#text/0")}`);
   }
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-execution-order/template.marko_0");
 };

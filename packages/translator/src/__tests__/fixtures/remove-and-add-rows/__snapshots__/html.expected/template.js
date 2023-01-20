@@ -6,10 +6,10 @@ const _renderer = ({
   _write("<div>");
   for (const child of children) {
     const _scope = _nextScopeId();
-    _write(`${_escapeXML(child.text)}${_markHydrateNode(_scope, 0)}`);
+    _write(`${_escapeXML(child.text)}${_markHydrateNode(_scope, "#text/0")}`);
     _maybeFlush();
   }
-  _write(`</div>${_markHydrateNode(_scope, 0)}`);
+  _write(`</div>${_markHydrateNode(_scope, "#div/0")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

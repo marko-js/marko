@@ -5,7 +5,7 @@ import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLHydrateCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
 import { getSectionId } from "../util/sections";
-import { ReserveType, reserveScope } from "../util/reserve";
+import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
@@ -50,7 +50,6 @@ export default {
 
       const sectionId = getSectionId(tag);
       if (isOutputDOM()) {
-        const cleanupIndex = tag.node.extra!.reserve!.id;
         const { value } = defaultAttr;
         let inlineStatements = null;
         if (
@@ -73,7 +72,7 @@ export default {
               callRuntime(
                 "userEffect",
                 scopeIdentifier,
-                t.numericLiteral(cleanupIndex),
+                getNodeLiteral(tag.node.extra!.reserve!),
                 defaultAttr.value
               )
             ),

@@ -1,5 +1,5 @@
 # Write
-  <body><button class="inc"></button><!M#0 0><button class="toggle"></button><!M#0 1><!M^1>The count is <!>0<!M#1 0><!M/0 2></body><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])</script>
+  <body><button class="inc"></button><!M#0 #button/0><button class="toggle"></button><!M#0 #button/1><!M^1>The count is <!>0<!M#1 #text/0><!M/0 #comment/2></body><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])</script>
 
 
 # Render "End"
@@ -10,19 +10,19 @@
     <button
       class="inc"
     />
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 1-->
+    <!--M#0 #button/1-->
     <!--M^1-->
     The count is 
     <!---->
     0
-    <!--M#1 0-->
-    <!--M/0 2-->
+    <!--M#1 #text/0-->
+    <!--M/0 #comment/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={8:!0,9:0,"2!":j={},"2(":b("ifBody")},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
     </script>
   </body>
 </html>

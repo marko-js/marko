@@ -5,11 +5,11 @@
   <body>
     <button>
       0
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{2:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -30,11 +30,11 @@ container.querySelector("button").click();
   <body>
     <button>
       1
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{2:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -55,11 +55,11 @@ container.querySelector("button").click();
   <body>
     <button>
       2
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{2:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -80,11 +80,11 @@ container.querySelector("button").click();
   <body>
     <button>
       3
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{2:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>

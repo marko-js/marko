@@ -12,8 +12,8 @@ import type { steps } from "./test";
 type Input = typeof steps[number];
 
 const enum INDEX {
-  div = 0,
-  value = 1,
+  div = "#div/0",
+  value = "value",
 }
 
 type ComponentScope = Scope<{

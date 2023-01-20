@@ -5,7 +5,7 @@ const _renderer = (input, _tagVar) => {
   const el = () => {
     throw new Error("Cannot reference DOM node from server");
   };
-  _write(`<div></div>${_markHydrateNode(_scope, 0)}`);
+  _write(`<div></div>${_markHydrateNode(_scope, "#div/0")}`);
   _helloSetter({
     el: el,
     renderBody() {

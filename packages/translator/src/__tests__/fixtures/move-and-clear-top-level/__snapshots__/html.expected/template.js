@@ -3,7 +3,7 @@ const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   for (const child of input.children) {
     const _scope = _nextScopeId();
-    _write(`${_escapeXML(child.text)}${_markHydrateNode(_scope, 0)}`);
+    _write(`${_escapeXML(child.text)}${_markHydrateNode(_scope, "#text/0")}`);
     _maybeFlush();
   }
 };

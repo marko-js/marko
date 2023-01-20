@@ -4,13 +4,13 @@ const _elseIfBody = /* @__PURE__ */_createRenderer("B", "");
 const _ifBody3 = /* @__PURE__ */_createRenderer("A", "");
 const _ifBody2 = /* @__PURE__ */_createRenderer("World", "");
 const _ifBody = /* @__PURE__ */_createRenderer("Hello", "");
-const _if3 = /* @__PURE__ */_conditional(2, 2, (_scope, x = _scope[5], y = _scope[6]) => x ? _ifBody3 : y ? _elseIfBody : _elseBody);
-const _if2 = /* @__PURE__ */_conditional(1, 2, (_scope, a = _scope[3], b = _scope[4]) => (a, b) ? _ifBody2 : null);
-const _if = /* @__PURE__ */_conditional(0, 2, (_scope, a = _scope[3], b = _scope[4]) => a + b ? _ifBody : null);
-const _y = /* @__PURE__ */_source(6, [_if3]);
-const _x = /* @__PURE__ */_source(5, [_if3]);
-const _b = /* @__PURE__ */_source(4, [_if, _if2]);
-const _a = /* @__PURE__ */_source(3, [_if, _if2]);
+const _if3 = /* @__PURE__ */_conditional("#text/2", 2, (_scope, x = _scope["x"], y = _scope["y"]) => x ? _ifBody3 : y ? _elseIfBody : _elseBody);
+const _if2 = /* @__PURE__ */_conditional("#text/1", 2, (_scope, a = _scope["a"], b = _scope["b"]) => (a, b) ? _ifBody2 : null);
+const _if = /* @__PURE__ */_conditional("#text/0", 2, (_scope, a = _scope["a"], b = _scope["b"]) => a + b ? _ifBody : null);
+const _y = /* @__PURE__ */_source("y", [_if3]);
+const _x = /* @__PURE__ */_source("x", [_if3]);
+const _b = /* @__PURE__ */_source("b", [_if, _if2]);
+const _a = /* @__PURE__ */_source("a", [_if, _if2]);
 export const attrs = /* @__PURE__ */_destructureSources([_a, _b, _x, _y], (_scope, {
   a,
   b,

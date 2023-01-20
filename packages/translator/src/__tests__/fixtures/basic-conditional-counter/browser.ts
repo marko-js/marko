@@ -17,12 +17,12 @@ import {
 import { get, next, over } from "../../utils/walks";
 
 const enum INDEX {
-  button = 0,
-  button2 = 1,
-  comment = 2,
-  conditional = 2,
-  show = 8,
-  count = 9,
+  button = "#button/0",
+  button2 = "#button/1",
+  comment = "#comment/2",
+  conditional = "#comment/2",
+  show = "show",
+  count = "count",
 }
 
 type ComponentScope = Scope<{
@@ -34,8 +34,8 @@ type ComponentScope = Scope<{
 }>;
 
 const enum INDEX_BRANCH0 {
-  text = 0,
-  count = 1,
+  text = "#text/0",
+  count = "count",
 }
 
 type Branch0Scope = Scope<{

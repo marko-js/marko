@@ -13,7 +13,12 @@ import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import { ReserveType, reserveScope, countReserves } from "../../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  countReserves,
+  getNodeLiteral,
+} from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
@@ -26,7 +31,8 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(tag),
         tag.node,
-        "if"
+        "if",
+        "#text"
       );
       customTag.analyze.enter(tag);
     },
@@ -154,7 +160,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           return callRuntime(
             "inConditionalScope",
             subscriber,
-            t.numericLiteral(extra.reserve!.id)
+            getNodeLiteral(extra.reserve!)
             /*writer.getRenderer(sectionId)*/
           );
         });
@@ -174,7 +180,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       signal.build = () => {
         return callRuntime(
           "conditional",
-          t.numericLiteral(extra.reserve!.id),
+          getNodeLiteral(extra.reserve!),
           t.numericLiteral(countReserves(references) || 1),
           getComputeFn(sectionId, expr, references)
         );

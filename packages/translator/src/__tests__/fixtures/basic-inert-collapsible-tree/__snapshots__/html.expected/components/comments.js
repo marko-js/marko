@@ -12,7 +12,7 @@ const _renderer = ({
     const _scope = _nextScopeId();
     const id = `${path}-${i}`;
     const open = true;
-    _write(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escapeXML(comment.text)}${_markHydrateNode(_scope, 1)}</span><button>${_escapeXML(open ? "[-]" : "[+]")}${_markHydrateNode(_scope, 3)}</button>${_markHydrateNode(_scope, 2)}`);
+    _write(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escapeXML(comment.text)}${_markHydrateNode(_scope, "#text/1")}</span><button>${_escapeXML(open ? "[-]" : "[+]")}${_markHydrateNode(_scope, "#text/3")}</button>${_markHydrateNode(_scope, "#button/2")}`);
     if (comment.comments) {
       const _scope = _nextScopeId();
       _comments({
@@ -23,14 +23,14 @@ const _renderer = ({
         }
       });
     }
-    _write(`</li>${_markHydrateNode(_scope, 0)}`);
+    _write(`</li>${_markHydrateNode(_scope, "#li/0")}`);
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
     _writeHydrateScope(_scope, {
-      8: open
+      "open": open
     });
     _maybeFlush();
   }
-  _write(`</ul>${_markHydrateNode(_scope, 0)}`);
+  _write(`</ul>${_markHydrateNode(_scope, "#ul/0")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

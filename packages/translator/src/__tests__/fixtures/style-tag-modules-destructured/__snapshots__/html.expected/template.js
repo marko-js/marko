@@ -5,7 +5,7 @@ const _renderer = (input, _tagVar) => {
   const {
     content
   } = _style;
-  _write(`<div${_classAttr(content)}>Hello</div>${_markHydrateNode(_scope, 1)}`);
+  _write(`<div${_classAttr(content)}>Hello</div>${_markHydrateNode(_scope, "#div/1")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

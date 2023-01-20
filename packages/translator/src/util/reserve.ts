@@ -1,4 +1,5 @@
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
+import { isOptimize } from "./marko-config";
 import { createSectionState, forEachSectionId } from "./sections";
 import { createSortedCollection } from "./sorted-arr";
 
@@ -15,6 +16,7 @@ export const enum ReserveType {
 export interface Reserve {
   type: ReserveType;
   sectionId: number;
+  debugKey: string;
   name: string;
   id: number;
   exportIdentifier?: t.Identifier;
@@ -55,7 +57,8 @@ export function reserveScope(
     | t.MarkoPlaceholder
     | t.Identifier
     | t.MarkoTagBody,
-  name: string
+  name: string,
+  debugKey: string = name
 ): Reserve {
   const extra = (node.extra ??= {} as typeof node.extra);
 
@@ -70,6 +73,7 @@ export function reserveScope(
     id: 0,
     type,
     name,
+    debugKey,
     sectionId,
   });
 
@@ -94,6 +98,16 @@ export function assignFinalIds() {
       }
     }
   });
+}
+
+export function getNodeLiteral(reserve: Reserve) {
+  if (!isOptimize()) {
+    return t.stringLiteral(
+      reserve.debugKey +
+        (reserve.type === ReserveType.Visit ? `/${reserve.id}` : "")
+    );
+  }
+  return t.numericLiteral(reserve.id);
 }
 
 export function compareReserves(a: Reserve, b: Reserve) {

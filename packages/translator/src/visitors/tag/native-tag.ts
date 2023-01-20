@@ -11,7 +11,7 @@ import {
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import { ReserveType, reserveScope } from "../../util/reserve";
+import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
 import { addStatement, addHTMLHydrateCall } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
@@ -52,7 +52,13 @@ export default {
         : (node.name as t.StringLiteral).value;
 
       if (sectionId !== undefined) {
-        reserveScope(ReserveType.Visit, sectionId, node, name);
+        reserveScope(
+          ReserveType.Visit,
+          sectionId,
+          node,
+          name,
+          `#${(node.name as t.StringLiteral).value}`
+        );
       }
     },
   },
@@ -121,7 +127,7 @@ export default {
                     [scopeIdentifier],
                     t.memberExpression(
                       scopeIdentifier,
-                      t.numericLiteral(extra.reserve!.id),
+                      getNodeLiteral(extra.reserve!),
                       true
                     )
                   )
@@ -132,9 +138,9 @@ export default {
         }
       }
 
-      let visitIndex: t.NumericLiteral | undefined;
+      let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
       if (extra.reserve) {
-        visitIndex = t.numericLiteral(extra.reserve.id);
+        visitAccessor = getNodeLiteral(extra.reserve);
         walks.visit(tag, walks.WalkCodes.Get);
       }
 
@@ -176,7 +182,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       helper,
-                      t.memberExpression(scopeIdentifier, visitIndex!, true),
+                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       value.node
                     )
                   )
@@ -205,7 +211,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "on",
-                      t.memberExpression(scopeIdentifier, visitIndex!, true),
+                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(getEventHandlerName(name)),
                       value.node
                     )
@@ -220,7 +226,7 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       "attr",
-                      t.memberExpression(scopeIdentifier, visitIndex!, true),
+                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(name),
                       value.node
                     )

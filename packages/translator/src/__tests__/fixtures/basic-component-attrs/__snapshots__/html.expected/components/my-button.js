@@ -4,10 +4,10 @@ const _renderer = ({
   text
 }, _tagVar) => {
   const _scope = _nextScopeId();
-  _write(`<button>${_escapeXML(text)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
+  _write(`<button>${_escapeXML(text)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onClick");
   _writeHydrateScope(_scope, {
-    2: onClick
+    "onClick": onClick
   });
 };
 export default _renderer;

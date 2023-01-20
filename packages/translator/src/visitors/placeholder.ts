@@ -4,7 +4,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
 import { getSectionId, getOrCreateSectionId } from "../util/sections";
-import { ReserveType, reserveScope } from "../util/reserve";
+import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { addStatement } from "../util/signals";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
@@ -29,7 +29,8 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(placeholder),
         node,
-        "placeholder"
+        "placeholder",
+        "#text"
       );
       needsMarker(placeholder);
     }
@@ -76,7 +77,7 @@ export default {
                   "data",
                   t.memberExpression(
                     scopeIdentifier,
-                    t.numericLiteral(reserve!.id!),
+                    getNodeLiteral(reserve!),
                     true
                   ),
                   placeholder.node.value
@@ -85,7 +86,7 @@ export default {
                   "html",
                   scopeIdentifier,
                   placeholder.node.value,
-                  t.numericLiteral(reserve!.id!)
+                  getNodeLiteral(reserve!)
                 )
           )
         );

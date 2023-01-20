@@ -2,7 +2,7 @@ import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, write as 
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const data = 0;
-  _write(`<button>${_escapeXML(data)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
+  _write(`<button>${_escapeXML(data)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-handler-refless/template.marko_0");
 };
 export default _renderer;

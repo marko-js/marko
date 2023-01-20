@@ -25,10 +25,10 @@ import { get, next, beginChild, endChild } from "../../utils/walks";
 // <button onclick=onclick><${renderBody}/></button>
 
 const enum FancyButton$Index {
-  BUTTON = 0,
-  COMMENT = 1,
-  RENDER_BODY = 6,
-  ON_CLICK = 7,
+  BUTTON = "#button/0",
+  COMMENT = "#comment/1",
+  RENDER_BODY = "renderBody",
+  ON_CLICK = "onClick",
 }
 
 type FancyButton$ComponentScope = Scope<{
@@ -91,8 +91,8 @@ export const FancyButton = createRenderFn(
 // <FancyButton onClick() { clickCount++ }>${input.clickCount}</FancyButton>
 
 const enum Index {
-  FANCYBUTTON_SCOPE = 0,
-  CLICK_COUNT = 1,
+  FANCYBUTTON_SCOPE = "#childScope/0",
+  CLICK_COUNT = "clickCount",
 }
 
 type ComponentScope = Scope<{
@@ -101,9 +101,7 @@ type ComponentScope = Scope<{
 }>;
 
 export const template = `${FancyButton$template}`;
-export const walks = `${beginChild(
-  Index.FANCYBUTTON_SCOPE
-)}${FancyButton$walks}${endChild}`;
+export const walks = `${beginChild}${FancyButton$walks}${endChild}`;
 
 export const setup = (scope: ComponentScope) => {
   setSource(scope, _clickCount, 0);
@@ -131,7 +129,7 @@ const clickCount$renderBody = dynamicClosure(
 );
 
 const enum RenderBody$Index {
-  TEXT = 0,
+  TEXT = "#text/0",
 }
 
 type RenderBody$Scope = Scope<{

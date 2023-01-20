@@ -3,11 +3,11 @@ const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const x = 1;
   const y = 1;
-  _write(`<button>${_escapeXML(x)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}${_escapeXML(y)}${_markHydrateNode(_scope, 2)}`);
+  _write(`<button>${_escapeXML(x)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}${_escapeXML(y)}${_markHydrateNode(_scope, "#text/2")}`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y");
   _writeHydrateScope(_scope, {
-    3: x,
-    4: y
+    "x": x,
+    "y": y
   });
 };
 export default _renderer;

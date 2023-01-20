@@ -23,7 +23,7 @@ const _renderer = ({
   };
   if (_tagName2) _write(`<${_tagName2}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
-  _write(`${_markHydrateNode(_scope, 1)}`);
+  _write(`${_markHydrateNode(_scope, "#undefined/1")}`);
   _writeHydrateScope(_scope, {});
 };
 export default _renderer;

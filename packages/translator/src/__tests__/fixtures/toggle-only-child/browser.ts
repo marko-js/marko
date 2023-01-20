@@ -16,20 +16,20 @@ import type { steps } from "./test";
 type Input = typeof steps[number];
 
 const enum INDEX {
-  comment = 0,
-  conditional = 0,
-  value = 6,
+  div = "#div/0",
+  conditional = "#div/0",
+  value = "value",
 }
 
 type ComponentScope = Scope<{
-  [INDEX.comment]: Comment;
-  [INDEX.conditional]: Comment;
+  [INDEX.div]: HTMLDivElement;
+  [INDEX.conditional]: HTMLDivElement;
   [INDEX.value]: Input["value"];
 }>;
 
 const enum INDEX_BRANCH0 {
-  text = 0,
-  value = 1,
+  text = "#text/0",
+  value = "value",
 }
 
 type Branch0Scope = Scope<{

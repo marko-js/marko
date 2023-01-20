@@ -1,4 +1,5 @@
 import type { Scope } from "../common/types";
+import { NodeType } from "./dom";
 import { createScope } from "./scope";
 
 export const walker = /* @__PURE__ */ document.createTreeWalker(document);
@@ -32,7 +33,6 @@ export const enum WalkCodes {
   EndChild = 38,
 
   BeginChild = 47,
-  BeginChildEnd = 66,
 
   Next = 67,
   NextEnd = 91,
@@ -48,7 +48,6 @@ export const enum WalkCodes {
 }
 
 export const enum WalkRangeSizes {
-  BeginChild = 20, // 47 through 66
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
@@ -57,7 +56,7 @@ export const enum WalkRangeSizes {
 
 export function trimWalkString(walkString: string): string {
   let end = walkString.length;
-  while (walkString.charCodeAt(--end) > WalkCodes.BeginChildEnd);
+  while (walkString.charCodeAt(--end) > WalkCodes.BeginChild);
   return walkString.slice(0, end + 1);
 }
 
@@ -101,23 +100,30 @@ function walkInternal(
       while (value--) {
         walker.nextNode();
       }
-    } else if (value >= WalkCodes.BeginChild) {
-      value =
-        WalkRangeSizes.BeginChild * currentMultiplier +
-        value -
-        WalkCodes.BeginChild;
+    } else if (value === WalkCodes.BeginChild) {
       currentWalkIndex = walkInternal(
         walkCodes,
-        (scope[value] = createScope(scope.___context)),
+        (scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#childScope")
+            : currentScopeIndex++
+        ] = createScope(scope.___context)),
         currentWalkIndex
       )!;
     } else if (value === WalkCodes.EndChild) {
       return currentWalkIndex;
     } else if (value === WalkCodes.Get) {
-      scope[currentScopeIndex++] = walker.currentNode;
+      scope[
+        MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex++, walker.currentNode)
+          : currentScopeIndex++
+      ] = walker.currentNode;
     } else {
-      const newNode = (scope[currentScopeIndex++] =
-        document.createTextNode(""));
+      const newNode = (scope[
+        MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex++, "#text")
+          : currentScopeIndex++
+      ] = document.createTextNode(""));
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
 
@@ -145,4 +151,18 @@ function walkInternal(
   }
 
   return currentWalkIndex;
+}
+
+function getDebugKey(index: number, node: Node | string) {
+  if (typeof node === "string") {
+    return `${node}/${index}`;
+  } else if (node.nodeType === NodeType.Text) {
+    return `#text/${index}`;
+  } else if (node.nodeType === NodeType.Comment) {
+    return `#comment/${index}`;
+  } else if (node.nodeType === NodeType.Element) {
+    return `#${(node as Element).tagName.toLowerCase()}/${index}`;
+  }
+
+  return index;
 }

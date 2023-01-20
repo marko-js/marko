@@ -2,7 +2,7 @@ import { getInContext as _getInContext, escapeXML as _escapeXML, markHydrateNode
 const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const _$global = _getInContext("$");
-  _write(`<div><span>${_escapeXML(_$global.x)}${_markHydrateNode(_scope, 0)}</span></div>`);
+  _write(`<div><span>${_escapeXML(_$global.x)}${_markHydrateNode(_scope, "#text/0")}</span></div>`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

@@ -10,6 +10,7 @@ import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { getComputeFn, getSignal, subscribe } from "../../util/signals";
 import {
   countReserves,
+  getNodeLiteral,
   Reserve,
   reserveScope,
   ReserveType,
@@ -24,7 +25,8 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(tag),
         tag.node as any as t.Identifier,
-        "dynamicTagName"
+        "dynamicTagName",
+        "#text"
       );
 
       customTag.analyze.enter(tag);
@@ -90,7 +92,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "conditional",
-            t.numericLiteral(tagNameReserve.id),
+            getNodeLiteral(tagNameReserve),
             t.numericLiteral(countReserves(references) || 1),
             getComputeFn(sectionId, node.name, references)
           );

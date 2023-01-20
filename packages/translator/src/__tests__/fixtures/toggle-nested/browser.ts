@@ -18,16 +18,16 @@ import type { steps } from "./test";
 type Input = typeof steps[number];
 
 const enum INDEX {
-  comment = 0,
-  conditional = 0,
-  show = 1,
-  value1 = 2,
-  value2 = 3,
+  div = "#div/0",
+  conditional = "#div/0",
+  show = "show",
+  value1 = "value1",
+  value2 = "value2",
 }
 
 type ComponentScope = Scope<{
-  [INDEX.comment]: Comment;
-  [INDEX.conditional]: Comment;
+  [INDEX.div]: HTMLDivElement;
+  [INDEX.conditional]: HTMLDivElement;
   [INDEX.show]: Input["show"];
   [INDEX.value1]: Input["value1"];
   [INDEX.value2]: Input["value2"];
@@ -35,22 +35,22 @@ type ComponentScope = Scope<{
 }>;
 
 const enum INDEX_IF0 {
-  comment1 = 0,
-  conditional1 = 0,
-  comment2 = 1,
-  conditional2 = 1,
+  comment0 = "#comment/0",
+  conditional0 = "#comment/0",
+  comment1 = "#comment/1",
+  conditional1 = "#comment/1",
 }
 
 type If0Scope = Scope<{
   _: ComponentScope;
+  [INDEX_IF0.comment0]: Comment;
+  [INDEX_IF0.conditional0]: Comment;
   [INDEX_IF0.comment1]: Comment;
   [INDEX_IF0.conditional1]: Comment;
-  [INDEX_IF0.comment2]: Comment;
-  [INDEX_IF0.conditional2]: Comment;
 }>;
 
 const enum INDEX_IF1 {
-  text = 0,
+  text = "#text/0",
 }
 
 type If1Scope = Scope<{
@@ -59,7 +59,7 @@ type If1Scope = Scope<{
 }>;
 
 const enum INDEX_IF2 {
-  text = 0,
+  text = "#text/0",
 }
 
 type If2Scope = Scope<{
@@ -96,22 +96,22 @@ const value1$if1 = closure(
   }
 );
 
-const _if2 = conditional(INDEX_IF0.conditional2, 1, (scope: If0Scope) => {
+const _if2 = conditional(INDEX_IF0.conditional1, 1, (scope: If0Scope) => {
   return scope._[INDEX.value2] ? ifBody2 : undefined;
 });
 
-const _if1 = conditional(INDEX_IF0.conditional1, 1, (scope: If0Scope) =>
+const _if1 = conditional(INDEX_IF0.conditional0, 1, (scope: If0Scope) =>
   scope._[INDEX.value1] ? ifBody1 : undefined
 );
 
 const value2$if0 = closure(1, INDEX.value2, [
   _if2,
-  inConditionalScope(value2$if2, INDEX_IF0.conditional2),
+  inConditionalScope(value2$if2, INDEX_IF0.conditional1),
 ]);
 
 const value1$if0 = closure(1, INDEX.value1, [
   _if1,
-  inConditionalScope(value1$if1, INDEX_IF0.conditional1),
+  inConditionalScope(value1$if1, INDEX_IF0.conditional0),
 ]);
 
 const _if0 = conditionalOnlyChild(
@@ -152,8 +152,8 @@ const ifBody0 = createRenderer(
   undefined,
   [value1$if0, value2$if0],
   0,
-  INDEX_IF0.conditional1,
-  INDEX_IF0.conditional2
+  INDEX_IF0.conditional0,
+  INDEX_IF0.conditional1
 );
 
 const ifBody1 = createRenderer(

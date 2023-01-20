@@ -16,7 +16,8 @@ export default {
         ReserveType.Visit,
         getOrCreateSectionId(tag),
         tag.node,
-        "put"
+        "put",
+        "#text"
       );
       customTag.analyze.enter(tag);
     },

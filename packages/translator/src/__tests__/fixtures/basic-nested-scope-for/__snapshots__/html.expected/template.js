@@ -4,10 +4,10 @@ const _renderer = (input, _tagVar) => {
   const selected = 0;
   for (const num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
     const _scope = _nextScopeId();
-    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}`);
+    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}`);
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
     _writeHydrateScope(_scope, {
-      2: num
+      "num": num
     });
     _maybeFlush();
   }

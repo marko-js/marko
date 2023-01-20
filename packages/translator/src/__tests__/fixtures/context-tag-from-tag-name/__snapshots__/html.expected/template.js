@@ -7,7 +7,7 @@ const _renderer = (input, _tagVar) => {
       const _scope = _nextScopeId();
       _write("<span>");
       const message = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko");
-      _write(`${_escapeXML(message)}${_markHydrateNode(_scope, 0)}</span>`);
+      _write(`${_escapeXML(message)}${_markHydrateNode(_scope, "#text/0")}</span>`);
     }
   });
 };

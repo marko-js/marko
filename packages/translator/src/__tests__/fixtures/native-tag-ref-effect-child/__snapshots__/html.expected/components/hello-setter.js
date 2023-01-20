@@ -5,7 +5,7 @@ const _renderer = ({
   const _scope = _nextScopeId();
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el");
   _writeHydrateScope(_scope, {
-    0: el
+    "el": el
   });
 };
 export default _renderer;

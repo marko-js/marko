@@ -22,6 +22,7 @@ import {
   reserveScope,
   countReserves,
   Reserve,
+  getNodeLiteral,
 } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
@@ -33,11 +34,16 @@ export default {
   analyze: {
     enter(tag) {
       const isOnlyChild = checkOnlyChild(tag);
+      const parentTag = (
+        isOnlyChild ? tag.parentPath.parent : undefined
+      ) as t.MarkoTag;
+      const parentTagName = (parentTag?.name as t.StringLiteral)?.value;
       reserveScope(
         ReserveType.Visit,
         getOrCreateSectionId(tag),
-        isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node,
-        "for"
+        isOnlyChild ? parentTag : tag.node,
+        "for",
+        isOnlyChild ? `#${parentTagName}` : "#text"
       );
       customTag.analyze.enter(tag);
     },
@@ -159,7 +165,7 @@ const translateDOM = {
     const byAttr = findName(attributes, "by");
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
-      return callRuntime("inLoopScope", signal, t.numericLiteral(reserve!.id));
+      return callRuntime("inLoopScope", signal, getNodeLiteral(reserve!));
     });
 
     if (ofAttr) {
@@ -189,7 +195,7 @@ const translateDOM = {
         );
         return callRuntime(
           "loop",
-          t.numericLiteral(reserve!.id),
+          getNodeLiteral(reserve!),
           t.numericLiteral(countReserves(references) || 1),
           rendererId,
           t.arrayExpression(
@@ -250,7 +256,7 @@ const translateDOM = {
       //     callRuntime(
       //       "setLoopOf",
       //       scopeIdentifier,
-      //       t.numericLiteral(reserve!.id),
+      //       getNodeLiteral(reserve!),
       //       ofAttrValue,
       //       rendererId,
       //       byAttr ? byAttr.value! : t.nullLiteral(),

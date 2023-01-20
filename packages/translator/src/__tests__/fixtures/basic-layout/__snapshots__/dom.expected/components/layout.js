@@ -1,6 +1,6 @@
 import { conditional as _conditional, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional(0, 1, (_scope, renderBody = _scope[1]) => renderBody);
-const _renderBody = /* @__PURE__ */_source(1, [_dynamicTagName]);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", 1, (_scope, renderBody = _scope["renderBody"]) => renderBody);
+const _renderBody = /* @__PURE__ */_source("renderBody", [_dynamicTagName]);
 export const attrs = /* @__PURE__ */_destructureSources([_renderBody], (_scope, {
   renderBody
 }) => {

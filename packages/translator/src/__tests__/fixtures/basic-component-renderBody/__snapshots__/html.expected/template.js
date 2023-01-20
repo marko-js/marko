@@ -9,7 +9,7 @@ const _renderer = (input, _tagVar) => {
     },
     renderBody() {
       const _scope = _nextScopeId();
-      _write(`${_escapeXML(clickCount)}${_markHydrateNode(_scope, 0)}`);
+      _write(`${_escapeXML(clickCount)}${_markHydrateNode(_scope, "#text/0")}`);
     }
   });
 };

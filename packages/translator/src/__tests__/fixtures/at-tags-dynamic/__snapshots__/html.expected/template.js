@@ -40,7 +40,7 @@ const _renderer = (input, _tagVar) => {
       _row.push({
         row: row,
         renderBody() {
-          _write(`${_escapeXML(row)}${_markHydrateNode(_scope, 0)}`);
+          _write(`${_escapeXML(row)}${_markHydrateNode(_scope, "#text/0")}`);
         }
       });
       _maybeFlush();

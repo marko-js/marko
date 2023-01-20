@@ -1,5 +1,5 @@
 # Write
-  0<!M#1 0>
+  0<!M#1 #text/0>
 
 
 # Render "End"
@@ -8,7 +8,7 @@
   <head />
   <body>
     0
-    <!--M#1 0-->
+    <!--M#1 #text/0-->
   </body>
 </html>
 ```

@@ -3,9 +3,9 @@ import { bindRenderer as _bindRenderer, createRenderer as _createRenderer, creat
 const _forBody = /* @__PURE__ */_createRenderer("", "");
 const _helloBody = /* @__PURE__ */_createRenderer("", "");
 const _setup = _scope => {
-  _hello(_scope[0]);
+  _hello(_scope["#childScope/0"]);
 };
 export const template = `${_hello_template}`;
-export const walks = /* beginChild(0), _hello_walks, endChild */`/${_hello_walks}&`;
+export const walks = /* beginChild, _hello_walks, endChild */`/${_hello_walks}&`;
 export const setup = _setup;
 export default /* @__PURE__ */_createRenderFn(template, walks, setup);

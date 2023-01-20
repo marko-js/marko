@@ -5,7 +5,7 @@ const _renderer = (input, _tagVar) => {
   _pushContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko", 1);
   _write("<span>");
   const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko");
-  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, 0)}</span>`);
+  _write(`${_escapeXML(x)}${_markHydrateNode(_scope, "#text/0")}</span>`);
   _popContext();
   _write("</div>");
 };

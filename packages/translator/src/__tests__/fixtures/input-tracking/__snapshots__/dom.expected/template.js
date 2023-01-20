@@ -1,7 +1,7 @@
 import { data as _data, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _b = "SIGNAL NOT INITIALIZED";
 const _a = "SIGNAL NOT INITIALIZED";
-const _input = /* @__PURE__ */_source(2, []);
+const _input = /* @__PURE__ */_source("input", []);
 export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
   _setSource(_scope, _input, input);
 });

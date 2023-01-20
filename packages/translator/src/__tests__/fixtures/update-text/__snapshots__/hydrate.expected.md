@@ -6,7 +6,7 @@
     Static 
     <!---->
     Dynamic 1
-    <!--M#0 0-->
+    <!--M#0 #text/0-->
   </body>
 </html>
 ```

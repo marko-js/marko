@@ -1,7 +1,7 @@
 import type { Renderer } from "./renderer";
 import { onDestroy, write } from "./scope";
 import { styleValue, classValue } from "../common/helpers";
-import { AccessorChars, Scope } from "../common/types";
+import { Accessor, AccessorChars, Scope } from "../common/types";
 
 export const enum NodeType {
   Element = 1,
@@ -39,10 +39,16 @@ export function data(node: Text | Comment, value: unknown) {
   }
 }
 
-export function attrs(scope: Scope, elementIndex: number, index: number) {
-  const nextAttrs = scope[index] as Record<string, unknown>;
-  const prevAttrs = scope[index + "-"] as Record<string, unknown> | undefined;
-  const element = scope[elementIndex] as Element;
+export function attrs(
+  scope: Scope,
+  elementAccessor: Accessor,
+  attrsAccessor: Accessor
+) {
+  const nextAttrs = scope[attrsAccessor] as Record<string, unknown>;
+  const prevAttrs = scope[attrsAccessor + "-"] as
+    | Record<string, unknown>
+    | undefined;
+  const element = scope[elementAccessor] as Element;
 
   if (prevAttrs) {
     for (const name in prevAttrs) {
@@ -64,7 +70,7 @@ export function attrs(scope: Scope, elementIndex: number, index: number) {
     }
   }
 
-  scope[index + "-"] = nextAttrs;
+  scope[attrsAccessor + "-"] = nextAttrs;
 }
 
 const doc = document;

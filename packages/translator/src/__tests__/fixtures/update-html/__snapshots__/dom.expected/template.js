@@ -1,5 +1,5 @@
 import { html as _html, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _value = /* @__PURE__ */_source(1, [], (_scope, value) => _html(_scope, value, 0));
+const _value = /* @__PURE__ */_source("value", [], (_scope, value) => _html(_scope, value, "#text/0"));
 export const attrs = /* @__PURE__ */_destructureSources([_value], (_scope, {
   value
 }) => {

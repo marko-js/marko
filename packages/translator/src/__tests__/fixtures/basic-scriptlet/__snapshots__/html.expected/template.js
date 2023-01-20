@@ -3,10 +3,10 @@ const _renderer = (input, _tagVar) => {
   const _scope = _nextScopeId();
   const clickCount = 0;
   const doubleCount = clickCount * 2;
-  _write(`<div><button>${_escapeXML(doubleCount)}${_markHydrateNode(_scope, 1)}</button>${_markHydrateNode(_scope, 0)}</div>`);
+  _write(`<div><button>${_escapeXML(doubleCount)}${_markHydrateNode(_scope, "#text/1")}</button>${_markHydrateNode(_scope, "#button/0")}</div>`);
   _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-scriptlet/template.marko_0_clickCount");
   _writeHydrateScope(_scope, {
-    2: clickCount
+    "clickCount": clickCount
   });
 };
 export default _renderer;

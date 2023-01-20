@@ -1,24 +1,24 @@
 import { setSource as _setSource, queueSource as _queueSource, lifecycle as _lifecycle, data as _data, on as _on, source as _source, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _prev = /* @__PURE__ */_source(4, [], (_scope, prev) => _data(_scope[1], prev));
+const _prev = /* @__PURE__ */_source("prev", [], (_scope, prev) => _data(_scope["#text/1"], prev));
 const _hydrate_x = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", _scope => {
-  _lifecycle(_scope, 5, {
+  _lifecycle(_scope, "cleanup", {
     onMount: function () {
-      const x = _scope[3];
+      const x = _scope["x"];
       this.cur = x;
     },
     onUpdate: function () {
-      const x = _scope[3];
+      const x = _scope["x"];
       _queueSource(_scope, _prev, this.cur);
       this.cur = x;
     }
   });
-  _on(_scope[2], "click", function () {
-    const x = _scope[3];
+  _on(_scope["#button/2"], "click", function () {
+    const x = _scope["x"];
     _queueSource(_scope, _x, x + 1);
   });
 });
-const _x = /* @__PURE__ */_source(3, [], (_scope, x) => {
-  _data(_scope[0], x);
+const _x = /* @__PURE__ */_source("x", [], (_scope, x) => {
+  _data(_scope["#text/0"], x);
   _queueHydrate(_scope, _hydrate_x);
 });
 const _setup = _scope => {

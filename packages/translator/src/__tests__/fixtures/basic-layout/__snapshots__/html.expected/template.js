@@ -7,7 +7,7 @@ const _renderer = ({
   _layout({
     renderBody() {
       const _scope = _nextScopeId();
-      _write(`<h1>Hello <!>${_escapeXML(name)}${_markHydrateNode(_scope, 0)}</h1>`);
+      _write(`<h1>Hello <!>${_escapeXML(name)}${_markHydrateNode(_scope, "#text/0")}</h1>`);
     }
   });
 };

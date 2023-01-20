@@ -32,8 +32,8 @@ const counter = () => {
   write(
     `<button class="inc"></button>${markHydrateNode(
       scopeId,
-      0
-    )}<button class="toggle"></button>${markHydrateNode(scopeId, 1)}`
+      "#button/0"
+    )}<button class="toggle"></button>${markHydrateNode(scopeId, "#button/1")}`
   );
 
   if (show) {
@@ -41,19 +41,19 @@ const counter = () => {
     write(
       `${markHydrateScopeStart(
         childScopeId
-      )}The count is <!>${count}${markHydrateNode(childScopeId, 0)}`
+      )}The count is <!>${count}${markHydrateNode(childScopeId, "#text/0")}`
     );
     childRenderer = register(() => {}, "ifBody");
     writeHydrateScope(childScopeId, (childScope = { [SYMBOL_OWNER]: scopeId }));
   }
-  write(`${markHydrateControlEnd(scopeId, 2)}`);
+  write(`${markHydrateControlEnd(scopeId, "#comment/2")}`);
 
   // eslint-disable-next-line no-sparse-arrays
   writeHydrateScope(scopeId, {
-    [2 + "!"]: childScope,
-    [2 + "("]: childRenderer,
-    8: show,
-    9: count,
+    ["#comment/2!"]: childScope,
+    ["#comment/2("]: childRenderer,
+    show: show,
+    count: count,
   });
   writeHydrateCall(scopeId, "counter");
 };

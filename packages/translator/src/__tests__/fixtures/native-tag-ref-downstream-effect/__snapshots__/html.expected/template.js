@@ -4,7 +4,7 @@ const _renderer = (input, _tagVar) => {
   const el = () => {
     throw new Error("Cannot reference DOM node from server");
   };
-  _write(`<div></div>${_markHydrateNode(_scope, 0)}`);
+  _write(`<div></div>${_markHydrateNode(_scope, "#div/0")}`);
   if (true) {
     const _scope = _nextScopeId();
     _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1");

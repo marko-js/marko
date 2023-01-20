@@ -4,7 +4,7 @@ const _renderer = (input, _tagVar) => {
   const x = 1;
   const y = x * 2;
   const z = y * 3;
-  _write(`<div>${_escapeXML(z)}${_markHydrateNode(_scope, 0)}</div>`);
+  _write(`<div>${_escapeXML(z)}${_markHydrateNode(_scope, "#text/0")}</div>`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

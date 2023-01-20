@@ -1,20 +1,20 @@
 import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, source as _source, createRenderer as _createRenderer, loop as _loop, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _x$forBody = /* @__PURE__ */_source(1, [], (_scope, x) => _data(_scope[0], x));
+const _x$forBody = /* @__PURE__ */_source("x", [], (_scope, x) => _data(_scope["#text/0"], x));
 const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ");
-const _ul_for = /* @__PURE__ */_loop(0, 1, _forBody, [_x$forBody], (_scope, [x]) => _setSource(_scope, _x$forBody, x), (_scope, list = _scope[4]) => [list, function (x) {
+const _ul_for = /* @__PURE__ */_loop("#ul/0", 1, _forBody, [_x$forBody], (_scope, [x]) => _setSource(_scope, _x$forBody, x), (_scope, list = _scope["list"]) => [list, function (x) {
   return x;
 }]);
-const _hydrate_list = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope[2], "click", function () {
-  const list = _scope[4];
+const _hydrate_list = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
+  const list = _scope["list"];
   _queueSource(_scope, _list, [].concat(list).reverse());
 }));
-const _list = /* @__PURE__ */_source(4, [_ul_for], (_scope, list) => _queueHydrate(_scope, _hydrate_list));
-const _hydrate_open = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => _on(_scope[1], "click", function () {
-  const open = _scope[3];
+const _list = /* @__PURE__ */_source("list", [_ul_for], (_scope, list) => _queueHydrate(_scope, _hydrate_list));
+const _hydrate_open = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => _on(_scope["#button/1"], "click", function () {
+  const open = _scope["open"];
   _queueSource(_scope, _open, !open);
 }));
-const _open = /* @__PURE__ */_source(3, [], (_scope, open) => {
-  _attr(_scope[0], "hidden", !open);
+const _open = /* @__PURE__ */_source("open", [], (_scope, open) => {
+  _attr(_scope["#ul/0"], "hidden", !open);
   _queueHydrate(_scope, _hydrate_open);
 });
 const _setup = _scope => {

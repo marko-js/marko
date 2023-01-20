@@ -11,3 +11,7 @@ export function isOutputDOM() {
 export function getMarkoOpts() {
   return currentProgramPath.hub.file.markoOpts;
 }
+
+export function isOptimize() {
+  return getMarkoOpts().optimize;
+}

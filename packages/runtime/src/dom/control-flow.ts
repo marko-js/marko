@@ -1,4 +1,4 @@
-import { AccessorChars, Scope } from "../common/types";
+import { AccessorChars, Scope, Accessor } from "../common/types";
 import { reconcile } from "./reconcile";
 import { Renderer, createScopeWithRenderer } from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
@@ -12,7 +12,7 @@ import {
 } from "./signals";
 
 export function conditional<S extends Scope>(
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   defaultMark: number,
   computeRenderer: (scope: S) => Renderer | undefined,
   fragment?: DOMFragment
@@ -31,7 +31,7 @@ export function conditional<S extends Scope>(
 }
 
 export function conditionalOnlyChild<S extends Scope>(
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   defaultMark: number,
   computeRenderer: (scope: S) => Renderer | undefined,
   fragment?: DOMFragment
@@ -51,7 +51,7 @@ export function conditionalOnlyChild<S extends Scope>(
 
 export function inConditionalScope<S extends Scope>(
   subscriber: Signal,
-  nodeAccessor: number | string /* branch?: Renderer */
+  nodeAccessor: Accessor /* branch?: Renderer */
 ): Signal {
   const scopeAccessor = (nodeAccessor as number) + AccessorChars.COND_SCOPE;
   // const rendererAccessor = nodeAccessor as number + AccessorChars.COND_RENDERER;
@@ -66,7 +66,7 @@ export function inConditionalScope<S extends Scope>(
 
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   newRenderer: Renderer<ChildScope> | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
@@ -96,7 +96,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
 export function setConditionalRendererOnlyChild(
   scope: Scope,
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   newRenderer: Renderer | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
@@ -124,7 +124,7 @@ const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
 export function loop<S extends Scope, C extends Scope, T>(
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   defaultMark: number,
   renderer: Renderer,
   paramSubscribers: Signal[],
@@ -160,7 +160,7 @@ export function loop<S extends Scope, C extends Scope, T>(
 
 export function inLoopScope<S extends Scope>(
   subscriber: Signal,
-  loopNodeAccessor: number
+  loopNodeAccessor: Accessor
 ): Signal {
   const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   return wrapSignal((methodName) => (scope, extraArg) => {
@@ -173,7 +173,7 @@ export function inLoopScope<S extends Scope>(
 
 export function setLoopOf<T, ChildScope extends Scope>(
   scope: Scope,
-  nodeAccessor: number,
+  nodeAccessor: Accessor,
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,

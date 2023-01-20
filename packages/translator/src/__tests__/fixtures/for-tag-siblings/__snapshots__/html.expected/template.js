@@ -5,13 +5,13 @@ const _renderer = (input, _tagVar) => {
   _write("<div>");
   for (const val of arrA) {
     const _scope = _nextScopeId();
-    _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope, 0)}</div>`);
+    _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope, "#text/0")}</div>`);
     _maybeFlush();
   }
-  _write(`</div>${_markHydrateNode(_scope, 0)}<div>`);
+  _write(`</div>${_markHydrateNode(_scope, "#div/0")}<div>`);
   for (const val of arrA) {
     const _scope = _nextScopeId();
-    _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope, 0)}</div>`);
+    _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope, "#text/0")}</div>`);
     _maybeFlush();
   }
   _write("<div></div></div>");

@@ -109,7 +109,9 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
             currentScopeId = stack.pop()!;
           }
         } else if (token === HydrateSymbols.SECTION_SINGLE_NODES_END) {
-          scope[parseInt(data)] = currentNode;
+          scope[
+            MARKO_DEBUG ? data.slice(0, data.indexOf(" ")) : parseInt(data)
+          ] = currentNode;
           // https://jsben.ch/dR7uk
           const childScopeIds = JSON.parse(
             "[" + data.slice(data.indexOf(" ") + 1) + "]"

@@ -24,10 +24,10 @@ const _renderer = ({
   if (_tagName) _write(`<${_tagName} class="a b"${_attr("other", other)}>`);
   if (_tagName) _write(`</${_tagName}>`);
   const _tagName2 = show && "div";
-  _write(`${_markHydrateNode(_scope, 2)}`);
+  _write(`${_markHydrateNode(_scope, "#undefined/2")}`);
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
-  _write(`${_markHydrateNode(_scope, 3)}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>${_markHydrateNode(_scope, 4)}`);
+  _write(`${_markHydrateNode(_scope, "#undefined/3")}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>${_markHydrateNode(_scope, "#undefined/4")}`);
   (showTagA ? tagA : tagB)({
     class: ["a", "b"],
     other: other,
@@ -67,10 +67,10 @@ const _renderer = ({
   if (_tagName5) _write(`</${_tagName5}>`);
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
-  _write(`${_markHydrateNode(_scope, 5)}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, 6)}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, 7)}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, 8)}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markHydrateNode(_scope, 9)}`);
+  _write(`${_markHydrateNode(_scope, "#undefined/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, "#undefined/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, "#undefined/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, "#undefined/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markHydrateNode(_scope, "#undefined/9")}`);
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}>`);
   if (tagConstB) _write(`</${tagConstB}>`);
-  _write(`${_markHydrateNode(_scope, 10)}`);
+  _write(`${_markHydrateNode(_scope, "#undefined/10")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

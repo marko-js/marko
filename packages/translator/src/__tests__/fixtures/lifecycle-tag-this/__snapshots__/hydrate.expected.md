@@ -13,9 +13,9 @@
     >
       Increment
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -44,9 +44,9 @@ container.querySelector("#increment")?.click();
     >
       Increment
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -76,9 +76,9 @@ container.querySelector("#increment")?.click();
     >
       Increment
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{1:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
   </body>
 </html>

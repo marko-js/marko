@@ -5,13 +5,13 @@
   <body>
     <button>
       1
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     1
-    <!--M#0 2-->
+    <!--M#0 #text/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{3:1,4:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1,y:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
     </script>
   </body>
 </html>
@@ -32,13 +32,13 @@ container.querySelector("button").click();
   <body>
     <button>
       2
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     2
-    <!--M#0 2-->
+    <!--M#0 #text/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{3:1,4:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1,y:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
     </script>
   </body>
 </html>
@@ -60,13 +60,13 @@ container.querySelector("button").click();
   <body>
     <button>
       4
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     4
-    <!--M#0 2-->
+    <!--M#0 #text/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{3:1,4:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1,y:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
     </script>
   </body>
 </html>
@@ -88,13 +88,13 @@ container.querySelector("button").click();
   <body>
     <button>
       8
-      <!--M#0 1-->
+      <!--M#0 #text/1-->
     </button>
-    <!--M#0 0-->
+    <!--M#0 #button/0-->
     8
-    <!--M#0 2-->
+    <!--M#0 #text/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{3:1,4:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1,y:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
     </script>
   </body>
 </html>

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
-import type { Reserve } from "./reserve";
+import { getNodeLiteral, Reserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 declare const MARKO_SRC: boolean;
@@ -78,7 +78,7 @@ function getRuntimePath(output: string) {
 export function callRead(reference: Reserve, targetSectionId: number) {
   return t.memberExpression(
     getScopeExpression(reference, targetSectionId),
-    t.numericLiteral(reference.id),
+    getNodeLiteral(reference),
     true
   );
 }

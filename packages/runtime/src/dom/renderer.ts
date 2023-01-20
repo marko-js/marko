@@ -1,4 +1,4 @@
-import type { Scope, ScopeContext } from "../common/types";
+import type { Accessor, Scope, ScopeContext } from "../common/types";
 import type { Signal } from "./signals";
 import { createScope } from "./scope";
 import { setContext } from "../common/context";
@@ -21,8 +21,8 @@ export type Renderer<S extends Scope = Scope> = {
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
-  ___dynamicStartNodeOffset: number | undefined;
-  ___dynamicEndNodeOffset: number | undefined;
+  ___dynamicStartNodeOffset: Accessor | undefined;
+  ___dynamicEndNodeOffset: Accessor | undefined;
   ___attrs: Signal | undefined;
   ___owner: Scope | undefined;
 };
@@ -160,8 +160,8 @@ export function createRenderer<S extends Scope>(
   setup?: SetupFn<S>,
   closureSignals: Signal[] = [],
   hasUserEffects: 0 | 1 = 0,
-  dynamicStartNodeOffset?: number,
-  dynamicEndNodeOffset?: number
+  dynamicStartNodeOffset?: Accessor,
+  dynamicEndNodeOffset?: Accessor
 ): Renderer<S> {
   return {
     ___template: template,

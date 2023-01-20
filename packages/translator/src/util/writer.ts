@@ -8,7 +8,7 @@ import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
-import { ReserveType } from "./reserve";
+import { getNodeLiteral, ReserveType } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",
@@ -99,7 +99,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markHydrateNode",
       scopeIdentifier,
-      t.numericLiteral(reserve!.id)
+      getNodeLiteral(reserve!)
     )}`;
   }
 }

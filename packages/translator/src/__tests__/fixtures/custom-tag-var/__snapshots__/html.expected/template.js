@@ -7,7 +7,7 @@ const _renderer = (input, _tagVar) => {
       const _scope = _nextScopeId();
     }
   }, _register(() => {}, "packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data", _scope));
-  _write(`<div>${_escapeXML(data)}${_markHydrateNode(_scope, 0)}</div>`);
+  _write(`<div>${_escapeXML(data)}${_markHydrateNode(_scope, "#text/1")}</div>`);
   _writeHydrateScope(_scope, {});
 };
 export default _renderer;

@@ -7,7 +7,7 @@ const _renderer = ({
   const _scope = _nextScopeId();
   _write(`<div${_styleAttr({
     color: color
-  })}></div>${_markHydrateNode(_scope, 0)}<div style=width:100px></div><div style="color: green"></div>`);
+  })}></div>${_markHydrateNode(_scope, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
   _customTag({
     style: {
       color: color
