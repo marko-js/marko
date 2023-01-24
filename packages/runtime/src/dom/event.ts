@@ -8,7 +8,6 @@ const delegationRoots = new WeakMap<
 
 const eventOpts: AddEventListenerOptions = {
   capture: true,
-  passive: true,
 };
 
 export function on<
