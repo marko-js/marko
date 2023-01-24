@@ -12,7 +12,6 @@ import {
   inConditionalScope,
   queueHydrate,
   Scope,
-  staticNodesFragment,
 } from "@marko/runtime-fluurt/src/dom";
 
 import { get, next, over, replace } from "../../utils/walks";
@@ -80,11 +79,8 @@ const _count$if = closure(
     data(scope[INDEX_BRANCH0.text], count);
   }
 );
-const _if = conditional(
-  INDEX.conditional,
-  1,
-  (scope: ComponentScope) => (scope[INDEX.show] ? _ifBody : undefined),
-  staticNodesFragment
+const _if = conditional(INDEX.conditional, 1, (scope: ComponentScope) =>
+  scope[INDEX.show] ? _ifBody : undefined
 );
 const _show = source(INDEX.show, [_if]);
 const _count = source(INDEX.count, [

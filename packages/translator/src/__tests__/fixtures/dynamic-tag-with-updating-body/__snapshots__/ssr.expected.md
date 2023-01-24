@@ -1,0 +1,44 @@
+# Write
+  <div><button id=count>0<!M#1 #text/1></button><!M#1 #button/0></div><button id=changeTag></button><!M#0 #button/1><script>(M$h=[]).push((b,s)=>({0:{tagName:"div"},1:{count:0}}),[1,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])</script>
+
+
+# Render "End"
+```html
+<html>
+  <head />
+  <body>
+    <div>
+      <button
+        id="count"
+      >
+        0
+        <!--M#1 #text/1-->
+      </button>
+      <!--M#1 #button/0-->
+    </div>
+    <button
+      id="changeTag"
+    />
+    <!--M#0 #button/1-->
+    <script>
+      (M$h=[]).push((b,s)=&gt;({0:{tagName:"div"},1:{count:0}}),[1,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+    </script>
+  </body>
+</html>
+```
+
+# Mutations
+```
+inserted #document/html0
+inserted #document/html0/head0
+inserted #document/html0/body1
+inserted #document/html0/body1/div0
+inserted #document/html0/body1/div0/button0
+inserted #document/html0/body1/div0/button0/#text0
+inserted #document/html0/body1/div0/button0/#comment1
+inserted #document/html0/body1/div0/#comment1
+inserted #document/html0/body1/button1
+inserted #document/html0/body1/#comment2
+inserted #document/html0/body1/script3
+inserted #document/html0/body1/script3/#text0
+```

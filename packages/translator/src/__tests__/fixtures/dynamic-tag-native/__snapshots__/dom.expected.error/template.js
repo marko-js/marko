@@ -1,0 +1,1 @@
+./packages/translator/src/__tests__/fixtures/dynamic-tag-native/template.marko: Cannot read properties of undefined (reading 'references')

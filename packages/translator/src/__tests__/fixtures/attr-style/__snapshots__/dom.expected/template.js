@@ -1,7 +1,19 @@
-import { styleAttr as _styleAttr, write as _write, createRenderer as _createRenderer, conditional as _conditional, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { styleAttr as _styleAttr, write as _write, dynamicAttrsProxy as _dynamicAttrsProxy, dynamicTagAttrs as _dynamicTagAttrs, createRenderer as _createRenderer, conditional as _conditional, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 const _testBody = /* @__PURE__ */_createRenderer("", "");
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", 1, (_scope, test = _scope["test"]) => test);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", 1, (_scope, test = _scope["test"]) => test || _testBody, _dynamicAttrsProxy("#text/4"), _scope => _dynamicTagAttrs(_scope, "#text/4", () => ({
+  style: {
+    color: "green"
+  },
+  test: {
+    style: {
+      color: "green"
+    },
+    renderBody() {
+      _write("Hello");
+    }
+  }
+}), _testBody));
 const _test = /* @__PURE__ */_source("test", [_dynamicTagName]);
 const _color = /* @__PURE__ */_source("color", [], (_scope, color) => _styleAttr(_scope["#div/0"], {
   color: color

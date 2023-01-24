@@ -1,0 +1,9 @@
+import child1 from "<child1>";
+import child2 from "<child2>";
+
+<let/tagName = child1/>
+<let/val = 3/>
+
+<${tagName} value=val />
+
+<button onClick() { tagName = tagName === child1 ? child2 : child1 } />

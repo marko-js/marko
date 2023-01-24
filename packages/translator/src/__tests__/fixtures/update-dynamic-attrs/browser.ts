@@ -27,8 +27,8 @@ export const template = `<div></div>`;
 export const walks = get + over(1);
 
 export const value_subscribers = [];
-export const value_action = (scope: ComponentScope) => {
-  attrs(scope, INDEX.div, INDEX.value);
+export const value_action = (scope: ComponentScope, value: Input["value"]) => {
+  value && attrs(scope, INDEX.div, value);
 };
 
 const _value = source(INDEX.value, value_subscribers, value_action);

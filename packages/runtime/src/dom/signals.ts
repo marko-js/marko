@@ -504,6 +504,23 @@ export function inRenderBody(
   return signal;
 }
 
+export function dynamicAttrsProxy(nodeAccessor: Accessor): Signal {
+  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
+    const renderer = scope[nodeAccessor + AccessorChars.COND_RENDERER] as
+      | Renderer
+      | undefined;
+    const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
+
+    renderer?.___attrs?.[methodName](childScope, extraArg);
+  });
+  if (MARKO_DEBUG) {
+    setDebugInfo(signal, "dynamicAttrsProxy", {
+      nodeAccessor,
+    });
+  }
+  return signal;
+}
+
 let tagId = 0;
 export function nextTagId() {
   return "c" + tagId++;

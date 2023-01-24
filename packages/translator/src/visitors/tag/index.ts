@@ -65,7 +65,7 @@ export default {
           // AttributeTag.analyze.exit(tag);
           break;
         case TagNameTypes.DynamicTag:
-          // DynamicTag.analyze.exit(tag);
+          DynamicTag.analyze.exit(tag);
           break;
       }
     },

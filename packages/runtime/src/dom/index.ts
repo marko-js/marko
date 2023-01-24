@@ -39,6 +39,7 @@ export {
   createRenderer,
   createRenderFn,
   initContextProvider,
+  dynamicTagAttrs,
 } from "./renderer";
 
 export {
@@ -57,4 +58,5 @@ export {
   contextClosure,
   inChildMany,
   inChild,
+  dynamicAttrsProxy,
 } from "./signals";

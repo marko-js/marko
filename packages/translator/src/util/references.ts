@@ -153,7 +153,7 @@ export function trackReferencesForBindings(
   }
 }
 
-function updateReferenceGroup(
+export function updateReferenceGroup(
   path: t.NodePath,
   extraKey: string,
   newBinding: Reserve

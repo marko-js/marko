@@ -147,6 +147,7 @@ export default {
       write`<${name.node}`;
 
       if (hasSpread) {
+        // TODO: #130 This doesn't work, parameters are wrong
         const attrsCallExpr = callRuntime(
           "attrs",
           scopeIdentifier,
@@ -159,7 +160,7 @@ export default {
           tag.insertBefore(t.expressionStatement(attrsCallExpr));
         }
       } else {
-        // TODO: this should iterate backward and filter out duplicated attrs.
+        // TODO: #129 this should iterate backward and filter out duplicated attrs.
         for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
           const name = attr.node.name;
           const extra = attr.node.extra ?? {};

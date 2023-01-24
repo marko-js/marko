@@ -1,10 +1,12 @@
-import type { Accessor, Scope, ScopeContext } from "../common/types";
-import type { Signal } from "./signals";
+import { Accessor, AccessorChars, Scope, ScopeContext } from "../common/types";
+import { setSource, Signal } from "./signals";
 import { createScope } from "./scope";
 import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
 import { DOMFragment, singleNodeFragment } from "./fragment";
+import { attrs } from "./dom";
+import { setConditionalRendererOnlyChild } from "./control-flow";
 
 const enum NodeType {
   Element = 1,
@@ -27,6 +29,10 @@ export type Renderer<S extends Scope = Scope> = {
   ___owner: Scope | undefined;
 };
 
+export type RendererOrElementName<S extends Scope = Scope> =
+  | Renderer<S>
+  | (string & Record<keyof Renderer<S>, undefined>);
+
 type Input = Record<string, unknown>;
 type SetupFn<S extends Scope = Scope> = (scope: S) => void;
 type RenderResult<I extends Input> = {
@@ -35,7 +41,7 @@ type RenderResult<I extends Input> = {
 };
 
 export function createScopeWithRenderer<S extends Scope = Scope>(
-  renderer: Renderer<S>,
+  renderer: RendererOrElementName<S>,
   context: ScopeContext,
   ownerScope?: Scope
 ) {
@@ -44,8 +50,10 @@ export function createScopeWithRenderer<S extends Scope = Scope>(
   newScope._ = renderer.___owner || ownerScope;
   newScope.___renderer = renderer as Renderer;
   initRenderer<S>(renderer, newScope);
-  for (const signal of renderer.___closureSignals) {
-    signal.___subscribe?.(newScope);
+  if (renderer.___closureSignals) {
+    for (const signal of renderer.___closureSignals) {
+      signal.___subscribe?.(newScope);
+    }
   }
   setContext(null);
   return newScope;
@@ -77,15 +85,18 @@ export function initContextProvider(
 }
 
 export function initRenderer<S extends Scope = Scope>(
-  renderer: Renderer<S>,
+  renderer: RendererOrElementName<S>,
   scope: S
 ) {
-  const dom = renderer.___clone();
+  const dom =
+    typeof renderer === "string"
+      ? document.createElement(renderer)
+      : renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment
       ? dom.firstChild!
       : (dom as ChildNode),
-    renderer.___walks!,
+    renderer.___walks ?? " ",
     scope
   );
   scope.___startNode =
@@ -108,6 +119,34 @@ export function initRenderer<S extends Scope = Scope>(
   return dom;
 }
 
+export function dynamicTagAttrs(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  getAttrs: () => Record<string, unknown>,
+  renderBody: Renderer
+) {
+  const renderer = scope[
+    nodeAccessor + AccessorChars.COND_RENDERER
+  ] as Renderer;
+  if (!renderer || renderer === renderBody) {
+    return;
+  }
+
+  const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE];
+  const attributes = getAttrs();
+  if (typeof renderer === "string") {
+    // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
+    const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
+    attrs(childScope, elementAccessor, attributes);
+    setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
+  } else if (renderer.___attrs) {
+    setSource(childScope, renderer.___attrs, {
+      ...attributes,
+      renderBody: renderBody ?? attributes.renderBody,
+    });
+  }
+}
+
 export function createRenderFn<I extends Input, S extends Scope>(
   template: string,
   walks: string,
@@ -124,7 +163,8 @@ export function createRenderFn<I extends Input, S extends Scope>(
     closureSignals,
     0,
     dynamicStartNodeOffset,
-    dynamicEndNodeOffset
+    dynamicEndNodeOffset,
+    attrs
   );
   return Object.assign((input: I, element: Element): RenderResult<I> => {
     const scope = createScope() as S;
@@ -161,7 +201,8 @@ export function createRenderer<S extends Scope>(
   closureSignals: Signal[] = [],
   hasUserEffects: 0 | 1 = 0,
   dynamicStartNodeOffset?: Accessor,
-  dynamicEndNodeOffset?: Accessor
+  dynamicEndNodeOffset?: Accessor,
+  attrs?: Signal
 ): Renderer<S> {
   return {
     ___template: template,
@@ -173,7 +214,7 @@ export function createRenderer<S extends Scope>(
     ___sourceNode: undefined,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
     ___dynamicEndNodeOffset: dynamicEndNodeOffset,
-    ___attrs: undefined,
+    ___attrs: attrs,
     ___owner: undefined,
   };
 }

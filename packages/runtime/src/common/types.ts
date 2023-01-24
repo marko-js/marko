@@ -58,6 +58,7 @@ export const enum AccessorChars {
   LOOP_SCOPE_MAP = "(",
   LOOP_VALUE = ")",
   CONTEXT_VALUE = ":",
+  PREVIOUS_ATTRIBUTES = "~",
 }
 
 export type Accessor = string | number;

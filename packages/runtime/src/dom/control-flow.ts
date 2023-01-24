@@ -1,8 +1,16 @@
 import { AccessorChars, Scope, Accessor } from "../common/types";
 import { reconcile } from "./reconcile";
-import { Renderer, createScopeWithRenderer } from "./renderer";
+import {
+  Renderer,
+  createScopeWithRenderer,
+  RendererOrElementName,
+} from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
-import { DOMFragment, singleNodeFragment } from "./fragment";
+import {
+  DOMFragment,
+  singleNodeFragment,
+  staticNodesFragment,
+} from "./fragment";
 import {
   derivation,
   destructureSources,
@@ -14,18 +22,22 @@ import {
 export function conditional<S extends Scope>(
   nodeAccessor: Accessor,
   defaultMark: number,
-  computeRenderer: (scope: S) => Renderer | undefined,
-  fragment?: DOMFragment
+  computeRenderer: (scope: S) => RendererOrElementName | undefined,
+  subscriber?: Signal,
+  action?: (scope: Scope, renderer?: RendererOrElementName) => void
 ) {
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   return derivation(
     rendererAccessor,
     defaultMark,
-    [inRenderBody(rendererAccessor, childScopeAccessor)],
+    [inRenderBody(rendererAccessor, childScopeAccessor)].concat(
+      subscriber ?? []
+    ),
     computeRenderer,
-    (scope: S, renderer?: Renderer) => {
-      setConditionalRenderer(scope, nodeAccessor, renderer, fragment);
+    (scope: S, renderer?: RendererOrElementName) => {
+      setConditionalRenderer(scope, nodeAccessor, renderer);
+      action?.(scope, renderer);
     }
   );
 }
@@ -33,7 +45,7 @@ export function conditional<S extends Scope>(
 export function conditionalOnlyChild<S extends Scope>(
   nodeAccessor: Accessor,
   defaultMark: number,
-  computeRenderer: (scope: S) => Renderer | undefined,
+  computeRenderer: (scope: S) => RendererOrElementName | undefined,
   fragment?: DOMFragment
 ) {
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
@@ -43,7 +55,7 @@ export function conditionalOnlyChild<S extends Scope>(
     defaultMark,
     [inRenderBody(rendererAccessor, childScopeAccessor)],
     computeRenderer,
-    (scope: S, renderer?: Renderer) => {
+    (scope: S, renderer?: RendererOrElementName) => {
       setConditionalRendererOnlyChild(scope, nodeAccessor, renderer, fragment);
     }
   );
@@ -67,8 +79,8 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer<ChildScope> | undefined,
-  fragment: DOMFragment = singleNodeFragment
+  newRenderer: RendererOrElementName<ChildScope> | undefined,
+  fragment: DOMFragment = staticNodesFragment // TODO: should optimize to singleNodesFragment
 ) {
   let newScope: ChildScope;
   let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
@@ -97,7 +109,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 export function setConditionalRendererOnlyChild(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer | undefined,
+  newRenderer: RendererOrElementName | undefined,
   fragment: DOMFragment = singleNodeFragment
 ) {
   const prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;

@@ -361,16 +361,16 @@ export function finalizeSignalArgs(args: t.Expression[]) {
       const body = (arg.body as t.BlockStatement).body;
       if (body) {
         if (body.length === 0) {
-          if (i === args.length - 1) {
-            args.length = i;
-          } else {
-            args[i] = t.nullLiteral();
-          }
+          args[i] = t.nullLiteral();
         } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
           arg.body = body[0].expression;
         }
       }
     }
+  }
+
+  for (let i = args.length - 1; t.isNullLiteral(args[i]); ) {
+    args.length = i--;
   }
 }
 export function addStatement(

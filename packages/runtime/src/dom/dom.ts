@@ -1,4 +1,3 @@
-import type { Renderer } from "./renderer";
 import { onDestroy, write } from "./scope";
 import { styleValue, classValue } from "../common/helpers";
 import { Accessor, AccessorChars, Scope } from "../common/types";
@@ -42,12 +41,11 @@ export function data(node: Text | Comment, value: unknown) {
 export function attrs(
   scope: Scope,
   elementAccessor: Accessor,
-  attrsAccessor: Accessor
+  nextAttrs: Record<string, unknown>
 ) {
-  const nextAttrs = scope[attrsAccessor] as Record<string, unknown>;
-  const prevAttrs = scope[attrsAccessor + "-"] as
-    | Record<string, unknown>
-    | undefined;
+  const prevAttrs = scope[
+    elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES
+  ] as typeof nextAttrs | undefined;
   const element = scope[elementAccessor] as Element;
 
   if (prevAttrs) {
@@ -70,7 +68,7 @@ export function attrs(
     }
   }
 
-  scope[attrsAccessor + "-"] = nextAttrs;
+  scope[elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES] = nextAttrs;
 }
 
 const doc = document;
@@ -118,27 +116,6 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
 
 export function innerHTML(element: Element, value: string) {
   element.innerHTML = normalizeString(value);
-}
-
-export function dynamicTagString(tag: string, input: Record<string, unknown>) {
-  // TODO
-  return [tag, input];
-}
-
-export function dynamicTagRenderer(
-  tag: Renderer,
-  input: Record<string, unknown>
-) {
-  // TODO
-  return [tag, input];
-}
-
-export function dynamicTag(
-  tag: string | Renderer,
-  input: Record<string, unknown>
-) {
-  // TODO
-  return [tag, input];
 }
 
 function normalizeAttrValue(value: unknown) {

@@ -7,7 +7,12 @@ import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputHTML } from "../../util/marko-config";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
-import { getComputeFn, getSignal, subscribe } from "../../util/signals";
+import {
+  addStatement,
+  getComputeFn,
+  getSignal,
+  subscribe,
+} from "../../util/signals";
 import {
   countReserves,
   getNodeLiteral,
@@ -15,8 +20,13 @@ import {
   reserveScope,
   ReserveType,
 } from "../../util/reserve";
-import type { ReferenceGroup } from "../../util/references";
+import {
+  mergeReferenceGroups,
+  ReferenceGroup,
+  updateReferenceGroup,
+} from "../../util/references";
 import customTag from "./custom-tag";
+import { scopeIdentifier } from "../program";
 
 export default {
   analyze: {
@@ -30,6 +40,15 @@ export default {
       );
 
       customTag.analyze.enter(tag);
+    },
+    exit(tag: t.NodePath<t.MarkoTag>) {
+      tag.node.extra.attrsReferences = mergeReferenceGroups(
+        getOrCreateSectionId(tag),
+        tag.node.attributes
+          .filter((attr) => attr.extra?.valueReferences)
+          .map((attr) => [attr.extra, "valueReferences"])
+      );
+      updateReferenceGroup(tag, "attrsReferences", tag.node.extra.reserve!);
     },
   },
   translate: {
@@ -73,18 +92,11 @@ export default {
           tag.replaceWith(t.expressionStatement(dynamicTagExpr))[0].skip();
         }
       } else {
-        // if (renderBodyProp) {
-        //   const tagBodySectionId = getSectionId(tag.get("body"));
-        //   const { walks, writes } = writer.getSectionMeta(tagBodySectionId);
-        //   const renderBody = callRuntime(
-        //     "createRenderer",
-        //     writes || t.stringLiteral(""),
-        //     walks || t.stringLiteral(""),
-        //     t.nullLiteral()
-        //   );
-        // }
-
         const sectionId = getSectionId(tag);
+        const bodySectionId = getSectionId(tag.get("body"));
+        const hasBody = sectionId !== bodySectionId;
+        const renderBodyIdentifier =
+          hasBody && writer.getRenderer(bodySectionId);
         const tagNameReserve = node.extra?.reserve as Reserve;
         const references = (node.extra?.nameReferences as ReferenceGroup)
           ?.references;
@@ -94,10 +106,52 @@ export default {
             "conditional",
             getNodeLiteral(tagNameReserve),
             t.numericLiteral(countReserves(references) || 1),
-            getComputeFn(sectionId, node.name, references)
+            getComputeFn(
+              sectionId,
+              renderBodyIdentifier
+                ? t.logicalExpression("||", node.name, renderBodyIdentifier)
+                : node.name,
+              references
+            ),
+            signal.subscribers[0],
+            t.arrowFunctionExpression(
+              [scopeIdentifier],
+              t.blockStatement(signal.render)
+            )
           );
         };
+
         subscribe(references, signal);
+
+        const attrsObject = attrsToObject(tag, true);
+        if (attrsObject || renderBodyIdentifier) {
+          const attrsSignal = getSignal(
+            sectionId,
+            node.extra?.attrsReferences.references
+          );
+
+          attrsSignal.subscribers.push(
+            callRuntime("dynamicAttrsProxy", getNodeLiteral(tagNameReserve))
+          );
+
+          addStatement(
+            "apply",
+            sectionId,
+            node.extra?.attrsReferences,
+            t.expressionStatement(
+              callRuntime(
+                "dynamicTagAttrs",
+                scopeIdentifier,
+                getNodeLiteral(tagNameReserve),
+                t.arrowFunctionExpression(
+                  [],
+                  attrsObject ?? t.objectExpression([])
+                ),
+                renderBodyIdentifier
+              )
+            )
+          );
+        }
 
         tag.remove();
       }
