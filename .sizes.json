@@ -7,45 +7,45 @@
     {
       "name": "*",
       "total": {
-        "min": 12667,
-        "gzip": 5360,
-        "brotli": 4886
+        "min": 12699,
+        "gzip": 5372,
+        "brotli": 4872
       }
     },
     {
       "name": "counter",
       "user": {
-        "min": 348,
-        "gzip": 268,
-        "brotli": 249
+        "min": 343,
+        "gzip": 266,
+        "brotli": 230
       },
       "runtime": {
-        "min": 3163,
-        "gzip": 1492,
-        "brotli": 1336
+        "min": 3176,
+        "gzip": 1501,
+        "brotli": 1346
       },
       "total": {
-        "min": 3511,
-        "gzip": 1760,
-        "brotli": 1585
+        "min": 3519,
+        "gzip": 1767,
+        "brotli": 1576
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 207,
-        "gzip": 182,
-        "brotli": 153
+        "gzip": 181,
+        "brotli": 158
       },
       "runtime": {
-        "min": 2628,
-        "gzip": 1326,
-        "brotli": 1182
+        "min": 2633,
+        "gzip": 1329,
+        "brotli": 1186
       },
       "total": {
-        "min": 2835,
-        "gzip": 1508,
-        "brotli": 1335
+        "min": 2840,
+        "gzip": 1510,
+        "brotli": 1344
       }
     },
     {
@@ -56,14 +56,14 @@
         "brotli": 612
       },
       "runtime": {
-        "min": 7213,
-        "gzip": 3238,
-        "brotli": 2947
+        "min": 7250,
+        "gzip": 3268,
+        "brotli": 2965
       },
       "total": {
-        "min": 8346,
-        "gzip": 3925,
-        "brotli": 3559
+        "min": 8383,
+        "gzip": 3955,
+        "brotli": 3577
       }
     },
     {
@@ -74,14 +74,14 @@
         "brotli": 533
       },
       "runtime": {
-        "min": 8214,
-        "gzip": 3679,
-        "brotli": 3339
+        "min": 8244,
+        "gzip": 3713,
+        "brotli": 3361
       },
       "total": {
-        "min": 9144,
-        "gzip": 4258,
-        "brotli": 3872
+        "min": 9174,
+        "gzip": 4292,
+        "brotli": 3894
       }
     }
   ]

@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import type { DOMFragment } from "./fragment";
+import { defaultFragment, DOMFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js
@@ -9,7 +9,7 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment
+  fragment: DOMFragment = defaultFragment
 ): void {
   const bLength = newScopes.length;
   let aEnd = oldScopes.length;

@@ -96,3 +96,5 @@ function getFirstNode(
 function getLastNode(currentScope: Scope) {
   return getFirstNode(currentScope, currentScope.___endNode, true);
 }
+
+export const defaultFragment = staticNodesFragment;

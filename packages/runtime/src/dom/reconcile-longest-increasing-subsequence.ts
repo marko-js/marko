@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import type { DOMFragment } from "./fragment";
+import { defaultFragment, DOMFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 const WRONG_POS = 2147483647;
@@ -9,7 +9,7 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment
+  fragment: DOMFragment = defaultFragment
 ): void {
   let oldStart = 0;
   let newStart = 0;

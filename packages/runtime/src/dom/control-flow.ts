@@ -6,11 +6,7 @@ import {
   RendererOrElementName,
 } from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
-import {
-  DOMFragment,
-  singleNodeFragment,
-  staticNodesFragment,
-} from "./fragment";
+import { defaultFragment } from "./fragment";
 import {
   derivation,
   destructureSources,
@@ -45,8 +41,7 @@ export function conditional<S extends Scope>(
 export function conditionalOnlyChild<S extends Scope>(
   nodeAccessor: Accessor,
   defaultMark: number,
-  computeRenderer: (scope: S) => RendererOrElementName | undefined,
-  fragment?: DOMFragment
+  computeRenderer: (scope: S) => RendererOrElementName | undefined
 ) {
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
@@ -56,7 +51,7 @@ export function conditionalOnlyChild<S extends Scope>(
     [inRenderBody(rendererAccessor, childScopeAccessor)],
     computeRenderer,
     (scope: S, renderer?: RendererOrElementName) => {
-      setConditionalRendererOnlyChild(scope, nodeAccessor, renderer, fragment);
+      setConditionalRendererOnlyChild(scope, nodeAccessor, renderer);
     }
   );
 }
@@ -79,11 +74,12 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName<ChildScope> | undefined,
-  fragment: DOMFragment = staticNodesFragment // TODO: should optimize to singleNodesFragment
+  newRenderer: RendererOrElementName<ChildScope> | undefined
 ) {
   let newScope: ChildScope;
   let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
+  const newFragment = newRenderer?.___fragment ?? defaultFragment;
+  const prevFragment = prevScope?.___renderer?.___fragment ?? defaultFragment;
 
   if (newRenderer) {
     newScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] =
@@ -98,19 +94,18 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     scope[nodeAccessor + AccessorChars.COND_SCOPE] = undefined;
   }
 
-  fragment.___insertBefore(
+  newFragment.___insertBefore(
     newScope,
-    fragment.___getParentNode(prevScope),
-    fragment.___getFirstNode(prevScope)
+    prevFragment.___getParentNode(prevScope),
+    prevFragment.___getFirstNode(prevScope)
   );
-  fragment.___remove(destroyScope(prevScope));
+  prevFragment.___remove(destroyScope(prevScope));
 }
 
 export function setConditionalRendererOnlyChild(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | undefined,
-  fragment: DOMFragment = singleNodeFragment
+  newRenderer: RendererOrElementName | undefined
 ) {
   const prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
   const referenceNode = scope[nodeAccessor] as Element;
@@ -123,7 +118,11 @@ export function setConditionalRendererOnlyChild(
         (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
         scope
       ));
-    fragment.___insertBefore(newScope, referenceNode, null);
+    (newRenderer.___fragment ?? defaultFragment).___insertBefore(
+      newScope,
+      referenceNode,
+      null
+    );
   }
 
   prevScope && destroyScope(prevScope);
@@ -141,8 +140,7 @@ export function loop<S extends Scope, C extends Scope, T>(
   renderer: Renderer,
   paramSubscribers: Signal[],
   setParams: (scope: C, params: [T, number, T[]]) => void,
-  compute: (scope: S) => [T[], (x: T) => unknown],
-  fragment?: DOMFragment
+  compute: (scope: S) => [T[], (x: T) => unknown]
 ) {
   const params = destructureSources(paramSubscribers, setParams);
   const valueAccessor = nodeAccessor + AccessorChars.LOOP_VALUE;
@@ -157,15 +155,7 @@ export function loop<S extends Scope, C extends Scope, T>(
     ],
     compute,
     (scope, [newValues, keyFn]) => {
-      setLoopOf(
-        scope,
-        nodeAccessor,
-        newValues,
-        renderer,
-        keyFn,
-        setParams,
-        fragment
-      );
+      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, setParams);
     }
   );
 }
@@ -189,8 +179,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
-  setParams?: (scope: ChildScope, params: [T, number, T[]]) => void,
-  fragment: DOMFragment = singleNodeFragment
+  setParams?: (scope: ChildScope, params: [T, number, T[]]) => void
 ) {
   let newMap: Map<unknown, ChildScope>;
   let newArray: Scope[];
@@ -263,13 +252,20 @@ export function setLoopOf<T, ChildScope extends Scope>(
         getEmptyScope(referenceNode as Comment);
       }
       const oldLastChild = oldArray[oldArray.length - 1];
+      const fragment = renderer.___fragment ?? defaultFragment;
       afterReference = fragment.___getAfterNode(oldLastChild);
       parentNode = fragment.___getParentNode(oldLastChild);
     } else {
       afterReference = null;
       parentNode = referenceNode as Element;
     }
-    reconcile(parentNode, oldArray, newArray!, afterReference, fragment);
+    reconcile(
+      parentNode,
+      oldArray,
+      newArray!,
+      afterReference,
+      renderer.___fragment
+    );
   }
 
   scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] = newMap;

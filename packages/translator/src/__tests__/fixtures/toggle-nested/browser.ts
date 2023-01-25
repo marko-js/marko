@@ -117,8 +117,7 @@ const value1$if0 = closure(1, INDEX.value1, [
 const _if0 = conditionalOnlyChild(
   INDEX.conditional,
   1,
-  (scope: ComponentScope) => (scope[INDEX.show] ? ifBody0 : undefined),
-  dynamicFragment
+  (scope: ComponentScope) => (scope[INDEX.show] ? ifBody0 : undefined)
 );
 
 export const value2_subscribers = [
@@ -152,6 +151,7 @@ const ifBody0 = createRenderer(
   undefined,
   [value1$if0, value2$if0],
   0,
+  dynamicFragment,
   INDEX_IF0.conditional0,
   INDEX_IF0.conditional1
 );

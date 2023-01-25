@@ -4,7 +4,7 @@ import { createScope } from "./scope";
 import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueHydrate, runHydrate } from "./queue";
-import { DOMFragment, singleNodeFragment } from "./fragment";
+import { DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 
@@ -23,6 +23,7 @@ export type Renderer<S extends Scope = Scope> = {
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
+  ___fragment: DOMFragment | undefined;
   ___dynamicStartNodeOffset: Accessor | undefined;
   ___dynamicEndNodeOffset: Accessor | undefined;
   ___attrs: Signal | undefined;
@@ -64,8 +65,7 @@ export function initContextProvider(
   scopeAccessor: number,
   valueAccessor: number,
   contextKey: string,
-  renderer: Renderer,
-  fragment: DOMFragment = singleNodeFragment
+  renderer: Renderer
 ) {
   const node: Node = scope[scopeAccessor];
   const newScope = createScopeWithRenderer(
@@ -77,7 +77,11 @@ export function initContextProvider(
     scope
   );
 
-  fragment.___insertBefore(newScope, node.parentNode!, node.nextSibling);
+  (renderer.___fragment ?? defaultFragment).___insertBefore(
+    newScope,
+    node.parentNode!,
+    node.nextSibling
+  );
 
   for (const signal of renderer.___closureSignals) {
     signal.___notify(newScope, true);
@@ -162,6 +166,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
     setup,
     closureSignals,
     0,
+    undefined,
     dynamicStartNodeOffset,
     dynamicEndNodeOffset,
     attrs
@@ -200,6 +205,7 @@ export function createRenderer<S extends Scope>(
   setup?: SetupFn<S>,
   closureSignals: Signal[] = [],
   hasUserEffects: 0 | 1 = 0,
+  fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
   dynamicEndNodeOffset?: Accessor,
   attrs?: Signal
@@ -212,6 +218,7 @@ export function createRenderer<S extends Scope>(
     ___closureSignals: closureSignals,
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
+    ___fragment: fragment,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
     ___dynamicEndNodeOffset: dynamicEndNodeOffset,
     ___attrs: attrs,
