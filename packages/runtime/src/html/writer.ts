@@ -329,9 +329,11 @@ export function markHydrateControlEnd(scopeId: number, index: Accessor) {
 export function markHydrateControlSingleNodeEnd(
   scopeId: number,
   index: Accessor,
-  childScopeIds: number | number[]
+  childScopeIds?: number | number[]
 ) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_SINGLE_NODES_END}${scopeId} ${index} ${childScopeIds}>`;
+  return `<!${runtimeId}${
+    HydrateSymbols.SECTION_SINGLE_NODES_END
+  }${scopeId} ${index} ${childScopeIds ?? ""}>`;
 }
 
 function writeHydrateScript() {

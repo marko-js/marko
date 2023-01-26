@@ -1,6 +1,6 @@
 import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = (input, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _write("<h1>Hello World</h1><script>\n    console.log('Hello World');\n  </script>");
 };
 export default _renderer;

@@ -1,6 +1,6 @@
 import { dynamicTag as _dynamicTag, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = (input, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _dynamicTag(input.renderBody, null);
 };
 export default _renderer;

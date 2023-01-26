@@ -48,13 +48,12 @@ container.querySelector("button.toggle").click();
 <button
   class="toggle"
 />
-<!---->
 ```
 
 # Mutations
 ```
-inserted #comment2
-removed span after #comment2
+inserted #text2
+removed span after #text2
 ```
 
 
@@ -68,7 +67,6 @@ container.querySelector("button.inc").click();
 <button
   class="toggle"
 />
-<!---->
 ```
 
 # Mutations
@@ -95,7 +93,7 @@ container.querySelector("button.toggle").click();
 # Mutations
 ```
 inserted span2
-removed #comment after span2
+removed #text after span2
 span2/#text0: " " => "2"
 ```
 

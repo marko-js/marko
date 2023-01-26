@@ -11,7 +11,7 @@ const _renderer = ({
   level,
   other
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _dynamicTag(renderBody, {
     class: ["a", "b"],
     other: other
@@ -24,22 +24,22 @@ const _renderer = ({
   if (_tagName) _write(`<${_tagName} class="a b"${_attr("other", other)}>`);
   if (_tagName) _write(`</${_tagName}>`);
   const _tagName2 = show && "div";
-  _write(`${_markHydrateNode(_scope, "#undefined/2")}`);
+  _write(`${_markHydrateNode(_scope0_, "#undefined/2")}`);
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
-  _write(`${_markHydrateNode(_scope, "#undefined/3")}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>${_markHydrateNode(_scope, "#undefined/4")}`);
+  _write(`${_markHydrateNode(_scope0_, "#undefined/3")}<${large ? "h1" : "h2"} class="a b"${_attr("other", other)}></${large ? "h1" : "h2"}>${_markHydrateNode(_scope0_, "#undefined/4")}`);
   (showTagA ? tagA : tagB)({
     class: ["a", "b"],
     other: other,
     class: ["a", "b"],
     other: other,
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope2_ = _nextScopeId();
     }
   });
   const _tagName3 = showTagA && tagA;
   function _renderBody2() {
-    const _scope = _nextScopeId();
+    const _scope3_ = _nextScopeId();
   }
   if (_tagName3) _tagName3({
     class: ["a", "b"],
@@ -47,7 +47,7 @@ const _renderer = ({
   });else _renderBody2();
   const _tagName4 = showTagA && tagA;
   function _renderBody3() {
-    const _scope = _nextScopeId();
+    const _scope1_ = _nextScopeId();
     _write("Body content");
   }
   if (_tagName4) _tagName4({
@@ -58,7 +58,7 @@ const _renderer = ({
     class: ["a", "b"],
     other: other,
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope4_ = _nextScopeId();
     }
   });
   const largeHeading = isLarge && "h1";
@@ -67,10 +67,10 @@ const _renderer = ({
   if (_tagName5) _write(`</${_tagName5}>`);
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
-  _write(`${_markHydrateNode(_scope, "#undefined/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope, "#undefined/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope, "#undefined/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope, "#undefined/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markHydrateNode(_scope, "#undefined/9")}`);
+  _write(`${_markHydrateNode(_scope0_, "#undefined/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markHydrateNode(_scope0_, "#undefined/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markHydrateNode(_scope0_, "#undefined/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markHydrateNode(_scope0_, "#undefined/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markHydrateNode(_scope0_, "#undefined/9")}`);
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}>`);
   if (tagConstB) _write(`</${tagConstB}>`);
-  _write(`${_markHydrateNode(_scope, "#undefined/10")}`);
+  _write(`${_markHydrateNode(_scope0_, "#undefined/10")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

@@ -8,11 +8,18 @@ import {
   getSignal,
   setSubscriberBuilder,
   writeHTMLHydrateStatements,
+  getSerializedScopeProperties,
+  setHydrateScopeBuilder,
+  getHydrateRegisterId,
 } from "../../util/signals";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import { getOrCreateSectionId, getSectionId } from "../../util/sections";
+import {
+  getOrCreateSectionId,
+  getScopeIdentifier,
+  getSectionId,
+} from "../../util/sections";
 import {
   ReserveType,
   reserveScope,
@@ -126,29 +133,61 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
   const bodySectionId = getOrCreateSectionId(tagBody);
   const [isLast, branches] = getBranches(tag, bodySectionId);
   if (isLast) {
-    branches[0].tag.node.extra.conditionalReferences = mergeReferenceGroups(
+    const rootExtra = branches[0].tag.node.extra;
+    const conditionalReferences = mergeReferenceGroups(
       sectionId,
       branches
         .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
         .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"])
     );
+    rootExtra.conditionalReferences = conditionalReferences;
+    rootExtra.isStateful = !!conditionalReferences.references;
+    rootExtra.hoistedScopeIdentifier =
+      rootExtra.isStateful && tag.scope.generateUidIdentifier("ifScope");
+    rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
+      return tag.node.body.body.length === 1;
+    });
   }
 }
 
 export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
+  const sectionId = getSectionId(tag);
   const bodySectionId = getSectionId(tagBody);
   const [isLast, branches] = getBranches(tag, bodySectionId);
+  const rootExtra = branches[0].tag.node.extra;
+  const isStateful = rootExtra.isStateful;
+  const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
   if (isOutputHTML()) {
+    if (isStateful) {
+      if (!singleNodeOptimization) {
+        writer.writePrependTo(tagBody)`${callRuntime(
+          "markHydrateScopeStart",
+          getScopeIdentifier(bodySectionId)
+        )}`;
+      }
+      setHydrateScopeBuilder(bodySectionId, (object: t.ObjectExpression) => {
+        return t.callExpression(
+          t.memberExpression(t.identifier("Object"), t.identifier("assign")),
+          [
+            branches[0].tag.node.extra.hoistedScopeIdentifier as t.Identifier,
+            object,
+          ]
+        );
+      });
+      getSerializedScopeProperties(bodySectionId).set(
+        importRuntime("SYMBOL_OWNER"),
+        getScopeIdentifier(sectionId)
+      );
+    }
     writer.flushInto(tag);
     writeHTMLHydrateStatements(tagBody);
   }
 
   if (isLast) {
+    const { extra } = branches[0].tag.node;
     if (isOutputDOM()) {
-      const sectionId = getSectionId(tag);
-      const { extra } = branches[0].tag.node;
       let expr: t.Expression = t.nullLiteral();
 
       for (let i = branches.length; i--; ) {
@@ -164,6 +203,10 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
             /*writer.getRenderer(sectionId)*/
           );
         });
+
+        if (isStateful) {
+          writer.setRegisterRenderer(sectionId, true);
+        }
 
         tag.remove();
 
@@ -187,11 +230,42 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       };
       subscribe(references, signal);
     } else {
+      const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();
+      const ifScopeIdIdentifier = tag.scope.generateUidIdentifier("ifScopeId");
+      const ifScopeIdentifier = branches[0].tag.node.extra
+        .hoistedScopeIdentifier as t.Identifier;
+      const ifRendererIdentifier =
+        tag.scope.generateUidIdentifier("ifRenderer");
 
       let statement: t.Statement | undefined;
       for (let i = branches.length; i--; ) {
-        const { tag } = branches[i];
+        const { tag, sectionId } = branches[i];
+
+        if (isStateful) {
+          tag.node.body.body.push(
+            t.expressionStatement(
+              callRuntime(
+                "register",
+                ifRendererIdentifier,
+                t.stringLiteral(getHydrateRegisterId(sectionId, "renderer"))
+              )
+            ) as any
+          );
+
+          if (singleNodeOptimization) {
+            tag.node.body.body.push(
+              t.expressionStatement(
+                t.assignmentExpression(
+                  "=",
+                  ifScopeIdIdentifier,
+                  getScopeIdentifier(sectionId)
+                )
+              ) as any
+            );
+          }
+        }
+
         const [testAttr] = tag.node.attributes;
         const curStatement = toFirstStatementOrBlock(tag.node.body);
 
@@ -204,7 +278,48 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         tag.remove();
       }
 
-      nextTag.insertBefore(statement!);
+      if (!isStateful) {
+        nextTag.insertBefore(statement!);
+      } else {
+        nextTag.insertBefore(
+          [
+            singleNodeOptimization &&
+              t.variableDeclaration("let", [
+                t.variableDeclarator(ifScopeIdIdentifier),
+              ]),
+            t.variableDeclaration("const", [
+              t.variableDeclarator(ifScopeIdentifier, t.objectExpression([])),
+              t.variableDeclarator(
+                ifRendererIdentifier,
+                t.arrowFunctionExpression([], t.blockStatement([]))
+              ),
+            ]),
+            statement!,
+          ].filter(Boolean) as t.Statement[]
+        );
+        if (singleNodeOptimization) {
+          write`${callRuntime(
+            "markHydrateControlSingleNodeEnd",
+            getScopeIdentifier(sectionId),
+            getNodeLiteral(extra.reserve!),
+            ifScopeIdIdentifier
+          )}`;
+        } else {
+          write`${callRuntime(
+            "markHydrateControlEnd",
+            getScopeIdentifier(sectionId),
+            getNodeLiteral(extra.reserve!)
+          )}`;
+        }
+        getSerializedScopeProperties(sectionId).set(
+          t.stringLiteral(getNodeLiteral(extra.reserve!).value + "!"),
+          ifScopeIdentifier
+        );
+        getSerializedScopeProperties(sectionId).set(
+          t.stringLiteral(getNodeLiteral(extra.reserve!).value + "("),
+          ifRendererIdentifier
+        );
+      }
     }
   }
 }

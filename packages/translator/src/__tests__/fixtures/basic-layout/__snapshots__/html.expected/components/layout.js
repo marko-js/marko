@@ -2,7 +2,7 @@ import { write as _write, dynamicTag as _dynamicTag, nextScopeId as _nextScopeId
 const _renderer = ({
   renderBody
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _write("<body>");
   _dynamicTag(renderBody, null);
   _write("</body>");

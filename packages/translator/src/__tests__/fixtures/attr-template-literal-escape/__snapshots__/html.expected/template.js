@@ -2,8 +2,8 @@ import { attr as _attr, markHydrateNode as _markHydrateNode, write as _write, ne
 const _renderer = ({
   name
 }, _tagVar) => {
-  const _scope = _nextScopeId();
-  _write(`<div${_attr("foo", `Hello ${name}`)}></div>${_markHydrateNode(_scope, "#div/0")}`);
+  const _scope0_ = _nextScopeId();
+  _write(`<div${_attr("foo", `Hello ${name}`)}></div>${_markHydrateNode(_scope0_, "#div/0")}`);
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

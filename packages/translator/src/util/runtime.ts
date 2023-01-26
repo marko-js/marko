@@ -26,7 +26,11 @@ const pureFunctions: Array<
   "inConditionalScope",
 ];
 
-export function importRuntime(name: string) {
+export function importRuntime(
+  name:
+    | keyof typeof import("@marko/runtime-fluurt/src/dom")
+    | keyof typeof import("@marko/runtime-fluurt/src/html")
+) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
 }
@@ -38,7 +42,7 @@ export function callRuntime(
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
   const callExpression = t.callExpression(
-    importRuntime(name as string),
+    importRuntime(name),
     filterArguments(args)
   );
   if (

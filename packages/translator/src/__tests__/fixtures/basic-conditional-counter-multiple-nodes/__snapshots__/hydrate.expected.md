@@ -16,9 +16,9 @@
     <!---->
     0
     <!--M#1 #text/0-->
-    <!--M/0 #comment/2-->
+    <!--M/0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -50,9 +50,9 @@ container.querySelector("button.inc").click();
     <!---->
     1
     <!--M#1 #text/0-->
-    <!--M/0 #comment/2-->
+    <!--M/0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -79,9 +79,9 @@ container.querySelector("button.toggle").click();
       class="toggle"
     />
     <!--M#0 #button/1-->
-    <!--M/0 #comment/2-->
+    <!--M/0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -114,9 +114,9 @@ container.querySelector("button.inc").click();
       class="toggle"
     />
     <!--M#0 #button/1-->
-    <!--M/0 #comment/2-->
+    <!--M/0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -145,7 +145,7 @@ container.querySelector("button.toggle").click();
     <!--M#0 #button/1-->
     The count is 2
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -177,7 +177,7 @@ container.querySelector("button.inc").click();
     <!--M#0 #button/1-->
     The count is 3
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#comment/2!":j={},"#comment/2(":b("ifBody"),show:!0,count:0},1:j},j._=h,k),[0,"counter",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>

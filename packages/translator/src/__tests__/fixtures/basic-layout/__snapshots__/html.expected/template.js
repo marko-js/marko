@@ -3,11 +3,11 @@ import _layout from "./components/layout.marko";
 const _renderer = ({
   name
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _layout({
     renderBody() {
-      const _scope = _nextScopeId();
-      _write(`<h1>Hello <!>${_escapeXML(name)}${_markHydrateNode(_scope, "#text/0")}</h1>`);
+      const _scope1_ = _nextScopeId();
+      _write(`<h1>Hello <!>${_escapeXML(name)}${_markHydrateNode(_scope1_, "#text/0")}</h1>`);
     }
   });
 };

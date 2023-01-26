@@ -3,12 +3,12 @@ const _renderer = ({
   onClick,
   renderBody
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _write("<button>");
   _dynamicTag(renderBody, null);
-  _write(`</button>${_markHydrateNode(_scope, "#button/0")}`);
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick");
-  _writeHydrateScope(_scope, {
+  _write(`</button>${_markHydrateNode(_scope0_, "#button/0")}`);
+  _writeHydrateCall(_scope0_, "packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick");
+  _writeHydrateScope(_scope0_, {
     "onClick": onClick
   });
 };

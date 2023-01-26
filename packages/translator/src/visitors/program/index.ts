@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { getMarkoOpts, isOutputHTML } from "../../util/marko-config";
+import {
+  getMarkoOpts,
+  isOutputDOM,
+  isOutputHTML,
+} from "../../util/marko-config";
 import programHTML from "./html";
 import programDOM from "./dom";
 import { startSection } from "../../util/sections";
@@ -44,7 +48,9 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      scopeIdentifier = program.scope.generateUidIdentifier("scope");
+      scopeIdentifier = isOutputDOM()
+        ? program.scope.generateUidIdentifier("scope")
+        : (null as any as t.Identifier);
       if (getMarkoOpts().output === ("hydrate" as "html")) {
         program.skip();
         program.node.body = [

@@ -1,12 +1,16 @@
 import { types as t } from "@marko/compiler";
-import { getSectionId, createSectionState } from "../util/sections";
+import {
+  getSectionId,
+  createSectionState,
+  getScopeIdentifier,
+} from "../util/sections";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { currentProgramPath } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { getNodeLiteral, ReserveType } from "./reserve";
 
@@ -25,6 +29,13 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""]
 );
 
+const [getRegisterRenderer, setRegisterRenderer] = createSectionState<boolean>(
+  "registerRenderer",
+  () => false
+);
+
+export { setRegisterRenderer };
+
 export function writeTo(path: t.NodePath<any>) {
   const sectionId = getSectionId(path);
   return (
@@ -37,6 +48,22 @@ export function writeTo(path: t.NodePath<any>) {
 
     for (let i = 0; i < exprsLen; i++) {
       writes.push(exprs[i], strs[i + 1]);
+    }
+  };
+}
+
+export function writePrependTo(path: t.NodePath<any>) {
+  const sectionId = getSectionId(path);
+  return (
+    strs: TemplateStringsArray,
+    ...exprs: Array<string | t.Expression>
+  ): void => {
+    const exprsLen = exprs.length;
+    const writes = getWrites(sectionId);
+    writes[0] += strs[exprsLen];
+
+    for (let i = 0; i < exprsLen; i++) {
+      writes.unshift(strs[i], exprs[i]);
     }
   };
 }
@@ -83,10 +110,12 @@ export function getSectionMeta(sectionId: number) {
     apply: getSetup(sectionId),
     walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
+    register: getRegisterRenderer(sectionId),
   };
 }
 
 export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
+  const sectionId = getSectionId(path);
   const { reserve } = path.node.extra;
 
   if (reserve?.type !== ReserveType.Visit) {
@@ -98,7 +127,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
   if (isOutputHTML()) {
     writeTo(path)`${callRuntime(
       "markHydrateNode",
-      scopeIdentifier,
+      getScopeIdentifier(sectionId),
       getNodeLiteral(reserve!)
     )}`;
   }

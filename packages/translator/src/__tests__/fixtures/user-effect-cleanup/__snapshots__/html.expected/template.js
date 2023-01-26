@@ -2,12 +2,12 @@ import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, write as 
 const _renderer = ({
   value
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   const a = 0;
   const b = 0;
-  _write(`<div>${_escapeXML("" + a + b)}${_markHydrateNode(_scope, "#text/0")}</div>`);
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_value");
-  _writeHydrateScope(_scope, {
+  _write(`<div>${_escapeXML("" + a + b)}${_markHydrateNode(_scope0_, "#text/0")}</div>`);
+  _writeHydrateCall(_scope0_, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_value");
+  _writeHydrateScope(_scope0_, {
     "value": value
   });
 };

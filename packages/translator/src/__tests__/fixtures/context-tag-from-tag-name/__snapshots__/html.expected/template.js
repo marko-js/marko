@@ -1,13 +1,13 @@
 import { write as _write, getInContext as _getInContext, escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _other from "./components/other.marko";
 const _renderer = (input, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _other({
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope1_ = _nextScopeId();
       _write("<span>");
       const message = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko");
-      _write(`${_escapeXML(message)}${_markHydrateNode(_scope, "#text/0")}</span>`);
+      _write(`${_escapeXML(message)}${_markHydrateNode(_scope1_, "#text/0")}</span>`);
     }
   });
 };

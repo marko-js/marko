@@ -1,5 +1,5 @@
 # Write
-  <span>Hello<!M#2 #text/0></span>
+  <span>Hello<!M#3 #text/0></span>
 
 
 # Render "End"
@@ -9,7 +9,7 @@
   <body>
     <span>
       Hello
-      <!--M#2 #text/0-->
+      <!--M#3 #text/0-->
     </span>
   </body>
 </html>

@@ -2,9 +2,9 @@ import { nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, wri
 const _renderer = ({
   el
 }, _tagVar) => {
-  const _scope = _nextScopeId();
-  _writeHydrateCall(_scope, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el");
-  _writeHydrateScope(_scope, {
+  const _scope0_ = _nextScopeId();
+  _writeHydrateCall(_scope0_, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el");
+  _writeHydrateScope(_scope0_, {
     "el": el
   });
 };

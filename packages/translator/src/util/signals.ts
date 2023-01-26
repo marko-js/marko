@@ -5,6 +5,7 @@ import {
   createSectionState,
   forEachSectionIdReverse,
   getOrCreateSectionId,
+  getScopeIdentifier,
 } from "./sections";
 import { Reserve, insertReserve, getNodeLiteral } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
@@ -62,6 +63,15 @@ export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
 const [forceHydrateScope, _setForceHydrateScope] = createSectionState<
   undefined | true
 >("forceHydrateScope");
+
+export const [getSerializedScopeProperties] = createSectionState<
+  Map<t.Expression, t.Expression>
+>("serializedScopeProperties", () => new Map());
+
+export const [getHydrateScopeBuilder, setHydrateScopeBuilder] =
+  createSectionState<undefined | ((arg: t.ObjectExpression) => t.Expression)>(
+    "hydrateScopeBuilder"
+  );
 
 export function setForceHydrateScope(sectionId: number) {
   _setForceHydrateScope(sectionId, true);
@@ -439,7 +449,7 @@ export function addHydrateReferences(signal: Signal, expression: t.Expression) {
 
 export function getHydrateRegisterId(
   sectionId: number,
-  references: ReferenceGroup["references"]
+  references: string | ReferenceGroup["references"]
 ) {
   const {
     markoOpts: { optimize },
@@ -447,7 +457,9 @@ export function getHydrateRegisterId(
   } = currentProgramPath.hub.file;
   let name = "";
   if (references) {
-    if (Array.isArray(references)) {
+    if (typeof references === "string") {
+      name += `_${references}`;
+    } else if (Array.isArray(references)) {
       for (const ref of references) {
         name += `_${ref.name}`;
       }
@@ -728,6 +740,7 @@ export function writeHTMLHydrateStatements(
 ) {
   const sectionId = getOrCreateSectionId(path);
   const allSignals = Array.from(getSignals(sectionId).values());
+  const scopeIdentifier = getScopeIdentifier(sectionId);
 
   path.unshiftContainer(
     "body",
@@ -777,14 +790,22 @@ export function writeHTMLHydrateStatements(
     );
   }
 
+  const additionalProperties = getSerializedScopeProperties(sectionId);
+  for (const [key, value] of additionalProperties) {
+    serializedProperties.push(t.objectProperty(key, value, !t.isLiteral(key)));
+  }
+
   if (serializedProperties.length || forceHydrateScope(sectionId)) {
+    const hydrateScopeBuilder = getHydrateScopeBuilder(sectionId);
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateScope",
           scopeIdentifier,
-          t.objectExpression(serializedProperties)
+          hydrateScopeBuilder
+            ? hydrateScopeBuilder(t.objectExpression(serializedProperties))
+            : t.objectExpression(serializedProperties)
         )
       )
     );

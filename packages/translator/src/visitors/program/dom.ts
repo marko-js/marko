@@ -1,7 +1,12 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
-import { getClosures, getSignal, writeSignals } from "../../util/signals";
+import {
+  getClosures,
+  getHydrateRegisterId,
+  getSignal,
+  writeSignals,
+} from "../../util/signals";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
 import { scopeIdentifier } from ".";
@@ -23,21 +28,30 @@ export default {
         writeSignals(childSectionId);
 
         if (childSectionId !== sectionId) {
-          const { walks, writes, apply } =
+          const { walks, writes, apply, register } =
             writer.getSectionMeta(childSectionId);
           const closures = getClosures(childSectionId);
           const identifier = writer.getRenderer(childSectionId);
+          const renderer = callRuntime(
+            "createRenderer",
+            writes,
+            walks,
+            apply,
+            closures.length && t.arrayExpression(closures)
+          );
           program.node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 identifier,
-                callRuntime(
-                  "createRenderer",
-                  writes,
-                  walks,
-                  apply,
-                  closures.length && t.arrayExpression(closures)
-                )
+                register
+                  ? callRuntime(
+                      "register",
+                      t.stringLiteral(
+                        getHydrateRegisterId(childSectionId, "renderer")
+                      ),
+                      renderer
+                    )
+                  : renderer
               ),
             ])
           );

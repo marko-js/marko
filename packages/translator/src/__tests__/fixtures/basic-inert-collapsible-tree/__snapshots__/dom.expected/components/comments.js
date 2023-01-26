@@ -1,4 +1,4 @@
-import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, inChild as _inChild, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { setSource as _setSource, attr as _attr, data as _data, on as _on, queueSource as _queueSource, inChild as _inChild, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, source as _source, queueHydrate as _queueHydrate, derivation as _derivation, inLoopScope as _inLoopScope, loop as _loop, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_subscriber([_inChild(_comments_attrs, "#childScope/0")], 2, (_scope, comment = _scope._["comment"], id = _scope._["id"]) => _setSource(_scope["#childScope/0"], _comments_attrs, {
   comments: comment.comments,
@@ -9,7 +9,7 @@ const _comment$ifBody = /* @__PURE__ */_closure(1, "comment", [_expr_comment_id$
 const _setup$ifBody = _scope => {
   _comments2(_scope["#childScope/0"]);
 };
-const _ifBody = /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]);
+const _ifBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]));
 const _if$forBody = /* @__PURE__ */_conditional("#text/4", 1, (_scope, comment = _scope["comment"]) => comment.comments ? _ifBody : null);
 const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", function () {
   const open = _scope["open"];

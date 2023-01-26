@@ -4,15 +4,15 @@ const _renderer = ({
   show,
   dynamic
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   const data1 = child({
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope1_ = _nextScopeId();
     }
-  }, _register(() => {}, "packages/translator/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data1", _scope));
+  }, _register(() => {}, "packages/translator/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data1", _scope0_));
   const _tagName = show && child;
   function _renderBody() {
-    const _scope = _nextScopeId();
+    const _scope2_ = _nextScopeId();
   }
   let data2 = void 0;
   if (_tagName) data2 = _tagName();else _renderBody();
@@ -23,8 +23,8 @@ const _renderer = ({
   };
   if (_tagName2) _write(`<${_tagName2}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
-  _write(`${_markHydrateNode(_scope, "#undefined/1")}`);
-  _writeHydrateScope(_scope, {});
+  _write(`${_markHydrateNode(_scope0_, "#undefined/1")}`);
+  _writeHydrateScope(_scope0_, {});
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

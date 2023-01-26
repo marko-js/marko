@@ -51,9 +51,9 @@
     {
       "name": "comments",
       "user": {
-        "min": 1133,
-        "gzip": 687,
-        "brotli": 612
+        "min": 1142,
+        "gzip": 695,
+        "brotli": 625
       },
       "runtime": {
         "min": 7250,
@@ -61,17 +61,17 @@
         "brotli": 2965
       },
       "total": {
-        "min": 8383,
-        "gzip": 3955,
-        "brotli": 3577
+        "min": 8392,
+        "gzip": 3963,
+        "brotli": 3590
       }
     },
     {
       "name": "comments 💧",
       "user": {
-        "min": 930,
-        "gzip": 579,
-        "brotli": 533
+        "min": 944,
+        "gzip": 591,
+        "brotli": 540
       },
       "runtime": {
         "min": 8244,
@@ -79,9 +79,9 @@
         "brotli": 3361
       },
       "total": {
-        "min": 9174,
-        "gzip": 4292,
-        "brotli": 3894
+        "min": 9188,
+        "gzip": 4304,
+        "brotli": 3901
       }
     }
   ]

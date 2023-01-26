@@ -1,7 +1,7 @@
 import "virtual:./template.marko.css \n  .content {\n    color: green;\n  }\n";
 import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = (input, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _write("<div class=content>Hello</div>");
 };
 export default _renderer;

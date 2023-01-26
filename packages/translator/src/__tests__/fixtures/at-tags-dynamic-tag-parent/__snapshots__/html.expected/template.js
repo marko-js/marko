@@ -2,7 +2,7 @@ import { write as _write, dynamicTag as _dynamicTag, nextScopeId as _nextScopeId
 const _renderer = ({
   x
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _dynamicTag(x, {
     header: {
       class: "my-header",

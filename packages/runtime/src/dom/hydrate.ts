@@ -135,9 +135,10 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      (registeredObjects.get(calls[i + 1] as string) as HydrateFn)!(
-        scopeLookup[calls[i] as number]!
-      );
+      const hydrateFn = (registeredObjects.get(
+        calls[i + 1] as string
+      ) as HydrateFn)!;
+      hydrateFn(scopeLookup[calls[i] as number]!);
     }
   }
 }

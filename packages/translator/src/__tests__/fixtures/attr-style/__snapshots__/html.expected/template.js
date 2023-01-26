@@ -4,16 +4,16 @@ const _renderer = ({
   color,
   test
 }, _tagVar) => {
-  const _scope = _nextScopeId();
+  const _scope0_ = _nextScopeId();
   _write(`<div${_styleAttr({
     color: color
-  })}></div>${_markHydrateNode(_scope, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
+  })}></div>${_markHydrateNode(_scope0_, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
   _customTag({
     style: {
       color: color
     },
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope2_ = _nextScopeId();
     }
   });
   _customTag({
@@ -21,13 +21,13 @@ const _renderer = ({
       width: 100
     },
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope3_ = _nextScopeId();
     }
   });
   _customTag({
     style: "color: green",
     renderBody() {
-      const _scope = _nextScopeId();
+      const _scope4_ = _nextScopeId();
     }
   });
   _dynamicTag(test, {

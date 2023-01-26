@@ -87,6 +87,12 @@ export function createSectionState<T = unknown>(
   ] as const;
 }
 
+export const [getScopeIdentifier] = createSectionState<t.Identifier>(
+  "scopeIdentifier",
+  (sectionId) =>
+    currentProgramPath.scope.generateUidIdentifier(`scope${sectionId}_`)
+);
+
 export function forEachSectionId(fn: (id: number) => void) {
   const { nextSectionId } = currentProgramPath.node.extra;
   for (let sectionId = 0; sectionId < nextSectionId!; sectionId++) {

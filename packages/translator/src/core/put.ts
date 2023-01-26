@@ -5,7 +5,10 @@ import * as walks from "../util/walks";
 import { callRuntime } from "../util/runtime";
 import { isOutputHTML } from "../util/marko-config";
 import customTag from "../visitors/tag/custom-tag";
-import { initContextProvider } from "../util/signals";
+import {
+  initContextProvider,
+  writeHTMLHydrateStatements,
+} from "../util/signals";
 import { reserveScope, ReserveType } from "../util/reserve";
 import { getOrCreateSectionId, getSectionId } from "../util/sections";
 
@@ -92,6 +95,7 @@ export default {
       assertNoVar(tag);
       if (isOutputHTML()) {
         writer.flushInto(tag);
+        writeHTMLHydrateStatements(tag.get("body"));
         tag.insertAfter(t.expressionStatement(callRuntime("popContext")));
       }
       tag.replaceWithMultiple(tag.node.body.body);

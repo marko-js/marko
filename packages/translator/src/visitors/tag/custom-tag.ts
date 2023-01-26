@@ -16,6 +16,7 @@ import {
   startSection,
   getSectionId,
   getOrCreateSectionId,
+  getScopeIdentifier,
 } from "../../util/sections";
 import trackReferences, {
   mergeReferenceGroups,
@@ -161,6 +162,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       )[0]
       .skip();
   } else if (tagVar) {
+    const sectionId = getSectionId(tag);
     translateVar(
       tag,
       callExpression(
@@ -171,15 +173,15 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           t.arrowFunctionExpression([], t.blockStatement([])),
           t.stringLiteral(
             getHydrateRegisterId(
-              getSectionId(tag),
+              sectionId,
               (node.var as t.Identifier).extra?.reserve
             )
           ),
-          scopeIdentifier
+          getScopeIdentifier(sectionId)
         )
       )
     );
-    setForceHydrateScope(getSectionId(tag));
+    setForceHydrateScope(sectionId);
     tag.remove();
   } else {
     tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();

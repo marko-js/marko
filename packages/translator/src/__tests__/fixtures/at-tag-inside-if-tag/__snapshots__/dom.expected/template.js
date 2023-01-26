@@ -1,7 +1,7 @@
 let _thing;
-import { write as _write, bindRenderer as _bindRenderer, createRenderer as _createRenderer, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, dynamicClosure as _dynamicClosure, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, bindRenderer as _bindRenderer, createRenderer as _createRenderer, register as _register, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, dynamicClosure as _dynamicClosure, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag/index.marko";
-const _ifBody = /* @__PURE__ */_createRenderer("", "");
+const _ifBody = _register("packages/translator/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer", /* @__PURE__ */_createRenderer("", ""));
 const _if$customTagBody = /* @__PURE__ */_conditional("#text/0", 1, (_scope, x = _scope._["x"]) => x ? _ifBody : null);
 const _x$customTagBody = _dynamicClosure(1, "x", [_if$customTagBody]);
 const _customTagBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", null, [_x$customTagBody]);

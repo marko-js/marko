@@ -44,14 +44,13 @@ container.querySelector("button.toggle").click();
 <button
   class="toggle"
 />
-<!---->
 ```
 
 # Mutations
 ```
-inserted #comment2
-removed #text after #comment2
-removed #text after #comment2
+inserted #text2
+removed #text after #text2
+removed #text after #text2
 ```
 
 
@@ -65,7 +64,6 @@ container.querySelector("button.inc").click();
 <button
   class="toggle"
 />
-<!---->
 ```
 
 # Mutations
@@ -91,7 +89,7 @@ The count is 2
 ```
 inserted #text2
 inserted #text3
-removed #comment after #text3
+removed #text after #text3
 #text3: "" => "2"
 ```
 
