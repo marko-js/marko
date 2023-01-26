@@ -3,6 +3,15 @@ import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
 import { getNodeLiteral, Reserve } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import {
+  escapeXML,
+  toString,
+  attr,
+  classAttr,
+  styleAttr,
+  escapeScript,
+  escapeStyle,
+} from "@marko/runtime-fluurt/src/html";
 
 declare const MARKO_SRC: boolean;
 
@@ -61,15 +70,15 @@ export function callRuntime(
 }
 
 export function getHTMLRuntime() {
-  return getRuntime("html") as typeof import("@marko/runtime-fluurt/src/html");
-}
-
-export function getDOMRuntime() {
-  return getRuntime("dom") as typeof import("@marko/runtime-fluurt/src/dom");
-}
-
-function getRuntime(output: string): unknown {
-  return require(getRuntimePath(output));
+  return {
+    escapeXML,
+    toString,
+    attr,
+    classAttr,
+    styleAttr,
+    escapeScript,
+    escapeStyle,
+  };
 }
 
 function getRuntimePath(output: string) {

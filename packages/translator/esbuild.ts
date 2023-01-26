@@ -9,10 +9,7 @@ Promise.all(
       outfile: `dist/index.${format}.js`,
       format,
       define: { MARKO_SRC: "false" },
-      external: [
-        ...Object.keys(pkg.dependencies || {}),
-        ...Object.keys(pkg.peerDependencies || {}),
-      ],
+      external: [...Object.keys(pkg.peerDependencies || {})],
       platform: "node",
       sourcemap: true,
     });
