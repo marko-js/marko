@@ -7,6 +7,7 @@ const _renderer = (input, _tagVar) => {
     _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}${_markHydrateNode(_scope1_, "#text/1")}</button>${_markHydrateNode(_scope1_, "#button/0")}`);
     _writeHydrateCall(_scope1_, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
     _writeHydrateScope(_scope1_, {
+      "selected": selected,
       "num": num
     });
     _maybeFlush();

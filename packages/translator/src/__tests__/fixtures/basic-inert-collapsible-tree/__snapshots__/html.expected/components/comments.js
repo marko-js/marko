@@ -26,6 +26,8 @@ const _renderer = ({
         }
       });
       _writeHydrateScope(_scope2_, Object.assign(_ifScope, {
+        "comment": comment,
+        "id": id,
         [_SYMBOL_OWNER]: _scope1_
       }));
       _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
@@ -34,6 +36,8 @@ const _renderer = ({
     _write(`${_markHydrateControlSingleNodeEnd(_scope1_, "#text/4", _ifScopeId)}</li>${_markHydrateNode(_scope1_, "#li/0")}`);
     _writeHydrateCall(_scope1_, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
     _writeHydrateScope(_scope1_, {
+      "path": path,
+      "i": i,
       "open": open,
       "#text/4!": _ifScope,
       "#text/4(": _ifRenderer

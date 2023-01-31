@@ -8,7 +8,9 @@ const _renderer = ({
   _write(`<div>${_escapeXML("" + a + b)}${_markHydrateNode(_scope0_, "#text/0")}</div>`);
   _writeHydrateCall(_scope0_, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_value");
   _writeHydrateScope(_scope0_, {
-    "value": value
+    "value": value,
+    "a": a,
+    "b": b
   });
 };
 export default _renderer;

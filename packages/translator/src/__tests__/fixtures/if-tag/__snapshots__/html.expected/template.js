@@ -62,6 +62,10 @@ const _renderer = ({
   }
   _write(`${_markHydrateControlSingleNodeEnd(_scope0_, "#text/2", _ifScopeId3)}</div>`);
   _writeHydrateScope(_scope0_, {
+    "a": a,
+    "b": b,
+    "x": x,
+    "y": y,
     "#text/0!": _ifScope,
     "#text/0(": _ifRenderer,
     "#text/1!": _ifScope2,

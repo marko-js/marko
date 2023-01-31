@@ -583,150 +583,6 @@ function getMappedId(reserve: Reserve) {
   return (reserve.type === 0 ? 1 : 0) * 10000 + reserve.id;
 }
 
-// export function writeApplyGroups(sectionId: number) {
-//   const allStatements = getApplyStatements(sectionId);
-//   const numReferenceGroups =
-//     currentProgramPath.node.extra!.referenceGroups![sectionId]!.length;
-//   if (!numReferenceGroups) return;
-
-//   for (let i = numReferenceGroups; i--; ) {
-//     const statements = allStatements[i] ?? [];
-
-//     // if (i === 0 && !statements.length) continue;
-
-//     const referenceGroup = getReferenceGroup(sectionId, i);
-//     const { references, apply: identifier } = referenceGroup;
-//     let newPaths;
-//     let params: (t.Identifier | t.RestElement | t.Pattern)[];
-//     let body: t.BlockStatement;
-
-//     if (references) {
-//       if (Array.isArray(references)) {
-//         // derivation
-//         params = references.map((binding) =>
-//           t.assignmentPattern(
-//             t.identifier(binding.name),
-//             callRead(binding, sectionId)
-//           )
-//         );
-//         body = t.blockStatement(statements);
-
-//         for (const binding of references) {
-//           addStatement(
-//             "apply",
-//             sectionId,
-//             getReferenceGroup(sectionId, binding),
-//             t.expressionStatement(
-//               // TODO: might need to queue in a child scope
-//               callRuntime("queueSource", scopeIdentifier, identifier)
-//             )
-//           );
-//         }
-//       } else if (references.sectionId !== sectionId) {
-//         // closure
-//         params = [
-//           t.assignmentPattern(
-//             t.identifier(references.name),
-//             callRead(references, sectionId)
-//           ),
-//         ];
-//         body = t.blockStatement(statements);
-
-//         const factory = getQueueBuilder(sectionId);
-//         if (factory) {
-//           const closurePriority = t.numericLiteral(NaN);
-//           getClosurePriorities(references.sectionId).push(closurePriority);
-//           addStatement(
-//             "apply",
-//             references.sectionId,
-//             getReferenceGroup(references.sectionId, references),
-//             t.expressionStatement(factory(referenceGroup, closurePriority))
-//           );
-//           addStatement(
-//             "apply",
-//             sectionId,
-//             undefined,
-//             t.expressionStatement(
-//               callRuntime("queueSource", scopeIdentifier, identifier)
-//             )
-//           );
-//         }
-//       } else {
-//         // source?
-//         let renderFn;
-//         if (statements.length) {
-//           renderFn = t.arrowFunctionExpression([scopeIdentifier, t.identifier(references.name)], t.blockStatement(statements));
-//         }
-//         newPaths = currentProgramPath.pushContainer(
-//           "body",
-//           t.variableDeclaration("const", [
-//             t.variableDeclarator(identifier, callRuntime("source", getNodeLiteral(references), t.arrayExpression(), renderFn))
-//           ])
-//         );
-//       }
-//     } else {
-//       // setup
-//       newPaths = currentProgramPath.pushContainer(
-//         "body",
-//         t.functionDeclaration(identifier, [scopeIdentifier], t.blockStatement(statements))
-//       );
-//     }
-
-//     for (const path of newPaths) {
-//       path.traverse(bindFunctionsVisitor, { root: path, sectionId });
-//     }
-//   }
-
-//   const closurePriorities = getClosurePriorities(sectionId);
-//   for (let i = 0; i < closurePriorities.length; i++) {
-//     closurePriorities[i].value = i + allStatements.length;
-//   }
-// }
-
-// export function writeHydrateGroups(sectionId: number) {
-//   const allStatements = getHydrateStatements(sectionId);
-//   for (let i = allStatements.length; i--; ) {
-//     const statements = allStatements[i];
-//     if (!statements?.length) continue;
-
-//     const referenceGroup = getReferenceGroup(sectionId, i)!;
-//     const { references, hydrate: identifier } = referenceGroup;
-//     const params: Parameters<typeof t.functionDeclaration>[1] = references
-//       ? (Array.isArray(references) ? references : [references]).map((binding) =>
-//           t.assignmentPattern(
-//             t.identifier(binding.name),
-//             callRead(binding, sectionId)
-//           )
-//         )
-//       : [];
-
-//     const [fnPath] = currentProgramPath.pushContainer("body", [
-//       t.functionDeclaration(
-//         identifier,
-//         [scopeIdentifier, ...params],
-//         t.blockStatement(statements)
-//       ),
-//       t.expressionStatement(
-//         callRuntime(
-//           "register",
-//           t.stringLiteral(getHydrateRegisterId(sectionId, references)),
-//           identifier
-//         )
-//       ),
-//     ]);
-//     fnPath.traverse(bindFunctionsVisitor, { root: fnPath, sectionId });
-
-//     addStatement(
-//       "apply",
-//       sectionId,
-//       getReferenceGroup(sectionId, references),
-//       t.expressionStatement(
-//         callRuntime("queueHydrate", scopeIdentifier, identifier)
-//       )
-//     );
-//   }
-// }
-
 export function addHTMLHydrateCall(
   sectionId: number,
   references?: ReferenceGroup
@@ -739,6 +595,8 @@ export function writeHTMLHydrateStatements(
   tagVarIdentifier?: t.Identifier
 ) {
   const sectionId = getOrCreateSectionId(path);
+  const referenceGroups =
+    currentProgramPath.node.extra.referenceGroups?.[sectionId] ?? [];
   const allSignals = Array.from(getSignals(sectionId).values());
   const scopeIdentifier = getScopeIdentifier(sectionId);
 
@@ -750,6 +608,15 @@ export function writeHTMLHydrateStatements(
   );
 
   const refs: Reserve[] = [];
+
+  for (const { references } of referenceGroups) {
+    if (Array.isArray(references)) {
+      // TODO: only need to include refs that intersect with stateful refs
+      for (const reference of references) {
+        insertReserve(refs, reference);
+      }
+    }
+  }
 
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].hydrate.length) {

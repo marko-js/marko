@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, attr as _attr, write as _write, markHydrateNode as _markHydrateNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, attr as _attr, write as _write, markHydrateNode as _markHydrateNode, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = ({
   renderBody,
   x,
@@ -71,6 +71,11 @@ const _renderer = ({
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}>`);
   if (tagConstB) _write(`</${tagConstB}>`);
   _write(`${_markHydrateNode(_scope0_, "#undefined/10")}`);
+  _writeHydrateScope(_scope0_, {
+    "#text/0": dynamicTagName,
+    "#text/1": dynamicTagName,
+    "other": other
+  });
 };
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

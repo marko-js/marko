@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { classAttr as _classAttr, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = (input, _tagVar) => {
   const _scope0_ = _nextScopeId();
@@ -39,6 +39,11 @@ const _renderer = (input, _tagVar) => {
         _write("Hello");
       }
     }
+  });
+  _writeHydrateScope(_scope0_, {
+    "#text/3": dynamicTagName,
+    "c": c,
+    "d": d
   });
 };
 export default _renderer;

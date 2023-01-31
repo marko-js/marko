@@ -6,6 +6,8 @@ const _renderer = (input, _tagVar) => {
   _write("<span>child</span>");
   const _return = x + y;
   _writeHydrateScope(_scope0_, {
+    "x": x,
+    "y": y,
     "/": _tagVar
   });
   return _return;
