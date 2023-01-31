@@ -7,4 +7,4 @@ export { _input as _apply_input };
 export const template = "Hello <!>!";
 export const walks = /* over(1), replace, over(2) */"b%c";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/custom-tag-template/hello.marko");

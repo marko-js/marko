@@ -7,5 +7,3 @@ function count(container: Element) {
 function changeTag(container: Element) {
   container.querySelector<HTMLButtonElement>("#changeTag")!.click();
 }
-
-export const skip_hydrate = true;

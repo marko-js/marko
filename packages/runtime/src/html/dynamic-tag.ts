@@ -1,5 +1,11 @@
 import type { Renderer } from "../common/types";
-import { write } from "./writer";
+import {
+  markHydrateScopeStart,
+  nextScopeId,
+  peekNextScopeId,
+  write,
+  writeHydrateScope,
+} from "./writer";
 import { attrs } from "./attrs";
 
 const voidElements = new Set([
@@ -28,15 +34,22 @@ export function dynamicTag(
   input: Record<string, unknown>,
   renderBody: (() => void) | undefined
 ) {
-  if (!tag) {
-    if (renderBody) {
-      renderBody();
-    }
+  if (!tag && !renderBody) return undefined;
 
-    return;
+  const internalScope = {};
+
+  const futureScopeId = peekNextScopeId();
+  write(`${markHydrateScopeStart(futureScopeId)}`);
+  writeHydrateScope(futureScopeId, internalScope);
+
+  if (!tag) {
+    renderBody!();
+
+    return internalScope;
   }
 
   if (typeof tag === "string") {
+    nextScopeId();
     write(`<${tag}${attrs(input)}>`);
 
     if (!voidElements.has(tag)) {
@@ -51,19 +64,18 @@ export function dynamicTag(
       );
     }
 
-    return;
+    return internalScope;
   }
 
   const renderer = (tag as RenderBodyObject).renderBody || tag;
 
   if (typeof renderer === "function") {
-    return renderer(
-      renderBody
-        ? input.renderBody
-          ? { ...input, renderBody }
-          : { renderBody, ...input }
-        : input
+    renderer(
+      renderBody ? { ...input, renderBody } : input,
+      null,
+      internalScope
     );
+    return internalScope;
   } else if (MARKO_DEBUG) {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }

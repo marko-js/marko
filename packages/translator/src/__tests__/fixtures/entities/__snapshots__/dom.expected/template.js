@@ -2,4 +2,4 @@ export const template = "Hello John &amp; Suzy Invalid Entity: &b ; Valid Numeri
 export const walks = /* over(1) */"b";
 export const setup = function () {};
 import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/entities/template.marko");

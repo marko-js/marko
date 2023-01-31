@@ -18,4 +18,4 @@ const _setup = _scope => {
 export const template = `${_child_template}<div class=hi></div>`;
 export const walks = /* beginChild, _child_walks, endChild, get, over(1) */`/${_child_walks}& b`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/event-handlers/template.marko");

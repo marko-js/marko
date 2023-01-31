@@ -17,4 +17,4 @@ const _setup = _scope => {
 export const template = `${_displayIntersection_template}<button></button>`;
 export const walks = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko");

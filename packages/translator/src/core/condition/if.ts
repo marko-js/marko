@@ -9,7 +9,6 @@ import {
   setSubscriberBuilder,
   writeHTMLHydrateStatements,
   getSerializedScopeProperties,
-  setHydrateScopeBuilder,
   getHydrateRegisterId,
 } from "../../util/signals";
 import { callRuntime, importRuntime } from "../../util/runtime";
@@ -18,6 +17,7 @@ import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import {
   getOrCreateSectionId,
   getScopeIdentifier,
+  getScopeIdIdentifier,
   getSectionId,
 } from "../../util/sections";
 import {
@@ -142,8 +142,6 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
     );
     rootExtra.conditionalReferences = conditionalReferences;
     rootExtra.isStateful = !!conditionalReferences.references;
-    rootExtra.hoistedScopeIdentifier =
-      rootExtra.isStateful && tag.scope.generateUidIdentifier("ifScope");
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
@@ -164,21 +162,12 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
           "markHydrateScopeStart",
-          getScopeIdentifier(bodySectionId)
+          getScopeIdIdentifier(bodySectionId)
         )}`;
       }
-      setHydrateScopeBuilder(bodySectionId, (object: t.ObjectExpression) => {
-        return t.callExpression(
-          t.memberExpression(t.identifier("Object"), t.identifier("assign")),
-          [
-            branches[0].tag.node.extra.hoistedScopeIdentifier as t.Identifier,
-            object,
-          ]
-        );
-      });
       getSerializedScopeProperties(bodySectionId).set(
         importRuntime("SYMBOL_OWNER"),
-        getScopeIdentifier(sectionId)
+        getScopeIdIdentifier(sectionId)
       );
     }
     writer.flushInto(tag);
@@ -233,8 +222,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();
       const ifScopeIdIdentifier = tag.scope.generateUidIdentifier("ifScopeId");
-      const ifScopeIdentifier = branches[0].tag.node.extra
-        .hoistedScopeIdentifier as t.Identifier;
+      const ifScopeIdentifier = getScopeIdentifier(branches[0].sectionId);
       const ifRendererIdentifier =
         tag.scope.generateUidIdentifier("ifRenderer");
 
@@ -259,7 +247,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                 t.assignmentExpression(
                   "=",
                   ifScopeIdIdentifier,
-                  getScopeIdentifier(sectionId)
+                  getScopeIdIdentifier(sectionId)
                 )
               ) as any
             );
@@ -300,14 +288,14 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         if (singleNodeOptimization) {
           write`${callRuntime(
             "markHydrateControlSingleNodeEnd",
-            getScopeIdentifier(sectionId),
+            getScopeIdIdentifier(sectionId),
             getNodeLiteral(extra.reserve!),
             ifScopeIdIdentifier
           )}`;
         } else {
           write`${callRuntime(
             "markHydrateControlEnd",
-            getScopeIdentifier(sectionId),
+            getScopeIdIdentifier(sectionId),
             getNodeLiteral(extra.reserve!)
           )}`;
         }

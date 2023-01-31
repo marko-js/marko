@@ -9,4 +9,4 @@ export { _value as _apply_value };
 export const template = "<div a=0></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/update-attr/template.marko");

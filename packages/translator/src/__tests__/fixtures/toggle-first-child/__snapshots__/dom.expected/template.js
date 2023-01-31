@@ -12,4 +12,4 @@ export { _value as _apply_value };
 export const template = "<div><!><span></span><span></span></div>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko");

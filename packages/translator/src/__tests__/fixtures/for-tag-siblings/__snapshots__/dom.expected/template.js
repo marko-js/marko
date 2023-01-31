@@ -12,4 +12,4 @@ const _setup = _scope => {
 export const template = "<div></div><div><!><div></div></div>";
 export const walks = /* get, over(1), next(1), replace, out(1) */" bD%l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/for-tag-siblings/template.marko");

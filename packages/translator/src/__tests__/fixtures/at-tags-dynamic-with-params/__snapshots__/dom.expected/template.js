@@ -22,4 +22,4 @@ export { _x as _apply_x };
 export const template = `${_hello_template}`;
 export const walks = /* beginChild, _hello_walks, endChild */`/${_hello_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko");

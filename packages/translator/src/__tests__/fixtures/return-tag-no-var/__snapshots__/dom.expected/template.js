@@ -6,4 +6,4 @@ export const template = `${_child_template}`;
 export const walks = /* beginChild, _child_walks, endChild */`/${_child_walks}&`;
 export const setup = _setup;
 import { createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/return-tag-no-var/template.marko");

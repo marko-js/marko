@@ -26,4 +26,4 @@ export { _a as _apply_a, _b as _apply_b, _x as _apply_x, _y as _apply_y };
 export const template = "<!><!><div><!></div>";
 export const walks = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"%b%bD%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/if-tag/template.marko");

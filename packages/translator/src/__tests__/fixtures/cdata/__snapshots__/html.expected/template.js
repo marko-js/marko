@@ -1,7 +1,7 @@
-import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar) => {
-  const _scope0_ = _nextScopeId();
+import { write as _write, nextScopeId as _nextScopeId, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+const _renderer = _register((input, _tagVar, _scope0_) => {
+  const _scope0_id = _nextScopeId();
   _write("<div>Here is a CDATA section: <![CDATA[ < > & ]]> with all kinds of unescaped text.</div>");
-};
+}, "packages/translator/src/__tests__/fixtures/cdata/template.marko");
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

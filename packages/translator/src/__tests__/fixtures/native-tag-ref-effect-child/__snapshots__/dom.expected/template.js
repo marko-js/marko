@@ -12,4 +12,4 @@ const _setup = _scope => {
 export const template = `<div></div>${_helloSetter_template}`;
 export const walks = /* get, over(1), beginChild, _helloSetter_walks, endChild */` b/${_helloSetter_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko");

@@ -32,4 +32,4 @@ const _setup = _scope => {
 export const template = "<!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
 export const walks = /* replace, over(2), get, over(1), get, over(1) */"%c b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

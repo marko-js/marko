@@ -16,7 +16,7 @@ import {
   startSection,
   getSectionId,
   getOrCreateSectionId,
-  getScopeIdentifier,
+  getScopeIdIdentifier,
 } from "../../util/sections";
 import trackReferences, {
   mergeReferenceGroups,
@@ -177,7 +177,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
               (node.var as t.Identifier).extra?.reserve
             )
           ),
-          getScopeIdentifier(sectionId)
+          getScopeIdIdentifier(sectionId)
         )
       )
     );

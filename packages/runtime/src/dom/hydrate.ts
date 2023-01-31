@@ -104,8 +104,13 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
         } else if (token === HydrateSymbols.SECTION_END) {
           scope[data] = currentNode;
           if (scopeId < currentScopeId) {
-            scopeLookup[currentScopeId].___endNode =
-              currentNode.previousSibling!;
+            const currScope = scopeLookup[currentScopeId];
+            const currParent = currentNode.parentNode!;
+            const startNode = currScope.___startNode as Node;
+            if (currParent !== startNode.parentNode) {
+              currParent.prepend(startNode);
+            }
+            currScope.___endNode = currentNode.previousSibling!;
             currentScopeId = stack.pop()!;
           }
         } else if (token === HydrateSymbols.SECTION_SINGLE_NODES_END) {

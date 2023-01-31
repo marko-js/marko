@@ -116,6 +116,7 @@ export class Serializer {
         BUFFER.push(cur ? "!0" : "!1");
         break;
 
+      case "function":
       case "object":
         if (cur === null) {
           BUFFER.push("null");
@@ -127,6 +128,11 @@ export class Serializer {
               return false;
             case false:
               switch (cur.constructor) {
+                case Function:
+                  return this.writeFunction(
+                    cur as Serializable<(...args: any[]) => any>
+                  );
+
                 case Object:
                   this.writeObject(cur as Record<string, unknown>);
                   break;
@@ -178,9 +184,6 @@ export class Serializer {
           }
         }
         break;
-      case "function": {
-        return this.writeFunction(cur as Serializable<(...args: any[]) => any>);
-      }
 
       default:
         return false;

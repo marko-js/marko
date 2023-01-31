@@ -5,9 +5,10 @@ import {
   createSectionState,
   forEachSectionIdReverse,
   getOrCreateSectionId,
+  getScopeIdIdentifier,
   getScopeIdentifier,
 } from "./sections";
-import { Reserve, insertReserve, getNodeLiteral } from "./reserve";
+import { Reserve, insertReserve, getNodeLiteral, ReserveType } from "./reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { callRuntime, callRead } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";
@@ -67,11 +68,6 @@ const [forceHydrateScope, _setForceHydrateScope] = createSectionState<
 export const [getSerializedScopeProperties] = createSectionState<
   Map<t.Expression, t.Expression>
 >("serializedScopeProperties", () => new Map());
-
-export const [getHydrateScopeBuilder, setHydrateScopeBuilder] =
-  createSectionState<undefined | ((arg: t.ObjectExpression) => t.Expression)>(
-    "hydrateScopeBuilder"
-  );
 
 export function setForceHydrateScope(sectionId: number) {
   _setForceHydrateScope(sectionId, true);
@@ -598,12 +594,13 @@ export function writeHTMLHydrateStatements(
   const referenceGroups =
     currentProgramPath.node.extra.referenceGroups?.[sectionId] ?? [];
   const allSignals = Array.from(getSignals(sectionId).values());
-  const scopeIdentifier = getScopeIdentifier(sectionId);
+  const scopeIdIdentifier = getScopeIdIdentifier(sectionId);
+  const scopeIdentifier = getScopeIdentifier(sectionId, true);
 
   path.unshiftContainer(
     "body",
     t.variableDeclaration("const", [
-      t.variableDeclarator(scopeIdentifier, callRuntime("nextScopeId")),
+      t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
     ])
   );
 
@@ -613,7 +610,9 @@ export function writeHTMLHydrateStatements(
     if (Array.isArray(references)) {
       // TODO: only need to include refs that intersect with stateful refs
       for (const reference of references) {
-        insertReserve(refs, reference);
+        if (reference.type !== ReserveType.Visit) {
+          insertReserve(refs, reference);
+        }
       }
     }
   }
@@ -635,7 +634,7 @@ export function writeHTMLHydrateStatements(
         t.expressionStatement(
           callRuntime(
             "writeHydrateCall",
-            scopeIdentifier,
+            scopeIdIdentifier,
             t.stringLiteral(getHydrateRegisterId(sectionId, references))
           )
         )
@@ -663,16 +662,14 @@ export function writeHTMLHydrateStatements(
   }
 
   if (serializedProperties.length || forceHydrateScope(sectionId)) {
-    const hydrateScopeBuilder = getHydrateScopeBuilder(sectionId);
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateScope",
-          scopeIdentifier,
-          hydrateScopeBuilder
-            ? hydrateScopeBuilder(t.objectExpression(serializedProperties))
-            : t.objectExpression(serializedProperties)
+          scopeIdIdentifier,
+          t.objectExpression(serializedProperties),
+          scopeIdentifier
         )
       )
     );

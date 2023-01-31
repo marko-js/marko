@@ -29,8 +29,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 p0: attr(class) "A" => "B"
-removed #text in p0
-inserted p0/#text0
 ```
 
 
@@ -49,6 +47,4 @@ container.querySelector("button").click();
 # Mutations
 ```
 p0: attr(class) "B" => "A"
-removed #text in p0
-inserted p0/#text0
 ```

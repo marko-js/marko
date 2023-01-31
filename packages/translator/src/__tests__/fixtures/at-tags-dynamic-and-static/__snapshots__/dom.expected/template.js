@@ -8,4 +8,4 @@ const _setup = _scope => {
 export const template = `${_hello_template}`;
 export const walks = /* beginChild, _hello_walks, endChild */`/${_hello_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/at-tags-dynamic-and-static/template.marko");

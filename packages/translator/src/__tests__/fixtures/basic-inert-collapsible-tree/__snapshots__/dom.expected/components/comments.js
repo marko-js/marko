@@ -45,4 +45,4 @@ export { _comments as _apply_comments, _path as _apply_path };
 export const template = "<ul></ul>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

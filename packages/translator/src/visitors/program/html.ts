@@ -4,6 +4,8 @@ import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 import isStatic from "../../util/is-static";
 import { returnId } from "../../core/return";
+import { getScopeIdentifier } from "../../util/sections";
+import { getTemplateId } from "@marko/babel-utils";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default {
@@ -32,16 +34,25 @@ export default {
 
       const rendererId = program.scope.generateUidIdentifier("renderer");
       const { attrs } = program.node.extra;
+      const {
+        markoOpts: { optimize },
+        opts: { filename },
+      } = program.hub.file;
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
             rendererId,
-            t.arrowFunctionExpression(
-              [
-                attrs ? (attrs.var as any) : t.identifier("input"),
-                tagVarIdentifier,
-              ],
-              t.blockStatement(renderContent)
+            callRuntime(
+              "register",
+              t.arrowFunctionExpression(
+                [
+                  attrs ? (attrs.var as any) : t.identifier("input"),
+                  tagVarIdentifier,
+                  getScopeIdentifier(0),
+                ],
+                t.blockStatement(renderContent)
+              ),
+              t.stringLiteral(getTemplateId(optimize, `${filename}`))
             )
           ),
         ]),

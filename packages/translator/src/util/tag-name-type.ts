@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import { isNativeTag } from "@marko/babel-utils";
-import { isOutputHTML } from "./marko-config";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -42,6 +41,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
       while ((path = pending.pop()) && type !== TagNameTypes.DynamicTag) {
         if (path.isConditionalExpression()) {
+          pending.push(path.get("test"));
           pending.push(path.get("consequent"));
 
           if (path.node.alternate) {
@@ -60,12 +60,12 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         } else if (path.isBinaryExpression()) {
           type =
             path.node.operator !== "+" ||
-            (type !== undefined && type !== TagNameTypes.NativeTag)
+            type !== undefined /* && type !== TagNameTypes.NativeTag*/
               ? TagNameTypes.DynamicTag
               : TagNameTypes.NativeTag;
         } else if (path.isStringLiteral() || path.isTemplateLiteral()) {
           type =
-            type !== undefined && type !== TagNameTypes.NativeTag
+            type !== undefined /* && type !== TagNameTypes.NativeTag */
               ? TagNameTypes.DynamicTag
               : TagNameTypes.NativeTag;
         } else if (path.isNullLiteral()) {
@@ -130,34 +130,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             }
 
             if (bindingTagName === "let") {
-              const defaultAttr = bindingTag.get("attributes")[0];
-
-              if (defaultAttr.node) {
-                pending.push(
-                  (defaultAttr as t.NodePath<t.MarkoAttribute>).get("value")
-                );
-              } else {
-                nullable = true;
-              }
-
-              const assignments = binding.constantViolations;
-              for (let i = assignments.length; i--; ) {
-                const assignment = assignments[
-                  i
-                ] as t.NodePath<t.AssignmentExpression>;
-                const { operator } = assignment.node;
-                if (operator === "=") {
-                  pending.push(assignment.get("right"));
-                } else if (operator === "+=") {
-                  type =
-                    type !== undefined && type !== TagNameTypes.NativeTag
-                      ? TagNameTypes.DynamicTag
-                      : TagNameTypes.NativeTag;
-                } else {
-                  type = TagNameTypes.DynamicTag;
-                  break;
-                }
-              }
+              type = TagNameTypes.DynamicTag;
+              continue;
+              // TODO: Optimize for when we are certain that this is either always a string or always a custom tag
             }
 
             continue;
@@ -169,8 +144,8 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      // // DOM implementation requires non strings actually be a dynamic tag call.
-      extra.tagNameType = isOutputHTML() ? type! : TagNameTypes.DynamicTag;
+      // DOM implementation requires non strings actually be a dynamic tag call.
+      extra.tagNameType = type!;
       extra.tagNameNullable = nullable;
       extra.tagNameDynamic = true;
     }

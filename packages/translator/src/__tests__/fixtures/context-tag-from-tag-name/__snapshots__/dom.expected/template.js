@@ -13,4 +13,4 @@ const _setup = _scope => {
 export const template = `${_other_template}`;
 export const walks = /* beginChild, _other_walks, endChild */`/${_other_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/template.marko");

@@ -10,4 +10,4 @@ const _setup = _scope => {
 export const template = `${_customTag_template}`;
 export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/template.marko");

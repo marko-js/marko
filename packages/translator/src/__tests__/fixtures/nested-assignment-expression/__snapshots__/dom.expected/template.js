@@ -18,4 +18,4 @@ const _setup = _scope => {
 export const template = "<button> </button>used to be <span> </span> which should be the same as <span> </span>";
 export const walks = /* get, next(1), get, out(1), over(1), next(1), get, out(1), over(1), next(1), get, out(1) */" D lbD lbD l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko");

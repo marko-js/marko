@@ -10,6 +10,7 @@ import {
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
 import { scopeIdentifier } from ".";
+import { getTemplateId } from "@marko/babel-utils";
 
 export default {
   translate: {
@@ -147,7 +148,10 @@ export default {
           )
         );
       }
-
+      const {
+        markoOpts: { optimize },
+        opts: { filename },
+      } = program.hub.file;
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
@@ -156,7 +160,8 @@ export default {
             walksIdentifier,
             setupIdentifier,
             attrs! && attrsSignalIdentifier,
-            closures.length && closuresIdentifier
+            closures.length && closuresIdentifier,
+            t.stringLiteral(getTemplateId(optimize, `${filename}`))
           )
         )
       );

@@ -10,4 +10,4 @@ const _setup = _scope => {
 export const template = `${_child_template}<div> </div>`;
 export const walks = /* beginChild, _child_walks, endChild, next(1), get, out(1) */`/${_child_walks}&D l`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/custom-tag-var-expression/template.marko");

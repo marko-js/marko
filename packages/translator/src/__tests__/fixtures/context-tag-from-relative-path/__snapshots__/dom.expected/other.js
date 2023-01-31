@@ -8,4 +8,4 @@ export { _input as _apply_input };
 export const template = "<set value=hello><!></set>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/context-tag-from-relative-path/other.marko");

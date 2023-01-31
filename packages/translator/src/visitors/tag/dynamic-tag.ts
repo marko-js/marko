@@ -6,10 +6,15 @@ import * as walks from "../../util/walks";
 import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputHTML } from "../../util/marko-config";
-import { getOrCreateSectionId, getSectionId } from "../../util/sections";
+import {
+  getOrCreateSectionId,
+  getScopeIdIdentifier,
+  getSectionId,
+} from "../../util/sections";
 import {
   addStatement,
   getComputeFn,
+  getSerializedScopeProperties,
   getSignal,
   subscribe,
 } from "../../util/signals";
@@ -26,7 +31,7 @@ import {
   updateReferenceGroup,
 } from "../../util/references";
 import customTag from "./custom-tag";
-import { scopeIdentifier } from "../program";
+import { currentProgramPath, scopeIdentifier } from "../program";
 
 export default {
   analyze: {
@@ -83,14 +88,37 @@ export default {
           );
         }
 
+        const dynamicScopeIdentifier =
+          currentProgramPath.scope.generateUidIdentifier("dynamicScope");
         const dynamicTagExpr = callRuntime("dynamicTag", ...args);
-
         if (node.var) {
+          // TODO: This breaks now that _dynamicTag returns a scope
           translateVar(tag, dynamicTagExpr);
           tag.remove();
         } else {
-          tag.replaceWith(t.expressionStatement(dynamicTagExpr))[0].skip();
+          tag
+            .replaceWith(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(dynamicScopeIdentifier, dynamicTagExpr),
+              ])
+            )[0]
+            .skip();
         }
+        const sectionId = getSectionId(tag);
+        writer.writeTo(tag)`${callRuntime(
+          "markHydrateControlEnd",
+          getScopeIdIdentifier(sectionId),
+          getNodeLiteral(node.extra.reserve!)
+        )}`;
+
+        getSerializedScopeProperties(sectionId).set(
+          t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "!"),
+          dynamicScopeIdentifier
+        );
+        getSerializedScopeProperties(sectionId).set(
+          t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "("),
+          node.name
+        );
       } else {
         const sectionId = getSectionId(tag);
         const bodySectionId = getSectionId(tag.get("body"));

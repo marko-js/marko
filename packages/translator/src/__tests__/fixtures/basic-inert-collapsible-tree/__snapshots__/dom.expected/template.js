@@ -11,4 +11,4 @@ export { _input as _apply_input };
 export const template = `${_comments_template}`;
 export const walks = /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko");

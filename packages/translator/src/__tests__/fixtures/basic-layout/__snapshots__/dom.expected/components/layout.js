@@ -10,4 +10,4 @@ export { _renderBody as _apply_renderBody };
 export const template = "<body><!></body>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/basic-layout/components/layout.marko");

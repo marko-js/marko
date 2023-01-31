@@ -12,4 +12,4 @@ const _setup = _scope => {
 export const template = "<div><!><button>Toggle</button></div>";
 export const walks = /* next(1), replace, over(1), get, out(1) */"D%b l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko");

@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getSectionId,
   createSectionState,
-  getScopeIdentifier,
+  getScopeIdIdentifier,
 } from "../util/sections";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
@@ -127,7 +127,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
   if (isOutputHTML()) {
     writeTo(path)`${callRuntime(
       "markHydrateNode",
-      getScopeIdentifier(sectionId),
+      getScopeIdIdentifier(sectionId),
       getNodeLiteral(reserve!)
     )}`;
   }

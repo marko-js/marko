@@ -1,16 +1,16 @@
-import { write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar) => {
-  const _scope0_ = _nextScopeId();
+import { write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+const _renderer = _register((input, _tagVar, _scope0_) => {
+  const _scope0_id = _nextScopeId();
   const x = 1;
   const y = 2;
   _write("<span>child</span>");
   const _return = x + y;
-  _writeHydrateScope(_scope0_, {
+  _writeHydrateScope(_scope0_id, {
     "x": x,
     "y": y,
     "/": _tagVar
-  });
+  }, _scope0_);
   return _return;
-};
+}, "packages/translator/src/__tests__/fixtures/custom-tag-var-multiple/components/child.marko");
 export default _renderer;
 export const render = /* @__PURE__ */_createRenderer(_renderer);

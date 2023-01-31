@@ -57,7 +57,7 @@ export default {
           sectionId,
           node,
           name,
-          `#${(node.name as t.StringLiteral).value}`
+          `#${tag.get("name").evaluate().value}`
         );
       }
     },

@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
@@ -87,11 +87,27 @@ export function createSectionState<T = unknown>(
   ] as const;
 }
 
-export const [getScopeIdentifier] = createSectionState<t.Identifier>(
-  "scopeIdentifier",
+export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
+  "scopeIdIdentifier",
   (sectionId) =>
-    currentProgramPath.scope.generateUidIdentifier(`scope${sectionId}_`)
+    currentProgramPath.scope.generateUidIdentifier(`scope${sectionId}_id`)
 );
+
+const [_getScopeIdentifier] = createSectionState<t.Identifier>(
+  "scopeIdentifier",
+  () => t.identifier("undefined")
+);
+
+export const getScopeIdentifier = (
+  sectionId: number,
+  ignoreDefault?: boolean
+) => {
+  const scopeId = _getScopeIdentifier(sectionId);
+  if (!ignoreDefault && scopeId.name === "undefined") {
+    scopeId.name = currentProgramPath.scope.generateUid(`scope${sectionId}_`);
+  }
+  return scopeId;
+};
 
 export function forEachSectionId(fn: (id: number) => void) {
   const { nextSectionId } = currentProgramPath.node.extra;

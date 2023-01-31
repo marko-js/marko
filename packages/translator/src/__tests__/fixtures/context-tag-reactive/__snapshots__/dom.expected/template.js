@@ -20,4 +20,4 @@ const _setup = _scope => {
 export const template = "<!><button id=increment> </button>";
 export const walks = /* replace, over(1), get, next(1), get, out(1) */"%b D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup);
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko");

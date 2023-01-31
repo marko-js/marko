@@ -1,0 +1,1 @@
+./packages/translator/src/__tests__/fixtures/dynamic-tag-var/template.marko: Cannot read properties of null (reading 'extra')

@@ -7,6 +7,7 @@ import { queueHydrate, runHydrate } from "./queue";
 import { DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
+import { register } from "./hydrate";
 
 const enum NodeType {
   Element = 1,
@@ -157,6 +158,7 @@ export function createRenderFn<I extends Input, S extends Scope>(
   setup?: SetupFn<S>,
   attrs?: Signal,
   closureSignals?: Signal[],
+  templateId?: string,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
@@ -171,32 +173,35 @@ export function createRenderFn<I extends Input, S extends Scope>(
     dynamicEndNodeOffset,
     attrs
   );
-  return Object.assign((input: I, element: Element): RenderResult<I> => {
-    const scope = createScope() as S;
-    queueHydrate(scope, () => {
-      element.replaceChildren(dom);
-    });
-    const dom = initRenderer(renderer, scope);
+  return register(
+    templateId!,
+    Object.assign((input: I, element: Element): RenderResult<I> => {
+      const scope = createScope() as S;
+      queueHydrate(scope, () => {
+        element.replaceChildren(dom);
+      });
+      const dom = initRenderer(renderer, scope);
 
-    if (attrs) {
-      attrs.___apply(scope, input);
-    }
+      if (attrs) {
+        attrs.___apply(scope, input);
+      }
 
-    runHydrate();
+      runHydrate();
 
-    return {
-      update: (newInput: I) => {
-        if (attrs) {
-          attrs.___mark(scope);
-          attrs.___apply(scope, newInput);
-          runHydrate();
-        }
-      },
-      destroy: () => {
-        // TODO
-      },
-    };
-  }, renderer);
+      return {
+        update: (newInput: I) => {
+          if (attrs) {
+            attrs.___mark(scope);
+            attrs.___apply(scope, newInput);
+            runHydrate();
+          }
+        },
+        destroy: () => {
+          // TODO
+        },
+      };
+    }, renderer)
+  );
 }
 
 export function createRenderer<S extends Scope>(
