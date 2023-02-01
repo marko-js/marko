@@ -1,8 +1,6 @@
 import { t as _t } from "marko/src/runtime/html/index.js";
-
 const _marko_componentType = "packages/translator-default/test/fixtures/await-tag/template.marko",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
 import _await from "marko/src/core-tags/core/await/renderer.js";

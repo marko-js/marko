@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "gHRccTPG",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _testHello from "./tags/test-hello/renderer.js";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";

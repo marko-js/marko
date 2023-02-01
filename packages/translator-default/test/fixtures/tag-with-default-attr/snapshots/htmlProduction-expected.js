@@ -1,8 +1,6 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-
 const _marko_componentType = "d4MwwGDt",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_attr from "marko/dist/runtime/html/helpers/attr.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";

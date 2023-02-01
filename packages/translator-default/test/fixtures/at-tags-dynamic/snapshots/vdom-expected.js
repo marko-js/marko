@@ -1,21 +1,16 @@
 import { t as _t } from "marko/src/runtime/vdom/index.js";
-
 const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-dynamic/template.marko",
-      _marko_template = _t(_marko_componentType);
-
+  _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
-
 _marko_registerComponent(_marko_componentType, () => _marko_template);
-
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
   const _cols = [];
   const _items = [];
-
   for (const color of input.colors) {
     if (x) {
       _items.push({
@@ -46,9 +41,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       });
     }
   }
-
   let i = 10;
-
   while (i--) {
     _items.push({
       "renderBody": out => {
@@ -56,10 +49,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       }
     });
   }
-
   for (const col of input.table) {
     const _rows = [];
-
     for (const row of col) {
       _rows.push({
         "row": row,
@@ -68,27 +59,22 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
         }
       });
     }
-
     _cols.push({
       "x": y,
       "rows": _rows
     });
   }
-
   const _rows2 = [];
-
   _rows2.push({
     "row": -1,
     "renderBody": out => {
       out.t("Outside", _component);
     }
   });
-
   _cols.push({
     "outside": true,
     "rows": _rows2
   });
-
   _marko_tag(_hello, {
     "list": {
       "items": _items
