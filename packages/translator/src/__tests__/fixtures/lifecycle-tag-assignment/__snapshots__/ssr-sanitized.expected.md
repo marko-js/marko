@@ -5,7 +5,7 @@
   <span>
     0
   </span>
-  , was=false
+  , was=‍
 </div>
 <button
   id="increment"

@@ -11,7 +11,6 @@ export {
 export {
   data,
   html,
-  innerHTML,
   attr,
   attrs,
   classAttr,

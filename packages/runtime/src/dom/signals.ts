@@ -32,10 +32,11 @@ function applyValue<S extends Scope, V>(
   value: V,
   valueAccessor: Accessor,
   subscribers: Signal[],
+  isCreate: boolean,
   action?: (scope: S, value: V) => void
 ) {
   const stale = write(scope, valueAccessor as number, value);
-  if (stale) {
+  if (stale || isCreate) {
     action?.(scope, value);
   }
   notifySubscribers(scope, stale as any as boolean, subscribers);
@@ -66,8 +67,16 @@ export function source<S extends Scope, V>(
       }
     },
     ___apply(scope, data) {
+      const isCreate = scope[markAccessor] === undefined;
       scope[markAccessor] = 1;
-      applyValue(scope as S, data as V, valueAccessor, subscribers, action);
+      applyValue(
+        scope as S,
+        data as V,
+        valueAccessor,
+        subscribers,
+        isCreate,
+        action
+      );
       scope[markAccessor] = 0;
     },
   };
@@ -201,7 +210,14 @@ export function derivation<S extends Scope, V>(
     subscribers,
     defaultMark,
     (scope: S) => {
-      applyValue(scope, compute(scope), valueAccessor, subscribers, action);
+      applyValue(
+        scope,
+        compute(scope),
+        valueAccessor,
+        subscribers,
+        false, // TODO: This should be true on creation
+        action
+      );
     }
   );
   if (MARKO_DEBUG) {

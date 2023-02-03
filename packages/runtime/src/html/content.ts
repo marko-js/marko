@@ -1,5 +1,5 @@
 export function toString(val: unknown) {
-  return val == null ? "" : val + "";
+  return val || val === 0 ? val + "" : "";
 }
 
 export const escapeXML = escapeIfNeeded((val: string) => {
@@ -82,14 +82,15 @@ export function escapeAttrValue(val: string) {
 
 function escapeIfNeeded(escape: (val: string) => string) {
   return (val: unknown) => {
-    if (val == null) {
-      return "";
+    if (!val && val !== 0) {
+      return "&zwj;";
     }
 
     switch (typeof val) {
       case "string":
         return escape(val);
       case "boolean":
+        return "true";
       case "number":
         return val + "";
       default:

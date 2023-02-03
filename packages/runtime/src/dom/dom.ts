@@ -114,16 +114,12 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
   scope[index + "-"] = nextProps;
 }
 
-export function innerHTML(element: Element, value: string) {
-  element.innerHTML = normalizeString(value);
-}
-
 function normalizeAttrValue(value: unknown) {
-  return value == null || value === false ? undefined : value + "";
+  return value || value === 0 ? value + "" : undefined;
 }
 
 function normalizeString(value: unknown) {
-  return value == null ? "" : value + "";
+  return value || value === 0 ? value + "" : "\u200d";
 }
 
 type EffectFn<S extends Scope> = (scope: S) => void | (() => void);

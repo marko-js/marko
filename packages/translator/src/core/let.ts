@@ -13,7 +13,11 @@ export default {
   translate(tag) {
     const { node } = tag;
     const tagVar = node.var;
-    const [defaultAttr] = node.attributes;
+    const defaultAttr =
+      node.attributes.find(
+        (attr) =>
+          t.isMarkoAttribute(attr) && (attr.default || attr.name === "value")
+      ) ?? t.markoAttribute("value", t.identifier("undefined"));
 
     assertNoParams(tag);
     assertNoBodyContent(tag);
@@ -28,24 +32,6 @@ export default {
       throw tag
         .get("var")
         .buildCodeFrameError("The 'let' cannot be destructured.");
-    }
-
-    if (!defaultAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'let' tag requires a default attribute.");
-    }
-
-    if (
-      node.attributes.length > 1 ||
-      !t.isMarkoAttribute(defaultAttr) ||
-      (!defaultAttr.default && defaultAttr.name !== "default")
-    ) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The 'let' tag only supports the 'default' attribute."
-        );
     }
 
     if (isOutputDOM()) {

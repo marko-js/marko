@@ -5,7 +5,7 @@
   <span>
     0
   </span>
-  , was=false
+  , was=‍
 </div>
 <button
   id="increment"
@@ -41,7 +41,7 @@ container.querySelector("#increment")?.click();
 # Mutations
 ```
 div0/span1/#text0: "0" => "1"
-div0/#text3: "false" => "0"
+div0/#text3: "‍" => "0"
 ```
 
 
