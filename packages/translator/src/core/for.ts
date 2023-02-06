@@ -15,8 +15,14 @@ import {
   subscribe,
   writeHTMLHydrateStatements,
   getComputeFn,
+  getSerializedScopeProperties,
 } from "../util/signals";
-import { getOrCreateSectionId, getSectionId } from "../util/sections";
+import {
+  getOrCreateSectionId,
+  getScopeIdentifier,
+  getScopeIdIdentifier,
+  getSectionId,
+} from "../util/sections";
 import {
   ReserveType,
   reserveScope,
@@ -24,7 +30,7 @@ import {
   Reserve,
   getNodeLiteral,
 } from "../util/reserve";
-import { callRuntime } from "../util/runtime";
+import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import type { ReferenceGroup } from "../util/references";
@@ -49,6 +55,11 @@ export default {
     },
     exit(tag) {
       analyzeAttributeTags(tag);
+
+      tag.node.extra.isStateful = tag.node.attributes.some(
+        (attr) => attr.extra?.valueReferences?.references
+      );
+      tag.node.extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
   },
   translate: {
@@ -270,19 +281,39 @@ const translateDOM = {
 
 const translateHTML = {
   exit(tag: t.NodePath<t.MarkoTag>) {
+    const sectionId = getSectionId(tag);
     const tagBody = tag.get("body");
+    const bodySectionId = getSectionId(tagBody);
     const { node } = tag;
     const {
       attributes,
       body: { body, params },
+      extra: { isStateful, singleNodeOptimization, isOnlyChild },
     } = node;
+    const {
+      extra: { reserve },
+    } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
     const fromAttr = findName(attributes, "from");
     const toAttr = findName(attributes, "to");
     const block = t.blockStatement(body);
+    const write = writer.writeTo(tag);
     let forNode: t.Node | t.Node[];
+
+    if (isStateful) {
+      if (!singleNodeOptimization) {
+        writer.writePrependTo(tagBody)`${callRuntime(
+          "markHydrateScopeStart",
+          getScopeIdIdentifier(bodySectionId)
+        )}`;
+      }
+      getSerializedScopeProperties(bodySectionId).set(
+        importRuntime("SYMBOL_OWNER"),
+        getScopeIdIdentifier(sectionId)
+      );
+    }
 
     writer.flushInto(tag);
     writeHTMLHydrateStatements(tagBody);
@@ -400,7 +431,49 @@ const translateHTML = {
 
     block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
 
-    tag.replaceWithMultiple(([] as t.Node[]).concat(forNode!));
+    const replacement = ([] as t.Node[]).concat(forNode!);
+
+    if (isStateful) {
+      const forScopeIdsIdentifier =
+        tag.scope.generateUidIdentifier("forScopeIds");
+      const forScopesIdentifier = getScopeIdentifier(bodySectionId);
+
+      replacement.unshift(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(forScopesIdentifier, t.arrayExpression([])),
+        ])
+      );
+
+      if (singleNodeOptimization) {
+        replacement.unshift(
+          t.variableDeclaration("let", [
+            t.variableDeclarator(forScopeIdsIdentifier, t.arrayExpression([])),
+          ])
+        );
+        block.body.push(
+          t.expressionStatement(
+            t.callExpression(
+              t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
+              [getScopeIdIdentifier(bodySectionId)]
+            )
+          )
+        );
+        write`${callRuntime(
+          "markHydrateControlSingleNodeEnd",
+          getScopeIdIdentifier(sectionId),
+          getNodeLiteral(reserve!),
+          forScopeIdsIdentifier
+        )}`;
+      } else {
+        write`${callRuntime(
+          "markHydrateControlEnd",
+          getScopeIdIdentifier(sectionId),
+          getNodeLiteral(reserve!)
+        )}`;
+      }
+    }
+
+    tag.replaceWithMultiple(replacement);
   },
 };
 

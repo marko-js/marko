@@ -7,5 +7,3 @@ function add(container: Element) {
 function remove(container: Element) {
   (container.querySelector("#remove") as HTMLButtonElement).click();
 }
-
-export const skip_ssr = true;
