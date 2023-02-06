@@ -28,7 +28,7 @@ export default {
     if (
       node.attributes.length > 1 ||
       !t.isMarkoAttribute(defaultAttr) ||
-      (!defaultAttr.default && defaultAttr.name !== "default")
+      (!defaultAttr.default && defaultAttr.name !== "value")
     ) {
       throw tag
         .get("name")
