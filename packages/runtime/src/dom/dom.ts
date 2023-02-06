@@ -115,7 +115,9 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
 }
 
 function normalizeAttrValue(value: unknown) {
-  return value || value === 0 ? value + "" : undefined;
+  if (value || value === 0) {
+    return value === true ? "" : value + "";
+  }
 }
 
 function normalizeString(value: unknown) {

@@ -52,8 +52,8 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   1
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   2
 </button>
@@ -61,7 +61,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   3
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   4
 </button>
@@ -69,7 +69,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   5
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   6
 </button>
@@ -77,7 +77,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   7
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   8
 </button>
@@ -85,7 +85,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   9
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   10
 </button>
@@ -93,7 +93,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
   11
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   12
 </button>
@@ -101,13 +101,13 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
 
 # Mutations
 ```
-button1: attr(data-selected) null => "true"
-button1: attr(data-multiple) null => "true"
-button3: attr(data-multiple) null => "true"
-button5: attr(data-multiple) null => "true"
-button7: attr(data-multiple) null => "true"
-button9: attr(data-multiple) null => "true"
-button11: attr(data-multiple) null => "true"
+button1: attr(data-selected) null => ""
+button1: attr(data-multiple) null => ""
+button3: attr(data-multiple) null => ""
+button5: attr(data-multiple) null => ""
+button7: attr(data-multiple) null => ""
+button9: attr(data-multiple) null => ""
+button11: attr(data-multiple) null => ""
 ```
 
 
@@ -122,8 +122,8 @@ button11: attr(data-multiple) null => "true"
   2
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   3
 </button>
@@ -134,7 +134,7 @@ button11: attr(data-multiple) null => "true"
   5
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   6
 </button>
@@ -145,7 +145,7 @@ button11: attr(data-multiple) null => "true"
   8
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   9
 </button>
@@ -156,7 +156,7 @@ button11: attr(data-multiple) null => "true"
   11
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   12
 </button>
@@ -164,16 +164,16 @@ button11: attr(data-multiple) null => "true"
 
 # Mutations
 ```
-button1: attr(data-selected) "true" => null
-button1: attr(data-multiple) "true" => null
-button2: attr(data-selected) null => "true"
-button2: attr(data-multiple) null => "true"
-button3: attr(data-multiple) "true" => null
-button5: attr(data-multiple) "true" => "true"
-button7: attr(data-multiple) "true" => null
-button8: attr(data-multiple) null => "true"
-button9: attr(data-multiple) "true" => null
-button11: attr(data-multiple) "true" => "true"
+button1: attr(data-selected) "" => null
+button1: attr(data-multiple) "" => null
+button2: attr(data-selected) null => ""
+button2: attr(data-multiple) null => ""
+button3: attr(data-multiple) "" => null
+button5: attr(data-multiple) "" => ""
+button7: attr(data-multiple) "" => null
+button8: attr(data-multiple) null => ""
+button9: attr(data-multiple) "" => null
+button11: attr(data-multiple) "" => ""
 ```
 
 
@@ -194,8 +194,8 @@ button11: attr(data-multiple) "true" => "true"
   4
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   5
 </button>
@@ -212,7 +212,7 @@ button11: attr(data-multiple) "true" => "true"
   9
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   10
 </button>
@@ -226,12 +226,12 @@ button11: attr(data-multiple) "true" => "true"
 
 # Mutations
 ```
-button2: attr(data-selected) "true" => null
-button2: attr(data-multiple) "true" => null
-button4: attr(data-selected) null => "true"
-button4: attr(data-multiple) null => "true"
-button5: attr(data-multiple) "true" => null
-button8: attr(data-multiple) "true" => null
-button9: attr(data-multiple) null => "true"
-button11: attr(data-multiple) "true" => null
+button2: attr(data-selected) "" => null
+button2: attr(data-multiple) "" => null
+button4: attr(data-selected) null => ""
+button4: attr(data-multiple) null => ""
+button5: attr(data-multiple) "" => null
+button8: attr(data-multiple) "" => null
+button9: attr(data-multiple) null => ""
+button11: attr(data-multiple) "" => null
 ```

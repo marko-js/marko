@@ -34,7 +34,7 @@ container.querySelector("#toggle").click();
 
 ```html
 <ul
-  hidden="true"
+  hidden=""
 >
   <li>
     1
@@ -60,7 +60,7 @@ container.querySelector("#toggle").click();
 
 # Mutations
 ```
-ul0: attr(hidden) null => "true"
+ul0: attr(hidden) null => ""
 ```
 
 
@@ -93,7 +93,7 @@ container.querySelector("#toggle").click();
 
 # Mutations
 ```
-ul0: attr(hidden) "true" => null
+ul0: attr(hidden) "" => null
 ```
 
 

@@ -47,8 +47,8 @@
   1
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   2
 </button>
@@ -56,7 +56,7 @@
   3
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   4
 </button>
@@ -64,7 +64,7 @@
   5
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   6
 </button>
@@ -72,7 +72,7 @@
   7
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   8
 </button>
@@ -80,7 +80,7 @@
   9
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   10
 </button>
@@ -88,7 +88,7 @@
   11
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   12
 </button>
@@ -106,8 +106,8 @@
   2
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   3
 </button>
@@ -118,7 +118,7 @@
   5
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   6
 </button>
@@ -129,7 +129,7 @@
   8
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   9
 </button>
@@ -140,7 +140,7 @@
   11
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   12
 </button>
@@ -164,8 +164,8 @@
   4
 </button>
 <button
-  data-multiple="true"
-  data-selected="true"
+  data-multiple=""
+  data-selected=""
 >
   5
 </button>
@@ -182,7 +182,7 @@
   9
 </button>
 <button
-  data-multiple="true"
+  data-multiple=""
 >
   10
 </button>

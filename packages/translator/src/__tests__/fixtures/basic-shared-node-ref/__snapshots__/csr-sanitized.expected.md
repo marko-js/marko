@@ -29,7 +29,7 @@ container.querySelector("#toggle").click();
 
 ```html
 <ul
-  hidden="true"
+  hidden=""
 >
   <li>
     1
