@@ -71,5 +71,6 @@
         "index-browser.marko",
         "index.js",
         "node-require.js"
-    ]
+    ],
+    "types": "index.d.ts"
 }
