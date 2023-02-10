@@ -5,7 +5,7 @@ declare module "*.marko" {
 
 declare namespace NodeJS {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface ReadableStream { }
+  interface ReadableStream {}
 }
 
 declare namespace Marko {
@@ -75,13 +75,13 @@ declare namespace Marko {
     in Params extends readonly any[] = [],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     out Return = void
-  > { }
+  > {}
 
   /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
   export type DynamicTagName =
     | {
-      renderBody?: Body<any, any> | Template | string | void | false;
-    }
+        renderBody?: Body<any, any> | Template | string | void | false;
+      }
     | Body<any, any>
     | Template
     | string
@@ -100,7 +100,8 @@ declare namespace Marko {
 
   export abstract class Component<
     Input extends Record<PropertyKey, any> = Record<PropertyKey, any>
-  > implements Emitter {
+  > implements Emitter
+  {
     /** A unique id for this instance. */
     public readonly id: string;
     /** The top level element rendered by this instance. */

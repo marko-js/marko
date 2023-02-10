@@ -71,7 +71,10 @@ export interface TagDefinition {
 export interface TaglibLookup {
   getTagsSorted(): TagDefinition[];
   getTag(tagName: string): undefined | TagDefinition;
-  getAttribute(tagName: string, attrName: string): undefined | AttributeDefinition;
+  getAttribute(
+    tagName: string,
+    attrName: string
+  ): undefined | AttributeDefinition;
   forEachAttribute(
     tagName: string,
     callback: (attr: AttributeDefinition, tag: TagDefinition) => void
