@@ -1,11 +1,9 @@
 import { attr as _attr, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _name = /* @__PURE__ */_source("name", [], (_scope, name) => _attr(_scope["#div/0"], "foo", `Hello ${name}`));
-export const attrs = /* @__PURE__ */_destructureSources([_name], (_scope, {
-  name
-}) => {
-  _setSource(_scope, _name, name);
+const _input = /* @__PURE__ */_source("input", [], (_scope, input) => _attr(_scope["#div/0"], "foo", `Hello ${input.name}`));
+export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
+  _setSource(_scope, _input, input);
 });
-export { _name as _apply_name };
+export { _input as _apply_input };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};

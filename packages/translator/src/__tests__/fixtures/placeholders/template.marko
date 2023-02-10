@@ -1,13 +1,12 @@
-<attrs/{ x }/>
--- ${x}
-<span>${x}<div /></span>
+-- ${input.x}
+<span>${input.x}<div /></span>
 <div>
   <div>
     a
   </div>
-  ${x}
+  ${input.x}
   ${"Hello Text <a/>"}
-  $!{x}
+  $!{input.x}
   $!{null}
   $!{"Hello HTML <a/>"}
 

@@ -4,25 +4,14 @@ const _elseIfBody = _register("packages/translator/src/__tests__/fixtures/if-tag
 const _ifBody3 = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_createRenderer("A", ""));
 const _ifBody2 = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_2_renderer", /* @__PURE__ */_createRenderer("World", ""));
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Hello", ""));
-const _if3 = /* @__PURE__ */_conditional("#text/2", 2, (_scope, x = _scope["x"], y = _scope["y"]) => x ? _ifBody3 : y ? _elseIfBody : _elseBody);
-const _if2 = /* @__PURE__ */_conditional("#text/1", 2, (_scope, a = _scope["a"], b = _scope["b"]) => (a, b) ? _ifBody2 : null);
-const _if = /* @__PURE__ */_conditional("#text/0", 2, (_scope, a = _scope["a"], b = _scope["b"]) => a + b ? _ifBody : null);
-const _y = /* @__PURE__ */_source("y", [_if3]);
-const _x = /* @__PURE__ */_source("x", [_if3]);
-const _b = /* @__PURE__ */_source("b", [_if, _if2]);
-const _a = /* @__PURE__ */_source("a", [_if, _if2]);
-export const attrs = /* @__PURE__ */_destructureSources([_a, _b, _x, _y], (_scope, {
-  a,
-  b,
-  x,
-  y
-}) => {
-  _setSource(_scope, _a, a);
-  _setSource(_scope, _b, b);
-  _setSource(_scope, _x, x);
-  _setSource(_scope, _y, y);
+const _if3 = /* @__PURE__ */_conditional("#text/2", 1, (_scope, input = _scope["input"]) => input.x ? _ifBody3 : input.y ? _elseIfBody : _elseBody);
+const _if2 = /* @__PURE__ */_conditional("#text/1", 1, (_scope, input = _scope["input"]) => (input.a, input.b) ? _ifBody2 : null);
+const _if = /* @__PURE__ */_conditional("#text/0", 1, (_scope, input = _scope["input"]) => input.a + input.b ? _ifBody : null);
+const _input = /* @__PURE__ */_source("input", [_if, _if2, _if3]);
+export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
+  _setSource(_scope, _input, input);
 });
-export { _a as _apply_a, _b as _apply_b, _x as _apply_x, _y as _apply_y };
+export { _input as _apply_input };
 export const template = "<!><!><div><!></div>";
 export const walks = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"%b%bD%l";
 export const setup = function () {};

@@ -1,8 +1,9 @@
 import { classAttr as _classAttr, attr as _attr, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _input = /* @__PURE__ */_source("input", [], (_scope, input) => {
-  _classAttr(_scope["#div/0"], input.className);
+  _classAttr(_scope["#div/0"], input.foo);
   _attr(_scope["#div/0"], "foo", 'a' + input.foo + 'b');
-  _attr(_scope["#div/0"], "bar", `a ${input.foo} b`);
+  _attr(_scope["#div/0"], "bar", `a ${input.bar} b`);
+  _attr(_scope["#div/0"], "nested", `a ${input.foo + ` nested ${input.bar}`} b`);
 });
 export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
   _setSource(_scope, _input, input);

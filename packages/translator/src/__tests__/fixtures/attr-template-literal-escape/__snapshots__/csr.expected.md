@@ -1,6 +1,8 @@
-# Render undefined
+# Render {"name":"Marko"}
 ```html
-<div />
+<div
+  foo="Hello Marko"
+/>
 ```
 
 # Mutations

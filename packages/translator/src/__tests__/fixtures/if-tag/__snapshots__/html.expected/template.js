@@ -1,15 +1,10 @@
 import { SYMBOL_OWNER as _SYMBOL_OWNER, write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, markHydrateControlSingleNodeEnd as _markHydrateControlSingleNodeEnd, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register(({
-  a,
-  b,
-  x,
-  y
-}, _tagVar, _scope0_) => {
+const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   let _ifScopeId;
   const _scope1_ = {},
     _ifRenderer = () => {};
-  if (a + b) {
+  if (input.a + input.b) {
     const _scope1_id = _nextScopeId();
     _write("Hello");
     _writeHydrateScope(_scope1_id, {
@@ -22,7 +17,7 @@ const _renderer = _register(({
   let _ifScopeId2;
   const _scope2_ = {},
     _ifRenderer2 = () => {};
-  if (a, b) {
+  if (input.a, input.b) {
     const _scope2_id = _nextScopeId();
     _write("World");
     _writeHydrateScope(_scope2_id, {
@@ -35,7 +30,7 @@ const _renderer = _register(({
   let _ifScopeId3;
   const _scope3_ = {},
     _ifRenderer3 = () => {};
-  if (x) {
+  if (input.x) {
     const _scope3_id = _nextScopeId();
     _write("A");
     _writeHydrateScope(_scope3_id, {
@@ -43,7 +38,7 @@ const _renderer = _register(({
     }, _scope3_);
     _register(_ifRenderer3, "packages/translator/src/__tests__/fixtures/if-tag/template.marko_3_renderer");
     _ifScopeId3 = _scope3_id;
-  } else if (y) {
+  } else if (input.y) {
     const _scope4_id = _nextScopeId();
     _write("B");
     _writeHydrateScope(_scope4_id, {
@@ -62,10 +57,6 @@ const _renderer = _register(({
   }
   _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#text/2", _ifScopeId3)}</div>`);
   _writeHydrateScope(_scope0_id, {
-    "a": a,
-    "b": b,
-    "x": x,
-    "y": y,
     "#text/0!": _scope1_,
     "#text/0(": _ifRenderer,
     "#text/1!": _scope2_,

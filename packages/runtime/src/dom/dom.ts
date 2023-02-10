@@ -74,13 +74,13 @@ export function attrs(
 const doc = document;
 const parser = /* @__PURE__ */ doc.createElement("template");
 
-export function html(scope: Scope, value: string, index: number) {
+export function html(scope: Scope, value: unknown, index: Accessor) {
   const firstChild = scope[index] as Node & ChildNode;
   const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
 
-  parser.innerHTML = value || " ";
+  parser.innerHTML = value || value === 0 ? `${value}` : "<!>";
   const newContent = parser.content;
   write(scope, index, newContent.firstChild);
   write(scope, (index + "-") as any as number, newContent.lastChild);

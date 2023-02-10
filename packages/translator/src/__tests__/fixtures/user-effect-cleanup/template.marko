@@ -1,8 +1,7 @@
-<attrs/{ value }/>
 <let/a = 0/>
 <let/b = 0/>
 <div>${"" + a + b}</div>
 <effect() {
-  const previousValue = a = value + 1;
+  const previousValue = a = input.value + 1;
   return () => b = previousValue;
 }/>

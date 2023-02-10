@@ -16,10 +16,10 @@ export function getEmptyScope(marker?: Comment) {
   return emptyScope;
 }
 
-export function write<S extends Scope>(
+export function write<S extends Scope, K extends keyof S>(
   scope: S,
-  localIndex: number,
-  value: unknown
+  localIndex: K,
+  value: S[K]
 ) {
   if (scope[localIndex] !== value) {
     scope[localIndex] = value;

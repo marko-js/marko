@@ -3,5 +3,3 @@ const click = (container: Element) => {
 };
 
 export const steps = [{}, click, click, click] as const;
-export const skip_ssr = true;
-export const skip_hydrate = true;
