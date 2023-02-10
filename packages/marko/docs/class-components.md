@@ -77,13 +77,13 @@ style.less {
 }
 ```
 
-> **Note:** The code in the `style` section is processed in a context separate from the rest of the template, so you can’t use JavaScript variables inside it. If you need variables in your CSS, use a CSS preprocessor that supports them.
+> **Note**: The code in the `style` section is processed in a context separate from the rest of the template, so you can’t use JavaScript variables inside it. If you need variables in your CSS, use a CSS preprocessor that supports them.
 
 ## Multi-file components
 
 You might prefer to keep your component’s class and styles in separate files from the view — the classical separation of HTML, CSS, and JavaScript. Marko makes this possible with a filename-based convention.
 
-> **ProTip:** If your’re moving the component’s class and styles to separate files is because the code is getting too large, consider splitting the component into smaller, more manageable components.
+> **ProTip**: If your’re moving the component’s class and styles to separate files is because the code is getting too large, consider splitting the component into smaller, more manageable components.
 
 ### Supporting files
 
@@ -134,7 +134,7 @@ And in your `style.css`, define the styles:
 }
 ```
 
-> **ProTip:** Marko actually looks any filenames with the pattern `[name].style.*`, so it will pick up any CSS preprocessor file extensions you use: `.less`, `.stylus`, `.scss`, etc.
+> **ProTip**: Marko actually looks any filenames with the pattern `[name].style.*`, so it will pick up any CSS preprocessor file extensions you use: `.less`, `.stylus`, `.scss`, etc.
 
 ### Components with plain objects
 
@@ -157,11 +157,11 @@ export default {
 
 Split components optimize for when a component renders on the server, and doesn’t need to dynamically rerender in the browser. As a result, its template and logic aren’t sent to the browser, reducing load time and download size.
 
-> **Note:** If a split component is the child of a stateful component, its full rendering logic will still be sent because the parent may pass new input to the split component and rerender it.
+> **Note**: If a split component is the child of a stateful component, its full rendering logic will still be sent because the parent may pass new input to the split component and rerender it.
 
 Additionally, if _all_ components rendered on a page are split components, Marko’s VDOM and rendering runtime is unnecessary, and therefore not sent to the browser.
 
-> **ProTip:** Don’t over-optimize. If your component really doesn’t need rerendering, go ahead and split, but don’t forgo stateful rerendering when it would make your code more maintainable.
+> **ProTip**: Don’t over-optimize. If your component really doesn’t need rerendering, go ahead and split, but don’t forgo stateful rerendering when it would make your code more maintainable.
 
 ### Usage
 
@@ -321,7 +321,7 @@ class {
 </button>
 ```
 
-> **ProTip:** Unlike native DOM events, UI component custom events may be emitted with multiple arguments. For example:
+> **ProTip**: Unlike native DOM events, UI component custom events may be emitted with multiple arguments. For example:
 >
 > ```js
 > this.emit("foo", "bar", "baz");
@@ -368,7 +368,7 @@ class {
 <fancy-button key="myFancyButton"/>
 ```
 
-> **Note:** The `[]` suffix (e.g. `key="colors[]"`) lets Marko know that the element will be repeated multiple times with the same key.
+> **Note**: The `[]` suffix (e.g. `key="colors[]"`) lets Marko know that the element will be repeated multiple times with the same key.
 
 #### Keyed matching
 
@@ -704,7 +704,7 @@ Returns `true` if the component needs a bath.
 
 Replaces the state with an entirely new state. Equivalent to `this.state = newState`.
 
-> **Note:** While `setState()` is additive and will not remove properties that are in the old state but not in the new state, `replaceState()` _will_ add the new state and remove the old state properties that are not found in the new state. Thus, if `replaceState()` is used, consider possible side effects if the new state contains less or other properties than the replaced state.
+> **Note**: While `setState()` is additive and will not remove properties that are in the old state but not in the new state, `replaceState()` _will_ add the new state and remove the old state properties that are not found in the new state. Thus, if `replaceState()` is used, consider possible side effects if the new state contains less or other properties than the replaced state.
 
 ### `rerender([input])`
 
@@ -880,7 +880,7 @@ class {
 }
 ```
 
-> **ProTip:** When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance. A parent component, or other code that has access to the component instance, can listen for these events. For example:
+> **ProTip**: When a lifecycle event occurs in the browser, the corresponding event is emitted on the component instance. A parent component, or other code that has access to the component instance, can listen for these events. For example:
 >
 > ```js
 > component.on("input", function (input, out) {

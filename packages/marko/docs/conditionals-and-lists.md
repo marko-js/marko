@@ -56,7 +56,7 @@ A key should be a string or number that uniquely identifies an item in the list 
 </for>
 ```
 
-> **ProTip:** If you have multiple tags underneath `<for>`, you can key only the first tag and that is enough to properly identify its siblings as well
+> **ProTip**: If you have multiple tags underneath `<for>`, you can key only the first tag and that is enough to properly identify its siblings as well
 >
 > ```marko
 > <dl>
@@ -69,4 +69,4 @@ A key should be a string or number that uniquely identifies an item in the list 
 > </dl>
 > ```
 
-> **Note:** If a key is not set, Marko will use the index of an item as its key. However this only works perfectly if items are only ever added or removed at the end of a list. Here's an example where things break down: if we have a list of `["A", "B", "C"]` and reverse the order, index keys would cause "A" to be transformed into "C" (and "C" into "A"), rather than just swapping them. Additionally if these components contained state, the new "C" would contain the state from the old "A" (and vice-versa). Be aware, stateful components include tags like the native `<input>` element. For this reason **it is always recommended to set a `key` on tags in a `<for>`.**
+> **Note**: If a key is not set, Marko will use the index of an item as its key. However this only works perfectly if items are only ever added or removed at the end of a list. Here's an example where things break down: if we have a list of `["A", "B", "C"]` and reverse the order, index keys would cause "A" to be transformed into "C" (and "C" into "A"), rather than just swapping them. Additionally if these components contained state, the new "C" would contain the state from the old "A" (and vice-versa). Be aware, stateful components include tags like the native `<input>` element. For this reason **it is always recommended to set a `key` on tags in a `<for>`.**

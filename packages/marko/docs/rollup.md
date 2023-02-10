@@ -128,7 +128,7 @@ To send the minimal amount of Marko templates to the browser you can provide a M
 This will also automatically invoke code to initialize the components in the browser, so there is no need to call
 `template.render` yourself in the browser.
 
-> Note: if you are using _linked_ plugins then the server plugin will automatically tell the browser compiler which Marko templates to load.
+> **Note**: if you are using _linked_ plugins then the server plugin will automatically tell the browser compiler which Marko templates to load.
 
 ```js
 export default {

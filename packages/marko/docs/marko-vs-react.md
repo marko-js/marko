@@ -364,7 +364,7 @@ With Marko any valid HTML markup can be used inside a Marko template. This is
 not the case with React. The following quote is from the [React
 documentation](https://facebook.github.io/react/docs/introducing-jsx.html#specifying-children-with-jsx):
 
-> **Caveat:**
+> **Note**:
 
 > Since JSX is closer to JavaScript than HTML, React DOM uses `camelCase` property naming
 > convention instead of HTML attribute names.

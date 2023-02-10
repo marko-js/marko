@@ -36,7 +36,7 @@ _output.html_
 <span id="my-id"></span> <button id="submit" class="primary large"></button>
 ```
 
-> **ProTip:** These shorthand attributes are available within the HTML syntax as well
+> **ProTip**: These shorthand attributes are available within the HTML syntax as well
 
 ## Text
 

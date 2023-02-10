@@ -55,7 +55,7 @@ The output HTML would be:
 </ol>
 ```
 
-> **Pro Tip**: `<for>`’s `of` attribute can loop over any iterable, just like JavaScript’s [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of). This includes strings, `NodeList`s, `Set`s… any object with zero-indexed numeric properties and a `.length`, basically.
+> **ProTip**: `<for>`’s `of` attribute can loop over any iterable, just like JavaScript’s [`for...of`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of). This includes strings, `NodeList`s, `Set`s… any object with zero-indexed numeric properties and a `.length`, basically.
 
 ### Iterating over an object’s properties
 
@@ -123,7 +123,7 @@ You can also pass an optional `step` attribute, which defaults to 1 otherwise. `
 </ol>
 ```
 
-> **ProTip:** This syntax is for generating numbers from nothing. Don’t use it to iterate over an object, like so:
+> **ProTip**: This syntax is for generating numbers from nothing. Don’t use it to iterate over an object, like so:
 >
 > ```marko
 > <!-- Inefficient code, do not copy -->
@@ -138,7 +138,7 @@ You can also pass an optional `step` attribute, which defaults to 1 otherwise. `
 
 ## `<while>`
 
-> **Warning:** Using `<while>` is not recommended. Instead, replicate it with [an iterable and `<for>`](#iterating-over-a-list).
+> **Warning**: Using `<while>` is not recommended. Instead, replicate it with [an iterable and `<for>`](#iterating-over-a-list).
 >
 > In the future, Marko may restrict value mutation during rendering, for runtime optimizations.
 
@@ -224,7 +224,7 @@ Macros receive input like components do, including [a `renderBody` for provided 
 <h1>Hello!</h1>
 ```
 
-> **ProTip:** You can use a macro inside itself for recursive layouts, like displaying directory contents.
+> **ProTip**: You can use a macro inside itself for recursive layouts, like displaying directory contents.
 
 ## `<await>`
 
@@ -276,7 +276,7 @@ Regardless of these attributes, the promise is executed as eagerly as possible. 
 
 - `timeout` is useful for limiting non-critical content from slowing down the rest of the page too much.
 
-> **Pro Tip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
+> **ProTip**: When using `timeout`, you can distinguish between `TimeoutError`s and promise rejections by checking the error’s `name`:
 >
 > ```marko
 > <await(slowPromise) timeout=5000>

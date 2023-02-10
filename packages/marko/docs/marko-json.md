@@ -96,7 +96,7 @@ We can also describe a _pattern_ of attributes to match a definition:
 
 In the above, all attributes prefixed with `data-` are configured to be a `string`.
 
-> **Note:** Future Marko versions will describe these definitions/types in the component itself, reducing the need for this configuration file.
+> **Note**: Future Marko versions will describe these definitions/types in the component itself, reducing the need for this configuration file.
 
 ### Paths
 
@@ -152,7 +152,7 @@ Similar to [`marko-tag.json`](#single-component-definition), this file is discov
 }
 ```
 
-> **⚠️ Note:** Compiler hooks are currently undocumented: avoid using them. The compiler API is overhauled in Marko 5, and will be documented once that transition is complete.
+> **Note**: Compiler hooks are currently undocumented: avoid using them. The compiler API is overhauled in Marko 5, and will be documented once that transition is complete.
 
 ## Shorthands
 

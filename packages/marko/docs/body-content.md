@@ -54,7 +54,7 @@ _HTML Output:_
 
 This is a pretty basic example, but you can imagine how this could be incorporated into a more advanced component to render passed content where/when needed.
 
-> **ProTip:**
+> **ProTip**:
 > Body content can be rendered multiple times. Or not at all.
 
 ## Passing attributes to body content
@@ -76,7 +76,7 @@ These attribute values can be received as a [tag parameter](./syntax.md#paramete
 </random-value>
 ```
 
-> **ProTip:**
+> **ProTip**:
 > Some tags (like the above tag) may not render anything except their body content with some data. This can be quite useful, just look at the `<for>` and `<await>` tags!
 
 ## Named body content
@@ -109,7 +109,7 @@ _components/layout.marko_
 </html>
 ```
 
-> **ProTip:** The `renderBody` property can be omitted. You could use `<${input.heading}/>`, for example.
+> **ProTip**: The `renderBody` property can be omitted. You could use `<${input.heading}/>`, for example.
 
 ### Repeated attribute tags
 

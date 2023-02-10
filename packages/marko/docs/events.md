@@ -128,4 +128,4 @@ The above code listens to native `change` events from the `<input>` element, and
 </form>
 ```
 
-> **Note:** Events are not received as `input`; you cannot access `input.onEmailChange`. Instead, they set up subscriptions.
+> **Note**: Events are not received as `input`; you cannot access `input.onEmailChange`. Instead, they set up subscriptions.

@@ -2,7 +2,7 @@
 
 The output of a component is based on input properties passed from its parent as attributes. However, a component may also maintain internal state that it uses to control its view. If Marko detects a change to either input or to the internal state, the view will automatically be updated.
 
-> **ProTip:**
+> **ProTip**:
 > Only data that is owned and modified by the component should go into its `state`. State should be exclusively used for data that triggers rerenders. Parents control `input`, and the component controls its own `state`.
 
 ## Initializing state
@@ -19,7 +19,7 @@ class {
 <div>The count is ${state.count}</div>
 ```
 
-> **Note:** Only properties that exist when `this.state` is first defined will be watched for changes. If you don't need a property initially, you can set it to `null`.
+> **Note**: Only properties that exist when `this.state` is first defined will be watched for changes. If you don't need a property initially, you can set it to `null`.
 
 ## Updating state
 
@@ -41,16 +41,16 @@ class {
 
 We've extended our example above to add a button with an [event handler](./events.md), so that, when clicked, the `state.count` value is incremented.
 
-> **Note:**
+> **Note**:
 > When browsing existing code, you may see `this.setState('name', value)` being used. This is equivalent to `this.state.name = value`.
 
 ### How updates work
 
 When a property on `state` is set, the component will be scheduled for an update if the property has changed. All updates are batched together for performance. This means you can update multiple state properties at the same time without causing multiple updates.
 
-> **ProTip:** If you need to know when the update has been applied, you can use `this.once('update', fn)` within a component method.
+> **ProTip**: If you need to know when the update has been applied, you can use `this.once('update', fn)` within a component method.
 
-> **Note:** The state object only watches its properties one level deep. This means updates to nested properites on the state (e.g. `this.state.object.something = newValue`) will not be detected.
+> **Note**: The state object only watches its properties one level deep. This means updates to nested properites on the state (e.g. `this.state.object.something = newValue`) will not be detected.
 >
 > Using [immutable](https://wecodetheweb.com/2016/02/12/immutable-javascript-using-es6-and-beyond/) data structures is recommended, but if you want to mutate a state property (perhaps push a new item into an array) you can let Marko know it changed using `setStateDirty`.
 >
@@ -93,7 +93,7 @@ _fancy-save-button.marko_
 </context>
 ```
 
-> **Note:** Context _couples_ tags together and can limit reuse of components.
+> **Note**: Context _couples_ tags together and can limit reuse of components.
 
 ### When to use a Redux like pattern
 

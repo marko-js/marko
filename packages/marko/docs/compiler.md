@@ -1,9 +1,7 @@
 # Compiler
 
 > **Warning**:
-> The compiler API and hooks are not terribly stable. They’re intended for advanced integrations or userland experimentation with new language features.
->
-> Prefer existing official plugins and the standard tag library when possible.
+> The compiler API and hooks do not adhere to the [semantic versioning](https://semver.org) rules of Marko’s template and runtime APIs. **_Breaking changes may be introduced outside of the `marko` package’s major versions._** They’re intended for advanced integrations or userland experimentation with new language features.
 
 ## Compile API
 
@@ -410,7 +408,7 @@ Migrations run automatically in the background, and can be written to disk when 
 
 To hook into the `migrate` stage, [use the `migrate` option in the `marko.json` file](https://markojs.com/docs/marko-json/#paths).
 
-> **Note:**
+> **Note**:
 > To make the compiler stop at this point and output the migrated template, rather than continuing to produce the JavaScript output, [set `output: "migrate"`](#output) in the [compilation options](#options).
 
 ### Transform
