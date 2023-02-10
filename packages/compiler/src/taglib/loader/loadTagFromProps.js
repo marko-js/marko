@@ -323,6 +323,17 @@ class TagLoader {
   }
 
   /**
+   * This property is used by @marko/language-tools (editor tooling)
+   * to override the Marko file used when generating the tags exposed
+   * typescript / jsdoc types.
+   */
+  types(value) {
+    var tag = this.tag;
+    var dirname = this.dirname;
+    tag.types = nodePath.resolve(dirname, value);
+  }
+
+  /**
    * An Object where each property maps to an attribute definition.
    * The property key will be the attribute name and the property value
    * will be the attribute definition. Example:

@@ -30,6 +30,7 @@ class Taglib {
     ok(filePath, '"filePath" expected');
     this.filePath = this.path /* deprecated */ = this.id = filePath;
     this.dirname = path.dirname(this.filePath);
+    this.scriptLang = undefined;
     this.tags = {};
     this.migrators = [];
     this.transformers = [];

@@ -1,0 +1,13 @@
+/**
+ * @template T
+ * @typedef {{
+ *   value?: T;
+ *   then?: Marko.Body<[Awaited<T>], void>;
+ *   catch?: Marko.Body<[unknown], void>;
+ *   placeholder?: Marko.Body<[], void>;
+ *   client-reorder?: boolean;
+ *   name?: string;
+ *   timeout?: number;
+ *   show-after?: string;
+ * }} Input
+ */

@@ -210,6 +210,12 @@ class TaglibLoader {
       }
     }
   }
+  scriptLang(lang) {
+    // The "script-lang" property is used to specify the language of embedded scripts (either "js" or "ts").
+    // The language tools will prefer the language specified by the "script-lang" if specified.
+    // If unspecified the language tools will check for a tsconfig, if one is found then "ts", otherwise we use "js".
+    this.taglib.scriptLang = lang;
+  }
   tagsDir(dir) {
     // The "tags-dir" property is used to supporting scanning
     // of a directory to discover custom tags. Scanning a directory
