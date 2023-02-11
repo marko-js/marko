@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.23.3
+
+### Patch Changes
+
+- [#1885](https://github.com/marko-js/marko/pull/1885) [`f1efd707a`](https://github.com/marko-js/marko/commit/f1efd707aa1c2aeac092ef7fff4ef5cb959f45b6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add taglib extensions and type definitions for typescript support.
+
 ## 5.23.2
 
 ### Patch Changes
