@@ -68,6 +68,7 @@
         "components-browser.marko",
         "components.js",
         "env.js",
+        "index.d.ts",
         "index-browser.marko",
         "index.js",
         "node-require.js"
