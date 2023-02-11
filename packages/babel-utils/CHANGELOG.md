@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.21.4
+
+### Patch Changes
+
+- [`d920e833d`](https://github.com/marko-js/marko/commit/d920e833df0b58456f28f7cb45ebd38b56c05ba7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add missing type definition for taglib.
+
 ## 5.21.3
 
 ### Patch Changes
