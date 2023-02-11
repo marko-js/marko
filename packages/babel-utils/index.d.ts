@@ -119,6 +119,7 @@ export interface Tag {
   }>;
   htmlType?: "html" | "svg" | "math";
   html?: boolean;
+  types?: string;
   template?: string;
   renderer?: string;
   deprecated?: boolean;
