@@ -50,8 +50,9 @@ export interface TagDefinition {
   isRepeated?: boolean;
   targetProperty?: string;
   taglibId: string;
-  template: string;
-  renderer: string;
+  types?: string;
+  template?: string;
+  renderer?: string;
   deprecated: boolean;
   openTagOnly: boolean;
   analyzer?: PluginDefinition<t.MarkoTag>;
