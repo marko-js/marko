@@ -34,6 +34,7 @@
   },
   "files": [
     "dist",
+    "loader.mjs",
     "modules.js",
     "index.d.ts",
     "babel-types.d.ts",
