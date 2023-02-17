@@ -328,9 +328,8 @@ class TagLoader {
    * typescript / jsdoc types.
    */
   types(value) {
-    var tag = this.tag;
-    var dirname = this.dirname;
-    tag.types = nodePath.resolve(dirname, value);
+    this.tag.types =
+      value[0] === "." ? nodePath.resolve(this.dirname, value) : value;
   }
 
   /**

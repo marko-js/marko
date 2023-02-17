@@ -78,15 +78,11 @@ declare namespace Marko {
   > {}
 
   /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
-  export type DynamicTagName =
-    | {
-        renderBody?: Body<any, any> | Template | string | void | false;
-      }
+  export type Renderable =
+    | { renderBody: Body<any, any> | Template | string; }
     | Body<any, any>
     | Template
-    | string
-    | void
-    | false;
+    | string;
 
   /** Extract the return tag type from a renderBody. */
   export type BodyReturnType<B> = B extends Body<any, infer Return>
@@ -94,12 +90,13 @@ declare namespace Marko {
     : never;
 
   /** Extract the tag parameter types received by a renderBody. */
-  export type BodyParamaters<B> = B extends Body<infer Params, any>
+  export type BodyParameters<B> = B extends Body<infer Params, any>
     ? Params
     : never;
 
-  export abstract class Component<
-    Input extends Record<PropertyKey, any> = Record<PropertyKey, any>
+  export class Component<
+    Input extends Record<PropertyKey, any> = Record<PropertyKey, any>,
+    State extends undefined | null | Record<PropertyKey, any> = undefined | null | Record<PropertyKey, any>
   > implements Emitter
   {
     /** A unique id for this instance. */
@@ -111,7 +108,7 @@ declare namespace Marko {
     /** @deprecated */
     public readonly els: Element[];
     /** Mutable state that when changed causes a rerender. */
-    abstract state: undefined | null | Record<PropertyKey, any>;
+    abstract state: State;
 
     /** Returns the amount of event handlers listening to a specific event. */
     listenerCount(eventName: PropertyKey): number;
@@ -197,20 +194,20 @@ declare namespace Marko {
     /** Replaces the children of an existing DOM element with the dom for the current instance. */
     replaceChildrenOf(target: ParentNode): this;
     /** Called when the component is firsted created. */
-    abstract onCreate?(input: this["input"], out: Marko.Out): void;
+    onCreate?(input: this["input"], out: Marko.Out): void;
     /** Called every time the component receives input from it's parent. */
-    abstract onInput?(
+    onInput?(
       input: this["input"],
       out: Marko.Out
     ): void | this["input"];
     /** Called after a component has successfully rendered, but before it's update has been applied to the dom. */
-    abstract onRender?(out: Marko.Out): void;
+    onRender?(out: Marko.Out): void;
     /** Called after the first time the component renders and is attached to the dom. */
-    abstract onMount?(): void;
+    onMount?(): void;
     /** Called when a components render has been applied to the DOM (excluding when it is initially mounted). */
-    abstract onUpdate?(): void;
+    onUpdate?(): void;
     /** Called when a component is destroyed and removed from the dom. */
-    abstract onDestroy?(): void;
+    onDestroy?(): void;
   }
 
   /** The top level api for a Marko Template. */
