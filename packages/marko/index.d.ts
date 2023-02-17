@@ -79,7 +79,7 @@ declare namespace Marko {
 
   /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
   export type Renderable =
-    | { renderBody: Body<any, any> | Template | string; }
+    | { renderBody: Body<any, any> | Template | string }
     | Body<any, any>
     | Template
     | string;
@@ -96,7 +96,10 @@ declare namespace Marko {
 
   export class Component<
     Input extends Record<PropertyKey, any> = Record<PropertyKey, any>,
-    State extends undefined | null | Record<PropertyKey, any> = undefined | null | Record<PropertyKey, any>
+    State extends undefined | null | Record<PropertyKey, any> =
+      | undefined
+      | null
+      | Record<PropertyKey, any>
   > implements Emitter
   {
     /** A unique id for this instance. */
@@ -196,10 +199,7 @@ declare namespace Marko {
     /** Called when the component is firsted created. */
     onCreate?(input: this["input"], out: Marko.Out): void;
     /** Called every time the component receives input from it's parent. */
-    onInput?(
-      input: this["input"],
-      out: Marko.Out
-    ): void | this["input"];
+    onInput?(input: this["input"], out: Marko.Out): void | this["input"];
     /** Called after a component has successfully rendered, but before it's update has been applied to the dom. */
     onRender?(out: Marko.Out): void;
     /** Called after the first time the component renders and is attached to the dom. */
