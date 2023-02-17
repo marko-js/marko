@@ -11,3 +11,7 @@ exports.register = function (id, component) {
     return component;
   });
 };
+
+window.Marko = {
+  Component: function () {}
+};

@@ -271,3 +271,7 @@ exports.writeInitComponentsCode = writeInitComponentsCode;
 exports.getRenderedComponents = function (out) {
   return warp10.stringifyPrepare(getInitComponentsDataFromOut(out));
 };
+
+globalThis.Marko = {
+  Component: function () {}
+};
