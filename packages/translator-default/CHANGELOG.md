@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.5
+
+### Patch Changes
+
+- [#1888](https://github.com/marko-js/marko/pull/1888) [`d110b0b5f`](https://github.com/marko-js/marko/commit/d110b0b5f6607a911d15b2045d46b9aa6ecba2d2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve type definitions.
+
 ## 5.22.4
 
 ### Patch Changes
