@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.6
+
+### Patch Changes
+
+- [#1890](https://github.com/marko-js/marko/pull/1890) [`768fa17cb`](https://github.com/marko-js/marko/commit/768fa17cb67e4643bafbf5a91679af1f17f5f4fd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - No longer require state to be present when writing types for component files.
+
 ## 5.22.5
 
 ### Patch Changes
