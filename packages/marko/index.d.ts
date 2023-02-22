@@ -111,7 +111,7 @@ declare namespace Marko {
     /** @deprecated */
     public readonly els: Element[];
     /** Mutable state that when changed causes a rerender. */
-    abstract state: State;
+    state: State;
 
     /** Returns the amount of event handlers listening to a specific event. */
     listenerCount(eventName: PropertyKey): number;
