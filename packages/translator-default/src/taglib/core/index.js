@@ -325,7 +325,7 @@ export default {
         }
       ]
     },
-    "<then>": {
+    "@then <then>": {
       autocomplete: [
         {
           displayText: "then|<result>|",
@@ -335,7 +335,7 @@ export default {
         }
       ]
     },
-    "<catch>": {
+    "@catch <catch>": {
       autocomplete: [
         {
           displayText: "catch|<err>|",
@@ -345,7 +345,7 @@ export default {
         }
       ]
     },
-    "<placeholder>": {
+    "@placeholder <placeholder>": {
       autocomplete: [
         {
           description: "A placeholder to display while the promise is pending.",

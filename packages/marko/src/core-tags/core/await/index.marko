@@ -1,10 +1,10 @@
 /**
  * @template T
  * @typedef {{
- *   value?: readonly [T];
- *   then?: { renderBody: Marko.Body<[Awaited<T>], void> };
- *   catch?: { renderBody: Marko.Body<[unknown], void> };
- *   placeholder?: { renderBody: Marko.Body<[], void> };
+ *   value: readonly [T];
+ *   then?: { renderBody: Marko.Body<[Awaited<T>]> };
+ *   catch?: { renderBody: Marko.Body<[unknown]> };
+ *   placeholder?: { renderBody: Marko.Body };
  *   "client-reorder"?: boolean;
  *   name?: string;
  *   timeout?: number;
