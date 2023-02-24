@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.8
+
+### Patch Changes
+
+- [`268d0c32e`](https://github.com/marko-js/marko/commit/268d0c32eb3e9f8a0f3a5a49730d1afdf0b7ab91) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Add docs for using TypeScript with Marko
+
 ## 5.22.7
 
 ### Patch Changes
