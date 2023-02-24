@@ -218,7 +218,10 @@ declare namespace Marko {
   }
 
   /** The top level api for a Marko Template. */
-  export abstract class Template<Input = { [attr: PropertyKey]: any }, Return = unknown> {
+  export abstract class Template<
+    Input = { [attr: PropertyKey]: any },
+    Return = unknown
+  > {
     /** Creates a Marko compatible output stream. */
     createOut(): Out;
 
@@ -318,6 +321,8 @@ declare namespace Marko {
     };
   }
 
-  export type NativeTagInput<Name extends keyof NativeTags> = NativeTags[Name]["input"];
-  export type NativeTagReturn<Name extends keyof NativeTags> = NativeTags[Name]["return"];
+  export type NativeTagInput<Name extends keyof NativeTags> =
+    NativeTags[Name]["input"];
+  export type NativeTagReturn<Name extends keyof NativeTags> =
+    NativeTags[Name]["return"];
 }
