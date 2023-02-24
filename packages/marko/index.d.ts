@@ -11,7 +11,14 @@ declare namespace NodeJS {
 declare namespace Marko {
   /** A mutable global object for the current render. */
   export interface Global {
+    /** A list of globals that should be serialized to the browser. */
     serializedGlobals?: Record<string, boolean>;
+    /** A CSP Nonce to add to each script output from Marko. */
+    cspNonce?: string;
+    /** Used to uniquely identify a instance of a Marko runtime. */
+    runtimeId?: string;
+    /** Used for rendering multiple Marko templates in a single hydrated page. */
+    componentIdPrefix?: string;
     [attr: PropertyKey]: unknown;
   }
 
@@ -211,7 +218,7 @@ declare namespace Marko {
   }
 
   /** The top level api for a Marko Template. */
-  export abstract class Template {
+  export abstract class Template<Input = { [attr: PropertyKey]: any }, Return = unknown> {
     /** Creates a Marko compatible output stream. */
     createOut(): Out;
 
@@ -228,7 +235,7 @@ declare namespace Marko {
     /** @marko-overload-start */
     /** Asynchronously render the template. */
     abstract render(
-      input: Marko.TemplateInput,
+      input: Marko.TemplateInput<Input>,
       stream?: {
         write: (chunk: string) => void;
         end: (chunk?: string) => void;
@@ -237,15 +244,15 @@ declare namespace Marko {
 
     /** Synchronously render the template. */
     abstract renderSync(
-      input: Marko.TemplateInput
+      input: Marko.TemplateInput<Input>
     ): Marko.RenderResult<Marko.Component>;
 
     /** Synchronously render a template to a string. */
-    abstract renderToString(input: Marko.TemplateInput): string;
+    abstract renderToString(input: Marko.TemplateInput<Input>): string;
 
     /** Render a template and return a stream.Readable in nodejs or a ReadableStream in a web worker environment. */
     abstract stream(
-      input: Marko.TemplateInput
+      input: Marko.TemplateInput<Input>
     ): ReadableStream<string> & NodeJS.ReadableStream;
     /** @marko-overload-end */
   }
@@ -303,7 +310,6 @@ declare namespace Marko {
 
   export type Repeated<T> = [T, T, ...T[]];
   export type Repeatable<T> = T | Repeated<T>;
-  export type MaybeRepeatable<T> = undefined | Repeatable<T>;
 
   export interface NativeTags {
     [name: string]: {
@@ -311,4 +317,7 @@ declare namespace Marko {
       return: unknown;
     };
   }
+
+  export type NativeTagInput<Name extends keyof NativeTags> = NativeTags[Name]["input"];
+  export type NativeTagReturn<Name extends keyof NativeTags> = NativeTags[Name]["return"];
 }
