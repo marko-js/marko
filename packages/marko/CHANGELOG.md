@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.22.7
+
+### Patch Changes
+
+- [#1892](https://github.com/marko-js/marko/pull/1892) [`c55ae937c`](https://github.com/marko-js/marko/commit/c55ae937c4d756482d49a6b8797669cd39ca6288) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve types for the await tag and Marko.Template.
+
+- Updated dependencies [[`c55ae937c`](https://github.com/marko-js/marko/commit/c55ae937c4d756482d49a6b8797669cd39ca6288)]:
+  - @marko/translator-default@5.22.6
+  - @marko/compiler@5.23.6
+
 ## 5.22.6
 
 ### Patch Changes
