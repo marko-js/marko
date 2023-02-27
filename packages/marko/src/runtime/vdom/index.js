@@ -1,5 +1,9 @@
 "use strict";
 
+window.Marko = {
+  Component: function () {}
+};
+
 /**
  * Method is for internal usage only. This method
  * is invoked by code in a compiled Marko template and
