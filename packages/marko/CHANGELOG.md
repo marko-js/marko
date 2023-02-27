@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.22.9
+
+### Patch Changes
+
+- [#1895](https://github.com/marko-js/marko/pull/1895) [`230523adf`](https://github.com/marko-js/marko/commit/230523adf139591846c8c29737e89bb8b4a818b1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where Marko.Component global was potentially not registered before the component file was loaded.
+
 ## 5.22.8
 
 ### Patch Changes
