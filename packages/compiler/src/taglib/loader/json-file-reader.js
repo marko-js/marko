@@ -1,9 +1,9 @@
-var taglibFS = require("../fs");
+var taglibConfig = require("../config");
 var stripJsonComments = require("strip-json-comments");
 var fsReadOptions = { encoding: "utf8" };
 
 exports.readFileSync = function (path) {
-  var json = String(taglibFS.curFS.readFileSync(path, fsReadOptions));
+  var json = String(taglibConfig.fs.readFileSync(path, fsReadOptions));
 
   try {
     var taglibProps = JSON.parse(stripJsonComments(json));

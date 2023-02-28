@@ -1,6 +1,7 @@
 import loader from "./loader";
 import finder from "./finder";
 import Lookup from "./lookup";
+import taglibConfig from "./config";
 import tryLoadTranslator from "../util/try-load-translator";
 
 export const excludeDir = finder.excludeDir;
@@ -18,7 +19,7 @@ register("marko/html", markoHTMLTaglib);
 register("marko/svg", markoSVGTaglib);
 register("marko/math", markoMathTaglib);
 
-export function buildLookup(dirname, requestedTranslator) {
+export function buildLookup(dirname, requestedTranslator, onError) {
   const translator = tryLoadTranslator(requestedTranslator);
   if (!translator || !Array.isArray(translator.taglibs)) {
     throw new Error(
@@ -26,19 +27,35 @@ export function buildLookup(dirname, requestedTranslator) {
     );
   }
 
-  if (!loadedTranslatorsTaglibs.has(translator)) {
+  let taglibsForDir = loadedTranslatorsTaglibs.get(translator);
+
+  if (!taglibsForDir) {
     loadedTranslatorsTaglibs.set(
       translator,
-      translator.taglibs.map(([id, props]) => loadTaglib(id, props))
+      (taglibsForDir = registeredTaglibs.concat(
+        translator.taglibs.map(([id, props]) => loadTaglib(id, props))
+      ))
     );
   }
 
-  const taglibsForDir = finder.find(
-    dirname,
-    registeredTaglibs.concat(loadedTranslatorsTaglibs.get(translator))
-  );
+  if (onError) {
+    const prevOnError = taglibConfig.onError;
+    taglibConfig.onError = onError;
+    try {
+      taglibsForDir = finder.find(dirname, taglibsForDir);
+    } catch (err) {
+      taglibConfig.onError(err);
+    } finally {
+      taglibConfig.onError = prevOnError;
+    }
+  } else {
+    taglibsForDir = finder.find(dirname, taglibsForDir);
+  }
 
-  const cacheKey = taglibsForDir.map(it => it.id).join();
+  const cacheKey = taglibsForDir
+    .map(it => it.id)
+    .sort()
+    .join();
   let lookup = lookupCache[cacheKey];
 
   if (!lookup) {
