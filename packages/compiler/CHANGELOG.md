@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.24.0
+
+### Minor Changes
+
+- [#1897](https://github.com/marko-js/marko/pull/1897) [`72cdc3e5b`](https://github.com/marko-js/marko/commit/72cdc3e5b6c72a0b5d4b4738eb420571fa0cafa4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose a top level `@marko/compiler/config` entry point for loading the default compiler config.
+
 ## 5.23.6
 
 ### Patch Changes
