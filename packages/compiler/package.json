@@ -34,6 +34,8 @@
   },
   "files": [
     "dist",
+    "config.js",
+    "config.d.ts",
     "modules.js",
     "index.d.ts",
     "babel-types.d.ts",
