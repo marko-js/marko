@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.0
+
+### Minor Changes
+
+- [#1899](https://github.com/marko-js/marko/pull/1899) [`4fc38e800`](https://github.com/marko-js/marko/commit/4fc38e80010241da76d24a46c2cd838aa5cf309f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose the ability to intercept errors from the taglib builder.
+
 ## 5.24.0
 
 ### Minor Changes
