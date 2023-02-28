@@ -1,7 +1,7 @@
 "use strict";
 var nodePath = require("path");
 var resolveFrom = require("resolve-from").silent;
-var taglibFS = require("../fs");
+var taglibConfig = require("../config");
 var taglibLoader = require("../loader");
 var lassoPackageRoot = require("lasso-package-root");
 var findCache = {};
@@ -148,7 +148,7 @@ function excludePackage(name) {
 
 function existsSync(file) {
   try {
-    taglibFS.curFS.statSync(file);
+    taglibConfig.fs.statSync(file);
     return true;
   } catch (_) {
     return false;

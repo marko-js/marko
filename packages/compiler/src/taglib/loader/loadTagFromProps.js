@@ -2,11 +2,11 @@
 
 var ok = require("assert").ok;
 var resolveFrom = require("resolve-from").silent;
-var propertyHandlers = require("property-handlers");
+var propertyHandlers = require("./property-handlers");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
 var createError = require("raptor-util/createError");
-var taglibFS = require("../fs");
+var taglibConfig = require("../config");
 var types = require("./types");
 var loaders = require("./loaders");
 var markoModules = require("../../../modules");
@@ -315,7 +315,7 @@ class TagLoader {
     var path = nodePath.resolve(dirname, value);
 
     try {
-      taglibFS.curFS.statSync(path);
+      taglibConfig.fs.statSync(path);
       tag.template = path;
     } catch (_) {
       throw new Error('Template at path "' + path + '" does not exist.');

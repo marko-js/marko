@@ -2,7 +2,7 @@
 
 var assert = require("assert");
 var raptorRegexp = require("raptor-regexp");
-var propertyHandlers = require("property-handlers");
+var propertyHandlers = require("./property-handlers");
 var types = require("./types");
 var createError = require("raptor-util/createError");
 var hasOwnProperty = Object.prototype.hasOwnProperty;

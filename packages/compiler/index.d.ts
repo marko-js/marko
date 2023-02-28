@@ -1,8 +1,9 @@
 import { SourceMap } from "magic-string";
 import { TaglibLookup } from "@marko/babel-utils";
 import * as types from "./babel-types";
-import Config from "./config";
-export { type Config, types };
+export { types };
+
+export type Config = typeof import("./config")
 
 type Dep = {
   type: string;
@@ -65,7 +66,8 @@ export namespace taglib {
   export function register(id: string, props: { [x: string]: unknown }): void;
   export function buildLookup(
     dirname: string,
-    translator?: unknown
+    translator?: unknown,
+    onError?: (err: Error) => void
   ): TaglibLookup;
   export function clearCaches(): void;
 }

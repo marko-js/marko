@@ -4,9 +4,9 @@ var ok = require("assert").ok;
 var resolveFrom = require("resolve-from").silent;
 var nodePath = require("path");
 var types = require("./types");
-var taglibFS = require("../fs");
+var taglibFS = require("../config");
 var scanTagsDir = require("./scanTagsDir");
-var propertyHandlers = require("property-handlers");
+var propertyHandlers = require("./property-handlers");
 var jsonFileReader = require("./json-file-reader");
 var DependencyChain = require("./DependencyChain");
 var createError = require("raptor-util/createError");
@@ -98,7 +98,7 @@ class TaglibLoader {
       tagFilePath = nodePath.resolve(this.dirname, value);
 
       try {
-        taglibFS.curFS.statSync(tagFilePath);
+        taglibFS.fs.statSync(tagFilePath);
       } catch (_) {
         throw new Error(
           'Tag at path "' +

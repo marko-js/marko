@@ -8,7 +8,7 @@ import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 import { MarkoFile } from "./file";
-import { curFS, setFS } from "../taglib/fs";
+import taglibConfig from "../taglib/config";
 import tryLoadTranslator from "../util/try-load-translator";
 import shouldOptimize from "../util/should-optimize";
 
@@ -49,21 +49,21 @@ export default (api, markoOpts) => {
       curOpts = opts;
     },
     parserOverride(code) {
-      let prevFS = curFS;
-      setFS(markoOpts.fileSystem);
+      let prevFS = taglibConfig.fs;
+      taglibConfig.fs = markoOpts.fileSystem;
       try {
         const file = getMarkoFile(code, curOpts, markoOpts);
         const finalAst = t.cloneNode(file.ast, true);
         SOURCE_FILES.set(finalAst, file);
         return finalAst;
       } finally {
-        setFS(prevFS);
+        taglibConfig.fs = prevFS;
       }
     },
     pre(file) {
-      let prevFS = curFS;
+      let prevFS = taglibConfig.fs;
+      taglibConfig.fs = markoOpts.fileSystem;
       curOpts = undefined;
-      setFS(markoOpts.fileSystem);
       try {
         if (markoOpts.output === "source" || markoOpts.output === "migrate") {
           return file;
@@ -104,7 +104,7 @@ export default (api, markoOpts) => {
         metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
         file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
-        setFS(prevFS);
+        taglibConfig.fs = prevFS;
       }
     }
   };

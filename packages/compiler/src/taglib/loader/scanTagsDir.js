@@ -1,7 +1,7 @@
 "use strict";
 
 const nodePath = require("path");
-const taglibFS = require("../fs");
+const taglibConfig = require("../config");
 const jsonFileReader = require("./json-file-reader");
 const tagDefFromCode = require("./tag-def-from-code");
 const loaders = require("./loaders");
@@ -48,7 +48,7 @@ function createDefaultTagDef() {
 
 function getFileMap(dirname) {
   let fileMap = {};
-  let files = taglibFS.curFS.readdirSync(dirname);
+  let files = taglibConfig.fs.readdirSync(dirname);
 
   files.forEach(file => {
     let extName = nodePath.extname(file);
@@ -77,7 +77,7 @@ function getPath(filename, fileMap) {
 
 function findAndSetFile(tagDef, tagDirname) {
   try {
-    if (!taglibFS.curFS.statSync(tagDirname).isDirectory()) {
+    if (!taglibConfig.fs.statSync(tagDirname).isDirectory()) {
       return;
     }
   } catch (_) {
@@ -133,7 +133,7 @@ module.exports = function scanTagsDir(
   }
 
   dir = nodePath.resolve(tagsConfigDirname, dir);
-  let children = taglibFS.curFS.readdirSync(dir);
+  let children = taglibConfig.fs.readdirSync(dir);
 
   for (let i = 0, len = children.length; i < len; i++) {
     let childFilename = children[i];
@@ -160,7 +160,7 @@ module.exports = function scanTagsDir(
 
       let hasTagJson = false;
       try {
-        taglibFS.curFS.statSync(tagJsonPath);
+        taglibConfig.fs.statSync(tagJsonPath);
         hasTagJson = true;
         // eslint-disable-next-line no-empty
       } catch (_) {}
@@ -191,7 +191,7 @@ module.exports = function scanTagsDir(
 
       if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
         let templateCode = String(
-          taglibFS.curFS.readFileSync(
+          taglibConfig.fs.readFileSync(
             tagDef.renderer || tagDef.template,
             fsReadOptions
           )
