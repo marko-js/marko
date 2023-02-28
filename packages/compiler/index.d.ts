@@ -3,7 +3,7 @@ import { TaglibLookup } from "@marko/babel-utils";
 import * as types from "./babel-types";
 export { types };
 
-export type Config = typeof import("./config")
+export type Config = typeof import("./config");
 
 type Dep = {
   type: string;
