@@ -29,7 +29,7 @@ export default function (path) {
           t.assignmentExpression(
             "=",
             t.memberExpression(t.thisExpression(), prop.key, prop.computed),
-            prop.value
+            prop.value || t.unaryExpression("void", t.numericLiteral(0))
           )
         );
 
