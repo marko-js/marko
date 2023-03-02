@@ -290,13 +290,14 @@ describe("AsyncStream", function() {
     const out = new AsyncStream();
 
     out
-      .catch(err => {
-        expect(err).to.be.an("error");
-        expect(out.getOutput()).to.equal("1");
-        done();
-      })
       .then(() => {
         throw new Error("Should not get here!");
+      })
+      .catch(err => {
+        expect(err).to.be.an("error");
+        expect(err.message).to.equal("test");
+        expect(out.getOutput()).to.equal("1");
+        done();
       });
 
     out.write("1");
