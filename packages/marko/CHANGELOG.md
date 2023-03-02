@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.25.0](https://github.com/marko-js/marko/compare/v4.24.6...v4.25.0) (2023-03-02)
+
+
+### Features
+
+* upgrade javascript parse/generate utils ([ef97e46](https://github.com/marko-js/marko/commit/ef97e46dec1bec2b990d9f5ccf280ab22924e37a))
+
 ### [4.24.6](https://github.com/marko-js/marko/compare/v4.24.5...v4.24.6) (2022-10-12)
 
 
