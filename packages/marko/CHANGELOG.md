@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.7](https://github.com/marko-js/marko/compare/v4.24.6...v4.24.7) (2023-03-02)
+
 ### [4.24.6](https://github.com/marko-js/marko/compare/v4.24.5...v4.24.6) (2022-10-12)
 
 
