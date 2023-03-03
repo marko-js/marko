@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.23.1
+
+### Patch Changes
+
+- [#1903](https://github.com/marko-js/marko/pull/1903) [`f2c8cad86`](https://github.com/marko-js/marko/commit/f2c8cad861d5efd5ef464de7cacea696031bfb93) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow empty class members
+
 ## 5.23.0
 
 ### Minor Changes
