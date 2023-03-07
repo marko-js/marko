@@ -12,7 +12,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   const _items = [];
   for (const a in b) {
     _items.push(null);

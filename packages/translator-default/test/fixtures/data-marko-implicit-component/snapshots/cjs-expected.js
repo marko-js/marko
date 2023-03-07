@@ -12,7 +12,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/data-mar
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   out.w(`<div${(0, _dataMarko.default)(out, _componentDef, {
     pa: ["class"]
   })} class=test>`);

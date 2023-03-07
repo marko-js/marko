@@ -565,7 +565,7 @@ this.setStateDirty("numbers");
 
 ### `this.input`
 
-The current input for the component. Setting `this.input` will rerender the component. If a `$global` property is set, `out.global` will also be updated during the rerender, otherwise the existing `$global` is used.
+The current input for the component. Setting `this.input` will rerender the component which can be useful for testing, but generally avoided (prefer `state` instead).
 
 ## Variables
 

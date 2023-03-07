@@ -9,7 +9,7 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 import _marko_split_component from "./template.component-browser.js";
 _marko_registerComponent(_marko_componentType, () => _marko_split_component);
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.n(_marko_node, _component);
 }, {
   t: _marko_componentType,

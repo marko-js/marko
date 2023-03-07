@@ -21,7 +21,7 @@ npm install marko @marko/fastify fastify --save
 
 The [`@marko/fastify`](https://github.com/marko-js/fastify/) adds a `reply.marko` decorator to the `reply` object. This function allows us to pass in a Marko template and supports Marko's streaming and modular approach to templates.
 
-By using `reply.marko` you'll automatically have access to `app.locals`, and `reply.locals` from within your Marko template and custom tags. These values are added to `out.global`.
+By using `reply.marko` you'll automatically have access to `app.locals`, and `reply.locals` from within your Marko template and custom tags. These values are added to `$global`.
 
 ```javascript
 import fastify from "fastify";

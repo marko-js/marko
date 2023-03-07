@@ -16,7 +16,7 @@ const _marko_component = {
     this.stuff();
   }
 };
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   out.w("<div></div>");
 }, {
   t: _marko_componentType,

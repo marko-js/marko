@@ -376,7 +376,8 @@ export const translate = {
                   t.identifier("out"),
                   file._componentDefIdentifier,
                   file._componentInstanceIdentifier,
-                  t.identifier("state")
+                  t.identifier("state"),
+                  t.identifier("$global")
                 ],
                 renderBlock.node
               ),

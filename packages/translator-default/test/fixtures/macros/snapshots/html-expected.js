@@ -6,7 +6,7 @@ import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   function _renderTree(out, node) {
     out.w("Name: ");
     out.w(_marko_escapeXml(node.name));

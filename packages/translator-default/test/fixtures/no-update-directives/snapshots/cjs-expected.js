@@ -13,7 +13,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/no-updat
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   (0, _renderTag.default)(_preserveTag.default, {
     "renderBody": out => {
       (0, _renderTag.default)(_index2.default, {

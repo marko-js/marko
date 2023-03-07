@@ -11,7 +11,7 @@ const _marko_component = {
     this.y = 2
   }
 };
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.e("div", null, "0", _component, 0, 0);
 }, {
   t: _marko_componentType,

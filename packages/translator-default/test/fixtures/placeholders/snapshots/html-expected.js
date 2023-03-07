@@ -6,7 +6,7 @@ import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml
 import _marko_to_string from "marko/src/runtime/helpers/to-string.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.w("<div>");
   out.w(_marko_escapeXml(input.x));
   out.w("Hello world &lt;a/>");

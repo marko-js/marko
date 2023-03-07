@@ -29,7 +29,7 @@ Express’s builtin view engine may be asynchronous, but it doesn’t support st
 
 [The `@marko/express` package](https://www.npmjs.com/package/@marko/express) adds a `res.marko()` method to [Express’s response object](https://expressjs.com/en/api.html#res). This method works like [`res.render()`](https://expressjs.com/en/api.html#res.render), but without the restrictions of Express’s view engine, letting you take full advantage of Marko’s streaming and modular template organization.
 
-> **ProTip**: By using `res.marko()`, properties from [`app.locals`](https://expressjs.com/en/api.html#app.locals) and [`res.locals`](https://expressjs.com/en/api.html#res.locals) are automatically [available on `out.global`](https://markojs.com/docs/rendering/#global-data).
+> **ProTip**: By using `res.marko()`, properties from [`app.locals`](https://expressjs.com/en/api.html#app.locals) and [`res.locals`](https://expressjs.com/en/api.html#res.locals) are automatically [available on `$global`](https://markojs.com/docs/rendering/#global-data).
 
 ```js
 import express from "express";
@@ -50,7 +50,7 @@ app.get("/", function (req, res) {
 app.listen(8080);
 ```
 
-> **Note**: Older versions of `@marko/express` used to also attach Express’s `app`, `req`, and `res` objects onto `out.global`. This meant uncontrolled network data could cause new and exciting surprises in your app code. Nowadays we recommend explicitly accessing the specific pieces of the HTTP exchange you’re interested in, like this:
+> **Note**: Older versions of `@marko/express` used to also attach Express’s `app`, `req`, and `res` objects onto `$global`. This meant uncontrolled network data could cause new and exciting surprises in your app code. Nowadays we recommend explicitly accessing the specific pieces of the HTTP exchange you’re interested in, like this:
 >
 > ```js
 > app.get("/", function (req, res) {

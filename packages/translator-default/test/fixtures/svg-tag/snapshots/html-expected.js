@@ -4,7 +4,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/svg-tag/
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.w("<svg height=100 width=100>");
   out.w("<circle cx=50 cy=50 r=40 stroke=black stroke-width=3 fill=red />");
   out.w("<a></a>");
