@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.24.0
+
+### Minor Changes
+
+- [#1907](https://github.com/marko-js/marko/pull/1907) [`7211a6937`](https://github.com/marko-js/marko/commit/7211a6937b2044a14f2c2194269a697c76066b54) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose `$global` as a shorthand for `out.global` within the template scope.
+
+### Patch Changes
+
+- Updated dependencies [[`7211a6937`](https://github.com/marko-js/marko/commit/7211a6937b2044a14f2c2194269a697c76066b54)]:
+  - @marko/translator-default@5.24.0
+  - @marko/compiler@5.26.0
+
 ## 5.23.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.26.0
+
+### Minor Changes
+
+- [#1907](https://github.com/marko-js/marko/pull/1907) [`7211a6937`](https://github.com/marko-js/marko/commit/7211a6937b2044a14f2c2194269a697c76066b54) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose `$global` as a shorthand for `out.global` within the template scope.
+
 ## 5.25.0
 
 ### Minor Changes
