@@ -7,7 +7,7 @@ import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   let _item = null;
   if (input.x) {
     _item = {

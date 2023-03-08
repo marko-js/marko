@@ -4,7 +4,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/if-tag/t
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   if (a + b) {
     out.w("Hello");
   }

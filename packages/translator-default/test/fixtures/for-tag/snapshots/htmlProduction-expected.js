@@ -6,7 +6,7 @@ import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xm
 import _marko_props from "marko/dist/runtime/html/helpers/data-marko.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   let _i = 0;
   for (const val of arr) {
     let i = _i++;

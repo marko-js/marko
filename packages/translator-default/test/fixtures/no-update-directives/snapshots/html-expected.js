@@ -7,7 +7,7 @@ import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
 import _preserve from "marko/src/core-tags/components/preserve-tag";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   _marko_tag(_preserve, {
     "renderBody": out => {
       _marko_tag(_hello, {

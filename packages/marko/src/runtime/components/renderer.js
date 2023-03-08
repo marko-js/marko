@@ -220,7 +220,8 @@ function createRendererFunc(
       out,
       componentDef,
       component,
-      component.___rawState
+      component.___rawState,
+      out.global
     );
 
     endComponent(out, componentDef);

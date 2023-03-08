@@ -124,7 +124,7 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
   - The render context with methods like `write`, `beginAsync`, etc.
   - `ReturnType<template.render>`
 - **`Marko.Global`**
-  - The type of the object on `out.global` that can be passed to a template's render methods as the `$global` property
+  - The type of the object in `$global` and `out.global` that can be passed to a template's render methods as the `$global` property.
 - **`Marko.RenderResult`**
   - The [result](https://markojs.com/docs/rendering/#renderresult) of rendering a Marko template
   - `ReturnType<template.renderSync>`

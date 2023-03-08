@@ -23,7 +23,7 @@ const _marko_component = {
     this.stuff();
   }
 };
-_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state) {
+_marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.w("<style id=css>");
   out.w("\n  div {\n    color: ");
   out.w(_marko_escapeStyle(x));

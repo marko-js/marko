@@ -12,7 +12,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/typescri
 var _default = _marko_template;
 exports.default = _default;
 const _marko_component = {};
-_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state) {
+_marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   const x = "hello!";
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(window.x))}>`);
   out.w("Hello");

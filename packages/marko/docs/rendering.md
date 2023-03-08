@@ -209,7 +209,7 @@ This method is available on the server, but not available by default in the brow
 
 ## Global data
 
-If you need to make data available to all rendered views, use the `$global` property on the input data object. This property will be removed from `input` and merged into the `out.global` property.
+If you need to make data available to all rendered views, use the `$global` property on the input data object. This property will be removed from `input` and provided to the template through a variable called `$global`. It is also made available on the `out.global` property.
 
 Global values persist across renders.
 
@@ -221,11 +221,21 @@ View.render({
 });
 ```
 
+Within the template you can access `$global` similar to accessing `input`.
+
+```marko
+<div>
+  You are on ${$global.flags.includes("mobile") ? "mobile" : "desktop"}
+</div>
+```
+
+> **Note:** `$global` is not available within [`static`](./syntax.md#static-javascript) parts of the template. In order to reference `$global` within the component class you must use `out.global` from one of the lifecycle methods that provide it.
+
 > **Warning:** Use `$global` with caution; it is visible in any component.
 
 ### Sending global data to browsers
 
-⚠️ To prevent accidentally exposing sensitive data, by default **no keys** in `out.global` are sent to browsers. To serialize data to the frontend, name the desired properties in `$global.serializedGlobals`.
+⚠️ To prevent accidentally exposing sensitive data, by default **no keys** in `$global` are sent to browsers. To serialize data to the frontend, name the desired properties in `$global.serializedGlobals`.
 
 Values must be serializable by [the `warp10` module](https://www.npmjs.com/package/warp10).
 
@@ -238,8 +248,8 @@ app.get("/", (req, res) => {
   Page.render(
     {
       $global: {
-        isIos: /iPad|iPhone/.test(ua), // Serialized and available on the server and browser as `out.global.isIos`
-        isAndroid: /Android/.test(ua), // Serialized and available on the server and browser as `out.global.isAndroid`
+        isIos: /iPad|iPhone/.test(ua), // Serialized and available on the server and browser as `$global.isIos`
+        isAndroid: /Android/.test(ua), // Serialized and available on the server and browser as `$global.isAndroid`
         req, // Only available server-side and not serialized, because it’s not in `serializedGlobals`
 
         serializedGlobals: {
