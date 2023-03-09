@@ -3,6 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
+var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
 var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
@@ -18,7 +19,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       "key": "foo",
       "renderBody": out => {
         out.w("Foo!");
-      }
+      },
+      [Symbol.iterator]: _selfIterator.default
     }
   }, out, _componentDef, "0");
 }, {

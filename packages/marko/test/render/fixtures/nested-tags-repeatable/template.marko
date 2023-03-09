@@ -1,0 +1,49 @@
+$ const data = [1, 2]
+
+<fancy-table data=data>
+    <@column|i|>
+      A ${i}
+    </>
+</fancy-table>
+
+<fancy-table data=data>
+    <@column|i|>
+      A ${i}
+    </>
+
+    <@column|i|>
+      B ${i}
+    </>
+</fancy-table>
+
+<fancy-table data=data>
+    <for|i| from=0 to=2>
+        <@column|j|>
+            ${i} ${j}
+        </>
+    </>
+</fancy-table>
+
+<fancy-table data=data>
+    <if(true)>
+      <@column|i|>
+        A ${i}
+      </>
+    </if>
+
+    <@column|i|>
+      B ${i}
+    </>
+</fancy-table>
+
+<fancy-table data=data>
+    <if(false)>
+      <@column|i|>
+        A ${i}
+      </>
+    </if>
+
+    <@column|i|>
+      B ${i}
+    </>
+</fancy-table>

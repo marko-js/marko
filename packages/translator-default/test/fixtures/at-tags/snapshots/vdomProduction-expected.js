@@ -2,6 +2,7 @@ import { t as _t } from "marko/dist/runtime/vdom/index.js";
 const _marko_componentType = "hNiObgtw",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
+import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
@@ -13,7 +14,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "foo": {
       "renderBody": out => {
         out.t("Foo!", _component);
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     }
   }, out, _componentDef, "0");
 }, {

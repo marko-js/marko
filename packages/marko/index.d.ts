@@ -311,8 +311,8 @@ declare namespace Marko {
     removeAllListeners(eventName?: PropertyKey): this;
   }
 
-  export type Repeated<T> = [T, T, ...T[]];
-  export type Repeatable<T> = T | Repeated<T>;
+  export type AttrTag<T> = T & Iterable<AttrTag<T>>;
+  export type RepeatableAttrTag<T> = Repeatable<AttrTag<T>>;
 
   export interface NativeTags {
     [name: string]: {
@@ -326,3 +326,5 @@ declare namespace Marko {
   export type NativeTagReturn<Name extends keyof NativeTags> =
     NativeTags[Name]["return"];
 }
+
+type Repeatable<T> = T | [T, T, ...T[]];

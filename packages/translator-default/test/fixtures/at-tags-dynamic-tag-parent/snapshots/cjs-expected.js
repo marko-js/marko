@@ -3,6 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
+var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -17,13 +18,15 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       "class": "my-header",
       "renderBody": out => {
         out.w("Header content");
-      }
+      },
+      [Symbol.iterator]: _selfIterator.default
     },
     "footer": {
       "class": "my-footer",
       "renderBody": out => {
         out.w("Footer content");
-      }
+      },
+      [Symbol.iterator]: _selfIterator.default
     }
   }), out => {
     out.w("Body content");

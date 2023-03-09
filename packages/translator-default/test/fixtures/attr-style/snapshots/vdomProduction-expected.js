@@ -5,6 +5,7 @@ export default _marko_template;
 import _marko_style_merge from "marko/dist/runtime/helpers/style-value.js";
 import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
+import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
 import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
@@ -45,7 +46,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       },
       "renderBody": out => {
         out.t("Hello", _component);
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     }
   }), null, null, null, _componentDef, "6");
 }, {

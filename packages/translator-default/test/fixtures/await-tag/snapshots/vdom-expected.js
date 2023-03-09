@@ -2,6 +2,7 @@ import { t as _t } from "marko/src/runtime/vdom/index.js";
 const _marko_componentType = "packages/translator-default/test/fixtures/await-tag/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
+import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
 import _await from "marko/src/core-tags/core/await/renderer.js";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
@@ -15,7 +16,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "then": {
       "renderBody": (out, result) => {
         out.t(result, _component);
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     }
   }, out, _componentDef, "0");
 }, {

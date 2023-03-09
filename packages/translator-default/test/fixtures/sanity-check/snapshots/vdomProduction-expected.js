@@ -21,6 +21,7 @@ import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 const _marko_node4 = _marko_createElement("div", null, "15", null, 0, 0);
 const _marko_node5 = _marko_createElement("div", null, "16", null, 0, 0);
 const _marko_node6 = _marko_createElement("div", null, "17", null, 0, 0);
+import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
 const _marko_node7 = _marko_createElement("div", {
   "c": "1"
 }, "19", null, 0, 0);
@@ -111,11 +112,13 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
         "d": 1,
         "renderBody": out => {
           out.n(_marko_node6, _component);
-        }
+        },
+        [Symbol.iterator]: _marko_self_iterator
       },
       "renderBody": out => {
         out.n(_marko_node5, _component);
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     },
     "renderBody": (out, b) => {
       out.n(_marko_node4, _component);

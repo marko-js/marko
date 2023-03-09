@@ -3,6 +3,7 @@
 exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
+var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
@@ -24,7 +25,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         },
         "renderBody": out => {
           out.w("foo");
-        }
+        },
+        [Symbol.iterator]: _selfIterator.default
       });
     } else if (y) {
       _items.push({
@@ -33,7 +35,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         },
         "renderBody": out => {
           out.w("bar");
-        }
+        },
+        [Symbol.iterator]: _selfIterator.default
       });
     } else {
       _items.push({
@@ -42,7 +45,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         },
         "renderBody": out => {
           out.w("baz");
-        }
+        },
+        [Symbol.iterator]: _selfIterator.default
       });
     }
   }
@@ -51,7 +55,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     _items.push({
       "renderBody": out => {
         out.w((0, _escapeXml.x)(i));
-      }
+      },
+      [Symbol.iterator]: _selfIterator.default
     });
   }
   for (const col of input.table) {
@@ -61,12 +66,14 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         "row": row,
         "renderBody": out => {
           out.w((0, _escapeXml.x)(row));
-        }
+        },
+        [Symbol.iterator]: _selfIterator.default
       });
     }
     _cols.push({
       "x": y,
-      "rows": _rows
+      "rows": _rows,
+      [Symbol.iterator]: _selfIterator.default
     });
   }
   const _rows2 = [];
@@ -74,15 +81,18 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     "row": -1,
     "renderBody": out => {
       out.w("Outside");
-    }
+    },
+    [Symbol.iterator]: _selfIterator.default
   });
   _cols.push({
     "outside": true,
-    "rows": _rows2
+    "rows": _rows2,
+    [Symbol.iterator]: _selfIterator.default
   });
   (0, _renderTag.default)(_index2.default, {
     "list": {
-      "items": _items
+      "items": _items,
+      [Symbol.iterator]: _selfIterator.default
     },
     "cols": _cols
   }, out, _componentDef, "0");

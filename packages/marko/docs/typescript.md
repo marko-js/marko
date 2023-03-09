@@ -18,7 +18,7 @@ There are two (non-exclusive) ways to add TypeScript to a Marko project:
   📦 package.json
   <mark><img src="./icons/ts.svg" width=16> tsconfig.json</mark>
   </pre>
-- **If you’re [publishing packages of Marko tags](https://markojs.com/docs/custom-tags/#publishing-tags-to-npm)**, add the following to [your `marko.json`](https://markojs.com/docs/marko-json/):
+- **If you’re [publishing packages of Marko tags](https://markojs.com/docs/custom-tags/#publishing-tags-to-npm)**, add the following to [your `marko.json`](./marko-json.md):
   ```json
   "script-lang": "ts"
   ```
@@ -28,7 +28,7 @@ There are two (non-exclusive) ways to add TypeScript to a Marko project:
 
 ## Typing a tag's `input`
 
-A `.marko` file will use any exported `Input` type for [that file’s `input` object](https://markojs.com/docs/class-components/#input).
+A `.marko` file will use any exported `Input` type for [that file’s `input` object](./class-components.md#input).
 
 This can be `export type Input` or `export interface Input`.
 
@@ -66,7 +66,7 @@ export interface Input extends PriceInput {
 
 ### Generic `Input`s
 
-[Generic Types and Type Parameters](https://www.typescriptlang.org/docs/handbook/2/generics.html) on `Input` are recognized throughout the entire `.marko` template (excluding [static statements](https://markojs.com/docs/syntax/#static-javascript)).
+[Generic Types and Type Parameters](https://www.typescriptlang.org/docs/handbook/2/generics.html) on `Input` are recognized throughout the entire `.marko` template (excluding [static statements](./syntax.md#static-javascript)).
 
 For example, if you set up a component like this:
 
@@ -114,11 +114,11 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
 - **`Marko.TemplateInput<Input>`**
   - The object accepted by the render methods of a template. It includes the template's `Input` as well as `$global` values.
 - **`Marko.Body<Params, Return>`**
-  - The type of the [body content](https://markojs.com/docs/body-content/) of a tag (`renderBody`)
+  - The type of the [body content](./body-content.md) of a tag (`renderBody`)
 - **`Marko.Component<Input, State>`**
-  - The base class for a [class component](https://markojs.com/docs/class-components/)
+  - The base class for a [class component](./class-components.md)
 - **`Marko.Renderable`**
-  - Values accepted by the [`<${dynamic}/>` tag](https://markojs.com/docs/syntax/#dynamic-tagname)
+  - Values accepted by the [`<${dynamic}/>` tag](./syntax.md#dynamic-tagname)
   - `string | Marko.Template | Marko.Body | { renderBody: Marko.Body}`
 - **`Marko.Out`**
   - The render context with methods like `write`, `beginAsync`, etc.
@@ -126,7 +126,7 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
 - **`Marko.Global`**
   - The type of the object in `$global` and `out.global` that can be passed to a template's render methods as the `$global` property.
 - **`Marko.RenderResult`**
-  - The [result](https://markojs.com/docs/rendering/#renderresult) of rendering a Marko template
+  - The [result](./rendering.md#renderresult) of rendering a Marko template
   - `ReturnType<template.renderSync>`
   - `Awaited<ReturnType<template.render>>`
 - **`Marko.Emitter`**
@@ -137,10 +137,10 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
   - Helpers to extract the input and return types for the specified `keyof Marko.NativeTag`
 - **`Marko.BodyParameters<Body>`** and **`Marko.BodyReturnType<Body>`**
   - Helpers to extract the parameters and return types from the specified `Marko.Body`
-- **`Marko.Repeated<T>`** and **`Marko.Repeatable<T>`**
-  - Used to represent types for attributes tags which can have one or many instances
-  - `Marko.Repeated<T>`: `[T, T, ...T[]]` (array with at least two items)
-  - `Marko.Repeatable<T>`: `T | Marko.Repeated<T>`
+- **`Marko.AttrTag<T>`** and **`Marko.RepeatableAttrTag<T>`**
+  - Used to represent types for [attributes tags](./body-content.md#named-body-content)
+  - `Marko.AttrTag<T>`: A single attribute tag
+  - `Marko.RepeatableAttrTag<T>`: One or more attribute tags
 
 ### Typing `renderBody`
 
@@ -221,7 +221,7 @@ $ const { color, renderBody, ...restOfInput } = input;
 
 ## TypeScript Syntax in `.marko`
 
-Any [JavaScript expression in Marko](https://markojs.com/docs/syntax/#inline-javascript) can also be written as a TypeScript expression.
+Any [JavaScript expression in Marko](./syntax.md#inline-javascript) can also be written as a TypeScript expression.
 
 ### Tag Type Parameters
 
