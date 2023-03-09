@@ -11,6 +11,7 @@ var _classValue = _interopRequireDefault(require("marko/src/runtime/helpers/clas
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _index2 = _interopRequireDefault(require("./components/other/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
+var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
@@ -83,11 +84,13 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
         "d": 1,
         "renderBody": out => {
           out.w("<div></div>");
-        }
+        },
+        [Symbol.iterator]: _selfIterator.default
       },
       "renderBody": out => {
         out.w("<div></div>");
-      }
+      },
+      [Symbol.iterator]: _selfIterator.default
     },
     "renderBody": (out, b) => {
       out.w("<div></div>");

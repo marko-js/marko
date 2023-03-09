@@ -111,9 +111,11 @@ _components/layout.marko_
 
 > **ProTip:** The `renderBody` property can be omitted. You could use `<${input.heading}/>`, for example.
 
-### Repeated attribute tags
+### Repeatable attribute tags
 
-It is sometimes useful to allow multiple of the same attribute tag to be passed. This would allow us to, for example, build a custom table component which would allow its user to specify any number of columns, while still giving ther user control over how each column is rendered:
+Attribute tags can be repeated. Rendering the same attribute tag name multiple times will cause the input value for that attribute to become an array instead of an single object.
+
+This allows us to, for example, build a custom table component which allows its user to specify any number of columns, while still giving the user control over how each column is rendered.
 
 _Marko Source:_
 
@@ -128,24 +130,26 @@ _Marko Source:_
 </fancy-table>
 ```
 
-In order to receive multiple of the same attribute tag, you need to specify that the attribute tag can be repeated in a [`marko-tag.json`](./marko-json.md#single-component-definition) file.
+> _Note_
+> Attribute tags are _repeatable_.
+>
+> - Zero: if you don't pass any `@column` tags, the `fancy-table` receives `undefined`.
+> - One: if you pass a single `@column` tag, the `fancy-table` receives a single attribute tag object. (For convenience this object is [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterable_protocol) meaning it can be directly passed to the `<for>` tag.)
+> - Many: if you pass multiple `@column` tags, the `fancy-table` receives an array of attribute tags.
+>   For TypeScript the [`Marko.AttrTag` or `Marko.RepeatableAttrTag` helpers](./typescript.md#built-in-marko-types) should be used here.
 
-_components/fancy-table/marko-tag.json:_
-
-```js
-{
-    "@data": "array",
-    "<column>": {
-        "is-repeated": true
-    }
-}
-```
+> _Protip_
+> To `.map`, `.filter` or otherwise work with attribute tags as an array:
+>
+> ```marko
+> $ const columns = [...input.column || []];
+> ```
 
 We can then use the `<for>` tag to render the body content into table, passing the row data to each column's body.
 
 _components/fancy-table/index.marko:_
 
-```marko{4-8}
+```marko {4-8}
 <table class="fancy">
     <for|row| of=input.data>
         <tr>
@@ -212,7 +216,7 @@ Now, each object in the `input.column` array will contain a `heading` property i
 
 _components/fancy-table/index.marko:_
 
-```marko{3-5}
+```marko {3-5}
 <table class="fancy">
     <tr>
         <for|column| of=input.column>
@@ -252,13 +256,28 @@ _HTML Output:_
 </table>
 ```
 
+> _Note_
+> You may also specify that the attribute tag can be repeated in a [`marko-tag.json`](./marko-json.md#single-component-definition) file.
+> This will cause an array to _always_ be passed if there are any items, rather than working up from `undefined`, single object and then an array.
+>
+> _components/fancy-table/marko-tag.json:_
+>
+> ```js
+> {
+>     "@data": "array",
+>     "<column>": {
+>         "is-repeated": true
+>     }
+> }
+> ```
+
 ### Nested attribute tags
 
 Continuing to build on our example, what if we want to add some custom content or even components into the column headings? In this case, we can extend our `<fancy-table>` to use nested attribute tags. We'll now have `<@heading>` and `<@cell>` tags nested under `<@column>`. This gives users of our tag full control over how to render both column headings and the cells within the column!
 
 _Marko Source:_
 
-```marko{3-8}
+```marko {3-8}
 <fancy-table>
     <@column>
         <@heading>
@@ -283,7 +302,7 @@ Now instead of rendering the heading as text, we'll render the heading's body co
 
 _components/fancy-table/index.marko:_
 
-```marko{5}
+```marko {5}
 <table class="fancy">
     <tr>
         <for|column| of=input.column>

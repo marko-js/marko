@@ -3,6 +3,7 @@ const _marko_componentType = "8BXCo81d",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
+import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
 import _await from "marko/dist/core-tags/core/await/renderer.js";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
@@ -14,7 +15,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "then": {
       "renderBody": (out, result) => {
         out.w(_marko_escapeXml(result));
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     }
   }, out, _componentDef, "0");
 }, {

@@ -12,6 +12,7 @@ import _marko_class_merge from "marko/src/runtime/helpers/class-value.js";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _other from "./components/other/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
+import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
@@ -94,11 +95,13 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
         "d": 1,
         "renderBody": out => {
           out.e("div", null, "17", _component, 0, 0);
-        }
+        },
+        [Symbol.iterator]: _marko_self_iterator
       },
       "renderBody": out => {
         out.e("div", null, "16", _component, 0, 0);
-      }
+      },
+      [Symbol.iterator]: _marko_self_iterator
     },
     "renderBody": (out, b) => {
       out.e("div", null, "15", _component, 0, 0);

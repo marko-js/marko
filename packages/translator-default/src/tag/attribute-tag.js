@@ -4,7 +4,8 @@ import {
   assertNoArgs,
   getTagDef,
   isTransparentTag,
-  isAttributeTag
+  isAttributeTag,
+  importDefault
 } from "@marko/babel-utils";
 import { getAttrs } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
@@ -14,13 +15,13 @@ const parentIdentifierLookup = new WeakMap();
 
 // TODO: optimize inline repeated @tags.
 
-export default function (path) {
-  const { node } = path;
-  const namePath = path.get("name");
+export default function (tag) {
+  const { node } = tag;
+  const namePath = tag.get("name");
   const tagName = namePath.node.value;
-  const parentPath = findParentTag(path);
+  const parentPath = findParentTag(tag);
 
-  assertNoArgs(path);
+  assertNoArgs(tag);
 
   if (!parentPath) {
     throw namePath.buildCodeFrameError(
@@ -29,10 +30,10 @@ export default function (path) {
   }
 
   const parentAttributes = parentPath.get("attributes");
-  const tagDef = getTagDef(path);
+  const tagDef = getTagDef(tag);
   const { isRepeated, targetProperty = tagName.slice(1) } =
     tagDef || EMPTY_OBJECT;
-  const isDynamic = isRepeated || parentPath !== path.parentPath.parentPath;
+  const isDynamic = isRepeated || parentPath !== tag.parentPath.parentPath;
   parentPath.node.exampleAttributeTag = node;
 
   if (isDynamic) {
@@ -49,28 +50,40 @@ export default function (path) {
       }
     }
   } else {
-    if (
-      parentAttributes.some(attr => attr.get("name").node === targetProperty)
-    ) {
-      throw namePath.buildCodeFrameError(
-        `Only one "${tagName}" tag is allowed here.`
+    const previousAttr = parentAttributes.find(
+      attr => attr.get("name").node === targetProperty
+    );
+
+    if (previousAttr) {
+      const previousValue = previousAttr.get("value").node;
+      if (t.isObjectExpression(previousValue)) {
+        previousAttr.set(
+          "value",
+          t.arrayExpression([previousValue, getAttrTagObject(tag)])
+        );
+      } else if (t.isArrayExpression(previousAttr)) {
+        previousAttr.elements.push(getAttrTagObject(tag));
+      } else {
+        previousAttr.set(
+          "value",
+          t.callExpression(
+            importDefault(
+              tag.hub.file,
+              "marko/src/runtime/helpers/repeatable.js",
+              "marko_repeatable"
+            ),
+            [previousValue, getAttrTagObject(tag)]
+          )
+        );
+      }
+    } else {
+      parentPath.pushContainer(
+        "attributes",
+        t.markoAttribute(targetProperty, getAttrTagObject(tag))
       );
     }
 
-    let attrs = getAttrs(path);
-
-    if (t.isNullLiteral(attrs)) {
-      // TODO: this could be left as a null literal, but would require changes in the
-      // await tag runtime to handle `<@catch/>`. (this would be a breaking change though)
-      attrs = t.objectExpression([]);
-    }
-
-    parentPath.pushContainer(
-      "attributes",
-      t.markoAttribute(targetProperty, attrs)
-    );
-
-    path.remove();
+    tag.remove();
     return;
   }
 
@@ -84,7 +97,7 @@ export default function (path) {
 
   if (!identifier) {
     identifier = identifiers[targetProperty] =
-      path.scope.generateUidIdentifier(targetProperty);
+      tag.scope.generateUidIdentifier(targetProperty);
     parentPath
       .get("body")
       .unshiftContainer(
@@ -103,27 +116,62 @@ export default function (path) {
   }
 
   if (isRepeated) {
-    path.replaceWith(
+    tag.replaceWith(
       withPreviousLocation(
         t.expressionStatement(
           t.callExpression(
             t.memberExpression(identifier, t.identifier("push")),
-            [getAttrs(path)]
+            [getAttrTagObject(tag)]
           )
         ),
         node
       )
     );
   } else {
-    path.replaceWith(
+    tag.replaceWith(
       withPreviousLocation(
         t.expressionStatement(
-          t.assignmentExpression("=", identifier, getAttrs(path))
+          t.assignmentExpression(
+            "=",
+            identifier,
+            t.callExpression(
+              importDefault(
+                tag.hub.file,
+                "marko/src/runtime/helpers/repeatable.js",
+                "marko_repeatable"
+              ),
+              [identifier, getAttrTagObject(tag)]
+            )
+          )
         ),
         node
       )
     );
   }
+}
+
+function getAttrTagObject(tag) {
+  const attrs = getAttrs(tag);
+  const iteratorProp = t.objectProperty(
+    t.memberExpression(t.identifier("Symbol"), t.identifier("iterator")),
+    importDefault(
+      tag.hub.file,
+      "marko/src/runtime/helpers/self-iterator.js",
+      "marko_self_iterator"
+    ),
+    true
+  );
+
+  if (t.isNullLiteral(attrs)) {
+    return t.objectExpression([iteratorProp]);
+  }
+
+  if (t.isObjectExpression(attrs)) {
+    attrs.properties.push(iteratorProp);
+    return attrs;
+  }
+
+  return t.objectExpression([iteratorProp, t.spreadElement(attrs)]);
 }
 
 function isAttributeTagChild(tag) {

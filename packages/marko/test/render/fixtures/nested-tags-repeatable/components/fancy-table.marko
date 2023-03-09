@@ -1,0 +1,19 @@
+// @ts-check
+/**
+ * @template T
+ * @typedef {{
+ *  data: T[],
+ *  column: Marko.RepeatableAttrTag<{ renderBody: Marko.Body<[T]> }>
+ * }} Input
+ */
+<table class="fancy">
+    <for|row| of=input.data>
+        <tr>
+            <for|column| of=input.column>
+                <td>
+                    <${column.renderBody}(row)/>
+                </td>
+            </for>
+        </tr>
+    </for>
+</table>
