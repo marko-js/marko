@@ -1,11 +1,7 @@
-var initComponents = require("../init-components");
-require("../ComponentsContext").___initClientRendered =
-  initComponents.___initClientRendered;
+var registry = require("../registry");
 
 exports.getComponentForEl = require("../util").___getComponentForEl;
-exports.init = window.$initComponents = initComponents.___initServerRendered;
-
-var registry = require("../registry");
+exports.init = registry.___initServerRendered;
 exports.register = function (id, component) {
   registry.r(id, function () {
     return component;
