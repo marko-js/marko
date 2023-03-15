@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.25.0
+
+### Minor Changes
+
+- [#1909](https://github.com/marko-js/marko/pull/1909) [`e8f1370cf`](https://github.com/marko-js/marko/commit/e8f1370cf668bb579e48fd05a60c086bed6bb466) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow repeated attribute tags without using a `marko.json` file. Attribute tag objects now also contain `Symbol.iterator` implementation to make the single case more easily forwarded to the `<for>` tag.
+
+### Patch Changes
+
+- [#1914](https://github.com/marko-js/marko/pull/1914) [`22228e804`](https://github.com/marko-js/marko/commit/22228e804c76d630c0fc333fa4750bb6e42c0814) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrades the included version of HTMLJS-Parser
+
+- [#1910](https://github.com/marko-js/marko/pull/1910) [`8512cf397`](https://github.com/marko-js/marko/commit/8512cf3976ebf67dcd19ba4485b5e38979061520) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Removes circular dependencies from the Marko runtime.
+
 ## 5.24.0
 
 ### Minor Changes
