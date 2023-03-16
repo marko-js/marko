@@ -3,7 +3,7 @@ export {
   conditionalOnlyChild,
   inConditionalScope,
   loop,
-  computeLoopFromTo,
+  computeLoopToFrom,
   computeLoopIn,
   inLoopScope,
 } from "./control-flow";

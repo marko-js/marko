@@ -33,7 +33,7 @@ import {
 import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
-import type { ReferenceGroup } from "../util/references";
+import { mergeReferenceGroups } from "../util/references";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
@@ -172,109 +172,100 @@ const translateDOM = {
     const {
       extra: { reserve },
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
-    const ofAttr = findName(attributes, "of");
-    const byAttr = findName(attributes, "by");
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
       return callRuntime("inLoopScope", signal, getNodeLiteral(reserve!));
     });
 
+    const [valParam] = params;
+    if (valParam && !t.isIdentifier(valParam)) {
+      throw tag.buildCodeFrameError(
+        "Invalid 'for' tag, |value| parameter must be an identifier."
+      );
+    }
+
+    const rendererId = writer.getRenderer(bodySectionId);
+
+    tag.remove();
+
+    const references = mergeReferenceGroups(
+      sectionId,
+      attributes
+        .filter(
+          (attr) =>
+            t.isMarkoAttribute(attr) &&
+            attr.extra?.valueReferences !== undefined
+        )
+        .map((attr) => [attr.extra, "valueReferences"])
+    )?.references;
+
+    const ofAttr = findName(attributes, "of");
+    const toAttr = findName(attributes, "to");
+    const inAttr = findName(attributes, "in");
+
+    let loopFunctionBody: t.Expression | t.BlockStatement = t.nullLiteral();
+    let tagParams = params;
     if (ofAttr) {
-      const ofAttrValue = ofAttr.value!;
-      const [valParam] = params;
+      const byAttr = findName(attributes, "by");
+      loopFunctionBody = t.arrayExpression([
+        ofAttr.value,
+        byAttr ? byAttr.value : t.nullLiteral(),
+      ]);
+    } else if (toAttr) {
+      const fromAttr = findName(attributes, "from");
+      const stepAttr = findName(attributes, "step");
 
-      // TODO: support patterns/rest
-      if (!t.isIdentifier(valParam)) {
-        throw tag.buildCodeFrameError(
-          `Invalid 'for of' tag, |value| parameter must be an identifier.`
-        );
-      }
+      loopFunctionBody = callRuntime(
+        "computeLoopToFrom",
+        toAttr.value,
+        fromAttr ? fromAttr.value : t.numericLiteral(0),
+        stepAttr ? stepAttr.value : t.numericLiteral(1)
+      );
+    } else if (inAttr) {
+      loopFunctionBody = callRuntime("computeLoopIn", inAttr.value);
+      tagParams = [t.arrayPattern(params)];
+    }
 
-      const rendererId = writer.getRenderer(bodySectionId);
-
-      tag.remove();
-
-      const references = (ofAttr.extra?.valueReferences as ReferenceGroup)
-        ?.references;
-      const signal = getSignal(sectionId, reserve);
-      signal.build = () => {
-        const bindings: Record<string, t.Identifier> = paramsPath.reduce(
-          (paramsLookup, param) => {
-            return Object.assign(paramsLookup, param.getBindingIdentifiers());
-          },
-          {}
-        );
-        return callRuntime(
-          "loop",
-          getNodeLiteral(reserve!),
-          t.numericLiteral(countReserves(references) || 1),
-          rendererId,
-          t.arrayExpression(
-            Object.values(bindings).map(
-              (binding) =>
-                getSignal(bodySectionId, binding.extra.reserve).identifier
-            )
-          ),
-          t.arrowFunctionExpression(
-            [scopeIdentifier, t.arrayPattern(params)],
-            t.blockStatement(
-              Object.values(bindings).map((binding) => {
-                return t.expressionStatement(
-                  callRuntime(
-                    "setSource",
-                    scopeIdentifier,
-                    getSignal(bodySectionId, binding.extra.reserve).identifier,
-                    binding
-                  )
-                );
-              })
-            )
-          ),
-          getComputeFn(
-            sectionId,
-            t.arrayExpression([
-              ofAttrValue,
-              byAttr ? byAttr.value! : t.nullLiteral(),
-            ]),
-            references
+    const signal = getSignal(sectionId, reserve);
+    signal.build = () => {
+      const bindings: Record<string, t.Identifier> = paramsPath.reduce(
+        (paramsLookup, param) => {
+          return Object.assign(paramsLookup, param.getBindingIdentifiers());
+        },
+        {}
+      );
+      return callRuntime(
+        "loop",
+        getNodeLiteral(reserve!),
+        t.numericLiteral(countReserves(references) || 1),
+        rendererId,
+        t.arrayExpression(
+          Object.values(bindings).map(
+            (binding) =>
+              getSignal(bodySectionId, binding.extra.reserve).identifier
           )
-        );
-      };
-      subscribe(references, signal);
-
-      for (const param of params) {
-        initSource(param.extra?.reserve as Reserve);
-      }
-
-      // valParam.extra.reserve
-
-      // export function loop<S extends Scope, C extends Scope, T>(
-      //   nodeAccessor: number,
-      //   defaultMark: number,
-      //   renderer: Renderer,
-      //   paramSubscribers: Signal[],
-      //   setParams: (scope: C, params: [T, number, T[]]) => void,
-      //   compute: (scope: S) => [T[], (x: T) => unknown],
-      //   fragment?: DOMFragment,
-      // ) {
-
-      // addStatement(
-      //   "apply",
-      //   sectionId,
-      //   // TODO: should merge byAttr refereces with ofAttr references
-      //   ofAttr.extra?.valueReferences,
-      //   t.expressionStatement(
-      //     callRuntime(
-      //       "setLoopOf",
-      //       scopeIdentifier,
-      //       getNodeLiteral(reserve!),
-      //       ofAttrValue,
-      //       rendererId,
-      //       byAttr ? byAttr.value! : t.nullLiteral(),
-      //       getReferenceGroup(bodySectionId, valParam.extra.reserve).apply
-      //     )
-      //   )
-      // );
+        ),
+        t.arrowFunctionExpression(
+          [scopeIdentifier, t.arrayPattern(tagParams)],
+          t.blockStatement(
+            Object.values(bindings).map((binding) =>
+              t.expressionStatement(
+                callRuntime(
+                  "setSource",
+                  scopeIdentifier,
+                  getSignal(bodySectionId, binding.extra.reserve).identifier,
+                  binding
+                )
+              )
+            )
+          )
+        ),
+        getComputeFn(sectionId, loopFunctionBody, references)
+      );
+    };
+    subscribe(references, signal);
+    for (const param of params) {
+      initSource(param.extra?.reserve as Reserve);
     }
   },
 };
@@ -296,7 +287,6 @@ const translateHTML = {
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
-    const fromAttr = findName(attributes, "from");
     const toAttr = findName(attributes, "to");
     const block = t.blockStatement(body);
     const write = writer.writeTo(tag);
@@ -387,14 +377,16 @@ const translateHTML = {
           block
         )
       );
-    } else if (fromAttr && toAttr) {
-      const stepAttr = findName(attributes, "step") || {
-        value: t.numericLiteral(1),
-      };
-      const stepValue = stepAttr ? stepAttr.value : t.numericLiteral(1);
+    } else if (toAttr) {
+      const stepValue =
+        findName(attributes, "step")?.value ?? t.numericLiteral(1);
+      const fromValue =
+        findName(attributes, "from")?.value ?? t.numericLiteral(0);
       const [indexParam] = params;
       const stepsName = tag.scope.generateUidIdentifier("steps");
+      const indexName = tag.scope.generateUidIdentifier("i");
       const stepName = tag.scope.generateUidIdentifier("step");
+      const fromName = tag.scope.generateUidIdentifier("from");
 
       if (indexParam) {
         block.body.unshift(
@@ -403,8 +395,8 @@ const translateHTML = {
               indexParam,
               t.binaryExpression(
                 "+",
-                fromAttr.value!,
-                t.binaryExpression("*", stepName, stepValue!)
+                fromName,
+                t.binaryExpression("*", indexName, stepName)
               )
             ),
           ])
@@ -414,17 +406,25 @@ const translateHTML = {
       forNode = t.forStatement(
         t.variableDeclaration("let", [
           t.variableDeclarator(
+            fromName,
+            t.logicalExpression("??", fromValue, t.numericLiteral(0))
+          ),
+          t.variableDeclarator(
+            stepName,
+            t.logicalExpression("??", stepValue, t.numericLiteral(1))
+          ),
+          t.variableDeclarator(
             stepsName,
             t.binaryExpression(
               "/",
-              t.binaryExpression("-", toAttr.value!, fromAttr.value!),
-              stepValue!
+              t.binaryExpression("-", toAttr.value, fromName),
+              stepName
             )
           ),
-          t.variableDeclarator(stepName, t.numericLiteral(0)),
+          t.variableDeclarator(indexName, t.numericLiteral(0)),
         ]),
-        t.binaryExpression("<=", stepName, stepsName),
-        t.updateExpression("++", stepName),
+        t.binaryExpression("<=", indexName, stepsName),
+        t.updateExpression("++", indexName),
         block
       );
     }
@@ -504,7 +504,7 @@ function validateFor(tag: t.NodePath<t.MarkoTag>) {
         `Invalid 'for in' tag, missing |key, value| params.`
       );
     }
-  } else if (findName(attrs, "from") && findName(attrs, "to")) {
+  } else if (findName(attrs, "to")) {
     assertAllowedAttributes(tag, ["from", "to", "step", "by"]);
   } else {
     throw tag.buildCodeFrameError(

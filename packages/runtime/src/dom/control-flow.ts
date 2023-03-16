@@ -272,11 +272,10 @@ export function setLoopOf<T, ChildScope extends Scope>(
   scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] = newArray;
 }
 
-export function computeLoopFromTo(from: number, to: number, step: number) {
+export function computeLoopToFrom(to: number, from = 0, step = 1) {
   const range: number[] = [];
-
-  for (let i = from; i <= to; i += step) {
-    range.push(i);
+  for (let _steps = (to - from) / step, i = 0; i <= _steps; i++) {
+    range.push(from + i * step);
   }
 
   return [range, keyFromTo] as [number[], typeof keyFromTo];
