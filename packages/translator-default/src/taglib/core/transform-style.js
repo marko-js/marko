@@ -1,7 +1,7 @@
 import path from "path";
 import getComponentFiles from "../../util/get-component-files";
 
-const STYLE_REG = /^style((?:\.[^\s\\/:*?"<>|({]+)+)?\s*\{/;
+const STYLE_REG = /^style((?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/;
 
 export default function (tag) {
   const { hub, node } = tag;

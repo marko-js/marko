@@ -36,7 +36,7 @@ function State(root, stream, writer, events) {
 }
 
 function escapeEndingComment(text) {
-  return text.replace(/-->/g, "--&gt;");
+  return text.replace(/(--!?)>/g, "$1&gt;");
 }
 
 function AsyncStream(global, writer, parentOut) {
