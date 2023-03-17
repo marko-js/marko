@@ -3,10 +3,7 @@
 const nodePath = require("path");
 const taglibConfig = require("../config");
 const jsonFileReader = require("./json-file-reader");
-const tagDefFromCode = require("./tag-def-from-code");
 const loaders = require("./loaders");
-const fsReadOptions = { encoding: "utf8" };
-const extend = require("raptor-util/extend");
 const types = require("./types");
 
 const tagFileTypes = [
@@ -186,19 +183,6 @@ module.exports = function scanTagsDir(
             // Skip this directory... there doesn't appear to be anything in it
             continue;
           }
-        }
-      }
-
-      if (!hasTagJson && (tagDef.renderer || tagDef.template)) {
-        let templateCode = String(
-          taglibConfig.fs.readFileSync(
-            tagDef.renderer || tagDef.template,
-            fsReadOptions
-          )
-        );
-        let extractedTagDef = tagDefFromCode.extractTagDef(templateCode);
-        if (extractedTagDef) {
-          extend(tagDef, extractedTagDef);
         }
       }
     }
