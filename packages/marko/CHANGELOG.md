@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.25.1
+
+### Patch Changes
+
+- [#1916](https://github.com/marko-js/marko/pull/1916) [`ac1d5062a`](https://github.com/marko-js/marko/commit/ac1d5062a7be8bb359ba8d378d3c7b2ec6dc14f6) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: modify/remove some inefficient regexes
+
+- Updated dependencies [[`ac1d5062a`](https://github.com/marko-js/marko/commit/ac1d5062a7be8bb359ba8d378d3c7b2ec6dc14f6)]:
+  - @marko/compiler@5.27.1
+  - @marko/translator-default@5.25.1
+
 ## 5.25.0
 
 ### Minor Changes
