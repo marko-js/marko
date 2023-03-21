@@ -25,13 +25,15 @@ export default function (path) {
         delete prop.loc;
         return prop;
       } else if (t.isClassProperty(prop) && !prop.static) {
-        classProperties.push(
-          t.assignmentExpression(
-            "=",
-            t.memberExpression(t.thisExpression(), prop.key, prop.computed),
-            prop.value || t.unaryExpression("void", t.numericLiteral(0))
-          )
-        );
+        if (!prop.declare) {
+          classProperties.push(
+            t.assignmentExpression(
+              "=",
+              t.memberExpression(t.thisExpression(), prop.key, prop.computed),
+              prop.value || t.unaryExpression("void", t.numericLiteral(0))
+            )
+          );
+        }
 
         return undefined;
       }

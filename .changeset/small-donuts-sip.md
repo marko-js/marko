@@ -5,7 +5,7 @@
 ---
 
 Reduce script parsing restrictions added by Babel.
-This was causing Babel to error when parsing partion scripts.
+This was causing Babel to error when parsing partial scripts.
 
 ```marko
 static const x = 1;

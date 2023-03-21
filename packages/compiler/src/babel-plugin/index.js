@@ -73,7 +73,7 @@ export default (api, markoOpts) => {
       taglibConfig.fs = markoOpts.fileSystem;
       curOpts = undefined;
       try {
-        if (markoOpts.output === "source" || markoOpts.output === "migrate") {
+        if (isMarkoOutput(markoOpts.output)) {
           return file;
         }
 
@@ -114,7 +114,21 @@ export default (api, markoOpts) => {
       } finally {
         taglibConfig.fs = prevFS;
       }
-    }
+    },
+    visitor:
+      markoOpts.stripTypes && isMarkoOutput(markoOpts.output)
+        ? {
+            ExportNamedDeclaration: {
+              exit(path) {
+                // The babel typescript plugin will add an empty export declaration
+                // if there are no other imports/exports in the file.
+                // This is not needed for Marko file outputs since there is always
+                // a default export.
+                if (path.node.specifiers.length === 0) path.remove();
+              }
+            }
+          }
+        : undefined
   };
 };
 
@@ -332,4 +346,8 @@ function addPlugin(meta, arr, plugin) {
 
 function unique(item, i, list) {
   return list.indexOf(item) === i;
+}
+
+function isMarkoOutput(output) {
+  return output === "source" || output === "migrate";
 }

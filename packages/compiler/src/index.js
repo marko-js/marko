@@ -3,7 +3,7 @@ import path from "path";
 import * as babel from "@babel/core";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
-import tsPlugin from "@babel/plugin-transform-typescript";
+import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
@@ -67,10 +67,11 @@ function loadBabelConfig(filename, config) {
   const requiredPlugins = [
     [corePlugin, markoConfig],
     [
-      markoConfig.stripTypes ? tsPlugin : tsSyntaxPlugin,
+      markoConfig.stripTypes ? tsTransformPlugin : tsSyntaxPlugin,
       {
         isTSX: false,
         allowNamespaces: true,
+        allowDeclareFields: true,
         optimizeConstEnums: true,
         onlyRemoveTypeImports: true,
         disallowAmbiguousJSXLike: false
