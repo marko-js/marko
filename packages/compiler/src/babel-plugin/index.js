@@ -46,6 +46,14 @@ export default (api, markoOpts) => {
   return {
     name: "marko",
     manipulateOptions(opts) {
+      // We need to allow these for now since we are not parsing the entire file
+      // These types of syntax errors will be picked up by the bundler / runtime anyways.
+      opts.parserOpts.allowAwaitOutsideFunction =
+        opts.parserOpts.allowImportExportEverywhere =
+        opts.parserOpts.allowReturnOutsideFunction =
+        opts.parserOpts.allowSuperOutsideMethod =
+        opts.parserOpts.allowUndeclaredExports =
+          true;
       curOpts = opts;
     },
     parserOverride(code) {
