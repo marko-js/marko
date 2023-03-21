@@ -44,11 +44,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
           babelConfig: {
             ...config.babelConfig,
             babelrc: false,
-            configFile: false,
-            plugins: [
-              "@babel/plugin-proposal-class-properties",
-              "@babel/plugin-proposal-private-methods"
-            ]
+            configFile: false
           },
           writeVersionComment: false
         };
