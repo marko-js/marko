@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.27.3
+
+### Patch Changes
+
+- [#1921](https://github.com/marko-js/marko/pull/1921) [`1fe71a502`](https://github.com/marko-js/marko/commit/1fe71a5020c5930c63e9c7ff226a3befca0e58a4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using `typeof window` and prefer `typeof document` checks for browser environment (improves future deno support).
+
+- [#1921](https://github.com/marko-js/marko/pull/1921) [`f0c697d7b`](https://github.com/marko-js/marko/commit/f0c697d7b5b0afcbe524f390db2b3c5fa54d5607) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoids using a package.json remap for the browser implementation of the \_preserve internal tag (used to implement `no-update` directives). This fixes an issue where in vite the module could not be loaded properly.
+
 ## 5.27.2
 
 ### Patch Changes
