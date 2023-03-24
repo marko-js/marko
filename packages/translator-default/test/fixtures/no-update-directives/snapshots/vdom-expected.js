@@ -4,7 +4,7 @@ const _marko_componentType = "packages/translator-default/test/fixtures/no-updat
 export default _marko_template;
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
-import _preserve from "marko/src/core-tags/components/preserve-tag";
+import _preserve from "marko/src/core-tags/components/preserve-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
 _marko_registerComponent(_marko_componentType, () => _marko_template);

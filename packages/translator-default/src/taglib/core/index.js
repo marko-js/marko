@@ -264,7 +264,7 @@ export default {
     ]
   },
   "<_preserve>": {
-    renderer: "marko/src/core-tags/components/preserve-tag",
+    renderer: "marko/src/core-tags/components/preserve-tag.js",
     "@n": "boolean",
     "@i": "boolean",
     "@b": "boolean",
