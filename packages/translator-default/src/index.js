@@ -473,7 +473,7 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/helpers/render-tag.js`,
     `${base}runtime/helpers/style-value.js`,
     `${base}runtime/helpers/to-string.js`,
-    `${base}core-tags/components/preserve-tag`,
+    `${base}core-tags/components/preserve-tag.js`,
     ...(output === "html"
       ? [
           `${base}runtime/html/index.js`,
