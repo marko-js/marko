@@ -1,5 +1,5 @@
 "use strict";
 
-if (typeof window === "undefined") {
+if (typeof document === "undefined") {
   exports.require = require;
 }
