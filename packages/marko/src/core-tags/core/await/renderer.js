@@ -81,7 +81,7 @@ const LAST_OPTIONS = { last: true, name: "await:finish" };
 
 module.exports = function awaitTag(input, out) {
   var clientReorder =
-    typeof window === "undefined" &&
+    typeof document === "undefined" &&
     input.clientReorder === true &&
     !out.isVDOM;
 
