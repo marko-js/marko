@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.4
+
+### Patch Changes
+
+- [#1923](https://github.com/marko-js/marko/pull/1923) [`62afb3256`](https://github.com/marko-js/marko/commit/62afb3256a0c402e75b90f06af4e8cdc5c8112f3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove class lifecycle types to avoid the need to `override` them.
+
 ## 5.25.3
 
 ### Patch Changes
