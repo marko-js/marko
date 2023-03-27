@@ -203,18 +203,18 @@ declare namespace Marko {
     replace(target: ChildNode): this;
     /** Replaces the children of an existing DOM element with the dom for the current instance. */
     replaceChildrenOf(target: ParentNode): this;
-    /** Called when the component is firsted created. */
-    onCreate?(input: this["input"], out: Marko.Out): void;
-    /** Called every time the component receives input from it's parent. */
-    onInput?(input: this["input"], out: Marko.Out): void | this["input"];
-    /** Called after a component has successfully rendered, but before it's update has been applied to the dom. */
-    onRender?(out: Marko.Out): void;
-    /** Called after the first time the component renders and is attached to the dom. */
-    onMount?(): void;
-    /** Called when a components render has been applied to the DOM (excluding when it is initially mounted). */
-    onUpdate?(): void;
-    /** Called when a component is destroyed and removed from the dom. */
-    onDestroy?(): void;
+    // /** Called when the component is firsted created. */
+    // onCreate?(input: this["input"], out: Marko.Out): void;
+    // /** Called every time the component receives input from it's parent. */
+    // onInput?(input: this["input"], out: Marko.Out): void | this["input"];
+    // /** Called after a component has successfully rendered, but before it's update has been applied to the dom. */
+    // onRender?(out: Marko.Out): void;
+    // /** Called after the first time the component renders and is attached to the dom. */
+    // onMount?(): void;
+    // /** Called when a components render has been applied to the DOM (excluding when it is initially mounted). */
+    // onUpdate?(): void;
+    // /** Called when a component is destroyed and removed from the dom. */
+    // onDestroy?(): void;
   }
 
   /** The top level api for a Marko Template. */
