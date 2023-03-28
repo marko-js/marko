@@ -1,17 +1,21 @@
-import { setSource as _setSource, inChild as _inChild, source as _source, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _child, attrs as _child_attrs, template as _child_template, walks as _child_walks } from "./components/child.marko";
-const _child_attrs_inChild = _inChild(_child_attrs, "#childScope/0");
-const _x = /* @__PURE__ */_source("x", [_inChild(_child_attrs, "#childScope/1")], (_scope, x) => _setSource(_scope["#childScope/1"], _child_attrs, {
-  value: x
-}));
+import { value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
+  let _child_attrs_value;
+  if (_dirty) {
+    _child_attrs_value = {
+      value: x
+    };
+  }
+  _child_attrs(_scope["#childScope/1"], _child_attrs_value, _dirty);
+});
 const _setup = _scope => {
-  _setSource(_scope, _x, "y");
   _child(_scope["#childScope/0"]);
-  _setSource(_scope["#childScope/0"], _child_attrs, {
+  _child(_scope["#childScope/1"]);
+  _x(_scope, "y");
+  _child_attrs(_scope["#childScope/0"], {
     value: 3
   });
-  _child(_scope["#childScope/1"]);
-  _notifySignal(_scope, _child_attrs_inChild);
 };
 export const template = `${_child_template}${_child_template}`;
 export const walks = /* beginChild, _child_walks, endChild, beginChild, _child_walks, endChild */`/${_child_walks}&/${_child_walks}&`;

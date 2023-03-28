@@ -8,7 +8,8 @@ import {
 import { assertNoBodyContent } from "../util/assert";
 import { callRuntime } from "../util/runtime";
 import { isOutputHTML } from "../util/marko-config";
-import { initDerivation } from "../util/signals";
+import { addValue, initValue } from "../util/signals";
+import { getSectionId } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -38,7 +39,8 @@ export default {
         t.variableDeclaration("const", [t.variableDeclarator(node.var, id)])
       );
     } else {
-      initDerivation(tagVar.extra.reserve!, undefined, id);
+      const source = initValue(tagVar.extra.reserve!);
+      addValue(getSectionId(tag), undefined, source, id);
       tag.remove();
     }
   },

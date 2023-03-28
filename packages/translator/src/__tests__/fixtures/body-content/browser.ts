@@ -2,19 +2,17 @@ import {
   data,
   createRenderFn,
   on,
-  source,
   queueHydrate,
-  setSource,
   queueSource,
-  bind,
   bindRenderer,
   Scope,
-  destructureSources,
   dynamicClosure,
   createRenderer,
   conditional,
   dynamicSubscribers,
   hydrateSubscription,
+  value,
+  bindFunction,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, next, beginChild, endChild } from "../../utils/walks";
 
@@ -41,41 +39,37 @@ type FancyButton$ComponentScope = Scope<{
 const FancyButton$template = `<button><!></button>`;
 const FancyButton$walks = get + next(1) + get + next(1);
 
-const FancyButton$renderBodyDynamicTag = conditional(
-  FancyButton$Index.COMMENT,
-  1,
-  (scope: FancyButton$ComponentScope) => {
-    return scope[FancyButton$Index.RENDER_BODY];
-  }
-);
-
-const FancyButton$renderBody = source(FancyButton$Index.RENDER_BODY, [
-  FancyButton$renderBodyDynamicTag,
-]);
-
-const FancyButton$onclick = source(
-  FancyButton$Index.ON_CLICK,
-  [],
-  (_scope: FancyButton$ComponentScope) => {
-    queueHydrate(_scope, FancyButton$onclick_hydrate);
-  }
-);
-
-export const FancyButton$onclick_hydrate = (
-  scope: FancyButton$ComponentScope
+export const FancyButton$attrs = (
+  scope: Scope,
+  value: any,
+  dirty: boolean | null | undefined
 ) => {
+  let renderBody, onclick;
+  if (dirty) {
+    ({ renderBody, onclick } = value);
+  }
+  FancyButton$renderBody(scope, renderBody, dirty);
+  FancyButton$onclick(scope, onclick, dirty);
+};
+
+const FancyButton$renderBody = value(
+  FancyButton$Index.RENDER_BODY,
+  (scope, value: any, dirty) => {
+    FancyButton$renderBodyDynamicTag(scope, value, dirty);
+  }
+);
+
+const FancyButton$onclick = value(FancyButton$Index.ON_CLICK, (_scope) => {
+  queueHydrate(_scope, FancyButton$onclick_hydrate);
+});
+
+export const FancyButton$onclick_hydrate = (scope: Scope) => {
   const onclick = scope[FancyButton$Index.ON_CLICK];
 
   on(scope[FancyButton$Index.BUTTON], "click", onclick);
 };
 
-export const FancyButton$attrs = destructureSources(
-  [FancyButton$renderBody, FancyButton$onclick],
-  (scope: ComponentScope, { renderBody, onclick }: any) => {
-    setSource(scope, FancyButton$renderBody, renderBody);
-    setSource(scope, FancyButton$onclick, onclick);
-  }
-);
+const FancyButton$renderBodyDynamicTag = conditional(FancyButton$Index.COMMENT);
 
 export const FancyButton = createRenderFn(
   FancyButton$template,
@@ -103,27 +97,32 @@ type ComponentScope = Scope<{
 export const template = `${FancyButton$template}`;
 export const walks = `${beginChild}${FancyButton$walks}${endChild}`;
 
-export const setup = (scope: ComponentScope) => {
-  setSource(scope, _clickCount, 0);
-  setSource(scope[Index.FANCYBUTTON_SCOPE], FancyButton$attrs, {
-    onclick: bind(scope, clickHandler),
-    renderBody: bindRenderer(scope, renderBody),
-  });
+export const setup = (scope: Scope) => {
+  _clickCount(scope, 0);
+  FancyButton$attrs(
+    scope[Index.FANCYBUTTON_SCOPE],
+    {
+      onclick: bindFunction(scope, clickHandler),
+      renderBody: bindRenderer(scope, renderBody),
+    },
+    true
+  );
 };
 
-const _clickCount = source(Index.CLICK_COUNT, [
-  dynamicSubscribers(Index.CLICK_COUNT),
-]);
+const _clickCount = value(Index.CLICK_COUNT, (scope: Scope, _value, dirty) => {
+  dynamicSubscribers(
+    scope[Index.CLICK_COUNT + "*" /* AccessorChars.SUBSCRIBERS */],
+    dirty!
+  );
+});
 
-export const clickHandler = (scope: ComponentScope) => {
+export const clickHandler = (scope: Scope) => {
   queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
 };
 
 const clickCount$renderBody = dynamicClosure(
-  1,
   Index.CLICK_COUNT,
-  [],
-  (scope: RenderBody$Scope, value: ComponentScope[Index.CLICK_COUNT]) => {
+  (scope: Scope, value: ComponentScope[Index.CLICK_COUNT]) => {
     data(scope[RenderBody$Index.TEXT], value);
   }
 );
@@ -132,13 +131,12 @@ const enum RenderBody$Index {
   TEXT = "#text/0",
 }
 
-type RenderBody$Scope = Scope<{
-  [RenderBody$Index.TEXT]: Text;
-}>;
+// type RenderBody$Scope = Scope<{
+//   [RenderBody$Index.TEXT]: Text;
+// }>;
 
 export const subscribe_clickCount$renderBody = hydrateSubscription(
   clickCount$renderBody,
-  1,
   Index.CLICK_COUNT
 );
 

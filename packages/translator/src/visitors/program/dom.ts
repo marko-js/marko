@@ -3,13 +3,13 @@ import { callRuntime } from "../../util/runtime";
 import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
 import {
   getClosures,
+  getDestructureSignal,
   getHydrateRegisterId,
   getSignal,
   writeSignals,
 } from "../../util/signals";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
-import { scopeIdentifier } from ".";
 import { getTemplateId } from "@marko/babel-utils";
 
 export default {
@@ -61,8 +61,7 @@ export default {
 
       if (attrs) {
         const exportSpecifiers: t.ExportSpecifier[] = [];
-        const subscribers: t.Identifier[] = [];
-        const statements: t.Statement[] = [];
+        const isIdentity = t.isIdentifier(attrs.var);
 
         for (const name in attrs.bindings) {
           const bindingIdentifier = attrs.bindings[name];
@@ -76,17 +75,6 @@ export default {
               bindingIdentifier.extra!.reserve!.exportIdentifier!
             )
           );
-          subscribers.push(signalIdentifier);
-          statements.push(
-            t.expressionStatement(
-              callRuntime(
-                "setSource",
-                scopeIdentifier,
-                signalIdentifier,
-                bindingIdentifier
-              )
-            )
-          );
         }
 
         program.node.body.push(
@@ -94,14 +82,12 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 attrsSignalIdentifier,
-                callRuntime(
-                  "destructureSources",
-                  t.arrayExpression(subscribers),
-                  t.arrowFunctionExpression(
-                    [scopeIdentifier, attrs.var as any],
-                    t.blockStatement(statements)
-                  )
-                )
+                isIdentity
+                  ? getSignal(
+                      sectionId,
+                      (attrs.var as t.Identifier).extra!.reserve!
+                    ).identifier
+                  : getDestructureSignal(attrs.bindings, attrs.var)
               ),
             ])
           ),

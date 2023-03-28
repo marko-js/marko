@@ -30,7 +30,7 @@ export { pushContext, popContext, getInContext } from "../common/context";
 
 export { queueSource, queueHydrate, run } from "./queue";
 
-export { write, bind, bindRenderer } from "./scope";
+export { write, bindFunction, bindRenderer } from "./scope";
 
 export type { Scope } from "../common/types";
 
@@ -42,20 +42,14 @@ export {
 } from "./renderer";
 
 export {
-  setSource,
-  notifySignal,
-  source,
-  destructureSources,
-  derivation,
-  nextTagId,
-  subscriber,
+  value,
+  intersection,
   closure,
   dynamicClosure,
+  contextClosure,
   dynamicSubscribers,
+  childClosures,
   setTagVar,
   tagVarSignal,
-  contextClosure,
-  inChildMany,
-  inChild,
-  dynamicAttrsProxy,
+  nextTagId,
 } from "./signals";

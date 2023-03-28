@@ -1,21 +1,21 @@
-import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, setSource as _setSource, dynamicSubscribers as _dynamicSubscribers, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, source as _source, notifySignal as _notifySignal, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, bindRenderer as _bindRenderer, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _layout, attrs as _layout_attrs, template as _layout_template, walks as _layout_walks } from "./components/layout.marko";
-const _layout_attrs_inChild = _inChild(_layout_attrs, "#childScope/0");
-const _name$layoutBody = _dynamicClosure(1, "name", [], (_scope, name) => _data(_scope["#text/0"], name));
+const _name$layoutBody = /* @__PURE__ */_dynamicClosure("name", (_scope, name) => _data(_scope["#text/0"], name));
 const _layoutBody = /* @__PURE__ */_createRenderer("<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", null, [_name$layoutBody]);
-const _name = /* @__PURE__ */_source("name", [_dynamicSubscribers("name")]);
+const _name = /* @__PURE__ */_value("name", (_scope, name, _dirty) => _dynamicSubscribers(_scope["name*"], _dirty));
 const _setup = _scope => {
   _layout(_scope["#childScope/0"]);
-  _setSource(_scope["#childScope/0"], _layout_attrs, {
+  _layout_attrs(_scope["#childScope/0"], {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _layoutBody)
   });
-  _notifySignal(_scope, _layout_attrs_inChild);
 };
-export const attrs = /* @__PURE__ */_destructureSources([_name], (_scope, {
-  name
-}) => {
-  _setSource(_scope, _name, name);
-});
+export const attrs = (_scope, _destructure, _dirty = true) => {
+  let name;
+  if (_dirty) ({
+    name
+  } = _destructure);
+  _name(_scope, name, _dirty);
+};
 export { _name as _apply_name };
 export const template = `${_layout_template}`;
 export const walks = /* beginChild, _layout_walks, endChild */`/${_layout_walks}&`;

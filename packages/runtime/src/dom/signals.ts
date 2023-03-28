@@ -1,559 +1,257 @@
 import { Scope, AccessorChars, Accessor } from "../common/types";
-import { bindSignal, getOwnerScope, write } from "./scope";
-import type { Renderer } from "./renderer";
+import { bindFunction } from "./scope";
+import type { RendererOrElementName } from "./renderer";
 
-export type Signal = {
-  ___mark(scope: Scope): void;
-  ___notify(scope: Scope, stale: boolean): void;
-  ___apply(scope: Scope, data?: unknown): void;
+export type Signal = ValueSignal | IntersectionSignal;
+
+export type ValueSignal<T = unknown> = (
+  scope: Scope,
+  value: T,
+  dirty?: null | boolean
+) => void;
+
+export type BoundValueSignal<T = unknown> = (
+  value: T,
+  dirty?: null | boolean
+) => void;
+
+export type IntersectionSignal = ((
+  scope: Scope,
+  dirty?: null | boolean
+) => void) & {
   ___subscribe?(scope: Scope): void;
   ___unsubscribe?(scope: Scope): void;
 };
 
+export type BoundIntersectionSignal = ((dirty?: null | boolean) => void) & {
+  ___subscribe?(scope: Scope): void;
+  ___unsubscribe?(scope: Scope): void;
+};
+
+export function value<T>(
+  valueAccessor: Accessor,
+  fn: ValueSignal<T>
+): ValueSignal<T> {
+  const markAccessor = valueAccessor + AccessorChars.MARK;
+  const alwaysCall = fn.length === 3;
+  return (scope, nextValue, dirty = true) => {
+    let creation, currentMark;
+    if (dirty === null) {
+      currentMark = scope[markAccessor] = (scope[markAccessor] ?? 0) + 1;
+    } else {
+      creation = scope[markAccessor] === undefined;
+      currentMark = scope[markAccessor] ||= 1;
+    }
+    if (currentMark === 1) {
+      if (
+        creation ||
+        alwaysCall ||
+        (dirty &&= scope[valueAccessor] !== nextValue)
+      ) {
+        scope[valueAccessor] = nextValue;
+        fn(scope, nextValue, dirty);
+      }
+    }
+    if (dirty !== null) {
+      // closure needs this to be called after the fn
+      // so it is marked until all downstream have been called
+      scope[markAccessor]--;
+    }
+  };
+}
+
 let accessorId = 0;
 
-function markSubscribers(scope: Scope, subscribers: Signal[]) {
-  for (const subscriber of subscribers) {
-    subscriber.___mark(scope);
-  }
-}
-function notifySubscribers(
-  scope: Scope,
-  stale: boolean,
-  subscribers: Signal[]
-) {
-  for (const subscriber of subscribers) {
-    subscriber.___notify(scope, stale);
-  }
-}
-
-function applyValue<S extends Scope, V>(
-  scope: S,
-  value: V,
-  valueAccessor: Accessor,
-  subscribers: Signal[],
-  isCreate: boolean,
-  action?: (scope: S, value: V) => void
-) {
-  const stale = write(scope, valueAccessor as number, value);
-  if (stale || isCreate) {
-    action?.(scope, value);
-  }
-  notifySubscribers(scope, stale as any as boolean, subscribers);
-}
-
-export function setSource(scope: Scope, signal: Signal, value: unknown) {
-  signal.___apply(scope, value);
-}
-
-export function notifySignal(scope: Scope, signal: Signal) {
-  signal.___notify(scope, true);
-}
-
-export function source<S extends Scope, V>(
-  valueAccessor: Accessor,
-  subscribers: Signal[],
-  action?: (scope: S, value: V) => void
-): Signal {
-  const markAccessor = valueAccessor + AccessorChars.MARK;
-  const signal: Signal = {
-    ___mark(scope) {
-      scope[markAccessor] = 1;
-      markSubscribers(scope, subscribers);
-    },
-    ___notify(scope, stale) {
-      if (!stale) {
-        notifySubscribers(scope, stale, subscribers);
-      }
-    },
-    ___apply(scope, data) {
-      const isCreate = scope[markAccessor] === undefined;
-      scope[markAccessor] = 1;
-      applyValue(
-        scope as S,
-        data as V,
-        valueAccessor,
-        subscribers,
-        isCreate,
-        action
-      );
-      scope[markAccessor] = 0;
-    },
-  };
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "source", {
-      valueAccessor,
-      markAccessor,
-      subscribers,
-      action,
-    });
-  }
-
-  return signal;
-}
-
-export function destructureSources<S extends Scope, V>(
-  subscribers: Signal[],
-  action?: (scope: S, value: V) => void
-): Signal {
-  const signal: Signal = {
-    ___mark(scope) {
-      markSubscribers(scope, subscribers);
-    },
-    ___notify(scope, stale) {
-      if (!stale) {
-        notifySubscribers(scope, stale, subscribers);
-      }
-    },
-    ___apply: action as (scope: Scope, data: unknown) => void,
-  };
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "destructureSources", { subscribers, action });
-  }
-
-  return signal;
-}
-
-// export function derivedSource?() {
-// }
-
-// export function controllableSource() {
-// }
-
-function baseSubscriber<S extends Scope>(
-  accessorId: Accessor,
-  subscribers: Signal[],
-  defaultMark: number | ((scope: S) => number),
-  apply: (scope: S) => void
-): Signal {
-  const markAccessor: Accessor = accessorId + AccessorChars.MARK;
-  const staleAccessor: Accessor = accessorId + AccessorChars.STALE;
-  const signal: Signal = {
-    ___mark(scope) {
-      const mark = (scope[markAccessor] = (scope[markAccessor] || 0) + 1);
-      if (mark === 1) {
-        markSubscribers(scope, subscribers);
-      }
-    },
-    ___notify(scope, stale) {
-      if (stale) {
-        scope[staleAccessor] = true;
-      }
+export function intersection(
+  count: number,
+  fn: IntersectionSignal
+): IntersectionSignal {
+  const dirtyAccessor = AccessorChars.DYNAMIC + accessorId++;
+  const markAccessor = dirtyAccessor + AccessorChars.MARK;
+  const alwaysCall = fn.length === 2;
+  return (scope, dirty = true) => {
+    let currentMark;
+    if (dirty === null) {
+      currentMark = scope[markAccessor] = (scope[markAccessor] ?? 0) + 1;
+    } else {
       if (scope[markAccessor] === undefined) {
-        scope[markAccessor] =
-          typeof defaultMark === "number"
-            ? defaultMark
-            : defaultMark(scope as S);
-        scope[staleAccessor] = true; // TODO: figure out if this helps for closures
+        scope[markAccessor] = count - 1;
+        scope[dirtyAccessor] = true;
+      } else {
+        currentMark = scope[markAccessor]--;
+        dirty = scope[dirtyAccessor] ||= dirty;
       }
-      if (scope[markAccessor] === 1) {
-        if (scope[staleAccessor]) {
-          scope[staleAccessor] = false;
-          apply(scope as S);
-        } else {
-          notifySubscribers(scope, false, subscribers);
-        }
-      }
-      scope[markAccessor]--;
-    },
-    ___apply() {
-      if (MARKO_DEBUG) {
-        throw new Error("Derivations should not be directly applied");
-      }
-    },
-  };
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "baseSubscriber", {
-      accessorId,
-      markAccessor,
-      staleAccessor,
-      subscribers,
-      defaultMark,
-      apply,
-    });
-  }
-
-  return signal;
-}
-
-export function subscriber<S extends Scope>(
-  subscribers: Signal[],
-  defaultMark: number,
-  apply: (scope: S) => void
-): Signal {
-  const signal: Signal = baseSubscriber(
-    AccessorChars.DYNAMIC + accessorId++,
-    subscribers,
-    defaultMark,
-    apply
-  );
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "subscriber", { subscribers, defaultMark, apply });
-  }
-
-  return signal;
-}
-
-export function derivation<S extends Scope, V>(
-  valueAccessor: Accessor,
-  defaultMark: number,
-  subscribers: Signal[],
-  compute: (scope: S) => V,
-  action?: (scope: S, value: V) => void
-): Signal {
-  const signal = baseSubscriber(
-    valueAccessor,
-    subscribers,
-    defaultMark,
-    (scope: S) => {
-      applyValue(
-        scope,
-        compute(scope),
-        valueAccessor,
-        subscribers,
-        false, // TODO: This should be true on creation
-        action
-      );
     }
-  );
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "derivation", {
-      valueAccessor,
-      defaultMark,
-      subscribers,
-      compute,
-      action,
-    });
-  }
-  return signal;
-}
-
-export function child<S extends Scope, V>(
-  childAccessor: Accessor,
-  valueAccessor: Accessor,
-  defaultMark: number,
-  subscribers: Signal[],
-  compute: (scope: S) => V,
-  action?: (scope: S, value: V) => void
-): Signal {
-  const childDerivation = derivation(
-    valueAccessor,
-    defaultMark,
-    subscribers,
-    compute,
-    action
-  );
-  const signal: Signal = inChild(childDerivation, childAccessor);
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "child", {
-      childAccessor,
-      valueAccessor,
-      defaultMark,
-      subscribers,
-      compute,
-      action,
-    });
-  }
-  return signal;
-}
-
-export function closure<S extends Scope, V>(
-  ownerLevel: number | ((scope: Scope) => Scope),
-  providerAccessor: Accessor | ((scope: Scope) => Accessor),
-  subscribers: Signal[],
-  action?: (scope: S, value: V) => void
-): Signal {
-  const getOwner =
-    typeof ownerLevel === "function"
-      ? ownerLevel
-      : (scope: Scope) => getOwnerScope(scope, ownerLevel);
-  const getProviderAccessor =
-    typeof providerAccessor === "function"
-      ? providerAccessor
-      : () => providerAccessor;
-
-  const getDefaultMark = (scope: Scope) => {
-    const ownerScope = getOwner(scope);
-    const providerMarkAccessor =
-      getProviderAccessor(scope) + AccessorChars.MARK;
-    const providerMark = ownerScope[providerMarkAccessor];
-    const providerHasRun =
-      (providerMark === undefined && !ownerScope.___client) ||
-      providerMark === 0;
-    // we hit this branch when we're creating a new scope that closes over a value that has already run.
-    // (it could have run on the server, earlier in setup, in the current batch, or in a previous batch)
-    // the defaultMark includes this value, so we decrement our mark since the value could not.
-    // (this scope did not exist at the time the value ran)
-    return providerHasRun ? 1 : 2;
+    if (currentMark === 1) {
+      if (dirty || alwaysCall) {
+        scope[dirtyAccessor] = false;
+        fn(scope, dirty);
+      }
+    }
   };
-  const apply = (scope: Scope) => {
-    const ownerScope = getOwner(scope);
-    const providerValueAccessor = getProviderAccessor(scope);
-    action?.(scope as S, ownerScope[providerValueAccessor]);
-    notifySubscribers(scope, true, subscribers);
-  };
-  const signal: Signal = baseSubscriber(
-    AccessorChars.DYNAMIC + accessorId++,
-    subscribers,
-    getDefaultMark,
-    apply
-  );
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "closure", {
-      ownerLevel,
-      providerAccessor,
-      subscribers,
-      action,
-    });
-  }
-  return signal;
 }
 
-export function dynamicClosure<S extends Scope, V>(
-  ownerLevel: number | ((scope: Scope) => Scope),
-  providerAccessor: Accessor | ((scope: Scope) => Accessor),
-  subscribers: Signal[],
-  action?: (scope: S, value: V) => void
-): Signal {
-  const getOwner =
-    typeof ownerLevel === "function"
-      ? ownerLevel
-      : (scope: Scope) => getOwnerScope(scope, ownerLevel);
-  const getProviderAccessor =
-    typeof providerAccessor === "function"
-      ? providerAccessor
-      : () => providerAccessor;
+export function closure<T>(
+  ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
+  fn: ValueSignal<T>,
+  getOwnerScope = (scope: Scope) => scope._!
+): IntersectionSignal {
+  const dirtyAccessor = AccessorChars.DYNAMIC + accessorId++;
+  const markAccessor = dirtyAccessor + 1;
+  const alwaysCall = fn.length === 3;
+  const getOwnerValueAccessor =
+    typeof ownerValueAccessor === "function"
+      ? ownerValueAccessor
+      : () => ownerValueAccessor as Accessor;
+  return (scope, dirty = true) => {
+    let ownerScope, ownerValueAccessor, currentMark;
+    if (dirty === null) {
+      currentMark = scope[markAccessor] = (scope[markAccessor] ?? 0) + 1;
+    } else {
+      if (scope[markAccessor] === undefined) {
+        ownerScope = getOwnerScope(scope);
+        ownerValueAccessor = getOwnerValueAccessor(scope);
+        const ownerMark = ownerScope[ownerValueAccessor + AccessorChars.MARK];
+        const ownerHasRun =
+          ownerMark === undefined ? !ownerScope.___client : ownerMark === 0;
+        scope[markAccessor] = (currentMark = ownerHasRun ? 1 : 2) - 1;
+        scope[dirtyAccessor] = true;
+      } else {
+        currentMark = scope[markAccessor]--;
+        dirty = scope[dirtyAccessor] ||= dirty;
+      }
+    }
+    if (currentMark === 1) {
+      if (dirty || alwaysCall) {
+        scope[dirtyAccessor] = false;
+        ownerScope ??= getOwnerScope(scope);
+        ownerValueAccessor ??= getOwnerValueAccessor(scope);
+        fn(scope, dirty && ownerScope[ownerValueAccessor], dirty);
+      }
+    }
+  };
+}
 
-  const signal = {
-    ...closure(ownerLevel, providerAccessor, subscribers, action),
+export function dynamicClosure<T>(
+  ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
+  fn: ValueSignal<T>,
+  getOwnerScope = (scope: Scope) => scope._!
+): IntersectionSignal {
+  const getOwnerValueAccessor =
+    typeof ownerValueAccessor === "function"
+      ? ownerValueAccessor
+      : () => ownerValueAccessor as string;
+  const signalFn = closure(getOwnerValueAccessor, fn, getOwnerScope);
+  return Object.assign(signalFn, {
     ___subscribe(scope: Scope) {
-      const ownerScope = getOwner(scope);
+      const ownerScope = getOwnerScope(scope);
       const providerSubscriptionsAccessor =
-        getProviderAccessor(scope) + AccessorChars.SUBSCRIBERS;
+        getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
       ownerScope[providerSubscriptionsAccessor] ??= new Set();
-      ownerScope[providerSubscriptionsAccessor].add(bindSignal(scope, signal));
+      ownerScope[providerSubscriptionsAccessor].add(
+        bindFunction(scope, signalFn as any)
+      );
     },
     ___unsubscribe(scope: Scope) {
-      const ownerScope = getOwner(scope);
+      const ownerScope = getOwnerScope(scope);
       const providerSubscriptionsAccessor =
-        getProviderAccessor(scope) + AccessorChars.SUBSCRIBERS;
-      (ownerScope[providerSubscriptionsAccessor] as Set<Signal>)?.delete(
-        bindSignal(scope, signal)
+        getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
+      ownerScope[providerSubscriptionsAccessor]?.delete(
+        bindFunction(scope, signalFn as any)
       );
     },
-  };
-
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "derivation", {
-      ownerLevel,
-      providerAccessor,
-      subscribers,
-      action,
-    });
-  }
-
-  return signal;
-}
-
-export function dynamicSubscribers(valueAccessor: Accessor) {
-  const subscriptionsAccessor = valueAccessor + AccessorChars.SUBSCRIBERS;
-  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
-    const subscribers = scope[subscriptionsAccessor];
-    if (subscribers) {
-      for (const subscriber of subscribers) {
-        subscriber[methodName](scope, extraArg);
-      }
-    }
   });
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "dynamicSubscribers", {
-      valueAccessor,
-      subscriptionsAccessor,
-    });
-  }
-  return signal;
 }
 
-export function contextClosure<S extends Scope, V>(
+export function contextClosure<T>(
   valueAccessor: Accessor,
   contextKey: string,
-  subscribers: Signal[],
-  action?: (scope: S, value: V) => void
-): Signal {
-  const signal: Signal = dynamicClosure(
-    (scope) => scope.___context![contextKey][0],
+  fn: ValueSignal<T>
+) {
+  // TODO: might be viable as a reliable way to get a unique id
+  // const dirtyAccessor = valueAccessor - 2;
+  return dynamicClosure(
     (scope) => scope.___context![contextKey][1],
-    subscribers,
-    (scope: Scope, value: V) => {
-      scope[valueAccessor] = value;
-      action?.(scope as S, value);
-    }
+    value(valueAccessor, fn),
+    (scope) => scope.___context![contextKey][0]
   );
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "contextClosure", {
-      valueAccessor,
-      contextKey,
-      subscribers,
-      action,
-    });
-  }
-  return signal;
 }
 
-// function getOwnerScope(scope: Scope, level: number) {
-//   for(; level--;) scope = scope._!;
-//   return scope;
-// }
-
-export function wrapSignal(
-  wrapper: (
-    methodName: "___mark" | "___notify" | "___apply"
-  ) => (scope: Scope, arg?: any) => void
+export function childClosures(
+  closureSignals: IntersectionSignal[],
+  childAccessor: Accessor
 ) {
-  const signal: Signal = {
-    ___mark: wrapper("___mark"),
-    ___notify: wrapper("___notify"),
-    ___apply: wrapper("___apply"),
+  const signal = (scope: Scope, dirty = true) => {
+    const childScope = scope[childAccessor] as Scope;
+    for (const closureSignal of closureSignals) {
+      closureSignal(childScope, dirty);
+    }
   };
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "wrapSignal", { wrapper });
+  return Object.assign(signal, {
+    ___subscribe(scope: Scope) {
+      const childScope = scope[childAccessor] as Scope;
+      for (const closureSignal of closureSignals) {
+        closureSignal.___subscribe?.(childScope);
+      }
+    },
+    ___unsubscribe(scope: Scope) {
+      const childScope = scope[childAccessor] as Scope;
+      for (const closureSignal of closureSignals) {
+        closureSignal.___unsubscribe?.(childScope);
+      }
+    },
+  });
+}
+
+export function dynamicSubscribers(
+  subscribers: BoundIntersectionSignal[],
+  dirty = true
+) {
+  if (subscribers) {
+    for (const subscriber of subscribers) {
+      subscriber(dirty);
+    }
   }
-  return signal;
 }
 
 export function setTagVar(
   scope: Scope,
   childAccessor: Accessor,
-  tagVarSignal: Signal
+  tagVarSignal: ValueSignal
 ) {
-  scope[childAccessor][AccessorChars.TAG_VARIABLE] = bindSignal(
+  scope[childAccessor][AccessorChars.TAG_VARIABLE] = bindFunction(
     scope,
-    tagVarSignal
-  );
+    tagVarSignal as any
+  ) as BoundValueSignal;
 }
 
-export const tagVarSignal = wrapSignal(
-  (methodName) => (scope, extraArg) =>
-    scope[AccessorChars.TAG_VARIABLE]?.[methodName](null, extraArg)
-);
+export const tagVarSignal = (scope: Scope, value: unknown, dirty = true) =>
+  scope[AccessorChars.TAG_VARIABLE]?.(value, dirty);
 
-if (MARKO_DEBUG) {
-  setDebugInfo(tagVarSignal, "tagVar", {});
-}
-
-export function wrapSignalWithSubscription(
-  wrapper: (
-    methodName:
-      | "___mark"
-      | "___notify"
-      | "___apply"
-      | "___subscribe"
-      | "___unsubscribe"
-  ) => (scope: Scope, arg?: any) => void
-) {
-  const signal: Signal = {
-    ...wrapSignal(wrapper),
-    ___subscribe: wrapper("___subscribe"),
-    ___unsubscribe: wrapper("___unsubscribe"),
-  };
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "wrapSignalWithSubscription", { wrapper });
-  }
-  return signal;
-}
-
-export function inChild(
-  subscriber: Signal,
-  childScopeAccessor: Accessor
-): Signal {
-  const signal: Signal = wrapSignal(
-    (methodName) => (scope, extraArg) =>
-      subscriber[methodName](scope[childScopeAccessor], extraArg)
-  );
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "inChild", { subscriber, childScopeAccessor });
-  }
-  return signal;
-}
-
-export function inChildMany(
-  subscribers: Signal[],
-  childScopeAccessor: Accessor
-): Signal {
-  const signal: Signal = wrapSignalWithSubscription(
-    (methodName) => (scope, extraArg) => {
-      const childScope = scope[childScopeAccessor] as Scope;
-      for (const signal of subscribers) {
-        signal[methodName]?.(childScope, extraArg);
-      }
-    }
-  );
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "inChildMany", { subscribers, childScopeAccessor });
-  }
-  return signal;
-}
-
-export function inRenderBody(
-  renderBodyIndex: Accessor,
-  childScopeAccessor: Accessor
-): Signal {
-  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
-    const childScope = scope[childScopeAccessor] as Scope;
-    const signals =
-      (scope[renderBodyIndex] as Renderer)?.___closureSignals ?? [];
+export const renderBodyClosures = (
+  renderBody: RendererOrElementName | undefined,
+  childScope: Scope,
+  dirty: null | boolean = true
+) => {
+  const signals = renderBody?.___closureSignals;
+  if (signals) {
     for (const signal of signals) {
-      signal[methodName](childScope, extraArg);
+      signal(childScope, dirty);
     }
-  });
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "inRenderBody", {
-      renderBodyIndex,
-      childScopeAccessor,
-    });
   }
-  return signal;
-}
+};
 
-export function dynamicAttrsProxy(nodeAccessor: Accessor): Signal {
-  const signal: Signal = wrapSignal((methodName) => (scope, extraArg) => {
-    const renderer = scope[nodeAccessor + AccessorChars.COND_RENDERER] as
-      | Renderer
-      | undefined;
-    const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
-
-    renderer?.___attrs?.[methodName](childScope, extraArg);
-  });
-  if (MARKO_DEBUG) {
-    setDebugInfo(signal, "dynamicAttrsProxy", {
-      nodeAccessor,
-    });
+export const inMany = (
+  scopes: Scope[],
+  dirty: null | boolean,
+  signal: IntersectionSignal
+) => {
+  for (const scope of scopes) {
+    signal(scope, dirty);
   }
-  return signal;
-}
+};
 
 let tagId = 0;
 export function nextTagId() {
   return "c" + tagId++;
-}
-
-function setDebugInfo(
-  signal: Signal,
-  type: string,
-  data: Record<string, unknown>
-) {
-  const signalCopy = { ...signal };
-  for (const key in signal) {
-    delete (signal as any)[key];
-  }
-  Object.setPrototypeOf(
-    signal,
-    new Function(`return new (class ${type} {})()`)()
-  );
-  Object.assign(signal, data, signalCopy, data);
 }

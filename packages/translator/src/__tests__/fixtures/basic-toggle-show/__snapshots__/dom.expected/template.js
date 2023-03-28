@@ -1,13 +1,16 @@
-import { setSource as _setSource, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, conditional as _conditional, source as _source, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Hello!", ""));
-const _if = /* @__PURE__ */_conditional("#text/0", 1, (_scope, show = _scope["show"]) => show ? _ifBody : null);
+const _if = /* @__PURE__ */_conditional("#text/0");
 const _hydrate_show = _register("packages/translator/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show", _scope => _on(_scope["#button/1"], "click", function () {
   const show = _scope["show"];
   _queueSource(_scope, _show, !show);
 }));
-const _show = /* @__PURE__ */_source("show", [_if], (_scope, show) => _queueHydrate(_scope, _hydrate_show));
+const _show = /* @__PURE__ */_value("show", (_scope, show) => {
+  _queueHydrate(_scope, _hydrate_show);
+  _if(_scope, show ? _ifBody : null);
+});
 const _setup = _scope => {
-  _setSource(_scope, _show, true);
+  _show(_scope, true);
 };
 export const template = "<div><!><button>Toggle</button></div>";
 export const walks = /* next(1), replace, over(1), get, out(1) */"D%b l";

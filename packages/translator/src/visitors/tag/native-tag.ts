@@ -110,7 +110,7 @@ export default {
               createElFunction ??= t.identifier(varName + "_getter");
               reference.replaceWith(
                 callRuntime(
-                  "bind",
+                  "bindFunction",
                   getScopeExpression(extra.reserve!, referenceSectionId),
                   createElFunction
                 )

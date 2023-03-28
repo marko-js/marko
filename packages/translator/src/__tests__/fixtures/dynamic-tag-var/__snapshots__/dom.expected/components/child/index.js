@@ -1,7 +1,6 @@
-import { tagVarSignal as _tagVarSignal, setSource as _setSource, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { tagVarSignal as _tagVarSignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _setup = _scope => {
-  _setSource(_scope, _tagVarSignal, 1);
-  _notifySignal(_scope, _tagVarSignal);
+  _tagVarSignal(_scope, 1);
 };
 export const template = "";
 export const walks = "";

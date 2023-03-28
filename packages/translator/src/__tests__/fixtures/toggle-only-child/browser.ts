@@ -3,12 +3,10 @@ import {
   conditionalOnlyChild,
   createRenderer,
   createRenderFn,
-  source,
+  value,
   closure,
   inConditionalScope,
   Scope,
-  destructureSources,
-  setSource,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
@@ -21,21 +19,21 @@ const enum INDEX {
   value = "value",
 }
 
-type ComponentScope = Scope<{
-  [INDEX.div]: HTMLDivElement;
-  [INDEX.conditional]: HTMLDivElement;
-  [INDEX.value]: Input["value"];
-}>;
+// type ComponentScope = Scope<{
+//   [INDEX.div]: HTMLDivElement;
+//   [INDEX.conditional]: HTMLDivElement;
+//   [INDEX.value]: Input["value"];
+// }>;
 
 const enum INDEX_BRANCH0 {
   text = "#text/0",
   value = "value",
 }
 
-type Branch0Scope = Scope<{
-  _: ComponentScope;
-  [INDEX_BRANCH0.text]: Text;
-}>;
+// type Branch0Scope = Scope<{
+//   _: ComponentScope;
+//   [INDEX_BRANCH0.text]: Text;
+// }>;
 
 // <attrs/{ value }/>
 // <div>
@@ -47,36 +45,26 @@ type Branch0Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-const value$if = closure(
-  1,
-  INDEX.value,
-  [],
-  (scope: Branch0Scope, value: string) => {
-    data(scope[INDEX_BRANCH0.text], value);
+const value$if = closure(INDEX.value, (scope: Scope, value: string) => {
+  data(scope[INDEX_BRANCH0.text], value);
+});
+
+const _if = conditionalOnlyChild(INDEX.conditional);
+
+const _value = value(INDEX.value, (scope, value, dirty) => {
+  _if(scope, value ? _ifBody : undefined, dirty);
+  inConditionalScope(scope, dirty, value$if, INDEX.conditional);
+});
+
+export const attrs = (scope: Scope, input: Input, dirty?: boolean | null) => {
+  let value;
+  if (dirty) {
+    ({ value } = input);
   }
-);
+  _value(scope, value, dirty);
+};
 
-const _if = conditionalOnlyChild(
-  INDEX.conditional,
-  1,
-  (scope: ComponentScope) => (scope[INDEX.value] ? _ifBody : undefined)
-);
-
-export const value_subscribers = [
-  _if,
-  inConditionalScope(value$if, INDEX.conditional),
-];
-
-const _value = source(INDEX.value, value_subscribers);
-
-export const attrs = destructureSources(
-  [_value],
-  (scope: ComponentScope, { value }: Input) => {
-    setSource(scope, _value, value);
-  }
-);
-
-export default createRenderFn(template, walks, undefined, attrs);
+export default createRenderFn<Input>(template, walks, undefined, attrs);
 
 const _ifBody = createRenderer(
   "<span> </span>",

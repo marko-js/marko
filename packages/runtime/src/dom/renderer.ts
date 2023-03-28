@@ -1,5 +1,5 @@
+import type { ValueSignal, IntersectionSignal } from "./signals";
 import { Accessor, AccessorChars, Scope, ScopeContext } from "../common/types";
-import { setSource, Signal } from "./signals";
 import { createScope } from "./scope";
 import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
@@ -16,42 +16,42 @@ const enum NodeType {
   DocumentFragment = 11,
 }
 
-export type Renderer<S extends Scope = Scope> = {
+export type Renderer<I extends Input = Input> = {
   ___template: string;
   ___walks: string | undefined;
-  ___setup: SetupFn<S> | undefined;
-  ___closureSignals: Signal[];
+  ___setup: SetupFn | undefined;
+  ___closureSignals: IntersectionSignal[];
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
   ___fragment: DOMFragment | undefined;
   ___dynamicStartNodeOffset: Accessor | undefined;
   ___dynamicEndNodeOffset: Accessor | undefined;
-  ___attrs: Signal | undefined;
+  ___attrs: ValueSignal<I> | undefined;
   ___owner: Scope | undefined;
 };
 
-export type RendererOrElementName<S extends Scope = Scope> =
-  | Renderer<S>
-  | (string & Record<keyof Renderer<S>, undefined>);
+export type RendererOrElementName<I extends Input = Input> =
+  | Renderer<I>
+  | (string & Record<keyof Renderer, undefined>);
 
 type Input = Record<string, unknown>;
-type SetupFn<S extends Scope = Scope> = (scope: S) => void;
+type SetupFn = (scope: Scope) => void;
 type RenderResult<I extends Input> = {
   update: (input: I) => void;
   destroy: () => void;
 };
 
-export function createScopeWithRenderer<S extends Scope = Scope>(
-  renderer: RendererOrElementName<S>,
+export function createScopeWithRenderer(
+  renderer: RendererOrElementName<any>,
   context: ScopeContext,
   ownerScope?: Scope
 ) {
   setContext(context);
-  const newScope = createScope(context as ScopeContext) as S;
+  const newScope = createScope(context as ScopeContext);
   newScope._ = renderer.___owner || ownerScope;
   newScope.___renderer = renderer as Renderer;
-  initRenderer<S>(renderer, newScope);
+  initRenderer(renderer, newScope);
   if (renderer.___closureSignals) {
     for (const signal of renderer.___closureSignals) {
       signal.___subscribe?.(newScope);
@@ -85,13 +85,13 @@ export function initContextProvider(
   );
 
   for (const signal of renderer.___closureSignals) {
-    signal.___notify(newScope, true);
+    signal(newScope, true);
   }
 }
 
-export function initRenderer<S extends Scope = Scope>(
-  renderer: RendererOrElementName<S>,
-  scope: S
+export function initRenderer(
+  renderer: RendererOrElementName<any>,
+  scope: Scope
 ) {
   const dom =
     typeof renderer === "string"
@@ -128,41 +128,51 @@ export function dynamicTagAttrs(
   scope: Scope,
   nodeAccessor: Accessor,
   getAttrs: () => Record<string, unknown>,
-  renderBody: Renderer
+  renderBody: Renderer,
+  dirty: boolean | undefined
 ) {
   const renderer = scope[
     nodeAccessor + AccessorChars.COND_RENDERER
   ] as Renderer;
-  if (!renderer || renderer === renderBody) {
+
+  if (!renderer || renderer === renderBody || (!dirty && !renderer.___attrs)) {
     return;
   }
 
   const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE];
-  const attributes = getAttrs();
   if (typeof renderer === "string") {
     // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
     const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-    attrs(childScope, elementAccessor, attributes);
+    attrs(childScope, elementAccessor, getAttrs());
     setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
   } else if (renderer.___attrs) {
-    setSource(childScope, renderer.___attrs, {
-      ...attributes,
-      renderBody: renderBody ?? attributes.renderBody,
-    });
+    if (dirty) {
+      const attributes = getAttrs();
+      renderer.___attrs(
+        childScope,
+        {
+          ...attributes,
+          renderBody: renderBody ?? attributes.renderBody,
+        },
+        dirty
+      );
+    } else {
+      renderer.___attrs(childScope, null as any, dirty);
+    }
   }
 }
 
-export function createRenderFn<I extends Input, S extends Scope>(
+export function createRenderFn<I extends Input>(
   template: string,
   walks: string,
-  setup?: SetupFn<S>,
-  attrs?: Signal,
-  closureSignals?: Signal[],
+  setup?: SetupFn,
+  attrs?: ValueSignal<I>,
+  closureSignals?: ValueSignal[],
   templateId?: string,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
-  const renderer = createRenderer<S>(
+  const renderer = createRenderer<I>(
     template,
     walks,
     setup,
@@ -176,14 +186,14 @@ export function createRenderFn<I extends Input, S extends Scope>(
   return register(
     templateId!,
     Object.assign((input: I, element: Element): RenderResult<I> => {
-      const scope = createScope() as S;
+      const scope = createScope();
       queueHydrate(scope, () => {
         element.replaceChildren(dom);
       });
       const dom = initRenderer(renderer, scope);
 
       if (attrs) {
-        attrs.___apply(scope, input);
+        attrs(scope, input, true);
       }
 
       runHydrate();
@@ -191,8 +201,8 @@ export function createRenderFn<I extends Input, S extends Scope>(
       return {
         update: (newInput: I) => {
           if (attrs) {
-            attrs.___mark(scope);
-            attrs.___apply(scope, newInput);
+            attrs(scope, newInput, null);
+            attrs(scope, newInput, true);
             runHydrate();
           }
         },
@@ -204,17 +214,17 @@ export function createRenderFn<I extends Input, S extends Scope>(
   );
 }
 
-export function createRenderer<S extends Scope>(
+export function createRenderer<I extends Input>(
   template: string,
   walks?: string,
-  setup?: SetupFn<S>,
-  closureSignals: Signal[] = [],
+  setup?: SetupFn,
+  closureSignals: IntersectionSignal[] = [],
   hasUserEffects: 0 | 1 = 0,
   fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
   dynamicEndNodeOffset?: Accessor,
-  attrs?: Signal
-): Renderer<S> {
+  attrs?: ValueSignal<I>
+): Renderer<I> {
   return {
     ___template: template,
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),

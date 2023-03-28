@@ -1,9 +1,9 @@
-import { setSource as _setSource, data as _data, derivation as _derivation, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _z = /* @__PURE__ */_derivation("z", 1, [], (_scope, y = _scope["y"]) => y * 3, (_scope, z) => _data(_scope["#text/0"], z));
-const _y = /* @__PURE__ */_derivation("y", 1, [_z], (_scope, x = _scope["x"]) => x * 2);
-const _x = /* @__PURE__ */_source("x", [_y]);
+import { data as _data, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _z = /* @__PURE__ */_value("z", (_scope, z) => _data(_scope["#text/0"], z));
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _z(_scope, y * 3));
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _y(_scope, x * 2));
 const _setup = _scope => {
-  _setSource(_scope, _x, 1);
+  _x(_scope, 1);
 };
 export const template = "<div> </div>";
 export const walks = /* next(1), get, out(1) */"D l";

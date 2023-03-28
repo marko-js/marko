@@ -7,68 +7,41 @@ import {
 } from "./renderer";
 import { getEmptyScope, destroyScope } from "./scope";
 import { defaultFragment } from "./fragment";
-import {
-  derivation,
-  destructureSources,
-  inRenderBody,
-  Signal,
-  wrapSignal,
-} from "./signals";
+import { IntersectionSignal, renderBodyClosures, ValueSignal } from "./signals";
 
-export function conditional<S extends Scope>(
+export function conditional(
   nodeAccessor: Accessor,
-  defaultMark: number,
-  computeRenderer: (scope: S) => RendererOrElementName | undefined,
-  subscriber?: Signal,
-  action?: (scope: Scope, renderer?: RendererOrElementName) => void
-) {
-  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  dynamicTagAttrs?: IntersectionSignal
+): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
-  return derivation(
-    rendererAccessor,
-    defaultMark,
-    [inRenderBody(rendererAccessor, childScopeAccessor)].concat(
-      subscriber ?? []
-    ),
-    computeRenderer,
-    (scope: S, renderer?: RendererOrElementName) => {
-      setConditionalRenderer(scope, nodeAccessor, renderer);
-      action?.(scope, renderer);
+  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  return (scope, newRenderer, dirty = true) => {
+    let currentRenderer = scope[rendererAccessor] as
+      | RendererOrElementName
+      | undefined;
+    if ((dirty &&= currentRenderer !== newRenderer)) {
+      currentRenderer = scope[rendererAccessor] = newRenderer;
+      setConditionalRenderer(scope, nodeAccessor, newRenderer);
     }
-  );
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], dirty);
+    dynamicTagAttrs?.(scope, dirty);
+  };
 }
 
-export function conditionalOnlyChild<S extends Scope>(
-  nodeAccessor: Accessor,
-  defaultMark: number,
-  computeRenderer: (scope: S) => RendererOrElementName | undefined
-) {
-  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
-  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
-  return derivation(
-    rendererAccessor,
-    defaultMark,
-    [inRenderBody(rendererAccessor, childScopeAccessor)],
-    computeRenderer,
-    (scope: S, renderer?: RendererOrElementName) => {
-      setConditionalRendererOnlyChild(scope, nodeAccessor, renderer);
-    }
-  );
-}
-
+// TODO: remove this, use return from conditional instead
 export function inConditionalScope<S extends Scope>(
-  subscriber: Signal,
+  scope: Scope,
+  dirty: null | boolean | undefined,
+  signal: IntersectionSignal,
   nodeAccessor: Accessor /* branch?: Renderer */
-): Signal {
-  const scopeAccessor = (nodeAccessor as number) + AccessorChars.COND_SCOPE;
-  // const rendererAccessor = nodeAccessor as number + AccessorChars.COND_RENDERER;
-  return wrapSignal((methodName) => (scope, extraArg) => {
-    const conditionalScope = scope[scopeAccessor] as S;
-    // const conditionalRenderer = scope[rendererAccessor] as Renderer;
-    if (conditionalScope /* && conditionalRenderer === branch */) {
-      subscriber[methodName](conditionalScope, extraArg);
-    }
-  });
+) {
+  const scopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  // const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
+  const conditionalScope = scope[scopeAccessor] as S;
+  // const conditionalRenderer = scope[rendererAccessor] as Renderer;
+  if (conditionalScope /* && conditionalRenderer === branch */) {
+    signal(conditionalScope, dirty);
+  }
 }
 
 export function setConditionalRenderer<ChildScope extends Scope>(
@@ -100,6 +73,25 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     prevFragment.___getFirstNode(prevScope)
   );
   prevFragment.___remove(destroyScope(prevScope));
+}
+
+export function conditionalOnlyChild(
+  nodeAccessor: Accessor,
+  action?: ValueSignal<RendererOrElementName | undefined>
+): ValueSignal<RendererOrElementName | undefined> {
+  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
+  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  return (scope, newRenderer, dirty = true) => {
+    let currentRenderer = scope[rendererAccessor] as
+      | RendererOrElementName
+      | undefined;
+    if (dirty && currentRenderer !== newRenderer) {
+      currentRenderer = scope[rendererAccessor] = newRenderer;
+      setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer);
+    }
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], dirty);
+    action?.(scope, currentRenderer, dirty);
+  };
 }
 
 export function setConditionalRendererOnlyChild(
@@ -134,43 +126,51 @@ export const emptyMarkerArray = [/* @__PURE__ */ getEmptyScope()];
 const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
-export function loop<S extends Scope, C extends Scope, T>(
+export function loop(
   nodeAccessor: Accessor,
-  defaultMark: number,
   renderer: Renderer,
-  paramSubscribers: Signal[],
-  setParams: (scope: C, params: [T, number, T[]]) => void,
-  compute: (scope: S) => [T[], (x: T) => unknown]
+  params?: ValueSignal
 ) {
-  const params = destructureSources(paramSubscribers, setParams);
-  const valueAccessor = nodeAccessor + AccessorChars.LOOP_VALUE;
-  return derivation(
-    valueAccessor,
-    defaultMark,
-    [
-      ...renderer.___closureSignals.map((signal) =>
-        inLoopScope(signal, nodeAccessor)
-      ),
-      inLoopScope(params, nodeAccessor),
-    ],
-    compute,
-    (scope, [newValues, keyFn]) => {
-      setLoopOf(scope, nodeAccessor, newValues, renderer, keyFn, setParams);
+  const loopScopeAccessor = nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
+  const closureSignals = renderer.___closureSignals;
+  return <T>(
+    scope: Scope,
+    value: [T[], (item: T) => unknown],
+    dirty = true
+  ) => {
+    if (dirty) {
+      setLoopOf(
+        scope,
+        nodeAccessor,
+        value[0],
+        renderer,
+        value[1],
+        params,
+        closureSignals
+      );
+    } else {
+      params?.(scope, null, dirty);
+      for (const signal of closureSignals) {
+        for (const childScope of scope[loopScopeAccessor]) {
+          signal(childScope, dirty);
+        }
+      }
     }
-  );
+  };
 }
 
-export function inLoopScope<S extends Scope>(
-  subscriber: Signal,
+// TODO: remove this, use return from loop instead
+export function inLoopScope(
+  scope: Scope,
+  dirty: null | boolean,
+  signal: IntersectionSignal,
   loopNodeAccessor: Accessor
-): Signal {
+) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
-  return wrapSignal((methodName) => (scope, extraArg) => {
-    const loopScopes = (scope as S)[loopScopeAccessor] ?? [];
-    for (const loopScope of loopScopes) {
-      subscriber[methodName](loopScope, extraArg);
-    }
-  });
+  const loopScopes = scope[loopScopeAccessor] ?? [];
+  for (const scope of loopScopes) {
+    signal(scope, dirty);
+  }
 }
 
 export function setLoopOf<T, ChildScope extends Scope>(
@@ -179,7 +179,8 @@ export function setLoopOf<T, ChildScope extends Scope>(
   newValues: T[],
   renderer: Renderer<ChildScope>,
   keyFn?: (item: T) => unknown,
-  setParams?: (scope: ChildScope, params: [T, number, T[]]) => void
+  params?: ValueSignal,
+  closureSignals?: IntersectionSignal[]
 ) {
   let newMap: Map<unknown, ChildScope>;
   let newArray: Scope[];
@@ -208,6 +209,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
       const item = newValues[index];
       const key = keyFn ? keyFn(item) : index;
       let childScope = oldMap.get(key);
+      const isNew = !childScope;
       if (!childScope) {
         childScope = createScopeWithRenderer(
           renderer,
@@ -221,8 +223,13 @@ export function setLoopOf<T, ChildScope extends Scope>(
         // TODO: track if any childScope has changed index
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
-      if (setParams) {
-        setParams(childScope, [item, index, newValues]);
+      if (params) {
+        params(childScope, [item, index, newValues], true);
+      }
+      if (closureSignals) {
+        for (const signal of closureSignals) {
+          signal(childScope, isNew);
+        }
       }
       newMap.set(key, childScope);
       newArray.push(childScope);

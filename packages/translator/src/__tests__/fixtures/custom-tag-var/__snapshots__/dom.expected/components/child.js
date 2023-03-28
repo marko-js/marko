@@ -1,15 +1,19 @@
-import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data, tagVarSignal as _tagVarSignal, source as _source, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, tagVarSignal as _tagVarSignal, register as _register, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _hydrate_x = _register("packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x", _scope => _on(_scope["#button/0"], "click", function () {
   const x = _scope["x"];
   _queueSource(_scope, _x, x + 1);
 }));
-const _x = /* @__PURE__ */_source("x", [_tagVarSignal], (_scope, x) => {
-  _data(_scope["#text/1"], x);
-  _setSource(_scope, _tagVarSignal, x);
-  _queueHydrate(_scope, _hydrate_x);
+const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
+  let _tagVarSignal_value;
+  if (_dirty) {
+    _data(_scope["#text/1"], x);
+    _queueHydrate(_scope, _hydrate_x);
+    _tagVarSignal_value = x;
+  }
+  _tagVarSignal(_scope, _tagVarSignal_value, _dirty);
 });
 const _setup = _scope => {
-  _setSource(_scope, _x, 1);
+  _x(_scope, 1);
 };
 export const template = "<button class=inc> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";

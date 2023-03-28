@@ -73,10 +73,26 @@ describe("translator", () => {
             return `virtual:${virtualPath} ${code}`;
           },
         };
+        const errors: Error[] = [];
 
         for (const file of additionalMarkoFiles) {
-          const name = path.relative(fixtureDir, file).replace(".marko", ".js");
-          await snap(() => compileCode(file, finalConfig), name, fixtureDir);
+          try {
+            const name = path
+              .relative(fixtureDir, file)
+              .replace(".marko", ".js");
+            await snap(() => compileCode(file, finalConfig), name, fixtureDir);
+          } catch (e) {
+            errors.push(e as Error);
+          }
+        }
+
+        if (errors.length === 1) {
+          throw errors[0];
+        } else if (errors.length > 1) {
+          throw new AggregateError(
+            errors,
+            "\n" + errors.map((e) => e.toString()).join("\n")
+          );
         }
       };
 

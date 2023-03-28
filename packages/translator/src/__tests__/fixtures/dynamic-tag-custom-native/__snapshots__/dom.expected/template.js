@@ -1,15 +1,28 @@
 import child from "./components/child.marko";
-import { setSource as _setSource, on as _on, queueSource as _queueSource, dynamicAttrsProxy as _dynamicAttrsProxy, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, source as _source, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", 1, (_scope, tagName = _scope["tagName"]) => tagName, _dynamicAttrsProxy("#text/1"), _scope => _dynamicTagAttrs(_scope, "#text/1", () => ({
-  id: "dynamic"
-})));
+import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", (_scope, _dirty) => {
+  let _dynamicBody_attrs;
+  if (_dirty) {
+    _dynamicBody_attrs = () => ({
+      id: "dynamic"
+    });
+  }
+  _dynamicTagAttrs(_scope, "#text/1", _dynamicBody_attrs, null, _dirty);
+});
 const _hydrate_tagName = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName", _scope => _on(_scope["#button/0"], "click", function () {
   const tagName = _scope["tagName"];
   _queueSource(_scope, _tagName, tagName === child ? "div" : child);
 }));
-const _tagName = /* @__PURE__ */_source("tagName", [_dynamicTagName], (_scope, tagName) => _queueHydrate(_scope, _hydrate_tagName));
+const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {
+  let _dynamicTagName_value;
+  if (_dirty) {
+    _queueHydrate(_scope, _hydrate_tagName);
+    _dynamicTagName_value = tagName;
+  }
+  _dynamicTagName(_scope, _dynamicTagName_value, _dirty);
+});
 const _setup = _scope => {
-  _setSource(_scope, _tagName, child);
+  _tagName(_scope, child);
 };
 export const template = "<button></button><!>";
 export const walks = /* get, over(1), replace, over(1) */" b%b";

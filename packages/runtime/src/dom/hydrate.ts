@@ -1,16 +1,11 @@
 import { Scope, HydrateSymbols, AccessorChars } from "../common/types";
 import type { Renderer } from "./renderer";
-import {
-  bind as bindFunction,
-  bindRenderer,
-  bindSignal,
-  getOwnerScope,
-} from "./scope";
-import type { Signal } from "./signals";
+import { bindFunction, bindRenderer } from "./scope";
+import type { IntersectionSignal, ValueSignal } from "./signals";
 
 type HydrateFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredObjects = new Map<string, HydrateFn | Signal | Renderer>();
+const registeredObjects = new Map<string, HydrateFn | ValueSignal | Renderer>();
 const doc = document;
 
 export function register<T>(id: string, obj: T): T {
@@ -39,8 +34,6 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
       return obj;
     } else if ((obj as Renderer).___template) {
       return bindRenderer(scope, obj as Renderer);
-    } else if ((obj as Signal).___mark) {
-      return bindSignal(scope, obj as Signal);
     } else {
       return bindFunction(scope, obj as HydrateFn);
     }
@@ -149,17 +142,17 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
 }
 
 export function hydrateSubscription(
-  signal: Signal,
-  ownerLevel: number,
-  ownerValueAccessor: string | number
+  signal: IntersectionSignal,
+  ownerValueAccessor: string | number,
+  getOwnerScope = (scope: Scope) => scope._!
 ) {
   const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
   const ownerSubscribersAccessor =
     ownerValueAccessor + AccessorChars.SUBSCRIBERS;
 
   return (subscriberScope: Scope) => {
-    const ownerScope = getOwnerScope(subscriberScope, ownerLevel);
-    const boundSignal = bindSignal(subscriberScope, signal);
+    const ownerScope = getOwnerScope(subscriberScope);
+    const boundSignal = bindFunction(subscriberScope, signal);
     const ownerMark = ownerScope[ownerMarkAccessor];
     (ownerScope[ownerSubscribersAccessor] ??= new Set()).add(boundSignal);
 

@@ -3,13 +3,14 @@ import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import {
-  subscribe,
-  getComputeFn,
+  getSignalFn,
   getSignal,
   setSubscriberBuilder,
   writeHTMLHydrateStatements,
   getSerializedScopeProperties,
   getHydrateRegisterId,
+  addValue,
+  getClosures,
 } from "../../util/signals";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
@@ -20,16 +21,12 @@ import {
   getScopeIdIdentifier,
   getSectionId,
 } from "../../util/sections";
-import {
-  ReserveType,
-  reserveScope,
-  countReserves,
-  getNodeLiteral,
-} from "../../util/reserve";
+import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
 import { mergeReferenceGroups, ReferenceGroup } from "../../util/references";
+import { dirtyIdentifier, scopeIdentifier } from "../../visitors/program";
 
 export default {
   analyze: {
@@ -185,11 +182,15 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         const id = writer.getRenderer(sectionId);
 
         setSubscriberBuilder(tag, (subscriber) => {
-          return callRuntime(
-            "inConditionalScope",
-            subscriber,
-            getNodeLiteral(extra.reserve!)
-            /*writer.getRenderer(sectionId)*/
+          return t.expressionStatement(
+            callRuntime(
+              "inConditionalScope",
+              scopeIdentifier,
+              dirtyIdentifier,
+              subscriber,
+              getNodeLiteral(extra.reserve!)
+              /*writer.getRenderer(sectionId)*/
+            )
           );
         });
 
@@ -206,18 +207,22 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      const references = (extra.conditionalReferences as ReferenceGroup)
-        .references;
       const signal = getSignal(sectionId, extra.reserve);
       signal.build = () => {
         return callRuntime(
           "conditional",
           getNodeLiteral(extra.reserve!),
-          t.numericLiteral(countReserves(references) || 1),
-          getComputeFn(sectionId, expr, references)
+          getSignalFn(signal, [scopeIdentifier])
         );
       };
-      subscribe(references, signal);
+      signal.hasDownstreamIntersections = () =>
+        branches.some((b) => getClosures(b.sectionId).length > 0);
+      addValue(
+        sectionId,
+        extra.conditionalReferences as ReferenceGroup,
+        signal,
+        expr
+      );
     } else {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();

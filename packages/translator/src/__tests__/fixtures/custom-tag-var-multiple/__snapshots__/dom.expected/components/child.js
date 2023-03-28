@@ -1,10 +1,18 @@
-import { setSource as _setSource, tagVarSignal as _tagVarSignal, subscriber as _subscriber, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _expr_x_y = /* @__PURE__ */_subscriber([_tagVarSignal], 2, (_scope, x = _scope["x"], y = _scope["y"]) => _setSource(_scope, _tagVarSignal, x + y));
-const _y = /* @__PURE__ */_source("y", [_expr_x_y]);
-const _x = /* @__PURE__ */_source("x", [_expr_x_y]);
+import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _expr_x_y = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
+  let _tagVarSignal_value;
+  if (_dirty) {
+    const x = _scope["x"],
+      y = _scope["y"];
+    _tagVarSignal_value = x + y;
+  }
+  _tagVarSignal(_scope, _tagVarSignal_value, _dirty);
+});
+const _y = /* @__PURE__ */_value("y", (_scope, y, _dirty) => _expr_x_y(_scope, _dirty));
+const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => _expr_x_y(_scope, _dirty));
 const _setup = _scope => {
-  _setSource(_scope, _x, 1);
-  _setSource(_scope, _y, 2);
+  _x(_scope, 1);
+  _y(_scope, 2);
 };
 export const template = "<span>child</span>";
 export const walks = /* over(1) */"b";

@@ -3,10 +3,9 @@ import { assertNoVar, assertNoParams, Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
-import { addStatement, getSignal } from "../util/signals";
+import { addValue } from "../util/signals";
 import { createSectionState, getSectionId } from "../util/sections";
-import { callRuntime, importRuntime } from "../util/runtime";
-import { scopeIdentifier } from "../visitors/program";
+import { importRuntime } from "../util/runtime";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
   "returnId"
@@ -65,27 +64,16 @@ export default {
         )[0]
         .skip();
     } else {
-      const signal = getSignal(
-        sectionId,
-        defaultAttr.extra?.valueReferences?.references
-      );
-
-      const tagVarSignalIdentifier = importRuntime("tagVarSignal");
-      signal.subscribers.push(tagVarSignalIdentifier);
-
-      addStatement(
-        "apply",
+      addValue(
         sectionId,
         defaultAttr.extra?.valueReferences,
-        t.expressionStatement(
-          callRuntime(
-            "setSource",
-            scopeIdentifier,
-            t.identifier(tagVarSignalIdentifier.name),
-            defaultAttr.value
-          )
-        )
+        {
+          identifier: importRuntime("tagVarSignal"),
+          hasDownstreamIntersections: () => true,
+        },
+        defaultAttr.value
       );
+
       tag.remove();
     }
   },

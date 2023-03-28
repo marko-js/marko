@@ -2,9 +2,7 @@ import {
   attrs,
   createRenderFn,
   Scope,
-  destructureSources,
-  setSource,
-  source,
+  value,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, over } from "../../utils/walks";
 import type { steps } from "./test";
@@ -16,28 +14,26 @@ const enum INDEX {
   value = "value",
 }
 
-type ComponentScope = Scope<{
-  [INDEX.div]: HTMLDivElement;
-  [INDEX.value]: Input["value"];
-}>;
+// type ComponentScope = Scope<{
+//   [INDEX.div]: HTMLDivElement;
+//   [INDEX.value]: Input["value"];
+// }>;
 
 // <attrs/{ value }/>
 // <div ...value/>
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-export const value_subscribers = [];
-export const value_action = (scope: ComponentScope, value: Input["value"]) => {
+const _value = value(INDEX.value, (scope: Scope, value: Input["value"]) => {
   value && attrs(scope, INDEX.div, value);
+});
+
+export const _attrs = (scope: Scope, input: Input, dirty?: boolean | null) => {
+  let value: Input["value"];
+  if (dirty) {
+    ({ value } = input);
+  }
+  _value(scope, value!, dirty);
 };
 
-const _value = source(INDEX.value, value_subscribers, value_action);
-
-export const _attrs = destructureSources(
-  [_value],
-  (scope: ComponentScope, { value }: Input) => {
-    setSource(scope, _value, value);
-  }
-);
-
-export default createRenderFn(template, walks, undefined, _attrs);
+export default createRenderFn<Input>(template, walks, undefined, _attrs);

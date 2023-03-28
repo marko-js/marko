@@ -3,7 +3,8 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { initDerivation } from "../util/signals";
+import { addValue, initValue } from "../util/signals";
+import { getSectionId } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -41,45 +42,19 @@ export default {
       const identifiers = Object.values(
         tag.get("var").getBindingIdentifiers()
       ) as t.Identifier[];
+      const sectionId = getSectionId(tag);
+      const references = defaultAttr.extra?.valueReferences;
+
       // TODO: optimize for cases like `const/x=y`
       if (identifiers.length === 1) {
-        initDerivation(
-          identifiers[0].extra.reserve!,
-          defaultAttr.extra?.valueReferences?.references,
-          defaultAttr.value
-        );
+        for (const identifier of identifiers) {
+          const binding = identifier.extra.reserve!;
+          const derivation = initValue(binding);
+          addValue(sectionId, references, derivation, defaultAttr.value);
+        }
       } else {
         // TODO: handle destructuring
       }
-
-      // const sectionId = getSectionId(tag);
-      // addStatement(
-      //   "apply",
-      //   sectionId,
-      //   defaultAttr.extra?.valueReferences,
-      //   identifiers.length === 1
-      //     ? t.expressionStatement(
-      //         t.callExpression(
-      //           getReferenceGroup(sectionId, identifiers[0].extra.reserve)
-      //             .apply,
-      //           [scopeIdentifier, defaultAttr.value]
-      //         )
-      //       )
-      //     : [
-      //         t.variableDeclaration("const", [
-      //           t.variableDeclarator(node.var, defaultAttr.value),
-      //         ]),
-      //         ...identifiers.map((identifier) =>
-      //           t.expressionStatement(
-      //             t.callExpression(
-      //               getReferenceGroup(sectionId, identifier.extra.reserve)
-      //                 .apply,
-      //               [t.identifier(identifier.name)]
-      //             )
-      //           )
-      //         ),
-      //       ]
-      // );
     } else {
       translateVar(tag, defaultAttr.value);
     }

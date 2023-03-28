@@ -1,15 +1,19 @@
-import { setSource as _setSource, data as _data, subscriber as _subscriber, inConditionalScope as _inConditionalScope, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, source as _source, notifySignal as _notifySignal, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _expr_a_b$ifBody = /* @__PURE__ */_subscriber([], 2, (_scope, a = _scope._["a"], b = _scope._["b"]) => _data(_scope["#text/0"], a + b));
-const _b$ifBody = /* @__PURE__ */_closure(1, "b", [_expr_a_b$ifBody]);
-const _a$ifBody = /* @__PURE__ */_closure(1, "a", [_expr_a_b$ifBody]);
+import { data as _data, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _expr_a_b$ifBody = /* @__PURE__ */_intersection(2, _scope => {
+  const a = _scope._["a"],
+    b = _scope._["b"];
+  _data(_scope["#text/0"], a + b);
+});
+const _b$ifBody = /* @__PURE__ */_closure("b", (_scope, b, _dirty) => _expr_a_b$ifBody(_scope, _dirty));
+const _a$ifBody = /* @__PURE__ */_closure("a", (_scope, a, _dirty) => _expr_a_b$ifBody(_scope, _dirty));
 const _ifBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", null, [_a$ifBody, _b$ifBody]);
-const _if = /* @__PURE__ */_conditional("#text/0", 1, _scope => true ? _ifBody : null);
-const _b = /* @__PURE__ */_source("b", [/* @__PURE__ */_inConditionalScope(_b$ifBody, "#text/0")]);
-const _a = /* @__PURE__ */_source("a", [/* @__PURE__ */_inConditionalScope(_a$ifBody, "#text/0")]);
+const _if = /* @__PURE__ */_conditional("#text/0");
+const _b = /* @__PURE__ */_value("b", (_scope, b, _dirty) => _inConditionalScope(_scope, _dirty, _b$ifBody, "#text/0"));
+const _a = /* @__PURE__ */_value("a", (_scope, a, _dirty) => _inConditionalScope(_scope, _dirty, _a$ifBody, "#text/0"));
 const _setup = _scope => {
-  _setSource(_scope, _a, 0);
-  _setSource(_scope, _b, 0);
-  _notifySignal(_scope, _if);
+  _a(_scope, 0);
+  _b(_scope, 0);
+  _if(_scope, true ? _ifBody : null);
 };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";

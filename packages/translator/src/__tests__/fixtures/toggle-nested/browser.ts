@@ -8,9 +8,7 @@ import {
   dynamicFragment,
   closure,
   Scope,
-  destructureSources,
-  source,
-  setSource,
+  value,
 } from "@marko/runtime-fluurt/src/dom";
 import { next, over, get } from "../../utils/walks";
 import type { steps } from "./test";
@@ -62,10 +60,10 @@ const enum INDEX_IF2 {
   text = "#text/0",
 }
 
-type If2Scope = Scope<{
-  _: If0Scope;
-  [INDEX_IF2.text]: Text;
-}>;
+// type If2Scope = Scope<{
+//   _: If0Scope;
+//   [INDEX_IF2.text]: Text;
+// }>;
 
 // <attrs/{show, value1, value2}/>
 // <div>
@@ -78,68 +76,59 @@ type If2Scope = Scope<{
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-const value2$if2 = closure(
-  2,
-  INDEX.value2,
-  [],
-  (scope: If2Scope, value: string) => {
-    data(scope[INDEX_IF2.text], value);
+export const attrs = (scope: Scope, input: Input, dirty?: null | boolean) => {
+  let show, value1, value2;
+  if (dirty) {
+    ({ show, value1, value2 } = input);
   }
-);
+  _show(scope, show, dirty);
+  _value1(scope, value1, dirty);
+  _value2(scope, value2, dirty);
+};
 
-const value1$if1 = closure(
-  2,
-  INDEX.value1,
-  [],
-  (scope: If1Scope, value: string) => {
-    data(scope[INDEX_IF1.text], value);
-  }
-);
-
-const _if2 = conditional(INDEX_IF0.conditional1, 1, (scope: If0Scope) => {
-  return scope._[INDEX.value2] ? ifBody2 : undefined;
+const _show = value(INDEX.show, (scope, value, dirty) => {
+  _if0(scope, value ? ifBody0 : undefined, dirty);
+});
+const _value1 = value(INDEX.value1, (scope, _value, dirty) => {
+  inConditionalScope(scope, dirty!, value1$if0, INDEX.conditional);
+});
+const _value2 = value(INDEX.value2, (scope, _value, dirty) => {
+  inConditionalScope(scope, dirty!, value2$if0, INDEX.conditional);
 });
 
-const _if1 = conditional(INDEX_IF0.conditional0, 1, (scope: If0Scope) =>
-  scope._[INDEX.value1] ? ifBody1 : undefined
+const _if0 = conditionalOnlyChild(INDEX.conditional);
+
+const value1$if0 = closure(INDEX.value1, (scope, value, dirty) => {
+  _if1(scope, value ? ifBody1 : undefined, dirty);
+  inConditionalScope(scope, dirty!, value1$if1, INDEX_IF0.conditional0);
+});
+
+const value2$if0 = closure(INDEX.value2, (scope, value, dirty) => {
+  _if2(scope, value ? ifBody2 : undefined, dirty);
+  inConditionalScope(scope, dirty!, value2$if2, INDEX_IF0.conditional1);
+});
+
+const _if1 = conditional(INDEX_IF0.conditional0);
+
+const value1$if1 = closure(
+  INDEX.value1,
+  (scope, value: string) => {
+    data(scope[INDEX_IF1.text], value);
+  },
+  (scope) => {
+    return (scope as If1Scope)._._;
+  }
 );
 
-const value2$if0 = closure(1, INDEX.value2, [
-  _if2,
-  inConditionalScope(value2$if2, INDEX_IF0.conditional1),
-]);
+const _if2 = conditional(INDEX_IF0.conditional1);
 
-const value1$if0 = closure(1, INDEX.value1, [
-  _if1,
-  inConditionalScope(value1$if1, INDEX_IF0.conditional0),
-]);
-
-const _if0 = conditionalOnlyChild(
-  INDEX.conditional,
-  1,
-  (scope: ComponentScope) => (scope[INDEX.show] ? ifBody0 : undefined)
-);
-
-export const value2_subscribers = [
-  inConditionalScope(value2$if0, INDEX.conditional),
-];
-
-export const value1_subscribers = [
-  inConditionalScope(value1$if0, INDEX.conditional),
-];
-
-export const show_subscribers = [_if0];
-
-const _show = source(INDEX.show, show_subscribers);
-const _value1 = source(INDEX.value1, value1_subscribers);
-const _value2 = source(INDEX.value2, value2_subscribers);
-
-export const attrs = destructureSources(
-  [_show, _value1, _value2],
-  (scope: ComponentScope, { show, value1, value2 }: Input) => {
-    setSource(scope, _show, show);
-    setSource(scope, _value1, value1);
-    setSource(scope, _value2, value2);
+const value2$if2 = closure(
+  INDEX.value2,
+  (scope, value: string) => {
+    data(scope[INDEX_IF2.text], value);
+  },
+  (scope) => {
+    return (scope as If1Scope)._._;
   }
 );
 

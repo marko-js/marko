@@ -7,7 +7,7 @@ import {
 import { ReserveType } from "../util/reserve";
 import { getOrCreateSectionId } from "../util/sections";
 import { currentProgramPath } from "../visitors/program";
-import { initSource } from "../util/signals";
+import { initValue } from "../util/signals";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -47,7 +47,7 @@ export default {
     const bindings = currentProgramPath.node.extra?.attrs?.bindings;
     if (bindings) {
       for (const key in bindings) {
-        initSource(bindings[key].extra!.reserve!);
+        initValue(bindings[key].extra!.reserve!);
       }
     }
 

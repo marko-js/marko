@@ -1,25 +1,39 @@
-import { write as _write, dynamicAttrsProxy as _dynamicAttrsProxy, dynamicTagAttrs as _dynamicTagAttrs, createRenderer as _createRenderer, conditional as _conditional, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { write as _write, dynamicTagAttrs as _dynamicTagAttrs, createRenderer as _createRenderer, conditional as _conditional, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _xBody = /* @__PURE__ */_createRenderer("Body content", "");
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", 1, (_scope, x = _scope["x"]) => x || _xBody, _dynamicAttrsProxy("#text/0"), _scope => _dynamicTagAttrs(_scope, "#text/0", () => ({
-  header: {
-    class: "my-header",
-    renderBody() {
-      _write("Header content");
-    }
-  },
-  footer: {
-    class: "my-footer",
-    renderBody() {
-      _write("Footer content");
-    }
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => {
+  let _dynamicBody_attrs;
+  if (_dirty) {
+    _dynamicBody_attrs = () => ({
+      header: {
+        class: "my-header",
+        renderBody() {
+          _write("Header content");
+        }
+      },
+      footer: {
+        class: "my-footer",
+        renderBody() {
+          _write("Footer content");
+        }
+      }
+    });
   }
-}), _xBody));
-const _x = /* @__PURE__ */_source("x", [_dynamicTagName]);
-export const attrs = /* @__PURE__ */_destructureSources([_x], (_scope, {
-  x
-}) => {
-  _setSource(_scope, _x, x);
+  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, _xBody, _dirty);
 });
+const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
+  let _dynamicTagName_value;
+  if (_dirty) {
+    _dynamicTagName_value = x || _xBody;
+  }
+  _dynamicTagName(_scope, _dynamicTagName_value, _dirty);
+});
+export const attrs = (_scope, _destructure, _dirty = true) => {
+  let x;
+  if (_dirty) ({
+    x
+  } = _destructure);
+  _x(_scope, x, _dirty);
+};
 export { _x as _apply_x };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";

@@ -1,9 +1,7 @@
-import { data as _data, derivation as _derivation, source as _source, setSource as _setSource, destructureSources as _destructureSources, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _value = /* @__PURE__ */_derivation("value", 1, [], (_scope, input = _scope["input"]) => input.value, (_scope, value) => _data(_scope["#text/0"], value));
-const _input = /* @__PURE__ */_source("input", [_value]);
-export const attrs = /* @__PURE__ */_destructureSources([_input], (_scope, input) => {
-  _setSource(_scope, _input, input);
-});
+import { data as _data, value as _value2, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/0"], value));
+const _input = /* @__PURE__ */_value2("input", (_scope, input) => _value(_scope, input.value));
+export const attrs = _input;
 export { _input as _apply_input };
 export const template = "<!> ";
 export const walks = /* replace, over(2) */"%c";

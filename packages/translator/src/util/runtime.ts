@@ -22,17 +22,15 @@ const pureFunctions: Array<
 > = [
   "createRenderFn",
   "createRenderer",
-  "source",
-  "derivation",
-  "subscriber",
+  "value",
+  "intersection",
   "closure",
+  "dynamicClosure",
+  "contextClosure",
   "loop",
   "conditional",
-  "destructureSources",
-  "bind",
+  "bindFunction",
   "bindRenderer",
-  "inLoopScope",
-  "inConditionalScope",
 ];
 
 export function importRuntime(

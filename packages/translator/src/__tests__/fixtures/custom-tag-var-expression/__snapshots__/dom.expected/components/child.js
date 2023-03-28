@@ -1,7 +1,13 @@
-import { setSource as _setSource, tagVarSignal as _tagVarSignal, source as _source, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _x = /* @__PURE__ */_source("x", [_tagVarSignal], (_scope, x) => _setSource(_scope, _tagVarSignal, x + 3));
+import { tagVarSignal as _tagVarSignal, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
+  let _tagVarSignal_value;
+  if (_dirty) {
+    _tagVarSignal_value = x + 3;
+  }
+  _tagVarSignal(_scope, _tagVarSignal_value, _dirty);
+});
 const _setup = _scope => {
-  _setSource(_scope, _x, 1);
+  _x(_scope, 1);
 };
 export const template = "<span>child</span>";
 export const walks = /* over(1) */"b";

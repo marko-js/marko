@@ -1,4 +1,4 @@
-import { setSource as _setSource, on as _on, queueSource as _queueSource, data as _data, source as _source, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount", _scope => {
   const clickCount = _scope["clickCount"];
   _on(_scope["#button/0"], "click", clickCount <= 1 ? () => {
@@ -6,12 +6,12 @@ const _hydrate_clickCount = _register("packages/translator/src/__tests__/fixture
     _queueSource(_scope, _clickCount, clickCount + 1);
   } : false);
 });
-const _clickCount = /* @__PURE__ */_source("clickCount", [], (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {
   _data(_scope["#text/1"], clickCount);
   _queueHydrate(_scope, _hydrate_clickCount);
 });
 const _setup = _scope => {
-  _setSource(_scope, _clickCount, 0);
+  _clickCount(_scope, 0);
 };
 export const template = "<button> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";

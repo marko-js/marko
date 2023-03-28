@@ -18,16 +18,13 @@ import {
   getOrCreateSectionId,
   getScopeIdIdentifier,
 } from "../../util/sections";
-import trackReferences, {
-  mergeReferenceGroups,
-  ReferenceGroup,
-} from "../../util/references";
+import trackReferences, { mergeReferenceGroups } from "../../util/references";
 import {
   addStatement,
+  addValue,
   getClosures,
   getHydrateRegisterId,
-  getSignal,
-  initSource,
+  initValue,
   setForceHydrateScope,
   writeHTMLHydrateStatements,
 } from "../../util/signals";
@@ -219,7 +216,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (childProgram.extra.closures) {
     getClosures(tagSectionId).push(
       callRuntime(
-        "inChildMany",
+        "childClosures",
         importNamed(file, relativePath, "closures", `${tagName}_closures`),
         getNodeLiteral(binding)
       )
@@ -243,7 +240,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (node.var) {
-    const source = initSource(
+    const source = initValue(
       // TODO: support destructuring
       (node.var as t.Identifier).extra.reserve!
     );
@@ -271,43 +268,15 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     )
   );
   if (attrsObject && tagAttrsIdentifier) {
-    let attrsSubscriber: t.CallExpression | t.Identifier = callRuntime(
-      "inChild",
-      tagAttrsIdentifier,
-      getNodeLiteral(binding)
-    );
-
-    if (!tag.node.extra.attrsReferences.references) {
-      // hoist out the call to `inChild` if it's going into the setup function
-      const tagAttrsIdentifierInChild =
-        currentProgramPath.scope.generateUidIdentifier(
-          `${tagName}_attrs_inChild`
-        );
-      currentProgramPath.pushContainer(
-        "body",
-        t.variableDeclaration("const", [
-          t.variableDeclarator(tagAttrsIdentifierInChild, attrsSubscriber),
-        ])
-      );
-      attrsSubscriber = tagAttrsIdentifierInChild;
-    }
-
-    getSignal(
-      tagSectionId,
-      (tag.node.extra.attrsReferences as ReferenceGroup).references
-    ).subscribers.push(attrsSubscriber);
-    addStatement(
-      "apply",
+    addValue(
       tagSectionId,
       tag.node.extra.attrsReferences,
-      t.expressionStatement(
-        callRuntime(
-          "setSource",
-          callRead(binding, tagSectionId),
-          t.identifier(tagAttrsIdentifier.name),
-          attrsObject
-        )
-      )
+      {
+        identifier: tagAttrsIdentifier,
+        hasDownstreamIntersections: () => true,
+      },
+      attrsObject,
+      callRead(binding, tagSectionId)
     );
   }
   tag.remove();

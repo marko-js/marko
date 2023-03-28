@@ -3,11 +3,9 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { initSource, queueSource, addStatement } from "../util/signals";
-import { callRuntime } from "../util/runtime";
+import { initValue, queueSource, addValue } from "../util/signals";
 import { registerAssignmentReplacer } from "../util/replace-assignments";
 import { getSectionId } from "../util/sections";
-import { scopeIdentifier } from "../visitors/program";
 
 export default {
   translate(tag) {
@@ -37,21 +35,15 @@ export default {
     if (isOutputDOM()) {
       const sectionId = getSectionId(tag);
       const binding = tagVar.extra.reserve!;
-      const source = initSource(binding);
-      // TODO: add defined guard if bindings exist.
-      addStatement(
-        "apply",
-        sectionId,
-        defaultAttr.extra?.valueReferences,
-        t.expressionStatement(
-          callRuntime(
-            "setSource",
-            scopeIdentifier,
-            source.identifier,
-            defaultAttr.value
-          )
-        )
-      );
+      const source = initValue(binding);
+      const references = defaultAttr.extra?.valueReferences;
+      const isSetup = !references;
+
+      if (!isSetup) {
+        // TODO: add defined guard if bindings exist.
+      } else {
+        addValue(sectionId, references, source, defaultAttr.value);
+      }
 
       registerAssignmentReplacer(
         tag.scope.getBinding(binding.name)!,

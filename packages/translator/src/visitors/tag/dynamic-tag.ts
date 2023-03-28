@@ -12,14 +12,13 @@ import {
   getSectionId,
 } from "../../util/sections";
 import {
-  addStatement,
-  getComputeFn,
+  getSignalFn,
   getSerializedScopeProperties,
   getSignal,
-  subscribe,
+  addValue,
+  addIntersectionWithGuardedValue,
 } from "../../util/signals";
 import {
-  countReserves,
   getNodeLiteral,
   Reserve,
   reserveScope,
@@ -31,7 +30,11 @@ import {
   updateReferenceGroup,
 } from "../../util/references";
 import customTag from "./custom-tag";
-import { currentProgramPath, scopeIdentifier } from "../program";
+import {
+  currentProgramPath,
+  dirtyIdentifier,
+  scopeIdentifier,
+} from "../program";
 
 export default {
   analyze: {
@@ -126,58 +129,50 @@ export default {
         const renderBodyIdentifier =
           hasBody && writer.getRenderer(bodySectionId);
         const tagNameReserve = node.extra?.reserve as Reserve;
-        const references = (node.extra?.nameReferences as ReferenceGroup)
-          ?.references;
         const signal = getSignal(sectionId, tagNameReserve);
         signal.build = () => {
           return callRuntime(
             "conditional",
             getNodeLiteral(tagNameReserve),
-            t.numericLiteral(countReserves(references) || 1),
-            getComputeFn(
-              sectionId,
-              renderBodyIdentifier
-                ? t.logicalExpression("||", node.name, renderBodyIdentifier)
-                : node.name,
-              references
-            ),
-            signal.subscribers[0],
-            t.arrowFunctionExpression(
-              [scopeIdentifier],
-              t.blockStatement(signal.render)
-            )
+            getSignalFn(signal, [scopeIdentifier])
           );
         };
-
-        subscribe(references, signal);
+        addValue(
+          sectionId,
+          node.extra?.nameReferences as ReferenceGroup,
+          signal,
+          renderBodyIdentifier
+            ? t.logicalExpression("||", node.name, renderBodyIdentifier)
+            : node.name
+        );
 
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {
-          const attrsSignal = getSignal(
+          const name = currentProgramPath.node.extra.sectionNames![sectionId];
+          const signal = getSignal(
             sectionId,
-            node.extra?.attrsReferences.references
+            node.extra?.attrsReferences?.references
           );
-
-          attrsSignal.subscribers.push(
-            callRuntime("dynamicAttrsProxy", getNodeLiteral(tagNameReserve))
+          const attrsGetter = t.arrowFunctionExpression(
+            [],
+            attrsObject ?? t.objectExpression([])
           );
-
-          addStatement(
-            "apply",
-            sectionId,
-            node.extra?.attrsReferences,
-            t.expressionStatement(
-              callRuntime(
-                "dynamicTagAttrs",
-                scopeIdentifier,
-                getNodeLiteral(tagNameReserve),
-                t.arrowFunctionExpression(
-                  [],
-                  attrsObject ?? t.objectExpression([])
-                ),
-                renderBodyIdentifier
-              )
-            )
+          addIntersectionWithGuardedValue(
+            signal,
+            name + "_attrs",
+            attrsGetter,
+            (attrsIdentifier) => {
+              return t.expressionStatement(
+                callRuntime(
+                  "dynamicTagAttrs",
+                  scopeIdentifier,
+                  getNodeLiteral(tagNameReserve),
+                  attrsIdentifier,
+                  renderBodyIdentifier,
+                  dirtyIdentifier
+                )
+              );
+            }
           );
         }
 

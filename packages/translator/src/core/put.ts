@@ -84,7 +84,7 @@ export default {
         initContextProvider(
           tag.hub.file.metadata.marko.id,
           node.extra.reserve!,
-          defaultAttr.extra?.valueReferences?.references,
+          defaultAttr.extra?.valueReferences,
           defaultAttr.value,
           rendererId
         );

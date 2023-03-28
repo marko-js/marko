@@ -10,12 +10,12 @@ import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
   getSignal,
-  initSource,
   setSubscriberBuilder,
-  subscribe,
   writeHTMLHydrateStatements,
-  getComputeFn,
   getSerializedScopeProperties,
+  addValue,
+  getDestructureSignal,
+  getClosures,
 } from "../util/signals";
 import {
   getOrCreateSectionId,
@@ -23,18 +23,12 @@ import {
   getScopeIdIdentifier,
   getSectionId,
 } from "../util/sections";
-import {
-  ReserveType,
-  reserveScope,
-  countReserves,
-  Reserve,
-  getNodeLiteral,
-} from "../util/reserve";
+import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferenceGroups } from "../util/references";
-import { scopeIdentifier } from "../visitors/program";
+import { dirtyIdentifier, scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze: {
@@ -174,7 +168,15 @@ const translateDOM = {
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
-      return callRuntime("inLoopScope", signal, getNodeLiteral(reserve!));
+      return t.expressionStatement(
+        callRuntime(
+          "inLoopScope",
+          scopeIdentifier,
+          dirtyIdentifier,
+          signal,
+          getNodeLiteral(reserve!)
+        )
+      );
     });
 
     const [valParam] = params;
@@ -184,11 +186,10 @@ const translateDOM = {
       );
     }
 
-    const rendererId = writer.getRenderer(bodySectionId);
-
     tag.remove();
 
-    const references = mergeReferenceGroups(
+    const rendererId = writer.getRenderer(bodySectionId);
+    const attrsReferenceGroup = mergeReferenceGroups(
       sectionId,
       attributes
         .filter(
@@ -197,7 +198,7 @@ const translateDOM = {
             attr.extra?.valueReferences !== undefined
         )
         .map((attr) => [attr.extra, "valueReferences"])
-    )?.references;
+    );
 
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
@@ -227,46 +228,26 @@ const translateDOM = {
     }
 
     const signal = getSignal(sectionId, reserve);
+    const parameterBindings = paramsPath.reduce((bindingsLookup, path) => {
+      return Object.assign(bindingsLookup, path.getBindingIdentifiers());
+    }, {});
+    const destructureParams = getDestructureSignal(
+      parameterBindings,
+      t.arrayPattern(tagParams)
+    );
     signal.build = () => {
-      const bindings: Record<string, t.Identifier> = paramsPath.reduce(
-        (paramsLookup, param) => {
-          return Object.assign(paramsLookup, param.getBindingIdentifiers());
-        },
-        {}
-      );
       return callRuntime(
         "loop",
         getNodeLiteral(reserve!),
-        t.numericLiteral(countReserves(references) || 1),
         rendererId,
-        t.arrayExpression(
-          Object.values(bindings).map(
-            (binding) =>
-              getSignal(bodySectionId, binding.extra.reserve).identifier
-          )
-        ),
-        t.arrowFunctionExpression(
-          [scopeIdentifier, t.arrayPattern(tagParams)],
-          t.blockStatement(
-            Object.values(bindings).map((binding) =>
-              t.expressionStatement(
-                callRuntime(
-                  "setSource",
-                  scopeIdentifier,
-                  getSignal(bodySectionId, binding.extra.reserve).identifier,
-                  binding
-                )
-              )
-            )
-          )
-        ),
-        getComputeFn(sectionId, loopFunctionBody, references)
+        destructureParams
       );
     };
-    subscribe(references, signal);
-    for (const param of params) {
-      initSource(param.extra?.reserve as Reserve);
-    }
+
+    signal.hasDownstreamIntersections = () =>
+      getClosures(bodySectionId).length > 0;
+
+    addValue(sectionId, attrsReferenceGroup, signal, loopFunctionBody);
   },
 };
 

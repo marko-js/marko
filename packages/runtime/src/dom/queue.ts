@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import type { Signal } from "./signals";
+import type { ValueSignal } from "./signals";
 import { schedule } from "./schedule";
 
 const enum BatchOffsets {
@@ -20,9 +20,9 @@ type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 let currentBatch: unknown[] = [];
 let currentHydrate: unknown[] = [];
 
-export function queueSource<T>(scope: Scope, signal: Signal, value: T) {
+export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
-  signal.___mark(scope);
+  signal(scope, null, null);
   currentBatch.push(scope, signal, value);
   return value;
 }
@@ -38,9 +38,9 @@ export function run() {
   try {
     for (let i = 0; i < currentBatch.length; i += BatchOffsets.TOTAL) {
       const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
-      const signal = currentBatch[i + BatchOffsets.SIGNAL] as Signal;
+      const signal = currentBatch[i + BatchOffsets.SIGNAL] as ValueSignal;
       const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
-      signal.___apply(scope, value);
+      signal(scope, value, true);
     }
   } finally {
     currentBatch = [];

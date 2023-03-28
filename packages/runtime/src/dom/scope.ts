@@ -1,7 +1,6 @@
 import { queueHydrate } from "./queue";
 import type { Scope, ScopeContext } from "../common/types";
 import type { Renderer } from "./renderer";
-import { Signal, wrapSignal } from "./signals";
 
 export function createScope(context?: ScopeContext): Scope {
   const scope = {} as Scope;
@@ -28,29 +27,16 @@ export function write<S extends Scope, K extends keyof S>(
   return 0;
 }
 
-function binder<T>(bind: (scope: Scope, value: T) => T) {
-  return (scope: Scope, value: T) => {
+function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
+  return (scope: Scope, value: T): U => {
     scope.___bound ??= new Map();
-    let bound = scope.___bound.get(value) as T;
+    let bound = scope.___bound.get(value) as U;
     if (!bound) {
       bound = bind(scope, value);
       scope.___bound.set(value, bound);
     }
     return bound;
   };
-}
-
-export function bind<S extends Scope>(
-  boundScope: S,
-  fn: (this: unknown, scope: S, ...args: unknown[]) => unknown
-) {
-  return fn.length
-    ? function bound(this: unknown, ...args: unknown[]) {
-        return fn.call(this, boundScope, ...args);
-      }
-    : function bound(this: unknown) {
-        return fn.call(this, boundScope);
-      };
 }
 
 export const bindRenderer = binder(
@@ -60,12 +46,20 @@ export const bindRenderer = binder(
   })
 );
 
-export const bindSignal = binder(
-  (boundScope, signal: Signal): Signal =>
-    wrapSignal(
-      (methodName) => (_scope, extraArg) =>
-        signal[methodName](boundScope, extraArg)
-    )
+type BindableFunction = (
+  this: unknown,
+  scope: Scope,
+  ...args: any[]
+) => unknown;
+export const bindFunction = binder(
+  <T extends BindableFunction>(boundScope: Scope, fn: T) =>
+    fn.length
+      ? function bound(this: unknown, ...args: any[]) {
+          return fn.call(this, boundScope, ...args);
+        }
+      : function bound(this: unknown) {
+          return fn.call(this, boundScope);
+        }
 );
 
 export function destroyScope(scope: Scope) {
@@ -96,10 +90,4 @@ export function onDestroy(scope: Scope, localIndex: number | string) {
     (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(scope);
   }
   (scope.___cleanup = scope.___cleanup || new Set()).add(localIndex);
-}
-
-export function getOwnerScope(scope: Scope, level: number) {
-  let ownerScope = scope._!;
-  for (let i = 1; i++ < level; ) ownerScope = ownerScope._!;
-  return ownerScope;
 }
