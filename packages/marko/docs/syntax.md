@@ -419,7 +419,7 @@ import componentB from "<component-b>";
 > </>
 > ```
 
-> **Note:** You cannot reference a Marko custom tag using a name string:
+> **Note:** You **cannot** reference a Marko custom tag or macro using a name string:
 >
 > _Marko Source:_
 >
