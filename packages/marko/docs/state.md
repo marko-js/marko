@@ -50,7 +50,7 @@ When a property on `state` is set, the component will be scheduled for an update
 
 > **ProTip:** If you need to know when the update has been applied, you can use `this.once('update', fn)` within a component method.
 
-> **Note:** The state object only watches its properties one level deep. This means updates to nested properites on the state (e.g. `this.state.object.something = newValue`) will not be detected.
+> **Note:** The state object only watches its properties one level deep. This means updates to nested properties on the state (e.g. `this.state.object.something = newValue`) will not be detected.
 >
 > Using [immutable](https://wecodetheweb.com/2016/02/12/immutable-javascript-using-es6-and-beyond/) data structures is recommended, but if you want to mutate a state property (perhaps push a new item into an array) you can let Marko know it changed using `setStateDirty`.
 >

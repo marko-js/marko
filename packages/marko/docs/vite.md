@@ -48,7 +48,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.get("/", async (req, res) => {
   const template = (await loadTemplate()).default;
-  // When the template is loaded, it will automaticall have `vite` assets inlined.
+  // When the template is loaded, it will automatically have `vite` assets inlined.
   template.render({ hello: "world" }, res);
 );
 
