@@ -134,7 +134,7 @@ Similar to [`marko-tag.json`](#single-component-definition), this file is discov
   "tags-dir": "./ui-modules", // What directory to crawl to autodiscover components. Default:`./components/`
   "taglib-imports": ["./some-folder/marko.json", "./other-folder/marko.json"], // Creates a _combined_ tag library by referencing others.
 
-  "tags": { // Definitions for individial tags.
+  "tags": { // Definitions for individual tags.
     "my-tag": {
       // Same options as “marko-tag.json”.
     }
