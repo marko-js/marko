@@ -31,6 +31,8 @@ type TestConfig = {
   manual_csr?: boolean;
   manual_ssr?: boolean;
   manual_hydrate?: boolean;
+  error_compiler?: boolean;
+  error_runtime?: boolean;
 };
 
 type Result = {
@@ -64,7 +66,11 @@ describe("translator", () => {
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
-      const snapMD = (fn: () => unknown) => snap(fn, `.md`, fixtureDir);
+      const snapMD = (fn: () => unknown) =>
+        (config.error_runtime ? snap.catch : snap)(fn, {
+          ext: `.md`,
+          dir: fixtureDir,
+        });
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"));
         const finalConfig: compiler.Config = {
@@ -74,13 +80,17 @@ describe("translator", () => {
           },
         };
         const errors: Error[] = [];
+        const targetSnap = config.error_compiler ? snap.catch : snap;
 
         for (const file of additionalMarkoFiles) {
           try {
             const name = path
               .relative(fixtureDir, file)
               .replace(".marko", ".js");
-            await snap(() => compileCode(file, finalConfig), name, fixtureDir);
+            await targetSnap(() => compileCode(file, finalConfig), {
+              file: name,
+              dir: fixtureDir,
+            });
           } catch (e) {
             errors.push(e as Error);
           }
@@ -118,10 +128,12 @@ describe("translator", () => {
 
       const skipSSR =
         !(manualSSR ? fs.existsSync(serverFile) : hasTemplate) ||
-        config.skip_ssr;
+        config.skip_ssr ||
+        config.error_compiler;
       const skipCSR =
         !(manualCSR ? fs.existsSync(browserFile) : hasTemplate) ||
-        config.skip_csr;
+        config.skip_csr ||
+        config.error_compiler;
       const skipHydrate =
         !(manualHydrate ? fs.existsSync(hydrateFile) : hasTemplate) ||
         config.skip_hydrate ||
