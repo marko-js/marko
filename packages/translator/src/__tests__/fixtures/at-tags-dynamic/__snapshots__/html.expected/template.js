@@ -7,9 +7,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   const _item = [];
   for (const color of ["red", "blue", "green"]) {
     const _scope3_id = _nextScopeId();
-    let _ifScopeId;
-    const _scope4_ = {},
-      _ifRenderer = () => {};
+    let _ifScopeId, _scope4_, _ifRenderer;
     if (color === "red") {
       const _scope4_id = _nextScopeId();
       _item.push({
@@ -20,10 +18,10 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
           _write("foo");
         }
       });
-      _writeHydrateScope(_scope4_id, {
+      _writeHydrateScope(_scope4_id, _scope4_ = {
         [_SYMBOL_OWNER]: _scope3_id
-      }, _scope4_);
-      _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
+      });
+      _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
       _ifScopeId = _scope4_id;
     } else {
       const _scope5_id = _nextScopeId();
@@ -35,10 +33,10 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
           _write("bar");
         }
       });
-      _writeHydrateScope(_scope5_id, {
+      _writeHydrateScope(_scope5_id, _scope4_ = {
         [_SYMBOL_OWNER]: _scope3_id
-      }, undefined);
-      _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
+      });
+      _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
       _ifScopeId = _scope5_id;
     }
     _write(`${_markHydrateControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
@@ -53,8 +51,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     let i = _i++;
     const _scope6_id = _nextScopeId();
     const _row = [];
-    let _forScopeIds = [];
-    const _scope8_ = [];
+    const _forScopeIds = [],
+      _scope8_ = [];
     for (const row of col) {
       const _scope8_id = _nextScopeId();
       _row.push({

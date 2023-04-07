@@ -2,8 +2,8 @@ import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, SYMBOL_OW
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const arrA = [1, 2, 3];
-  let _forScopeIds = [];
-  const _scope1_ = [];
+  const _forScopeIds = [],
+    _scope1_ = [];
   let _i = 0;
   for (const val of arrA) {
     let i = _i++;
@@ -17,8 +17,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   }
   const arrB = [1, 2, 3];
   _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
-  let _forScopeIds2 = [];
-  const _scope2_ = [];
+  const _forScopeIds2 = [],
+    _scope2_ = [];
   let _i2 = 0;
   for (const val of arrB) {
     let i = _i2++;

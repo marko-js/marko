@@ -793,14 +793,25 @@ export function writeHTMLHydrateStatements(
   }
 
   if (serializedProperties.length || forceHydrateScope(sectionId)) {
+    const tagName = (
+      (path.parentPath?.node as t.MarkoTag)?.name as t.StringLiteral
+    )?.value;
+    const isCondScope =
+      tagName === "if" || tagName === "else-if" || tagName === "else";
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateScope",
           scopeIdIdentifier,
-          t.objectExpression(serializedProperties),
-          scopeIdentifier
+          isCondScope
+            ? t.assignmentExpression(
+                "=",
+                scopeIdentifier,
+                t.objectExpression(serializedProperties)
+              )
+            : t.objectExpression(serializedProperties),
+          isCondScope ? null : scopeIdentifier
         )
       )
     );

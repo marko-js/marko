@@ -5,18 +5,16 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _write("<div>");
   _pushContext("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko", 123);
   const _scope1_id = _nextScopeId();
-  let _ifScopeId;
-  const _scope2_ = {},
-    _ifRenderer = () => {};
+  let _ifScopeId, _scope2_, _ifRenderer;
   if (show) {
     const _scope2_id = _nextScopeId();
     _write("<span>");
     const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko");
     _write(`${_escapeXML(x)}${_markHydrateNode(_scope2_id, "#text/0")}</span>`);
-    _writeHydrateScope(_scope2_id, {
+    _writeHydrateScope(_scope2_id, _scope2_ = {
       [_SYMBOL_OWNER]: _scope1_id
-    }, _scope2_);
-    _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer");
+    });
+    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
   _write(`${_markHydrateControlSingleNodeEnd(_scope1_id, "#text/0", _ifScopeId)}`);

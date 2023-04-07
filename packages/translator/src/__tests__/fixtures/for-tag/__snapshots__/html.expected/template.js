@@ -48,8 +48,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     _maybeFlush();
   }
   _write(`${_markHydrateControlEnd(_scope0_id, "#text/3")}`);
-  let _forScopeIds4 = [];
-  const _scope5_ = [];
+  const _forScopeIds4 = [],
+    _scope5_ = [];
   let _i4 = 0;
   const list = arr;
   for (const val of list) {

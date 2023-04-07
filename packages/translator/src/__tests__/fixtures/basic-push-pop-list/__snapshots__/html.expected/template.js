@@ -4,8 +4,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   const id = 0;
   const items = [];
   _write("<div>");
-  let _forScopeIds = [];
-  const _scope1_ = [];
+  const _forScopeIds = [],
+    _scope1_ = [];
   for (const item of items) {
     const _scope1_id = _nextScopeId();
     _write(`${_escapeXML(item)}${_markHydrateNode(_scope1_id, "#text/0")}`);

@@ -4,16 +4,14 @@ const _renderer = _register(({
 }, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
-  let _ifScopeId;
-  const _scope1_ = {},
-    _ifRenderer = () => {};
+  let _ifScopeId, _scope1_, _ifRenderer;
   if (value) {
     const _scope1_id = _nextScopeId();
     _write(`<span>${_escapeXML(value)}${_markHydrateNode(_scope1_id, "#text/0")}</span>`);
-    _writeHydrateScope(_scope1_id, {
+    _writeHydrateScope(_scope1_id, _scope1_ = {
       [_SYMBOL_OWNER]: _scope0_id
-    }, _scope1_);
-    _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer");
+    });
+    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<span></span><span></span></div>`);

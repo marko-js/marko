@@ -3,8 +3,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const arrA = [1, 2, 3];
   _write("<div>");
-  let _forScopeIds = [];
-  const _scope1_ = [];
+  const _forScopeIds = [],
+    _scope1_ = [];
   for (const val of arrA) {
     const _scope1_id = _nextScopeId();
     _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope1_id, "#text/0")}</div>`);
@@ -15,8 +15,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     _forScopeIds.push(_scope1_id);
   }
   _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#div/0", _forScopeIds)}</div>${_markHydrateNode(_scope0_id, "#div/0")}<div>`);
-  let _forScopeIds2 = [];
-  const _scope2_ = [];
+  const _forScopeIds2 = [],
+    _scope2_ = [];
   for (const val of arrA) {
     const _scope2_id = _nextScopeId();
     _write(`<div>${_escapeXML(val)}${_markHydrateNode(_scope2_id, "#text/0")}</div>`);

@@ -16,6 +16,7 @@ export function conditional(
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   return (scope, newRenderer, dirty = true) => {
+    newRenderer ||= undefined;
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;

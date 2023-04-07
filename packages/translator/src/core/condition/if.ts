@@ -234,13 +234,19 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       let statement: t.Statement | undefined;
       for (let i = branches.length; i--; ) {
         const { tag, sectionId } = branches[i];
+        const branchScopeIdentifier = getScopeIdentifier(sectionId, true);
+        branchScopeIdentifier.name = ifScopeIdentifier.name;
 
         if (isStateful) {
           tag.node.body.body.push(
             t.expressionStatement(
               callRuntime(
                 "register",
-                ifRendererIdentifier,
+                t.assignmentExpression(
+                  "=",
+                  ifRendererIdentifier,
+                  t.arrowFunctionExpression([], t.blockStatement([]))
+                ),
                 t.stringLiteral(getHydrateRegisterId(sectionId, "renderer"))
               )
             ) as any
@@ -274,22 +280,18 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       if (!isStateful) {
         nextTag.insertBefore(statement!);
       } else {
-        nextTag.insertBefore(
-          [
-            singleNodeOptimization &&
-              t.variableDeclaration("let", [
+        nextTag.insertBefore([
+          t.variableDeclaration(
+            "let",
+            [
+              singleNodeOptimization &&
                 t.variableDeclarator(ifScopeIdIdentifier),
-              ]),
-            t.variableDeclaration("const", [
-              t.variableDeclarator(ifScopeIdentifier, t.objectExpression([])),
-              t.variableDeclarator(
-                ifRendererIdentifier,
-                t.arrowFunctionExpression([], t.blockStatement([]))
-              ),
-            ]),
-            statement!,
-          ].filter(Boolean) as t.Statement[]
-        );
+              t.variableDeclarator(ifScopeIdentifier),
+              t.variableDeclarator(ifRendererIdentifier),
+            ].filter(Boolean) as t.VariableDeclarator[]
+          ),
+          statement!,
+        ]);
         if (singleNodeOptimization) {
           write`${callRuntime(
             "markHydrateControlSingleNodeEnd",

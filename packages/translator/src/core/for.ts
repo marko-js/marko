@@ -420,17 +420,20 @@ const translateHTML = {
       const forScopesIdentifier = getScopeIdentifier(bodySectionId);
 
       replacement.unshift(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(forScopesIdentifier, t.arrayExpression([])),
-        ])
+        t.variableDeclaration(
+          "const",
+          [
+            singleNodeOptimization &&
+              t.variableDeclarator(
+                forScopeIdsIdentifier,
+                t.arrayExpression([])
+              ),
+            t.variableDeclarator(forScopesIdentifier, t.arrayExpression([])),
+          ].filter(Boolean) as t.VariableDeclarator[]
+        )
       );
 
       if (singleNodeOptimization) {
-        replacement.unshift(
-          t.variableDeclaration("let", [
-            t.variableDeclarator(forScopeIdsIdentifier, t.arrayExpression([])),
-          ])
-        );
         block.body.push(
           t.expressionStatement(
             t.callExpression(

@@ -14,9 +14,7 @@ const _renderer = _register(({
     const id = `${path}-${i}`;
     const open = true;
     _write(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escapeXML(comment.text)}${_markHydrateNode(_scope1_id, "#text/1")}</span><button>${_escapeXML(open ? "[-]" : "[+]")}${_markHydrateNode(_scope1_id, "#text/3")}</button>${_markHydrateNode(_scope1_id, "#button/2")}`);
-    let _ifScopeId;
-    const _scope2_ = {},
-      _ifRenderer = () => {};
+    let _ifScopeId, _scope2_, _ifRenderer;
     if (comment.comments) {
       const _scope2_id = _nextScopeId();
       _comments({
@@ -26,12 +24,12 @@ const _renderer = _register(({
           const _scope3_id = _nextScopeId();
         }
       });
-      _writeHydrateScope(_scope2_id, {
+      _writeHydrateScope(_scope2_id, _scope2_ = {
         "comment": comment,
         "id": id,
         [_SYMBOL_OWNER]: _scope1_id
-      }, _scope2_);
-      _register(_ifRenderer, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
+      });
+      _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _write(`${_markHydrateScopeStart(_scope1_id)}${_markHydrateControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_markHydrateNode(_scope1_id, "#li/0")}`);
