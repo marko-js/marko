@@ -3,7 +3,7 @@ import { Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { addValue, initValue } from "../util/signals";
+import { addValue, getTagVarSignal } from "../util/signals";
 import { getSectionId } from "../util/sections";
 
 export default {
@@ -39,22 +39,12 @@ export default {
     }
 
     if (isOutputDOM()) {
-      const identifiers = Object.values(
-        tag.get("var").getBindingIdentifiers()
-      ) as t.Identifier[];
       const sectionId = getSectionId(tag);
       const references = defaultAttr.extra?.valueReferences;
+      const derivation = getTagVarSignal(tag.get("var"))!;
 
       // TODO: optimize for cases like `const/x=y`
-      if (identifiers.length === 1) {
-        for (const identifier of identifiers) {
-          const binding = identifier.extra.reserve!;
-          const derivation = initValue(binding);
-          addValue(sectionId, references, derivation, defaultAttr.value);
-        }
-      } else {
-        // TODO: handle destructuring
-      }
+      addValue(sectionId, references, derivation, defaultAttr.value);
     } else {
       translateVar(tag, defaultAttr.value);
     }

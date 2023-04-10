@@ -378,11 +378,37 @@ export function getSignalFn(
   return t.arrowFunctionExpression(params, t.blockStatement(statements));
 }
 
+export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
+  const identifiers = Object.values(
+    varPath.getBindingIdentifiers()
+  ) as t.Identifier[];
+
+  if (identifiers.length === 1) {
+    return initValue(identifiers[0].extra.reserve!);
+  } else if (identifiers.length > 1) {
+    return getDestructureSignal(identifiers, varPath.node!)!;
+  }
+}
+
+export function getTagParamsSignal(
+  paramsPaths: NodePath<t.Identifier | t.RestElement | t.Pattern>[],
+  pattern: t.ArrayPattern = t.arrayPattern(
+    paramsPaths.map((path) => path.node!)
+  )
+) {
+  const parameterBindings = paramsPaths.reduce((bindingsLookup, path) => {
+    return Object.assign(bindingsLookup, path.getBindingIdentifiers());
+  }, {});
+  return getDestructureSignal(parameterBindings, pattern);
+}
+
 export function getDestructureSignal(
-  bindingsByName: Record<string, t.Identifier>,
+  bindingsByName: Record<string, t.Identifier> | t.Identifier[],
   destructurePattern: t.LVal
 ) {
-  const bindings = Object.values(bindingsByName);
+  const bindings = Array.isArray(bindingsByName)
+    ? bindingsByName
+    : Object.values(bindingsByName);
   if (bindings.length) {
     const valueIdentifier =
       currentProgramPath.scope.generateUidIdentifier("destructure");
@@ -395,31 +421,67 @@ export function getDestructureSignal(
       bindings.map((binding) => t.variableDeclarator(binding))
     );
 
-    return t.arrowFunctionExpression(
-      [
-        scopeIdentifier,
-        valueIdentifier,
-        t.assignmentPattern(dirtyIdentifier, t.booleanLiteral(true)),
-      ],
-      t.blockStatement([
-        declarations,
-        t.ifStatement(
-          dirtyIdentifier,
-          t.expressionStatement(
-            t.assignmentExpression("=", destructurePattern, valueIdentifier)
-          )
-        ),
-        ...bindingSignals.map((signal, i) =>
-          t.expressionStatement(
-            t.callExpression(signal.identifier, [
-              scopeIdentifier,
-              bindings[i],
+    return {
+      get identifier() {
+        const name =
+          currentProgramPath.scope.generateUidIdentifier("destructure");
+        currentProgramPath.pushContainer("body", [
+          t.variableDeclaration("const", [
+            t.variableDeclarator(name, this.build(true)),
+          ]),
+        ]);
+        return name;
+      },
+      build(canCallOnlyWhenDirty?: boolean) {
+        if (canCallOnlyWhenDirty && !this.hasDownstreamIntersections()) {
+          return t.arrowFunctionExpression(
+            [scopeIdentifier, destructurePattern as t.Pattern],
+            t.blockStatement(
+              bindingSignals.map((signal, i) =>
+                t.expressionStatement(
+                  t.callExpression(signal.identifier, [
+                    scopeIdentifier,
+                    bindings[i],
+                  ])
+                )
+              )
+            )
+          );
+        }
+        return t.arrowFunctionExpression(
+          [
+            scopeIdentifier,
+            valueIdentifier,
+            t.assignmentPattern(dirtyIdentifier, t.booleanLiteral(true)),
+          ],
+          t.blockStatement([
+            declarations,
+            t.ifStatement(
               dirtyIdentifier,
-            ])
-          )
-        ),
-      ])
-    );
+              t.expressionStatement(
+                t.assignmentExpression("=", destructurePattern, valueIdentifier)
+              )
+            ),
+            ...bindingSignals.map((signal, i) =>
+              t.expressionStatement(
+                t.callExpression(signal.identifier, [
+                  scopeIdentifier,
+                  bindings[i],
+                  dirtyIdentifier,
+                ])
+              )
+            ),
+          ])
+        );
+      },
+      hasDownstreamIntersections() {
+        return bindings.some((binding) => {
+          const reserve = binding.extra?.reserve as Reserve;
+          const signal = getSignal(reserve.sectionId, reserve);
+          return signal.hasDownstreamIntersections();
+        });
+      },
+    };
   }
 }
 

@@ -87,7 +87,7 @@ export default {
                       sectionId,
                       (attrs.var as t.Identifier).extra!.reserve!
                     ).identifier
-                  : getDestructureSignal(attrs.bindings, attrs.var)
+                  : getDestructureSignal(attrs.bindings, attrs.var)?.build()
               ),
             ])
           ),

@@ -1,0 +1,13 @@
+<div>
+  <let/id=0/>
+  <let/items=[{ name: "Marko", description:"HTML Reimagined" }]/>
+
+  <for|{ name, description }| of=items>
+    <div>${name}: ${description}</div>
+  </for>
+
+  <button id="add" onClick() { 
+    items = [...items, { name: "JavaScript", description:"Java, but scriptier" }];
+  }>Add</button>
+  <button id="remove" onClick() { items = items.slice(0, -1); }>Remove</button>
+</div>

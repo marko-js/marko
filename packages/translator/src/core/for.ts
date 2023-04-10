@@ -14,7 +14,7 @@ import {
   writeHTMLHydrateStatements,
   getSerializedScopeProperties,
   addValue,
-  getDestructureSignal,
+  getTagParamsSignal,
   getClosures,
 } from "../util/signals";
 import {
@@ -179,13 +179,6 @@ const translateDOM = {
       );
     });
 
-    const [valParam] = params;
-    if (valParam && !t.isIdentifier(valParam)) {
-      throw tag.buildCodeFrameError(
-        "Invalid 'for' tag, |value| parameter must be an identifier."
-      );
-    }
-
     tag.remove();
 
     const rendererId = writer.getRenderer(bodySectionId);
@@ -228,11 +221,8 @@ const translateDOM = {
     }
 
     const signal = getSignal(sectionId, reserve);
-    const parameterBindings = paramsPath.reduce((bindingsLookup, path) => {
-      return Object.assign(bindingsLookup, path.getBindingIdentifiers());
-    }, {});
-    const destructureParams = getDestructureSignal(
-      parameterBindings,
+    const paramsSignal = getTagParamsSignal(
+      paramsPath,
       t.arrayPattern(tagParams)
     );
     signal.build = () => {
@@ -240,11 +230,12 @@ const translateDOM = {
         "loop",
         getNodeLiteral(reserve!),
         rendererId,
-        destructureParams
+        paramsSignal?.build()
       );
     };
 
     signal.hasDownstreamIntersections = () =>
+      paramsSignal?.hasDownstreamIntersections() ||
       getClosures(bodySectionId).length > 0;
 
     addValue(sectionId, attrsReferenceGroup, signal, loopFunctionBody);
