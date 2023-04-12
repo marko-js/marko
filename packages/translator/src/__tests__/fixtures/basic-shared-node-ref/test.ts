@@ -7,5 +7,3 @@ function toggle(container: Element) {
 function reverse(container: Element) {
   (container.querySelector("#reverse") as HTMLButtonElement).click();
 }
-
-export const skip_ssr = true;
