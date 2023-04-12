@@ -6,7 +6,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   if (true) {
     const _scope1_id = _nextScopeId();
     _write(`${_escapeXML(a + b)}${_markHydrateNode(_scope1_id, "#text/0")}`);
-    _writeHydrateScope(_scope1_id, _scope1_ = {
+    _writeHydrateScope(_scope1_id, {
       "a": a,
       "b": b
     });

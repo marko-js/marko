@@ -198,7 +198,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
     >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
   const oldArray =
     (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] as ChildScope[]) ||
-    (referenceIsMarker ? emptyMarkerArray : (emptyArray as ChildScope[]));
+    Array.from(oldMap.values());
   let afterReference: Node | null;
   let parentNode: Node & ParentNode;
   let needsReconciliation = true; // TODO: len !== oldArray.length;

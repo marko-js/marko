@@ -21,7 +21,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _writeHydrateScope(_scope1_id, {
     "#text/0!": _scope2_,
     "#text/0(": _ifRenderer
-  }, undefined);
+  });
   _popContext();
   _write(`<button id=toggle>Toggle</button>${_markHydrateNode(_scope0_id, "#button/1")}</div>`);
   _writeHydrateCall(_scope0_id, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show");

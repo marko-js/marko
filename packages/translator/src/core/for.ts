@@ -11,6 +11,7 @@ import * as walks from "../util/walks";
 import {
   getSignal,
   setSubscriberBuilder,
+  setRegisterScopeBuilder,
   writeHTMLHydrateStatements,
   getSerializedScopeProperties,
   addValue,
@@ -28,7 +29,11 @@ import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferenceGroups } from "../util/references";
-import { dirtyIdentifier, scopeIdentifier } from "../visitors/program";
+import {
+  currentProgramPath,
+  dirtyIdentifier,
+  scopeIdentifier,
+} from "../visitors/program";
 
 export default {
   analyze: {
@@ -50,9 +55,21 @@ export default {
     exit(tag) {
       analyzeAttributeTags(tag);
 
-      tag.node.extra.isStateful = tag.node.attributes.some(
-        (attr) => attr.extra?.valueReferences?.references
+      const sectionId = getOrCreateSectionId(tag);
+      tag.node.extra.attrsReferences = mergeReferenceGroups(
+        sectionId,
+        tag.node.attributes
+          .filter(
+            (attr) =>
+              t.isMarkoAttribute(attr) &&
+              attr.extra?.valueReferences !== undefined
+          )
+          .map((attr) => [attr.extra, "valueReferences"])
       );
+
+      tag.node.extra.isStateful =
+        !!tag.node.extra.attrsReferences &&
+        !Object.keys(tag.node.extra.nestedAttributeTags).length;
       tag.node.extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
   },
@@ -160,7 +177,7 @@ const translateDOM = {
     const {
       attributes,
       body: { params },
-      extra: { isOnlyChild },
+      extra: { isOnlyChild, attrsReferences },
     } = node;
     const paramsPath = tag.get("body").get("params");
     const {
@@ -182,16 +199,6 @@ const translateDOM = {
     tag.remove();
 
     const rendererId = writer.getRenderer(bodySectionId);
-    const attrsReferenceGroup = mergeReferenceGroups(
-      sectionId,
-      attributes
-        .filter(
-          (attr) =>
-            t.isMarkoAttribute(attr) &&
-            attr.extra?.valueReferences !== undefined
-        )
-        .map((attr) => [attr.extra, "valueReferences"])
-    );
 
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
@@ -238,7 +245,7 @@ const translateDOM = {
       paramsSignal?.hasDownstreamIntersections() ||
       getClosures(bodySectionId).length > 0;
 
-    addValue(sectionId, attrsReferenceGroup, signal, loopFunctionBody);
+    addValue(sectionId, attrsReferences, signal, loopFunctionBody);
   },
 };
 
@@ -260,9 +267,12 @@ const translateHTML = {
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
     const toAttr = findName(attributes, "to");
+    const byAttr = findName(attributes, "by");
     const block = t.blockStatement(body);
     const write = writer.writeTo(tag);
-    let forNode: t.Node | t.Node[];
+    const replacement: t.Node[] = [];
+    let byParams: t.Expression[];
+    let keyExpression: t.Expression | undefined = t.identifier("NOO");
 
     if (isStateful) {
       if (!singleNodeOptimization) {
@@ -271,17 +281,47 @@ const translateHTML = {
           getScopeIdIdentifier(bodySectionId)
         )}`;
       }
+      setRegisterScopeBuilder(tag, (scope: t.Expression) => {
+        const tempScopeIdentifier =
+          currentProgramPath.scope.generateUidIdentifier("s");
+        return t.callExpression(
+          t.arrowFunctionExpression(
+            [tempScopeIdentifier],
+            t.sequenceExpression([
+              t.callExpression(
+                t.memberExpression(
+                  getScopeIdentifier(bodySectionId),
+                  t.identifier("set")
+                ),
+                [keyExpression!, tempScopeIdentifier]
+              ),
+              tempScopeIdentifier,
+            ])
+          ),
+          [scope]
+        );
+      });
       getSerializedScopeProperties(bodySectionId).set(
         importRuntime("SYMBOL_OWNER"),
         getScopeIdIdentifier(sectionId)
       );
     }
 
-    writer.flushInto(tag);
-    writeHTMLHydrateStatements(tagBody);
+    if (byAttr && isStateful) {
+      const byIdentifier = currentProgramPath.scope.generateUidIdentifier("by");
+      replacement.push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(byIdentifier, byAttr.value!),
+        ])
+      );
+      byParams = [];
+      keyExpression = t.callExpression(byIdentifier, byParams);
+    }
 
     if (inAttr) {
       const [keyParam, valParam] = params;
+
+      keyExpression = keyParam as t.Identifier;
 
       if (valParam) {
         // TODO: account for keyParam being a non identifier.
@@ -295,14 +335,17 @@ const translateHTML = {
         );
       }
 
-      forNode = t.forInStatement(
-        t.variableDeclaration("const", [t.variableDeclarator(keyParam)]),
-        inAttr.value!,
-        block
+      replacement.push(
+        t.forInStatement(
+          t.variableDeclaration("const", [t.variableDeclarator(keyParam)]),
+          inAttr.value!,
+          block
+        )
       );
     } else if (ofAttr) {
       let ofAttrValue = ofAttr.value!;
-      const [valParam, keyParam, loopParam] = params;
+      // eslint-disable-next-line prefer-const
+      let [valParam, indexParam, loopParam] = params;
 
       if (!valParam) {
         throw namePath.buildCodeFrameError(
@@ -310,14 +353,24 @@ const translateHTML = {
         );
       }
 
-      forNode = [];
+      if (!t.isIdentifier(valParam) && byParams!) {
+        const tempValParam =
+          currentProgramPath.scope.generateUidIdentifier("v");
+        block.body.unshift(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(valParam, tempValParam),
+          ])
+        );
+        valParam = tempValParam;
+      }
 
-      if (keyParam) {
+      if (indexParam || isStateful) {
+        indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         const indexName = tag.scope.generateUidIdentifierBasedOnNode(
-          keyParam,
+          indexParam,
           "i"
         );
-        forNode.push(
+        replacement.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(indexName, t.numericLiteral(0)),
           ])
@@ -325,7 +378,10 @@ const translateHTML = {
 
         block.body.unshift(
           t.variableDeclaration("let", [
-            t.variableDeclarator(keyParam, t.updateExpression("++", indexName)),
+            t.variableDeclarator(
+              indexParam,
+              t.updateExpression("++", indexName)
+            ),
           ])
         );
       }
@@ -335,14 +391,20 @@ const translateHTML = {
           ofAttrValue = loopParam;
         }
 
-        forNode.push(
+        replacement.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(loopParam, ofAttr.value),
           ])
         );
       }
 
-      forNode.push(
+      if (byParams!) {
+        byParams.push(valParam as t.Identifier, indexParam as t.Identifier);
+      } else {
+        keyExpression = indexParam as t.Identifier;
+      }
+
+      replacement.push(
         t.forOfStatement(
           t.variableDeclaration("const", [t.variableDeclarator(valParam)]),
           ofAttrValue,
@@ -354,13 +416,15 @@ const translateHTML = {
         findName(attributes, "step")?.value ?? t.numericLiteral(1);
       const fromValue =
         findName(attributes, "from")?.value ?? t.numericLiteral(0);
-      const [indexParam] = params;
+      let [indexParam] = params;
       const stepsName = tag.scope.generateUidIdentifier("steps");
       const indexName = tag.scope.generateUidIdentifier("i");
       const stepName = tag.scope.generateUidIdentifier("step");
       const fromName = tag.scope.generateUidIdentifier("from");
 
-      if (indexParam) {
+      if (indexParam || isStateful) {
+        indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
+        keyExpression = indexParam as t.Identifier;
         block.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(
@@ -375,35 +439,33 @@ const translateHTML = {
         );
       }
 
-      forNode = t.forStatement(
-        t.variableDeclaration("let", [
-          t.variableDeclarator(
-            fromName,
-            t.logicalExpression("??", fromValue, t.numericLiteral(0))
-          ),
-          t.variableDeclarator(
-            stepName,
-            t.logicalExpression("??", stepValue, t.numericLiteral(1))
-          ),
-          t.variableDeclarator(
-            stepsName,
-            t.binaryExpression(
-              "/",
-              t.binaryExpression("-", toAttr.value, fromName),
-              stepName
-            )
-          ),
-          t.variableDeclarator(indexName, t.numericLiteral(0)),
-        ]),
-        t.binaryExpression("<=", indexName, stepsName),
-        t.updateExpression("++", indexName),
-        block
+      replacement.push(
+        t.forStatement(
+          t.variableDeclaration("let", [
+            t.variableDeclarator(
+              fromName,
+              t.logicalExpression("??", fromValue, t.numericLiteral(0))
+            ),
+            t.variableDeclarator(
+              stepName,
+              t.logicalExpression("??", stepValue, t.numericLiteral(1))
+            ),
+            t.variableDeclarator(
+              stepsName,
+              t.binaryExpression(
+                "/",
+                t.binaryExpression("-", toAttr.value, fromName),
+                stepName
+              )
+            ),
+            t.variableDeclarator(indexName, t.numericLiteral(0)),
+          ]),
+          t.binaryExpression("<=", indexName, stepsName),
+          t.updateExpression("++", indexName),
+          block
+        )
       );
     }
-
-    block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
-
-    const replacement = ([] as t.Node[]).concat(forNode!);
 
     if (isStateful) {
       const forScopeIdsIdentifier =
@@ -419,7 +481,10 @@ const translateHTML = {
                 forScopeIdsIdentifier,
                 t.arrayExpression([])
               ),
-            t.variableDeclarator(forScopesIdentifier, t.arrayExpression([])),
+            t.variableDeclarator(
+              forScopesIdentifier,
+              t.newExpression(t.identifier("Map"), [])
+            ),
           ].filter(Boolean) as t.VariableDeclarator[]
         )
       );
@@ -446,7 +511,20 @@ const translateHTML = {
           getNodeLiteral(reserve!)
         )}`;
       }
+      getSerializedScopeProperties(sectionId).set(
+        t.stringLiteral(getNodeLiteral(reserve!).value + "("),
+        t.conditionalExpression(
+          t.memberExpression(forScopesIdentifier, t.identifier("size")),
+          forScopesIdentifier,
+          t.identifier("undefined")
+        )
+      );
     }
+
+    writer.flushInto(tag);
+    writeHTMLHydrateStatements(tagBody);
+
+    block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
 
     tag.replaceWithMultiple(replacement);
   },

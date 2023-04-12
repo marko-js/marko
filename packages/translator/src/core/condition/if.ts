@@ -11,6 +11,7 @@ import {
   getHydrateRegisterId,
   addValue,
   getClosures,
+  setRegisterScopeBuilder,
 } from "../../util/signals";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
@@ -162,6 +163,13 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           getScopeIdIdentifier(bodySectionId)
         )}`;
       }
+      setRegisterScopeBuilder(tag, (scope: t.Expression) => {
+        return t.assignmentExpression(
+          "=",
+          getScopeIdentifier(bodySectionId),
+          scope
+        );
+      });
       getSerializedScopeProperties(bodySectionId).set(
         importRuntime("SYMBOL_OWNER"),
         getScopeIdIdentifier(sectionId)

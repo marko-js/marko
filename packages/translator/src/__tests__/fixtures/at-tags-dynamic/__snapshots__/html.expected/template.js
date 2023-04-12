@@ -43,16 +43,14 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     _writeHydrateScope(_scope3_id, {
       "#text/0!": _scope4_,
       "#text/0(": _ifRenderer
-    }, undefined);
+    });
     _maybeFlush();
   }
   let _i = 0;
   for (const col of [["a", "b"], ["c", "d"]]) {
-    let i = _i++;
     const _scope6_id = _nextScopeId();
+    let i = _i++;
     const _row = [];
-    const _forScopeIds = [],
-      _scope8_ = [];
     for (const row of col) {
       const _scope8_id = _nextScopeId();
       _row.push({
@@ -61,13 +59,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
           _write(`${_escapeXML(row)}${_markHydrateNode(_scope9_id, "#text/0")}`);
         }
       });
-      _writeHydrateScope(_scope8_id, {
-        [_SYMBOL_OWNER]: _scope7_id
-      }, _scope8_);
       _maybeFlush();
-      _forScopeIds.push(_scope8_id);
     }
-    _write(`${_markHydrateControlSingleNodeEnd(_scope7_id, "#text/0", _forScopeIds)}`);
     _col.push({
       x: i,
       row: _row

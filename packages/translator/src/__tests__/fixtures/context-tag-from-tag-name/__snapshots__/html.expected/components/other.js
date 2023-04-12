@@ -8,7 +8,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _writeHydrateScope(_scope1_id, {
     "#text/0!": _dynamicScope,
     "#text/0(": input.renderBody
-  }, undefined);
+  });
   _popContext();
 }, "packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko");
 export default _renderer;

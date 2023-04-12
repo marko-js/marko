@@ -25,7 +25,7 @@ const _renderer = _register(({
   _writeHydrateScope(_scope1_id, {
     "#text/0!": _scope2_,
     "#text/0(": _ifRenderer
-  }, undefined);
+  });
   _customTag({
     thing: _thing
   });

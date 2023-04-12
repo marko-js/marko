@@ -20,6 +20,7 @@ import { returnId } from "../core/return";
 import { isOutputHTML } from "./marko-config";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Statement;
+export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 
 export type Signal = {
   identifier: t.Identifier;
@@ -70,6 +71,13 @@ const [getSignals] = createSectionState<Map<unknown, Signal>>(
 const [getSubscribeBuilder, _setSubscribeBuilder] = createSectionState<
   subscribeBuilder | undefined
 >("queue");
+export function setSubscriberBuilder(
+  tag: t.NodePath<t.MarkoTag>,
+  builder: subscribeBuilder
+) {
+  _setSubscribeBuilder(getSectionId(tag.get("body")), builder);
+}
+
 export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
   "closures",
   () => []
@@ -78,20 +86,21 @@ export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
 const [forceHydrateScope, _setForceHydrateScope] = createSectionState<
   undefined | true
 >("forceHydrateScope");
-
+export function setForceHydrateScope(sectionId: number) {
+  _setForceHydrateScope(sectionId, true);
+}
 export const [getSerializedScopeProperties] = createSectionState<
   Map<t.Expression, t.Expression>
 >("serializedScopeProperties", () => new Map());
 
-export function setForceHydrateScope(sectionId: number) {
-  _setForceHydrateScope(sectionId, true);
-}
-
-export function setSubscriberBuilder(
+const [getRegisterScopeBuilder, _setRegisterScopeBuilder] = createSectionState<
+  registerScopeBuilder | undefined
+>("register");
+export function setRegisterScopeBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  builder: subscribeBuilder
+  builder: registerScopeBuilder
 ) {
-  _setSubscribeBuilder(getSectionId(tag.get("body")), builder);
+  _setRegisterScopeBuilder(getSectionId(tag.get("body")), builder);
 }
 
 export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
@@ -855,25 +864,18 @@ export function writeHTMLHydrateStatements(
   }
 
   if (serializedProperties.length || forceHydrateScope(sectionId)) {
-    const tagName = (
-      (path.parentPath?.node as t.MarkoTag)?.name as t.StringLiteral
-    )?.value;
-    const isCondScope =
-      tagName === "if" || tagName === "else-if" || tagName === "else";
+    const isRoot = path.isProgram();
+    const builder = getRegisterScopeBuilder(sectionId);
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeHydrateScope",
           scopeIdIdentifier,
-          isCondScope
-            ? t.assignmentExpression(
-                "=",
-                scopeIdentifier,
-                t.objectExpression(serializedProperties)
-              )
+          builder
+            ? builder(t.objectExpression(serializedProperties))
             : t.objectExpression(serializedProperties),
-          isCondScope ? null : scopeIdentifier
+          isRoot ? scopeIdentifier : null
         )
       )
     );
