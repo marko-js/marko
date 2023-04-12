@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.5
+
+### Patch Changes
+
+- [`712f68062`](https://github.com/marko-js/marko/commit/712f68062326b5fb71073b691d1761d4ac71bdc3) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for Marko translator-default
+
 ## 5.25.4
 
 ### Patch Changes
