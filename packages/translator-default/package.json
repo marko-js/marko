@@ -16,8 +16,10 @@
     "marko": "^5.25.4"
   },
   "files": [
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
   "keywords": [
     "babel",
