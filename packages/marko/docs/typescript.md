@@ -133,8 +133,8 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
   - `EventEmitter` from `@types/node`
 - **`Marko.NativeTags`**
   - `Marko.NativeTags`: An object containing all native tags and their types
-- **`Marko.NativeTagInput<TagName>`** and **`Marko.NativeTagReturn<TagName>`**
-  - Helpers to extract the input and return types for the specified `keyof Marko.NativeTag`
+- **`Marko.Input<TagName>`** and **`Marko.Return<TagName>`**
+  - Helpers to extract the input and return types native tags (when a string is passed) or a custom tag.
 - **`Marko.BodyParameters<Body>`** and **`Marko.BodyReturnType<Body>`**
   - Helpers to extract the parameters and return types from the specified `Marko.Body`
 - **`Marko.AttrTag<T>`** and **`Marko.RepeatableAttrTag<T>`**
@@ -207,7 +207,7 @@ The types for native tags are accessed via the global `Marko.NativeTags` type. H
 _color-button.marko_
 
 ```marko
-export interface Input extends Marko.NativeTagInput<"button"> {
+export interface Input extends Marko.Input<"button"> {
   color: string;
   renderBody?: Marko.Body;
 }
