@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.6
+
+### Patch Changes
+
+- [#1929](https://github.com/marko-js/marko/pull/1929) [`c7a197a5c`](https://github.com/marko-js/marko/commit/c7a197a5c2e49e4b365d185d6e24ab431a61abc9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Adds strict typescript types for the native HTML tags.
+
 ## 5.25.5
 
 ### Patch Changes
