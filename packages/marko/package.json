@@ -10,6 +10,7 @@
         "argly": "^1.2.0",
         "browser-refresh-client": "1.1.4",
         "complain": "^1.6.0",
+        "csstype": "^3.1.2",
         "events-light": "^1.0.5",
         "listener-tracker": "^2.0.0",
         "minimatch": "^3.0.4",
@@ -71,7 +72,8 @@
         "index.d.ts",
         "index-browser.marko",
         "index.js",
-        "node-require.js"
+        "node-require.js",
+        "tags-html.d.ts"
     ],
     "types": "index.d.ts"
 }
