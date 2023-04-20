@@ -118,6 +118,12 @@ export default (api, markoOpts) => {
     visitor:
       markoOpts.stripTypes && isMarkoOutput(markoOpts.output)
         ? {
+            MarkoClass(path) {
+              // We replace the MarkoClass with a regular class declaration so babel can strip it's types.
+              path.replaceWith(
+                t.classDeclaration(t.identifier(""), null, path.node.body)
+              );
+            },
             ExportNamedDeclaration: {
               exit(path) {
                 // The babel typescript plugin will add an empty export declaration
@@ -159,8 +165,9 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
         let mtime = Infinity;
         try {
           mtime = markoOpts.fileSystem.statSync(watchFile).mtime;
-          // eslint-disable-next-line no-empty
-        } catch {}
+        } catch {
+          // ignore
+        }
 
         if (mtime > cached.time) {
           // Some dependency changed, invalidate the cache.
