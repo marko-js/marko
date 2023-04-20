@@ -4536,7 +4536,7 @@ type AttrClass =
   | string
   | AttrClass[]
   | Record<string, AttrMissing | boolean>;
-type AttrStyle = AttrMissing | csstype.PropertiesHyphen | AttrStyle[];
+type AttrStyle = AttrMissing | string | csstype.PropertiesHyphen | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
   | AttrMissing
