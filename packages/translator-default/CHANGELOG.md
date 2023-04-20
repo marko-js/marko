@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.7
+
+### Patch Changes
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`04d6fad6d`](https://github.com/marko-js/marko/commit/04d6fad6d599adc98d6f0ef00a5c44b4a4fc7485) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where types were not being stripped from the inline Marko component class.
+
 ## 5.25.6
 
 ### Patch Changes

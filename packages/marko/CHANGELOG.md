@@ -1,5 +1,23 @@
 # Change Log
 
+## 5.25.6
+
+### Patch Changes
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`722467a6c`](https://github.com/marko-js/marko/commit/722467a6cf72cf024fbc5a1fa802060de9f2dec3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make the Input type less strict to avoid issues with extending it in a custom tag.
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`04d6fad6d`](https://github.com/marko-js/marko/commit/04d6fad6d599adc98d6f0ef00a5c44b4a4fc7485) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where types were not being stripped from the inline Marko component class.
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`c492349a8`](https://github.com/marko-js/marko/commit/c492349a840c4d9cb9693258eac8d96663b29989) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix style attribute types.
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`4523d7ce1`](https://github.com/marko-js/marko/commit/4523d7ce1baedc259b0d1c0de338b280509c8bd4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow Marko.HTMLAttributes interface to be used without specifying a generic.
+
+- [#1934](https://github.com/marko-js/marko/pull/1934) [`a5fbf6cb3`](https://github.com/marko-js/marko/commit/a5fbf6cb3bde86cb37c66d19625fbe7a994b9ab4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose types for the Marko attribute directives.
+
+- Updated dependencies [[`04d6fad6d`](https://github.com/marko-js/marko/commit/04d6fad6d599adc98d6f0ef00a5c44b4a4fc7485)]:
+  - @marko/compiler@5.27.7
+  - @marko/translator-default@5.25.7
+
 ## 5.25.5
 
 ### Patch Changes
