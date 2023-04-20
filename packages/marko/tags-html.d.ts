@@ -1031,6 +1031,43 @@ declare global {
       }
       interface Input extends HTMLAttributes<HTMLInputElement> {
         /**
+         * A comma-separated list of file types that a file input should accept.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
+         */
+        accept?: AttrString;
+
+        /**
+         * The alternate text for an image input, displayed if the image cannot be loaded.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-alt
+         */
+        alt?: AttrString;
+
+        /**
+         * Specifies whether the input field should have autocomplete enabled or disabled.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
+         */
+        autocomplete?: AttrOnOff;
+
+        /**
+         * Indicates whether a file input should use a specific capture method.
+         * "user" indicates the front camera, "environment" indicates the rear camera.
+         * @see https://w3c.github.io/html-media-capture/#dfn-capture
+         */
+        capture?: AttrBoolean | "user" | "environment";
+
+        /**
+         * Indicates whether a checkbox should be checked or not.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-checked
+         */
+        checked?: AttrBoolean;
+
+        /**
+         * Enables the submission of the directionality of a text input.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname
+         */
+        dirname?: AttrString;
+
+        /**
          * Indicates whether the input should be disabled or not. When disabled,
          * the input will not be interactable or submitted with the form.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-disabled
@@ -1046,20 +1083,95 @@ declare global {
         form?: AttrString;
 
         /**
-         * The name attribute of the input element, which is used as a key
-         * when submitting the form data. Also the named used in the form.elements.
+         * The URL of the form processing endpoint when the input image is used for form submission.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction
+         */
+        formaction?: Form["action"];
+
+        /**
+         * The encoding type for the form data when the input image is used for form submission.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype
+         */
+        formenctype?: Form["enctype"];
+
+        /**
+         * The HTTP method to use when the input image is used for form submission.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod
+         */
+        formmethod?: Form["method"];
+
+        /**
+         * Indicates whether form validation should be skipped when the input image is used for form submission.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate
+         */
+        formnovalidate?: Form["novalidate"];
+
+        /**
+         * The browsing context for displaying the response after form submission when the input image is used.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget
+         */
+        formtarget?: Form["target"];
+
+        /**
+         * The height of of an image input in pixels.
+         * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height
+         */
+        height?: AttrStringOrNumber;
+
+        /**
+         * The ID of a <datalist> element that provides a list of suggested values for the input.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
+         */
+        list?: AttrString;
+
+        /**
+         * The maximum allowed value for the input.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
+         */
+        max?: AttrString;
+
+        /**
+         * The maximum number of characters allowed in the input.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
+         */
+        maxlength?: AttrStringOrNumber;
+
+        /**
+         * The minimum allowed value for the input.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
+         */
+        min?: AttrString;
+
+        /**
+         * The minimum number of characters required in the input.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
+         */
+        minlength?: AttrStringOrNumber;
+
+        /**
+         * Indicates whether the input should allow more than one value.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
+         */
+        multiple?: AttrBoolean;
+
+        /**
+         * Used as a key when submitting the forms data. Also the name used in the form.elements api.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-name
          * @see HTMLFormElement.elements
          */
         name?: AttrString;
-      }
 
-      interface InputButton extends Input {
         /**
-         * The input type, set to "button" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
+         * A regular expression pattern to be validated against the input value.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
          */
-        type: "button";
+        pattern?: AttrString;
+
+        /**
+         * A short hint to display in the input field before the user enters a value.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
+         */
+        placeholder?: AttrString;
 
         /**
          * Specifies the target element for the popover.
@@ -1074,96 +1186,6 @@ declare global {
         popovertargetaction?: AttrMissing | "toggle" | "show" | "hide";
 
         /**
-         * The value attribute for the button input, which can be used as a label or identifier.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-
-      interface InputCheckbox extends Input {
-        /**
-         * The input type, set to "checkbox" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "checkbox";
-
-        /**
-         * Indicates whether the checkbox should be checked or not.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-checked
-         */
-        checked?: AttrBoolean;
-
-        /**
-         * Indicates whether the checkbox is required to be checked for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The value attribute for the checkbox input, which can be used as a label or identifier.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-
-      interface InputColor extends Input {
-        /**
-         * The input type, set to "color" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "color";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The value attribute for the color input, representing a color value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-
-      interface InputDate extends Input {
-        /**
-         * The input type, set to "date" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "date";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrString;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrString;
-
-        /**
          * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
          */
@@ -1176,204 +1198,10 @@ declare global {
         required?: AttrBoolean;
 
         /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrString;
-
-        /**
-         * The value attribute for the date input, representing a date value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-
-      interface InputDateTimeLocal extends Input {
-        /**
-         * The input type, set to "datetime-local" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "datetime-local";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrString;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrString;
-
-        /**
-         * The value attribute for the datetime-local input, representing a date and time value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputEmail extends Input {
-        /**
-         * The input type, set to "email" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "email";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed length for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-         */
-        maxlength?: AttrStringOrNumber;
-
-        /**
-         * The minimum allowed length for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-         */
-        minlength?: AttrStringOrNumber;
-
-        /**
-         * Indicates whether the input should allow multiple email addresses or not.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
-         */
-        multiple?: AttrBoolean;
-
-        /**
-         * A regular expression that the input value must match for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
-         */
-        pattern?: AttrString;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The visible width of the input field in average character widths.
+         * The number of characters wide a text input field should be displayed.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-size
          */
         size?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the email input, representing an email address value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputFile extends Input {
-        /**
-         * The input type, set to "file" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "file";
-
-        /**
-         * A comma-separated list of file types that the input should accept.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-accept
-         */
-        accept?: AttrString;
-
-        /**
-         * Indicates whether the input should use a specific capture method.
-         * "user" indicates the front camera, "environment" indicates the rear camera.
-         * @see https://w3c.github.io/html-media-capture/#dfn-capture
-         */
-        capture?: AttrBoolean | "user" | "environment";
-
-        /**
-         * Indicates whether the input should allow the selection of multiple files or not.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-multiple
-         */
-        multiple?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-      }
-      interface InputHidden extends Input {
-        /**
-         * The input type, set to "hidden" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "hidden";
-
-        /**
-         * The value attribute for the hidden input, representing a hidden value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-      interface InputImage extends Input {
-        /**
-         * The input type, set to "image" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "image";
-
-        /**
-         * The alternate text for the image, displayed if the image cannot be loaded.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-alt
-         */
-        alt?: AttrString;
 
         /**
          * The URL of the image file.
@@ -1382,702 +1210,53 @@ declare global {
         src?: AttrString;
 
         /**
-         * The height of the image in pixels.
-         * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-height
+         * Specifies the allowed number intervals for the input value.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
          */
-        height?: AttrStringOrNumber;
+        step?: AttrString;
 
         /**
-         * The width of the image in pixels.
+         * Controls the data type (and associated control) of the element.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
+         */
+        type:
+          | AttrMissing
+          | "button"
+          | "checkbox"
+          | "color"
+          | "date"
+          | "datetime-local"
+          | "email"
+          | "file"
+          | "hidden"
+          | "image"
+          | "month"
+          | "number"
+          | "password"
+          | "radio"
+          | "range"
+          | "reset"
+          | "search"
+          | "submit"
+          | "tel"
+          | "text"
+          | "time"
+          | "url"
+          | "week";
+
+        /**
+         * Specifies the string value you want to pass back to the server.
+         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
+         */
+        value?: AttrStringOrNumber;
+
+        /**
+         * The width of an image input in pixels.
          * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
          */
         width?: AttrStringOrNumber;
-
-        /**
-         * The URL of the form processing endpoint when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction
-         */
-        formaction?: Form["action"];
-
-        /**
-         * The encoding type for the form data when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype
-         */
-        formenctype?: Form["enctype"];
-
-        /**
-         * The HTTP method to use when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod
-         */
-        formmethod?: Form["method"];
-
-        /**
-         * Indicates whether form validation should be skipped when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate
-         */
-        formnovalidate?: Form["novalidate"];
-
-        /**
-         * The browsing context for displaying the response after form submission when the input image is used.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget
-         */
-        formtarget?: Form["target"];
-
-        /**
-         * Specifies the target element for the popover.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertarget?: AttrString;
-
-        /**
-         * Specifies the action to perform on the popover target.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertargetaction?: AttrMissing | "toggle" | "show" | "hide";
-
-        /**
-         * The value attribute for the image input, representing a value to submit with the form.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
       }
 
-      interface InputMonth extends Input {
-        /**
-         * The input type, set to "month" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "month";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrString;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrString;
-
-        /**
-         * The value attribute for the month input, representing a month value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputNumber extends Input {
-        /**
-         * The input type, set to "number" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "number";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrStringOrNumber;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrStringOrNumber;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the month input, representing a month value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-      interface InputRadio extends Input {
-        /**
-         * The input type, set to "radio" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "radio";
-
-        /**
-         * Indicates whether the radio should be checked or not.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-checked
-         */
-        checked?: AttrBoolean;
-
-        /**
-         * Indicates whether the radio is required to be checked for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The value attribute for the radio input, which can be used as a label or identifier.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-      interface InputRange extends Input {
-        /**
-         * The input type, set to "range" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "range";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrStringOrNumber;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrStringOrNumber;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the month input, representing a month value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-      interface InputReset extends Input {
-        /**
-         * The input type, set to "reset" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "reset";
-
-        /**
-         * Specifies the target element for the popover.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertarget?: AttrString;
-
-        /**
-         * Specifies the action to perform on the popover target.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertargetaction?: AttrMissing | "toggle" | "show" | "hide";
-      }
-      interface InputSubmit extends Input {
-        /**
-         * The input type, set to "submit" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "submit";
-
-        /**
-         * The URL of the form processing endpoint when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formaction
-         */
-        formaction?: Form["action"];
-
-        /**
-         * The encoding type for the form data when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formenctype
-         */
-        formenctype?: Form["enctype"];
-
-        /**
-         * The HTTP method to use when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formmethod
-         */
-        formmethod?: Form["method"];
-
-        /**
-         * Indicates whether form validation should be skipped when the input image is used for form submission.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formnovalidate
-         */
-        formnovalidate?: Form["novalidate"];
-
-        /**
-         * The browsing context for displaying the response after form submission when the input image is used.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fs-formtarget
-         */
-        formtarget?: Form["target"];
-
-        /**
-         * Specifies the target element for the popover.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertarget?: AttrString;
-
-        /**
-         * Specifies the action to perform on the popover target.
-         * @see https://developer.chrome.com/docs/web-platform/popover-api/popovertargetaction-toggle-attribute
-         */
-        popovertargetaction?: AttrMissing | "toggle" | "show" | "hide";
-
-        /**
-         * The value attribute for the month input, representing a month value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputTel extends Input {
-        /**
-         * The input type, set to "tel" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "tel";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum number of characters allowed in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-         */
-        maxlength?: AttrStringOrNumber;
-
-        /**
-         * The minimum number of characters required in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-         */
-        minlength?: AttrStringOrNumber;
-
-        /**
-         * A regular expression pattern to be matched by the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
-         */
-        pattern?: AttrString;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The number of characters wide the input field should be displayed.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-size
-         */
-        size?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the tel input, representing a telephone number value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-
-      interface InputURL extends Input {
-        /**
-         * The input type, set to "url" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "url";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum number of characters allowed in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-         */
-        maxlength?: AttrStringOrNumber;
-
-        /**
-         * The minimum number of characters required in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-         */
-        minlength?: AttrStringOrNumber;
-
-        /**
-         * A regular expression pattern to be matched by the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
-         */
-        pattern?: AttrString;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The number of characters wide the input field should be displayed.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-size
-         */
-        size?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the tel input, representing a telephone number value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputPassword extends Input {
-        /**
-         * The input type, set to "password" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "password";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The maximum number of characters allowed in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-         */
-        maxlength?: AttrStringOrNumber;
-
-        /**
-         * The minimum number of characters required in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-         */
-        minlength?: AttrStringOrNumber;
-
-        /**
-         * A regular expression pattern to be matched by the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
-         */
-        pattern?: AttrString;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The number of characters wide the input field should be displayed.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-size
-         */
-        size?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for the tel input, representing a telephone number value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-      interface InputText extends Input {
-        /**
-         * The input type for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type?: "text" | "search" | "email"; // TODO: split interfaces
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * Enables the submission of the directionality of the element.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-dirname
-         */
-        dirname?: AttrString;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum number of characters allowed in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-maxlength
-         */
-        maxlength?: AttrStringOrNumber;
-
-        /**
-         * The minimum number of characters required in the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-minlength
-         */
-        minlength?: AttrStringOrNumber;
-
-        /**
-         * A regular expression pattern to be matched by the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-pattern
-         */
-        pattern?: AttrString;
-
-        /**
-         * A short hint to display in the input field before the user enters a value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
-         */
-        placeholder?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * The number of characters wide the input field should be displayed.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-size
-         */
-        size?: AttrStringOrNumber;
-
-        /**
-         * The value attribute for input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrStringOrNumber;
-      }
-      interface InputTime extends Input {
-        /**
-         * The input type, set to "time" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "time";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrString;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrString;
-
-        /**
-         * The value attribute for the time input, representing a time value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
-
-      interface InputWeek extends Input {
-        /**
-         * The input type, set to "week" for this interface.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
-         */
-        type: "week";
-
-        /**
-         * Specifies whether the input field should have autocomplete enabled or disabled.
-         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
-         */
-        autocomplete?: AttrOnOff;
-
-        /**
-         * The ID of a <datalist> element that provides a list of suggested values for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-list
-         */
-        list?: AttrString;
-
-        /**
-         * The maximum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
-         */
-        max?: AttrString;
-
-        /**
-         * The minimum allowed value for the input.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
-         */
-        min?: AttrString;
-
-        /**
-         * Indicates whether the input should be read-only or not. Read-only inputs cannot be edited.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-readonly
-         */
-        readonly?: AttrBoolean;
-
-        /**
-         * Indicates whether the input is required to have a value for the form to be submitted.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-required
-         */
-        required?: AttrBoolean;
-
-        /**
-         * Specifies the allowed number intervals for the input value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
-         */
-        step?: AttrString;
-
-        /**
-         * The value attribute for the time input, representing a time value.
-         * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-value
-         */
-        value?: AttrString;
-      }
       interface Ins extends HTMLAttributes<HTMLModElement> {
         /**
          * A URI for a resource that explains the reason for the insertion.
