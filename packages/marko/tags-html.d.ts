@@ -3109,6 +3109,27 @@ declare global {
       interface WBr extends HTMLAttributes<HTMLElement> {}
     }
 
+    interface Directives {
+      /**
+       * Used to uniquely identify a tag within a template in order
+       * to get an element reference to it later.
+       *
+       * @see Marko.Component.getEl
+       * @see Marko.Component.getComponent
+       */
+      key?: AttrString;
+
+      /**
+       * Tells Marko to avoid updating the element or it's contents (excluding custom tags which may rerender independently).
+       */
+      "no-update"?: AttrBoolean;
+
+      /**
+       * Tells Marko to avoid updating an elements contents (excluding custom tags which may rerender independently).
+       */
+      "no-update-if"?: AttrBoolean;
+    }
+
     interface HTMLAttributes<T extends Element = Element>
       extends AriaAttributes {
       /**
