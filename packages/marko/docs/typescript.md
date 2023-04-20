@@ -357,3 +357,46 @@ _components/color-rotate-button/index.marko_
   <${input.renderBody}/>
 </button>
 ```
+
+## Extend Native Tags (for custom elements)
+
+```ts
+interface MyCustomElementAttributes {
+  // ...
+}
+
+declare global {
+  namespace Marko {
+    namespace NativeTags {
+      // By adding this entry, you can now use `my-custom-element` as a native html tag.
+      "my-custom-element": MyCustomElementAttributes
+    }
+  }
+}
+```
+
+## Extending the "global" HTML Attributes
+
+```ts
+declare global {
+  namespace Marko {
+    interface HTMLAttributes {
+      "my-non-standard-attribute"?: string; // Adds this attribute as available on all HTML tags.
+    }
+  }
+}
+```
+
+## Extending CSS Properties (for custom properties)
+
+```ts
+declare global {
+  namespace Marko {
+    namespace CSS {
+      interface Properties {
+        "--foo"?: string; // adds a support for a custom `--foo` css property.
+      }
+    }
+  }
+}
+```

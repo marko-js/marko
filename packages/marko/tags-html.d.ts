@@ -124,6 +124,10 @@ declare global {
       wbr: Tag<_.Marko·Inputᐸʺwbrʺᐳ>;
     }
 
+    namespace CSS {
+      export interface Properties extends csstype.PropertiesHyphen {}
+    }
+
     namespace HTML {
       interface A extends HTMLAttributes<HTMLAnchorElement> {
         /**
@@ -3715,7 +3719,7 @@ type AttrClass =
   | string
   | AttrClass[]
   | Record<string, AttrMissing | boolean>;
-type AttrStyle = AttrMissing | string | csstype.PropertiesHyphen | AttrStyle[];
+type AttrStyle = AttrMissing | string | Marko.CSS.Properties | AttrStyle[];
 type AttrCrossOrigin = AttrBoolean | "anonymous" | "use-credentials";
 type AttrEventHandler<Event, Target> =
   | AttrMissing
