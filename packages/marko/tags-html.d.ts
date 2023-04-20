@@ -3630,29 +3630,7 @@ declare global {
       type Marko·Inputᐸʺiʺᐳ = { [K in keyof HTML.I]: HTML.I[K] };
       type Marko·Inputᐸʺiframeʺᐳ = { [K in keyof HTML.IFrame]: HTML.IFrame[K] };
       type Marko·Inputᐸʺimgʺᐳ = { [K in keyof HTML.Img]: HTML.Img[K] };
-      type Marko·Inputᐸʺinputʺᐳ = {} & (
-        | HTML.InputHidden
-        | HTML.InputText
-        | HTML.InputTel
-        | HTML.InputURL
-        | HTML.InputEmail
-        | HTML.InputPassword
-        | HTML.InputDate
-        | HTML.InputMonth
-        | HTML.InputWeek
-        | HTML.InputTime
-        | HTML.InputDateTimeLocal
-        | HTML.InputNumber
-        | HTML.InputRange
-        | HTML.InputColor
-        | HTML.InputCheckbox
-        | HTML.InputRadio
-        | HTML.InputFile
-        | HTML.InputSubmit
-        | HTML.InputImage
-        | HTML.InputReset
-        | HTML.InputButton
-      );
+      type Marko·Inputᐸʺinputʺᐳ = { [K in keyof HTML.Input]: HTML.Input[K] };
       type Marko·Inputᐸʺinsʺᐳ = { [K in keyof HTML.Ins]: HTML.Ins[K] };
       type Marko·Inputᐸʺkbdʺᐳ = { [K in keyof HTML.Kbd]: HTML.Kbd[K] };
       type Marko·Inputᐸʺlabelʺᐳ = { [K in keyof HTML.Label]: HTML.Label[K] };
