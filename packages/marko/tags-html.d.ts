@@ -3109,7 +3109,8 @@ declare global {
       interface WBr extends HTMLAttributes<HTMLElement> {}
     }
 
-    interface HTMLAttributes<T extends Element> extends AriaAttributes {
+    interface HTMLAttributes<T extends Element = Element>
+      extends AriaAttributes {
       /**
        * Specifies a keyboard shortcut to activate or focus on an element.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute
