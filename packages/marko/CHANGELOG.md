@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.25.7
+
+### Patch Changes
+
+- [#1936](https://github.com/marko-js/marko/pull/1936) [`f99e6deff`](https://github.com/marko-js/marko/commit/f99e6deff2e68b0aea8ab7918e6a6c3a509f311a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with the HTML <input> tag types.
+
+- [#1936](https://github.com/marko-js/marko/pull/1936) [`f216ca254`](https://github.com/marko-js/marko/commit/f216ca25401e10c9878d37c38d371c6f706f3a25) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add the ability to extend the list of valid css property names when setting a style attrbitue with an object (useful for custom properties).
+
 ## 5.25.6
 
 ### Patch Changes
