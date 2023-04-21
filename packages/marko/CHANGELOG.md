@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.8
+
+### Patch Changes
+
+- [#1938](https://github.com/marko-js/marko/pull/1938) [`d8a922085`](https://github.com/marko-js/marko/commit/d8a922085ec068b0791211b05e749f3a9695d478) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve typing for some <input> fields.
+
 ## 5.25.7
 
 ### Patch Changes
