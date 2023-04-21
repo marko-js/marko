@@ -200,9 +200,9 @@ _index.marko_
 </for-by-two>
 ```
 
-### Extending a native tag type
+### Extending native tag types within a Marko tag
 
-The types for native tags are accessed via the global `Marko.NativeTags` type. Here's an example of a component that adds a feature to the `button` element:
+The types for native tags are accessed via the global `Marko.Input` type. Here's an example of a component that extends the `button` html tag:
 
 _color-button.marko_
 
@@ -217,6 +217,49 @@ $ const { color, renderBody, ...restOfInput } = input;
 <button style=`color: ${color}` ...restOfInput>
   <${renderBody}/>
 </button>
+```
+
+### Registering a new native tag (eg for custom elements).
+
+```ts
+interface MyCustomElementAttributes {
+  // ...
+}
+
+declare global {
+  namespace Marko {
+    namespace NativeTags {
+      // By adding this entry, you can now use `my-custom-element` as a native html tag.
+      "my-custom-element": MyCustomElementAttributes
+    }
+  }
+}
+```
+
+### Registering new "global" HTML Attributes
+
+```ts
+declare global {
+  namespace Marko {
+    interface HTMLAttributes {
+      "my-non-standard-attribute"?: string; // Adds this attribute as available on all HTML tags.
+    }
+  }
+}
+```
+
+### Registering CSS Properties (eg for custom properties)
+
+```ts
+declare global {
+  namespace Marko {
+    namespace CSS {
+      interface Properties {
+        "--foo"?: string; // adds a support for a custom `--foo` css property.
+      }
+    }
+  }
+}
 ```
 
 ## TypeScript Syntax in `.marko`
@@ -358,45 +401,7 @@ _components/color-rotate-button/index.marko_
 </button>
 ```
 
-## Extend Native Tags (for custom elements)
+# CI Type Checking
 
-```ts
-interface MyCustomElementAttributes {
-  // ...
-}
-
-declare global {
-  namespace Marko {
-    namespace NativeTags {
-      // By adding this entry, you can now use `my-custom-element` as a native html tag.
-      "my-custom-element": MyCustomElementAttributes
-    }
-  }
-}
-```
-
-## Extending the "global" HTML Attributes
-
-```ts
-declare global {
-  namespace Marko {
-    interface HTMLAttributes {
-      "my-non-standard-attribute"?: string; // Adds this attribute as available on all HTML tags.
-    }
-  }
-}
-```
-
-## Extending CSS Properties (for custom properties)
-
-```ts
-declare global {
-  namespace Marko {
-    namespace CSS {
-      interface Properties {
-        "--foo"?: string; // adds a support for a custom `--foo` css property.
-      }
-    }
-  }
-}
-```
+For type checking Marko files outside of your editor there is the ["@marko/type-check" cli](https://github.com/marko-js/language-server/tree/main/packages/type-check).
+Check out the CLI documentation for more information.
