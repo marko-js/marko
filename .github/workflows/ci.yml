@@ -11,12 +11,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  format:
+  lint:
     runs-on: ubuntu-latest
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,17 +23,38 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Format Code
-        run: npm run format
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          ref: ${{ github.head_ref }}
-          commit_message: "[ci] format"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint Code
+        run: npm run lint
+  # # Skip automatically commiting formatted code right now as it does not work in PRs.
+  # format:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     # Give the default GITHUB_TOKEN write permission to commit and push the
+  #     # added or changed files to the repository.
+  #     contents: write
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: ${{ github.head_ref }}
+  #     - name: Use node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         cache: npm
+  #     - name: Install dependencies
+  #       run: npm ci
+  #     - name: Format Code
+  #       run: npm run format
+  #     - name: Commit changes
+  #       uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         ref: ${{ github.head_ref }}
+  #         commit_message: "[ci] format"
+  #         commit_user_name: "github-actions[bot]"
+  #         commit_user_email: "github-actions[bot]@users.noreply.github.com"
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"
@@ -65,7 +82,7 @@ jobs:
         uses: codecov/codecov-action@v2
   release:
     runs-on: ubuntu-latest
-    needs: [format, test]
+    needs: [lint, test]
     if: "${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}"
     steps:
       - name: Checkout code
