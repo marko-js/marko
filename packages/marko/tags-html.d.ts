@@ -1050,7 +1050,7 @@ declare global {
          * Specifies whether the input field should have autocomplete enabled or disabled.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
          */
-        autocomplete?: AttrOnOff;
+        autocomplete?: AttrAutoComplete;
 
         /**
          * Indicates whether a file input should use a specific capture method.
@@ -1132,7 +1132,7 @@ declare global {
          * The maximum allowed value for the input.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-max
          */
-        max?: AttrString;
+        max?: AttrStringOrNumber;
 
         /**
          * The maximum number of characters allowed in the input.
@@ -1144,7 +1144,7 @@ declare global {
          * The minimum allowed value for the input.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-min
          */
-        min?: AttrString;
+        min?: AttrStringOrNumber;
 
         /**
          * The minimum number of characters required in the input.
@@ -1175,7 +1175,7 @@ declare global {
          * A short hint to display in the input field before the user enters a value.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-placeholder
          */
-        placeholder?: AttrString;
+        placeholder?: AttrStringOrNumber;
 
         /**
          * Specifies the target element for the popover.
@@ -1217,7 +1217,7 @@ declare global {
          * Specifies the allowed number intervals for the input value.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-step
          */
-        step?: AttrString;
+        step?: AttrStringOrNumber;
 
         /**
          * Controls the data type (and associated control) of the element.
@@ -1779,7 +1779,7 @@ declare global {
          * Controls whether the browser should automatically complete the value for the select.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
          */
-        autocomplete?: AttrOnOff;
+        autocomplete?: AttrAutoComplete;
 
         /**
          * Indicates whether the select element should be disabled or not.
@@ -1987,7 +1987,7 @@ declare global {
          * Helps browsers autofill the user's input based on previous entries.
          * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#attr-fe-autocomplete
          */
-        autocomplete?: AttrOnOff;
+        autocomplete?: AttrAutoComplete;
 
         /**
          * (Safari only). Controls the autocorrect behavior of the <textarea> element.
@@ -3749,33 +3749,60 @@ type AttrBooleanString = AttrMissing | "false" | "true";
 type AttrYesNoString = AttrMissing | "no" | "yes";
 type AttrTriState = AttrBooleanString | "mixed";
 type AttrOnOff = AttrMissing | "on" | "off";
+type AttrAutoComplete =
+  | AttrOnOff
+  | "shipping"
+  | "billing"
+  | "name"
+  | "honorific-prefix"
+  | "given-name"
+  | "additional-name"
+  | "family-name"
+  | "honorific-suffix"
+  | "nickname"
+  | "username"
+  | "new-password"
+  | "current-password"
+  | "one-time-code"
+  | "organization-title"
+  | "organization"
+  | "street-address"
+  | "address-line1"
+  | "address-line2"
+  | "address-line3"
+  | "address-level4"
+  | "address-level3"
+  | "address-level2"
+  | "address-level1"
+  | "country"
+  | "country-name"
+  | "postal-code"
+  | "cc-name"
+  | "cc-given-name"
+  | "cc-additional-name"
+  | "cc-family-name"
+  | "cc-number"
+  | "cc-exp"
+  | "cc-exp-month"
+  | "cc-exp-year"
+  | "cc-csc"
+  | "cc-type"
+  | "transaction-currency"
+  | "transaction-amount"
+  | "language"
+  | "bday"
+  | "bday-day"
+  | "bday-month"
+  | "bday-year"
+  | "sex"
+  | "url"
+  | "photo"
+  | "home"
+  | "work"
+  | "mobile"
+  | "fax"
+  | "pager"
+  | (string & {});
 type Tag<Input> = Input extends Marko.HTMLAttributes<infer Element>
   ? Marko.NativeTag<Input, Element>
   : never;
-type UpperCaseChar =
-  | "A"
-  | "B"
-  | "C"
-  | "D"
-  | "E"
-  | "F"
-  | "G"
-  | "H"
-  | "I"
-  | "J"
-  | "K"
-  | "L"
-  | "M"
-  | "N"
-  | "O"
-  | "P"
-  | "Q"
-  | "R"
-  | "S"
-  | "T"
-  | "U"
-  | "V"
-  | "W"
-  | "X"
-  | "Y"
-  | "Z";
