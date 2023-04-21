@@ -30,7 +30,7 @@ Not sure if that typo is worth a pull request? Found a bug and know how to fix i
 
 We are always thrilled to receive pull requests. We do our best to process them quickly. If your pull request is not accepted on the first try, don't get discouraged! We'll work with you to come to an acceptable solution.
 
-Prior to merging your PR, you will need to sign the [JS Foundation CLA](https://cla.js.foundation/marko-js/marko). It's pretty straight-forward and only takes a minute. You can even sign it now if you're thinking about contributing.
+Prior to merging your PR, you will need to sign the [Open JS Foundation CLA](https://easycla.lfx.linuxfoundation.org/). It's pretty straight-forward and only takes a minute. You'll also be prompted to sign the CLA automatically when opening a PR.
 
 > **TIP:** If you're new to GitHub or open source you can check out this [free course](https://egghead.io/courses/how-to-contribute-to-an-open-source-project-on-github) on how to contribute to an open source project.
 
@@ -39,7 +39,10 @@ Prior to merging your PR, you will need to sign the [JS Foundation CLA](https://
 Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://codecov.io/gh/marko-js/marko) has not decreased:
 
 ```
-npm run test-coverage
+npm run ci:test
+
+# to view the coverage report
+npm run report
 ```
 
 While developing you can run a single test group and use [grep](https://mochajs.org/#-g---grep-pattern) to filter the tests:
