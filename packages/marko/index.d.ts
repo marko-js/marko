@@ -364,5 +364,12 @@ declare global {
           | Body<any, infer Return>
       ? Return
       : never;
+
+    /** @deprecated @see {@link Marko.Input} */
+    export type NativeTagInput<Name extends keyof NativeTags> =
+      NativeTags[Name]["input"];
+    /** @deprecated @see {@link Marko.Return} */
+    export type NativeTagReturn<Name extends keyof NativeTags> =
+      NativeTags[Name]["return"];
   }
 }
