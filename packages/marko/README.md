@@ -9,6 +9,7 @@
 [![Continuous Integration status](https://github.com/marko-js/marko/actions/workflows/ci.yml/badge.svg)](https://github.com/marko-js/marko/actions/workflows/ci.yml)
 [![Code coverage %](https://codecov.io/gh/marko-js/marko/branch/master/graph/badge.svg)](https://codecov.io/gh/marko-js/marko)
 [![# of monthly downloads](https://img.shields.io/npm/dm/marko.svg)](https://npm-stat.com/charts.html?package=marko)
+[![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/7029/badge)](https://bestpractices.coreinfrastructure.org/projects/7029)
 
 [Docs](https://markojs.com/docs/getting-started/) ∙ [Try Online](https://markojs.com/try-online/) ∙ [Contribute](#contributors) ∙ [Get Support](#community--support)
 
