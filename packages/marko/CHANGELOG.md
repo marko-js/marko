@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.9
+
+### Patch Changes
+
+- [#1940](https://github.com/marko-js/marko/pull/1940) [`b31487946`](https://github.com/marko-js/marko/commit/b314879466046d0f06e22c30f93a306de189c72a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add back NativeTagInput and NativeTagReturn types as deprecated.
+
 ## 5.25.8
 
 ### Patch Changes
