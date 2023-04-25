@@ -2303,14 +2303,25 @@ declare global {
       key?: AttrString;
 
       /**
-       * Tells Marko to avoid updating the element or it's contents (excluding custom tags which may rerender independently).
+       * Tells Marko to avoid updating the element or its contents (excluding custom tags which may rerender independently).
        */
       "no-update"?: AttrBoolean;
 
       /**
-       * Tells Marko to avoid updating an elements contents (excluding custom tags which may rerender independently).
+       * Tells Marko to avoid updating an element's contents (excluding custom tags which may rerender independently). Used instead of no-update when runtime functionality is needed.
        */
       "no-update-if"?: AttrBoolean;
+
+      /**
+       * Tells Marko to avoid updating an element's body.
+       */
+      "no-update-body"?: AttrBoolean;
+
+      /**
+       * Tells Marko to avoid updating an element's body. Used instead of no-update-body when runtime functionality is needed.
+       * @see https://markojs.com/docs/syntax/#conditional-rendering
+       */
+      "no-update-body-if"?: AttrBoolean;
     }
 
     interface HTMLAttributes<T extends Element = Element>
