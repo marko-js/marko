@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.10
+
+### Patch Changes
+
+- [#1945](https://github.com/marko-js/marko/pull/1945) [`ce2ab4763`](https://github.com/marko-js/marko/commit/ce2ab47637a63cccc7adde2ea0adb2b59e38f258) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix(typescript): add no-update-body and no-update-body-if
+
 ## 5.25.9
 
 ### Patch Changes
