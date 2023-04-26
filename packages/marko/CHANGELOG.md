@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.25.11
+
+### Patch Changes
+
+- [#1947](https://github.com/marko-js/marko/pull/1947) [`7264e6ce6`](https://github.com/marko-js/marko/commit/7264e6ce6361c55ca73a25b9c2d2a36d4e48ee38) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve TS native tag event handler types
+
+  - add onToggle
+  - add onFormData
+  - move onSubmit into form
+
 ## 5.25.10
 
 ### Patch Changes
