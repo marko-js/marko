@@ -752,7 +752,7 @@ declare global {
       }
       interface FigCaption extends HTMLAttributes<HTMLElement> {}
       interface Figure extends HTMLAttributes<HTMLElement> {}
-      interface Form extends HTMLAttributes<HTMLElement> {
+      interface Form extends HTMLAttributes<HTMLFormElement> {
         /**
          * Specifies the character encodings that are to be used for the form submission.
          * @see https://html.spec.whatwg.org/multipage/forms.html#attr-form-accept-charset
@@ -824,14 +824,28 @@ declare global {
         target?: AttrTarget;
         /** @deprecated */
         accept?: AttrString;
+
+        /**
+         * Fired at a form element when it is constructing the entry list
+         * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
+         */
+        onFormData?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
+        "on-formdata"?: this["onFormData"];
+
+        /**
+         * Fired when a form is submitted, either by user interaction or through a script.
+         * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-submit
+         */
+        onSubmit?: AttrEventHandler<SubmitEvent, HTMLFormElement>;
+        "on-submit"?: this["onSubmit"];
       }
-      interface H1 extends HTMLAttributes<HTMLFormElement> {}
+      interface H1 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H2 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H3 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H4 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H5 extends HTMLAttributes<HTMLHeadingElement> {}
       interface H6 extends HTMLAttributes<HTMLHeadingElement> {}
-      interface Footer extends HTMLAttributes<HTMLHeadingElement> {}
+      interface Footer extends HTMLAttributes<HTMLElement> {}
       interface Head extends HTMLAttributes<HTMLHeadElement> {
         /** @deprecated */
         profile?: AttrString;
@@ -3078,13 +3092,6 @@ declare global {
       "on-stalled"?: this["onStalled"];
 
       /**
-       * Fired when a form is submitted, either by user interaction or through a script.
-       * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-submit
-       */
-      onSubmit?: AttrEventHandler<SubmitEvent, T>;
-      "on-submit"?: this["onSubmit"];
-
-      /**
        * Fired when the user agent intentionally does not download media data.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-suspend
        */
@@ -3097,6 +3104,13 @@ declare global {
        */
       onTimeUpdate?: AttrEventHandler<Event, T>;
       "on-timeupdate"?: this["onTimeUpdate"];
+
+      /**
+       * Fired at details elements when they open or close; fired on elements with the popover attribute when they are transitioning between showing and hidden
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-toggle
+       */
+      onToggle?: AttrEventHandler<Event, T>;
+      "on-toggle"?: this["onToggle"];
 
       /**
        * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
