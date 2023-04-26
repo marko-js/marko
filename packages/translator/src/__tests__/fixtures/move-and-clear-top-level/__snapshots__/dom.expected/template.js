@@ -10,7 +10,7 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [i
   return c.id;
 }]));
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = function () {};

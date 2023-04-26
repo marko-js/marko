@@ -23,7 +23,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _tagName(_scope, tagName, _dirty);
 };
-export { _tagName as _apply_tagName };
+export { _tagName };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = function () {};

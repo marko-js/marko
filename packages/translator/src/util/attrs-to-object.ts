@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import toPropertyName from "./to-property-name";
-import type { ReferenceGroup } from "./references";
+import type { References } from "./references";
 
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
@@ -8,7 +8,7 @@ export default function attrsToObject(
 ): t.Expression | undefined {
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
-  const resultExtra: { references?: ReferenceGroup } = (result.extra = {});
+  const resultExtra: { references?: References } = (result.extra = {});
 
   for (const attr of node.attributes) {
     const value = attr.value!;

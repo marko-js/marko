@@ -4,7 +4,7 @@ import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
 import {
   getClosures,
   getDestructureSignal,
-  getHydrateRegisterId,
+  getResumeRegisterId,
   getSignal,
   writeSignals,
 } from "../../util/signals";
@@ -23,13 +23,13 @@ export default {
       const attrsSignalIdentifier = t.identifier("attrs");
       const closuresIdentifier = t.identifier("closures");
       const { attrs } = program.node.extra;
-      const { walks, writes, apply } = writer.getSectionMeta(sectionId);
+      const { walks, writes, setup } = writer.getSectionMeta(sectionId);
 
       forEachSectionIdReverse((childSectionId) => {
         writeSignals(childSectionId);
 
         if (childSectionId !== sectionId) {
-          const { walks, writes, apply, register } =
+          const { walks, writes, setup, register } =
             writer.getSectionMeta(childSectionId);
           const closures = getClosures(childSectionId);
           const identifier = writer.getRenderer(childSectionId);
@@ -37,7 +37,7 @@ export default {
             "createRenderer",
             writes,
             walks,
-            apply,
+            setup,
             closures.length && t.arrayExpression(closures)
           );
           program.node.body.push(
@@ -48,7 +48,7 @@ export default {
                   ? callRuntime(
                       "register",
                       t.stringLiteral(
-                        getHydrateRegisterId(childSectionId, "renderer")
+                        getResumeRegisterId(childSectionId, "renderer")
                       ),
                       renderer
                     )
@@ -70,10 +70,7 @@ export default {
             bindingIdentifier.extra.reserve
           ).identifier;
           exportSpecifiers.push(
-            t.exportSpecifier(
-              signalIdentifier,
-              bindingIdentifier.extra!.reserve!.exportIdentifier!
-            )
+            t.exportSpecifier(signalIdentifier, signalIdentifier)
           );
         }
 
@@ -115,9 +112,9 @@ export default {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               setupIdentifier,
-              t.isNullLiteral(apply) || !apply
+              t.isNullLiteral(setup) || !setup
                 ? t.functionExpression(null, [], t.blockStatement([]))
-                : apply
+                : setup
             ),
           ])
         )

@@ -1,18 +1,18 @@
-import { on as _on, attr as _attr, queueSource as _queueSource, data as _data, intersection as _intersection, register as _register, queueHydrate as _queueHydrate, value as _value, closure as _closure, createRenderer as _createRenderer, loop as _loop, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, attr as _attr, queueSource as _queueSource, data as _data, intersection as _intersection, register as _register, queueEffect as _queueEffect, value as _value, closure as _closure, createRenderer as _createRenderer, loop as _loop, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_selected_num$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const selected = _scope._["selected"],
     num = _scope["num"];
   _attr(_scope["#button/0"], "data-selected", selected === num);
   _attr(_scope["#button/0"], "data-multiple", num % selected === 0);
 });
-const _hydrate_num$forBody = _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => _on(_scope["#button/0"], "click", function () {
+const _num$forBody_effect = _register("packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => _on(_scope["#button/0"], "click", function () {
   const num = _scope["num"];
   _queueSource(_scope._, _selected, num);
 }));
 const _num$forBody = /* @__PURE__ */_value("num", (_scope, num, _dirty) => {
   if (_dirty) {
     _data(_scope["#text/1"], num);
-    _queueHydrate(_scope, _hydrate_num$forBody);
+    _queueEffect(_scope, _num$forBody_effect);
   }
   _expr_selected_num$forBody(_scope, _dirty);
 });

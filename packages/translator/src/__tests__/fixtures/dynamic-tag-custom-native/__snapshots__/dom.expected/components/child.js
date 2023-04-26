@@ -7,7 +7,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _id(_scope, id, _dirty);
 };
-export { _id as _apply_id };
+export { _id };
 export const template = "<div>Id is <!></div>";
 export const walks = /* next(1), over(1), replace, out(1) */"Db%l";
 export const setup = function () {};

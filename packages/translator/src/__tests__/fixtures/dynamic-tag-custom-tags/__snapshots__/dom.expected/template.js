@@ -1,6 +1,6 @@
 import child1 from "./components/child1.marko";
 import child2 from "./components/child2.marko";
-import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_dynamicTagName_val = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _dynamicBody_attrs;
   if (_dirty) {
@@ -14,14 +14,14 @@ const _expr_dynamicTagName_val = /* @__PURE__ */_intersection(2, (_scope, _dirty
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));
 const _val = /* @__PURE__ */_value("val", (_scope, val, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));
-const _hydrate_tagName = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
+const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
   const tagName = _scope["tagName"];
   _queueSource(_scope, _tagName, tagName === child1 ? child2 : child1);
 }));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {
   let _dynamicTagName_value;
   if (_dirty) {
-    _queueHydrate(_scope, _hydrate_tagName);
+    _queueEffect(_scope, _tagName_effect);
     _dynamicTagName_value = tagName;
   }
   _dynamicTagName(_scope, _dynamicTagName_value, _dirty);

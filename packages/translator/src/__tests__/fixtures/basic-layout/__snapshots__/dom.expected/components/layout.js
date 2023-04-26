@@ -8,7 +8,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _renderBody(_scope, renderBody, _dirty);
 };
-export { _renderBody as _apply_renderBody };
+export { _renderBody };
 export const template = "<body><!></body>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};

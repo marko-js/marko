@@ -1,5 +1,5 @@
-import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _hydrate_x = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
+import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
   _lifecycle(_scope, "cleanup", {
     onMount: function () {
       this.onUpdate();
@@ -15,7 +15,7 @@ const _hydrate_x = _register("packages/translator/src/__tests__/fixtures/lifecyc
     _queueSource(_scope, _x, x + 1);
   });
 });
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueHydrate(_scope, _hydrate_x));
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect));
 const _setup = _scope => {
   _x(_scope, 0);
 };

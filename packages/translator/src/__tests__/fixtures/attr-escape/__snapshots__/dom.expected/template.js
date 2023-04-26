@@ -6,7 +6,7 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _attr(_scope["#div/0"], "nested", `a ${input.foo + ` nested ${input.bar}`} b`);
 });
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};

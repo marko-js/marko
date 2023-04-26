@@ -12,7 +12,7 @@ import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSectionId, getSectionId } from "../../util/sections";
 import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
-import { addStatement, addHTMLHydrateCall } from "../../util/signals";
+import { addStatement, addHTMLEffectCall } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { currentProgramPath, scopeIdentifier } from "../program";
@@ -177,7 +177,7 @@ export default {
                 write`${callRuntime(helper, value.node)}`;
               } else {
                 addStatement(
-                  "apply",
+                  "render",
                   sectionId,
                   valueReferences,
                   t.expressionStatement(
@@ -196,7 +196,7 @@ export default {
                 write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
                 if (isEventHandler(name)) {
-                  addHTMLHydrateCall(sectionId, valueReferences);
+                  addHTMLEffectCall(sectionId, valueReferences);
                 } else {
                   write`${callRuntime(
                     "attr",
@@ -206,7 +206,7 @@ export default {
                 }
               } else if (isEventHandler(name)) {
                 addStatement(
-                  "hydrate",
+                  "effect",
                   sectionId,
                   valueReferences,
                   t.expressionStatement(
@@ -221,7 +221,7 @@ export default {
                 );
               } else {
                 addStatement(
-                  "apply",
+                  "render",
                   sectionId,
                   valueReferences,
                   t.expressionStatement(

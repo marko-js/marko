@@ -65,7 +65,7 @@ const _setup = _scope => {
   _customTag(_scope["#childScope/2"]);
 };
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!>`;
 export const walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%b`;
 export const setup = _setup;

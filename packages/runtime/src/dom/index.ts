@@ -24,11 +24,11 @@ export { on } from "./event";
 
 export { staticNodesFragment, dynamicFragment } from "./fragment";
 
-export { init, register, hydrateSubscription } from "./hydrate";
+export { init, register, resumeSubscription } from "./resume";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queueSource, queueHydrate, run } from "./queue";
+export { queueSource, queueEffect, run } from "./queue";
 
 export { write, bindFunction, bindRenderer } from "./scope";
 

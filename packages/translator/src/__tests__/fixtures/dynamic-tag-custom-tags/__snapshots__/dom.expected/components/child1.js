@@ -7,7 +7,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _value(_scope, value, _dirty);
 };
-export { _value as _apply_value };
+export { _value };
 export const template = "<div>Child 1 has <!></div>";
 export const walks = /* next(1), over(1), replace, out(1) */"Db%l";
 export const setup = function () {};

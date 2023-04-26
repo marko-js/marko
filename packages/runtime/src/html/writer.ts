@@ -1,6 +1,6 @@
 import type { Writable } from "stream";
 import { Context, setContext, pushContext } from "../common/context";
-import { Renderer, HydrateSymbols, Accessor } from "../common/types";
+import { Renderer, ResumeSymbols, Accessor } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
@@ -91,7 +91,7 @@ export function maybeFlush() {
 }
 
 function flushToStream() {
-  writeHydrateScript();
+  writeResumeScript();
   $_stream!.write($_buffer!.content);
   if ($_stream!.flush) {
     $_stream!.flush();
@@ -281,7 +281,7 @@ export function markReplaceEnd(id: number) {
 }
 
 function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
-  let runtimeCall = runtimeId + HydrateSymbols.VAR_REORDER_RUNTIME;
+  let runtimeCall = runtimeId + ResumeSymbols.VAR_REORDER_RUNTIME;
   if (!$_streamData!.runtimeFlushed) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
     $_streamData!.runtimeFlushed = true;
@@ -305,11 +305,11 @@ export function peekNextScopeId() {
   return $_streamData!.scopeId;
 }
 
-export function writeHydrateCall(scopeId: number, fnId: string) {
+export function writeEffect(scopeId: number, fnId: string) {
   $_buffer!.calls += `${scopeId},"${fnId}",`;
 }
 
-export function writeHydrateScope(
+export function writeScope(
   scopeId: number,
   scope: PartialScope,
   assignTo?: PartialScope | PartialScope[]
@@ -326,32 +326,32 @@ export function writeHydrateScope(
   $_streamData!.scopeLookup.set(scopeId, scope);
 }
 
-export function markHydrateNode(scopeId: number, index: Accessor) {
+export function markResumeNode(scopeId: number, index: Accessor) {
   // TODO: can we only include the scope id when it differs from the prvious node marker?
-  return `<!${runtimeId}${HydrateSymbols.NODE}${scopeId} ${index}>`;
+  return `<!${runtimeId}${ResumeSymbols.NODE}${scopeId} ${index}>`;
 }
 
-export function markHydrateScopeStart(scopeId: number, key?: string) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_START}${scopeId}${
+export function markResumeScopeStart(scopeId: number, key?: string) {
+  return `<!${runtimeId}${ResumeSymbols.SECTION_START}${scopeId}${
     key ? " " + key : ""
   }>`;
 }
 
-export function markHydrateControlEnd(scopeId: number, index: Accessor) {
-  return `<!${runtimeId}${HydrateSymbols.SECTION_END}${scopeId} ${index}>`;
+export function markResumeControlEnd(scopeId: number, index: Accessor) {
+  return `<!${runtimeId}${ResumeSymbols.SECTION_END}${scopeId} ${index}>`;
 }
 
-export function markHydrateControlSingleNodeEnd(
+export function markResumeControlSingleNodeEnd(
   scopeId: number,
   index: Accessor,
   childScopeIds?: number | number[]
 ) {
   return `<!${runtimeId}${
-    HydrateSymbols.SECTION_SINGLE_NODES_END
+    ResumeSymbols.SECTION_SINGLE_NODES_END
   }${scopeId} ${index} ${childScopeIds ?? ""}>`;
 }
 
-function writeHydrateScript() {
+function writeResumeScript() {
   if ($_buffer!.calls || $_buffer!.scopes) {
     let isFirstFlush;
     let serializer = $_streamData!.serializer;
@@ -362,8 +362,8 @@ function writeHydrateScript() {
     }
     $_buffer!.content += `<script>${
       isFirstFlush
-        ? `(${runtimeId + HydrateSymbols.VAR_HYDRATE}=[])`
-        : runtimeId + HydrateSymbols.VAR_HYDRATE
+        ? `(${runtimeId + ResumeSymbols.VAR_RESUME}=[])`
+        : runtimeId + ResumeSymbols.VAR_RESUME
     }.push(${serializer.stringify($_buffer!.scopes)},[${
       $_buffer!.calls
     }])</script>`;

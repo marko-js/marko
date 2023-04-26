@@ -107,7 +107,7 @@ export function flushInto(
 export function getSectionMeta(sectionId: number) {
   const writes = getWrites(sectionId);
   return {
-    apply: getSetup(sectionId),
+    setup: getSetup(sectionId),
     walks: getWalkString(sectionId),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
     register: getRegisterRenderer(sectionId),
@@ -126,7 +126,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
 
   if (isOutputHTML()) {
     writeTo(path)`${callRuntime(
-      "markHydrateNode",
+      "markResumeNode",
       getScopeIdIdentifier(sectionId),
       getNodeLiteral(reserve!)
     )}`;

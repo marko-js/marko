@@ -1,6 +1,6 @@
 import child1 from "./components/child1.marko";
 import child2 from "./components/child2.marko";
-import { dynamicTag as _dynamicTag, markHydrateControlEnd as _markHydrateControlEnd, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, writeHydrateCall as _writeHydrateCall, writeHydrateScope as _writeHydrateScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const tagName = child1;
@@ -8,9 +8,9 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   const _dynamicScope = _dynamicTag(tagName, {
     value: val
   });
-  _write(`${_markHydrateControlEnd(_scope0_id, "#text/0")}<button></button>${_markHydrateNode(_scope0_id, "#button/1")}`);
-  _writeHydrateCall(_scope0_id, "packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName");
-  _writeHydrateScope(_scope0_id, {
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}<button></button>${_markResumeNode(_scope0_id, "#button/1")}`);
+  _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName");
+  _writeScope(_scope0_id, {
     "tagName": tagName,
     "val": val,
     "#text/0!": _dynamicScope,

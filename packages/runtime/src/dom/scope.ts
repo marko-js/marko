@@ -1,4 +1,4 @@
-import { queueHydrate } from "./queue";
+import { queueEffect } from "./queue";
 import type { Scope, ScopeContext } from "../common/types";
 import type { Renderer } from "./renderer";
 
@@ -71,7 +71,7 @@ export function destroyScope(scope: Scope) {
       if (typeof instance === "object") {
         destroyScope(instance);
       } else {
-        queueHydrate(scope, scope[instance] as () => void);
+        queueEffect(scope, scope[instance] as () => void);
       }
     }
   }

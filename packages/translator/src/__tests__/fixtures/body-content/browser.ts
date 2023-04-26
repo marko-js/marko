@@ -2,7 +2,7 @@ import {
   data,
   createRenderFn,
   on,
-  queueHydrate,
+  queueEffect,
   queueSource,
   bindRenderer,
   Scope,
@@ -10,7 +10,7 @@ import {
   createRenderer,
   conditional,
   dynamicSubscribers,
-  hydrateSubscription,
+  resumeSubscription,
   value,
   bindFunction,
 } from "@marko/runtime-fluurt/src/dom";
@@ -60,10 +60,10 @@ const FancyButton$renderBody = value(
 );
 
 const FancyButton$onclick = value(FancyButton$Index.ON_CLICK, (_scope) => {
-  queueHydrate(_scope, FancyButton$onclick_hydrate);
+  queueEffect(_scope, FancyButton$onclick_resume);
 });
 
-export const FancyButton$onclick_hydrate = (scope: Scope) => {
+export const FancyButton$onclick_resume = (scope: Scope) => {
   const onclick = scope[FancyButton$Index.ON_CLICK];
 
   on(scope[FancyButton$Index.BUTTON], "click", onclick);
@@ -135,7 +135,7 @@ const enum RenderBody$Index {
 //   [RenderBody$Index.TEXT]: Text;
 // }>;
 
-export const subscribe_clickCount$renderBody = hydrateSubscription(
+export const subscribe_clickCount$renderBody = resumeSubscription(
   clickCount$renderBody,
   Index.CLICK_COUNT
 );

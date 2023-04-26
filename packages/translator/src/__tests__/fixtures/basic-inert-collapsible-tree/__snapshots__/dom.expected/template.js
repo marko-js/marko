@@ -11,7 +11,7 @@ const _setup = _scope => {
   _comments(_scope["#childScope/0"]);
 };
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = `${_comments_template}`;
 export const walks = /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`;
 export const setup = _setup;

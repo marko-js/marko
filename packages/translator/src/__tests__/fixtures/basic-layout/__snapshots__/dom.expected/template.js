@@ -16,7 +16,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _name(_scope, name, _dirty);
 };
-export { _name as _apply_name };
+export { _name };
 export const template = `${_layout_template}`;
 export const walks = /* beginChild, _layout_walks, endChild */`/${_layout_walks}&`;
 export const setup = _setup;

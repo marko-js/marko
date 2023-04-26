@@ -1,10 +1,6 @@
 import type { types as t } from "@marko/compiler";
 import type { Tag } from "@marko/babel-utils";
-import {
-  getReferenceGroup,
-  trackReferencesForBindings,
-} from "../util/references";
-import { ReserveType } from "../util/reserve";
+import { trackReferencesForBindings } from "../util/references";
 import { getOrCreateSectionId } from "../util/sections";
 import { currentProgramPath } from "../visitors/program";
 import { initValue } from "../util/signals";
@@ -26,16 +22,7 @@ export default {
         string,
         t.Identifier
       >;
-      const sectionId = getOrCreateSectionId(tag);
-      trackReferencesForBindings(sectionId, varPath, ReserveType.Store);
-      for (const key in bindings) {
-        const binding = bindings[key].extra!.reserve!;
-        binding!.exportIdentifier = getReferenceGroup(
-          sectionId,
-          binding,
-          true
-        ).apply;
-      }
+      trackReferencesForBindings(getOrCreateSectionId(tag), varPath);
       (currentProgramPath.node.extra ??= {}).attrs = {
         bindings,
         var: varPath.node!,
@@ -62,47 +49,3 @@ export default {
     },
   ],
 } as Tag;
-
-/*
-function getPathsToId(varNode:t.Identifier | t.ObjectPattern) {
-  if (t.isIdentifier(varNode)) {
-    return varNode.extra!.reserve!.fnId;
-  } else {
-    const paths = {};
-    for (const property of varNode.properties) {
-      if (t.isRestElement(property)) {
-
-      } else {
-        paths[property.key.name] = getPathsToId(property.value);
-      }
-    }
-    return paths;
-  }
-}
-
-type AttributeMeta = {
-  children: Record<string, AttributeMeta>;
-  rest?: AttributeMeta;
-  pattern: t.ObjectPattern | t.Identifier;
-  fnId?: string;
-}
-
-
-// <div a=x/>
-// child: <attrs/{ a }/>
-const _apply_x(x) {
-  _applyChild_a(x);
-}
-
-// <div a=x/>
-// child: <attrs/{ b, ...rest }/>
-const _apply_x(x) {
-  _applyChild_rest({ a: x });
-}
-
-// <div a={ b: x }/>
-// child: <attrs/{ a: { b: c } }/>
-const _apply_x(x) {
-  _applyChild_c(x);
-}
-*/

@@ -6,9 +6,9 @@ import {
   getSignalFn,
   getSignal,
   setSubscriberBuilder,
-  writeHTMLHydrateStatements,
+  writeHTMLResumeStatements,
   getSerializedScopeProperties,
-  getHydrateRegisterId,
+  getResumeRegisterId,
   addValue,
   getClosures,
   setRegisterScopeBuilder,
@@ -26,7 +26,7 @@ import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
-import { mergeReferenceGroups, ReferenceGroup } from "../../util/references";
+import { mergeReferences, References } from "../../util/references";
 import { dirtyIdentifier, scopeIdentifier } from "../../visitors/program";
 
 export default {
@@ -132,14 +132,14 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
   const [isLast, branches] = getBranches(tag, bodySectionId);
   if (isLast) {
     const rootExtra = branches[0].tag.node.extra;
-    const conditionalReferences = mergeReferenceGroups(
+    const conditionalReferences = mergeReferences(
       sectionId,
       branches
         .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
         .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"])
     );
     rootExtra.conditionalReferences = conditionalReferences;
-    rootExtra.isStateful = !!conditionalReferences.references;
+    rootExtra.isStateful = !!conditionalReferences;
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
@@ -159,7 +159,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
     if (isStateful) {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
-          "markHydrateScopeStart",
+          "markResumeScopeStart",
           getScopeIdIdentifier(bodySectionId)
         )}`;
       }
@@ -176,7 +176,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       );
     }
     writer.flushInto(tag);
-    writeHTMLHydrateStatements(tagBody);
+    writeHTMLResumeStatements(tagBody);
   }
 
   if (isLast) {
@@ -227,7 +227,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         branches.some((b) => getClosures(b.sectionId).length > 0);
       addValue(
         sectionId,
-        extra.conditionalReferences as ReferenceGroup,
+        extra.conditionalReferences as References,
         signal,
         expr
       );
@@ -255,7 +255,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                   ifRendererIdentifier,
                   t.arrowFunctionExpression([], t.blockStatement([]))
                 ),
-                t.stringLiteral(getHydrateRegisterId(sectionId, "renderer"))
+                t.stringLiteral(getResumeRegisterId(sectionId, "renderer"))
               )
             ) as any
           );
@@ -302,14 +302,14 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         ]);
         if (singleNodeOptimization) {
           write`${callRuntime(
-            "markHydrateControlSingleNodeEnd",
+            "markResumeControlSingleNodeEnd",
             getScopeIdIdentifier(sectionId),
             getNodeLiteral(extra.reserve!),
             ifScopeIdIdentifier
           )}`;
         } else {
           write`${callRuntime(
-            "markHydrateControlEnd",
+            "markResumeControlEnd",
             getScopeIdIdentifier(sectionId),
             getNodeLiteral(extra.reserve!)
           )}`;

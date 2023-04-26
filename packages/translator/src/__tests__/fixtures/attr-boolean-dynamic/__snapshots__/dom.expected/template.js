@@ -1,12 +1,12 @@
-import { attr as _attr, on as _on, queueSource as _queueSource, data as _data, register as _register, queueHydrate as _queueHydrate, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _hydrate_disabled = _register("packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled", _scope => _on(_scope["#button/1"], "click", function () {
+import { attr as _attr, on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _disabled_effect = _register("packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled", _scope => _on(_scope["#button/1"], "click", function () {
   const disabled = _scope["disabled"];
   _queueSource(_scope, _disabled, !disabled);
 }));
 const _disabled = /* @__PURE__ */_value("disabled", (_scope, disabled) => {
   _attr(_scope["#input/0"], "disabled", disabled);
   _data(_scope["#text/2"], disabled ? "enable" : "disable");
-  _queueHydrate(_scope, _hydrate_disabled);
+  _queueEffect(_scope, _disabled_effect);
 });
 const _setup = _scope => {
   _disabled(_scope, true);

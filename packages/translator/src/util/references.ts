@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
-import { createSortedCollection } from "./sorted-arr";
+import type { types as t } from "@marko/compiler";
+import { SortedRepeatable } from "./sorted-repeatable";
 import {
   getOrCreateSectionId,
   createSectionState,
@@ -9,8 +9,7 @@ import {
   Reserve,
   ReserveType,
   reserveScope,
-  compareReserves,
-  insertReserve,
+  repeatableReserves,
 } from "./reserve";
 import { currentProgramPath } from "../visitors/program";
 
@@ -22,62 +21,53 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoPlaceholder
 >;
 
-const [getReferenceGroups] = createSectionState<ReferenceGroup[]>(
-  "apply",
-  () => [
-    {
-      sectionId: 0,
-      index: 0,
-      count: 0,
-      references: undefined,
-      apply: t.identifier(""),
-      hydrate: t.identifier(""),
-    },
-  ]
-);
-export interface ReferenceGroup {
-  sectionId: number;
-  index: number;
-  count: number;
-  references: undefined | Reserve | Reserve[];
-  apply: t.Identifier;
-  hydrate: t.Identifier;
+const intersectionSubscribeCounts = new WeakMap<Reserve[], number>();
+const repeatableIntersections = new SortedRepeatable(compareIntersections);
+const [getIntersectionsBySection, setIntersectionsBySection] =
+  createSectionState<Intersection[]>("intersectionsBySection", () => []);
+
+export interface IntersectionsBySection {
+  [sectionId: number]: Intersection[];
 }
+export type Intersection = Reserve[];
+export type References = undefined | Reserve | Intersection;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    referenceGroups?: ReferenceGroup[][];
+    intersectionsBySection?: IntersectionsBySection;
   }
 
+  // TODO: remove
   export interface FunctionExpressionExtra {
-    references?: ReferenceGroup;
+    references?: References;
     name?: string;
   }
 
+  // TODO: remove
   export interface ArrowFunctionExpressionExtra {
-    references?: ReferenceGroup;
+    references?: References;
     name?: string;
   }
 
   export interface MarkoTagExtra {
-    varReferences?: ReferenceGroup;
-    nameReferences?: ReferenceGroup;
+    varReferences?: References;
+    nameReferences?: References;
   }
 
   export interface MarkoTagBodyExtra {
-    paramsReferences?: ReferenceGroup;
+    paramsReferences?: References;
   }
 
   export interface MarkoAttributeExtra {
-    valueReferences?: ReferenceGroup;
+    valueReferences?: References;
   }
 
   export interface MarkoSpreadAttributeExtra {
-    valueReferences?: ReferenceGroup;
+    valueReferences?: References;
   }
 
   export interface MarkoPlaceholderExtra {
-    valueReferences?: ReferenceGroup;
+    valueReferences?: References;
   }
 }
 
@@ -94,8 +84,7 @@ export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
 
 export function trackReferencesForBindings(
   sectionId: number,
-  path: t.NodePath<any>,
-  reserveType: ReserveType = ReserveType.Store
+  path: t.NodePath<any>
 ) {
   const scope = path.scope;
   const bindings = path.getBindingIdentifiers() as unknown as Record<
@@ -115,16 +104,12 @@ export function trackReferencesForBindings(
         )
     );
     const identifier = bindings[name];
-    const binding = reserveScope(reserveType, sectionId, identifier, name);
-
-    insertReferenceGroup(getReferenceGroups(sectionId), {
+    const binding = reserveScope(
+      ReserveType.Store,
       sectionId,
-      index: 0,
-      count: 0,
-      references: binding,
-      apply: t.identifier(""),
-      hydrate: t.identifier(""),
-    });
+      identifier,
+      name
+    );
 
     for (const reference of references) {
       const fnRoot = getFnRoot(reference.scope.path);
@@ -132,6 +117,7 @@ export function trackReferencesForBindings(
       const markoRoot = exprRoot.parentPath;
       const immediateRoot = fnRoot ?? exprRoot;
 
+      // TODO: remove
       if (immediateRoot) {
         const name = (immediateRoot.node as t.FunctionExpression).id?.name;
 
@@ -141,10 +127,10 @@ export function trackReferencesForBindings(
           }
         }
 
-        updateReferenceGroup(immediateRoot, "references", binding);
+        addBindingToReferences(immediateRoot, "references", binding);
       }
 
-      updateReferenceGroup(
+      addBindingToReferences(
         markoRoot,
         `${exprRoot.listKey || exprRoot.key}References`,
         binding
@@ -153,82 +139,57 @@ export function trackReferencesForBindings(
   }
 }
 
-export function updateReferenceGroup(
+export function addBindingToReferences(
   path: t.NodePath,
-  extraKey: string,
-  newBinding: Reserve
+  referencesKey: string,
+  binding: Reserve
 ) {
   const sectionId = getOrCreateSectionId(path);
-  const currentGroup = (path.node.extra ??= {})[extraKey] as
-    | ReferenceGroup
-    | undefined;
-  const newReferences = insertReserve(
-    currentGroup?.references,
-    newBinding,
-    true
-  );
+  const extra = (path.node.extra ??= {});
+  const prevReferences = extra[referencesKey] as References | undefined;
 
-  if (currentGroup) {
-    currentGroup.count--;
+  if (prevReferences) {
+    if (prevReferences !== binding) {
+      extra[referencesKey] = addSubscriber(
+        getIntersection(
+          sectionId,
+          repeatableReserves.add(
+            repeatableReserves.clone(prevReferences),
+            binding
+          )
+        )
+      );
+
+      if (isIntersection(prevReferences)) {
+        removeSubscriber(getIntersection(sectionId, prevReferences));
+      }
+    }
+  } else {
+    extra[referencesKey] = binding;
   }
-
-  getOrCreateReferenceGroup(sectionId, newBinding);
-
-  path.node.extra![extraKey] = getOrCreateReferenceGroup(
-    sectionId,
-    newReferences
-  );
 }
 
-export function mergeReferenceGroups(
+export function mergeReferences(
   sectionId: number,
   groupEntries: [Record<string, unknown>, string][]
 ) {
-  let newReferences: ReferenceGroup["references"];
+  let newReferences: References;
   for (const [extra, key] of groupEntries) {
-    const group = extra[key] as ReferenceGroup;
-    const references = group.references;
-    delete extra[key];
-    group.count--;
-    sectionId = group.sectionId;
+    const references = extra[key] as References;
 
-    if (references) {
-      if (Array.isArray(references)) {
-        for (const binding of references) {
-          newReferences = insertReserve(newReferences, binding);
-        }
-      } else {
-        newReferences = insertReserve(newReferences, references);
-      }
+    if (isIntersection(references)) {
+      removeSubscriber(getIntersection(sectionId, references));
     }
+
+    newReferences = repeatableReserves.addAll(newReferences, references);
+    delete extra[key];
   }
 
-  return getOrCreateReferenceGroup(sectionId, newReferences);
-}
-
-function getOrCreateReferenceGroup(
-  sectionId: number,
-  references: ReferenceGroup["references"]
-) {
-  const newGroup: ReferenceGroup = {
-    sectionId,
-    index: 0,
-    count: 1,
-    references,
-    apply: t.identifier(""),
-    hydrate: t.identifier(""),
-  };
-
-  const referenceGroups = getReferenceGroups(sectionId);
-  const existingGroup = findReferenceGroup(referenceGroups, newGroup);
-
-  if (existingGroup) {
-    existingGroup.count++;
-  } else {
-    insertReferenceGroup(referenceGroups, newGroup);
+  if (isIntersection(newReferences)) {
+    newReferences = addSubscriber(getIntersection(sectionId, newReferences));
   }
 
-  return existingGroup ?? newGroup;
+  return newReferences;
 }
 
 function getExprRoot(path: t.NodePath<t.Node>) {
@@ -286,116 +247,68 @@ function isFunctionExpression(
  * reference group priority is sorted by number of references,
  * then if needed by reference order.
  */
-const { insert: insertReferenceGroup, find: findReferenceGroup } =
-  createSortedCollection(function compareReferenceGroups(
-    { references: a }: ReferenceGroup,
-    { references: b }: ReferenceGroup
-  ) {
-    if (a) {
-      if (b) {
-        if (Array.isArray(a)) {
-          if (Array.isArray(b)) {
-            const len = a.length;
-            const lenDelta = len - b.length;
-            if (lenDelta !== 0) {
-              return lenDelta;
-            }
+function compareIntersections(a: Intersection, b: Intersection) {
+  const len = a.length;
+  const lenDelta = len - b.length;
+  if (lenDelta !== 0) {
+    return lenDelta;
+  }
 
-            for (let i = 0; i < len; i++) {
-              const compareResult = compareReserves(a[i], b[i]);
-              if (compareResult !== 0) {
-                return compareResult;
-              }
-            }
-
-            return 0;
-          } else {
-            return 1;
-          }
-        } else if (Array.isArray(b)) {
-          return -1;
-        } else {
-          return compareReserves(a, b);
-        }
-      } else {
-        return 1;
-      }
-    } else {
-      return b ? -1 : 0;
+  for (let i = 0; i < len; i++) {
+    const compareResult = repeatableReserves.compare(a[i], b[i]);
+    if (compareResult !== 0) {
+      return compareResult;
     }
-  });
+  }
 
-export function finalizeReferences() {
-  const allReferenceGroups: ReferenceGroup[][] = [];
+  return 0;
+}
+
+export function finalizeIntersections() {
+  const intersectionsBySection: IntersectionsBySection =
+    ((currentProgramPath.node.extra ??= {}).intersectionsBySection = {});
   forEachSectionId((sectionId) => {
-    const referenceGroups = getReferenceGroups(sectionId).filter(
-      (g) => g.count > 0 || !Array.isArray(g.references)
+    intersectionsBySection[sectionId] = getIntersectionsBySection(
+      sectionId
+    ).filter(
+      (intersection) => intersectionSubscribeCounts.get(intersection)! > 0
     );
-    referenceGroups.forEach((g, i) => {
-      g.index = i;
-      g.apply.name = generateReferenceGroupName(
-        "apply",
-        sectionId,
-        g.references
-      );
-      g.hydrate.name = generateReferenceGroupName(
-        "hydrate",
-        sectionId,
-        g.references
-      );
-    });
-    allReferenceGroups[sectionId] = referenceGroups;
   });
-  (currentProgramPath.node.extra ??= {}).referenceGroups = allReferenceGroups;
 }
 
-export function getReferenceGroup(
-  sectionId: number,
-  lookup: number | ReferenceGroup["references"],
-  analyze = false
-) {
-  const referenceGroups = analyze
-    ? getReferenceGroups(sectionId)
-    : currentProgramPath.node.extra!.referenceGroups![sectionId];
-  let found: ReferenceGroup | undefined;
-  if (typeof lookup === "number") {
-    found = referenceGroups[lookup];
-  } else {
-    found = findReferenceGroup(referenceGroups, {
-      references: lookup,
-    } as ReferenceGroup);
-  }
+function getIntersection(sectionId: number, references: Intersection) {
+  const intersections = getIntersectionsBySection(sectionId);
+  let intersection = repeatableIntersections.find(intersections, references);
 
-  if (!found) {
-    throw new Error(
-      `Reference group not found for section ${sectionId}: ${lookup}`
+  if (!intersection) {
+    intersection = references;
+    setIntersectionsBySection(
+      sectionId,
+      repeatableIntersections.add(intersections, references)
     );
   }
 
-  return found;
+  return intersection;
 }
 
-function generateReferenceGroupName(
-  type: "apply" | "hydrate",
-  sectionId: number,
-  references: ReferenceGroup["references"]
-) {
-  let name =
-    type +
-    (sectionId
-      ? currentProgramPath.node.extra.sectionNames![sectionId].replace("_", "$")
-      : "");
+function addSubscriber(intersection: Intersection) {
+  intersectionSubscribeCounts.set(
+    intersection,
+    (intersectionSubscribeCounts.get(intersection) || 0) + 1
+  );
 
-  if (references) {
-    if (Array.isArray(references)) {
-      name += "With";
-      for (const ref of references) {
-        name += `_${ref.name}`;
-      }
-    } else {
-      name += `_${references.name}`;
-    }
-  }
+  return intersection;
+}
 
-  return currentProgramPath.scope.generateUid(name);
+function removeSubscriber(intersection: Intersection) {
+  intersectionSubscribeCounts.set(
+    intersection,
+    intersectionSubscribeCounts.get(intersection)! - 1
+  );
+
+  return intersection;
+}
+
+function isIntersection(references: References): references is Intersection {
+  return Array.isArray(references);
 }

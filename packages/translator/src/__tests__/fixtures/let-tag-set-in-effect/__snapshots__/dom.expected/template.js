@@ -1,13 +1,13 @@
-import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
-const _hydrate_x = _register("packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x", _scope => {
+const _x_effect = _register("packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x", _scope => {
   const x = _scope["x"];
   _queueSource(_scope, _y, x);
   _queueSource(_scope, _x, 2);
 });
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/0"], x);
-  _queueHydrate(_scope, _hydrate_x);
+  _queueEffect(_scope, _x_effect);
 });
 const _setup = _scope => {
   _x(_scope, 1);

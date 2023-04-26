@@ -13,7 +13,7 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _if3(_scope, input.x ? _ifBody3 : input.y ? _elseIfBody : _elseBody);
 });
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<!><!><div><!></div>";
 export const walks = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"%b%bD%l";
 export const setup = function () {};

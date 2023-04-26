@@ -24,11 +24,7 @@ import {
   reserveScope,
   ReserveType,
 } from "../../util/reserve";
-import {
-  mergeReferenceGroups,
-  ReferenceGroup,
-  updateReferenceGroup,
-} from "../../util/references";
+import { mergeReferences, addBindingToReferences } from "../../util/references";
 import customTag from "./custom-tag";
 import {
   currentProgramPath,
@@ -50,13 +46,13 @@ export default {
       customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      tag.node.extra.attrsReferences = mergeReferenceGroups(
+      tag.node.extra.attrsReferences = mergeReferences(
         getOrCreateSectionId(tag),
         tag.node.attributes
           .filter((attr) => attr.extra?.valueReferences)
           .map((attr) => [attr.extra, "valueReferences"])
       );
-      updateReferenceGroup(tag, "attrsReferences", tag.node.extra.reserve!);
+      addBindingToReferences(tag, "attrsReferences", tag.node.extra.reserve!);
     },
   },
   translate: {
@@ -109,7 +105,7 @@ export default {
         }
         const sectionId = getSectionId(tag);
         writer.writeTo(tag)`${callRuntime(
-          "markHydrateControlEnd",
+          "markResumeControlEnd",
           getScopeIdIdentifier(sectionId),
           getNodeLiteral(node.extra.reserve!)
         )}`;
@@ -139,7 +135,7 @@ export default {
         };
         addValue(
           sectionId,
-          node.extra?.nameReferences as ReferenceGroup,
+          node.extra?.nameReferences,
           signal,
           renderBodyIdentifier
             ? t.logicalExpression("||", node.name, renderBodyIdentifier)
@@ -149,10 +145,7 @@ export default {
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {
           const name = currentProgramPath.node.extra.sectionNames![sectionId];
-          const signal = getSignal(
-            sectionId,
-            node.extra?.attrsReferences?.references
-          );
+          const signal = getSignal(sectionId, node.extra?.attrsReferences);
           const attrsGetter = t.arrowFunctionExpression(
             [],
             attrsObject ?? t.objectExpression([])

@@ -1,9 +1,9 @@
-import { dynamicTag as _dynamicTag, markHydrateControlEnd as _markHydrateControlEnd, write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const _dynamicScope = _dynamicTag(input.renderBody, null);
-  _write(`${_markHydrateControlEnd(_scope0_id, "#text/0")}`);
-  _writeHydrateScope(_scope0_id, {
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _writeScope(_scope0_id, {
     "#text/0!": _dynamicScope,
     "#text/0(": input.renderBody
   }, _scope0_);

@@ -68,7 +68,7 @@ export default {
         writer.markNode(placeholder);
       } else {
         addStatement(
-          "apply",
+          "render",
           getSectionId(placeholder),
           valueReferences,
           t.expressionStatement(

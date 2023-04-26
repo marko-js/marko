@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, markHydrateControlSingleNodeEnd as _markHydrateControlSingleNodeEnd, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = _register(({
   value
 }, _tagVar, _scope0_) => {
@@ -7,15 +7,15 @@ const _renderer = _register(({
   let _ifScopeId, _scope1_, _ifRenderer;
   if (value) {
     const _scope1_id = _nextScopeId();
-    _write(`<span>${_escapeXML(value)}${_markHydrateNode(_scope1_id, "#text/0")}</span>`);
-    _writeHydrateScope(_scope1_id, _scope1_ = {
+    _write(`<span>${_escapeXML(value)}${_markResumeNode(_scope1_id, "#text/0")}</span>`);
+    _writeScope(_scope1_id, _scope1_ = {
       [_SYMBOL_OWNER]: _scope0_id
     });
     _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<span></span><span></span></div>`);
-  _writeHydrateScope(_scope0_id, {
+  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<span></span><span></span></div>`);
+  _writeScope(_scope0_id, {
     "#text/0!": _scope1_,
     "#text/0(": _ifRenderer
   }, _scope0_);

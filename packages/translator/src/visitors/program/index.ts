@@ -8,7 +8,7 @@ import programHTML from "./html";
 import programDOM from "./dom";
 import { startSection } from "../../util/sections";
 import { assignFinalIds } from "../../util/reserve";
-import { finalizeReferences } from "../../util/references";
+import { finalizeIntersections } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 
 export let currentProgramPath: t.NodePath<t.Program>;
@@ -41,7 +41,7 @@ export default {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit() {
       assignFinalIds();
-      finalizeReferences();
+      finalizeIntersections();
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },

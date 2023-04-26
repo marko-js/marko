@@ -1,28 +1,28 @@
-import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_count_multiplier = /* @__PURE__ */_intersection(2, _scope => {
   const count = _scope["count"],
     multiplier = _scope["multiplier"];
   _multipliedCount(_scope, count * multiplier);
 });
 const _multipliedCount = /* @__PURE__ */_value("multipliedCount", (_scope, multipliedCount) => _data(_scope["#text/3"], multipliedCount));
-const _hydrate_multiplier = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _on(_scope["#button/0"], "click", function () {
+const _multiplier_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _on(_scope["#button/0"], "click", function () {
   const multiplier = _scope["multiplier"];
   _queueSource(_scope, _multiplier, multiplier + 1);
 }));
 const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier, _dirty) => {
   if (_dirty) {
     _data(_scope["#text/1"], multiplier);
-    _queueHydrate(_scope, _hydrate_multiplier);
+    _queueEffect(_scope, _multiplier_effect);
   }
   _expr_count_multiplier(_scope, _dirty);
 });
-const _hydrate_count = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", function () {
+const _count_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", function () {
   const count = _scope["count"];
   _queueSource(_scope, _count, count + 1);
 }));
 const _count = /* @__PURE__ */_value("count", (_scope, count, _dirty) => {
   if (_dirty) {
-    _queueHydrate(_scope, _hydrate_count);
+    _queueEffect(_scope, _count_effect);
   }
   _expr_count_multiplier(_scope, _dirty);
 });

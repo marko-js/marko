@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import type { ReferenceGroup } from "./references";
+import type { References } from "./references";
 import {
   getSectionId,
   createSectionState,
@@ -7,7 +7,12 @@ import {
   getScopeIdIdentifier,
   getScopeIdentifier,
 } from "./sections";
-import { Reserve, insertReserve, getNodeLiteral, ReserveType } from "./reserve";
+import {
+  Reserve,
+  repeatableReserves,
+  getNodeLiteral,
+  ReserveType,
+} from "./reserve";
 import {
   currentProgramPath,
   dirtyIdentifier,
@@ -39,8 +44,8 @@ export type Signal = {
   intersectionDeclarations: t.VariableDeclarator[];
   intersection: t.Statement[];
   render: t.Statement[];
-  hydrate: t.Statement[];
-  hydrateInlineReferences: undefined | Reserve | Reserve[];
+  effect: t.Statement[];
+  effectInlineReferences: undefined | Reserve | Reserve[];
   closures: Map<number /* sectionId */, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
@@ -83,11 +88,11 @@ export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
   () => []
 );
 
-const [forceHydrateScope, _setForceHydrateScope] = createSectionState<
+const [forceResumeScope, _setForceResumeScope] = createSectionState<
   undefined | true
->("forceHydrateScope");
-export function setForceHydrateScope(sectionId: number) {
-  _setForceHydrateScope(sectionId, true);
+>("forceResumeScope");
+export function setForceResumeScope(sectionId: number) {
+  _setForceResumeScope(sectionId, true);
 }
 export const [getSerializedScopeProperties] = createSectionState<
   Map<t.Expression, t.Expression>
@@ -104,17 +109,11 @@ export function setRegisterScopeBuilder(
 }
 
 export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
-  const key = !Array.isArray(reserve)
-    ? reserve
-    : reserve
-        .map((r) => `${r.sectionId}/${r.id}`)
-        .sort()
-        .join("-");
   const signals = getSignals(sectionId);
-  let signal = signals.get(key)!;
+  let signal = signals.get(reserve)!;
   if (!signal) {
     signals.set(
-      key,
+      reserve,
       (signal = {
         identifier: t.identifier(generateSignalName(sectionId, reserve)),
         reserve,
@@ -123,8 +122,8 @@ export function getSignal(sectionId: number, reserve?: Reserve | Reserve[]) {
         intersectionDeclarations: [],
         intersection: [],
         render: [],
-        hydrate: [],
-        hydrateInlineReferences: undefined,
+        effect: [],
+        effectInlineReferences: undefined,
         subscribers: [],
         closures: new Map(),
         hasDownstreamIntersections: () => {
@@ -204,7 +203,7 @@ export function initValue(
 export function initContextProvider(
   templateId: string,
   reserve: Reserve,
-  providers: ReferenceGroup | undefined,
+  providers: References,
   compute: t.Expression,
   renderer: t.Identifier
 ) {
@@ -230,7 +229,7 @@ export function initContextProvider(
   );
 
   addStatement(
-    "apply",
+    "render",
     reserve.sectionId,
     undefined,
     t.expressionStatement(
@@ -281,7 +280,7 @@ export function addIntersectionWithGuardedValue(
 export function getSignalFn(
   signal: Signal,
   params: Array<t.Identifier | t.Pattern>,
-  references?: undefined | Reserve | Reserve[]
+  references?: References
 ) {
   const isSetup = !signal.reserve;
   const sectionId = signal.sectionId;
@@ -388,14 +387,13 @@ export function getSignalFn(
 }
 
 export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
-  const identifiers = Object.values(
-    varPath.getBindingIdentifiers()
-  ) as t.Identifier[];
-
-  if (identifiers.length === 1) {
-    return initValue(identifiers[0].extra.reserve!);
-  } else if (identifiers.length > 1) {
-    return getDestructureSignal(identifiers, varPath.node!)!;
+  if (varPath.isIdentifier()) {
+    return initValue(varPath.node.extra.reserve!);
+  } else {
+    return getDestructureSignal(
+      Object.values(varPath.getBindingIdentifiers()) as t.Identifier[],
+      varPath.node!
+    )!;
   }
 }
 
@@ -581,31 +579,29 @@ export function finalizeSignalArgs(args: t.Expression[]) {
   }
 }
 export function addStatement(
-  type: "hydrate",
+  type: "effect",
   targetSectionId: number,
-  references: ReferenceGroup | undefined,
+  references: References,
   statement: t.Statement | t.Statement[],
   originalNodes: t.Expression | t.Expression[],
   isInlined?: boolean
 ): void;
 export function addStatement(
-  type: "apply" | "intersection",
+  type: "render",
   targetSectionId: number,
-  references: ReferenceGroup | undefined,
+  references: References,
   statement: t.Statement | t.Statement[]
 ): void;
 export function addStatement(
-  // TODO: rename "apply" to "render"
-  type: "apply" | "hydrate" | "intersection",
+  type: "render" | "effect",
   targetSectionId: number,
-  references: ReferenceGroup | undefined,
+  references: References,
   statement: t.Statement | t.Statement[],
   originalNodes?: t.Expression | t.Expression[],
   isInlined?: boolean
 ): void {
-  const reserve = references?.references;
-  const signal = getSignal(targetSectionId, reserve);
-  const statements = (signal[type === "apply" ? "render" : type] ??= []);
+  const signal = getSignal(targetSectionId, references);
+  const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -613,16 +609,16 @@ export function addStatement(
     statements.push(statement);
   }
 
-  if (type === "hydrate") {
+  if (type === "effect") {
     if (Array.isArray(originalNodes)) {
       for (const node of originalNodes) {
         if (isInlined || !t.isFunction(node)) {
-          addHydrateReferences(signal, node);
+          addEffectReferences(signal, node);
         }
       }
     } else {
       if (isInlined || !t.isFunction(originalNodes)) {
-        addHydrateReferences(signal, originalNodes!);
+        addEffectReferences(signal, originalNodes!);
       }
     }
   }
@@ -630,35 +626,24 @@ export function addStatement(
 
 export function addValue(
   targetSectionId: number,
-  references: ReferenceGroup | undefined,
+  references: References,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
   scope: t.Expression = scopeIdentifier
 ) {
-  const reserve = references?.references;
-  const targetSignal = getSignal(targetSectionId, reserve);
-  targetSignal.values.push({ signal, value, scope });
+  getSignal(targetSectionId, references).values.push({ signal, value, scope });
 }
 
-export function addHydrateReferences(signal: Signal, expression: t.Expression) {
-  const references = (expression as t.FunctionExpression).extra?.references
-    ?.references;
-  let refs = signal.hydrateInlineReferences;
-  if (references) {
-    if (Array.isArray(references)) {
-      for (const ref of references) {
-        refs = insertReserve(refs, ref);
-      }
-    } else {
-      refs = insertReserve(refs, references as Reserve);
-    }
-  }
-  signal.hydrateInlineReferences = refs;
+export function addEffectReferences(signal: Signal, expression: t.Expression) {
+  signal.effectInlineReferences = repeatableReserves.addAll(
+    signal.effectInlineReferences,
+    (expression as t.FunctionExpression).extra?.references
+  );
 }
 
-export function getHydrateRegisterId(
+export function getResumeRegisterId(
   sectionId: number,
-  references: string | ReferenceGroup["references"]
+  references: string | References
 ) {
   const {
     markoOpts: { optimize },
@@ -684,46 +669,45 @@ export function writeSignals(sectionId: number) {
   const declarations = Array.from(signals.values())
     .sort(sortSignals)
     .flatMap((signal) => {
-      let hydrateDeclarator;
-      if (signal.hydrate.length) {
-        const hydrateIdentifier = t.identifier(
-          "_hydrate" + signal.identifier.name
+      let effectDeclarator;
+      if (signal.effect.length) {
+        const effectIdentifier = t.identifier(
+          `${signal.identifier.name}_effect`
         );
 
-        if (signal.hydrateInlineReferences) {
-          signal.hydrate.unshift(
+        if (signal.effectInlineReferences) {
+          signal.effect.unshift(
             t.variableDeclaration(
               "const",
-              (Array.isArray(signal.hydrateInlineReferences)
-                ? signal.hydrateInlineReferences
-                : [signal.hydrateInlineReferences]
-              ).map((binding) =>
-                t.variableDeclarator(
-                  t.identifier(binding.name),
-                  callRead(binding, sectionId)
-                )
+              repeatableReserves.toArray(
+                signal.effectInlineReferences,
+                (binding) =>
+                  t.variableDeclarator(
+                    t.identifier(binding.name),
+                    callRead(binding, sectionId)
+                  )
               )
             )
           );
         }
 
-        hydrateDeclarator = t.variableDeclarator(
-          hydrateIdentifier,
+        effectDeclarator = t.variableDeclarator(
+          effectIdentifier,
           callRuntime(
             "register",
-            t.stringLiteral(getHydrateRegisterId(sectionId, signal.reserve)),
+            t.stringLiteral(getResumeRegisterId(sectionId, signal.reserve)),
             t.arrowFunctionExpression(
               [scopeIdentifier],
-              signal.hydrate.length === 1 &&
-                t.isExpressionStatement(signal.hydrate[0])
-                ? signal.hydrate[0].expression
-                : t.blockStatement(signal.hydrate)
+              signal.effect.length === 1 &&
+                t.isExpressionStatement(signal.effect[0])
+                ? signal.effect[0].expression
+                : t.blockStatement(signal.effect)
             )
           )
         );
         signal.render.push(
           t.expressionStatement(
-            callRuntime("queueHydrate", scopeIdentifier, hydrateIdentifier)
+            callRuntime("queueEffect", scopeIdentifier, effectIdentifier)
           )
         );
       }
@@ -732,7 +716,7 @@ export function writeSignals(sectionId: number) {
       if (signal.register) {
         value = callRuntime(
           "register",
-          t.stringLiteral(getHydrateRegisterId(sectionId, signal.reserve)),
+          t.stringLiteral(getResumeRegisterId(sectionId, signal.reserve)),
           value
         );
       }
@@ -740,9 +724,9 @@ export function writeSignals(sectionId: number) {
         finalizeSignalArgs(value.arguments as any as t.Expression[]);
       }
       const signalDeclarator = t.variableDeclarator(signal.identifier, value);
-      return hydrateDeclarator
+      return effectDeclarator
         ? [
-            t.variableDeclaration("const", [hydrateDeclarator]),
+            t.variableDeclaration("const", [effectDeclarator]),
             t.variableDeclaration("const", [signalDeclarator]),
           ]
         : t.variableDeclaration("const", [signalDeclarator]);
@@ -781,20 +765,18 @@ function getMappedId(reserve: Reserve) {
   return (reserve.type === 0 ? 1 : 0) * 10000 + reserve.id;
 }
 
-export function addHTMLHydrateCall(
-  sectionId: number,
-  references?: ReferenceGroup
-) {
-  addStatement("hydrate", sectionId, references, undefined as any, []);
+export function addHTMLEffectCall(sectionId: number, references?: References) {
+  // TODO: this should not add an undefined statement.
+  addStatement("effect", sectionId, references, undefined as any, []);
 }
 
-export function writeHTMLHydrateStatements(
+export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
   tagVarIdentifier?: t.Identifier
 ) {
   const sectionId = getOrCreateSectionId(path);
-  const referenceGroups =
-    currentProgramPath.node.extra.referenceGroups?.[sectionId] ?? [];
+  const intersections =
+    currentProgramPath.node.extra.intersectionsBySection?.[sectionId] ?? [];
   const allSignals = Array.from(getSignals(sectionId).values());
   const scopeIdIdentifier = getScopeIdIdentifier(sectionId);
   const scopeIdentifier = getScopeIdentifier(sectionId, true);
@@ -806,45 +788,35 @@ export function writeHTMLHydrateStatements(
     ])
   );
 
-  const refs: Reserve[] = [];
+  const serializedReferences: Reserve[] = [];
 
-  for (const { references } of referenceGroups) {
-    if (Array.isArray(references)) {
-      // TODO: only need to include refs that intersect with stateful refs
-      for (const reference of references) {
-        if (reference.type !== ReserveType.Visit) {
-          insertReserve(refs, reference);
-        }
+  for (const intersection of intersections) {
+    for (const reference of intersection) {
+      if (reference.type !== ReserveType.Visit) {
+        // TODO: this should not be needed
+        repeatableReserves.add(serializedReferences, reference);
       }
     }
   }
 
   for (let i = allSignals.length; i--; ) {
-    if (allSignals[i].hydrate.length) {
-      const references = allSignals[i].reserve;
-      if (references) {
-        if (Array.isArray(references)) {
-          for (const ref of references) {
-            insertReserve(refs, ref);
-          }
-        } else {
-          insertReserve(refs, references);
-        }
-      }
+    if (allSignals[i].effect.length) {
+      const signalRefs = allSignals[i].reserve;
+      repeatableReserves.addAll(serializedReferences, signalRefs);
       path.pushContainer(
         "body",
         t.expressionStatement(
           callRuntime(
-            "writeHydrateCall",
+            "writeEffect",
             scopeIdIdentifier,
-            t.stringLiteral(getHydrateRegisterId(sectionId, references))
+            t.stringLiteral(getResumeRegisterId(sectionId, signalRefs))
           )
         )
       );
     }
   }
 
-  const serializedProperties = refs.reduce((acc, ref) => {
+  const serializedProperties = serializedReferences.reduce((acc, ref) => {
     acc.push(t.objectProperty(getNodeLiteral(ref), t.identifier(ref.name)));
     return acc;
   }, [] as Array<t.ObjectProperty>);
@@ -863,14 +835,14 @@ export function writeHTMLHydrateStatements(
     serializedProperties.push(t.objectProperty(key, value, !t.isLiteral(key)));
   }
 
-  if (serializedProperties.length || forceHydrateScope(sectionId)) {
+  if (serializedProperties.length || forceResumeScope(sectionId)) {
     const isRoot = path.isProgram();
     const builder = getRegisterScopeBuilder(sectionId);
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
-          "writeHydrateScope",
+          "writeScope",
           scopeIdIdentifier,
           builder
             ? builder(t.objectExpression(serializedProperties))
@@ -896,7 +868,7 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  const references = extra?.references?.references;
+  const references = extra?.references;
   const program = fn.hub.file.path;
   const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 
@@ -908,7 +880,7 @@ function bindFunction(
     node.body.body.unshift(
       t.variableDeclaration(
         "const",
-        (Array.isArray(references) ? references : [references]).map((binding) =>
+        repeatableReserves.toArray(references, (binding) =>
           t.variableDeclarator(
             t.identifier(binding.name),
             callRead(binding, sectionId)

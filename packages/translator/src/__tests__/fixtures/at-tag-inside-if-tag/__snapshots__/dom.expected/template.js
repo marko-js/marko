@@ -16,7 +16,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _x(_scope, x, _dirty);
 };
-export { _x as _apply_x };
+export { _x };
 export const template = `${_customTag_template}`;
 export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&`;
 export const setup = _setup;

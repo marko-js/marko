@@ -1,9 +1,9 @@
 import {
   write,
-  markHydrateNode,
+  markResumeNode,
   nextScopeId,
-  writeHydrateScope,
-  writeHydrateCall,
+  writeScope,
+  writeEffect,
   register,
 } from "@marko/runtime-fluurt/src/html";
 
@@ -27,15 +27,15 @@ const counter = () => {
   FancyButton({
     renderBody() {
       const bodyScopeId = nextScopeId();
-      write(`${clickCount}${markHydrateNode(bodyScopeId, "#text/0")}`);
-      writeHydrateScope(bodyScopeId, { _: scope });
-      writeHydrateCall(bodyScopeId, "subscribe_clickCount$renderBody");
+      write(`${clickCount}${markResumeNode(bodyScopeId, "#text/0")}`);
+      writeScope(bodyScopeId, { _: scope });
+      writeEffect(bodyScopeId, "subscribe_clickCount$renderBody");
     },
     onClick: register(() => {}, "clickHandler", scopeId),
   });
 
   // eslint-disable-next-line no-sparse-arrays
-  writeHydrateScope(scopeId, scope);
+  writeScope(scopeId, scope);
 };
 
 ////////////////////////////////////////////////////
@@ -57,8 +57,8 @@ const FancyButton = ({
 
   renderBody();
 
-  write(`</button>${markHydrateNode(scopeId, "#button/0")}`);
+  write(`</button>${markResumeNode(scopeId, "#button/0")}`);
 
-  writeHydrateScope(scopeId, { onClick });
-  writeHydrateCall(scopeId, "FancyButton$onclick_hydrate");
+  writeScope(scopeId, { onClick });
+  writeEffect(scopeId, "FancyButton$onclick_resume");
 };

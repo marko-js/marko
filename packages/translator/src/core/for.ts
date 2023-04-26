@@ -12,7 +12,7 @@ import {
   getSignal,
   setSubscriberBuilder,
   setRegisterScopeBuilder,
-  writeHTMLHydrateStatements,
+  writeHTMLResumeStatements,
   getSerializedScopeProperties,
   addValue,
   getTagParamsSignal,
@@ -28,7 +28,7 @@ import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
-import { mergeReferenceGroups } from "../util/references";
+import { mergeReferences } from "../util/references";
 import {
   currentProgramPath,
   dirtyIdentifier,
@@ -56,7 +56,7 @@ export default {
       analyzeAttributeTags(tag);
 
       const sectionId = getOrCreateSectionId(tag);
-      tag.node.extra.attrsReferences = mergeReferenceGroups(
+      tag.node.extra.attrsReferences = mergeReferences(
         sectionId,
         tag.node.attributes
           .filter(
@@ -277,7 +277,7 @@ const translateHTML = {
     if (isStateful) {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
-          "markHydrateScopeStart",
+          "markResumeScopeStart",
           getScopeIdIdentifier(bodySectionId)
         )}`;
       }
@@ -499,14 +499,14 @@ const translateHTML = {
           )
         );
         write`${callRuntime(
-          "markHydrateControlSingleNodeEnd",
+          "markResumeControlSingleNodeEnd",
           getScopeIdIdentifier(sectionId),
           getNodeLiteral(reserve!),
           forScopeIdsIdentifier
         )}`;
       } else {
         write`${callRuntime(
-          "markHydrateControlEnd",
+          "markResumeControlEnd",
           getScopeIdIdentifier(sectionId),
           getNodeLiteral(reserve!)
         )}`;
@@ -522,7 +522,7 @@ const translateHTML = {
     }
 
     writer.flushInto(tag);
-    writeHTMLHydrateStatements(tagBody);
+    writeHTMLResumeStatements(tagBody);
 
     block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
 

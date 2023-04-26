@@ -8,7 +8,7 @@ const _for = /* @__PURE__ */_loop("#div/0", _forBody, (_scope, _destructure, _di
 });
 const _input = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, _computeLoopToFrom(input.to, input.from, input.step)));
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};

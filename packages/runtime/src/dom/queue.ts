@@ -9,7 +9,7 @@ const enum BatchOffsets {
   TOTAL = 3,
 }
 
-const enum HydrateOffsets {
+const enum EffectOffsets {
   SCOPE = 0,
   FN = 1,
   TOTAL = 2,
@@ -18,7 +18,7 @@ const enum HydrateOffsets {
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
 let currentBatch: unknown[] = [];
-let currentHydrate: unknown[] = [];
+let currentEffects: unknown[] = [];
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
@@ -27,11 +27,11 @@ export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   return value;
 }
 
-export function queueHydrate<S extends Scope, T extends ExecFn<S>>(
+export function queueEffect<S extends Scope, T extends ExecFn<S>>(
   scope: S,
   fn: T
 ) {
-  currentHydrate.push(scope, fn);
+  currentEffects.push(scope, fn);
 }
 
 export function run() {
@@ -45,17 +45,17 @@ export function run() {
   } finally {
     currentBatch = [];
   }
-  runHydrate();
+  runEffects();
 }
 
-export function runHydrate() {
+export function runEffects() {
   try {
-    for (let i = 0; i < currentHydrate.length; i += HydrateOffsets.TOTAL) {
-      const scope = currentHydrate[i] as Scope;
-      const fn = currentHydrate[i + 1] as (scope: Scope) => void;
+    for (let i = 0; i < currentEffects.length; i += EffectOffsets.TOTAL) {
+      const scope = currentEffects[i] as Scope;
+      const fn = currentEffects[i + 1] as (scope: Scope) => void;
       fn(scope);
     }
   } finally {
-    currentHydrate = [];
+    currentEffects = [];
   }
 }

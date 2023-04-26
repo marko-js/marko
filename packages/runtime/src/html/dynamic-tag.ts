@@ -1,10 +1,10 @@
 import type { Renderer } from "../common/types";
 import {
-  markHydrateScopeStart,
+  markResumeScopeStart,
   nextScopeId,
   peekNextScopeId,
   write,
-  writeHydrateScope,
+  writeScope,
 } from "./writer";
 import { attrs } from "./attrs";
 
@@ -39,8 +39,8 @@ export function dynamicTag(
   const internalScope = {};
 
   const futureScopeId = peekNextScopeId();
-  write(`${markHydrateScopeStart(futureScopeId)}`);
-  writeHydrateScope(futureScopeId, internalScope);
+  write(`${markResumeScopeStart(futureScopeId)}`);
+  writeScope(futureScopeId, internalScope);
 
   if (!tag) {
     renderBody!();

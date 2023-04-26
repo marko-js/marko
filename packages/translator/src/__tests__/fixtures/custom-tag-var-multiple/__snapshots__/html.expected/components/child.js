@@ -1,11 +1,11 @@
-import { write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const x = 1;
   const y = 2;
   _write("<span>child</span>");
   const _return = x + y;
-  _writeHydrateScope(_scope0_id, {
+  _writeScope(_scope0_id, {
     "x": x,
     "y": y,
     "/": _tagVar

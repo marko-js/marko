@@ -19,12 +19,12 @@ export {
   tryCatch,
   nextTagId,
   nextScopeId,
-  markHydrateNode,
-  writeHydrateCall,
-  writeHydrateScope,
-  markHydrateScopeStart,
-  markHydrateControlEnd,
-  markHydrateControlSingleNodeEnd,
+  markResumeNode,
+  writeEffect,
+  writeScope,
+  markResumeScopeStart,
+  markResumeControlEnd,
+  markResumeControlSingleNodeEnd,
 } from "./writer";
 
 export { register, SYMBOL_OWNER } from "./serializer";

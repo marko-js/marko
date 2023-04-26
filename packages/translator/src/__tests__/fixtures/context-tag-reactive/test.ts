@@ -1,4 +1,4 @@
-export const skip_hydrate = true;
+export const skip_resume = true;
 
 export const steps = [{}, increment];
 

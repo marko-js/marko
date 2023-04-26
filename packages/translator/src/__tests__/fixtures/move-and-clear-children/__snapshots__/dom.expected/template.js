@@ -16,7 +16,7 @@ export const attrs = (_scope, _destructure2, _dirty = true) => {
   } = _destructure2);
   _children(_scope, children, _dirty);
 };
-export { _children as _apply_children };
+export { _children };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};

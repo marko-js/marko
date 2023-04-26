@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { writeHTMLHydrateStatements } from "../../util/signals";
+import { writeHTMLResumeStatements } from "../../util/signals";
 import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 import isStatic from "../../util/is-static";
@@ -14,7 +14,7 @@ export default {
       const tagVarIdentifier = program.scope.generateUidIdentifier("tagVar");
 
       flushInto(program);
-      writeHTMLHydrateStatements(program, tagVarIdentifier);
+      writeHTMLResumeStatements(program, tagVarIdentifier);
 
       const returnIdentifier = returnId(0);
       if (returnIdentifier !== undefined) {

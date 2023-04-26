@@ -5,7 +5,7 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _html(_scope, input.missing, "#text/2");
 });
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
 export const walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
 export const setup = function () {};

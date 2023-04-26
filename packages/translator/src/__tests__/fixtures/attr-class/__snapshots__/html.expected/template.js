@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markHydrateNode as _markHydrateNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, markHydrateControlEnd as _markHydrateControlEnd, writeHydrateScope as _writeHydrateScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -9,7 +9,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _write(`<div${_classAttr(["a", {
     b: c,
     d
-  }])}></div>${_markHydrateNode(_scope0_id, "#div/0")}<div class="a b"></div><div class="a b c"></div>`);
+  }])}></div>${_markResumeNode(_scope0_id, "#div/0")}<div class="a b"></div><div class="a b c"></div>`);
   _customTag({
     class: ["a", {
       b: c,
@@ -40,8 +40,8 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
       }
     }
   });
-  _write(`${_markHydrateControlEnd(_scope0_id, "#text/3")}`);
-  _writeHydrateScope(_scope0_id, {
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
+  _writeScope(_scope0_id, {
     "c": c,
     "d": d,
     "#text/3!": _dynamicScope,

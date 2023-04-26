@@ -13,4 +13,4 @@ export const steps = [
   },
 ];
 export const skip_ssr = true;
-export const skip_hydrate = true;
+export const skip_resume = true;

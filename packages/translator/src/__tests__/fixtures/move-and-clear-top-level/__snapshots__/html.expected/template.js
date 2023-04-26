@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, SYMBOL_OWNER as _SYMBOL_OWNER, markHydrateControlSingleNodeEnd as _markHydrateControlSingleNodeEnd, write as _write, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, maybeFlush as _maybeFlush, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const _forScopeIds = [],
@@ -11,14 +11,14 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     const _scope1_id = _nextScopeId();
     let _i = _i2++;
     _forScopeIds.push(_scope1_id);
-    _write(`${_escapeXML(child.text)}${_markHydrateNode(_scope1_id, "#text/0")}`);
-    _writeHydrateScope(_scope1_id, (_s => (_scope1_.set(_by(child, _i), _s), _s))({
+    _write(`${_escapeXML(child.text)}${_markResumeNode(_scope1_id, "#text/0")}`);
+    _writeScope(_scope1_id, (_s => (_scope1_.set(_by(child, _i), _s), _s))({
       [_SYMBOL_OWNER]: _scope0_id
     }));
     _maybeFlush();
   }
-  _write(`${_markHydrateControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
-  _writeHydrateScope(_scope0_id, {
+  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
+  _writeScope(_scope0_id, {
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   }, _scope0_);
 }, "packages/translator/src/__tests__/fixtures/move-and-clear-top-level/template.marko");

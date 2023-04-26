@@ -3,11 +3,11 @@ import { Accessor, AccessorChars, Scope, ScopeContext } from "../common/types";
 import { createScope } from "./scope";
 import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
-import { queueHydrate, runHydrate } from "./queue";
+import { queueEffect, runEffects } from "./queue";
 import { DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
-import { register } from "./hydrate";
+import { register } from "./resume";
 
 const enum NodeType {
   Element = 1,
@@ -187,7 +187,7 @@ export function createRenderFn<I extends Input>(
     templateId!,
     Object.assign((input: I, element: Element): RenderResult<I> => {
       const scope = createScope();
-      queueHydrate(scope, () => {
+      queueEffect(scope, () => {
         element.replaceChildren(dom);
       });
       const dom = initRenderer(renderer, scope);
@@ -196,14 +196,14 @@ export function createRenderFn<I extends Input>(
         attrs(scope, input, true);
       }
 
-      runHydrate();
+      runEffects();
 
       return {
         update: (newInput: I) => {
           if (attrs) {
             attrs(scope, newInput, null);
             attrs(scope, newInput, true);
-            runHydrate();
+            runEffects();
           }
         },
         destroy: () => {

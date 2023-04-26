@@ -158,7 +158,7 @@ export default {
       // if (refId === '$') {
       //   const scriptlet = tag as unknown as t.NodePath<t.MarkoScriptlet>;
       //   addStatement(
-      //     "apply",
+      //     "render",
       //     getSectionId(scriptlet),
       //     scriptlet.node.extra?.bodyReferences as ReferenceGroup,
       //     scriptlet.node.body

@@ -27,10 +27,10 @@ type TestConfig = {
   skip_html?: boolean;
   skip_csr?: boolean;
   skip_ssr?: boolean;
-  skip_hydrate?: boolean;
+  skip_resume?: boolean;
   manual_csr?: boolean;
   manual_ssr?: boolean;
-  manual_hydrate?: boolean;
+  manual_resume?: boolean;
   error_compiler?: boolean;
   error_runtime?: boolean;
 };
@@ -62,7 +62,7 @@ describe("translator", () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
       const serverFile = resolve("server.ts");
-      const hydrateFile = resolve("hydrate.ts");
+      const resumeFile = resolve("resume.ts");
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
@@ -117,14 +117,14 @@ describe("translator", () => {
 
       let ssrResult: Result;
       let csrResult: Result;
-      let hydrateResult: Result;
+      let resumeResult: Result;
 
       const skipHTML = !hasTemplate || config.skip_html;
       const skipDOM = !hasTemplate || config.skip_dom;
 
       const manualSSR = skipHTML || config.manual_ssr;
       const manualCSR = skipDOM || config.manual_csr;
-      const manualHydrate = skipHTML || skipDOM || config.manual_hydrate;
+      const manualResume = skipHTML || skipDOM || config.manual_resume;
 
       const skipSSR =
         !(manualSSR ? fs.existsSync(serverFile) : hasTemplate) ||
@@ -134,9 +134,9 @@ describe("translator", () => {
         !(manualCSR ? fs.existsSync(browserFile) : hasTemplate) ||
         config.skip_csr ||
         config.error_compiler;
-      const skipHydrate =
-        !(manualHydrate ? fs.existsSync(hydrateFile) : hasTemplate) ||
-        config.skip_hydrate ||
+      const skipResume =
+        !(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
+        config.skip_resume ||
         skipSSR ||
         skipCSR;
 
@@ -255,8 +255,8 @@ describe("translator", () => {
         return (csrResult = { browser, tracker });
       };
 
-      const hydrate = async () => {
-        if (hydrateResult) return hydrateResult;
+      const resume = async () => {
+        if (resumeResult) return resumeResult;
         const { browser } = await ssr();
         const { window } = browser;
         const { document } = window;
@@ -271,7 +271,7 @@ describe("translator", () => {
           "@marko/runtime-fluurt/src/dom"
         ) as typeof import("@marko/runtime-fluurt/src/dom");
 
-        browser.require(manualHydrate ? hydrateFile : templateFile);
+        browser.require(manualResume ? resumeFile : templateFile);
         init();
         throwErrors();
         tracker.logUpdate(input);
@@ -294,7 +294,7 @@ describe("translator", () => {
 
         tracker.cleanup();
 
-        return (hydrateResult = { browser, tracker });
+        return (resumeResult = { browser, tracker });
       };
 
       describe("compile", () => {
@@ -308,8 +308,8 @@ describe("translator", () => {
           await snapMD(async () => (await ssr()).tracker.getLogs());
         });
 
-        (skipHydrate ? it.skip : it)("hydrate", async () => {
-          await snapMD(async () => (await hydrate()).tracker.getLogs());
+        (skipResume ? it.skip : it)("resume", async () => {
+          await snapMD(async () => (await resume()).tracker.getLogs());
         });
 
         (skipCSR ? it.skip : it)("csr", async () => {
@@ -322,25 +322,25 @@ describe("translator", () => {
           await snapMD(async () => (await ssr()).tracker.getLogs(true));
         });
 
-        (skipHydrate ? it.skip : it)("hydrate-sanitized", async () => {
-          await snapMD(async () => (await hydrate()).tracker.getLogs(true));
+        (skipResume ? it.skip : it)("resume-sanitized", async () => {
+          await snapMD(async () => (await resume()).tracker.getLogs(true));
         });
 
         (skipCSR ? it.skip : it)("csr-sanitized", async () => {
           await snapMD(async () => (await csr()).tracker.getLogs(true));
         });
 
-        (skipCSR || skipHydrate ? it.skip : it)("equivalent", async () => {
-          const hydrateLogs = (await hydrate()).tracker.getRawLogs(true);
+        (skipCSR || skipResume ? it.skip : it)("equivalent", async () => {
+          const resumeLogs = (await resume()).tracker.getRawLogs(true);
           // when the steps for a test contains more than one input,
-          // the updates are not run for the hydrate test
-          // so we trim the csrLogs to match the number of hydrateLogs
+          // the updates are not run for the resume test
+          // so we trim the csrLogs to match the number of resumeLogs
           const csrLogs = (await csr()).tracker
             .getRawLogs(true)
-            .slice(0, hydrateLogs.length);
+            .slice(0, resumeLogs.length);
           assert.strictEqual(
             csrLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
-            hydrateLogs.join("\n\n").replace(/[cs]\d+/g, "%id")
+            resumeLogs.join("\n\n").replace(/[cs]\d+/g, "%id")
           );
         });
       });

@@ -1,4 +1,4 @@
-import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueHydrate as _queueHydrate, value as _value, inConditionalScope as _inConditionalScope, loop as _loop, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueEffect as _queueEffect, value as _value, inConditionalScope as _inConditionalScope, loop as _loop, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _comments_attrs_value;
@@ -28,14 +28,14 @@ const _expr_path_i$forBody = /* @__PURE__ */_intersection(2, (_scope, _dirty) =>
   _id$forBody(_scope, _id$forBody_value, _dirty);
 });
 const _if$forBody = /* @__PURE__ */_conditional("#text/4");
-const _hydrate_open$forBody = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", function () {
+const _open$forBody_effect = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", function () {
   const open = _scope["open"];
   _queueSource(_scope, _open$forBody, !open);
 }));
 const _open$forBody = /* @__PURE__ */_value("open", (_scope, open) => {
   _attr(_scope["#li/0"], "hidden", !open);
   _data(_scope["#text/3"], open ? "[-]" : "[+]");
-  _queueHydrate(_scope, _hydrate_open$forBody);
+  _queueEffect(_scope, _open$forBody_effect);
 });
 const _id$forBody = /* @__PURE__ */_value("id", (_scope, id, _dirty) => {
   if (_dirty) {
@@ -81,7 +81,7 @@ export const attrs = (_scope, _destructure2, _dirty = true) => {
   _comments(_scope, comments, _dirty);
   _path(_scope, path, _dirty);
 };
-export { _comments as _apply_comments, _path as _apply_path };
+export { _comments, _path };
 export const template = "<ul></ul>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};

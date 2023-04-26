@@ -7,7 +7,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _value(_scope, value, _dirty);
 };
-export { _value as _apply_value };
+export { _value };
 export const template = "<em>Testing</em> <!>";
 export const walks = /* over(2), replace, over(1) */"c%b";
 export const setup = function () {};

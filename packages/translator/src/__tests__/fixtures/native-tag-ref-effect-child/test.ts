@@ -1,1 +1,1 @@
-export const skip_hydrate = true;
+export const skip_resume = true;

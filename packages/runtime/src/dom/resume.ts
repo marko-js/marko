@@ -1,11 +1,14 @@
-import { Scope, HydrateSymbols, AccessorChars } from "../common/types";
+import { Scope, ResumeSymbols, AccessorChars } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindFunction, bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 
-type HydrateFn<S extends Scope = Scope> = (scope: S) => void;
+type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredObjects = new Map<string, HydrateFn | ValueSignal | Renderer>();
+const registeredObjects = new Map<
+  string,
+  RegisteredFn | ValueSignal | Renderer
+>();
 const doc = document;
 
 export function register<T>(id: string, obj: T): T {
@@ -15,10 +18,10 @@ export function register<T>(id: string, obj: T): T {
 
 export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const runtimeLength = runtimeId.length;
-  const hydrateVar = runtimeId + HydrateSymbols.VAR_HYDRATE;
+  const resumeVar = runtimeId + ResumeSymbols.VAR_RESUME;
   // TODO: check if this is a fakeArray
   // and warn in dev that there are conflicting runtime ids
-  const initialHydration = (window as any)[hydrateVar];
+  const initialHydration = (window as any)[resumeVar];
   const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
   let currentScopeId: number;
@@ -27,7 +30,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
   const getScope = (id: number) =>
     scopeLookup[id] ?? (scopeLookup[id] = {} as Scope);
   const stack: number[] = [];
-  const fakeArray = { push: hydrate };
+  const fakeArray = { push: resume };
   const bind = (registryId: string, scope: Scope) => {
     const obj = registeredObjects.get(registryId);
     if (!scope) {
@@ -35,11 +38,11 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     } else if ((obj as Renderer).___template) {
       return bindRenderer(scope, obj as Renderer);
     } else {
-      return bindFunction(scope, obj as HydrateFn);
+      return bindFunction(scope, obj as RegisteredFn);
     }
   };
 
-  Object.defineProperty(window, hydrateVar, {
+  Object.defineProperty(window, resumeVar, {
     get() {
       return fakeArray;
     },
@@ -47,11 +50,11 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
 
   if (initialHydration) {
     for (let i = 0; i < initialHydration.length; i += 2) {
-      hydrate(initialHydration[i], initialHydration[i + 1]);
+      resume(initialHydration[i], initialHydration[i + 1]);
     }
   }
 
-  function hydrate(
+  function resume(
     scopesFn: (
       b: typeof bind,
       s: typeof scopeLookup,
@@ -88,13 +91,13 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
         const scope = getScope(scopeId);
         const data = nodeValue.slice(nodeValue.indexOf(" ") + 1);
 
-        if (token === HydrateSymbols.NODE) {
+        if (token === ResumeSymbols.NODE) {
           scope[data] = currentNode.previousSibling;
-        } else if (token === HydrateSymbols.SECTION_START) {
+        } else if (token === ResumeSymbols.SECTION_START) {
           stack.push(currentScopeId);
           currentScopeId = scopeId;
           scope.___startNode = currentNode;
-        } else if (token === HydrateSymbols.SECTION_END) {
+        } else if (token === ResumeSymbols.SECTION_END) {
           scope[data] = currentNode;
           if (scopeId < currentScopeId) {
             const currScope = scopeLookup[currentScopeId];
@@ -106,7 +109,7 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
             currScope.___endNode = currentNode.previousSibling!;
             currentScopeId = stack.pop()!;
           }
-        } else if (token === HydrateSymbols.SECTION_SINGLE_NODES_END) {
+        } else if (token === ResumeSymbols.SECTION_SINGLE_NODES_END) {
           scope[
             MARKO_DEBUG ? data.slice(0, data.indexOf(" ")) : parseInt(data)
           ] = currentNode;
@@ -133,15 +136,14 @@ export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      const hydrateFn = (registeredObjects.get(
-        calls[i + 1] as string
-      ) as HydrateFn)!;
-      hydrateFn(scopeLookup[calls[i] as number]!);
+      (registeredObjects.get(calls[i + 1] as string) as RegisteredFn)(
+        scopeLookup[calls[i] as number]!
+      );
     }
   }
 }
 
-export function hydrateSubscription(
+export function resumeSubscription(
   signal: IntersectionSignal,
   ownerValueAccessor: string | number,
   getOwnerScope = (scope: Scope) => scope._!

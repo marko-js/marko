@@ -20,7 +20,7 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _for2(_scope, _computeLoopIn(input.children));
 });
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<div><!><!></div>";
 export const walks = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
 export const setup = function () {};

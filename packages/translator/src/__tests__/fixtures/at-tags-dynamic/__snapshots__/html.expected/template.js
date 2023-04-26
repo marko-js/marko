@@ -1,4 +1,4 @@
-import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeHydrateScope as _writeHydrateScope, register as _register, markHydrateControlSingleNodeEnd as _markHydrateControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markHydrateNode as _markHydrateNode, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -18,7 +18,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
           _write("foo");
         }
       });
-      _writeHydrateScope(_scope4_id, _scope4_ = {
+      _writeScope(_scope4_id, _scope4_ = {
         [_SYMBOL_OWNER]: _scope3_id
       });
       _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
@@ -33,14 +33,14 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
           _write("bar");
         }
       });
-      _writeHydrateScope(_scope5_id, _scope4_ = {
+      _writeScope(_scope5_id, _scope4_ = {
         [_SYMBOL_OWNER]: _scope3_id
       });
       _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
       _ifScopeId = _scope5_id;
     }
-    _write(`${_markHydrateControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
-    _writeHydrateScope(_scope3_id, {
+    _write(`${_markResumeControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
+    _writeScope(_scope3_id, {
       "#text/0!": _scope4_,
       "#text/0(": _ifRenderer
     });
@@ -56,7 +56,7 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
       _row.push({
         row: row,
         renderBody() {
-          _write(`${_escapeXML(row)}${_markHydrateNode(_scope9_id, "#text/0")}`);
+          _write(`${_escapeXML(row)}${_markResumeNode(_scope9_id, "#text/0")}`);
         }
       });
       _maybeFlush();

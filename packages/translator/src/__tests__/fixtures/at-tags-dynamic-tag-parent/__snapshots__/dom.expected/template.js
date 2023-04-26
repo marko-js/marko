@@ -34,7 +34,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _x(_scope, x, _dirty);
 };
-export { _x as _apply_x };
+export { _x };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = function () {};

@@ -1,7 +1,7 @@
-import { register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0", _scope => document.body.className = "no-deps");
+import { register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _setup_effect = _register("packages/translator/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0", _scope => document.body.className = "no-deps");
 const _setup = _scope => {
-  _queueHydrate(_scope, _hydrate_setup);
+  _queueEffect(_scope, _setup_effect);
 };
 export const template = "";
 export const walks = "";

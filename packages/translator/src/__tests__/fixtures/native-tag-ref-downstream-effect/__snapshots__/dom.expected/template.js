@@ -1,7 +1,7 @@
-import { register as _register, queueHydrate as _queueHydrate, createRenderer as _createRenderer, conditional as _conditional, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _hydrate_setup$ifBody = _register("packages/translator/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1", _scope => _scope._["#div/0"].textContent = "hello");
+import { register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, conditional as _conditional, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _setup$ifBody_effect = _register("packages/translator/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1", _scope => _scope._["#div/0"].textContent = "hello");
 const _setup$ifBody = _scope => {
-  _queueHydrate(_scope, _hydrate_setup$ifBody);
+  _queueEffect(_scope, _setup$ifBody_effect);
 };
 const _ifBody = /* @__PURE__ */_createRenderer("", "", _setup$ifBody);
 const _if = /* @__PURE__ */_conditional("#text/1");

@@ -20,7 +20,7 @@ export const attrs = (_scope, _destructure, _dirty = true) => {
   } = _destructure);
   _x(_scope, x, _dirty);
 };
-export { _x as _apply_x };
+export { _x };
 export const template = `${_hello_template}`;
 export const walks = /* beginChild, _hello_walks, endChild */`/${_hello_walks}&`;
 export const setup = _setup;

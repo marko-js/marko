@@ -1,8 +1,8 @@
-import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
-const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0", _scope => _queueSource(_scope, _x, "Client Only"));
+const _setup_effect = _register("packages/translator/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0", _scope => _queueSource(_scope, _x, "Client Only"));
 const _setup = _scope => {
-  _queueHydrate(_scope, _hydrate_setup);
+  _queueEffect(_scope, _setup_effect);
   _x(_scope, undefined);
 };
 export const template = "<div> </div>";

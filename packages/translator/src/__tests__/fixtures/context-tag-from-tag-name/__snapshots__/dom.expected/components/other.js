@@ -9,7 +9,7 @@ const _setup = _scope => {
   _put(_scope, "Hello");
 };
 export const attrs = _input;
-export { _input as _apply_input };
+export { _input };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;

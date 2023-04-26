@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueHydrate as _queueHydrate, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   const a = _scope["a"],
     b = _scope["b"];
@@ -16,7 +16,7 @@ const _a = /* @__PURE__ */_value("a", (_scope, a, _dirty) => {
   }
   _expr_a_b(_scope, _dirty);
 });
-const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
+const _setup_effect = _register("packages/translator/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
   _on(_scope["#button/0"], "click", function () {
     _queueSource(_scope, _a, 10);
   });
@@ -25,7 +25,7 @@ const _hydrate_setup = _register("packages/translator/src/__tests__/fixtures/cou
   });
 });
 const _setup = _scope => {
-  _queueHydrate(_scope, _hydrate_setup);
+  _queueEffect(_scope, _setup_effect);
   _a(_scope, 0);
   _b(_scope, 0);
 };

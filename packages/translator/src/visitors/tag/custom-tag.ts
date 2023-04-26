@@ -18,15 +18,15 @@ import {
   getOrCreateSectionId,
   getScopeIdIdentifier,
 } from "../../util/sections";
-import trackReferences, { mergeReferenceGroups } from "../../util/references";
+import trackReferences, { mergeReferences } from "../../util/references";
 import {
   addStatement,
   addValue,
   getClosures,
-  getHydrateRegisterId,
+  getResumeRegisterId,
   initValue,
-  setForceHydrateScope,
-  writeHTMLHydrateStatements,
+  setForceResumeScope,
+  writeHTMLResumeStatements,
 } from "../../util/signals";
 import { getNodeLiteral, reserveScope, ReserveType } from "../../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../program";
@@ -72,7 +72,7 @@ export default {
       const template = tagDef?.template;
       const sectionId = getOrCreateSectionId(tag);
       if (template) {
-        tag.node.extra.attrsReferences = mergeReferenceGroups(
+        tag.node.extra.attrsReferences = mergeReferences(
           sectionId,
           tag.node.attributes
             .filter((attr) => attr.extra?.valueReferences)
@@ -104,7 +104,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   let tagIdentifier: t.Expression;
 
   writer.flushInto(tag);
-  writeHTMLHydrateStatements(tagBody);
+  writeHTMLResumeStatements(tagBody);
 
   if (t.isStringLiteral(node.name)) {
     const { file } = tag.hub;
@@ -169,7 +169,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           "register",
           t.arrowFunctionExpression([], t.blockStatement([])),
           t.stringLiteral(
-            getHydrateRegisterId(
+            getResumeRegisterId(
               sectionId,
               (node.var as t.Identifier).extra?.reserve
             )
@@ -178,7 +178,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         )
       )
     );
-    setForceHydrateScope(sectionId);
+    setForceResumeScope(sectionId);
     tag.remove();
   } else {
     tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
@@ -246,7 +246,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
     source.register = true;
     addStatement(
-      "apply",
+      "render",
       tagSectionId,
       undefined,
       t.expressionStatement(
@@ -260,7 +260,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     );
   }
   addStatement(
-    "apply",
+    "render",
     tagSectionId,
     undefined,
     t.expressionStatement(
