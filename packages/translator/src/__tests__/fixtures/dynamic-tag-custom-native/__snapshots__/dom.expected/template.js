@@ -10,7 +10,9 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", (_scope, _dirty) 
   _dynamicTagAttrs(_scope, "#text/1", _tagName_input, null, _dirty);
 });
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName", _scope => _on(_scope["#button/0"], "click", function () {
-  const tagName = _scope["tagName"];
+  const {
+    tagName
+  } = _scope;
   _queueSource(_scope, _tagName, tagName === child ? "div" : child);
 }));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {

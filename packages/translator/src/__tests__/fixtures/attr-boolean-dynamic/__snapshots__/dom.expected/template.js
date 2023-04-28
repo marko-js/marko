@@ -1,6 +1,8 @@
 import { attr as _attr, on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _disabled_effect = _register("packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled", _scope => _on(_scope["#button/1"], "click", function () {
-  const disabled = _scope["disabled"];
+  const {
+    disabled
+  } = _scope;
   _queueSource(_scope, _disabled, !disabled);
 }));
 const _disabled = /* @__PURE__ */_value("disabled", (_scope, disabled) => {

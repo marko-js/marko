@@ -1,12 +1,16 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_x_y_effect = _register("packages/translator/src/__tests__/fixtures/let-tag/template.marko_0_x_y", _scope => _on(_scope["#button/0"], "click", () => {
-  const x = _scope["x"],
-    y = _scope["y"];
+  const {
+    x,
+    y
+  } = _scope;
   return _queueSource(_scope, _x, _queueSource(_scope, _y, x + y));
 }));
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
-  const x = _scope["x"],
-    y = _scope["y"];
+  const {
+    x,
+    y
+  } = _scope;
   _queueEffect(_scope, _expr_x_y_effect);
 });
 const _y = /* @__PURE__ */_value("y", (_scope, y, _dirty) => {

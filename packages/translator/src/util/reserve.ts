@@ -99,14 +99,15 @@ export function assignFinalIds() {
   });
 }
 
-export function getNodeLiteral(reserve: Reserve) {
-  if (!isOptimize()) {
-    return t.stringLiteral(
-      reserve.debugKey +
-        (reserve.type === ReserveType.Visit ? `/${reserve.id}` : "")
-    );
+export function getScopeAccessorLiteral(reserve: Reserve) {
+  if (isOptimize()) {
+    return t.numericLiteral(reserve.id);
   }
-  return t.numericLiteral(reserve.id);
+
+  return t.stringLiteral(
+    reserve.debugKey +
+      (reserve.type === ReserveType.Visit ? `/${reserve.id}` : "")
+  );
 }
 
 export const repeatableReserves = new SortedRepeatable(function compareReserves(

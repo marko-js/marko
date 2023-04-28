@@ -3,17 +3,23 @@ const _prev = /* @__PURE__ */_value("prev", (_scope, prev) => _data(_scope["#tex
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", _scope => {
   _lifecycle(_scope, "cleanup", {
     onMount: function () {
-      const x = _scope["x"];
+      const {
+        x
+      } = _scope;
       this.cur = x;
     },
     onUpdate: function () {
-      const x = _scope["x"];
+      const {
+        x
+      } = _scope;
       _queueSource(_scope, _prev, this.cur);
       this.cur = x;
     }
   });
   _on(_scope["#button/2"], "click", function () {
-    const x = _scope["x"];
+    const {
+      x
+    } = _scope;
     _queueSource(_scope, _x, x + 1);
   });
 });

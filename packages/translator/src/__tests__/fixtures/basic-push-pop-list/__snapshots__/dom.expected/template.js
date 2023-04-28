@@ -2,16 +2,20 @@ import { data as _data, on as _on, queueSource as _queueSource, value as _value,
 const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _data(_scope["#text/0"], item));
 const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ");
 const _expr_id_items_effect = _register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _scope => _on(_scope["#button/1"], "click", function () {
-  const id = _scope["id"],
-    items = _scope["items"];
+  const {
+    id,
+    items
+  } = _scope;
   // TODO: nested writes ([...items, id++]) don't work
   const nextId = id + 1;
   _queueSource(_scope, _id, nextId);
   _queueSource(_scope, _items, [...items, nextId]);
 }));
 const _expr_id_items = /* @__PURE__ */_intersection(2, _scope => {
-  const id = _scope["id"],
-    items = _scope["items"];
+  const {
+    id,
+    items
+  } = _scope;
   _queueEffect(_scope, _expr_id_items_effect);
 });
 const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
@@ -20,7 +24,9 @@ const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _d
   _item$forBody(_scope, item, _dirty);
 });
 const _items_effect = _register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _scope => _on(_scope["#button/2"], "click", function () {
-  const items = _scope["items"];
+  const {
+    items
+  } = _scope;
   _queueSource(_scope, _items, items.slice(0, -1));
 }));
 const _items = /* @__PURE__ */_value("items", (_scope, items, _dirty) => {

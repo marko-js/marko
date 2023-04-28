@@ -3,8 +3,12 @@ import { setup as _comments2, attrs as _comments_attrs, template as _comments_te
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _comments_attrs_value;
   if (_dirty) {
-    const comment = _scope._["comment"],
-      id = _scope._["id"];
+    const {
+      _: {
+        comment,
+        id
+      }
+    } = _scope;
     _comments_attrs_value = {
       comments: comment.comments,
       path: id
@@ -21,15 +25,21 @@ const _ifBody = _register("packages/translator/src/__tests__/fixtures/basic-iner
 const _expr_path_i$forBody = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _id$forBody_value;
   if (_dirty) {
-    const path = _scope._["path"],
-      i = _scope["i"];
+    const {
+      _: {
+        path
+      },
+      i
+    } = _scope;
     _id$forBody_value = `${path}-${i}`;
   }
   _id$forBody(_scope, _id$forBody_value, _dirty);
 });
 const _if$forBody = /* @__PURE__ */_conditional("#text/4");
 const _open$forBody_effect = _register("packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", function () {
-  const open = _scope["open"];
+  const {
+    open
+  } = _scope;
   _queueSource(_scope, _open$forBody, !open);
 }));
 const _open$forBody = /* @__PURE__ */_value("open", (_scope, open) => {

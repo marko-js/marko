@@ -5,7 +5,11 @@ import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  getScopeAccessorLiteral,
+} from "../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
@@ -72,7 +76,7 @@ export default {
               callRuntime(
                 "userEffect",
                 scopeIdentifier,
-                getNodeLiteral(tag.node.extra!.reserve!),
+                getScopeAccessorLiteral(tag.node.extra!.reserve!),
                 defaultAttr.value
               )
             ),

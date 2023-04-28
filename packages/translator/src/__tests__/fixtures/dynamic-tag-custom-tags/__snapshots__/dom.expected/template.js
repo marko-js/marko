@@ -4,8 +4,10 @@ import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSo
 const _expr_dynamicTagName_val = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _tagName_input;
   if (_dirty) {
-    const dynamicTagName = _scope["#text/0"],
-      val = _scope["val"];
+    const {
+      "#text/0": dynamicTagName,
+      val
+    } = _scope;
     _tagName_input = () => ({
       value: val
     });
@@ -15,7 +17,9 @@ const _expr_dynamicTagName_val = /* @__PURE__ */_intersection(2, (_scope, _dirty
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));
 const _val = /* @__PURE__ */_value("val", (_scope, val, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
-  const tagName = _scope["tagName"];
+  const {
+    tagName
+  } = _scope;
   _queueSource(_scope, _tagName, tagName === child1 ? child2 : child1);
 }));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {

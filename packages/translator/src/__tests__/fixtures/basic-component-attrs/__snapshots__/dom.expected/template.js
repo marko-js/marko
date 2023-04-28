@@ -6,7 +6,9 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount, _di
     _myButton_attrs_value = {
       text: clickCount,
       onClick: function () {
-        const clickCount = _scope["clickCount"];
+        const {
+          clickCount
+        } = _scope;
         _queueSource(_scope, _clickCount, clickCount + 1);
       }
     };

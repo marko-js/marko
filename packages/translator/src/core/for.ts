@@ -24,7 +24,11 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
-import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  getScopeAccessorLiteral,
+} from "../util/reserve";
 import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
@@ -191,7 +195,7 @@ const translateDOM = {
           scopeIdentifier,
           dirtyIdentifier,
           signal,
-          getNodeLiteral(reserve!)
+          getScopeAccessorLiteral(reserve!)
         )
       );
     });
@@ -235,7 +239,7 @@ const translateDOM = {
     signal.build = () => {
       return callRuntime(
         "loop",
-        getNodeLiteral(reserve!),
+        getScopeAccessorLiteral(reserve!),
         rendererId,
         paramsSignal?.build()
       );
@@ -501,18 +505,18 @@ const translateHTML = {
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
           getScopeIdIdentifier(section),
-          getNodeLiteral(reserve!),
+          getScopeAccessorLiteral(reserve!),
           forScopeIdsIdentifier
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getNodeLiteral(reserve!)
+          getScopeAccessorLiteral(reserve!)
         )}`;
       }
       getSerializedScopeProperties(section).set(
-        t.stringLiteral(getNodeLiteral(reserve!).value + "("),
+        t.stringLiteral(getScopeAccessorLiteral(reserve!).value + "("),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),
           forScopesIdentifier,

@@ -13,9 +13,11 @@ const _destructure2 = (_scope, _destructure, _dirty = true) => {
 const _expr_dynamicTagName_c_d = /* @__PURE__ */_intersection(3, (_scope, _dirty) => {
   let _inputTest_input;
   if (_dirty) {
-    const dynamicTagName = _scope["#text/3"],
-      c = _scope["c"],
-      d = _scope["d"];
+    const {
+      "#text/3": dynamicTagName,
+      c,
+      d
+    } = _scope;
     _inputTest_input = () => ({
       class: ["a", {
         b: c,
@@ -35,8 +37,10 @@ const _expr_dynamicTagName_c_d = /* @__PURE__ */_intersection(3, (_scope, _dirty
   _dynamicTagAttrs(_scope, "#text/3", _inputTest_input, _inputTestBody, _dirty);
 });
 const _expr_c_d = /* @__PURE__ */_intersection(2, _scope => {
-  const c = _scope["c"],
-    d = _scope["d"];
+  const {
+    c,
+    d
+  } = _scope;
   _classAttr(_scope["#div/0"], ["a", {
     b: c,
     d

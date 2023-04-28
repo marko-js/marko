@@ -1,6 +1,8 @@
 import { register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _el_effect = _register("packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el", _scope => {
-  const el = _scope["el"];
+  const {
+    el
+  } = _scope;
   el().textContent = "hello";
 });
 const _el = /* @__PURE__ */_value("el", (_scope, el) => _queueEffect(_scope, _el_effect));

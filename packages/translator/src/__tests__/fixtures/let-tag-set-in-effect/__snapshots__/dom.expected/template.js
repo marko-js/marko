@@ -1,7 +1,9 @@
 import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x", _scope => {
-  const x = _scope["x"];
+  const {
+    x
+  } = _scope;
   _queueSource(_scope, _y, x);
   _queueSource(_scope, _x, 2);
 });

@@ -7,7 +7,9 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount, _di
   if (_dirty) {
     _myButton_attrs_value = {
       onClick: function () {
-        const clickCount = _scope["clickCount"];
+        const {
+          clickCount
+        } = _scope;
         _queueSource(_scope, _clickCount, clickCount + 1);
       },
       renderBody: /* @__PURE__ */_bindRenderer(_scope, _myButtonBody)

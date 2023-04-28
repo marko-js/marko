@@ -12,7 +12,7 @@ import toTemplateOrStringLiteral, {
 import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
 import { isOutputHTML } from "./marko-config";
-import { getNodeLiteral, ReserveType } from "./reserve";
+import { getScopeAccessorLiteral, ReserveType } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",
@@ -125,7 +125,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getNodeLiteral(reserve!)
+      getScopeAccessorLiteral(reserve!)
     )}`;
   }
 }

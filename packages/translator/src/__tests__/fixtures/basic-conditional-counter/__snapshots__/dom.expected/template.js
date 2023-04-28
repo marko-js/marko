@@ -3,7 +3,9 @@ const _count$ifBody = /* @__PURE__ */_closure("count", (_scope, count) => _data(
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", null, [_count$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/2");
 const _count_effect = _register("packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
-  const count = _scope["count"];
+  const {
+    count
+  } = _scope;
   _queueSource(_scope, _count, count + 1);
 }));
 const _count = /* @__PURE__ */_value("count", (_scope, count, _dirty) => {
@@ -13,7 +15,9 @@ const _count = /* @__PURE__ */_value("count", (_scope, count, _dirty) => {
   _inConditionalScope(_scope, _dirty, _count$ifBody, "#text/2");
 });
 const _show_effect = _register("packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show", _scope => _on(_scope["#button/1"], "click", function () {
-  const show = _scope["show"];
+  const {
+    show
+  } = _scope;
   _queueSource(_scope, _show, !show);
 }));
 const _show = /* @__PURE__ */_value("show", (_scope, show, _dirty) => {

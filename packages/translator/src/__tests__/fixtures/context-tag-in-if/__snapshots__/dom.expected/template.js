@@ -12,7 +12,9 @@ const _show$putBody = /* @__PURE__ */_dynamicClosure("show", (_scope, show, _dir
 const _putBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", null, [_show$putBody]);
 const _put = /* @__PURE__ */_value("0:", (_scope, put, _dirty) => _dynamicSubscribers(_scope["0:*"], _dirty));
 const _show_effect = _register("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show", _scope => _on(_scope["#button/1"], "click", function () {
-  const show = _scope["show"];
+  const {
+    show
+  } = _scope;
   _queueSource(_scope, _show, !show);
 }));
 const _show = /* @__PURE__ */_value("show", (_scope, show, _dirty) => {

@@ -12,7 +12,9 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) 
   _dynamicTagAttrs(_scope, "#text/0", _tagName_input, _tagNameBody, _dirty);
 });
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
-  const tagName = _scope["tagName"];
+  const {
+    tagName
+  } = _scope;
   _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
 }));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {

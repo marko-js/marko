@@ -11,7 +11,7 @@ import {
 import {
   Reserve,
   repeatableReserves,
-  getNodeLiteral,
+  getScopeAccessorLiteral,
   ReserveType,
 } from "./reserve";
 import {
@@ -19,11 +19,12 @@ import {
   dirtyIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
-import { callRuntime, callRead, getScopeExpression } from "./runtime";
+import { callRuntime } from "./runtime";
 import { getTemplateId } from "@marko/babel-utils";
 import type { NodePath } from "@marko/compiler/babel-types";
 import { returnId } from "../core/return";
 import { isOutputHTML } from "./marko-config";
+import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Statement;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
@@ -178,12 +179,12 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
       provider.closures.set(section, signal);
       signal.build = () => {
         const builder = getSubscribeBuilder(section);
-        const ownerScope = getScopeExpression(reserve.section, section);
+        const ownerScope = getScopeExpression(section, reserve.section);
         const isImmediateOwner =
           (ownerScope as t.MemberExpression).object === scopeIdentifier;
         return callRuntime(
           builder && isImmediateOwner ? "closure" : "dynamicClosure",
-          getNodeLiteral(reserve),
+          getScopeAccessorLiteral(reserve),
           getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)]),
           isImmediateOwner
             ? null
@@ -197,7 +198,7 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
 
 export function initValue(
   reserve: Reserve,
-  valueAccessor = getNodeLiteral(reserve)
+  valueAccessor = getScopeAccessorLiteral(reserve)
 ) {
   const section = reserve.section;
   const signal = getSignal(section, reserve);
@@ -223,7 +224,7 @@ export function initContextProvider(
   renderer: t.Identifier
 ) {
   const section = reserve.section;
-  const scopeAccessor = getNodeLiteral(reserve);
+  const scopeAccessor = getScopeAccessorLiteral(reserve);
   const valueAccessor = t.stringLiteral(
     `${reserve.id}${AccessorChars.CONTEXT_VALUE}`
   );
@@ -269,7 +270,7 @@ export function initContextConsumer(templateId: string, reserve: Reserve) {
   signal.build = () => {
     return callRuntime(
       "contextClosure",
-      getNodeLiteral(reserve),
+      getScopeAccessorLiteral(reserve),
       t.stringLiteral(templateId),
       getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)])
     );
@@ -340,7 +341,7 @@ export function getSignalFn(
     if (builder && isImmediateOwner) {
       signal.intersection.push(builder(closureSignal.identifier));
     } else if (!signal.hasDynamicSubscribers) {
-      const dynamicSubscribersKey = getNodeLiteral(
+      const dynamicSubscribersKey = getScopeAccessorLiteral(
         closureSignal.reserve as Reserve
       );
       dynamicSubscribersKey.value += AccessorChars.SUBSCRIBERS;
@@ -357,24 +358,12 @@ export function getSignalFn(
     }
   }
 
-  if (Array.isArray(references)) {
-    signal.render.unshift(
-      t.variableDeclaration(
-        "const",
-        references.map((binding) =>
-          t.variableDeclarator(
-            t.identifier(binding.name),
-            callRead(binding, section)
-          )
-        )
-      )
-    );
-  } else if (references) {
+  if (references) {
     signal.render.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          t.identifier(references.name),
-          callRead(references, section)
+          createScopeReadPattern(section, references),
+          scopeIdentifier
         ),
       ])
     );
@@ -557,7 +546,7 @@ export function queueSource(
 ) {
   return callRuntime(
     "queueSource",
-    getScopeExpression(source.section, targetSection),
+    getScopeExpression(targetSection, source.section),
     source.identifier,
     value
   );
@@ -681,17 +670,12 @@ export function writeSignals(section: Section) {
 
         if (signal.effectInlineReferences) {
           signal.effect.unshift(
-            t.variableDeclaration(
-              "const",
-              repeatableReserves.toArray(
-                signal.effectInlineReferences,
-                (binding) =>
-                  t.variableDeclarator(
-                    t.identifier(binding.name),
-                    callRead(binding, section)
-                  )
-              )
-            )
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                createScopeReadPattern(section, signal.effectInlineReferences),
+                scopeIdentifier
+              ),
+            ])
           );
         }
 
@@ -821,7 +805,9 @@ export function writeHTMLResumeStatements(
   }
 
   const serializedProperties = serializedReferences.reduce((acc, ref) => {
-    acc.push(t.objectProperty(getNodeLiteral(ref), t.identifier(ref.name)));
+    acc.push(
+      t.objectProperty(getScopeAccessorLiteral(ref), t.identifier(ref.name))
+    );
     return acc;
   }, [] as Array<t.ObjectProperty>);
 
@@ -882,15 +868,12 @@ function bindFunction(
     }
 
     node.body.body.unshift(
-      t.variableDeclaration(
-        "const",
-        repeatableReserves.toArray(references, (binding) =>
-          t.variableDeclarator(
-            t.identifier(binding.name),
-            callRead(binding, section)
-          )
-        )
-      )
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          createScopeReadPattern(section, references),
+          scopeIdentifier
+        ),
+      ])
     );
   }
 

@@ -13,14 +13,18 @@ const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _d
 });
 const _items_effect = _register("packages/translator/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
   _on(_scope["#button/1"], "click", function () {
-    const items = _scope["items"];
+    const {
+      items
+    } = _scope;
     _queueSource(_scope, _items, [...items, {
       name: "JavaScript",
       description: "Java, but scriptier"
     }]);
   });
   _on(_scope["#button/2"], "click", function () {
-    const items = _scope["items"];
+    const {
+      items
+    } = _scope;
     _queueSource(_scope, _items, items.slice(0, -1));
   });
 });

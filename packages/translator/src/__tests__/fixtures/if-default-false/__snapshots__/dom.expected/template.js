@@ -2,7 +2,9 @@ import { on as _on, queueSource as _queueSource, createRenderer as _createRender
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/if-default-false/template.marko_1_renderer", /* @__PURE__ */_createRenderer("hi", ""));
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _show_effect = _register("packages/translator/src/__tests__/fixtures/if-default-false/template.marko_0_show", _scope => _on(_scope["#button/0"], "click", function () {
-  const show = _scope["show"];
+  const {
+    show
+  } = _scope;
   _queueSource(_scope, _show, !show);
 }));
 const _show = /* @__PURE__ */_value("show", (_scope, show) => {

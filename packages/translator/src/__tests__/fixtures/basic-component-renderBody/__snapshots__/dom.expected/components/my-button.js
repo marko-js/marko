@@ -2,7 +2,9 @@ import { on as _on, conditional as _conditional, value as _value, register as _r
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/1");
 const _renderBody = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody));
 const _onClick_effect = _register("packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick", _scope => {
-  const onClick = _scope["onClick"];
+  const {
+    onClick
+  } = _scope;
   _on(_scope["#button/0"], "click", onClick);
 });
 const _onClick = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick_effect));

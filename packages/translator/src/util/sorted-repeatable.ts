@@ -80,6 +80,17 @@ export class SortedRepeatable<T> {
 
     return [];
   }
+  *iterate(data: Repeatable<T>): Generator<T> {
+    if (data) {
+      if (Array.isArray(data)) {
+        for (const item of data) {
+          yield item;
+        }
+      } else {
+        yield data;
+      }
+    }
+  }
 }
 
 function joinItems<T>(compare: Compare<T>, a: T, b: T): T | T[] {

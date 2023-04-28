@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
 import { getMarkoOpts } from "./marko-config";
-import { getNodeLiteral, Reserve } from "./reserve";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import type { Reserve } from "./reserve";
+import { currentProgramPath } from "../visitors/program";
 import {
   escapeXML,
   toString,
@@ -13,6 +13,7 @@ import {
   escapeStyle,
 } from "@marko/runtime-fluurt/src/html";
 import type { Section } from "./sections";
+import { getScopeExpression } from "./scope-read";
 
 declare const MARKO_SRC: boolean;
 
@@ -87,42 +88,18 @@ function getRuntimePath(output: string) {
   }/${output === "html" ? "html" : "dom"}`;
 }
 
-export function callRead(reference: Reserve, targetSection: Section) {
-  return t.memberExpression(
-    getScopeExpression(reference.section, targetSection),
-    getNodeLiteral(reference),
-    true
-  );
-}
-
 export function callQueue(
   identifier: t.Identifier,
   reference: Reserve,
   value: t.Expression,
-  targetSection: Section
+  section: Section
 ) {
   return callRuntime(
     "queueSource",
-    getScopeExpression(reference.section, targetSection),
+    getScopeExpression(section, reference.section),
     identifier,
     value
   );
-}
-
-export function getScopeExpression(
-  referenceSection: Section,
-  section: Section
-) {
-  let scope: t.Expression = scopeIdentifier;
-  const diff = section.depth - referenceSection.depth;
-  for (let i = 0; i < diff; i++) {
-    scope = t.memberExpression(scope, t.identifier("_"));
-  }
-  if (diff < 0) {
-    // TODO: handle hoisted references
-    throw new Error("Unable to find scope for reference.");
-  }
-  return scope;
 }
 
 function filterArguments<A>(args: (A | Falsy)[]) {

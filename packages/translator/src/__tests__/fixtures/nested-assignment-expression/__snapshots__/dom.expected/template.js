@@ -2,7 +2,9 @@ import { on as _on, queueSource as _queueSource, data as _data, value as _value,
 const _lastCount2 = /* @__PURE__ */_value("lastCount2", (_scope, lastCount2) => _data(_scope["#text/3"], lastCount2));
 const _lastCount = /* @__PURE__ */_value("lastCount", (_scope, lastCount) => _data(_scope["#text/2"], lastCount));
 const _clickCount_effect = _register("packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount", _scope => _on(_scope["#button/0"], "click", function () {
-  const clickCount = _scope["clickCount"];
+  const {
+    clickCount
+  } = _scope;
   const last = _queueSource(_scope, _lastCount, (_queueSource(_scope, _clickCount, clickCount + 1), clickCount));
   _queueSource(_scope, _lastCount2, last);
 }));

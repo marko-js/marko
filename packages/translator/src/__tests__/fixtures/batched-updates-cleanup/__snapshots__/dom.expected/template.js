@@ -4,7 +4,9 @@ const _ifBody = _register("packages/translator/src/__tests__/fixtures/batched-up
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _message = /* @__PURE__ */_value("message", (_scope, message, _dirty) => _inConditionalScope(_scope, _dirty, _message$ifBody, "#text/1"));
 const _show_effect = _register("packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show", _scope => _on(_scope["#button/0"], "click", function () {
-  const show = _scope["show"];
+  const {
+    show
+  } = _scope;
   _queueSource(_scope, _message, "bye");
   _queueSource(_scope, _show, !show);
 }));

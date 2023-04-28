@@ -23,7 +23,11 @@ import {
   getSection,
   Section,
 } from "../../util/sections";
-import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  getScopeAccessorLiteral,
+} from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
@@ -197,7 +201,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
               scopeIdentifier,
               dirtyIdentifier,
               subscriber,
-              getNodeLiteral(extra.reserve!)
+              getScopeAccessorLiteral(extra.reserve!)
               /*writer.getRenderer(section)*/
             )
           );
@@ -220,7 +224,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       signal.build = () => {
         return callRuntime(
           "conditional",
-          getNodeLiteral(extra.reserve!),
+          getScopeAccessorLiteral(extra.reserve!),
           getSignalFn(signal, [scopeIdentifier])
         );
       };
@@ -305,22 +309,22 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           write`${callRuntime(
             "markResumeControlSingleNodeEnd",
             getScopeIdIdentifier(section),
-            getNodeLiteral(extra.reserve!),
+            getScopeAccessorLiteral(extra.reserve!),
             ifScopeIdIdentifier
           )}`;
         } else {
           write`${callRuntime(
             "markResumeControlEnd",
             getScopeIdIdentifier(section),
-            getNodeLiteral(extra.reserve!)
+            getScopeAccessorLiteral(extra.reserve!)
           )}`;
         }
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getNodeLiteral(extra.reserve!).value + "!"),
+          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "!"),
           ifScopeIdentifier
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getNodeLiteral(extra.reserve!).value + "("),
+          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "("),
           ifRendererIdentifier
         );
       }

@@ -1,6 +1,8 @@
 import { classAttr as _classAttr, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _className_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className", _scope => _on(_scope["#button/1"], "click", function () {
-  const className = _scope["className"];
+  const {
+    className
+  } = _scope;
   _queueSource(_scope, _className, className === "A" ? "B" : "A");
 }));
 const _className = /* @__PURE__ */_value("className", (_scope, className) => {

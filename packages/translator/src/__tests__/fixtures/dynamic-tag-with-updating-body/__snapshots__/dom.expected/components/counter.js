@@ -1,6 +1,8 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _count_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
-  const count = _scope["count"];
+  const {
+    count
+  } = _scope;
   _queueSource(_scope, _count, count + 1);
 }));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {

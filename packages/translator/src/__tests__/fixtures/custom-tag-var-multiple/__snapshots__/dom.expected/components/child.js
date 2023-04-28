@@ -2,8 +2,10 @@ import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as 
 const _expr_x_y = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
   let _tagVarSignal_value;
   if (_dirty) {
-    const x = _scope["x"],
-      y = _scope["y"];
+    const {
+      x,
+      y
+    } = _scope;
     _tagVarSignal_value = x + y;
   }
   _tagVarSignal(_scope, _tagVarSignal_value, _dirty);

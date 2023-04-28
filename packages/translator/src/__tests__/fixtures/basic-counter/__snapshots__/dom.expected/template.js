@@ -1,6 +1,8 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _clickCount_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter/template.marko_0_clickCount", _scope => _on(_scope["#button/0"], "click", function () {
-  const clickCount = _scope["clickCount"];
+  const {
+    clickCount
+  } = _scope;
   _queueSource(_scope, _clickCount, clickCount + 1);
 }));
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {

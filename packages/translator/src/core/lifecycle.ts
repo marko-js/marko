@@ -9,7 +9,11 @@ import attrsToObject from "../util/attrs-to-object";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferences, References } from "../util/references";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import { getNodeLiteral, reserveScope, ReserveType } from "../util/reserve";
+import {
+  getScopeAccessorLiteral,
+  reserveScope,
+  ReserveType,
+} from "../util/reserve";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -71,7 +75,7 @@ export default {
             callRuntime(
               "lifecycle",
               scopeIdentifier,
-              getNodeLiteral(tag.node.extra!.reserve!),
+              getScopeAccessorLiteral(tag.node.extra!.reserve!),
               attrsObject
             )
           ),

@@ -2,16 +2,22 @@ import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, regist
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag/template.marko_0_x", _scope => {
   _lifecycle(_scope, "cleanup", {
     onMount: function () {
-      const x = _scope["x"];
+      const {
+        x
+      } = _scope;
       document.getElementById("ref").textContent = "Mount " + x;
     },
     onUpdate: function () {
-      const x = _scope["x"];
+      const {
+        x
+      } = _scope;
       document.getElementById("ref").textContent = "Update " + x;
     }
   });
   _on(_scope["#button/0"], "click", function () {
-    const x = _scope["x"];
+    const {
+      x
+    } = _scope;
     _queueSource(_scope, _x, x + 1);
   });
 });

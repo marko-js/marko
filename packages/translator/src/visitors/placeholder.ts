@@ -4,7 +4,11 @@ import { isOutputHTML } from "../util/marko-config";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
 import { getSection, getOrCreateSection } from "../util/sections";
-import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  getScopeAccessorLiteral,
+} from "../util/reserve";
 import { addStatement } from "../util/signals";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
@@ -77,7 +81,7 @@ export default {
                   "data",
                   t.memberExpression(
                     scopeIdentifier,
-                    getNodeLiteral(reserve!),
+                    getScopeAccessorLiteral(reserve!),
                     true
                   ),
                   placeholder.node.value
@@ -86,7 +90,7 @@ export default {
                   "html",
                   scopeIdentifier,
                   placeholder.node.value,
-                  getNodeLiteral(reserve!)
+                  getScopeAccessorLiteral(reserve!)
                 )
           )
         );

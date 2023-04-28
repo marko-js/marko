@@ -19,7 +19,7 @@ import {
   addIntersectionWithGuardedValue,
 } from "../../util/signals";
 import {
-  getNodeLiteral,
+  getScopeAccessorLiteral,
   Reserve,
   reserveScope,
   ReserveType,
@@ -107,15 +107,19 @@ export default {
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getNodeLiteral(node.extra.reserve!)
+          getScopeAccessorLiteral(node.extra.reserve!)
         )}`;
 
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "!"),
+          t.stringLiteral(
+            getScopeAccessorLiteral(node.extra.reserve!).value + "!"
+          ),
           dynamicScopeIdentifier
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "("),
+          t.stringLiteral(
+            getScopeAccessorLiteral(node.extra.reserve!).value + "("
+          ),
           node.name
         );
       } else {
@@ -128,7 +132,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "conditional",
-            getNodeLiteral(tagNameReserve),
+            getScopeAccessorLiteral(tagNameReserve),
             getSignalFn(signal, [scopeIdentifier])
           );
         };
@@ -157,7 +161,7 @@ export default {
                 callRuntime(
                   "dynamicTagAttrs",
                   scopeIdentifier,
-                  getNodeLiteral(tagNameReserve),
+                  getScopeAccessorLiteral(tagNameReserve),
                   attrsIdentifier,
                   renderBodyIdentifier,
                   dirtyIdentifier

@@ -2,21 +2,24 @@ import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
 import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
-import {
-  callRead,
-  callRuntime,
-  getHTMLRuntime,
-  getScopeExpression,
-} from "../../util/runtime";
+import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
 import { getOrCreateSection, getSection } from "../../util/sections";
-import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
+import {
+  ReserveType,
+  reserveScope,
+  getScopeAccessorLiteral,
+} from "../../util/reserve";
 import { addStatement, addHTMLEffectCall } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import type { Identifier } from "@marko/compiler/babel-types";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+} from "../../util/scope-read";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -103,7 +106,7 @@ export default {
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  callRead(extra.reserve!, referenceSection)
+                  createScopeReadExpression(referenceSection, extra.reserve!)
                 )
               );
             } else {
@@ -111,7 +114,7 @@ export default {
               reference.replaceWith(
                 callRuntime(
                   "bindFunction",
-                  getScopeExpression(extra.reserve!.section, referenceSection),
+                  getScopeExpression(referenceSection, extra.reserve!.section),
                   createElFunction
                 )
               );
@@ -127,7 +130,7 @@ export default {
                     [scopeIdentifier],
                     t.memberExpression(
                       scopeIdentifier,
-                      getNodeLiteral(extra.reserve!),
+                      getScopeAccessorLiteral(extra.reserve!),
                       true
                     )
                   )
@@ -140,7 +143,7 @@ export default {
 
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
       if (extra.reserve) {
-        visitAccessor = getNodeLiteral(extra.reserve);
+        visitAccessor = getScopeAccessorLiteral(extra.reserve);
         walks.visit(tag, walks.WalkCodes.Get);
       }
 

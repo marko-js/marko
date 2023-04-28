@@ -7,7 +7,9 @@ const _ul_for = /* @__PURE__ */_loop("#ul/0", _forBody, (_scope, _destructure, _
   _x$forBody(_scope, x, _dirty);
 });
 const _list_effect = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
-  const list = _scope["list"];
+  const {
+    list
+  } = _scope;
   _queueSource(_scope, _list, [].concat(list).reverse());
 }));
 const _list = /* @__PURE__ */_value("list", (_scope, list) => {
@@ -17,7 +19,9 @@ const _list = /* @__PURE__ */_value("list", (_scope, list) => {
   }]);
 });
 const _open_effect = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => _on(_scope["#button/1"], "click", function () {
-  const open = _scope["open"];
+  const {
+    open
+  } = _scope;
   _queueSource(_scope, _open, !open);
 }));
 const _open = /* @__PURE__ */_value("open", (_scope, open) => {

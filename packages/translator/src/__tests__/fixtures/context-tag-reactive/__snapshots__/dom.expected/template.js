@@ -6,7 +6,9 @@ const _setup$putBody = _scope => {
 const _putBody = /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$putBody, [_childClosures(_child_closures, "#childScope/0")]);
 const _put = /* @__PURE__ */_value("0:", (_scope, put, _dirty) => _dynamicSubscribers(_scope["0:*"], _dirty));
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
-  const x = _scope["x"];
+  const {
+    x
+  } = _scope;
   _queueSource(_scope, _x, x + 1);
 }));
 const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {

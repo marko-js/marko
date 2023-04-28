@@ -5,13 +5,17 @@ const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycl
       this.onUpdate();
     },
     onUpdate: function () {
-      const x = _scope["x"];
+      const {
+        x
+      } = _scope;
       document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
       this.cur = x;
     }
   });
   _on(_scope["#button/0"], "click", function () {
-    const x = _scope["x"];
+    const {
+      x
+    } = _scope;
     _queueSource(_scope, _x, x + 1);
   });
 });

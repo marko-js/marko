@@ -1,11 +1,19 @@
 import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _x$ifBody_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x", _scope => _lifecycle(_scope, "cleanup", {
   onMount: function () {
-    const x = _scope._["x"];
+    const {
+      _: {
+        x
+      }
+    } = _scope;
     document.getElementById("ref").textContent = "Mount " + x;
   },
   onUpdate: function () {
-    const x = _scope._["x"];
+    const {
+      _: {
+        x
+      }
+    } = _scope;
     document.getElementById("ref").textContent = "Update " + x;
   },
   onDestroy: function () {
@@ -16,7 +24,9 @@ const _x$ifBody = /* @__PURE__ */_closure("x", (_scope, x) => _queueEffect(_scop
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", null, [_x$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _show_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_show", _scope => _on(_scope["#button/2"], "click", function () {
-  const show = _scope["show"];
+  const {
+    show
+  } = _scope;
   _queueSource(_scope, _show, !show);
 }));
 const _show = /* @__PURE__ */_value("show", (_scope, show, _dirty) => {
@@ -28,7 +38,9 @@ const _show = /* @__PURE__ */_value("show", (_scope, show, _dirty) => {
   _if(_scope, _if_value, _dirty);
 });
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
-  const x = _scope["x"];
+  const {
+    x
+  } = _scope;
   _queueSource(_scope, _x, x + 1);
 }));
 const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {

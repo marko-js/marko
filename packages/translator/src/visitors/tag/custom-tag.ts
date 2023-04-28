@@ -11,7 +11,7 @@ import translateVar from "../../util/translate-var";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
-import { callRuntime, callRead } from "../../util/runtime";
+import { callRuntime } from "../../util/runtime";
 import {
   startSection,
   getSection,
@@ -28,8 +28,13 @@ import {
   setForceResumeScope,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { getNodeLiteral, reserveScope, ReserveType } from "../../util/reserve";
+import {
+  getScopeAccessorLiteral,
+  reserveScope,
+  ReserveType,
+} from "../../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../program";
+import { createScopeReadExpression } from "../../util/scope-read";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -218,7 +223,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       callRuntime(
         "childClosures",
         importNamed(file, relativePath, "closures", `${tagName}_closures`),
-        getNodeLiteral(binding)
+        getScopeAccessorLiteral(binding)
       )
     );
   }
@@ -253,7 +258,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "setTagVar",
           scopeIdentifier,
-          getNodeLiteral(binding),
+          getScopeAccessorLiteral(binding),
           source.identifier
         )
       )
@@ -264,7 +269,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     tagSection,
     undefined,
     t.expressionStatement(
-      t.callExpression(tagIdentifier, [callRead(binding, tagSection)])
+      t.callExpression(tagIdentifier, [
+        createScopeReadExpression(tagSection, binding),
+      ])
     )
   );
   if (attrsObject && tagAttrsIdentifier) {
@@ -276,7 +283,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         hasDownstreamIntersections: () => true,
       },
       attrsObject,
-      callRead(binding, tagSection)
+      createScopeReadExpression(tagSection, binding)
     );
   }
   tag.remove();

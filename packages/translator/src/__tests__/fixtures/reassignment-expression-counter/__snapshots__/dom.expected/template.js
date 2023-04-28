@@ -1,15 +1,21 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _count_effect = _register("packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count", _scope => {
   _on(_scope["#button/0"], "click", function () {
-    const count = _scope["count"];
+    const {
+      count
+    } = _scope;
     _queueSource(_scope, _count, count + 2);
   });
   _on(_scope["#button/2"], "click", function () {
-    const count = _scope["count"];
+    const {
+      count
+    } = _scope;
     _queueSource(_scope, _count, count * 3);
   });
   _on(_scope["#button/4"], "click", function () {
-    const count = _scope["count"];
+    const {
+      count
+    } = _scope;
     _queueSource(_scope, _count, count ** 3);
   });
 });

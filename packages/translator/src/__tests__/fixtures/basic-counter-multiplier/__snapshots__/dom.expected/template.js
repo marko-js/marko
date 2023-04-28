@@ -1,12 +1,16 @@
 import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_count_multiplier = /* @__PURE__ */_intersection(2, _scope => {
-  const count = _scope["count"],
-    multiplier = _scope["multiplier"];
+  const {
+    count,
+    multiplier
+  } = _scope;
   _multipliedCount(_scope, count * multiplier);
 });
 const _multipliedCount = /* @__PURE__ */_value("multipliedCount", (_scope, multipliedCount) => _data(_scope["#text/3"], multipliedCount));
 const _multiplier_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _on(_scope["#button/0"], "click", function () {
-  const multiplier = _scope["multiplier"];
+  const {
+    multiplier
+  } = _scope;
   _queueSource(_scope, _multiplier, multiplier + 1);
 }));
 const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier, _dirty) => {
@@ -17,7 +21,9 @@ const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier, _di
   _expr_count_multiplier(_scope, _dirty);
 });
 const _count_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", function () {
-  const count = _scope["count"];
+  const {
+    count
+  } = _scope;
   _queueSource(_scope, _count, count + 1);
 }));
 const _count = /* @__PURE__ */_value("count", (_scope, count, _dirty) => {
