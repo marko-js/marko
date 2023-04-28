@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
-import { getOrCreateSectionId, getSectionId } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import attrsToObject from "../util/attrs-to-object";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferences, References } from "../util/references";
@@ -24,15 +24,15 @@ export default {
   analyze: {
     enter(tag) {
       customTag.analyze.enter(tag);
-      const sectionId = getSectionId(tag);
-      reserveScope(ReserveType.Store, sectionId, tag.node, "cleanup");
+      const section = getSection(tag);
+      reserveScope(ReserveType.Store, section, tag.node, "cleanup");
       (currentProgramPath.node.extra ?? {}).isInteractive = true;
     },
     exit(tag) {
       customTag.analyze.exit(tag);
-      const sectionId = getOrCreateSectionId(tag);
+      const section = getOrCreateSection(tag);
       tag.node.extra.attrsReferences = mergeReferences(
-        sectionId,
+        section,
         tag.node.attributes
           .filter((attr) => attr.extra?.valueReferences)
           .map((attr) => [attr.extra, "valueReferences"])
@@ -59,13 +59,13 @@ export default {
       //     );
       // }
 
-      const sectionId = getSectionId(tag);
+      const section = getSection(tag);
 
       if (isOutputDOM()) {
         const attrsObject = attrsToObject(tag);
         addStatement(
           "effect",
-          sectionId,
+          section,
           node.extra.attrsReferences,
           t.expressionStatement(
             callRuntime(
@@ -78,7 +78,7 @@ export default {
           node.attributes.map((a) => a.value)
         );
       } else {
-        addHTMLEffectCall(sectionId, node.extra.attrsReferences);
+        addHTMLEffectCall(section, node.extra.attrsReferences);
       }
 
       tag.remove();

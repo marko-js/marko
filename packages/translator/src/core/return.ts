@@ -4,7 +4,7 @@ import * as writer from "../util/writer";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { addValue } from "../util/signals";
-import { createSectionState, getSectionId } from "../util/sections";
+import { createSectionState, getSection } from "../util/sections";
 import { importRuntime } from "../util/runtime";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
@@ -19,7 +19,7 @@ export default {
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
 
-    const sectionId = getSectionId(tag);
+    const section = getSection(tag);
 
     const {
       node,
@@ -54,7 +54,7 @@ export default {
     if (isOutputHTML()) {
       writer.flushBefore(tag);
       const returnId = file.path.scope.generateUidIdentifier("return");
-      _setReturnId(sectionId, returnId);
+      _setReturnId(section, returnId);
 
       tag
         .replaceWith(
@@ -65,7 +65,7 @@ export default {
         .skip();
     } else {
       addValue(
-        sectionId,
+        section,
         defaultAttr.extra?.valueReferences,
         {
           identifier: importRuntime("tagVarSignal"),

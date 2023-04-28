@@ -1,8 +1,9 @@
 import { types as t } from "@marko/compiler";
 import {
-  getSectionId,
+  getSection,
   createSectionState,
   getScopeIdIdentifier,
+  Section,
 } from "../util/sections";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
@@ -10,16 +11,12 @@ import toTemplateOrStringLiteral, {
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
-import { currentProgramPath } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { getNodeLiteral, ReserveType } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",
-  (sectionId: number) => {
-    const name = currentProgramPath.node.extra.sectionNames![sectionId];
-    return t.identifier(name);
-  }
+  (section: Section) => t.identifier(section.name)
 );
 
 export { getRenderer };
@@ -37,13 +34,13 @@ const [getRegisterRenderer, setRegisterRenderer] = createSectionState<boolean>(
 export { setRegisterRenderer };
 
 export function writeTo(path: t.NodePath<any>) {
-  const sectionId = getSectionId(path);
+  const section = getSection(path);
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
   ): void => {
     const exprsLen = exprs.length;
-    const writes = getWrites(sectionId);
+    const writes = getWrites(section);
     appendLiteral(writes, strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
@@ -53,13 +50,13 @@ export function writeTo(path: t.NodePath<any>) {
 }
 
 export function writePrependTo(path: t.NodePath<any>) {
-  const sectionId = getSectionId(path);
+  const section = getSection(path);
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
   ): void => {
     const exprsLen = exprs.length;
-    const writes = getWrites(sectionId);
+    const writes = getWrites(section);
     writes[0] += strs[exprsLen];
 
     for (let i = 0; i < exprsLen; i++) {
@@ -69,7 +66,7 @@ export function writePrependTo(path: t.NodePath<any>) {
 }
 
 export function consumeHTML(path: t.NodePath<any>) {
-  const writes = getWrites(getSectionId(path));
+  const writes = getWrites(getSection(path));
   const result = toTemplateOrStringLiteral(writes);
 
   writes.length = 0;
@@ -83,7 +80,7 @@ export function consumeHTML(path: t.NodePath<any>) {
 export function hasPendingHTML(
   path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
 ) {
-  const writes = getWrites(getSectionId(path));
+  const writes = getWrites(getSection(path));
   return Boolean(writes.length > 1 || writes[0]);
 }
 
@@ -104,18 +101,18 @@ export function flushInto(
   }
 }
 
-export function getSectionMeta(sectionId: number) {
-  const writes = getWrites(sectionId);
+export function getSectionMeta(section: Section) {
+  const writes = getWrites(section);
   return {
-    setup: getSetup(sectionId),
-    walks: getWalkString(sectionId),
+    setup: getSetup(section),
+    walks: getWalkString(section),
     writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
-    register: getRegisterRenderer(sectionId),
+    register: getRegisterRenderer(section),
   };
 }
 
 export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
-  const sectionId = getSectionId(path);
+  const section = getSection(path);
   const { reserve } = path.node.extra;
 
   if (reserve?.type !== ReserveType.Visit) {
@@ -127,7 +124,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
   if (isOutputHTML()) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
-      getScopeIdIdentifier(sectionId),
+      getScopeIdIdentifier(section),
       getNodeLiteral(reserve!)
     )}`;
   }

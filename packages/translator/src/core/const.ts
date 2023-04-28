@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import { addValue, getTagVarSignal } from "../util/signals";
-import { getSectionId } from "../util/sections";
+import { getSection } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -39,12 +39,12 @@ export default {
     }
 
     if (isOutputDOM()) {
-      const sectionId = getSectionId(tag);
+      const section = getSection(tag);
       const references = defaultAttr.extra?.valueReferences;
       const derivation = getTagVarSignal(tag.get("var"))!;
 
       // TODO: optimize for cases like `const/x=y`
-      addValue(sectionId, references, derivation, defaultAttr.value);
+      addValue(section, references, derivation, defaultAttr.value);
     } else {
       translateVar(tag, defaultAttr.value);
     }

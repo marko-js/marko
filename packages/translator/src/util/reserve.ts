@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isOptimize } from "./marko-config";
-import { createSectionState, forEachSectionId } from "./sections";
+import { Section, createSectionState, forEachSection } from "./sections";
 import { SortedRepeatable } from "./sorted-repeatable";
 
 const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
@@ -15,7 +15,7 @@ export const enum ReserveType {
 
 export interface Reserve {
   type: ReserveType;
-  sectionId: number;
+  section: Section;
   debugKey: string;
   name: string;
   id: number;
@@ -27,7 +27,7 @@ declare module "@marko/compiler/dist/types" {
   }
 
   export interface MarkoTagBodyExtra {
-    sectionId?: number;
+    section?: Section;
   }
 
   export interface MarkoTagExtra {
@@ -49,7 +49,7 @@ declare module "@marko/compiler/dist/types" {
 
 export function reserveScope(
   type: ReserveType,
-  sectionId: number,
+  section: Section,
   node:
     | t.MarkoTag
     | t.MarkoAttribute
@@ -67,13 +67,13 @@ export function reserveScope(
     return reserve;
   }
 
-  const reservesByType = getReservesByType(sectionId);
+  const reservesByType = getReservesByType(section);
   const reserve = (extra.reserve = {
     id: 0,
     type,
     name,
     debugKey,
-    sectionId,
+    section,
   });
 
   if (reservesByType[type]) {
@@ -86,9 +86,9 @@ export function reserveScope(
 }
 
 export function assignFinalIds() {
-  forEachSectionId((sectionId) => {
+  forEachSection((section) => {
     let curIndex = 0;
-    for (const reserves of getReservesByType(sectionId)) {
+    for (const reserves of getReservesByType(section)) {
       if (reserves) {
         for (const reserve of reserves) {
           reserve.id = curIndex;
@@ -113,5 +113,5 @@ export const repeatableReserves = new SortedRepeatable(function compareReserves(
   a: Reserve,
   b: Reserve
 ) {
-  return a.sectionId - b.sectionId || a.type - b.type || a.id - b.id;
+  return a.section.id - b.section.id || a.type - b.type || a.id - b.id;
 });

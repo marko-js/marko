@@ -5,7 +5,7 @@ import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
 import { initValue, queueSource, addValue } from "../util/signals";
 import { registerAssignmentReplacer } from "../util/replace-assignments";
-import { getSectionId } from "../util/sections";
+import { getSection } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -33,7 +33,7 @@ export default {
     }
 
     if (isOutputDOM()) {
-      const sectionId = getSectionId(tag);
+      const section = getSection(tag);
       const binding = tagVar.extra.reserve!;
       const source = initValue(binding);
       const references = defaultAttr.extra?.valueReferences;
@@ -42,13 +42,13 @@ export default {
       if (!isSetup) {
         // TODO: add defined guard if bindings exist.
       } else {
-        addValue(sectionId, references, source, defaultAttr.value);
+        addValue(section, references, source, defaultAttr.value);
       }
 
       registerAssignmentReplacer(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
-          queueSource(source, value, getSectionId(assignment))
+          queueSource(source, value, getSection(assignment))
       );
     } else {
       translateVar(tag, defaultAttr.value);

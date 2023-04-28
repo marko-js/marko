@@ -5,11 +5,11 @@ const _setup$tagNameBody = _scope => {
 };
 const _tagNameBody = /* @__PURE__ */_createRenderer(`${_counter_template}`, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagNameBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _tagName_input;
   if (_dirty) {
-    _dynamicBody_attrs = () => ({});
+    _tagName_input = () => ({});
   }
-  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, _tagNameBody, _dirty);
+  _dynamicTagAttrs(_scope, "#text/0", _tagName_input, _tagNameBody, _dirty);
 });
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
   const tagName = _scope["tagName"];

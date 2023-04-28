@@ -2,41 +2,58 @@ import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
 
+export type Section = {
+  id: number;
+  name: string;
+  depth: number;
+  parent?: Section;
+};
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    nextSectionId?: number;
-    sectionId?: number;
-    sectionNames?: string[];
+    section?: Section;
+    sections?: Section[];
   }
 
   export interface MarkoTagBodyExtra {
-    sectionId?: number;
+    section?: Section;
   }
 }
 
-export function startSection(path: t.NodePath<t.MarkoTagBody | t.Program>) {
+export function startSection(
+  path: t.NodePath<t.MarkoTagBody | t.Program>
+): Section {
   const extra = (path.node.extra ??= {});
-  let sectionId = extra.sectionId;
+  let section = extra.section;
 
-  if (sectionId === undefined) {
-    const programExtra = (path.hub.file.path.node.extra ??= {});
-    const sectionNameNode = (path.parent as t.MarkoTag)?.name;
-    const sectionName =
-      (sectionNameNode as t.StringLiteral)?.value ??
-      (sectionNameNode as t.Identifier)?.name ??
-      "dynamic";
-    sectionId = extra.sectionId = programExtra.nextSectionId || 0;
-    programExtra.nextSectionId = sectionId + 1; // currentProgramPath.scope.generateUid(path.node.name);
-    programExtra.sectionNames = programExtra.sectionNames ?? [];
-    programExtra.sectionNames[sectionId] = currentProgramPath.scope.generateUid(
-      sectionName + "Body"
+  if (!section) {
+    const parentSection = path.parentPath
+      ? getOrCreateSection(path.parentPath)
+      : undefined;
+    const sectionNamePath = (path.parentPath as t.NodePath<t.MarkoTag>)?.get(
+      "name"
     );
+    const sectionName = path.isProgram()
+      ? ""
+      : currentProgramPath.scope.generateUid(
+          sectionNamePath.toString() + "Body"
+        );
+
+    const programExtra = (path.hub.file.path.node.extra ??= {});
+    const sections = (programExtra.sections ??= []);
+    section = extra.section = {
+      id: sections.length,
+      name: sectionName,
+      depth: parentSection ? parentSection.depth + 1 : 0,
+      parent: parentSection,
+    };
+    sections.push(section);
   }
 
-  return sectionId;
+  return section;
 }
 
-export function getOrCreateSectionId(path: t.NodePath<any>) {
+export function getOrCreateSection(path: t.NodePath<any>) {
   let cur = path;
 
   // eslint-disable-next-line no-constant-condition
@@ -54,43 +71,41 @@ export function getOrCreateSectionId(path: t.NodePath<any>) {
   }
 }
 
-export function getSectionId(path: t.NodePath) {
-  let sectionId: number;
+export function getSection(path: t.NodePath) {
+  let section: Section;
   let currentPath = path;
-  while (
-    (sectionId = currentPath.node.extra?.sectionId as number) === undefined
-  ) {
+  while ((section = currentPath.node.extra?.section as Section) === undefined) {
     currentPath = currentPath.parentPath!;
   }
-  return sectionId;
+  return section;
 }
 
-export function getParentSectionId(path: t.NodePath) {
-  return getSectionId(path.parentPath!);
+export function getParentSection(path: t.NodePath) {
+  return getSection(path.parentPath!);
 }
 
 export function createSectionState<T = unknown>(
   key: string,
-  init?: ((sectionId: number) => T) | (() => T)
+  init?: ((section: Section) => T) | (() => T)
 ) {
   return [
-    (sectionId: number): T => {
+    (section: Section): T => {
       const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
-      const sectionData = (arrayOfSectionData[sectionId] ??=
-        init && init(sectionId));
+      const sectionData = (arrayOfSectionData[section.id] ??=
+        init && init(section));
       return sectionData as T;
     },
-    (sectionId: number, value: T): void => {
+    (section: Section, value: T): void => {
       const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
-      arrayOfSectionData[sectionId] = value;
+      arrayOfSectionData[section.id] = value;
     },
   ] as const;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   "scopeIdIdentifier",
-  (sectionId) =>
-    currentProgramPath.scope.generateUidIdentifier(`scope${sectionId}_id`)
+  (section) =>
+    currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`)
 );
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
@@ -99,26 +114,24 @@ const [_getScopeIdentifier] = createSectionState<t.Identifier>(
 );
 
 export const getScopeIdentifier = (
-  sectionId: number,
+  section: Section,
   ignoreDefault?: boolean
 ) => {
-  const scopeId = _getScopeIdentifier(sectionId);
+  const scopeId = _getScopeIdentifier(section);
   if (!ignoreDefault && scopeId.name === "undefined") {
-    scopeId.name = currentProgramPath.scope.generateUid(`scope${sectionId}_`);
+    scopeId.name = currentProgramPath.scope.generateUid(`scope${section.id}_`);
   }
   return scopeId;
 };
 
-export function forEachSectionId(fn: (id: number) => void) {
-  const { nextSectionId } = currentProgramPath.node.extra;
-  for (let sectionId = 0; sectionId < nextSectionId!; sectionId++) {
-    fn(sectionId);
-  }
+export function forEachSection(fn: (section: Section) => void) {
+  const { sections } = currentProgramPath.node.extra;
+  sections?.forEach(fn);
 }
 
-export function forEachSectionIdReverse(fn: (id: number) => void) {
-  const { nextSectionId } = currentProgramPath.node.extra;
-  for (let sectionId = nextSectionId!; sectionId--; ) {
-    fn(sectionId);
+export function forEachSectionReverse(fn: (section: Section) => void) {
+  const { sections } = currentProgramPath.node.extra;
+  for (let i = sections!.length; i--; ) {
+    fn(sections![i]);
   }
 }

@@ -14,8 +14,8 @@ import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime, callRead } from "../../util/runtime";
 import {
   startSection,
-  getSectionId,
-  getOrCreateSectionId,
+  getSection,
+  getOrCreateSection,
   getScopeIdIdentifier,
 } from "../../util/sections";
 import trackReferences, { mergeReferences } from "../../util/references";
@@ -50,7 +50,7 @@ export default {
       if (getTagDef(tag)?.template) {
         reserveScope(
           ReserveType.Visit,
-          getOrCreateSectionId(tag),
+          getOrCreateSection(tag),
           tag.node,
           "#childScope"
         );
@@ -70,10 +70,10 @@ export default {
       // TODO: only if dynamic attributes
       const tagDef = getTagDef(tag);
       const template = tagDef?.template;
-      const sectionId = getOrCreateSectionId(tag);
+      const section = getOrCreateSection(tag);
       if (template) {
         tag.node.extra.attrsReferences = mergeReferences(
-          sectionId,
+          section,
           tag.node.attributes
             .filter((attr) => attr.extra?.valueReferences)
             .map((attr) => [attr.extra, "valueReferences"])
@@ -159,7 +159,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       )[0]
       .skip();
   } else if (tagVar) {
-    const sectionId = getSectionId(tag);
+    const section = getSection(tag);
     translateVar(
       tag,
       callExpression(
@@ -170,15 +170,15 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           t.arrowFunctionExpression([], t.blockStatement([])),
           t.stringLiteral(
             getResumeRegisterId(
-              sectionId,
+              section,
               (node.var as t.Identifier).extra?.reserve
             )
           ),
-          getScopeIdIdentifier(sectionId)
+          getScopeIdIdentifier(section)
         )
       )
     );
-    setForceResumeScope(sectionId);
+    setForceResumeScope(section);
     tag.remove();
   } else {
     tag.replaceWith(callStatement(tagIdentifier, attrsObject))[0].skip();
@@ -186,9 +186,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function translateDOM(tag: t.NodePath<t.MarkoTag>) {
-  const tagSectionId = getSectionId(tag);
+  const tagSection = getSection(tag);
   const tagBody = tag.get("body");
-  const tagBodySectionId = getSectionId(tagBody);
+  const tagBodySection = getSection(tagBody);
   const { node } = tag;
   const write = writer.writeTo(tag);
   const binding = node.extra.reserve!;
@@ -214,7 +214,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   );
 
   if (childProgram.extra.closures) {
-    getClosures(tagSectionId).push(
+    getClosures(tagSection).push(
       callRuntime(
         "childClosures",
         importNamed(file, relativePath, "closures", `${tagName}_closures`),
@@ -225,7 +225,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
 
   let attrsObject = attrsToObject(tag);
 
-  if (tagBodySectionId !== tagSectionId) {
+  if (tagBodySection !== tagSection) {
     attrsObject ??= t.objectExpression([]);
     (attrsObject as t.ObjectExpression).properties.push(
       t.objectProperty(
@@ -233,7 +233,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "bindRenderer",
           scopeIdentifier,
-          writer.getRenderer(tagBodySectionId)
+          writer.getRenderer(tagBodySection)
         )
       )
     );
@@ -247,7 +247,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     source.register = true;
     addStatement(
       "render",
-      tagSectionId,
+      tagSection,
       undefined,
       t.expressionStatement(
         callRuntime(
@@ -261,22 +261,22 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   }
   addStatement(
     "render",
-    tagSectionId,
+    tagSection,
     undefined,
     t.expressionStatement(
-      t.callExpression(tagIdentifier, [callRead(binding, tagSectionId)])
+      t.callExpression(tagIdentifier, [callRead(binding, tagSection)])
     )
   );
   if (attrsObject && tagAttrsIdentifier) {
     addValue(
-      tagSectionId,
+      tagSection,
       tag.node.extra.attrsReferences,
       {
         identifier: tagAttrsIdentifier,
         hasDownstreamIntersections: () => true,
       },
       attrsObject,
-      callRead(binding, tagSectionId)
+      callRead(binding, tagSection)
     );
   }
   tag.remove();

@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
-import { getSectionId } from "../util/sections";
+import { getSection } from "../util/sections";
 import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
@@ -16,8 +16,8 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
-    const sectionId = getSectionId(tag);
-    reserveScope(ReserveType.Store, sectionId, tag.node, "cleanup");
+    const section = getSection(tag);
+    reserveScope(ReserveType.Store, section, tag.node, "cleanup");
     (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },
   translate: {
@@ -48,7 +48,7 @@ export default {
           );
       }
 
-      const sectionId = getSectionId(tag);
+      const section = getSection(tag);
       if (isOutputDOM()) {
         const { value } = defaultAttr;
         let inlineStatements = null;
@@ -65,7 +65,7 @@ export default {
         }
         addStatement(
           "effect",
-          sectionId,
+          section,
           defaultAttr.extra?.valueReferences,
           inlineStatements ||
             t.expressionStatement(
@@ -80,7 +80,7 @@ export default {
           !!inlineStatements
         );
       } else {
-        addHTMLEffectCall(sectionId, defaultAttr.extra?.valueReferences);
+        addHTMLEffectCall(section, defaultAttr.extra?.valueReferences);
       }
 
       tag.remove();

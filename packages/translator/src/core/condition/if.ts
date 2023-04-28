@@ -17,10 +17,11 @@ import { callRuntime, importRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import {
-  getOrCreateSectionId,
+  getOrCreateSection,
   getScopeIdentifier,
   getScopeIdIdentifier,
-  getSectionId,
+  getSection,
+  Section,
 } from "../../util/sections";
 import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
@@ -34,7 +35,7 @@ export default {
     enter(tag) {
       reserveScope(
         ReserveType.Visit,
-        getOrCreateSectionId(tag),
+        getOrCreateSection(tag),
         tag.node,
         "if",
         "#text"
@@ -102,11 +103,11 @@ const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   {
     tag: t.NodePath<t.MarkoTag>;
-    sectionId: number;
+    section: Section;
   }[]
 >();
 
-function getBranches(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
+function getBranches(tag: t.NodePath<t.MarkoTag>, bodySection: Section) {
   const branches = BRANCHES_LOOKUP.get(tag) ?? [];
   const nextTag = tag.getNextSibling();
   const isLast = !(
@@ -115,7 +116,7 @@ function getBranches(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
 
   branches.push({
     tag,
-    sectionId: bodySectionId,
+    section: bodySection,
   });
 
   if (!isLast) {
@@ -126,14 +127,14 @@ function getBranches(tag: t.NodePath<t.MarkoTag>, bodySectionId: number) {
 }
 
 export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
-  const sectionId = getOrCreateSectionId(tag);
+  const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
-  const bodySectionId = getOrCreateSectionId(tagBody);
-  const [isLast, branches] = getBranches(tag, bodySectionId);
+  const bodySection = getOrCreateSection(tagBody);
+  const [isLast, branches] = getBranches(tag, bodySection);
   if (isLast) {
     const rootExtra = branches[0].tag.node.extra;
     const conditionalReferences = mergeReferences(
-      sectionId,
+      section,
       branches
         .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
         .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"])
@@ -148,9 +149,9 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
 
 export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
-  const sectionId = getSectionId(tag);
-  const bodySectionId = getSectionId(tagBody);
-  const [isLast, branches] = getBranches(tag, bodySectionId);
+  const section = getSection(tag);
+  const bodySection = getSection(tagBody);
+  const [isLast, branches] = getBranches(tag, bodySection);
   const rootExtra = branches[0].tag.node.extra;
   const isStateful = rootExtra.isStateful;
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
@@ -160,19 +161,19 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
           "markResumeScopeStart",
-          getScopeIdIdentifier(bodySectionId)
+          getScopeIdIdentifier(bodySection)
         )}`;
       }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         return t.assignmentExpression(
           "=",
-          getScopeIdentifier(bodySectionId),
+          getScopeIdentifier(bodySection),
           scope
         );
       });
-      getSerializedScopeProperties(bodySectionId).set(
+      getSerializedScopeProperties(bodySection).set(
         importRuntime("SYMBOL_OWNER"),
-        getScopeIdIdentifier(sectionId)
+        getScopeIdIdentifier(section)
       );
     }
     writer.flushInto(tag);
@@ -185,9 +186,9 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       let expr: t.Expression = t.nullLiteral();
 
       for (let i = branches.length; i--; ) {
-        const { tag, sectionId } = branches[i];
+        const { tag, section } = branches[i];
         const [testAttr] = tag.node.attributes;
-        const id = writer.getRenderer(sectionId);
+        const id = writer.getRenderer(section);
 
         setSubscriberBuilder(tag, (subscriber) => {
           return t.expressionStatement(
@@ -197,13 +198,13 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
               dirtyIdentifier,
               subscriber,
               getNodeLiteral(extra.reserve!)
-              /*writer.getRenderer(sectionId)*/
+              /*writer.getRenderer(section)*/
             )
           );
         });
 
         if (isStateful) {
-          writer.setRegisterRenderer(sectionId, true);
+          writer.setRegisterRenderer(section, true);
         }
 
         tag.remove();
@@ -215,7 +216,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      const signal = getSignal(sectionId, extra.reserve);
+      const signal = getSignal(section, extra.reserve);
       signal.build = () => {
         return callRuntime(
           "conditional",
@@ -224,9 +225,9 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         );
       };
       signal.hasDownstreamIntersections = () =>
-        branches.some((b) => getClosures(b.sectionId).length > 0);
+        branches.some((b) => getClosures(b.section).length > 0);
       addValue(
-        sectionId,
+        section,
         extra.conditionalReferences as References,
         signal,
         expr
@@ -235,14 +236,14 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();
       const ifScopeIdIdentifier = tag.scope.generateUidIdentifier("ifScopeId");
-      const ifScopeIdentifier = getScopeIdentifier(branches[0].sectionId);
+      const ifScopeIdentifier = getScopeIdentifier(branches[0].section);
       const ifRendererIdentifier =
         tag.scope.generateUidIdentifier("ifRenderer");
 
       let statement: t.Statement | undefined;
       for (let i = branches.length; i--; ) {
-        const { tag, sectionId } = branches[i];
-        const branchScopeIdentifier = getScopeIdentifier(sectionId, true);
+        const { tag, section } = branches[i];
+        const branchScopeIdentifier = getScopeIdentifier(section, true);
         branchScopeIdentifier.name = ifScopeIdentifier.name;
 
         if (isStateful) {
@@ -255,7 +256,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                   ifRendererIdentifier,
                   t.arrowFunctionExpression([], t.blockStatement([]))
                 ),
-                t.stringLiteral(getResumeRegisterId(sectionId, "renderer"))
+                t.stringLiteral(getResumeRegisterId(section, "renderer"))
               )
             ) as any
           );
@@ -266,7 +267,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                 t.assignmentExpression(
                   "=",
                   ifScopeIdIdentifier,
-                  getScopeIdIdentifier(sectionId)
+                  getScopeIdIdentifier(section)
                 )
               ) as any
             );
@@ -303,22 +304,22 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         if (singleNodeOptimization) {
           write`${callRuntime(
             "markResumeControlSingleNodeEnd",
-            getScopeIdIdentifier(sectionId),
+            getScopeIdIdentifier(section),
             getNodeLiteral(extra.reserve!),
             ifScopeIdIdentifier
           )}`;
         } else {
           write`${callRuntime(
             "markResumeControlEnd",
-            getScopeIdIdentifier(sectionId),
+            getScopeIdIdentifier(section),
             getNodeLiteral(extra.reserve!)
           )}`;
         }
-        getSerializedScopeProperties(sectionId).set(
+        getSerializedScopeProperties(section).set(
           t.stringLiteral(getNodeLiteral(extra.reserve!).value + "!"),
           ifScopeIdentifier
         );
-        getSerializedScopeProperties(sectionId).set(
+        getSerializedScopeProperties(section).set(
           t.stringLiteral(getNodeLiteral(extra.reserve!).value + "("),
           ifRendererIdentifier
         );

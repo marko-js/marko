@@ -1,13 +1,13 @@
 import { dynamicTagAttrs as _dynamicTagAttrs, createRenderer as _createRenderer, conditional as _conditional, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _tagNameBody = /* @__PURE__ */_createRenderer("Hello World", "");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _tagName_input;
   if (_dirty) {
-    _dynamicBody_attrs = () => ({
+    _tagName_input = () => ({
       class: ["a", "b"]
     });
   }
-  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, _tagNameBody, _dirty);
+  _dynamicTagAttrs(_scope, "#text/0", _tagName_input, _tagNameBody, _dirty);
 });
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {
   let _dynamicTagName_value;

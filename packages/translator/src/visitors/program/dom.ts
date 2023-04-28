@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
-import { forEachSectionIdReverse, getSectionId } from "../../util/sections";
+import { forEachSectionReverse, getSection } from "../../util/sections";
 import {
   getClosures,
   getDestructureSignal,
@@ -16,23 +16,23 @@ export default {
   translate: {
     exit(program: t.NodePath<t.Program>) {
       visit(program);
-      const sectionId = getSectionId(program);
+      const section = getSection(program);
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
       const setupIdentifier = t.identifier("setup");
       const attrsSignalIdentifier = t.identifier("attrs");
       const closuresIdentifier = t.identifier("closures");
       const { attrs } = program.node.extra;
-      const { walks, writes, setup } = writer.getSectionMeta(sectionId);
+      const { walks, writes, setup } = writer.getSectionMeta(section);
 
-      forEachSectionIdReverse((childSectionId) => {
-        writeSignals(childSectionId);
+      forEachSectionReverse((childSection) => {
+        writeSignals(childSection);
 
-        if (childSectionId !== sectionId) {
+        if (childSection !== section) {
           const { walks, writes, setup, register } =
-            writer.getSectionMeta(childSectionId);
-          const closures = getClosures(childSectionId);
-          const identifier = writer.getRenderer(childSectionId);
+            writer.getSectionMeta(childSection);
+          const closures = getClosures(childSection);
+          const identifier = writer.getRenderer(childSection);
           const renderer = callRuntime(
             "createRenderer",
             writes,
@@ -48,7 +48,7 @@ export default {
                   ? callRuntime(
                       "register",
                       t.stringLiteral(
-                        getResumeRegisterId(childSectionId, "renderer")
+                        getResumeRegisterId(childSection, "renderer")
                       ),
                       renderer
                     )
@@ -66,7 +66,7 @@ export default {
         for (const name in attrs.bindings) {
           const bindingIdentifier = attrs.bindings[name];
           const signalIdentifier = getSignal(
-            sectionId,
+            section,
             bindingIdentifier.extra.reserve
           ).identifier;
           exportSpecifiers.push(
@@ -81,7 +81,7 @@ export default {
                 attrsSignalIdentifier,
                 isIdentity
                   ? getSignal(
-                      sectionId,
+                      section,
                       (attrs.var as t.Identifier).extra!.reserve!
                     ).identifier
                   : getDestructureSignal(attrs.bindings, attrs.var)?.build()
@@ -92,7 +92,7 @@ export default {
         );
       }
 
-      const closures = getClosures(sectionId);
+      const closures = getClosures(section);
 
       program.node.body.push(
         t.exportNamedDeclaration(

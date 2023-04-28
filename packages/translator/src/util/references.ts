@@ -1,9 +1,10 @@
 import type { types as t } from "@marko/compiler";
 import { SortedRepeatable } from "./sorted-repeatable";
 import {
-  getOrCreateSectionId,
+  getOrCreateSection,
   createSectionState,
-  forEachSectionId,
+  forEachSection,
+  Section,
 } from "./sections";
 import {
   Reserve,
@@ -73,17 +74,17 @@ declare module "@marko/compiler/dist/types" {
 
 export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
   if (tag.has("var")) {
-    trackReferencesForBindings(getOrCreateSectionId(tag), tag.get("var"));
+    trackReferencesForBindings(getOrCreateSection(tag), tag.get("var"));
   }
 
   const body = tag.get("body");
   if (body.get("body").length && body.get("params").length) {
-    trackReferencesForBindings(getOrCreateSectionId(body), body);
+    trackReferencesForBindings(getOrCreateSection(body), body);
   }
 }
 
 export function trackReferencesForBindings(
-  sectionId: number,
+  section: Section,
   path: t.NodePath<any>
 ) {
   const scope = path.scope;
@@ -104,12 +105,7 @@ export function trackReferencesForBindings(
         )
     );
     const identifier = bindings[name];
-    const binding = reserveScope(
-      ReserveType.Store,
-      sectionId,
-      identifier,
-      name
-    );
+    const binding = reserveScope(ReserveType.Store, section, identifier, name);
 
     for (const reference of references) {
       const fnRoot = getFnRoot(reference.scope.path);
@@ -144,7 +140,7 @@ export function addBindingToReferences(
   referencesKey: string,
   binding: Reserve
 ) {
-  const sectionId = getOrCreateSectionId(path);
+  const section = getOrCreateSection(path);
   const extra = (path.node.extra ??= {});
   const prevReferences = extra[referencesKey] as References | undefined;
 
@@ -152,7 +148,7 @@ export function addBindingToReferences(
     if (prevReferences !== binding) {
       extra[referencesKey] = addSubscriber(
         getIntersection(
-          sectionId,
+          section,
           repeatableReserves.add(
             repeatableReserves.clone(prevReferences),
             binding
@@ -161,7 +157,7 @@ export function addBindingToReferences(
       );
 
       if (isIntersection(prevReferences)) {
-        removeSubscriber(getIntersection(sectionId, prevReferences));
+        removeSubscriber(getIntersection(section, prevReferences));
       }
     }
   } else {
@@ -170,7 +166,7 @@ export function addBindingToReferences(
 }
 
 export function mergeReferences(
-  sectionId: number,
+  section: Section,
   groupEntries: [Record<string, unknown>, string][]
 ) {
   let newReferences: References;
@@ -178,7 +174,7 @@ export function mergeReferences(
     const references = extra[key] as References;
 
     if (isIntersection(references)) {
-      removeSubscriber(getIntersection(sectionId, references));
+      removeSubscriber(getIntersection(section, references));
     }
 
     newReferences = repeatableReserves.addAll(newReferences, references);
@@ -186,7 +182,7 @@ export function mergeReferences(
   }
 
   if (isIntersection(newReferences)) {
-    newReferences = addSubscriber(getIntersection(sectionId, newReferences));
+    newReferences = addSubscriber(getIntersection(section, newReferences));
   }
 
   return newReferences;
@@ -267,23 +263,23 @@ function compareIntersections(a: Intersection, b: Intersection) {
 export function finalizeIntersections() {
   const intersectionsBySection: IntersectionsBySection =
     ((currentProgramPath.node.extra ??= {}).intersectionsBySection = {});
-  forEachSectionId((sectionId) => {
-    intersectionsBySection[sectionId] = getIntersectionsBySection(
-      sectionId
+  forEachSection((section) => {
+    intersectionsBySection[section.id] = getIntersectionsBySection(
+      section
     ).filter(
       (intersection) => intersectionSubscribeCounts.get(intersection)! > 0
     );
   });
 }
 
-function getIntersection(sectionId: number, references: Intersection) {
-  const intersections = getIntersectionsBySection(sectionId);
+function getIntersection(section: Section, references: Intersection) {
+  const intersections = getIntersectionsBySection(section);
   let intersection = repeatableIntersections.find(intersections, references);
 
   if (!intersection) {
     intersection = references;
     setIntersectionsBySection(
-      sectionId,
+      section,
       repeatableIntersections.add(intersections, references)
     );
   }

@@ -13,7 +13,7 @@ import { isOutputHTML } from "../util/marko-config";
 import { initContextConsumer } from "../util/signals";
 import customTag from "../visitors/tag/custom-tag";
 import { currentProgramPath } from "../visitors/program";
-import { getOrCreateSectionId } from "../util/sections";
+import { getOrCreateSection } from "../util/sections";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -25,8 +25,8 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
-      const sectionId = getOrCreateSectionId(tag);
-      if (sectionId === 0) {
+      const section = getOrCreateSection(tag);
+      if (section.id === 0) {
         (currentProgramPath.node.extra ??= {}).closures = true;
       }
 
@@ -159,7 +159,7 @@ export default {
       //   const scriptlet = tag as unknown as t.NodePath<t.MarkoScriptlet>;
       //   addStatement(
       //     "render",
-      //     getSectionId(scriptlet),
+      //     getSection(scriptlet),
       //     scriptlet.node.extra?.bodyReferences as ReferenceGroup,
       //     scriptlet.node.body
       //   );

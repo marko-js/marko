@@ -9,7 +9,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { callRuntime } from "../util/runtime";
 import { isOutputHTML } from "../util/marko-config";
 import { addValue, initValue } from "../util/signals";
-import { getSectionId } from "../util/sections";
+import { getSection } from "../util/sections";
 
 export default {
   translate(tag) {
@@ -40,7 +40,7 @@ export default {
       );
     } else {
       const source = initValue(tagVar.extra.reserve!);
-      addValue(getSectionId(tag), undefined, source, id);
+      addValue(getSection(tag), undefined, source, id);
       tag.remove();
     }
   },

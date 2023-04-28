@@ -7,9 +7,9 @@ import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import { isOutputHTML } from "../../util/marko-config";
 import {
-  getOrCreateSectionId,
+  getOrCreateSection,
   getScopeIdIdentifier,
-  getSectionId,
+  getSection,
 } from "../../util/sections";
 import {
   getSignalFn,
@@ -37,7 +37,7 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       reserveScope(
         ReserveType.Visit,
-        getOrCreateSectionId(tag),
+        getOrCreateSection(tag),
         tag.node as any as t.Identifier,
         "dynamicTagName",
         "#text"
@@ -47,7 +47,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       tag.node.extra.attrsReferences = mergeReferences(
-        getOrCreateSectionId(tag),
+        getOrCreateSection(tag),
         tag.node.attributes
           .filter((attr) => attr.extra?.valueReferences)
           .map((attr) => [attr.extra, "valueReferences"])
@@ -103,29 +103,28 @@ export default {
             )[0]
             .skip();
         }
-        const sectionId = getSectionId(tag);
+        const section = getSection(tag);
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
-          getScopeIdIdentifier(sectionId),
+          getScopeIdIdentifier(section),
           getNodeLiteral(node.extra.reserve!)
         )}`;
 
-        getSerializedScopeProperties(sectionId).set(
+        getSerializedScopeProperties(section).set(
           t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "!"),
           dynamicScopeIdentifier
         );
-        getSerializedScopeProperties(sectionId).set(
+        getSerializedScopeProperties(section).set(
           t.stringLiteral(getNodeLiteral(node.extra.reserve!).value + "("),
           node.name
         );
       } else {
-        const sectionId = getSectionId(tag);
-        const bodySectionId = getSectionId(tag.get("body"));
-        const hasBody = sectionId !== bodySectionId;
-        const renderBodyIdentifier =
-          hasBody && writer.getRenderer(bodySectionId);
+        const section = getSection(tag);
+        const bodySection = getSection(tag.get("body"));
+        const hasBody = section !== bodySection;
+        const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
         const tagNameReserve = node.extra?.reserve as Reserve;
-        const signal = getSignal(sectionId, tagNameReserve);
+        const signal = getSignal(section, tagNameReserve);
         signal.build = () => {
           return callRuntime(
             "conditional",
@@ -134,7 +133,7 @@ export default {
           );
         };
         addValue(
-          sectionId,
+          section,
           node.extra?.nameReferences,
           signal,
           renderBodyIdentifier
@@ -144,15 +143,14 @@ export default {
 
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {
-          const name = currentProgramPath.node.extra.sectionNames![sectionId];
-          const signal = getSignal(sectionId, node.extra?.attrsReferences);
+          const signal = getSignal(section, node.extra?.attrsReferences);
           const attrsGetter = t.arrowFunctionExpression(
             [],
             attrsObject ?? t.objectExpression([])
           );
           addIntersectionWithGuardedValue(
             signal,
-            name + "_attrs",
+            tag.get("name").toString() + "_input",
             attrsGetter,
             (attrsIdentifier) => {
               return t.expressionStatement(

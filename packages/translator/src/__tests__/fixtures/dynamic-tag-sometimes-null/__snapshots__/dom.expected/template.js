@@ -1,11 +1,11 @@
 import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _xBody = /* @__PURE__ */_createRenderer("Body Content", "");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _x_input;
   if (_dirty) {
-    _dynamicBody_attrs = () => ({});
+    _x_input = () => ({});
   }
-  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, _xBody, _dirty);
+  _dynamicTagAttrs(_scope, "#text/0", _x_input, _xBody, _dirty);
 });
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
   const x = _scope["x"];

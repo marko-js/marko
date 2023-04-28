@@ -10,14 +10,14 @@ import {
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { reserveScope, ReserveType } from "../util/reserve";
-import { getOrCreateSectionId, getSectionId } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 
 export default {
   analyze: {
     enter(tag) {
       reserveScope(
         ReserveType.Visit,
-        getOrCreateSectionId(tag),
+        getOrCreateSection(tag),
         tag.node,
         "put",
         "#text"
@@ -78,8 +78,8 @@ export default {
         walks.visit(tag, walks.WalkCodes.Replace);
         walks.enterShallow(tag);
 
-        const bodySectionId = getSectionId(tag.get("body"));
-        const rendererId = writer.getRenderer(bodySectionId);
+        const bodySection = getSection(tag.get("body"));
+        const rendererId = writer.getRenderer(bodySection);
 
         initContextProvider(
           tag.hub.file.metadata.marko.id,

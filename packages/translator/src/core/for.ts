@@ -19,10 +19,10 @@ import {
   getClosures,
 } from "../util/signals";
 import {
-  getOrCreateSectionId,
+  getOrCreateSection,
   getScopeIdentifier,
   getScopeIdIdentifier,
-  getSectionId,
+  getSection,
 } from "../util/sections";
 import { ReserveType, reserveScope, getNodeLiteral } from "../util/reserve";
 import { callRuntime, importRuntime } from "../util/runtime";
@@ -45,7 +45,7 @@ export default {
       const parentTagName = (parentTag?.name as t.StringLiteral)?.value;
       reserveScope(
         ReserveType.Visit,
-        getOrCreateSectionId(tag),
+        getOrCreateSection(tag),
         isOnlyChild ? parentTag : tag.node,
         "for",
         isOnlyChild ? `#${parentTagName}` : "#text"
@@ -55,9 +55,9 @@ export default {
     exit(tag) {
       analyzeAttributeTags(tag);
 
-      const sectionId = getOrCreateSectionId(tag);
+      const section = getOrCreateSection(tag);
       tag.node.extra.attrsReferences = mergeReferences(
-        sectionId,
+        section,
         tag.node.attributes
           .filter(
             (attr) =>
@@ -171,8 +171,8 @@ export default {
 
 const translateDOM = {
   exit(tag: t.NodePath<t.MarkoTag>) {
-    const bodySectionId = getSectionId(tag.get("body"));
-    const sectionId = getSectionId(tag);
+    const bodySection = getSection(tag.get("body"));
+    const section = getSection(tag);
     const { node } = tag;
     const {
       attributes,
@@ -198,7 +198,7 @@ const translateDOM = {
 
     tag.remove();
 
-    const rendererId = writer.getRenderer(bodySectionId);
+    const rendererId = writer.getRenderer(bodySection);
 
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
@@ -227,7 +227,7 @@ const translateDOM = {
       tagParams = [t.arrayPattern(params)];
     }
 
-    const signal = getSignal(sectionId, reserve);
+    const signal = getSignal(section, reserve);
     const paramsSignal = getTagParamsSignal(
       paramsPath,
       t.arrayPattern(tagParams)
@@ -243,17 +243,17 @@ const translateDOM = {
 
     signal.hasDownstreamIntersections = () =>
       paramsSignal?.hasDownstreamIntersections() ||
-      getClosures(bodySectionId).length > 0;
+      getClosures(bodySection).length > 0;
 
-    addValue(sectionId, attrsReferences, signal, loopFunctionBody);
+    addValue(section, attrsReferences, signal, loopFunctionBody);
   },
 };
 
 const translateHTML = {
   exit(tag: t.NodePath<t.MarkoTag>) {
-    const sectionId = getSectionId(tag);
+    const section = getSection(tag);
     const tagBody = tag.get("body");
-    const bodySectionId = getSectionId(tagBody);
+    const bodySection = getSection(tagBody);
     const { node } = tag;
     const {
       attributes,
@@ -278,7 +278,7 @@ const translateHTML = {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
           "markResumeScopeStart",
-          getScopeIdIdentifier(bodySectionId)
+          getScopeIdIdentifier(bodySection)
         )}`;
       }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
@@ -290,7 +290,7 @@ const translateHTML = {
             t.sequenceExpression([
               t.callExpression(
                 t.memberExpression(
-                  getScopeIdentifier(bodySectionId),
+                  getScopeIdentifier(bodySection),
                   t.identifier("set")
                 ),
                 [keyExpression!, tempScopeIdentifier]
@@ -301,9 +301,9 @@ const translateHTML = {
           [scope]
         );
       });
-      getSerializedScopeProperties(bodySectionId).set(
+      getSerializedScopeProperties(bodySection).set(
         importRuntime("SYMBOL_OWNER"),
-        getScopeIdIdentifier(sectionId)
+        getScopeIdIdentifier(section)
       );
     }
 
@@ -470,7 +470,7 @@ const translateHTML = {
     if (isStateful) {
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
-      const forScopesIdentifier = getScopeIdentifier(bodySectionId);
+      const forScopesIdentifier = getScopeIdentifier(bodySection);
 
       replacement.unshift(
         t.variableDeclaration(
@@ -494,24 +494,24 @@ const translateHTML = {
           t.expressionStatement(
             t.callExpression(
               t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
-              [getScopeIdIdentifier(bodySectionId)]
+              [getScopeIdIdentifier(bodySection)]
             )
           )
         );
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
-          getScopeIdIdentifier(sectionId),
+          getScopeIdIdentifier(section),
           getNodeLiteral(reserve!),
           forScopeIdsIdentifier
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
-          getScopeIdIdentifier(sectionId),
+          getScopeIdIdentifier(section),
           getNodeLiteral(reserve!)
         )}`;
       }
-      getSerializedScopeProperties(sectionId).set(
+      getSerializedScopeProperties(section).set(
         t.stringLiteral(getNodeLiteral(reserve!).value + "("),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),

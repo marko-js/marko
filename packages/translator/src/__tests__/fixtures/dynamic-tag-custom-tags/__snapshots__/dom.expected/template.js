@@ -2,15 +2,15 @@ import child1 from "./components/child1.marko";
 import child2 from "./components/child2.marko";
 import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_dynamicTagName_val = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _tagName_input;
   if (_dirty) {
     const dynamicTagName = _scope["#text/0"],
       val = _scope["val"];
-    _dynamicBody_attrs = () => ({
+    _tagName_input = () => ({
       value: val
     });
   }
-  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, null, _dirty);
+  _dynamicTagAttrs(_scope, "#text/0", _tagName_input, null, _dirty);
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));
 const _val = /* @__PURE__ */_value("val", (_scope, val, _dirty) => _expr_dynamicTagName_val(_scope, _dirty));

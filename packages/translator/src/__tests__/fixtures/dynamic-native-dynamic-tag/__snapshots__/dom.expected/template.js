@@ -1,15 +1,15 @@
 import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _tagNameBody = /* @__PURE__ */_createRenderer("body content", "");
 const _expr_dynamicTagName_className = /* @__PURE__ */_intersection(2, (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _tagName_input;
   if (_dirty) {
     const dynamicTagName = _scope["#text/0"],
       className = _scope["className"];
-    _dynamicBody_attrs = () => ({
+    _tagName_input = () => ({
       class: className
     });
   }
-  _dynamicTagAttrs(_scope, "#text/0", _dynamicBody_attrs, _tagNameBody, _dirty);
+  _dynamicTagAttrs(_scope, "#text/0", _tagName_input, _tagNameBody, _dirty);
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => _expr_dynamicTagName_className(_scope, _dirty));
 const _className = /* @__PURE__ */_value("className", (_scope, className, _dirty) => _expr_dynamicTagName_className(_scope, _dirty));

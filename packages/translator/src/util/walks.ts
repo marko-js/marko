@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { createSectionState, getSectionId } from "../util/sections";
+import { Section, createSectionState, getSection } from "../util/sections";
 import { ReserveType } from "../util/reserve";
 import { isOutputHTML } from "./marko-config";
 import toTemplateOrStringLiteral, {
@@ -78,20 +78,20 @@ type VisitCodes =
   | WalkCodes.Replace;
 
 export function enter(path: t.NodePath<any>) {
-  getSteps(getSectionId(path)).push(Step.enter);
+  getSteps(getSection(path)).push(Step.enter);
 }
 
 export function exit(path: t.NodePath<any>) {
-  getSteps(getSectionId(path)).push(Step.exit);
+  getSteps(getSection(path)).push(Step.exit);
 }
 
 export function enterShallow(path: t.NodePath<any>) {
-  getSteps(getSectionId(path)).push(Step.enter, Step.exit);
+  getSteps(getSection(path)).push(Step.enter, Step.exit);
 }
 
 export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
-  const walks = getWalks(getSectionId(path));
-  const walkComment = getWalkComment(getSectionId(path));
+  const walks = getWalks(getSection(path));
+  const walkComment = getWalkComment(getSection(path));
   walkComment.push(
     `${walkCodeToName[WalkCodes.BeginChild]}`,
     (expr as t.Identifier).name,
@@ -116,10 +116,10 @@ export function visit(
     return;
   }
 
-  const sectionId = getSectionId(path);
-  const steps = getSteps(sectionId);
-  const walks = getWalks(sectionId);
-  const walkComment = getWalkComment(sectionId);
+  const section = getSection(path);
+  const steps = getSteps(section);
+  const walks = getWalks(section);
+  const walkComment = getWalkComment(section);
 
   let walkString = "";
 
@@ -206,14 +206,14 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
   return result;
 }
 
-export function getWalkString(sectionId: number) {
+export function getWalkString(section: Section) {
   const walkLiteral =
-    toTemplateOrStringLiteral(getWalks(sectionId)) || t.stringLiteral("");
+    toTemplateOrStringLiteral(getWalks(section)) || t.stringLiteral("");
   if ((walkLiteral as t.StringLiteral).value !== "") {
     walkLiteral.leadingComments = [
       {
         type: "CommentBlock",
-        value: " " + getWalkComment(sectionId).join(", ") + " ",
+        value: " " + getWalkComment(section).join(", ") + " ",
       } as t.CommentBlock,
     ] as const;
   }

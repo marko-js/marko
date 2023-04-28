@@ -1,7 +1,7 @@
 import type { types as t } from "@marko/compiler";
 import type { Tag } from "@marko/babel-utils";
 import { trackReferencesForBindings } from "../util/references";
-import { getOrCreateSectionId } from "../util/sections";
+import { getOrCreateSection } from "../util/sections";
 import { currentProgramPath } from "../visitors/program";
 import { initValue } from "../util/signals";
 
@@ -22,7 +22,7 @@ export default {
         string,
         t.Identifier
       >;
-      trackReferencesForBindings(getOrCreateSectionId(tag), varPath);
+      trackReferencesForBindings(getOrCreateSection(tag), varPath);
       (currentProgramPath.node.extra ??= {}).attrs = {
         bindings,
         var: varPath.node!,

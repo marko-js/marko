@@ -2,7 +2,7 @@ import type { types as t } from "@marko/compiler";
 import { addStatement } from "../util/signals";
 import { isOutputHTML } from "../util/marko-config";
 import type { References } from "../util/references";
-import { getSectionId } from "../util/sections";
+import { getSection } from "../util/sections";
 
 export default {
   translate(scriptlet: t.NodePath<t.MarkoScriptlet>) {
@@ -15,7 +15,7 @@ export default {
       } else {
         addStatement(
           "render",
-          getSectionId(scriptlet),
+          getSection(scriptlet),
           scriptlet.node.extra?.bodyReferences as References,
           scriptlet.node.body
         );

@@ -10,7 +10,7 @@ import {
 } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
-import { getOrCreateSectionId, getSectionId } from "../../util/sections";
+import { getOrCreateSection, getSection } from "../../util/sections";
 import { ReserveType, reserveScope, getNodeLiteral } from "../../util/reserve";
 import { addStatement, addHTMLEffectCall } from "../../util/signals";
 import * as writer from "../../util/writer";
@@ -29,7 +29,7 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const attrs = tag.get("attributes");
-      let sectionId = tag.has("var") ? getOrCreateSectionId(tag) : undefined;
+      let section = tag.has("var") ? getOrCreateSection(tag) : undefined;
 
       if (attrs.some(isSpreadAttr)) {
         // TODO
@@ -39,10 +39,10 @@ export default {
           const { name } = attrNode;
 
           if (isEventHandler(name)) {
-            sectionId ??= getOrCreateSectionId(tag);
+            section ??= getOrCreateSection(tag);
             (currentProgramPath.node.extra ?? {}).isInteractive = true;
           } else if (!evaluate(attr).confident) {
-            sectionId ??= getOrCreateSectionId(tag);
+            section ??= getOrCreateSection(tag);
           }
         }
       }
@@ -51,10 +51,10 @@ export default {
         ? (node.var as t.Identifier).name
         : (node.name as t.StringLiteral).value;
 
-      if (sectionId !== undefined) {
+      if (section !== undefined) {
         reserveScope(
           ReserveType.Visit,
-          sectionId,
+          section,
           node,
           name,
           `#${tag.get("name").evaluate().value}`
@@ -71,7 +71,7 @@ export default {
       const tagDef = getTagDef(tag);
       const hasSpread = attrs.some((attr) => attr.isMarkoSpreadAttribute());
       const write = writer.writeTo(tag);
-      const sectionId = getSectionId(tag);
+      const section = getSection(tag);
 
       // TODO: throw error if var is not an identifier (like let)
 
@@ -99,11 +99,11 @@ export default {
           const references = tag.scope.getBinding(varName)!.referencePaths;
           let createElFunction = undefined;
           for (const reference of references) {
-            const referenceSectionId = getSectionId(reference);
+            const referenceSection = getSection(reference);
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  callRead(extra.reserve!, referenceSectionId)
+                  callRead(extra.reserve!, referenceSection)
                 )
               );
             } else {
@@ -111,7 +111,7 @@ export default {
               reference.replaceWith(
                 callRuntime(
                   "bindFunction",
-                  getScopeExpression(extra.reserve!, referenceSectionId),
+                  getScopeExpression(extra.reserve!.section, referenceSection),
                   createElFunction
                 )
               );
@@ -178,7 +178,7 @@ export default {
               } else {
                 addStatement(
                   "render",
-                  sectionId,
+                  section,
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(
@@ -196,7 +196,7 @@ export default {
                 write`${getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
                 if (isEventHandler(name)) {
-                  addHTMLEffectCall(sectionId, valueReferences);
+                  addHTMLEffectCall(section, valueReferences);
                 } else {
                   write`${callRuntime(
                     "attr",
@@ -207,7 +207,7 @@ export default {
               } else if (isEventHandler(name)) {
                 addStatement(
                   "effect",
-                  sectionId,
+                  section,
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(
@@ -222,7 +222,7 @@ export default {
               } else {
                 addStatement(
                   "render",
-                  sectionId,
+                  section,
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(

@@ -1,13 +1,13 @@
 import child from "./components/child.marko";
 import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", (_scope, _dirty) => {
-  let _dynamicBody_attrs;
+  let _tagName_input;
   if (_dirty) {
-    _dynamicBody_attrs = () => ({
+    _tagName_input = () => ({
       id: "dynamic"
     });
   }
-  _dynamicTagAttrs(_scope, "#text/1", _dynamicBody_attrs, null, _dirty);
+  _dynamicTagAttrs(_scope, "#text/1", _tagName_input, null, _dirty);
 });
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName", _scope => _on(_scope["#button/0"], "click", function () {
   const tagName = _scope["tagName"];
