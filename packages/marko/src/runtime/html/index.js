@@ -18,7 +18,7 @@ function Template(typeName) {
   this.___typeName = typeName;
 }
 
-Template.prototype.stream = require("./create-readable");
+Template.prototype.stream = require("@internal/create-readable");
 
 var AsyncStream = require("./AsyncStream");
 require("../createOut").___setCreateOut(

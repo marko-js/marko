@@ -1,4 +1,4 @@
-var componentsUtil = require("./util");
+var componentsUtil = require("@internal/components-util");
 var runtimeId = componentsUtil.___runtimeId;
 var componentLookup = componentsUtil.___componentLookup;
 var getMarkoPropsFromEl = componentsUtil.___getMarkoPropsFromEl;

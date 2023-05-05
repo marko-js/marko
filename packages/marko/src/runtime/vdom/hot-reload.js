@@ -1,7 +1,7 @@
 var runtime = require(".");
 var queueMicrotask = require("../queueMicrotask");
-var util = require("../components/util");
-var registry = require("../components/registry");
+var util = require("@internal/components-util");
+var registry = require("@internal/components-registry");
 var updateManager = require("../components/update-manager");
 
 var createTemplate = runtime.t;

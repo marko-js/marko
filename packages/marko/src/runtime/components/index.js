@@ -1,1 +1,1 @@
-module.exports = require("./entry");
+module.exports = require("@internal/components-entry");

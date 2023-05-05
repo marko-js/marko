@@ -7,7 +7,7 @@ var domInsert = require("../dom-insert");
 var defaultCreateOut = require("../createOut");
 var getComponentsContext =
   require("./ComponentsContext").___getComponentsContext;
-var componentsUtil = require("./util");
+var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var EventEmitter = require("events-light");
