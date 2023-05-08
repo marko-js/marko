@@ -25,7 +25,7 @@ declare global {
       [attr: PropertyKey]: unknown;
     }
 
-    export type TemplateInput<Input = { [attr: PropertyKey]: any }> = Input & {
+    export type TemplateInput<Input> = Input & {
       $global?: Global;
     };
 
@@ -105,11 +105,8 @@ declare global {
       : never;
 
     export class Component<
-      Input extends Record<PropertyKey, any> = Record<PropertyKey, any>,
-      State extends undefined | null | Record<PropertyKey, any> =
-        | undefined
-        | null
-        | Record<PropertyKey, any>
+      Input = unknown,
+      State = unknown
     > implements Emitter
     {
       /** A unique id for this instance. */
@@ -222,7 +219,7 @@ declare global {
 
     /** The top level api for a Marko Template. */
     export abstract class Template<
-      Input = { [attr: PropertyKey]: any },
+      Input = unknown,
       Return = unknown
     > {
       /** Creates a Marko compatible output stream. */
@@ -246,6 +243,12 @@ declare global {
           write: (chunk: string) => void;
           end: (chunk?: string) => void;
         }
+      ): Marko.Out<Marko.Component>;
+
+      /** Asynchronously render the template in buffered mode. */
+      abstract render(
+        input: Marko.TemplateInput<Input>,
+        cb?: (err: Error | null, result: Marko.RenderResult<Marko.Component>) => void
       ): Marko.Out<Marko.Component>;
 
       /** Synchronously render the template. */
