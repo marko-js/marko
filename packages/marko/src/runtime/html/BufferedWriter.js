@@ -1,6 +1,6 @@
 "use strict";
 
-const immediate = require("../setImmediate");
+const immediate = require("@internal/set-immediate");
 const setImmediate = immediate.___setImmediate;
 const clearImmediate = immediate.___clearImmediate;
 const StringWriter = require("./StringWriter");

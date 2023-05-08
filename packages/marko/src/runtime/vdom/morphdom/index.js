@@ -1,7 +1,7 @@
 "use strict";
 var specialElHandlers = require("./specialElHandlers");
 var KeySequence = require("../../components/KeySequence");
-var componentsUtil = require("../../components/util");
+var componentsUtil = require("@internal/components-util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var addComponentRootToKeyedElements =

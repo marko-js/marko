@@ -1,7 +1,7 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
 var w10Noop = require("warp10/constants").NOOP;
-var componentUtil = require("./util");
+var componentUtil = require("@internal/components-util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler =
   require("./event-delegation").___addDelegatedEventHandler;

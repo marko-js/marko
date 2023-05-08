@@ -461,7 +461,7 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/components/index.js`,
     `${base}runtime/components/defineComponent.js`,
     `${base}runtime/components/renderer.js`,
-    `${base}runtime/components/registry`,
+    `${base}runtime/components/registry.js`,
     `${base}runtime/components/attach-detach.js`,
     `${base}runtime/helpers/assign.js`,
     `${base}runtime/helpers/class-value.js`,
