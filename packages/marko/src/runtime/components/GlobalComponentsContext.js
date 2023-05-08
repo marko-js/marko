@@ -1,4 +1,5 @@
-var nextComponentIdProvider = require("@internal/components-util").___nextComponentIdProvider;
+var nextComponentIdProvider =
+  require("@internal/components-util").___nextComponentIdProvider;
 
 function GlobalComponentsContext(out) {
   this.___renderedComponentsById = {};
