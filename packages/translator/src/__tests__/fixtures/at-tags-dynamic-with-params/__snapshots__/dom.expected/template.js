@@ -9,16 +9,16 @@ const _ifBody = _register("packages/translator/src/__tests__/fixtures/at-tags-dy
 const _if$helloBody = /* @__PURE__ */_conditional("#text/0");
 const _x$helloBody = /* @__PURE__ */_dynamicClosure("x", (_scope, x) => _if$helloBody(_scope, x ? _ifBody : null));
 const _helloBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", null, [_x$helloBody]);
-const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => _dynamicSubscribers(_scope["x*"], _dirty));
+const _x = /* @__PURE__ */_value("x", null, _dynamicSubscribers("x"));
 const _setup = _scope => {
   _hello(_scope["#childScope/0"]);
 };
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let x;
-  if (_dirty) ({
+  if (!_clean) ({
     x
   } = _destructure);
-  _x(_scope, x, _dirty);
+  _x(_scope, x, _clean);
 };
 export { _x };
 export const template = `${_hello_template}`;

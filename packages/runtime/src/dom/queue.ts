@@ -22,7 +22,7 @@ let currentEffects: unknown[] = [];
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
-  signal(scope, null, null);
+  signal(scope, 0, 1);
   currentBatch.push(scope, signal, value);
   return value;
 }

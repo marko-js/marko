@@ -13,7 +13,7 @@ import { callRuntime } from "../../util/runtime";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
-export let dirtyIdentifier: t.Identifier;
+export let cleanIdentifier: t.Identifier;
 
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,
@@ -52,8 +52,8 @@ export default {
       scopeIdentifier = isOutputDOM()
         ? program.scope.generateUidIdentifier("scope")
         : (null as any as t.Identifier);
-      dirtyIdentifier = isOutputDOM()
-        ? program.scope.generateUidIdentifier("dirty")
+      cleanIdentifier = isOutputDOM()
+        ? program.scope.generateUidIdentifier("clean")
         : (null as any as t.Identifier);
       if (getMarkoOpts().output === ("hydrate" as "html")) {
         program.skip();

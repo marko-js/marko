@@ -4,16 +4,16 @@ const _forBody2 = /* @__PURE__ */_createRenderer("<p> </p>", /* next(1), get */"
 const _text$forBody = /* @__PURE__ */_value("text", (_scope, text) => _data(_scope["#text/1"], text));
 const _key$forBody = /* @__PURE__ */_value("key", (_scope, key) => _data(_scope["#text/0"], key));
 const _forBody = /* @__PURE__ */_createRenderer("<p><!>: <!></p>", /* next(1), replace, over(2), replace */"D%c%");
-const _for2 = /* @__PURE__ */_loop("#text/1", _forBody2, (_scope, _destructure2, _dirty = true) => {
+const _for2 = /* @__PURE__ */_loop("#text/1", _forBody2, (_scope, _destructure2, _clean) => {
   let key;
-  if (_dirty) [[key]] = _destructure2;
-  _key$forBody2(_scope, key, _dirty);
+  if (!_clean) [[key]] = _destructure2;
+  _key$forBody2(_scope, key, _clean);
 });
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
   let key, text;
-  if (_dirty) [[key, text]] = _destructure;
-  _key$forBody(_scope, key, _dirty);
-  _text$forBody(_scope, text, _dirty);
+  if (!_clean) [[key, text]] = _destructure;
+  _key$forBody(_scope, key, _clean);
+  _text$forBody(_scope, text, _clean);
 });
 const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _for(_scope, _computeLoopIn(input.children));

@@ -1,4 +1,4 @@
-import { bindFunction as _bindFunction, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { bindFunction as _bindFunction, inChild as _inChild, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const el_getter = _scope => _scope["#div/0"];
 import { setup as _helloSetter, attrs as _helloSetter_attrs, template as _helloSetter_template, walks as _helloSetter_walks } from "./components/hello-setter.marko";
 const _setup = _scope => {

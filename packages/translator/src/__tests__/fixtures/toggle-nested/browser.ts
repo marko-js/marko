@@ -76,37 +76,26 @@ const enum INDEX_IF2 {
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-export const attrs = (scope: Scope, input: Input, dirty?: null | boolean) => {
+export const attrs = (scope: Scope, input: Input, clean?: 1 | boolean) => {
   let show, value1, value2;
-  if (dirty) {
+  if (!clean) {
     ({ show, value1, value2 } = input);
   }
-  _show(scope, show, dirty);
-  _value1(scope, value1, dirty);
-  _value2(scope, value2, dirty);
+  _show(scope, show, clean);
+  _value1(scope, value1, clean);
+  _value2(scope, value2, clean);
 };
-
-const _show = value(INDEX.show, (scope, value, dirty) => {
-  _if0(scope, value ? ifBody0 : undefined, dirty);
-});
-const _value1 = value(INDEX.value1, (scope, _value, dirty) => {
-  inConditionalScope(scope, dirty!, value1$if0, INDEX.conditional);
-});
-const _value2 = value(INDEX.value2, (scope, _value, dirty) => {
-  inConditionalScope(scope, dirty!, value2$if0, INDEX.conditional);
-});
 
 const _if0 = conditionalOnlyChild(INDEX.conditional);
 
-const value1$if0 = closure(INDEX.value1, (scope, value, dirty) => {
-  _if1(scope, value ? ifBody1 : undefined, dirty);
-  inConditionalScope(scope, dirty!, value1$if1, INDEX_IF0.conditional0);
-});
-
-const value2$if0 = closure(INDEX.value2, (scope, value, dirty) => {
-  _if2(scope, value ? ifBody2 : undefined, dirty);
-  inConditionalScope(scope, dirty!, value2$if2, INDEX_IF0.conditional1);
-});
+const _show = value(
+  INDEX.show,
+  (scope, value) => {
+    _if0(scope, value ? ifBody0 : undefined);
+  },
+  undefined,
+  _if0
+);
 
 const _if1 = conditional(INDEX_IF0.conditional0);
 
@@ -130,6 +119,37 @@ const value2$if2 = closure(
   (scope) => {
     return (scope as If1Scope)._._;
   }
+);
+
+const value1$if0 = closure(
+  INDEX.value1,
+  (scope, value) => {
+    _if1(scope, value ? ifBody1 : undefined);
+  },
+  undefined,
+  inConditionalScope(value1$if1, INDEX_IF0.conditional0),
+  _if1
+);
+
+const value2$if0 = closure(
+  INDEX.value2,
+  (scope, value) => {
+    _if2(scope, value ? ifBody2 : undefined);
+  },
+  undefined,
+  inConditionalScope(value2$if2, INDEX_IF0.conditional1),
+  _if2
+);
+
+const _value1 = value(
+  INDEX.value1,
+  undefined,
+  inConditionalScope(value1$if0, INDEX.conditional)
+);
+const _value2 = value(
+  INDEX.value2,
+  undefined,
+  inConditionalScope(value2$if0, INDEX.conditional)
 );
 
 export default createRenderFn(template, walks, undefined, attrs);

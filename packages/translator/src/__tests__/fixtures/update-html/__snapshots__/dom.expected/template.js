@@ -1,11 +1,11 @@
 import { html as _html, value as _value2, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _value = /* @__PURE__ */_value2("value", (_scope, value) => _html(_scope, value, "#text/0"));
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let value;
-  if (_dirty) ({
+  if (!_clean) ({
     value
   } = _destructure);
-  _value(_scope, value, _dirty);
+  _value(_scope, value, _clean);
 };
 export { _value };
 export const template = "<em>Testing</em> <!>";

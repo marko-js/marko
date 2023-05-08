@@ -13,10 +13,10 @@ const _i$forBody6 = /* @__PURE__ */_value("i", (_scope, i) => {
   _attr(_scope["#div/2"], "key", `other-${i}`);
 });
 const _forBody8 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div>", /* get, next(1), get, out(1), over(1), get */" D lb ");
-const _for$forBody = /* @__PURE__ */_loop("#text/3", _forBody8, (_scope, _destructure7, _dirty = true) => {
+const _for$forBody = /* @__PURE__ */_loop("#text/3", _forBody8, (_scope, _destructure7, _clean) => {
   let i;
-  if (_dirty) [i] = _destructure7;
-  _i$forBody6(_scope, i, _dirty);
+  if (!_clean) [i] = _destructure7;
+  _i$forBody6(_scope, i, _clean);
 });
 const _i$forBody5 = /* @__PURE__ */_value("i", (_scope, i) => {
   _attr(_scope["#div/0"], "key", i);
@@ -55,51 +55,51 @@ const _val$forBody = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope[
 const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div><div></div><div></div>", /* next(1), replace, over(2), replace */"D%c%");
 const _for10 = /* @__PURE__ */_loop("#text/9", _forBody11);
 const _for9 = /* @__PURE__ */_loop("#text/8", _forBody10);
-const _for8 = /* @__PURE__ */_loop("#text/7", _forBody9, (_scope, _destructure9, _dirty = true) => {
+const _for8 = /* @__PURE__ */_loop("#text/7", _forBody9, (_scope, _destructure9, _clean) => {
   let i;
-  if (_dirty) [i] = _destructure9;
-  _i$forBody7(_scope, i, _dirty);
+  if (!_clean) [i] = _destructure9;
+  _i$forBody7(_scope, i, _clean);
 });
-const _for7 = /* @__PURE__ */_loop("#text/6", _forBody7, (_scope, _destructure8, _dirty = true) => {
+const _for7 = /* @__PURE__ */_loop("#text/6", _forBody7, (_scope, _destructure8, _clean) => {
   let i;
-  if (_dirty) [i] = _destructure8;
-  _i$forBody5(_scope, i, _dirty);
+  if (!_clean) [i] = _destructure8;
+  _i$forBody5(_scope, i, _clean);
 });
-const _for6 = /* @__PURE__ */_loop("#text/5", _forBody6, (_scope, _destructure6, _dirty = true) => {
+const _for6 = /* @__PURE__ */_loop("#text/5", _forBody6, (_scope, _destructure6, _clean) => {
   let key, val;
-  if (_dirty) [[key, val]] = _destructure6;
-  _key$forBody2(_scope, key, _dirty);
-  _val$forBody5(_scope, val, _dirty);
+  if (!_clean) [[key, val]] = _destructure6;
+  _key$forBody2(_scope, key, _clean);
+  _val$forBody5(_scope, val, _clean);
 });
-const _for5 = /* @__PURE__ */_loop("#text/4", _forBody5, (_scope, _destructure5, _dirty = true) => {
+const _for5 = /* @__PURE__ */_loop("#text/4", _forBody5, (_scope, _destructure5, _clean) => {
   let val, i, list;
-  if (_dirty) [val, i, list] = _destructure5;
-  _val$forBody4(_scope, val, _dirty);
-  _i$forBody4(_scope, i, _dirty);
-  _list$forBody(_scope, list, _dirty);
+  if (!_clean) [val, i, list] = _destructure5;
+  _val$forBody4(_scope, val, _clean);
+  _i$forBody4(_scope, i, _clean);
+  _list$forBody(_scope, list, _clean);
 });
-const _for4 = /* @__PURE__ */_loop("#text/3", _forBody4, (_scope, _destructure4, _dirty = true) => {
+const _for4 = /* @__PURE__ */_loop("#text/3", _forBody4, (_scope, _destructure4, _clean) => {
   let val, i;
-  if (_dirty) [val, i] = _destructure4;
-  _val$forBody3(_scope, val, _dirty);
-  _i$forBody3(_scope, i, _dirty);
+  if (!_clean) [val, i] = _destructure4;
+  _val$forBody3(_scope, val, _clean);
+  _i$forBody3(_scope, i, _clean);
 });
-const _for3 = /* @__PURE__ */_loop("#text/2", _forBody3, (_scope, _destructure3, _dirty = true) => {
+const _for3 = /* @__PURE__ */_loop("#text/2", _forBody3, (_scope, _destructure3, _clean) => {
   let i;
-  if (_dirty) [i] = _destructure3;
-  _i$forBody2(_scope, i, _dirty);
+  if (!_clean) [i] = _destructure3;
+  _i$forBody2(_scope, i, _clean);
 });
-const _for2 = /* @__PURE__ */_loop("#text/1", _forBody2, (_scope, _destructure2, _dirty = true) => {
+const _for2 = /* @__PURE__ */_loop("#text/1", _forBody2, (_scope, _destructure2, _clean) => {
   let key, val;
-  if (_dirty) [[key, val]] = _destructure2;
-  _key$forBody(_scope, key, _dirty);
-  _val$forBody2(_scope, val, _dirty);
+  if (!_clean) [[key, val]] = _destructure2;
+  _key$forBody(_scope, key, _clean);
+  _val$forBody2(_scope, val, _clean);
 });
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
   let val, i;
-  if (_dirty) [val, i] = _destructure;
-  _val$forBody(_scope, val, _dirty);
-  _i$forBody(_scope, i, _dirty);
+  if (!_clean) [val, i] = _destructure;
+  _val$forBody(_scope, val, _clean);
+  _i$forBody(_scope, i, _clean);
 });
 const _obj = /* @__PURE__ */_value("obj", (_scope, obj) => {
   _for2(_scope, _computeLoopIn(obj));

@@ -13,18 +13,8 @@ const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr_x_y_effect);
 });
-const _y = /* @__PURE__ */_value("y", (_scope, y, _dirty) => {
-  if (_dirty) {
-    _data(_scope["#text/2"], y);
-  }
-  _expr_x_y(_scope, _dirty);
-});
-const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
-  if (_dirty) {
-    _data(_scope["#text/1"], x);
-  }
-  _expr_x_y(_scope, _dirty);
-});
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _expr_x_y);
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/1"], x), _expr_x_y);
 const _setup = _scope => {
   _x(_scope, 1);
   _y(_scope, 1);

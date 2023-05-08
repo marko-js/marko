@@ -283,7 +283,12 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         hasDownstreamIntersections: () => true,
       },
       attrsObject,
-      createScopeReadExpression(tagSection, binding)
+      createScopeReadExpression(tagSection, binding),
+      callRuntime(
+        "inChild",
+        getScopeAccessorLiteral(binding),
+        t.identifier(tagAttrsIdentifier.name)
+      )
     );
   }
   tag.remove();

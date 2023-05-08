@@ -2,14 +2,14 @@ import { data as _data, on as _on, queueSource as _queueSource, value as _value,
 const _description$forBody = /* @__PURE__ */_value("description", (_scope, description) => _data(_scope["#text/1"], description));
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
 const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%");
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
   let name, description;
-  if (_dirty) [{
+  if (!_clean) [{
     name,
     description
   }] = _destructure;
-  _name$forBody(_scope, name, _dirty);
-  _description$forBody(_scope, description, _dirty);
+  _name$forBody(_scope, name, _clean);
+  _description$forBody(_scope, description, _clean);
 });
 const _items_effect = _register("packages/translator/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
   _on(_scope["#button/1"], "click", function () {

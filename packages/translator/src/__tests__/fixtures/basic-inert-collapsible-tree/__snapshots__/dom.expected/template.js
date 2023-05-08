@@ -1,12 +1,6 @@
 import { setup as _comments, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./components/comments.marko";
-import { value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
-const _input = /* @__PURE__ */_value("input", (_scope, input, _dirty) => {
-  let _comments_attrs_value;
-  if (_dirty) {
-    _comments_attrs_value = input;
-  }
-  _comments_attrs(_scope["#childScope/0"], _comments_attrs_value, _dirty);
-});
+import { inChild as _inChild, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _comments_attrs(_scope["#childScope/0"], input), null, _inChild("#childScope/0", _comments_attrs));
 const _setup = _scope => {
   _comments(_scope["#childScope/0"]);
 };

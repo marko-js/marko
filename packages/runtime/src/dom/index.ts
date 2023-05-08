@@ -52,4 +52,7 @@ export {
   setTagVar,
   tagVarSignal,
   nextTagId,
+  inChild,
+  values,
+  intersections,
 } from "./signals";

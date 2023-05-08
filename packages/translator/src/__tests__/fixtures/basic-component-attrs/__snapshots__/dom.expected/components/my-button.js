@@ -7,14 +7,14 @@ const _onClick_effect = _register("packages/translator/src/__tests__/fixtures/ba
   _on(_scope["#button/0"], "click", onClick);
 });
 const _onClick = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick_effect));
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let onClick, text;
-  if (_dirty) ({
+  if (!_clean) ({
     onClick,
     text
   } = _destructure);
-  _onClick(_scope, onClick, _dirty);
-  _text(_scope, text, _dirty);
+  _onClick(_scope, onClick, _clean);
+  _text(_scope, text, _clean);
 };
 export { _onClick, _text };
 export const template = "<button> </button>";

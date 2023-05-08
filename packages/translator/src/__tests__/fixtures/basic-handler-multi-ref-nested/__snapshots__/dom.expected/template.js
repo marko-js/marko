@@ -17,13 +17,8 @@ const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr_a_b_effect);
 });
-const _b = /* @__PURE__ */_value("b", (_scope, b, _dirty) => _expr_a_b(_scope, _dirty));
-const _a = /* @__PURE__ */_value("a", (_scope, a, _dirty) => {
-  if (_dirty) {
-    _data(_scope["#text/1"], a.join(""));
-  }
-  _expr_a_b(_scope, _dirty);
-});
+const _b = /* @__PURE__ */_value("b", null, _expr_a_b);
+const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a.join("")), _expr_a_b);
 const _setup = _scope => {
   _a(_scope, [0]);
   _b(_scope, 1);

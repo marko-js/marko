@@ -1,10 +1,10 @@
 import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loop as _loop, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ");
-const _ul_for = /* @__PURE__ */_loop("#ul/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _ul_for = /* @__PURE__ */_loop("#ul/0", _forBody, (_scope, _destructure, _clean) => {
   let x;
-  if (_dirty) [x] = _destructure;
-  _x$forBody(_scope, x, _dirty);
+  if (!_clean) [x] = _destructure;
+  _x$forBody(_scope, x, _clean);
 });
 const _list_effect = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
   const {

@@ -6,12 +6,12 @@ const _el_effect = _register("packages/translator/src/__tests__/fixtures/native-
   el().textContent = "hello";
 });
 const _el = /* @__PURE__ */_value("el", (_scope, el) => _queueEffect(_scope, _el_effect));
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let el;
-  if (_dirty) ({
+  if (!_clean) ({
     el
   } = _destructure);
-  _el(_scope, el, _dirty);
+  _el(_scope, el, _clean);
 };
 export { _el };
 export const template = "";

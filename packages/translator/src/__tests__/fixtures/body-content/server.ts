@@ -60,5 +60,5 @@ const FancyButton = ({
   write(`</button>${markResumeNode(scopeId, "#button/0")}`);
 
   writeScope(scopeId, { onClick });
-  writeEffect(scopeId, "FancyButton$onclick_resume");
+  writeEffect(scopeId, "FancyButton$onclick_effect");
 };

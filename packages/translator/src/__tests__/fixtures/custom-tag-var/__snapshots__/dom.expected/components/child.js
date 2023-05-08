@@ -5,15 +5,11 @@ const _x_effect = _register("packages/translator/src/__tests__/fixtures/custom-t
   } = _scope;
   _queueSource(_scope, _x, x + 1);
 }));
-const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
-  let _tagVarSignal_value;
-  if (_dirty) {
-    _data(_scope["#text/1"], x);
-    _queueEffect(_scope, _x_effect);
-    _tagVarSignal_value = x;
-  }
-  _tagVarSignal(_scope, _tagVarSignal_value, _dirty);
-});
+const _x = /* @__PURE__ */_value("x", (_scope, x) => {
+  _data(_scope["#text/1"], x);
+  _queueEffect(_scope, _x_effect);
+  _tagVarSignal(_scope, x);
+}, null, _tagVarSignal);
 const _setup = _scope => {
   _x(_scope, 1);
 };

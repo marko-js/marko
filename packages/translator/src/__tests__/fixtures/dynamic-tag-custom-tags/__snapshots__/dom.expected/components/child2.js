@@ -1,11 +1,11 @@
 import { data as _data, value as _value2, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/0"], value));
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let value;
-  if (_dirty) ({
+  if (!_clean) ({
     value
   } = _destructure);
-  _value(_scope, value, _dirty);
+  _value(_scope, value, _clean);
 };
 export { _value };
 export const template = "<div>Child 2 has <!></div>";

@@ -28,12 +28,12 @@ const _value = value(INDEX.value, (scope: Scope, value: Input["value"]) => {
   value && attrs(scope, INDEX.div, value);
 });
 
-export const _attrs = (scope: Scope, input: Input, dirty?: boolean | null) => {
+export const _attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   let value: Input["value"];
-  if (dirty) {
+  if (!clean) {
     ({ value } = input);
   }
-  _value(scope, value!, dirty);
+  _value(scope, value!, clean);
 };
 
 export default createRenderFn<Input>(template, walks, undefined, _attrs);

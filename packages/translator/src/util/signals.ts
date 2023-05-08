@@ -16,7 +16,7 @@ import {
 } from "./reserve";
 import {
   currentProgramPath,
-  dirtyIdentifier,
+  cleanIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
 import { callRuntime } from "./runtime";
@@ -25,12 +25,14 @@ import type { NodePath } from "@marko/compiler/babel-types";
 import { returnId } from "../core/return";
 import { isOutputHTML } from "./marko-config";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
+import type { Repeatable } from "./sorted-repeatable";
 
-export type subscribeBuilder = (subscriber: t.Expression) => t.Statement;
+export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 
 export type Signal = {
   identifier: t.Identifier;
+  valueAccessor?: t.Expression;
   reserve: undefined | Reserve | Reserve[];
   section: Section;
   build: () => t.Expression;
@@ -39,12 +41,13 @@ export type Signal = {
     signal: {
       identifier: t.Identifier;
       hasDownstreamIntersections: () => boolean;
+      buildDeclaration?: () => t.VariableDeclaration;
     };
     value: t.Expression;
     scope: t.Expression;
+    intersectionExpression?: t.Expression;
   }>;
-  intersectionDeclarations: t.VariableDeclarator[];
-  intersection: t.Statement[];
+  intersection: Repeatable<t.Expression>;
   render: t.Statement[];
   effect: t.Statement[];
   effectInlineReferences: undefined | Reserve | Reserve[];
@@ -136,8 +139,7 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
         reserve,
         section,
         values: [],
-        intersectionDeclarations: [],
-        intersection: [],
+        intersection: undefined,
         render: [],
         effect: [],
         effectInlineReferences: undefined,
@@ -145,7 +147,7 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
         closures: new Map(),
         hasDownstreamIntersections: () => {
           if (
-            signal.intersection.length > 0 ||
+            signal.intersection ||
             signal.closures.size ||
             signal.values.some((v) => v.signal.hasDownstreamIntersections())
           ) {
@@ -188,7 +190,9 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
           getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)]),
           isImmediateOwner
             ? null
-            : t.arrowFunctionExpression([scopeIdentifier], ownerScope)
+            : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
+          buildSignalIntersections(signal),
+          buildSignalValuesWithIntersections(signal)
         );
       };
     }
@@ -207,12 +211,25 @@ export function initValue(
       scopeIdentifier,
       t.identifier(reserve.name),
     ]);
-    if ((fn.body as t.BlockStatement).body.length > 0) {
-      return callRuntime("value", valueAccessor, fn);
+    const intersections = buildSignalIntersections(signal);
+    const valuesWithIntersections = buildSignalValuesWithIntersections(signal);
+    if (
+      (fn.body as t.BlockStatement).body.length > 0 ||
+      intersections ||
+      valuesWithIntersections
+    ) {
+      return callRuntime(
+        "value",
+        valueAccessor,
+        fn,
+        intersections,
+        valuesWithIntersections
+      );
     } else {
       return fn;
     }
   };
+  signal.valueAccessor = valueAccessor;
   return signal;
 }
 
@@ -228,21 +245,11 @@ export function initContextProvider(
   const valueAccessor = t.stringLiteral(
     `${reserve.id}${AccessorChars.CONTEXT_VALUE}`
   );
-  const subscribersAccessor = t.stringLiteral(
-    `${reserve.id}${AccessorChars.CONTEXT_VALUE}${AccessorChars.SUBSCRIBERS}`
-  );
 
   const signal = initValue(reserve, valueAccessor);
   addValue(section, providers, signal, compute);
-  signal.intersection.push(
-    t.expressionStatement(
-      callRuntime(
-        "dynamicSubscribers",
-        t.memberExpression(scopeIdentifier, subscribersAccessor, true),
-        dirtyIdentifier
-      )
-    )
-  );
+  signal.hasDynamicSubscribers = true;
+  signal.hasDownstreamIntersections = () => true;
 
   addStatement(
     "render",
@@ -279,83 +286,19 @@ export function initContextConsumer(templateId: string, reserve: Reserve) {
   return signal;
 }
 
-export function addIntersectionWithGuardedValue(
-  signal: Signal,
-  name: string,
-  value: t.Expression,
-  getStatement: (i: t.Identifier) => t.Statement
-) {
-  const valueIdentifier = currentProgramPath.scope.generateUidIdentifier(name);
-  signal.render.push(
-    t.expressionStatement(t.assignmentExpression("=", valueIdentifier, value))
-  );
-  signal.intersection.push(getStatement(valueIdentifier));
-  signal.intersectionDeclarations.push(t.variableDeclarator(valueIdentifier));
-}
-
 export function getSignalFn(
   signal: Signal,
   params: Array<t.Identifier | t.Pattern>,
   references?: References
 ) {
-  const isSetup = !signal.reserve;
   const section = signal.section;
-  const needsDirty = !isSetup && signal.hasDownstreamIntersections();
-  let statements;
 
   for (const value of signal.values) {
-    const callee = value.signal.identifier;
-    const needsDirty = !isSetup && value.signal.hasDownstreamIntersections();
-    if (needsDirty) {
-      addIntersectionWithGuardedValue(
-        signal,
-        callee.name + "_value",
-        value.value,
-        (valueIdentifier) => {
-          return t.expressionStatement(
-            t.callExpression(callee, [
-              value.scope,
-              valueIdentifier,
-              dirtyIdentifier,
-            ])
-          );
-        }
-      );
-    } else {
-      signal.render.push(
-        t.expressionStatement(
-          t.callExpression(callee, [value.scope, value.value])
-        )
-      );
-    }
-  }
-
-  // In order to ensure correct topological ordering, closures must be called last
-  // with closures higher in the tree called before calling closures lower in the tree
-  const closureEntries = Array.from(signal.closures.entries()).sort(
-    ([a], [b]) => a.id - b.id
-  );
-  for (const [closureSection, closureSignal] of closureEntries) {
-    const builder = getSubscribeBuilder(closureSection);
-    const isImmediateOwner = closureSection.parent === section;
-    if (builder && isImmediateOwner) {
-      signal.intersection.push(builder(closureSignal.identifier));
-    } else if (!signal.hasDynamicSubscribers) {
-      const dynamicSubscribersKey = getScopeAccessorLiteral(
-        closureSignal.reserve as Reserve
-      );
-      dynamicSubscribersKey.value += AccessorChars.SUBSCRIBERS;
-      signal.hasDynamicSubscribers = true;
-      signal.intersection.push(
-        t.expressionStatement(
-          callRuntime(
-            "dynamicSubscribers",
-            t.memberExpression(scopeIdentifier, dynamicSubscribersKey, true),
-            dirtyIdentifier
-          )
-        )
-      );
-    }
+    signal.render.push(
+      t.expressionStatement(
+        t.callExpression(value.signal.identifier, [value.scope, value.value])
+      )
+    );
   }
 
   if (references) {
@@ -369,26 +312,71 @@ export function getSignalFn(
     );
   }
 
-  if (needsDirty) {
-    params.push(dirtyIdentifier);
-    if (signal.render.length) {
-      statements = [
-        t.ifStatement(dirtyIdentifier, t.blockStatement(signal.render)),
-        ...signal.intersection,
-      ];
-      if (signal.intersectionDeclarations.length) {
-        statements.unshift(
-          t.variableDeclaration("let", signal.intersectionDeclarations)
-        );
-      }
-    } else {
-      statements = signal.intersection;
+  return t.arrowFunctionExpression(params, t.blockStatement(signal.render));
+}
+
+export function buildSignalIntersections(signal: Signal) {
+  let intersections: Repeatable<t.Expression> = signal.intersection;
+  const section = signal.section;
+
+  // In order to ensure correct topological ordering, closures must be called last
+  // with closures higher in the tree called before calling closures lower in the tree
+  // TODO: use a repeatable of signals sorted by section
+  const closureEntries = Array.from(signal.closures.entries()).sort(
+    ([a], [b]) => a.id - b.id
+  );
+  for (const [closureSection, closureSignal] of closureEntries) {
+    const builder = getSubscribeBuilder(closureSection);
+    const isImmediateOwner = closureSection.parent === section;
+    if (builder && isImmediateOwner) {
+      intersections = pushRepeatable(
+        intersections,
+        builder(closureSignal.identifier)
+      );
+    } else if (!signal.hasDynamicSubscribers) {
+      signal.hasDynamicSubscribers = true;
     }
-  } else {
-    statements = signal.render;
+  }
+  if (signal.hasDynamicSubscribers) {
+    signal.hasDynamicSubscribers = true;
+    intersections = pushRepeatable(
+      intersections,
+      callRuntime("dynamicSubscribers", signal.valueAccessor)
+    );
   }
 
-  return t.arrowFunctionExpression(params, t.blockStatement(statements));
+  return Array.isArray(intersections)
+    ? callRuntime("intersections", t.arrayExpression(intersections))
+    : intersections;
+}
+
+export function buildSignalValuesWithIntersections(signal: Signal) {
+  let valuesWithIntersections: Repeatable<t.Expression>;
+
+  for (const value of signal.values) {
+    if (value.signal.hasDownstreamIntersections()) {
+      valuesWithIntersections = pushRepeatable(
+        valuesWithIntersections,
+        value.intersectionExpression ??
+          t.identifier(value.signal.identifier.name)
+      );
+    }
+  }
+
+  return Array.isArray(valuesWithIntersections)
+    ? callRuntime("values", t.arrayExpression(valuesWithIntersections))
+    : valuesWithIntersections;
+}
+
+function pushRepeatable<T>(repeatable: Repeatable<T>, value: T) {
+  if (!repeatable) {
+    return value;
+  } else if (Array.isArray(repeatable)) {
+    repeatable.push(value);
+    return repeatable;
+  } else {
+    return [repeatable, value];
+  }
 }
 
 export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
@@ -461,15 +449,11 @@ export function getDestructureSignal(
           );
         }
         return t.arrowFunctionExpression(
-          [
-            scopeIdentifier,
-            valueIdentifier,
-            t.assignmentPattern(dirtyIdentifier, t.booleanLiteral(true)),
-          ],
+          [scopeIdentifier, valueIdentifier, cleanIdentifier],
           t.blockStatement([
             declarations,
             t.ifStatement(
-              dirtyIdentifier,
+              t.unaryExpression("!", cleanIdentifier),
               t.expressionStatement(
                 t.assignmentExpression("=", destructurePattern, valueIdentifier)
               )
@@ -479,7 +463,7 @@ export function getDestructureSignal(
                 t.callExpression(signal.identifier, [
                   scopeIdentifier,
                   bindings[i],
-                  dirtyIdentifier,
+                  cleanIdentifier,
                 ])
               )
             ),
@@ -506,13 +490,9 @@ export function subscribe(
     return;
   }
   const providerSignal = getSignal(subscriber.section, provider);
-  providerSignal.intersection.push(
-    t.expressionStatement(
-      t.callExpression(subscriber.identifier, [
-        scopeIdentifier,
-        dirtyIdentifier,
-      ])
-    )
+  providerSignal.intersection = pushRepeatable(
+    providerSignal.intersection,
+    subscriber.identifier
   );
 }
 
@@ -622,9 +602,15 @@ export function addValue(
   references: References,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
-  scope: t.Expression = scopeIdentifier
+  scope: t.Expression = scopeIdentifier,
+  intersectionExpression?: t.Expression
 ) {
-  getSignal(targetSection, references).values.push({ signal, value, scope });
+  getSignal(targetSection, references).values.push({
+    signal,
+    value,
+    scope,
+    intersectionExpression,
+  });
 }
 
 export function addEffectReferences(signal: Signal, expression: t.Expression) {

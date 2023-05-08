@@ -51,17 +51,21 @@ const value$if = closure(INDEX.value, (scope: Scope, value: string) => {
 
 const _if = conditionalOnlyChild(INDEX.conditional);
 
-const _value = value(INDEX.value, (scope, value, dirty) => {
-  _if(scope, value ? _ifBody : undefined, dirty);
-  inConditionalScope(scope, dirty, value$if, INDEX.conditional);
-});
+const _value = value(
+  INDEX.value,
+  (scope, value) => {
+    _if(scope, value ? _ifBody : undefined);
+  },
+  inConditionalScope(value$if, INDEX.conditional),
+  _if
+);
 
-export const attrs = (scope: Scope, input: Input, dirty?: boolean | null) => {
+export const attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   let value;
-  if (dirty) {
+  if (!clean) {
     ({ value } = input);
   }
-  _value(scope, value, dirty);
+  _value(scope, value, clean);
 };
 
 export default createRenderFn<Input>(template, walks, undefined, attrs);

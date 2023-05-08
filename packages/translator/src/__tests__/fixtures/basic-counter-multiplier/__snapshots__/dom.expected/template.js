@@ -13,25 +13,17 @@ const _multiplier_effect = _register("packages/translator/src/__tests__/fixtures
   } = _scope;
   _queueSource(_scope, _multiplier, multiplier + 1);
 }));
-const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier, _dirty) => {
-  if (_dirty) {
-    _data(_scope["#text/1"], multiplier);
-    _queueEffect(_scope, _multiplier_effect);
-  }
-  _expr_count_multiplier(_scope, _dirty);
-});
+const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier) => {
+  _data(_scope["#text/1"], multiplier);
+  _queueEffect(_scope, _multiplier_effect);
+}, _expr_count_multiplier);
 const _count_effect = _register("packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", function () {
   const {
     count
   } = _scope;
   _queueSource(_scope, _count, count + 1);
 }));
-const _count = /* @__PURE__ */_value("count", (_scope, count, _dirty) => {
-  if (_dirty) {
-    _queueEffect(_scope, _count_effect);
-  }
-  _expr_count_multiplier(_scope, _dirty);
-});
+const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_count_multiplier);
 const _setup = _scope => {
   _count(_scope, 0);
   _multiplier(_scope, 1);

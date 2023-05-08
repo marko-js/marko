@@ -18,10 +18,10 @@ const _expr_id_items = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr_id_items_effect);
 });
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
   let item;
-  if (_dirty) [item] = _destructure;
-  _item$forBody(_scope, item, _dirty);
+  if (!_clean) [item] = _destructure;
+  _item$forBody(_scope, item, _clean);
 });
 const _items_effect = _register("packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _scope => _on(_scope["#button/2"], "click", function () {
   const {
@@ -29,14 +29,11 @@ const _items_effect = _register("packages/translator/src/__tests__/fixtures/basi
   } = _scope;
   _queueSource(_scope, _items, items.slice(0, -1));
 }));
-const _items = /* @__PURE__ */_value("items", (_scope, items, _dirty) => {
-  if (_dirty) {
-    _queueEffect(_scope, _items_effect);
-    _for(_scope, [items, null]);
-  }
-  _expr_id_items(_scope, _dirty);
-});
-const _id = /* @__PURE__ */_value("id", (_scope, id, _dirty) => _expr_id_items(_scope, _dirty));
+const _items = /* @__PURE__ */_value("items", (_scope, items) => {
+  _queueEffect(_scope, _items_effect);
+  _for(_scope, [items, null]);
+}, _expr_id_items);
+const _id = /* @__PURE__ */_value("id", null, _expr_id_items);
 const _setup = _scope => {
   _id(_scope, 0);
   _items(_scope, []);

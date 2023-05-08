@@ -33,11 +33,7 @@ import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferences } from "../util/references";
-import {
-  currentProgramPath,
-  dirtyIdentifier,
-  scopeIdentifier,
-} from "../visitors/program";
+import { currentProgramPath } from "../visitors/program";
 
 export default {
   analyze: {
@@ -189,14 +185,10 @@ const translateDOM = {
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
-      return t.expressionStatement(
-        callRuntime(
-          "inLoopScope",
-          scopeIdentifier,
-          dirtyIdentifier,
-          signal,
-          getScopeAccessorLiteral(reserve!)
-        )
+      return callRuntime(
+        "inLoopScope",
+        signal,
+        getScopeAccessorLiteral(reserve!)
       );
     });
 

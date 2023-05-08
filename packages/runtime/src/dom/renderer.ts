@@ -124,42 +124,42 @@ export function initRenderer(
   return dom;
 }
 
-export function dynamicTagAttrs(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  getAttrs: () => Record<string, unknown>,
-  renderBody: Renderer,
-  dirty: boolean | undefined
-) {
-  const renderer = scope[
-    nodeAccessor + AccessorChars.COND_RENDERER
-  ] as Renderer;
+export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
+  return (
+    scope: Scope,
+    getAttrs: () => Record<string, unknown>,
+    clean?: boolean | 1
+  ) => {
+    const renderer = scope[
+      nodeAccessor + AccessorChars.COND_RENDERER
+    ] as Renderer;
 
-  if (!renderer || renderer === renderBody || (!dirty && !renderer.___attrs)) {
-    return;
-  }
-
-  const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE];
-  if (typeof renderer === "string") {
-    // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
-    const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-    attrs(childScope, elementAccessor, getAttrs());
-    setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
-  } else if (renderer.___attrs) {
-    if (dirty) {
-      const attributes = getAttrs();
-      renderer.___attrs(
-        childScope,
-        {
-          ...attributes,
-          renderBody: renderBody ?? attributes.renderBody,
-        },
-        dirty
-      );
-    } else {
-      renderer.___attrs(childScope, null as any, dirty);
+    if (!renderer || renderer === renderBody || (clean && !renderer.___attrs)) {
+      return;
     }
-  }
+
+    const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE];
+    if (typeof renderer === "string") {
+      // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
+      const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
+      attrs(childScope, elementAccessor, getAttrs());
+      setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
+    } else if (renderer.___attrs) {
+      if (clean) {
+        renderer.___attrs(childScope, null as any, clean);
+      } else {
+        const attributes = getAttrs();
+        renderer.___attrs(
+          childScope,
+          {
+            ...attributes,
+            renderBody: renderBody ?? attributes.renderBody,
+          },
+          clean
+        );
+      }
+    }
+  };
 }
 
 export function createRenderFn<I extends Input>(
@@ -193,7 +193,7 @@ export function createRenderFn<I extends Input>(
       const dom = initRenderer(renderer, scope);
 
       if (attrs) {
-        attrs(scope, input, true);
+        attrs(scope, input);
       }
 
       runEffects();
@@ -201,8 +201,8 @@ export function createRenderFn<I extends Input>(
       return {
         update: (newInput: I) => {
           if (attrs) {
-            attrs(scope, newInput, null);
-            attrs(scope, newInput, true);
+            attrs(scope, newInput, 1);
+            attrs(scope, newInput);
             runEffects();
           }
         },

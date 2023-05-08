@@ -6,17 +6,17 @@ const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _data(_scope["#text/0"], (dummy, value));
 });
-const _dummy = /* @__PURE__ */_value2("dummy", (_scope, dummy, _dirty) => _expr_value_dummy(_scope, _dirty));
-const _value = /* @__PURE__ */_value2("value", (_scope, value, _dirty) => _expr_value_dummy(_scope, _dirty));
+const _dummy = /* @__PURE__ */_value2("dummy", null, _expr_value_dummy);
+const _value = /* @__PURE__ */_value2("value", null, _expr_value_dummy);
 const _setup = _scope => {
   _dummy(_scope, {});
 };
-export const attrs = (_scope, _destructure, _dirty = true) => {
+export const attrs = (_scope, _destructure, _clean) => {
   let value;
-  if (_dirty) ({
+  if (!_clean) ({
     value
   } = _destructure);
-  _value(_scope, value, _dirty);
+  _value(_scope, value, _clean);
 };
 export { _value };
 export const template = "<div> </div>";

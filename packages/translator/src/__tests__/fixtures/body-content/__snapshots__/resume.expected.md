@@ -9,7 +9,7 @@
     </button>
     <!--M#1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_resume",])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click();
     </button>
     <!--M#1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_resume",])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click();
     </button>
     <!--M#1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_resume",])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ container.querySelector("button").click();
     </button>
     <!--M#1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_resume",])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>

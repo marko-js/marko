@@ -16,7 +16,8 @@ import {
   getSerializedScopeProperties,
   getSignal,
   addValue,
-  addIntersectionWithGuardedValue,
+  buildSignalIntersections,
+  buildSignalValuesWithIntersections,
 } from "../../util/signals";
 import {
   getScopeAccessorLiteral,
@@ -26,11 +27,7 @@ import {
 } from "../../util/reserve";
 import { mergeReferences, addBindingToReferences } from "../../util/references";
 import customTag from "./custom-tag";
-import {
-  currentProgramPath,
-  dirtyIdentifier,
-  scopeIdentifier,
-} from "../program";
+import { currentProgramPath, scopeIdentifier } from "../program";
 
 export default {
   analyze: {
@@ -133,9 +130,12 @@ export default {
           return callRuntime(
             "conditional",
             getScopeAccessorLiteral(tagNameReserve),
-            getSignalFn(signal, [scopeIdentifier])
+            getSignalFn(signal, [scopeIdentifier]),
+            buildSignalIntersections(signal),
+            buildSignalValuesWithIntersections(signal)
           );
         };
+        signal.hasDownstreamIntersections = () => true;
         addValue(
           section,
           node.extra?.nameReferences,
@@ -147,27 +147,40 @@ export default {
 
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {
-          const signal = getSignal(section, node.extra?.attrsReferences);
           const attrsGetter = t.arrowFunctionExpression(
             [],
             attrsObject ?? t.objectExpression([])
           );
-          addIntersectionWithGuardedValue(
-            signal,
-            tag.get("name").toString() + "_input",
-            attrsGetter,
-            (attrsIdentifier) => {
-              return t.expressionStatement(
-                callRuntime(
-                  "dynamicTagAttrs",
-                  scopeIdentifier,
-                  getScopeAccessorLiteral(tagNameReserve),
-                  attrsIdentifier,
-                  renderBodyIdentifier,
-                  dirtyIdentifier
-                )
-              );
-            }
+          const id = currentProgramPath.scope.generateUidIdentifier(
+            tag.get("name").toString() + "_input"
+          );
+          let added = false;
+          addValue(
+            section,
+            node.extra?.attrsReferences,
+            {
+              get identifier() {
+                if (!added) {
+                  currentProgramPath.pushContainer(
+                    "body",
+                    t.variableDeclaration("const", [
+                      t.variableDeclarator(
+                        id,
+                        callRuntime(
+                          "dynamicTagAttrs",
+                          getScopeAccessorLiteral(tagNameReserve),
+                          renderBodyIdentifier
+                        )
+                      ),
+                    ])
+                  );
+                  added = true;
+                }
+                return id;
+              },
+              hasDownstreamIntersections: () => true,
+            },
+            attrsGetter
           );
         }
 

@@ -42,34 +42,36 @@ const FancyButton$walks = get + next(1) + get + next(1);
 export const FancyButton$attrs = (
   scope: Scope,
   value: any,
-  dirty: boolean | null | undefined
+  clean?: boolean | 1
 ) => {
   let renderBody, onclick;
-  if (dirty) {
+  if (!clean) {
     ({ renderBody, onclick } = value);
   }
-  FancyButton$renderBody(scope, renderBody, dirty);
-  FancyButton$onclick(scope, onclick, dirty);
+  FancyButton$renderBody(scope, renderBody, clean);
+  FancyButton$onclick(scope, onclick, clean);
 };
+
+const FancyButton$renderBodyDynamicTag = conditional(FancyButton$Index.COMMENT);
 
 const FancyButton$renderBody = value(
   FancyButton$Index.RENDER_BODY,
-  (scope, value: any, dirty) => {
-    FancyButton$renderBodyDynamicTag(scope, value, dirty);
-  }
+  (scope, value: any) => {
+    FancyButton$renderBodyDynamicTag(scope, value);
+  },
+  undefined,
+  FancyButton$renderBodyDynamicTag
 );
 
 const FancyButton$onclick = value(FancyButton$Index.ON_CLICK, (_scope) => {
-  queueEffect(_scope, FancyButton$onclick_resume);
+  queueEffect(_scope, FancyButton$onclick_effect);
 });
 
-export const FancyButton$onclick_resume = (scope: Scope) => {
+export const FancyButton$onclick_effect = (scope: Scope) => {
   const onclick = scope[FancyButton$Index.ON_CLICK];
 
   on(scope[FancyButton$Index.BUTTON], "click", onclick);
 };
-
-const FancyButton$renderBodyDynamicTag = conditional(FancyButton$Index.COMMENT);
 
 export const FancyButton = createRenderFn(
   FancyButton$template,
@@ -99,22 +101,17 @@ export const walks = `${beginChild}${FancyButton$walks}${endChild}`;
 
 export const setup = (scope: Scope) => {
   _clickCount(scope, 0);
-  FancyButton$attrs(
-    scope[Index.FANCYBUTTON_SCOPE],
-    {
-      onclick: bindFunction(scope, clickHandler),
-      renderBody: bindRenderer(scope, renderBody),
-    },
-    true
-  );
+  FancyButton$attrs(scope[Index.FANCYBUTTON_SCOPE], {
+    onclick: bindFunction(scope, clickHandler),
+    renderBody: bindRenderer(scope, renderBody),
+  });
 };
 
-const _clickCount = value(Index.CLICK_COUNT, (scope: Scope, _value, dirty) => {
-  dynamicSubscribers(
-    scope[Index.CLICK_COUNT + "*" /* AccessorChars.SUBSCRIBERS */],
-    dirty!
-  );
-});
+const _clickCount = value(
+  Index.CLICK_COUNT,
+  undefined,
+  dynamicSubscribers(Index.CLICK_COUNT)
+);
 
 export const clickHandler = (scope: Scope) => {
   queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);

@@ -29,26 +29,17 @@ const _show_effect = _register("packages/translator/src/__tests__/fixtures/lifec
   } = _scope;
   _queueSource(_scope, _show, !show);
 }));
-const _show = /* @__PURE__ */_value("show", (_scope, show, _dirty) => {
-  let _if_value;
-  if (_dirty) {
-    _queueEffect(_scope, _show_effect);
-    _if_value = show ? _ifBody : null;
-  }
-  _if(_scope, _if_value, _dirty);
-});
+const _show = /* @__PURE__ */_value("show", (_scope, show) => {
+  _queueEffect(_scope, _show_effect);
+  _if(_scope, show ? _ifBody : null);
+}, null, _if);
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
   const {
     x
   } = _scope;
   _queueSource(_scope, _x, x + 1);
 }));
-const _x = /* @__PURE__ */_value("x", (_scope, x, _dirty) => {
-  if (_dirty) {
-    _queueEffect(_scope, _x_effect);
-  }
-  _inConditionalScope(_scope, _dirty, _x$ifBody, "#text/0");
-});
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect), _inConditionalScope(_x$ifBody, "#text/0"));
 const _setup = _scope => {
   _x(_scope, 0);
   _show(_scope, true);

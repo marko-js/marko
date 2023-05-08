@@ -32,7 +32,7 @@ import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
 import { mergeReferences, References } from "../../util/references";
-import { dirtyIdentifier, scopeIdentifier } from "../../visitors/program";
+import { scopeIdentifier } from "../../visitors/program";
 
 export default {
   analyze: {
@@ -195,15 +195,11 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         const id = writer.getRenderer(section);
 
         setSubscriberBuilder(tag, (subscriber) => {
-          return t.expressionStatement(
-            callRuntime(
-              "inConditionalScope",
-              scopeIdentifier,
-              dirtyIdentifier,
-              subscriber,
-              getScopeAccessorLiteral(extra.reserve!)
-              /*writer.getRenderer(section)*/
-            )
+          return callRuntime(
+            "inConditionalScope",
+            subscriber,
+            getScopeAccessorLiteral(extra.reserve!)
+            /*writer.getRenderer(section)*/
           );
         });
 

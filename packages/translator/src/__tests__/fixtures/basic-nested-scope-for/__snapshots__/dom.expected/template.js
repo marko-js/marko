@@ -15,21 +15,18 @@ const _num$forBody_effect = _register("packages/translator/src/__tests__/fixture
   } = _scope;
   _queueSource(_scope._, _selected, num);
 }));
-const _num$forBody = /* @__PURE__ */_value("num", (_scope, num, _dirty) => {
-  if (_dirty) {
-    _data(_scope["#text/1"], num);
-    _queueEffect(_scope, _num$forBody_effect);
-  }
-  _expr_selected_num$forBody(_scope, _dirty);
-});
-const _selected$forBody = /* @__PURE__ */_closure("selected", (_scope, selected, _dirty) => _expr_selected_num$forBody(_scope, _dirty));
+const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
+  _data(_scope["#text/1"], num);
+  _queueEffect(_scope, _num$forBody_effect);
+}, _expr_selected_num$forBody);
+const _selected$forBody = /* @__PURE__ */_closure("selected", null, null, _expr_selected_num$forBody);
 const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", null, [_selected$forBody]);
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _dirty = true) => {
+const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
   let num;
-  if (_dirty) [num] = _destructure;
-  _num$forBody(_scope, num, _dirty);
+  if (!_clean) [num] = _destructure;
+  _num$forBody(_scope, num, _clean);
 });
-const _selected = /* @__PURE__ */_value("selected", (_scope, selected, _dirty) => _inLoopScope(_scope, _dirty, _selected$forBody, "#text/0"));
+const _selected = /* @__PURE__ */_value("selected", null, _inLoopScope(_selected$forBody, "#text/0"));
 const _setup = _scope => {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], null]);

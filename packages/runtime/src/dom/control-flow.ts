@@ -11,38 +11,43 @@ import { IntersectionSignal, renderBodyClosures, ValueSignal } from "./signals";
 
 export function conditional(
   nodeAccessor: Accessor,
-  dynamicTagAttrs?: IntersectionSignal
+  dynamicTagAttrs?: IntersectionSignal,
+  intersection?: IntersectionSignal,
+  valueWithIntersection?: ValueSignal
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
-  return (scope, newRenderer, dirty = true) => {
+  return (scope, newRenderer, clean) => {
     newRenderer ||= undefined;
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;
-    if ((dirty &&= currentRenderer !== newRenderer)) {
+    if (!clean && !(clean = currentRenderer === newRenderer)) {
       currentRenderer = scope[rendererAccessor] = newRenderer;
       setConditionalRenderer(scope, nodeAccessor, newRenderer);
+      dynamicTagAttrs?.(scope);
+    } else {
+      valueWithIntersection?.(scope, 0, clean);
     }
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], dirty);
-    dynamicTagAttrs?.(scope, dirty);
+    intersection?.(scope, clean);
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
   };
 }
 
 // TODO: remove this, use return from conditional instead
 export function inConditionalScope<S extends Scope>(
-  scope: Scope,
-  dirty: null | boolean | undefined,
   signal: IntersectionSignal,
   nodeAccessor: Accessor /* branch?: Renderer */
-) {
+): IntersectionSignal {
   const scopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   // const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
-  const conditionalScope = scope[scopeAccessor] as S;
-  // const conditionalRenderer = scope[rendererAccessor] as Renderer;
-  if (conditionalScope /* && conditionalRenderer === branch */) {
-    signal(conditionalScope, dirty);
-  }
+  return (scope: Scope, clean?: boolean | 1) => {
+    const conditionalScope = scope[scopeAccessor] as S;
+    // const conditionalRenderer = scope[rendererAccessor] as Renderer;
+    if (conditionalScope /* && conditionalRenderer === branch */) {
+      signal(conditionalScope, clean);
+    }
+  };
 }
 
 export function setConditionalRenderer<ChildScope extends Scope>(
@@ -82,16 +87,16 @@ export function conditionalOnlyChild(
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
-  return (scope, newRenderer, dirty = true) => {
+  return (scope, newRenderer, clean) => {
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;
-    if (dirty && currentRenderer !== newRenderer) {
+    if (!clean && currentRenderer !== newRenderer) {
       currentRenderer = scope[rendererAccessor] = newRenderer;
       setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer);
     }
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], dirty);
-    action?.(scope, currentRenderer, dirty);
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
+    action?.(scope, currentRenderer, clean);
   };
 }
 
@@ -137,9 +142,16 @@ export function loop(
   return <T>(
     scope: Scope,
     value: [T[], (item: T) => unknown],
-    dirty = true
+    clean: boolean | 1
   ) => {
-    if (dirty) {
+    if (clean) {
+      for (const childScope of scope[loopScopeAccessor]) {
+        params?.(childScope, null, clean);
+        for (const signal of closureSignals) {
+          signal(childScope, clean);
+        }
+      }
+    } else {
       setLoopOf(
         scope,
         nodeAccessor,
@@ -149,29 +161,22 @@ export function loop(
         params,
         closureSignals
       );
-    } else {
-      params?.(scope, null, dirty);
-      for (const signal of closureSignals) {
-        for (const childScope of scope[loopScopeAccessor]) {
-          signal(childScope, dirty);
-        }
-      }
     }
   };
 }
 
 // TODO: remove this, use return from loop instead
 export function inLoopScope(
-  scope: Scope,
-  dirty: null | boolean,
   signal: IntersectionSignal,
   loopNodeAccessor: Accessor
 ) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
-  const loopScopes = scope[loopScopeAccessor] ?? [];
-  for (const scope of loopScopes) {
-    signal(scope, dirty);
-  }
+  return (scope: Scope, clean?: boolean | 1) => {
+    const loopScopes = scope[loopScopeAccessor] ?? [];
+    for (const scope of loopScopes) {
+      signal(scope, clean);
+    }
+  };
 }
 
 export function setLoopOf<T, ChildScope extends Scope>(
@@ -225,7 +230,7 @@ export function setLoopOf<T, ChildScope extends Scope>(
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
       if (params) {
-        params(childScope, [item, index, newValues], true);
+        params(childScope, [item, index, newValues]);
       }
       if (closureSignals) {
         for (const signal of closureSignals) {

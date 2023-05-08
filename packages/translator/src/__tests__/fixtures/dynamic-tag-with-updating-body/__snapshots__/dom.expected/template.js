@@ -1,30 +1,21 @@
 import { setup as _counter, template as _counter_template, walks as _counter_walks } from "./components/counter.marko";
-import { dynamicTagAttrs as _dynamicTagAttrs, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _setup$tagNameBody = _scope => {
   _counter(_scope["#childScope/0"]);
 };
 const _tagNameBody = /* @__PURE__ */_createRenderer(`${_counter_template}`, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagNameBody);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", (_scope, _dirty) => {
-  let _tagName_input;
-  if (_dirty) {
-    _tagName_input = () => ({});
-  }
-  _dynamicTagAttrs(_scope, "#text/0", _tagName_input, _tagNameBody, _dirty);
-});
+const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), null, _tagName_input);
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
   const {
     tagName
   } = _scope;
   _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
 }));
-const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName, _dirty) => {
-  let _dynamicTagName_value;
-  if (_dirty) {
-    _queueEffect(_scope, _tagName_effect);
-    _dynamicTagName_value = tagName || _tagNameBody;
-  }
-  _dynamicTagName(_scope, _dynamicTagName_value, _dirty);
-});
+const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
+  _queueEffect(_scope, _tagName_effect);
+  _dynamicTagName(_scope, tagName || _tagNameBody);
+}, null, _dynamicTagName);
 const _setup = _scope => {
   _tagName(_scope, "div");
 };
