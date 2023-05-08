@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.8
+
+### Patch Changes
+
+- [#1949](https://github.com/marko-js/marko/pull/1949) [`7f6b65a4b`](https://github.com/marko-js/marko/commit/7f6b65a4b6d34dad6b4f6961be3b8766b7146e63) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use @internal module to host browser/worker remapped files. Improves support for some tools that don't work well with nested package.json files.
+
 ## 5.25.7
 
 ### Patch Changes
