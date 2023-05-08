@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.13
+
+### Patch Changes
+
+- [`946f596c2`](https://github.com/marko-js/marko/commit/946f596c2de04b1742ba83c32d0e72575b276632) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce restrictions on Marko.Component type. Add Marko.Template overload type for callback function passed to render.
+
 ## 5.25.12
 
 ### Patch Changes
