@@ -6,6 +6,9 @@ import { isOutputDOM } from "../util/marko-config";
 import { initValue, queueSource, addValue } from "../util/signals";
 import { registerAssignmentReplacer } from "../util/replace-assignments";
 import { getSection } from "../util/sections";
+import { callRuntime } from "../util/runtime";
+import { currentProgramPath } from "../visitors/program";
+import { getScopeAccessorLiteral } from "../util/reserve";
 
 export default {
   translate(tag) {
@@ -40,7 +43,39 @@ export default {
       const isSetup = !references;
 
       if (!isSetup) {
-        // TODO: add defined guard if bindings exist.
+        let initValueId: t.Identifier | undefined;
+        addValue(
+          section,
+          references,
+          {
+            get identifier() {
+              if (!initValueId) {
+                initValueId = tag.scope.generateUidIdentifier(
+                  source.identifier.name + "_init"
+                );
+                currentProgramPath.pushContainer(
+                  "body",
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(
+                      initValueId,
+                      callRuntime(
+                        "initValue",
+                        getScopeAccessorLiteral(binding),
+                        source.identifier
+                      )
+                    ),
+                  ])
+                );
+              }
+
+              return initValueId;
+            },
+            hasDownstreamIntersections() {
+              return source.hasDownstreamIntersections();
+            },
+          },
+          defaultAttr.value
+        );
       } else {
         addValue(section, references, source, defaultAttr.value);
       }

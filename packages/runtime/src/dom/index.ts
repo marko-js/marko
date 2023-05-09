@@ -43,6 +43,7 @@ export {
 
 export {
   value,
+  initValue,
   intersection,
   closure,
   dynamicClosure,

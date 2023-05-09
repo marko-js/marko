@@ -1,4 +1,6 @@
 import { data as _data, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _destructure2 = (_scope, {
   x,
   y
@@ -6,8 +8,6 @@ const _destructure2 = (_scope, {
   _x(_scope, x);
   _y(_scope, y);
 };
-const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _z = /* @__PURE__ */_value("z", (_scope, z) => _destructure2(_scope, z));
 const _setup = _scope => {
   _z(_scope, {

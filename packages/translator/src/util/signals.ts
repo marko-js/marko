@@ -644,73 +644,69 @@ export function getResumeRegisterId(
 }
 
 export function writeSignals(section: Section) {
-  const signals = getSignals(section);
-  const declarations = Array.from(signals.values())
-    .sort(sortSignals)
-    .flatMap((signal) => {
-      let effectDeclarator;
-      if (signal.effect.length) {
-        const effectIdentifier = t.identifier(
-          `${signal.identifier.name}_effect`
-        );
+  const signals = [...getSignals(section).values()].sort(sortSignals);
+  for (const signal of signals) {
+    let effectDeclarator;
+    if (signal.effect.length) {
+      const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
 
-        if (signal.effectInlineReferences) {
-          signal.effect.unshift(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                createScopeReadPattern(section, signal.effectInlineReferences),
-                scopeIdentifier
-              ),
-            ])
-          );
-        }
-
-        effectDeclarator = t.variableDeclarator(
-          effectIdentifier,
-          callRuntime(
-            "register",
-            t.stringLiteral(getResumeRegisterId(section, signal.reserve)),
-            t.arrowFunctionExpression(
-              [scopeIdentifier],
-              signal.effect.length === 1 &&
-                t.isExpressionStatement(signal.effect[0])
-                ? signal.effect[0].expression
-                : t.blockStatement(signal.effect)
-            )
-          )
-        );
-        signal.render.push(
-          t.expressionStatement(
-            callRuntime("queueEffect", scopeIdentifier, effectIdentifier)
-          )
+      if (signal.effectInlineReferences) {
+        signal.effect.unshift(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              createScopeReadPattern(section, signal.effectInlineReferences),
+              scopeIdentifier
+            ),
+          ])
         );
       }
 
-      let value = signal.build();
-      if (signal.register) {
-        value = callRuntime(
+      effectDeclarator = t.variableDeclarator(
+        effectIdentifier,
+        callRuntime(
           "register",
           t.stringLiteral(getResumeRegisterId(section, signal.reserve)),
-          value
-        );
-      }
-      if (t.isCallExpression(value)) {
-        finalizeSignalArgs(value.arguments as any as t.Expression[]);
-      }
-      const signalDeclarator = t.variableDeclarator(signal.identifier, value);
-      return effectDeclarator
+          t.arrowFunctionExpression(
+            [scopeIdentifier],
+            signal.effect.length === 1 &&
+              t.isExpressionStatement(signal.effect[0])
+              ? signal.effect[0].expression
+              : t.blockStatement(signal.effect)
+          )
+        )
+      );
+      signal.render.push(
+        t.expressionStatement(
+          callRuntime("queueEffect", scopeIdentifier, effectIdentifier)
+        )
+      );
+    }
+
+    const value = signal.register
+      ? callRuntime(
+          "register",
+          t.stringLiteral(getResumeRegisterId(section, signal.reserve)),
+          signal.build()
+        )
+      : signal.build();
+    if (t.isCallExpression(value)) {
+      finalizeSignalArgs(value.arguments as any as t.Expression[]);
+    }
+    const signalDeclarator = t.variableDeclarator(signal.identifier, value);
+    const roots = currentProgramPath.pushContainer(
+      "body",
+      effectDeclarator
         ? [
             t.variableDeclaration("const", [effectDeclarator]),
             t.variableDeclaration("const", [signalDeclarator]),
           ]
-        : t.variableDeclaration("const", [signalDeclarator]);
-    });
+        : t.variableDeclaration("const", [signalDeclarator])
+    );
 
-  const newPaths = currentProgramPath.pushContainer("body", declarations);
-
-  newPaths.forEach((newPath) =>
-    newPath.traverse(bindFunctionsVisitor, { root: newPath, section })
-  );
+    for (const root of roots) {
+      root.traverse(bindFunctionsVisitor, { root, section });
+    }
+  }
 }
 
 function sortSignals(a: Signal, b: Signal) {

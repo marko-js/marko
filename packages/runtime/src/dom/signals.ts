@@ -28,6 +28,18 @@ export type BoundIntersectionSignal = ((clean?: 1 | boolean) => void) & {
   ___unsubscribe?(scope: Scope): void;
 };
 
+export function initValue<T>(
+  valueAccessor: Accessor,
+  fn: ValueSignal<T>
+): ValueSignal<T> {
+  const markAccessor = valueAccessor + AccessorChars.MARK;
+  return (scope, nextValue, clean) => {
+    if (clean !== 1 && scope[markAccessor] === undefined) {
+      fn(scope, nextValue, clean);
+    }
+  };
+}
+
 export function value<T>(
   valueAccessor: Accessor,
   render?: ValueSignal<T>,
