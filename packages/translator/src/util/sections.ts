@@ -90,13 +90,13 @@ export function createSectionState<T = unknown>(
 ) {
   return [
     (section: Section): T => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
+      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
       const sectionData = (arrayOfSectionData[section.id] ??=
         init && init(section));
       return sectionData as T;
     },
     (section: Section, value: T): void => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= []);
+      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
       arrayOfSectionData[section.id] = value;
     },
   ] as const;

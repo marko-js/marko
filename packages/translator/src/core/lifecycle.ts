@@ -28,8 +28,12 @@ export default {
   analyze: {
     enter(tag) {
       customTag.analyze.enter(tag);
-      const section = getSection(tag);
-      reserveScope(ReserveType.Store, section, tag.node, "cleanup");
+      reserveScope(
+        ReserveType.Store,
+        getOrCreateSection(tag),
+        tag.node,
+        "cleanup"
+      );
       (currentProgramPath.node.extra ?? {}).isInteractive = true;
     },
     exit(tag) {

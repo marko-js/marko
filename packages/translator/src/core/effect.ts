@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";
 import { callRuntime } from "../util/runtime";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import {
   ReserveType,
   reserveScope,
@@ -20,8 +20,12 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
-    const section = getSection(tag);
-    reserveScope(ReserveType.Store, section, tag.node, "cleanup");
+    reserveScope(
+      ReserveType.Store,
+      getOrCreateSection(tag),
+      tag.node,
+      "cleanup"
+    );
     (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },
   translate: {
