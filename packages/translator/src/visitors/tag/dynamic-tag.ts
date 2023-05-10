@@ -78,7 +78,16 @@ export default {
 
           args.push(
             t.arrowFunctionExpression(
-              renderBodyProp.params,
+              renderBodyProp.params.length
+                ? [
+                    t.objectPattern([
+                      t.objectProperty(
+                        t.identifier("value"),
+                        t.arrayPattern(renderBodyProp.params)
+                      ),
+                    ]),
+                  ]
+                : [],
               toFirstExpressionOrBlock(renderBodyProp.body)
             )
           );

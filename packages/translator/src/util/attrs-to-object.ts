@@ -44,7 +44,16 @@ export default function attrsToObject(
         t.objectMethod(
           "method",
           t.identifier("renderBody"),
-          params,
+          params.length
+            ? [
+                t.objectPattern([
+                  t.objectProperty(
+                    t.identifier("value"),
+                    t.arrayPattern(params)
+                  ),
+                ]),
+              ]
+            : [],
           t.blockStatement(body)
         )
       );

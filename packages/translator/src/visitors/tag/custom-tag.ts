@@ -137,7 +137,16 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       const [renderBodyPath] = tag.insertBefore(
         t.functionDeclaration(
           renderBodyId,
-          renderBodyProp.params,
+          renderBodyProp.params.length
+            ? [
+                t.objectPattern([
+                  t.objectProperty(
+                    t.identifier("value"),
+                    t.arrayPattern(renderBodyProp.params)
+                  ),
+                ]),
+              ]
+            : [],
           renderBodyProp.body
         )
       );

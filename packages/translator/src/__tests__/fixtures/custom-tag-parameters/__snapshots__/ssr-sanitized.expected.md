@@ -1,4 +1,11 @@
 # Render "End"
 ```html
-<div />
+<button
+  class="inc"
+>
+  1
+</button>
+<div>
+  Count: 1
+</div>
 ```

@@ -10,7 +10,9 @@ const _renderer = _register(({
   if (x) {
     const _scope2_id = _nextScopeId();
     _item = {
-      renderBody(y) {
+      renderBody({
+        value: [y]
+      }) {
         _write(`${_escapeXML(y)}${_markResumeNode(_scope3_id, "#text/0")}`);
       }
     };

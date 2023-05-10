@@ -3,11 +3,11 @@ import _customTag from "./components/custom-tag.marko";
 const _renderer = _register((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   _customTag({
-    renderBody(a, b, {
-      c
+    renderBody({
+      value: [count]
     }) {
       const _scope1_id = _nextScopeId();
-      _write(`<div>${_escapeXML(a)}${_markResumeNode(_scope1_id, "#text/0")} <!>${_escapeXML(b)}${_markResumeNode(_scope1_id, "#text/1")} <!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}</div>`);
+      _write(`<div>Count: <!>${_escapeXML(count)}${_markResumeNode(_scope1_id, "#text/0")}</div>`);
     }
   });
 }, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/template.marko");
