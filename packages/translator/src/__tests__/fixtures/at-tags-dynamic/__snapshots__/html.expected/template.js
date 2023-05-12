@@ -48,15 +48,15 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   }
   let _i = 0;
   for (const col of [["a", "b"], ["c", "d"]]) {
-    const _scope6_id = _nextScopeId();
+    const _scope8_id = _nextScopeId();
     let i = _i++;
     const _row = [];
     for (const row of col) {
-      const _scope8_id = _nextScopeId();
+      const _scope10_id = _nextScopeId();
       _row.push({
         row: row,
         renderBody() {
-          _write(`${_escapeXML(row)}${_markResumeNode(_scope9_id, "#text/0")}`);
+          _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
         }
       });
       _maybeFlush();

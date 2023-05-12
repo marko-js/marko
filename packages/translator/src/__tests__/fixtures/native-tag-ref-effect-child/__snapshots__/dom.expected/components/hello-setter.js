@@ -17,4 +17,4 @@ export { _el };
 export const template = "";
 export const walks = "";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko");

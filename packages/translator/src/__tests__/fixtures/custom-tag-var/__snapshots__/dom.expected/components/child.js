@@ -9,11 +9,11 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
   _tagVarSignal(_scope, x);
-}, null, _tagVarSignal);
+}, void 0, _tagVarSignal);
 const _setup = _scope => {
   _x(_scope, 1);
 };
 export const template = "<button class=inc> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko");

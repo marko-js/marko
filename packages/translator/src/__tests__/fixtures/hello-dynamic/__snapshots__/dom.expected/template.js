@@ -9,4 +9,4 @@ export { _input };
 export const template = "Hello <!>! Hello <!>! Hello <!>!";
 export const walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/hello-dynamic/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/hello-dynamic/template.marko");

@@ -399,7 +399,10 @@ export function getTagParamsSignal(
   const parameterBindings = paramsPaths.reduce((bindingsLookup, path) => {
     return Object.assign(bindingsLookup, path.getBindingIdentifiers());
   }, {});
-  return getDestructureSignal(parameterBindings, pattern);
+  return getDestructureSignal(
+    parameterBindings,
+    t.objectPattern([t.objectProperty(t.identifier("value"), pattern)])
+  );
 }
 
 export function getDestructureSignal(
@@ -472,7 +475,7 @@ export function getDestructureSignal(
       },
       hasDownstreamIntersections() {
         return bindings.some((binding) => {
-          const reserve = binding.extra?.reserve as Reserve;
+          const reserve = binding.extra!.reserve!;
           const signal = getSignal(reserve.section, reserve);
           return signal.hasDownstreamIntersections();
         });

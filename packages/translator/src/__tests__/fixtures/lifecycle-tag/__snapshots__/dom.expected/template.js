@@ -28,4 +28,4 @@ const _setup = _scope => {
 export const template = "<div id=ref></div><button id=increment>Increment</button>";
 export const walks = /* over(1), get, over(1) */"b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/lifecycle-tag/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/lifecycle-tag/template.marko");

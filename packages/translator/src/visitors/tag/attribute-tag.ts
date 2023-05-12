@@ -3,10 +3,20 @@ import { findParentTag, assertNoVar } from "@marko/babel-utils";
 import { TagNameTypes } from "../../util/tag-name-type";
 import attrsToObject from "../../util/attrs-to-object";
 import * as writer from "../../util/writer";
+import { getSection, startSection } from "../../util/sections";
 
 export default {
+  analyze: {
+    enter(tag: t.NodePath<t.MarkoTag>) {
+      const body = tag.get("body");
+      if (body.get("body").length) {
+        startSection(body);
+      }
+    },
+  },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      getSection(tag.get("body"));
       if (writer.hasPendingHTML(tag)) {
         throw tag
           .get("name")

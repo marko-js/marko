@@ -1,4 +1,4 @@
-import { on as _on, attr as _attr, queueSource as _queueSource, data as _data, intersection as _intersection, register as _register, queueEffect as _queueEffect, value as _value, closure as _closure, createRenderer as _createRenderer, loop as _loop, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, attr as _attr, queueSource as _queueSource, data as _data, intersection as _intersection, register as _register, queueEffect as _queueEffect, value as _value, closure as _closure, createRenderer as _createRenderer, loopOf as _loopOf, inLoopScope as _inLoopScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _expr_selected_num$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -19,19 +19,21 @@ const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
   _data(_scope["#text/1"], num);
   _queueEffect(_scope, _num$forBody_effect);
 }, _expr_selected_num$forBody);
-const _selected$forBody = /* @__PURE__ */_closure("selected", null, null, _expr_selected_num$forBody);
-const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", null, [_selected$forBody]);
-const _for = /* @__PURE__ */_loop("#text/0", _forBody, (_scope, _destructure, _clean) => {
+const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _expr_selected_num$forBody);
+const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let num;
-  if (!_clean) [num] = _destructure;
+  if (!_clean) ({
+    value: [num]
+  } = _destructure);
   _num$forBody(_scope, num, _clean);
 });
+const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _selected = /* @__PURE__ */_value("selected", null, _inLoopScope(_selected$forBody, "#text/0"));
 const _setup = _scope => {
   _selected(_scope, 0);
-  _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], null]);
+  _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);
 };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/basic-nested-scope-for/template.marko");

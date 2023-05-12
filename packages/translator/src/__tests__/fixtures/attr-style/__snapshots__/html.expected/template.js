@@ -13,7 +13,7 @@ const _renderer = _register(({
       color: color
     },
     renderBody() {
-      const _scope2_id = _nextScopeId();
+      const _scope3_id = _nextScopeId();
     }
   });
   _customTag({
@@ -21,13 +21,13 @@ const _renderer = _register(({
       width: 100
     },
     renderBody() {
-      const _scope3_id = _nextScopeId();
+      const _scope4_id = _nextScopeId();
     }
   });
   _customTag({
     style: "color: green",
     renderBody() {
-      const _scope4_id = _nextScopeId();
+      const _scope5_id = _nextScopeId();
     }
   });
   const _dynamicScope = _dynamicTag(test, {

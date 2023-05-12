@@ -17,4 +17,4 @@ const _setup = _scope => {
 export const template = "<button></button><!>";
 export const walks = /* get, over(1), replace, over(1) */" b%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/if-default-false/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/if-default-false/template.marko");

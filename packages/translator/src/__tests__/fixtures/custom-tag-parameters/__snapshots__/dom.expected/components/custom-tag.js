@@ -20,7 +20,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
 }, _expr_dynamicTagName_x);
-const _input = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), null, _dynamicTagName);
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), void 0, _dynamicTagName);
 const _setup = _scope => {
   _x(_scope, 1);
 };
@@ -29,4 +29,4 @@ export { _input };
 export const template = "<button class=inc> </button><!>";
 export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/components/custom-tag.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/components/custom-tag.marko");

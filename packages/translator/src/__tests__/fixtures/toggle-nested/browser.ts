@@ -152,7 +152,7 @@ const _value2 = value(
   inConditionalScope(value2$if0, INDEX.conditional)
 );
 
-export default createRenderFn(template, walks, undefined, attrs);
+export default createRenderFn(template, walks, undefined, attrs as any);
 
 const ifBody0 = createRenderer(
   "<!><!>",

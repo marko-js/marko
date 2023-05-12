@@ -20,4 +20,4 @@ export { _onClick, _text };
 export const template = "<button> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");

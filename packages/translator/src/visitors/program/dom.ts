@@ -1,11 +1,16 @@
 import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
-import { forEachSectionReverse, getSection } from "../../util/sections";
+import {
+  forEachSectionReverse,
+  getSection,
+  getSectionPath,
+} from "../../util/sections";
 import {
   getClosures,
   getDestructureSignal,
   getResumeRegisterId,
   getSignal,
+  getTagParamsSignal,
   writeSignals,
 } from "../../util/signals";
 import * as writer from "../../util/writer";
@@ -26,6 +31,12 @@ export default {
       const { walks, writes, setup } = writer.getSectionMeta(section);
 
       forEachSectionReverse((childSection) => {
+        const sectionPath = getSectionPath(childSection);
+        const tagParamsSignal = sectionPath.isProgram()
+          ? undefined
+          : getTagParamsSignal(
+              (sectionPath as t.NodePath<t.MarkoTagBody>).get("params")
+            );
         writeSignals(childSection);
 
         if (childSection !== section) {
@@ -38,7 +49,12 @@ export default {
             writes,
             walks,
             setup,
-            closures.length && t.arrayExpression(closures)
+            closures.length && t.arrayExpression(closures),
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            tagParamsSignal?.build()
           );
           program.node.body.push(
             t.variableDeclaration("const", [
@@ -61,7 +77,6 @@ export default {
 
       if (attrs) {
         const exportSpecifiers: t.ExportSpecifier[] = [];
-        const isIdentity = t.isIdentifier(attrs.var);
 
         for (const name in attrs.bindings) {
           const bindingIdentifier = attrs.bindings[name];
@@ -79,7 +94,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 attrsSignalIdentifier,
-                isIdentity
+                t.isIdentifier(attrs.var)
                   ? getSignal(
                       section,
                       (attrs.var as t.Identifier).extra!.reserve!

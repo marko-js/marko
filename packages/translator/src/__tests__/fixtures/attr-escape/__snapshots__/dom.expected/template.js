@@ -10,4 +10,4 @@ export { _input };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/attr-escape/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/attr-escape/template.marko");

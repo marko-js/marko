@@ -11,7 +11,7 @@ const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _displayIntersection_attrs(_scope["#childScope/0"], {
     value: count
   });
-}, null, _inChild("#childScope/0", _displayIntersection_attrs));
+}, void 0, _inChild("#childScope/0", _displayIntersection_attrs));
 const _setup = _scope => {
   _displayIntersection(_scope["#childScope/0"]);
   _count(_scope, 0);
@@ -19,4 +19,4 @@ const _setup = _scope => {
 export const template = `${_displayIntersection_template}<button></button>`;
 export const walks = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/component-attrs-intersection/template.marko");

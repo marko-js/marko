@@ -25,4 +25,4 @@ export { _input };
 export const template = "<div> </div>";
 export const walks = /* next(1), get, out(1) */"D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko");

@@ -2,9 +2,9 @@ export {
   conditional,
   conditionalOnlyChild,
   inConditionalScope,
-  loop,
-  computeLoopToFrom,
-  computeLoopIn,
+  loopOf,
+  loopIn,
+  loopTo,
   inLoopScope,
 } from "./control-flow";
 

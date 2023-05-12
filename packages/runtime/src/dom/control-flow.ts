@@ -9,6 +9,11 @@ import { getEmptyScope, destroyScope } from "./scope";
 import { defaultFragment } from "./fragment";
 import { IntersectionSignal, renderBodyClosures, ValueSignal } from "./signals";
 
+type LoopForEach = (
+  value: unknown[],
+  cb: (key: unknown, args: unknown[]) => void
+) => void;
+
 export function conditional(
   nodeAccessor: Accessor,
   dynamicTagAttrs?: IntersectionSignal,
@@ -53,7 +58,7 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName<ChildScope> | undefined
+  newRenderer: RendererOrElementName | undefined
 ) {
   let newScope: ChildScope;
   let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
@@ -132,16 +137,59 @@ export const emptyMarkerArray = [/* @__PURE__ */ getEmptyScope()];
 const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
-export function loop(
+export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
+  return loop(nodeAccessor, renderer, (value, cb) => {
+    const [all, getKey = keyBySecondArg] = value as typeof value &
+      [all: unknown[], getKey?: (item: unknown, index: number) => unknown];
+    let i = 0;
+    for (const item of all) {
+      cb(getKey(item, i), [item, i, all]);
+      i++;
+    }
+  });
+}
+
+export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
+  return loop(nodeAccessor, renderer, (value, cb) => {
+    const [all, getKey = keyByFirstArg] = value as typeof value &
+      [
+        all: Record<string, unknown>,
+        getKey?: (key: string, v: unknown) => unknown
+      ];
+    for (const key in all) {
+      const v = all[key];
+      cb(getKey(key, v), [key, v, all]);
+    }
+  });
+}
+
+export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
+  return loop(nodeAccessor, renderer, (value, cb) => {
+    const [to, from = 0, step = 1, getKey = keyByFirstArg] = value as [
+      to: number,
+      from: number,
+      step: number,
+      getKey?: (v: number) => unknown
+    ];
+    const steps = (to - from) / step;
+    for (let i = 0; i <= steps; i++) {
+      const v = from + i * step;
+      cb(getKey(v), [v]);
+    }
+  });
+}
+
+function loop(
   nodeAccessor: Accessor,
   renderer: Renderer,
-  params?: ValueSignal
+  forEach: LoopForEach
 ) {
   const loopScopeAccessor = nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   const closureSignals = renderer.___closureSignals;
-  return <T>(
+  const params = renderer.___attrs;
+  return (
     scope: Scope,
-    value: [T[], (item: T) => unknown],
+    value: [unknown, (...args: unknown[]) => unknown],
     clean: boolean | 1
   ) => {
     if (clean) {
@@ -151,17 +199,107 @@ export function loop(
           signal(childScope, clean);
         }
       }
-    } else {
-      setLoopOf(
-        scope,
-        nodeAccessor,
-        value[0],
-        renderer,
-        value[1],
-        params,
-        closureSignals
+
+      return;
+    }
+
+    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    // TODO: compiler should use only comment so the text check can be removed
+    const referenceIsMarker =
+      referenceNode.nodeType === 8 /* Comment */ ||
+      referenceNode.nodeType === 3; /* Text */
+    const oldMap =
+      (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] as Map<
+        unknown,
+        Scope
+      >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
+    const oldArray =
+      (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] as Scope[]) ||
+      Array.from(oldMap.values());
+
+    let newMap!: Map<unknown, Scope>;
+    let newArray!: Scope[];
+    let afterReference: Node | null;
+    let parentNode: Node & ParentNode;
+    let needsReconciliation = true;
+
+    forEach(value, (key, args) => {
+      let childScope = oldMap.get(key);
+      const isNew = !childScope;
+      if (!childScope) {
+        childScope = createScopeWithRenderer(
+          renderer,
+          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||=
+            scope.___context),
+          scope
+        );
+        // TODO: once we can track moves
+        // needsReconciliation = true;
+      } else {
+        // TODO: track if any childScope has changed index
+        // needsReconciliation ||= oldArray[index] !== childScope;
+      }
+      if (params) {
+        params(childScope, { value: args });
+      }
+      if (closureSignals) {
+        for (const signal of closureSignals) {
+          signal(childScope, isNew);
+        }
+      }
+
+      if (newMap) {
+        newMap.set(key, childScope);
+        newArray.push(childScope);
+      } else {
+        newMap = new Map([[key, childScope]]);
+        newArray = [childScope];
+      }
+    });
+
+    if (!newMap) {
+      if (referenceIsMarker) {
+        newMap = emptyMarkerMap;
+        newArray = emptyMarkerArray;
+        getEmptyScope(referenceNode as Comment);
+      } else {
+        // Fast path when loop is only child of parent
+        if (renderer.___hasUserEffects) {
+          for (let i = 0; i < oldArray.length; i++) {
+            destroyScope(oldArray[i]);
+          }
+        }
+        referenceNode.textContent = "";
+        newMap = emptyMap;
+        newArray = emptyArray;
+        needsReconciliation = false;
+      }
+    }
+
+    if (needsReconciliation) {
+      if (referenceIsMarker) {
+        if (oldMap === emptyMarkerMap) {
+          getEmptyScope(referenceNode as Comment);
+        }
+        const oldLastChild = oldArray[oldArray.length - 1];
+        const fragment = renderer.___fragment ?? defaultFragment;
+        afterReference = fragment.___getAfterNode(oldLastChild);
+        parentNode = fragment.___getParentNode(oldLastChild);
+      } else {
+        afterReference = null;
+        parentNode = referenceNode as Element;
+      }
+      reconcile(
+        parentNode,
+        oldArray,
+        newArray!,
+        afterReference,
+        renderer.___fragment
       );
     }
+
+    scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] = newMap;
+    scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] = newArray;
   };
 }
 
@@ -179,136 +317,10 @@ export function inLoopScope(
   };
 }
 
-export function setLoopOf<T, ChildScope extends Scope>(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  newValues: T[],
-  renderer: Renderer<ChildScope>,
-  keyFn?: (item: T) => unknown,
-  params?: ValueSignal,
-  closureSignals?: IntersectionSignal[]
-) {
-  let newMap: Map<unknown, ChildScope>;
-  let newArray: Scope[];
-  const len = newValues.length;
-  const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-  // TODO: compiler should use only comment so the text check can be removed
-  const referenceIsMarker =
-    referenceNode.nodeType === 8 /* Comment */ ||
-    referenceNode.nodeType === 3; /* Text */
-  const oldMap =
-    (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] as Map<
-      unknown,
-      ChildScope
-    >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
-  const oldArray =
-    (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] as ChildScope[]) ||
-    Array.from(oldMap.values());
-  let afterReference: Node | null;
-  let parentNode: Node & ParentNode;
-  let needsReconciliation = true; // TODO: len !== oldArray.length;
-
-  if (len > 0) {
-    newMap = new Map();
-    newArray = [];
-    for (let index = 0; index < len; index++) {
-      const item = newValues[index];
-      const key = keyFn ? keyFn(item) : index;
-      let childScope = oldMap.get(key);
-      const isNew = !childScope;
-      if (!childScope) {
-        childScope = createScopeWithRenderer(
-          renderer,
-          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||=
-            scope.___context),
-          scope
-        ) as ChildScope;
-        // TODO: once we can track moves
-        // needsReconciliation = true;
-      } else {
-        // TODO: track if any childScope has changed index
-        // needsReconciliation ||= oldArray[index] !== childScope;
-      }
-      if (params) {
-        params(childScope, [item, index, newValues]);
-      }
-      if (closureSignals) {
-        for (const signal of closureSignals) {
-          signal(childScope, isNew);
-        }
-      }
-      newMap.set(key, childScope);
-      newArray.push(childScope);
-    }
-  } else {
-    if (referenceIsMarker) {
-      newMap = emptyMarkerMap;
-      newArray = emptyMarkerArray;
-      getEmptyScope(referenceNode as Comment);
-    } else {
-      // Fast path when loop is only child of parent
-      if (renderer.___hasUserEffects) {
-        for (let i = 0; i < oldArray.length; i++) {
-          destroyScope(oldArray[i]);
-        }
-      }
-      referenceNode.textContent = "";
-      newMap = emptyMap;
-      newArray = emptyArray;
-      needsReconciliation = false;
-    }
-  }
-
-  if (needsReconciliation) {
-    if (referenceIsMarker) {
-      if (oldMap === emptyMarkerMap) {
-        getEmptyScope(referenceNode as Comment);
-      }
-      const oldLastChild = oldArray[oldArray.length - 1];
-      const fragment = renderer.___fragment ?? defaultFragment;
-      afterReference = fragment.___getAfterNode(oldLastChild);
-      parentNode = fragment.___getParentNode(oldLastChild);
-    } else {
-      afterReference = null;
-      parentNode = referenceNode as Element;
-    }
-    reconcile(
-      parentNode,
-      oldArray,
-      newArray!,
-      afterReference,
-      renderer.___fragment
-    );
-  }
-
-  scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] = newMap;
-  scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] = newArray;
+function keyBySecondArg(_item: unknown, index: unknown) {
+  return index;
 }
 
-export function computeLoopToFrom(to: number, from = 0, step = 1) {
-  const range: number[] = [];
-  for (let _steps = (to - from) / step, i = 0; i <= _steps; i++) {
-    range.push(from + i * step);
-  }
-
-  return [range, keyFromTo] as [number[], typeof keyFromTo];
-}
-
-function keyFromTo(item: number) {
-  return item;
-}
-
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-
-export function computeLoopIn(object: Record<string, unknown>) {
-  return [Object.entries(object), keyIn] as [
-    Entries<typeof object>,
-    typeof keyIn
-  ];
-}
-
-function keyIn(item: [string, unknown]) {
-  return item[0];
+function keyByFirstArg(name: unknown) {
+  return name;
 }

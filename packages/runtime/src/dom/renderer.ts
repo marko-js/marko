@@ -16,7 +16,7 @@ const enum NodeType {
   DocumentFragment = 11,
 }
 
-export type Renderer<I extends Input = Input> = {
+export type Renderer = {
   ___template: string;
   ___walks: string | undefined;
   ___setup: SetupFn | undefined;
@@ -27,23 +27,22 @@ export type Renderer<I extends Input = Input> = {
   ___fragment: DOMFragment | undefined;
   ___dynamicStartNodeOffset: Accessor | undefined;
   ___dynamicEndNodeOffset: Accessor | undefined;
-  ___attrs: ValueSignal<I> | undefined;
+  ___attrs: ValueSignal | undefined;
   ___owner: Scope | undefined;
 };
 
-export type RendererOrElementName<I extends Input = Input> =
-  | Renderer<I>
+export type RendererOrElementName =
+  | Renderer
   | (string & Record<keyof Renderer, undefined>);
 
-type Input = Record<string, unknown>;
 type SetupFn = (scope: Scope) => void;
-type RenderResult<I extends Input> = {
-  update: (input: I) => void;
+type RenderResult = {
+  update: (input: unknown) => void;
   destroy: () => void;
 };
 
 export function createScopeWithRenderer(
-  renderer: RendererOrElementName<any>,
+  renderer: RendererOrElementName,
   context: ScopeContext,
   ownerScope?: Scope
 ) {
@@ -89,10 +88,7 @@ export function initContextProvider(
   }
 }
 
-export function initRenderer(
-  renderer: RendererOrElementName<any>,
-  scope: Scope
-) {
+export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
   const dom =
     typeof renderer === "string"
       ? document.createElement(renderer)
@@ -162,17 +158,17 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
   };
 }
 
-export function createRenderFn<I extends Input>(
+export function createRenderFn(
   template: string,
   walks: string,
   setup?: SetupFn,
-  attrs?: ValueSignal<I>,
+  attrs?: ValueSignal,
   closureSignals?: ValueSignal[],
   templateId?: string,
   dynamicStartNodeOffset?: number,
   dynamicEndNodeOffset?: number
 ) {
-  const renderer = createRenderer<I>(
+  const renderer = createRenderer(
     template,
     walks,
     setup,
@@ -185,7 +181,7 @@ export function createRenderFn<I extends Input>(
   );
   return register(
     templateId!,
-    Object.assign((input: I, element: Element): RenderResult<I> => {
+    Object.assign((input: unknown, element: Element): RenderResult => {
       const scope = createScope();
       queueEffect(scope, () => {
         element.replaceChildren(dom);
@@ -199,7 +195,7 @@ export function createRenderFn<I extends Input>(
       runEffects();
 
       return {
-        update: (newInput: I) => {
+        update: (newInput: unknown) => {
           if (attrs) {
             attrs(scope, newInput, 1);
             attrs(scope, newInput);
@@ -214,7 +210,7 @@ export function createRenderFn<I extends Input>(
   );
 }
 
-export function createRenderer<I extends Input>(
+export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
@@ -223,8 +219,8 @@ export function createRenderer<I extends Input>(
   fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
   dynamicEndNodeOffset?: Accessor,
-  attrs?: ValueSignal<I>
-): Renderer<I> {
+  attrs?: ValueSignal
+): Renderer {
   return {
     ___template: template,
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),

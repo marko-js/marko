@@ -16,13 +16,13 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
       d
     }],
     renderBody() {
-      const _scope2_id = _nextScopeId();
+      const _scope3_id = _nextScopeId();
     }
   });
   _customTag({
     class: ["a", false, "b"],
     renderBody() {
-      const _scope3_id = _nextScopeId();
+      const _scope4_id = _nextScopeId();
     }
   });
   const _dynamicScope = _dynamicTag(input.test, {

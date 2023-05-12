@@ -29,7 +29,9 @@ const pureFunctions: Array<
   "closure",
   "dynamicClosure",
   "contextClosure",
-  "loop",
+  "loopOf",
+  "loopIn",
+  "loopTo",
   "conditional",
   "bindFunction",
   "bindRenderer",
@@ -107,7 +109,7 @@ function filterArguments<A>(args: (A | Falsy)[]) {
   for (let i = args.length; i--; ) {
     const arg = args[i];
     if (arg || filteredArgs.length) {
-      filteredArgs[i] = arg || t.nullLiteral();
+      filteredArgs[i] = arg || t.unaryExpression("void", t.numericLiteral(0));
     }
   }
   return filteredArgs as A[];

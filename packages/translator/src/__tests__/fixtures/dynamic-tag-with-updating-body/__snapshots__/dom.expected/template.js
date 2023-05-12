@@ -5,7 +5,7 @@ const _setup$tagNameBody = _scope => {
 };
 const _tagNameBody = /* @__PURE__ */_createRenderer(`${_counter_template}`, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagNameBody);
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), null, _tagName_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), void 0, _tagName_input);
 const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
   const {
     tagName
@@ -15,11 +15,11 @@ const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dy
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);
-}, null, _dynamicTagName);
+}, void 0, _dynamicTagName);
 const _setup = _scope => {
   _tagName(_scope, "div");
 };
 export const template = "<!><button id=changeTag></button>";
 export const walks = /* replace, over(1), get, over(1) */"%b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");

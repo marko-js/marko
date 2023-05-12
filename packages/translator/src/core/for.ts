@@ -15,7 +15,6 @@ import {
   writeHTMLResumeStatements,
   getSerializedScopeProperties,
   addValue,
-  getTagParamsSignal,
   getClosures,
 } from "../util/signals";
 import {
@@ -76,14 +75,6 @@ export default {
   translate: {
     enter(tag) {
       validateFor(tag);
-
-      if (
-        !isOutputHTML() &&
-        Object.keys(tag.node.extra.nestedAttributeTags).length
-      ) {
-        tag.remove();
-        return;
-      }
 
       const {
         extra: { isOnlyChild },
@@ -171,18 +162,20 @@ export default {
 
 const translateDOM = {
   exit(tag: t.NodePath<t.MarkoTag>) {
-    const bodySection = getSection(tag.get("body"));
-    const section = getSection(tag);
+    const tagBody = tag.get("body");
+    const tagSection = getSection(tag);
+    const bodySection = getSection(tagBody);
     const { node } = tag;
     const {
       attributes,
-      body: { params },
       extra: { isOnlyChild, attrsReferences },
     } = node;
-    const paramsPath = tag.get("body").get("params");
     const {
       extra: { reserve },
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
+    const paramIdentifiers = Object.values(
+      tagBody.getBindingIdentifiers()
+    ) as t.Identifier[];
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
       return callRuntime(
@@ -200,55 +193,68 @@ const translateDOM = {
     const toAttr = findName(attributes, "to");
     const inAttr = findName(attributes, "in");
 
-    let loopFunctionBody: t.Expression | t.BlockStatement = t.nullLiteral();
-    let tagParams = params;
+    const loopArgs: t.Expression[] = [];
+    let loopKind: "loopOf" | "loopIn" | "loopTo";
     if (ofAttr) {
-      const byAttr = findName(attributes, "by");
-      loopFunctionBody = t.arrayExpression([
-        ofAttr.value,
-        byAttr ? byAttr.value : t.nullLiteral(),
-      ]);
+      loopKind = "loopOf";
+      loopArgs.push(ofAttr.value);
+    } else if (inAttr) {
+      loopKind = "loopIn";
+      loopArgs.push(inAttr.value);
     } else if (toAttr) {
       const fromAttr = findName(attributes, "from");
       const stepAttr = findName(attributes, "step");
-
-      loopFunctionBody = callRuntime(
-        "computeLoopToFrom",
+      loopKind = "loopTo";
+      loopArgs.push(
         toAttr.value,
         fromAttr ? fromAttr.value : t.numericLiteral(0),
         stepAttr ? stepAttr.value : t.numericLiteral(1)
       );
-    } else if (inAttr) {
-      loopFunctionBody = callRuntime("computeLoopIn", inAttr.value);
-      tagParams = [t.arrayPattern(params)];
+    } else {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "Invalid <for> tag. Expected either an 'of', 'to', or 'in' attribute."
+        );
     }
 
-    const signal = getSignal(section, reserve);
-    const paramsSignal = getTagParamsSignal(
-      paramsPath,
-      t.arrayPattern(tagParams)
-    );
+    const byAttr = findName(attributes, "by");
+    if (byAttr) {
+      loopArgs.push(byAttr.value);
+    }
+
+    const signal = getSignal(tagSection, reserve);
     signal.build = () => {
       return callRuntime(
-        "loop",
+        loopKind,
         getScopeAccessorLiteral(reserve!),
-        rendererId,
-        paramsSignal?.build()
+        rendererId
       );
     };
 
-    signal.hasDownstreamIntersections = () =>
-      paramsSignal?.hasDownstreamIntersections() ||
-      getClosures(bodySection).length > 0;
+    signal.hasDownstreamIntersections = () => {
+      for (const identifier of paramIdentifiers) {
+        if (
+          getSignal(
+            bodySection,
+            identifier.extra!.reserve
+          ).hasDownstreamIntersections()
+        ) {
+          return true;
+        }
+      }
 
-    addValue(section, attrsReferences, signal, loopFunctionBody);
+      return getClosures(bodySection).length > 0;
+    };
+
+    addValue(tagSection, attrsReferences, signal, t.arrayExpression(loopArgs));
   },
 };
 
 const translateHTML = {
   exit(tag: t.NodePath<t.MarkoTag>) {
-    const section = getSection(tag);
     const tagBody = tag.get("body");
+    const tagSection = getSection(tag);
     const bodySection = getSection(tagBody);
     const { node } = tag;
     const {
@@ -299,7 +305,7 @@ const translateHTML = {
       });
       getSerializedScopeProperties(bodySection).set(
         importRuntime("SYMBOL_OWNER"),
-        getScopeIdIdentifier(section)
+        getScopeIdIdentifier(tagSection)
       );
     }
 
@@ -496,18 +502,18 @@ const translateHTML = {
         );
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
-          getScopeIdIdentifier(section),
+          getScopeIdIdentifier(tagSection),
           getScopeAccessorLiteral(reserve!),
           forScopeIdsIdentifier
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
-          getScopeIdIdentifier(section),
+          getScopeIdIdentifier(tagSection),
           getScopeAccessorLiteral(reserve!)
         )}`;
       }
-      getSerializedScopeProperties(section).set(
+      getSerializedScopeProperties(tagSection).set(
         t.stringLiteral(getScopeAccessorLiteral(reserve!).value + "("),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),

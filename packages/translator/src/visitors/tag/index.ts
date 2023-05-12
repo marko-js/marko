@@ -34,7 +34,7 @@ export default {
           CustomTag.analyze.enter(tag);
           break;
         case TagNameTypes.AttributeTag:
-          // AttributeTag.analyze.enter(tag);
+          AttributeTag.analyze.enter(tag);
           break;
         case TagNameTypes.DynamicTag:
           DynamicTag.analyze.enter(tag);

@@ -1,5 +1,6 @@
 import { classAttr as _classAttr, write as _write, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, intersections as _intersections, value as _value, values as _values, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
+const _testBody = /* @__PURE__ */_createRenderer("", "");
 const _inputTestBody = /* @__PURE__ */_createRenderer("", "");
 const _inputTest_input = _dynamicTagAttrs("#text/3", _inputTestBody);
 const _expr_dynamicTagName_c_d = /* @__PURE__ */_intersection(3, _scope => {
@@ -58,7 +59,7 @@ const _destructure3 = (_scope, _destructure, _clean) => {
 const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _destructure2(_scope, input);
   _dynamicTagName(_scope, input.test || _inputTestBody);
-}, null, _values([_destructure3, _dynamicTagName]));
+}, void 0, _values([_destructure3, _dynamicTagName]));
 const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
@@ -68,4 +69,4 @@ export { _input };
 export const template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!>`;
 export const walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%b`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, null, "packages/translator/src/__tests__/fixtures/attr-class/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/attr-class/template.marko");

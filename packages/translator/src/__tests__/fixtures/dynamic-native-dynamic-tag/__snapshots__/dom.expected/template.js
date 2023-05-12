@@ -21,7 +21,7 @@ const _tagName_effect = _register("packages/translator/src/__tests__/fixtures/dy
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);
-}, null, _dynamicTagName);
+}, void 0, _dynamicTagName);
 const _setup = _scope => {
   _tagName(_scope, "span");
   _className(_scope, "A");
@@ -29,4 +29,4 @@ const _setup = _scope => {
 export const template = "<!><button></button>";
 export const walks = /* replace, over(1), get, over(1) */"%b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");

@@ -8,4 +8,4 @@ const _setup = _scope => {
 export const template = "<!> <!>";
 export const walks = /* replace, over(2), replace, over(1) */"%c%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/import-tag-conflict/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/import-tag-conflict/template.marko");

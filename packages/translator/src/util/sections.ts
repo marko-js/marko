@@ -77,6 +77,11 @@ export function getSection(path: t.NodePath) {
   while ((section = currentPath.node.extra?.section as Section) === undefined) {
     currentPath = currentPath.parentPath!;
   }
+
+  _setSectionPath(
+    section,
+    currentPath as t.NodePath<t.MarkoTagBody | t.Program>
+  );
   return section;
 }
 
@@ -107,6 +112,10 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   (section) =>
     currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`)
 );
+
+const [getSectionPath, _setSectionPath] =
+  createSectionState<t.NodePath<t.MarkoTagBody | t.Program>>("sectionPath");
+export { getSectionPath };
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   "scopeIdentifier",

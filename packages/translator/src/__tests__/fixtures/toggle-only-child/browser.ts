@@ -68,7 +68,7 @@ export const attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   _value(scope, value, clean);
 };
 
-export default createRenderFn<Input>(template, walks, undefined, attrs);
+export default createRenderFn(template, walks, undefined, attrs as any);
 
 const _ifBody = createRenderer(
   "<span> </span>",

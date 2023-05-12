@@ -36,4 +36,4 @@ export const _attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   _value(scope, value!, clean);
 };
 
-export default createRenderFn<Input>(template, walks, undefined, _attrs);
+export default createRenderFn(template, walks, undefined, _attrs as any);

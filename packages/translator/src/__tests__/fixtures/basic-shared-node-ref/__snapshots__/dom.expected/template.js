@@ -1,11 +1,13 @@
-import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loop as _loop, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
-const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ");
-const _ul_for = /* @__PURE__ */_loop("#ul/0", _forBody, (_scope, _destructure, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let x;
-  if (!_clean) [x] = _destructure;
+  if (!_clean) ({
+    value: [x]
+  } = _destructure);
   _x$forBody(_scope, x, _clean);
 });
+const _ul_for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
 const _list_effect = _register("packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
   const {
     list
@@ -35,4 +37,4 @@ const _setup = _scope => {
 export const template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
 export const walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko");

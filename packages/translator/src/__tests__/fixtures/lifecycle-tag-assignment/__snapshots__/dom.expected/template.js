@@ -34,4 +34,4 @@ const _setup = _scope => {
 export const template = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
 export const walks = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, null, null, "packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko");
+export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko");
