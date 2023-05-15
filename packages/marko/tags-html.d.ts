@@ -1237,7 +1237,7 @@ declare global {
          * Controls the data type (and associated control) of the element.
          * @see https://html.spec.whatwg.org/multipage/input.html#attr-input-type
          */
-        type:
+        type?:
           | AttrMissing
           | "button"
           | "checkbox"
