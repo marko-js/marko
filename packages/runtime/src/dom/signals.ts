@@ -1,4 +1,4 @@
-import { Scope, AccessorChars, Accessor } from "../common/types";
+import { type Scope, AccessorChars, type Accessor } from "../common/types";
 import { bindFunction } from "./scope";
 import type { RendererOrElementName } from "./renderer";
 

@@ -3,7 +3,7 @@ import {
   getSection,
   createSectionState,
   getScopeIdIdentifier,
-  Section,
+  type Section,
 } from "../util/sections";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {

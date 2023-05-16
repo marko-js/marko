@@ -22,7 +22,7 @@ inserted button0, button1, div2
 
 
 # Render 
-container.querySelector("button#count").click();
+container.querySelector("button#count").click()
 
 ```html
 <button
@@ -47,7 +47,7 @@ div2/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("button#count").click();
+container.querySelector("button#count").click()
 
 ```html
 <button
@@ -72,7 +72,7 @@ div2/#text0: "1" => "2"
 
 
 # Render 
-container.querySelector("button#multiplier").click();
+container.querySelector("button#multiplier").click()
 
 ```html
 <button

@@ -32,7 +32,7 @@
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <html>
@@ -68,7 +68,7 @@ removed #comment before #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <html>
@@ -103,7 +103,7 @@ inserted #document/html0/body1/div0/#text1
 
 
 # Render 
-container.querySelector("#remove").click();
+container.querySelector("#remove").click()
 
 ```html
 <html>
@@ -138,7 +138,7 @@ removed #text after #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <html>

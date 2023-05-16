@@ -24,7 +24,7 @@ inserted button0, button1, button2
 
 
 # Render 
-container.querySelector("#addTwo").click();
+container.querySelector("#addTwo").click()
 
 ```html
 <button
@@ -53,7 +53,7 @@ button2/#text0: "0" => "2"
 
 
 # Render 
-container.querySelector("#triple").click();
+container.querySelector("#triple").click()
 
 ```html
 <button
@@ -82,7 +82,7 @@ button2/#text0: "2" => "6"
 
 
 # Render 
-container.querySelector("#cube").click();
+container.querySelector("#cube").click()
 
 ```html
 <button

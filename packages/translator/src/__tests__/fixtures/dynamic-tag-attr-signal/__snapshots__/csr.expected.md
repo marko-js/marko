@@ -15,7 +15,7 @@ inserted p0, button1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <p
@@ -33,7 +33,7 @@ p0: attr(class) "A" => "B"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <p

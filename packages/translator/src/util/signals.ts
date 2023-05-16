@@ -6,10 +6,10 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getScopeIdentifier,
-  Section,
+  type Section,
 } from "./sections";
 import {
-  Reserve,
+  type Reserve,
   repeatableReserves,
   getScopeAccessorLiteral,
   ReserveType,

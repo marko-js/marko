@@ -16,7 +16,7 @@
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div>
@@ -35,7 +35,7 @@ container.querySelector("#increment")?.click();
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div>

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { exitBranchTranslate, exitBranchAnalyze } from "./if";
 import customTag from "../../visitors/tag/custom-tag";
 

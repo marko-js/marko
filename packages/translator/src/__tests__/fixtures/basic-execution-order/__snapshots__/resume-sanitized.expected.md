@@ -8,7 +8,7 @@ hi
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>

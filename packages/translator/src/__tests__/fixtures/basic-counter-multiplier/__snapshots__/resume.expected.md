@@ -37,7 +37,7 @@
 
 
 # Render 
-container.querySelector("button#count").click();
+container.querySelector("button#count").click()
 
 ```html
 <html>
@@ -77,7 +77,7 @@ container.querySelector("button#count").click();
 
 
 # Render 
-container.querySelector("button#count").click();
+container.querySelector("button#count").click()
 
 ```html
 <html>
@@ -117,7 +117,7 @@ container.querySelector("button#count").click();
 
 
 # Render 
-container.querySelector("button#multiplier").click();
+container.querySelector("button#multiplier").click()
 
 ```html
 <html>

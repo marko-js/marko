@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { defaultFragment, DOMFragment } from "./fragment";
+import { defaultFragment, type DOMFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 const WRONG_POS = 2147483647;

@@ -25,7 +25,7 @@
 
 
 # Render 
-container.querySelector("#toggle").click();
+container.querySelector("#toggle").click()
 
 ```html
 <ul
@@ -55,7 +55,7 @@ container.querySelector("#toggle").click();
 
 
 # Render 
-container.querySelector("#toggle").click();
+container.querySelector("#toggle").click()
 
 ```html
 <ul>
@@ -83,7 +83,7 @@ container.querySelector("#toggle").click();
 
 
 # Render 
-container.querySelector("#reverse").click();
+container.querySelector("#reverse").click()
 
 ```html
 <ul>

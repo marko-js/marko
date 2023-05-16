@@ -1,20 +1,8 @@
 {
   "name": "@marko/translator-fluurt",
-  "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "version": "0.0.1",
-  "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
-  "dependencies": {
-    "@marko/babel-utils": "^5.21.3",
-    "@marko/runtime-fluurt": "^0.0.1",
-    "tslib": "^2.3.1"
-  },
-  "files": [
-    "dist",
-    "!**/__tests__",
-    "!**/*.tsbuildinfo"
-  ],
-  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
-  "jsnext": "dist/index.esm.js",
+  "private": true,
+  "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
     "fluurt",
@@ -24,21 +12,38 @@
     "parser",
     "plugin"
   ],
-  "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "peerDependencies": {
-    "@marko/compiler": "^5.23.0"
-  },
+  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
+  "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x/tree/master/packages/translator"
   },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
+  ],
   "scripts": {
     "build": "npm run build:types && npm run build:js",
-    "build:js": "node -r esbuild-register esbuild.ts",
+    "build:js": "tsx build.mts",
     "build:types": "tsc -b",
     "prepublishOnly": "npm run build"
   },
-  "types": "dist/index.d.ts"
+  "dependencies": {
+    "@marko/babel-utils": "^5.21.4",
+    "@marko/runtime-fluurt": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@marko/compiler": "^5.23.0"
+  }
 }

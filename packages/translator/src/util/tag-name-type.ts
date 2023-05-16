@@ -35,7 +35,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       extra.tagNameNullable = extra.tagNameNullable = false;
     } else {
       const pending = [name] as t.NodePath<t.Expression>[];
-      let path: typeof pending[0] | undefined;
+      let path: (typeof pending)[0] | undefined;
       let type: TagNameTypes | undefined = undefined;
       let nullable = false;
 

@@ -3,7 +3,7 @@ import {
   assertNoAttributes,
   assertNoParams,
   assertNoVar,
-  Tag,
+  type Tag,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";

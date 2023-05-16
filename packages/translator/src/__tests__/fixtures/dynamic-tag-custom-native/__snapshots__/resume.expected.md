@@ -27,7 +27,7 @@
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>
@@ -56,7 +56,7 @@ removed div after #document/html0/body1/div2
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>

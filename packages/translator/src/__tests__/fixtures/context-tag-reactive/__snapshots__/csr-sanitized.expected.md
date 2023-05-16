@@ -12,7 +12,7 @@
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div>

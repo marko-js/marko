@@ -1,4 +1,4 @@
-import { parseScript, Tag } from "@marko/babel-utils";
+import { parseScript, type Tag } from "@marko/babel-utils";
 
 export default {
   parse(tag) {

@@ -30,7 +30,7 @@
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <html>
@@ -63,7 +63,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <html>
@@ -94,7 +94,7 @@ removed span after #document/html0/body1/#comment4
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <html>
@@ -123,7 +123,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <html>
@@ -156,7 +156,7 @@ removed #comment after #document/html0/body1/span4
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <html>

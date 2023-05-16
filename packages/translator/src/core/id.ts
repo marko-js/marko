@@ -3,7 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
-  Tag,
+  type Tag,
 } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { callRuntime } from "../util/runtime";

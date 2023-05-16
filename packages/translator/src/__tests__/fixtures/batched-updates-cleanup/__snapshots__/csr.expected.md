@@ -13,7 +13,7 @@ inserted button0, span1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />

@@ -1,5 +1,4 @@
 {
-  "include": ["packages/*/src/**/*", "types/types.d.ts"],
   "compilerOptions": {
     "lib": ["dom", "ESNext"],
     "strict": true,
@@ -9,8 +8,8 @@
     "sourceMap": false,
     "declaration": true,
     "incremental": true,
+    "module": "ESNext",
     "skipLibCheck": true,
-    "module": "CommonJS",
     "stripInternal": true,
     "noUnusedLocals": true,
     "isolatedModules": true,
@@ -21,9 +20,9 @@
     "noImplicitReturns": false,
     "noImplicitOverride": true,
     "emitDeclarationOnly": true,
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler",
     "allowUnreachableCode": false,
-    "importsNotUsedAsValues": "error",
-    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true
   }
 }

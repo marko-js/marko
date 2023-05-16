@@ -18,7 +18,7 @@ inserted button0, button1, span2
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -39,7 +39,7 @@ span2/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <button
@@ -58,7 +58,7 @@ removed span after #text2
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -76,7 +76,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <button
@@ -99,7 +99,7 @@ span2/#text0: " " => "2"
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button

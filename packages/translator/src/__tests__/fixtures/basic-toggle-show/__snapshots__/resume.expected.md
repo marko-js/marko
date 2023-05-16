@@ -25,7 +25,7 @@
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>
@@ -54,7 +54,7 @@ removed #text after #document/html0/body1/div0/#comment0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>
@@ -82,7 +82,7 @@ removed #comment after #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>

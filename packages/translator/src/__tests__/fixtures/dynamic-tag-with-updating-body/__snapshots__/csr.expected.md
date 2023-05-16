@@ -19,7 +19,7 @@ inserted div0, button1
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <div>
@@ -41,7 +41,7 @@ div0/button0/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("#changeTag").click();
+container.querySelector("#changeTag").click()
 
 ```html
 <span>
@@ -65,7 +65,7 @@ inserted span0/button0
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <span>

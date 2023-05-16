@@ -20,7 +20,7 @@ inserted button0, #text1, span2, #text3, span4
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>
@@ -43,7 +43,7 @@ button0/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>
@@ -68,7 +68,7 @@ span4/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>

@@ -14,7 +14,7 @@
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div>
@@ -28,7 +28,7 @@ container.querySelector("#toggle")?.click();
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div>

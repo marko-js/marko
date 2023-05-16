@@ -1,5 +1,5 @@
 import path from "path";
-import { assertNoParams, importDefault, Tag } from "@marko/babel-utils";
+import { assertNoParams, importDefault, type Tag } from "@marko/babel-utils";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts } from "../util/marko-config";
 import { currentProgramPath } from "../visitors/program";

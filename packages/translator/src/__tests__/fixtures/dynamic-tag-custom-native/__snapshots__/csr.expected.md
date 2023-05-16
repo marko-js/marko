@@ -13,7 +13,7 @@ inserted button0, div1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />
@@ -31,7 +31,7 @@ div1: attr(id) null => "dynamic"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  Tag,
+  type Tag,
   assertAllowedAttributes,
   assertNoVar,
   getTagDef,

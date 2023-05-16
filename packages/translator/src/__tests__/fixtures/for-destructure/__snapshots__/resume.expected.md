@@ -40,7 +40,7 @@
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <html>
@@ -86,7 +86,7 @@ inserted #document/html0/body1/div0/div1
 
 
 # Render 
-container.querySelector("#remove").click();
+container.querySelector("#remove").click()
 
 ```html
 <html>
@@ -129,7 +129,7 @@ removed div after #document/html0/body1/div0/div0
 
 
 # Render 
-container.querySelector("#remove").click();
+container.querySelector("#remove").click()
 
 ```html
 <html>
@@ -166,7 +166,7 @@ removed div before #document/html0/body1/div0/#comment0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <html>

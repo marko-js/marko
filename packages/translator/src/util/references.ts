@@ -4,10 +4,10 @@ import {
   getOrCreateSection,
   createSectionState,
   forEachSection,
-  Section,
+  type Section,
 } from "./sections";
 import {
-  Reserve,
+  type Reserve,
   ReserveType,
   reserveScope,
   repeatableReserves,

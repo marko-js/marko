@@ -21,7 +21,7 @@ inserted div0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>
@@ -47,7 +47,7 @@ removed #text before div0/#text0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>
@@ -72,7 +72,7 @@ inserted div0/#text1
 
 
 # Render 
-container.querySelector("#remove").click();
+container.querySelector("#remove").click()
 
 ```html
 <div>
@@ -97,7 +97,7 @@ removed #text after div0/#text0
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>

@@ -19,7 +19,7 @@ inserted div0
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div>
@@ -39,7 +39,7 @@ removed span after div0/#text1
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div>

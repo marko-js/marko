@@ -5,7 +5,7 @@ import {
   queueEffect,
   queueSource,
   bindRenderer,
-  Scope,
+  type Scope,
   dynamicClosure,
   createRenderer,
   conditional,

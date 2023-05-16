@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { isOptimize } from "./marko-config";
-import { Section, createSectionState, forEachSection } from "./sections";
+import { type Section, createSectionState, forEachSection } from "./sections";
 import { SortedRepeatable } from "./sorted-repeatable";
 
 const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(

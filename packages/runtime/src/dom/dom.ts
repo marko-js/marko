@@ -1,6 +1,6 @@
 import { onDestroy, write } from "./scope";
 import { styleValue, classValue } from "../common/helpers";
-import { Accessor, AccessorChars, Scope } from "../common/types";
+import { type Accessor, AccessorChars, type Scope } from "../common/types";
 
 export const enum NodeType {
   Element = 1,

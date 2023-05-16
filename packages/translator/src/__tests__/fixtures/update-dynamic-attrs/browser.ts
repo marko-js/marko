@@ -1,13 +1,13 @@
 import {
   attrs,
   createRenderFn,
-  Scope,
+  type Scope,
   value,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, over } from "../../utils/walks";
 import type { steps } from "./test";
 
-type Input = typeof steps[number];
+type Input = (typeof steps)[number];
 
 const enum INDEX {
   div = "#div/0",

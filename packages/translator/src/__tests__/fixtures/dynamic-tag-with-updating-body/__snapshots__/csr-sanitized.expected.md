@@ -14,7 +14,7 @@
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <div>
@@ -31,7 +31,7 @@ container.querySelector("#count").click();
 
 
 # Render 
-container.querySelector("#changeTag").click();
+container.querySelector("#changeTag").click()
 
 ```html
 <span>
@@ -48,7 +48,7 @@ container.querySelector("#changeTag").click();
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <span>

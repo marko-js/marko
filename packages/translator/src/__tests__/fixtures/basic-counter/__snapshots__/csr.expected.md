@@ -14,7 +14,7 @@ inserted div0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <div>
@@ -31,7 +31,7 @@ div0/button0/#text0: "0" => "1"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <div>
@@ -48,7 +48,7 @@ div0/button0/#text0: "1" => "2"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <div>

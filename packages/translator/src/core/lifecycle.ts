@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { Tag, assertNoParams } from "@marko/babel-utils";
+import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";
@@ -7,7 +7,7 @@ import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import attrsToObject from "../util/attrs-to-object";
 import customTag from "../visitors/tag/custom-tag";
-import { mergeReferences, References } from "../util/references";
+import { mergeReferences, type References } from "../util/references";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import {
   getScopeAccessorLiteral,

@@ -4,7 +4,7 @@ import {
   resolveTagImport,
   getTemplateId,
   assertNoParams,
-  Tag,
+  type Tag,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";

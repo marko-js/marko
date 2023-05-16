@@ -10,7 +10,7 @@ inserted button0, #text1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />
@@ -25,7 +25,7 @@ removed #text after #text1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />
@@ -39,7 +39,7 @@ removed #text after #text1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button />

@@ -11,7 +11,7 @@ inserted #text0, button1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <div>
@@ -29,7 +29,7 @@ inserted div0/#text0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 Body Content

@@ -1,4 +1,4 @@
-import { Accessor, AccessorChars, Scope } from "../common/types";
+import { type Accessor, AccessorChars, type Scope } from "../common/types";
 import { emptyMarkerArray } from "./control-flow";
 
 export type DOMFragment = {

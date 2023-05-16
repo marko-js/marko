@@ -2,32 +2,90 @@ name: CI
 
 on:
   pull_request:
-    paths-ignore: ["**.md"]
+    types: [opened, synchronize]
   push:
-    branches: ["main"]
-    paths-ignore: ["**.md"]
+    branches: [main]
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event_name == 'pull_request_target' && github.head_ref || github.ref }}"
+  cancel-in-progress: true
 
 jobs:
-  build:
+  format:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [16.x]
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Use node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Format Code
+        run: npm run format
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "[ci] format"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  test:
+    runs-on: ubuntu-latest
+    name: "test: node@${{ matrix.node }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [16, 18, 20]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Use node@${{ matrix.node }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-          cache: "npm"
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Lint code
         run: npm run lint
       - name: Check bundle size
-        run: npm run size
+        run: npm run size -- --check
       - name: Run tests
         run: npm run ci:test
       - name: Report code coverage
         uses: codecov/codecov-action@v2
+  release:
+    runs-on: ubuntu-latest
+    needs: [format, test]
+    if: "${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          version: npm run version
+          publish: npm run publish
+          commit: "[ci] release"
+          title: "[ci] release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

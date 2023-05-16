@@ -16,7 +16,7 @@ inserted button0, button1, #text2, #text3
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -35,7 +35,7 @@ The count is 1
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <button
@@ -55,7 +55,7 @@ removed #text after #text2
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -73,7 +73,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.toggle").click();
+container.querySelector("button.toggle").click()
 
 ```html
 <button
@@ -95,7 +95,7 @@ removed #text after #text3
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button

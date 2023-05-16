@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { Tag, assertNoParams } from "@marko/babel-utils";
+import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { addStatement, addHTMLEffectCall } from "../util/signals";

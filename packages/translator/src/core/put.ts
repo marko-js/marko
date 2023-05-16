@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { assertNoParams, assertNoVar, Tag } from "@marko/babel-utils";
+import { assertNoParams, assertNoVar, type Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import { callRuntime } from "../util/runtime";

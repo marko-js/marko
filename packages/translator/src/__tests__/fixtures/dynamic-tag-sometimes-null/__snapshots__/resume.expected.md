@@ -23,7 +23,7 @@ inserted #document/html0/body1/#comment0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>
@@ -52,7 +52,7 @@ inserted #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <html>

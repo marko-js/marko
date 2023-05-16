@@ -3,7 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   isNativeTag,
-  Plugin,
+  type Plugin,
 } from "@marko/babel-utils";
 import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
 import * as hooks from "../../util/plugin-hooks";

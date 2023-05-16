@@ -1,9 +1,11 @@
 import type { DOMWindow } from "jsdom";
 import createBrowser from "jsdom-context-require";
+import init from "../test-globals";
 
 export default function (options: Parameters<typeof createBrowser>[0]) {
   const browser = createBrowser(options);
   const window = browser.window as DOMWindow & { MessageChannel: any };
+  init(window);
   window.queueMicrotask = queueMicrotask;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   window.MessageChannel = (

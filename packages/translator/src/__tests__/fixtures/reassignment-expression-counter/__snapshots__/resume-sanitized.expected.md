@@ -19,7 +19,7 @@
 
 
 # Render 
-container.querySelector("#addTwo").click();
+container.querySelector("#addTwo").click()
 
 ```html
 <button
@@ -41,7 +41,7 @@ container.querySelector("#addTwo").click();
 
 
 # Render 
-container.querySelector("#triple").click();
+container.querySelector("#triple").click()
 
 ```html
 <button
@@ -63,7 +63,7 @@ container.querySelector("#triple").click();
 
 
 # Render 
-container.querySelector("#cube").click();
+container.querySelector("#cube").click()
 
 ```html
 <button

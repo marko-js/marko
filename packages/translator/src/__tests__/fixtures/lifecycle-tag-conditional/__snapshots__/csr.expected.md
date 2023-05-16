@@ -25,7 +25,7 @@ inserted div1/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div
@@ -53,7 +53,7 @@ inserted div1/#text0
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div
@@ -83,7 +83,7 @@ inserted div1/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div
@@ -110,7 +110,7 @@ container.querySelector("#increment")?.click();
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div

@@ -10,7 +10,7 @@
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input />
@@ -21,7 +21,7 @@ container.querySelector("button").click();
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input
@@ -34,7 +34,7 @@ container.querySelector("button").click();
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input />

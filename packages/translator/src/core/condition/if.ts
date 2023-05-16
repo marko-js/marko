@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import {
@@ -21,7 +21,7 @@ import {
   getScopeIdentifier,
   getScopeIdIdentifier,
   getSection,
-  Section,
+  type Section,
 } from "../../util/sections";
 import {
   ReserveType,
@@ -31,7 +31,7 @@ import {
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
-import { mergeReferences, References } from "../../util/references";
+import { mergeReferences, type References } from "../../util/references";
 import { scopeIdentifier } from "../../visitors/program";
 
 export default {

@@ -19,7 +19,7 @@
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div
@@ -41,7 +41,7 @@ container.querySelector("#increment")?.click();
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div
@@ -63,7 +63,7 @@ container.querySelector("#toggle")?.click();
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div
@@ -85,7 +85,7 @@ container.querySelector("#increment")?.click();
 
 
 # Render 
-container.querySelector("#toggle")?.click();
+container.querySelector("#toggle")?.click()
 
 ```html
 <div

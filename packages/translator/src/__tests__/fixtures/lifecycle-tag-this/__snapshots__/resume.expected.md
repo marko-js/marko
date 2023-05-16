@@ -28,7 +28,7 @@ inserted #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <html>
@@ -60,7 +60,7 @@ inserted #document/html0/body1/div0/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <html>

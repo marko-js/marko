@@ -1,6 +1,6 @@
 # Editor
 *.sublime*
-.vscode
+.vscode/settings.json
 
 # OSX
 *.DS_Store
@@ -11,10 +11,13 @@ npm-debug.log
 
 # Build
 dist
-*.actual.*
-*.actual
+*.marko.js
+*.actual*
 *.tsbuildinfo
 
+# Logging
+*.log
+
 # Coverage
-.nyc_output
 coverage
+.nyc_output

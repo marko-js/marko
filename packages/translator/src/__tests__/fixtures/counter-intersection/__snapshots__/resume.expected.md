@@ -38,7 +38,7 @@
 
 
 # Render 
-container.querySelector("button.a").click();
+container.querySelector("button.a").click()
 
 ```html
 <html>
@@ -80,7 +80,7 @@ container.querySelector("button.a").click();
 
 
 # Render 
-container.querySelector("button.b").click();
+container.querySelector("button.b").click()
 
 ```html
 <html>

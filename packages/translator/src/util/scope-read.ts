@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import type { References } from "./references";
 import type { Section } from "./sections";
 import {
-  Reserve,
+  type Reserve,
   getScopeAccessorLiteral,
   repeatableReserves,
 } from "./reserve";

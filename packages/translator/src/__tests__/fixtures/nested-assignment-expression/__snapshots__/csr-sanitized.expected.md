@@ -15,7 +15,7 @@ which should be the same as
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>
@@ -33,7 +33,7 @@ which should be the same as
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>
@@ -51,7 +51,7 @@ which should be the same as
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <button>

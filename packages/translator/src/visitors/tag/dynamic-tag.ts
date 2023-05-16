@@ -21,7 +21,7 @@ import {
 } from "../../util/signals";
 import {
   getScopeAccessorLiteral,
-  Reserve,
+  type Reserve,
   reserveScope,
   ReserveType,
 } from "../../util/reserve";

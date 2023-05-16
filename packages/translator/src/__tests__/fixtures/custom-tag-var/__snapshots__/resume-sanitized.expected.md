@@ -12,7 +12,7 @@
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -27,7 +27,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button
@@ -42,7 +42,7 @@ container.querySelector("button.inc").click();
 
 
 # Render 
-container.querySelector("button.inc").click();
+container.querySelector("button.inc").click()
 
 ```html
 <button

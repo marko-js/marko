@@ -6,12 +6,12 @@ import {
   value,
   closure,
   inConditionalScope,
-  Scope,
+  type Scope,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
 
-type Input = typeof steps[number];
+type Input = (typeof steps)[number];
 
 const enum INDEX {
   div = "#div/0",

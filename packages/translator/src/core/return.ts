@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { assertNoVar, assertNoParams, Tag } from "@marko/babel-utils";
+import { assertNoVar, assertNoParams, type Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";

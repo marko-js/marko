@@ -21,7 +21,7 @@ inserted div0, button1
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div>
@@ -46,7 +46,7 @@ div0/#text3: "‍" => "0"
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div>

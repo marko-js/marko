@@ -3,9 +3,10 @@ import path from "path";
 import zlib from "zlib";
 import chalk from "chalk";
 import assert from "assert";
-import { OutputChunk, rollup } from "rollup";
+import { fileURLToPath } from "url";
+import { type OutputChunk, rollup } from "rollup";
 import { table } from "table";
-import { terser } from "rollup-plugin-terser";
+import terser from "@rollup/plugin-terser";
 import hypothetical from "rollup-plugin-hypothetical";
 import * as compiler from "@marko/compiler";
 
@@ -27,19 +28,20 @@ interface Saved {
   results: Result[];
 }
 
+const rootDir = path.join(fileURLToPath(import.meta.url), "../..");
 const runtimePath = path.join(
-  __dirname,
-  "../packages/runtime/dist/dom/index.esm.js"
+  rootDir,
+  "packages/runtime/dist/dom/index.mjs"
 );
 const translatorPath = path.join(
-  __dirname,
-  "../packages/translator/dist/index.cjs.js"
+  rootDir,
+  "packages/translator/dist/index.mjs"
 );
-const configPath = path.join(__dirname, "../.sizes.json");
-const shouldWrite = process.argv.includes("--write");
+const configPath = path.join(rootDir, ".sizes.json");
+const shouldWrite = !process.argv.includes("--check");
 const skipExamples = process.argv.includes("--no-examples");
 
-run(configPath).catch(console.error);
+await run(configPath);
 
 async function run(configPath: string) {
   const { examples, results: previous } = loadData(configPath);
@@ -102,12 +104,16 @@ function renderTable(
         let p = previous && previous[i];
         if (!p || p.name !== result.name) {
           unsynced = true;
-          p = previous && previous.find((p) => p.name === result.name);
+          p = previous.find((p) => p.name === result.name)!;
         }
         return [
           chalk.cyan(result.name),
-          renderSize(result.user, !unsynced && p.user, measure),
-          renderSize(result.runtime, !unsynced && p.runtime, measure),
+          renderSize(result.user, !unsynced ? p.user : undefined, measure),
+          renderSize(
+            result.runtime,
+            !unsynced ? p.runtime : undefined,
+            measure
+          ),
           renderSize(result.total, p && p.total, measure),
         ];
       })
@@ -196,11 +202,6 @@ function addSizes(all) {
 async function bundleExample(examplePath: string, hydrate: boolean) {
   const bundle = await rollup({
     input: hydrate ? "./hydrate.js" : examplePath,
-    manualChunks(id) {
-      if (id === runtimePath) {
-        return "runtime";
-      }
-    },
     plugins: [
       {
         name: "marko",
@@ -240,7 +241,15 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
     ],
   });
 
-  const { output } = await bundle.generate({ format: "es", compact: true });
+  const { output } = await bundle.generate({
+    format: "es",
+    compact: true,
+    manualChunks(id) {
+      if (id === runtimePath) {
+        return "runtime";
+      }
+    },
+  });
   const runtimeChunk = output.find(
     (o) => o.name === "runtime" && "code" in o
   ) as OutputChunk;

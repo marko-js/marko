@@ -1,28 +1,30 @@
 {
   "name": "@marko/runtime-fluurt",
-  "description": "Optimized runtime for Marko templates.",
   "version": "0.0.1",
-  "bugs": "https://github.com/marko-js/x/issues",
-  "files": [
-    "dist",
-    "!**/__tests__",
-    "!**/*.tsbuildinfo"
-  ],
-  "homepage": "https://github.com/marko-js/x",
+  "private": true,
+  "description": "Optimized runtime for Marko templates.",
   "keywords": [
     "fluurt",
     "marko",
     "runtime"
   ],
-  "license": "MIT",
+  "homepage": "https://github.com/marko-js/x",
+  "bugs": "https://github.com/marko-js/x/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/x"
   },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "!**/__tests__",
+    "!**/meta.*.json",
+    "!**/*.tsbuildinfo"
+  ],
   "scripts": {
     "build": "npm run build:types && npm run build:js",
-    "build:js": "node -r esbuild-register esbuild.ts",
-    "build:types": "tsc -d",
+    "build:js": "tsx build.mts",
+    "build:types": "tsc -b",
     "prepublishOnly": "npm run build"
   }
 }

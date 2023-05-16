@@ -1,10 +1,15 @@
 import type { ValueSignal, IntersectionSignal } from "./signals";
-import { Accessor, AccessorChars, Scope, ScopeContext } from "../common/types";
+import {
+  type Accessor,
+  AccessorChars,
+  type Scope,
+  type ScopeContext,
+} from "../common/types";
 import { createScope } from "./scope";
 import { setContext } from "../common/context";
 import { WalkCodes, walk, trimWalkString } from "./walker";
 import { queueEffect, runEffects } from "./queue";
-import { DOMFragment, defaultFragment } from "./fragment";
+import { type DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { register } from "./resume";

@@ -16,7 +16,7 @@
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>
@@ -36,7 +36,7 @@ container.querySelector("#add").click();
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>
@@ -56,7 +56,7 @@ container.querySelector("#add").click();
 
 
 # Render 
-container.querySelector("#remove").click();
+container.querySelector("#remove").click()
 
 ```html
 <div>
@@ -76,7 +76,7 @@ container.querySelector("#remove").click();
 
 
 # Render 
-container.querySelector("#add").click();
+container.querySelector("#add").click()
 
 ```html
 <div>

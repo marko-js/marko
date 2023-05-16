@@ -20,7 +20,7 @@ inserted div0/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div
@@ -43,7 +43,7 @@ inserted div0/#text0
 
 
 # Render 
-container.querySelector("#increment")?.click();
+container.querySelector("#increment")?.click()
 
 ```html
 <div

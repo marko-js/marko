@@ -15,7 +15,7 @@ inserted input0, button1
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input />
@@ -32,7 +32,7 @@ button1/#text0: "enable" => "disable"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input
@@ -51,7 +51,7 @@ button1/#text0: "disable" => "enable"
 
 
 # Render 
-container.querySelector("button").click();
+container.querySelector("button").click()
 
 ```html
 <input />

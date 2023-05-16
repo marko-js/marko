@@ -7,13 +7,13 @@ import {
   createRenderFn,
   dynamicFragment,
   closure,
-  Scope,
+  type Scope,
   value,
 } from "@marko/runtime-fluurt/src/dom";
 import { next, over, get } from "../../utils/walks";
 import type { steps } from "./test";
 
-type Input = typeof steps[number];
+type Input = (typeof steps)[number];
 
 const enum INDEX {
   div = "#div/0",

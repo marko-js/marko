@@ -33,7 +33,7 @@ inserted #document/html0/body1/#comment0
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <html>
@@ -68,7 +68,7 @@ container.querySelector("#count").click();
 
 
 # Render 
-container.querySelector("#changeTag").click();
+container.querySelector("#changeTag").click()
 
 ```html
 <html>
@@ -103,7 +103,7 @@ inserted #document/html0/body1/span0/button0
 
 
 # Render 
-container.querySelector("#count").click();
+container.querySelector("#count").click()
 
 ```html
 <html>
