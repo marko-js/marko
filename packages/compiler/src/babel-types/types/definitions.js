@@ -6,7 +6,6 @@ import {
   assertEach
 } from "@babel/types/lib/definitions/utils";
 
-import { functionCommon } from "@babel/types/lib/definitions/core";
 const valueFieldCommon = {
   value: {
     validate: assertValueType("string")
@@ -135,7 +134,10 @@ const MarkoDefinitions = {
     visitor: ["params", "body"],
     fields: {
       params: {
-        ...functionCommon.params,
+        validate: chain(
+          assertValueType("array"),
+          assertEach(assertNodeType("Identifier", "Pattern", "RestElement"))
+        ),
         default: []
       },
       body: {
