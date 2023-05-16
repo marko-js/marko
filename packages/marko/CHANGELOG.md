@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.14
+
+### Patch Changes
+
+- [#1953](https://github.com/marko-js/marko/pull/1953) [`2b88703d5`](https://github.com/marko-js/marko/commit/2b88703d5f92528d97ec7285739267242a8f2815) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Accuracy of types for Marko.Input<"input"> has been improved
+
 ## 5.25.13
 
 ### Patch Changes
