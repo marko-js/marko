@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.27.9
+
+### Patch Changes
+
+- [#1955](https://github.com/marko-js/marko/pull/1955) [`ca9bfa2a2`](https://github.com/marko-js/marko/commit/ca9bfa2a2b16cecdbb269a8116b3186166b07061) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix type definition for MarkoTagBody AST.
+
 ## 5.27.8
 
 ### Patch Changes
