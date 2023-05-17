@@ -7,7 +7,6 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
   const window = browser.window as DOMWindow & { MessageChannel: any };
   init(window);
   window.queueMicrotask = queueMicrotask;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   window.MessageChannel = (
     window as any
   ).MessageChannel = class MessageChannel {

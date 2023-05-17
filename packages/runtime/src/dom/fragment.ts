@@ -71,11 +71,7 @@ function getFirstNode(
   let scopeOrScopes: Scope | Scope[];
 
   if (MARKO_DEBUG) {
-    if (
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: Unreachable code error
-      AccessorChars.COND_SCOPE !== AccessorChars.LOOP_SCOPE_ARRAY
-    ) {
+    if (AccessorChars.COND_SCOPE !== AccessorChars.LOOP_SCOPE_ARRAY) {
       throw new Error("Offset mismatch between conditionals and loops");
     }
   }

@@ -1,13 +1,12 @@
 import { types as t } from "@marko/compiler";
+import { getTemplateId } from "@marko/babel-utils";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 import isStatic from "../../util/is-static";
 import { returnId } from "../../core/return";
 import { getScopeIdentifier, getSection } from "../../util/sections";
-import { getTemplateId } from "@marko/babel-utils";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default {
   translate: {
     exit(program: t.NodePath<t.Program>) {

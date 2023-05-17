@@ -4,12 +4,12 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import programHTML from "./html";
-import programDOM from "./dom";
 import { startSection } from "../../util/sections";
 import { assignFinalIds } from "../../util/reserve";
 import { finalizeIntersections } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
+import programDOM from "./dom";
+import programHTML from "./html";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
@@ -38,7 +38,6 @@ export default {
       startSection(program);
     },
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     exit() {
       assignFinalIds();
       finalizeIntersections();
