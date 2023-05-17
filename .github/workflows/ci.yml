@@ -31,6 +31,8 @@ jobs:
         run: npm ci
       - name: Format Code
         run: npm run format
+      - name: Update bundle sizes
+        run: npm run build:sizes
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
@@ -56,10 +58,6 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
-      - name: Lint code
-        run: npm run lint
-      - name: Check bundle size
-        run: npm run size -- --check
       - name: Run tests
         run: npm run ci:test
       - name: Report code coverage

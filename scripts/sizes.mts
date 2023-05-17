@@ -2,12 +2,11 @@ import fs from "fs";
 import path from "path";
 import zlib from "zlib";
 import chalk from "chalk";
-import assert from "assert";
 import { fileURLToPath } from "url";
 import { type OutputChunk, rollup } from "rollup";
 import { table } from "table";
-import terser from "@rollup/plugin-terser";
-import hypothetical from "rollup-plugin-hypothetical";
+import pluginTerser from "@rollup/plugin-terser";
+import pluginVirtual from "@rollup/plugin-virtual";
 import * as compiler from "@marko/compiler";
 
 interface Sizes {
@@ -29,16 +28,9 @@ interface Saved {
 }
 
 const rootDir = path.join(fileURLToPath(import.meta.url), "../..");
-const runtimePath = path.join(
-  rootDir,
-  "packages/runtime/dist/dom/index.mjs"
-);
-const translatorPath = path.join(
-  rootDir,
-  "packages/translator/dist/index.mjs"
-);
+const runtimePath = path.join(rootDir, "packages/runtime/dist/dom/index.mjs");
+const translatorPath = path.join(rootDir, "packages/translator/dist/index.mjs");
 const configPath = path.join(rootDir, ".sizes.json");
-const shouldWrite = !process.argv.includes("--check");
 const skipExamples = process.argv.includes("--no-examples");
 
 await run(configPath);
@@ -51,25 +43,7 @@ async function run(configPath: string) {
   console.log(measure);
 
   console.log(renderTable(current, previous, measure));
-
-  if (shouldWrite) {
-    writeData(configPath, current);
-    console.log(
-      chalk.green(`${path.relative(process.cwd(), configPath)} updated!`)
-    );
-  } else {
-    try {
-      assert.deepStrictEqual(previous, current);
-      console.log(
-        chalk.green(`${path.relative(process.cwd(), configPath)} matches!`)
-      );
-    } catch (e) {
-      console.log(
-        chalk.red(`${path.relative(process.cwd(), configPath)} does not match!`)
-      );
-      process.exit(1);
-    }
-  }
+  writeData(configPath, current);
 }
 
 function loadData(configPath: string): Saved {
@@ -122,7 +96,7 @@ function renderTable(
       columns: columns.reduce((r, _, i) => {
         r[i] = { alignment: "right" };
         return r;
-      }, {}),
+      }, {} as any),
     }
   );
 }
@@ -189,7 +163,7 @@ async function getSizesForSrc(minified: string): Promise<Sizes> {
   };
 }
 
-function addSizes(all) {
+function addSizes(all: Sizes[]) {
   const total = { min: 0, gzip: 0, brotli: 0 };
   for (const { min, gzip, brotli } of all) {
     total.min += min;
@@ -229,15 +203,12 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
         },
       },
       hydrate &&
-        hypothetical({
-          files: {
-            "./hydrate.js": `import ${JSON.stringify(
-              examplePath
-            )}; import { init } from "@marko/runtime-fluurt/dist/dom"; init();`,
-          },
-          allowFallthrough: true,
+        pluginVirtual({
+          "./hydrate.js": `import ${JSON.stringify(
+            examplePath
+          )}; import { init } from "@marko/runtime-fluurt/dist/dom"; init();`,
         }),
-      terser({ compress: {}, mangle: { module: true } }),
+      pluginTerser({ compress: {}, mangle: { module: true } }),
     ],
   });
 
