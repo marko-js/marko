@@ -30,15 +30,8 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "!**/__tests__",
     "!**/*.tsbuildinfo"
   ],
-  "scripts": {
-    "build": "npm run build:types && npm run build:js",
-    "build:js": "tsx build.mts",
-    "build:types": "tsc -b",
-    "prepublishOnly": "npm run build"
-  },
   "dependencies": {
     "@marko/babel-utils": "^5.21.4",
     "@marko/runtime-fluurt": "^0.0.1"

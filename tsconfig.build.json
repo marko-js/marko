@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["**/dist"],
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false
+  },
+  "references": [
+    {
+      "path": "./packages/runtime"
+    },
+    {
+      "path": "./packages/translator"
+    }
+  ]
+}

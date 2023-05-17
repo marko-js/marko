@@ -8,7 +8,7 @@ const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
   () => [undefined, undefined, undefined]
 );
 
-export const enum ReserveType {
+export enum ReserveType {
   Visit = 0,
   Store = 1,
 }

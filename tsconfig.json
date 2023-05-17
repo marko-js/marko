@@ -23,6 +23,7 @@
     "verbatimModuleSyntax": true,
     "moduleResolution": "bundler",
     "allowUnreachableCode": false,
+    "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true
   }
 }

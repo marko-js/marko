@@ -9,6 +9,9 @@ import pluginTerser from "@rollup/plugin-terser";
 import pluginVirtual from "@rollup/plugin-virtual";
 import * as compiler from "@marko/compiler";
 
+// Ensure packages are built.
+import "./bundle.mjs";
+
 interface Sizes {
   min: number;
   gzip: number;

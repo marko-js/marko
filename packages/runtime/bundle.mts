@@ -1,21 +1,25 @@
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { build } from "esbuild";
+
+const absWorkingDir = fileURLToPath(new URL(".", import.meta.url));
 
 await Promise.all(
   ["dist/debug", "dist"].flatMap((env) =>
     ["dom", "html"].flatMap((name) => {
       (["esm", "cjs"] as const).map(async (format) => {
         const isProd = env === "dist";
-        const pkgDir = `${env}/${name}`;
+        const outdir = path.join(absWorkingDir, `${env}/${name}`);
         const { metafile } = await build({
           format,
+          outdir,
+          absWorkingDir,
           bundle: true,
           metafile: true,
           sourcemap: true,
           platform: "browser",
           minifySyntax: isProd,
-          outdir: `${env}/${name}`,
           entryPoints: [`src/${name}/index.ts`],
           define: { MARKO_DEBUG: String(!isProd) },
           mangleProps: isProd ? /^___/ : undefined,
@@ -24,11 +28,11 @@ await Promise.all(
 
         await Promise.all([
           fs.promises.writeFile(
-            `${pkgDir}/meta.${format}.json`,
+            `${outdir}/meta.${format}.json`,
             JSON.stringify(metafile)
           ),
           fs.promises.writeFile(
-            `${pkgDir}/package.json`,
+            `${outdir}/package.json`,
             JSON.stringify(
               {
                 main: "index.js",
@@ -39,7 +43,7 @@ await Promise.all(
                     default: "./index.js",
                   },
                 },
-                types: path.relative(pkgDir, `dist/${name}/index.d.ts`),
+                types: path.relative(outdir, `dist/${name}/index.d.ts`),
               },
               null,
               2

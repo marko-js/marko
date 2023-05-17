@@ -17,14 +17,7 @@
   "license": "MIT",
   "files": [
     "dist",
-    "!**/__tests__",
     "!**/meta.*.json",
     "!**/*.tsbuildinfo"
-  ],
-  "scripts": {
-    "build": "npm run build:types && npm run build:js",
-    "build:js": "tsx build.mts",
-    "build:types": "tsc -b",
-    "prepublishOnly": "npm run build"
-  }
+  ]
 }
