@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getTemplateId } from "@marko/babel-utils";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -15,7 +16,6 @@ import {
 } from "../../util/signals";
 import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
-import { getTemplateId } from "@marko/babel-utils";
 
 export default {
   translate: {

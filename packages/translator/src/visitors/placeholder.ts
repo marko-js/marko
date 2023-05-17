@@ -3,17 +3,17 @@ import { isNativeTag } from "@marko/babel-utils";
 import { isOutputHTML } from "../util/marko-config";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import evaluate from "../util/evaluate";
-import { getSection, getOrCreateSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import {
   ReserveType,
-  reserveScope,
   getScopeAccessorLiteral,
+  reserveScope,
 } from "../util/reserve";
 import { addStatement } from "../util/signals";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import { scopeIdentifier } from "./program";
 import { isCoreTag } from "../util/is-core-tag";
+import { scopeIdentifier } from "./program";
 
 const ESCAPE_TYPES = {
   script: "escapeScript",

@@ -1,3 +1,4 @@
+import { taglibId } from "../util/is-core-tag";
 import ImportTag from "./import";
 import ExportTag from "./export";
 import AttrsTag from "./attrs";
@@ -19,7 +20,6 @@ import ReturnTag from "./return";
 import StaticTag from "./static";
 import NoopTag from "./noop";
 import FlushHereAndAfter from "./__flush_here_and_after__";
-import { taglibId } from "../util/is-core-tag";
 
 export default {
   taglibId,

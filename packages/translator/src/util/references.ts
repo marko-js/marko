@@ -1,18 +1,18 @@
 import type { types as t } from "@marko/compiler";
+import { currentProgramPath } from "../visitors/program";
 import { SortedRepeatable } from "./sorted-repeatable";
 import {
-  getOrCreateSection,
+  type Section,
   createSectionState,
   forEachSection,
-  type Section,
+  getOrCreateSection,
 } from "./sections";
 import {
   type Reserve,
   ReserveType,
-  reserveScope,
   repeatableReserves,
+  reserveScope,
 } from "./reserve";
-import { currentProgramPath } from "../visitors/program";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag

@@ -1,5 +1,5 @@
-import { queueEffect } from "./queue";
 import type { Scope, ScopeContext } from "../common/types";
+import { queueEffect } from "./queue";
 import type { Renderer } from "./renderer";
 
 export function createScope(context?: ScopeContext): Scope {

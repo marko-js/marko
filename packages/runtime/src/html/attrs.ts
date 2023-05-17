@@ -1,4 +1,4 @@
-import { isVoid, classValue, styleValue } from "../common/helpers";
+import { classValue, isVoid, styleValue } from "../common/helpers";
 import { escapeAttrValue } from "./content";
 
 export function classAttr(val: unknown) {

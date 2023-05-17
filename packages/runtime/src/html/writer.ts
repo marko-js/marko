@@ -1,6 +1,6 @@
 import type { Writable } from "stream";
-import { Context, setContext, pushContext } from "../common/context";
-import { type Renderer, ResumeSymbols, type Accessor } from "../common/types";
+import { Context, pushContext, setContext } from "../common/context";
+import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 

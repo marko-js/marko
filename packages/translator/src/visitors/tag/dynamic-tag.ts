@@ -12,22 +12,22 @@ import {
   getSection,
 } from "../../util/sections";
 import {
-  getSignalFn,
-  getSerializedScopeProperties,
-  getSignal,
   addValue,
   buildSignalIntersections,
   buildSignalValuesWithIntersections,
+  getSerializedScopeProperties,
+  getSignal,
+  getSignalFn,
 } from "../../util/signals";
 import {
-  getScopeAccessorLiteral,
   type Reserve,
-  reserveScope,
   ReserveType,
+  getScopeAccessorLiteral,
+  reserveScope,
 } from "../../util/reserve";
-import { mergeReferences, addBindingToReferences } from "../../util/references";
-import customTag from "./custom-tag";
+import { addBindingToReferences, mergeReferences } from "../../util/references";
 import { currentProgramPath, scopeIdentifier } from "../program";
+import customTag from "./custom-tag";
 
 export default {
   analyze: {

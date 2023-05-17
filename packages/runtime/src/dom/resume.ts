@@ -1,4 +1,4 @@
-import { type Scope, ResumeSymbols, AccessorChars } from "../common/types";
+import { AccessorChars, ResumeSymbols, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindFunction, bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";

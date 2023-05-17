@@ -2,13 +2,13 @@ import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { addStatement, addHTMLEffectCall } from "../util/signals";
+import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import {
   ReserveType,
-  reserveScope,
   getScopeAccessorLiteral,
+  reserveScope,
 } from "../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 

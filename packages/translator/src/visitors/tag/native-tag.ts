@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
+import type { Identifier } from "@marko/compiler/babel-types";
 import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
@@ -8,14 +9,13 @@ import evaluate from "../../util/evaluate";
 import { getOrCreateSection, getSection } from "../../util/sections";
 import {
   ReserveType,
-  reserveScope,
   getScopeAccessorLiteral,
+  reserveScope,
 } from "../../util/reserve";
-import { addStatement, addHTMLEffectCall } from "../../util/signals";
+import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import type { Identifier } from "@marko/compiler/babel-types";
 import {
   createScopeReadExpression,
   getScopeExpression,

@@ -1,10 +1,10 @@
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
+import reorderRuntime from "../../../../runtime/src/html/reorder-runtime";
 import { getNodePath } from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;
 
-import reorderRuntime from "../../../../runtime/src/html/reorder-runtime";
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",

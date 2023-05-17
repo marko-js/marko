@@ -1,20 +1,20 @@
 import {
-  data,
+  type Scope,
+  bindFunction,
+  bindRenderer,
+  conditional,
   createRenderFn,
+  createRenderer,
+  data,
+  dynamicClosure,
+  dynamicSubscribers,
   on,
   queueEffect,
   queueSource,
-  bindRenderer,
-  type Scope,
-  dynamicClosure,
-  createRenderer,
-  conditional,
-  dynamicSubscribers,
   resumeSubscription,
   value,
-  bindFunction,
 } from "@marko/runtime-fluurt/src/dom";
-import { get, next, beginChild, endChild } from "../../utils/walks";
+import { beginChild, endChild, get, next } from "../../utils/walks";
 
 ////////////////////////////////////////////////////
 // FancyButton

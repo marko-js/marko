@@ -1,28 +1,28 @@
 import { types as t } from "@marko/compiler";
+import { getTemplateId } from "@marko/babel-utils";
+import type { NodePath } from "@marko/compiler/babel-types";
+import {
+  cleanIdentifier,
+  currentProgramPath,
+  scopeIdentifier,
+} from "../visitors/program";
+import { returnId } from "../core/return";
 import type { References } from "./references";
 import {
-  getSection,
+  type Section,
   createSectionState,
   getOrCreateSection,
   getScopeIdIdentifier,
   getScopeIdentifier,
-  type Section,
+  getSection,
 } from "./sections";
 import {
   type Reserve,
-  repeatableReserves,
-  getScopeAccessorLiteral,
   ReserveType,
+  getScopeAccessorLiteral,
+  repeatableReserves,
 } from "./reserve";
-import {
-  currentProgramPath,
-  cleanIdentifier,
-  scopeIdentifier,
-} from "../visitors/program";
 import { callRuntime } from "./runtime";
-import { getTemplateId } from "@marko/babel-utils";
-import type { NodePath } from "@marko/compiler/babel-types";
-import { returnId } from "../core/return";
 import { isOutputHTML } from "./marko-config";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import type { Repeatable } from "./sorted-repeatable";

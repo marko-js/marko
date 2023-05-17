@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { assertNoParams, assertNoVar, type Tag } from "@marko/babel-utils";
+import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import { callRuntime } from "../util/runtime";
@@ -9,7 +9,7 @@ import {
   initContextProvider,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { reserveScope, ReserveType } from "../util/reserve";
+import { ReserveType, reserveScope } from "../util/reserve";
 import { getOrCreateSection, getSection } from "../util/sections";
 
 export default {

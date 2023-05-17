@@ -1,16 +1,16 @@
-import { AccessorChars, type Scope, type Accessor } from "../common/types";
+import { type Accessor, AccessorChars, type Scope } from "../common/types";
 import { reconcile } from "./reconcile";
 import {
   type Renderer,
-  createScopeWithRenderer,
   type RendererOrElementName,
+  createScopeWithRenderer,
 } from "./renderer";
-import { getEmptyScope, destroyScope } from "./scope";
+import { destroyScope, getEmptyScope } from "./scope";
 import { defaultFragment } from "./fragment";
 import {
   type IntersectionSignal,
-  renderBodyClosures,
   type ValueSignal,
+  renderBodyClosures,
 } from "./signals";
 
 type LoopForEach = (

@@ -1,10 +1,10 @@
 import {
+  fork,
+  getInContext,
+  popContext,
+  pushContext,
   tryPlaceholder,
   write,
-  fork,
-  pushContext,
-  popContext,
-  getInContext,
 } from "@marko/runtime-fluurt/src/html";
 import { resolveAfter } from "../../utils/resolve";
 

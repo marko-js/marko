@@ -1,16 +1,16 @@
 import {
-  data,
+  type Scope,
+  closure,
   conditional,
   conditionalOnlyChild,
-  inConditionalScope,
-  createRenderer,
   createRenderFn,
+  createRenderer,
+  data,
   dynamicFragment,
-  closure,
-  type Scope,
+  inConditionalScope,
   value,
 } from "@marko/runtime-fluurt/src/dom";
-import { next, over, get } from "../../utils/walks";
+import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
 
 type Input = (typeof steps)[number];

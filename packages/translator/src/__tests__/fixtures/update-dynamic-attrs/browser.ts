@@ -1,7 +1,7 @@
 import {
+  type Scope,
   attrs,
   createRenderFn,
-  type Scope,
   value,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, over } from "../../utils/walks";

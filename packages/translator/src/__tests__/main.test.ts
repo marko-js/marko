@@ -2,18 +2,17 @@ import "./test-globals";
 import fs from "fs";
 import path from "path";
 import assert from "assert";
+import type { Writable } from "stream";
 import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import createBrowser from "./utils/create-browser";
-import createMutationTracker from "./utils/track-mutations";
 import glob from "tiny-glob";
 import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
-import createTrackMutations from "./utils/track-mutations";
-import { isWait } from "./utils/resolve";
-import type { Writable } from "stream";
 import type { DOMWindow } from "jsdom";
 import { createRenderer } from "@marko/runtime-fluurt/src/html";
+import createBrowser from "./utils/create-browser";
+import createMutationTracker from "./utils/track-mutations";
+import { isWait } from "./utils/resolve";
 
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -166,7 +165,7 @@ describe("translator", () => {
 
         document.open();
 
-        const tracker = createTrackMutations(browser.window, document);
+        const tracker = createMutationTracker(browser.window, document);
 
         await render(input, config.context, {
           write(data: string) {
@@ -262,7 +261,7 @@ describe("translator", () => {
         const { window } = browser;
         const { document } = window;
         const throwErrors = trackErrors(window);
-        const tracker = createTrackMutations(window, document);
+        const tracker = createMutationTracker(window, document);
         const [input, ...steps] =
           typeof config.steps === "function"
             ? await config.steps()

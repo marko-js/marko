@@ -1,9 +1,9 @@
 import path from "path";
-import { assertNoParams, importDefault, type Tag } from "@marko/babel-utils";
+import { type Tag, assertNoParams, importDefault } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts } from "../util/marko-config";
 import { currentProgramPath } from "../visitors/program";
-import { types as t } from "@marko/compiler";
 
 export default {
   translate(tag) {

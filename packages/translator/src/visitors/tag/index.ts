@@ -1,18 +1,18 @@
 import { types as t } from "@marko/compiler";
 import {
+  type Plugin,
   assertNoArgs,
   getTagDef,
   isNativeTag,
-  type Plugin,
 } from "@marko/babel-utils";
 import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
 import * as hooks from "../../util/plugin-hooks";
+import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import { isOutputHTML } from "../../util/marko-config";
 import NativeTag from "./native-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import AttributeTag from "./attribute-tag";
-import analyzeAttributeTags from "../../util/nested-attribute-tags";
-import { isOutputHTML } from "../../util/marko-config";
 
 export default {
   analyze: {

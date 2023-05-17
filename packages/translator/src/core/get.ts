@@ -1,10 +1,10 @@
 import path from "path";
 import { types as t } from "@marko/compiler";
 import {
-  resolveTagImport,
-  getTemplateId,
-  assertNoParams,
   type Tag,
+  assertNoParams,
+  getTemplateId,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import { callRuntime } from "../util/runtime";

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
+import type { Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
-import type { Tag } from "@marko/babel-utils";
 import { isOutputHTML } from "../util/marko-config";
 
 export default {

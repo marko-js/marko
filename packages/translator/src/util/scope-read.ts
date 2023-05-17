@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { scopeIdentifier } from "../visitors/program";
 import type { References } from "./references";
 import type { Section } from "./sections";
 import {
@@ -6,7 +7,6 @@ import {
   getScopeAccessorLiteral,
   repeatableReserves,
 } from "./reserve";
-import { scopeIdentifier } from "../visitors/program";
 
 export function createScopeReadPattern(
   section: Section,

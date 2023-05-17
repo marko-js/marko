@@ -1,5 +1,5 @@
-import { tryCatch, write, fork } from "@marko/runtime-fluurt/src/html";
-import { resolveAfter, rejectAfter } from "../../utils/resolve";
+import { fork, tryCatch, write } from "@marko/runtime-fluurt/src/html";
+import { rejectAfter, resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
   write("a");

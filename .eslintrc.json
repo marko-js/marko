@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["eslint:recommended", "prettier"],
+  "extends": ["eslint:recommended", "plugin:import/recommended", "prettier"],
   "parserOptions": {
     "sourceType": "module",
     "impliedStrict": true
@@ -11,12 +11,24 @@
     "es2020": true,
     "browser": true
   },
+  "rules": {
+    "import/order": ["error"],
+    "sort-imports": [
+      "error",
+      {
+        "allowSeparatedGroups": true,
+        "ignoreDeclarationSort": true
+      }
+    ]
+  },
   "overrides": [
     {
       "files": ["**/*.ts"],
       "parser": "@typescript-eslint/parser",
       "extends": [
         "eslint:recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript",
         "plugin:@typescript-eslint/recommended",
         "prettier"
       ],

@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 import {
-  getSection,
+  type Section,
   createSectionState,
   getScopeIdIdentifier,
-  type Section,
+  getSection,
 } from "../util/sections";
 import { callRuntime } from "./runtime";
 import toTemplateOrStringLiteral, {
@@ -12,7 +12,7 @@ import toTemplateOrStringLiteral, {
 import { getWalkString } from "./walks";
 import { getSetup } from "./signals";
 import { isOutputHTML } from "./marko-config";
-import { getScopeAccessorLiteral, ReserveType } from "./reserve";
+import { ReserveType, getScopeAccessorLiteral } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",

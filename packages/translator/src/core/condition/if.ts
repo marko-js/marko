@@ -3,35 +3,35 @@ import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import {
-  getSignalFn,
-  getSignal,
-  setSubscriberBuilder,
-  writeHTMLResumeStatements,
-  getSerializedScopeProperties,
-  getResumeRegisterId,
   addValue,
   getClosures,
+  getResumeRegisterId,
+  getSerializedScopeProperties,
+  getSignal,
+  getSignalFn,
   setRegisterScopeBuilder,
+  setSubscriberBuilder,
+  writeHTMLResumeStatements,
 } from "../../util/signals";
 import { callRuntime, importRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import {
-  getOrCreateSection,
-  getScopeIdentifier,
-  getScopeIdIdentifier,
-  getSection,
   type Section,
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getScopeIdentifier,
+  getSection,
 } from "../../util/sections";
 import {
   ReserveType,
-  reserveScope,
   getScopeAccessorLiteral,
+  reserveScope,
 } from "../../util/reserve";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import customTag from "../../visitors/tag/custom-tag";
-import { mergeReferences, type References } from "../../util/references";
+import { type References, mergeReferences } from "../../util/references";
 import { scopeIdentifier } from "../../visitors/program";
 
 export default {

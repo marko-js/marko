@@ -1,13 +1,13 @@
-import type { ValueSignal, IntersectionSignal } from "./signals";
 import {
   type Accessor,
   AccessorChars,
   type Scope,
   type ScopeContext,
 } from "../common/types";
-import { createScope } from "./scope";
 import { setContext } from "../common/context";
-import { WalkCodes, walk, trimWalkString } from "./walker";
+import type { IntersectionSignal, ValueSignal } from "./signals";
+import { createScope } from "./scope";
+import { WalkCodes, trimWalkString, walk } from "./walker";
 import { queueEffect, runEffects } from "./queue";
 import { type DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";

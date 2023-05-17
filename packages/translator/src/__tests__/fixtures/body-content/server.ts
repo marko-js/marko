@@ -1,10 +1,10 @@
 import {
-  write,
   markResumeNode,
   nextScopeId,
-  writeScope,
-  writeEffect,
   register,
+  write,
+  writeEffect,
+  writeScope,
 } from "@marko/runtime-fluurt/src/html";
 
 export default () => {

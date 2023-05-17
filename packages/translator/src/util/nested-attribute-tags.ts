@@ -1,8 +1,8 @@
 import type { types as t } from "@marko/compiler";
 import {
   isAttributeTag,
-  isTransparentTag,
   isLoopTag,
+  isTransparentTag,
 } from "@marko/babel-utils";
 
 type Lookup = Record<

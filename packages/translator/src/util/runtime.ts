@@ -1,17 +1,17 @@
 import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
-import { getMarkoOpts } from "./marko-config";
-import type { Reserve } from "./reserve";
-import { currentProgramPath } from "../visitors/program";
 import {
-  escapeXML,
-  toString,
   attr,
   classAttr,
-  styleAttr,
   escapeScript,
   escapeStyle,
+  escapeXML,
+  styleAttr,
+  toString,
 } from "@marko/runtime-fluurt/src/html";
+import { currentProgramPath } from "../visitors/program";
+import { getMarkoOpts } from "./marko-config";
+import type { Reserve } from "./reserve";
 import type { Section } from "./sections";
 import { getScopeExpression } from "./scope-read";
 

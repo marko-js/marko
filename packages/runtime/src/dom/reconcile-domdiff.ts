@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { defaultFragment, type DOMFragment } from "./fragment";
+import { type DOMFragment, defaultFragment } from "./fragment";
 import { destroyScope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js

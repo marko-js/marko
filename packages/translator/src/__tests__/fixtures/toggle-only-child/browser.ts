@@ -1,12 +1,12 @@
 import {
-  data,
-  conditionalOnlyChild,
-  createRenderer,
-  createRenderFn,
-  value,
-  closure,
-  inConditionalScope,
   type Scope,
+  closure,
+  conditionalOnlyChild,
+  createRenderFn,
+  createRenderer,
+  data,
+  inConditionalScope,
+  value,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";

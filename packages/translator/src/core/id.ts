@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 import {
+  type Tag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
-  type Tag,
 } from "@marko/babel-utils";
 import { assertNoBodyContent } from "../util/assert";
 import { callRuntime } from "../util/runtime";

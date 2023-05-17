@@ -1,32 +1,32 @@
 import { types as t } from "@marko/compiler";
-import { isOutputHTML } from "../util/marko-config";
 import {
   type Tag,
   assertAllowedAttributes,
   assertNoVar,
   getTagDef,
 } from "@marko/babel-utils";
+import { isOutputHTML } from "../util/marko-config";
 import * as writer from "../util/writer";
 import * as walks from "../util/walks";
 import {
-  getSignal,
-  setSubscriberBuilder,
-  setRegisterScopeBuilder,
-  writeHTMLResumeStatements,
-  getSerializedScopeProperties,
   addValue,
   getClosures,
+  getSerializedScopeProperties,
+  getSignal,
+  setRegisterScopeBuilder,
+  setSubscriberBuilder,
+  writeHTMLResumeStatements,
 } from "../util/signals";
 import {
   getOrCreateSection,
-  getScopeIdentifier,
   getScopeIdIdentifier,
+  getScopeIdentifier,
   getSection,
 } from "../util/sections";
 import {
   ReserveType,
-  reserveScope,
   getScopeAccessorLiteral,
+  reserveScope,
 } from "../util/reserve";
 import { callRuntime, importRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";

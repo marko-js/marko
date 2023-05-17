@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
 import {
   getTagDef,
-  importNamed,
   importDefault,
-  resolveRelativePath,
+  importNamed,
   loadFileForTag,
+  resolveRelativePath,
 } from "@marko/babel-utils";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import translateVar from "../../util/translate-var";
@@ -13,10 +13,10 @@ import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
 import { callRuntime } from "../../util/runtime";
 import {
-  startSection,
-  getSection,
   getOrCreateSection,
   getScopeIdIdentifier,
+  getSection,
+  startSection,
 } from "../../util/sections";
 import trackReferences, { mergeReferences } from "../../util/references";
 import {
@@ -29,9 +29,9 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
+  ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
-  ReserveType,
 } from "../../util/reserve";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import { createScopeReadExpression } from "../../util/scope-read";
