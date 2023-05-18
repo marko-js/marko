@@ -19,7 +19,7 @@ if (fs.existsSync(markoInstalledDir)) {
   );
 }
 
-Module._resolveFilename = function(request, parent, isMain) {
+Module._resolveFilename = function (request, parent, isMain) {
   if (request.charAt(0) !== ".") {
     if (
       request === "marko/components" ||

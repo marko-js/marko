@@ -2,7 +2,7 @@ var nodePath = require("path");
 var fs = require("fs");
 var requireHook = require("../../../../node-require");
 
-exports.check = function(marko, markoCompiler, expect, snapshot, done) {
+exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var compiledPath;
 
   requireHook.install({

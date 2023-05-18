@@ -5,7 +5,7 @@ var oldResolveFilename = Module._resolveFilename;
 
 var rootDir = nodePath.join(__dirname, "../");
 
-Module._resolveFilename = function(request, parent, isMain) {
+Module._resolveFilename = function (request, parent, isMain) {
   if (request.charAt(0) !== ".") {
     var firstSlash = request.indexOf("/");
     var targetPackageName =

@@ -82,7 +82,7 @@ function render(data, out) {
   if (colors && colors.length) {
     out.w("<ul>");
 
-    marko_forEach(colors, function(color) {
+    marko_forEach(colors, function (color) {
       out.w('<li class="color">' + marko_escapeXml(color) + "</li>");
     });
 
@@ -109,7 +109,7 @@ function render(data, out) {
   if (colors && colors.length) {
     out.be("UL");
 
-    marko_forEach(colors, function(color) {
+    marko_forEach(colors, function (color) {
       out.e("LI", marko_attrs0, 1).t(marko_str(color));
     });
 
@@ -643,7 +643,7 @@ $ var age = calculateAge(state.birthday);
 **Old:**
 
 ```js
-template.render({}, function(err, html, out) {});
+template.render({}, function (err, html, out) {});
 ```
 
 **New:**
@@ -651,8 +651,8 @@ template.render({}, function(err, html, out) {});
 ```js
 template
   .render({})
-  .then(function(result) {})
-  .catch(function(err) {});
+  .then(function (result) {})
+  .catch(function (err) {});
 
 // render() can now be used with async/await
 var out = await template.render({});

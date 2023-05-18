@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function loadNestedTagHelper(targetProperty, isRepeated) {
-  return function(input, parent) {
+  return function (input, parent) {
     // If we are nested tag then we do not have a renderer
     if (isRepeated) {
       var existingArray = parent[targetProperty];

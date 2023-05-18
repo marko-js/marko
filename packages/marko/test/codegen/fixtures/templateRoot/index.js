@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   var templateRoot = builder.templateRoot([
     builder.htmlElement("div", { class: builder.literal("foo") }, [
       builder.htmlElement("span", { class: builder.literal("bar") })

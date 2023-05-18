@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(compiler) {
+module.exports = function (compiler) {
   let builder = compiler.createBuilder();
 
   let rootNode = builder.templateRoot([

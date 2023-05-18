@@ -1,7 +1,7 @@
 const CodeWriter = require("../../../compiler/CodeWriter");
 const CodeGenerator = require("../../../compiler/CodeGenerator");
 
-module.exports = function(node, context, options) {
+module.exports = function (node, context, options) {
   const codeGenerator = new CodeGenerator(context);
   node = codeGenerator.generateCode(node);
   const writer = new CodeWriter(

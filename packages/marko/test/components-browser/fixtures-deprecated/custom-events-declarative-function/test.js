@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var pubsub = require("../../../__util__/pubsub");
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   window.received1 = [];

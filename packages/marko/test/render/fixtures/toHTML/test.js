@@ -1,6 +1,6 @@
 exports.templateData = {
   message: {
-    toHTML: function() {
+    toHTML: function () {
       return "<span>Hello World</span>";
     }
   }

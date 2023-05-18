@@ -8,9 +8,9 @@ exports.templateData = {
   inner2: callbackProvider(3, {})
 };
 
-exports.checkHtml = function() {};
-exports.checkEvents = function(events, snapshot, out) {
-  events = events.map(function(eventInfo) {
+exports.checkHtml = function () {};
+exports.checkEvents = function (events, snapshot, out) {
+  events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
     expect(arg.out != null).to.equal(true);
 

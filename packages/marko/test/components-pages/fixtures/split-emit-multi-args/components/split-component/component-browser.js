@@ -1,9 +1,9 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     window.splitComponent = this;
     this.clicked = false;
   },
-  handleClick: function(value) {
+  handleClick: function (value) {
     this.clicked = value;
   }
 };

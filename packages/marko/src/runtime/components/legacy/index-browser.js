@@ -6,7 +6,7 @@ var complain = "MARKO_DEBUG" && require("complain");
 
 // expose legacy
 require("../registry-browser").___legacy = exports;
-exports.load = function(typeName) {
+exports.load = function (typeName) {
   return exports.defineWidget(loader(typeName));
 };
 
@@ -19,7 +19,7 @@ exports.makeRenderable = exports.renderable = require("../../renderable");
 // browser only
 var Widget = (exports.Widget = Component);
 exports.onInitWidget = modernMarko.onInitComponent;
-exports.getWidgetForEl = exports.get = function(elOrId) {
+exports.getWidgetForEl = exports.get = function (elOrId) {
   var el = elOrId;
 
   if (typeof elOrId === "string") {
@@ -37,11 +37,11 @@ exports.initWidgets = modernMarko.init;
 // monkey patch Widget
 if (Widget) {
   var WidgetProto = Widget.prototype;
-  WidgetProto.setProps = function(newInput) {
+  WidgetProto.setProps = function (newInput) {
     this.___isReceivingNewInput = true;
     this.___setInput(newInput);
   };
-  WidgetProto.rerender = function(newInput) {
+  WidgetProto.rerender = function (newInput) {
     if (newInput) {
       this.setProps(newInput);
     }
@@ -53,21 +53,21 @@ if (Widget) {
 
 var RenderResult = require("../../RenderResult");
 
-RenderResult.prototype.getWidget = function() {
+RenderResult.prototype.getWidget = function () {
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     complain("getWidget is deprecated. use getComponent instead.");
   }
   return this.getWidgets()[0];
 };
-RenderResult.prototype.getWidgets = function() {
+RenderResult.prototype.getWidgets = function () {
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     complain("getWidgets is deprecated. use getComponents instead.");
   }
   return RenderResult.prototype.getComponents
     .apply(this, arguments)
-    .filter(function(component) {
+    .filter(function (component) {
       return component.___isLegacy;
     });
 };

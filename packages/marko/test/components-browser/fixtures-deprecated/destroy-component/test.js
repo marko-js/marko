@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     showSimple: true
   });
@@ -8,7 +8,7 @@ module.exports = function(helpers) {
   var simple = component.getComponent("simple");
   var simpleDestroyed = false;
 
-  simple.onDestroy = function() {
+  simple.onDestroy = function () {
     simpleDestroyed = true;
   };
 

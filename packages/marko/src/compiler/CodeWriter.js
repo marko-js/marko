@@ -49,9 +49,7 @@ class CodeWriter {
 
     this.writeStatements(body);
 
-    this.decIndent()
-      .writeLineIndent()
-      .write("}");
+    this.decIndent().writeLineIndent().write("}");
   }
 
   writeStatements(nodes) {

@@ -61,7 +61,7 @@ var minifiers = {
       throw e;
     }
   },
-  both: function(src, file) {
+  both: function (src, file) {
     var withGCC = minifiers.gcc(src, file);
     var withBoth = minifiers.uglify(withGCC, file);
     return withBoth.length < withGCC.length ? withBoth : withGCC;
@@ -105,7 +105,7 @@ bundleFiles.forEach(filename => {
   promiseChain = promiseChain.then(() => {
     return new Promise((resolve, reject) => {
       console.log(`Compressing and calculating size of ${file}...`);
-      zlib.gzip(minifiedSrc, function(err, gzippedBuffer) {
+      zlib.gzip(minifiedSrc, function (err, gzippedBuffer) {
         if (err) {
           return reject(err);
         }

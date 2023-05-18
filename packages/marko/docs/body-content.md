@@ -4,8 +4,8 @@ We're used to passing body content to HTML tags. When you do this, the tag has c
 
 ```html
 <details>
-  <summary>Hello <strong>World</strong></summary> This is some
-  <em>content</em> that can be toggled.
+  <summary>Hello <strong>World</strong></summary>
+  This is some <em>content</em> that can be toggled.
 </details>
 ```
 

@@ -7,12 +7,12 @@ exports.templateData = {
   inner2: Promise.resolve()
 };
 
-exports.checkEvents = function(events, snapshot, out) {
+exports.checkEvents = function (events, snapshot, out) {
   // Expect that we invoked the await reorderer. If true, it was only able to
   // be invoked once.
   expect(out.global.__awaitReordererInvoked).to.equal(true);
 
-  events = events.map(function(eventInfo) {
+  events = events.map(function (eventInfo) {
     var arg = extend({}, eventInfo.arg);
     expect(arg.out != null).to.equal(true);
 

@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should invoke event handler method for custom events with extra args", function() {
+it("should invoke event handler method for custom events with extra args", function () {
   var component = window.fooComponent;
 
   component.pressEvent = null;

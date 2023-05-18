@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 
-exports.test = function(done) {
+exports.test = function (done) {
   // should not register the res.marko function multiple times
   const express = require("express");
   require("marko/express");

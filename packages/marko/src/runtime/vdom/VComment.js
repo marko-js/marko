@@ -9,12 +9,12 @@ function VComment(value, ownerComponent) {
 VComment.prototype = {
   ___nodeType: 8,
 
-  ___actualize: function(doc) {
+  ___actualize: function (doc) {
     var nodeValue = this.___nodeValue;
     return doc.createComment(nodeValue);
   },
 
-  ___cloneNode: function() {
+  ___cloneNode: function () {
     return new VComment(this.___nodeValue);
   }
 };

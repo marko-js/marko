@@ -11,9 +11,9 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
     }
   } catch (err) {
     var actualEnd = finalOut.end;
-    finalOut.end = function() {};
+    finalOut.end = function () {};
 
-    setImmediate(function() {
+    setImmediate(function () {
       finalOut.end = actualEnd;
       finalOut.error(err);
     });
@@ -21,7 +21,7 @@ function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
   return finalOut;
 }
 
-module.exports = function(target, renderer) {
+module.exports = function (target, renderer) {
   var renderFunc =
     renderer && (renderer.renderer || renderer.render || renderer);
   var createOut = target.createOut || renderer.createOut || defaultCreateOut;
@@ -29,7 +29,7 @@ module.exports = function(target, renderer) {
   return extend(target, {
     createOut: createOut,
 
-    renderToString: function(data, callback) {
+    renderToString: function (data, callback) {
       var localData = data || {};
       var render = renderFunc || this._;
       var globalData = localData.$global;
@@ -43,7 +43,7 @@ module.exports = function(target, renderer) {
 
       if (callback) {
         out
-          .on("finish", function() {
+          .on("finish", function () {
             callback(null, out.toString(), out);
           })
           .once("error", callback);
@@ -56,7 +56,7 @@ module.exports = function(target, renderer) {
       }
     },
 
-    renderSync: function(data) {
+    renderSync: function (data) {
       var localData = data || {};
       var render = renderFunc || this._;
       var globalData = localData.$global;
@@ -90,7 +90,7 @@ module.exports = function(target, renderer) {
      * @param  {AsyncStream/AsyncVDOMBuilder} out A Stream, an AsyncStream/AsyncVDOMBuilder instance, or a callback function
      * @return {AsyncStream/AsyncVDOMBuilder} Returns the AsyncStream/AsyncVDOMBuilder instance that the template is rendered to
      */
-    render: function(data, out) {
+    render: function (data, out) {
       var callback;
       var finalOut;
       var finalData;
@@ -126,7 +126,7 @@ module.exports = function(target, renderer) {
 
       if (callback) {
         finalOut
-          .on("finish", function() {
+          .on("finish", function () {
             callback(null, finalOut.___getResult(), finalOut);
           })
           .once("error", callback);

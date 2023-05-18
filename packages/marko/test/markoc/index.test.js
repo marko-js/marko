@@ -20,15 +20,15 @@ autotest("fixtures", fixture => {
       const testModule = require(resolve("test.js"));
       const helpers = {};
 
-      helpers.existsSync = function(filename) {
+      helpers.existsSync = function (filename) {
         return fs.existsSync(resolve(filename));
       };
 
-      helpers.readSync = function(filename) {
+      helpers.readSync = function (filename) {
         return fs.readFileSync(resolve(filename));
       };
 
-      helpers.spawnSync = function(args, options) {
+      helpers.spawnSync = function (args, options) {
         options = options || {};
         if (!options.cwd) {
           options.cwd = dir;

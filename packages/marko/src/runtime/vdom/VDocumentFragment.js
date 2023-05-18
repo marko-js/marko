@@ -18,11 +18,11 @@ VDocumentFragment.prototype = {
 
   ___DocumentFragment: true,
 
-  ___cloneNode: function() {
+  ___cloneNode: function () {
     return new VDocumentFragmentClone(this);
   },
 
-  ___actualize: function(doc) {
+  ___actualize: function (doc) {
     return doc.createDocumentFragment();
   }
 };

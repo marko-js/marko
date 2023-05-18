@@ -14,9 +14,8 @@ function getNestedVariables(elNode, tagDef, codegen) {
     tagDef.forEachVariable(nestedVar => {
       let varName;
       if (nestedVar.nameFromAttribute) {
-        let possibleNameAttributes = nestedVar.nameFromAttribute.split(
-          /\s+or\s+|\s*,\s*/i
-        );
+        let possibleNameAttributes =
+          nestedVar.nameFromAttribute.split(/\s+or\s+|\s*,\s*/i);
         for (let i = 0, len = possibleNameAttributes.length; i < len; i++) {
           let attrName = possibleNameAttributes[i];
           let keep = false;
@@ -275,7 +274,7 @@ class CustomTag extends HtmlElement {
     if (tagDef.forEachAttribute) {
       // Add default values for any attributes from the tag definition. These added properties may get overridden
       // by get overridden from the attributes found on the actual HTML element.
-      tagDef.forEachAttribute(function(attrDef) {
+      tagDef.forEachAttribute(function (attrDef) {
         if (attrDef.hasOwnProperty("defaultValue")) {
           handleAttr(
             attrDef.name,
@@ -351,7 +350,7 @@ class CustomTag extends HtmlElement {
     if (tagDef.forEachImportedVariable) {
       // Imported variables are used to add input properties to a custom tag based on data/variables
       // found in the compiled template
-      tagDef.forEachImportedVariable(function(importedVariable) {
+      tagDef.forEachImportedVariable(function (importedVariable) {
         let propName = importedVariable.targetProperty;
         let propExpression = importedVariable.expression;
 
@@ -651,7 +650,7 @@ class CustomTag extends HtmlElement {
 
       if (tagDef.bodyFunction) {
         let bodyFunction = tagDef.bodyFunction;
-        let bodyFunctionParams = bodyFunction.params.map(function(param) {
+        let bodyFunctionParams = bodyFunction.params.map(function (param) {
           return builder.identifier(param);
         });
 
@@ -662,9 +661,8 @@ class CustomTag extends HtmlElement {
           renderBodyFunction.params.push(this._nestedTagVar);
         } else {
           if (nestedVariableNames && nestedVariableNames.length) {
-            renderBodyFunction.params = renderBodyFunction.params.concat(
-              nestedVariableNames
-            );
+            renderBodyFunction.params =
+              renderBodyFunction.params.concat(nestedVariableNames);
           }
         }
       }
@@ -798,8 +796,8 @@ class CustomTag extends HtmlElement {
     let renderBody = this.generateRenderBodyCode(codegen, body);
     let additionalAttrs = renderBody &&
       !isDynamicTag && {
-        [(tagDef.bodyFunction && tagDef.bodyFunction.name) ||
-        "renderBody"]: renderBody
+        [(tagDef.bodyFunction && tagDef.bodyFunction.name) || "renderBody"]:
+          renderBody
       };
     let inputProps = this.buildInputProps(codegen, additionalAttrs);
     let renderTagNode = this.generateRenderNode(

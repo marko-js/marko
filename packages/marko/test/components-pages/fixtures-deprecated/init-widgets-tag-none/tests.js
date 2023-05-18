@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should initialize widgets after ready", function(done) {
+it("should initialize widgets after ready", function (done) {
   expect(window.beforeInitWidgetsFooWidget).to.equal(undefined);
   expect(window.afterInitWidgetsBarWidget).to.equal(undefined);
 
@@ -13,7 +13,7 @@ it("should initialize widgets after ready", function(done) {
   done();
 });
 
-it("should assign unique IDs to each widget", function(done) {
+it("should assign unique IDs to each widget", function (done) {
   expect(window.fooWidget.id).to.be.a("string");
   expect(window.barWidget.id).to.be.a("string");
   expect(window.bazWidget.id).to.be.a("string");
@@ -23,7 +23,7 @@ it("should assign unique IDs to each widget", function(done) {
   done();
 });
 
-it("should assign a unique ID to a nested widget based on the parent ID", function(done) {
+it("should assign a unique ID to a nested widget based on the parent ID", function (done) {
   expect(window.bazWidget.id).to.contain(window.fooWidget.id + "-");
   done();
 });

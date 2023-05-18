@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"));
   var inner = component.getComponent("inner");
   expect(helpers.targetEl.textContent).to.equal("Hello world");

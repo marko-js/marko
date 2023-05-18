@@ -1,10 +1,10 @@
 "use strict";
 
-var escapeXmlOrNullish = require("../../../../runtime/html/helpers/escape-xml")
-  .x;
+var escapeXmlOrNullish =
+  require("../../../../runtime/html/helpers/escape-xml").x;
 var Literal = require("../../Literal");
 
-module.exports = function(node, codegen) {
+module.exports = function (node, codegen) {
   var context = codegen.context;
   var argument = codegen.generateCode(node.argument);
   var escape = node.escape !== false;

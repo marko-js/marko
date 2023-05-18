@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 
-exports.test = function(done) {
+exports.test = function (done) {
   // should be able to register for multiple express instances
 
   const express = require("express");
@@ -12,7 +12,7 @@ exports.test = function(done) {
   var expressMock = { response: {} };
   var _require = module.require;
 
-  module.require = function() {
+  module.require = function () {
     if (arguments[0] === "express") return expressMock;
     return _require.apply(module, arguments);
   };

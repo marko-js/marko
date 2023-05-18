@@ -8,7 +8,7 @@ function safeVarName(varName) {
 
   return varName
     .replace(/[^A-Za-z0-9_]/g, "_")
-    .replace(/^[0-9]+/, function(match) {
+    .replace(/^[0-9]+/, function (match) {
       var str = "";
       for (var i = 0; i < match.length; i++) {
         str += "_";

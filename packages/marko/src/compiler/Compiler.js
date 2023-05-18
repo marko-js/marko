@@ -4,14 +4,14 @@ var path = require("path");
 var CodeGenerator = require("./CodeGenerator");
 var CodeWriter = require("./CodeWriter");
 var createError = require("raptor-util/createError");
-var resolveDep = require("../runtime/components/legacy/dependencies")
-  .resolveDep;
+var resolveDep =
+  require("../runtime/components/legacy/dependencies").resolveDep;
 
 const FLAG_TRANSFORMER_APPLIED = "transformerApply";
 
 function transformNode(node, context) {
   try {
-    context.taglibLookup.forEachNodeTransformer(node, function(transformer) {
+    context.taglibLookup.forEachNodeTransformer(node, function (transformer) {
       if (node.isDetached()) {
         return; //The node might have been removed from the tree
       }
@@ -52,7 +52,7 @@ function transformTreeHelper(node, context) {
    *       The checks to prevent transformers from being applied multiple times makes
    *       sure that this is not a problem.
    */
-  node.forEachChild(function(childNode) {
+  node.forEachChild(function (childNode) {
     transformTreeHelper(childNode, context);
   });
 }

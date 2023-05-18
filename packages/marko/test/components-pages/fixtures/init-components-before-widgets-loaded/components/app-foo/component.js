@@ -1,11 +1,11 @@
 module.exports = {
-  onInput: function() {
+  onInput: function () {
     this.state = {
       name: "app-foo"
     };
   },
 
-  onMount: function() {
+  onMount: function () {
     window.fooComponent = this;
   }
 };

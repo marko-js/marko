@@ -34,7 +34,7 @@ module.exports = function autotest(fixturesName, run) {
       if (fixtureName[0] === "~") {
         // skip the fixture directory
       } else if (modes.length > 1) {
-        describe(fixtureName, function() {
+        describe(fixtureName, function () {
           modes.forEach(mode => {
             runFixtureTest(
               mode.name,
@@ -63,7 +63,7 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
 
   if (hasMainFile) {
     try {
-      complain.log = function(message) {
+      complain.log = function (message) {
         context.deprecation = context.deprecation || new Error(message);
       };
       const main = require(mainPath);
@@ -134,8 +134,8 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
         }
       };
       if (fn.length > 0) {
-        return function(done) {
-          complain.log = function(message) {
+        return function (done) {
+          complain.log = function (message) {
             if (!/NOTICE/.test(message)) {
               context.deprecation = context.deprecation || new Error(message);
             }
@@ -150,8 +150,8 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
           });
         };
       } else {
-        return function() {
-          complain.log = function(message) {
+        return function () {
+          complain.log = function (message) {
             if (!/NOTICE/.test(message)) {
               context.deprecation = context.deprecation || new Error(message);
             }

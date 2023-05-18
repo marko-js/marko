@@ -1,11 +1,11 @@
-var parseHTML = function(html) {
+var parseHTML = function (html) {
   var container = document.createElement("template");
   parseHTML = container.content
-    ? function(html) {
+    ? function (html) {
         container.innerHTML = html;
         return container.content;
       }
-    : function(html) {
+    : function (html) {
         container.innerHTML = html;
         return container;
       };
@@ -13,6 +13,6 @@ var parseHTML = function(html) {
   return parseHTML(html);
 };
 
-module.exports = function(html) {
+module.exports = function (html) {
   return parseHTML(html).firstChild;
 };

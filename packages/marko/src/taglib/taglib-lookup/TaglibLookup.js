@@ -96,7 +96,7 @@ class TaglibLookup {
     var merged = this.merged;
 
     function handleNestedTags(tag, parentTagName) {
-      tag.forEachNestedTag(function(nestedTag) {
+      tag.forEachNestedTag(function (nestedTag) {
         var fullyQualifiedName = parentTagName + ":" + nestedTag.name;
         // Create a clone of the nested tag since we need to add some new
         // properties
@@ -111,7 +111,7 @@ class TaglibLookup {
       });
     }
 
-    taglib.forEachTag(function(tag) {
+    taglib.forEachTag(function (tag) {
       handleNestedTags(tag, tag.name);
     });
   }

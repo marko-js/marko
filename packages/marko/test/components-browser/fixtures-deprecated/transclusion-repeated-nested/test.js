@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var root = helpers.mount(require.resolve("./index"));
   var counters = root.getComponents("counter");
   var containers = root.getComponents("container");

@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     window.appInitAsync = this;
 
     var helloFrank = this.getComponent("helloFrank");
@@ -10,7 +10,7 @@ module.exports = {
     var helloJohnAsync = this.getComponent("helloJohnAsync");
     var helloJane = this.getComponent("helloJane");
 
-    this.test = function() {
+    this.test = function () {
       expect(helloFrank).to.be.an("object");
       expect(helloFrank.name).to.equal("Frank");
 

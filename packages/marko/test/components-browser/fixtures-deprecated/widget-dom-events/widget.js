@@ -11,7 +11,7 @@ function Widget() {
   }
 
   this.log = log;
-  this.clearLog = function() {
+  this.clearLog = function () {
     this.logOutput = [];
   };
 
@@ -19,35 +19,35 @@ function Widget() {
 }
 
 Widget.prototype = {
-  handleRootClick: function(event, el) {
+  handleRootClick: function (event, el) {
     expect(el.getAttribute("class")).to.equal("app-dom-events");
     expect(event.target.tagName.length > 0).to.equal(true);
     this.log("el:click");
     expect(this.name).to.equal("app-dom-events");
   },
 
-  handleButtonClick: function() {
+  handleButtonClick: function () {
     this.log("button:click");
   },
 
-  handleRootMouseMove: function() {
+  handleRootMouseMove: function () {
     this.log("el:mousemove");
   },
 
-  handleButtonSpanMouseMove: function() {
+  handleButtonSpanMouseMove: function () {
     this.log("button>span:mousemove");
   },
 
-  handleFooLinkDblClick: function() {
+  handleFooLinkDblClick: function () {
     this.log("#fooLink:dblclick");
   },
 
-  handleFooLinkMouseOut: function(event, el) {
+  handleFooLinkMouseOut: function (event, el) {
     expect(event.target).to.equal(el);
     this.log("#fooLink:mouseout");
   },
 
-  handleHelloWorldMouseDown: function(event, el) {
+  handleHelloWorldMouseDown: function (event, el) {
     expect(this.getEl("helloWorld")).to.equal(el);
     this.log("#helloWorld:mousedown");
   }

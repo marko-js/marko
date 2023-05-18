@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   function check(tag, isFirst) {
     if (!isFirst) {
       component.input = { comp: tag };

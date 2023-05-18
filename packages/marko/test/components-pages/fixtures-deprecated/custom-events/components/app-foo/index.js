@@ -1,16 +1,16 @@
 module.exports = require("marko-widgets").defineComponent({
   template: require.resolve("./template.marko"),
 
-  getTemplateData: function() {
+  getTemplateData: function () {
     return {};
   },
 
-  init: function() {
+  init: function () {
     window.fooWidget = this;
     this.pressEvent = undefined;
   },
 
-  handleButtonPress: function() {
+  handleButtonPress: function () {
     this.pressEvent = arguments;
   }
 });

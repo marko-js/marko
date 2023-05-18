@@ -4,7 +4,7 @@ function Widget(config) {
 
   var $el = this.$();
 
-  this.appendHtml = function(html) {
+  this.appendHtml = function (html) {
     $el.append(html);
   };
 }

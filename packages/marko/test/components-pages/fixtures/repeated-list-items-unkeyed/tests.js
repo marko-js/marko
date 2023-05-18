@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should update correctly", function() {
+it("should update correctly", function () {
   var listItemsComponent = window.listItemsComponent;
   expect(
     listItemsComponent.getEl("root").querySelectorAll("li").length

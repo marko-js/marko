@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-exports.checkTemplate = function(compiledTemplate) {
+exports.checkTemplate = function (compiledTemplate) {
   expect(compiledTemplate.dependencies).to.eql([
     {
       type: "require",

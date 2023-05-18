@@ -1,5 +1,5 @@
 module.exports = {
-  handleColorClick: function(color) {
+  handleColorClick: function (color) {
     this.color = color;
   }
 };

@@ -1,4 +1,4 @@
-exports.createApp = function(express, markoExpressPath) {
+exports.createApp = function (express, markoExpressPath) {
   var app = express();
   var markoExpress = require(markoExpressPath);
 
@@ -7,13 +7,13 @@ exports.createApp = function(express, markoExpressPath) {
   return app;
 };
 
-exports.createController = function() {
-  return function(req, res) {
+exports.createController = function () {
+  return function (req, res) {
     res.marko("home");
   };
 };
 
-exports.checkResponse = function(response, expect) {
+exports.checkResponse = function (response, expect) {
   expect(response.statusCode).to.equal(500);
   expect(response.body).to.include("res.marko");
   expect(response.body).to.include("res.render");

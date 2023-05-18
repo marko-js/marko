@@ -6,7 +6,7 @@ function indentStr(level) {
 
   return str;
 }
-module.exports = function(node) {
+module.exports = function (node) {
   var code = "";
 
   function codegenEl(node, level) {
@@ -55,7 +55,7 @@ module.exports = function(node) {
   return "return " + code + "\n";
 };
 
-module.exports.generateInitCode = function() {
+module.exports.generateInitCode = function () {
   return `
     var MarkoVDOM = window.MarkoVDOM;
     var createElement = MarkoVDOM.createElement;

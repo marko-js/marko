@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   const component = helpers.mount(require.resolve("./index"), {});
   const root = component.getEl("root");
   const before = component.before;

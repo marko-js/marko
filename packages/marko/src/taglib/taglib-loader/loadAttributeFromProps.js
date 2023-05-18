@@ -235,7 +235,7 @@ function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
   return attr;
 }
 
-loadAttributeFromProps.isSupportedProperty = function(name) {
+loadAttributeFromProps.isSupportedProperty = function (name) {
   return AttrLoader.prototype.hasOwnProperty(name);
 };
 

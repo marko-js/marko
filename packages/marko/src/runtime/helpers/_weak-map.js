@@ -5,10 +5,10 @@ module.exports =
   function WeakMap() {
     var id = seed + counter++;
     return {
-      get: function(ref) {
+      get: function (ref) {
         return ref[id];
       },
-      set: function(ref, value) {
+      set: function (ref, value) {
         ref[id] = value;
       }
     };

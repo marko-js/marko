@@ -137,7 +137,7 @@ function getPreviousTemplate(templatePath, options) {
 }
 
 function createRenderProxy(template) {
-  return function(data, out) {
+  return function (data, out) {
     template._(data, out);
   };
 }

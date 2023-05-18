@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   return builder.program([
     builder.ifStatement(builder.literal(true), [
       builder.code("var a = 1;\nvar b = 2;"),

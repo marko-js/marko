@@ -5,7 +5,7 @@ const commonMigrators = [
   require("./widget-get-template-data")
 ];
 
-module.exports = function(root, context) {
+module.exports = function (root, context) {
   commonMigrators.forEach(migrator => migrator(root, context));
   return true;
 };

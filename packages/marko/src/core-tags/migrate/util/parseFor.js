@@ -64,7 +64,8 @@ var tokenizer = require("../../../compiler/util/tokenizer").create([
   }
 ]);
 
-var inRegExp = /^\s*([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
+var inRegExp =
+  /^\s*([$A-Z_][0-9A-Z_$]*)(?:\s*,\s*([$A-Z_][0-9A-Z_$]*))?\s+in\s+/i;
 
 function throwError(message) {
   var error = new Error(message);
@@ -119,7 +120,7 @@ function createNumberExpression(str, errorMessage) {
  * <varName> from <expression> to <expression> step <expression>
  * <init>; <test>; <update>
  */
-module.exports = function(str) {
+module.exports = function (str) {
   str = removeComments(str);
 
   let depth = 0;

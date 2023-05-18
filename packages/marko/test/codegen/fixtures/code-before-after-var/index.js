@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   var vars = builder.vars(["foo"]);
 
   vars.onBeforeGenerateCode(event => {

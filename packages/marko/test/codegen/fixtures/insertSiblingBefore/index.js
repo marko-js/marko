@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   var spanElement = builder.htmlElement("span", [
     {
       name: "class",

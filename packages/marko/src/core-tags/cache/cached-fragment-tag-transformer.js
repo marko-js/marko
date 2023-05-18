@@ -1,6 +1,6 @@
 var defaultCacheManagerPath = require.resolve("./default-cache-manager");
 
-module.exports = function(el, context) {
+module.exports = function (el, context) {
   context.deprecate("The <cached-fragment> tag is deprecated.");
   if (!el.hasAttribute("cache-manager")) {
     var requirePath = context.getRequirePath(defaultCacheManagerPath);

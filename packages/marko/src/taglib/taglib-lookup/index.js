@@ -27,7 +27,7 @@ function buildLookup(dirname) {
   var taglibs = taglibFinder.find(dirname, exports.registeredTaglibs);
 
   var lookupCacheKey = taglibs
-    .map(function(taglib) {
+    .map(function (taglib) {
       return taglib.id;
     })
     .join(",");

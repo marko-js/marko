@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var svgNS = "http://www.w3.org/2000/svg";
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"));
   var root = component.getEl("root");
   var svgEl = root.firstChild;

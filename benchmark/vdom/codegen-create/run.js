@@ -28,11 +28,11 @@ ${wrappedCode}
 
 var methods = ["dom", "dom-innerHTML", "marko-vdom", "react"];
 
-var htmlFiles = fs.readdirSync(__dirname).filter(function(name) {
+var htmlFiles = fs.readdirSync(__dirname).filter(function (name) {
   return name.startsWith("html-");
 });
 
-htmlFiles.forEach(function(htmlFile) {
+htmlFiles.forEach(function (htmlFile) {
   var name = htmlFile.substring("html-".length).slice(0, 0 - ".html".length);
   var html = fs.readFileSync(path.join(__dirname, htmlFile), {
     encoding: "utf8"
@@ -42,7 +42,7 @@ htmlFiles.forEach(function(htmlFile) {
 
   var rootNode = doc.body.firstChild;
 
-  methods.forEach(function(methodName) {
+  methods.forEach(function (methodName) {
     generateCode(methodName, name, rootNode, html);
   });
 });

@@ -1,4 +1,4 @@
-module.exports = function(o) {
+module.exports = function (o) {
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     require("complain")("notEmpty is deprecated.");

@@ -1,4 +1,4 @@
-exports.check = function(markoCompiler, expect, snapshot) {
+exports.check = function (markoCompiler, expect, snapshot) {
   var taglibLookup = markoCompiler.taglibLookup;
   var lookup = taglibLookup.buildLookup(__dirname);
 

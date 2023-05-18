@@ -1,4 +1,4 @@
-module.exports = function(el, context) {
+module.exports = function (el, context) {
   var path = el.getAttributeValue("require");
   el.detach();
 

@@ -1,10 +1,10 @@
-module.exports = function(helpers, done) {
+module.exports = function (helpers, done) {
   require("marko/ready").patchComponent();
 
   try {
     var component = helpers.mount(require.resolve("./index"), {});
 
-    component.ready(function() {
+    component.ready(function () {
       done();
     });
   } finally {

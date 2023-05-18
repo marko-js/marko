@@ -141,13 +141,13 @@ function ready(callback, thisObj, doc) {
 
 module.exports = ready;
 
-module.exports.patchComponent = function(proto) {
+module.exports.patchComponent = function (proto) {
   if (proto && proto.ready) {
     // Don't patch if the component has overwritten the ready method.
     return;
   }
 
-  (proto || require("./Component").prototype).ready = function(callback) {
+  (proto || require("./Component").prototype).ready = function (callback) {
     var document = this.el.ownerDocument;
     ready(callback, this, document);
   };

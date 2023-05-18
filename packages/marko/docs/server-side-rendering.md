@@ -5,7 +5,7 @@ Marko allows any Marko template/UI component to be rendered on the server or in 
 ```js
 var template = require("./template"); // Import ./template.marko
 
-module.exports = function(req, res) {
+module.exports = function (req, res) {
   res.setHeader("Content-Type", "text/html; charset=utf-8");
   template.render({ name: "Frank" }, res);
 };
@@ -16,7 +16,7 @@ Marko can also provide you with a `Readable` stream.
 ```js
 var template = require("./template"); // Import ./template.marko
 
-module.exports = function(req) {
+module.exports = function (req) {
   // Return a Readable stream for someone to do something with:
   return template.stream({ name: "Frank" });
 };

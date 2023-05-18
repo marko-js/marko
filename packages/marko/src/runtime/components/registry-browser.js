@@ -63,11 +63,12 @@ function getComponentClass(typeName, isLegacy) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    var classNameMatch = /\/([^/]+?)(?:\/index|\/template|)(?:\.marko|\.component(?:-browser)?|)$/.exec(
-      typeName
-    );
+    var classNameMatch =
+      /\/([^/]+?)(?:\/index|\/template|)(?:\.marko|\.component(?:-browser)?|)$/.exec(
+        typeName
+      );
     var className = classNameMatch ? classNameMatch[1] : "AnonymousComponent";
-    className = className.replace(/-(.)/g, function(g) {
+    className = className.replace(/-(.)/g, function (g) {
       return g[1].toUpperCase();
     });
     className = className

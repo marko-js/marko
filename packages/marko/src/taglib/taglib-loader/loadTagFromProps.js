@@ -24,7 +24,7 @@ function exists(path) {
 }
 
 function removeDashes(str) {
-  return str.replace(/-([a-z])/g, function(match, lower) {
+  return str.replace(/-([a-z])/g, function (match, lower) {
     return lower.toUpperCase();
   });
 }
@@ -136,11 +136,11 @@ class TagLoader {
       propertyHandlers(
         value,
         {
-          name: function(value) {
+          name: function (value) {
             nestedVariable.name = value;
           },
 
-          nameFromAttribute: function(value) {
+          nameFromAttribute: function (value) {
             nestedVariable.nameFromAttribute = value;
           }
         },
@@ -577,9 +577,8 @@ class TagLoader {
         );
       }
 
-      importedVar.expression = markoCompiler.builder.parseExpression(
-        expression
-      );
+      importedVar.expression =
+        markoCompiler.builder.parseExpression(expression);
       tag.addImportedVariable(importedVar);
     });
   }

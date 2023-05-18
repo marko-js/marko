@@ -1,5 +1,5 @@
 module.exports = {
-  onInput: function() {
+  onInput: function () {
     this.state = {
       type: "state",
       name: "foo"
@@ -8,7 +8,7 @@ module.exports = {
     this.name = "foo";
   },
 
-  onMount: function() {
+  onMount: function () {
     window.fooComponent = this;
     this.componentConfig = {
       type: this.type,

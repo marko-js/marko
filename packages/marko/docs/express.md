@@ -28,7 +28,7 @@ var app = express();
 
 app.use(markoExpress()); //enable res.marko(template, data)
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.marko(template, {
     name: "Frank",
     count: 30,

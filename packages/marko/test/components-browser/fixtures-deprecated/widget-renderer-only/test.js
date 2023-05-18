@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   helpers.mount(require.resolve("./index"), {
     name: "Frank"
   });

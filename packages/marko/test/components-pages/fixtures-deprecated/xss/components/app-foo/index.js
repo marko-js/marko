@@ -1,19 +1,19 @@
 module.exports = require("marko-widgets").defineComponent({
   template: require("./template.marko"),
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       evil: '</script><script>alert("hello")</script>'
     };
   },
 
-  getWidgetConfig: function() {
+  getWidgetConfig: function () {
     return {
       evil: '</script><script>alert("hello")</script>'
     };
   },
 
-  init: function(widgetConfig) {
+  init: function (widgetConfig) {
     this.widgetConfig = widgetConfig;
     window.fooWidget = this;
   }

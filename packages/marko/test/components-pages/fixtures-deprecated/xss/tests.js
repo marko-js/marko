@@ -1,9 +1,9 @@
 var expect = require("chai").expect;
 
-it("should handle ending </script> tag", function(done) {
+it("should handle ending </script> tag", function (done) {
   var ready = require("marko/ready");
 
-  ready(function() {
+  ready(function () {
     expect(window.fooWidget.state.evil).to.equal(
       '</script><script>alert("hello")</script>'
     );

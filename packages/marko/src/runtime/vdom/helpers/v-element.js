@@ -2,7 +2,7 @@
 
 var VElement = require("../vdom").___VElement;
 
-module.exports = function(
+module.exports = function (
   tagName,
   attrs,
   key,

@@ -8,8 +8,8 @@ require("./ComponentsContext").___initClientRendered =
 exports.getComponentForEl = componentsUtil.___getComponentForEl;
 exports.init = window.$initComponents = initComponents.___initServerRendered;
 
-exports.register = function(id, component) {
-  registry.r(id, function() {
+exports.register = function (id, component) {
+  registry.r(id, function () {
     return component;
   });
 };

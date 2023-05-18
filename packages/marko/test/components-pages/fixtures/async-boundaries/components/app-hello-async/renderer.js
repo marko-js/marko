@@ -1,8 +1,8 @@
 var AppHello = require("../app-hello");
 
-module.exports = function(input, out) {
+module.exports = function (input, out) {
   var asyncOut = out.beginAsync();
-  setTimeout(function() {
+  setTimeout(function () {
     AppHello.render(
       {
         name: input.name

@@ -1,14 +1,14 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     this.divClicked = false;
     this.buttonClicked = false;
   },
 
-  handleDivClick: function() {
+  handleDivClick: function () {
     this.divClicked = true;
   },
 
-  handleButtonClick: function(event) {
+  handleButtonClick: function (event) {
     this.buttonClicked = true;
     event.stopPropagation();
   }

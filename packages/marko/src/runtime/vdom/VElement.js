@@ -117,7 +117,7 @@ function VElement(
 VElement.prototype = {
   ___nodeType: 1,
 
-  ___cloneNode: function() {
+  ___cloneNode: function () {
     return new VElementClone(this);
   },
 
@@ -128,7 +128,7 @@ VElement.prototype = {
    * @param  {int|null} attrCount  The number of attributes (or `null` if not known)
    * @param  {int|null} childCount The number of child nodes (or `null` if not known)
    */
-  e: function(tagName, attrs, key, ownerComponent, childCount, flags, props) {
+  e: function (tagName, attrs, key, ownerComponent, childCount, flags, props) {
     var child = this.___appendChild(
       new VElement(
         tagName,
@@ -154,14 +154,14 @@ VElement.prototype = {
    *
    * @param  {String} value The value for the new Comment node
    */
-  n: function(node, ownerComponent) {
+  n: function (node, ownerComponent) {
     node = node.___cloneNode();
     node.___ownerComponent = ownerComponent;
     this.___appendChild(node);
     return this.___finishChild();
   },
 
-  ___actualize: function(doc, parentNamespaceURI) {
+  ___actualize: function (doc, parentNamespaceURI) {
     var tagName = this.___nodeName;
     var attributes = this.___attributes;
     var namespaceURI = DEFAULT_NS[tagName] || parentNamespaceURI || NS_HTML;
@@ -202,7 +202,7 @@ VElement.prototype = {
     return el;
   },
 
-  ___hasAttribute: function(name) {
+  ___hasAttribute: function (name) {
     // We don't care about the namespaces since the there
     // is no chance that attributes with the same name will have
     // different namespaces
@@ -215,9 +215,9 @@ inherit(VElement, VNode);
 
 var proto = (VElementClone.prototype = VElement.prototype);
 
-["checked", "selected", "disabled"].forEach(function(name) {
+["checked", "selected", "disabled"].forEach(function (name) {
   defineProperty(proto, name, {
-    get: function() {
+    get: function () {
       var value = this.___attributes[name];
       return value !== false && value != null;
     }
@@ -225,7 +225,7 @@ var proto = (VElementClone.prototype = VElement.prototype);
 });
 
 defineProperty(proto, "___value", {
-  get: function() {
+  get: function () {
     var value = this.___valueInternal;
     if (value == null) {
       value = this.___attributes.value;
@@ -239,7 +239,7 @@ defineProperty(proto, "___value", {
   }
 });
 
-VElement.___removePreservedAttributes = function(attrs) {
+VElement.___removePreservedAttributes = function (attrs) {
   // By default this static method is a no-op, but if there are any
   // compiled components that have "no-update" attributes then
   // `preserve-attrs.js` will be imported and this method will be replaced
@@ -298,7 +298,7 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
 
 VElement.___virtualize = virtualizeElement;
 
-VElement.___morphAttrs = function(fromEl, vFromEl, toEl) {
+VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
   var removePreservedAttributes = VElement.___removePreservedAttributes;
 
   var fromFlags = vFromEl.___flags;

@@ -1,20 +1,20 @@
 var expect = require("chai").expect;
 var pubsub = require("../../../__util__/pubsub");
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   var received1 = [];
   var received2 = [];
 
-  component.handleTestEvent1 = function() {
+  component.handleTestEvent1 = function () {
     received1.push({
       args: arguments,
       component: arguments[arguments.length - 1]
     });
   };
 
-  component.handleTestEvent2 = function() {
+  component.handleTestEvent2 = function () {
     received2.push({
       args: arguments,
       component: arguments[arguments.length - 1]

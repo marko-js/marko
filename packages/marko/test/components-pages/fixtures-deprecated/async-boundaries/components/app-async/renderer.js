@@ -1,8 +1,8 @@
 var template = require("./template.marko");
 
-module.exports = function(input, out) {
+module.exports = function (input, out) {
   var asyncOut = out.beginAsync();
-  setTimeout(function() {
+  setTimeout(function () {
     template.render(
       {
         name: input.name,

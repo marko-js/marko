@@ -29,8 +29,8 @@ function testNodeRequireInstall(options, expected) {
   expect(expected).to.deep.equal(actualKeys);
 }
 
-describe("node-require", function() {
-  it("should consolidate using both extension and extensions", function() {
+describe("node-require", function () {
+  it("should consolidate using both extension and extensions", function () {
     testNodeRequireInstall(
       {
         extension: ".marko.xml",
@@ -40,7 +40,7 @@ describe("node-require", function() {
     );
   });
 
-  it("should consolidate using only extensions", function() {
+  it("should consolidate using only extensions", function () {
     testNodeRequireInstall(
       {
         extensions: [".marko", ".html"]
@@ -49,7 +49,7 @@ describe("node-require", function() {
     );
   });
 
-  it("should consolidate using only extension", function() {
+  it("should consolidate using only extension", function () {
     testNodeRequireInstall(
       {
         extension: ".marko.xml"
@@ -58,7 +58,7 @@ describe("node-require", function() {
     );
   });
 
-  it("should consolidate using extension and empty array of extensions", function() {
+  it("should consolidate using extension and empty array of extensions", function () {
     testNodeRequireInstall(
       {
         extension: ".marko.xml",
@@ -68,11 +68,11 @@ describe("node-require", function() {
     );
   });
 
-  it("should consolidate with .marko when neither extension or extensions provided", function() {
+  it("should consolidate with .marko when neither extension or extensions provided", function () {
     testNodeRequireInstall({}, [".marko"]);
   });
 
-  it("should insert missing period into extensions", function() {
+  it("should insert missing period into extensions", function () {
     testNodeRequireInstall(
       {
         extension: "marko.xml",

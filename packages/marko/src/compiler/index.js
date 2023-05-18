@@ -14,7 +14,7 @@ var taglib = require("../taglib");
 var defaults = extend({}, globalConfig);
 
 Object.defineProperty(exports, "defaultOptions", {
-  get: function() {
+  get: function () {
     return globalConfig;
   },
   enumerable: true,
@@ -22,7 +22,7 @@ Object.defineProperty(exports, "defaultOptions", {
 });
 
 Object.defineProperty(exports, "config", {
-  get: function() {
+  get: function () {
     return globalConfig;
   },
   enumerable: true,
@@ -141,7 +141,7 @@ function compileFile(filename, options, callback) {
   options.sourceOnly = options.sourceOnly !== false;
 
   if (callback) {
-    fs.readFile(filename, { encoding: "utf8" }, function(err, templateSrc) {
+    fs.readFile(filename, { encoding: "utf8" }, function (err, templateSrc) {
       if (err) {
         return callback(err);
       }
@@ -292,7 +292,7 @@ function buildTaglibLookup(dirname) {
 
 exports.buildTaglibLookup = buildTaglibLookup;
 
-exports.registerTaglib = function(filePath) {
+exports.registerTaglib = function (filePath) {
   registerCoreTaglibs();
 
   ok(typeof filePath === "string", '"filePath" should be a string');

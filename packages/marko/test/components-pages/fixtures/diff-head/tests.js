@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should allow diffing head", function() {
+it("should allow diffing head", function () {
   var app = window.app;
   expect(document.head.getAttribute("count")).to.equal("0");
 

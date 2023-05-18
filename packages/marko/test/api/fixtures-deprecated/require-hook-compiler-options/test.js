@@ -17,7 +17,7 @@ function compileAndCheck(path, shouldWriteToDisk) {
   expect(fs.existsSync(compiledFile)).to.equal(shouldWriteToDisk);
 }
 
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, expect, helpers, done) {
   try {
     requireHook.install({
       compilerOptions: {

@@ -3,7 +3,7 @@ var template = require("marko").load(require.resolve("./template.marko"));
 module.exports = require("marko/legacy-components").defineComponent({
   createOut: template.createOut,
 
-  renderer: function(input, out) {
+  renderer: function (input, out) {
     template.render(
       {
         name: input.name
@@ -12,7 +12,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     );
   },
 
-  setName: function(name) {
+  setName: function (name) {
     this.getEl("name").innerHTML = name;
   }
 });

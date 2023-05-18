@@ -8,7 +8,7 @@ var parseHTML = require("../parse-html");
 /**
  * Helper for processing dynamic attributes
  */
-module.exports = function(attributes) {
+module.exports = function (attributes) {
   if (typeof attributes === "string") {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {

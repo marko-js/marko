@@ -1,7 +1,7 @@
 module.exports = require("marko/legacy-components").defineComponent({
   template: require("./template.marko"),
 
-  getInitialState: function(input) {
+  getInitialState: function (input) {
     var type = input.type || "success";
 
     return {
@@ -9,11 +9,11 @@ module.exports = require("marko/legacy-components").defineComponent({
     };
   },
 
-  getInitialBody: function(input) {
+  getInitialBody: function (input) {
     return input.message || input.renderBody;
   },
 
-  getTemplateData: function(state) {
+  getTemplateData: function (state) {
     var type = state.type;
 
     var className = "alert alert-" + type;
@@ -24,7 +24,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     };
   },
 
-  setType: function(newType) {
+  setType: function (newType) {
     this.setState("type", newType);
   }
 });

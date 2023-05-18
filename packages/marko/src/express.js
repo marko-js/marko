@@ -30,7 +30,7 @@ module.exports = function markoAppMiddleware() {
 function patchResponse(response) {
   response.marko =
     response.marko ||
-    function(template, data) {
+    function (template, data) {
       if (typeof template === "string") {
         throw new Error(
           "res.marko does not take a template name or path like res.render.  " +

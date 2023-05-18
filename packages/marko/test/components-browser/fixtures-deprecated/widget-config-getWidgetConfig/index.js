@@ -1,7 +1,7 @@
 module.exports = require("marko/legacy-components").defineComponent({
   template: require("./template.marko"),
 
-  getWidgetConfig: function(input) {
+  getWidgetConfig: function (input) {
     return {
       string: input.name,
       number: 12,
@@ -13,7 +13,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     };
   },
 
-  init: function(config) {
+  init: function (config) {
     this.config = config;
   }
 });

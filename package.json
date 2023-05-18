@@ -32,7 +32,7 @@
         "micromatch": "^3.0.4",
         "mocha": "^5.0.1",
         "nyc": "^13.0.0",
-        "prettier": "^1.13.5",
+        "prettier": "^2.8.8",
         "shelljs": "^0.8.4",
         "standard-version": "^7.1.0"
     },

@@ -1,4 +1,4 @@
-module.exports = function(app) {
+module.exports = function (app) {
   var Suite = window.Benchmark.Suite;
   var MarkoVDOM = app.vdom;
 
@@ -79,15 +79,15 @@ module.exports = function(app) {
   }
 
   // add tests
-  suite.add("real DOM", function() {
+  suite.add("real DOM", function () {
     return toHTML(todomvcDOM);
   });
 
-  suite.add("marko-vdom", function() {
+  suite.add("marko-vdom", function () {
     return toHTML(todomvcDOMVirtual);
   });
 
-  return function() {
+  return function () {
     return app.runSuite(suite);
   };
 };

@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should update correctly", function() {
+it("should update correctly", function () {
   var component = window.component;
   var input = component.getEl("input");
 

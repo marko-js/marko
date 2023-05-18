@@ -72,11 +72,7 @@ function render(input, out) {
 var marko_template = require("marko/vdom").t(__filename);
 
 function render(input, out) {
-  out
-    .e("DIV", null, 3)
-    .t("Hello ")
-    .t(input.name)
-    .t("!");
+  out.e("DIV", null, 3).t("Hello ").t(input.name).t("!");
 }
 ```
 
@@ -184,11 +180,7 @@ var marko_attrs0 = {
 };
 
 function render(input, out) {
-  out
-    .e("DIV", marko_attrs0, 3)
-    .t("Hello ")
-    .t(input.name)
-    .t("!");
+  out.e("DIV", marko_attrs0, 3).t("Hello ").t(input.name).t("!");
 }
 ```
 

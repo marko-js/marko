@@ -3,7 +3,7 @@ var iframeContentComponent = require("./components/app-iframe-content");
 module.exports = require("marko/legacy-components").defineComponent({
   template: require.resolve("./template.marko"),
 
-  renderIntoIframe: function() {
+  renderIntoIframe: function () {
     var frameEl = this.getFrameEl();
     return iframeContentComponent
       .renderSync({})
@@ -11,7 +11,7 @@ module.exports = require("marko/legacy-components").defineComponent({
       .getWidget();
   },
 
-  getFrameEl: function() {
+  getFrameEl: function () {
     return this.getEl("frame");
   }
 });

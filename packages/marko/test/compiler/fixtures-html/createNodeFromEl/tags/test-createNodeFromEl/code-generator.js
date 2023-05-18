@@ -1,4 +1,4 @@
-module.exports = function(elNode, codegen) {
+module.exports = function (elNode, codegen) {
   var builder = codegen.builder;
 
   var helloNode1 = codegen.context.createNodeForEl("test-hello", [

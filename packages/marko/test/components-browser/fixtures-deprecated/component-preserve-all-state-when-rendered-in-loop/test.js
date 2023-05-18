@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 var domData = require("../../../../src/runtime/components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
   var rootEl = component.getEl();
   var itemIds = ["child-a", "child-b", "child-c"];

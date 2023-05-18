@@ -1,7 +1,7 @@
 module.exports = require("marko/legacy-components").defineComponent({
   template: require.resolve("./template.marko"),
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       x: 1
     };

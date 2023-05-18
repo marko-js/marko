@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder, codegen) {
+module.exports = function (builder, codegen) {
   var context = codegen.context;
 
   var templateRoot = builder.templateRoot([builder.htmlElement("div", [])]);

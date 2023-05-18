@@ -1,5 +1,5 @@
 module.exports = {
-  emitTestEvent: function() {
+  emitTestEvent: function () {
     this.emit("test", "abc", "123");
   }
 };

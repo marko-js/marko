@@ -10,18 +10,18 @@ function BrowserHelpers() {
 }
 
 BrowserHelpers.prototype = {
-  triggerEvent: function(el, type) {
+  triggerEvent: function (el, type) {
     var ev = document.createEvent("Event");
     ev.initEvent(type, true, true);
     el.dispatchEvent(ev);
   },
 
-  triggerCustomEvent: function(el, type, detail) {
+  triggerCustomEvent: function (el, type, detail) {
     var ev = new CustomEvent(type, { detail: detail });
     el.dispatchEvent(ev);
   },
 
-  triggerMouseEvent: function(el, type) {
+  triggerMouseEvent: function (el, type) {
     var ev = document.createEvent("MouseEvent");
     ev.initMouseEvent(
       type,
@@ -43,15 +43,15 @@ BrowserHelpers.prototype = {
     el.dispatchEvent(ev);
   },
 
-  triggerClick: function(el) {
+  triggerClick: function (el) {
     this.triggerMouseEvent(el, "click");
   },
 
-  triggerMouseMove: function(el) {
+  triggerMouseMove: function (el) {
     this.triggerMouseEvent(el, "mousemove");
   },
 
-  mount: function(templatePath, input) {
+  mount: function (templatePath, input) {
     var $global = input && input.$global;
     var template = require(templatePath);
     var renderResult = template.renderSync(input).appendTo(this.targetEl);
@@ -79,11 +79,11 @@ BrowserHelpers.prototype = {
     return instance;
   },
 
-  log: function(data) {
+  log: function (data) {
     this.logOutput.push(data);
   },
 
-  getComponentForEl: function(el) {
+  getComponentForEl: function (el) {
     return markoComponents.getComponentForEl(el);
   },
 
@@ -91,7 +91,7 @@ BrowserHelpers.prototype = {
     return document.getElementById("testsTarget");
   },
 
-  nodeListToArray: function(nodes) {
+  nodeListToArray: function (nodes) {
     var nodeArray = new Array(nodes.length);
     for (var i = 0; i < nodes.length; i++) {
       nodeArray[i] = nodes[i];
@@ -99,7 +99,7 @@ BrowserHelpers.prototype = {
     return nodeArray;
   },
 
-  checkChildrenMatch: function(children1, children2) {
+  checkChildrenMatch: function (children1, children2) {
     expect(children1.length).to.equal(children2.length);
 
     for (var i = 0; i < children1.length; i++) {
@@ -117,7 +117,7 @@ BrowserHelpers.prototype = {
     }
   },
 
-  cleanPath: function(path) {
+  cleanPath: function (path) {
     return path.replace(/\.\d+\.in-context$/, "");
   }
 };

@@ -1,1 +1,1 @@
-exports.install = function() {};
+exports.install = function () {};
