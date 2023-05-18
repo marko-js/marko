@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should initialize components before ready", function() {
+it("should initialize components before ready", function () {
   expect(window.afterInitComponents_foo != null).to.equal(true);
   expect(window.afterInitComponents_bar == null).to.equal(true);
 

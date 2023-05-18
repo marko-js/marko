@@ -26,11 +26,11 @@ app.use("/codegen-create", serveStatic(__dirname + "/codegen-create"));
 
 app.use(require("lasso/middleware").serveStatic());
 
-app.get("/", function(req, res) {
+app.get("/", function (req, res) {
   res.marko(template);
 });
 
-app.listen(8080, function(err) {
+app.listen(8080, function (err) {
   if (err) {
     throw err;
   }

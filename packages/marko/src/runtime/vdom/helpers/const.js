@@ -1,8 +1,8 @@
 "use strict";
 
-module.exports = function(id) {
+module.exports = function (id) {
   var i = 0;
-  return function() {
+  return function () {
     return id + i++;
   };
 };

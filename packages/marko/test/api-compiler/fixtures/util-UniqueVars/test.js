@@ -1,4 +1,4 @@
-exports.check = function(marko, markoCompiler, expect, helpers, done) {
+exports.check = function (marko, markoCompiler, expect, helpers, done) {
   var UniqueVars = require("marko/src/compiler/util/UniqueVars");
 
   var uniqueVars = new UniqueVars();

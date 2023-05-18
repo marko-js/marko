@@ -1,3 +1,3 @@
-it("should initialize widgets correctly across async boundaries", function() {
+it("should initialize widgets correctly across async boundaries", function () {
   window.appInitAsync.test();
 });

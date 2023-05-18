@@ -1,5 +1,5 @@
 var expect = require("chai").expect;
-module.exports = function(node, context) {
+module.exports = function (node, context) {
   var previousSibling = node.previousSibling;
   var nextSibling = node.nextSibling;
 

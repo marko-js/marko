@@ -1,13 +1,13 @@
 function Component() {}
 
 Component.prototype = {
-  onMount: function() {
+  onMount: function () {
     window.appButtonSplitExportClass = this;
   },
-  setColor: function(color) {
+  setColor: function (color) {
     this.el.style.backgroundColor = color;
   },
-  setLabel: function(label) {
+  setLabel: function (label) {
     this.el.innerHTML = label;
   }
 };

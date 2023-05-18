@@ -63,7 +63,7 @@ function run(fixture) {
         res.end(err.toString());
       });
 
-      var server = app.listen(0, function(err) {
+      var server = app.listen(0, function (err) {
         if (err) {
           return done(err);
         }
@@ -71,7 +71,7 @@ function run(fixture) {
         var port = server.address().port;
         var address = `http://localhost:${port}/test`;
 
-        request(address, function(error, response, body) {
+        request(address, function (error, response, body) {
           try {
             if (main.checkResponse) {
               response.body = body;

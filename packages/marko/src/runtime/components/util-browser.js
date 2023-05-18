@@ -141,13 +141,13 @@ function addComponentRootToKeyedElements(
 
 // eslint-disable-next-line no-constant-condition
 if ("MARKO_DEBUG") {
-  var warnNodeRemoved = function(event) {
+  var warnNodeRemoved = function (event) {
     var fragment = event.target.fragment;
     if (fragment) {
       var baseError = new Error(
         "Fragment boundary marker removed.  This will cause an error when the fragment is updated."
       );
-      fragment.___markersRemovedError = function(message) {
+      fragment.___markersRemovedError = function (message) {
         var error = new Error(message + " Boundary markers missing.");
 
         baseError.stack = baseError.stack.replace(/.*warnNodeRemoved.*\n/, "");
@@ -158,10 +158,10 @@ if ("MARKO_DEBUG") {
       };
     }
   };
-  exports.___startDOMManipulationWarning = function() {
+  exports.___startDOMManipulationWarning = function () {
     document.addEventListener("DOMNodeRemoved", warnNodeRemoved);
   };
-  exports.___stopDOMManipulationWarning = function() {
+  exports.___stopDOMManipulationWarning = function () {
     document.removeEventListener("DOMNodeRemoved", warnNodeRemoved);
   };
 }

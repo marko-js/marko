@@ -8,14 +8,14 @@ var running = false;
 var benchmarks = {};
 
 function loadScript(path) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var script = document.createElement("script");
     script.src = path;
-    script.onload = function() {
+    script.onload = function () {
       resolve();
     };
 
-    script.onerror = function(e) {
+    script.onerror = function (e) {
       reject(e);
     };
 
@@ -25,14 +25,14 @@ function loadScript(path) {
 
 function loadScripts(paths) {
   return Promise.all(
-    paths.map(function(path) {
+    paths.map(function (path) {
       return loadScript(path);
     })
   );
 }
 
 function runSuite(suite) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     if (running) {
       return;
     }
@@ -40,13 +40,13 @@ function runSuite(suite) {
     running = true;
 
     suite
-      .on("start", function() {
+      .on("start", function () {
         resultsEl.innerHTML += 'Running "' + suite.name + '"...\n';
       })
-      .on("cycle", function(event) {
+      .on("cycle", function (event) {
         resultsEl.innerHTML += String(event.target) + "\n";
       })
-      .on("complete", function() {
+      .on("complete", function () {
         resultsEl.innerHTML +=
           "Fastest is " +
           this.filter("fastest").map("name") +
@@ -57,7 +57,7 @@ function runSuite(suite) {
         suite.off("start cycle complete");
         resolve();
       })
-      .on("error", function(e) {
+      .on("error", function (e) {
         running = false;
 
         suite.off("start cycle complete error");
@@ -71,16 +71,16 @@ function runSuite(suite) {
 var vdom = (window.MarkoVDOM = {
   virtualize: require("../../runtime/vdom/virtualize"),
 
-  createElement: function(tagName, attrs, childCount, constId) {
+  createElement: function (tagName, attrs, childCount, constId) {
     return new HTMLElement(tagName, attrs, childCount, constId);
   },
-  createText: function(value) {
+  createText: function (value) {
     return new Text(value);
   },
-  createComment: function(value) {
+  createComment: function (value) {
     return new Comment(value);
   },
-  createDocumentFragment: function() {
+  createDocumentFragment: function () {
     return new DocumentFragment();
   }
 });
@@ -99,7 +99,7 @@ function registerBenchmark(name, func) {
 registerBenchmark("create", require("./benchmark-create"));
 registerBenchmark("walk", require("./benchmark-walk"));
 
-document.body.addEventListener("click", function(event) {
+document.body.addEventListener("click", function (event) {
   if (running) {
     return;
   }
@@ -113,12 +113,12 @@ document.body.addEventListener("click", function(event) {
     var benchmarkFunc = benchmarks[benchmarkName];
 
     benchmarkFunc()
-      .then(function() {
+      .then(function () {
         target.innerHTML = oldButtonLabel;
 
         resultsEl.innerHTML += "\nDONE!";
       })
-      .catch(function(e) {
+      .catch(function (e) {
         target.innerHTML = oldButtonLabel;
         console.error(e);
         resultsEl.innerHTML = e.toString();

@@ -1,4 +1,4 @@
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {});
 
   var oldChildren = helpers.nodeListToArray(widget.el.childNodes);

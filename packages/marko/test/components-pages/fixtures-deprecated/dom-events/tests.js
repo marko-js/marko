@@ -26,7 +26,7 @@ function triggerClick(el) {
   triggerMouseEvent(el, "click");
 }
 
-it("should invoke event handler method for non-bubbling events", function() {
+it("should invoke event handler method for non-bubbling events", function () {
   window.fooWidget.mouseMoveEvent = null;
   triggerMouseEvent(window.fooWidget.getEl("button"), "mousemove");
   expect(window.fooWidget.mouseMoveEvent != null).to.equal(true);
@@ -37,7 +37,7 @@ it("should invoke event handler method for non-bubbling events", function() {
   );
 });
 
-it("should invoke event handler method for non-bubbling events with extra args", function() {
+it("should invoke event handler method for non-bubbling events with extra args", function () {
   window.fooWidget.mouseMoveEvent = null;
 
   triggerMouseEvent(window.fooWidget.getEl("ok"), "mousemove");
@@ -59,7 +59,7 @@ it("should invoke event handler method for non-bubbling events with extra args",
   );
 });
 
-it("should invoke event handler method for bubbling events", function() {
+it("should invoke event handler method for bubbling events", function () {
   window.fooWidget.clickEvent = null;
   triggerMouseEvent(window.fooWidget.getEl("button"), "click");
   expect(window.fooWidget.clickEvent != null).to.equal(true);
@@ -69,7 +69,7 @@ it("should invoke event handler method for bubbling events", function() {
   );
 });
 
-it("should invoke event handler method for bubbling events with extra args", function() {
+it("should invoke event handler method for bubbling events with extra args", function () {
   var widget = window.fooWidget;
 
   window.fooWidget.clickEvent = null;

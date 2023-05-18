@@ -33,7 +33,7 @@ function checkPropertiesStatic(properties) {
   return true;
 }
 
-module.exports = function(node, codegen) {
+module.exports = function (node, codegen) {
   var builder = codegen.builder;
   var context = codegen.context;
   var body = codegen.generateCode(node.body);

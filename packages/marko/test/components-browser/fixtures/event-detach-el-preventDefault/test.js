@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     colors: ["red", "green", "blue"]
   });
@@ -9,7 +9,7 @@ module.exports = function(helpers) {
 
   var finishDetach;
 
-  component.handleDetach = function(color, event) {
+  component.handleDetach = function (color, event) {
     expect(color).to.equal("green");
     finishDetach = event.detach;
     event.preventDefault();

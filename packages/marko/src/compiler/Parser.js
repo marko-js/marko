@@ -5,10 +5,10 @@ var Normalizer = require("./Normalizer");
 var Migrator = require("./Migrator");
 
 var COMPILER_ATTRIBUTE_HANDLERS = {
-  "preserve-whitespace": function(attr, context) {
+  "preserve-whitespace": function (attr, context) {
     context.setPreserveWhitespace(true);
   },
-  "preserve-comments": function(attr, context) {
+  "preserve-comments": function (attr, context) {
     context.setPreserveComments(true);
   }
 };
@@ -164,7 +164,7 @@ class Parser {
 
       this.parentNode.setTrimStartEnd(true);
 
-      attributes.forEach(function(attr) {
+      attributes.forEach(function (attr) {
         let attrName = attr.name;
         let handler = COMPILER_ATTRIBUTE_HANDLERS[attrName];
 

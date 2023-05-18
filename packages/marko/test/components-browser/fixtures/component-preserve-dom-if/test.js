@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   function getTimestamps() {
@@ -19,8 +19,8 @@ module.exports = function(helpers) {
       preserveBodyClass: component.el
         .querySelector(".preserve-body")
         .getAttribute("data-renderId"),
-      preserveBodyClassBody: component.el.querySelector(".preserve-body")
-        .innerHTML,
+      preserveBodyClassBody:
+        component.el.querySelector(".preserve-body").innerHTML,
       componentClass: require("marko/components").getComponentForEl(
         component.el.querySelector(".component-no-id")
       ).state.name

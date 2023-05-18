@@ -1,7 +1,7 @@
 var enabled = false;
 var browserRefreshClient = require("browser-refresh-client");
 
-exports.enable = function(options) {
+exports.enable = function (options) {
   if (!browserRefreshClient.isBrowserRefreshEnabled()) {
     return;
   }
@@ -23,7 +23,7 @@ exports.enable = function(options) {
 
   browserRefreshClient
     .enableSpecialReload("*.marko marko.json marko-tag.json")
-    .onFileModified(function(path) {
+    .onFileModified(function (path) {
       hotReload.handleFileModified(path, options);
     });
 };

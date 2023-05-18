@@ -60,9 +60,7 @@ Marko templates can be imported and rendered by any JavaScript module. The code 
 _client.js_
 
 ```js
-require("./components/app/index.marko")
-  .renderSync({})
-  .appendTo(document.body);
+require("./components/app/index.marko").renderSync({}).appendTo(document.body);
 ```
 
 When Lasso.js bundles up the code above it will automatically bundle up the required `./components/app/index.marko` file.
@@ -124,9 +122,8 @@ To retrieve the list of server rendered components, do:
 
 ```javascript
 template.render(data, (err, output) => {
-  const renderedComponentsList = require("marko/components").getRenderedComponents(
-    output.out
-  );
+  const renderedComponentsList =
+    require("marko/components").getRenderedComponents(output.out);
   const html = output.getOutput();
 });
 res.json({

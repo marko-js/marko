@@ -84,7 +84,7 @@ exports.buildDir = function buildDir(sourceName, targetName, options) {
 
   findFiles(
     sourceDir,
-    function(sourceFile, relativePath, stat) {
+    function (sourceFile, relativePath, stat) {
       var targetFile = path.join(distDir, relativePath);
       var targetDir = path.dirname(targetFile);
 

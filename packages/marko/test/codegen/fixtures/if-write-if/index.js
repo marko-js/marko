@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   var startIf = builder.ifStatement(builder.literal(true), [
     builder.text(builder.literal("A"))
   ]);

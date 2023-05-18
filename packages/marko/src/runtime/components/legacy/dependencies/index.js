@@ -24,7 +24,7 @@ function getRootDeps(template, context) {
   });
 
   // these dependencies should be last
-  deps.concat = function() {
+  deps.concat = function () {
     var result = [];
     result = result.concat.apply(result, arguments);
     result.push.apply(result, this);
@@ -121,7 +121,7 @@ function getInitModule(path, components) {
         run: true,
         virtualModule: {
           path: virtualPath,
-          read: function(_, callback) {
+          read: function (_, callback) {
             // TODO: Check if read can just return string in lasso 2
             if (callback) {
               callback(null, code);
@@ -172,7 +172,7 @@ function parseDependencyString(string) {
 }
 
 function patch(Template) {
-  Template.prototype.getDependencies = function(context) {
+  Template.prototype.getDependencies = function (context) {
     context = context || {};
 
     return getRootDeps(this, context);

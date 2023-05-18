@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var appFooComponent = require("./components/app-foo");
 
-it("should generate a unique ID that is different for a UI component rendered on the server and browser", function() {
+it("should generate a unique ID that is different for a UI component rendered on the server and browser", function () {
   var serverFooWidget = window.fooWidget;
   var browserFooWidget = appFooComponent
     .renderSync({})

@@ -9,7 +9,7 @@ function Widget() {
   var async2 = this.getWidget("async2");
   var helloJane = this.getWidget("helloJane");
 
-  this.test = function() {
+  this.test = function () {
     expect(helloFrank).to.be.an("object");
     expect(helloFrank.name).to.equal("Frank");
 

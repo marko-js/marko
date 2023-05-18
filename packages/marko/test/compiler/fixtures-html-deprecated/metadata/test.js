@@ -3,7 +3,7 @@ var oldMeta = config.meta;
 
 config.meta = true;
 
-exports.checkTemplate = function(template, snapshot) {
+exports.checkTemplate = function (template, snapshot) {
   var dependencies = template.getDependencies();
   config.meta = oldMeta;
 

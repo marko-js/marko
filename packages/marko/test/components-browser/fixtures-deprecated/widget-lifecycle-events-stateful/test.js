@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var lifecycle = require("./lifecycle-recorder");
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
     messageCount: 10
@@ -17,9 +17,9 @@ module.exports = function(helpers) {
     "onRender:firstRender"
   ]);
 
-  expect(
-    lifecycle.events[widget.getWidget("nestedStateful").id]
-  ).to.deep.equal(["init", "onRender:firstRender"]);
+  expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
+    ["init", "onRender:firstRender"]
+  );
 
   expect(lifecycle.events.foo).to.deep.equal(["init", "onRender:firstRender"]);
 
@@ -43,15 +43,9 @@ module.exports = function(helpers) {
     "onUpdate"
   ]);
 
-  expect(
-    lifecycle.events[widget.getWidget("nestedStateful").id]
-  ).to.deep.equal([
-    "init",
-    "onRender:firstRender",
-    "onBeforeUpdate",
-    "onUpdate",
-    "onRender"
-  ]);
+  expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
+    ["init", "onRender:firstRender", "onBeforeUpdate", "onUpdate", "onRender"]
+  );
 
   expect(lifecycle.events.foo).to.deep.equal(["init", "onRender:firstRender"]);
 
@@ -80,15 +74,9 @@ module.exports = function(helpers) {
     "onRender"
   ]);
 
-  expect(
-    lifecycle.events[widget.getWidget("nestedStateful").id]
-  ).to.deep.equal([
-    "init",
-    "onRender:firstRender",
-    "onBeforeUpdate",
-    "onUpdate",
-    "onRender"
-  ]);
+  expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
+    ["init", "onRender:firstRender", "onBeforeUpdate", "onUpdate", "onRender"]
+  );
 
   expect(lifecycle.events.foo).to.deep.equal([
     "init",

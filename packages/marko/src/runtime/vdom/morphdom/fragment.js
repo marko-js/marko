@@ -37,7 +37,7 @@ var fragmentPrototype = {
     nodes.push(current);
     return nodes;
   },
-  insertBefore: function(newChildNode, referenceNode) {
+  insertBefore: function (newChildNode, referenceNode) {
     var actualReference = referenceNode == null ? this.endNode : referenceNode;
     return insertBefore(
       newChildNode,
@@ -45,14 +45,14 @@ var fragmentPrototype = {
       this.startNode.parentNode
     );
   },
-  insertInto: function(newParentNode, referenceNode) {
-    this.nodes.forEach(function(node) {
+  insertInto: function (newParentNode, referenceNode) {
+    this.nodes.forEach(function (node) {
       insertBefore(node, referenceNode, newParentNode);
     }, this);
     return this;
   },
-  remove: function() {
-    this.nodes.forEach(function(node) {
+  remove: function () {
+    this.nodes.forEach(function (node) {
       this.detachedContainer.appendChild(node);
     }, this);
   }
@@ -69,7 +69,8 @@ function createFragmentNode(startNode, nextNode, parentNode) {
     : document.createTextNode("");
   fragment.startNode.fragment = fragment;
   fragment.endNode.fragment = fragment;
-  var detachedContainer = (fragment.detachedContainer = document.createDocumentFragment());
+  var detachedContainer = (fragment.detachedContainer =
+    document.createDocumentFragment());
   parentNode =
     parentNode || (startNode && startNode.parentNode) || detachedContainer;
   insertBefore(fragment.startNode, startNode, parentNode);
@@ -79,7 +80,7 @@ function createFragmentNode(startNode, nextNode, parentNode) {
 
 function beginFragmentNode(startNode, parentNode) {
   var fragment = createFragmentNode(startNode, null, parentNode);
-  fragment.___finishFragment = function(nextNode) {
+  fragment.___finishFragment = function (nextNode) {
     fragment.___finishFragment = null;
     insertBefore(
       fragment.endNode,

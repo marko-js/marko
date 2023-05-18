@@ -41,8 +41,9 @@ module.exports = function migrator(elNode, context) {
     let finalTarget = target;
 
     if (!isMemberOrIdentifer) {
-      const complexIncludeIdentifierCount = (context._complexIncludeIdentifierCount =
-        (context._complexIncludeIdentifierCount || 0) + 1);
+      const complexIncludeIdentifierCount =
+        (context._complexIncludeIdentifierCount =
+          (context._complexIncludeIdentifierCount || 0) + 1);
       let identifierName = "includeTarget";
 
       if (complexIncludeIdentifierCount !== 1) {

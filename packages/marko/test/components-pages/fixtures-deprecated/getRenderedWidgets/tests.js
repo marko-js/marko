@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var markoWidgets = require("marko-widgets");
 
-it("should serialize widget config down to the browser", function() {
+it("should serialize widget config down to the browser", function () {
   expect(window.simpleWidgets).to.eql([]);
 
   var components = window.components;

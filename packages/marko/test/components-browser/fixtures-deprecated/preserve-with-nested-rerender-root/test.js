@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = async function(helpers) {
+module.exports = async function (helpers) {
   var isHydrate = helpers.isHydrate;
   var component = helpers.mount(require.resolve("./index"));
 

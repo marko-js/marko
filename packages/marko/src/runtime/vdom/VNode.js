@@ -2,7 +2,7 @@
 function VNode() {}
 
 VNode.prototype = {
-  ___VNode: function(finalChildCount, ownerComponent) {
+  ___VNode: function (finalChildCount, ownerComponent) {
     this.___finalChildCount = finalChildCount;
     this.___childCount = 0;
     this.___firstChildInternal = null;
@@ -45,7 +45,7 @@ VNode.prototype = {
     return nextSibling;
   },
 
-  ___appendChild: function(child) {
+  ___appendChild: function (child) {
     this.___childCount++;
 
     if (this.___nodeName === "textarea") {

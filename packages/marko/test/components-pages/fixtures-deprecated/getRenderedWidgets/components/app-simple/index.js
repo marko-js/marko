@@ -5,7 +5,7 @@ if (typeof window !== "undefined") {
 module.exports = require("marko-widgets").defineComponent({
   template: require.resolve("./template.marko"),
 
-  getWidgetConfig: function(input) {
+  getWidgetConfig: function (input) {
     return {
       type: "widget config",
       name: input.name,
@@ -13,7 +13,7 @@ module.exports = require("marko-widgets").defineComponent({
     };
   },
 
-  getInitialState: function(input) {
+  getInitialState: function (input) {
     return {
       type: "widget state",
       name: input.name,
@@ -21,11 +21,11 @@ module.exports = require("marko-widgets").defineComponent({
     };
   },
 
-  getTemplateData: function(state) {
+  getTemplateData: function (state) {
     return state;
   },
 
-  init: function(widgetConfig) {
+  init: function (widgetConfig) {
     window.simpleWidgets.push(this);
 
     this.widgetConfig = widgetConfig;

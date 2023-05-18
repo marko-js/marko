@@ -23,7 +23,7 @@ module.exports = function defineWidget(def, renderer) {
     return def;
   }
 
-  var ComponentClass = function() {};
+  var ComponentClass = function () {};
   var proto;
   var legacyInit;
 
@@ -67,7 +67,7 @@ module.exports = function defineWidget(def, renderer) {
   proto.constructor = def.constructor = Component;
 
   Object.defineProperty(proto, "state", {
-    get: function() {
+    get: function () {
       var raw = this.___state && this.___state.___raw;
 
       if (raw && !raw.toJSON) {
@@ -76,14 +76,12 @@ module.exports = function defineWidget(def, renderer) {
 
       return raw;
     },
-    set: function(newState) {
+    set: function (newState) {
       newState = newState || {};
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         if (
-          Object.keys(newState)
-            .sort()
-            .join("") !==
+          Object.keys(newState).sort().join("") !==
           Object.keys((this.___state && this.___state.___raw) || {})
             .sort()
             .join("")
@@ -98,7 +96,7 @@ module.exports = function defineWidget(def, renderer) {
   });
 
   Object.defineProperty(proto, "__document", {
-    get: function() {
+    get: function () {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain("__document is deprecated");
@@ -108,7 +106,7 @@ module.exports = function defineWidget(def, renderer) {
   });
 
   Object.defineProperty(proto, "el", {
-    get: function() {
+    get: function () {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         if (
@@ -130,27 +128,27 @@ module.exports = function defineWidget(def, renderer) {
   proto.___legacyOnRender = proto.onRender;
   Object.defineProperty(proto, "onRender", {
     get: noop,
-    set: function(v) {
+    set: function (v) {
       proto.___legacyOnRender = v;
     }
   });
 
   proto.___legacyOnUpdate = proto.onUpdate;
   Object.defineProperty(proto, "onUpdate", {
-    get: function() {
+    get: function () {
       return modernMountOrUpdate;
     },
-    set: function(v) {
+    set: function (v) {
       proto.___legacyOnUpdate = v;
     }
   });
 
   proto.___legacyOnDestroy = proto.onDestroy;
   Object.defineProperty(proto, "onDestroy", {
-    get: function() {
+    get: function () {
       return modernOnDestory;
     },
-    set: function(v) {
+    set: function (v) {
       proto.___legacyOnDestroy = v;
     }
   });
@@ -165,7 +163,7 @@ module.exports = function defineWidget(def, renderer) {
 
   // convert legacy to modern
   proto.___modernUpdate = proto.update;
-  proto.update = function() {
+  proto.update = function () {
     if (this.___destroyed) {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
@@ -213,7 +211,7 @@ module.exports = function defineWidget(def, renderer) {
         if ("MARKO_DEBUG") {
           Object.defineProperty(el, "__widget", {
             configurable: true,
-            get: function() {
+            get: function () {
               complain("__widget is deprecated");
               return self;
             }
@@ -279,14 +277,14 @@ module.exports = function defineWidget(def, renderer) {
       var createOut = renderer.createOut;
       if (typeof renderer !== "function") {
         var rendererObject = renderer;
-        renderer = function(input, out) {
+        renderer = function (input, out) {
           var rendererFunc = rendererObject.renderer || rendererObject.render;
           rendererFunc(input, out);
         };
         renderer.createOut = createOut;
       }
 
-      renderer.render = function(input) {
+      renderer.render = function (input) {
         var out = createOut();
         renderer(input, out);
         return out.end();
@@ -305,7 +303,7 @@ module.exports = function defineWidget(def, renderer) {
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
     Object.defineProperty(Component, "_isWidget", {
-      get: function() {
+      get: function () {
         complain("_isWidget is deprecated");
         return true;
       }

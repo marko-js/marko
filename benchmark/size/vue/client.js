@@ -11,7 +11,7 @@ var App = require("./components/App");
 
 new Vue({
   el: document.body,
-  render: function(createElement) {
+  render: function (createElement) {
     return createElement(App);
   }
 });

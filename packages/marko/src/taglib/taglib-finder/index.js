@@ -67,7 +67,7 @@ function find(dirname, registeredTaglibs) {
   var added = {};
 
   var helper = {
-    addTaglib: function(taglib) {
+    addTaglib: function (taglib) {
       if (added[taglib.id]) {
         return;
       }

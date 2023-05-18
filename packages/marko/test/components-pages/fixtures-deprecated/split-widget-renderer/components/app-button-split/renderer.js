@@ -1,9 +1,9 @@
 module.exports = require("marko-widgets").defineRenderer({
   template: require.resolve("./template.marko"),
-  getInitialBody: function(input) {
+  getInitialBody: function (input) {
     return input.label || input.renderBody;
   },
-  getTemplateData: function(state, input) {
+  getTemplateData: function (state, input) {
     var rootAttrs = {};
 
     var classParts = ["app-button"];

@@ -29,18 +29,18 @@ var helpers = {
   triggerClick: triggerClick
 };
 
-it("should allow no args", function() {
+it("should allow no args", function () {
   window.components["no-args"].test(helpers);
 });
 
-it("should allow one arg", function() {
+it("should allow one arg", function () {
   window.components["one-arg"].test(helpers);
 });
 
-it("should allow one arg as array", function() {
+it("should allow one arg as array", function () {
   window.components["one-arg-array"].test(helpers);
 });
 
-it("should allow two args", function() {
+it("should allow two args", function () {
   window.components["two-args"].test(helpers);
 });

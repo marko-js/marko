@@ -19,7 +19,7 @@ var VComment = vdom.___VComment;
 var VDocumentFragment = vdom.___VDocumentFragment;
 
 var vdomHelpers = {
-  createElement: function(
+  createElement: function (
     tagName,
     attrs,
     key,
@@ -38,13 +38,13 @@ var vdomHelpers = {
       props
     );
   },
-  createText: function(value) {
+  createText: function (value) {
     return new VText(value);
   },
-  createComment: function(value) {
+  createComment: function (value) {
     return new VComment(value);
   },
-  createDocumentFragment: function() {
+  createDocumentFragment: function () {
     return new VDocumentFragment();
   },
   VElement: VElement,

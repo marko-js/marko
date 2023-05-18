@@ -21,7 +21,7 @@ function createOut(globalData, parent, state, buffer) {
   return new AsyncStream(globalData, parent, state, buffer);
 }
 
-exports.createWriter = function(writer) {
+exports.createWriter = function (writer) {
   return new AsyncStream(null, writer);
 };
 

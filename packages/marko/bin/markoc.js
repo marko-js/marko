@@ -99,7 +99,7 @@ var args = require("argly")
     "Delete all *.marko.js files in the current directory",
     "$0 . --clean"
   )
-  .validate(function(result) {
+  .validate(function (result) {
     if (result.help) {
       this.printUsage();
       process.exit(0);
@@ -116,7 +116,7 @@ var args = require("argly")
       process.exit(1);
     }
   })
-  .onError(function(err) {
+  .onError(function (err) {
     this.printUsage();
 
     if (err) {
@@ -151,7 +151,7 @@ if (force) {
 
 var paths = args.paths;
 if (paths && paths.length) {
-  paths.forEach(function(path) {
+  paths.forEach(function (path) {
     appModulePath.addPath(nodePath.resolve(cwd, path));
   });
 }
@@ -162,12 +162,12 @@ if (!ignoreRules) {
   ignoreRules = ["/node_modules", ".*"];
 }
 
-ignoreRules = ignoreRules.filter(function(s) {
+ignoreRules = ignoreRules.filter(function (s) {
   s = s.trim();
   return s && !s.match(/^#/);
 });
 
-ignoreRules = ignoreRules.map(function(pattern) {
+ignoreRules = ignoreRules.map(function (pattern) {
   return new Minimatch(pattern, mmOptions);
 });
 
@@ -223,10 +223,10 @@ function walk(files, options, done) {
   var fileCallback = options.file;
   var context = {
     errors: [],
-    beginAsync: function() {
+    beginAsync: function () {
       pending++;
     },
-    endAsync: function(err) {
+    endAsync: function (err) {
       if (err) {
         this.errors.push(err);
       }
@@ -245,17 +245,17 @@ function walk(files, options, done) {
 
   function doWalk(dir) {
     context.beginAsync();
-    fs.readdir(dir, function(err, list) {
+    fs.readdir(dir, function (err, list) {
       if (err) {
         return context.endAsync(err);
       }
 
       if (list.length) {
-        list.forEach(function(basename) {
+        list.forEach(function (basename) {
           var file = nodePath.join(dir, basename);
 
           context.beginAsync();
-          fs.stat(file, function(err, stat) {
+          fs.stat(file, function (err, stat) {
             if (err) {
               return context.endAsync(err);
             }
@@ -296,7 +296,7 @@ if (args.clean) {
   walk(
     args.files,
     {
-      file: function(file, context) {
+      file: function (file, context) {
         var basename = nodePath.basename(file);
 
         if (
@@ -305,7 +305,7 @@ if (args.clean) {
           basename.endsWith(".marko.xml.js")
         ) {
           context.beginAsync();
-          fs.unlink(file, function(err) {
+          fs.unlink(file, function (err) {
             if (err) {
               return context.endAsync(err);
             }
@@ -316,7 +316,7 @@ if (args.clean) {
         }
       }
     },
-    function() {
+    function () {
       if (deleteCount === 0) {
         console.log("No *.marko.js files were found. Already clean.");
       } else {
@@ -329,7 +329,7 @@ if (args.clean) {
   var compileCount = 0;
   var failed = [];
 
-  var compile = function(path, context) {
+  var compile = function (path, context) {
     if (found[path]) {
       return;
     }
@@ -348,7 +348,7 @@ if (args.clean) {
 
     context.beginAsync();
 
-    markoCompiler.compileFile(path, compileOptions, function(err, src) {
+    markoCompiler.compileFile(path, compileOptions, function (err, src) {
       if (err) {
         failed.push(
           'Failed to compile "' +
@@ -361,7 +361,7 @@ if (args.clean) {
       }
 
       context.beginAsync();
-      fs.writeFile(outPath, src, { encoding: "utf8" }, function(err) {
+      fs.writeFile(outPath, src, { encoding: "utf8" }, function (err) {
         if (err) {
           failed.push(
             'Failed to write "' + path + '". Error: ' + (err.stack || err)
@@ -382,7 +382,7 @@ if (args.clean) {
     walk(
       args.files,
       {
-        file: function(file, context) {
+        file: function (file, context) {
           var basename = nodePath.basename(file);
 
           if (
@@ -394,7 +394,7 @@ if (args.clean) {
           }
         }
       },
-      function(err) {
+      function (err) {
         if (err) {
           if (failed.length) {
             console.error(

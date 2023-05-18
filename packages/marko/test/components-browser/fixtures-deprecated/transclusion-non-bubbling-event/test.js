@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), { show: false });
   var container = component.getComponent("container");
 
@@ -10,7 +10,7 @@ module.exports = function(helpers) {
   var eventTarget = helpers.targetEl.querySelector("#eventTarget");
   var eventFired = false;
 
-  component.on("eventFired", function() {
+  component.on("eventFired", function () {
     eventFired = true;
   });
 

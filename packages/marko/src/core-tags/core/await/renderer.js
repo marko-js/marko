@@ -23,7 +23,7 @@ function requestData(provider, timeout) {
       );
     }
 
-    var callback = function(err, data) {
+    var callback = function (err, data) {
       if (err) {
         asyncValue.___reject(err);
       } else {
@@ -60,7 +60,7 @@ function requestData(provider, timeout) {
     error = new Error(errorMsg);
   }
   if (timeout > 0) {
-    let timeoutId = setTimeout(function() {
+    let timeoutId = setTimeout(function () {
       timeoutId = null;
       if (!error) error = new Error(errorMsg);
       error.code = "ERR_AWAIT_TIMEDOUT";
@@ -68,7 +68,7 @@ function requestData(provider, timeout) {
       asyncValue.___reject(error);
     }, timeout);
 
-    asyncValue.___done(function() {
+    asyncValue.___done(function () {
       if (timeoutId != null) {
         clearTimeout(timeoutId);
       }
@@ -139,7 +139,7 @@ module.exports = function awaitTag(input, out) {
     // - await:beforeRender
     // - await:finish
     //
-    asyncOut.emit = function(event) {
+    asyncOut.emit = function (event) {
       if (event !== "finish" && event !== "error") {
         // We don't want to proxy the finish and error events since those are
         // very specific to the AsyncWriter associated with the await instance
@@ -192,7 +192,7 @@ module.exports = function awaitTag(input, out) {
       // this event until after the code to move
       // the async fragment into place has been written
       let asyncLastOut = asyncOut.beginAsync(LAST_OPTIONS);
-      asyncOut.onLast(function() {
+      asyncOut.onLast(function () {
         var oldWriter = asyncOut.writer;
         // We swap out the writer so that writing will happen to our `asyncLastOut`
         // even though we are still passing along the original `asyncOut`. We have

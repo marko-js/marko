@@ -10,7 +10,7 @@ module.exports = function defineComponent(def, renderer) {
     return def;
   }
 
-  var ComponentClass = function() {};
+  var ComponentClass = function () {};
   var proto;
 
   var type = typeof def;

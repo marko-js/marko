@@ -1,9 +1,9 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     this.counter = 0;
   },
 
-  handleMouseMove: function(event, el) {
+  handleMouseMove: function (event, el) {
     el.innerHTML = "" + this.counter++;
   }
 };

@@ -1,6 +1,6 @@
 var template = require("marko").load(require.resolve("./template.marko"));
 
-exports.render = function(input, out) {
+exports.render = function (input, out) {
   var label = input.label || "app-fixed-id";
   template.render(
     {

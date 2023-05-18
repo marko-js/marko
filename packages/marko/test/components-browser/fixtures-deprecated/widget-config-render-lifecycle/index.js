@@ -16,12 +16,12 @@ module.exports = require("marko/legacy-components").defineComponent({
     return input;
   },
 
-  getWidgetConfig: function(input) {
+  getWidgetConfig: function (input) {
     input.calls.push("getWidgetConfig");
     return input.calls;
   },
 
-  init: function(config) {
+  init: function (config) {
     this.config = config;
   }
 });

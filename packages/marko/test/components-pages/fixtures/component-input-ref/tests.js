@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it("should serialize component input down to the browser", function() {
+it("should serialize component input down to the browser", function () {
   expect(window.barComponent.getComponent("foo")).to.equal(window.fooComponent);
   expect(window.fooComponent.input.color).to.equal("#800");
   expect(window.fooComponent.el.textContent).to.equal("The current count is 0");

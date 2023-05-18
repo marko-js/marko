@@ -4,7 +4,7 @@ var TextVDOM = require("./TextVDOM");
 var Literal = require("../../Literal");
 var he = require("he"); // Used for dealing with HTML entities
 
-module.exports = function(node, codegen, vdomUtil) {
+module.exports = function (node, codegen, vdomUtil) {
   var argument = codegen.generateCode(node.argument);
   var escape = node.escape !== false;
   var isStatic = null;

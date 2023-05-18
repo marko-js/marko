@@ -4,7 +4,7 @@ exports.templateData = {
   testDataProvider: Promise.resolve({ name: "Frank" })
 };
 
-exports.checkHtml = function(html) {
+exports.checkHtml = function (html) {
   expect(html).to.contain("Loading main...");
   expect(html).to.contain("Hello Frank");
 };

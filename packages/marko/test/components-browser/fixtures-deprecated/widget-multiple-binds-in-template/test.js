@@ -1,8 +1,8 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widgetsLookup = {};
-  window.addWidget = function(name, widget) {
+  window.addWidget = function (name, widget) {
     var widgets = widgetsLookup[name] || (widgetsLookup[name] = []);
     widgets.push(widget);
   };

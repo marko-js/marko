@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var targetEl = helpers.targetEl;
 
   var widget = helpers.mount(require.resolve("./index"), {

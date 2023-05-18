@@ -18,10 +18,10 @@ function RenderResult(out) {
 module.exports = RenderResult;
 
 var proto = (RenderResult.prototype = {
-  getComponent: function() {
+  getComponent: function () {
     return this.getComponents()[0];
   },
-  getComponents: function(selector) {
+  getComponents: function (selector) {
     if (this.___components === undefined) {
       throw Error("Not added to DOM");
     }
@@ -30,7 +30,7 @@ var proto = (RenderResult.prototype = {
 
     var components = [];
 
-    componentDefs.forEach(function(componentDef) {
+    componentDefs.forEach(function (componentDef) {
       var component = componentDef.___component;
       if (!selector || selector(component)) {
         components.push(component);
@@ -40,7 +40,7 @@ var proto = (RenderResult.prototype = {
     return components;
   },
 
-  afterInsert: function(doc) {
+  afterInsert: function (doc) {
     var out = this.___out;
     var componentsContext = out.___components;
     if (componentsContext) {
@@ -51,20 +51,20 @@ var proto = (RenderResult.prototype = {
 
     return this;
   },
-  getNode: function(doc) {
+  getNode: function (doc) {
     return this.___out.___getNode(doc);
   },
-  getOutput: function() {
+  getOutput: function () {
     return this.___out.___getOutput();
   },
-  toString: function() {
+  toString: function () {
     return this.___out.toString();
   },
   document: typeof document != "undefined" && document
 });
 
 Object.defineProperty(proto, "html", {
-  get: function() {
+  get: function () {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(
@@ -76,7 +76,7 @@ Object.defineProperty(proto, "html", {
 });
 
 Object.defineProperty(proto, "context", {
-  get: function() {
+  get: function () {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(

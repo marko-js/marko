@@ -20,7 +20,7 @@ function handleImport(taglib, importedTaglib) {
   taglib.imports.push(importedTaglib);
 
   if (importedTaglib.imports) {
-    importedTaglib.imports.forEach(function(nestedImportedTaglib) {
+    importedTaglib.imports.forEach(function (nestedImportedTaglib) {
       handleImport(taglib, nestedImportedTaglib);
     });
   }
@@ -90,7 +90,7 @@ class Taglib {
   forEachTag(callback, thisObj) {
     forEachEntry(
       this.tags,
-      function(key, tag) {
+      function (key, tag) {
         callback.call(thisObj, tag);
       },
       this

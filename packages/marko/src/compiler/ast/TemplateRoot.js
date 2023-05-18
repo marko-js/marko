@@ -2,7 +2,7 @@
 var Node = require("./Node");
 
 function createVarsArray(vars) {
-  return Object.keys(vars).map(function(varName) {
+  return Object.keys(vars).map(function (varName) {
     var varInit = vars[varName];
     return {
       id: varName,

@@ -26,7 +26,7 @@ function triggerClick(el) {
   triggerMouseEvent(el, "click");
 }
 
-it("should allow getEl() with a split component", function() {
+it("should allow getEl() with a split component", function () {
   var app = window.splitComponent;
   triggerClick(app.el);
   expect(app.clicked).to.equal(true);

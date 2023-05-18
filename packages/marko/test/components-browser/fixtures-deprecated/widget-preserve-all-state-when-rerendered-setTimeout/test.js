@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers, done) {
+module.exports = function (helpers, done) {
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
     count: 30
@@ -8,7 +8,7 @@ module.exports = function(helpers, done) {
 
   var targetEl = widget.el;
 
-  setTimeout(function() {
+  setTimeout(function () {
     widget.setState("count", 100);
     widget.update();
     expect(widget.state.count).to.equal(100);
@@ -17,7 +17,7 @@ module.exports = function(helpers, done) {
     );
   }, 100);
 
-  setTimeout(function() {
+  setTimeout(function () {
     widget.setState("count", 200);
     widget.update();
     expect(widget.state.count).to.equal(200);
@@ -27,7 +27,7 @@ module.exports = function(helpers, done) {
     done();
   }, 200);
 
-  setTimeout(function() {
+  setTimeout(function () {
     widget.setState("count", 0);
     widget.update();
     expect(widget.state.count).to.equal(0);

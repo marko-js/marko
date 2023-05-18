@@ -1,4 +1,4 @@
-module.exports = function(elNode, context) {
+module.exports = function (elNode, context) {
   const builder = context.builder;
   const provider = elNode.argument;
   elNode.argument = undefined;

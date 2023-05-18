@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {});
 
   var previousComponents = {};
@@ -30,7 +30,7 @@ module.exports = function(helpers) {
       expect(divs[i].innerHTML).to.equal(letter);
     }
 
-    Object.keys(previousComponents).forEach(function(letter) {
+    Object.keys(previousComponents).forEach(function (letter) {
       if (!(letter in newComponents)) {
         expect(previousComponents[letter].isDestroyed()).to.equal(true);
       }

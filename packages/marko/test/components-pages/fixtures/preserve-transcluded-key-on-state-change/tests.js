@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-it.skip("should update correctly", function() {
+it.skip("should update correctly", function () {
   var component = window.component;
   var originalChild = component.getComponent("child");
 

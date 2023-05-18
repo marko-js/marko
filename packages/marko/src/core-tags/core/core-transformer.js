@@ -3,7 +3,7 @@
 var coreAttrHandlers = [
   [
     "marko-preserve-whitespace",
-    function(attr, node, el) {
+    function (attr, node, el) {
       el.setPreserveWhitespace(true);
     }
   ]
@@ -24,7 +24,7 @@ class AttributeTransformer {
   }
 }
 
-coreAttrHandlers.forEach(function(attrHandler) {
+coreAttrHandlers.forEach(function (attrHandler) {
   var name = attrHandler[0];
   var func = attrHandler[1];
   AttributeTransformer.prototype[name] = func;

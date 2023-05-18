@@ -1,11 +1,11 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {});
 
   var testEventFired = false;
 
-  widget.getWidget("bar").on("testEvent", function(a, b) {
+  widget.getWidget("bar").on("testEvent", function (a, b) {
     expect(a).to.equal("a");
     expect(b).to.equal("b");
     testEventFired = true;

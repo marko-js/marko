@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   var program = builder.program;
   var identifier = builder.identifier;
   var functionDeclaration = builder.functionDeclaration;

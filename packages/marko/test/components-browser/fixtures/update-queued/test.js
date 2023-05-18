@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers, done) {
+module.exports = function (helpers, done) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank"
   });
@@ -11,7 +11,7 @@ module.exports = function(helpers, done) {
 
   expect(component.el.innerHTML).to.contain("Hello Frank!");
 
-  component.onUpdate = function() {
+  component.onUpdate = function () {
     expect(component.el.innerHTML).to.contain("Hello Jane!");
     done();
   };

@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-exports.test = function(helpers) {
+exports.test = function (helpers) {
   helpers.spawnSync(["template1.marko"]);
   helpers.spawnSync(["template2.marko"]);
 

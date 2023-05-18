@@ -3,49 +3,49 @@ var lifecycle = require("./lifecycle-recorder");
 module.exports = require("marko/legacy-components").defineComponent({
   template: require.resolve("./template.marko"),
 
-  getInitialState: function(input) {
+  getInitialState: function (input) {
     return {
       shouldBind: input.shouldBind,
       name: input.name
     };
   },
 
-  getTemplateData: function(state) {
+  getTemplateData: function (state) {
     return {
       shouldBind: state.shouldBind,
       name: state.name
     };
   },
 
-  init: function() {
+  init: function () {
     this.lifecycleEvents = [];
     lifecycle.record(this.id, "init");
   },
 
-  onRender: function(eventArg) {
+  onRender: function (eventArg) {
     lifecycle.record(
       this.id,
       eventArg.firstRender ? "onRender:firstRender" : "onRender"
     );
   },
 
-  setName: function(newName) {
+  setName: function (newName) {
     this.setState("name", newName);
   },
 
-  onBeforeDestroy: function() {
+  onBeforeDestroy: function () {
     lifecycle.record(this.id, "onBeforeDestroy");
   },
 
-  onDestroy: function() {
+  onDestroy: function () {
     lifecycle.record(this.id, "onDestroy");
   },
 
-  onBeforeUpdate: function() {
+  onBeforeUpdate: function () {
     lifecycle.record(this.id, "onBeforeUpdate");
   },
 
-  onUpdate: function() {
+  onUpdate: function () {
     lifecycle.record(this.id, "onUpdate");
   }
 });

@@ -1,8 +1,8 @@
 "use strict";
 
 var attr = require("../../../../runtime/html/helpers/attr");
-var escapeDoubleQuoteAttrValue = require("../../../../runtime/html/helpers/escape-quotes")
-  .d;
+var escapeDoubleQuoteAttrValue =
+  require("../../../../runtime/html/helpers/escape-quotes").d;
 
 function isStringLiteral(node) {
   return node.type === "Literal" && typeof node.value === "string";

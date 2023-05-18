@@ -1,5 +1,5 @@
 module.exports = {
-  onMount: function() {
+  onMount: function () {
     this.name = "app-foo";
     this.getComponent("bar").appendHtml("FOO");
   }

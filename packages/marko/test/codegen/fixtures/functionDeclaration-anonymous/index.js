@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   return builder.functionDeclaration(
     null,
     ["num1", "num2"],

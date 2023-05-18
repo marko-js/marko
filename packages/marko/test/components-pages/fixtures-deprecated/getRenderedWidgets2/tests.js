@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 var markoComponents = require("marko/components");
 
-it("should serialize component config down to the browser", function() {
+it("should serialize component config down to the browser", function () {
   expect(window.simpleComponents).to.deep.equal([]);
 
   var components = window.components;

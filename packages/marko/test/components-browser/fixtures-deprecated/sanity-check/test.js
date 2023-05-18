@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), { name: "Frank" });
 
   expect(widget.el.innerHTML).to.contain("Hello Frank!");

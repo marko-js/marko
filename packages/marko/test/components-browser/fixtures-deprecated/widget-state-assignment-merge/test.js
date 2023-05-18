@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./"));
   expect(Object.keys(widget.state.toJSON())).has.length(2);
   expect(widget.state).has.property("size", "normal");

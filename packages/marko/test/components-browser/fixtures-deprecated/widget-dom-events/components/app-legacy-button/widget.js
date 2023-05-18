@@ -14,7 +14,7 @@ function Widget() {
 }
 
 Widget.prototype = {
-  handleRootMouseDown: function(event, el) {
+  handleRootMouseDown: function (event, el) {
     this.clicked = true;
     expect(el.getAttribute("class")).to.equal("app-legacy-button");
     this.log("click");

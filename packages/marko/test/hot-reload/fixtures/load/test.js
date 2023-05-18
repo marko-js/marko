@@ -1,7 +1,7 @@
 var fs = require("fs");
 var nodePath = require("path");
 
-exports.check = function(marko, hotReload, expect, snapshot) {
+exports.check = function (marko, hotReload, expect, snapshot) {
   var srcTemplatePath = nodePath.join(__dirname, "template.marko");
   var templateSrc = fs.readFileSync(srcTemplatePath, { encoding: "utf8" });
 

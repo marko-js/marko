@@ -1,5 +1,5 @@
-var getComponentsContext = require("../ComponentsContext")
-  .___getComponentsContext;
+var getComponentsContext =
+  require("../ComponentsContext").___getComponentsContext;
 var componentsUtil = require("../util");
 var componentLookup = componentsUtil.___componentLookup;
 var registry = require("../registry");
@@ -134,7 +134,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
     componentDef.___isExisting = isExisting;
     componentDef.___isLegacy = true;
 
-    componentDef.t = function(typeName) {
+    componentDef.t = function (typeName) {
       if (typeName) {
         if (registry.___isServer) {
           var oldComponent = component;

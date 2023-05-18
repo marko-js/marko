@@ -23,7 +23,7 @@ function cleaResolvePathCache() {
   }
 
   var keys = Object.keys(modulePathCache);
-  keys.forEach(function(key) {
+  keys.forEach(function (key) {
     delete modulePathCache[key];
   });
 }
@@ -42,7 +42,7 @@ function tryReloadTemplate(path) {
   }
 }
 
-exports.enable = function(options) {
+exports.enable = function (options) {
   if (runtime.__hotReloadEnabled) {
     // Marko has already been monkey-patched. Nothing to do!
     return;
@@ -108,11 +108,11 @@ exports.enable = function(options) {
     var actualRenderFunc;
 
     Object.defineProperty(originalTemplate, "_", {
-      get: function() {
+      get: function () {
         return actualRenderFunc;
       },
 
-      set: function(renderFunc) {
+      set: function (renderFunc) {
         actualRenderFunc = createHotReloadProxy(
           renderFunc,
           originalTemplate,
@@ -144,7 +144,7 @@ function normalizeExtension(extension) {
   return extension;
 }
 
-exports.handleFileModified = function(path, options) {
+exports.handleFileModified = function (path, options) {
   if (!fs.existsSync(path)) {
     console.log(
       "[marko/hot-reload] WARNING cannot resolve template path: ",

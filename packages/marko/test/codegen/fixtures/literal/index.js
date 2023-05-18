@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(builder) {
+module.exports = function (builder) {
   return builder.vars({
     aString: builder.literal("abc"),
     aNumber: builder.literal(123),

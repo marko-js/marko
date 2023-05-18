@@ -42,7 +42,7 @@ function defineRenderer(def) {
     };
   }
 
-  renderer.render = function(input) {
+  renderer.render = function (input) {
     var out = createOut();
     renderer(input, out);
     return out.end();

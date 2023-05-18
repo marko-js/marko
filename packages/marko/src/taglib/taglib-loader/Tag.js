@@ -74,13 +74,13 @@ class Tag {
       return;
     }
 
-    forEachEntry(this.importedVariables, function(key, importedVariable) {
+    forEachEntry(this.importedVariables, function (key, importedVariable) {
       callback.call(thisObj, importedVariable);
     });
   }
 
   forEachTransformer(callback, thisObj) {
-    forEachEntry(this.transformers, function(key, transformer) {
+    forEachEntry(this.transformers, function (key, transformer) {
       callback.call(thisObj, transformer);
     });
   }
@@ -249,7 +249,7 @@ class Tag {
       return;
     }
 
-    forEachEntry(this.nestedTags, function(key, nestedTag) {
+    forEachEntry(this.nestedTags, function (key, nestedTag) {
       callback.call(thisObj, nestedTag);
     });
   }
@@ -259,7 +259,7 @@ class Tag {
 
   forEachMigrator(callback, thisObj) {
     this.migratorPaths
-      .map(function(path) {
+      .map(function (path) {
         return (this.migrators[path] =
           this.migrators[path] || markoModules.require(path));
       }, this)
@@ -278,7 +278,7 @@ class Tag {
       var loadedCodeGenerator = markoModules.require(
         this.codeGeneratorModulePath
       );
-      nodeFactory = function(elNode) {
+      nodeFactory = function (elNode) {
         elNode.setType(codeGeneratorModulePath);
         elNode.setCodeGenerator(loadedCodeGenerator);
         return elNode;

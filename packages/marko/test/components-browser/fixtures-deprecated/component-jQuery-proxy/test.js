@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers, done) {
+module.exports = function (helpers, done) {
   require("marko/jquery").patchComponent(window.$);
 
   try {
@@ -14,7 +14,7 @@ module.exports = function(helpers, done) {
     expect(component.$("button").html()).to.equal("Test Button");
     expect(component.$("li", "ul").length).to.equal(3);
 
-    component.$(function() {
+    component.$(function () {
       done();
     });
   } finally {

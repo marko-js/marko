@@ -1,23 +1,23 @@
 module.exports = require("marko-widgets").defineComponent({
   template: require("./template.marko"),
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       name: "app-foo"
     };
   },
 
-  init: function() {
+  init: function () {
     window.fooWidget = this;
     this.mouseMoveEvent = null;
     this.clickEvent = null;
   },
 
-  handleButtonMouseMove: function() {
+  handleButtonMouseMove: function () {
     this.mouseMoveEvent = arguments;
   },
 
-  handleButtonClick: function() {
+  handleButtonClick: function () {
     this.clickEvent = arguments;
   }
 });

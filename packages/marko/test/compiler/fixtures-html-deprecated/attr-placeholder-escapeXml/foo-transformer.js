@@ -1,4 +1,4 @@
-module.exports = function(el, context) {
+module.exports = function (el, context) {
   var builder = context.builder;
   var fooValue = el.getAttributeValue("foo");
 

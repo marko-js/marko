@@ -1,11 +1,11 @@
 var template = require("./template.marko");
 
-exports.render = function(input, out) {
+exports.render = function (input, out) {
   var tabs = [],
     activeFound = false;
 
   input.renderBody(out, {
-    addTab: function(tab) {
+    addTab: function (tab) {
       if (tab.active) {
         tab.activeFound = true;
       }
@@ -19,7 +19,7 @@ exports.render = function(input, out) {
     tabs[0].active = true;
   }
 
-  tabs.forEach(function(tab) {
+  tabs.forEach(function (tab) {
     tab.liClass = tab.active ? "active" : "";
     tab.divClass = tab.active ? "tab-pane active" : "tab-pane";
   });

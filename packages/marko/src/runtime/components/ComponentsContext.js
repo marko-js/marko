@@ -20,9 +20,8 @@ function ComponentsContext(out, parentComponentsContext) {
   } else {
     globalComponentsContext = out.global.___components;
     if (globalComponentsContext === undefined) {
-      out.global.___components = globalComponentsContext = new GlobalComponentsContext(
-        out
-      );
+      out.global.___components = globalComponentsContext =
+        new GlobalComponentsContext(out);
     }
   }
 
@@ -36,7 +35,7 @@ function ComponentsContext(out, parentComponentsContext) {
 }
 
 ComponentsContext.prototype = {
-  ___initComponents: function(doc) {
+  ___initComponents: function (doc) {
     var componentDefs = this.___components;
 
     ComponentsContext.___initClientRendered(componentDefs, doc);

@@ -26,7 +26,7 @@ function create(tokens) {
   );
 
   return {
-    forEachToken: function(value, callback) {
+    forEachToken: function (value, callback) {
       tokensRegExp.lastIndex = 0; // Start searching from the beginning again
       var matches;
       while ((matches = tokensRegExp.exec(value))) {

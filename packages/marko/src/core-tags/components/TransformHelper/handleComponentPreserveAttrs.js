@@ -11,7 +11,7 @@ module.exports = function handleComponentPreserveAttrs() {
 
   var noUpdateAttrs = [];
 
-  el.forEachAttribute(function(attr) {
+  el.forEachAttribute(function (attr) {
     var attrName = attr.name;
 
     if (attrName && attrName.endsWith(NO_UPDATE_ATTR_SUFFIX)) {

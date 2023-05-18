@@ -1,6 +1,6 @@
 var expect = require("chai").expect;
 
-module.exports = function(helpers) {
+module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {});
 
   function getTimestamps() {
@@ -19,8 +19,8 @@ module.exports = function(helpers) {
       preserveBodyClass: widget.el
         .querySelector(".preserve-body")
         .getAttribute("data-renderId"),
-      preserveBodyClassBody: widget.el.querySelector(".preserve-body")
-        .innerHTML,
+      preserveBodyClassBody:
+        widget.el.querySelector(".preserve-body").innerHTML,
       widgetClass: require("marko/legacy-components").getWidgetForEl(
         widget.el.querySelector(".widget-no-id")
       ).state.name
