@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.27.10
+
+### Patch Changes
+
+- [#1957](https://github.com/marko-js/marko/pull/1957) [`820fa12f4`](https://github.com/marko-js/marko/commit/820fa12f40f33abc1811f148441ff834cfe4654b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix compiler config type definitions
+
 ## 5.27.9
 
 ### Patch Changes
