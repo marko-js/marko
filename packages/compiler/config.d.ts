@@ -1,4 +1,4 @@
-const Config: {
+declare const Config: {
   output?: "html" | "dom" | "hydrate" | "migrate" | "source";
   stripTypes?: boolean;
   runtimeId?: string | null;
@@ -13,7 +13,7 @@ const Config: {
   resolveVirtualDependency?:
     | ((
         filename: string,
-        dep: { virtualPath: string; code: string; map?: SourceMap }
+        dep: { virtualPath: string; code: string; map?: any }
       ) => string)
     | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
