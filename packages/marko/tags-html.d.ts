@@ -2562,6 +2562,7 @@ declare global {
        */
       onAbort?: AttrEventHandler<Event, T>;
       "on-abort"?: this["onAbort"];
+      onabort?: AttrString;
 
       /**
        * Fired when an Animation unexpectedly aborts.
@@ -2598,6 +2599,7 @@ declare global {
        */
       onAuxClick?: AttrEventHandler<PointerEvent, T>;
       "on-auxclick"?: this["onAuxClick"];
+      onauxclick?: AttrString;
 
       /**
        * Fires when the value of an <input>, or <textarea> element is about to be modified.
@@ -2605,6 +2607,23 @@ declare global {
        */
       onBeforeInput?: AttrEventHandler<InputEvent, T>;
       "on-beforeinput"?: this["onBeforeInput"];
+      onbeforeinput?: AttrString;
+
+      /**
+       * Fired on elements with the hidden=until-found attribute before they are revealed.
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
+       */
+      onBeforeMatch?: AttrEventHandler<Event, T>;
+      "on-beforematch"?: this["onBeforeMatch"];
+      onbeforematch?: AttrString;
+
+      /**
+       * Fired on elements with the popover attribute when they are transitioning between showing and hidden
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
+       */
+      onBeforeToggle?: AttrEventHandler<Event, T>;
+      "on-beforetoggle"?: this["onBeforeToggle"];
+      onbeforetoggle?: AttrString;
 
       /**
        * Fires when a node loses focus.
@@ -2612,6 +2631,15 @@ declare global {
        */
       onBlur?: AttrEventHandler<Event, T>;
       "on-blur"?: this["onBlur"];
+      onblur?: AttrString;
+
+      /**
+       * Fired at controls when the user commits a value change (see also the input event)
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-cancel
+       */
+      onCancel?: AttrEventHandler<Event, T>;
+      "on-cancel"?: this["onCancel"];
+      oncancel?: AttrString;
 
       /**
        * Fires when the user agent can resume playback of the media data,
@@ -2621,6 +2649,7 @@ declare global {
        */
       onCanPlay?: AttrEventHandler<Event, T>;
       "on-canplay"?: this["onCanPlay"];
+      oncanplay?: AttrString;
 
       /**
        * Fires when the user agent can play through the media data without having to stop for further buffering of content.
@@ -2628,6 +2657,7 @@ declare global {
        */
       onCanPlayThrough?: AttrEventHandler<Event, T>;
       "on-canplaythrough"?: this["onCanPlayThrough"];
+      oncanplaythrough?: AttrString;
 
       /**
        * Fired when the form elements value is modified.
@@ -2635,6 +2665,7 @@ declare global {
        */
       onChange?: AttrEventHandler<Event, T>;
       "on-change"?: this["onChange"];
+      onchange?: AttrString;
 
       /**
        * Normally a mouse event; also synthetically fired at an element before its activation behavior is run,
@@ -2643,6 +2674,15 @@ declare global {
        */
       onClick?: AttrEventHandler<PointerEvent, T>;
       "on-click"?: this["onClick"];
+      onclick?: AttrString;
+
+      /**
+       * Fired at dialog elements when they are closed
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-close
+       */
+      onClose?: AttrEventHandler<Event, T>;
+      "on-close"?: this["onClose"];
+      onclose?: AttrString;
 
       /**
        * Fired when a text composition system such as an input method editor completes or cancels the current composition session.
@@ -2667,12 +2707,29 @@ declare global {
       "on-compositionupdate"?: this["onCompositionUpdate"];
 
       /**
+       * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
+       */
+      onContextLost?: AttrEventHandler<Event, T>;
+      "on-contextlost"?: this["onContextLost"];
+      oncontextlost?: AttrString;
+
+      /**
        * Fired when the user attempts to open a context menu.
        * This event is typically triggered by clicking the right mouse button, or by pressing the context menu key.
        * @see https://w3c.github.io/uievents/#event-type-contextmenu
        */
       onContextMenu?: AttrEventHandler<PointerEvent, T>;
       "on-contextmenu"?: this["onContextMenu"];
+      oncontextmenu?: AttrString;
+
+      /**
+       * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is restored after being lost
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
+       */
+      onContextRestored?: AttrEventHandler<Event, T>;
+      "on-contextrestored"?: this["onContextRestored"];
+      oncontextrestored?: AttrString;
 
       /**
        * Fired when the user copies the content of an element.
@@ -2680,6 +2737,15 @@ declare global {
        */
       onCopy?: AttrEventHandler<ClipboardEvent, T>;
       "on-copy"?: this["onCopy"];
+      oncopy?: AttrString;
+
+      /**
+       * Fired when one or more cues in the track have become active or stopped being active.
+       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
+       */
+      onCueChange?: AttrEventHandler<Event, T>;
+      "on-cuechange"?: this["onCueChange"];
+      oncuechange?: AttrString;
 
       /**
        * Fired when the user cuts the content of an element.
@@ -2687,6 +2753,7 @@ declare global {
        */
       onCut?: AttrEventHandler<ClipboardEvent, T>;
       "on-cut"?: this["onCut"];
+      oncut?: AttrString;
 
       /**
        * Fired when the user double-clicks on an element.
@@ -2694,6 +2761,7 @@ declare global {
        */
       onDblClick?: AttrEventHandler<MouseEvent, T>;
       "on-dblclick"?: this["onDblClick"];
+      ondblclick?: AttrString;
 
       /**
        * Fired every few hundred milliseconds as an element or text selection is being dragged by the user.
@@ -2701,6 +2769,7 @@ declare global {
        */
       onDrag?: AttrEventHandler<DragEvent, T>;
       "on-drag"?: this["onDrag"];
+      ondrag?: AttrString;
 
       /**
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
@@ -2708,6 +2777,7 @@ declare global {
        */
       onDragEnd?: AttrEventHandler<DragEvent, T>;
       "on-dragend"?: this["onDragEnd"];
+      ondragend?: AttrString;
 
       /**
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
@@ -2715,6 +2785,7 @@ declare global {
        */
       onDragEnter?: AttrEventHandler<DragEvent, T>;
       "on-dragenter"?: this["onDragEnter"];
+      ondragenter?: AttrString;
 
       /**
        * Fired when a dragged element or text selection leaves a valid drop target.
@@ -2722,6 +2793,7 @@ declare global {
        */
       onDragLeave?: AttrEventHandler<DragEvent, T>;
       "on-dragleave"?: this["onDragLeave"];
+      ondragleave?: AttrString;
 
       /**
        * Fired an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
@@ -2729,6 +2801,7 @@ declare global {
        */
       onDragOver?: AttrEventHandler<DragEvent, T>;
       "on-dragover"?: this["onDragOver"];
+      ondragover?: AttrString;
 
       /**
        * Fired when an element or text selection has started being dragged.
@@ -2736,6 +2809,7 @@ declare global {
        */
       onDragStart?: AttrEventHandler<DragEvent, T>;
       "on-dragstart"?: this["onDragStart"];
+      ondragstart?: AttrString;
 
       /**
        * Fired when an element or text selection is dropped on a valid drop target.
@@ -2743,6 +2817,7 @@ declare global {
        */
       onDrop?: AttrEventHandler<DragEvent, T>;
       "on-drop"?: this["onDrop"];
+      ondrop?: AttrString;
 
       /**
        * Fired when the duration attribute of a media element has just been updated.
@@ -2750,6 +2825,7 @@ declare global {
        */
       onDurationChange?: AttrEventHandler<Event, T>;
       "on-durationchange"?: this["onDurationChange"];
+      ondurationchange?: AttrString;
 
       /**
        * Fired when a media element's playback stops because its source data has been fully consumed and not looped.
@@ -2757,6 +2833,7 @@ declare global {
        */
       onEmptied?: AttrEventHandler<Event, T>;
       "on-emptied"?: this["onEmptied"];
+      onemptied?: AttrString;
 
       /**
        * Fired when an encrypted media stream is encountered and the user agent recognizes the stream's encryption scheme.
@@ -2771,6 +2848,7 @@ declare global {
        */
       onEnded?: AttrEventHandler<Event, T>;
       "on-ended"?: this["onEnded"];
+      onended?: AttrString;
 
       /**
        * Fired when an error occurs while fetching an external resource, such as a script, image, or video.
@@ -2778,6 +2856,7 @@ declare global {
        */
       onError?: AttrEventHandler<ErrorEvent | Event, T>;
       "on-error"?: this["onError"];
+      onerror?: AttrString;
 
       /**
        * Fired when an element receives focus, either by user input or via script.
@@ -2785,6 +2864,7 @@ declare global {
        */
       onFocus?: AttrEventHandler<FocusEvent, T>;
       "on-focus"?: this["onFocus"];
+      onfocus?: AttrString;
 
       /**
        * Fires when an element has received focus, after the focus event. The two events differ in that focusin bubbles, while focus does not.
@@ -2801,6 +2881,14 @@ declare global {
        */
       onFocusOut?: AttrEventHandler<FocusEvent, T>;
       "on-focusout"?: this["onFocusOut"];
+
+      /**
+       * Fired at a form element when it is constructing the entry list
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
+       */
+      onFormData?: AttrEventHandler<FormDataEvent, T>;
+      "on-formdata"?: this["onFormData"];
+      onformdata?: AttrString;
 
       /**
        * Fired immediately after an Element switches into or out of fullscreen mode.
@@ -2831,6 +2919,7 @@ declare global {
        */
       onInput?: AttrEventHandler<InputEvent, T>;
       "on-input"?: this["onInput"];
+      oninput?: AttrString;
 
       /**
        * Fired when a form element is found to be invalid during submission or constraint validation.
@@ -2838,6 +2927,7 @@ declare global {
        */
       onInvalid?: AttrEventHandler<Event, T>;
       "on-invalid"?: this["onInvalid"];
+      oninvalid?: AttrString;
 
       /**
        * Fired when a key is first pressed down.
@@ -2845,6 +2935,7 @@ declare global {
        */
       onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
       "on-keydown"?: this["onKeyDown"];
+      onkeydown?: AttrString;
 
       /**
        * Fired when a key is pressed down and then released, while the element has focus.
@@ -2852,6 +2943,7 @@ declare global {
        */
       onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
       "on-keypress"?: this["onKeyPress"];
+      onkeypress?: AttrString;
 
       /**
        * Fired when a key is released after being pressed down.
@@ -2859,6 +2951,7 @@ declare global {
        */
       onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
       "on-keyup"?: this["onKeyUp"];
+      onkeyup?: AttrString;
 
       /**
        * Fired when an element or resource, such as an image, has completely loaded.
@@ -2866,6 +2959,7 @@ declare global {
        */
       onLoad?: AttrEventHandler<Event, T>;
       "on-load"?: this["onLoad"];
+      onload?: AttrString;
 
       /**
        * Fired when the user agent can render the media data at the current playback position for the first time.
@@ -2873,6 +2967,7 @@ declare global {
        */
       onLoadedData?: AttrEventHandler<Event, T>;
       "on-loadeddata"?: this["onLoadedData"];
+      onloadeddata?: AttrString;
 
       /**
        * Fired when the user agent has just determined the duration and dimensions of the media resource.
@@ -2880,6 +2975,7 @@ declare global {
        */
       onLoadedMetadata?: AttrEventHandler<Event, T>;
       "on-loadedmetadata"?: this["onLoadedMetadata"];
+      onloadedmetadata?: AttrString;
 
       /**
        * Fired when the user agent begins looking for media data, before the media has begun to load.
@@ -2887,6 +2983,7 @@ declare global {
        */
       onLoadStart?: AttrEventHandler<Event, T>;
       "on-loadstart"?: this["onLoadStart"];
+      onloadstart?: AttrString;
 
       /**
        * Fired when a captured pointer is released.
@@ -2901,6 +2998,7 @@ declare global {
        */
       onMouseDown?: AttrEventHandler<MouseEvent, T>;
       "on-mousedown"?: this["onMouseDown"];
+      onmousedown?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element.
@@ -2908,6 +3006,7 @@ declare global {
        */
       onMouseEnter?: AttrEventHandler<MouseEvent, T>;
       "on-mouseenter"?: this["onMouseEnter"];
+      onmouseenter?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element.
@@ -2915,6 +3014,7 @@ declare global {
        */
       onMouseLeave?: AttrEventHandler<MouseEvent, T>;
       "on-mouseleave"?: this["onMouseLeave"];
+      onmouseleave?: AttrString;
 
       /**
        * Fired when a pointing device is moved over an element.
@@ -2922,6 +3022,7 @@ declare global {
        */
       onMouseMove?: AttrEventHandler<MouseEvent, T>;
       "on-mousemove"?: this["onMouseMove"];
+      onmousemove?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element or off one of its children.
@@ -2929,6 +3030,7 @@ declare global {
        */
       onMouseOut?: AttrEventHandler<MouseEvent, T>;
       "on-mouseout"?: this["onMouseOut"];
+      onmouseout?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element or onto one of its children.
@@ -2936,6 +3038,7 @@ declare global {
        */
       onMouseOver?: AttrEventHandler<MouseEvent, T>;
       "on-mouseover"?: this["onMouseOver"];
+      onmouseover?: AttrString;
 
       /**
        * Fired when a pointing device button is released over an element.
@@ -2943,6 +3046,7 @@ declare global {
        */
       onMouseUp?: AttrEventHandler<MouseEvent, T>;
       "on-mouseup"?: this["onMouseUp"];
+      onmouseup?: AttrString;
 
       /**
        * Fired when the user has completed a "paste" action, usually through a context menu or keyboard shortcut.
@@ -2950,6 +3054,7 @@ declare global {
        */
       onPaste?: AttrEventHandler<ClipboardEvent, T>;
       "on-paste"?: this["onPaste"];
+      onpaste?: AttrString;
 
       /**
        * Fired when playback of a media element is paused.
@@ -2957,6 +3062,7 @@ declare global {
        */
       onPause?: AttrEventHandler<Event, T>;
       "on-pause"?: this["onPause"];
+      onpause?: AttrString;
 
       /**
        * Fired when playback of a media element is ready to start after having been paused.
@@ -2964,6 +3070,7 @@ declare global {
        */
       onPlay?: AttrEventHandler<Event, T>;
       "on-play"?: this["onPlay"];
+      onplay?: AttrString;
 
       /**
        * Fired when playback of a media element is ready to start, or when playback is resumed after a pause event.
@@ -2971,6 +3078,7 @@ declare global {
        */
       onPlaying?: AttrEventHandler<Event, T>;
       "on-playing"?: this["onPlaying"];
+      onplaying?: AttrString;
 
       /**
        * Fired when the pointing device's hardware triggers a cancellation of the pointer event, such as due to a system event.
@@ -3034,6 +3142,7 @@ declare global {
        */
       onProgress?: AttrEventHandler<Event, T>;
       "on-progress"?: this["onProgress"];
+      onprogress?: AttrString;
 
       /**
        * Fired when the playback rate of a media element has changed.
@@ -3041,6 +3150,7 @@ declare global {
        */
       onRateChange?: AttrEventHandler<Event, T>;
       "on-ratechange"?: this["onRateChange"];
+      onratechange?: AttrString;
 
       /**
        * Fired when a form is reset, either by user interaction or through a script.
@@ -3048,6 +3158,15 @@ declare global {
        */
       onReset?: AttrEventHandler<Event, T>;
       "on-reset"?: this["onReset"];
+      onreset?: AttrString;
+
+      /**
+       * Fired at the Window when the viewport is resized. Fired at VisualViewport when the visual viewport is resized or the layout viewport is scaled.
+       * @see https://drafts.csswg.org/cssom-view/#eventdef-window-resize
+       */
+      onResize?: AttrEventHandler<Event, T>;
+      "on-resize"?: this["onResize"];
+      onresize?: AttrString;
 
       /**
        * Fired when an element's scrollbar is being scrolled.
@@ -3055,6 +3174,7 @@ declare global {
        */
       onScroll?: AttrEventHandler<Event, T>;
       "on-scroll"?: this["onScroll"];
+      onscroll?: AttrString;
 
       /**
        * Fired when element scrolling has completed. Scrolling is considered completed when the scroll position has no more pending updates and the user has completed their gesture.
@@ -3062,6 +3182,18 @@ declare global {
        */
       onScrollEnd?: AttrEventHandler<Event, T>;
       "on-scrollend"?: this["onScrollEnd"];
+      onscrollend?: AttrString;
+
+      /**
+       * Fired when a security policy violation occurs, such as when an attempted resource load is blocked due to the security settings of the browser or when an inline script violates the Content Security Policy (CSP) of the page.
+       * @see https://w3c.github.io/webappsec-csp/#eventdef-globaleventhandlers-securitypolicyviolation
+       */
+      onSecurityPolicyViolation?: AttrEventHandler<
+        SecurityPolicyViolationEvent,
+        T
+      >;
+      "on-securitypolicyviolation"?: this["onSecurityPolicyViolation"];
+      onsecuritypolicyviolation?: AttrString;
 
       /**
        * Fired when a seek operation on a media element completes.
@@ -3069,6 +3201,7 @@ declare global {
        */
       onSeeked?: AttrEventHandler<Event, T>;
       "on-seeked"?: this["onSeeked"];
+      onseeked?: AttrString;
 
       /**
        * Fired when a seek operation on a media element begins.
@@ -3076,6 +3209,7 @@ declare global {
        */
       onSeeking?: AttrEventHandler<Event, T>;
       "on-seeking"?: this["onSeeking"];
+      onseeking?: AttrString;
 
       /**
        * Fired when some text is selected within an input or textarea element.
@@ -3083,6 +3217,15 @@ declare global {
        */
       onSelect?: AttrEventHandler<Event, T>;
       "on-select"?: this["onSelect"];
+      onselect?: AttrString;
+
+      /**
+       * Fired when a <slot> element's distributed nodes change.
+       * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
+       */
+      onSlotChange?: AttrEventHandler<Event, T>;
+      "on-slotchange"?: this["onSlotChange"];
+      onslotchange?: AttrString;
 
       /**
        * Fired when a media element's data downloading has been stalled due to an issue, such as a lack of data.
@@ -3090,6 +3233,15 @@ declare global {
        */
       onStalled?: AttrEventHandler<Event, T>;
       "on-stalled"?: this["onStalled"];
+      onstalled?: AttrString;
+
+      /**
+       * Fired at a form element when it is submitted
+       * @see https://html.spec.whatwg.org/multipage/indices.html#event-submit
+       */
+      onSubmit?: AttrEventHandler<SubmitEvent, T>;
+      "on-submit"?: this["onSubmit"];
+      onsubmit?: AttrString;
 
       /**
        * Fired when the user agent intentionally does not download media data.
@@ -3097,6 +3249,7 @@ declare global {
        */
       onSuspend?: AttrEventHandler<Event, T>;
       "on-suspend"?: this["onSuspend"];
+      onsuspend?: AttrString;
 
       /**
        * Fired when the current playback position of a media element changes as part of normal playback or due to a seek operation.
@@ -3104,6 +3257,7 @@ declare global {
        */
       onTimeUpdate?: AttrEventHandler<Event, T>;
       "on-timeupdate"?: this["onTimeUpdate"];
+      ontimeupdate?: AttrString;
 
       /**
        * Fired at details elements when they open or close; fired on elements with the popover attribute when they are transitioning between showing and hidden
@@ -3111,6 +3265,7 @@ declare global {
        */
       onToggle?: AttrEventHandler<Event, T>;
       "on-toggle"?: this["onToggle"];
+      ontoggle?: AttrString;
 
       /**
        * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
@@ -3174,6 +3329,7 @@ declare global {
        */
       onVolumeChange?: AttrEventHandler<Event, T>;
       "on-volumechange"?: this["onVolumeChange"];
+      onvolumechange?: AttrString;
 
       /**
        * Fired when a media element is waiting for data to continue playback, such as when buffering.
@@ -3181,6 +3337,7 @@ declare global {
        */
       onWaiting?: AttrEventHandler<Event, T>;
       "on-waiting"?: this["onWaiting"];
+      onwaiting?: AttrString;
 
       /**
        * Fired when a user rotates a mouse wheel or similar input device over an element.
@@ -3188,6 +3345,7 @@ declare global {
        */
       onWheel?: AttrEventHandler<WheelEvent, T>;
       "on-wheel"?: this["onWheel"];
+      onwheel?: AttrString;
 
       /**
        * data-* global attributes form a class of attributes called custom data attributes, that allow proprietary
