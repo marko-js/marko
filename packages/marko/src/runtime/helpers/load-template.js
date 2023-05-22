@@ -1,3 +1,3 @@
 "use strict";
 
-module.exports = require("../../loader");
+module.exports = require("@internal/loader");

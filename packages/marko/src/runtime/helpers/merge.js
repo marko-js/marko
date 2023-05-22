@@ -1,9 +1,11 @@
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
 /**
  * Merges object properties
  */
 module.exports = function merge(into, source) {
   for (var k in source) {
-    if (source.hasOwnProperty(k) && !into.hasOwnProperty(k)) {
+    if (hasOwnProperty.call(source, k) && !hasOwnProperty.call(into, k)) {
       into[k] = source[k];
     }
   }

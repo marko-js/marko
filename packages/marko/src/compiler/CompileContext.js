@@ -82,10 +82,7 @@ const helpers = {
     vdom: "marko/runtime/components/legacy/defineComponent-legacy",
     html: "marko/runtime/helpers/noop"
   },
-  "defineWidget-legacy": {
-    html: "marko/runtime/components/legacy/defineWidget-legacy",
-    vdom: "marko/runtime/components/legacy/defineWidget-legacy-browser"
-  },
+  "defineWidget-legacy": "marko/runtime/components/legacy/defineWidget-legacy",
   dynamicTag: "marko/runtime/helpers/dynamic-tag",
   escapeXml: {
     html: {
@@ -117,10 +114,8 @@ const helpers = {
   renderer: "marko/runtime/components/renderer",
   rendererLegacy: "marko/runtime/components/legacy/renderer-legacy",
   registerComponent: {
-    vdom: {
-      module: "marko/runtime/components/registry-browser",
-      method: "r"
-    }
+    module: "marko/runtime/components/registry",
+    method: "r"
   },
   str: "marko/runtime/helpers/to-string",
   styleValue: "marko/runtime/helpers/style-value",

@@ -2,7 +2,7 @@ var eventDelegation = require("./event-delegation");
 var delegateEvent = eventDelegation.___delegateEvent;
 var getEventFromEl = eventDelegation.___getEventFromEl;
 
-// var componentsUtil = require('./util');
+// var componentsUtil = require('@internal/components-util');
 // var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 // var destroyComponentForNode = componentsUtil.___destroyComponentForNode;
 

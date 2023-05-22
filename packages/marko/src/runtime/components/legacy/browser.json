@@ -2,7 +2,7 @@
   "dependencies": [
     {
       "type": "require",
-      "path": "./index-browser",
+      "path": "./index",
       "run": true
     }
   ]

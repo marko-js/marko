@@ -2,8 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/vdom").t(),
     marko_classValue = require("marko/src/runtime/helpers/class-value"),
-    components_registry_browser = require("marko/src/runtime/components/registry-browser"),
-    marko_registerComponent = components_registry_browser.r,
+    components_registry = require("marko/src/runtime/components/registry"),
+    marko_registerComponent = components_registry.r,
     marko_componentType = marko_registerComponent("/marko-test$1.0.0/vdom-compiler/fixtures/attr-class-expression/template.marko", function() {
       return module.exports;
     }),

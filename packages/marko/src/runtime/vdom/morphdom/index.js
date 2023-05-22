@@ -1,7 +1,7 @@
 "use strict";
 var specialElHandlers = require("./specialElHandlers");
 var KeySequence = require("../../components/KeySequence");
-var componentsUtil = require("../../components/util");
+var componentsUtil = require("@internal/components-util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var addComponentRootToKeyedElements =
@@ -56,7 +56,7 @@ function onNodeAdded(node, componentsContext) {
   }
 }
 
-function morphdom(fromNode, toNode, doc, componentsContext) {
+function morphdom(fromNode, toNode, host, componentsContext) {
   var globalComponentsContext;
   var isHydrate = false;
   var keySequences = Object.create(null);
@@ -74,7 +74,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
     ownerComponent,
     parentComponent
   ) {
-    var realNode = vNode.___actualize(doc, parentEl.namespaceURI);
+    var realNode = vNode.___actualize(host, parentEl.namespaceURI);
     insertBefore(realNode, referenceEl, parentEl);
 
     if (
@@ -564,6 +564,17 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
             isCompatible = true;
             // Simply update nodeValue on the original node to
             // change the text value
+
+            if (
+              isHydrate === true &&
+              toNextSibling &&
+              curFromNodeType === TEXT_NODE &&
+              toNextSibling.___nodeType === TEXT_NODE
+            ) {
+              fromNextSibling = curFromNodeChild.splitText(
+                curToNodeChild.___nodeValue.length
+              );
+            }
             if (curFromNodeChild.nodeValue !== curToNodeChild.___nodeValue) {
               curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
             }
@@ -667,7 +678,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    componentsUtil.___stopDOMManipulationWarning();
+    componentsUtil.___stopDOMManipulationWarning(host);
   }
 
   morphChildren(fromNode, toNode, toNode.___component);
@@ -696,7 +707,7 @@ function morphdom(fromNode, toNode, doc, componentsContext) {
 
   // eslint-disable-next-line no-constant-condition
   if ("MARKO_DEBUG") {
-    componentsUtil.___startDOMManipulationWarning();
+    componentsUtil.___startDOMManipulationWarning(host);
   }
 }
 

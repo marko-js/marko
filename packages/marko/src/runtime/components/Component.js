@@ -7,7 +7,7 @@ var domInsert = require("../dom-insert");
 var defaultCreateOut = require("../createOut");
 var getComponentsContext =
   require("./ComponentsContext").___getComponentsContext;
-var componentsUtil = require("./util");
+var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var EventEmitter = require("events-light");
@@ -22,6 +22,7 @@ var componentsByDOMNode = domData.___componentByDOMNode;
 var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var CONTEXT_KEY = "__subtree_context__";
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
 var slice = Array.prototype.slice;
 
 var COMPONENT_SUBSCRIBE_TO_OPTIONS;
@@ -97,7 +98,7 @@ function processUpdateHandlers(component, stateChanges, oldState) {
   var handlers;
 
   for (var propName in stateChanges) {
-    if (stateChanges.hasOwnProperty(propName)) {
+    if (hasOwnProperty.call(stateChanges, propName)) {
       var handlerMethodName = "update_" + propName;
 
       handlerMethod = component[handlerMethodName];
@@ -183,7 +184,7 @@ function Component(id) {
   this.___updateQueued = false;
   this.___dirty = false;
   this.___settingInput = false;
-  this.___document = undefined;
+  this.___host = undefined;
 
   var ssrKeyedElements = keyedElementsByComponentId[id];
 
@@ -389,7 +390,7 @@ Component.prototype = componentProto = {
       // Merge in the new state with the old state
       var newState = name;
       for (var k in newState) {
-        if (newState.hasOwnProperty(k)) {
+        if (hasOwnProperty.call(newState, k)) {
           state.___set(k, newState[k], true /* ensure:true */);
         }
       }
@@ -530,21 +531,21 @@ Component.prototype = componentProto = {
     var input = this.___renderInput || this.___input;
 
     updateManager.___batchUpdate(function () {
-      self.___rerender(input, false).afterInsert(self.___document);
+      self.___rerender(input, false).afterInsert(self.___host);
     });
 
     this.___reset();
   },
 
   ___rerender: function (input, isHydrate) {
-    var doc = this.___document;
+    var host = this.___host;
     var globalData = this.___global;
     var rootNode = this.___rootNode;
     var renderer = this.___renderer;
     var createOut = renderer.createOut || defaultCreateOut;
     var out = createOut(globalData);
     out.sync();
-    out.___document = this.___document;
+    out.___host = this.___host;
     out[CONTEXT_KEY] = this.___context;
 
     var componentsContext = getComponentsContext(out);
@@ -558,7 +559,7 @@ Component.prototype = componentProto = {
 
     var targetNode = out.___getOutput().___firstChild;
 
-    morphdom(rootNode, targetNode, doc, componentsContext);
+    morphdom(rootNode, targetNode, host, componentsContext);
 
     return result;
   },
@@ -592,7 +593,9 @@ Component.prototype = componentProto = {
       var isOnce = customEvent[2];
       var extraArgs = customEvent[3];
 
-      finalCustomEvents[eventType] = [targetMethodName, isOnce, extraArgs];
+      if (targetMethodName) {
+        finalCustomEvents[eventType] = [targetMethodName, isOnce, extraArgs];
+      }
     });
   },
 

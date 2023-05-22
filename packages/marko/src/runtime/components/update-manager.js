@@ -4,7 +4,7 @@ var updatesScheduled = false;
 var batchStack = []; // A stack of batched updates
 var unbatchedQueue = []; // Used for scheduled batched updates
 
-var setImmediate = require("../setImmediate");
+var setImmediate = require("@internal/set-immediate").___setImmediate;
 
 /**
  * This function is called when we schedule the update of "unbatched"

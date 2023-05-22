@@ -1,6 +1,12 @@
 var domInsert = require("./dom-insert");
 var complain = "MARKO_DEBUG" && require("complain");
 
+function getRootNode(el) {
+  var cur = el;
+  while (cur.parentNode) cur = cur.parentNode;
+  return cur;
+}
+
 function getComponentDefs(result) {
   var componentDefs = result.___components;
 
@@ -40,19 +46,19 @@ var proto = (RenderResult.prototype = {
     return components;
   },
 
-  afterInsert: function (doc) {
+  afterInsert: function (host) {
     var out = this.___out;
     var componentsContext = out.___components;
     if (componentsContext) {
-      this.___components = componentsContext.___initComponents(doc);
+      this.___components = componentsContext.___initComponents(host);
     } else {
       this.___components = null;
     }
 
     return this;
   },
-  getNode: function (doc) {
-    return this.___out.___getNode(doc);
+  getNode: function (host) {
+    return this.___out.___getNode(host);
   },
   getOutput: function () {
     return this.___out.___getOutput();
@@ -60,7 +66,7 @@ var proto = (RenderResult.prototype = {
   toString: function () {
     return this.___out.toString();
   },
-  document: typeof document != "undefined" && document
+  document: typeof document === "object" && document
 });
 
 Object.defineProperty(proto, "html", {
@@ -97,13 +103,9 @@ Object.defineProperty(proto, "context", {
 domInsert(
   proto,
   function getEl(renderResult, referenceEl) {
-    return renderResult.getNode(referenceEl.ownerDocument);
+    return renderResult.getNode(getRootNode(referenceEl));
   },
   function afterInsert(renderResult, referenceEl) {
-    var isShadow =
-      typeof ShadowRoot === "function" && referenceEl instanceof ShadowRoot;
-    return renderResult.afterInsert(
-      isShadow ? referenceEl : referenceEl.ownerDocument
-    );
+    return renderResult.afterInsert(getRootNode(referenceEl));
   }
 );

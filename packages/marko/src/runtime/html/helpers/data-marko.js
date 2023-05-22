@@ -5,8 +5,6 @@ var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
-// var FLAG_IS_LEGACY = 4;
-// var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 module.exports = function dataMarko(out, componentDef, props, key) {
   var result = "";

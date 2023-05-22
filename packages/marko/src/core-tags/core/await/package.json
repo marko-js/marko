@@ -1,6 +1,0 @@
-{
-    "browser": {
-        "./client-reorder.js": "./client-reorder-browser.js",
-        "./reorderer-renderer.js": "./noop-render.js"
-    }
-}

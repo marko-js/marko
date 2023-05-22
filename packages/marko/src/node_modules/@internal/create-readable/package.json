@@ -1,0 +1,11 @@
+{
+  "main": "./index.js",
+  "browser": "./index-browser.js",
+  "exports": {
+    ".": {
+      "worker": "./index-browser.js",
+      "browser": "./index-browser.js",
+      "default": "./index.js"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 var defaultCreateOut = require("./createOut");
-var setImmediate = require("./setImmediate");
+var setImmediate = require("@internal/set-immediate").___setImmediate;
 var extend = require("raptor-util/extend");
 
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
