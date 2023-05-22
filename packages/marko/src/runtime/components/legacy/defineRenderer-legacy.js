@@ -1,11 +1,10 @@
 var complain = "MARKO_DEBUG" && require("complain");
-var marko = require("../../../");
 var makeRenderable = require("../../renderable");
 var getComponentsContext =
   require("../ComponentsContext").___getComponentsContext;
-var componentsUtil = require("../util");
-var componentLookup = componentsUtil.___componentLookup;
+var componentLookup = require("@internal/components-util").___componentLookup;
 var modernRenderer = require("../renderer");
+var loader = require("@internal/loader");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 
 module.exports = function defineRenderer(renderingLogic) {
@@ -23,7 +22,7 @@ module.exports = function defineRenderer(renderingLogic) {
   var template = renderingLogic.template;
 
   if (typeof template === "string") {
-    template = marko.load(template);
+    template = loader(template);
   }
 
   if (!renderer) {

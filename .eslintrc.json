@@ -6,6 +6,7 @@
   },
   "globals": {
     "document": true,
-    "ShadowRoot": true
+    "ShadowRoot": true,
+    "globalThis": true
   }
 }

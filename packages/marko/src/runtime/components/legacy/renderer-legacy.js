@@ -1,13 +1,13 @@
 var getComponentsContext =
   require("../ComponentsContext").___getComponentsContext;
-var componentsUtil = require("../util");
+var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
-var registry = require("../registry");
+var registry = require("@internal/components-registry");
 var modernRenderer = require("../renderer");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var trackAsyncComponents = modernRenderer.___trackAsyncComponents;
-var beginComponent = require("../beginComponent");
-var endComponent = require("../endComponent");
+var beginComponent = require("@internal/components-beginComponent");
+var endComponent = require("@internal/components-endComponent");
 var complain = "MARKO_DEBUG" && require("complain");
 
 function createRendererFunc(templateRenderFunc, componentProps) {

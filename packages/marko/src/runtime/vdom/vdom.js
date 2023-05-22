@@ -7,7 +7,6 @@ var VComponent = require("./VComponent");
 var VFragment = require("./VFragment");
 var parseHTML = require("./parse-html");
 
-var defaultDocument = typeof document != "undefined" && document;
 var specialHtmlRegexp = /[&<]/;
 
 function virtualizeChildNodes(node, vdomParent, ownerComponent) {
@@ -33,7 +32,7 @@ function virtualize(node, ownerComponent) {
   }
 }
 
-function virtualizeHTML(html, doc, ownerComponent) {
+function virtualizeHTML(html, ownerComponent) {
   if (!specialHtmlRegexp.test(html)) {
     return new VText(html, ownerComponent);
   }
@@ -64,7 +63,7 @@ Node_prototype.t = function (value) {
       value = "";
     } else if (type === "object") {
       if (value.toHTML) {
-        vdomNode = virtualizeHTML(value.toHTML(), document);
+        vdomNode = virtualizeHTML(value.toHTML());
       }
     }
   }
@@ -94,4 +93,3 @@ exports.___VComponent = VComponent;
 exports.___VFragment = VFragment;
 exports.___virtualize = virtualize;
 exports.___virtualizeHTML = virtualizeHTML;
-exports.___defaultDocument = defaultDocument;

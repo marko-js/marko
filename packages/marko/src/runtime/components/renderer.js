@@ -1,13 +1,13 @@
-var componentsUtil = require("./util");
+var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
 
 var ComponentsContext = require("./ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var registry = require("./registry");
+var registry = require("@internal/components-registry");
 var copyProps = require("raptor-util/copyProps");
 var isServer = componentsUtil.___isServer === true;
-var beginComponent = require("./beginComponent");
-var endComponent = require("./endComponent");
+var beginComponent = require("@internal/components-beginComponent");
+var endComponent = require("@internal/components-endComponent");
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = "$wa";
 

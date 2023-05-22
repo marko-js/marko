@@ -3,6 +3,7 @@
 .idea/
 npm-debug.log
 node_modules
+!packages/marko/src/node_modules
 *.sublime-workspace
 *.orig
 .DS_Store

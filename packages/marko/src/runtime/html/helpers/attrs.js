@@ -6,11 +6,11 @@ var dynamicAttrHelper = require("./_dynamic-attr");
 module.exports = function attrs(arg) {
   switch (typeof arg) {
     case "object":
-      var out = "";
+      var result = "";
       for (var attrName in arg) {
-        out += dynamicAttrHelper(attrName, arg[attrName]);
+        result += dynamicAttrHelper(attrName, arg[attrName]);
       }
-      return out;
+      return result;
     case "string":
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {

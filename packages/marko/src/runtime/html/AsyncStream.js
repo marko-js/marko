@@ -2,7 +2,6 @@
 var EventEmitter = require("events-light");
 var StringWriter = require("./StringWriter");
 var BufferedWriter = require("./BufferedWriter");
-var defaultDocument = typeof document != "undefined" && document;
 var RenderResult = require("../RenderResult");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
@@ -37,7 +36,7 @@ function State(root, stream, writer, events) {
 }
 
 function escapeEndingComment(text) {
-  return text.replace(/-->/g, "--&gt;");
+  return text.replace(/(--!?)>/g, "$1&gt;");
 }
 
 function AsyncStream(global, writer, parentOut) {
@@ -95,6 +94,7 @@ function AsyncStream(global, writer, parentOut) {
   this.___assignedComponentDef = null;
   this.___assignedKey = null;
   this.___assignedCustomEvents = null;
+  this.___isLast = false;
 }
 
 AsyncStream.DEFAULT_TIMEOUT = 10000;
@@ -114,7 +114,7 @@ AsyncStream.enableAsyncStackTrace = function () {
 
 var proto = (AsyncStream.prototype = {
   constructor: AsyncStream,
-  ___document: defaultDocument,
+  ___host: typeof document === "object" && document,
   ___isOut: true,
 
   sync: function () {
@@ -205,6 +205,7 @@ var proto = (AsyncStream.prototype = {
           }
 
           this._lastCount++;
+          newStream.___isLast = true;
         }
 
         name = options.name;
@@ -302,7 +303,7 @@ var proto = (AsyncStream.prototype = {
       }
 
       if (remaining === 0) {
-        parentOut._handleChildDone();
+        parentOut._handleChildDone(this);
       } else if (remaining - this._lastCount === 0) {
         this._emitLast();
       }
@@ -311,7 +312,7 @@ var proto = (AsyncStream.prototype = {
     return this;
   },
 
-  _handleChildDone: function () {
+  _handleChildDone: function (childOut) {
     var remaining = --this._remaining;
 
     if (remaining === 0) {
@@ -319,10 +320,16 @@ var proto = (AsyncStream.prototype = {
       if (parentOut === undefined) {
         this._doFinish();
       } else {
-        parentOut._handleChildDone();
+        parentOut._handleChildDone(this);
       }
-    } else if (remaining - this._lastCount === 0) {
-      this._emitLast();
+    } else {
+      if (childOut.___isLast) {
+        this._lastCount--;
+      }
+
+      if (remaining - this._lastCount === 0) {
+        this._emitLast();
+      }
     }
   },
 
@@ -394,23 +401,22 @@ var proto = (AsyncStream.prototype = {
   },
 
   _emitLast: function () {
-    var lastArray = this._last;
+    if (this._last) {
+      var i = 0;
+      var lastArray = this._last;
+      this._last = undefined;
+      (function next() {
+        if (i === lastArray.length) {
+          return;
+        }
+        var lastCallback = lastArray[i++];
+        lastCallback(next);
 
-    var i = 0;
-
-    function next() {
-      if (i === lastArray.length) {
-        return;
-      }
-      var lastCallback = lastArray[i++];
-      lastCallback(next);
-
-      if (lastCallback.length === 0) {
-        next();
-      }
+        if (lastCallback.length === 0) {
+          next();
+        }
+      })();
     }
-
-    next();
   },
 
   emit: function (type, arg) {
@@ -508,11 +514,14 @@ var proto = (AsyncStream.prototype = {
       "<" +
       tagName +
       markoAttr(this, componentDef, props, key) +
-      attrsHelper(elementAttrs) +
-      ">";
+      attrsHelper(elementAttrs);
 
-    if (selfClosingTags.indexOf(tagName) === -1) {
-      str += "</" + tagName + ">";
+    if (selfClosingTags.voidElements.indexOf(tagName) !== -1) {
+      str += ">";
+    } else if (selfClosingTags.svgElements.indexOf(tagName) !== -1) {
+      str += "/>";
+    } else {
+      str += "></" + tagName + ">";
     }
 
     this.write(str);
@@ -594,17 +603,16 @@ var proto = (AsyncStream.prototype = {
     }
   },
 
-  ___getNode: function (doc) {
+  ___getNode: function (host) {
     var node = this._node;
-    var nextEl;
-    var fragment;
-    var html = this.___getOutput();
-
-    if (!doc) {
-      doc = this.___document;
-    }
 
     if (!node) {
+      var nextEl;
+      var fragment;
+      var html = this.___getOutput();
+      if (!host) host = this.___host;
+      var doc = host.ownerDocument || host;
+
       if (html) {
         node = parseHTML(html);
 

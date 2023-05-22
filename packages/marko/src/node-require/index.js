@@ -7,6 +7,17 @@ const fs = require("fs");
 const fsReadOptions = { encoding: "utf8" };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
+if (process.env.MARKO_HOT_RELOAD) {
+  require("../hot-reload").enable();
+}
+
+// If process was launched with browser refresh then automatically
+// enable browser-refresh
+require("../browser-refresh").enable();
+
+// Adds the template.getDependencies() method needed by older versions of lasso-marko
+require("../runtime/components/legacy/dependencies/html");
+
 function normalizeExtension(extension) {
   if (extension.charAt(0) !== ".") {
     extension = "." + extension;

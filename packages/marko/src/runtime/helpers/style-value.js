@@ -23,7 +23,7 @@ module.exports = function styleHelper(style) {
     } else if (type === "object") {
       for (var name in style) {
         var value = style[name];
-        if (value != null) {
+        if (value != null && value !== false) {
           if (typeof value === "number" && value) {
             value += "px";
           }

@@ -1,3 +1,6 @@
+# Internal modules
+!packages/marko/src/node_modules
+
 # minfied
 *.min.js
 

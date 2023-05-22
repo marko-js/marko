@@ -16,3 +16,4 @@ input.js
 coverage
 
 node_modules
+!packages/marko/src/node_modules

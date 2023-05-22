@@ -1,5 +1,7 @@
 "use strict";
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
 /**
  * Merges object properties
  */
@@ -9,7 +11,7 @@ module.exports = function assign() {
     var source = arguments[i];
     if (source != null) {
       for (var k in source) {
-        if (source.hasOwnProperty(k)) {
+        if (hasOwnProperty.call(source, k)) {
           into[k] = source[k];
         }
       }

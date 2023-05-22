@@ -22,8 +22,8 @@ VDocumentFragment.prototype = {
     return new VDocumentFragmentClone(this);
   },
 
-  ___actualize: function (doc) {
-    return doc.createDocumentFragment();
+  ___actualize: function (host) {
+    return (host.ownerDocument || host).createDocumentFragment();
   }
 };
 
