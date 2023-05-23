@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.26.0](https://github.com/marko-js/marko/compare/v4.25.0...v4.26.0) (2023-05-23)
+
+
+### Features
+
+* backport Marko 5 runtime improvements ([1f40cae](https://github.com/marko-js/marko/commit/1f40cae8071dae4bea0870a5db4000bdb9e4779a))
+
 ## [4.25.0](https://github.com/marko-js/marko/compare/v4.24.6...v4.25.0) (2023-03-02)
 
 
