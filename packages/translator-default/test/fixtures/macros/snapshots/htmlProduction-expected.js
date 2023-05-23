@@ -13,7 +13,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.w("<ul>");
       {
         let _keyValue = 0;
-        for (const child of node.children) {
+        for (const child of node.children || []) {
           const _keyScope = `[${_keyValue++}]`;
           out.w("<li>");
           _marko_dynamic_tag(out, _renderTree, () => child, null, null, null, _componentDef, "3" + _keyScope);

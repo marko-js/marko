@@ -13,7 +13,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     out.w("<ul>");
     {
       let _keyValue = 0;
-      for (const color of input.colors) {
+      for (const color of input.colors || []) {
         const _keyScope = `[${_keyValue++}]`;
         out.w("<li>");
         out.w(_marko_escapeXml(color));

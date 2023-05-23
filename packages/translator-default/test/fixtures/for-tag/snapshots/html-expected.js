@@ -8,7 +8,7 @@ import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   let _i = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i++;
     const _keyScope = `[${i}]`;
     out.w("<div>");
@@ -40,7 +40,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     out.w("<div></div>");
   }
   let _i2 = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i2++;
     const _keyValue = `@${i}`,
       _keyScope4 = `[${_keyValue}]`;

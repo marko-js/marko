@@ -14,7 +14,7 @@ exports.default = _default;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   let _i = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i++;
     const _keyScope = `[${i}]`;
     out.w("<div>");
@@ -46,7 +46,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     out.w("<div></div>");
   }
   let _i2 = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i2++;
     const _keyValue = `@${i}`,
       _keyScope4 = `[${_keyValue}]`;
