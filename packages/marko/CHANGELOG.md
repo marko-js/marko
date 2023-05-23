@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.1](https://github.com/marko-js/marko/compare/v4.26.0...v4.26.1) (2023-05-23)
+
+
+### Bug Fixes
+
+* add missing exposed _wrr flag ([b95b3c4](https://github.com/marko-js/marko/commit/b95b3c4e70c0ad5c78d20de29e1a46112b0355dc))
+
 ## [4.26.0](https://github.com/marko-js/marko/compare/v4.25.0...v4.26.0) (2023-05-23)
 
 
