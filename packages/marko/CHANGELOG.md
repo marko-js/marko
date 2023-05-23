@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.15
+
+### Patch Changes
+
+- [#1960](https://github.com/marko-js/marko/pull/1960) [`9cf477857`](https://github.com/marko-js/marko/commit/9cf477857dee2ab58ada5daef7eb117ccf92726e) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Native event handler strings
+
 ## 5.25.14
 
 ### Patch Changes
