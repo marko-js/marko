@@ -15,7 +15,7 @@ exports.t = function createTemplate(typeName) {
 };
 
 function Template(typeName) {
-  this.___typeName = typeName;
+  this.path = this.___typeName = typeName;
 }
 
 var AsyncVDOMBuilder = require("./AsyncVDOMBuilder");

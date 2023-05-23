@@ -44,7 +44,11 @@ export function exit(path) {
       block
     );
   } else if (ofAttr) {
-    let ofAttrValue = ofAttr.value;
+    let ofAttrValue = t.logicalExpression(
+      "||",
+      ofAttr.value,
+      t.arrayExpression([])
+    );
     allowedAttributes.push("of");
 
     const [valParam, keyParam, loopParam] = params;

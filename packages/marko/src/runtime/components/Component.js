@@ -247,19 +247,17 @@ Component.prototype = componentProto = {
   },
   getEl: function (key, index) {
     if (key) {
-      var keyedElement =
-        this.___keyedElements["@" + resolveKeyHelper(key, index)];
-
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        if (
-          keyedElement &&
-          keyedElement.nodeType !== 1 /* Node.ELEMENT_NODE */
-        ) {
-          throw new Error(
-            "Using 'getEl(key)' to get a component instance is not supported, did you mean 'getComponent(key)'?"
+      var resolvedKey = resolveKeyHelper(key, index);
+      var keyedElement = this.___keyedElements["@" + resolvedKey];
+      if (keyedElement && keyedElement.nodeType === 12 /** FRAGMENT_NODE */) {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+          complain(
+            "Accessing the elements of a child component using 'component.getEl' is deprecated."
           );
         }
+
+        return walkFragments(keyedElement);
       }
 
       return keyedElement;
@@ -281,15 +279,15 @@ Component.prototype = componentProto = {
   },
   getComponent: function (key, index) {
     var rootNode = this.___keyedElements["@" + resolveKeyHelper(key, index)];
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      if (/\[\]$/.test(key)) {
-        throw new Error(
+    if (/\[\]$/.test(key)) {
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        complain(
           "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
         );
       }
+      rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
     }
-
     return rootNode && componentsByDOMNode.get(rootNode);
   },
   getComponents: function (key) {

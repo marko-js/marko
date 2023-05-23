@@ -1,5 +1,6 @@
 /* jshint newcap:false */
 
+var complain = "MARKO_DEBUG" && require("complain");
 var domData = require("../components/dom-data");
 var componentsUtil = require("@internal/components-util");
 var vElementByDOMNode = domData.___vElementByDOMNode;
@@ -30,8 +31,18 @@ function convertAttrValue(type, value) {
   if (value === true) {
     return "";
   } else if (type == "object") {
-    if (value instanceof RegExp) {
-      return value.source;
+    switch (value.toString) {
+      case Object.prototype.toString:
+      case Array.prototype.toString:
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+          complain(
+            "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead."
+          );
+        }
+        return JSON.stringify(value);
+      case RegExp.prototype.toString:
+        return value.source;
     }
   }
 

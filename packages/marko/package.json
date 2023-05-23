@@ -35,6 +35,7 @@
     "browser": {
         "./compiler.js": "./compiler-browser.marko",
         "./components.js": "./components-browser.marko",
+        "./legacy-components.js": "./legacy-components-browser.marko",
         "./index.js": "./index-browser.marko"
     },
     "types": "index.d.ts",
@@ -50,6 +51,8 @@
         "compiler.js",
         "components-browser.marko",
         "components.js",
+        "legacy-components-browser.marko",
+        "legacy-components.js",
         "env.js",
         "index.d.ts",
         "index-browser.marko",

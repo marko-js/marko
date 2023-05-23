@@ -21,7 +21,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       out.w("<ul>");
       {
         let _keyValue = 0;
-        for (const child of node.children) {
+        for (const child of node.children || []) {
           const _keyScope = `[${_keyValue++}]`;
           out.w("<li>");
           (0, _dynamicTag.default)(out, _renderTree, () => child, null, null, null, _componentDef, "3" + _keyScope);
