@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.25.16
+
+### Patch Changes
+
+- [#1963](https://github.com/marko-js/marko/pull/1963) [`a00c63f5f`](https://github.com/marko-js/marko/commit/a00c63f5f0995647450ba0fe1eeca25050dfbf03) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure all component lifecycle methods invoked when HMR'ing a class component with lifecycle changes.
+
+- [#1963](https://github.com/marko-js/marko/pull/1963) [`a00c63f5f`](https://github.com/marko-js/marko/commit/a00c63f5f0995647450ba0fe1eeca25050dfbf03) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid removing SSR transcluded content while doing updating via HMR.
+
 ## 5.25.15
 
 ### Patch Changes
