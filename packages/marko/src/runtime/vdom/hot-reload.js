@@ -1,6 +1,5 @@
 var runtime = require(".");
 var queueMicrotask = require("../queueMicrotask");
-var util = require("@internal/components-util");
 var registry = require("@internal/components-registry");
 var updateManager = require("../components/update-manager");
 
@@ -17,7 +16,7 @@ runtime.t = function (typeName) {
 
   var renderFn;
   var template = (registered[typeName] = createTemplate(typeName));
-  var instances = (instancesByType[typeName] = []);
+  var instances = (instancesByType[typeName] = new Set());
   Object.defineProperty(template, "_", {
     get: function () {
       return renderFn && proxyRenderer;
@@ -25,7 +24,7 @@ runtime.t = function (typeName) {
     set: function (v) {
       renderFn = v;
 
-      if (instances.length) {
+      if (instances.size) {
         if (!queue) {
           queue = [];
           queueMicrotask(batchUpdate);
@@ -35,27 +34,24 @@ runtime.t = function (typeName) {
           var newProto = registry.___getComponentClass(typeName).prototype;
           instances.forEach(function (instance) {
             if (hasLifecycleChanged(instance.__proto__, newProto)) {
-              var startNode = instance.___rootNode.startNode;
-              var endNode = instance.___rootNode.endNode;
-              var parentNode = startNode.parentNode;
-              var curNode;
+              var renderer = instance.___renderer;
+              instance.___renderer = (input, out) => {
+                instance.___emitCreate(input, out);
+                if (instance.onInput) {
+                  input = instance.onInput(input, out) || input;
+                }
+                instance.___renderer = renderer;
+                instance.___renderer(input, out);
+              };
 
               instance.___hmrDestroyed = true;
               instance.___emitDestroy();
-              instance.___removeDOMEventListeners();
+              instance.___mounted = false;
 
               if (instance.___subscriptions) {
                 instance.___subscriptions.removeAllListeners();
                 instance.___subscriptions = null;
               }
-
-              while ((curNode = startNode.nextSibling) !== endNode) {
-                util.___destroyNodeRecursive(curNode);
-                parentNode.removeChild(curNode);
-              }
-
-              instance.___hmrDestroyed = false;
-              instance.___mounted = false;
             }
 
             instance.__proto__ = newProto;
@@ -80,10 +76,10 @@ registry.___createComponent = function (typeName, id) {
   var instance = createComponent(typeName, id);
 
   if (instances) {
-    instances.push(instance);
+    instances.add(instance);
     instance.once("destroy", function () {
       if (!instance.___hmrDestroyed) {
-        instances.splice(1, instances.indexOf(instance));
+        instances.delete(instance);
       }
     });
   }
