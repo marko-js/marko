@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.25.17
+
+### Patch Changes
+
+- [#1965](https://github.com/marko-js/marko/pull/1965) [`08ea9febc`](https://github.com/marko-js/marko/commit/08ea9febcf1d8652409a23b82f3d2c2d912bbd52) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fixes support for usage with [arc](https://github.com/eBay/arc) and adaptive `.marko` files.
+
+- Updated dependencies [[`08ea9febc`](https://github.com/marko-js/marko/commit/08ea9febcf1d8652409a23b82f3d2c2d912bbd52)]:
+  - @marko/translator-default@5.25.9
+
 ## 5.25.16
 
 ### Patch Changes
