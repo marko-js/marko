@@ -12,12 +12,11 @@ export default function getComponentFiles({ hub: { file } }) {
 
   const { filename } = file.opts;
   const fs = file.markoOpts.fileSystem;
-  const ext = path.extname(filename);
   const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
-  const nameNoExt = path.basename(filename, ext);
-  const isEntry = "index" === nameNoExt;
-  const fileMatch = `(${escapeRegExp(nameNoExt)}\\.${isEntry ? "|" : ""})`;
+  const base = getBase(filename);
+  const isEntry = "index" === base;
+  const fileMatch = `(${escapeRegExp(base)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
   const splitComponentMatch = new RegExp(
@@ -49,4 +48,38 @@ export default function getComponentFiles({ hub: { file } }) {
     componentFile,
     componentBrowserFile
   });
+}
+
+/**
+ * Given a filename, gets the base name, strips off the file extension
+ * and removes any arc flags (https://github.com/eBay/arc).
+ *
+ * @example
+ * getBase("/dir/foo.marko") // => "foo"
+ * getBase("/dir/foo.bar.marko") // => "foo.bar"
+ * getBase("/dir/foo[bar].marko") // => "foo"
+ * getBase("/dir/foo[bar].baz.marko") // => "foo.baz"
+ */
+function getBase(filename) {
+  const start = filename.lastIndexOf(path.sep) + 1;
+  const leftDot = filename.indexOf(".", start);
+
+  if (leftDot === -1) {
+    return filename.slice(start);
+  }
+
+  const rightDot = filename.lastIndexOf(".");
+  const closeBracket = leftDot - 1;
+  if (filename[closeBracket] === "]") {
+    const openBracket = filename.lastIndexOf("[", closeBracket);
+    if (openBracket > start) {
+      // If we match a "]" before the extension and find a "[" before that,
+      // then we have an arc flag. Strip it off.
+      return (
+        filename.slice(start, openBracket) + filename.slice(leftDot, rightDot)
+      );
+    }
+  }
+
+  return filename.slice(start, rightDot);
 }
