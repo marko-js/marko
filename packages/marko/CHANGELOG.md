@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.25.18
+
+### Patch Changes
+
+- [`ddc6b6ca0`](https://github.com/marko-js/marko/commit/ddc6b6ca00e3e9e0125d9f2da0953d9cb7883e07) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix typescript syntax error in docs.
+
 ## 5.25.17
 
 ### Patch Changes
