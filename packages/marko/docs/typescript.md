@@ -53,7 +53,7 @@ You can also import, reuse, and extend `Input` interfaces from other `.marko` or
 ```marko
 import { Input as PriceInput } from "<PriceField>";
 import { ExtraTypes } from "lib/utils.ts";
-export type Input = { ...PriceInput, ...ExtraTypes };
+export type Input = PriceInput & ExtraTypes;
 ```
 
 ```marko
