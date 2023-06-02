@@ -1,4 +1,5 @@
-packages/translator-default/test/fixtures/typescript-with-tag-variable/template.marko(1,6): Tag does not support a variable.
+packages/translator-default/test/fixtures/typescript-with-tag-variable/template.marko:1:6
+
 > 1 | <let/x:{ y: string } = { y: "hello" }/>
-    |      ^^^^^^^^^^^^^^^
+    |      ^^^^^^^^^^^^^^^ Tag does not support a variable.
   2 |

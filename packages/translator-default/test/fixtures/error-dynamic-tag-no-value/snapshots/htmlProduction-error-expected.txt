@@ -1,4 +1,5 @@
-packages/translator-default/test/fixtures/error-dynamic-tag-no-value/template.marko(1,4): Invalid placeholder, the expression cannot be missing
+packages/translator-default/test/fixtures/error-dynamic-tag-no-value/template.marko:1:4
+
 > 1 | <${}/>
-    |    ^
+    |    ^ Invalid placeholder, the expression cannot be missing
   2 |

@@ -1,5 +1,6 @@
-packages/translator-default/test/fixtures/error-wrong-closing-tag/template.marko(3,1): The closing "b" tag does not match the corresponding opening "a" tag
+packages/translator-default/test/fixtures/error-wrong-closing-tag/template.marko:3:1
+
   1 | <a>
   2 |   <div/>
 > 3 | </b>
-    | ^^^^
+    | ^^^^ The closing "b" tag does not match the corresponding opening "a" tag

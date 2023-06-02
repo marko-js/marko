@@ -1,6 +1,7 @@
-packages/translator-default/test/fixtures/error-await-tag-multiple-arguments/template.marko(1,11): You can only pass one argument to the "<await>" tag.
+packages/translator-default/test/fixtures/error-await-tag-multiple-arguments/template.marko:1:11
+
 > 1 | <await(a, b)>
-    |           ^
+    |           ^ You can only pass one argument to the "<await>" tag.
   2 |   <@then|result|>
   3 |     ${result}
   4 |   </@then>

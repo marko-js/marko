@@ -1,11 +1,14 @@
 import path from "path";
+import color from "kleur";
 import { codeFrameColumns } from "@babel/code-frame";
 const CWD = process.cwd();
 
 export function buildCodeFrame(filename, code, loc, message) {
-  return `${path.relative(CWD, filename)}${
-    loc ? `(${loc.start.line},${loc.start.column + 1})` : ""
-  }: ${message}\n${
+  return `${color.cyan(path.relative(CWD, filename))}${
+    loc
+      ? `:${color.yellow(loc.start.line)}:${color.yellow(loc.start.column + 1)}`
+      : ""
+  }\n\n${
     loc
       ? codeFrameColumns(
           code,
@@ -22,7 +25,7 @@ export function buildCodeFrame(filename, code, loc, message) {
                   }
                 : undefined
           },
-          { highlightCode: true }
+          { highlightCode: true, message }
         )
       : ""
   }`;

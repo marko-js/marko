@@ -1,5 +1,6 @@
-packages/translator-default/test/fixtures/error-class-tag-nested-content/template.marko(2,2): Line has extra indentation at the beginning
+packages/translator-default/test/fixtures/error-class-tag-nested-content/template.marko:2:2
+
   1 | class {}
 > 2 |  <div/>
-    |  ^
+    |  ^ Line has extra indentation at the beginning
   3 |

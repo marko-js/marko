@@ -1,7 +1,8 @@
-packages/translator-default/test/fixtures/error-class-constructor/template.marko(2,3): The constructor method should not be used for a component, use onCreate instead.
+packages/translator-default/test/fixtures/error-class-constructor/template.marko:2:3
+
   1 | class {
 > 2 |   constructor() {
-    |   ^^^^^^^^^^^
+    |   ^^^^^^^^^^^ The constructor method should not be used for a component, use onCreate instead.
   3 |     
   4 |   }
   5 | }

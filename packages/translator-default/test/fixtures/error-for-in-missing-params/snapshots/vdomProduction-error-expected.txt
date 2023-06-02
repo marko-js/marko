@@ -1,5 +1,6 @@
-packages/translator-default/test/fixtures/error-for-in-missing-params/template.marko(1,2): Invalid 'for in' tag, missing |key, value| params.
+packages/translator-default/test/fixtures/error-for-in-missing-params/template.marko:1:2
+
 > 1 | <for|| in=x>
-    |  ^^^
+    |  ^^^ Invalid 'for in' tag, missing |key, value| params.
   2 |   <div/>
   3 | </for>

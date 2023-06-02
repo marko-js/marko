@@ -1,3 +1,4 @@
-packages/translator-default/test/fixtures/error-id-shorthand-and-attribute/template.marko(1,8): Cannot have shorthand id and id attribute.
+packages/translator-default/test/fixtures/error-id-shorthand-and-attribute/template.marko:1:8
+
 > 1 | <div#x id="y"/>
-    |        ^^^^^^
+    |        ^^^^^^ Cannot have shorthand id and id attribute.
