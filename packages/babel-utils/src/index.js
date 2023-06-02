@@ -34,6 +34,14 @@ export { resolveRelativePath, importDefault, importNamed } from "./imports";
 
 export { getTaglibLookup, getTagDefForTagName } from "./taglib";
 
+export {
+  DiagnosticType,
+  diagnosticError,
+  diagnosticDeprecate,
+  diagnosticWarn,
+  diagnosticSuggest
+} from "./diagnostics";
+
 export function defineTag(tag) {
   return tag;
 } // just used for adding types for compiler plugins.

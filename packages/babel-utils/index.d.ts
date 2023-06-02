@@ -257,3 +257,64 @@ export function resolveTagImport(
   path: t.NodePath<any>,
   request: string
 ): string | undefined;
+
+export enum DiagnosticType {
+  Error = "error",
+  Warning = "warning",
+  Deprecation = "deprecation",
+  Suggestion = "suggestion"
+}
+
+export interface Diagnostic {
+  type: DiagnosticType;
+  label: string;
+  loc: undefined | false | LocRange;
+  fix: boolean | ConfirmFix | SelectFix;
+}
+
+export interface DiagnosticOptions {
+  label: string;
+  loc?: undefined | false | LocRange;
+  fix?:
+    | undefined
+    | (() => void)
+    | (ConfirmFix & {
+        apply(confirmed: boolean | undefined): void;
+      })
+    | (SelectFix & {
+        apply(selected: string | undefined): void;
+      });
+}
+
+export function diagnosticError(
+  path: t.NodePath<any>,
+  options: DiagnosticOptions
+): void;
+export function diagnosticWarn(
+  path: t.NodePath<any>,
+  options: DiagnosticOptions
+): void;
+export function diagnosticDeprecate(
+  path: t.NodePath<any>,
+  options: DiagnosticOptions
+): void;
+export function diagnosticSuggest(
+  path: t.NodePath<any>,
+  options: DiagnosticOptions
+): void;
+
+interface ConfirmFix {
+  type: "confirm";
+  message: string;
+  initialValue?: boolean;
+}
+
+interface SelectFix {
+  type: "select";
+  message: string;
+  options: {
+    value: string;
+    label?: string;
+  }[];
+  initialValue?: string;
+}

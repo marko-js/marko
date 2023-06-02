@@ -139,7 +139,20 @@ const config = {
   /**
    * Set to true in order to bring in the hot module replacement runtime.
    */
-  hot: false
+  hot: false,
+
+  /**
+   * Wether error diagnostics should be thrown as errors
+   * before the compile result is returned.
+   *
+   * Note that the compiler can still throw errors even when true.
+   * When the errorRecovery is true, any recoverable errors will be
+   * returned in the `meta.diagnostics` property of the compile result.
+   */
+  errorRecovery: false,
+
+  // When supplied, any diagnostics which have a fix specified in the lookup will be applied to the source code.
+  applyFixes: undefined
 };
 
 if (process.env.MARKO_CONFIG) {

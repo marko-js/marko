@@ -73,17 +73,19 @@ export default (api, markoOpts) => {
       taglibConfig.fs = markoOpts.fileSystem;
       curOpts = undefined;
       try {
-        if (isMarkoOutput(markoOpts.output)) {
-          return file;
-        }
-
         const { ast, metadata } = file;
         const sourceFile = SOURCE_FILES.get(ast);
+        metadata.marko = shallowClone(sourceFile.metadata.marko);
+
+        if (isMarkoOutput(markoOpts.output)) {
+          finalizeMeta(metadata.marko);
+          return;
+        }
+
         const taglibLookup = sourceFile.___taglibLookup;
         const rootTranslators = [];
         const { buildCodeFrameError } = file;
         const { buildError } = file.hub;
-        metadata.marko = shallowClone(sourceFile.metadata.marko);
         file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
         file.hub.buildError = file.buildCodeFrameError.bind(file);
         file.markoOpts = markoOpts;
@@ -101,6 +103,7 @@ export default (api, markoOpts) => {
         }
 
         rootTranslators.push(translator.translate);
+        file.___compileStage = "translate";
         traverseAll(file, rootTranslators);
         file.buildCodeFrameError = buildCodeFrameError;
         file.hub.buildError = buildError;
@@ -109,7 +112,7 @@ export default (api, markoOpts) => {
           file.___getMarkoFile =
             undefined;
 
-        metadata.marko.watchFiles = metadata.marko.watchFiles.filter(unique);
+        finalizeMeta(metadata.marko);
         file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
         taglibConfig.fs = prevFS;
@@ -202,13 +205,15 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     macros: {},
     deps: [],
     tags: [],
-    watchFiles: []
+    watchFiles: [],
+    diagnostics: []
   });
 
   file.markoOpts = markoOpts;
   file.___taglibLookup = taglibLookup;
   file.___getMarkoFile = getMarkoFile;
 
+  file.___compileStage = "parse";
   parseMarko(file);
 
   if (isSource) {
@@ -225,7 +230,28 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   rootMigrators.push(migrate);
+  file.___compileStage = "migrate";
   traverseAll(file, rootMigrators);
+
+  const { applyFixes } = markoOpts;
+  if (applyFixes) {
+    for (let i = 0; i < meta.diagnostics.length; i++) {
+      const diag = meta.diagnostics[i];
+      if (diag.fix) {
+        if (applyFixes.has(i)) {
+          (typeof diag.fix === "function" ? diag.fix : diag.fix.apply)(
+            applyFixes.get(i)
+          );
+        }
+      }
+    }
+  } else {
+    for (const diag of meta.diagnostics) {
+      if (diag.fix) {
+        (typeof diag.fix === "function" ? diag.fix : diag.fix.apply)(undefined);
+      }
+    }
+  }
 
   if (isMigrate) {
     return file;
@@ -239,6 +265,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   rootTransformers.push(transform);
+  file.___compileStage = "transform";
   traverseAll(file, rootTransformers);
 
   for (const taglibId in taglibLookup.taglibsById) {
@@ -260,6 +287,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
 
   if (translator.analyze) {
     try {
+      file.___compileStage = "analyze";
       traverseAll(file, translator.analyze);
     } catch (e) {
       compileCache.delete(cacheKey);
@@ -351,10 +379,35 @@ function addPlugin(meta, arr, plugin) {
   }
 }
 
-function unique(item, i, list) {
-  return list.indexOf(item) === i;
-}
-
 function isMarkoOutput(output) {
   return output === "source" || output === "migrate";
+}
+
+function finalizeMeta(meta) {
+  meta.watchFiles = [...new Set(meta.watchFiles)];
+  meta.diagnostics = meta.diagnostics.map(
+    ({ type, label, loc, fix: rawFix }) => {
+      let fix = false;
+
+      switch (typeof rawFix) {
+        case "function":
+          fix = true;
+          break;
+        case "object":
+          // strip off the apply function.
+          ({
+            // eslint-disable-next-line no-empty-pattern
+            apply: {},
+            ...fix
+          } = rawFix);
+          break;
+      }
+      return {
+        type,
+        label,
+        loc,
+        fix
+      };
+    }
+  );
 }

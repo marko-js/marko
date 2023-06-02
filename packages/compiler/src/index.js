@@ -1,14 +1,17 @@
 export * as types from "./babel-types";
 import path from "path";
+import color from "kleur";
 import * as babel from "@babel/core";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
 import tsTransformPlugin from "@babel/plugin-transform-typescript";
+import { DiagnosticType } from "@marko/babel-utils";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
+import { buildCodeFrame, buildCodeFrameError } from "./util/build-code-frame";
 export { taglib };
 
 let globalConfig = { ...defaultConfig };
@@ -17,17 +20,19 @@ export function configure(newConfig) {
 }
 
 export async function compile(src, filename, config) {
-  const babelConfig = loadBabelConfig(filename, config);
+  const markoConfig = loadMarkoConfig(config);
+  const babelConfig = loadBabelConfig(filename, markoConfig);
   const babelResult = await babel.transformAsync(src, babelConfig);
-  scheduleDefaultClear(config);
-  return buildResult(babelResult);
+  scheduleDefaultClear(markoConfig);
+  return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
 export function compileSync(src, filename, config) {
-  const babelConfig = loadBabelConfig(filename, config);
+  const markoConfig = loadMarkoConfig(config);
+  const babelConfig = loadBabelConfig(filename, markoConfig);
   const babelResult = babel.transformSync(src, babelConfig);
-  scheduleDefaultClear(config);
-  return buildResult(babelResult);
+  scheduleDefaultClear(markoConfig);
+  return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
 export async function compileFile(filename, config) {
@@ -56,14 +61,18 @@ export function getRuntimeEntryFiles(output, requestedTranslator) {
   return [];
 }
 
-function loadBabelConfig(filename, config) {
-  const markoConfig = { ...globalConfig, ...config, babelConfig: undefined };
+function loadMarkoConfig(config) {
+  const markoConfig = { ...globalConfig, ...config };
 
   if (markoConfig.stripTypes === undefined) {
     markoConfig.stripTypes =
       markoConfig.output !== "source" && markoConfig.output !== "migrate";
   }
 
+  return markoConfig;
+}
+
+function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
   const requiredPlugins = [
     [corePlugin, markoConfig],
     [
@@ -83,7 +92,7 @@ function loadBabelConfig(filename, config) {
       ? path.relative(process.cwd(), filename)
       : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
-    ...(config && config.babelConfig),
+    ...babelConfig,
     filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,
@@ -102,13 +111,52 @@ function loadBabelConfig(filename, config) {
   return babel.loadPartialConfig(baseBabelConfig).options;
 }
 
-function buildResult(babelResult) {
+function buildResult(src, filename, errorRecovery, babelResult) {
   const {
     ast,
     map,
     code,
     metadata: { marko: meta }
   } = babelResult;
+
+  if (!errorRecovery) {
+    const errors = [];
+
+    for (const diag of meta.diagnostics) {
+      if (diag.type === DiagnosticType.Error) {
+        errors.push(diag);
+      }
+    }
+
+    switch (errors.length) {
+      case 0:
+        break;
+      case 1: {
+        const [diag] = errors;
+        throw buildCodeFrameError(filename, src, diag.loc, diag.label);
+      }
+      default: {
+        let err;
+        const message = `${color.red("AggregationError:")}\n${errors
+          .map(diag => buildCodeFrame(filename, src, diag.loc, diag.label))
+          .join("\n\n")
+          .replace(/^(?!\s*$)/gm, "\t")}\n`;
+
+        if (typeof AggregateError === "function") {
+          err = new AggregateError(errors, message);
+        } else {
+          err = new Error(message);
+          err.name = "AggregateError";
+          err.errors = errors;
+        }
+
+        // Remove the stack trace from the error since it is not useful.
+        err.stack = "";
+        throw err;
+      }
+    }
+  }
+
   return { ast, map, code, meta };
 }
 
