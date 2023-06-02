@@ -1,5 +1,7 @@
 declare const Config: {
   output?: "html" | "dom" | "hydrate" | "migrate" | "source";
+  errorRecovery?: boolean;
+  applyFixes?: Map<number, unknown>;
   stripTypes?: boolean;
   runtimeId?: string | null;
   ast?: boolean;

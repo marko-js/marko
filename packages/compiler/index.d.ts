@@ -1,5 +1,5 @@
 import { SourceMap } from "magic-string";
-import { TaglibLookup } from "@marko/babel-utils";
+import { TaglibLookup, Diagnostic } from "@marko/babel-utils";
 import * as types from "./babel-types";
 export { types };
 
@@ -22,6 +22,7 @@ export type MarkoMeta = {
   watchFiles: string[];
   tags?: string[];
   deps: Array<string | Dep>;
+  diagnostics: Diagnostic[];
 };
 
 export type CompileResult = {

@@ -6,6 +6,9 @@
       "jsx": false
     }
   },
+  "globals": {
+    "AggregateError": true
+  },
   "env": {
     "node": true,
     "mocha": true,

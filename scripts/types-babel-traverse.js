@@ -71,12 +71,7 @@ fs.readFile(
     code: string,
     opts: Record<string, unknown>,
     metadata: Record<string, unknown> & {
-      marko: {
-        id: string,
-        tags: string[],
-        deps: Array<string | { type: string, code: string, path: string, virtualPath: string, [x:string]: unknown }>,
-        watchFiles: string[]
-      }
+      marko: import("@marko/compiler").MarkoMeta
     },
     markoOpts: Required<import('@marko/compiler').Config>
 }
