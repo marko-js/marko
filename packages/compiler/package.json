@@ -20,6 +20,7 @@
     "he": "^1.2.0",
     "htmljs-parser": "^5.4.3",
     "jsesc": "^3.0.2",
+    "kleur": "^4.1.5",
     "lasso-package-root": "^1.0.1",
     "raptor-regexp": "^1.0.1",
     "raptor-util": "^3.2.0",

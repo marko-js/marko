@@ -1,6 +1,7 @@
-packages/translator-default/test/fixtures/error-class-private-properties/template.marko(2,3): Unsupported class property on component.
+packages/translator-default/test/fixtures/error-class-private-properties/template.marko:2:3
+
   1 | class {
 > 2 |   #x = 1;
-    |   ^^^^^^^
+    |   ^^^^^^^ Unsupported class property on component.
   3 | }
   4 | <div/>

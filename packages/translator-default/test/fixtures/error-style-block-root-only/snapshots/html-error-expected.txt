@@ -1,5 +1,6 @@
-packages/translator-default/test/fixtures/error-style-block-root-only/template.marko(2,4): Style blocks must be at the root of your Marko template.
+packages/translator-default/test/fixtures/error-style-block-root-only/template.marko:2:4
+
   1 | <div>
 > 2 |   <style { div { color: green; } }/>
-    |    ^^^^^
+    |    ^^^^^ Style blocks must be at the root of your Marko template.
   3 | </div>

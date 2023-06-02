@@ -1,3 +1,4 @@
-packages/translator-default/test/fixtures/error-event-handler-value/template.marko(1,19): "onClick(handler, ...args)" does not accept a value.
+packages/translator-default/test/fixtures/error-event-handler-value/template.marko:1:19
+
 > 1 | <div onClick('a')=b/>
-    |                   ^
+    |                   ^ "onClick(handler, ...args)" does not accept a value.
