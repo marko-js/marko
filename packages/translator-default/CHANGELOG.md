@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.26.0
+
+### Minor Changes
+
+- [#1968](https://github.com/marko-js/marko/pull/1968) [`70922e68e`](https://github.com/marko-js/marko/commit/70922e68e07578a867fff846e9bb623d64298e14) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add support for additional diagnostics emitted from the compiler.
+
+### Patch Changes
+
+- Updated dependencies [[`70922e68e`](https://github.com/marko-js/marko/commit/70922e68e07578a867fff846e9bb623d64298e14)]:
+  - @marko/babel-utils@5.22.0
+
 ## 5.25.9
 
 ### Patch Changes
