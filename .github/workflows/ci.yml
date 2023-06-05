@@ -81,7 +81,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: npm run version
-          publish: npm run publish
+          publish: npm run release
           commit: "[ci] release"
           title: "[ci] release"
         env:
