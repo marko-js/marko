@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.28.1
+
+### Patch Changes
+
+- [#1970](https://github.com/marko-js/marko/pull/1970) [`ce5c40c95`](https://github.com/marko-js/marko/commit/ce5c40c9570c3410f62a2c9feb635ee7c7e54799) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when outputting hydrate code with commonjs modules enabled.
+
 ## 5.28.0
 
 ### Minor Changes
