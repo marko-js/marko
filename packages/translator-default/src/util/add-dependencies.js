@@ -4,7 +4,7 @@ import { types as t } from "@marko/compiler";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 
 export default (entryFile, isHydrate) => {
-  const { modules, resolveVirtualDependency, hydrateIncludeImports } =
+  const { resolveVirtualDependency, hydrateIncludeImports } =
     entryFile.markoOpts;
   const hydratedFiles = new Set();
   const program = entryFile.path;
@@ -164,12 +164,6 @@ export default (entryFile, isHydrate) => {
   }
 
   function importPath(path) {
-    if (modules === "cjs") {
-      return t.expressionStatement(
-        t.callExpression(t.identifier("require"), [t.stringLiteral(path)])
-      );
-    }
-
     return t.importDeclaration([], t.stringLiteral(path));
   }
 };
