@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.2](https://github.com/marko-js/marko/compare/v4.26.1...v4.26.2) (2023-06-07)
+
+
+### Bug Fixes
+
+* regression with components registered only via browser.json ([183011e](https://github.com/marko-js/marko/commit/183011ed18ad3cfff4a0f2e5d4d68cf351bee1c4))
+
 ### [4.26.1](https://github.com/marko-js/marko/compare/v4.26.0...v4.26.1) (2023-05-23)
 
 
