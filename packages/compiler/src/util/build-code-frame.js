@@ -6,11 +6,9 @@ const CWD = process.cwd();
 export function buildCodeFrame(filename, code, loc, message) {
   return `${color.cyan(path.relative(CWD, filename))}${
     loc
-      ? `:${color.yellow(loc.start.line)}:${color.yellow(loc.start.column + 1)}`
-      : ""
-  }\n\n${
-    loc
-      ? codeFrameColumns(
+      ? `:${color.yellow(loc.start.line)}:${color.yellow(
+          loc.start.column + 1
+        )}\n\n${codeFrameColumns(
           code,
           {
             start: {
@@ -26,8 +24,8 @@ export function buildCodeFrame(filename, code, loc, message) {
                 : undefined
           },
           { highlightCode: true, message }
-        )
-      : ""
+        )}`
+      : `: ${message}`
   }`;
 }
 
