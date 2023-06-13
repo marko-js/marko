@@ -86,7 +86,7 @@ describe("translator", () => {
           try {
             const name = path
               .relative(fixtureDir, file)
-              .replace(".marko", ".js");
+              .replace(".marko", config.error_compiler ? ".error.txt" : ".js");
             await targetSnap(() => compileCode(file, finalConfig), {
               file: name,
               dir: fixtureDir,
