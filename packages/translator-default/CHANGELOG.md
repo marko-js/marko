@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.26.2
+
+### Patch Changes
+
+- [#1972](https://github.com/marko-js/marko/pull/1972) [`897b8beba`](https://github.com/marko-js/marko/commit/897b8bebadbb08e0457fb959bd573cb2a5a4d593) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where error messages without a source location were losing their message
+
 ## 5.26.1
 
 ### Patch Changes
