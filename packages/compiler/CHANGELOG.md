@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.28.3
+
+### Patch Changes
+
+- [#1974](https://github.com/marko-js/marko/pull/1974) [`42f7b46e2`](https://github.com/marko-js/marko/commit/42f7b46e25168ef4998e9c3f6014f9b6e1234486) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Run migration fixes synchronously.
+
+- Updated dependencies [[`42f7b46e2`](https://github.com/marko-js/marko/commit/42f7b46e25168ef4998e9c3f6014f9b6e1234486)]:
+  - @marko/babel-utils@5.22.1
+
 ## 5.28.2
 
 ### Patch Changes
