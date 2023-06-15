@@ -191,7 +191,9 @@ export function findAttributeTags(
   path: t.NodePath<t.MarkoTag>
 ): Array<t.NodePath<t.MarkoTag>>;
 
-export function getArgOrSequence(path: t.NodePath<t.MarkoTag>): t.Expression;
+export function getArgOrSequence(
+  path: t.NodePath<t.MarkoTag | t.MarkoAttribute>
+): t.Expression;
 
 export function loadFileForTag(
   path: t.NodePath<t.MarkoTag>

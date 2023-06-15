@@ -233,26 +233,6 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   file.___compileStage = "migrate";
   traverseAll(file, rootMigrators);
 
-  const { applyFixes } = markoOpts;
-  if (applyFixes) {
-    for (let i = 0; i < meta.diagnostics.length; i++) {
-      const diag = meta.diagnostics[i];
-      if (diag.fix) {
-        if (applyFixes.has(i)) {
-          (typeof diag.fix === "function" ? diag.fix : diag.fix.apply)(
-            applyFixes.get(i)
-          );
-        }
-      }
-    }
-  } else {
-    for (const diag of meta.diagnostics) {
-      if (diag.fix) {
-        (typeof diag.fix === "function" ? diag.fix : diag.fix.apply)(undefined);
-      }
-    }
-  }
-
   if (isMigrate) {
     return file;
   }
@@ -385,29 +365,4 @@ function isMarkoOutput(output) {
 
 function finalizeMeta(meta) {
   meta.watchFiles = [...new Set(meta.watchFiles)];
-  meta.diagnostics = meta.diagnostics.map(
-    ({ type, label, loc, fix: rawFix }) => {
-      let fix = false;
-
-      switch (typeof rawFix) {
-        case "function":
-          fix = true;
-          break;
-        case "object":
-          // strip off the apply function.
-          ({
-            // eslint-disable-next-line no-empty-pattern
-            apply: {},
-            ...fix
-          } = rawFix);
-          break;
-      }
-      return {
-        type,
-        label,
-        loc,
-        fix
-      };
-    }
-  );
 }

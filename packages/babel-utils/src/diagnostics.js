@@ -24,12 +24,36 @@ export function diagnosticSuggest(path, options) {
 function add(type, path, options) {
   const { file } = path.hub;
   const { diagnostics } = file.metadata.marko;
-  const { label, fix, loc = path.node.loc } = options;
-  diagnostics.push({ type, label, loc, fix });
+  const { label, fix: rawFix, loc = path.node.loc } = options;
+  let fix = false;
 
-  if (fix && file.___compileStage !== "migrate") {
-    throw new Error(
-      "Diagnostic fixes can only be registered during the migrate stage."
-    );
+  if (rawFix) {
+    if (file.___compileStage !== "migrate") {
+      throw new Error(
+        "Diagnostic fixes can only be registered during the migrate stage."
+      );
+    }
+
+    const { applyFixes } = file.markoOpts;
+    let apply;
+
+    if (typeof rawFix === "function") {
+      apply = rawFix;
+      fix = true;
+    } else {
+      // strip off the apply function.
+      ({ apply, ...fix } = rawFix);
+    }
+
+    if (applyFixes) {
+      const i = diagnostics.length;
+      if (applyFixes.has(i)) {
+        apply(applyFixes.get(i));
+      }
+    } else {
+      apply(undefined);
+    }
   }
+
+  diagnostics.push({ type, label, loc, fix });
 }
