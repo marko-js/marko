@@ -11,7 +11,7 @@ import defaultConfig from "./config";
 import * as taglib from "./taglib";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
-import { buildCodeFrame, buildCodeFrameError } from "./util/build-code-frame";
+import { buildCodeFrameError } from "./util/build-code-frame";
 export { taglib };
 
 let globalConfig = { ...defaultConfig };
@@ -124,7 +124,7 @@ function buildResult(src, filename, errorRecovery, babelResult) {
 
     for (const diag of meta.diagnostics) {
       if (diag.type === DiagnosticType.Error) {
-        errors.push(diag);
+        errors.push(buildCodeFrameError(filename, src, diag.loc, diag.label));
       }
     }
 
@@ -132,13 +132,12 @@ function buildResult(src, filename, errorRecovery, babelResult) {
       case 0:
         break;
       case 1: {
-        const [diag] = errors;
-        throw buildCodeFrameError(filename, src, diag.loc, diag.label);
+        throw errors[0];
       }
       default: {
         let err;
         const message = `${color.red("AggregationError:")}\n${errors
-          .map(diag => buildCodeFrame(filename, src, diag.loc, diag.label))
+          .map(err => err.message)
           .join("\n\n")
           .replace(/^(?!\s*$)/gm, "\t")}\n`;
 
