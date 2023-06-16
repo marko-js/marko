@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.28.4
+
+### Patch Changes
+
+- [#1976](https://github.com/marko-js/marko/pull/1976) [`7555a46a1`](https://github.com/marko-js/marko/commit/7555a46a19cee973b279fd582ffd51671490dc40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where aggregate errors from the compiler were not exposing error objects (was exposing the raw diagnostics).
+
+- [#1976](https://github.com/marko-js/marko/pull/1976) [`7555a46a1`](https://github.com/marko-js/marko/commit/7555a46a19cee973b279fd582ffd51671490dc40) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Include locations and original message for errors thrown from the compiler.
+
 ## 5.28.3
 
 ### Patch Changes
