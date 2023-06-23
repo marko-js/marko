@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.26.5
+
+### Patch Changes
+
+- [#1978](https://github.com/marko-js/marko/pull/1978) [`931a5d24b`](https://github.com/marko-js/marko/commit/931a5d24bbf77d7b29922f34d66d8ca7c42cea07) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoids loading babel config when compiler output is set to source or migrate.
+
+- Updated dependencies [[`931a5d24b`](https://github.com/marko-js/marko/commit/931a5d24bbf77d7b29922f34d66d8ca7c42cea07)]:
+  - @marko/compiler@5.28.5
+  - @marko/translator-default@5.26.5
+
 ## 5.26.4
 
 ### Patch Changes
