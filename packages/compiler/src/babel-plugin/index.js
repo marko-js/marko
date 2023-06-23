@@ -53,6 +53,7 @@ export default (api, markoOpts) => {
         opts.parserOpts.allowReturnOutsideFunction =
         opts.parserOpts.allowSuperOutsideMethod =
         opts.parserOpts.allowUndeclaredExports =
+        opts.parserOpts.allowNewTargetOutsideFunction =
           true;
       curOpts = opts;
     },

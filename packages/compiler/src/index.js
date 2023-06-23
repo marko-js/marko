@@ -65,14 +65,14 @@ function loadMarkoConfig(config) {
   const markoConfig = { ...globalConfig, ...config };
 
   if (markoConfig.stripTypes === undefined) {
-    markoConfig.stripTypes =
-      markoConfig.output !== "source" && markoConfig.output !== "migrate";
+    markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);
   }
 
   return markoConfig;
 }
 
 function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
+  const isTranslated = isTranslatedOutput(markoConfig.output);
   const requiredPlugins = [
     [corePlugin, markoConfig],
     [
@@ -92,23 +92,29 @@ function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
       ? path.relative(process.cwd(), filename)
       : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
+    configFile: isTranslated,
+    babelrc: isTranslated,
     ...babelConfig,
     filename,
     sourceType: "module",
     sourceMaps: markoConfig.sourceMaps,
     code: markoConfig.code,
-    ast: markoConfig.ast
+    ast: markoConfig.ast,
+    plugins:
+      babelConfig && babelConfig.plugins
+        ? requiredPlugins.concat(babelConfig.plugins)
+        : requiredPlugins
   };
 
-  if (markoConfig.modules === "cjs") {
-    requiredPlugins.push([cjsPlugin, { loose: true }]);
+  if (isTranslated) {
+    if (markoConfig.modules === "cjs") {
+      baseBabelConfig.plugins.push([cjsPlugin, { loose: true }]);
+    }
+
+    return babel.loadPartialConfig(baseBabelConfig).options;
   }
 
-  baseBabelConfig.plugins = requiredPlugins.concat(
-    baseBabelConfig.plugins || []
-  );
-
-  return babel.loadPartialConfig(baseBabelConfig).options;
+  return baseBabelConfig;
 }
 
 function buildResult(src, filename, errorRecovery, babelResult) {
@@ -180,4 +186,8 @@ function isDefaultCache(config) {
 
 function getFs(config) {
   return config.fileSystem || globalConfig.fileSystem;
+}
+
+function isTranslatedOutput(output) {
+  return output !== "source" && output !== "migrate";
 }
