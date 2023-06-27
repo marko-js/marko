@@ -1,5 +1,26 @@
 # Change Log
 
+## 5.27.0
+
+### Minor Changes
+
+- [#1980](https://github.com/marko-js/marko/pull/1980) [`9d3b34eef`](https://github.com/marko-js/marko/commit/9d3b34eefa2d0d9f9b27b9635950360b62be2f1f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow parse errors to be recovered from by migrations. This adds a new ast node type of MarkoParseError.
+  MarkoParseError nodes can be removed during the migration stage to handle legacy syntaxes. Any MarkoParseError
+  left in the AST at the end of the migration phase will throw an error similar to what it would have previously
+  thrown synchronously.
+
+  This also means that all parse errors can be surfaced as an aggregate error instead of bailing on the first
+  parse error. When the compiler is ran with `errorRecovery: true` these errors become diagnostics instead of
+  being thrown.
+
+### Patch Changes
+
+- [#1980](https://github.com/marko-js/marko/pull/1980) [`20deb5699`](https://github.com/marko-js/marko/commit/20deb5699c7b7393dd7ba4b95cdbb60945a9319f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue that could happen if DOMContentLoaded was manually invoked multiple times.
+
+- Updated dependencies [[`9d3b34eef`](https://github.com/marko-js/marko/commit/9d3b34eefa2d0d9f9b27b9635950360b62be2f1f)]:
+  - @marko/translator-default@5.27.0
+  - @marko/compiler@5.29.0
+
 ## 5.26.5
 
 ### Patch Changes

@@ -1,5 +1,23 @@
 # Change Log
 
+## 5.29.0
+
+### Minor Changes
+
+- [#1980](https://github.com/marko-js/marko/pull/1980) [`9d3b34eef`](https://github.com/marko-js/marko/commit/9d3b34eefa2d0d9f9b27b9635950360b62be2f1f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow parse errors to be recovered from by migrations. This adds a new ast node type of MarkoParseError.
+  MarkoParseError nodes can be removed during the migration stage to handle legacy syntaxes. Any MarkoParseError
+  left in the AST at the end of the migration phase will throw an error similar to what it would have previously
+  thrown synchronously.
+
+  This also means that all parse errors can be surfaced as an aggregate error instead of bailing on the first
+  parse error. When the compiler is ran with `errorRecovery: true` these errors become diagnostics instead of
+  being thrown.
+
+### Patch Changes
+
+- Updated dependencies [[`9d3b34eef`](https://github.com/marko-js/marko/commit/9d3b34eefa2d0d9f9b27b9635950360b62be2f1f)]:
+  - @marko/babel-utils@6.0.0
+
 ## 5.28.5
 
 ### Patch Changes
