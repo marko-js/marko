@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.4](https://github.com/marko-js/marko/compare/v4.26.3...v4.26.4) (2023-06-27)
+
+
+### Bug Fixes
+
+* bind render method on legacy widgets ([163d2ae](https://github.com/marko-js/marko/commit/163d2ae33063dd7399b6e4e9b531d445458f7c77))
+
 ### [4.26.3](https://github.com/marko-js/marko/compare/v4.26.2...v4.26.3) (2023-06-27)
 
 
