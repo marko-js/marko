@@ -9,7 +9,7 @@ function escapeFileNames(commands) {
   return filenames => {
     const allFiles = filenames.join(" ");
     const allFilesEscaped = filenames
-      .map(filename => `"${escape([filename])}"`)
+      .map(filename => `"${escape([filename]).replace(/\\@/g, "@")}"`)
       .join(" ");
     return commands.map(
       command =>
