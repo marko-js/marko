@@ -13,6 +13,22 @@ const valueFieldCommon = {
 };
 
 const MarkoDefinitions = {
+  MarkoParseError: {
+    aliases: ["Marko", "Expression", "Statement"],
+    builder: ["source", "label", "errorLoc"],
+    fields: {
+      source: {
+        validate: assertValueType("string")
+      },
+      label: {
+        validate: assertValueType("string")
+      },
+      errorLoc: {
+        optional: true,
+        validate: assertValueType("object")
+      }
+    }
+  },
   MarkoDocumentType: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],

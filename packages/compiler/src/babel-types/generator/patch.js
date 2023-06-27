@@ -15,6 +15,9 @@ const UNENCLOSED_WHITESPACE_TYPES = [
 ];
 
 Object.assign(Printer.prototype, {
+  MarkoParseError(node) {
+    this.token(node.source);
+  },
   MarkoDocumentType(node) {
     this.token("<!");
     this.token(node.value);

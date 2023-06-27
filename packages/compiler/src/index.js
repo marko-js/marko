@@ -1,6 +1,5 @@
 export * as types from "./babel-types";
 import path from "path";
-import color from "kleur";
 import * as babel from "@babel/core";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
@@ -12,6 +11,7 @@ import * as taglib from "./taglib";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 import { buildCodeFrameError } from "./util/build-code-frame";
+import throwAggregateError from "./util/merge-errors";
 export { taglib };
 
 let globalConfig = { ...defaultConfig };
@@ -134,32 +134,7 @@ function buildResult(src, filename, errorRecovery, babelResult) {
       }
     }
 
-    switch (errors.length) {
-      case 0:
-        break;
-      case 1: {
-        throw errors[0];
-      }
-      default: {
-        let err;
-        const message = `${color.red("AggregationError:")}\n${errors
-          .map(err => err.message)
-          .join("\n\n")
-          .replace(/^(?!\s*$)/gm, "\t")}\n`;
-
-        if (typeof AggregateError === "function") {
-          err = new AggregateError(errors, message);
-        } else {
-          err = new Error(message);
-          err.name = "AggregateError";
-          err.errors = errors;
-        }
-
-        // Remove the stack trace from the error since it is not useful.
-        err.stack = "";
-        throw err;
-      }
-    }
+    throwAggregateError(errors);
   }
 
   return { ast, map, code, meta };

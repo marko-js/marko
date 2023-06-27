@@ -1,7 +1,7 @@
 import path from "path";
 import { createHash } from "crypto";
 import * as t from "../babel-types";
-import { getTemplateId } from "@marko/babel-utils";
+import { diagnosticError, getTemplateId } from "@marko/babel-utils";
 import { visitors } from "@babel/traverse";
 import { buildLookup } from "../taglib";
 import { parseMarko } from "./parser";
@@ -11,6 +11,8 @@ import { MarkoFile } from "./file";
 import taglibConfig from "../taglib/config";
 import tryLoadTranslator from "../util/try-load-translator";
 import shouldOptimize from "../util/should-optimize";
+import { buildCodeFrameError } from "../util/build-code-frame";
+import throwAggregateError from "../util/merge-errors";
 
 const SOURCE_FILES = new WeakMap();
 
@@ -58,7 +60,7 @@ export default (api, markoOpts) => {
       curOpts = opts;
     },
     parserOverride(code) {
-      let prevFS = taglibConfig.fs;
+      const prevFS = taglibConfig.fs;
       taglibConfig.fs = markoOpts.fileSystem;
       try {
         const file = getMarkoFile(code, curOpts, markoOpts);
@@ -70,7 +72,9 @@ export default (api, markoOpts) => {
       }
     },
     pre(file) {
-      let prevFS = taglibConfig.fs;
+      const { buildError: prevBuildError } = file.hub;
+      const { buildCodeFrameError: prevCodeFrameError } = file;
+      const prevFS = taglibConfig.fs;
       taglibConfig.fs = markoOpts.fileSystem;
       curOpts = undefined;
       try {
@@ -85,8 +89,6 @@ export default (api, markoOpts) => {
 
         const taglibLookup = sourceFile.___taglibLookup;
         const rootTranslators = [];
-        const { buildCodeFrameError } = file;
-        const { buildError } = file.hub;
         file.buildCodeFrameError = MarkoFile.prototype.buildCodeFrameError;
         file.hub.buildError = file.buildCodeFrameError.bind(file);
         file.markoOpts = markoOpts;
@@ -106,17 +108,17 @@ export default (api, markoOpts) => {
         rootTranslators.push(translator.translate);
         file.___compileStage = "translate";
         traverseAll(file, rootTranslators);
-        file.buildCodeFrameError = buildCodeFrameError;
-        file.hub.buildError = buildError;
-        file.markoOpts =
-          file.___taglibLookup =
-          file.___getMarkoFile =
-            undefined;
 
         finalizeMeta(metadata.marko);
         file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
         taglibConfig.fs = prevFS;
+        file.buildCodeFrameError = prevCodeFrameError;
+        file.hub.buildError = prevBuildError;
+        file.markoOpts =
+          file.___taglibLookup =
+          file.___getMarkoFile =
+            undefined;
       }
     },
     visitor:
@@ -233,6 +235,35 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   rootMigrators.push(migrate);
   file.___compileStage = "migrate";
   traverseAll(file, rootMigrators);
+
+  if (file.___hasParseErrors) {
+    if (markoOpts.errorRecovery) {
+      t.traverseFast(file.path.node, node => {
+        if (node.type === "MarkoParseError") {
+          diagnosticError(file.path, {
+            label: node.label,
+            loc: node.errorLoc || node.loc
+          });
+        }
+      });
+    } else {
+      let errors = [];
+      t.traverseFast(file.path.node, node => {
+        if (node.type === "MarkoParseError") {
+          errors.push(
+            buildCodeFrameError(
+              file.opts.filename,
+              file.code,
+              node.errorLoc || node.loc,
+              node.label
+            )
+          );
+        }
+      });
+
+      throwAggregateError(errors);
+    }
+  }
 
   if (isMigrate) {
     return file;

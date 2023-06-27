@@ -6,7 +6,7 @@ import {
   resolveRelativePath,
   importNamed,
   importDefault,
-  parseScript,
+  parseStatements,
   isNativeTag,
   isMacroTag,
   isDynamicTag,
@@ -193,7 +193,13 @@ export const translate = {
 
       if (file.metadata.marko.moduleCode) {
         path
-          .replaceWith(parseScript(file, file.metadata.marko.moduleCode))[0]
+          .replaceWith(
+            t.program(
+              parseStatements(file, file.metadata.marko.moduleCode),
+              undefined,
+              file.markoOpts.modules === "cjs" ? "script" : "module"
+            )
+          )[0]
           .skip();
         return;
       }
@@ -427,7 +433,7 @@ export const translate = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("deps"),
-              parseExpression(file, JSON.stringify(meta.deps), file.code.length)
+              parseExpression(file, JSON.stringify(meta.deps))
             )
           );
         }

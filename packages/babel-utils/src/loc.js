@@ -1,16 +1,16 @@
-const LINE_POS_KEY = Symbol();
+const LINE_INDEX_KEY = Symbol();
 
-export function getLoc(file, pos) {
-  return findLoc(getLinePositions(file), 0, pos);
+export function getLoc(file, index) {
+  return findLoc(getLineIndexes(file), 0, index);
 }
 
 export function getLocRange(file, start, end) {
-  const linePositions = getLinePositions(file);
-  const startLoc = findLoc(linePositions, 0, start);
+  const lineIndexes = getLineIndexes(file);
+  const startLoc = findLoc(lineIndexes, 0, start);
 
   if (startLoc) {
     const endLoc =
-      start === end ? startLoc : findLoc(linePositions, startLoc.line - 1, end);
+      start === end ? startLoc : findLoc(lineIndexes, startLoc.line - 1, end);
 
     return {
       start: startLoc,
@@ -26,44 +26,45 @@ export function withLoc(file, node, start, end) {
   return node;
 }
 
-function getLinePositions(file) {
-  let linePositions = file.metadata.marko[LINE_POS_KEY];
+function getLineIndexes(file) {
+  let lineIndexes = file.metadata.marko[LINE_INDEX_KEY];
 
-  if (!linePositions) {
-    linePositions = [0];
+  if (!lineIndexes) {
+    lineIndexes = [0];
     for (let i = 0; i < file.code.length; i++) {
       if (file.code[i] === "\n") {
-        linePositions.push(i);
+        lineIndexes.push(i);
       }
     }
 
-    file.metadata.marko[LINE_POS_KEY] = linePositions;
+    file.metadata.marko[LINE_INDEX_KEY] = lineIndexes;
   }
 
-  return linePositions;
+  return lineIndexes;
 }
 
-function findLoc(linePositions, startLine, pos) {
-  const endLine = linePositions.length - 1;
+function findLoc(lineIndexes, startLine, index) {
+  const endLine = lineIndexes.length - 1;
   let max = endLine;
   let line = startLine;
 
   while (line < max) {
     const mid = (line + max) >>> 1;
-    if (linePositions[mid] < pos) {
+    if (lineIndexes[mid] < index) {
       line = mid + 1;
     } else {
       max = mid;
     }
   }
 
-  let linePos = linePositions[line];
-  if (linePos > pos) {
-    linePos = linePositions[--line];
+  let lineIndex = lineIndexes[line];
+  if (lineIndex > index) {
+    lineIndex = lineIndexes[--line];
   }
 
   return {
+    index,
     line: line + 1,
-    column: pos === linePos ? 0 : pos - linePos - (line === 0 ? 0 : 1)
+    column: index === lineIndex ? 0 : index - lineIndex - (line === 0 ? 0 : 1)
   };
 }
