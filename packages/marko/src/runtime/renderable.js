@@ -1,3 +1,5 @@
+"use strict";
+
 var defaultCreateOut = require("./createOut");
 var setImmediate = require("@internal/set-immediate").___setImmediate;
 var extend = require("raptor-util/extend");
@@ -27,6 +29,7 @@ module.exports = function (target, renderer) {
   var createOut = target.createOut || renderer.createOut || defaultCreateOut;
 
   return extend(target, {
+    _: renderFunc,
     createOut: createOut,
 
     renderToString: function (data, callback) {

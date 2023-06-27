@@ -68,13 +68,11 @@ module.exports = function dynamicTag(
 
       var renderer =
         tag._ ||
-        tag.render ||
-        (tag.renderer && tag.renderer.renderer) ||
-        tag.renderer;
+        (tag.renderer ? tag.renderer.renderer || tag.renderer : tag.render);
 
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
-        if (tag.renderer && tag.renderer.renderer === renderer) {
+        if (tag.renderer && tag.renderer.renderer) {
           complain(
             "An object with a 'renderer' was passed to the dynamic tag, but renderer was another template."
           );

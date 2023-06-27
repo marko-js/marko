@@ -5,17 +5,19 @@
  */
 module.exports = function loadTagHelper(handler) {
   var renderer =
-    handler.renderer ||
-    handler._ ||
-    (typeof handler === "function" && handler) ||
-    function deferredRenderer(input, out) {
-      // Allows for circular dependencies by lazily defining renderer
-      // on the first render.
-      (renderer = handler.renderer || handler._ || handler.render)(input, out);
-    };
+    getRenderer(handler) ||
+    (typeof handler === "function"
+      ? handler
+      : function deferredRenderer(input, out) {
+          (renderer = getRenderer(handler) || handler.render)(input, out);
+        });
 
   return function wrappedRenderer(input, out, componentDef, key, customEvents) {
     out.c(componentDef, key, customEvents);
     renderer(input, out);
   };
 };
+
+function getRenderer(handler) {
+  return handler._ || handler.renderer;
+}
