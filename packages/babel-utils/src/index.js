@@ -28,7 +28,14 @@ export { normalizeTemplateString } from "./template-string";
 
 export { getLoc, getLocRange, withLoc } from "./loc";
 
-export { parseScript, parseExpression } from "./parse";
+export {
+  parseStatements,
+  parseExpression,
+  parseParams,
+  parseArgs,
+  parseVar,
+  parseTemplateLiteral
+} from "./parse";
 
 export { resolveRelativePath, importDefault, importNamed } from "./imports";
 

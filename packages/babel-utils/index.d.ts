@@ -208,7 +208,7 @@ export function normalizeTemplateString(
   expressions: t.Expression[]
 ): t.TemplateLiteral;
 
-type Loc = { line: number; column: number };
+type Loc = { line: number; column: number; index?: number };
 type LocRange = { start: Loc; end: Loc };
 
 export function getLoc(file: t.BabelFile, pos: number): Loc;
@@ -224,16 +224,67 @@ export function withLoc<T extends t.Node>(
   end: number
 ): T;
 
-export function parseScript(
+export function parseStatements(file: t.BabelFile, str: string): t.Statement[];
+export function parseStatements(
   file: t.BabelFile,
   str: string,
-  start?: number
-): t.Program;
+  sourceStart: number,
+  sourceEnd: number,
+  sourceOffset?: number
+): t.Statement[];
+
+export function parseExpression(file: t.BabelFile, str: string): t.Expression;
 export function parseExpression(
   file: t.BabelFile,
   str: string,
-  start?: number
+  sourceStart: number,
+  sourceEnd: number,
+  sourceOffset?: number
 ): t.Expression;
+
+export function parseParams(
+  file: t.BabelFile,
+  str: string
+): t.Function["params"];
+export function parseParams(
+  file: t.BabelFile,
+  str: string,
+  sourceStart: number,
+  sourceEnd: number
+): t.Function["params"];
+
+export function parseArgs(
+  file: t.BabelFile,
+  str: string
+): t.CallExpression["arguments"];
+export function parseArgs(
+  file: t.BabelFile,
+  str: string,
+  sourceStart: number,
+  sourceEnd: number
+): t.CallExpression["arguments"];
+
+export function parseVar(
+  file: t.BabelFile,
+  str: string
+): t.VariableDeclarator["id"];
+export function parseVar(
+  file: t.BabelFile,
+  str: string,
+  sourceStart: number,
+  sourceEnd: number
+): t.VariableDeclarator["id"];
+
+export function parseTemplateLiteral(
+  file: t.BabelFile,
+  str: string
+): t.TemplateLiteral;
+export function parseTemplateLiteral(
+  file: t.BabelFile,
+  str: string,
+  sourceStart: number,
+  sourceEnd: number
+): t.TemplateLiteral;
 
 export function resolveRelativePath(file: t.BabelFile, request: string): string;
 export function importDefault(

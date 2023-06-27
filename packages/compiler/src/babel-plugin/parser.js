@@ -1,8 +1,12 @@
 import { createParser, TagType } from "htmljs-parser";
 import * as t from "../babel-types";
 import {
-  parseScript,
+  parseStatements,
   parseExpression,
+  parseArgs,
+  parseParams,
+  parseVar,
+  parseTemplateLiteral,
   getTagDefForTagName
 } from "@marko/babel-utils";
 
@@ -65,7 +69,12 @@ export function parseMarko(file) {
       case 1: {
         if (emptyRange(quasis[0]) && emptyRange(quasis[1])) {
           const [{ value }] = expressions;
-          const result = parseExpression(file, parser.read(value), value.start);
+          const result = parseExpression(
+            file,
+            parser.read(value),
+            value.start,
+            value.end
+          );
           if (t.isStringLiteral(result)) {
             // convert to template literal just so that we don't mistake it for a native tag if this is a tag name.
             return t.templateLiteral(
@@ -86,11 +95,7 @@ export function parseMarko(file) {
 
     const [{ start }] = quasis;
     const end = quasis[quasis.length - 1].end;
-    return parseExpression(
-      file,
-      `\`${parser.read({ start, end })}\``,
-      start - 1
-    );
+    return parseTemplateLiteral(file, parser.read({ start, end }), start, end);
   };
 
   const parser = createParser({
@@ -196,7 +201,12 @@ export function parseMarko(file) {
       pushContent(
         withLoc(
           t.markoPlaceholder(
-            parseExpression(file, parser.read(part.value), part.value.start),
+            parseExpression(
+              file,
+              parser.read(part.value),
+              part.value.start,
+              part.value.end
+            ),
             part.escape
           ),
           part
@@ -207,7 +217,12 @@ export function parseMarko(file) {
       pushContent(
         withLoc(
           t.markoScriptlet(
-            parseScript(file, parser.read(part.value), part.value.start).body
+            parseStatements(
+              file,
+              parser.read(part.value),
+              part.value.start,
+              part.value.end
+            )
           ),
           part
         )
@@ -264,28 +279,31 @@ export function parseMarko(file) {
       }
     },
 
-    onTagVar(part) {
-      currentTag.node.var = parseExpression(
+    onTagVar({ value }) {
+      currentTag.node.var = parseVar(
         file,
-        `(${parser.read(part.value)})=>{}`,
-        part.value.start - 1
-      ).params[0];
+        parser.read(value),
+        value.start,
+        value.end
+      );
     },
 
-    onTagParams(part) {
-      currentTag.node.body.params = parseExpression(
+    onTagParams({ value }) {
+      currentTag.node.body.params = parseParams(
         file,
-        `(${parser.read(part.value)})=>{}`,
-        part.start
-      ).params;
+        parser.read(value),
+        value.start,
+        value.end
+      );
     },
 
-    onTagArgs(part) {
-      currentTag.node.arguments = parseExpression(
+    onTagArgs({ value }) {
+      currentTag.node.arguments = parseArgs(
         file,
-        `_${parser.read(part)}`,
-        part.start - 1
-      ).arguments;
+        parser.read(value),
+        value.start,
+        value.end
+      );
     },
 
     onAttrName(part) {
@@ -305,13 +323,15 @@ export function parseMarko(file) {
       currentAttr.end = part.end;
     },
 
-    onAttrArgs(part) {
-      currentAttr.arguments = parseExpression(
+    onAttrArgs({ value, end }) {
+      currentAttr.arguments = parseArgs(
         file,
-        `_${parser.read(part)}`,
-        part.start - 1
-      ).arguments;
-      currentAttr.end = part.end;
+        parser.read(value),
+        value.start,
+        value.end
+      );
+
+      currentAttr.end = end;
     },
 
     onAttrValue(part) {
@@ -329,16 +349,20 @@ export function parseMarko(file) {
       currentAttr.value = withLoc(
         t.functionExpression(
           undefined,
-          parseExpression(
+          parseParams(
             file,
-            `${parser.read(part.params)}=>{}`,
-            part.params.start
-          ).params,
-          parseExpression(
-            file,
-            `()=>${parser.read(part.body)}`,
-            part.body.start - 4
-          ).body
+            parser.read(part.params.value),
+            part.params.value.start,
+            part.params.value.end
+          ),
+          t.blockStatement(
+            parseStatements(
+              file,
+              parser.read(part.body.value),
+              part.body.value.start,
+              part.body.value.end
+            )
+          )
         ),
         part
       );

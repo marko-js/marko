@@ -9,7 +9,7 @@ export default function (path) {
   } = path;
   const {
     rawValue: code,
-    name: { start }
+    name: { start, end }
   } = node;
   const meta = file.metadata.marko;
 
@@ -29,7 +29,7 @@ export default function (path) {
       );
   }
 
-  const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start);
+  const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start, end);
 
   if (parsed.id) {
     throw file.buildCodeFrameError(

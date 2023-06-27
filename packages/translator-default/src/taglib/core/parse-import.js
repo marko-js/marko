@@ -1,4 +1,4 @@
-import { parseScript } from "@marko/babel-utils";
+import { parseStatements } from "@marko/babel-utils";
 
 export default function (path) {
   const {
@@ -7,8 +7,8 @@ export default function (path) {
   } = path;
   const {
     rawValue,
-    name: { start }
+    name: { start, end }
   } = node;
-  const [importNode] = parseScript(file, rawValue, start).body;
+  const [importNode] = parseStatements(file, rawValue, start, end);
   path.replaceWith(importNode);
 }
