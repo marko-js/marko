@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.27.1
+
+### Patch Changes
+
+- [#1982](https://github.com/marko-js/marko/pull/1982) [`d75ce5243`](https://github.com/marko-js/marko/commit/d75ce52432470544611b758f1d97fe255b9747b4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where the `finish` event was not being invoked when rendering a Marko template with a mock writable that was not an event emitter
+
 ## 5.27.0
 
 ### Minor Changes
