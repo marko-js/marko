@@ -248,7 +248,9 @@ var proto = (AsyncStream.prototype = {
 
     if (state.writer.end) {
       state.writer.end();
-    } else {
+    }
+
+    if (state.events !== state.stream) {
       state.events.emit("finish", this.___getResult());
     }
   },
