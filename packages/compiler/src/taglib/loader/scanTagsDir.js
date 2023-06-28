@@ -9,6 +9,7 @@ const types = require("./types");
 const tagFileTypes = [
   "template",
   "renderer",
+  "migrate",
   "transform",
   "transformer",
   "code-generator",
@@ -23,6 +24,7 @@ const searchFiles = [
   { name: "index", type: "renderer" },
   { name: "template.marko", type: "template" },
   { name: "template.html", type: "template" },
+  { name: "migrate", type: "migrate" },
   { name: "code-generator", type: "translate" },
   { name: "translate", type: "translate" },
   { name: "node-factory", type: "parse" },
