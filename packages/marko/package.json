@@ -1,50 +1,7 @@
 {
     "name": "marko",
     "version": "5.29.2",
-    "license": "MIT",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
-    "dependencies": {
-        "@marko/compiler": "^5.31.1",
-        "@marko/translator-default": "^5.29.2",
-        "app-module-path": "^2.2.0",
-        "argly": "^1.2.0",
-        "browser-refresh-client": "1.1.4",
-        "complain": "^1.6.0",
-        "csstype": "^3.1.2",
-        "events-light": "^1.0.5",
-        "listener-tracker": "^2.0.0",
-        "minimatch": "^3.0.4",
-        "raptor-util": "^3.2.0",
-        "resolve-from": "^5.0.0",
-        "self-closing-tags": "^1.0.1",
-        "warp10": "^2.0.1"
-    },
-    "main": "index.js",
-    "browser": {
-        "./compiler.js": "./compiler-browser.marko",
-        "./components.js": "./components-browser.marko",
-        "./index.js": "./index-browser.marko"
-    },
-    "bin": {
-        "markoc": "bin/markoc"
-    },
-    "homepage": "https://markojs.com/",
-    "logo": {
-        "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/marko-js/marko.git"
-    },
-    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
-    "maintainers": [
-        "Patrick Steele-Idem <pnidem@gmail.com>",
-        "Michael Rawlings <ml.rawlings@gmail.com>",
-        "Phillip Gates-Idem <phillip.idem@gmail.com>",
-        "Austin Kelleher <a@alk.im>",
-        "Dylan Piercey <pierceydylan@gmail.com>",
-        "Martin Aberer"
-    ],
     "keywords": [
         "front-end",
         "templating",
@@ -59,6 +16,31 @@
         "virtual",
         "virtual-dom"
     ],
+    "homepage": "https://markojs.com/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/marko-js/marko.git"
+    },
+    "license": "MIT",
+    "author": "Patrick Steele-Idem <pnidem@gmail.com>",
+    "maintainers": [
+        "Patrick Steele-Idem <pnidem@gmail.com>",
+        "Michael Rawlings <ml.rawlings@gmail.com>",
+        "Phillip Gates-Idem <phillip.idem@gmail.com>",
+        "Austin Kelleher <a@alk.im>",
+        "Dylan Piercey <pierceydylan@gmail.com>",
+        "Martin Aberer"
+    ],
+    "main": "index.js",
+    "browser": {
+        "./compiler.js": "./compiler-browser.marko",
+        "./components.js": "./components-browser.marko",
+        "./index.js": "./index-browser.marko"
+    },
+    "types": "index.d.ts",
+    "bin": {
+        "markoc": "bin/markoc"
+    },
     "files": [
         "bin",
         "dist",
@@ -75,8 +57,26 @@
         "node-require.js",
         "tags-html.d.ts"
     ],
-    "types": "index.d.ts",
     "scripts": {
         "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+    },
+    "dependencies": {
+        "@marko/compiler": "^5.30.0",
+        "@marko/translator-default": "^5.28.0",
+        "app-module-path": "^2.2.0",
+        "argly": "^1.2.0",
+        "browser-refresh-client": "1.1.4",
+        "complain": "^1.6.0",
+        "csstype": "^3.1.2",
+        "events-light": "^1.0.5",
+        "listener-tracker": "^2.0.0",
+        "minimatch": "^3.0.4",
+        "raptor-util": "^3.2.0",
+        "resolve-from": "^5.0.0",
+        "self-closing-tags": "^1.0.1",
+        "warp10": "^2.0.1"
+    },
+    "logo": {
+        "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
     }
 }

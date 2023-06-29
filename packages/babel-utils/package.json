@@ -1,22 +1,7 @@
 {
   "name": "@marko/babel-utils",
-  "description": "Utilities for use with Marko babel plugins.",
   "version": "6.2.1",
-  "author": "Dylan Piercey <dpiercey@ebay.com>",
-  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
-  "dependencies": {
-    "@babel/runtime": "^7.16.0",
-    "jsesc": "^3.0.2",
-    "relative-import-path": "^1.0.0"
-  },
-  "devDependencies": {
-    "@marko/compiler": "^5.31.2"
-  },
-  "files": [
-    "dist",
-    "index.d.ts"
-  ],
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-utils/README.md",
+  "description": "Utilities for use with Marko babel plugins.",
   "keywords": [
     "htmljs",
     "parser",
@@ -25,19 +10,34 @@
     "parse",
     "marko"
   ],
-  "license": "MIT",
-  "main": "src/index.js",
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js",
-  "types": "index.d.ts",
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-utils/README.md",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/marko-js/marko/tree/master/packages/babel-utils"
   },
+  "license": "MIT",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.16.0",
+    "jsesc": "^3.0.2",
+    "relative-import-path": "^1.0.0"
+  },
+  "devDependencies": {
+    "@marko/compiler": "^5.30.0"
+  },
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
-  }
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js"
 }

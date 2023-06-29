@@ -1,9 +1,38 @@
 {
   "name": "@marko/compiler",
-  "description": "Marko template to JS compiler.",
   "version": "5.31.2",
-  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "description": "Marko template to JS compiler.",
+  "keywords": [
+    "babel",
+    "htmljs",
+    "marko",
+    "parse",
+    "parser",
+    "plugin"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/marko/docs/compiler.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/compiler"
+  },
+  "license": "MIT",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "config.js",
+    "config.d.ts",
+    "modules.js",
+    "index.d.ts",
+    "babel-types.d.ts",
+    "register.js",
+    "register.d.ts"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+  },
   "dependencies": {
     "@babel/code-frame": "^7.16.0",
     "@babel/core": "^7.16.0",
@@ -33,38 +62,9 @@
   "devDependencies": {
     "@marko/translator-default": "^5.29.1"
   },
-  "files": [
-    "dist",
-    "config.js",
-    "config.d.ts",
-    "modules.js",
-    "index.d.ts",
-    "babel-types.d.ts",
-    "register.js",
-    "register.d.ts"
-  ],
-  "homepage": "https://github.com/marko-js/marko/blob/main/packages/marko/docs/compiler.md",
-  "keywords": [
-    "babel",
-    "htmljs",
-    "marko",
-    "parse",
-    "parser",
-    "plugin"
-  ],
-  "license": "MIT",
-  "main": "src/index.js",
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js",
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/compiler"
-  },
-  "types": "index.d.ts",
-  "scripts": {
-    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
-  }
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js"
 }

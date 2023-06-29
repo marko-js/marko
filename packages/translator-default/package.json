@@ -1,9 +1,32 @@
 {
   "name": "@marko/translator-default",
-  "description": "Translates Marko templates to the default Marko runtime.",
   "version": "5.29.2",
-  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "description": "Translates Marko templates to the default Marko runtime.",
+  "keywords": [
+    "babel",
+    "htmljs",
+    "marko",
+    "parse",
+    "parser",
+    "plugin"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
+  },
+  "license": "MIT",
+  "author": "Dylan Piercey <dpiercey@ebay.com>",
+  "main": "src/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+  },
   "dependencies": {
     "@babel/runtime": "^7.16.0",
     "@marko/babel-utils": "^6.2.0",
@@ -15,24 +38,6 @@
     "@marko/compiler": "^5.31.1",
     "marko": "^5.29.2"
   },
-  "files": [
-    "dist",
-    "index.d.ts"
-  ],
-  "types": "index.d.ts",
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
-  "keywords": [
-    "babel",
-    "htmljs",
-    "marko",
-    "parse",
-    "parser",
-    "plugin"
-  ],
-  "license": "MIT",
-  "main": "src/index.js",
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js",
   "peerDependencies": {
     "@marko/compiler": "^5.16.1",
     "marko": "^5.17.2"
@@ -40,11 +45,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
-  },
-  "scripts": {
-    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
-  }
+  "main:dev": "src/index.js",
+  "main:npm": "dist/index.js"
 }
