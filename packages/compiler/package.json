@@ -63,5 +63,8 @@
     "type": "git",
     "url": "https://github.com/marko-js/marko/tree/master/packages/compiler"
   },
-  "types": "index.d.ts"
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+  }
 }

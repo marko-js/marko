@@ -27,11 +27,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***********************************************************************************************/
 
 const fs = require("fs");
-const path = require("path");
-require("../packages/compiler/dist/babel-types/types/patch");
-const {
-  MARKO_TYPES
-} = require("../packages/compiler/dist/babel-types/types/definitions");
+require("../dist/babel-types/types/patch");
+const { MARKO_TYPES } = require("../dist/babel-types/types/definitions");
 
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =
@@ -47,7 +44,7 @@ const ASSERT =
 const BREAK = "\n    ";
 
 fs.readFile(
-  path.join(__dirname, "../node_modules/@types/babel__traverse/index.d.ts"),
+  require.resolve("@types/babel__traverse/index.d.ts"),
   "utf8",
   (err, data) => {
     if (err) return console.error(err);
