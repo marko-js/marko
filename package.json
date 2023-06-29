@@ -24,6 +24,7 @@
     "@marko/compiler": "^5.28.2",
     "@rollup/plugin-terser": "^0.4.3",
     "@rollup/plugin-virtual": "^3.0.1",
+    "@types/babel__code-frame": "^7.0.3",
     "@types/jsdom": "^21.1.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "^20.3.1",

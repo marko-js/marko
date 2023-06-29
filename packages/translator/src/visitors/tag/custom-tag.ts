@@ -327,7 +327,7 @@ function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
       );
   }
 
-  const tags = file.metadata.marko.tags;
+  const tags = file.metadata.marko.tags!;
   if (!tags.includes(relativePath)) {
     tags.push(relativePath);
   }
