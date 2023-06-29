@@ -1,7 +1,7 @@
 <module-code(function(require, opts) {
     var file = `"./${opts.optimize ? "dist" : "src"}/runtime/components"`;
 
-    if (opts.module === "cjs") {
+    if (opts.modules === "cjs") {
         return `module.exports = require(${file});\n`;
     } else {
         return `export { default } from ${file};\nexport * from ${file};\n`;
