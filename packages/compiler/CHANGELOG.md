@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.30.1
+
+### Patch Changes
+
+- [#1987](https://github.com/marko-js/marko/pull/1987) [`8bf5cb1f0`](https://github.com/marko-js/marko/commit/8bf5cb1f097769c835a452ff4bbea67a6c741810) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When duplicate taglib entries are found and merged, nullish values are now ignored. This means if you specify a property in a taglib it will not be unset by another (merged) taglib.
+
+- [#1986](https://github.com/marko-js/marko/pull/1986) [`1b29b859f`](https://github.com/marko-js/marko/commit/1b29b859fb0876d9a8d0d7bba44d08f77f1706bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where `module-code` entries were not properly checking the expected module output (causing them to always output esm). This was previously fine due to the cjs conversion plugin running for these, however a recent change caused that plugin to no longer run for these files since (which should have been unnecessary, except for that they had the incorrect check).
+
 ## 5.30.0
 
 ### Minor Changes
