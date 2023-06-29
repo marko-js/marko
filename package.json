@@ -2,8 +2,8 @@
   "name": "marko-project",
   "private": true,
   "scripts": {
-    "build": "npm exec --ws -- babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production && npm run build:types",
-    "build:types": "node scripts/types-babel-types.mjs > packages/compiler/dist/types.d.ts && node scripts/types-babel-traverse.js > packages/compiler/dist/traverse.d.ts",
+    "build": "npm run build --ws",
+    "build:types": "npm run build:types --ws --if-present",
     "publish": "ENTRY=main:npm npm run set-entry && npm run build && changeset publish && ENTRY=main:dev npm run set-entry && npm ci",
     "change": "changeset add",
     "test": "mocha \"packages/*/test/{*.test.js,*/*.test.js}\"",
