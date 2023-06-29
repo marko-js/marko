@@ -14,7 +14,6 @@ class Tag {
     this.attributes = {};
     this.transformers = [];
     this.patternAttributes = [];
-    this.types = undefined;
   }
 
   addAttribute(attr) {
