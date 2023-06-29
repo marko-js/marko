@@ -15,10 +15,11 @@ function merge(target, source) {
     const desc = descs[key];
     if (desc.writable) {
       const sourceVal = desc.value;
+      if (sourceVal == null) continue;
+
       const targetVal = target[key];
 
       if (
-        sourceVal &&
         typeof sourceVal === "object" &&
         targetVal &&
         typeof targetVal === "object"
