@@ -1,6 +1,6 @@
-packages/translator-default/test/fixtures/error-export-tag-nested-content/template.marko:2:2
-
-  1 | export { a } from "b";
-> 2 |  <div/>
-    |  ^ Line has extra indentation at the beginning
-  3 |
+CompileError
+    at packages/translator-default/test/fixtures/error-export-tag-nested-content/template.marko:2:2
+      1 | export { a } from "b";
+    > 2 |  <div/>
+        |  ^ Line has extra indentation at the beginning
+      3 |

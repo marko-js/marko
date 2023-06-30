@@ -1,8 +1,8 @@
-packages/translator-default/test/fixtures/error-nested-tag-arguments/template.marko:2:10
-
-  1 | <custom-tag>
-> 2 |   <@test(a, b, { c })>
-    |          ^^^^^^^^^^^ Tag does not support arguments.
-  3 |     Hi
-  4 |   </@test>
-  5 | </custom-tag>
+CompileError
+    at packages/translator-default/test/fixtures/error-nested-tag-arguments/template.marko:2:10
+      1 | <custom-tag>
+    > 2 |   <@test(a, b, { c })>
+        |          ^^^^^^^^^^^ Tag does not support arguments.
+      3 |     Hi
+      4 |   </@test>
+      5 | </custom-tag>

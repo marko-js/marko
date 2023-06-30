@@ -1,7 +1,7 @@
-packages/translator-default/test/fixtures/error-class-with-super-class/template.marko:1:15
-
-> 1 | class extends Test {
-    |               ^^^^ Component class cannot have a super class.
-  2 |   onCreate() {
-  3 |
-  4 |   }
+CompileError
+    at packages/translator-default/test/fixtures/error-class-with-super-class/template.marko:1:15
+    > 1 | class extends Test {
+        |               ^^^^ Component class cannot have a super class.
+      2 |   onCreate() {
+      3 |
+      4 |   }

@@ -2,7 +2,10 @@ import fs from "fs";
 import path from "path";
 import autotest from "mocha-autotest";
 import stripAnsi from "strip-ansi";
+import escapeRegExp from "escape-string-regexp";
 import { compileFileSync } from "../src";
+
+const cwdRegExp = new RegExp(escapeRegExp(process.cwd() + "/"), "g");
 
 fs.readdirSync(path.join(__dirname, "../../"))
   .map(dir => /^translator-(.*)|/.exec(dir)[1])
@@ -62,7 +65,7 @@ fs.readdirSync(path.join(__dirname, "../../"))
             output = compileFileSync(templateFile, compilerConfig).code;
           } catch (err) {
             try {
-              snapshot(stripCwd(stripAnsi(err.message)), {
+              snapshot(stripCwd(stripModuleStackTrace(stripAnsi(err.stack))), {
                 name: `${name}-error`,
                 ext: ".txt"
               });
@@ -82,5 +85,9 @@ fs.readdirSync(path.join(__dirname, "../../"))
   });
 
 function stripCwd(message) {
-  return message.replace(process.cwd() + "/", "");
+  return message.replace(cwdRegExp, "");
+}
+
+function stripModuleStackTrace(message) {
+  return message.replace(/\r?\n +at (?!packages[/\\])[^\n]+$/gm, "");
 }

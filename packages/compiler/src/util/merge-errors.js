@@ -1,5 +1,6 @@
-import color from "kleur";
-
+const indent = "    ";
+const compileErrorPrefix = `SyntaxError\n`;
+const compileErrorStackTracePrefix = `${compileErrorPrefix + indent}at `;
 export default function throwAggregateError(errors) {
   switch (errors.length) {
     case 0:
@@ -8,21 +9,20 @@ export default function throwAggregateError(errors) {
       throw errors[0];
   }
 
-  let err;
-  const message = `${color.red("AggregationError:")}\n${errors
-    .map(err => err.message)
-    .join("\n\n")
-    .replace(/^(?!\s*$)/gm, "\t")}\n`;
+  throw new CompileErrors(errors);
+}
 
-  if (typeof AggregateError === "function") {
-    err = new AggregateError(errors, message);
-  } else {
-    err = new Error(message);
-    err.name = "AggregateError";
-    err.errors = errors;
+class CompileErrors extends Error {
+  constructor(errors) {
+    super();
+    this.errors = errors;
+    this.stack = `CompileErrors\n${errors
+      .map(({ stack }) => {
+        if (stack.startsWith(compileErrorStackTracePrefix)) {
+          return stack.slice(compileErrorPrefix.length);
+        }
+        return stack.replace(/^(?!\s*$)/gm, "    ");
+      })
+      .join("\n\n")}`;
   }
-
-  // Remove the stack trace from the error since it is not useful.
-  err.stack = "";
-  throw err;
 }

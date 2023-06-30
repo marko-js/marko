@@ -1,7 +1,7 @@
-packages/translator-default/test/fixtures/error-class-file-and-inline/template.marko:1:1
-
-> 1 | class {
-    | ^^^^^ A Marko file can either have an inline class, or an external "component.js", but not both.
-  2 |   onCreate() {
-  3 |
-  4 |   }
+CompileError
+    at packages/translator-default/test/fixtures/error-class-file-and-inline/template.marko:1:1
+    > 1 | class {
+        | ^^^^^ A Marko file can either have an inline class, or an external "component.js", but not both.
+      2 |   onCreate() {
+      3 |
+      4 |   }

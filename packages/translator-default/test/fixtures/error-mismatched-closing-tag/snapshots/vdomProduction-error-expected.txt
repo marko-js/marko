@@ -1,6 +1,6 @@
-packages/translator-default/test/fixtures/error-mismatched-closing-tag/template.marko:4:1
-
-  2 |   <span>
-  3 |   <span>
-> 4 | </div>
-    | ^^^^^^ The closing "div" tag does not match the corresponding opening "span" tag
+CompileError
+    at packages/translator-default/test/fixtures/error-mismatched-closing-tag/template.marko:4:1
+      2 |   <span>
+      3 |   <span>
+    > 4 | </div>
+        | ^^^^^^ The closing "div" tag does not match the corresponding opening "span" tag

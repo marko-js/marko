@@ -1,6 +1,6 @@
-packages/translator-default/test/fixtures/error-export-tag-root-only/template.marko:2:4
-
-  1 | <div>
-> 2 |   <export x from "y"/>
-    |    ^^^^^^ The "export" tag is reserved and cannot be used as an HTML tag.
-  3 | </div>
+CompileError
+    at packages/translator-default/test/fixtures/error-export-tag-root-only/template.marko:2:4
+      1 | <div>
+    > 2 |   <export x from "y"/>
+        |    ^^^^^^ The "export" tag is reserved and cannot be used as an HTML tag.
+      3 | </div>

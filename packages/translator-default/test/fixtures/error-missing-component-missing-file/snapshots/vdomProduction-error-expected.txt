@@ -1,4 +1,4 @@
-packages/translator-default/test/fixtures/error-missing-component-missing-file/template.marko:1:2
-
-> 1 | <thing/>
-    |  ^^^^^ Unable to find entry point for custom tag <thing>.
+CompileError
+    at packages/translator-default/test/fixtures/error-missing-component-missing-file/template.marko:1:2
+    > 1 | <thing/>
+        |  ^^^^^ Unable to find entry point for custom tag <thing>.
