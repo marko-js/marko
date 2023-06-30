@@ -1,6 +1,6 @@
-packages/translator-default/test/fixtures/error-else-tag-missing-if/template.marko:1:2
-
-> 1 | <else>
-    |  ^^^^ Invalid 'else' tag, expected preceding 'if' or 'else-if' tag.
-  2 |   Hello
-  3 | </else>
+CompileError
+    at packages/translator-default/test/fixtures/error-else-tag-missing-if/template.marko:1:2
+    > 1 | <else>
+        |  ^^^^ Invalid 'else' tag, expected preceding 'if' or 'else-if' tag.
+      2 |   Hello
+      3 | </else>

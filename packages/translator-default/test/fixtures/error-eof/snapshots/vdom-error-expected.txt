@@ -1,7 +1,7 @@
-packages/translator-default/test/fixtures/error-eof/template.marko:1:7
-
-> 1 | style {
-    |       ^ EOF reached while parsing attribute name for the "style" tag
-  2 |   div {
-  3 |     color: green;
-  4 | }
+CompileError
+    at packages/translator-default/test/fixtures/error-eof/template.marko:1:7
+    > 1 | style {
+        |       ^ EOF reached while parsing attribute name for the "style" tag
+      2 |   div {
+      3 |     color: green;
+      4 | }

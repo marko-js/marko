@@ -1,4 +1,4 @@
-packages/translator-default/test/fixtures/error-event-handler-missing-args/template.marko:1:6
-
-> 1 | <div onClick()/>
-    |      ^^^^^^^^^ Event handler is missing arguments.
+CompileError
+    at packages/translator-default/test/fixtures/error-event-handler-missing-args/template.marko:1:6
+    > 1 | <div onClick()/>
+        |      ^^^^^^^^^ Event handler is missing arguments.

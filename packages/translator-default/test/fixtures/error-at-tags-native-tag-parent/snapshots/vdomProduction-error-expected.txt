@@ -1,9 +1,9 @@
-packages/translator-default/test/fixtures/error-at-tags-native-tag-parent/template.marko:9:6
-
-   7 |     Body content
-   8 |
->  9 |     <@footer class="my-footer">
-     |      ^^^^^^^ @tags must be within a custom element.
-  10 |         Footer content
-  11 |     </@footer>
-  12 | </div>
+CompileError
+    at packages/translator-default/test/fixtures/error-at-tags-native-tag-parent/template.marko:9:6
+       7 |     Body content
+       8 |
+    >  9 |     <@footer class="my-footer">
+         |      ^^^^^^^ @tags must be within a custom element.
+      10 |         Footer content
+      11 |     </@footer>
+      12 | </div>

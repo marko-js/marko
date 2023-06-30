@@ -2,54 +2,72 @@ import path from "path";
 import color from "kleur";
 import { codeFrameColumns } from "@babel/code-frame";
 const CWD = process.cwd();
+const indent = "    ";
 
-export function buildCodeFrameError(
-  filename,
-  code,
-  loc,
-  message,
-  Error = SyntaxError
-) {
-  const err = new Error();
-  const codeFrame = buildCodeFrame(filename, code, loc, message);
+class CompileError extends Error {
+  constructor(filename, code, loc, message) {
+    super();
+    const prettyMessage = buildMessage(code, loc, message);
+    const prettyFileName = buildFileName(filename, loc);
+    this.stack = loc
+      ? `CompileError\n${indent}at ${prettyFileName}\n${prettyMessage.replace(
+          /^/gm,
+          indent
+        )}`
+      : `CompileError: ${prettyMessage}\n${indent}at ${prettyFileName}`;
 
-  err.loc = loc;
-  err.label = message;
-  err.stack = ""; // Avoid showing the stack trace for this error.
-
-  // Prevent babel from changing our error message.
-  Object.defineProperty(err, "message", {
-    get() {
-      return codeFrame;
-    },
-    set() {}
-  });
-
-  return err;
+    Object.defineProperties(this, {
+      loc: { value: loc, enumerable: false, writable: true },
+      label: { value: message, enumerable: false, writable: true },
+      // Ignore some mutations from Babel.
+      code: {
+        enumerable: false,
+        get() {
+          return undefined;
+        },
+        set() {}
+      },
+      message: {
+        enumerable: false,
+        get() {
+          return `${prettyFileName}: ${message}`;
+        },
+        set() {}
+      }
+    });
+  }
 }
 
-function buildCodeFrame(filename, code, loc, message) {
+export function buildCodeFrameError(filename, code, loc, message) {
+  return new CompileError(filename, code, loc, message);
+}
+
+function buildMessage(code, loc, message) {
+  return loc
+    ? codeFrameColumns(
+        code,
+        {
+          start: {
+            line: loc.start.line,
+            column: loc.start.column + 1
+          },
+          end:
+            loc.end && loc.start.line === loc.end.line
+              ? {
+                  line: loc.end.line,
+                  column: loc.end.column + 1
+                }
+              : undefined
+        },
+        { highlightCode: true, message }
+      )
+    : message;
+}
+
+function buildFileName(filename, loc) {
   return `${color.cyan(path.relative(CWD, filename))}${
     loc
-      ? `:${color.yellow(loc.start.line)}:${color.yellow(
-          loc.start.column + 1
-        )}\n\n${codeFrameColumns(
-          code,
-          {
-            start: {
-              line: loc.start.line,
-              column: loc.start.column + 1
-            },
-            end:
-              loc.end && loc.start.line === loc.end.line
-                ? {
-                    line: loc.end.line,
-                    column: loc.end.column + 1
-                  }
-                : undefined
-          },
-          { highlightCode: true, message }
-        )}`
-      : `: ${message}`
+      ? `:${color.yellow(loc.start.line)}:${color.yellow(loc.start.column + 1)}`
+      : ""
   }`;
 }

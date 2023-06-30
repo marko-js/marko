@@ -1,5 +1,5 @@
-packages/translator-default/test/fixtures/error-unclosed-tag/template.marko:1:1
-
-> 1 | <div>
-    | ^^^^^ Missing ending "div" tag
-  2 |   <span/>
+CompileError
+    at packages/translator-default/test/fixtures/error-unclosed-tag/template.marko:1:1
+    > 1 | <div>
+        | ^^^^^ Missing ending "div" tag
+      2 |   <span/>

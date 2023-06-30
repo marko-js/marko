@@ -1,7 +1,7 @@
-packages/translator-default/test/fixtures/error-at-tags-top-level/template.marko:1:2
-
-> 1 | <@header class="my-header">
-    |  ^^^^^^^ @tags must be nested within another element.
-  2 |     Header content
-  3 | </@header>
-  4 |
+CompileError
+    at packages/translator-default/test/fixtures/error-at-tags-top-level/template.marko:1:2
+    > 1 | <@header class="my-header">
+        |  ^^^^^^^ @tags must be nested within another element.
+      2 |     Header content
+      3 | </@header>
+      4 |

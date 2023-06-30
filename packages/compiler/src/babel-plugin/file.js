@@ -6,13 +6,7 @@ export class MarkoFile extends File {
     throw new Error("addHelper is not supported during a Marko transform");
   }
 
-  buildCodeFrameError(node, msg, Error) {
-    return buildCodeFrameError(
-      this.opts.filename,
-      this.code,
-      node.loc,
-      msg,
-      Error
-    );
+  buildCodeFrameError(node, msg) {
+    return buildCodeFrameError(this.opts.filename, this.code, node.loc, msg);
   }
 }

@@ -1,8 +1,8 @@
-packages/translator-default/test/fixtures/error-class-not-root/template.marko:2:3
-
-  1 | div
-> 2 |   class extends Test {
-    |   ^^^^^ "class" can only be used at the root of the template.
-  3 |     onCreate() {
-  4 |
-  5 |     }
+CompileError
+    at packages/translator-default/test/fixtures/error-class-not-root/template.marko:2:3
+      1 | div
+    > 2 |   class extends Test {
+        |   ^^^^^ "class" can only be used at the root of the template.
+      3 |     onCreate() {
+      4 |
+      5 |     }

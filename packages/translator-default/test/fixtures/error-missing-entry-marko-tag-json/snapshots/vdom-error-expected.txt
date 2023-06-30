@@ -1,4 +1,4 @@
-packages/translator-default/test/fixtures/error-missing-entry-marko-tag-json/template.marko:1:2
-
-> 1 | <some-tag/>
-    |  ^^^^^^^^ Unable to find entry point for custom tag <some-tag>.
+CompileError
+    at packages/translator-default/test/fixtures/error-missing-entry-marko-tag-json/template.marko:1:2
+    > 1 | <some-tag/>
+        |  ^^^^^^^^ Unable to find entry point for custom tag <some-tag>.
