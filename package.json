@@ -17,7 +17,7 @@
     "publish": "ENTRY=main:npm npm run set-entry && npm run build && changeset publish && ENTRY=main:dev npm run set-entry && npm ci",
     "report": "open ./coverage/lcov-report/index.html",
     "set-entry": "npm exec --ws -c 'dot-json package.json main $(dot-json package.json $ENTRY)'",
-    "test": "mocha \"packages/*/test/{*.test.js,*/*.test.js}\"",
+    "test": "mocha",
     "test:watch": "npm run mocha -- --recursive --watch",
     "version": "changeset version && npm i --package-lock-only"
   },
