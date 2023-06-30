@@ -14,7 +14,7 @@ export function getLocRange(file, start, end) {
 
     return {
       start: startLoc,
-      end: endLoc
+      end: endLoc,
     };
   }
 }
@@ -65,6 +65,6 @@ function findLoc(lineIndexes, startLine, index) {
   return {
     index,
     line: line + 1,
-    column: index === lineIndex ? 0 : index - lineIndex - (line === 0 ? 0 : 1)
+    column: index === lineIndex ? 0 : index - lineIndex - (line === 0 ? 0 : 1),
   };
 }

@@ -11,12 +11,12 @@ const globals = [
   "after",
   "beforeEach",
   "afterEach",
-  "it"
+  "it",
 ];
 
 const browserExtensions = {
   ".marko": compileMarkoModule,
-  ".html": compileMarkoModule
+  ".html": compileMarkoModule,
 };
 
 module.exports = function (dir, html, options) {
@@ -29,7 +29,7 @@ module.exports = function (dir, html, options) {
     beforeParse(window, browser) {
       window.global = window;
       window.alert = () => {};
-      window.addEventListener("error", e => {
+      window.addEventListener("error", (e) => {
         browser.error = browser.error || e.error;
       });
       browser.require("complain").log = (...args) =>
@@ -40,7 +40,7 @@ module.exports = function (dir, html, options) {
       if (options.beforeParse) {
         options.beforeParse(window, browser);
       }
-    }
+    },
   });
 };
 
@@ -50,7 +50,7 @@ function compileMarkoModule(module, filename) {
       writeToDisk: false,
       output: "vdom",
       browser: true,
-      meta: true
+      meta: true,
     }),
     filename
   );

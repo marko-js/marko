@@ -67,7 +67,7 @@ StringWriter.prototype = {
       str += `<script${nonceAttr}>${this._scripts}</script>`;
     }
     return str;
-  }
+  },
 };
 
 module.exports = StringWriter;

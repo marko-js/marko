@@ -4,7 +4,7 @@ import {
   importDefault,
   isNativeTag,
   isLoopTag,
-  getTagDef
+  getTagDef,
 } from "@marko/babel-utils";
 import { getKeyManager } from "./key-manager";
 import write from "./vdom-out-write";
@@ -35,7 +35,7 @@ const mergeStaticCreateVisitor = {
       t.memberExpression(state.currentRoot, t.identifier("e")),
       writeArgs
     );
-  }
+  },
 };
 
 const analyzeStaticVisitor = {
@@ -68,7 +68,7 @@ const analyzeStaticVisitor = {
       // check attributes
       isStatic =
         isStatic &&
-        path.get("attributes").every(attr => {
+        path.get("attributes").every((attr) => {
           if (
             !t.isMarkoAttribute(attr) ||
             attr.node.arguments ||
@@ -93,16 +93,16 @@ const analyzeStaticVisitor = {
         path
           .get("body")
           .get("body")
-          .every(t => staticNodes.has(t.node));
+          .every((t) => staticNodes.has(t.node));
 
       if (isStatic) staticNodes.add(path.node);
-    }
-  }
+    },
+  },
 };
 
 export function optimizeStaticVDOM(path) {
   const {
-    hub: { file }
+    hub: { file },
   } = path;
 
   if (
@@ -123,13 +123,13 @@ export function optimizeStaticVDOM(path) {
         "marko_createElement"
       ),
       writeArgs
-    )
+    ),
   };
 
   path.traverse(mergeStaticCreateVisitor, state);
 
   const d = t.variableDeclaration("const", [
-    t.variableDeclarator(identifier, state.currentRoot)
+    t.variableDeclarator(identifier, state.currentRoot),
   ]);
   file.path.node.body.push(d);
   path.replaceWith(write("n", identifier, file._componentInstanceIdentifier));

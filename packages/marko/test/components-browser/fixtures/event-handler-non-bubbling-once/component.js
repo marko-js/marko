@@ -5,5 +5,5 @@ module.exports = {
 
   onceMouseMove: function () {
     this.numOfInvocations++;
-  }
+  },
 };

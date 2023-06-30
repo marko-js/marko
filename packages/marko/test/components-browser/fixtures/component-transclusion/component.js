@@ -5,7 +5,7 @@ module.exports = {
 
     this.state = {
       alertType: alertType,
-      alertMessage: alertMessage
+      alertMessage: alertMessage,
     };
   },
 
@@ -15,5 +15,5 @@ module.exports = {
 
   setAlertMessage: function (newAlertMessage) {
     this.setState("alertMessage", newAlertMessage);
-  }
+  },
 };

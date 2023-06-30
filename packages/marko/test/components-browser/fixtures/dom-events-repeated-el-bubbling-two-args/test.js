@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 
   var liEls = component.el.querySelectorAll("ul.primary li");
@@ -24,7 +24,7 @@ module.exports = function (helpers) {
   helpers.triggerMouseEvent(liEls[1], "click");
   expect(component.color).to.deep.equal({
     color: "green",
-    type: "secondary"
+    type: "secondary",
   });
 
   helpers.triggerMouseEvent(liEls[2], "click");

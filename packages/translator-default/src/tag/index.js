@@ -7,7 +7,7 @@ import {
   isMacroTag,
   isNativeTag,
   findAttributeTags,
-  assertNoVar
+  assertNoVar,
 } from "@marko/babel-utils";
 import nativeTag from "./native-tag";
 import dynamicTag from "./dynamic-tag";
@@ -45,7 +45,7 @@ export default {
     }
 
     if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
-      findAttributeTags(path).forEach(child => {
+      findAttributeTags(path).forEach((child) => {
         child.set(
           "name",
           t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`)
@@ -71,7 +71,7 @@ export default {
           const tagIdentifier = path.scope.generateUidIdentifier(`tagName`);
           path.insertBefore(
             t.variableDeclaration("const", [
-              t.variableDeclarator(tagIdentifier, name.node)
+              t.variableDeclarator(tagIdentifier, name.node),
             ])
           );
 
@@ -124,7 +124,7 @@ export default {
     } else {
       return customTag(path, isDynamicNullable);
     }
-  }
+  },
 };
 
 const HANDLE_BINDINGS = ["module", "var", "let", "const"];
@@ -133,7 +133,7 @@ function findDynamicTagTypes(root) {
   const types = {
     string: false,
     empty: false,
-    component: false
+    component: false,
   };
 
   let path;

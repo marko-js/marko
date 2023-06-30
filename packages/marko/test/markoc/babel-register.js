@@ -6,9 +6,9 @@ require("@babel/register")({
       {
         loose: true,
         targets: {
-          node: "8"
-        }
-      }
-    ]
-  ]
+          node: "8",
+        },
+      },
+    ],
+  ],
 });

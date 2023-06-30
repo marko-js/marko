@@ -11,7 +11,7 @@ const UNENCLOSED_WHITESPACE_TYPES = [
   "BinaryExpression",
   "NewExpression",
   "Function",
-  "AssignmentExpression"
+  "AssignmentExpression",
 ];
 
 Object.assign(Printer.prototype, {
@@ -220,7 +220,7 @@ Object.assign(Printer.prototype, {
       }
       this.token(">");
     }
-  }
+  },
 });
 
 function spaceSeparator() {

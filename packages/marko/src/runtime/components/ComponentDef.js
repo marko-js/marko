@@ -81,7 +81,7 @@ ComponentDef.prototype = {
 
   get ___type() {
     return this.___component.___type;
-  }
+  },
 };
 
 ComponentDef.prototype.nk = ComponentDef.prototype.___nextKey;
@@ -148,7 +148,7 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
     id: id,
     ___component: component,
     ___domEvents: extra.d,
-    ___flags: extra.f || 0
+    ___flags: extra.f || 0,
   };
 };
 

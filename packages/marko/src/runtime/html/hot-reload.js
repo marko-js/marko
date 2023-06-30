@@ -15,7 +15,7 @@ runtime.t = function (typeName) {
     },
     set: function (v) {
       renderFn = v;
-    }
+    },
   });
 
   return template;

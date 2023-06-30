@@ -1,4 +1,4 @@
-module.exports = api => ({
+module.exports = (api) => ({
   retainLines: true,
   presets: [
     [
@@ -6,10 +6,10 @@ module.exports = api => ({
       {
         loose: true,
         targets: {
-          node: "16"
-        }
-      }
-    ]
+          node: "16",
+        },
+      },
+    ],
   ],
   plugins: ["@babel/transform-runtime"],
   overrides: [
@@ -18,9 +18,9 @@ module.exports = api => ({
       plugins: api.env("production")
         ? [
             ["babel-plugin-minprops", { matchPrefix: "___", context: "marko" }],
-            "./scripts/babel-plugin-marko-debug"
+            "./scripts/babel-plugin-marko-debug",
           ]
-        : []
-    }
-  ]
+        : [],
+    },
+  ],
 });

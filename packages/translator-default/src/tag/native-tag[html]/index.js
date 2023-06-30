@@ -4,7 +4,7 @@ import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   normalizeTemplateString,
-  importDefault
+  importDefault,
 } from "@marko/babel-utils";
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
@@ -19,13 +19,13 @@ const EMPTY_OBJECT = {};
 export default function (path, isNullable) {
   const {
     hub: { file },
-    node
+    node,
   } = path;
   const {
     key,
     name,
     body: { body },
-    handlers
+    handlers,
   } = node;
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const tagDef = getTagDef(path);
@@ -75,7 +75,9 @@ export default function (path, isNullable) {
     tagProperties.push(
       t.objectProperty(
         t.identifier("pa"),
-        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+        t.arrayExpression(
+          node.preserveAttrs.map((name) => t.stringLiteral(name))
+        )
       )
     );
   }
@@ -153,7 +155,7 @@ export default function (path, isNullable) {
           [
             normalizeTemplateString`f_${key}`,
             file._componentInstanceIdentifier,
-            t.numericLiteral(1)
+            t.numericLiteral(1),
           ]
         )
       )

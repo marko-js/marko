@@ -4,7 +4,7 @@ module.exports = function (helpers) {
   var counter = 0;
 
   var component = helpers.mount(require.resolve("./index"), {
-    counter: counter
+    counter: counter,
   });
 
   expect(
@@ -12,7 +12,7 @@ module.exports = function (helpers) {
   ).to.equal("0");
 
   component.input = {
-    counter: ++counter
+    counter: ++counter,
   };
 
   component.update();

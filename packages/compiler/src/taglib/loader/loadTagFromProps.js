@@ -43,7 +43,7 @@ function normalizeHook(dirname, value) {
       path: value,
       get hook() {
         return markoModules.require(value);
-      }
+      },
     };
   }
   return { hook: value };
@@ -74,8 +74,8 @@ class TagLoader {
         "*": {
           type: "string",
           targetProperty: null,
-          preserveName: false
-        }
+          preserveName: false,
+        },
       };
     }
 
@@ -89,7 +89,7 @@ class TagLoader {
 
     if (typeof value === "string") {
       nestedVariable = {
-        name: value
+        name: value,
       };
     } else {
       nestedVariable = {};
@@ -103,7 +103,7 @@ class TagLoader {
 
           nameFromAttribute: function (value) {
             nestedVariable.nameFromAttribute = value;
-          }
+          },
         },
         dependencyChain.toString()
       );
@@ -216,15 +216,15 @@ class TagLoader {
     } else if (typeof value === "string") {
       if (hasNestedTag && hasAttr) {
         tagProps = attrProps = {
-          type: value
+          type: value,
         };
       } else if (hasNestedTag) {
         tagProps = {
-          type: value
+          type: value,
         };
       } else {
         attrProps = {
-          type: value
+          type: value,
         };
       }
     }

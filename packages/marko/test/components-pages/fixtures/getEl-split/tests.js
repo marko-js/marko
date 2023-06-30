@@ -6,9 +6,9 @@ it("should allow getEl() with a split component", function () {
   expect(splitComponent.getEl("button").nodeName).to.equal("BUTTON");
 
   expect(splitComponent.getEls("li").length).to.equal(3);
-  expect(splitComponent.getEls("li").map(el => el.textContent)).to.eql([
+  expect(splitComponent.getEls("li").map((el) => el.textContent)).to.eql([
     "1",
     "2",
-    "3"
+    "3",
   ]);
 });

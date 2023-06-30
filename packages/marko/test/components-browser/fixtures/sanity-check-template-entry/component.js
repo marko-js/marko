@@ -1,10 +1,10 @@
 module.exports = {
   onInput: function (input) {
     this.state = {
-      name: input.name
+      name: input.name,
     };
   },
   setName: function (newName) {
     this.state.name = newName;
-  }
+  },
 };

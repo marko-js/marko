@@ -9,7 +9,7 @@ module.exports = {
       throw new Error("this.state should be undefined");
     }
     this.state = {
-      events: ["onCreate"]
+      events: ["onCreate"],
     };
 
     this.onCreateInputName = input.name;
@@ -45,9 +45,9 @@ module.exports = {
     expect(this.state.events).to.deep.equal([
       "onCreate",
       "onInput[Frank]",
-      "onRender"
+      "onRender",
     ]);
     expect(this.onCreateInputName).to.equal("Frank");
     expect(this.onCreateOutName).to.equal("FrankGlobal");
-  }
+  },
 };

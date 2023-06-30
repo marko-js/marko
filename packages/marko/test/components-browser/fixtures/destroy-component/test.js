@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    showSimple: true
+    showSimple: true,
   });
 
   var simple = component.getComponent("simple");
@@ -15,7 +15,7 @@ module.exports = function (helpers) {
   expect(simple != null).to.equal(true);
 
   component.input = {
-    showSimple: false
+    showSimple: false,
   };
 
   component.update();

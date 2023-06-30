@@ -10,7 +10,7 @@ exports.check = function (expect, helpers, done) {
   const actual = babel.transform(input, {
     plugins: [pluginPath],
     babelrc: false,
-    configFile: false
+    configFile: false,
   }).code;
 
   if (process.env.UPDATE_EXPECTATIONS) {

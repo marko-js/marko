@@ -21,8 +21,8 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   template
     .stream({
       $global: {
-        foo: "bar"
-      }
+        foo: "bar",
+      },
     })
     .pipe(stream);
 };

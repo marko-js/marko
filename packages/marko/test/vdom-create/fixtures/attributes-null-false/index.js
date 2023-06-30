@@ -9,7 +9,7 @@ module.exports = function (helpers) {
         id: "bar",
         title: null,
         "data-bar": false,
-        checked: true
+        checked: true,
       },
       0
     )

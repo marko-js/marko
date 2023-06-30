@@ -11,5 +11,5 @@ module.exports = {
   handleButtonClick: function (event) {
     this.buttonClicked = true;
     event.stopPropagation();
-  }
+  },
 };

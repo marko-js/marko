@@ -16,7 +16,7 @@ module.exports = function __flushHereAndAfter__(input, out) {
     const asyncOut = out.beginAsync({ last: true });
     const nextWriter = out.writer;
 
-    out.on("___toString", writer => {
+    out.on("___toString", (writer) => {
       if (writer instanceof BufferedWriter) {
         if (flushed) {
           const detachedOut = out.createOut();

@@ -5,7 +5,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var templatePath = path.join(__dirname, "template.marko");
 
   var compiledTemplate = compiler.compileFileForBrowser(templatePath, {
-    writeVersionComment: false
+    writeVersionComment: false,
   });
 
   var code = compiledTemplate.code;

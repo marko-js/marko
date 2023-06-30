@@ -5,7 +5,7 @@ module.exports = function (input, out) {
   setTimeout(function () {
     AppHello.render(
       {
-        name: input.name
+        name: input.name,
       },
       asyncOut
     );

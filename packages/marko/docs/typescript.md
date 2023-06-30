@@ -376,7 +376,7 @@ _components/color-rotate-button/component.js_
 export default class extends Marko.Component {
   onCreate() {
     this.state = {
-      colorIndex: 0
+      colorIndex: 0,
     };
   }
 

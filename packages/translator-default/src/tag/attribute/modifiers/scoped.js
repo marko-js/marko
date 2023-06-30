@@ -4,7 +4,7 @@ import withPreviousLocation from "../../../util/with-previous-location";
 export default {
   exit(tag, _, value) {
     const {
-      hub: { file }
+      hub: { file },
     } = tag;
     value.replaceWith(
       withPreviousLocation(
@@ -18,5 +18,5 @@ export default {
         value.node
       )
     );
-  }
+  },
 };

@@ -4,7 +4,7 @@ import * as t from "@babel/types";
 import traverse, { NodePath, Scope } from "@babel/traverse";
 import { MARKO_TYPES, MARKO_ALIAS_TYPES } from "../types/definitions";
 
-MARKO_TYPES.forEach(typeName => {
+MARKO_TYPES.forEach((typeName) => {
   const checkKey = `is${typeName}`;
   const assertKey = `assert${typeName}`;
   const checkFn = t[checkKey];
@@ -17,7 +17,7 @@ MARKO_TYPES.forEach(typeName => {
   };
 });
 
-MARKO_ALIAS_TYPES.forEach(aliasName => {
+MARKO_ALIAS_TYPES.forEach((aliasName) => {
   const checkKey = `is${aliasName}`;
   const originalProtoCheck = NodePath.prototype[checkKey];
   NodePath.prototype[checkKey] = function (opts) {
@@ -68,13 +68,13 @@ Scope.prototype.crawl = function () {
                       : binding;
                   } else {
                     state.hoistableTagVarsByScope.set(curScope, {
-                      [name]: binding
+                      [name]: binding,
                     });
                   }
                 }
               }
             }
-          }
+          },
         })
       );
     }

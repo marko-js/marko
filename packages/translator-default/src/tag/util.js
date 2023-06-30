@@ -6,7 +6,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
   const {
     attributes,
     body: { body, params },
-    hasDynamicAttrTags
+    hasDynamicAttrTags,
   } = node;
   const attrsLen = attributes.length;
   const childLen = body.length;
@@ -77,7 +77,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
       );
       path
         .insertBefore(body.slice(0, endDynamicAttrTagsIndex))
-        .map(child => child.skip());
+        .map((child) => child.skip());
     }
 
     if (!hasDynamicAttrTags || endDynamicAttrTagsIndex !== childLen - 1) {
@@ -100,7 +100,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
   // Default parameters
   tagDef &&
     tagDef.forEachAttribute &&
-    tagDef.forEachAttribute(attr => {
+    tagDef.forEachAttribute((attr) => {
       if (foundProperties[attr.name] || attr.dynamicAttribute) {
         return;
       }
@@ -142,7 +142,7 @@ export function buildEventHandlerArray(path) {
         const parts = [
           t.stringLiteral(eventName),
           args[0],
-          t.booleanLiteral(once)
+          t.booleanLiteral(once),
         ];
 
         if (args.length > 1) {
@@ -151,7 +151,7 @@ export function buildEventHandlerArray(path) {
 
         return t.arrayExpression(parts);
       })
-    )
+    ),
   ];
 }
 
@@ -179,7 +179,7 @@ export function evaluateAttr(attr) {
 
   return {
     confident,
-    computed
+    computed,
   };
 }
 

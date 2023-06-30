@@ -12,5 +12,5 @@ module.exports = {
     this.appendHtml = function (html) {
       el.innerHTML += html;
     };
-  }
+  },
 };

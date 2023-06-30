@@ -54,7 +54,7 @@ function batchUpdate(func) {
   // batched update completes we invoke the "afterUpdate"
   // event listeners.
   var batch = {
-    ___queue: null
+    ___queue: null,
   };
 
   batchStack.push(batch);

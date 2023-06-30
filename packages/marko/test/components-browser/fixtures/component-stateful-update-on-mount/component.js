@@ -4,5 +4,5 @@ module.exports = {
   },
   onMount() {
     this.state.mounted = true;
-  }
+  },
 };

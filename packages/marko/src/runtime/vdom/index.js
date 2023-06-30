@@ -1,7 +1,7 @@
 "use strict";
 
 window.Marko = {
-  Component: function () {}
+  Component: function () {},
 };
 
 /**

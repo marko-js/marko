@@ -83,7 +83,7 @@ export default {
   },
   increment() {
     this.state.count++;
-  }
+  },
 };
 ```
 

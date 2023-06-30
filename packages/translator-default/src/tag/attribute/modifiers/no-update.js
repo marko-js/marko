@@ -9,7 +9,7 @@ export default {
   exit(tag, attr) {
     const {
       node,
-      hub: { file }
+      hub: { file },
     } = tag;
     const isVDOM = file.markoOpts.output !== "html";
 
@@ -23,5 +23,5 @@ export default {
     }
 
     node.preserveAttrs.push(attr.node.name);
-  }
+  },
 };

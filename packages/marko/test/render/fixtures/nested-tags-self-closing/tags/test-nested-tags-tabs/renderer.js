@@ -5,7 +5,7 @@ exports.renderer = function (input, out) {
 
   template.render(
     {
-      tabs: tabs
+      tabs: tabs,
     },
     out
   );

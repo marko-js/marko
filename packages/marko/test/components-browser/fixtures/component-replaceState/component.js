@@ -3,7 +3,7 @@ module.exports = {
     this.state = {
       heading: input.heading || "",
       message: input.message || "",
-      colors: input.colors || []
+      colors: input.colors || [],
     };
-  }
+  },
 };

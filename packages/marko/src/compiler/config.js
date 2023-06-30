@@ -34,7 +34,7 @@ if (g.__MARKO_CONFIG) {
      * You can also access this metadata via `compile(...).meta`.
      * This API is sticking around for compatibility purposes.
      */
-    meta: true
+    meta: true,
   };
 
   if (process.env.MARKO_CONFIG) {

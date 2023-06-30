@@ -2,7 +2,7 @@ module.exports = {
   onInput: function (input) {
     this.state = {
       name: input.name,
-      age: input.age
+      age: input.age,
     };
   },
   getName: function () {
@@ -10,5 +10,5 @@ module.exports = {
   },
   getAge: function () {
     return this.getEl("age").innerHTML;
-  }
+  },
 };

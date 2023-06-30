@@ -7,9 +7,9 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
   template
     .render({
-      userPromise: promiseProvider(1, { name: "John" })
+      userPromise: promiseProvider(1, { name: "John" }),
     })
-    .then(result => {
+    .then((result) => {
       process.nextTick(() => {
         snapshot(result.toString());
         done();

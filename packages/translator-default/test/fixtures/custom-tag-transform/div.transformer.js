@@ -11,9 +11,9 @@ export function exit(path) {
   path.replaceWith(
     t.markoTag(
       t.stringLiteral("span"),
-      path.get("attributes").map(p => p.node),
+      path.get("attributes").map((p) => p.node),
       t.markoTagBody(
-        path.get("body.body").map(p => p.node),
+        path.get("body.body").map((p) => p.node),
         toNodes(path.get("params"))
       ),
       toNodes(path.get("arguments"))
@@ -22,5 +22,5 @@ export function exit(path) {
 }
 
 function toNodes(nodePaths) {
-  return nodePaths.length ? nodePaths.map(p => p.node) : undefined;
+  return nodePaths.length ? nodePaths.map((p) => p.node) : undefined;
 }

@@ -5,7 +5,7 @@ export function exit(path) {
   const { node } = path;
   const {
     attributes,
-    body: { body, params }
+    body: { body, params },
   } = node;
   const namePath = path.get("name");
   const ofAttr = findName(attributes, "of");
@@ -33,7 +33,7 @@ export function exit(path) {
           t.variableDeclarator(
             valParam,
             t.memberExpression(inAttr.value, keyParam, true)
-          )
+          ),
         ])
       );
     }
@@ -61,13 +61,13 @@ export function exit(path) {
       const indexName = path.scope.generateUidIdentifier(keyParam.name);
       forNode.push(
         t.variableDeclaration("let", [
-          t.variableDeclarator(indexName, t.numericLiteral(0))
+          t.variableDeclarator(indexName, t.numericLiteral(0)),
         ])
       );
 
       block.body.unshift(
         t.variableDeclaration("let", [
-          t.variableDeclarator(keyParam, t.updateExpression("++", indexName))
+          t.variableDeclarator(keyParam, t.updateExpression("++", indexName)),
         ])
       );
     }
@@ -76,7 +76,7 @@ export function exit(path) {
       ofAttrValue = loopParam;
       forNode.push(
         t.variableDeclaration("const", [
-          t.variableDeclarator(loopParam, ofAttr.value)
+          t.variableDeclarator(loopParam, ofAttr.value),
         ])
       );
     }
@@ -92,7 +92,7 @@ export function exit(path) {
     allowedAttributes.push("from", "to", "step");
 
     const stepAttr = findName(attributes, "step") || {
-      value: t.numericLiteral(1)
+      value: t.numericLiteral(1),
     };
     const stepValue = stepAttr ? stepAttr.value : t.numericLiteral(1);
     const [indexParam] = params;
@@ -109,7 +109,7 @@ export function exit(path) {
               fromAttr.value,
               t.binaryExpression("*", stepName, stepValue)
             )
-          )
+          ),
         ])
       );
     }
@@ -124,7 +124,7 @@ export function exit(path) {
             stepValue
           )
         ),
-        t.variableDeclarator(stepName, t.numericLiteral(0))
+        t.variableDeclarator(stepName, t.numericLiteral(0)),
       ]),
       t.binaryExpression("<=", stepName, stepsName),
       t.updateExpression("++", stepName),
@@ -141,5 +141,5 @@ export function exit(path) {
 }
 
 function findName(arr, value) {
-  return arr.find(obj => obj.name === value);
+  return arr.find((obj) => obj.name === value);
 }

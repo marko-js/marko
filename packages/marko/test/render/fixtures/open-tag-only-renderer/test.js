@@ -1,4 +1,4 @@
 exports.templateData = {};
 exports.loadOptions = {
-  preserveWhitespace: true
+  preserveWhitespace: true,
 };

@@ -7,7 +7,7 @@ module.exports = function (helpers) {
   var rootEl = component.getEl();
   var itemIds = ["child-a", "child-b", "child-c"];
 
-  itemIds.forEach(id => component.addItem(id));
+  itemIds.forEach((id) => component.addItem(id));
   component.update();
 
   var curLookup = getKeyLookup();
@@ -33,7 +33,7 @@ module.exports = function (helpers) {
       lookup[key] = {
         el: el,
         component: component,
-        children: getKeyLookup(el.children)
+        children: getKeyLookup(el.children),
       };
     }
 

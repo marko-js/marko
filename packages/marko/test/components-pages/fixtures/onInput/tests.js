@@ -7,7 +7,7 @@ it.skip("should allow return", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("FRANK");
 
   component.input = {
-    name: "John"
+    name: "John",
   };
 
   component.update();
@@ -23,7 +23,7 @@ it.skip("should allow input to be assigned to null", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("John");
 
   component.input = {
-    name: "Jane"
+    name: "Jane",
   };
 
   component.update();
@@ -32,7 +32,7 @@ it.skip("should allow input to be assigned to null", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("Jane");
 
   component.input = {
-    name: "Henry"
+    name: "Henry",
   };
 
   component.update();
@@ -48,7 +48,7 @@ it.skip("should allow input to be assigned to null with return", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("JANE");
 
   component.input = {
-    name: "Frank"
+    name: "Frank",
   };
 
   component.update();
@@ -57,7 +57,7 @@ it.skip("should allow input to be assigned to null with return", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("FRANK");
 
   component.input = {
-    name: "Henry"
+    name: "Henry",
   };
 
   component.update();
@@ -73,7 +73,7 @@ it.skip("should allow input to be assigned to a new object", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
 
   component.input = {
-    name: "Jane"
+    name: "Jane",
   };
 
   component.update();
@@ -82,7 +82,7 @@ it.skip("should allow input to be assigned to a new object", function () {
   expect(component.el.querySelector(".name").innerHTML).to.equal("Jane");
 
   component.input = {
-    name: "Henry"
+    name: "Henry",
   };
 
   component.update();
@@ -98,7 +98,7 @@ it.skip("should allow input to be assigned to a new object with return", functio
   expect(component.el.querySelector(".name").innerHTML).to.equal("heather");
 
   component.input = {
-    name: "Jane"
+    name: "Jane",
   };
 
   component.update();
@@ -107,7 +107,7 @@ it.skip("should allow input to be assigned to a new object with return", functio
   expect(component.el.querySelector(".name").innerHTML).to.equal("jane");
 
   component.input = {
-    name: "Henry"
+    name: "Henry",
   };
 
   component.update();

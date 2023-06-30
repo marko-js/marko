@@ -20,7 +20,7 @@ export default function (tag) {
       );
   }
 
-  if (deps.some(dep => dep.style)) {
+  if (deps.some((dep) => dep.style)) {
     throw tag
       .get("name")
       .buildCodeFrameError(
@@ -50,7 +50,7 @@ export default function (tag) {
     startPos: start + codeSartOffset,
     endPos: start + codeEndOffset,
     path: `./${base}`,
-    virtualPath: `./${base + type}`
+    virtualPath: `./${base + type}`,
   });
 
   tag.remove();

@@ -30,7 +30,7 @@ BufferedWriter.prototype = Object.assign(
       if (!this._wrapped.isTTY) {
         this._wrapped.end();
       }
-    }
+    },
   },
   StringWriter.prototype
 );

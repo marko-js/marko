@@ -1,5 +1,5 @@
 exports.templateData = {
-  name: "World"
+  name: "World",
 };
 
 exports.skip_vdom =

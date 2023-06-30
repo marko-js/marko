@@ -80,7 +80,7 @@ VNode.prototype = {
     } else {
       return this;
     }
-  }
+  },
 
   // ,toJSON: function() {
   //     var clone = Object.assign({

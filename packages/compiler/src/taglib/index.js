@@ -53,7 +53,7 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   }
 
   const cacheKey = taglibsForDir
-    .map(it => it.id)
+    .map((it) => it.id)
     .sort()
     .join();
   let lookup = lookupCache[cacheKey];

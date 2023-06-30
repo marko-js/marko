@@ -11,5 +11,5 @@ export default {
   "no-update": noUpdatePlugin,
   "no-update-if": noUpdateIfPlugin,
   "no-update-body": noUpdateBodyPlugin,
-  "no-update-body-if": noUpdateBodyIfPlugin
+  "no-update-body-if": noUpdateBodyIfPlugin,
 };

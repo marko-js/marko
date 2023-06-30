@@ -106,7 +106,7 @@ export default (entryFile, isHydrate) => {
         t.expressionStatement(
           t.callExpression(registerId, [
             t.stringLiteral(meta.id),
-            splitComponentId
+            splitComponentId,
           ])
         )
       );
@@ -127,7 +127,7 @@ export default (entryFile, isHydrate) => {
           s = s || new MagicString(file.code, { source: filename });
           map = s.snip(dep.startPos, dep.endPos).generateMap({
             source: filename,
-            includeContent: true
+            includeContent: true,
           });
 
           if (sourceMaps === "inline" || sourceMaps === "both") {
@@ -144,7 +144,7 @@ export default (entryFile, isHydrate) => {
         dep = resolveVirtualDependency(filename, {
           map,
           code,
-          virtualPath
+          virtualPath,
         });
       } else if (dep.startsWith("package:")) {
         continue;

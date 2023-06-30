@@ -11,5 +11,5 @@ module.exports = {
 
   getHookNames: function () {
     return hooks;
-  }
+  },
 };

@@ -1,7 +1,7 @@
 "use strict";
 
 globalThis.Marko = {
-  Component: function () {}
+  Component: function () {},
 };
 
 /**

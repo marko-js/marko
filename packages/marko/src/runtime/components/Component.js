@@ -27,7 +27,7 @@ var slice = Array.prototype.slice;
 
 var COMPONENT_SUBSCRIBE_TO_OPTIONS;
 var NON_COMPONENT_SUBSCRIBE_TO_OPTIONS = {
-  addDestroyListener: false
+  addDestroyListener: false,
 };
 
 var emit = EventEmitter.prototype.emit;
@@ -636,7 +636,7 @@ Component.prototype = componentProto = {
   ___emitDestroy() {
     this.onDestroy && this.onDestroy();
     this.___emit("destroy");
-  }
+  },
 };
 
 componentProto.elId = componentProto.getElId;

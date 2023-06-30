@@ -24,7 +24,7 @@ export default {
     "node-factory": parseImport,
     "parse-options": {
       statement: true,
-      rawOpenTag: true
+      rawOpenTag: true,
     },
     autocomplete: [
       {
@@ -33,15 +33,15 @@ export default {
           "Use to import external modules, follows the same syntax as JavaScript imports.",
         snippet: 'import ${2} from "${1:path}"',
         descriptionMoreURL:
-          "https://markojs.com/docs/syntax/#importing-external-files"
-      }
-    ]
+          "https://markojs.com/docs/syntax/#importing-external-files",
+      },
+    ],
   },
   "<export>": {
     "node-factory": parseExport,
     "parse-options": {
       statement: true,
-      rawOpenTag: true
+      rawOpenTag: true,
     },
     autocomplete: [
       {
@@ -50,15 +50,15 @@ export default {
           "Use export additional data with the template, follows the same syntax as JavaScript exports.",
         snippet: "export ${1}",
         descriptionMoreURL:
-          "https://markojs.com/docs/syntax/#importing-external-files"
-      }
-    ]
+          "https://markojs.com/docs/syntax/#importing-external-files",
+      },
+    ],
   },
   "<class>": {
     "node-factory": parseClass,
     "parse-options": {
       statement: true,
-      rawOpenTag: true
+      rawOpenTag: true,
     },
     autocomplete: [
       {
@@ -67,31 +67,32 @@ export default {
         description:
           "A class containing the lifecycle methods, event handlers, and other properties for this component.",
         descriptionMoreURL:
-          "https://markojs.com/docs/class-components/#single-file-components"
-      }
-    ]
+          "https://markojs.com/docs/class-components/#single-file-components",
+      },
+    ],
   },
   "<static>": {
     "node-factory": parseStatic,
     "parse-options": {
       statement: true,
-      rawOpenTag: true
+      rawOpenTag: true,
     },
     autocomplete: [
       {
         displayText: "static <statement>",
         description:
           "A JavaScript statement which is only evaluated once your template is loaded.",
-        descriptionMoreURL: "https://markojs.com/docs/syntax/#static-javascript"
-      }
-    ]
+        descriptionMoreURL:
+          "https://markojs.com/docs/syntax/#static-javascript",
+      },
+    ],
   },
   "<style>": {
     "node-factory": parseStyle,
     transformer: transformStyle,
     "parse-options": {
-      rawOpenTag: true
-    }
+      rawOpenTag: true,
+    },
   },
   "<macro>": {
     "node-factory": parseMacro,
@@ -100,18 +101,18 @@ export default {
       type: "string",
       autocomplete: [
         {
-          description: "The name which can be used as a tag within a template."
-        }
-      ]
+          description: "The name which can be used as a tag within a template.",
+        },
+      ],
     },
     autocomplete: [
       {
         displayText: 'macro|<params>| name="<name>"',
         description: "Creates a reusable fragment within the template.",
         snippet: 'macro|${2:param1, param2}| name="${1:name}"',
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#macro"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#macro",
+      },
+    ],
   },
   "<include-text>": {
     "code-generator": translateIncludeContent,
@@ -121,9 +122,9 @@ export default {
         displayText: 'include-text("<path>")',
         description: "Allows you to inline the contents of a text file.",
         snippet: 'include-text(${1:"./foo.txt"})',
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#include-text"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#include-text",
+      },
+    ],
   },
   "<include-html>": {
     "code-generator": translateIncludeContent,
@@ -133,9 +134,9 @@ export default {
         displayText: 'include-html("<path>")',
         snippet: 'include-html(${1:"./foo.html"})',
         description: "Allows you to inline the contents of an html file.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#include-html"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#include-html",
+      },
+    ],
   },
   "<if>": {
     "code-generator": translateIf,
@@ -145,9 +146,9 @@ export default {
         snippet: "if(${1:condition})",
         description: "Use to display content only if the condition is meant.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<else-if>": {
     "code-generator": translateElseIf,
@@ -158,9 +159,9 @@ export default {
         description:
           "Use after an <if> or <else-if> tag to display content if those conditions do not match and this one does.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<else>": {
     "code-generator": translateElse,
@@ -170,9 +171,9 @@ export default {
         description:
           "Use after an <if> or <else-if> tag to display content if those conditions do not match.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#if-else-if-else"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#if-else-if-else",
+      },
+    ],
   },
   "<for>": {
     "code-generator": translateFor,
@@ -180,42 +181,42 @@ export default {
       type: "expression",
       autocomplete: [
         {
-          description: "Iterates over a list of items."
-        }
-      ]
+          description: "Iterates over a list of items.",
+        },
+      ],
     },
     "@in": {
       type: "expression",
       autocomplete: [
         {
-          description: "Iterates over the keys and values of an object."
-        }
-      ]
+          description: "Iterates over the keys and values of an object.",
+        },
+      ],
     },
     "@to": {
       type: "number",
       autocomplete: [
         {
-          description: "Iterates up to the provided number (inclusive)"
-        }
-      ]
+          description: "Iterates up to the provided number (inclusive)",
+        },
+      ],
     },
     "@from": {
       type: "number",
       autocomplete: [
         {
-          description: "Iterates starting from the provided number (inclusive)"
-        }
-      ]
+          description: "Iterates starting from the provided number (inclusive)",
+        },
+      ],
     },
     "@step": {
       type: "number",
       autocomplete: [
         {
           description:
-            "The amount to increment during each interation (with from/to)"
-        }
-      ]
+            "The amount to increment during each interation (with from/to)",
+        },
+      ],
     },
     autocomplete: [
       {
@@ -223,20 +224,20 @@ export default {
         description:
           "Use to iterate over lists, object properties, or between ranges.",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-over-a-list"
+          "https://markojs.com/docs/core-tags/#iterating-over-a-list",
       },
       {
         snippet: "for|${1:name, value}| in=${3:object}",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties"
+          "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties",
       },
       {
         snippet:
           "for|${1:index}| from=${2:number} to=${3:number} step=${4:number}",
         descriptionMoreURL:
-          "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers"
-      }
-    ]
+          "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers",
+      },
+    ],
   },
   "<while>": {
     "code-generator": translateWhile,
@@ -245,42 +246,42 @@ export default {
         snippet: "while(${1:condition})",
         description:
           "Renders the content multiple times until the condition is no longer met.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#while"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#while",
+      },
+    ],
   },
   "<html-comment>": {
     "code-generator": translateHTMLComment,
     "parse-options": {
-      text: true
+      text: true,
     },
     attributes: {},
     autocomplete: [
       {
         description:
           "Use to create an html comment that is not stripped from the output.",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#html-comment"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#html-comment",
+      },
+    ],
   },
   "<_preserve>": {
     renderer: "marko/src/core-tags/components/preserve-tag.js",
     "@n": "boolean",
     "@i": "boolean",
     "@b": "boolean",
-    autocomplete: []
+    autocomplete: [],
   },
   "<init-components>": {
     "code-generator": translateServerOnly,
     renderer: "marko/src/core-tags/components/init-components-tag.js",
-    "@immediate": "boolean"
+    "@immediate": "boolean",
   },
   "<_preferred-script-location>": {
     "code-generator": translateServerOnly,
-    renderer: "marko/src/core-tags/components/preferred-script-location-tag.js"
+    renderer: "marko/src/core-tags/components/preferred-script-location-tag.js",
   },
   "<body>": {
-    "code-generator": translateBody
+    "code-generator": translateBody,
   },
   "<await>": {
     renderer: "marko/src/core-tags/core/await/renderer.js",
@@ -294,36 +295,36 @@ export default {
         {
           description:
             "Used to improve debugging and also to ensure promise ordering with the show-after attribute.",
-          snippet: 'name="${1:name}"'
-        }
-      ]
+          snippet: 'name="${1:name}"',
+        },
+      ],
     },
     "@timeout": {
       type: "number",
       autocomplete: [
         {
           description:
-            "An optional timeout that when reached will cause the promise to reject with a TimeoutError."
-        }
-      ]
+            "An optional timeout that when reached will cause the promise to reject with a TimeoutError.",
+        },
+      ],
     },
     "@client-reorder": {
       type: "boolean",
       autocomplete: [
         {
           description:
-            "If set anything after this promise will be sent out immediately, and reordered using JS in the browser."
-        }
-      ]
+            "If set anything after this promise will be sent out immediately, and reordered using JS in the browser.",
+        },
+      ],
     },
     "@show-after": {
       type: "string",
       autocomplete: [
         {
           description:
-            "This attribute will ensure that (with client-reorder) this await tag will always show after another await tag with the provided name."
-        }
-      ]
+            "This attribute will ensure that (with client-reorder) this await tag will always show after another await tag with the provided name.",
+        },
+      ],
     },
     "@then <then>": {
       autocomplete: [
@@ -331,9 +332,9 @@ export default {
           displayText: "then|<result>|",
           description: "Executed with the result of the resolved promise.",
           snippet: "then|${1:result}|",
-          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
-        }
-      ]
+          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+        },
+      ],
     },
     "@catch <catch>": {
       autocomplete: [
@@ -341,17 +342,17 @@ export default {
           displayText: "catch|<err>|",
           description: "Executed with the err of the rejected promise.",
           snippet: "catch|${1:err}|",
-          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
-        }
-      ]
+          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+        },
+      ],
     },
     "@placeholder <placeholder>": {
       autocomplete: [
         {
           description: "A placeholder to display while the promise is pending.",
-          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
-        }
-      ]
+          descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+        },
+      ],
     },
     autocomplete: [
       {
@@ -359,9 +360,9 @@ export default {
         description:
           "Used to render a template asynchronously with the results of a Promise",
         snippet: "await(${1:promise})",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+      },
+    ],
   },
   "<await-reorderer>": {
     "code-generator": translateServerOnly,
@@ -369,19 +370,19 @@ export default {
     autocomplete: [
       {
         snippet: "await-reorderer",
-        descriptionMoreURL: "https://markojs.com/docs/core-tags/#await"
-      }
-    ]
+        descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+      },
+    ],
   },
   "<__flush_here_and_after__>": {
     "code-generator": translateServerOnly,
-    renderer: "marko/src/core-tags/core/__flush_here_and_after__.js"
+    renderer: "marko/src/core-tags/core/__flush_here_and_after__.js",
   },
   "<module-code>": {
     "node-factory": parseModuleCode,
     "parse-options": {
-      rawOpenTag: true
-    }
+      rawOpenTag: true,
+    },
   },
   "<*>": {
     "@key": {
@@ -391,12 +392,12 @@ export default {
         {
           displayText: 'key="<method>"',
           snippet: 'key="${1:method}"',
-          descriptionMoreURL: "https://markojs.com/docs/class-components/#key"
+          descriptionMoreURL: "https://markojs.com/docs/class-components/#key",
         },
         {
-          descriptionMoreURL: "https://markojs.com/docs/class-components/#key"
-        }
-      ]
+          descriptionMoreURL: "https://markojs.com/docs/class-components/#key",
+        },
+      ],
     },
     "@on*": {
       pattern: true,
@@ -409,9 +410,9 @@ export default {
           displayText: 'on<event>("<method>")',
           snippet: 'on${1:Click}("handle${2:Button}${1:Click}")',
           descriptionMoreURL:
-            "https://markojs.com/docs/components/#attaching-dom-event-listeners"
-        }
-      ]
+            "https://markojs.com/docs/components/#attaching-dom-event-listeners",
+        },
+      ],
     },
     "@once*": {
       pattern: true,
@@ -423,8 +424,8 @@ export default {
         displayText: 'once<event>("<method>")',
         snippet: 'once${1:Click}("handle${2:Button}${1:Click}")',
         descriptionMoreURL:
-          "https://markojs.com/docs/components/#attaching-dom-event-listeners"
-      }
+          "https://markojs.com/docs/components/#attaching-dom-event-listeners",
+      },
     },
     "@no-update": {
       type: "flag",
@@ -432,9 +433,9 @@ export default {
       autocomplete: [
         {
           descriptionMoreURL:
-            "https://markojs.com/docs/class-components/#no-update"
-        }
-      ]
+            "https://markojs.com/docs/class-components/#no-update",
+        },
+      ],
     },
     "@no-update-body": {
       type: "flag",
@@ -442,9 +443,9 @@ export default {
       autocomplete: [
         {
           descriptionMoreURL:
-            "https://markojs.com/docs/class-components/#no-update-body"
-        }
-      ]
+            "https://markojs.com/docs/class-components/#no-update-body",
+        },
+      ],
     },
     "@no-update-if": {
       "preserve-name": true,
@@ -452,9 +453,9 @@ export default {
         {
           snippet: "no-update-if(${1:condition})",
           descriptionMoreURL:
-            "https://markojs.com/docs/class-components/#no-update-if"
-        }
-      ]
+            "https://markojs.com/docs/class-components/#no-update-if",
+        },
+      ],
     },
     "@no-update-body-if": {
       "preserve-name": true,
@@ -462,9 +463,9 @@ export default {
         {
           snippet: "no-update-body-if(${1:condition})",
           descriptionMoreURL:
-            "https://markojs.com/docs/class-components/#no-update-body-if"
-        }
-      ]
-    }
-  }
+            "https://markojs.com/docs/class-components/#no-update-body-if",
+        },
+      ],
+    },
+  },
 };

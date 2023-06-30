@@ -2,7 +2,7 @@ module.exports = {
   onInput: function () {
     this.state = {
       type: "state",
-      name: "foo"
+      name: "foo",
     };
     this.type = "config";
     this.name = "foo";
@@ -12,7 +12,7 @@ module.exports = {
     window.fooComponent = this;
     this.componentConfig = {
       type: this.type,
-      name: this.name
+      name: this.name,
     };
-  }
+  },
 };

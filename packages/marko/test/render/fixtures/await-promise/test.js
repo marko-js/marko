@@ -1,3 +1,3 @@
 exports.templateData = {
-  promiseData: Promise.resolve("Test promise")
+  promiseData: Promise.resolve("Test promise"),
 };

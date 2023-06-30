@@ -14,7 +14,7 @@ var NS_MATH = "http://www.w3.org/1998/Math/MathML";
 var NS_SVG = "http://www.w3.org/2000/svg";
 var DEFAULT_NS = {
   svg: NS_SVG,
-  math: NS_MATH
+  math: NS_MATH,
 };
 
 var FLAG_SIMPLE_ATTRS = 1;
@@ -201,7 +201,7 @@ VElement.prototype = {
     // different namespaces
     var value = this.___attributes[name];
     return value != null && value !== false;
-  }
+  },
 };
 
 inherit(VElement, VNode);
@@ -213,7 +213,7 @@ var proto = (VElementClone.prototype = VElement.prototype);
     get: function () {
       var value = this.___attributes[name];
       return value !== false && value != null;
-    }
+    },
   });
 });
 
@@ -229,7 +229,7 @@ defineProperty(proto, "___value", {
         this.___attributes.type === "radio"
       ? "on"
       : "";
-  }
+  },
 });
 
 VElement.___removePreservedAttributes = function (attrs) {

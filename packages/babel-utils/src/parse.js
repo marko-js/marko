@@ -130,7 +130,7 @@ function tryParse(
       ? t.cloneDeepWithoutLoc(babelParser.parseExpression(code, parserOpts))
       : babelParser
           .parse(code, parserOpts)
-          .program.body.map(node => t.cloneDeepWithoutLoc(node));
+          .program.body.map((node) => t.cloneDeepWithoutLoc(node));
   }
 }
 
@@ -154,7 +154,7 @@ function createParseError(file, sourceStart, sourceEnd, label, errorLoc) {
     errorLoc: errorLoc && getBoundedRange(loc, errorLoc),
     loc,
     start: sourceStart,
-    end: sourceEnd
+    end: sourceEnd,
   };
 }
 

@@ -3,9 +3,9 @@ var expect = require("chai").expect;
 
 exports.templateData = {
   getUserInfoShort: () =>
-    new Promise(resolve => setTimeout(() => resolve({}), 50)),
+    new Promise((resolve) => setTimeout(() => resolve({}), 50)),
   getUserInfoLong: () =>
-    new Promise(resolve => setTimeout(() => resolve({}), 200))
+    new Promise((resolve) => setTimeout(() => resolve({}), 200)),
 };
 
 exports.checkEvents = function (events, snapshot) {
@@ -18,7 +18,7 @@ exports.checkEvents = function (events, snapshot) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

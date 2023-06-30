@@ -66,7 +66,7 @@ var proto = (RenderResult.prototype = {
   toString: function () {
     return this.___out.toString();
   },
-  document: typeof document === "object" && document
+  document: typeof document === "object" && document,
 });
 
 Object.defineProperty(proto, "html", {
@@ -78,7 +78,7 @@ Object.defineProperty(proto, "html", {
       );
     }
     return this.toString();
-  }
+  },
 });
 
 Object.defineProperty(proto, "context", {
@@ -90,7 +90,7 @@ Object.defineProperty(proto, "context", {
       );
     }
     return this.___out;
-  }
+  },
 });
 
 // Add all of the following DOM methods to Component.prototype:

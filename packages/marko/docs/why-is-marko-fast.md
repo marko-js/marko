@@ -109,8 +109,8 @@ function render(input, out) {
     "DIV",
     {
       style: marko_styleAttr({
-        backgroundColor: color
-      })
+        backgroundColor: color,
+      }),
     },
     0,
     4

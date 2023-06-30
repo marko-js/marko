@@ -47,7 +47,7 @@ ComponentsContext.prototype = {
     this.___out.global.___components = undefined;
 
     return componentDefs;
-  }
+  },
 };
 
 function getComponentsContext(out) {

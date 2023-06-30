@@ -22,7 +22,7 @@ var Component = {
 
   handleCustomClick: function () {
     this.log("custom:click");
-  }
+  },
 };
 
 module.exports = Component;

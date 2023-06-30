@@ -12,25 +12,25 @@ const {
   FLIPPED_ALIAS_KEYS,
   DEPRECATED_KEYS,
   is,
-  getBindingIdentifiers
+  getBindingIdentifiers,
 } = babelTypes;
 
 getBindingIdentifiers.keys["MarkoTag"] = ["var"];
 getBindingIdentifiers.keys["MarkoTagBody"] = ["params"];
 
-MARKO_TYPES.forEach(typeName => {
+MARKO_TYPES.forEach((typeName) => {
   defineType(typeName, definitions[typeName]);
 });
 
 for (const type of [
   ...Object.keys(VISITOR_KEYS),
   ...Object.keys(FLIPPED_ALIAS_KEYS),
-  ...Object.keys(DEPRECATED_KEYS)
+  ...Object.keys(DEPRECATED_KEYS),
 ]) {
   if (!TYPES.includes(type)) TYPES.push(type);
 }
 
-MARKO_TYPES.forEach(typeName => {
+MARKO_TYPES.forEach((typeName) => {
   const lowerName = typeName[0].toLowerCase() + typeName.slice(1);
   const checkKey = `is${typeName}`;
   const assertKey = `assert${typeName}`;
@@ -41,7 +41,7 @@ MARKO_TYPES.forEach(typeName => {
   };
 });
 
-MARKO_ALIAS_TYPES.forEach(aliasName => {
+MARKO_ALIAS_TYPES.forEach((aliasName) => {
   const checkKey = `is${aliasName}`;
   const originalCheck = generatedValidators[checkKey];
   generatedValidators[checkKey] = (node, opts) =>

@@ -12,7 +12,7 @@ npm install @marko/vite vite
 import { defineConfig } from "vite";
 import marko from "@marko/vite";
 export default defineConfig({
-  plugins: [marko()]
+  plugins: [marko()],
 });
 ```
 
@@ -66,8 +66,8 @@ You can manually override Marko's Babel configuration by passing a `babelConfig`
 ```javascript
 marko({
   babelConfig: {
-    presets: ["@babel/preset-env"]
-  }
+    presets: ["@babel/preset-env"],
+  },
 });
 ```
 

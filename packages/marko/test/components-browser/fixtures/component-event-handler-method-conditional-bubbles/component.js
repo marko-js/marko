@@ -5,5 +5,5 @@ module.exports = {
 
   handleButtonClick: function () {
     this.clicked = true;
-  }
+  },
 };

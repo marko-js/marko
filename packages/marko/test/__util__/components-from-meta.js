@@ -13,7 +13,7 @@ const getComponents = (module.exports = (template, components) => {
 
       if (meta.tags) {
         const dir = path.dirname(template.path);
-        meta.tags.forEach(tagRelativePath => {
+        meta.tags.forEach((tagRelativePath) => {
           var tagPath =
             "." === tagRelativePath[0]
               ? path.resolve(dir, tagRelativePath)

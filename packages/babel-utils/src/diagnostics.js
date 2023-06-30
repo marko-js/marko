@@ -2,7 +2,7 @@ export const DiagnosticType = {
   Error: "error",
   Warning: "warning",
   Deprecation: "deprecation",
-  Suggestion: "suggestion"
+  Suggestion: "suggestion",
 };
 
 export function diagnosticError(path, options) {

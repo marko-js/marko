@@ -137,10 +137,10 @@ export default (api, markoOpts) => {
                 // This is not needed for Marko file outputs since there is always
                 // a default export.
                 if (path.node.specifiers.length === 0) path.remove();
-              }
-            }
+              },
+            },
           }
-        : undefined
+        : undefined,
   };
 };
 
@@ -198,9 +198,9 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
         type: "Program",
         sourceType: "module",
         body: [],
-        directives: []
-      }
-    }
+        directives: [],
+      },
+    },
   });
 
   const meta = (file.metadata.marko = {
@@ -208,7 +208,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     deps: [],
     tags: [],
     watchFiles: [],
-    diagnostics: []
+    diagnostics: [],
   });
 
   file.markoOpts = markoOpts;
@@ -237,17 +237,17 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
 
   if (file.___hasParseErrors) {
     if (markoOpts.errorRecovery) {
-      t.traverseFast(file.path.node, node => {
+      t.traverseFast(file.path.node, (node) => {
         if (node.type === "MarkoParseError") {
           diagnosticError(file.path, {
             label: node.label,
-            loc: node.errorLoc || node.loc
+            loc: node.errorLoc || node.loc,
           });
         }
       });
     } else {
       let errors = [];
-      t.traverseFast(file.path.node, node => {
+      t.traverseFast(file.path.node, (node) => {
         if (node.type === "MarkoParseError") {
           errors.push(
             buildCodeFrameError(
@@ -293,7 +293,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   compileCache.set(cacheKey, {
     time: Date.now(),
     file,
-    contentHash
+    contentHash,
   });
 
   if (translator.analyze) {

@@ -23,7 +23,7 @@ var voidWriter = {
   },
   toString: function () {
     return "";
-  }
+  },
 };
 
 function State(root, stream, writer, events) {
@@ -235,7 +235,7 @@ var proto = (AsyncStream.prototype = {
 
     state.events.emit("beginAsync", {
       out: newStream,
-      parentOut: this
+      parentOut: this,
     });
 
     return newStream;
@@ -498,7 +498,7 @@ var proto = (AsyncStream.prototype = {
     newOut.on("error", this.emit.bind(this, "error"));
     this._state.events.emit("beginDetachedAsync", {
       out: newOut,
-      parentOut: this
+      parentOut: this,
     });
     return newOut;
   },
@@ -655,7 +655,7 @@ var proto = (AsyncStream.prototype = {
     this.___assignedComponentDef = componentDef;
     this.___assignedKey = key;
     this.___assignedCustomEvents = customEvents;
-  }
+  },
 });
 
 // alias:
@@ -669,6 +669,6 @@ function getNonMarkoStack(error) {
     .toString()
     .split("\n")
     .slice(1)
-    .filter(line => !/\/node_modules\/marko\//.test(line))
+    .filter((line) => !/\/node_modules\/marko\//.test(line))
     .join("\n");
 }

@@ -18,7 +18,7 @@ VFragment.prototype = {
     keysByDOMNode.set(fragment, this.___key);
     vElementByDOMNode.set(fragment, this);
     return fragment;
-  }
+  },
 };
 
 inherit(VFragment, VNode);

@@ -7,7 +7,7 @@ const requiredCompilerOptions = { modules: "cjs" };
 const defaultCompilerOptions = {
   // eslint-disable-next-line no-constant-condition
   sourceMaps: "MARKO_DEBUG" ? "inline" : false,
-  meta: true
+  meta: true,
 };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 
@@ -80,7 +80,7 @@ function install(options) {
     requireExtensions[MARKO_EXTENSIONS] ||
     (requireExtensions[MARKO_EXTENSIONS] = []);
 
-  extensions.forEach(extension => {
+  extensions.forEach((extension) => {
     extension = normalizeExtension(extension);
     requireExtensions[extension] = markoRequireExtension;
     requireExtensions[MARKO_EXTENSIONS].push(extension);

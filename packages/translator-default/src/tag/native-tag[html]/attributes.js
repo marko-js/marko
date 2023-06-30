@@ -9,11 +9,11 @@ export default function (path, attrs) {
   const len = attrs.length;
   if (len === 0) return t.stringLiteral("");
 
-  if (attrs.some(attr => !attr.node.name)) {
+  if (attrs.some((attr) => !attr.node.name)) {
     const attrsObject = t.objectExpression([]);
     for (let i = 0; i < len; i++) {
       const {
-        node: { name, value }
+        node: { name, value },
       } = attrs[i];
 
       if (name) {
@@ -35,7 +35,7 @@ export default function (path, attrs) {
         attrsObject.properties.length === 1 &&
         t.isSpreadElement(attrsObject.properties[0])
           ? attrsObject.properties[0].argument
-          : attrsObject
+          : attrsObject,
       ]
     );
   } else {
@@ -54,12 +54,12 @@ export default function (path, attrs) {
       attrValues.set(name, {
         confident,
         computed,
-        value
+        value,
       });
     }
 
     for (const [name, { confident, computed, value }] of [
-      ...attrValues
+      ...attrValues,
     ].reverse()) {
       if (confident) {
         if (computed == null || computed === false) {

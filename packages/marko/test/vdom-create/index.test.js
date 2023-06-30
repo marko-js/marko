@@ -9,7 +9,7 @@ var autotest = require("mocha-autotest").default;
 
 var document = createBrowser({
   dir: __dirname,
-  html: "<html><body></body></html>"
+  html: "<html><body></body></html>",
 }).window.document;
 
 var vdom = require("marko/runtime/vdom/vdom");
@@ -44,10 +44,10 @@ var vdomHelpers = {
     return new VDocumentFragment();
   },
   VElement: VElement,
-  virtualizeElement: VElement.___virtualize
+  virtualizeElement: VElement.___virtualize,
 };
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;

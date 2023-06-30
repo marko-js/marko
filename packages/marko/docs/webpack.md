@@ -42,16 +42,16 @@ The `<webpack-assets>` tag can be used along with the plugin in a multi-compiler
 export default [
   {
     entry: "./server.js",
-    plugins: [markoPlugin.server]
+    plugins: [markoPlugin.server],
     // ...
   },
   {
     // ...
     entry: {
-      tracking: "./tracking.js"
+      tracking: "./tracking.js",
     },
-    plugins: [markoPlugin.browser]
-  }
+    plugins: [markoPlugin.browser],
+  },
 ];
 ```
 
@@ -69,26 +69,26 @@ export default [
       rules: [
         {
           test: /\.marko$/,
-          loader: "@marko/webpack/loader"
-        }
-      ]
+          loader: "@marko/webpack/loader",
+        },
+      ],
     },
-    plugins: [markoPlugin.server]
+    plugins: [markoPlugin.server],
   },
   {
     rules: [
       {
         test: /\.marko$/,
-        loader: "@marko/webpack/loader"
+        loader: "@marko/webpack/loader",
       },
       // If using `style` blocks with Marko you must use an appropriate loader
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
+        use: ["style-loader", "css-loader"],
+      },
     ],
-    plugins: [markoPlugin.browser]
-  }
+    plugins: [markoPlugin.browser],
+  },
 ];
 ```
 
@@ -131,7 +131,7 @@ import germanTranslations from "./de.json";
 
 const languages = {
   en: null,
-  de: germanTranslations
+  de: germanTranslations,
 };
 
 const markoPlugin = new MarkoPlugin();
@@ -144,27 +144,27 @@ export default [
       rules: [
         {
           test: /\.marko$/,
-          loader: "@marko/webpack/loader"
-        }
-      ]
+          loader: "@marko/webpack/loader",
+        },
+      ],
     },
-    plugins: [markoPlugin.server]
+    plugins: [markoPlugin.server],
   },
-  ...Object.keys(languages).map(language => ({
+  ...Object.keys(languages).map((language) => ({
     name: `Browser-${language}`,
     rules: [
       {
         test: /\.marko$/,
-        loader: "@marko/webpack/loader"
+        loader: "@marko/webpack/loader",
       },
       // If using `style` blocks with Marko you must use an appropriate loader
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
+        use: ["style-loader", "css-loader"],
+      },
     ],
-    plugins: [new I18nPlugin(languages[language]), markoPlugin.browser]
-  }))
+    plugins: [new I18nPlugin(languages[language]), markoPlugin.browser],
+  })),
 ];
 ```
 
@@ -193,7 +193,7 @@ The `runtimeId` will default to the [`uniqueName` option](https://webpack.js.org
 import MarkoPlugin from "@marko/webpack/plugin";
 
 const markoPlugin = new MarkoPlugin({
-  runtimeId: "MY_MARKO_RUNTIME_ID" // default to webpack `output.uniqueName` option.
+  runtimeId: "MY_MARKO_RUNTIME_ID", // default to webpack `output.uniqueName` option.
 });
 ```
 

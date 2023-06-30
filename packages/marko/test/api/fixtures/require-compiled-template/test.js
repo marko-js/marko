@@ -7,7 +7,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var template = require(nodePath.join(__dirname, "template.marko")).default;
   template.render(
     {
-      name: "John"
+      name: "John",
     },
     function (err, result) {
       if (err) {

@@ -5,5 +5,5 @@ export default {
     if (path.node.name === "old") {
       path.replaceWith(t.identifier("new"));
     }
-  }
+  },
 };

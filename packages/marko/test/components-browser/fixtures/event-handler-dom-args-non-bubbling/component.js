@@ -5,5 +5,5 @@ module.exports = {
 
   handleButtonMouseMove: function () {
     this.mouseMoveEvent = arguments;
-  }
+  },
 };

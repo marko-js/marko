@@ -7,7 +7,7 @@ export function exit(path) {
 
   const {
     ifStatement,
-    body: { body }
+    body: { body },
   } = path.node;
 
   if (!ifStatement) {

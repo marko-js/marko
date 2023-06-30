@@ -4,5 +4,5 @@ module.exports = {
   },
   onUpdate: function () {
     window.rerenderInitOrder.push("parent");
-  }
+  },
 };

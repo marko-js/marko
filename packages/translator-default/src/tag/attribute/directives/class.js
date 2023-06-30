@@ -6,7 +6,7 @@ import withPreviousLocation from "../../../util/with-previous-location";
 export default {
   exit(tag, _, value) {
     const {
-      hub: { file }
+      hub: { file },
     } = tag;
     if (!isNativeTag(tag)) return;
     if (value.isStringLiteral()) return;
@@ -31,5 +31,5 @@ export default {
             value.node
           )
     );
-  }
+  },
 };

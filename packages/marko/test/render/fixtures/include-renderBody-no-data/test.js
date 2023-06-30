@@ -3,5 +3,5 @@ exports.templateData = {
     out.beginElement("div");
     out.text("foo");
     out.endElement();
-  }
+  },
 };

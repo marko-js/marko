@@ -152,7 +152,7 @@ const config = {
   errorRecovery: false,
 
   // When supplied, any diagnostics which have a fix specified in the lookup will be applied to the source code.
-  applyFixes: undefined
+  applyFixes: undefined,
 };
 
 if (process.env.MARKO_CONFIG) {

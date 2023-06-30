@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
-    name: "Frank"
+    name: "Frank",
   });
 
   expect(
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
 
   // Rerender with a new props object that has the shallow properties
   component.input = {
-    name: "Frank"
+    name: "Frank",
   };
 
   component.update();
@@ -28,7 +28,7 @@ module.exports = function (helpers) {
 
   // Rerender with a new props object that has the shallow properties
   component.input = {
-    name: "John"
+    name: "John",
   };
 
   component.update();

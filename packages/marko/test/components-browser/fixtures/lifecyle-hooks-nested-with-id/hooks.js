@@ -9,7 +9,7 @@ module.exports = {
     hooksArray.push({
       name: name,
       args: args,
-      thisObject: thisObj
+      thisObject: thisObj,
     });
   },
 
@@ -23,5 +23,5 @@ module.exports = {
     return hooksArray.map(function (hook) {
       return hook.name;
     });
-  }
+  },
 };

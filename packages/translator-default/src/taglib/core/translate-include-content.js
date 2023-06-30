@@ -4,7 +4,7 @@ import { assertNoParams, assertNoAttributes } from "@marko/babel-utils";
 
 export function enter(tag) {
   const {
-    hub: { file }
+    hub: { file },
   } = tag;
   assertNoParams(tag);
   assertNoAttributes(tag);

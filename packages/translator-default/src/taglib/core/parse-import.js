@@ -3,11 +3,11 @@ import { parseStatements } from "@marko/babel-utils";
 export default function (path) {
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = path;
   const {
     rawValue,
-    name: { start, end }
+    name: { start, end },
   } = node;
   const [importNode] = parseStatements(file, rawValue, start, end);
   path.replaceWith(importNode);

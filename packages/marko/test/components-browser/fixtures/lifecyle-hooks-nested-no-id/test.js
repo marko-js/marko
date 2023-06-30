@@ -3,19 +3,19 @@ var hooks = require("./hooks");
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    name: "Frank"
+    name: "Frank",
   });
 
   expect(component.el.querySelector(".foo .name").innerHTML).to.equal("Frank");
   expect(hooks.getHookNames("foo")).to.deep.equal([
     "create",
     "render",
-    "mount"
+    "mount",
   ]);
   expect(hooks.getHookNames("root")).to.deep.equal([
     "create",
     "render",
-    "mount"
+    "mount",
   ]);
 
   hooks.reset();

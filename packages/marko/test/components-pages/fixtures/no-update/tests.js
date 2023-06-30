@@ -7,7 +7,7 @@ it("should allow attributes to not be updated", function () {
   expect(foo).to.equal("server");
 
   noUpdateComponent.input = {
-    name: "browser"
+    name: "browser",
   };
 
   noUpdateComponent.update();
@@ -25,7 +25,7 @@ it("should allow a root element to not be updated", function () {
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
   noUpdateComponent.input = {
-    name: "browser"
+    name: "browser",
   };
 
   noUpdateComponent.update();
@@ -46,7 +46,7 @@ it("should allow a nested element to not be updated", function () {
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
   noUpdateComponent.input = {
-    name: "browser"
+    name: "browser",
   };
 
   noUpdateComponent.update();
@@ -67,7 +67,7 @@ it("should allow a body element to not be updated", function () {
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
   noUpdateComponent.input = {
-    name: "browser"
+    name: "browser",
   };
 
   noUpdateComponent.update();

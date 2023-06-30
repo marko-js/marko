@@ -27,5 +27,5 @@ module.exports = {
     helpers.triggerMouseEvent(contentComponent.getEl("button"), "click");
 
     expect(buttonClick).to.equal(true);
-  }
+  },
 };

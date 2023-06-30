@@ -5,5 +5,5 @@ module.exports = {
 
   handleMouseMove: function () {
     this.mouseMoved = true;
-  }
+  },
 };

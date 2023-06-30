@@ -9,7 +9,7 @@ Component.prototype = {
   },
   setLabel: function (label) {
     this.el.innerHTML = label;
-  }
+  },
 };
 
 module.exports = Component;

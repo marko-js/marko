@@ -22,13 +22,13 @@ export const visitor = {
         exit(migrator, path, t);
         if (path.node !== node) break; // Stop if node is replaced.
       }
-    }
-  }
+    },
+  },
 };
 
 function getMigratorsForTag(path) {
   const {
-    hub: { file }
+    hub: { file },
   } = path;
   const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
@@ -39,7 +39,7 @@ function getMigratorsForTag(path) {
 
   if (!migrators) {
     migrators = MIGRATOR_CACHE[tagName] = [];
-    const addMigrators = tagDef => {
+    const addMigrators = (tagDef) => {
       if (tagDef && tagDef.migrators) {
         for (const migrator of tagDef.migrators) {
           if (migrator.path) {

@@ -46,5 +46,5 @@ exports.lookup = {
     } else {
       register(taglib, taglib.id);
     }
-  }
+  },
 };
