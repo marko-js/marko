@@ -2,13 +2,13 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    label: "Foo"
+    label: "Foo",
   });
 
   var rootEl = component.getEl("root");
 
   component.input = {
-    label: "Bar"
+    label: "Bar",
   };
   component.update();
 

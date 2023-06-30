@@ -31,7 +31,7 @@ function run(fixture) {
             flush() {},
             end() {
               resolve(html);
-            }
+            },
           }
         )
         .once("error", reject);
@@ -43,7 +43,7 @@ function run(fixture) {
           browser.require("../../components");
           browser.window.$initComponents();
           browser.require(templateFile);
-        }
+        },
       });
       // TODO: we should enable this but it causes a test (diff-body) to fail
       // due to DOMContentLoaded firing twice, which shouldn't be possible.

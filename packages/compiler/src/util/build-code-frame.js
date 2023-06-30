@@ -21,13 +21,13 @@ class CompileError extends Error {
         value: loc,
         enumerable: false,
         writable: true,
-        configurable: true
+        configurable: true,
       },
       label: {
         value: message,
         enumerable: false,
         writable: true,
-        configurable: true
+        configurable: true,
       },
       // Ignore some mutations from Babel.
       code: {
@@ -36,7 +36,7 @@ class CompileError extends Error {
         get() {
           return undefined;
         },
-        set() {}
+        set() {},
       },
       message: {
         configurable: true,
@@ -44,8 +44,8 @@ class CompileError extends Error {
         get() {
           return `${prettyFileName}: ${message}`;
         },
-        set() {}
-      }
+        set() {},
+      },
     });
   }
 }
@@ -61,15 +61,15 @@ function buildMessage(code, loc, message) {
         {
           start: {
             line: loc.start.line,
-            column: loc.start.column + 1
+            column: loc.start.column + 1,
           },
           end:
             loc.end && loc.start.line === loc.end.line
               ? {
                   line: loc.end.line,
-                  column: loc.end.column + 1
+                  column: loc.end.column + 1,
                 }
-              : undefined
+              : undefined,
         },
         { highlightCode: true, message }
       )

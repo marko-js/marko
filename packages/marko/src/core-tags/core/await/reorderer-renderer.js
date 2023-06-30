@@ -27,7 +27,7 @@ module.exports = function (input, out) {
   var asyncOut = out.beginAsync({
     last: true,
     timeout: -1,
-    name: "await-reorderer"
+    name: "await-reorderer",
   });
 
   out.onLast(function (next) {

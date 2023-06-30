@@ -7,5 +7,5 @@ module.exports = {
   },
   onDestroy() {
     this.before.remove();
-  }
+  },
 };

@@ -3,7 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
-  resolveRelativePath
+  resolveRelativePath,
 } from "@marko/babel-utils";
 import { getAttrs, buildEventHandlerArray } from "./util";
 import nativeTag from "./native-tag";
@@ -13,7 +13,7 @@ import withPreviousLocation from "../util/with-previous-location";
 export default function (path, isNullable) {
   const {
     hub: { file },
-    node
+    node,
   } = path;
   const { markoOpts } = file;
   const { name, key } = node;
@@ -87,7 +87,7 @@ export default function (path, isNullable) {
           t.identifier("out"),
           file._componentDefIdentifier,
           key,
-          ...buildEventHandlerArray(path)
+          ...buildEventHandlerArray(path),
         ]
       )
     ),
@@ -99,14 +99,14 @@ export default function (path, isNullable) {
     const renderBodyProp =
       t.isObjectExpression(foundAttrs) &&
       foundAttrs.properties.find(
-        prop => prop.key && prop.key.value === "renderBody"
+        (prop) => prop.key && prop.key.value === "renderBody"
       );
 
     if (renderBodyProp) {
       renderBodyIdentifier = path.scope.generateUidIdentifier("renderBody");
       path.insertBefore(
         t.variableDeclaration("const", [
-          t.variableDeclarator(renderBodyIdentifier, renderBodyProp.value)
+          t.variableDeclarator(renderBodyIdentifier, renderBodyProp.value),
         ])
       );
 

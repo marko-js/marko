@@ -9,7 +9,7 @@ const attachedDetachedLoaded = new WeakSet();
 export default {
   enter(attr) {
     const {
-      hub: { file }
+      hub: { file },
     } = attr;
     const tag = attr.parentPath;
     const value = attr.get("value");
@@ -57,7 +57,7 @@ export default {
 
       handlers[eventName] = {
         arguments: args,
-        once: eventType === "once"
+        once: eventType === "once",
       };
 
       if (isVDOM) {
@@ -109,7 +109,7 @@ export default {
         `The binding syntax (:=) is only supported when using the "Tags API".`
       );
     }
-  }
+  },
 };
 
 function execModifiersAndDirectives(type, tag, attr, value) {

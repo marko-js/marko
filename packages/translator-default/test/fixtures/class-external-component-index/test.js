@@ -1,3 +1,3 @@
 module.exports = {
-  templateFile: "index.marko"
+  templateFile: "index.marko",
 };

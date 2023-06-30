@@ -4,7 +4,7 @@ import { parseStatements } from "@marko/babel-utils";
 export default function (path) {
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = path;
   const { rawValue, end } = node;
   const code = rawValue.replace(/^static\s*/, "").trim();

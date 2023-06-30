@@ -5,7 +5,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
   expect(compiler.config.ignoreUnrecognizedTags).to.equal(false);
 
   compiler.configure({
-    ignoreUnrecognizedTags: true
+    ignoreUnrecognizedTags: true,
   });
   expect(compiler.config.writeVersionComment).to.equal(true);
   expect(compiler.config.ignoreUnrecognizedTags).to.equal(true);

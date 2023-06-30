@@ -12,24 +12,24 @@ const ESCAPE_TYPES = {
     name: "x",
     module: "marko/src/runtime/html/helpers/escape-xml.js",
     alias: "marko_escapeXml",
-    fn: escapeXML
+    fn: escapeXML,
   },
   script: {
     module: "marko/src/runtime/html/helpers/escape-script-placeholder.js",
     alias: "marko_escapeScript",
-    fn: escapeScript
+    fn: escapeScript,
   },
   style: {
     module: "marko/src/runtime/html/helpers/escape-style-placeholder.js",
     alias: "marko_escapeStyle",
-    fn: escapeStyle
-  }
+    fn: escapeStyle,
+  },
 };
 
 export default function (path) {
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = path;
   const { confident, value: computed } = path.get("value").evaluate();
   let { escape, value } = node;

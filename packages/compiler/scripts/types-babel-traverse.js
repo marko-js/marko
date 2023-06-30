@@ -49,14 +49,16 @@ fs.readFile(
   (err, data) => {
     if (err) return console.error(err);
 
-    [HUB_INTERFACE, HUB_CLASS, IMPORT, EXPORT_NODE, IS, ASSERT].forEach(str => {
-      if (data.indexOf(str) === -1) {
-        console.error(
-          `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`
-        );
-        process.exit(1);
+    [HUB_INTERFACE, HUB_CLASS, IMPORT, EXPORT_NODE, IS, ASSERT].forEach(
+      (str) => {
+        if (data.indexOf(str) === -1) {
+          console.error(
+            `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`
+          );
+          process.exit(1);
+        }
       }
-    });
+    );
 
     var result = data
       .replace(
@@ -89,16 +91,16 @@ ${HUB_INTERFACE}
         IS +
           BREAK +
           MARKO_TYPES.map(
-            t => `is${t}(props?: object | null): this is NodePath<t.${t}>;`
+            (t) => `is${t}(props?: object | null): this is NodePath<t.${t}>;`
           ).join(BREAK)
       )
       .replace(
         ASSERT,
         ASSERT +
           BREAK +
-          MARKO_TYPES.map(t => `assert${t}(props?: object | null): void;`).join(
-            BREAK
-          )
+          MARKO_TYPES.map(
+            (t) => `assert${t}(props?: object | null): void;`
+          ).join(BREAK)
       );
 
     process.stdout.write(result);

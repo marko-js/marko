@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var attributes = {
     id: "link",
-    href: "http://ebay.com"
+    href: "http://ebay.com",
   };
 
   var el = helpers.vdom

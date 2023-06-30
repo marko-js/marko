@@ -5,12 +5,12 @@ module.exports = function (helpers) {
     original: {
       heading: "original colors",
       message: "These are primary colors!",
-      colors: ["red", "green", "blue"]
+      colors: ["red", "green", "blue"],
     },
     new: {
       heading: "new colors",
-      colors: ["orange", "yellow", "purple"]
-    }
+      colors: ["orange", "yellow", "purple"],
+    },
   };
 
   var component = helpers.mount(require.resolve("./index"), states.original);

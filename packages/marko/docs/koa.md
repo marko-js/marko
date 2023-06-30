@@ -22,7 +22,7 @@ app.use((ctx, next) => {
   ctx.body = Template.stream({
     name: "Frank",
     count: 30,
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 });
 

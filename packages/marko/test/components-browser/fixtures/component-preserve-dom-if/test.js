@@ -23,7 +23,7 @@ module.exports = function (helpers) {
         component.el.querySelector(".preserve-body").innerHTML,
       componentClass: require("marko/components").getComponentForEl(
         component.el.querySelector(".component-no-id")
-      ).state.name
+      ).state.name,
     };
   }
 
@@ -31,7 +31,7 @@ module.exports = function (helpers) {
 
   component.input = {
     preserveCondition: true,
-    renderId: renderId
+    renderId: renderId,
   };
   component.update();
 
@@ -69,7 +69,7 @@ module.exports = function (helpers) {
   // Do not preserve
   component.input = {
     preserveCondition: false,
-    renderId: renderId
+    renderId: renderId,
   };
   component.update();
 

@@ -10,7 +10,7 @@ require("../../compiler");
 var autotest = require("mocha-autotest").default;
 var taglibLoader = require("../../compiler").taglibLoader;
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   test(() => {

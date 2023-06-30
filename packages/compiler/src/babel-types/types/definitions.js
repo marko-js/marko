@@ -3,13 +3,13 @@ import {
   assertValueType,
   arrayOfType,
   chain,
-  assertEach
+  assertEach,
 } from "@babel/types/lib/definitions/utils";
 
 const valueFieldCommon = {
   value: {
-    validate: assertValueType("string")
-  }
+    validate: assertValueType("string"),
+  },
 };
 
 const MarkoDefinitions = {
@@ -18,45 +18,45 @@ const MarkoDefinitions = {
     builder: ["source", "label", "errorLoc"],
     fields: {
       source: {
-        validate: assertValueType("string")
+        validate: assertValueType("string"),
       },
       label: {
-        validate: assertValueType("string")
+        validate: assertValueType("string"),
       },
       errorLoc: {
         optional: true,
-        validate: assertValueType("object")
-      }
-    }
+        validate: assertValueType("object"),
+      },
+    },
   },
   MarkoDocumentType: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    fields: { ...valueFieldCommon }
+    fields: { ...valueFieldCommon },
   },
 
   MarkoDeclaration: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    fields: { ...valueFieldCommon }
+    fields: { ...valueFieldCommon },
   },
 
   MarkoCDATA: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    fields: { ...valueFieldCommon }
+    fields: { ...valueFieldCommon },
   },
 
   MarkoComment: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    fields: { ...valueFieldCommon }
+    fields: { ...valueFieldCommon },
   },
 
   MarkoText: {
     aliases: ["Marko", "Statement"],
     builder: ["value"],
-    fields: { ...valueFieldCommon }
+    fields: { ...valueFieldCommon },
   },
 
   MarkoPlaceholder: {
@@ -65,13 +65,13 @@ const MarkoDefinitions = {
     visitor: ["value"],
     fields: {
       value: {
-        validate: assertNodeType("Expression")
+        validate: assertNodeType("Expression"),
       },
       escape: {
         validate: assertValueType("boolean"),
-        default: true
-      }
-    }
+        default: true,
+      },
+    },
   },
 
   MarkoScriptlet: {
@@ -80,13 +80,13 @@ const MarkoDefinitions = {
     visitor: ["body"],
     fields: {
       body: {
-        validate: arrayOfType(["Statement"])
+        validate: arrayOfType(["Statement"]),
       },
       static: {
         validate: assertValueType("boolean"),
-        default: false
-      }
-    }
+        default: false,
+      },
+    },
   },
 
   MarkoClass: {
@@ -95,9 +95,9 @@ const MarkoDefinitions = {
     visitor: ["body"],
     fields: {
       body: {
-        validate: assertNodeType("ClassBody")
-      }
-    }
+        validate: assertNodeType("ClassBody"),
+      },
+    },
   },
 
   MarkoAttribute: {
@@ -106,31 +106,31 @@ const MarkoDefinitions = {
     visitor: ["value", "arguments"],
     fields: {
       name: {
-        validate: assertValueType("string")
+        validate: assertValueType("string"),
       },
       value: {
-        validate: assertNodeType("Expression")
+        validate: assertNodeType("Expression"),
       },
       modifier: {
         validate: assertValueType("string"),
-        optional: true
+        optional: true,
       },
       arguments: {
         validate: chain(
           assertValueType("array"),
           assertEach(assertNodeType("Expression", "SpreadElement"))
         ),
-        optional: true
+        optional: true,
       },
       default: {
         validate: assertValueType("boolean"),
-        optional: true
+        optional: true,
       },
       bound: {
         validate: assertValueType("boolean"),
-        optional: true
-      }
-    }
+        optional: true,
+      },
+    },
   },
 
   MarkoSpreadAttribute: {
@@ -139,9 +139,9 @@ const MarkoDefinitions = {
     visitor: ["value"],
     fields: {
       value: {
-        validate: assertNodeType("Expression")
-      }
-    }
+        validate: assertNodeType("Expression"),
+      },
+    },
   },
 
   MarkoTagBody: {
@@ -154,7 +154,7 @@ const MarkoDefinitions = {
           assertValueType("array"),
           assertEach(assertNodeType("Identifier", "Pattern", "RestElement"))
         ),
-        default: []
+        default: [],
       },
       body: {
         validate: arrayOfType([
@@ -163,11 +163,11 @@ const MarkoDefinitions = {
           "MarkoText",
           "MarkoPlaceholder",
           "MarkoScriptlet",
-          "MarkoComment"
+          "MarkoComment",
         ]),
-        default: []
-      }
-    }
+        default: [],
+      },
+    },
   },
 
   MarkoTag: {
@@ -176,32 +176,32 @@ const MarkoDefinitions = {
     visitor: ["name", "attributes", "body", "arguments", "var"],
     fields: {
       name: {
-        validate: assertNodeType("Expression")
+        validate: assertNodeType("Expression"),
       },
       attributes: {
         validate: arrayOfType(["MarkoAttribute", "MarkoSpreadAttribute"]),
-        default: []
+        default: [],
       },
       body: {
-        validate: assertNodeType("MarkoTagBody")
+        validate: assertNodeType("MarkoTagBody"),
       },
       arguments: {
         validate: chain(
           assertValueType("array"),
           assertEach(assertNodeType("Expression", "SpreadElement"))
         ),
-        optional: true
+        optional: true,
       },
       rawValue: {
         validate: assertValueType("string"),
-        optional: true
+        optional: true,
       },
       var: {
         validate: assertNodeType("LVal"),
-        optional: true
-      }
-    }
-  }
+        optional: true,
+      },
+    },
+  },
 };
 
 export default MarkoDefinitions;

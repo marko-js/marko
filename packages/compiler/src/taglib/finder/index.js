@@ -30,19 +30,19 @@ function getAllDependencyNames(pkg) {
   var map = {};
 
   if (pkg.dependencies) {
-    Object.keys(pkg.dependencies).forEach(name => {
+    Object.keys(pkg.dependencies).forEach((name) => {
       map[name] = true;
     });
   }
 
   if (pkg.peerDependencies) {
-    Object.keys(pkg.peerDependencies).forEach(name => {
+    Object.keys(pkg.peerDependencies).forEach((name) => {
       map[name] = true;
     });
   }
 
   if (pkg.devDependencies) {
-    Object.keys(pkg.devDependencies).forEach(name => {
+    Object.keys(pkg.devDependencies).forEach((name) => {
       map[name] = true;
     });
   }
@@ -69,7 +69,7 @@ function find(dirname, registeredTaglibs) {
       added[taglib.id] = true;
       found.push(taglib);
     },
-    foundTaglibPackages: {}
+    foundTaglibPackages: {},
   };
 
   var rootDirname = process.cwd(); // Don't search up past this directory
@@ -113,7 +113,7 @@ function find(dirname, registeredTaglibs) {
 
   if (rootPkg) {
     // Now look for `marko.json` from installed packages
-    getAllDependencyNames(rootPkg).forEach(name => {
+    getAllDependencyNames(rootPkg).forEach((name) => {
       if (!excludedPackages[name]) {
         let taglibPath = resolveFrom(
           rootPkg.__dirname,

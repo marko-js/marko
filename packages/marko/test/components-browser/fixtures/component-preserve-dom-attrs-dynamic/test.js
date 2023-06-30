@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    className: "foo"
+    className: "foo",
   });
 
   var span = component.el.querySelector("span");

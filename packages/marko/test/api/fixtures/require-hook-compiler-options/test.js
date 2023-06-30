@@ -22,8 +22,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
   try {
     requireHook.install({
       compilerOptions: {
-        ignoreUnrecognizedTags: false
-      }
+        ignoreUnrecognizedTags: false,
+      },
     }); // Reconfigure for testing
 
     expect(markoCompiler.config.ignoreUnrecognizedTags).to.equal(false);
@@ -32,8 +32,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
 
     requireHook.install({
       compilerOptions: {
-        ignoreUnrecognizedTags: true
-      }
+        ignoreUnrecognizedTags: true,
+      },
     });
 
     expect(markoCompiler.config.ignoreUnrecognizedTags).to.equal(true);

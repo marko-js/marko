@@ -7,16 +7,16 @@ import {
   parseParams,
   parseVar,
   parseTemplateLiteral,
-  getTagDefForTagName
+  getTagDefForTagName,
 } from "@marko/babel-utils";
 
 const noop = () => {};
-const emptyRange = part => part.start === part.end;
-const isAttrTag = tag => tag.name.value?.[0] === "@";
+const emptyRange = (part) => part.start === part.end;
+const isAttrTag = (tag) => tag.name.value?.[0] === "@";
 const toBabelPosition = ({ line, character }) => ({
   // Babel lines start at 1 and use "column" instead of "character".
   line: line + 1,
-  column: character
+  column: character,
 });
 
 export function parseMarko(file) {
@@ -31,12 +31,12 @@ export function parseMarko(file) {
   let { preserveWhitespace } = htmlParseOptions;
   let preservingWhitespaceUntil = preserveWhitespace;
   let onNext = noop;
-  const positionAt = index => toBabelPosition(parser.positionAt(index));
-  const locationAt = range => {
+  const positionAt = (index) => toBabelPosition(parser.positionAt(index));
+  const locationAt = (range) => {
     const { start, end } = parser.locationAt(range);
     return {
       start: toBabelPosition(start),
-      end: toBabelPosition(end)
+      end: toBabelPosition(end),
     };
   };
   const withLoc = (node, range) => {
@@ -45,12 +45,12 @@ export function parseMarko(file) {
     node.loc = locationAt(range);
     return node;
   };
-  const enterTag = node => {
+  const enterTag = (node) => {
     currentTag = currentBody.pushContainer("body", node)[0];
     currentBody = currentTag.get("body");
     onNext(node);
   };
-  const pushContent = node => {
+  const pushContent = (node) => {
     currentBody.node.body.push(node);
     onNext(node);
   };
@@ -81,8 +81,8 @@ export function parseMarko(file) {
               [
                 t.templateElement({
                   raw: result.value,
-                  cooked: result.value
-                })
+                  cooked: result.value,
+                }),
               ],
               []
             );
@@ -147,7 +147,7 @@ export function parseMarko(file) {
 
       const node = t.markoText(value);
       pushContent(node);
-      onNext = next => {
+      onNext = (next) => {
         switch (next?.type) {
           case "MarkoScriptlet":
           case "MarkoComment":
@@ -176,7 +176,7 @@ export function parseMarko(file) {
           const trimmedStart = part.start + rawValue.indexOf(value);
           withLoc(node, {
             start: trimmedStart,
-            end: trimmedStart + rawValue.length
+            end: trimmedStart + rawValue.length,
           });
         } else {
           body.splice(body.indexOf(node), 1);
@@ -391,16 +391,18 @@ export function parseMarko(file) {
         const classShorthandValue =
           currentShorthandClassNames.length === 1
             ? currentShorthandClassNames[0]
-            : currentShorthandClassNames.every(expr => t.isStringLiteral(expr))
+            : currentShorthandClassNames.every((expr) =>
+                t.isStringLiteral(expr)
+              )
             ? withLoc(
                 t.stringLiteral(
-                  currentShorthandClassNames.map(node => node.value).join(" ")
+                  currentShorthandClassNames.map((node) => node.value).join(" ")
                 ),
                 {
                   start: currentShorthandClassNames[0].start,
                   end: currentShorthandClassNames[
                     currentShorthandClassNames.length - 1
-                  ].end
+                  ].end,
                 }
               )
             : t.arrayExpression(currentShorthandClassNames);
@@ -455,7 +457,7 @@ export function parseMarko(file) {
         if (parseOptions.rawOpenTag) {
           node.rawValue = parser.read({
             start: node.name.start,
-            end: part.start
+            end: part.start,
           });
         }
 
@@ -495,7 +497,7 @@ export function parseMarko(file) {
       }
 
       onNext();
-    }
+    },
   });
 
   parser.parse(code);
@@ -507,6 +509,6 @@ export function parseMarko(file) {
   ast.end = program.end = code.length - 1;
   ast.loc = program.loc = {
     start: { line: 1, column: 0 },
-    end: positionAt(ast.end)
+    end: positionAt(ast.end),
   };
 }

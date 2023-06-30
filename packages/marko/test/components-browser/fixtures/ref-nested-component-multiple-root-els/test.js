@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    age: 30
+    age: 30,
   });
   var fooComponent = component.getComponent("foo");
   expect(fooComponent != null).to.equal(true);

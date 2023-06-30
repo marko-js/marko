@@ -17,7 +17,7 @@ VText.prototype = {
 
   ___cloneNode: function () {
     return new VText(this.___nodeValue);
-  }
+  },
 };
 
 inherit(VText, VNode);

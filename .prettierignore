@@ -5,6 +5,7 @@
 *actual*
 *expected*
 input.*
+__snapshots__
 
 # generated
 dist/
@@ -15,6 +16,7 @@ dist/
 .nyc_output
 .cache/
 coverage
+.sizes.json
 ~*
 
 # controlled by npm's formatter

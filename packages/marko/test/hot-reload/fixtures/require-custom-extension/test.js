@@ -12,22 +12,22 @@ exports.check = function (marko, hotReload, expect, snapshot) {
 
   snapshot(template.renderSync({ name: "John" }).toString(), {
     name: "initial",
-    ext: ".html"
+    ext: ".html",
   });
 
   fs.writeFileSync(tempTemplatePath, templateSrc + "!", { encoding: "utf8" });
 
   snapshot(template.renderSync({ name: "John" }).toString(), {
     name: "modified",
-    ext: ".html"
+    ext: ".html",
   });
 
   hotReload.handleFileModified(tempTemplatePath, {
-    extension: ".html"
+    extension: ".html",
   });
 
   snapshot(template.renderSync({ name: "John" }).toString(), {
     name: "reloaded",
-    ext: ".html"
+    ext: ".html",
   });
 };

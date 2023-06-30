@@ -6,7 +6,7 @@ module.exports = function (helpers) {
       "div",
       {
         class: "foo",
-        onclick: "doSomething()"
+        onclick: "doSomething()",
       },
       null,
       null,
@@ -16,7 +16,7 @@ module.exports = function (helpers) {
       "svg",
       {
         width: "100",
-        height: "100"
+        height: "100",
       },
       null,
       null,
@@ -31,7 +31,7 @@ module.exports = function (helpers) {
         stroke: "green",
         "stroke-width": "4",
         fill: "yellow",
-        "xlink:href": "http://ebay.com/"
+        "xlink:href": "http://ebay.com/",
       },
       null,
       null,

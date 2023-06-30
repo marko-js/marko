@@ -5,7 +5,7 @@ import { getAttrs, evaluateAttr } from "../util";
 import {
   getTagDef,
   normalizeTemplateString,
-  importDefault
+  importDefault,
 } from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 
@@ -14,26 +14,26 @@ const MAYBE_SVG = {
   a: true,
   script: true,
   style: true,
-  title: true
+  title: true,
 };
 
 export function tagArguments(path, isStatic) {
   const {
     hub: { file },
     node,
-    parent
+    parent,
   } = path;
   const {
     name,
     key,
     body: { body },
-    handlers
+    handlers,
   } = node;
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const attrs = path.get("attributes");
   const seen = new Set();
   const len = attrs.length;
-  const hasSpread = attrs.some(attr => !attr.node.name);
+  const hasSpread = attrs.some((attr) => !attr.node.name);
   let runtimeFlags = 0;
 
   for (let i = len; i--; ) {
@@ -83,14 +83,16 @@ export function tagArguments(path, isStatic) {
       ? t.numericLiteral(body.length)
       : body.length
       ? t.nullLiteral()
-      : t.numericLiteral(0)
+      : t.numericLiteral(0),
   ];
 
   if (node.preserveAttrs) {
     tagProperties.push(
       t.objectProperty(
         t.identifier("pa"),
-        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+        t.arrayExpression(
+          node.preserveAttrs.map((name) => t.stringLiteral(name))
+        )
       )
     );
   }
@@ -126,7 +128,7 @@ export function tagArguments(path, isStatic) {
 
   if (
     t.isObjectExpression(attrsObj) &&
-    attrsObj.properties.every(n => isPropertyName(n, SIMPLE_ATTRS)) &&
+    attrsObj.properties.every((n) => isPropertyName(n, SIMPLE_ATTRS)) &&
     !node.preserveAttrs
   ) {
     runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
@@ -167,7 +169,7 @@ export default function (path, isNullable) {
   const {
     name,
     key,
-    body: { body }
+    body: { body },
   } = node;
 
   const isEmpty = !body.length;
@@ -186,7 +188,7 @@ export default function (path, isNullable) {
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
             normalizeTemplateString`f_${key}`,
-            path.hub.file._componentInstanceIdentifier
+            path.hub.file._componentInstanceIdentifier,
           ]
         )
       )

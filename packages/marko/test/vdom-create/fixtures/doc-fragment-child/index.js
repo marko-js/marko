@@ -5,11 +5,11 @@ module.exports = function (helpers) {
 
   var div1 = helpers.vdom.createElement("div", {
     class: "foo1",
-    onclick: "doSomething()"
+    onclick: "doSomething()",
   });
 
   var div2 = helpers.vdom.createElement("div", {
-    class: "foo2"
+    class: "foo2",
   });
 
   docFragment.___appendChild(div1);

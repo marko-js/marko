@@ -1,8 +1,8 @@
 exports.tests = [
   {
     templateData: {
-      D1: Promise.resolve()
+      D1: Promise.resolve(),
     },
-    expectedFile: require.resolve("./expected.html")
-  }
+    expectedFile: require.resolve("./expected.html"),
+  },
 ];

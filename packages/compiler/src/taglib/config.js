@@ -1,6 +1,6 @@
 module.exports = {
   fs: undefined,
-  onError: err => {
+  onError: (err) => {
     throw err;
-  }
+  },
 };

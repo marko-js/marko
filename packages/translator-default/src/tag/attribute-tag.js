@@ -5,7 +5,7 @@ import {
   getTagDef,
   isTransparentTag,
   isAttributeTag,
-  importDefault
+  importDefault,
 } from "@marko/babel-utils";
 import { getAttrs } from "./util";
 import withPreviousLocation from "../util/with-previous-location";
@@ -51,7 +51,7 @@ export default function (tag) {
     }
   } else {
     const previousAttr = parentAttributes.find(
-      attr => attr.get("name").node === targetProperty
+      (attr) => attr.get("name").node === targetProperty
     );
 
     if (previousAttr) {
@@ -106,7 +106,7 @@ export default function (tag) {
           t.variableDeclarator(
             identifier,
             isRepeated ? t.arrayExpression([]) : t.nullLiteral()
-          )
+          ),
         ])
       );
     parentPath.pushContainer(

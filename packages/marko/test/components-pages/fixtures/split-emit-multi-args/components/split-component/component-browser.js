@@ -5,5 +5,5 @@ module.exports = {
   },
   handleClick: function (value) {
     this.clicked = value;
-  }
+  },
 };

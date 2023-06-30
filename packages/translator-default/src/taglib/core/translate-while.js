@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   getArgOrSequence,
   assertNoAttributes,
-  assertNoParams
+  assertNoParams,
 } from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 

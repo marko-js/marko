@@ -3,5 +3,5 @@ module.exports = {
     out.beginElement("div");
     out.text(input.name.toUpperCase());
     out.endElement();
-  }
+  },
 };

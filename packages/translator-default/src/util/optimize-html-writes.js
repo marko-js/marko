@@ -15,21 +15,21 @@ const mergeWriteCallsVisitor = {
       expressions.push(content);
     } while ((curPath = curPath.getNextSibling()));
 
-    removals.forEach(removal => removal.remove());
+    removals.forEach((removal) => removal.remove());
 
     if (expressions.length > 1) {
       path
         .get("expression.arguments.0")
         .replaceWith(normalizeTemplateString(quasis, ...expressions));
     }
-  }
+  },
 };
 
 export function optimizeHTMLWrites(path) {
   const {
     hub: {
-      file: { markoOpts }
-    }
+      file: { markoOpts },
+    },
   } = path;
 
   if (markoOpts.optimize && markoOpts.output === "html") {

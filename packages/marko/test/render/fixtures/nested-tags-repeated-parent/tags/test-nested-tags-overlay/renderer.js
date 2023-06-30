@@ -9,7 +9,7 @@ exports.renderer = function (input, out) {
     {
       header: header,
       body: body,
-      footer: footer
+      footer: footer,
     },
     out
   );

@@ -7,10 +7,10 @@ const startOffset = "module-code".length;
 export default function (tag) {
   const {
     hub: { file },
-    node: { rawValue }
+    node: { rawValue },
   } = tag;
   const dirname = path.dirname(file.opts.filename);
-  const relativeRequire = entry =>
+  const relativeRequire = (entry) =>
     markoModules.require(resolveFrom(dirname, entry));
   const fn = eval(rawValue.slice(startOffset));
   const source = fn(relativeRequire, file.markoOpts);

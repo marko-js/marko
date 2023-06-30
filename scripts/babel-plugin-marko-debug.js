@@ -5,7 +5,7 @@
 module.exports = function babelPluginMarkoDebug() {
   return {
     visitor: {
-      IfStatement: path => {
+      IfStatement: (path) => {
         const node = path.node;
         return replaceMarkoDebug(
           path,
@@ -14,7 +14,7 @@ module.exports = function babelPluginMarkoDebug() {
           node.alternate
         );
       },
-      ConditionalExpression: path => {
+      ConditionalExpression: (path) => {
         const node = path.node;
         return replaceMarkoDebug(
           path,
@@ -23,7 +23,7 @@ module.exports = function babelPluginMarkoDebug() {
           node.alternate
         );
       },
-      LogicalExpression: path => {
+      LogicalExpression: (path) => {
         const node = path.node;
 
         if (node.operator === "&&") {
@@ -31,8 +31,8 @@ module.exports = function babelPluginMarkoDebug() {
         } else {
           return replaceMarkoDebug(path, node.left, null, node.right);
         }
-      }
-    }
+      },
+    },
   };
 };
 

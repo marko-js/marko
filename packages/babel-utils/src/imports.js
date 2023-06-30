@@ -40,7 +40,7 @@ export function importDefault(file, request, nameHint) {
   }
 
   const specifiers = importDeclaration.get("specifiers");
-  const specifier = specifiers.find(specifier =>
+  const specifier = specifiers.find((specifier) =>
     specifier.isImportDefaultSpecifier()
   );
 
@@ -73,7 +73,7 @@ export function importNamed(file, request, name, nameHint = name) {
 
   const specifiers = importDeclaration.get("specifiers");
   const specifier = specifiers.find(
-    specifier =>
+    (specifier) =>
       specifier.isImportSpecifier() && specifier.node.imported.name === name
   );
 

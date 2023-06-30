@@ -22,7 +22,7 @@ var openTagOnly = {};
   "param",
   "source",
   "track",
-  "wbr"
+  "wbr",
 ].forEach(function (tagName) {
   openTagOnly[tagName] = true;
 });

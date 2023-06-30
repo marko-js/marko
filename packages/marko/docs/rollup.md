@@ -102,7 +102,7 @@ const assetFileNames = "[name]-[hash][extname]";
 
 const externalDependencies = [
   ...Object.keys(pkg.dependencies),
-  ...builtinModules
+  ...builtinModules,
 ];
 
 process.env.SASS_PATH = "./:./node_modules";
@@ -114,13 +114,13 @@ export default (async () => [
       dir: "built/server/",
       assetFileNames: `../browser/${assetFileNames}`,
       format: "cjs",
-      sourcemap: true
+      sourcemap: true,
     },
-    external: id =>
+    external: (id) =>
       externalDependencies.some(
-        dependency => id === dependency || id.startsWith(dependency + "/")
+        (dependency) => id === dependency || id.startsWith(dependency + "/")
       ),
-    plugins: [isWatch && runPlugin({ execArgv: ["--enable-source-maps"] })]
+    plugins: [isWatch && runPlugin({ execArgv: ["--enable-source-maps"] })],
   }),
 
   compiler("browser", {
@@ -130,7 +130,7 @@ export default (async () => [
       entryFileNames: __PROD__ ? "[name]-[hash].js" : null,
       assetFileNames,
       sourcemap: true,
-      sourcemapExcludeSources: __PROD__
+      sourcemapExcludeSources: __PROD__,
     },
     plugins: [
       stylesPlugin({
@@ -138,13 +138,13 @@ export default (async () => [
         sourceMap: true,
         config: {
           target: "browserslist:css",
-          plugins: [autoprefixer({ env: "css" })]
+          plugins: [autoprefixer({ env: "css" })],
         },
         minimize: __PROD__,
         url: {
           publicPath,
-          hash: assetFileNames
-        }
+          hash: assetFileNames,
+        },
       }),
       __PROD__ && (await import("rollup-plugin-terser")).terser(),
       __PROD__ &&
@@ -153,8 +153,8 @@ export default (async () => [
           minSize: 1024,
           gzipOptions: {
             level: 9,
-            memLevel: 9
-          }
+            memLevel: 9,
+          },
         }),
       __PROD__ &&
         !isWatch &&
@@ -170,10 +170,10 @@ export default (async () => [
                 bundleAnalyzerFilename
               )}\x1b[0m`
             );
-          }
-        }
-    ]
-  })
+          },
+        },
+    ],
+  }),
 ])();
 
 function compiler(target, config) {
@@ -184,7 +184,7 @@ function compiler(target, config) {
     browserslistEnv,
     compact: false,
     babelrc: false,
-    caller: { target }
+    caller: { target },
   };
   if (isBrowser) {
     babelConfig.presets = [
@@ -192,9 +192,9 @@ function compiler(target, config) {
         "@babel/preset-env",
         {
           browserslistEnv,
-          bugfixes: true
-        }
-      ]
+          bugfixes: true,
+        },
+      ],
     ];
   }
 
@@ -205,16 +205,16 @@ function compiler(target, config) {
       markoPlugin[target]({ babelConfig }),
       nodeResolvePlugin({
         browser: isBrowser,
-        preferBuiltins: !isBrowser
+        preferBuiltins: !isBrowser,
       }),
       commonjsPlugin(),
       replacePlugin({
         preventAssignment: true,
-        values: { __DEV__, __PROD__ }
+        values: { __DEV__, __PROD__ },
       }),
       babelPlugin({
         babelHelpers: "bundled",
-        ...babelConfig
+        ...babelConfig,
       }),
       jsonPlugin(),
       urlPlugin({
@@ -223,10 +223,10 @@ function compiler(target, config) {
         fileName: assetFileNames,
         include: "**/*.{svg,png,jpg,jpeg}",
         limit: 0, // Never Base64 & inline
-        emitFiles: !isBrowser
+        emitFiles: !isBrowser,
       }),
-      ...config.plugins
-    ]
+      ...config.plugins,
+    ],
   };
 }
 ```
@@ -276,7 +276,7 @@ For example, if you have both `esm` and `iife` build outputs configured:
 {
   output: [
     { dir: "dist/iife", format: "iife" },
-    { dir: "dist/esm", format: "esm" }
+    { dir: "dist/esm", format: "esm" },
   ];
 }
 ```
@@ -306,8 +306,8 @@ You can manually override the builtin Babel configuration by passing a `babelCon
 ```js
 marko.browser({
   babelConfig: {
-    presets: ["@babel/preset-env"]
-  }
+    presets: ["@babel/preset-env"],
+  },
 });
 ```
 
@@ -344,9 +344,9 @@ marko.browser({
             isEntry,
             fileName,
             // only inline code chunks below 1kB
-            inline: code.trim().length < 1024 && code
+            inline: code.trim().length < 1024 && code,
           }
     );
-  }
+  },
 });
 ```

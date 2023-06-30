@@ -13,7 +13,7 @@ import {
   isAttributeTag,
   loadFileForTag,
   findParentTag,
-  getTagDef
+  getTagDef,
 } from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
@@ -42,7 +42,7 @@ export const analyze = {
       if (!meta.hasComponent && !meta.hasComponentBrowser) {
         meta.hasComponent = program
           .get("body")
-          .some(child => child.isMarkoClass());
+          .some((child) => child.isMarkoClass());
       }
     },
     exit(program) {
@@ -67,16 +67,16 @@ export const analyze = {
 
       meta.component =
         meta.component && resolveRelativePath(file, meta.component);
-      meta.deps = meta.deps.map(filename =>
+      meta.deps = meta.deps.map((filename) =>
         typeof filename === "string"
           ? resolveRelativePath(file, filename)
           : filename
       );
 
       meta.imports = program.node.body
-        .filter(child => t.isImportDeclaration(child))
-        .map(child => child.source.value);
-    }
+        .filter((child) => t.isImportDeclaration(child))
+        .map((child) => child.source.value);
+    },
   },
   MarkoTag(tag) {
     const { file } = tag.hub;
@@ -156,8 +156,8 @@ export const analyze = {
           meta.tags.push(tagEntry);
         }
       }
-    }
-  }
+    },
+  },
 };
 
 export const translate = {
@@ -178,7 +178,7 @@ export const translate = {
   Program: {
     enter(path) {
       const {
-        hub: { file }
+        hub: { file },
       } = path;
 
       if (file.markoOpts.output === "hydrate") {
@@ -218,7 +218,7 @@ export const translate = {
       path
         .get("body")
         .filter(isRenderContent)
-        .forEach(childPath => {
+        .forEach((childPath) => {
           renderBlock.pushContainer("body", childPath.node);
           childPath.remove();
         });
@@ -228,7 +228,7 @@ export const translate = {
     },
     exit(path) {
       const {
-        hub: { file }
+        hub: { file },
       } = path;
       const { markoOpts, _inlineComponentClass } = file;
       const includeMetaInSource = markoOpts.meta !== false;
@@ -297,9 +297,9 @@ export const translate = {
             t.variableDeclarator(
               templateIdentifier,
               t.callExpression(runtimeTemplateIdentifier, [
-                componentTypeIdentifier
+                componentTypeIdentifier,
               ])
-            )
+            ),
           ]),
           includeMetaInSource &&
             t.expressionStatement(
@@ -309,7 +309,7 @@ export const translate = {
                 t.identifier("__filename")
               )
             ),
-          t.exportDefaultDeclaration(templateIdentifier)
+          t.exportDefaultDeclaration(templateIdentifier),
         ].filter(Boolean)
       );
 
@@ -336,18 +336,18 @@ export const translate = {
                           "marko_split_component"
                         )
                       : templateIdentifier
-                  )
+                  ),
                 ]
               )
             ),
           t.variableDeclaration("const", [
-            t.variableDeclarator(componentIdentifier, componentClass)
-          ])
+            t.variableDeclarator(componentIdentifier, componentClass),
+          ]),
         ].filter(Boolean)
       );
 
       const templateRenderOptionsProps = [
-        t.objectProperty(t.identifier("t"), componentTypeIdentifier)
+        t.objectProperty(t.identifier("t"), componentTypeIdentifier),
       ];
 
       if (!meta.component) {
@@ -383,12 +383,12 @@ export const translate = {
                   file._componentDefIdentifier,
                   file._componentInstanceIdentifier,
                   t.identifier("state"),
-                  t.identifier("$global")
+                  t.identifier("$global"),
                 ],
                 renderBlock.node
               ),
               t.objectExpression(templateRenderOptionsProps),
-              componentIdentifier
+              componentIdentifier,
             ])
           )
         )
@@ -417,7 +417,7 @@ export const translate = {
 
       if (includeMetaInSource) {
         const metaObject = t.objectExpression([
-          t.objectProperty(t.identifier("id"), componentTypeIdentifier)
+          t.objectProperty(t.identifier("id"), componentTypeIdentifier),
         ]);
 
         if (meta.component) {
@@ -442,7 +442,7 @@ export const translate = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("tags"),
-              t.arrayExpression(meta.tags.map(tag => t.stringLiteral(tag)))
+              t.arrayExpression(meta.tags.map((tag) => t.stringLiteral(tag)))
             )
           );
         }
@@ -456,8 +456,8 @@ export const translate = {
       }
 
       optimizeHTMLWrites(path);
-    }
-  }
+    },
+  },
 };
 
 export function getRuntimeEntryFiles(output, optimize) {
@@ -499,7 +499,7 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}core-tags/components/preferred-script-location-tag.js`,
           `${base}core-tags/core/__flush_here_and_after__.js`,
           `${base}core-tags/core/await/renderer.js`,
-          `${base}core-tags/core/await/reorderer-renderer.js`
+          `${base}core-tags/core/await/reorderer-renderer.js`,
         ]
       : [
           `${base}runtime/vdom/index.js`,
@@ -508,8 +508,8 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/vdom/helpers/const.js`,
           `${base}runtime/vdom/helpers/v-element.js`,
           `${base}runtime/vdom/helpers/v-text.js`,
-          `${base}runtime/vdom/preserve-attrs.js`
-        ])
+          `${base}runtime/vdom/preserve-attrs.js`,
+        ]),
   ];
 }
 

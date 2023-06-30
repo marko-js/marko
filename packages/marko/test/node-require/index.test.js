@@ -11,7 +11,7 @@ var nodeRequire = require("../../node-require");
 
 function testNodeRequireInstall(options, expected) {
   let requireObj = {
-    extensions: {}
+    extensions: {},
   };
 
   options.require = requireObj;
@@ -34,7 +34,7 @@ describe("node-require", function () {
     testNodeRequireInstall(
       {
         extension: ".marko.xml",
-        extensions: [".marko", ".html"]
+        extensions: [".marko", ".html"],
       },
       [".marko.xml", ".marko", ".html"]
     );
@@ -43,7 +43,7 @@ describe("node-require", function () {
   it("should consolidate using only extensions", function () {
     testNodeRequireInstall(
       {
-        extensions: [".marko", ".html"]
+        extensions: [".marko", ".html"],
       },
       [".marko", ".html"]
     );
@@ -52,7 +52,7 @@ describe("node-require", function () {
   it("should consolidate using only extension", function () {
     testNodeRequireInstall(
       {
-        extension: ".marko.xml"
+        extension: ".marko.xml",
       },
       [".marko.xml"]
     );
@@ -62,7 +62,7 @@ describe("node-require", function () {
     testNodeRequireInstall(
       {
         extension: ".marko.xml",
-        extensions: []
+        extensions: [],
       },
       [".marko.xml"]
     );
@@ -76,7 +76,7 @@ describe("node-require", function () {
     testNodeRequireInstall(
       {
         extension: "marko.xml",
-        extensions: ["html"]
+        extensions: ["html"],
       },
       [".marko.xml", ".html"]
     );

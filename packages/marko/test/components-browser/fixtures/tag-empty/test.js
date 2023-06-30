@@ -14,7 +14,7 @@ module.exports = function (helpers) {
   }
 
   const component = helpers.mount(require.resolve("./index"), {
-    comp: "a"
+    comp: "a",
   });
   const innerHTML = "<span>body text</span>";
 

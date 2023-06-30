@@ -15,7 +15,7 @@ const tagFileTypes = [
   "code-generator",
   "translate",
   "node-factory",
-  "parse"
+  "parse",
 ];
 
 const searchFiles = [
@@ -30,7 +30,7 @@ const searchFiles = [
   { name: "node-factory", type: "parse" },
   { name: "parse", type: "parse" },
   { name: "transformer", type: "transform" },
-  { name: "transform", type: "transform" }
+  { name: "transform", type: "transform" },
 ];
 
 function createDefaultTagDef() {
@@ -39,9 +39,9 @@ function createDefaultTagDef() {
       "*": {
         type: "string",
         targetProperty: null,
-        preserveName: false
-      }
-    }
+        preserveName: false,
+      },
+    },
   };
 }
 
@@ -49,7 +49,7 @@ function getFileMap(dirname) {
   let fileMap = {};
   let files = taglibConfig.fs.readdirSync(dirname);
 
-  files.forEach(file => {
+  files.forEach((file) => {
     let extName = nodePath.extname(file);
     let baseName = file.slice(0, -1 * extName.length);
     let fullPath = nodePath.join(dirname, file);

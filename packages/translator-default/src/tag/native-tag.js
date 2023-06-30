@@ -3,12 +3,12 @@ import nativeTagVdom from "./native-tag[vdom]";
 import {
   assertNoAttributeTags,
   assertNoParams,
-  assertNoArgs
+  assertNoArgs,
 } from "@marko/babel-utils";
 
 export default function (path, isNullable) {
   const {
-    hub: { file }
+    hub: { file },
   } = path;
   const { markoOpts } = file;
 

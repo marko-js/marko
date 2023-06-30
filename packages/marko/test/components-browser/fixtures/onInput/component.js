@@ -17,5 +17,5 @@ module.exports = {
   setUpTest: function () {
     this.foo = "bar";
     this.array = [1, 2, 3];
-  }
+  },
 };

@@ -85,7 +85,7 @@ class Taglib {
       tags: this.tags,
       attributes: this.attributes,
       patternAttributes: this.patternAttributes,
-      imports: this.imports
+      imports: this.imports,
     };
   }
 }

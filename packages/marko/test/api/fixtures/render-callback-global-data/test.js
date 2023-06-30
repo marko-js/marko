@@ -5,8 +5,8 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var data = {
     name: "John",
     $global: {
-      greeting: "Greetings"
-    }
+      greeting: "Greetings",
+    },
   };
   template.render(data, function (error, result) {
     snapshot(result.toString());

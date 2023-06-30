@@ -26,12 +26,12 @@ var defaultOptionsExportDefinition = {
     return globalConfig;
   },
   enumerable: true,
-  configurable: false
+  configurable: false,
 };
 
 Object.defineProperties(exports, {
   defaultOptions: defaultOptionsExportDefinition,
-  config: defaultOptionsExportDefinition
+  config: defaultOptionsExportDefinition,
 });
 
 function configure(newConfig) {
@@ -66,8 +66,8 @@ function _compile(src, filename, userConfig, callback) {
 
   if (callback) {
     compiler.compile(src, filename, options).then(
-      result => callback(null, resultCompat(result, options)),
-      error => callback(error)
+      (result) => callback(null, resultCompat(result, options)),
+      (error) => callback(error)
     );
   } else {
     return resultCompat(compiler.compileSync(src, filename, options), options);
@@ -96,7 +96,7 @@ function compileForBrowser(src, filename, options, callback) {
     {
       output: "dom",
       meta: false,
-      sourceOnly: false
+      sourceOnly: false,
     },
     options
   );

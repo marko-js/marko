@@ -5,5 +5,5 @@ module.exports = {
 
   handleButtonClick: function () {
     this.buttonClickCalls.push(arguments);
-  }
+  },
 };

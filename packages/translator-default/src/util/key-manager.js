@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import {
   normalizeTemplateString,
   isTransparentTag,
-  isLoopTag
+  isLoopTag,
 } from "@marko/babel-utils";
 const KeyManagerLookup = new WeakMap();
 
@@ -33,7 +33,7 @@ class KeyManager {
 
   nextKey() {
     return Object.assign(t.stringLiteral(String(this._nextKey++)), {
-      _isAutoKey: true
+      _isAutoKey: true,
     });
   }
 
@@ -42,7 +42,7 @@ class KeyManager {
       // Record the first child key if found under a loop.
       const firstChildTag = path
         .get("body.body")
-        .find(child => child.isMarkoTag());
+        .find((child) => child.isMarkoTag());
       const firstChildKey = firstChildTag && getUserKey(firstChildTag);
 
       if (firstChildKey) {
@@ -50,7 +50,7 @@ class KeyManager {
         firstChildTag.set("key", keyValueIdentifier);
         firstChildTag.insertBefore(
           t.variableDeclaration("const", [
-            t.variableDeclarator(keyValueIdentifier, firstChildKey)
+            t.variableDeclarator(keyValueIdentifier, firstChildKey),
           ])
         );
 
@@ -109,7 +109,7 @@ function getKeyScope(path) {
     let keyValue;
 
     if (path.get("name.value").node === "for") {
-      if (path.node.attributes.some(attr => attr.name === "of")) {
+      if (path.node.attributes.some((attr) => attr.name === "of")) {
         keyValue = path.node.body.params[1];
       } else {
         keyValue = path.node.body.params[0];
@@ -120,7 +120,7 @@ function getKeyScope(path) {
       const keyValueIdentifier = path.scope.generateUidIdentifier("keyValue");
       path.insertBefore(
         t.variableDeclaration("let", [
-          t.variableDeclarator(keyValueIdentifier, t.numericLiteral(0))
+          t.variableDeclarator(keyValueIdentifier, t.numericLiteral(0)),
         ])
       );
 
@@ -140,7 +140,7 @@ function getKeyScope(path) {
           t.variableDeclarator(
             keyScopeIdentifier,
             normalizeTemplateString`[${keyValue}]`
-          )
+          ),
         ])
       );
   }
@@ -158,7 +158,7 @@ function getUserKey(path) {
   if (key === undefined) {
     const keyAttr = path
       .get("attributes")
-      .find(attr => attr.get("name").node === "key");
+      .find((attr) => attr.get("name").node === "key");
 
     if (keyAttr) {
       key = normalizeTemplateString`@${keyAttr.get("value").node}`;

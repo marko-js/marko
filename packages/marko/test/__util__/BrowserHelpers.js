@@ -74,7 +74,7 @@ BrowserHelpers.prototype = {
       template: this.cleanPath(templatePath),
       components: getComponentsFromMeta(template),
       input: input,
-      $global: $global
+      $global: $global,
     });
 
     return instance;
@@ -120,7 +120,7 @@ BrowserHelpers.prototype = {
 
   cleanPath: function (path) {
     return path.replace(/\.\d+\.in-context$/, "");
-  }
+  },
 };
 
 module.exports = BrowserHelpers;

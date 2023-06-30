@@ -60,7 +60,7 @@ http
     response.writeHead(200, { "content-type": "text/html;charset=utf-8" });
     const templateStream = MarkoTemplate.stream({});
     const gzipStream = zlib.createGzip({
-      flush: zlib.constants.Z_PARTIAL_FLUSH
+      flush: zlib.constants.Z_PARTIAL_FLUSH,
     });
     templateStream.pipe(outputStream).pipe(response);
   })

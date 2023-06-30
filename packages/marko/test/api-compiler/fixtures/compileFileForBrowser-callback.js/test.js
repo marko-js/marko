@@ -7,7 +7,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   compiler.compileFileForBrowser(
     templatePath,
     {
-      writeVersionComment: false
+      writeVersionComment: false,
     },
     function (err, compiledTemplate) {
       if (err) {

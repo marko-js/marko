@@ -4,8 +4,8 @@ var expect = require("chai").expect;
 exports.templateData = {
   outer: Promise.resolve(),
   $global: {
-    cspNonce: "xyz"
-  }
+    cspNonce: "xyz",
+  },
 };
 
 exports.checkEvents = function (events, snapshot, out) {
@@ -18,7 +18,7 @@ exports.checkEvents = function (events, snapshot, out) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

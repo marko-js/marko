@@ -4,20 +4,20 @@ export default function (path) {
   const {
     hub: { file },
     node: {
-      body: { body }
-    }
+      body: { body },
+    },
   } = path;
 
   const classProperties = [];
   let onCreateMethod = body.find(
-    prop =>
+    (prop) =>
       prop.computed === false &&
       t.isIdentifier(prop.key) &&
       prop.key.name === "onCreate"
   );
 
   const objectProperties = body
-    .map(prop => {
+    .map((prop) => {
       if (t.isClassMethod(prop)) {
         prop.type = "ObjectMethod";
         delete prop.start;

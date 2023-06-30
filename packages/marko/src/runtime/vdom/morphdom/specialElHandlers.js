@@ -100,7 +100,7 @@ SpecialElHandlers.prototype = {
         fromEl.selectedIndex = selected;
       }
     }
-  }
+  },
 };
 
 module.exports = new SpecialElHandlers();

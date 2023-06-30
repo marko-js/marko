@@ -102,7 +102,7 @@ module.exports = function awaitTag(input, out) {
   var awaitInfo = {
     name: name,
     clientReorder: clientReorder,
-    dataProvider: provider
+    dataProvider: provider,
   };
 
   if (clientReorder) {
@@ -112,7 +112,7 @@ module.exports = function awaitTag(input, out) {
       out.global.___clientReorderContext ||
       (out.global.___clientReorderContext = {
         instances: [],
-        nextId: 0
+        nextId: 0,
       });
 
     var id = (awaitInfo.id = input.name || clientReorderContext.nextId++);
@@ -159,7 +159,7 @@ module.exports = function awaitTag(input, out) {
     out.flush(); // Flush everything up to this await instance
     asyncOut = awaitInfo.out = out.beginAsync({
       timeout: 0, // We will use our code for controlling timeout
-      name: name
+      name: name,
     });
   }
 

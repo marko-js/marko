@@ -11,8 +11,8 @@ export default {
           path.replaceWith(
             withPreviousLocation(t.identifier("input"), path.node)
           );
-        }
+        },
       });
     }
-  }
+  },
 };

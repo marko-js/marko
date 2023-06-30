@@ -1,3 +1,3 @@
 exports.templateData = {
-  hidden: true
+  hidden: true,
 };

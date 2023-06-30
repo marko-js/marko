@@ -16,7 +16,7 @@ let installSourceMaps = () => {
         return { url: null, map };
       }
       return null;
-    }
+    },
   });
 };
 
@@ -32,7 +32,7 @@ function register({ extensions = require.extensions, ...options } = {}) {
           meta: true,
           hot: process.env.BROWSER_REFRESH_URL !== undefined,
           // eslint-disable-next-line no-constant-condition
-          sourceMaps: isDev ? "both" : false
+          sourceMaps: isDev ? "both" : false,
         },
         options,
         requiredOptions

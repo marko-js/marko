@@ -1,4 +1,4 @@
 exports.templateData = {
   name: "John",
-  count: 51
+  count: 51,
 };

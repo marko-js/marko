@@ -4,7 +4,7 @@ const expect = require("chai").expect;
 exports.templateData = {
   outer: Promise.resolve(),
   inner1: Promise.resolve(),
-  inner2: Promise.resolve()
+  inner2: Promise.resolve(),
 };
 
 exports.checkEvents = function (events, snapshot, out) {
@@ -21,7 +21,7 @@ exports.checkEvents = function (events, snapshot, out) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

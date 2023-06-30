@@ -5,8 +5,8 @@ module.exports = {
 
   onMount: function () {
     this.componentConfig = {
-      name: this.name
+      name: this.name,
     };
     window.fooComponent = this;
-  }
+  },
 };

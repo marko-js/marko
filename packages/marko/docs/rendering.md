@@ -70,7 +70,7 @@ The `render` method returns an async `out` which is used to generate HTML on the
 import View from "./view.marko";
 var resultPromise = View.render({});
 
-resultPromise.then(result => {
+resultPromise.then((result) => {
   result.appendTo(document.body);
 });
 ```
@@ -216,8 +216,8 @@ Global values persist across renders.
 ```js
 View.render({
   $global: {
-    flags: ["mobile"]
-  }
+    flags: ["mobile"],
+  },
 });
 ```
 
@@ -254,9 +254,9 @@ app.get("/", (req, res) => {
 
         serializedGlobals: {
           isIos: true, // Tell Marko to serialize `isIos`
-          isAndroid: true // Tell Marko to serialize `isAndroid`
-        }
-      }
+          isAndroid: true, // Tell Marko to serialize `isAndroid`
+        },
+      },
     },
     res
   );

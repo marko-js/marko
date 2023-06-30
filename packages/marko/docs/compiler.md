@@ -46,10 +46,10 @@ compiler.compileFileSync(filename: string, options?: CompileOptions): CompileRes
 import * as compiler from "@marko/compiler";
 
 const asyncResult = await compiler.compileFile("./src/index.marko", {
-  modules: "cjs"
+  modules: "cjs",
 });
 const syncResult = compiler.compileFileSync("./src/index.marko", {
-  modules: "cjs"
+  modules: "cjs",
 });
 ```
 
@@ -73,7 +73,7 @@ const asyncResult = await compiler.compile(
   { modules: "cjs" }
 );
 const syncResult = compiler.compileSync("<h1>Hello!</>", "./src/index.marko", {
-  modules: "cjs"
+  modules: "cjs",
 });
 ```
 
@@ -92,10 +92,10 @@ Or you can pass options objects when calling compile functions. Each property wi
 import * as compiler from "@marko/compiler";
 compiler.configure({
   output: "dom",
-  sourceMaps: true
+  sourceMaps: true,
 });
 const result = compiler.compileFileSync("./example.marko", {
-  output: "html"
+  output: "html",
 });
 ```
 

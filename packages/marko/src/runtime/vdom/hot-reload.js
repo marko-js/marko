@@ -61,7 +61,7 @@ runtime.t = function (typeName) {
           });
         });
       }
-    }
+    },
   });
 
   return template;

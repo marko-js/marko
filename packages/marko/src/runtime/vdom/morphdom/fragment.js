@@ -55,7 +55,7 @@ var fragmentPrototype = {
     this.nodes.forEach(function (node) {
       this.detachedContainer.appendChild(node);
     }, this);
-  }
+  },
 };
 
 function createFragmentNode(startNode, nextNode, parentNode) {

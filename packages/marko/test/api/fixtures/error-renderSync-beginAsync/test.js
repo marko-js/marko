@@ -9,7 +9,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
 
   try {
     output = template.renderSync({
-      nameDataProvider: promiseProvider(1, "John")
+      nameDataProvider: promiseProvider(1, "John"),
     });
   } catch (_e) {
     e = _e;

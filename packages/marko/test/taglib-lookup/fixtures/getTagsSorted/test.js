@@ -4,7 +4,7 @@ exports.check = function (markoCompiler, expect, snapshot) {
   var tagNames = [];
 
   var tags = lookup.getTagsSorted();
-  tags.forEach(tag => {
+  tags.forEach((tag) => {
     tagNames.push(tag.name);
   });
 

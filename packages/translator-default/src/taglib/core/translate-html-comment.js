@@ -1,7 +1,7 @@
 import {
   assertNoArgs,
   assertNoParams,
-  assertNoAttributes
+  assertNoAttributes,
 } from "@marko/babel-utils";
 import write from "../../util/html-out-write";
 

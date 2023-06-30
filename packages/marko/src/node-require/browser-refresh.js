@@ -8,10 +8,10 @@ if ("MARKO_DEBUG") {
     browserRefreshClient
       .enableSpecialReload(
         `${extensions
-          .map(ext => `*${ext}`)
+          .map((ext) => `*${ext}`)
           .join(" ")} marko.json marko-tag.json`
       )
-      .onFileModified(path => {
+      .onFileModified((path) => {
         hotReload.handleFileModified(path);
       });
   }

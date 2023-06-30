@@ -46,7 +46,7 @@ export default function getComponentFiles({ hub: { file } }) {
     styleFile,
     packageFile,
     componentFile,
-    componentBrowserFile
+    componentBrowserFile,
   });
 }
 

@@ -25,7 +25,7 @@ function normalizeHook(dirname, value) {
       path: value,
       get hook() {
         return markoModules.require(value);
-      }
+      },
     };
   }
   return { hook: value };
@@ -170,7 +170,7 @@ class TaglibLoader {
     // }
     var taglib = this.taglib;
 
-    Object.keys(value).forEach(attrName => {
+    Object.keys(value).forEach((attrName) => {
       var attrDef = value[attrName];
 
       var attr = loaders.loadAttributeFromProps(
@@ -369,13 +369,13 @@ class TaglibLoader {
       taglib.attributeGroups || (taglib.attributeGroups = {});
     let dependencyChain = this.dependencyChain.append("attribute-groups");
 
-    Object.keys(value).forEach(attrGroupName => {
+    Object.keys(value).forEach((attrGroupName) => {
       let attrGroup = (attributeGroups[attrGroupName] = {});
       let attrGroupDependencyChain = dependencyChain.append(attrGroupName);
 
       let rawAttrGroup = value[attrGroupName];
 
-      Object.keys(rawAttrGroup).forEach(attrName => {
+      Object.keys(rawAttrGroup).forEach((attrName) => {
         var rawAttrDef = rawAttrGroup[attrName];
 
         let attr = loaders.loadAttributeFromProps(

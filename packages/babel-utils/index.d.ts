@@ -319,7 +319,7 @@ export enum DiagnosticType {
   Error = "error",
   Warning = "warning",
   Deprecation = "deprecation",
-  Suggestion = "suggestion"
+  Suggestion = "suggestion",
 }
 
 export interface Diagnostic {

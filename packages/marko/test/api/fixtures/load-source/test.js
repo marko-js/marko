@@ -8,14 +8,14 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   templatePath = nodePath.join(__dirname, "dummy.marko");
   template = marko.load(templatePath, "-- Hello $!{data.name}!");
   snapshot(template.renderSync({ name: "Frank" }).toString(), {
-    name: "no-options"
+    name: "no-options",
   });
 
   // Make sure calling load with templatePath:String, templateSrc:String, options:Object arguments works
   templatePath = nodePath.join(__dirname, "dummy.marko");
   template = marko.load(templatePath, "-- Hello $!{data.name}!", {});
   snapshot(template.renderSync({ name: "Frank" }).toString(), {
-    name: "empty-options"
+    name: "empty-options",
   });
 
   // Make sure calling load with templatePath:String, options:Object arguments works

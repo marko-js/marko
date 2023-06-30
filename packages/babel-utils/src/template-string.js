@@ -2,7 +2,7 @@ import jsesc from "jsesc";
 import { types as t } from "@marko/compiler";
 
 export function normalizeTemplateString(quasis, ...expressions) {
-  quasis = quasis.map(q => (t.isTemplateElement(q) ? q.value.cooked : q));
+  quasis = quasis.map((q) => (t.isTemplateElement(q) ? q.value.cooked : q));
 
   for (let i = expressions.length; i--; ) {
     let v = expressions[i];
@@ -13,7 +13,7 @@ export function normalizeTemplateString(quasis, ...expressions) {
       quasis.splice(
         i + 1,
         0,
-        ...v.quasis.slice(1, -1).map(q => q.value.cooked)
+        ...v.quasis.slice(1, -1).map((q) => q.value.cooked)
       );
       expressions.splice(i, 1, ...v.expressions);
       i += v.expressions.length;
@@ -47,7 +47,7 @@ export function normalizeTemplateString(quasis, ...expressions) {
 function getTemplateElement(s = "") {
   return t.templateElement({
     cooked: s,
-    raw: jsesc(s, { quotes: "backtick" })
+    raw: jsesc(s, { quotes: "backtick" }),
   });
 }
 

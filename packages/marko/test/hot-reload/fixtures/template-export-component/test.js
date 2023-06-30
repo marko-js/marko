@@ -5,7 +5,7 @@ var tempDir = nodePath.join(__dirname, "temp");
 
 function copyFiles(dir) {
   var files = fs.readdirSync(dir);
-  files.forEach(file => {
+  files.forEach((file) => {
     var src = fs.readFileSync(nodePath.join(dir, file));
     fs.writeFileSync(nodePath.join(tempDir, file), src);
   });
@@ -24,7 +24,7 @@ exports.check = function (marko, hotReload, expect, snapshot) {
   var component = require(tempTemplatePath).default;
   snapshot(component.renderSync().toString(), {
     name: "initial",
-    ext: ".html"
+    ext: ".html",
   });
 
   copyFiles(nodePath.join(__dirname, "b"));
@@ -32,6 +32,6 @@ exports.check = function (marko, hotReload, expect, snapshot) {
 
   snapshot(component.renderSync().toString(), {
     name: "reloaded",
-    ext: ".html"
+    ext: ".html",
   });
 };

@@ -24,13 +24,13 @@ export const visitor = {
         exit(transformer, path, t);
         if (path.node !== node) break; // Stop if node is replaced.
       }
-    }
-  }
+    },
+  },
 };
 
 function getTransformersForTag(path) {
   const {
-    hub: { file }
+    hub: { file },
   } = path;
   const { watchFiles } = file.metadata.marko;
   const tagName = path.get("name.value").node || "*";
@@ -41,7 +41,7 @@ function getTransformersForTag(path) {
 
   if (!transformers) {
     transformers = TRANSFORMER_CACHE[tagName] = [];
-    const addTransformers = tagDef => {
+    const addTransformers = (tagDef) => {
       if (tagDef && tagDef.transformers) {
         for (const transformer of tagDef.transformers) {
           if (transformer.path) {

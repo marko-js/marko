@@ -8,7 +8,7 @@ exports.templateData = {
   getD5: () => promiseProvider(Math.ceil(Math.random() * 10)),
   getD6: () => promiseProvider(Math.ceil(Math.random() * 10)),
   getD7: () => promiseProvider(Math.ceil(Math.random() * 10)),
-  getD8: () => promiseProvider(Math.ceil(Math.random() * 10))
+  getD8: () => promiseProvider(Math.ceil(Math.random() * 10)),
 };
 
 exports.noFlushComment = true;

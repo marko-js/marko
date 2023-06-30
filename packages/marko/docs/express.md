@@ -43,7 +43,7 @@ app.get("/", function (req, res) {
   res.marko(template, {
     name: "Frank",
     count: 30,
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 });
 
@@ -56,7 +56,7 @@ app.listen(8080);
 > app.get("/", function (req, res) {
 >   res.marko(template, {
 >     params: req.params,
->     submitted: req.method === "POST" && req.body
+>     submitted: req.method === "POST" && req.body,
 >   });
 > });
 > ```

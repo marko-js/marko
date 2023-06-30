@@ -3,5 +3,5 @@ import noUpdatePlugin from "./no-update";
 
 export default {
   scoped: scopedPlugin,
-  "no-update": noUpdatePlugin
+  "no-update": noUpdatePlugin,
 };

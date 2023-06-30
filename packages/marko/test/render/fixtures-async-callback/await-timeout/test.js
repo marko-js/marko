@@ -11,7 +11,7 @@ exports.templateData = {
     setTimeout(function () {
       done(null, {});
     }, 200);
-  }
+  },
 };
 
 exports.checkEvents = function (events, snapshot) {
@@ -24,7 +24,7 @@ exports.checkEvents = function (events, snapshot) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

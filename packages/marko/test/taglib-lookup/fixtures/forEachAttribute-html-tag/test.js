@@ -3,7 +3,7 @@ exports.check = function (markoCompiler, expect) {
 
   var hasHrefAttr = false;
 
-  lookup.forEachAttribute("a", attr => {
+  lookup.forEachAttribute("a", (attr) => {
     if (attr.name === "href") {
       hasHrefAttr = true;
     }

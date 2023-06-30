@@ -12,14 +12,14 @@ var BrowserHelpers = browser.require(browserHelpersPath);
 
 autotest("fixtures", {
   client: runClientTest,
-  hydrate: runHydrateTest
+  hydrate: runHydrateTest,
 });
 
 function runClientTest(fixture) {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let context = fixture.context;
-  test(done => {
+  test((done) => {
     let helpers = new BrowserHelpers();
     let testFile = resolve("test.js");
     let testFunc = browser.require(testFile);
@@ -43,7 +43,7 @@ function runClientTest(fixture) {
     function cleanupAndFinish(err) {
       // Cache components for use in hydrate run.
       if (!err) context.rendered = helpers.rendered;
-      helpers.instances.forEach(instance => instance.destroy());
+      helpers.instances.forEach((instance) => instance.destroy());
       helpers.targetEl.innerHTML = "";
       if (browser.error) {
         err = browser.error;
@@ -58,7 +58,7 @@ function runHydrateTest(fixture) {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let context = fixture.context;
-  test(done => {
+  test((done) => {
     var components = context.rendered;
     if (!components)
       throw new Error("No components rendered by client version of test");
@@ -76,13 +76,13 @@ function runHydrateTest(fixture) {
             rootComponent = rootComponent.default || rootComponent;
             marko.register(ssrTemplate.meta.id, rootComponent);
             components.forEach(function (def) {
-              Object.keys(def.components).forEach(type => {
+              Object.keys(def.components).forEach((type) => {
                 var component = browser.require(def.components[type]);
                 component = component.default || component;
                 marko.register(type, component);
               });
             });
-          }
+          },
         });
         var testFile = resolve("test.js");
         var testFunc = browser.require(testFile);

@@ -5,9 +5,9 @@ function Component() {
 Component.prototype = {
   onCreate: function () {
     this.state = {
-      name: "Frank"
+      name: "Frank",
     };
-  }
+  },
 };
 
 module.exports = Component;

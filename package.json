@@ -49,7 +49,7 @@
     "lint-staged": "^10.5.4",
     "mocha": "^8.3.2",
     "mocha-autotest": "^1.1.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.8.8",
     "shell-quote": "^1.7.2",
     "sort-package-json": "^2.4.1",
     "through": "^2.3.8",

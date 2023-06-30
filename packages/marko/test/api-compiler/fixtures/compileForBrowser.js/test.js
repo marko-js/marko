@@ -7,7 +7,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
   var templateSrc = fs.readFileSync(templatePath, { encoding: "utf8" });
   var compiledTemplate = compiler.compileForBrowser(templateSrc, templatePath, {
-    writeVersionComment: false
+    writeVersionComment: false,
   });
 
   var code = compiledTemplate.code;

@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 exports.templateData = {
-  testDataProvider: Promise.resolve({ name: "Frank" })
+  testDataProvider: Promise.resolve({ name: "Frank" }),
 };
 
 exports.checkHtml = function (html) {

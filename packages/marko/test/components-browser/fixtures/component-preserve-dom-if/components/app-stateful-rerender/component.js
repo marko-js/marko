@@ -5,7 +5,7 @@ module.exports = {
       count: input.count,
       className: input["class"],
       foo: "bar",
-      hello: "world"
+      hello: "world",
     };
-  }
+  },
 };

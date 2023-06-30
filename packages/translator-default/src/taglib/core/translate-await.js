@@ -11,10 +11,10 @@ export function enter(path) {
       );
   } else if (args.length > 1) {
     const {
-      loc: { start }
+      loc: { start },
     } = args[1].node;
     const {
-      loc: { end }
+      loc: { end },
     } = args[args.length - 1].node;
     throw path.hub.file.buildCodeFrameError(
       { loc: { start, end } },
@@ -28,7 +28,9 @@ export function enter(path) {
     t.markoAttribute("_provider", provider.node)
   );
 
-  if (!path.get("attributes").some(attr => attr.get("name").node === "name")) {
+  if (
+    !path.get("attributes").some((attr) => attr.get("name").node === "name")
+  ) {
     path.pushContainer(
       "attributes",
       t.markoAttribute("_name", t.stringLiteral(provider.toString()))

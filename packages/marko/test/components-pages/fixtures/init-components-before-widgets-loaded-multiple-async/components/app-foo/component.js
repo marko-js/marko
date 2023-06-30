@@ -1,14 +1,14 @@
 module.exports = {
   onInput: function () {
     var parent = {
-      child: {}
+      child: {},
     };
 
     parent.child.parent = parent;
 
     this.state = {
       name: "app-foo",
-      parent: parent
+      parent: parent,
     };
   },
 
@@ -17,5 +17,5 @@ module.exports = {
       window.fooComponents = [];
     }
     window.fooComponents.push(this);
-  }
+  },
 };

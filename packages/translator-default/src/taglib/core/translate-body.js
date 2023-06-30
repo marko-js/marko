@@ -11,7 +11,7 @@ export function enter(path) {
         t.stringLiteral("_preferred-script-location"),
         [],
         t.markoTagBody()
-      )
+      ),
     ]);
   }
 }

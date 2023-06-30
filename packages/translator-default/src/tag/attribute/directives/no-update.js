@@ -38,5 +38,5 @@ export default {
     } else {
       tag.replaceWith(replacement);
     }
-  }
+  },
 };

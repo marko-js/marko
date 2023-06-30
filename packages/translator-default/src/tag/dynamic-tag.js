@@ -6,7 +6,7 @@ import withPreviousLocation from "../util/with-previous-location";
 export default function (path) {
   const {
     node,
-    hub: { file }
+    hub: { file },
   } = path;
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
   const { key, arguments: args } = node;
@@ -18,14 +18,16 @@ export default function (path) {
     tagProperties.push(
       t.objectProperty(
         t.identifier("pa"),
-        t.arrayExpression(node.preserveAttrs.map(name => t.stringLiteral(name)))
+        t.arrayExpression(
+          node.preserveAttrs.map((name) => t.stringLiteral(name))
+        )
       )
     );
   }
 
   if (t.isObjectExpression(foundAttrs)) {
     const renderBodyIndex = foundAttrs.properties.findIndex(
-      prop => prop.key && prop.key.value === "renderBody"
+      (prop) => prop.key && prop.key.value === "renderBody"
     );
 
     attrsLen = foundAttrs.properties.length;
@@ -55,7 +57,7 @@ export default function (path) {
           : t.nullLiteral(),
         file._componentDefIdentifier,
         key,
-        ...buildEventHandlerArray(path)
+        ...buildEventHandlerArray(path),
       ]
     )
   );

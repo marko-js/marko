@@ -22,7 +22,7 @@ it("should update correctly", function () {
   ).to.equal("dates");
 
   listItemsComponent.input = {
-    options: ["apples", "bananas"]
+    options: ["apples", "bananas"],
   };
   listItemsComponent.update();
 
@@ -40,7 +40,7 @@ it("should update correctly", function () {
   ).to.equal("bananas");
 
   listItemsComponent.input = {
-    options: []
+    options: [],
   };
   listItemsComponent.update();
 
@@ -52,7 +52,7 @@ it("should update correctly", function () {
   ).to.equal(0);
 
   listItemsComponent.input = {
-    options: ["apples", "bananas"]
+    options: ["apples", "bananas"],
   };
   listItemsComponent.update();
 

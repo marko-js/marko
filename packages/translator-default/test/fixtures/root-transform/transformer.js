@@ -5,5 +5,5 @@ export default {
     if (path.node.name === "before") {
       path.replaceWith(t.identifier("after"));
     }
-  }
+  },
 };

@@ -12,7 +12,7 @@ module.exports = function (helpers) {
       {
         width: "100",
         height: "100",
-        xmlns: "http://www.w3.org/2000/svg"
+        xmlns: "http://www.w3.org/2000/svg",
       },
       1
     )
@@ -25,7 +25,7 @@ module.exports = function (helpers) {
         stroke: "green",
         "stroke-width": "4",
         fill: "yellow",
-        "xlink:href": "http://ebay.com/"
+        "xlink:href": "http://ebay.com/",
       },
       0,
       FLAGS

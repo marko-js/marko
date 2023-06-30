@@ -7,7 +7,7 @@ export function exit(path) {
   const { attributes, body } = node;
   if (attributes.length === 0) {
     diagnosticError(path, {
-      label: "The 'macro' tag must have a 'name' attribute."
+      label: "The 'macro' tag must have a 'name' attribute.",
     });
     path.remove();
     return;
@@ -15,7 +15,7 @@ export function exit(path) {
 
   if (attributes.length > 1) {
     diagnosticError(path, {
-      label: "The 'macro' tag can only have a 'name' attribute."
+      label: "The 'macro' tag can only have a 'name' attribute.",
     });
     path.remove();
     return;
@@ -25,7 +25,7 @@ export function exit(path) {
   if (!t.isStringLiteral(nameAttr.value)) {
     diagnosticError(path, {
       label: "The 'name' attribute for 'macro' tags must be a string literal.",
-      loc: nameAttr.loc || node.loc || undefined
+      loc: nameAttr.loc || node.loc || undefined,
     });
     path.remove();
     return;
