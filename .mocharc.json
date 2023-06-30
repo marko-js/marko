@@ -1,5 +1,6 @@
 {
   "enable-source-maps": true,
-  "watchFiles": ["src/**/*.js", "src/**/*.marko"],
+  "spec": "packages/**/@(test|__tests__)/**/*.test.@(js|ts)",
+  "watchFiles": ["packages/*/src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"],
   "require": ["@babel/register"]
 }
