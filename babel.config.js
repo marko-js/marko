@@ -6,7 +6,7 @@ module.exports = api => ({
       {
         loose: true,
         targets: {
-          node: "10"
+          node: "16"
         }
       }
     ]
@@ -22,10 +22,5 @@ module.exports = api => ({
           ]
         : []
     }
-  ],
-  env: {
-    test: {
-      plugins: ["babel-plugin-istanbul"]
-    }
-  }
+  ]
 });
