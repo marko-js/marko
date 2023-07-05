@@ -1,5 +1,9 @@
 import { types as t } from "@marko/compiler";
-import { parseExpression } from "@marko/babel-utils";
+import {
+  diagnosticDeprecate,
+  diagnosticError,
+  parseExpression
+} from "@marko/babel-utils";
 import getComponentFiles from "../../util/get-component-files";
 
 export default function (path) {
@@ -13,48 +17,59 @@ export default function (path) {
   } = node;
   const meta = file.metadata.marko;
 
-  if (getComponentFiles(path).componentFile) {
-    throw path
-      .get("name")
-      .buildCodeFrameError(
-        'A Marko file can either have an inline class, or an external "component.js", but not both.'
-      );
-  }
-
   if (meta.hasComponent) {
-    throw path
-      .get("name")
-      .buildCodeFrameError(
-        "A Marko component can only have one top level class."
-      );
-  }
-
-  const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start, end);
-
-  if (parsed.id) {
-    throw file.buildCodeFrameError(
-      parsed.id,
-      "Component class cannot have a name."
-    );
-  }
-
-  if (parsed.superClass) {
-    throw file.buildCodeFrameError(
-      parsed.superClass,
-      "Component class cannot have a super class."
-    );
-  }
-
-  const constructorProp = parsed.body.body.find(
-    prop => t.isClassMethod(prop) && prop.kind === "constructor"
-  );
-  if (constructorProp) {
-    throw file.buildCodeFrameError(
-      constructorProp.key,
-      "The constructor method should not be used for a component, use onCreate instead."
-    );
+    diagnosticError(path.get("name"), {
+      label: "A Marko component can only have one top level class."
+    });
+    path.remove();
+    return;
   }
 
   meta.hasComponent = true;
+
+  if (getComponentFiles(path).componentFile) {
+    diagnosticError(path.get("name"), {
+      label:
+        'A Marko file can either have an inline class, or an external "component.js", but not both.'
+    });
+
+    path.remove();
+    return;
+  }
+
+  const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start, end);
+  if (parsed.type === "MarkoParseError") {
+    path.replaceWith(t.markoClass([t.expressionStatement(parsed)]));
+    return;
+  }
+
+  if (parsed.superClass) {
+    diagnosticError(path, {
+      label: "Component class cannot have a super class.",
+      loc: parsed.superClass.loc
+    });
+  }
+
+  const constructorPropIndex = parsed.body.body.findIndex(
+    prop => t.isClassMethod(prop) && prop.kind === "constructor"
+  );
+  if (constructorPropIndex !== -1) {
+    const constructorProp = parsed.body.body[constructorPropIndex];
+    diagnosticError(path, {
+      label:
+        "The constructor method should not be used for a component, use onCreate instead.",
+      loc: constructorProp.key.loc
+    });
+
+    parsed.body.body.splice(constructorProp, 1);
+  }
+
+  if (parsed.id) {
+    diagnosticDeprecate(path, {
+      label: "Component class should not have a name.",
+      loc: parsed.id.loc
+    });
+  }
+
   path.replaceWith(t.markoClass(parsed.body));
 }
