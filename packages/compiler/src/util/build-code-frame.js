@@ -17,17 +17,29 @@ class CompileError extends Error {
       : `CompileError: ${prettyMessage}\n${indent}at ${prettyFileName}`;
 
     Object.defineProperties(this, {
-      loc: { value: loc, enumerable: false, writable: true },
-      label: { value: message, enumerable: false, writable: true },
+      loc: {
+        value: loc,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      },
+      label: {
+        value: message,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      },
       // Ignore some mutations from Babel.
       code: {
         enumerable: false,
+        configurable: true,
         get() {
           return undefined;
         },
         set() {}
       },
       message: {
+        configurable: true,
         enumerable: false,
         get() {
           return `${prettyFileName}: ${message}`;
