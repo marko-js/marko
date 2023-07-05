@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.28.3
+
+### Patch Changes
+
+- [#1992](https://github.com/marko-js/marko/pull/1992) [`1bc993012`](https://github.com/marko-js/marko/commit/1bc993012375315a6cbda3eed75291abf821de6b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression which would happen if tools tried to "delete" the `loc` property on error instances returned from Marko. This property is now configurable and can be deleted again.
+
+- Updated dependencies [[`1bc993012`](https://github.com/marko-js/marko/commit/1bc993012375315a6cbda3eed75291abf821de6b)]:
+  - @marko/compiler@5.30.3
+  - @marko/translator-default@5.28.3
+
 ## 5.28.2
 
 ### Patch Changes
