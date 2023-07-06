@@ -1,0 +1,3 @@
+deprecation[fixable](1:19-1:23): The 'data' variable is deprecated. Use 'input' instead.
+deprecation[fixable](5:11-5:15): The 'data' variable is deprecated. Use 'input' instead.
+deprecation[fixable](8:13-8:17): The 'data' variable is deprecated. Use 'input' instead.

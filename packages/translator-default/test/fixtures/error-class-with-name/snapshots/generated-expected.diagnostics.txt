@@ -1,0 +1,1 @@
+deprecation(1:7-1:11): Component class should not have a name.
