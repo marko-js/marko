@@ -5,6 +5,9 @@ import { types as t } from "@marko/compiler";
 import { getRootDir } from "lasso-package-root";
 import { getTagDefForTagName } from "./taglib";
 import { resolveRelativePath } from "./imports";
+
+const MACRO_IDS_KEY = Symbol();
+const MACRO_NAMES_KEY = "__marko_macro_names__"; // must be a string literal since it is used across compiler stages.
 const TRANSPARENT_TAGS = new Set([
   "for",
   "while",
@@ -53,21 +56,80 @@ export function isTransparentTag(path) {
   return t.isStringLiteral(name) && TRANSPARENT_TAGS.has(name.value);
 }
 
+export function registerMacro(path, name) {
+  const { file } = path.hub;
+  const markoMeta = file.metadata.marko;
+  const macroNames = markoMeta[MACRO_NAMES_KEY];
+
+  if (macroNames) {
+    if (macroNames[name]) {
+      throw path.buildCodeFrameError(
+        `A macro with the name "${name}" already exists.`
+      );
+    }
+    macroNames[name] = true;
+  } else {
+    markoMeta[MACRO_NAMES_KEY] = { [name]: true };
+  }
+}
+
+export function hasMacro(path, name) {
+  const macroNames = path.hub.file.metadata.marko[MACRO_NAMES_KEY];
+  return !!(macroNames && macroNames[name]);
+}
+
 export function isMacroTag(path) {
-  return Boolean(getMacroIdentifier(path));
+  const { name } = path.node;
+  return t.isStringLiteral(name) && hasMacro(path, name.value);
+}
+
+export function getMacroIdentifierForName(path, name) {
+  const { file } = path.hub;
+
+  if (file.___compileStage !== "translate") {
+    throw new Error(
+      "getMacroIdentifierForName can only be called during the translate phase of the compiler."
+    );
+  }
+
+  const markoMeta = file.metadata.marko;
+  let macroIds = markoMeta[MACRO_IDS_KEY];
+
+  if (!macroIds) {
+    macroIds = markoMeta[MACRO_IDS_KEY] = {};
+
+    for (const macroName in markoMeta[MACRO_NAMES_KEY]) {
+      macroIds[macroName] = file.path.scope.generateUid(macroName);
+    }
+  }
+
+  const id = macroIds[name];
+
+  if (!id) {
+    throw new Error(
+      "<macro> was added programmatically, but was not registered via the 'registerMacro' api in @marko/babel-utils."
+    );
+  }
+
+  return t.identifier(id);
 }
 
 export function getMacroIdentifier(path) {
-  const macros = path.hub.file.metadata.marko.macros;
-  const { name } = path.node;
+  const { file } = path.hub;
 
-  if (t.isStringLiteral(name)) {
-    const id = macros[name.value];
-
-    if (id) {
-      return t.identifier(id);
-    }
+  if (file.___compileStage !== "translate") {
+    throw new Error(
+      "getMacroIdentifier can only be called during the translate phase of the compiler."
+    );
   }
+
+  if (!isMacroTag(path)) {
+    throw path.buildCodeFrameError(
+      "getMacroIdentifier called on non macro referencing tag."
+    );
+  }
+
+  return getMacroIdentifierForName(path, path.node.name.value);
 }
 
 export function getTagDef(path) {
