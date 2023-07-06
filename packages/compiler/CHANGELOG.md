@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.31.0
+
+### Minor Changes
+
+- [#1996](https://github.com/marko-js/marko/pull/1996) [`d93037843`](https://github.com/marko-js/marko/commit/d930378434279451b0113ae6a268304063b037f4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move <macro> tag validation to the translate phase and expose new utilities for working with macros in @marko/babel-utils. This allows for migration/transformer/etc compiler hooks to better work with <macro>'s.
+
+### Patch Changes
+
+- Updated dependencies [[`d93037843`](https://github.com/marko-js/marko/commit/d930378434279451b0113ae6a268304063b037f4)]:
+  - @marko/babel-utils@6.2.0
+
 ## 5.30.3
 
 ### Patch Changes
