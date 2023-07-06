@@ -61,8 +61,11 @@ fs.readdirSync(path.join(__dirname, "../../"))
 
         test(() => {
           let output;
+          let diags;
           try {
-            output = compileFileSync(templateFile, compilerConfig).code;
+            const result = compileFileSync(templateFile, compilerConfig);
+            output = result.code;
+            diags = result.meta.diagnostics;
           } catch (err) {
             try {
               snapshot(stripCwd(stripModuleStackTrace(stripAnsi(err.stack))), {
@@ -79,6 +82,25 @@ fs.readdirSync(path.join(__dirname, "../../"))
             name,
             ext: mode === "generated" ? ".marko" : ".js"
           });
+
+          if (mode === "generated") {
+            snapshot(output, {
+              name,
+              ext: ".marko"
+            });
+
+            if (diags && diags.length) {
+              snapshot(printDiags(diags), {
+                name,
+                ext: ".diagnostics.txt"
+              });
+            }
+          } else {
+            snapshot(output, {
+              name,
+              ext: ".js"
+            });
+          }
         });
       };
     }
@@ -90,4 +112,26 @@ function stripCwd(message) {
 
 function stripModuleStackTrace(message) {
   return message.replace(/\r?\n +at (?!packages[/\\])[^\n]+$/gm, "");
+}
+
+function printDiags(diags) {
+  let result = "";
+
+  for (const diag of diags) {
+    result += `${diag.type}${diag.fix ? `[fixable]` : ""}${printLoc(
+      diag.loc
+    )}: ${diag.label}\n`;
+  }
+
+  return result;
+}
+
+function printLoc(loc) {
+  if (loc) {
+    return `(${loc.start.line}:${loc.start.column + 1}-${loc.end.line}:${
+      loc.end.column + 1
+    })`;
+  }
+
+  return "";
 }
