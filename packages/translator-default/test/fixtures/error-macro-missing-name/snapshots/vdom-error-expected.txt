@@ -1,6 +1,6 @@
 CompileError
-    at packages/translator-default/test/fixtures/error-macro-missing-name/template.marko:1:2
+    at packages/translator-default/test/fixtures/error-macro-missing-name/template.marko:1:1
     > 1 | <macro|stuff|>
-        |  ^^^^^ The "name" attribute is required on "macro" tags.
+        | ^ The 'macro' tag must have a 'name' attribute.
       2 |   <div/>
       3 | </macro>

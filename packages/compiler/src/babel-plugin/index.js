@@ -205,7 +205,6 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
 
   const meta = (file.metadata.marko = {
     id,
-    macros: {},
     deps: [],
     tags: [],
     watchFiles: [],

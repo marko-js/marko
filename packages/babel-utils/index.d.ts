@@ -176,9 +176,13 @@ export function isAttributeTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isTransparentTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isLoopTag(path: t.NodePath<t.MarkoTag>): boolean;
 
-export function getMacroIdentifier(
-  path: t.NodePath<t.MarkoTag>
-): t.Identifier | undefined;
+export function registerMacro(path: t.NodePath<any>, name: string): void;
+export function hasMacro(path: t.NodePath<any>, name: string): boolean;
+export function getMacroIdentifierForName(
+  path: t.NodePath<any>,
+  name: string
+): t.Identifier;
+export function getMacroIdentifier(path: t.NodePath<t.MarkoTag>): t.Identifier;
 export function getTagDef(
   path: t.NodePath<t.MarkoTag>
 ): TagDefinition | undefined;
