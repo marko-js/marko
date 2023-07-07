@@ -4,7 +4,7 @@ import defineType from "@babel/types/lib/definitions/utils";
 import validate from "@babel/types/lib/validators/validate";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
-import definitions, { MARKO_TYPES, MARKO_ALIAS_TYPES } from "./definitions";
+import definitions, { MARKO_ALIAS_TYPES, MARKO_TYPES } from "./definitions";
 
 const {
   TYPES,

@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { normalizeTemplateString, isNativeTag } from "@marko/babel-utils";
+import { isNativeTag, normalizeTemplateString } from "@marko/babel-utils";
 const EMPTY_OBJECT = {};
 
 export default {

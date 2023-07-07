@@ -1,9 +1,9 @@
 import nativeTagHtml from "./native-tag[html]";
 import nativeTagVdom from "./native-tag[vdom]";
 import {
+  assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
-  assertNoArgs,
 } from "@marko/babel-utils";
 
 export default function (path, isNullable) {

@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
 import {
-  normalizeTemplateString,
-  isTransparentTag,
   isLoopTag,
+  isTransparentTag,
+  normalizeTemplateString,
 } from "@marko/babel-utils";
 const KeyManagerLookup = new WeakMap();
 

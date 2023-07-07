@@ -1,11 +1,11 @@
 import { types as t } from "@marko/compiler";
 import {
-  findParentTag,
   assertNoArgs,
+  findParentTag,
   getTagDef,
-  isTransparentTag,
-  isAttributeTag,
   importDefault,
+  isAttributeTag,
+  isTransparentTag,
 } from "@marko/babel-utils";
 import { getAttrs } from "./util";
 import withPreviousLocation from "../util/with-previous-location";

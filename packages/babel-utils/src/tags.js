@@ -1,4 +1,4 @@
-import { relative, resolve, basename, dirname } from "path";
+import { basename, dirname, relative, resolve } from "path";
 import resolveFrom from "resolve-from";
 import { createHash } from "crypto";
 import { types as t } from "@marko/compiler";

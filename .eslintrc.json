@@ -1,7 +1,9 @@
 {
+  "root": true,
   "extends": ["eslint:recommended", "prettier"],
   "parserOptions": {
     "sourceType": "module",
+    "impliedStrict": true,
     "ecmaFeatures": {
       "jsx": false
     }
@@ -14,5 +16,14 @@
     "mocha": true,
     "es2020": true,
     "browser": true
+  },
+  "rules": {
+    "sort-imports": [
+      "error",
+      {
+        "allowSeparatedGroups": true,
+        "ignoreDeclarationSort": true
+      }
+    ]
   }
 }

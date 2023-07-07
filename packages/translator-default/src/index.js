@@ -1,19 +1,19 @@
 import { resolve } from "path";
 import { types as t } from "@marko/compiler";
 import {
-  parseExpression,
-  resolveTagImport,
-  resolveRelativePath,
-  importNamed,
-  importDefault,
-  parseStatements,
-  isNativeTag,
-  isMacroTag,
-  isDynamicTag,
-  isAttributeTag,
-  loadFileForTag,
   findParentTag,
   getTagDef,
+  importDefault,
+  importNamed,
+  isAttributeTag,
+  isDynamicTag,
+  isMacroTag,
+  isNativeTag,
+  loadFileForTag,
+  parseExpression,
+  parseStatements,
+  resolveRelativePath,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import { version } from "marko/package.json";
 import MarkoDocumentType from "./document-type";
