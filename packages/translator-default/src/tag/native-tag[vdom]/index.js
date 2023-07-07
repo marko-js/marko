@@ -1,11 +1,11 @@
 import { types as t } from "@marko/compiler";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
-import { getAttrs, evaluateAttr } from "../util";
+import { evaluateAttr, getAttrs } from "../util";
 import {
   getTagDef,
-  normalizeTemplateString,
   importDefault,
+  normalizeTemplateString,
 } from "@marko/babel-utils";
 import withPreviousLocation from "../../util/with-previous-location";
 

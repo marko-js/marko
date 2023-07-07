@@ -5,7 +5,7 @@ import {
   importDefault,
   resolveRelativePath,
 } from "@marko/babel-utils";
-import { getAttrs, buildEventHandlerArray } from "./util";
+import { buildEventHandlerArray, getAttrs } from "./util";
 import nativeTag from "./native-tag";
 import dynamicTag from "./dynamic-tag";
 import withPreviousLocation from "../util/with-previous-location";

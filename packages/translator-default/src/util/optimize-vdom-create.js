@@ -1,10 +1,10 @@
 import { decode } from "he";
 import { types as t } from "@marko/compiler";
 import {
-  importDefault,
-  isNativeTag,
-  isLoopTag,
   getTagDef,
+  importDefault,
+  isLoopTag,
+  isNativeTag,
 } from "@marko/babel-utils";
 import { getKeyManager } from "./key-manager";
 import write from "./vdom-out-write";

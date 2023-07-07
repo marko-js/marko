@@ -1,13 +1,13 @@
 import nodePath from "path";
 import { types as t } from "@marko/compiler";
 import {
+  assertNoVar,
+  findAttributeTags,
   getTagDef,
-  isDynamicTag,
   isAttributeTag,
+  isDynamicTag,
   isMacroTag,
   isNativeTag,
-  findAttributeTags,
-  assertNoVar,
 } from "@marko/babel-utils";
 import nativeTag from "./native-tag";
 import dynamicTag from "./dynamic-tag";

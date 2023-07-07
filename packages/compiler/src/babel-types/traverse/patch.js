@@ -2,7 +2,7 @@ import "../types/patch";
 
 import * as t from "@babel/types";
 import traverse, { NodePath, Scope } from "@babel/traverse";
-import { MARKO_TYPES, MARKO_ALIAS_TYPES } from "../types/definitions";
+import { MARKO_ALIAS_TYPES, MARKO_TYPES } from "../types/definitions";
 
 MARKO_TYPES.forEach((typeName) => {
   const checkKey = `is${typeName}`;

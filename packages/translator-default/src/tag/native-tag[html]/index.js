@@ -3,8 +3,8 @@ import SELF_CLOSING from "self-closing-tags";
 import { types as t } from "@marko/compiler";
 import {
   getTagDef,
-  normalizeTemplateString,
   importDefault,
+  normalizeTemplateString,
 } from "@marko/babel-utils";
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";

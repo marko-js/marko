@@ -1,13 +1,13 @@
-import { createParser, TagType } from "htmljs-parser";
+import { TagType, createParser } from "htmljs-parser";
 import * as t from "../babel-types";
 import {
-  parseStatements,
-  parseExpression,
-  parseArgs,
-  parseParams,
-  parseVar,
-  parseTemplateLiteral,
   getTagDefForTagName,
+  parseArgs,
+  parseExpression,
+  parseParams,
+  parseStatements,
+  parseTemplateLiteral,
+  parseVar,
 } from "@marko/babel-utils";
 
 const noop = () => {};

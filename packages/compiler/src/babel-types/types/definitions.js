@@ -1,9 +1,9 @@
 import {
+  arrayOfType,
+  assertEach,
   assertNodeType,
   assertValueType,
-  arrayOfType,
   chain,
-  assertEach,
 } from "@babel/types/lib/definitions/utils";
 
 const valueFieldCommon = {

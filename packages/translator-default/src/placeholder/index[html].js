@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef, importNamed, importDefault } from "@marko/babel-utils";
+import { getTagDef, importDefault, importNamed } from "@marko/babel-utils";
 import toString from "marko/src/runtime/helpers/to-string";
 import { x as escapeXML } from "marko/src/runtime/html/helpers/escape-xml";
 import escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder";
