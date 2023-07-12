@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.29.1
+
+### Patch Changes
+
+- [#1997](https://github.com/marko-js/marko/pull/1997) [`2afa3f6e6`](https://github.com/marko-js/marko/commit/2afa3f6e61ca262debde88bc11400a6ba97a2f19) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure source maps are loaded in dev mode when using the @marko/register hook.
+
+- Updated dependencies [[`2afa3f6e6`](https://github.com/marko-js/marko/commit/2afa3f6e61ca262debde88bc11400a6ba97a2f19)]:
+  - @marko/compiler@5.31.1
+  - @marko/translator-default@5.29.1
+
 ## 5.29.0
 
 ### Minor Changes
