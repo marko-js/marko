@@ -297,10 +297,12 @@ export function resolveTagImport(path, request) {
 
 function createNewFileOpts(opts, filename) {
   const sourceFileName = basename(filename);
+  const sourceRoot = dirname(filename);
   const filenameRelative = relative(CWD, filename);
   return {
     ...opts,
     filename,
+    sourceRoot,
     sourceFileName,
     filenameRelative,
     parserOpts: {
@@ -310,6 +312,7 @@ function createNewFileOpts(opts, filename) {
     generatorOpts: {
       ...opts.generatorOpts,
       filename,
+      sourceRoot,
       sourceFileName
     }
   };
