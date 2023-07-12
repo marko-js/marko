@@ -14,6 +14,8 @@ import { buildCodeFrameError } from "./util/build-code-frame";
 import throwAggregateError from "./util/merge-errors";
 export { taglib };
 
+const CWD = process.cwd();
+
 let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
   globalConfig = { ...defaultConfig, ...newConfig };
@@ -88,9 +90,8 @@ function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
     ]
   ];
   const baseBabelConfig = {
-    filenameRelative: filename
-      ? path.relative(process.cwd(), filename)
-      : undefined,
+    filenameRelative: filename ? path.relative(CWD, filename) : undefined,
+    sourceRoot: filename ? path.dirname(filename) : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
     configFile: isTranslated,
     babelrc: isTranslated,
