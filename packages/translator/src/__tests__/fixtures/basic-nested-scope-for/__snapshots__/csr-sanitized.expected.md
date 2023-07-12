@@ -40,7 +40,7 @@
 
 
 # Render 
-c=>click(c,2)
+c => click(c, 2)
 
 ```html
 <button>
@@ -96,7 +96,7 @@ c=>click(c,2)
 
 
 # Render 
-c=>click(c,3)
+c => click(c, 3)
 
 ```html
 <button>
@@ -148,7 +148,7 @@ c=>click(c,3)
 
 
 # Render 
-c=>click(c,5)
+c => click(c, 5)
 
 ```html
 <button>

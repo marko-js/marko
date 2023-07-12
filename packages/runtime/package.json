@@ -19,5 +19,8 @@
     "dist",
     "!**/meta.*.json",
     "!**/*.tsbuildinfo"
-  ]
+  ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  }
 }

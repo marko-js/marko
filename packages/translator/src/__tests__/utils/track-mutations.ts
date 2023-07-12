@@ -119,7 +119,8 @@ function getStatusString(
       ? `\n${update
           .toString()
           .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
-          .replace(/^ {4}/gm, "")}\n`
+          .replace(/^ {4}/gm, "")
+          .replace(/;$/, "")}\n`
       : JSON.stringify(update);
 
   const formattedHTML = Array.from(container.childNodes)

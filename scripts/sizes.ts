@@ -1,16 +1,12 @@
 import fs from "fs";
 import path from "path";
 import zlib from "zlib";
-import chalk from "chalk";
-import { fileURLToPath } from "url";
+import kleur from "kleur";
 import { type OutputChunk, rollup } from "rollup";
 import { table } from "table";
 import pluginTerser from "@rollup/plugin-terser";
 import pluginVirtual from "@rollup/plugin-virtual";
 import * as compiler from "@marko/compiler";
-
-// Ensure packages are built.
-import "./bundle.mjs";
 
 interface Sizes {
   min: number;
@@ -30,13 +26,13 @@ interface Saved {
   results: Result[];
 }
 
-const rootDir = path.join(fileURLToPath(import.meta.url), "../..");
+const rootDir = path.join(__dirname, "..");
 const runtimePath = path.join(rootDir, "packages/runtime/dist/dom/index.mjs");
-const translatorPath = path.join(rootDir, "packages/translator/dist/index.mjs");
+const translatorPath = path.join(rootDir, "packages/translator/dist/index.js");
 const configPath = path.join(rootDir, ".sizes.json");
 const skipExamples = process.argv.includes("--no-examples");
 
-await run(configPath);
+run(configPath);
 
 async function run(configPath: string) {
   const { examples, results: previous } = loadData(configPath);
@@ -72,7 +68,7 @@ function renderTable(
   measure: keyof Sizes
 ) {
   const columns = ["name", "user", "runtime", "total"].map((n) =>
-    chalk.bold(n)
+    kleur.bold(n)
   );
   let unsynced = false;
   return table(
@@ -84,7 +80,7 @@ function renderTable(
           p = previous.find((p) => p.name === result.name)!;
         }
         return [
-          chalk.cyan(result.name),
+          kleur.cyan(result.name),
           renderSize(result.user, !unsynced ? p.user : undefined, measure),
           renderSize(
             result.runtime,
@@ -116,11 +112,11 @@ function renderSize(
       const delta = current[measure] - previous[measure];
       str += "\n";
       if (delta === 0) {
-        str += chalk.dim(delta);
+        str += kleur.dim(delta);
       } else if (delta < 0) {
-        str += chalk.green.dim(delta);
+        str += kleur.green().dim(delta);
       } else {
-        str += chalk.red.dim("+" + delta);
+        str += kleur.red().dim("+" + delta);
       }
     }
   }

@@ -32,6 +32,9 @@
     "dist",
     "!**/*.tsbuildinfo"
   ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  },
   "dependencies": {
     "@marko/babel-utils": "^5.21.4",
     "@marko/runtime-fluurt": "^0.0.1"

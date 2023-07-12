@@ -27,10 +27,7 @@
     "!**/*.tsbuildinfo"
   ],
   "scripts": {
-    "build": "npm run build:types && npm run build:js",
-    "build:js": "node -r esbuild-register esbuild.ts",
-    "build:types": "tsc -b",
-    "prepublishOnly": "npm run build"
+    "build": "echo 'todo'"
   },
   "dependencies": {
     "@babel/code-frame": "7.22.5",

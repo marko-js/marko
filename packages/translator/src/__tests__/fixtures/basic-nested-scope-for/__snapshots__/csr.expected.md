@@ -45,7 +45,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
 
 
 # Render 
-c=>click(c,2)
+c => click(c, 2)
 
 ```html
 <button>
@@ -112,7 +112,7 @@ button11: attr(data-multiple) null => ""
 
 
 # Render 
-c=>click(c,3)
+c => click(c, 3)
 
 ```html
 <button>
@@ -178,7 +178,7 @@ button11: attr(data-multiple) "" => ""
 
 
 # Render 
-c=>click(c,5)
+c => click(c, 5)
 
 ```html
 <button>

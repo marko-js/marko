@@ -1,7 +1,7 @@
 {
   "timeout": 5000,
   "enable-source-maps": true,
-  "require": ["tsx", "mocha-snap"],
+  "require": ["~ts", "mocha-snap"],
   "spec": "packages/*/src/**/__tests__/*.test.ts",
   "watchFiles": ["packages/*/src/**/*.@(ts|marko)", "!**/__snapshots__/**"]
 }

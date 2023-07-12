@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
 import { build } from "esbuild";
-import { fileURLToPath } from "url";
 
-const absWorkingDir = fileURLToPath(new URL(".", import.meta.url));
+const absWorkingDir = path.join(__dirname, "..");
 const pkg = JSON.parse(
-  await fs.promises.readFile(path.join(absWorkingDir, "package.json"), "utf8")
+  fs.readFileSync(path.join(absWorkingDir, "package.json"), "utf8")
 );
 const external = new Set([
   ...Object.keys(pkg.dependencies || {}),
@@ -14,7 +13,7 @@ const external = new Set([
 
 external.delete("@marko/runtime-fluurt");
 
-await Promise.all(
+Promise.all(
   (["esm", "cjs"] as const).map((format) =>
     build({
       format,

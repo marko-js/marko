@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
 import { build } from "esbuild";
 
-const absWorkingDir = fileURLToPath(new URL(".", import.meta.url));
+const absWorkingDir = path.join(__dirname, "..");
 
-await Promise.all(
+Promise.all(
   ["dist/debug", "dist"].flatMap((env) =>
     ["dom", "html"].flatMap((name) => {
       (["esm", "cjs"] as const).map(async (format) => {

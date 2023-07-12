@@ -51,7 +51,7 @@ const baseConfig: compiler.Config = {
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
-register(htmlConfig);
+register({ ...htmlConfig, modules: "cjs" });
 
 describe("translator", () => {
   const fixturesDir = path.join(__dirname, "fixtures");
@@ -154,6 +154,7 @@ describe("translator", () => {
           dir: __dirname,
           extensions: register({
             ...domConfig,
+            modules: "cjs",
             extensions: {},
           }),
         });
