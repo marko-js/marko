@@ -284,7 +284,7 @@ export default {
   },
   "<await>": {
     renderer: "marko/src/core-tags/core/await/renderer.js",
-    types: "marko/src/core-tags/core/await/index.marko",
+    types: "marko/src/core-tags/core/await/index.d.marko",
     "code-generator": translateAwait,
     "@_provider": "expression",
     "@_name": "string",
