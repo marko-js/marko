@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.29.2
+
+### Patch Changes
+
+- [#1999](https://github.com/marko-js/marko/pull/1999) [`7957fb564`](https://github.com/marko-js/marko/commit/7957fb56485a8607ab5b928531001085aba2d104) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch to .d.marko file for <await> tag types to avoid issues when loaded in a pure typescript project. By default TypeScript doesn't play well with `node_modules` which are seen as `.js` files which is what the jsdoc version of a Marko file appears as. By switching to a `.d.marko` it is instead always seen as `.ts` which is always analyzed by typescript.
+
+- Updated dependencies [[`7957fb564`](https://github.com/marko-js/marko/commit/7957fb56485a8607ab5b928531001085aba2d104)]:
+  - @marko/translator-default@5.29.2
+
 ## 5.29.1
 
 ### Patch Changes
