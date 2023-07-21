@@ -26,3 +26,6 @@ package.json
 # controlled by lerna
 CHANGELOG.md
 lerna.json
+
+# editor
+.vscode

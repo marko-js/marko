@@ -1,8 +1,8 @@
-### Project ###
-
-*.marko.js
-*actual.*
+# Build
 dist
+*.marko.js
+*actual*
+*.tsbuildinfo
 
 ### Node ###
 
@@ -93,6 +93,7 @@ Icon
 # VisualStudioCode
 .vscode
 .history
+*.sublime*
 
 # JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 *.iml

@@ -1,5 +1,15 @@
 {
   "all": true,
-  "include": ["packages/*/src/**/*.js"],
-  "reporter": ["lcov", "text-summary"]
+  "parserPlugins": ["objectRestSpread", "typescript"],
+  "reporter": ["text-summary", "lcov"],
+  "include": [
+    "packages/*/src/**/*.js",
+    "packages/*/src/**/*.ts",
+    "packages/*/src/**/*.marko"
+  ],
+  "exclude": [
+    "**/__tests__",
+    "packages/runtime/src/html/reorder-runtime.ts",
+    "**/*.d.ts"
+  ]
 }

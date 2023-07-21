@@ -216,6 +216,7 @@ declare global {
     }
 
     /** The top level api for a Marko Template. */
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     export abstract class Template<Input = unknown, Return = unknown> {
       /** Creates a Marko compatible output stream. */
       createOut(): Out;

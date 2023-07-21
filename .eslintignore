@@ -11,3 +11,5 @@ coverage/
 *generated/
 ~vdom.skip
 **/test/**/input.js
+.vscode
+__snapshots__
