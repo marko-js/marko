@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [14, 16, 18]
+        node: [16, 18, 20]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -53,10 +53,6 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - name: Install dependencies
-        if: ${{ matrix.node == 14 }}
-        run: npx npm@8 ci
-      - name: Install dependencies
-        if: ${{ matrix.node != 14 }}
         run: npm ci
       - name: Run tests
         run: npm run ci:test
