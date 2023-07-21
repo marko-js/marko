@@ -3,7 +3,8 @@ import { TaglibLookup, Diagnostic } from "@marko/babel-utils";
 import * as types from "./babel-types";
 export { types };
 
-export type Config = typeof import("./config");
+type _Config = typeof import("./config");
+export interface Config extends _Config {}
 
 type Dep = {
   type: string;
@@ -16,21 +17,21 @@ type Dep = {
   [x: string]: unknown;
 };
 
-export type MarkoMeta = {
+export interface MarkoMeta {
   id: string;
   component?: string;
   watchFiles: string[];
   tags?: string[];
   deps: Array<string | Dep>;
   diagnostics: Diagnostic[];
-};
+}
 
-export type CompileResult = {
+export interface CompileResult {
   ast: types.File;
   code: string;
   map: SourceMap;
   meta: MarkoMeta;
-};
+}
 
 export function configure(config: Config): void;
 
