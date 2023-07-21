@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.2.1
+
+### Patch Changes
+
+- [#2001](https://github.com/marko-js/marko/pull/2001) [`037a6ce67`](https://github.com/marko-js/marko/commit/037a6ce67088d63dcdc67a8b5bd02c10cf38b64e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve some typings for the compiler apis.
+
 ## 6.2.0
 
 ### Minor Changes
