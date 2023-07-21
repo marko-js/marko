@@ -51,9 +51,12 @@ const baseConfig: compiler.Config = {
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
-register({ ...htmlConfig, modules: "cjs" });
 
 describe("translator", () => {
+  before(() => {
+    register({ ...htmlConfig, modules: "cjs" });
+  });
+
   const fixturesDir = path.join(__dirname, "fixtures");
   for (const entry of fs.readdirSync(fixturesDir)) {
     if (entry.endsWith(".skip")) continue;

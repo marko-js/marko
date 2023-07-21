@@ -17,6 +17,11 @@ const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
 
 describe("translator-interop", () => {
+  before(() => {
+    uncachePackage("@marko/translator-default");
+    uncachePackage("@marko/translator-fluurt");
+  });
+
   const fixturesDir = path.join(__dirname, "fixtures");
   for (const entry of fs.readdirSync(fixturesDir)) {
     if (entry.endsWith(".skip")) continue;
@@ -69,4 +74,14 @@ describe("translator-interop", () => {
 
 async function compileCode(templateFile: string, config: compiler.Config) {
   return (await compiler.compileFile(templateFile, config)).code;
+}
+
+function uncachePackage(packageName: string) {
+  const resolved = require.resolve(packageName);
+  const root = path.dirname(resolved);
+  Object.keys(require.cache).forEach((key) => {
+    if (key.startsWith(root)) {
+      delete require.cache[key];
+    }
+  });
 }
