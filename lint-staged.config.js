@@ -2,7 +2,7 @@ const escape = require("shell-quote").quote;
 
 module.exports = {
   "*.{json,css,md}": escapeFileNames(["prettier --write", "git add"]),
-  "*.js": escapeFileNames(["eslint", "prettier --write", "git add"]),
+  "*.{js,ts}": escapeFileNames(["eslint --fix", "prettier --write", "git add"]),
 };
 
 function escapeFileNames(commands) {
