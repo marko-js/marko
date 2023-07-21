@@ -19,10 +19,10 @@ export interface AttributeDefinition {
     descriptionMoreURL?: string;
   }>;
 }
-export type PluginDefinition<T = any> = {
+export interface PluginDefinition<T = any> {
   path?: string;
   hook: Plugin<T>;
-};
+}
 export interface TagDefinition {
   dir: string;
   filePath: string;
@@ -209,7 +209,7 @@ export function loadFileForImport(
 
 export function normalizeTemplateString(
   quasis: Array<string | t.TemplateElement>,
-  expressions: t.Expression[]
+  ...expressions: t.Expression[]
 ): t.TemplateLiteral;
 
 type Loc = { line: number; column: number; index?: number };

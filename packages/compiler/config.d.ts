@@ -10,7 +10,10 @@ declare const Config: {
   ignoreUnrecognizedTags?: boolean;
   sourceMaps?: boolean | "inline" | "both";
   translator?: any;
-  fileSystem?: typeof import("fs");
+  fileSystem?: Pick<
+    typeof import("fs"),
+    "statSync" | "readFileSync" | "readdirSync"
+  >;
   modules?: "esm" | "cjs";
   resolveVirtualDependency?:
     | ((
