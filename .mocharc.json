@@ -1,6 +1,7 @@
 {
+  "timeout": 5000,
   "enable-source-maps": true,
-  "spec": "packages/**/@(test|__tests__)/**/*.test.@(js|ts)",
-  "watchFiles": ["packages/*/src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"],
-  "require": ["@babel/register"]
+  "require": ["~ts", "mocha-snap"],
+  "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"],
+  "watchFiles": ["src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"]
 }

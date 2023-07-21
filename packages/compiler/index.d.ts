@@ -1,5 +1,5 @@
 import { SourceMap } from "magic-string";
-import { TaglibLookup, Diagnostic } from "@marko/babel-utils";
+import { Diagnostic, TaglibLookup } from "@marko/babel-utils";
 import * as types from "./babel-types";
 export { types };
 

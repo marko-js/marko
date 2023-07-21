@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "ESNext"],
+    "strict": true,
+    "outDir": "dist",
+    "composite": true,
+    "target": "ESNext",
+    "sourceMap": false,
+    "declaration": true,
+    "incremental": true,
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "noUnusedLocals": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noUnusedParameters": true,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": false,
+    "noImplicitOverride": true,
+    "emitDeclarationOnly": true,
+    "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler",
+    "allowUnreachableCode": false,
+    "allowImportingTsExtensions": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}
