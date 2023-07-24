@@ -1,6 +1,7 @@
 {
   "name": "@marko/translator-interop-class-tags",
   "version": "0.0.1",
+  "private": true,
   "description": "Combines the ClassComponent translator from Marko 5 and the TagsAPI translator from Marko 6",
   "keywords": [
     "babel",
