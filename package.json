@@ -6,6 +6,7 @@
   ],
   "scripts": {
     "build": "npm run build --ws && npm run build:types",
+    "build:sizes": "npm run build --ws && node -r ~ts scripts/sizes.ts",
     "build:types": "npm run build:types --ws --if-present && tsc -b tsconfig.build.json",
     "change": "changeset add",
     "ci:report": "c8 report --reporter=text-lcov > coverage.lcov && codecov",

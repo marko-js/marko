@@ -1,0 +1,12 @@
+<let/x=0/>
+<let/show=true/>
+<if=show>
+<lifecycle
+  onMount() { document.getElementById("ref").textContent = "Mount " + x; }
+  onUpdate() { document.getElementById("ref").textContent = "Update " + x; }
+  onDestroy() { document.getElementById("ref").textContent = "Destroy"; }
+/>
+</if>
+<div#ref/>
+<button#increment on-click() { x++ }>Increment</button>
+<button#toggle on-click() { show = !show }>Toggle</button>

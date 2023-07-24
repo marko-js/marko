@@ -1,0 +1,33 @@
+import tagA from "./components/tag-a/index.marko";
+import tagB from "<tag-b>";
+
+<attrs/{ renderBody, x, show, showTagA, isLarge, tag, level, other }/>
+
+<${renderBody} class=["a", "b"] other=other/>
+<${x} class=["a", "b"] other=other/>
+
+<${show ? "div" : null} class=["a", "b"] other=other/>
+<${show && "div"} class=["a", "b"] other=other/>
+
+<${large ? "h1" : "h2"} class=["a", "b"] other=other/>
+
+<${showTagA ? tagA : tagB} class=["a", "b"] other=other class=["a", "b"] other=other/>
+<${showTagA && tagA} class=["a", "b"] other=other/>
+<${showTagA && tagA} class=["a", "b"] other=other>
+  Body content
+</>
+
+<${tag || tagA} class=["a", "b"] other=other/>
+
+<const/largeHeading = isLarge && "h1"/>
+<${largeHeading || "h2"} class=["a", "b"] other=other/>
+
+<${global.x = "a" + "b"} class=["a", "b"] other=other/>
+<${"h" + level} class=["a", "b"] other=other/>
+<${`h${level}`} class=["a", "b"] other=other/>
+
+<const/tagConstA = "a"/>
+<${tagConstA} class=["a", "b"] other=other/>
+
+<const/tagConstB = show ? "div" : null/>
+<${tagConstB} class=["a", "b"] other=other/>

@@ -1,0 +1,12 @@
+<let/count = 0/>
+<let/multiplier = 1/>
+<const/multipliedCount = count * multiplier/>
+<button id="multiplier" onClick() {
+  multiplier++
+}>increase multiplier (${multiplier})</button>
+<button id="count" onClick() {
+  count++
+}>increase count</button>
+<div>
+  ${multipliedCount}
+</div>

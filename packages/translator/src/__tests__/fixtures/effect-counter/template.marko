@@ -1,0 +1,9 @@
+<div>
+  <let/clickCount = 0/>
+  <effect() {
+    document.getElementById("button").textContent = clickCount;
+  }/>
+  <button#button onClick() {
+    clickCount++
+  }>0</button>
+</div>

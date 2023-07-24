@@ -1,0 +1,43 @@
+{
+  "name": "@marko/translator-interop-class-tags",
+  "version": "0.0.1",
+  "description": "Combines the ClassComponent translator from Marko 5 and the TagsAPI translator from Marko 6",
+  "keywords": [
+    "babel",
+    "fluurt",
+    "htmljs",
+    "marko",
+    "parse",
+    "parser",
+    "plugin"
+  ],
+  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator-interop/README.md",
+  "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/x/tree/master/packages/translator-interop"
+  },
+  "license": "MIT",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "echo 'todo'"
+  },
+  "dependencies": {
+    "@babel/code-frame": "7.22.5",
+    "@marko/babel-utils": "^5.21.3",
+    "@marko/translator-default": "^5.26.4",
+    "@marko/translator-fluurt": "^0.0.1",
+    "tslib": "^2.3.1"
+  },
+  "peerDependencies": {
+    "@marko/compiler": "^5.23.0"
+  },
+  "jsnext": "dist/index.esm.js"
+}
