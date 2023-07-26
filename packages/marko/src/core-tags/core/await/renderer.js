@@ -220,7 +220,11 @@ function renderContents(err, data, input, out) {
   if (err) {
     if (input.catch) {
       if (errorRenderer) {
-        errorRenderer(out, err);
+        try {
+          errorRenderer(out, err);
+        } catch (err2) {
+          out.error(err2);
+        }
       }
     } else {
       out.error(err);
