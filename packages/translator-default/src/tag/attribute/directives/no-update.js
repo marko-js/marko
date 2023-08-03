@@ -3,6 +3,9 @@ import { isNativeTag, normalizeTemplateString } from "@marko/babel-utils";
 const EMPTY_OBJECT = {};
 
 export default {
+  enter(tag) {
+    tag.node.isPreserved = true;
+  },
   exit(tag, attr, _, opts = EMPTY_OBJECT) {
     attr.remove();
     const { node } = tag;
