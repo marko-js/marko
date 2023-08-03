@@ -5,24 +5,27 @@ export { types };
 
 type _Config = typeof import("./config");
 export interface Config extends _Config {}
+interface Dep {
+  type: string;
+  path: string;
+  [x: string]: unknown;
+}
 
-type Dep = {
+interface VirtualDep {
   type: string;
   code: string;
-  path: string;
+  virtualPath: string;
   startPos?: number;
   endPos?: number;
-  require?: boolean;
-  virtualPath?: string;
   [x: string]: unknown;
-};
+}
 
 export interface MarkoMeta {
   id: string;
   component?: string;
   watchFiles: string[];
   tags?: string[];
-  deps: Array<string | Dep>;
+  deps: Array<string | Dep | VirtualDep>;
   diagnostics: Diagnostic[];
 }
 
