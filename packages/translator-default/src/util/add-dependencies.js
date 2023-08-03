@@ -1,7 +1,12 @@
 import path from "path";
 import MagicString from "magic-string";
 import { types as t } from "@marko/compiler";
-import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
+import resolveFrom from "resolve-from";
+import {
+  loadFileForImport,
+  parseStatements,
+  resolveRelativePath,
+} from "@marko/babel-utils";
 
 export default (entryFile, isHydrate) => {
   const { resolveVirtualDependency, hydrateIncludeImports } =
@@ -15,7 +20,6 @@ export default (entryFile, isHydrate) => {
     return;
   }
 
-  const registerId = t.identifier("register");
   const watchFiles = new Set();
   let hasComponents = false;
   let splitComponentIndex = 0;
@@ -32,7 +36,7 @@ export default (entryFile, isHydrate) => {
     );
     if (splitComponentIndex) {
       markoComponentsImport.specifiers.push(
-        t.importSpecifier(registerId, registerId)
+        t.importSpecifier(t.identifier("register"), t.identifier("register"))
       );
     }
     markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
@@ -86,6 +90,15 @@ export default (entryFile, isHydrate) => {
         if (!hydratedFiles.has(resolvePath(file, tag))) {
           addHydrateDeps(loadFileForImport(file, tag));
         }
+      } else {
+        const importedTemplates = tryGetTemplateImports(file, tag);
+        if (importedTemplates) {
+          for (const templateFile of importedTemplates) {
+            if (!hydratedFiles.has(resolvePath(file, templateFile))) {
+              addHydrateDeps(loadFileForImport(file, templateFile));
+            }
+          }
+        }
       }
     }
 
@@ -104,7 +117,7 @@ export default (entryFile, isHydrate) => {
       program.pushContainer(
         "body",
         t.expressionStatement(
-          t.callExpression(registerId, [
+          t.callExpression(t.identifier("register"), [
             t.stringLiteral(meta.id),
             splitComponentId,
           ])
@@ -167,6 +180,62 @@ export default (entryFile, isHydrate) => {
     return t.importDeclaration([], t.stringLiteral(path));
   }
 };
+
+function tryGetTemplateImports(file, rendererRelativePath) {
+  const resolvedRendererPath = path.join(
+    file.opts.filename,
+    "..",
+    rendererRelativePath
+  );
+  let templateImports;
+
+  try {
+    for (const statement of parseStatements(
+      file,
+      file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8")
+    )) {
+      if (statement.type === "ImportDeclaration") {
+        addImport(statement.source.value);
+      } else {
+        t.traverseFast(statement, (node) => {
+          if (
+            node.type === "CallExpression" &&
+            (node.callee.name === "require" ||
+              (node.callee.type === "MemberExpression" &&
+                node.callee.object.type === "Identifier" &&
+                node.callee.object.name === "require" &&
+                node.callee.property.type === "Identifier" &&
+                node.callee.property.name === "resolve")) &&
+            node.arguments.length === 1 &&
+            node.arguments[0].type === "StringLiteral"
+          ) {
+            addImport(node.arguments[0].value);
+          }
+        });
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  return templateImports;
+
+  function addImport(request) {
+    if (request.endsWith(".marko")) {
+      const resolvedTemplatePath =
+        request[0] === "."
+          ? path.resolve(resolvedRendererPath, "..", request)
+          : resolveFrom.silent(path.dirname(resolvedRendererPath), request);
+      if (resolvedTemplatePath) {
+        if (templateImports) {
+          templateImports.push(resolvedTemplatePath);
+        } else {
+          templateImports = [resolvedTemplatePath];
+        }
+      }
+    }
+  }
+}
 
 function toTestFn(val) {
   if (typeof val === "function") {
