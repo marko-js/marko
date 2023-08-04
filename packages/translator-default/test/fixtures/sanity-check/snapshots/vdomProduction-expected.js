@@ -85,7 +85,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       b: c,
       d
     }]),
-    "style": "a:b;"
+    "style": "a:b"
   }, "8", _component, 0, 1);
   out.n(_marko_node, _component);
   _marko_dynamic_tag(out, a, null, out => {
@@ -126,7 +126,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   }, out, _componentDef, "14");
   out.be("div", _marko_attrs({
     "class": "b c",
-    "a": "[object Object]",
+    "a": "{\"a\":1}",
     "c": "${d}",
     ...e,
     ...f(),

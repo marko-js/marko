@@ -50,12 +50,21 @@ export default function (path, attrs) {
       const attr = attrs[i];
       const { name, value } = attr.node;
       if (attrValues.has(name)) continue;
-      const { confident, computed } = evaluateAttr(attr);
-      attrValues.set(name, {
-        confident,
-        computed,
-        value,
-      });
+      const computed = evaluateAttr(attr);
+      attrValues.set(
+        name,
+        computed
+          ? {
+              confident: true,
+              computed: computed.value,
+              value,
+            }
+          : {
+              confident: false,
+              computed: undefined,
+              value,
+            }
+      );
     }
 
     for (const [name, { confident, computed, value }] of [

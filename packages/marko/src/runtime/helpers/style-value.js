@@ -14,11 +14,15 @@ module.exports = function styleHelper(style) {
 
   if (type !== "string") {
     var styles = "";
+    var sep = "";
 
     if (Array.isArray(style)) {
       for (var i = 0, len = style.length; i < len; i++) {
         var next = styleHelper(style[i]);
-        if (next) styles += next + (next[next.length - 1] !== ";" ? ";" : "");
+        if (next) {
+          styles += sep + next;
+          sep = ";";
+        }
       }
     } else if (type === "object") {
       for (var name in style) {
@@ -28,7 +32,8 @@ module.exports = function styleHelper(style) {
             value += "px";
           }
 
-          styles += changeCase.___camelToDashCase(name) + ":" + value + ";";
+          styles += sep + changeCase.___camelToDashCase(name) + ":" + value;
+          sep = ";";
         }
       }
     }

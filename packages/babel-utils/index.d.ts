@@ -375,3 +375,15 @@ interface SelectFix {
   }[];
   initialValue?: string;
 }
+
+type Computed =
+  | undefined
+  | number
+  | string
+  | boolean
+  | RegExp
+  | bigint
+  | null
+  | { [x: string]: Computed }
+  | Computed[];
+export function computeNode(node: t.Node): undefined | { value: Computed };

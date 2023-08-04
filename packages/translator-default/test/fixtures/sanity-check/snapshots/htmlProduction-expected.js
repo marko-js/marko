@@ -40,7 +40,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.w(`</div><div></div><div${_marko_attr("id", _componentDef.elId("1"))}></div><div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
-  }]))} style=a:b;></div><input type=text>`);
+  }]))} style=a:b></div><input type=text>`);
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");
   }, null, null, _componentDef, "@x");

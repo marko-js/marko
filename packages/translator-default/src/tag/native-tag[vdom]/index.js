@@ -44,13 +44,13 @@ export function tagArguments(path, isStatic) {
     }
 
     seen.add(name);
-    const { confident, computed } = evaluateAttr(attr);
+    const computed = evaluateAttr(attr);
 
-    if (confident) {
-      if (computed == null || computed === false) {
+    if (computed) {
+      if (computed.value === undefined) {
         if (!hasSpread) attr.remove();
       } else {
-        attr.set("value", t.stringLiteral(computed));
+        attr.set("value", t.stringLiteral(computed.value));
       }
     }
   }

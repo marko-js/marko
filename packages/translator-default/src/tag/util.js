@@ -1,5 +1,7 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/babel-utils";
+import { computeNode, getTagDef } from "@marko/babel-utils";
+import classToString from "marko/src/runtime/helpers/class-value";
+import styleToString from "marko/src/runtime/helpers/style-value";
 
 export function getAttrs(path, preserveNames, skipRenderBody) {
   const { node } = path;
@@ -156,31 +158,47 @@ export function buildEventHandlerArray(path) {
 }
 
 export function evaluateAttr(attr) {
-  const name = attr.get("name").node;
-  const value = attr.get("value");
-  let confident = false;
-  let computed = undefined;
-
-  if (name) {
-    if (value.isRegExpLiteral()) {
-      confident = true;
-      computed = value.get("pattern").node;
-    } else {
-      const evaluated = value.evaluate();
-      ({ confident, value: computed } = evaluated);
-
-      if (computed === true) {
-        computed = "";
-      } else if (computed != null && computed !== false) {
-        computed = computed + "";
+  if (attr.node.name) {
+    const computed = computeNode(attr.node.value);
+    if (computed) {
+      const { value } = computed;
+      switch (attr.node.name) {
+        case "class":
+          return {
+            value: classToString(value)
+              ?.replace(/(\s)\s/, "$1")
+              .trim(),
+          };
+        case "style":
+          return {
+            value: styleToString(value)
+              ?.replace(/(\s)\s/, "$1")
+              .trim()
+              .replace(/;$/, ""),
+          };
       }
+
+      if (value == null || value === false) {
+        return { value: undefined };
+      }
+
+      if (value === true) {
+        return { value: "" };
+      }
+
+      if (typeof value === "object") {
+        switch (value.toString) {
+          case Object.prototype.toString:
+          case Array.prototype.toString:
+            return { value: JSON.stringify(value) };
+          case RegExp.prototype.toString:
+            return { value: value.source };
+        }
+      }
+
+      return { value: value + "" };
     }
   }
-
-  return {
-    confident,
-    computed,
-  };
 }
 
 function camelCase(string) {

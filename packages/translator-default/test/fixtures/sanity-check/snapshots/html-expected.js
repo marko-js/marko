@@ -52,7 +52,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.w(`<div${_marko_attr("class", _marko_class_merge(["a", {
     b: c,
     d
-  }]))} style=a:b;></div>`);
+  }]))} style=a:b></div>`);
   out.w("<input type=text>");
   _marko_dynamic_tag(out, a, null, out => {
     out.w("<div></div>");

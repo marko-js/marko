@@ -36,7 +36,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   if (true) {
     const data = "bar";
     out.w("Hello ");
-    out.w("bar");
+    out.w((0, _escapeXml.x)(data));
   }
   out.w("</div>");
 }, {
