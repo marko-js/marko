@@ -1,16 +1,15 @@
 import { types as t } from "@marko/compiler";
-import { importDefault, normalizeTemplateString } from "@marko/babel-utils";
-import attrHelper from "marko/src/runtime/html/helpers/attr";
+import { importDefault } from "@marko/babel-utils";
 import { evaluateAttr } from "../util";
 
 export default function (path, attrs) {
   const len = attrs.length;
-  if (len === 0) return t.stringLiteral("");
+  if (len === 0) return t.nullLiteral();
   if (len === 1 && attrs[0].node.type === "MarkoSpreadAttribute") {
     return t.callExpression(
       importDefault(
         path.hub.file,
-        "marko/src/runtime/html/helpers/attrs.js",
+        "marko/src/runtime/vdom/helpers/attrs.js",
         "marko_attrs"
       ),
       [attrs[0].node.value]
@@ -49,18 +48,15 @@ export default function (path, attrs) {
     return t.callExpression(
       importDefault(
         path.hub.file,
-        "marko/src/runtime/html/helpers/merge-attrs.js",
+        "marko/src/runtime/vdom/helpers/merge-attrs.js",
         "marko_merge_attrs"
       ),
       attrsObjects
     );
   }
 
-  const file = path.hub.file;
-  const quasis = [];
-  const expressions = [];
   const attrValues = new Map();
-  let curString = "";
+  const props = [];
 
   // Remove duplicate attrs so last one wins.
   for (let i = len; i--; ) {
@@ -92,28 +88,17 @@ export default function (path, attrs) {
         continue;
       }
 
-      curString += attrHelper(name, computed);
-    } else {
-      quasis.push(curString);
-      curString = "";
-      expressions.push(
-        t.callExpression(
-          importDefault(
-            file,
-            "marko/src/runtime/html/helpers/attr.js",
-            "marko_attr"
-          ),
-          [t.stringLiteral(name), value]
-        )
+      props.push(
+        t.objectProperty(t.stringLiteral(name), t.stringLiteral(computed))
       );
+    } else {
+      props.push(t.objectProperty(t.stringLiteral(name), value));
     }
   }
 
-  quasis.push(curString);
-
-  if (expressions.length) {
-    return normalizeTemplateString(quasis, ...expressions);
-  } else {
-    return t.stringLiteral(quasis.join(""));
+  if (props.length) {
+    return t.objectExpression(props);
   }
+
+  return t.nullLiteral();
 }

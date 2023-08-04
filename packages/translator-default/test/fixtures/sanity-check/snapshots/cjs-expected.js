@@ -13,6 +13,7 @@ var _index2 = _interopRequireDefault(require("./components/other/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
+var _mergeAttrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/merge-attrs.js"));
 var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -96,14 +97,11 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       out.w("<div></div>");
     }
   }, out, _componentDef, "14");
-  out.w(`<div${(0, _attrs.default)({
+  out.w(`<div${(0, _mergeAttrs.default)({
     "class": "b c",
-    "a": {
-      a: 1
-    },
-    "c": "${d}",
-    ...e,
-    ...f(),
+    "a": "{\"a\":1}",
+    "c": "${d}"
+  }, e, f(), {
     "id": "a"
   })}>`);
   out.w((0, _escapeXml.x)(_b.default));

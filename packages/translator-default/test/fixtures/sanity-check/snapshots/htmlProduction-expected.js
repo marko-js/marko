@@ -17,6 +17,7 @@ import _other from "./components/other/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
 import { x as _marko_escapeXml } from "marko/dist/runtime/html/helpers/escape-xml.js";
+import _marko_merge_attrs from "marko/dist/runtime/html/helpers/merge-attrs.js";
 import _marko_attrs from "marko/dist/runtime/html/helpers/attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 const _marko_component = {
@@ -77,14 +78,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.w("<div></div>");
     }
   }, out, _componentDef, "14");
-  out.w(`<div${_marko_attrs({
+  out.w(`<div${_marko_merge_attrs({
     "class": "b c",
-    "a": {
-      a: 1
-    },
-    "c": "${d}",
-    ...e,
-    ...f(),
+    "a": "{\"a\":1}",
+    "c": "${d}"
+  }, e, f(), {
     "id": "a"
   })}>${_marko_escapeXml(a)}<!--abc--><div c=1></div><div d=1></div>`);
   if (x === a) {

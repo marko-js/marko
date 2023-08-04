@@ -28,11 +28,12 @@ const _marko_node7 = _marko_createElement("div", {
 const _marko_node8 = _marko_createElement("div", {
   "d": "1"
 }, "20", null, 0, 0);
-import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs.js";
+import _marko_merge_attrs from "marko/dist/runtime/vdom/helpers/merge-attrs.js";
 const _marko_node9 = _marko_createElement("div", {
   "b": "1"
 }, "21", null, 0, 0);
 const _marko_node10 = _marko_createElement("div", null, "22", null, 1, 0).t("123 abc 123");
+import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
@@ -124,12 +125,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.n(_marko_node4, _component);
     }
   }, out, _componentDef, "14");
-  out.be("div", _marko_attrs({
+  out.be("div", _marko_merge_attrs({
     "class": "b c",
     "a": "{\"a\":1}",
-    "c": "${d}",
-    ...e,
-    ...f(),
+    "c": "${d}"
+  }, e, f(), {
     "id": "a"
   }), "18", _component, null, 4);
   out.t(a, _component);
