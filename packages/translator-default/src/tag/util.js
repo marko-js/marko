@@ -158,46 +158,42 @@ export function buildEventHandlerArray(path) {
 }
 
 export function evaluateAttr(attr) {
-  if (attr.node.name) {
-    const computed = computeNode(attr.node.value);
-    if (computed) {
-      const { value } = computed;
-      switch (attr.node.name) {
-        case "class":
-          return {
-            value: classToString(value)
-              ?.replace(/(\s)\s/, "$1")
-              .trim(),
-          };
-        case "style":
-          return {
-            value: styleToString(value)
-              ?.replace(/(\s)\s/, "$1")
-              .trim()
-              .replace(/;$/, ""),
-          };
-      }
-
-      if (value == null || value === false) {
-        return { value: undefined };
-      }
-
-      if (value === true) {
-        return { value: "" };
-      }
-
-      if (typeof value === "object") {
-        switch (value.toString) {
-          case Object.prototype.toString:
-          case Array.prototype.toString:
-            return { value: JSON.stringify(value) };
-          case RegExp.prototype.toString:
-            return { value: value.source };
-        }
-      }
-
-      return { value: value + "" };
+  const computed = computeNode(attr.node.value);
+  if (computed) {
+    const { value } = computed;
+    switch (attr.node.name) {
+      case "class":
+        return {
+          value: classToString(value)?.replace(/\s+/, " ").trim(),
+        };
+      case "style":
+        return {
+          value: styleToString(value)
+            ?.replace(/\s+/, " ")
+            .trim()
+            .replace(/;$/, ""),
+        };
     }
+
+    if (value == null || value === false) {
+      return { value: undefined };
+    }
+
+    if (value === true) {
+      return { value: "" };
+    }
+
+    if (typeof value === "object") {
+      switch (value.toString) {
+        case Object.prototype.toString:
+        case Array.prototype.toString:
+          return { value: JSON.stringify(value) };
+        case RegExp.prototype.toString:
+          return { value: value.source };
+      }
+    }
+
+    return { value: value + "" };
   }
 }
 

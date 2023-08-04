@@ -1,12 +1,8 @@
 import { types as t } from "@marko/compiler";
 import write from "../../util/vdom-out-write";
 import * as FLAGS from "../../util/runtime-flags";
-import { evaluateAttr, getAttrs } from "../util";
-import {
-  getTagDef,
-  importDefault,
-  normalizeTemplateString,
-} from "@marko/babel-utils";
+import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
+import translateAttributes from "./attributes";
 import withPreviousLocation from "../../util/with-previous-location";
 
 const SIMPLE_ATTRS = ["id", "class", "style"];
@@ -30,48 +26,11 @@ export function tagArguments(path, isStatic) {
     handlers,
   } = node;
   const tagProperties = (path.node.extra && path.node.extra.properties) || [];
-  const attrs = path.get("attributes");
-  const seen = new Set();
-  const len = attrs.length;
-  const hasSpread = attrs.some((attr) => !attr.node.name);
+  const attrsObj = translateAttributes(path, path.get("attributes"));
   let runtimeFlags = 0;
 
-  for (let i = len; i--; ) {
-    const attr = attrs[i];
-    const { name } = attr.node;
-    if (seen.has(name)) {
-      if (!hasSpread) attr.remove();
-    }
-
-    seen.add(name);
-    const computed = evaluateAttr(attr);
-
-    if (computed) {
-      if (computed.value === undefined) {
-        if (!hasSpread) attr.remove();
-      } else {
-        attr.set("value", t.stringLiteral(computed.value));
-      }
-    }
-  }
-
-  let attrsObj = getAttrs(path, true, true);
-
-  if (!t.isNullLiteral(attrsObj)) {
-    if (
-      !t.isObjectExpression(attrsObj) ||
-      attrsObj.properties.some(t.isSpreadElement)
-    ) {
-      runtimeFlags |= FLAGS.SPREAD_ATTRS;
-      attrsObj = t.callExpression(
-        importDefault(
-          file,
-          "marko/src/runtime/vdom/helpers/attrs.js",
-          "marko_attrs"
-        ),
-        [attrsObj]
-      );
-    }
+  if (!t.isNullLiteral(attrsObj) && !t.isObjectExpression(attrsObj)) {
+    runtimeFlags |= FLAGS.SPREAD_ATTRS;
   }
 
   const writeArgs = [
