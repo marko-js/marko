@@ -20,7 +20,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w(`<div${(0, _attr.default)("style", (0, _styleValue.default)({
     color: input.color
   }))}></div>`);
-  out.w("<div style=width:100px;></div>");
+  out.w("<div style=width:100px></div>");
   out.w("<div style=\"color: green\"></div>");
   (0, _renderTag.default)(_customTag2.default, {
     "style": {

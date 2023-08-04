@@ -1,6 +1,7 @@
 import { decode } from "he";
 import { types as t } from "@marko/compiler";
 import {
+  computeNode,
   getTagDef,
   importDefault,
   isLoopTag,
@@ -9,8 +10,13 @@ import {
 import { getKeyManager } from "./key-manager";
 import write from "./vdom-out-write";
 import { tagArguments } from "../tag/native-tag[vdom]";
-import directives from "../tag/attribute/directives";
 
+const skipDirectives = new Set([
+  "no-update",
+  "no-update-if",
+  "no-update-body",
+  "no-update-body-if",
+]);
 const staticNodes = new WeakSet();
 
 const mergeStaticCreateVisitor = {
@@ -22,10 +28,14 @@ const mergeStaticCreateVisitor = {
     );
   },
   MarkoPlaceholder(path, state) {
-    const { value } = path.get("value").evaluate();
+    const computed = computeNode(path.node.value);
     state.currentRoot = t.callExpression(
       t.memberExpression(state.currentRoot, t.identifier("t")),
-      [t.stringLiteral(value != null ? value.toString() : "")]
+      [
+        t.stringLiteral(
+          computed && computed.value != null ? `${computed.value}` : ""
+        ),
+      ]
     );
   },
   MarkoTag(path, state) {
@@ -44,8 +54,8 @@ const analyzeStaticVisitor = {
   },
   MarkoPlaceholder(path) {
     if (path.node.escape) {
-      const { confident } = path.get("value").evaluate();
-      if (confident) {
+      const computed = computeNode(path.node.value);
+      if (computed) {
         staticNodes.add(path.node);
       }
     }
@@ -68,24 +78,18 @@ const analyzeStaticVisitor = {
       // check attributes
       isStatic =
         isStatic &&
-        path.get("attributes").every((attr) => {
-          if (
-            !t.isMarkoAttribute(attr) ||
-            attr.node.arguments ||
-            attr.node.modifier ||
-            directives[attr.node.name]
-          )
-            return false;
-
-          const attrValue = attr.get("value");
-          const exclude =
-            t.isObjectExpression(attrValue) ||
-            t.isArrayExpression(attrValue) ||
-            t.isRegExpLiteral(attrValue);
-          if (exclude) return false;
-          const { confident } = attrValue.evaluate();
-          return confident;
-        });
+        path
+          .get("attributes")
+          .every(
+            (attr) =>
+              t.isMarkoAttribute(attr) &&
+              !(
+                attr.node.arguments ||
+                attr.node.modifier ||
+                skipDirectives.has(attr.node.name) ||
+                !computeNode(attr.node.value)
+              )
+          );
 
       // check children
       isStatic =

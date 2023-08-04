@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { importDefault, isNativeTag } from "@marko/babel-utils";
+import { computeNode, importDefault, isNativeTag } from "@marko/babel-utils";
 import classToString from "marko/src/runtime/helpers/class-value";
 import withPreviousLocation from "../../../util/with-previous-location";
 
@@ -9,27 +9,29 @@ export default {
       hub: { file },
     } = tag;
     if (!isNativeTag(tag)) return;
-    if (value.isStringLiteral()) return;
 
-    const { confident, value: computed } = value.evaluate();
-
-    const s = classToString(computed);
-    value.replaceWith(
-      confident
-        ? s
-          ? t.stringLiteral(s)
-          : t.nullLiteral()
-        : withPreviousLocation(
-            t.callExpression(
-              importDefault(
-                file,
-                "marko/src/runtime/helpers/class-value.js",
-                "marko_class_merge"
-              ),
-              [value.node]
+    const computed = computeNode(value.node);
+    if (computed) {
+      const str = classToString(computed.value);
+      if (str) {
+        value.replaceWith(t.stringLiteral(str));
+      } else {
+        value.parentPath.remove();
+      }
+    } else {
+      value.replaceWith(
+        withPreviousLocation(
+          t.callExpression(
+            importDefault(
+              file,
+              "marko/src/runtime/helpers/class-value.js",
+              "marko_class_merge"
             ),
-            value.node
-          )
-    );
+            [value.node]
+          ),
+          value.node
+        )
+      );
+    }
   },
 };

@@ -58,7 +58,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(["a", {
     b: c,
     d
-  }]))} style=a:b;></div>`);
+  }]))} style=a:b></div>`);
   out.w("<input type=text>");
   (0, _dynamicTag.default)(out, _b.default, null, out => {
     out.w("<div></div>");

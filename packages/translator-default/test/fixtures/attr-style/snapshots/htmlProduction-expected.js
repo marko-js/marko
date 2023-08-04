@@ -13,7 +13,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.w(`<div${_marko_attr("style", _marko_style_merge({
     color: input.color
-  }))}></div><div style=width:100px;></div><div style="color: green"></div>`);
+  }))}></div><div style=width:100px></div><div style="color: green"></div>`);
   _marko_tag(_customTag, {
     "style": {
       color: input.color

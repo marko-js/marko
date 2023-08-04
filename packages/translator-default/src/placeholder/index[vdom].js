@@ -1,3 +1,4 @@
+import { computeNode } from "@marko/babel-utils";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -5,9 +6,9 @@ export default function (path) {
   const { node } = path;
   const { escape, value } = node;
   const method = escape ? "t" : "h";
-  const { confident, value: computed } = path.get("value").evaluate();
+  const computed = computeNode(value);
 
-  if (confident && !computed) {
+  if (computed && computed.value == null) {
     path.remove();
   } else {
     path.replaceWith(

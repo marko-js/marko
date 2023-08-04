@@ -18,7 +18,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     })
   }, "0", _component, 0, 1);
   out.e("div", {
-    "style": "width:100px;"
+    "style": "width:100px"
   }, "1", _component, 0, 1);
   out.e("div", {
     "style": "color: green"

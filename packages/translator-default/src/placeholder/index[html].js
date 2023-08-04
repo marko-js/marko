@@ -1,5 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { getTagDef, importDefault, importNamed } from "@marko/babel-utils";
+import {
+  computeNode,
+  getTagDef,
+  importDefault,
+  importNamed,
+} from "@marko/babel-utils";
 import toString from "marko/src/runtime/helpers/to-string";
 import { x as escapeXML } from "marko/src/runtime/html/helpers/escape-xml";
 import escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder";
@@ -31,15 +36,15 @@ export default function (path) {
     node,
     hub: { file },
   } = path;
-  const { confident, value: computed } = path.get("value").evaluate();
+  const computed = computeNode(node.value);
   let { escape, value } = node;
 
   if (escape) {
     const tagName = findParentTagName(path);
     const escapeType = ESCAPE_TYPES[tagName] || ESCAPE_TYPES.html;
 
-    value = confident
-      ? t.stringLiteral(escapeType.fn(computed))
+    value = computed
+      ? t.stringLiteral(escapeType.fn(computed.value))
       : t.callExpression(
           escapeType.name
             ? importNamed(
@@ -52,8 +57,8 @@ export default function (path) {
           [value]
         );
   } else {
-    value = confident
-      ? t.stringLiteral(toString(computed))
+    value = computed
+      ? t.stringLiteral(toString(computed.value))
       : t.callExpression(
           importDefault(
             file,
