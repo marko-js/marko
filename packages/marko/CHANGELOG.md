@@ -1,5 +1,21 @@
 # Change Log
 
+## 5.30.0
+
+### Minor Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compute node helper to replace babels `evaluate` helper. This helper is less aggressive and doesn't suffer from the false positives that popped up with babels version.
+
+### Patch Changes
+
+- [#2005](https://github.com/marko-js/marko/pull/2005) [`4286236b0`](https://github.com/marko-js/marko/commit/4286236b0eaa3cfdbdde02f531d76fcaed3203ee) Thanks [@rturnq](https://github.com/rturnq)! - Handle errors thrown in await catch attribute
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid adding trailing semicolon to style attribute output.
+
+- Updated dependencies [[`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1), [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1), [`d45962db1`](https://github.com/marko-js/marko/commit/d45962db1def9b025a1d75d98b4c655c0565e3ef)]:
+  - @marko/translator-default@5.30.0
+  - @marko/compiler@5.32.0
+
 ## 5.29.2
 
 ### Patch Changes
@@ -2725,8 +2741,8 @@ Summary of changes across all beta releases for the `4.5.0` release:
 ```javascript
 require("marko/node-require").install({
   compilerOptions: {
-    writeToDisk: false
-  }
+    writeToDisk: false,
+  },
 });
 ```
 
@@ -3381,7 +3397,7 @@ exports.renderer = function (input, out) {
 
   template.render(
     {
-      tabs: tabs
+      tabs: tabs,
     },
     out
   );
