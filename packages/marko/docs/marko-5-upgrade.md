@@ -32,6 +32,8 @@ Run your application and tests and ensure that there are no deprecation warnings
 
 Additionally, any deprecation warnings that start with `MIGRATION` are automatically migratable by [`marko migrate`](https://github.com/marko-js/cli/blob/master/packages/migrate/README.md). Most migrations are 100% safe and will run automatically. However, there are a few migrations which are considered unsafe: they may only get you 90% of the way there. These migrations will prompt and ask if you want to run the migration. It is highly recommended to run these only on a single component at a time and then finish the migration manually using the guide below so that your app is always in a working state.
 
+> **Note**: Deprecations related to `marko-widgets` are not necessary to address before upgrading.
+
 ## Step 3 - Upgrade dependencies
 
 Before upgrading to Marko 5, it is recommended to make sure that your Marko-related dependencies are up-to-date. Many packages have versions that support both Marko 4 and Marko 5. If one of your dependencies doesn't have a version that supports both, you'll need to wait to upgrade it until you're upgrading Marko.
@@ -42,17 +44,31 @@ After upgrading, run your application and tests to ensure that everything is sti
 
 Phew! With all the prep out of the way we're finally ready to upgrade `marko`!
 
-```
-npm install marko@^5
+Note that some features removed in Marko 4 do not log deprecations since they do not need to be resolved to get up and running with Marko 5. However for Marko 5 to support some of the features removed after Marko 4 you need to install a `compat` module.
+
+There are currently two `compat` modules you can install, one which supports the `marko-widget`'s api from Marko@3 and one with just the compat needed for Marko@4 components.
+
+**For apps with `marko-widgets` installed, add the following modules:**
+
+```bash
+# Upgrade using npm
+npm install marko@^5 @marko/compiler marko-widgets@^8
+
+# Or with yarn
+yarn install marko@^5 @marko/compiler marko-widgets@^8
 ```
 
-or
+**For apps which were not using the Marko@3 compat layer, add the following modules:**
 
-```
-yarn upgrade marko@^5
+```bash
+# Upgrade using npm
+npm install marko@^5 @marko/compiler @marko/compat-v4
+
+# Or with yarn
+yarn install marko@^5 @marko/compiler @marko/compat-v4
 ```
 
-> **Note**: Marko 5 has changed to using ES Modules. This means if you are using CJS modules to `require` a Marko template you will need to use the `.default` property exported.
+> **Note**: Marko 5 has changed to using ES Modules. This means if you are using CJS modules to `require` a Marko template you will need to use the `.default` property exported. When using @marko/compat-v4 this is handled automatically.
 >
 > ```js
 > const template = require("./template.marko");
