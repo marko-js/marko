@@ -4,9 +4,6 @@ module.exports = function migrator(node, context) {
   const arg = node.getAttribute("body-only-if");
 
   if (arg) {
-    context.deprecate(
-      'The "body-only-if(x)" tag is deprecated. Please use "<${test ? null : tag>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-body‐only‐if'
-    );
     // Check if body-only-if(true) is set and automatically unwrap element
     if (arg.argument === "true") {
       // w-body will take care of the unwrapping

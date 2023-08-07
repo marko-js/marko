@@ -35,12 +35,6 @@ module.exports = function handleLegacyBind() {
 
   const hasWidgetTypes = context.isFlagSet("hasWidgetTypes");
 
-  if (hasWidgetTypes) {
-    context.deprecate(
-      "The <widget-types> tag is deprecated. Please remove it. See: https://github.com/marko-js/marko/issues/514"
-    );
-  }
-
   if (bindAttrValue != null && !bindAttr.isLiteralValue()) {
     // This is a dynamic expression. The <widget-types> should have been found.
     if (!hasWidgetTypes) {

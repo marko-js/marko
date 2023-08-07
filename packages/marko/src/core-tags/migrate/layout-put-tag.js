@@ -3,9 +3,6 @@ const commonTagMigrator = require("./all-tags");
 module.exports = function migrator(oldNode, context) {
   commonTagMigrator(oldNode, context);
   oldNode.setTransformerApplied(commonTagMigrator);
-  context.deprecate(
-    'The "<layout-put>" tag is deprecated and replaced with first class language support. See: https://github.com/marko-js/marko/wiki/Deprecation:-layout-tag'
-  );
 
   const attributes = oldNode.attributes;
   if (!attributes) {

@@ -1,5 +1,4 @@
 "use strict";
-var complain = "MARKO_DEBUG" && require("complain");
 var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("@internal/components-util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
@@ -53,11 +52,6 @@ ComponentDef.prototype = {
       return id;
     } else {
       if (typeof nestedId !== "string") {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          complain("Using non strings as keys is deprecated.");
-        }
-
         nestedId = String(nestedId);
       }
 

@@ -14,10 +14,6 @@ module.exports = function migrate(el, context) {
 
   context.setMeta("legacy", true);
 
-  context.deprecate(
-    "Legacy components using w-bind and defineRenderer/defineComponent or defineComponent are deprecated. See: https://github.com/marko-js/marko/issues/421"
-  );
-
   if (value == null) {
     componentModule = getDefaultWidgetFile(context.dirname);
 

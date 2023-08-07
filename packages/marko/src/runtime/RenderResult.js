@@ -1,5 +1,4 @@
 var domInsert = require("./dom-insert");
-var complain = "MARKO_DEBUG" && require("complain");
 
 function getRootNode(el) {
   var cur = el;
@@ -71,24 +70,12 @@ var proto = (RenderResult.prototype = {
 
 Object.defineProperty(proto, "html", {
   get: function () {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        'The "html" property is deprecated. Please use "toString" instead.'
-      );
-    }
     return this.toString();
   },
 });
 
 Object.defineProperty(proto, "context", {
   get: function () {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        'The "context" property is deprecated. Please use "out" instead.'
-      );
-    }
     return this.___out;
   },
 });

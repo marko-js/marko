@@ -4,7 +4,7 @@ module.exports = {
   getTemplateData(state, input) {
     return {
       x: input.x,
-      y: state.y
+      y: state.y,
     };
   }
 };

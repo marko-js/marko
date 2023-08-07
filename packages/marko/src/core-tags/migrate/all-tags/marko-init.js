@@ -17,9 +17,6 @@ module.exports = function migrate(el, context) {
       return;
     }
 
-    context.deprecate(
-      'The "marko-init" attribute is deprecated.  Use the static tag instead. See https://github.com/marko-js/marko/wiki/Deprecation:-script-template-helpers'
-    );
     el.removeAttribute("marko-init");
   } else if (el.hasAttribute("template-helpers")) {
     if (el.tagName !== "script") {
@@ -29,9 +26,6 @@ module.exports = function migrate(el, context) {
       return;
     }
 
-    context.deprecate(
-      'The "template-helpers" attribute is deprecated and will be removed in the next release candidate. Use the static tag instead. See https://github.com/marko-js/marko/wiki/Deprecation:-script-template-helpers'
-    );
     el.removeAttribute("template-helpers");
   } else {
     return;

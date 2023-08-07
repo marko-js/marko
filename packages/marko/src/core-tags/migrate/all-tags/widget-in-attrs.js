@@ -7,31 +7,18 @@ module.exports = function migrate(el, context) {
       el.tagName !== "var" &&
       el.tagName !== "assign"
     ) {
-      context.deprecate(
-        `The "*=widget.elId("someId")" is deprecated. Please use "*:scoped="someId"" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
-      );
-
       attr.name += ":scoped";
       attr.value = value.args[0];
       return;
     }
 
-    let found;
-    const walker = context.createWalker({
+    context.createWalker({
       enter(node) {
         if (isWidgetMemberExpression(node)) {
           node.object.name = "component";
-          found = true;
         }
       },
-    });
-    walker.walk(value);
-
-    if (found) {
-      context.deprecate(
-        `The "widget" variable is deprecated. Please use "component" instead.`
-      );
-    }
+    }).walk(value);
   });
 };
 

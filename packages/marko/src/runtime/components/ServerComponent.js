@@ -1,5 +1,4 @@
 "use strict";
-var complain = "MARKO_DEBUG" && require("complain");
 
 class ServerComponent {
   constructor(id, input, out, typeName, customEvents, scope) {
@@ -45,11 +44,6 @@ class ServerComponent {
       return id;
     } else {
       if (typeof nestedId !== "string") {
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          complain("Using non strings as keys is deprecated.");
-        }
-
         nestedId = String(nestedId);
       }
 

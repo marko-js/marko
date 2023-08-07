@@ -510,6 +510,10 @@ class TagLoader {
    * - "body-function": "_handleBody(param1, param2, param3)"
    */
   bodyFunction(value) {
+    complain("body-function is deprecated.", {
+      location: this.filePath,
+    });
+
     var tag = this.tag;
     var parts = bodyFunctionRegExp.exec(value);
     if (!parts) {
@@ -557,6 +561,10 @@ class TagLoader {
    * }
    */
   importVar(value) {
+    complain("import-var is deprecated.", {
+      location: this.filePath,
+    });
+
     var tag = this.tag;
     forEachEntry(value, (varName, varValue) => {
       var importedVar = {
@@ -644,6 +652,10 @@ class TagLoader {
    * DEPRECATED
    */
   escapeXmlBody(value) {
+    complain("escape-xml-body is deprecated.", {
+      location: this.filePath,
+    });
+
     if (value === false) {
       this.tag.escapeXmlBody = false;
     }
@@ -724,6 +736,9 @@ class TagLoader {
   }
 
   featureFlags(value) {
+    complain("feature-flags is deprecated.", {
+      location: this.filePath,
+    });
     this.tag.featureFlags = value;
   }
 }

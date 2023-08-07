@@ -12,12 +12,6 @@ module.exports = function attrs(arg) {
       }
       return result;
     case "string":
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        complain(
-          "Passing a string as a dynamic attribute value is deprecated - More details: https://github.com/marko-js/marko/wiki/Deprecation:-String-as-dynamic-attribute-value"
-        );
-      }
       return arg;
     default:
       return "";

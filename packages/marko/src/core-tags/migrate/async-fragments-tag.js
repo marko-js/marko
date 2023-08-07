@@ -5,10 +5,6 @@ module.exports = function migrator(elNode, context) {
   commonTagMigrator(elNode, context);
   elNode.setTransformerApplied(commonTagMigrator);
 
-  context.deprecate(
-    `The "<async-fragments>" tag is deprecated. Please use "<await-reorderer>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
-  );
-
   // all this tag ever did was handling of client reordering
   // we'll remove the attribute as that's all this new tag does
   elNode.removeAttribute("client-reorder");

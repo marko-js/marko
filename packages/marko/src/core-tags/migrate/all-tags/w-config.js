@@ -7,10 +7,6 @@ module.exports = function migrate(el, context) {
     return;
   }
 
-  context.deprecate(
-    'The "w-config" attribute is deprecated. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐config'
-  );
-
   if (attr.value) {
     el.insertSiblingBefore(
       builder.scriptlet({

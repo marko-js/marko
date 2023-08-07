@@ -3,7 +3,6 @@
 var escapeQuoteHelpers = require("./escape-quotes");
 var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
-var complain = "MARKO_DEBUG" && require("complain");
 
 module.exports = maybeEmptyAttr;
 
@@ -30,14 +29,6 @@ function notEmptyAttr(name, value) {
       switch (value.toString) {
         case Object.prototype.toString:
         case Array.prototype.toString:
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            complain(
-              "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
-              { locationIndex: 2 }
-            );
-          }
-
           return " " + name + singleQuote(JSON.stringify(value), 2);
         case RegExp.prototype.toString:
           return " " + name + guessQuotes(value.source);

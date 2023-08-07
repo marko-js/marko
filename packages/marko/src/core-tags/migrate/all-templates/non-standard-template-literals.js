@@ -31,12 +31,6 @@ module.exports = function migrator(el, context) {
 
   walker.walk(el);
 
-  if (found) {
-    context.deprecate(
-      "Non standard template literals have been deprecated, please use javascript template literals instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-nonstandard-template-literals"
-    );
-  }
-
   if (literals.length) {
     context.addMigration({
       description: "Migrate template with non standard template literals",

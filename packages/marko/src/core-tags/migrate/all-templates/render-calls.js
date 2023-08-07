@@ -22,10 +22,6 @@ module.exports = function migrator(el, context) {
         return;
       }
 
-      context.deprecate(
-        "Directly rendering by passing `out` to a function is deprecated. Please use the dynamic tag instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-imperative-render-calls"
-      );
-
       if (hasErrors) {
         return;
       }

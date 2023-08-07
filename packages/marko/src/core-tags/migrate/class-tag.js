@@ -11,9 +11,5 @@ module.exports = function migrator(el, context) {
     );
   }
 
-  context.deprecate(
-    "Having a named class at the top level of a file is deprecated. Use `class {...}` without a name instead."
-  );
-
   el.tagString = el.tagString.replace(classNamedRegexp, "$1$2");
 };

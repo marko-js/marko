@@ -8,10 +8,6 @@ module.exports = function migrator(elNode, context) {
   const functionAttr = elNode.attributes[0];
   const functionArgs = functionAttr.argument;
 
-  context.deprecate(
-    'The "<invoke>" tag is deprecated. Please use "$ <js_code>" for JavaScript in the template. See: https://github.com/marko-js/marko/wiki/Deprecation:-var,-assign,-invoke-tags'
-  );
-
   if (!functionAttr) {
     context.addError(
       'Invalid <invoke> tag. Missing function attribute. Expected: <invoke console.log("Hello World")'

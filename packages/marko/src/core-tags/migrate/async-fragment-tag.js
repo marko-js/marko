@@ -8,10 +8,6 @@ module.exports = function migrator(elNode, context) {
   const builder = context.builder;
   const attributes = elNode.attributes;
 
-  context.deprecate(
-    `The "<async-fragment>" tag is deprecated. Please use "<await>" instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-async-fragment`
-  );
-
   if (!attributes || !attributes.length) {
     context.addError(
       'Invalid <async-fragment> tag. Argument is missing. Example; <async-fragment data-provider=data.userInfo var="userInfo" />'

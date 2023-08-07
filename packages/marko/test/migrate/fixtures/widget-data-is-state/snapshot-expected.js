@@ -4,7 +4,7 @@ module.exports = {
   onCreate(input) {
     this.state = {
       x: input.x,
-      y: input.y
+      y: input.y,
     };
   }
 };

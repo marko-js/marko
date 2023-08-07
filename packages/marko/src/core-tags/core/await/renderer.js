@@ -1,5 +1,4 @@
 "use strict";
-var complain = "MARKO_DEBUG" && require("complain");
 var AsyncValue = require("./AsyncValue");
 
 function safeRenderBody(renderBody, targetOut, data) {
@@ -14,14 +13,6 @@ function requestData(provider, timeout) {
   var asyncValue = new AsyncValue();
 
   if (typeof provider === "function") {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        "Passing a callback function to the <await> tag has been deprecated, please use a promise instead.",
-        { level: 1, locationIndex: 3 }
-      );
-    }
-
     var callback = function (err, data) {
       if (err) {
         asyncValue.___reject(err);

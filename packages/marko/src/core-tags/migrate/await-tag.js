@@ -9,10 +9,6 @@ module.exports = function migrator(elNode, context) {
     return;
   }
 
-  context.deprecate(
-    'The "<await(result from promise)>" syntax has been deprecated, please use the modern syntax of "<await(promise)><@then|result|>". See: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-await'
-  );
-
   elNode.argument = undefined;
   let provider = builder.expression(match[2]);
   const varName = match[1];
@@ -102,29 +98,18 @@ module.exports = function migrator(elNode, context) {
 
   let placeholderBody;
   if (elNode.hasAttribute("placeholder")) {
-    context.deprecate(
-      'The "placeholder" attribute on the "<await>" tag is deprecated. Please use the "<@placeholder>" nested tag instead.'
-    );
-
     placeholderBody = [builder.text(elNode.getAttributeValue("placeholder"))];
     elNode.removeAttribute("placeholder");
   }
 
   let timeoutBody;
   if (elNode.hasAttribute("timeout-message")) {
-    context.deprecate(
-      'The "timeout-message" attribute on the "<await>" tag is deprecated. Please use the "<@catch|err|>" nested tag instead with a check for "err.name === "TimeoutError".'
-    );
-
     timeoutBody = [builder.text(elNode.getAttributeValue("timeout-message"))];
     elNode.removeAttribute("timeout-message");
   }
 
   let errorBody;
   if (elNode.hasAttribute("error-message")) {
-    context.deprecate(
-      'The "error-message" attribute on the "<await>" tag is deprecated. Please use the "<@catch>" nested tag instead.'
-    );
     errorBody = [builder.text(elNode.getAttributeValue("error-message"))];
     elNode.removeAttribute("error-message");
   }

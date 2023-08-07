@@ -9,12 +9,7 @@ module.exports = function forOf(array, callback) {
   var i;
 
   if (array == null) {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        "Passing a non iterable to a <for> loop is deprecated. Prefer to use an <if> around the loop instead."
-      );
-    }
+    // ignore
   } else if (Array.isArray(array)) {
     for (i = 0; i < array.length; i++) {
       callback(array[i], i, array);

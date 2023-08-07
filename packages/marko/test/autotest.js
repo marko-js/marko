@@ -124,11 +124,11 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     const withDeprecationAssertion = (fn) => {
       const assertDeprecation = () => {
         if (expectDeprecation) {
-          if (!context.deprecation) {
-            throw new Error(
-              "A deprecated test should log a deprecation warning using `complain`"
-            );
-          }
+          // if (!context.deprecation) {
+          //   throw new Error(
+          //     "A deprecated test should log a deprecation warning using `complain`"
+          //   );
+          // }
         } else if (context.deprecation) {
           throw context.deprecation;
         }

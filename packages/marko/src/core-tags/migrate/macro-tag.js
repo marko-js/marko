@@ -22,11 +22,6 @@ module.exports = function migrator(elNode, context) {
     return elNode;
   }
 
-  context.deprecate(
-    'The "<macro my-macro(input)>" syntax has been deprecated. Please use the new tag param syntax, eg: "<macro|input| name="my-macro">. See: https://github.com/marko-js/marko/wiki/Deprecation:-legacy-macro',
-    elNode
-  );
-
   const name = defAttr.name;
   const params = defAttr.argument
     ? builder.parseJavaScriptParams(defAttr.argument)

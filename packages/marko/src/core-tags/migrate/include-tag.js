@@ -5,9 +5,6 @@ const commonTagMigrator = require("./all-tags");
 module.exports = function migrator(elNode, context) {
   commonTagMigrator(elNode, context);
   elNode.setTransformerApplied(commonTagMigrator);
-  context.deprecate(
-    'The "<include>" tag is deprecated. Please use the "<${dynamic}/>" tag or regular text replacement instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-include-tag'
-  );
 
   const builder = context.builder;
   const rawArg = elNode.argument;

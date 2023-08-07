@@ -1,8 +1,6 @@
 "use strict";
 /* jshint newcap:false */
 
-var complain = "MARKO_DEBUG" && require("complain");
-
 var domInsert = require("../dom-insert");
 var defaultCreateOut = require("../createOut");
 var getComponentsContext =
@@ -254,13 +252,6 @@ Component.prototype = componentProto = {
         var keyedComponentRoot = this.___keyedElements[resolvedKey];
 
         if (keyedComponentRoot) {
-          // eslint-disable-next-line no-constant-condition
-          if ("MARKO_DEBUG") {
-            complain(
-              "Accessing the elements of a child component using 'component.getEl' is deprecated."
-            );
-          }
-
           return keyedComponentRoot.nodeType === 1 /** Node.ELEMENT_NODE */
             ? keyedComponentRoot
             : walkFragments(keyedComponentRoot);
@@ -287,12 +278,6 @@ Component.prototype = componentProto = {
   getComponent: function (key, index) {
     var rootNode = this.___keyedElements[resolveKeyHelper(key, index)];
     if (/\[\]$/.test(key)) {
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        complain(
-          "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
-        );
-      }
       rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
     }
     return rootNode && componentsByDOMNode.get(rootNode);
@@ -604,12 +589,6 @@ Component.prototype = componentProto = {
   },
 
   get els() {
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      complain(
-        'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.'
-      );
-    }
     return (this.___rootNode ? this.___rootNode.nodes : []).filter(function (
       el
     ) {

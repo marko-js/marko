@@ -1,4 +1,3 @@
-var complain = "MARKO_DEBUG" && require("complain");
 var makeRenderable = require("../../renderable");
 var getComponentsContext =
   require("../ComponentsContext").___getComponentsContext;
@@ -9,11 +8,6 @@ var resolveComponentKey = modernRenderer.___resolveComponentKey;
 
 module.exports = function defineRenderer(renderingLogic) {
   var renderer = renderingLogic.renderer;
-
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    require("complain")("defineRenderer is deprecated");
-  }
 
   if (renderer && renderer.___isRenderer) {
     return renderer;
@@ -127,16 +121,6 @@ module.exports = function defineRenderer(renderingLogic) {
         // to the widget constructor. If rendered on the server the
         // widget config will be serialized.
         widgetConfig = getWidgetConfig(newProps, out);
-      }
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        if (widgetState && "widgetState" in templateData) {
-          complain("Passing widgetState as input is deprecated.");
-        }
-
-        if (widgetConfig && "widgetConfig" in templateData) {
-          complain("Passing widgetConfig as input is deprecated.");
-        }
       }
 
       templateData.widgetProps = newProps;
