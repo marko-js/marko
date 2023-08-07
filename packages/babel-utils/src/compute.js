@@ -120,11 +120,11 @@ export function computeNode(node) {
       return { value: test.value ? consequent.value : alternate.value };
     }
     case "TemplateLiteral": {
-      let value = node.quasis[0].cooked;
+      let value = node.quasis[0].value.cooked;
       for (let i = 0; i < node.expressions.length; i++) {
         const expr = computeNode(node.expressions[i]);
         if (!expr) return;
-        value += expr.value + node.quasis[i + 1].cooked;
+        value += expr.value + node.quasis[i + 1].value.cooked;
       }
       return { value };
     }
