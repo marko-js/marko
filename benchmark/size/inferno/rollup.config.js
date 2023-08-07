@@ -17,7 +17,7 @@ export default {
       include: [],
       babelrc: false,
       presets: [["es2015", { loose: true, modules: false }], "stage-0"],
-      plugins: ["inferno"]
+      plugins: ["inferno"],
     }),
     browserifyPlugin(envify),
     nodeResolvePlugin({
@@ -25,8 +25,8 @@ export default {
       main: true, // Default: true
       browser: true, // Default: false
       preferBuiltins: false,
-      extensions: [".js", ".jsx"]
-    })
+      extensions: [".js", ".jsx"],
+    }),
   ],
-  dest: path.join(__dirname, "../build/bundles/inferno.js")
+  dest: path.join(__dirname, "../build/bundles/inferno.js"),
 };

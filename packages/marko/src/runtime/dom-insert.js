@@ -72,6 +72,6 @@ module.exports = function (target, getEl, afterInsert) {
       var el = getEl(this, referenceEl);
       insertAfter(el, referenceEl, referenceEl.parentNode);
       return afterInsert(this, referenceEl);
-    }
+    },
   });
 };

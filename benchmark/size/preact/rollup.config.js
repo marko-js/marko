@@ -23,12 +23,12 @@ export default {
       main: true, // Default: true
       browser: true, // Default: false
       preferBuiltins: false,
-      extensions: [".js", ".jsx"]
+      extensions: [".js", ".jsx"],
     }),
     commonjsPlugin({
       include: [],
-      extensions: [".js", ".jsx"]
-    })
+      extensions: [".js", ".jsx"],
+    }),
   ],
-  dest: path.join(__dirname, "../build/bundles/preact.js")
+  dest: path.join(__dirname, "../build/bundles/preact.js"),
 };

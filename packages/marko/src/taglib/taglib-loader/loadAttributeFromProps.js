@@ -22,7 +22,7 @@ class AttrLoader {
       attrProps = {};
     } else if (typeof attrProps === "string") {
       attrProps = {
-        type: attrProps
+        type: attrProps,
       };
     } else {
       assert.ok(typeof attrProps === "object", 'Invalid "attrProps"');

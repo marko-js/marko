@@ -10,7 +10,7 @@ var COMPILER_ATTRIBUTE_HANDLERS = {
   },
   "preserve-comments": function (attr, context) {
     context.setPreserveComments(true);
-  }
+  },
 };
 
 function getSimplifiedValue(node) {
@@ -41,7 +41,7 @@ function getParserStateForTag(parser, el, tagDef) {
           parser.context.addError({
             message:
               'Value for "marko-body" should be one of the following: "static-text", "parsed-text", "html"',
-            code: "ERR_INVALID_ATTR"
+            code: "ERR_INVALID_ATTR",
           });
           return;
         }
@@ -100,7 +100,7 @@ class Parser {
     this.context = context;
 
     this.stack.push({
-      node: rootNode
+      node: rootNode,
     });
 
     this.parserImpl.parse(src, this, context.filename, mergedOptions);
@@ -177,7 +177,7 @@ class Parser {
               '". Allowed: ' +
               Object.keys(COMPILER_ATTRIBUTE_HANDLERS).join(", "),
             pos: el.pos,
-            node: el
+            node: el,
           });
           return;
         }
@@ -205,7 +205,7 @@ class Parser {
       openTagOnly: el.openTagOnly === true,
       selfClosed: el.selfClosed === true,
       pos: el.pos,
-      attributes: parsedAttributes
+      attributes: parsedAttributes,
     };
 
     var node = builder.htmlElement(elDef);
@@ -213,7 +213,7 @@ class Parser {
     node.tagDef = tagDef;
 
     if (attributeParseErrors && attributeParseErrors.length) {
-      attributeParseErrors.forEach(e => {
+      attributeParseErrors.forEach((e) => {
         context.addError(node, e);
       });
     }
@@ -224,7 +224,7 @@ class Parser {
     }
 
     if (el.shorthandClassNames) {
-      node.rawShorthandClassNames = el.shorthandClassNames.map(className => {
+      node.rawShorthandClassNames = el.shorthandClassNames.map((className) => {
         let parsed = builder.parseExpression(className.value);
         return getSimplifiedValue(parsed);
       });
@@ -238,7 +238,7 @@ class Parser {
 
     this.stack.push({
       node: node,
-      tag: null
+      tag: null,
     });
   }
 
@@ -249,7 +249,7 @@ class Parser {
     // <div class="foo"> -> "div class=foo"
     var parsedAttributes = [];
 
-    attributes.forEach(attr => {
+    attributes.forEach((attr) => {
       var attrName = attr.name;
       var attrRawValue = attr.value;
       var attrSpread;
@@ -296,7 +296,7 @@ class Parser {
       var attrDef = {
         name: attrName,
         value: attrValue,
-        rawValue: attrRawValue
+        rawValue: attrRawValue,
       };
 
       if (attr.argument) {
@@ -369,7 +369,7 @@ class Parser {
       message: event.message,
       code: event.code,
       pos: event.pos,
-      endPos: event.endPos
+      endPos: event.endPos,
     });
   }
 

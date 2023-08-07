@@ -8,7 +8,7 @@ var parseFor = require("marko/core-tags/migrate/util/parseFor.js");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
@@ -23,7 +23,7 @@ autotest("fixtures", fixture => {
       if (e.code === "INVALID_FOR") {
         snapshot(
           {
-            error: e.message
+            error: e.message,
           },
           ".json"
         );

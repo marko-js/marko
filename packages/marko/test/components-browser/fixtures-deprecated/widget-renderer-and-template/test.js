@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
-    name: "Frank"
+    name: "Frank",
   });
   var targetEl = widget.el.parentNode;
   expect(targetEl.innerHTML).to.contain("Frank");
@@ -11,7 +11,7 @@ module.exports = function (helpers) {
   expect(targetEl.innerHTML).to.not.contain("Frank");
 
   widget.rerender({
-    name: "Jane"
+    name: "Jane",
   });
 
   expect(targetEl.innerHTML).to.contain("Jane");

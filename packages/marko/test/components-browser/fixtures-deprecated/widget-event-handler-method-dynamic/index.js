@@ -16,5 +16,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   handleBarClick: function () {
     this.barClicked = true;
-  }
+  },
 });

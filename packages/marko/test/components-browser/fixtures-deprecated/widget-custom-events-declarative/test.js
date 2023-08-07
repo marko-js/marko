@@ -10,14 +10,14 @@ module.exports = function (helpers) {
   widget.handleTestEvent1 = function () {
     received1.push({
       args: arguments,
-      widget: arguments[arguments.length - 1]
+      widget: arguments[arguments.length - 1],
     });
   };
 
   widget.handleTestEvent2 = function () {
     received2.push({
       args: arguments,
-      widget: arguments[arguments.length - 1]
+      widget: arguments[arguments.length - 1],
     });
   };
 

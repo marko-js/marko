@@ -12,7 +12,9 @@ module.exports = function migrator(node, context) {
       // w-body will take care of the unwrapping
       if (!node.getAttribute("w-body")) {
         // Unwrap if there is no w-body tag
-        node.forEachChild(currentNode => node.insertSiblingBefore(currentNode));
+        node.forEachChild((currentNode) =>
+          node.insertSiblingBefore(currentNode)
+        );
         node.detach();
       }
       return;
@@ -34,7 +36,7 @@ module.exports = function migrator(node, context) {
 
     if (!tagDef.html && tagDef.renderer) {
       tagName = builder.objectExpression({
-        renderer: builder.identifier(tagName)
+        renderer: builder.identifier(tagName),
       });
     }
 

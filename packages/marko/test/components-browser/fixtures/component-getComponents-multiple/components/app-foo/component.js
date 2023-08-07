@@ -3,5 +3,5 @@ module.exports = {
     this.name = input.name;
   },
 
-  onMount: function () {}
+  onMount: function () {},
 };

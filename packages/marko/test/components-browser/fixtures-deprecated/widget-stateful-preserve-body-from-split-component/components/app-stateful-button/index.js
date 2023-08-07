@@ -5,7 +5,7 @@ module.exports = require("marko/legacy-components").defineComponent({
       size: input.size || "normal",
       variant: input.variant || "primary",
       className: input["class"],
-      attrs: input["*"]
+      attrs: input["*"],
     };
   },
 
@@ -47,7 +47,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
     return {
       type: type,
-      rootAttrs: rootAttrs
+      rootAttrs: rootAttrs,
     };
   },
 
@@ -56,7 +56,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     // We will emit a custom "click" event when a DOM click event
     // is triggered
     this.emit("click", {
-      event: event // Pass along the DOM event in case it is helpful to others
+      event: event, // Pass along the DOM event in case it is helpful to others
     });
   },
 
@@ -75,5 +75,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getSize: function () {
     return this.state.size;
-  }
+  },
 });

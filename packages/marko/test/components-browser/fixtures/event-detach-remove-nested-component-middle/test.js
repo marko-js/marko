@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 
   expect(helpers.targetEl.querySelectorAll(".color").length).to.equal(3);

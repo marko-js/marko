@@ -2,7 +2,7 @@ module.exports = {
   onInput: function (input) {
     this.state = {
       name: input.name,
-      age: input.age
+      age: input.age,
     };
   },
   setName: function (newName) {
@@ -10,5 +10,5 @@ module.exports = {
   },
   setAge: function (newAge) {
     this.setState("age", newAge);
-  }
+  },
 };

@@ -8,7 +8,7 @@ const escodegen = require("escodegen");
 const FLAG_COMPONENT_STYLE = Symbol("COMPONENT_STYLE");
 const espreeOptions = {
   sourceType: "script",
-  ecmaVersion: espree.latestEcmaVersion
+  ecmaVersion: espree.latestEcmaVersion,
 };
 
 function handleStyleElement(styleEl, transformHelper) {
@@ -62,7 +62,7 @@ function handleStyleElement(styleEl, transformHelper) {
       type: lang,
       code: styleCode,
       virtualPath: "./" + path.basename(context.filename) + "." + lang,
-      path: "./" + path.basename(context.filename)
+      path: "./" + path.basename(context.filename),
     });
   }
 
@@ -77,14 +77,14 @@ function methodToProperty(method) {
     value: method.value,
     kind: "init",
     method: false,
-    shorthand: false
+    shorthand: false,
   };
 }
 
 function classToObject(cls, el, transformHelper) {
   return {
     type: "ObjectExpression",
-    properties: cls.body.body.map(method => {
+    properties: cls.body.body.map((method) => {
       if (method.type != "MethodDefinition") {
         throw Error(
           "Only methods are allowed on single file component class definitions."
@@ -104,7 +104,7 @@ function classToObject(cls, el, transformHelper) {
       } else {
         return method;
       }
-    })
+    }),
   };
 }
 
@@ -123,7 +123,7 @@ function handleClassDeclaration(classEl, transformHelper) {
       if (errorIndex != null && errorIndex >= 0) {
         transformHelper.context.addError({
           pos: classEl.pos + errorIndex,
-          message: message
+          message: message,
         });
         return;
       }
@@ -151,7 +151,7 @@ function handleClassDeclaration(classEl, transformHelper) {
   let moduleInfo = {
     inlineId: componentVar,
     filename: transformHelper.filename,
-    requirePath: "./" + path.basename(transformHelper.filename)
+    requirePath: "./" + path.basename(transformHelper.filename),
   };
 
   classEl.detach();
@@ -179,7 +179,7 @@ module.exports = function handleRootNodes() {
     context.addDependency("package: ./" + componentFiles.package);
   }
 
-  componentFiles.styles.forEach(styleFile => {
+  componentFiles.styles.forEach((styleFile) => {
     context.addDependency("./" + styleFile);
   });
 
@@ -188,7 +188,7 @@ module.exports = function handleRootNodes() {
 
     let moduleInfo = {
       filename: path.join(dirname, file),
-      requirePath: "./" + file.slice(0, file.lastIndexOf("."))
+      requirePath: "./" + file.slice(0, file.lastIndexOf(".")),
     };
 
     componentModule = rendererModule = moduleInfo;
@@ -199,7 +199,7 @@ module.exports = function handleRootNodes() {
 
     componentModule = {
       filename: path.join(dirname, file),
-      requirePath: "./" + file.slice(0, file.lastIndexOf("."))
+      requirePath: "./" + file.slice(0, file.lastIndexOf(".")),
     };
   }
 
@@ -264,7 +264,7 @@ module.exports = function handleRootNodes() {
         walker.skip();
         return;
       }
-    }
+    },
   });
 
   walker.walk(templateRoot);
@@ -281,7 +281,7 @@ module.exports = function handleRootNodes() {
 
   // After normalizing the text nodes to remove whitespace we may have detached
   // some of the root text nodes so remove those from our list
-  rootNodes = rootNodes.filter(rootNode => {
+  rootNodes = rootNodes.filter((rootNode) => {
     return rootNode.isDetached() !== true;
   });
 
@@ -296,7 +296,7 @@ module.exports = function handleRootNodes() {
 
     componentModule = rendererModule = {
       filename: this.filename,
-      requirePath: "./" + path.basename(this.filename)
+      requirePath: "./" + path.basename(this.filename),
     };
   }
 
@@ -305,6 +305,6 @@ module.exports = function handleRootNodes() {
     isImplicitComponent,
     rootNodes,
     componentModule,
-    rendererModule
+    rendererModule,
   });
 };

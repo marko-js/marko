@@ -11,5 +11,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   handleMouseMove: function () {
     this.mouseMoved = true;
-  }
+  },
 });

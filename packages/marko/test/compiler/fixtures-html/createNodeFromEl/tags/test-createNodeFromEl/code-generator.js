@@ -4,18 +4,18 @@ module.exports = function (elNode, codegen) {
   var helloNode1 = codegen.context.createNodeForEl("test-hello", [
     {
       name: "name",
-      value: builder.literal("Frank")
-    }
+      value: builder.literal("Frank"),
+    },
   ]);
 
   var helloNode2 = codegen.context.createNodeForEl("test-hello", {
-    name: builder.literal("Frank")
+    name: builder.literal("Frank"),
   });
 
   var helloNode3 = codegen.context.createNodeForEl("test-hello", {
     name: {
-      value: builder.literal("Frank")
-    }
+      value: builder.literal("Frank"),
+    },
   });
 
   return [helloNode1, helloNode2, helloNode3];

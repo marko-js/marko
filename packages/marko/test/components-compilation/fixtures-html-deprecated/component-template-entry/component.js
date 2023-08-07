@@ -18,7 +18,7 @@ function render(input, out, component) {
 marko_template._ = marko_components.r(
   render,
   {
-    type: marko_componentType
+    type: marko_componentType,
   },
   marko_component
 );

@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     size: 2,
-    name: "foo"
+    name: "foo",
   });
 
   expect(component.getEl("heading").tagName).to.equal("H2");
@@ -13,7 +13,7 @@ module.exports = function (helpers) {
 
   component.input = {
     size: 3,
-    name: "bar"
+    name: "bar",
   };
   component.update();
 

@@ -23,7 +23,7 @@ app.use((ctx, next) => {
   ctx.body = template.stream({
     name: "Frank",
     count: 30,
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 });
 
@@ -46,7 +46,7 @@ app.use((ctx, next) => {
   ctx.body = template.stream({
     name: "Frank",
     count: 30,
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 
   ctx.vary("Accept-Encoding");

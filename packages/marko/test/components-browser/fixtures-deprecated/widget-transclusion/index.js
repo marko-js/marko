@@ -7,7 +7,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
     return {
       alertType: alertType,
-      alertMessage: alertMessage
+      alertMessage: alertMessage,
     };
   },
 
@@ -17,7 +17,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
     return {
       alertType: alertType,
-      alertMessage: alertMessage
+      alertMessage: alertMessage,
     };
   },
 
@@ -27,5 +27,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   setAlertMessage: function (newAlertMessage) {
     this.setState("alertMessage", newAlertMessage);
-  }
+  },
 });

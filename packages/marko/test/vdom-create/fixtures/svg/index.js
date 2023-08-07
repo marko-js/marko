@@ -15,7 +15,7 @@ module.exports = function (helpers) {
         stroke: "green",
         "stroke-width": "4",
         fill: "yellow",
-        "xlink:href": "http://ebay.com/"
+        "xlink:href": "http://ebay.com/",
       },
       0
     );

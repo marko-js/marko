@@ -8,12 +8,12 @@ module.exports = require("marko/legacy-components").defineComponent({
       boolean: true,
       complex: {
         a: '<"hello">',
-        b: "test"
-      }
+        b: "test",
+      },
     };
   },
 
   init: function (config) {
     this.config = config;
-  }
+  },
 });

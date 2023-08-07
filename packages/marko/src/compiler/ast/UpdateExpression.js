@@ -51,7 +51,7 @@ class UpdateExpression extends Node {
       type: "UpdateExpression",
       argument: this.argument,
       operator: this.operator,
-      prefix: this.prefix
+      prefix: this.prefix,
     };
   }
 

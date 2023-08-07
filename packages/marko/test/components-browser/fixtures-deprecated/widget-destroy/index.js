@@ -3,7 +3,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getTemplateData: function (state, input) {
     return {
-      showSimple: input.showSimple == null ? true : input.showSimple
+      showSimple: input.showSimple == null ? true : input.showSimple,
     };
-  }
+  },
 });

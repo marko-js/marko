@@ -13,7 +13,7 @@ if (!/^v6\..*/.test(process.version)) {
 
   cp.execSync("npm i --no-package-lock", { cwd: __dirname });
 
-  autotest("fixtures", fixture => {
+  autotest("fixtures", (fixture) => {
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;
@@ -29,7 +29,7 @@ if (!/^v6\..*/.test(process.version)) {
       const outputs = {
         fileContents: {},
         fileNames: {},
-        dependentPaths: {}
+        dependentPaths: {},
       };
       return migrate({
         dir: __dirname,
@@ -53,7 +53,7 @@ if (!/^v6\..*/.test(process.version)) {
         },
         onUpdateDependents(from, to) {
           outputs.dependentPaths[from] = to;
-        }
+        },
       }).then(() => {
         const byExtension = Object.entries(outputs.fileContents)
           .sort(([a], [b]) => a.localeCompare(b))
@@ -71,7 +71,7 @@ if (!/^v6\..*/.test(process.version)) {
             JSON.stringify(
               {
                 fileNames: outputs.fileNames,
-                dependentPaths: outputs.dependentPaths
+                dependentPaths: outputs.dependentPaths,
               },
               null,
               2
@@ -81,7 +81,7 @@ if (!/^v6\..*/.test(process.version)) {
             ),
             {
               ext: ".json",
-              name: "updated-path-snapshot"
+              name: "updated-path-snapshot",
             }
           );
         }
@@ -89,7 +89,7 @@ if (!/^v6\..*/.test(process.version)) {
         Object.entries(byExtension).forEach(([ext, files]) => {
           snapshot(files.join("\n\n"), {
             ext,
-            name: "snapshot"
+            name: "snapshot",
           });
         });
       });

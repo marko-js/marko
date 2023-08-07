@@ -31,14 +31,14 @@ module.exports = function migrator(elNode, context) {
   let replacement = renderCallToDynamicTag(functionAst, context);
 
   if (replacement) {
-    elNode.forEachAttribute(attr => {
+    elNode.forEachAttribute((attr) => {
       if (attr !== functionAttr) {
         replacement.addAttribute(attr);
       }
     });
   } else {
     replacement = builder.scriptlet({
-      value: functionCallExpression
+      value: functionCallExpression,
     });
   }
 

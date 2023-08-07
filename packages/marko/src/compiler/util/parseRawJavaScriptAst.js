@@ -5,7 +5,7 @@ const espree = require("espree");
 const espreeOptions = {
   range: true,
   sourceType: "script",
-  ecmaVersion: espree.latestEcmaVersion
+  ecmaVersion: espree.latestEcmaVersion,
 };
 
 module.exports = function parseRawJavaScriptAst(parts, src) {

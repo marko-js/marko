@@ -54,7 +54,7 @@ module.exports = function migrate(el, context) {
     componentModule = {
       legacy: true,
       filename,
-      requirePath: literalValue
+      requirePath: literalValue,
     };
   }
 
@@ -80,18 +80,18 @@ module.exports = function migrate(el, context) {
           message:
             "A widget file was discovered, would you like to migrate that as well?\n" +
             "Note: widget migrations are not 100% safe and should be tested after migration.",
-          initial: true
+          initial: true,
         })
-        .then(shouldMigrate => {
+        .then((shouldMigrate) => {
           if (shouldMigrate) {
             el.removeAttribute("w-bind");
             return helpers.run("componentFile", {
               templateFile: context.filename,
-              componentFile: componentModule.filename
+              componentFile: componentModule.filename,
             });
           }
         });
-    }
+    },
   });
 };
 
@@ -103,19 +103,19 @@ function getDefaultWidgetFile(dirname) {
     return {
       filename,
       requirePath: "./widget",
-      legacy
+      legacy,
     };
   } else if ((filename = resolveFrom(dirname, "./component"))) {
     return {
       filename,
       requirePath: "./component",
-      legacy
+      legacy,
     };
   } else if ((filename = resolveFrom(dirname, "./"))) {
     return {
       filename,
       requirePath: "./",
-      legacy
+      legacy,
     };
   } else {
     return null;

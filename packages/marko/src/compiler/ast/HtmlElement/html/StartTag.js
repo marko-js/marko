@@ -29,7 +29,7 @@ class StartTag extends Node {
     if (this.includeDataMarko) {
       var dataMarkoArgs = [
         builder.identifier("out"),
-        builder.identifier("__component")
+        builder.identifier("__component"),
       ];
 
       var properties = this.properties;
@@ -39,7 +39,7 @@ class StartTag extends Node {
         if (propKeys.length) {
           dataMarkoArgs.push(
             builder.objectExpression(
-              propKeys.map(propName => {
+              propKeys.map((propName) => {
                 return builder.property(
                   builder.literal(propName),
                   properties[propName]
@@ -68,7 +68,7 @@ class StartTag extends Node {
     }
 
     if (attributes) {
-      var hasSpread = attributes.find(attr => attr.spread);
+      var hasSpread = attributes.find((attr) => attr.spread);
       if (!hasSpread) {
         for (let i = 0; i < attributes.length; i++) {
           let attr = attributes[i];

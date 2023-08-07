@@ -19,19 +19,19 @@ function flattenAttrConcats(node) {
       if (isString) {
         return {
           isString: true,
-          concats: left.concats.concat(right.concats)
+          concats: left.concats.concat(right.concats),
         };
       } else {
         return {
           isString: false,
-          concats: [node]
+          concats: [node],
         };
       }
     }
 
     return {
       isString: isStringLiteral(node) || node.type === "AttributePlaceholder",
-      concats: [node]
+      concats: [node],
     };
   }
 
@@ -125,7 +125,7 @@ module.exports = function generateCode(node, codegen) {
     return [
       builder.htmlLiteral(" " + name + "("),
       builder.htmlLiteral(argument),
-      builder.htmlLiteral(")")
+      builder.htmlLiteral(")"),
     ];
   } else {
     // Attribute with no value is a boolean attribute

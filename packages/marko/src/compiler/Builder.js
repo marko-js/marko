@@ -65,7 +65,7 @@ function makeNode(arg) {
   } else if (arg == null) {
     return undefined;
   } else if (Array.isArray(arg)) {
-    return arg.map(arg => {
+    return arg.map((arg) => {
       return makeNode(arg);
     });
   } else {
@@ -209,7 +209,7 @@ class Builder {
         : {
             params: makeNode(params),
             of: makeNode(ofExpression),
-            body
+            body,
           }
     );
   }
@@ -221,7 +221,7 @@ class Builder {
         : {
             params: makeNode(params),
             in: makeNode(inExpression),
-            body
+            body,
           }
     );
   }
@@ -235,7 +235,7 @@ class Builder {
             from: makeNode(from),
             to: makeNode(to),
             step: makeNode(step),
-            body
+            body,
           }
     );
   }
@@ -299,7 +299,7 @@ class Builder {
         body,
         argument,
         openTagOnly,
-        selfClosed
+        selfClosed,
       });
     }
   }
@@ -377,7 +377,7 @@ class Builder {
       return new Assignment({
         left: moduleExports,
         right: value,
-        operator: "="
+        operator: "=",
       });
     } else {
       return moduleExports;
@@ -432,7 +432,7 @@ class Builder {
         }
       } else {
         let propertiesObject = properties;
-        properties = Object.keys(propertiesObject).map(key => {
+        properties = Object.keys(propertiesObject).map((key) => {
           let value = propertiesObject[key];
           if (!(value instanceof Node)) {
             value = value = new Literal({ value });
@@ -509,7 +509,7 @@ class Builder {
 
     let callee = new MemberExpression({
       object: new Identifier({ name: "require" }),
-      property: new Identifier({ name: "resolve" })
+      property: new Identifier({ name: "resolve" }),
     });
 
     let args = [path];
@@ -526,7 +526,7 @@ class Builder {
     return new Scriptlet({
       code: scriptlet.value,
       tag: scriptlet.tag,
-      block: scriptlet.block
+      block: scriptlet.block,
     });
   }
 
@@ -615,11 +615,11 @@ class Builder {
           }
           if (typeof declaration === "string") {
             declarations[i] = new VariableDeclarator({
-              id: new Identifier({ name: declaration })
+              id: new Identifier({ name: declaration }),
             });
           } else if (declaration instanceof Identifier) {
             declarations[i] = new VariableDeclarator({
-              id: declaration
+              id: declaration,
             });
           } else if (typeof declaration === "object") {
             if (!(declaration instanceof VariableDeclarator)) {
@@ -640,14 +640,14 @@ class Builder {
 
               declarations[i] = new VariableDeclarator({
                 id,
-                init
+                init,
               });
             }
           }
         }
       } else if (typeof declarations === "object") {
         // Convert the object into an array of variables
-        declarations = Object.keys(declarations).map(key => {
+        declarations = Object.keys(declarations).map((key) => {
           let id = new Identifier({ name: key });
           let init = makeNode(declarations[key]);
           return new VariableDeclarator({ id, init });

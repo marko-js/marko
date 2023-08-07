@@ -114,7 +114,7 @@ AsyncValue.prototype = {
       // notify callbacks
       notifyCallbacks(this, null, value);
     }
-  }
+  },
 };
 
 module.exports = AsyncValue;

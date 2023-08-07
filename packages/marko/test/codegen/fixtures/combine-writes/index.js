@@ -20,11 +20,11 @@ module.exports = function (builder) {
             [
               functionCall("foo"),
               htmlElement("li", [], [text("color")]),
-              functionCall("bar")
+              functionCall("bar"),
             ]
-          )
-        ])
+          ),
+        ]),
       ]
-    )
+    ),
   ]);
 };

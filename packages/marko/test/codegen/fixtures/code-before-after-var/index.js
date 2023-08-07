@@ -3,11 +3,11 @@
 module.exports = function (builder) {
   var vars = builder.vars(["foo"]);
 
-  vars.onBeforeGenerateCode(event => {
+  vars.onBeforeGenerateCode((event) => {
     event.insertCode(builder.functionCall("before", []));
   });
 
-  vars.onAfterGenerateCode(event => {
+  vars.onAfterGenerateCode((event) => {
     event.insertCode(builder.functionCall("after", []));
   });
 

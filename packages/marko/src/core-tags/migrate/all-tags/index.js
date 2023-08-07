@@ -17,13 +17,13 @@ const commonMigrators = [
   require("./w-on"),
   require("./w-preserve"),
   require("./w-preserve-attrs"),
-  require("./widget-in-attrs")
+  require("./widget-in-attrs"),
 ];
 
 module.exports = function (el, context) {
   if (el.detachNode) {
     return false;
   }
-  commonMigrators.forEach(migrator => migrator(el, context));
+  commonMigrators.forEach((migrator) => migrator(el, context));
   return true;
 };

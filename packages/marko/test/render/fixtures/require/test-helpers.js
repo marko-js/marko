@@ -4,5 +4,5 @@ module.exports = {
   },
   upperCase: function (str) {
     return str ? str.toUpperCase(str) : str;
-  }
+  },
 };

@@ -23,12 +23,12 @@ module.exports = function (helpers) {
     [15],
     [7],
     [19],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
 
   var component = helpers.mount(require.resolve("./index.marko"), {});
 
-  changes.forEach(array => {
+  changes.forEach((array) => {
     component.array = array;
     component.forceUpdate();
     component.update();

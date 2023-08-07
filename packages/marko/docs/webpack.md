@@ -40,19 +40,19 @@ module.exports = {
   entry: "./client.js",
   output: {
     path: __dirname,
-    filename: "static/bundle.js"
+    filename: "static/bundle.js",
   },
   resolve: {
-    extensions: [".js", ".marko"]
+    extensions: [".js", ".marko"],
   },
   module: {
     rules: [
       {
         test: /\.marko$/,
-        loader: "@marko/webpack/loader"
-      }
-    ]
-  }
+        loader: "@marko/webpack/loader",
+      },
+    ],
+  },
 };
 ```
 
@@ -96,8 +96,8 @@ module: {
     //...
     {
       test: /\.less$/, // matches style.less { ... } from our template
-      use: ["style-loader", "css-loader", "less-loader"]
-    }
+      use: ["style-loader", "css-loader", "less-loader"],
+    },
     //...
   ];
 }
@@ -120,25 +120,25 @@ const CSSExtractPlugin = require("mini-css-extract-plugin");
 module.exports = {
   entry: "./client.js",
   resolve: {
-    extensions: [".js", ".marko"]
+    extensions: [".js", ".marko"],
   },
   module: {
     rules: [
       {
         test: /\.marko$/,
-        loader: "@marko/webpack/loader"
+        loader: "@marko/webpack/loader",
       },
       {
         test: /\.(less|css)$/,
-        use: [CSSExtractPlugin.loader, "css-loader", "less-loader"]
-      }
-    ]
+        use: [CSSExtractPlugin.loader, "css-loader", "less-loader"],
+      },
+    ],
   },
   plugins: [
     // Write out CSS bundle to its own file:
     new CSSExtractPlugin({
-      filename: "[name].css"
-    })
-  ]
+      filename: "[name].css",
+    }),
+  ],
 };
 ```

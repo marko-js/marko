@@ -15,5 +15,5 @@ module.exports = {
 
   emitTestEvent: function () {
     this.emit("testEvent", "a", "b");
-  }
+  },
 };

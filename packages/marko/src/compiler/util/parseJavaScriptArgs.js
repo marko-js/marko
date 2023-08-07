@@ -11,7 +11,7 @@ function parseJavaScriptArgs(args, builder) {
   const ast = parseRawJavaScriptAst`_(${args})`;
 
   return ast.body[0].expression.arguments.map(
-    node =>
+    (node) =>
       convertRawJavaScriptAst(node, builder) ||
       builder.expression(ast.source.slice(node.range[0], node.range[1]), ast)
   );

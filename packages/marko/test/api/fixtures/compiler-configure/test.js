@@ -4,7 +4,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
   expect(markoCompiler.config.preserveWhitespace).to.equal(false);
 
   markoCompiler.configure({
-    preserveWhitespace: true
+    preserveWhitespace: true,
   });
   expect(markoCompiler.config.writeToDisk).to.equal(true);
   expect(markoCompiler.config.preserveWhitespace).to.equal(true);

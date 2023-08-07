@@ -63,7 +63,7 @@ exports.enable = function (options) {
       hotReloadData = template[HOT_RELOAD_KEY] = {
         modifiedId: modifiedId,
         latest: template,
-        originals: {}
+        originals: {},
       };
     }
 
@@ -118,7 +118,7 @@ exports.enable = function (options) {
           originalTemplate,
           "_"
         );
-      }
+      },
     });
 
     return originalTemplate;
@@ -192,7 +192,7 @@ exports.handleFileModified = function (path, options) {
     handleFileModified();
     // If we taglib was modified then uncache *all* templates so that they will
     // all be reloaded
-    Object.keys(require.cache).forEach(filename => {
+    Object.keys(require.cache).forEach((filename) => {
       if (filename.endsWith(".marko") || filename.endsWith(".marko.js")) {
         delete require.cache[filename];
       }

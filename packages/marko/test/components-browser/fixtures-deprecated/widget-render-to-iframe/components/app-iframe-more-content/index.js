@@ -3,5 +3,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getValue: function () {
     return this.getEl("input").value;
-  }
+  },
 });

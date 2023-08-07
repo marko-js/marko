@@ -58,7 +58,7 @@ function transformTreeHelper(node, context) {
 }
 
 function transformTree(rootNode, context) {
-  context.taglibLookup.forEachTemplateTransformer(transformer => {
+  context.taglibLookup.forEachTemplateTransformer((transformer) => {
     var transformFunc = transformer.getFunc();
     rootNode = transformFunc(rootNode, context) || rootNode;
   });
@@ -111,7 +111,7 @@ class CompiledTemplate {
     var meta = this.context.meta;
     if (meta) {
       var root = path.dirname(this.filename);
-      return (meta.deps || []).map(dep => resolveDep(dep, root));
+      return (meta.deps || []).map((dep) => resolveDep(dep, root));
     } else {
       return [];
     }
@@ -151,7 +151,7 @@ class Compiler {
 
     // STAGE 1: Parse the template to produce the initial AST
     var ast = this.parser.parse(src, context, {
-      migrate: true && !process.env.MARKO_NO_MIGRATE
+      migrate: true && !process.env.MARKO_NO_MIGRATE,
     });
     // console.log('ROOT', JSON.stringify(ast, null, 2));
 

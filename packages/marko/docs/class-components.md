@@ -110,7 +110,7 @@ In your `component.js` file, export the component’s class:
 module.exports = class {
   onCreate() {
     this.state = {
-      count: 0
+      count: 0,
     };
   }
   increment() {
@@ -144,12 +144,12 @@ If you target browsers that does not support classes, a plain object of methods 
 module.exports = {
   onCreate: function () {
     this.state = {
-      count: 0
+      count: 0,
     };
   },
   increment: function () {
     this.state.count++;
-  }
+  },
 };
 ```
 
@@ -217,7 +217,7 @@ class {
 module.exports = {
   shout() {
     alert(`My favorite number is ${this.number}!`);
-  }
+  },
 };
 ```
 
@@ -626,7 +626,7 @@ Destroys the component by unsubscribing from all listeners made using the `subsc
 ```js
 component.destroy({
   removeNode: false, // true by default
-  recursive: false // true by default
+  recursive: false, // true by default
 });
 ```
 
@@ -748,7 +748,7 @@ Changes the value of multiple state properties:
 ```js
 this.setState({
   disabled: true,
-  size: "large"
+  size: "large",
 });
 ```
 

@@ -13,6 +13,6 @@ module.exports = function (builder) {
       strictEquality("a", "1"),
       [assignment("foo", literal(1))],
       elseStatement([assignment("foo", literal(2))])
-    )
+    ),
   ]);
 };

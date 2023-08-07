@@ -3,8 +3,8 @@ module.exports = require("marko/legacy-components").defineComponent({
   getTemplateData: function (state, input) {
     return {
       preserveCondition: input.preserveCondition,
-      renderId: input.renderId || 0
+      renderId: input.renderId || 0,
     };
   },
-  init: function () {}
+  init: function () {},
 });

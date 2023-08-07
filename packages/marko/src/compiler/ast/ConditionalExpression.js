@@ -38,7 +38,7 @@ class ConditionalExpression extends Node {
       type: "ConditionalExpression",
       test: this.test,
       consequent: this.consequent,
-      alternate: this.alternate
+      alternate: this.alternate,
     };
   }
 

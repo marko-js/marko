@@ -13,5 +13,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getFrameEl: function () {
     return this.getEl("frame");
-  }
+  },
 });

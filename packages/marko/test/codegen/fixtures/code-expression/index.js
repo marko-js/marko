@@ -7,6 +7,6 @@ module.exports = function (builder) {
   var literal = builder.literal;
 
   return program([
-    ifStatement(builder.code("a === b"), [assignment("foo", literal("bar"))])
+    ifStatement(builder.code("a === b"), [assignment("foo", literal("bar"))]),
   ]);
 };

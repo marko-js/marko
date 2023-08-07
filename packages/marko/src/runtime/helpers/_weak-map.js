@@ -10,6 +10,6 @@ module.exports =
       },
       set: function (ref, value) {
         ref[id] = value;
-      }
+      },
     };
   };

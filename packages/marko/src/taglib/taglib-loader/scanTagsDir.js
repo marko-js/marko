@@ -14,7 +14,7 @@ const tagFileTypes = [
   "renderer",
   "transformer",
   "code-generator",
-  "node-factory"
+  "node-factory",
 ];
 
 const searchFiles = [
@@ -25,7 +25,7 @@ const searchFiles = [
   { name: "template.html", type: "template" },
   { name: "code-generator", type: "code-generator" },
   { name: "node-factory", type: "node-factory" },
-  { name: "transformer", type: "transformer" }
+  { name: "transformer", type: "transformer" },
 ];
 
 function createDefaultTagDef() {
@@ -34,9 +34,9 @@ function createDefaultTagDef() {
       "*": {
         type: "string",
         targetProperty: null,
-        preserveName: false
-      }
-    }
+        preserveName: false,
+      },
+    },
   };
 }
 
@@ -44,7 +44,7 @@ function getFileMap(dirname) {
   let fileMap = {};
   let files = fs.readdirSync(dirname);
 
-  files.forEach(file => {
+  files.forEach((file) => {
     let extName = nodePath.extname(file);
     let baseName = file.slice(0, -1 * extName.length);
     let fullPath = nodePath.join(dirname, file);

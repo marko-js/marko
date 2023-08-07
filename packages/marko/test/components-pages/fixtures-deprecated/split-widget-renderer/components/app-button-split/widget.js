@@ -7,5 +7,5 @@ module.exports = require("marko-widgets").defineWidget({
   },
   setLabel: function (label) {
     this.el.innerHTML = label;
-  }
+  },
 });

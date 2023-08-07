@@ -135,12 +135,12 @@ class CodeGenerator {
 
   _generateCode(node, finalNodes) {
     if (isArray(node)) {
-      node.forEach(child => {
+      node.forEach((child) => {
         this._generateCode(child, finalNodes);
       });
       return;
     } else if (node instanceof Container) {
-      node.forEach(child => {
+      node.forEach((child) => {
         if (child.container === node) {
           this._generateCode(child, finalNodes);
         }

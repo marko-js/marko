@@ -8,7 +8,7 @@ module.exports = function codeGenerator(el, codegen) {
   var bodyFunc = builder.renderBodyFunction(el.body, [
     builder.identifierOut(),
     builder.identifier("__component"),
-    builder.identifier("state")
+    builder.identifier("state"),
   ]);
 
   var componentProps = el.getAttributeValue("props");

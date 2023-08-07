@@ -5,7 +5,7 @@ const { callbackProvider } = require("../../../__util__/async-helpers");
 exports.templateData = {
   outer: callbackProvider(1, {}),
   inner1: callbackProvider(2, {}),
-  inner2: callbackProvider(3, {})
+  inner2: callbackProvider(3, {}),
 };
 
 exports.checkEvents = function (events, snapshot, out) {
@@ -18,7 +18,7 @@ exports.checkEvents = function (events, snapshot, out) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

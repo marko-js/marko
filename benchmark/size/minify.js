@@ -35,7 +35,7 @@ var minifiers = {
     const gcc = require("google-closure-compiler-js");
     const options = {
       jsCode: [{ src: src }],
-      languageIn: "ES5"
+      languageIn: "ES5",
     };
 
     const out = gcc.compile(options);
@@ -49,7 +49,7 @@ var minifiers = {
   uglify: function minifyUglifyJS(src, file) {
     try {
       return UglifyJS.minify(src, {
-        fromString: true
+        fromString: true,
       }).code;
     } catch (e) {
       if (e.line != null) {
@@ -65,7 +65,7 @@ var minifiers = {
     var withGCC = minifiers.gcc(src, file);
     var withBoth = minifiers.uglify(withGCC, file);
     return withBoth.length < withGCC.length ? withBoth : withGCC;
-  }
+  },
 };
 
 var minifier = minifiers.both;
@@ -76,7 +76,7 @@ var sizes = {};
 
 var targetLib = process.argv[2];
 
-bundleFiles.forEach(filename => {
+bundleFiles.forEach((filename) => {
   if (!filename.endsWith(".js")) {
     return;
   }

@@ -6,5 +6,5 @@ module.exports = {
   ___componentByDOMNode: new WeakMap(),
   ___detachedByDOMNode: new WeakMap(),
   ___keyByDOMNode: new WeakMap(),
-  ___ssrKeyedElementsByComponentId: {}
+  ___ssrKeyedElementsByComponentId: {},
 };

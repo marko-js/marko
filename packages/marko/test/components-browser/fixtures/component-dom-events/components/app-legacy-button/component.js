@@ -19,5 +19,5 @@ module.exports = {
     expect(el.getAttribute("class")).to.equal("app-legacy-button");
     this.log("click");
     expect(this.name).to.equal("app-legacy-button");
-  }
+  },
 };

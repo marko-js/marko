@@ -2,26 +2,26 @@
 var tokenizer = require("./tokenizer").create([
   {
     name: "stringDouble",
-    pattern: /"(?:[^"]|\\")*"/
+    pattern: /"(?:[^"]|\\")*"/,
   },
   {
     name: "stringSingle",
-    pattern: /'(?:[^']|\\')*'/
+    pattern: /'(?:[^']|\\')*'/,
   },
   {
     name: "singleLineComment",
-    pattern: /\/\/.*/
+    pattern: /\/\/.*/,
   },
   {
     name: "multiLineComment",
-    pattern: /\/\*(?:[\s\S]*?)\*\//
-  }
+    pattern: /\/\*(?:[\s\S]*?)\*\//,
+  },
 ]);
 
 module.exports = function removeComments(str) {
   var comments = [];
 
-  tokenizer.forEachToken(str, token => {
+  tokenizer.forEachToken(str, (token) => {
     switch (token.name) {
       case "singleLineComment":
       case "multiLineComment":

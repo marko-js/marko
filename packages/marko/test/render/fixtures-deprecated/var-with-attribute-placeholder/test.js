@@ -1,4 +1,4 @@
 exports.templateData = {
   firstName: "Hello",
-  lastName: "World"
+  lastName: "World",
 };

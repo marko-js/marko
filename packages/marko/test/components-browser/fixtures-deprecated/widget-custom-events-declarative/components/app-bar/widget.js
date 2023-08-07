@@ -12,7 +12,7 @@ function Widget(config) {
 Widget.prototype = {
   emitTestEvent: function () {
     this.emit("testEvent", "a", "b");
-  }
+  },
 };
 
 exports.Widget = Widget;

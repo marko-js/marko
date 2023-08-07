@@ -11,11 +11,11 @@ var autotest = require("../autotest");
 var marko = require("../../");
 var markoCompiler = require("../../compiler");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     require(resolve("test.js")).check(
       marko,
       markoCompiler,
@@ -26,11 +26,11 @@ autotest("fixtures", fixture => {
   });
 });
 
-autotest("fixtures-deprecated", fixture => {
+autotest("fixtures-deprecated", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     require(resolve("test.js")).check(
       marko,
       markoCompiler,

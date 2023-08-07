@@ -15,21 +15,21 @@ const browser = createBrowserWithMarko(__dirname, "<html><body></body></html>");
 autotest("fixtures", {
   html: testRunner,
   vdom: testRunner,
-  "html ≅ vdom": compareNormalized
+  "html ≅ vdom": compareNormalized,
 });
 
 autotest("fixtures-deprecated", {
   html: testRunner,
   vdom: testRunner,
-  "html ≅ vdom": compareNormalized
+  "html ≅ vdom": compareNormalized,
 });
 
 autotest("fixtures-async-callback", {
-  html: testRunner
+  html: testRunner,
 });
 
 autotest("fixtures-async-deprecated", {
-  html: testRunner
+  html: testRunner,
 });
 
 function testRunner(fixture) {
@@ -66,7 +66,7 @@ async function runRenderTest(fixture) {
       output: output,
       writeToDisk: main.writeToDisk !== false,
       preserveWhitespace: main.preserveWhitespaceGlobal === true,
-      ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true
+      ignoreUnrecognizedTags: main.ignoreUnrecognizedTags === true,
     };
 
     require("marko/compiler").configure(compilerOptions);
@@ -84,7 +84,7 @@ async function runRenderTest(fixture) {
         e = _e;
         let errorFile = path.join(dir, "error.txt");
         fs.writeFileSync(errorFile, e.stack.toString(), {
-          encoding: "utf8"
+          encoding: "utf8",
         });
       }
 
@@ -110,7 +110,7 @@ async function runRenderTest(fixture) {
         : template.createOut(
             {},
             {
-              write: data => (html += data),
+              write: (data) => (html += data),
               flush: () => {
                 if (!main.noFlushComment) {
                   html += "<!--FLUSH-->";
@@ -119,7 +119,7 @@ async function runRenderTest(fixture) {
               end: () => {
                 html = html.replace(/<!--FLUSH-->$/, "");
                 out.emit("finish");
-              }
+              },
             }
           );
       let asyncEventsVerifier = createAsyncVerifier(
@@ -138,25 +138,25 @@ async function runRenderTest(fixture) {
 
         actualNode.normalize();
         let vdomString = domToString(actualNode, {
-          childrenOnly: true
+          childrenOnly: true,
         });
 
         snapshot(vdomString, {
           name: "vdom",
-          ext: ".html"
+          ext: ".html",
         });
 
         fixture.context.vdom = normalizeHtml(actualNode);
       } else {
         if (main.checkHtml) {
           fs.writeFileSync(path.join(dir, "actual.html"), html, {
-            encoding: "utf8"
+            encoding: "utf8",
           });
           main.checkHtml(html);
         } else {
           snapshot(html, {
             ext: ".html",
-            format: toDiffableHtml
+            format: toDiffableHtml,
           });
         }
 
@@ -202,14 +202,14 @@ function normalizeHtml(htmlOrNode) {
       // sort attrs by name.
       Array.from(node.attributes)
         .sort((a, b) => a.name.localeCompare(b.name))
-        .forEach(attr => {
+        .forEach((attr) => {
           node.removeAttributeNode(attr);
           node.setAttributeNode(attr);
         });
     }
   }
 
-  nodesToRemove.forEach(n => n.remove());
+  nodesToRemove.forEach((n) => n.remove());
   document.body.innerHTML = document.body.innerHTML;
   document.body.normalize();
 
@@ -248,7 +248,7 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
 
       events.push({
         event: event,
-        arg: Object.assign({}, arg)
+        arg: Object.assign({}, arg),
       });
     });
   };
@@ -269,9 +269,9 @@ function createAsyncVerifier(main, snapshot, out, isVDOM) {
         expect(events).to.deep.equal([
           "await:begin",
           "await:beforeRender",
-          "await:finish"
+          "await:finish",
         ]);
       });
-    }
+    },
   };
 }

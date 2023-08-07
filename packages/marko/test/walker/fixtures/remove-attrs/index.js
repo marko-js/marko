@@ -16,8 +16,8 @@ module.exports = function (compiler) {
       {
         class: literal("colors"),
         if: {
-          argument: "notEmpty(data.colors)"
-        }
+          argument: "notEmpty(data.colors)",
+        },
       },
       [
         htmlElement(
@@ -25,13 +25,13 @@ module.exports = function (compiler) {
           {
             class: literal("color"),
             for: {
-              argument: "color in data.colors"
-            }
+              argument: "color in data.colors",
+            },
           },
           [text("color")]
-        )
+        ),
       ]
-    )
+    ),
   ]);
 
   let walker = compiler.createWalker({
@@ -47,7 +47,7 @@ module.exports = function (compiler) {
           node.removeAttribute("if");
         }
       }
-    }
+    },
   });
 
   walker.walk(rootNode);

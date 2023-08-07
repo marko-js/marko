@@ -2,6 +2,6 @@
 
 module.exports = function (builder) {
   return builder.renderBodyFunction([
-    builder.text(builder.literal("Hello World!"))
+    builder.text(builder.literal("Hello World!")),
   ]);
 };

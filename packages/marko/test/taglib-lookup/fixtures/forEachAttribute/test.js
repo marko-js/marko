@@ -4,7 +4,7 @@ exports.check = function (markoCompiler, expect, snapshot) {
 
   var attrNames = [];
 
-  lookup.forEachAttribute("foo", attr => {
+  lookup.forEachAttribute("foo", (attr) => {
     attrNames.push(attr.name);
   });
 

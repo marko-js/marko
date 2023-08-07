@@ -37,7 +37,7 @@ class ComponentArgs {
       options.eventType,
       options.targetMethod,
       options.isOnce,
-      options.extraArgs
+      options.extraArgs,
     ]);
   }
 
@@ -66,7 +66,7 @@ class ComponentArgs {
         return codegen.builder.functionCall(tagVar, tagArgs);
       };
     } else {
-      el.onBeforeGenerateCode(event => {
+      el.onBeforeGenerateCode((event) => {
         let funcTarget = builder.memberExpression(
           builder.identifierOut(),
           builder.identifier("c")
@@ -76,7 +76,7 @@ class ComponentArgs {
         event.insertCode(builder.functionCall(funcTarget, funcArgs));
       });
 
-      el.onAfterGenerateCode(event => {
+      el.onAfterGenerateCode((event) => {
         let funcTarget = builder.memberExpression(
           builder.identifierOut(),
           builder.identifier("c")

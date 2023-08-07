@@ -66,7 +66,7 @@ class NewExpression extends Node {
     return {
       type: "NewExpression",
       callee: this.callee,
-      args: this.args
+      args: this.args,
     };
   }
 

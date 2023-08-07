@@ -4,7 +4,7 @@ module.exports = function (helpers) {
   helpers.mount(require.resolve("./components/app-checkbox"), {
     checked: true,
     class: "my-checkbox",
-    data: 123
+    data: 123,
   });
 
   expect(helpers.targetEl.children.length).to.equal(1);

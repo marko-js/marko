@@ -24,14 +24,14 @@ function createCache() {
 
         callback(null, value);
       });
-    }
+    },
   };
 }
 
 var defaultCacheManager = {
   getCache: function (cacheName) {
     return caches[cacheName] || (caches[cacheName] = createCache());
-  }
+  },
 };
 
 module.exports = defaultCacheManager;

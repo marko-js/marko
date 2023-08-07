@@ -5,5 +5,5 @@ module.exports = {
 
   getButton1: function () {
     return this.getComponent("button1");
-  }
+  },
 };

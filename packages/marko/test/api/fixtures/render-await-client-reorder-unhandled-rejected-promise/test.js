@@ -8,12 +8,12 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
   template.render(
     {
-      userPromise: promiseProvider(1, new Error("User Promise Rejected Error"))
+      userPromise: promiseProvider(1, new Error("User Promise Rejected Error")),
     },
     out
   );
 
-  out.on("error", err => {
+  out.on("error", (err) => {
     expect(err.message.indexOf("User Promise Rejected Error") !== -1).to.equal(
       true
     );

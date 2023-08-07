@@ -13,14 +13,14 @@ class Declaration extends Node {
     return [
       builder.htmlLiteral("<?"),
       codegen.generateCode(builder.text(this.declaration)),
-      builder.htmlLiteral("?>")
+      builder.htmlLiteral("?>"),
     ];
   }
 
   toJSON() {
     return {
       type: this.type,
-      value: this.value
+      value: this.value,
     };
   }
 }

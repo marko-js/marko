@@ -28,7 +28,7 @@ module.exports = function (helpers) {
   );
   expect(widget.logOutput).to.deep.equal([
     "button>span:mousemove",
-    "el:mousemove"
+    "el:mousemove",
   ]);
 
   widget.clearLog();

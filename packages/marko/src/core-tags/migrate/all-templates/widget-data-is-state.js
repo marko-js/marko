@@ -8,9 +8,9 @@ module.exports = function migrator(el, context) {
     apply() {
       context.root.prependChild(
         context.builder.scriptlet({
-          value: "var data = state"
+          value: "var data = state",
         })
       );
-    }
+    },
   });
 };

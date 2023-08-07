@@ -53,8 +53,8 @@ module.exports = function migrator(elNode, context) {
       elNode.insertSiblingBefore(
         builder.scriptlet({
           value: builder.vars({
-            [identifierName]: target
-          })
+            [identifierName]: target,
+          }),
         })
       );
 

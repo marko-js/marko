@@ -4,8 +4,8 @@ module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index.marko"), {
     $global: {
       name: "Frank",
-      serializedGlobals: { name: true }
-    }
+      serializedGlobals: { name: true },
+    },
   });
 
   expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");

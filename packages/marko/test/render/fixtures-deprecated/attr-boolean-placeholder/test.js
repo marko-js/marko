@@ -2,17 +2,17 @@ exports.templateData = {
   options: [
     {
       value: "red",
-      selected: false
+      selected: false,
     },
     {
       value: "green",
-      selected: true
+      selected: true,
     },
     {
       value: "blue",
-      selected: false
-    }
+      selected: false,
+    },
   ],
   disabled: false,
-  checked: true
+  checked: true,
 };

@@ -4,16 +4,16 @@ module.exports = function (helpers) {
   var fields = [
     {
       value: "name",
-      label: "Name"
+      label: "Name",
     },
     {
       value: "age",
-      label: "Age"
-    }
+      label: "Age",
+    },
   ];
 
   var component = helpers.mount(require.resolve("./index"), {
-    fields: fields
+    fields: fields,
   });
 
   var inputs = component.getEl("root").querySelectorAll("input");

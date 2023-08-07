@@ -14,7 +14,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var template = require("./template.marko");
   template
     .stream({
-      name: "John"
+      name: "John",
     })
     .pipe(outStream)
     .on("error", function (e) {

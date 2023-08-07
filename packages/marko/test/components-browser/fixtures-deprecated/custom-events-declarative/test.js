@@ -10,14 +10,14 @@ module.exports = function (helpers) {
   component.handleTestEvent1 = function () {
     received1.push({
       args: arguments,
-      component: arguments[arguments.length - 1]
+      component: arguments[arguments.length - 1],
     });
   };
 
   component.handleTestEvent2 = function () {
     received2.push({
       args: arguments,
-      component: arguments[arguments.length - 1]
+      component: arguments[arguments.length - 1],
     });
   };
 

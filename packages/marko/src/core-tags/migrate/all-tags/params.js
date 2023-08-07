@@ -17,7 +17,7 @@ function enableTagParams(el, context) {
     el.params = context.builder.parseJavaScriptParams(el.argument);
     delete el.argument;
   }
-  el.forEachChild(childNode => {
+  el.forEachChild((childNode) => {
     if (isNestedTag(childNode)) {
       enableTagParams(childNode, context);
     }

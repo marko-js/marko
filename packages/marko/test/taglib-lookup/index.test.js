@@ -11,7 +11,7 @@ var markoCompiler = require("../../compiler");
 
 markoCompiler.buildTaglibLookup(__dirname);
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;

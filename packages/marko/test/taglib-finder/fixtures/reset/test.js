@@ -5,7 +5,7 @@ exports.check = function (taglibFinder) {
   var finderDir = nodePath.join(__dirname, "a/b/c");
 
   function getPaths() {
-    return taglibFinder.find(finderDir, []).map(taglib => {
+    return taglibFinder.find(finderDir, []).map((taglib) => {
       return taglib.path;
     });
   }

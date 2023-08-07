@@ -3,7 +3,7 @@ module.exports = require("marko-widgets").defineComponent({
   getTemplateData(state, input) {
     return {
       x: input.x,
-      y: state.y
+      y: state.y,
     };
-  }
+  },
 });

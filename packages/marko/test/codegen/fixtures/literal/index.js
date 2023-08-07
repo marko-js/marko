@@ -7,12 +7,12 @@ module.exports = function (builder) {
     aBoolean: builder.literal(false),
     anObject: builder.literal({
       foo: "bar",
-      dynamic: builder.expression("data.name")
+      dynamic: builder.expression("data.name"),
     }),
     anArray: builder.literal(["foo", builder.expression("data.name")]),
     literalTrue: builder.literalTrue(),
     literalFalse: builder.literalFalse(),
     literalNull: builder.literalNull(),
-    literalUndefined: builder.literalUndefined()
+    literalUndefined: builder.literalUndefined(),
   });
 };

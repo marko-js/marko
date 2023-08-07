@@ -9,7 +9,7 @@ require("lasso").configure({
   outputDir: __dirname + "/static",
   bundlingEnabled: isProduction,
   fingerprintsEnabled: isProduction,
-  minify: isProduction
+  minify: isProduction,
 });
 
 var express = require("express");

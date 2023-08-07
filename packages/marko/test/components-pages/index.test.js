@@ -31,7 +31,7 @@ function run(fixture) {
             flush() {},
             end() {
               resolve(html);
-            }
+            },
           }
         )
         .once("error", reject);
@@ -43,7 +43,7 @@ function run(fixture) {
           browser.require("../../components");
           browser.window.$initComponents();
           browser.require(templateFile);
-        }
+        },
       });
       after(function () {
         browser.window.close();

@@ -2,7 +2,7 @@ const addIdScopedAttr = require("../util/addIdScopedAttr");
 const componentElId = /^component\.(?:getE|e)lId\(.*\)$/;
 
 module.exports = function migrate(el, context) {
-  el.forEachAttribute(attr => {
+  el.forEachAttribute((attr) => {
     let name = attr.name;
     let value = attr.value;
 

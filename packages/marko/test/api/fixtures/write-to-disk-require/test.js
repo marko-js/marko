@@ -7,8 +7,8 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
   requireHook.install({
     compilerOptions: {
-      writeToDisk: true
-    }
+      writeToDisk: true,
+    },
   });
 
   try {
@@ -22,8 +22,8 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
     fs.unlinkSync(compiledPath);
     requireHook.install({
       compilerOptions: {
-        writeToDisk: false
-      }
+        writeToDisk: false,
+      },
     });
   }
 

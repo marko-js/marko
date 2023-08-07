@@ -104,8 +104,8 @@ function render(input, out) {
     "DIV",
     {
       style: marko_styleAttr({
-        backgroundColor: color
-      })
+        backgroundColor: color,
+      }),
     },
     0,
     4
@@ -176,7 +176,7 @@ Marko will produce the following compiled output:
 
 ```js
 var marko_attrs0 = {
-  class: "hello"
+  class: "hello",
 };
 
 function render(input, out) {

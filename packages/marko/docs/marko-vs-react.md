@@ -455,11 +455,11 @@ template:
 function renderColors(colors) {
   return (
     <ul>
-      {colors.map(color => (
+      {colors.map((color) => (
         <li
           className="color"
           style={{
-            backgroundColor: color
+            backgroundColor: color,
           }}
         >
           {color}

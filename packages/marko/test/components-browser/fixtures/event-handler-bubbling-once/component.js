@@ -5,5 +5,5 @@ module.exports = {
 
   onceClick: function () {
     this.numOfInvocations++;
-  }
+  },
 };

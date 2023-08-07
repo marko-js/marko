@@ -5,8 +5,8 @@ var coreAttrHandlers = [
     "marko-preserve-whitespace",
     function (attr, node, el) {
       el.setPreserveWhitespace(true);
-    }
-  ]
+    },
+  ],
 ];
 
 class AttributeTransformer {
@@ -19,7 +19,7 @@ class AttributeTransformer {
   addError(message) {
     this.context.addError({
       node: this.el,
-      message: message
+      message: message,
     });
   }
 }
@@ -47,7 +47,7 @@ module.exports = function transform(el, context) {
         params: el.params,
         openTagOnly: el.openTagOnly,
         selfClosed: el.selfClosed,
-        body: el.body
+        body: el.body,
       }))
     );
   }
@@ -55,7 +55,7 @@ module.exports = function transform(el, context) {
   var attributeTransfomer;
   var node = el;
 
-  el.forEachAttribute(attr => {
+  el.forEachAttribute((attr) => {
     let attrName = attr.name;
     var attrTransformerFunc = attributeTransformers[attrName];
     if (attrTransformerFunc) {

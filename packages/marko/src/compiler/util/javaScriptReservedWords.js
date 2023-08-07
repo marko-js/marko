@@ -62,5 +62,5 @@ module.exports = {
   volatile: true,
   while: true,
   with: true,
-  yield: true
+  yield: true,
 };

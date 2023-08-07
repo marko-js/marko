@@ -12,7 +12,7 @@ module.exports = function codeGenerator(elNode, codegen) {
       Array.from(body.slice(1)).reduce((expr, current) => {
         return builder.binaryExpression(expr, "+", current.argument);
       }, body[0].argument),
-      builder.identifier("component")
+      builder.identifier("component"),
     ]
   );
 };

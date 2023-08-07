@@ -3,11 +3,11 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getInitialState: function () {
     return {
-      x: 1
+      x: 1,
     };
   },
 
   update_x() {
     this.updatedX = true;
-  }
+  },
 });

@@ -3,7 +3,7 @@ var fs = require("fs");
 
 exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   markoCompiler.configure({
-    writeToDisk: false
+    writeToDisk: false,
   });
 
   var templatePath = nodePath.join(__dirname, "template.marko");
@@ -11,7 +11,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   snapshot(template.renderSync({ name: "Frank" }).toString());
 
   markoCompiler.configure({
-    writeToDisk: false
+    writeToDisk: false,
   });
 
   var compiledTemplatePath = nodePath.join(__dirname, "template.marko.js");

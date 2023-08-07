@@ -5,7 +5,7 @@ module.exports = function renderCallToDynamicTag(ast, context) {
   const args = ast.args;
   const callee = ast.callee;
   const argsLength = args.length;
-  const outIndex = args.findIndex(arg => arg.name === "out");
+  const outIndex = args.findIndex((arg) => arg.name === "out");
   const calleeProperty = callee.property && callee.property.name;
 
   if (outIndex === -1) {
@@ -57,7 +57,7 @@ module.exports = function renderCallToDynamicTag(ast, context) {
                   null,
                   [builder.identifier("_"), builder.identifier("out")],
                   [ast]
-                )
+                ),
         });
       }
     }
@@ -87,18 +87,18 @@ function toAttributesOrSpread(val) {
 
   if (
     val.type === "ObjectExpression" &&
-    val.properties.every(prop => !prop.computed)
+    val.properties.every((prop) => !prop.computed)
   ) {
-    return val.properties.map(prop => ({
+    return val.properties.map((prop) => ({
       name: prop.literalKeyValue,
-      value: prop.value
+      value: prop.value,
     }));
   }
 
   return [
     {
       value: val,
-      spread: true
-    }
+      spread: true,
+    },
   ];
 }

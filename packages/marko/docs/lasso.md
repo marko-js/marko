@@ -128,7 +128,7 @@ template.render(data, (err, output) => {
 });
 res.json({
   renderedComponentsList,
-  html
+  html,
 });
 ```
 

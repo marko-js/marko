@@ -3,5 +3,5 @@ module.exports = require("marko-widgets").defineComponent({
 
   init: function () {
     window.fooWidget = this;
-  }
+  },
 });

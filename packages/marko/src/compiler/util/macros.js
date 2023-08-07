@@ -30,7 +30,7 @@ class MacrosContext {
     var functionName = "macro_" + safeVarName(name);
     var macroDef = {
       name: name,
-      functionName: functionName
+      functionName: functionName,
     };
 
     this._byName[name] = macroDef;

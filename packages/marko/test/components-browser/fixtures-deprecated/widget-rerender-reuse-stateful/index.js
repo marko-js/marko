@@ -2,16 +2,16 @@ module.exports = require("marko/legacy-components").defineComponent({
   template: require.resolve("./template.marko"),
   getInitialState: function (input) {
     return {
-      buttonSize: input.buttonSize || "normal"
+      buttonSize: input.buttonSize || "normal",
     };
   },
   getTemplateData: function (state) {
     return {
-      buttonSize: state.buttonSize
+      buttonSize: state.buttonSize,
     };
   },
 
   setButtonSize: function (size) {
     this.setState("buttonSize", size);
-  }
+  },
 });

@@ -5,7 +5,7 @@ exports.checkTemplate = function (compiledTemplate) {
     {
       type: "require",
       run: true,
-      path: __filename
-    }
+      path: __filename,
+    },
   ]);
 };

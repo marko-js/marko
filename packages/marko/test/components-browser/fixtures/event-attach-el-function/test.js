@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var events = (window.events = []);
   var component = helpers.mount(require.resolve("./index"), {
-    colors: ["red"]
+    colors: ["red"],
   });
 
   // When hydrating, the first color item was rendered on the
@@ -16,7 +16,7 @@ module.exports = function (helpers) {
   }
 
   component.input = {
-    colors: ["red", "blue"]
+    colors: ["red", "blue"],
   };
 
   component.update();
@@ -28,7 +28,7 @@ module.exports = function (helpers) {
   );
 
   component.input = {
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   };
 
   component.update();

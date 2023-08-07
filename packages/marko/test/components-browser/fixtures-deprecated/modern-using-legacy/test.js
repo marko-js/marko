@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./template.marko"), {
-    name: "Frank"
+    name: "Frank",
   });
   var widget = component.getComponent("legacy-widget");
 

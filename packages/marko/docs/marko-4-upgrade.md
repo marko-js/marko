@@ -541,7 +541,7 @@ _index.js_
 
 ```js
 module.exports = require("marko-widgets").defineComponent({
-  template: require("./template.marko")
+  template: require("./template.marko"),
   // ...
 });
 ```

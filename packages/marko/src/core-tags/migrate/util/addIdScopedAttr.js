@@ -15,7 +15,7 @@ module.exports = function addIdScopedAttr(context, el, attrValue) {
           );
         }
       }
-    }
+    },
   });
   walker.walk(templateRoot);
 };

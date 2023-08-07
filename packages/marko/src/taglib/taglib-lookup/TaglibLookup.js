@@ -76,7 +76,7 @@ function merge(target, source) {
 class TaglibLookup {
   constructor() {
     this.merged = {
-      attributeGroups: {}
+      attributeGroups: {},
     };
     this.taglibsById = {};
     this._inputFiles = null;
@@ -136,7 +136,7 @@ class TaglibLookup {
       textTransformers: taglib.textTransformers,
       attributes: taglib.attributes,
       patternAttributes: taglib.patternAttributes,
-      attributeGroups: taglib.attributeGroups || {}
+      attributeGroups: taglib.attributeGroups || {},
     });
 
     this._mergeNestedTags(taglib);
@@ -147,7 +147,7 @@ class TaglibLookup {
 
     if (sortedTags === undefined) {
       sortedTags = this._sortedTags = [];
-      this.forEachTag(tag => {
+      this.forEachTag((tag) => {
         sortedTags.push(tag);
       });
       sortedTags.sort(TAG_COMPARATOR);
@@ -228,7 +228,7 @@ class TaglibLookup {
   getTag(element) {
     if (typeof element === "string") {
       element = {
-        tagName: element
+        tagName: element,
       };
     }
     var tags = this.merged.tags;
@@ -243,13 +243,13 @@ class TaglibLookup {
   getAttribute(element, attr) {
     if (typeof element === "string") {
       element = {
-        tagName: element
+        tagName: element,
       };
     }
 
     if (typeof attr === "string") {
       attr = {
-        name: attr
+        name: attr,
       };
     }
 
@@ -332,7 +332,7 @@ class TaglibLookup {
   forEachTagMigrator(element, callback, thisObj) {
     if (typeof element === "string") {
       element = {
-        tagName: element
+        tagName: element,
       };
     }
 
@@ -394,7 +394,7 @@ class TaglibLookup {
   forEachTagTransformer(element, callback, thisObj) {
     if (typeof element === "string") {
       element = {
-        tagName: element
+        tagName: element,
       };
     }
 

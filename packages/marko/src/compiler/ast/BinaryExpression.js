@@ -97,7 +97,7 @@ class BinaryExpression extends Node {
       type: "BinaryExpression",
       left: this.left,
       operator: this.operator,
-      right: this.right
+      right: this.right,
     };
   }
 

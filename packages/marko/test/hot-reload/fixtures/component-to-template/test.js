@@ -5,7 +5,7 @@ var tempDir = nodePath.join(__dirname, "temp");
 
 function copyFiles(dir) {
   var files = fs.readdirSync(dir);
-  files.forEach(file => {
+  files.forEach((file) => {
     var src = fs.readFileSync(nodePath.join(dir, file));
     fs.writeFileSync(nodePath.join(tempDir, file), src);
   });
@@ -43,7 +43,7 @@ exports.check = function (marko, hotReload, expect, snapshot) {
 
   snapshot(component.renderToString({ name: "Frank" }), {
     name: "initial",
-    ext: ".html"
+    ext: ".html",
   });
 
   try {
@@ -58,6 +58,6 @@ exports.check = function (marko, hotReload, expect, snapshot) {
 
   snapshot(component.renderToString({ name: "Jane" }), {
     name: "reloaded",
-    ext: ".html"
+    ext: ".html",
   });
 };

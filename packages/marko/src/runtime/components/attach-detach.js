@@ -48,7 +48,7 @@ function handleNodeDetach(node) {
           if (parentNode) {
             parentNode.removeChild(node);
           }
-        }
+        },
       });
 
       return allowDetach;

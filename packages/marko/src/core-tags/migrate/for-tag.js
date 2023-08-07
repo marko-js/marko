@@ -80,10 +80,10 @@ function migrateForLoop(elNode, context) {
                   builder.variableDeclarator(
                     iteratorResultName,
                     builder.arrayExpression([])
-                  )
+                  ),
                 ]),
                 context
-              )
+              ),
             })
           );
 
@@ -102,12 +102,12 @@ function migrateForLoop(elNode, context) {
                           builder.identifier("push")
                         ),
                         [itemName]
-                      )
+                      ),
                     ]
-                  )
+                  ),
                 ]),
                 context
-              )
+              ),
             })
           );
 
@@ -172,7 +172,7 @@ function migrateForLoop(elNode, context) {
                 builder.memberExpression(parsed.in, parsed.nameVarName, true)
               ),
               context
-            )
+            ),
           })
         );
 
@@ -208,7 +208,7 @@ function migrateForLoop(elNode, context) {
           elNode.insertSiblingBefore(
             builder.scriptlet({
               value: printJS(parsed.init, context),
-              block: true
+              block: true,
             })
           );
         }
@@ -217,7 +217,7 @@ function migrateForLoop(elNode, context) {
           elNode.appendChild(
             builder.scriptlet({
               value: printJS(parsed.update, context),
-              block: true
+              block: true,
             })
           );
         }
@@ -329,7 +329,7 @@ function normalizeParts(parsed, builder) {
     varName: varName,
     from: from,
     to: to,
-    step: step
+    step: step,
   };
 }
 
@@ -354,7 +354,7 @@ function replaceStatusVarInBody(el, context, parsed) {
       indexIdentifier,
       "===",
       builder.binaryExpression(lengthIdentifier, "-", builder.literal(1))
-    )
+    ),
   };
 
   const remapKeys = Object.keys(remaps);
@@ -373,7 +373,7 @@ function replaceStatusVarInBody(el, context, parsed) {
     `${statusVarName}\\.(${remapKeys.join("|")})\\(\\)`,
     "g"
   );
-  const remapReplacer = str =>
+  const remapReplacer = (str) =>
     str.replace(remapRegexp, (_, key) => remapStrings[key]);
   const visitor = {
     enter(node) {
@@ -402,7 +402,7 @@ function replaceStatusVarInBody(el, context, parsed) {
           this.skip();
         }
       }
-    }
+    },
   };
 
   context.createWalker(visitor).walk(el.body);

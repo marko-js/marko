@@ -31,7 +31,7 @@ class TransformHelper {
 
   getTemplateModule() {
     return {
-      requirePath: this.context.getRequirePath(this.filename)
+      requirePath: this.context.getRequirePath(this.filename),
     };
   }
 

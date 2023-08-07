@@ -4,7 +4,7 @@ module.exports = {
       size: input.size || "normal",
       variant: input.variant || "primary",
       className: input["class"],
-      body: input.label || input.renderBody
+      body: input.label || input.renderBody,
     };
   },
 
@@ -13,7 +13,7 @@ module.exports = {
     // We will emit a custom "click" event when a DOM click event
     // is triggered
     this.emit("click", {
-      event: event // Pass along the DOM event in case it is helpful to others
+      event: event, // Pass along the DOM event in case it is helpful to others
     });
   },
 
@@ -28,5 +28,5 @@ module.exports = {
 
   setLabel: function (label) {
     this.setState("label", label);
-  }
+  },
 };

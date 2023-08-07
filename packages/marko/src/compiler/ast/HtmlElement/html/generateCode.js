@@ -56,7 +56,7 @@ module.exports = function generateCode(node, codegen) {
       context.meta.legacy ||
       context.isFlagSet("legacyWidgetAttrsWithoutBind") ||
       !context.isStatefulComponent ||
-      isPreserved(node)
+      isPreserved(node),
   });
 
   var endTag;
@@ -64,7 +64,7 @@ module.exports = function generateCode(node, codegen) {
 
   if (!openTagOnly) {
     endTag = new EndTag({
-      tagName: tagName
+      tagName: tagName,
     });
   }
 
@@ -81,7 +81,7 @@ module.exports = function generateCode(node, codegen) {
           [
             builder.concat(builder.literal("f_"), node.key),
             builder.identifier("component"),
-            builder.literal(1)
+            builder.literal(1),
           ]
         )
       )
@@ -108,11 +108,11 @@ module.exports = function generateCode(node, codegen) {
       codegen.context.helper("propsForPreviousNode"),
       [
         builder.objectExpression(
-          attributes.map(attr =>
+          attributes.map((attr) =>
             builder.property(builder.identifier(attr.name), attr.value)
           )
         ),
-        builder.identifier("out")
+        builder.identifier("out"),
       ]
     );
   }

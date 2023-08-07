@@ -23,11 +23,11 @@ class HtmlJsParser {
       onString(event) {
         if (!event.isStringLiteral) {
           let value = "";
-          event.stringParts.forEach(part => {
+          event.stringParts.forEach((part) => {
             if (part.type === "placeholder") {
               value += "${" + part.value + "}";
             } else {
-              value += part.replace(/`|\${/g, match => "\\" + match);
+              value += part.replace(/`|\${/g, (match) => "\\" + match);
             }
           });
           event.value = "$nonstandard`" + value + "`";
@@ -90,7 +90,7 @@ class HtmlJsParser {
 
       onError(event) {
         handlers.handleError(event);
-      }
+      },
     };
 
     var mergedOptions = Object.assign({}, this.defaultOptions, options);
@@ -98,7 +98,7 @@ class HtmlJsParser {
       ignorePlaceholders: mergedOptions.ignorePlaceholders,
       isOpenTagOnly: function (tagName) {
         return handlers.isOpenTagOnly(tagName);
-      }
+      },
     }));
     parser.parse(src, filename);
   }

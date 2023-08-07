@@ -8,9 +8,9 @@ exports.render = function (input, out) {
       boolean: true,
       complex: {
         a: '<"hello">',
-        b: "test"
-      }
-    }
+        b: "test",
+      },
+    },
   };
 
   template.render(templateData, out);

@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 
   expect(widget.el.innerHTML).to.contain("red");

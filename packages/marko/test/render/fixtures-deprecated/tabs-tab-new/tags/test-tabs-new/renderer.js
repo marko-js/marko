@@ -13,7 +13,7 @@ exports.render = function (input, out) {
 
         tab.id = "tab" + tabs.length;
         tabs.push(tab);
-      }
+      },
     });
   }
 
@@ -28,7 +28,7 @@ exports.render = function (input, out) {
 
   template.render(
     {
-      tabs: tabs
+      tabs: tabs,
     },
     out
   );

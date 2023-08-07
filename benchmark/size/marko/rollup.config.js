@@ -23,12 +23,12 @@ export default {
       main: true, // Default: true
       browser: true, // Default: false
       preferBuiltins: false,
-      extensions: [".js", ".marko"]
+      extensions: [".js", ".marko"],
     }),
     commonjsPlugin({
       include: [],
-      extensions: [".js", ".marko"]
-    })
+      extensions: [".js", ".marko"],
+    }),
   ],
-  dest: path.join(__dirname, "../build/bundles/marko.js")
+  dest: path.join(__dirname, "../build/bundles/marko.js"),
 };

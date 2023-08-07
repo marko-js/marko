@@ -13,5 +13,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getButton1: function () {
     return this.getWidget("button1");
-  }
+  },
 });

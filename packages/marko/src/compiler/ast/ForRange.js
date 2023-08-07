@@ -30,7 +30,7 @@ class ForRange extends Node {
       from,
       to,
       step,
-      builder.functionDeclaration(null, params, this.body)
+      builder.functionDeclaration(null, params, this.body),
     ]);
   }
 

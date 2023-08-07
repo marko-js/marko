@@ -16,7 +16,7 @@ module.exports = function codeGenerator(el, codegen) {
 
   var typesObject = {};
 
-  attrs.forEach(attr => {
+  attrs.forEach((attr) => {
     if (!attr.isLiteralString()) {
       codegen.addError("Component type should be a string");
       return;
@@ -40,7 +40,7 @@ module.exports = function codeGenerator(el, codegen) {
     let componentModule = {
       legacy: true,
       filename: filename,
-      requirePath: requirePath
+      requirePath: requirePath,
     };
 
     typesObject[attr.name] = generateRegisterComponentCode(

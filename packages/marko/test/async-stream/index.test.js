@@ -64,7 +64,7 @@ describe("AsyncStream", function () {
     out.write("1");
     out.write("2");
 
-    return out.end().then(result => {
+    return out.end().then((result) => {
       const output = result.getOutput();
       expect(output).to.equal("12");
       expect(result.toString()).to.equal("12");
@@ -279,7 +279,7 @@ describe("AsyncStream", function () {
     }, 10);
 
     out.write("3");
-    out.end().catch(err => {
+    out.end().catch((err) => {
       expect(errors.length).to.equal(1);
       expect(err).to.be.an("error");
       done();
@@ -293,7 +293,7 @@ describe("AsyncStream", function () {
       .then(() => {
         throw new Error("Should not get here!");
       })
-      .catch(err => {
+      .catch((err) => {
         expect(err).to.be.an("error");
         expect(err.message).to.equal("test");
         expect(out.getOutput()).to.equal("1");

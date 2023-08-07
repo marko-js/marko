@@ -78,7 +78,7 @@ function addTransformer(tagLoader, value) {
             properties[k] = value[k];
           }
         }
-      }
+      },
     },
     tagLoader.dependencyChain.append("transformer")
   );
@@ -113,8 +113,8 @@ class TagLoader {
         "*": {
           type: "string",
           targetProperty: null,
-          preserveName: false
-        }
+          preserveName: false,
+        },
       };
     }
 
@@ -128,7 +128,7 @@ class TagLoader {
 
     if (typeof value === "string") {
       nestedVariable = {
-        name: value
+        name: value,
       };
     } else {
       nestedVariable = {};
@@ -142,7 +142,7 @@ class TagLoader {
 
           nameFromAttribute: function (value) {
             nestedVariable.nameFromAttribute = value;
-          }
+          },
         },
         dependencyChain.toString()
       );
@@ -255,15 +255,15 @@ class TagLoader {
     } else if (typeof value === "string") {
       if (hasNestedTag && hasAttr) {
         tagProps = attrProps = {
-          type: value
+          type: value,
         };
       } else if (hasNestedTag) {
         tagProps = {
-          type: value
+          type: value,
         };
       } else {
         attrProps = {
-          type: value
+          type: value,
         };
       }
     }
@@ -444,14 +444,14 @@ class TagLoader {
       // so treat the value as the path to the JS
       // module for the transformer
       value = {
-        path: value
+        path: value,
       };
 
       addTransformer(this, value);
     } else if (Array.isArray(value)) {
-      value.forEach(transformerPath => {
+      value.forEach((transformerPath) => {
         value = {
-          path: transformerPath
+          path: transformerPath,
         };
 
         addTransformer(this, value);
@@ -480,7 +480,7 @@ class TagLoader {
    */
   var(value) {
     complain("var is deprecated. Use tag parameters instead.", {
-      location: this.filePath
+      location: this.filePath,
     });
     this._handleVar(value, this.dependencyChain.append("var"));
   }
@@ -491,7 +491,7 @@ class TagLoader {
    */
   vars(value) {
     complain("vars is deprecated. Use tag parameters instead.", {
-      location: this.filePath
+      location: this.filePath,
     });
     if (value) {
       value.forEach((v, i) => {
@@ -560,7 +560,7 @@ class TagLoader {
     var tag = this.tag;
     forEachEntry(value, (varName, varValue) => {
       var importedVar = {
-        targetProperty: varName
+        targetProperty: varName,
       };
 
       var expression = varValue;

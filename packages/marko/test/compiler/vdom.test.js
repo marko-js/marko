@@ -8,12 +8,12 @@ var compiler = require("../../compiler");
 var autotest = require("../autotest");
 var fs = require("fs");
 
-const run = name =>
-  autotest(name, fixture => {
+const run = (name) =>
+  autotest(name, (fixture) => {
     let test = fixture.test;
     let resolve = fixture.resolve;
     let snapshot = fixture.snapshot;
-    test(done => {
+    test((done) => {
       var templatePath = resolve("template.marko");
       var mainPath = resolve("test.js");
       var main;
@@ -24,7 +24,7 @@ const run = name =>
 
       var compilerOptions = {
         writeVersionComment: false,
-        autoKeyEnabled: true
+        autoKeyEnabled: true,
       };
 
       if (main && main.checkError) {

@@ -10,7 +10,7 @@ var autotest = require("../autotest");
 
 var taglibFinder = require("marko/taglib").finder;
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let dir = fixture.dir;
   let resolve = fixture.resolve;
@@ -26,7 +26,7 @@ autotest("fixtures", fixture => {
       }
 
       var finderDir = resolve(test.dir);
-      var found = taglibFinder.find(finderDir, []).map(taglib => {
+      var found = taglibFinder.find(finderDir, []).map((taglib) => {
         if (taglib.path.startsWith(dir)) {
           return taglib.path.substring(dir.length).replace(/[\\]/g, "/");
         } else {

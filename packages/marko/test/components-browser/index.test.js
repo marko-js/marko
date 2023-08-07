@@ -12,19 +12,19 @@ var BrowserHelpers = browser.require(browserHelpersPath);
 
 autotest("fixtures", {
   client: runClientTest,
-  hydrate: runHydrateTest
+  hydrate: runHydrateTest,
 });
 
 autotest("fixtures-deprecated", {
   client: runClientTest,
-  hydrate: runHydrateTest
+  hydrate: runHydrateTest,
 });
 
 function runClientTest(fixture) {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let context = fixture.context;
-  test(done => {
+  test((done) => {
     let helpers = new BrowserHelpers();
     let testFile = resolve("test.js");
     let testFunc = browser.require(testFile);
@@ -48,7 +48,7 @@ function runClientTest(fixture) {
     function cleanupAndFinish(err) {
       // Cache components for use in hydrate run.
       if (!err) context.rendered = helpers.rendered;
-      helpers.instances.forEach(instance => instance.destroy());
+      helpers.instances.forEach((instance) => instance.destroy());
       helpers.targetEl.innerHTML = "";
       done(err);
     }
@@ -59,7 +59,7 @@ function runHydrateTest(fixture) {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let context = fixture.context;
-  test(done => {
+  test((done) => {
     var components = context.rendered;
     if (!components)
       throw new Error("No components rendered by client version of test");
@@ -74,7 +74,7 @@ function runHydrateTest(fixture) {
           beforeParse(window, browser) {
             var marko = browser.require("marko/components");
             var legacy = browser.require("marko/legacy-components");
-            legacy.load = type =>
+            legacy.load = (type) =>
               legacy.defineWidget(
                 browser.require(
                   type.replace(/^.*\/components-browser/, __dirname)
@@ -83,7 +83,7 @@ function runHydrateTest(fixture) {
             var rootComponent = browser.require(hydrateComponentPath);
             marko.register(ssrTemplate.meta.id, rootComponent);
             components.forEach(function (def) {
-              Object.keys(def.components).forEach(type => {
+              Object.keys(def.components).forEach((type) => {
                 const componentPath = def.components[type];
                 let component = browser.require(componentPath);
                 if (/widget$/.test(type)) {
@@ -92,7 +92,7 @@ function runHydrateTest(fixture) {
                 marko.register(type, component);
               });
             });
-          }
+          },
         });
         var testFile = resolve("test.js");
         var testFunc = browser.require(testFile);

@@ -3,11 +3,11 @@ module.exports = require("marko/legacy-components").defineComponent({
   init: function () {},
   getInitialState: function () {
     return {
-      name: "Joe"
+      name: "Joe",
     };
   },
 
   getTemplateData: function (state) {
     return state;
-  }
+  },
 });

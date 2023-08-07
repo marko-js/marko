@@ -5,5 +5,5 @@ exports.templateData = {
       statusVar.index = i;
       callback(arrayList[i], statusVar);
     }
-  }
+  },
 };

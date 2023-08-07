@@ -11,7 +11,7 @@ module.exports = {
     this.state = {
       type: "component state",
       name: input.name,
-      messageCount: input.messageCount
+      messageCount: input.messageCount,
     };
   },
 
@@ -21,7 +21,7 @@ module.exports = {
     this.componentConfig = {
       type: this.type,
       name: this.name,
-      messageCount: this.messageCount
+      messageCount: this.messageCount,
     };
-  }
+  },
 };

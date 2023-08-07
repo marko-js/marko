@@ -46,7 +46,7 @@ function patchResponse(response) {
 
       if (data) {
         data = Object.assign(data, {
-          $global: Object.assign($global, data.$global)
+          $global: Object.assign($global, data.$global),
         });
       } else {
         data = { $global };

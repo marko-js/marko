@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    messageCount: 10
+    messageCount: 10,
   });
 
   var targetEl = helpers.targetEl;
@@ -14,12 +14,12 @@ module.exports = function (helpers) {
 
   expect(widget.lifecycleEvents).to.deep.equal([
     "init",
-    "onRender:firstRender"
+    "onRender:firstRender",
   ]);
 
   widget.setProps({
     name: "Jane",
-    messageCount: 30
+    messageCount: 30,
   });
   expect(targetEl.innerHTML).to.contain(
     "Hello Frank! You have 10 new messages."
@@ -27,7 +27,7 @@ module.exports = function (helpers) {
 
   expect(widget.lifecycleEvents).to.deep.equal([
     "init",
-    "onRender:firstRender"
+    "onRender:firstRender",
   ]);
 
   widget.update();
@@ -41,7 +41,7 @@ module.exports = function (helpers) {
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
-    "onRender"
+    "onRender",
   ]);
 
   widget.destroy();
@@ -53,6 +53,6 @@ module.exports = function (helpers) {
     "onUpdate",
     "onRender",
     "onBeforeDestroy",
-    "onDestroy"
+    "onDestroy",
   ]);
 };

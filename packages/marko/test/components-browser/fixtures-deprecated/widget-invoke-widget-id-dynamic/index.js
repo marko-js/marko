@@ -5,7 +5,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   getTemplateData: function () {
     return {
       barRenderer: barRenderer,
-      barWidgetId: "myBar"
+      barWidgetId: "myBar",
     };
-  }
+  },
 });

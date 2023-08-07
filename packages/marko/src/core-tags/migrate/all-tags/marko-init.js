@@ -5,7 +5,7 @@ const SAFE_TO_PRINT_ON_ONE_LINE = [
   "ElseIf",
   "ForStatement",
   "WhileStatement",
-  "FunctionDeclaration"
+  "FunctionDeclaration",
 ];
 
 module.exports = function migrate(el, context) {
@@ -50,7 +50,7 @@ module.exports = function migrate(el, context) {
     if (!child.type) {
       child.forEachChild(insertStaticOrImport);
     } else if (child.type === "Vars") {
-      child.declarations.forEach(declaration => {
+      child.declarations.forEach((declaration) => {
         const id = declaration.id;
         const init = declaration.init;
         el.insertSiblingBefore(

@@ -7,7 +7,7 @@ module.exports = function migrate(el, context) {
     el.hasAttribute("for-key") ||
     el.hasAttribute("for-ref")
   ) {
-    el.forEachAttribute(attr => {
+    el.forEachAttribute((attr) => {
       const name = attr.name;
       if (
         !name ||

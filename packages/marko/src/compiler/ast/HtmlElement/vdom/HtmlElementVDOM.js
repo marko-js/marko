@@ -45,7 +45,7 @@ function finalizeCreateArgs(createArgs, builder) {
 const SIMPLE_ATTRS = {
   class: true,
   style: true,
-  id: true
+  id: true,
 };
 
 function isStaticProperties(properties) {

@@ -138,9 +138,9 @@ template.render(
     $global: {
       serializedGlobals: {
         apiKey: true,
-        locale: true
-      }
-    }
+        locale: true,
+      },
+    },
   },
   res
 );

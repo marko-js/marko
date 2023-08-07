@@ -8,6 +8,6 @@ module.exports = function (builder) {
   var literal = builder.literal;
 
   return program([
-    ifStatement(strictEquality("a", "1"), [assignment("foo", literal("bar"))])
+    ifStatement(strictEquality("a", "1"), [assignment("foo", literal("bar"))]),
   ]);
 };

@@ -12,5 +12,5 @@ module.exports = require("marko-widgets").defineComponent({
 
   handleButtonPress: function () {
     this.pressEvent = arguments;
-  }
+  },
 });

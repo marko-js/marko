@@ -18,6 +18,6 @@ module.exports = function (builder) {
         [assignment("foo", literal(2))],
         elseStatement([assignment("foo", literal(3))])
       )
-    )
+    ),
   ]);
 };

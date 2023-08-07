@@ -5,11 +5,11 @@ module.exports = {
     this.boolean = true;
     this.complex = {
       a: '<"hello">',
-      b: "test"
+      b: "test",
     };
   },
 
   onMount: function () {
     this.name = "app-component-config";
-  }
+  },
 };

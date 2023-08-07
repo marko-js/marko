@@ -21,12 +21,12 @@ export default {
       main: true, // Default: true
       browser: true, // Default: false
       preferBuiltins: false,
-      extensions: [".js", ".vue"]
+      extensions: [".js", ".vue"],
     }),
     commonjsPlugin({
       include: [],
-      extensions: [".js", ".vue"]
-    })
+      extensions: [".js", ".vue"],
+    }),
   ],
-  dest: path.join(__dirname, "../build/bundles/vue.js")
+  dest: path.join(__dirname, "../build/bundles/vue.js"),
 };

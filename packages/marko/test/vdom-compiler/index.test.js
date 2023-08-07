@@ -27,7 +27,7 @@ function run(fixture) {
     var compilerOptions = {
       output: "vdom",
       writeVersionComment: false,
-      autoKeyEnabled: false
+      autoKeyEnabled: false,
     };
 
     if (main && main.checkError) {

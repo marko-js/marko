@@ -13,7 +13,7 @@ class DocumentType extends Node {
     return [
       builder.htmlLiteral("<!"),
       builder.html(codegen.generateCode(this.documentType)),
-      builder.htmlLiteral(">")
+      builder.htmlLiteral(">"),
     ];
   }
 
@@ -24,7 +24,7 @@ class DocumentType extends Node {
   toJSON() {
     return {
       type: this.type,
-      value: this.documentType
+      value: this.documentType,
     };
   }
 }

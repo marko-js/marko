@@ -24,7 +24,7 @@ function getComponentFiles(filename) {
     styles: [],
     file: null,
     browserFile: null,
-    package: null
+    package: null,
   };
 
   let dirFiles = fs.readdirSync(dirname);

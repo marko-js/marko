@@ -50,7 +50,7 @@ var Component = {
   handleHelloWorldMouseDown: function (event, el) {
     expect(this.getEl("helloWorld")).to.equal(el);
     this.log("#helloWorld:mousedown");
-  }
+  },
 };
 
 module.exports = Component;

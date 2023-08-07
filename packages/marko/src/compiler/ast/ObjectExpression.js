@@ -60,7 +60,7 @@ class ObjectExpression extends Node {
     }
 
     if (Array.isArray(props)) {
-      props.forEach(prop => {
+      props.forEach((prop) => {
         this.addProperty(prop);
       });
     }
@@ -91,7 +91,7 @@ class ObjectExpression extends Node {
   toJSON() {
     return {
       type: "ObjectExpression",
-      properties: this.properties
+      properties: this.properties,
     };
   }
 

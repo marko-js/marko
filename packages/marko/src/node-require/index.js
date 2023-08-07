@@ -140,7 +140,7 @@ function install(options) {
     requireExtensions[MARKO_EXTENSIONS] ||
     (requireExtensions[MARKO_EXTENSIONS] = []);
 
-  extensions.forEach(extension => {
+  extensions.forEach((extension) => {
     extension = normalizeExtension(extension);
     requireExtensions[extension] = markoRequireExtension;
     requireExtensions[MARKO_EXTENSIONS].push(extension);

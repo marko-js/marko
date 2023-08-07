@@ -7,7 +7,7 @@ var toHTML = require("../__util__/toHTML");
 var createBrowser = require("jsdom-context-require");
 var autotest = require("../autotest");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
@@ -18,14 +18,14 @@ autotest("fixtures", fixture => {
 
       var document = createBrowser({
         dir: __dirname,
-        html: "<html><body>" + inputHtml + "</body></html>"
+        html: "<html><body>" + inputHtml + "</body></html>",
       }).window.document;
       var domNode = document.body.firstChild;
       var vdomNode = virtualize(domNode);
       var vdomHTML = toHTML(vdomNode);
       snapshot(vdomHTML, {
         ext: ".html",
-        name: "virtualized"
+        name: "virtualized",
       });
     }
   });

@@ -15,7 +15,7 @@ class EndTag extends Node {
     return [
       builder.htmlLiteral("</"),
       builder.html(tagName),
-      builder.htmlLiteral(">")
+      builder.htmlLiteral(">"),
     ];
   }
 }

@@ -7,9 +7,9 @@ module.exports = function migrator(el, context) {
     apply() {
       context.root.prependChild(
         context.builder.scriptlet({
-          value: "var data = component.getTemplateData(state, input)"
+          value: "var data = component.getTemplateData(state, input)",
         })
       );
-    }
+    },
   });
 };

@@ -13,7 +13,7 @@ module.exports = async function (helpers) {
   expect(button.textContent).to.equal(isHydrate ? "0" : "10");
 
   button.click();
-  await new Promise(resolve => setTimeout(resolve));
+  await new Promise((resolve) => setTimeout(resolve));
 
   expect(button.textContent).to.equal(isHydrate ? "1" : "11");
 };

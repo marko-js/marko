@@ -2,7 +2,7 @@ const awaitTagMigration = require("./await-tag");
 const newTags = {
   "async-fragment-placeholder": "await-placeholder",
   "async-fragment-timeout": "await-timeout",
-  "async-fragment-error": "await-error"
+  "async-fragment-error": "await-error",
 };
 module.exports = function migrator(elNode, context) {
   const builder = context.builder;
@@ -34,7 +34,7 @@ module.exports = function migrator(elNode, context) {
     return;
   }
 
-  elNode.forEachChild(child => {
+  elNode.forEachChild((child) => {
     const newTag = newTags[child.tagName];
     if (newTag) {
       child.tagName = newTag;

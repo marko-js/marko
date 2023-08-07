@@ -4,9 +4,9 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
     template: require("./template.marko"),
     getTemplateData: function (input) {
       return {
-        fullName: input.firstName + " " + input.lastName
+        fullName: input.firstName + " " + input.lastName,
       };
-    }
+    },
   });
 
   var renderResult = renderer.render({ firstName: "John", lastName: "Doe" });

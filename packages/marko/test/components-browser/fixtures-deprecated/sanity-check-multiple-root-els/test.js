@@ -4,7 +4,7 @@ module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank",
     age: 30,
-    url: "http://ebay.com/"
+    url: "http://ebay.com/",
   });
 
   expect(component.getEl("name").innerHTML).to.equal("Frank");

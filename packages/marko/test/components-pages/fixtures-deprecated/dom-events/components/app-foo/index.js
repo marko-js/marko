@@ -3,7 +3,7 @@ module.exports = require("marko-widgets").defineComponent({
 
   getInitialState: function () {
     return {
-      name: "app-foo"
+      name: "app-foo",
     };
   },
 
@@ -19,5 +19,5 @@ module.exports = require("marko-widgets").defineComponent({
 
   handleButtonClick: function () {
     this.clickEvent = arguments;
-  }
+  },
 });

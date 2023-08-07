@@ -38,7 +38,7 @@ module.exports = require("marko-widgets").defineRenderer({
 
     return {
       type: type,
-      rootAttrs: rootAttrs
+      rootAttrs: rootAttrs,
     };
-  }
+  },
 });

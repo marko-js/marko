@@ -12,7 +12,7 @@ exports.render = function (input, out) {
 
       tab.id = "tab" + tabs.length;
       tabs.push(tab);
-    }
+    },
   });
 
   if (!activeFound && tabs.length) {
@@ -26,7 +26,7 @@ exports.render = function (input, out) {
 
   template.render(
     {
-      tabs: tabs
+      tabs: tabs,
     },
     out
   );

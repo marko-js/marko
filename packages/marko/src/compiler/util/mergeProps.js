@@ -24,7 +24,7 @@ module.exports = function merge(props1, props2, context) {
       let mergeVar = context.helper("merge");
       argProp.value = context.builder.functionCall(mergeVar, [
         props2, // Input props from the attributes take precedence
-        argProp.value
+        argProp.value,
       ]);
 
       return props1;
@@ -38,14 +38,14 @@ module.exports = function merge(props1, props2, context) {
 
       return context.builder.functionCall(mergeVar, [
         props2, // Input props from the attributes take precedence
-        props1
+        props1,
       ]);
     }
   } else {
     let mergeVar = context.helper("merge");
     return context.builder.functionCall(mergeVar, [
       props2, // Input props from the attributes take precedence
-      props1
+      props1,
     ]);
   }
 };

@@ -70,7 +70,7 @@ The `render` method returns an async `out` which is used to generate HTML on the
 var view = require("./view"); // Import `./view.marko`
 var resultPromise = view.render({});
 
-resultPromise.then(result => {
+resultPromise.then((result) => {
   result.appendTo(document.body);
 });
 ```
@@ -212,8 +212,8 @@ If you need to make data available globally to all views that are rendered as th
 ```js
 view.render({
   $global: {
-    flags: ["mobile"]
-  }
+    flags: ["mobile"],
+  },
 });
 ```
 
@@ -235,9 +235,9 @@ app.get("/", (req, res) => {
 
         serializedGlobals: {
           isIos: true, // Tell marko to serialize isIos above
-          isAndroid: true // Tell marko to serialize isAndroid above
-        }
-      }
+          isAndroid: true, // Tell marko to serialize isAndroid above
+        },
+      },
     },
     res
   );

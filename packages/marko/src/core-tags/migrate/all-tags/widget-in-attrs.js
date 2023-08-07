@@ -1,5 +1,5 @@
 module.exports = function migrate(el, context) {
-  el.forEachAttribute(attr => {
+  el.forEachAttribute((attr) => {
     const value = attr.value;
 
     if (
@@ -23,7 +23,7 @@ module.exports = function migrate(el, context) {
           node.object.name = "component";
           found = true;
         }
-      }
+      },
     });
     walker.walk(value);
 

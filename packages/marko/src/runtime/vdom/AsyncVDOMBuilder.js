@@ -293,7 +293,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
 
     state.___events.emit("beginAsync", {
       out: asyncOut,
-      parentOut: this
+      parentOut: this,
     });
 
     return asyncOut;
@@ -443,7 +443,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     this.___assignedComponentDef = componentDef;
     this.___assignedKey = key;
     this.___assignedCustomEvents = customEvents;
-  }
+  },
 });
 
 proto.e = proto.element;

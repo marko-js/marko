@@ -8,7 +8,7 @@ module.exports = function migrator(elNode, context) {
   if (
     !attributes.length ||
     attributes.some(
-      attr => attr.name === "name" && attr.value.type === "Literal"
+      (attr) => attr.name === "name" && attr.value.type === "Literal"
     )
   ) {
     return;
@@ -48,7 +48,7 @@ module.exports = function migrator(elNode, context) {
         params.push(builder.identifier("renderBody"));
         macroWalker.stop();
       }
-    }
+    },
   });
 
   macroWalker.walk(elNode);
@@ -56,7 +56,7 @@ module.exports = function migrator(elNode, context) {
   params
     .slice()
     .reverse()
-    .forEach(param => {
+    .forEach((param) => {
       const name = builder.identifier(param.name);
       const value = builder.memberExpression(
         builder.identifier("macroInput"),
@@ -67,7 +67,7 @@ module.exports = function migrator(elNode, context) {
           value: printJS(
             builder.vars([builder.variableDeclarator(name, value)]),
             context
-          )
+          ),
         })
       );
     });
@@ -90,7 +90,7 @@ module.exports = function migrator(elNode, context) {
           child.addAttribute({ name: name, value: value });
         }
       }
-    }
+    },
   });
 
   templateWalker.walk(context.root);

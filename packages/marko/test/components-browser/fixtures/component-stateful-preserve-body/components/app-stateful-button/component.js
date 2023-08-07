@@ -2,7 +2,7 @@ module.exports = {
   onInput: function (input) {
     this.state = {
       size: input.size || "normal",
-      label: input.label || "(no label)"
+      label: input.label || "(no label)",
     };
   },
 
@@ -12,5 +12,5 @@ module.exports = {
 
   setLabel: function (newLabel) {
     this.state.label = newLabel;
-  }
+  },
 };

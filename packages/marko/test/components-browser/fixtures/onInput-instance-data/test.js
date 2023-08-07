@@ -10,6 +10,6 @@ module.exports = function (helpers) {
   expect(component.boolean).to.equal(true);
   expect(component.complex).to.deep.equal({
     a: '<"hello">',
-    b: "test"
+    b: "test",
   });
 };

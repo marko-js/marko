@@ -29,7 +29,7 @@ class UniqueVars {
 
       let newEntry = {
         name: name + ++entry.counter,
-        value: value
+        value: value,
       };
 
       entry.vars.push(newEntry);
@@ -39,10 +39,10 @@ class UniqueVars {
         vars: [
           {
             name: name,
-            value: value
-          }
+            value: value,
+          },
         ],
-        counter: 1
+        counter: 1,
       };
 
       this.vars[name] = entry;

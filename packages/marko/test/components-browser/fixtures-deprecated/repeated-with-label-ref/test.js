@@ -5,13 +5,13 @@ module.exports = function (helpers) {
     fields: [
       {
         value: "name",
-        label: "Name"
+        label: "Name",
       },
       {
         value: "age",
-        label: "Age"
-      }
-    ]
+        label: "Age",
+      },
+    ],
   });
 
   var inputs = [];

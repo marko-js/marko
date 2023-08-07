@@ -140,7 +140,7 @@ module.exports = function convertRawJavaScriptAst(ast, builder) {
         return null;
       }
       case "TemplateLiteral": {
-        const quasis = node.quasis.map(q => q.value.cooked);
+        const quasis = node.quasis.map((q) => q.value.cooked);
         const expressions = convert(node.expressions);
         if (expressions) {
           return builder.templateLiteral(quasis, expressions);

@@ -27,7 +27,7 @@ const OPTIMIZER_CONTEXT_KEY = Symbol();
 const OPTIONS_DEFAULT = { optimizeTextNodes: true, optimizeStaticNodes: true };
 const OPTIONS_OPTIMIZE_TEXT_NODES = {
   optimizeTextNodes: true,
-  optimizeStaticNodes: false
+  optimizeStaticNodes: false,
 };
 
 class OptimizerContext {
@@ -159,7 +159,7 @@ function doOptimizeNode(node, context, options) {
   let walker = context.createWalker({
     enterArray(nodes) {
       return generateNodesForArray(nodes, context, options);
-    }
+    },
   });
 
   return walker.walk(node);

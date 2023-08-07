@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   function renderWidget(rootTagName) {
     var widget = helpers.mount(require.resolve("./index"), {
-      rootTagName: rootTagName
+      rootTagName: rootTagName,
     });
     return widget;
   }

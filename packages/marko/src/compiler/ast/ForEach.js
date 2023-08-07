@@ -17,7 +17,7 @@ class ForEach extends Node {
 
     return builder.functionCall(context.helper("forOf"), [
       this.of,
-      builder.functionDeclaration(null, this.params, this.body)
+      builder.functionDeclaration(null, this.params, this.body),
     ]);
   }
 

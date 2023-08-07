@@ -140,6 +140,6 @@ module.exports = function (target, renderer) {
       globalData.template = globalData.template || this;
 
       return safeRender(render, finalData, finalOut, shouldEnd);
-    }
+    },
   });
 };

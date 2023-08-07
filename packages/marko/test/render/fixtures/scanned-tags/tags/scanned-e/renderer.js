@@ -2,9 +2,9 @@ exports.TAG = {
   attributes: {
     name: {
       type: "string",
-      "target-property": "NAME"
-    }
-  }
+      "target-property": "NAME",
+    },
+  },
 };
 
 module.exports = function render(input, out) {

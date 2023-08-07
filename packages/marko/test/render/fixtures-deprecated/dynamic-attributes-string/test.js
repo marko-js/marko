@@ -1,3 +1,3 @@
 exports.templateData = {
-  attrs: ' foo="bar" baz'
+  attrs: ' foo="bar" baz',
 };

@@ -23,11 +23,11 @@ function createCodeWriter(context) {
   return new CodeWriter(context, builder);
 }
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     var main = require(resolve("index.js"));
     var generateCodeFunc = main;
     var skipCodegen = main.skipCodegen === true;

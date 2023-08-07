@@ -49,7 +49,7 @@ class ArrayExpression extends Node {
   toJSON() {
     return {
       type: "ArrayExpression",
-      elements: this.elements
+      elements: this.elements,
     };
   }
 

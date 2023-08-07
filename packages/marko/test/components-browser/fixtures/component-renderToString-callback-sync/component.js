@@ -5,7 +5,7 @@ module.exports = {
     var self = this;
     helloComponent.renderToString(
       {
-        name: this.input.name
+        name: this.input.name,
       },
       function (error, html) {
         if (error) {
@@ -15,5 +15,5 @@ module.exports = {
         }
       }
     );
-  }
+  },
 };

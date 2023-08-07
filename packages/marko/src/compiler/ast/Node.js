@@ -130,7 +130,7 @@ class Node {
 
   appendChildren(nodes) {
     ok(this.body, "Node does not support child nodes: " + this);
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       this.body.appendChild(node);
     });
   }
@@ -288,7 +288,7 @@ class Node {
   get bodyText() {
     var bodyText = "";
 
-    this.forEachChild(child => {
+    this.forEachChild((child) => {
       if (child.type === "Text") {
         var childText = child.argument;
         if (childText && childText.type === "Literal") {
@@ -361,7 +361,7 @@ class Node {
     var currentTextLiteral = null;
     var literalTextNodes = [];
 
-    body.forEach(curChild => {
+    body.forEach((curChild) => {
       if (curChild.noOutput) {
         // Skip over AST nodes that produce no HTML output
         return;
@@ -426,7 +426,7 @@ class Node {
       literalTextNodes.forEach(trim);
     }
 
-    literalTextNodes.forEach(textNode => {
+    literalTextNodes.forEach((textNode) => {
       if (textNode.argument.value === "") {
         textNode.detach();
       }

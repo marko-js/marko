@@ -9,7 +9,7 @@ function ensure(state, propertyName) {
       },
       set: function (value) {
         this.___set(propertyName, value, false /* ensure:false */);
-      }
+      },
     });
   }
 }
@@ -99,7 +99,7 @@ State.prototype = {
   },
   toJSON: function () {
     return this.___raw;
-  }
+  },
 };
 
 module.exports = State;

@@ -18,7 +18,7 @@ Object.defineProperty(exports, "defaultOptions", {
     return globalConfig;
   },
   enumerable: true,
-  configurable: false
+  configurable: false,
 });
 
 Object.defineProperty(exports, "config", {
@@ -26,7 +26,7 @@ Object.defineProperty(exports, "config", {
     return globalConfig;
   },
   enumerable: true,
-  configurable: false
+  configurable: false,
 });
 
 var defaultParser = new Parser(new HtmlJsParser());
@@ -42,7 +42,7 @@ function configure(newConfig) {
 
 var defaultCompiler = new Compiler({
   parser: defaultParser,
-  builder: Builder.DEFAULT_BUILDER
+  builder: Builder.DEFAULT_BUILDER,
 });
 
 function createBuilder(options) {
@@ -123,7 +123,7 @@ function compileForBrowser(src, filename, options, callback) {
       output: "vdom",
       meta: false,
       browser: true,
-      sourceOnly: false
+      sourceOnly: false,
     },
     options
   );
@@ -191,7 +191,7 @@ function parseRaw(templateSrc, filename, options) {
     Object.assign(
       {
         raw: true,
-        ignorePlaceholders: true
+        ignorePlaceholders: true,
       },
       options
     )

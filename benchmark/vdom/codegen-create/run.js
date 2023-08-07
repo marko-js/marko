@@ -35,7 +35,7 @@ var htmlFiles = fs.readdirSync(__dirname).filter(function (name) {
 htmlFiles.forEach(function (htmlFile) {
   var name = htmlFile.substring("html-".length).slice(0, 0 - ".html".length);
   var html = fs.readFileSync(path.join(__dirname, htmlFile), {
-    encoding: "utf8"
+    encoding: "utf8",
   });
 
   var doc = jsdom(html);

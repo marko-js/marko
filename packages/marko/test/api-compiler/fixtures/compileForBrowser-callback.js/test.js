@@ -11,7 +11,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
     templateSrc,
     templatePath,
     {
-      writeVersionComment: false
+      writeVersionComment: false,
     },
     function (err, compiledTemplate) {
       var code = compiledTemplate.code;

@@ -51,7 +51,7 @@ class Property extends Node {
     return {
       type: "Property",
       key: this.key,
-      value: this.value
+      value: this.value,
     };
   }
 

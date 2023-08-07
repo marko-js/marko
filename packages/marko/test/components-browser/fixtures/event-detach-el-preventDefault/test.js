@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    colors: ["red", "green", "blue"]
+    colors: ["red", "green", "blue"],
   });
 
   expect(component.events.length).to.equal(0);
@@ -16,7 +16,7 @@ module.exports = function (helpers) {
   };
 
   component.input = {
-    colors: ["red", "blue"]
+    colors: ["red", "blue"],
   };
 
   component.update();

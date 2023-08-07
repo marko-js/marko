@@ -5,8 +5,8 @@ module.exports = function (helpers) {
     name: "Frank",
     $global: {
       name: "Frank",
-      serializedGlobals: { name: true }
-    }
+      serializedGlobals: { name: true },
+    },
   });
 
   var onCreateArgs = component.onCreateArgs;

@@ -7,8 +7,8 @@ module.exports = function (input, out) {
       {
         name: input.name,
         widgetConfig: {
-          name: input.name
-        }
+          name: input.name,
+        },
       },
       asyncOut
     );

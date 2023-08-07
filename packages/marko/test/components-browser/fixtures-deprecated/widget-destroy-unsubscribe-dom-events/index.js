@@ -28,5 +28,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   handleFooLinkMouseOut: function (event, el) {
     expect(event.target).to.equal(el);
     this.log("#fooLink:mouseout");
-  }
+  },
 });

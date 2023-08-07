@@ -12,12 +12,12 @@ const globals = [
   "after",
   "beforeEach",
   "afterEach",
-  "it"
+  "it",
 ];
 
 const browserExtensions = {
   ".marko": compileMarkoModule,
-  ".html": compileMarkoModule
+  ".html": compileMarkoModule,
 };
 
 module.exports = function (dir, html, options) {
@@ -39,7 +39,7 @@ module.exports = function (dir, html, options) {
       if (options.beforeParse) {
         options.beforeParse(window, browser);
       }
-    }
+    },
   });
 };
 
@@ -49,7 +49,7 @@ function compileMarkoModule(module, filename) {
       writeToDisk: false,
       output: "vdom",
       browser: true,
-      meta: true
+      meta: true,
     }),
     filename
   );

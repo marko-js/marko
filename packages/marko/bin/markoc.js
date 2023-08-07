@@ -42,7 +42,7 @@ markoCompiler.defaultOptions.checkUpToDate = false;
 var mmOptions = {
   matchBase: true,
   dot: true,
-  flipNegate: true
+  flipNegate: true,
 };
 
 function relPath(path) {
@@ -55,41 +55,41 @@ var args = require("argly")
   .createParser({
     "--help": {
       type: "boolean",
-      description: "Show this help message"
+      description: "Show this help message",
     },
     "--files --file -f *": {
       type: "string[]",
-      description: "A set of directories or files to compile"
+      description: "A set of directories or files to compile",
     },
     "--ignore -i": {
       type: "string[]",
-      description: 'An ignore rule (default: --ignore "/node_modules" ".*")'
+      description: 'An ignore rule (default: --ignore "/node_modules" ".*")',
     },
     "--clean -c": {
       type: "boolean",
-      description: "Clean all of the *.marko.js files"
+      description: "Clean all of the *.marko.js files",
     },
     "--force": {
       type: "boolean",
-      description: "Force template recompilation even if unchanged"
+      description: "Force template recompilation even if unchanged",
     },
     "--paths -p": {
       type: "string[]",
       description:
-        "Additional directories to add to the Node.js module search path"
+        "Additional directories to add to the Node.js module search path",
     },
     "--quiet -q": {
       type: "boolean",
-      description: "Only print warnings and errors"
+      description: "Only print warnings and errors",
     },
     "--vdom -V": {
       type: "boolean",
-      description: "VDOM output"
+      description: "VDOM output",
     },
     "--version -v": {
       type: "boolean",
-      description: "Print markoc and marko compiler versions to the console"
-    }
+      description: "Print markoc and marko compiler versions to the console",
+    },
   })
   .usage("Usage: $0 <pattern> [options]")
   .example("Compile a single template", "$0 template.marko")
@@ -141,7 +141,7 @@ var compileOptions = {
   output: output,
   browser: isForBrowser,
   compilerType: "markoc",
-  compilerVersion: markoPkgVersion || markocPkgVersion
+  compilerVersion: markoPkgVersion || markocPkgVersion,
 };
 
 var force = args.force;
@@ -240,7 +240,7 @@ function walk(files, options, done) {
           done(null);
         }
       }
-    }
+    },
   };
 
   function doWalk(dir) {
@@ -314,7 +314,7 @@ if (args.clean) {
             context.endAsync();
           });
         }
-      }
+      },
     },
     function () {
       if (deleteCount === 0) {
@@ -392,7 +392,7 @@ if (args.clean) {
           ) {
             compile(file, context);
           }
-        }
+        },
       },
       function (err) {
         if (err) {

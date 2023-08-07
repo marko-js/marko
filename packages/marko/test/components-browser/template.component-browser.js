@@ -1,5 +1,5 @@
 module.exports = {
   onMount() {
-    window.getComponent = index => this.getComponent(`component--${index}`);
-  }
+    window.getComponent = (index) => this.getComponent(`component--${index}`);
+  },
 };

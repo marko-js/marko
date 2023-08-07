@@ -15,7 +15,7 @@ class HtmlComment extends Node {
     return [
       builder.htmlLiteral("<!--"),
       builder.html(comment),
-      builder.htmlLiteral("-->")
+      builder.htmlLiteral("-->"),
     ];
   }
 

@@ -103,7 +103,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       isFakeComponent = true;
       component = {
         id: id,
-        ___keyedElements: {}
+        ___keyedElements: {},
       };
     } else {
       component.___updateQueued = true;

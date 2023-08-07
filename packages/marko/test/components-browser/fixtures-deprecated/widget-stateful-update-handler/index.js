@@ -3,13 +3,13 @@ module.exports = require("marko/legacy-components").defineComponent({
   getInitialState: function () {
     return {
       buttonSize: "small",
-      buttonLabel: "Initial Label"
+      buttonLabel: "Initial Label",
     };
   },
   getTemplateData: function (state) {
     return {
       buttonSize: state.buttonSize,
-      buttonLabel: state.buttonLabel
+      buttonLabel: state.buttonLabel,
     };
   },
 
@@ -17,5 +17,5 @@ module.exports = require("marko/legacy-components").defineComponent({
     var button1Widget = this.getWidget("button1");
     button1Widget.setSize(newSize);
     button1Widget.update();
-  }
+  },
 });

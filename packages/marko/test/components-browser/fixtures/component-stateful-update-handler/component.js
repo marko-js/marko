@@ -2,7 +2,7 @@ module.exports = {
   onInput: function () {
     this.state = {
       buttonSize: "small",
-      buttonLabel: "Initial Label"
+      buttonLabel: "Initial Label",
     };
   },
 
@@ -10,5 +10,5 @@ module.exports = {
     var button1Component = this.getComponent("button1");
     button1Component.setSize(newSize);
     button1Component.update();
-  }
+  },
 };

@@ -14,7 +14,7 @@ Widget.prototype = {
   testGetEl: function () {
     var wrapperEl = this.getEl("wrapper");
     expect(wrapperEl != null).to.equal(true);
-  }
+  },
 };
 
 exports.Widget = Widget;

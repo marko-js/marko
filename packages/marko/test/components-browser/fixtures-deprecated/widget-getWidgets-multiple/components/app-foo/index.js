@@ -7,7 +7,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getWidgetConfig: function (input) {
     return {
-      name: input.name
+      name: input.name,
     };
-  }
+  },
 });

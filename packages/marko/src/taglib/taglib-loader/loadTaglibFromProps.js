@@ -35,7 +35,7 @@ function addTransformer(taglibLoader, value) {
       path(value) {
         const path = markoModules.resolveFrom(dirname, value);
         transformer.path = path;
-      }
+      },
     },
     taglibLoader.dependencyChain.append("transformer").toString()
   );
@@ -182,7 +182,7 @@ class TaglibLoader {
     // }
     var taglib = this.taglib;
 
-    Object.keys(value).forEach(attrName => {
+    Object.keys(value).forEach((attrName) => {
       var attrDef = value[attrName];
 
       var attr = loaders.loadAttributeFromProps(
@@ -336,7 +336,7 @@ class TaglibLoader {
 
     if (typeof value === "string") {
       value = {
-        path: value
+        path: value,
       };
     }
 
@@ -346,7 +346,7 @@ class TaglibLoader {
         path(value) {
           var path = markoModules.resolveFrom(dirname, value);
           transformer.path = path;
-        }
+        },
       },
       this.dependencyChain.append("textTransformer").toString()
     );
@@ -381,14 +381,14 @@ class TaglibLoader {
       // so treat the value as the path to the JS
       // module for the transformer
       value = {
-        path: value
+        path: value,
       };
 
       addTransformer(this, value);
     } else if (Array.isArray(value)) {
-      value.forEach(transformerPath => {
+      value.forEach((transformerPath) => {
         value = {
-          path: transformerPath
+          path: transformerPath,
         };
 
         addTransformer(this, value);
@@ -404,13 +404,13 @@ class TaglibLoader {
       taglib.attributeGroups || (taglib.attributeGroups = {});
     let dependencyChain = this.dependencyChain.append("attribute-groups");
 
-    Object.keys(value).forEach(attrGroupName => {
+    Object.keys(value).forEach((attrGroupName) => {
       let attrGroup = (attributeGroups[attrGroupName] = {});
       let attrGroupDependencyChain = dependencyChain.append(attrGroupName);
 
       let rawAttrGroup = value[attrGroupName];
 
-      Object.keys(rawAttrGroup).forEach(attrName => {
+      Object.keys(rawAttrGroup).forEach((attrName) => {
         var rawAttrDef = rawAttrGroup[attrName];
 
         let attr = loaders.loadAttributeFromProps(

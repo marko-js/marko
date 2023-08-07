@@ -66,7 +66,7 @@ class Walker {
   }
 
   _walkContainer(nodes) {
-    nodes.forEach(node => {
+    nodes.forEach((node) => {
       var transformed = this.walk(node);
       if (!transformed) {
         node.container.removeChild(node);

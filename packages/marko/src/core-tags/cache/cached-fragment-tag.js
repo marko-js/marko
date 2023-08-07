@@ -29,7 +29,7 @@ module.exports = {
           });
 
           nestedOut.end();
-        }
+        },
       },
       function (err, result) {
         if (err) {
@@ -48,5 +48,5 @@ module.exports = {
         }
       }
     );
-  }
+  },
 };

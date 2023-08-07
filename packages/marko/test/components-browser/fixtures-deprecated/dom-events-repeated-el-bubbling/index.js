@@ -3,5 +3,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   handleColorClick: function (event, el) {
     this.color = el.getAttribute("data-color");
-  }
+  },
 });

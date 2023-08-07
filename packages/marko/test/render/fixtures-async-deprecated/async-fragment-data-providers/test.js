@@ -1,6 +1,6 @@
 const {
   promiseProvider,
-  callbackProvider
+  callbackProvider,
 } = require("../../../__util__/async-helpers");
 
 exports.templateData = {
@@ -8,6 +8,6 @@ exports.templateData = {
     return promiseProvider(1, { name: "testSharedData" });
   },
   contextData: callbackProvider(1, {
-    name: "testContextData"
-  })
+    name: "testContextData",
+  }),
 };

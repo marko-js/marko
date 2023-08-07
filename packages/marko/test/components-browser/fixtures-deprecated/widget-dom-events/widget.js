@@ -50,7 +50,7 @@ Widget.prototype = {
   handleHelloWorldMouseDown: function (event, el) {
     expect(this.getEl("helloWorld")).to.equal(el);
     this.log("#helloWorld:mousedown");
-  }
+  },
 };
 
 exports.Widget = Widget;

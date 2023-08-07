@@ -18,7 +18,7 @@ Widget.prototype = {
 
   emitTestEvent2: function () {
     this.emit("testEvent");
-  }
+  },
 };
 
 exports.Widget = Widget;

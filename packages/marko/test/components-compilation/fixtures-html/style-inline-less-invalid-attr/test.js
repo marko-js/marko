@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 exports.compilerOptions = {
-  meta: true
+  meta: true,
 };
 
 exports.checkError = function (err) {

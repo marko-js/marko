@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
-    showSimple: true
+    showSimple: true,
   });
 
   var simple = widget.getWidget("simple");
@@ -15,7 +15,7 @@ module.exports = function (helpers) {
   expect(simple != null).to.equal(true);
 
   widget.setProps({
-    showSimple: false
+    showSimple: false,
   });
   widget.update();
 

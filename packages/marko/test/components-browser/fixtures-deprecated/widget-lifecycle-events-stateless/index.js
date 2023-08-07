@@ -4,7 +4,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   getTemplateData: function (state, input) {
     return {
       name: input.name,
-      messageCount: input.messageCount
+      messageCount: input.messageCount,
     };
   },
 
@@ -38,5 +38,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   recordWidgetLifecycleEvent: function (name) {
     this.lifecycleEvents.push(name);
-  }
+  },
 });

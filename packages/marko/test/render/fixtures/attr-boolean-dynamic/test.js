@@ -1,4 +1,4 @@
 exports.templateData = {
   isGreenSelected: true,
-  isBlueSelected: false
+  isBlueSelected: false,
 };

@@ -21,7 +21,7 @@ function babelTransformFile(sourceFile, targetFile, babelOptions) {
 }
 
 function createMatcher(patterns) {
-  var matchers = patterns.map(pattern => {
+  var matchers = patterns.map((pattern) => {
     return mm.matcher(pattern, { matchBase: true });
   });
 

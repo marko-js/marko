@@ -25,11 +25,11 @@ module.exports = function (builder) {
               null,
               ["color"],
               [htmlElement("li", { class: literal("color") }, [text("color")])]
-            )
-          ])
+            ),
+          ]),
         ]
-      )
-    ])
+      ),
+    ]),
   ]);
 
   return rootNode;

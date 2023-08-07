@@ -73,14 +73,14 @@ function generateRegisterComponentCode(
               builder.identifier("module"),
               builder.identifier("exports")
             )
-          )
+          ),
         ]
       );
     }
 
     registerNode = builder.functionCall(registerComponent, [
       builder.literal(componentId),
-      def
+      def,
     ]);
   } else {
     registerNode = builder.literal(componentId);

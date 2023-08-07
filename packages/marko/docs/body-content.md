@@ -167,12 +167,12 @@ _Example Data:_
 [
   {
     name: "Patrick",
-    age: 63
+    age: 63,
   },
   {
     name: "Austin",
-    age: 12
-  }
+    age: 12,
+  },
 ];
 ```
 

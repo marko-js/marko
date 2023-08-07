@@ -6,7 +6,7 @@ function createVarsArray(vars) {
     var varInit = vars[varName];
     return {
       id: varName,
-      init: varInit
+      init: varInit,
     };
   });
 }
@@ -115,7 +115,7 @@ class TemplateRoot extends Node {
         context,
         templateVar,
         templateRendererMember,
-        renderFunctionVar
+        renderFunctionVar,
       };
 
       assignRenderCode = this.generateAssignRenderCode(eventArgs);
@@ -152,7 +152,7 @@ class TemplateRoot extends Node {
   toJSON() {
     return {
       type: this.type,
-      body: this.body
+      body: this.body,
     };
   }
 

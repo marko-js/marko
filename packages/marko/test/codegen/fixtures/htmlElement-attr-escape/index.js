@@ -6,12 +6,12 @@ module.exports = function (builder) {
     [
       {
         name: "class",
-        value: builder.literal("greeting")
+        value: builder.literal("greeting"),
       },
       {
         name: "foo",
-        value: builder.identifier("bar")
-      }
+        value: builder.identifier("bar"),
+      },
     ],
     [builder.text(builder.literal("Hello World"))]
   );

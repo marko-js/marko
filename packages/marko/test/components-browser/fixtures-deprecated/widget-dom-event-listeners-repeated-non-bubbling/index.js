@@ -11,5 +11,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   handleMouseMove: function (event, el) {
     el.innerHTML = "" + this.counter++;
-  }
+  },
 });

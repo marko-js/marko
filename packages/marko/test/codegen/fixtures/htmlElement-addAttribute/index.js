@@ -13,7 +13,7 @@ module.exports = function (builder) {
       builder.literal("foo"),
       builder.identifier("className")
     ),
-    escape: false
+    escape: false,
   });
 
   return htmlElement;

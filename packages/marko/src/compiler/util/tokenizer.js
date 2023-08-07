@@ -10,7 +10,7 @@ function create(tokens) {
           start: matches.index,
           end: matches.index + matches[0].length,
           name: tokenDef.name,
-          value: tokenValue
+          value: tokenValue,
         };
       }
     }
@@ -18,7 +18,7 @@ function create(tokens) {
 
   var tokensRegExp = new RegExp(
     tokens
-      .map(token => {
+      .map((token) => {
         return "(" + token.pattern.source + ")";
       })
       .join("|"),
@@ -33,7 +33,7 @@ function create(tokens) {
         let token = getToken(matches);
         callback(token);
       }
-    }
+    },
   };
 }
 

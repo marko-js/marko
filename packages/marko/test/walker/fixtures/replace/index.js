@@ -7,18 +7,18 @@ module.exports = function (compiler) {
     builder.htmlElement(
       "ul",
       {
-        class: "escapeXml(data.foo)"
+        class: "escapeXml(data.foo)",
       },
       [
         builder.htmlElement(
           "li",
           {
-            class: builder.literal("color")
+            class: builder.literal("color"),
           },
           [builder.text("color")]
-        )
+        ),
       ]
-    )
+    ),
   ]);
 
   let walker = compiler.createWalker({
@@ -30,7 +30,7 @@ module.exports = function (compiler) {
       ) {
         return node.args[0];
       }
-    }
+    },
   });
 
   walker.walk(rootNode);

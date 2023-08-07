@@ -25,11 +25,11 @@ module.exports = function generateCode(node, codegen, vdomUtil) {
     } else {
       if (name === "class") {
         node.value = builder.functionCall(context.helper("classValue"), [
-          attrValue
+          attrValue,
         ]);
       } else if (name === "style") {
         node.value = builder.functionCall(context.helper("styleValue"), [
-          attrValue
+          attrValue,
         ]);
       }
     }

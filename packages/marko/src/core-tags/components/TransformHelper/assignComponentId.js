@@ -99,7 +99,7 @@ module.exports = function assignComponentId(isRepeated) {
 
   this.componentIdInfo = {
     idExpression: idExpression,
-    nestedIdExpression: nestedIdExpression
+    nestedIdExpression: nestedIdExpression,
   };
 
   return this.componentIdInfo;
@@ -188,7 +188,7 @@ const createIndexKey = (forNode, transformHelper) => {
 
 const forASTNodes = ["ForEach", "ForEachProp", "ForRange", "ForStatement"];
 
-const getParentFor = el => {
+const getParentFor = (el) => {
   let current = el;
   while ((current = current.parentNode) && current.type !== "Macro") {
     if (current.tagName === "for" || forASTNodes.includes(current.type)) {
@@ -197,7 +197,7 @@ const getParentFor = el => {
   }
 };
 
-const getFirstElementChild = el => {
+const getFirstElementChild = (el) => {
   let current = el.firstChild;
   while (
     current &&

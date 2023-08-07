@@ -4,7 +4,7 @@ var expect = require("chai").expect;
 exports.templateData = {
   userDataProvider: function (callback) {
     callback(null, { name: "Frank" });
-  }
+  },
 };
 
 exports.checkEvents = function (events, snapshot) {
@@ -17,7 +17,7 @@ exports.checkEvents = function (events, snapshot) {
 
     return {
       event: eventInfo.event,
-      arg: arg
+      arg: arg,
     };
   });
 

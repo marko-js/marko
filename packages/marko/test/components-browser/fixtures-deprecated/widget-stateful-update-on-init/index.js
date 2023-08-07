@@ -5,5 +5,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   },
   init: function () {
     this.setState("mounted", true);
-  }
+  },
 });

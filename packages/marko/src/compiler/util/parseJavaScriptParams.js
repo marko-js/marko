@@ -9,7 +9,7 @@ function parseJavaScriptParams(params, builder) {
 
   const ast = parseRawJavaScriptAst`(${params}) => {}`;
 
-  return ast.body[0].expression.params.map(node => {
+  return ast.body[0].expression.params.map((node) => {
     const paramSrc = ast.source.slice(node.range[0], node.range[1]);
     return node.type === "Identifier"
       ? builder.identifier(paramSrc)

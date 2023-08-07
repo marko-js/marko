@@ -9,7 +9,7 @@ module.exports = function migrate(el, context) {
     `The "w-preserve-attrs" attribute is deprecated. Please use ":no-update" modifier instead. See: https://github.com/marko-js/marko/wiki/Deprecation:-w‐*-Attributes`
   );
 
-  values.split(",").forEach(val => {
+  values.split(",").forEach((val) => {
     const existingAttr = el.getAttribute(val);
 
     if (existingAttr) {

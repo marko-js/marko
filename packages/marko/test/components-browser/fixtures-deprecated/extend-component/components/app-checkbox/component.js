@@ -4,7 +4,7 @@ module.exports = {
       checked: input.checked === true,
       className: input["class"],
       data: input.data,
-      body: input.label || input.renderBody
+      body: input.label || input.renderBody,
     };
   },
 
@@ -36,11 +36,11 @@ module.exports = {
       data: this.state.data,
       preventDefault: function () {
         defaultPrevented = true;
-      }
+      },
     });
 
     if (!defaultPrevented) {
       this.setState("checked", newChecked);
     }
-  }
+  },
 };

@@ -11,7 +11,7 @@ module.exports = function (builder) {
           builder.identifier("macroInput"),
           builder.identifier("name")
         )
-      )
+      ),
     ]
   );
 };

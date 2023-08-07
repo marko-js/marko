@@ -83,7 +83,7 @@ module.exports = function handleComponentEvents() {
   if (hasComponentEvents) {
     var attrs = el.getAttributes().concat([]);
 
-    attrs.forEach(attr => {
+    attrs.forEach((attr) => {
       var eventType;
       var targetMethod;
       var attrName = attr.name;
@@ -150,7 +150,7 @@ module.exports = function handleComponentEvents() {
           eventType,
           targetMethod,
           extraArgs,
-          isOnce
+          isOnce,
         });
       } else {
         // We are adding an event listener for a DOM event (not a custom event)
@@ -171,7 +171,7 @@ module.exports = function handleComponentEvents() {
           eventType,
           targetMethod,
           extraArgs,
-          isOnce
+          isOnce,
         });
       }
     });

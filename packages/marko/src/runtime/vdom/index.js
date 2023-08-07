@@ -2,7 +2,7 @@
 
 typeof window === "object" &&
   (window.Marko = {
-    Component: function () {}
+    Component: function () {},
   });
 
 /**

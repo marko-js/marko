@@ -175,7 +175,7 @@ class HtmlElement extends Node {
       attributes: this._attributes,
       tagString: this.tagString,
       argument: this.argument,
-      body: this.body
+      body: this.body,
     };
   }
 

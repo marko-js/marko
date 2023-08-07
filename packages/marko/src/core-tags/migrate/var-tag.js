@@ -39,7 +39,7 @@ module.exports = function nodeFactory(elNode, context) {
     lastChild.argument.value = lastChild.argument.value.trimRight();
   }
 
-  const scriptlets = elNode.attributes.map(attr => {
+  const scriptlets = elNode.attributes.map((attr) => {
     const name = attr.name;
     const val = attr.rawValue;
 
@@ -55,7 +55,7 @@ module.exports = function nodeFactory(elNode, context) {
     return builder.scriptlet({
       value: `var ${
         val == null ? name : `${name} = ${printJS(attr.value, context)}`
-      }`
+      }`,
     });
   });
 
@@ -63,7 +63,7 @@ module.exports = function nodeFactory(elNode, context) {
     return;
   }
 
-  scriptlets.forEach(scriptlet => elNode.insertSiblingBefore(scriptlet));
-  elNode.forEachChild(node => elNode.insertSiblingBefore(node));
+  scriptlets.forEach((scriptlet) => elNode.insertSiblingBefore(scriptlet));
+  elNode.forEachChild((node) => elNode.insertSiblingBefore(node));
   elNode.detach();
 };

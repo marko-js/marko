@@ -25,7 +25,7 @@ function run(fixture) {
   let dir = fixture.dir;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     var express = require(resolveFrom(dir, "express"));
     var mainPath = resolve("test.js");
     var templatePath = resolve("template.marko");
@@ -100,7 +100,7 @@ function run(fixture) {
 }
 
 function setup() {
-  ["express-4", "express-5"].forEach(version => {
+  ["express-4", "express-5"].forEach((version) => {
     var versionDirectory = path.join(__dirname, "versions", version);
     execSync("npm install", { cwd: versionDirectory });
     shell.cp("-R", fixturesDirectory, versionDirectory);

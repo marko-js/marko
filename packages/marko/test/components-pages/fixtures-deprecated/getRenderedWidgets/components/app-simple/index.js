@@ -9,7 +9,7 @@ module.exports = require("marko-widgets").defineComponent({
     return {
       type: "widget config",
       name: input.name,
-      messageCount: input.messageCount
+      messageCount: input.messageCount,
     };
   },
 
@@ -17,7 +17,7 @@ module.exports = require("marko-widgets").defineComponent({
     return {
       type: "widget state",
       name: input.name,
-      messageCount: input.messageCount
+      messageCount: input.messageCount,
     };
   },
 
@@ -29,5 +29,5 @@ module.exports = require("marko-widgets").defineComponent({
     window.simpleWidgets.push(this);
 
     this.widgetConfig = widgetConfig;
-  }
+  },
 });

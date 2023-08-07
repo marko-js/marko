@@ -8,8 +8,8 @@ exports.render = function (input, out) {
     boolean: true,
     complex: {
       a: '<"hello">',
-      b: "test"
-    }
+      b: "test",
+    },
   };
 
   viewModel._widgetConfig = config;

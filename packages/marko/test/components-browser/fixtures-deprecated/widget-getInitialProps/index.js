@@ -3,7 +3,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   getInitialProps: function (input) {
     var name = input.name;
     return {
-      name: name.toUpperCase()
+      name: name.toUpperCase(),
     };
-  }
+  },
 });

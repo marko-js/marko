@@ -12,9 +12,9 @@ module.exports = function (builder) {
           builder.literal("k:"),
           builder.identifier("k"),
           builder.literal("v:"),
-          builder.identifier("v")
-        ])
-      ]
-    })
+          builder.identifier("v"),
+        ]),
+      ],
+    }),
   ]);
 };

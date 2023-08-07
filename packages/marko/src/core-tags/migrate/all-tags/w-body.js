@@ -44,15 +44,15 @@ module.exports = function migrate(el, context) {
       )
     ),
     builder.htmlElement("else", undefined, [
-      builder.text(isDefault ? renderBodyValue : bodyValue)
-    ])
+      builder.text(isDefault ? renderBodyValue : bodyValue),
+    ]),
   ]);
 
   if (
     el.hasAttribute("body-only-if") &&
     el.getAttribute("body-only-if").argument === "true"
   ) {
-    el.forEachChild(node => el.insertSiblingBefore(node));
+    el.forEachChild((node) => el.insertSiblingBefore(node));
     el.detach();
   }
 };

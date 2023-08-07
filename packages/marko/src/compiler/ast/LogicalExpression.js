@@ -74,7 +74,7 @@ class LogicalExpression extends Node {
       type: "LogicalExpression",
       left: this.left,
       operator: this.operator,
-      right: this.right
+      right: this.right,
     };
   }
 

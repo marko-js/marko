@@ -101,7 +101,7 @@ module.exports = function handleComponentBind(options) {
 
     // TODO Deprecation warning for inner binds
     let componentNode = context.createNodeForEl("_component", {
-      props: builder.literal(componentProps)
+      props: builder.literal(componentProps),
     });
     el.wrapWith(componentNode);
     return;
@@ -146,7 +146,7 @@ module.exports = function handleComponentBind(options) {
       eventArgs.node.addRenderFunctionParam(builder.identifier("state"));
     }
 
-    eventArgs.node.generateAssignRenderCode = eventArgs => {
+    eventArgs.node.generateAssignRenderCode = (eventArgs) => {
       const nodes = [];
       const templateVar = eventArgs.templateVar;
       const templateRendererMember = eventArgs.templateRendererMember;
@@ -154,7 +154,7 @@ module.exports = function handleComponentBind(options) {
 
       const createRendererArgs = [
         renderFunctionVar,
-        builder.literal(componentProps)
+        builder.literal(componentProps),
       ];
 
       if (markoComponentVar) {
@@ -177,7 +177,7 @@ module.exports = function handleComponentBind(options) {
             ),
             builder.functionCall(defineComponentHelper, [
               markoComponentVar || builder.literal({}),
-              templateRendererMember
+              templateRendererMember,
             ])
           )
         );

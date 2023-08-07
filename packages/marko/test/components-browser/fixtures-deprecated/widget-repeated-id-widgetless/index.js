@@ -6,7 +6,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getTemplateData: function () {
     return {
-      renderers: [widgetLessRenderer, widgetLessRenderer, simpleRenderer]
+      renderers: [widgetLessRenderer, widgetLessRenderer, simpleRenderer],
     };
-  }
+  },
 });

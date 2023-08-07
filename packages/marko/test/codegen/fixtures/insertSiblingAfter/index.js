@@ -4,8 +4,8 @@ module.exports = function (builder) {
   var spanElement = builder.htmlElement("span", [
     {
       name: "class",
-      value: builder.literal("foo")
-    }
+      value: builder.literal("foo"),
+    },
   ]);
 
   var htmlElement = builder.htmlElement(
@@ -13,8 +13,8 @@ module.exports = function (builder) {
     [
       {
         name: "class",
-        value: builder.literal("greeting")
-      }
+        value: builder.literal("greeting"),
+      },
     ],
     [spanElement, builder.text(builder.literal("Hello World"))]
   );
@@ -22,8 +22,8 @@ module.exports = function (builder) {
   let varNode = builder.vars([
     {
       id: builder.identifier("newVar"),
-      init: builder.literal("Hello World")
-    }
+      init: builder.literal("Hello World"),
+    },
   ]);
 
   spanElement.insertSiblingAfter(varNode);

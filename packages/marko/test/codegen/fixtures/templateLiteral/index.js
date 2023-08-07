@@ -39,7 +39,7 @@ module.exports = function (builder) {
     nsTemplateLiteral,
     nsTemplateLiteralEscape,
     nsTemplateLiteralEscape2,
-    nsTemplateLiteralEscapeQuotes
+    nsTemplateLiteralEscapeQuotes,
   ];
 };
 

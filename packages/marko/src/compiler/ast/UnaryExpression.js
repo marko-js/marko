@@ -55,7 +55,7 @@ class UnaryExpression extends Node {
       type: "UnaryExpression",
       argument: this.argument,
       operator: this.operator,
-      prefix: this.prefix
+      prefix: this.prefix,
     };
   }
 

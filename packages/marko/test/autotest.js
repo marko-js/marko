@@ -20,22 +20,22 @@ module.exports = function autotest(fixturesName, run) {
     if (typeof run === "function") {
       modes.push({ name: "", run });
     } else {
-      Object.keys(run).forEach(modeName =>
+      Object.keys(run).forEach((modeName) =>
         modes.push({
           name: modeName,
-          run: run[modeName]
+          run: run[modeName],
         })
       );
     }
 
-    fs.readdirSync(fixturesDirectory).forEach(fixtureName => {
+    fs.readdirSync(fixturesDirectory).forEach((fixtureName) => {
       let fixtureDirectory = path.join(fixturesDirectory, fixtureName);
       let context = {};
       if (fixtureName[0] === "~") {
         // skip the fixture directory
       } else if (modes.length > 1) {
         describe(fixtureName, function () {
-          modes.forEach(mode => {
+          modes.forEach((mode) => {
             runFixtureTest(
               mode.name,
               fixtureDirectory,
@@ -53,7 +53,7 @@ module.exports = function autotest(fixturesName, run) {
 };
 
 function runFixtureTest(name, dir, run, mode, context = {}) {
-  const resolve = file => path.join(dir, file);
+  const resolve = (file) => path.join(dir, file);
   const mainPath = resolve("test.js");
   const hasMainFile = fs.existsSync(mainPath);
   const expectDeprecation =
@@ -105,7 +105,7 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     } catch (e) {
       if (updateExpectations) {
         fs.writeFileSync(expectedPath, actualString, {
-          encoding: "utf8"
+          encoding: "utf8",
         });
       } else {
         e.stack = e.stack.slice(
@@ -120,8 +120,8 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     }
   };
 
-  const test = fn => {
-    const withDeprecationAssertion = fn => {
+  const test = (fn) => {
+    const withDeprecationAssertion = (fn) => {
       const assertDeprecation = () => {
         if (expectDeprecation) {
           if (!context.deprecation) {
@@ -140,7 +140,7 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
               context.deprecation = context.deprecation || new Error(message);
             }
           };
-          return fn.call(this, err => {
+          return fn.call(this, (err) => {
             if (err) {
               done(err);
             } else {
@@ -168,7 +168,7 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     return test;
   };
 
-  const skip = reason => {
+  const skip = (reason) => {
     const test = it.skip(name);
     test.details = reason;
     test.file = mainPath;
@@ -182,7 +182,7 @@ function runFixtureTest(name, dir, run, mode, context = {}) {
     dir,
     snapshot,
     mode,
-    context
+    context,
   });
 }
 
@@ -204,7 +204,7 @@ function normalize(content, isObject, format) {
       ""
     );
   }
-  format = format || (content => content);
+  format = format || ((content) => content);
   return format(content);
 }
 

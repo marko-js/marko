@@ -5,7 +5,7 @@ module.exports = function (helpers) {
   helpers.targetEl.appendChild(previousSibling);
 
   var widget = helpers.mount(require.resolve("./index"), {
-    label: "Foo"
+    label: "Foo",
   });
 
   var nextSibling = document.createElement("div");
@@ -21,7 +21,7 @@ module.exports = function (helpers) {
   // var oldEl = widget.el;
 
   widget.rerender({
-    label: "Bar"
+    label: "Bar",
   });
 
   expect(widget.el.innerHTML.trim()).to.equal("Bar");

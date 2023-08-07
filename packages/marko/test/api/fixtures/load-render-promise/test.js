@@ -7,13 +7,13 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
   template
     .render({
-      name: "John"
+      name: "John",
     })
-    .then(result => {
+    .then((result) => {
       snapshot(result.toString());
       done();
     })
-    .catch(err => {
+    .catch((err) => {
       done(err);
     });
 };

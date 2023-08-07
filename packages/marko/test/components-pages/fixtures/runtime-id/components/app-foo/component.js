@@ -1,7 +1,7 @@
 module.exports = {
   onInput: function () {
     this.state = {
-      counter: 0
+      counter: 0,
     };
   },
 
@@ -11,5 +11,5 @@ module.exports = {
 
   onMount: function () {
     window.fooComponent = this;
-  }
+  },
 };

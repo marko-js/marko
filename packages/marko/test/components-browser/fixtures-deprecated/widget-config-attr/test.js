@@ -9,7 +9,7 @@ module.exports = function (helpers) {
     boolean: true,
     complex: {
       a: '<"hello">',
-      b: "test"
-    }
+      b: "test",
+    },
   });
 };

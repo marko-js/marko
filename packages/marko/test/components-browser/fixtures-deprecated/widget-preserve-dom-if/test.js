@@ -23,7 +23,7 @@ module.exports = function (helpers) {
         widget.el.querySelector(".preserve-body").innerHTML,
       widgetClass: require("marko/legacy-components").getWidgetForEl(
         widget.el.querySelector(".widget-no-id")
-      ).state.name
+      ).state.name,
     };
   }
 
@@ -31,7 +31,7 @@ module.exports = function (helpers) {
 
   widget.rerender({
     preserveCondition: true,
-    renderId: renderId
+    renderId: renderId,
   });
 
   var timestamps = getTimestamps();
@@ -68,7 +68,7 @@ module.exports = function (helpers) {
   // Do not preserve
   widget.rerender({
     preserveCondition: false,
-    renderId: renderId
+    renderId: renderId,
   });
 
   timestamps = getTimestamps();

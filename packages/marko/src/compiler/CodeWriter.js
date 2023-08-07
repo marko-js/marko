@@ -60,7 +60,7 @@ class CodeWriter {
     ok(nodes, '"nodes" expected');
     let firstStatement = true;
 
-    var writeNode = node => {
+    var writeNode = (node) => {
       if (Array.isArray(node) || node instanceof Container) {
         node.forEach(writeNode);
         return;

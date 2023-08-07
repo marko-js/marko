@@ -16,7 +16,7 @@ module.exports = function migrator(el, context) {
         } else {
           // For others we keep track of them to run an optional migration below.
           node._originalExpressions = node.expressions;
-          node.expressions = node.expressions.map(expr =>
+          node.expressions = node.expressions.map((expr) =>
             builder.conditionalExpression(
               builder.binaryExpression(expr, "==", builder.literalNull()),
               builder.literal(""),
@@ -26,7 +26,7 @@ module.exports = function migrator(el, context) {
           literals.push(node);
         }
       }
-    }
+    },
   });
 
   walker.walk(el);
@@ -46,16 +46,16 @@ module.exports = function migrator(el, context) {
             type: "confirm",
             message:
               "Non standard template literals convert null/undefined/false to empty strings, JavaScript template literals do not. If you are relying on this it may cause issues. Would you like to attempt to migrate?",
-            initial: true
+            initial: true,
           })
-          .then(shouldMigrate => {
+          .then((shouldMigrate) => {
             if (shouldMigrate) {
-              literals.forEach(node => {
+              literals.forEach((node) => {
                 node.expressions = node._originalExpressions;
               });
             }
           });
-      }
+      },
     });
   }
 };

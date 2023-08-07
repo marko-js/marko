@@ -11,26 +11,26 @@ const path = require("path");
 const morphdom = require("marko/runtime/vdom/morphdom");
 const createBrowser = require("jsdom-context-require");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let dir = fixture.dir;
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
   test(() => {
     var fromHTML = fs.readFileSync(resolve("from.html"), {
-      encoding: "utf8"
+      encoding: "utf8",
     });
     var toHTML = fs.readFileSync(resolve("to.html"), {
-      encoding: "utf8"
+      encoding: "utf8",
     });
 
     let fromDocument = createBrowser({
       dir: __dirname,
-      html: "<html><body>" + fromHTML + "</body></html>"
+      html: "<html><body>" + fromHTML + "</body></html>",
     }).window.document;
     let toDocument = createBrowser({
       dir: __dirname,
-      html: "<html><body>" + toHTML + "</body></html>"
+      html: "<html><body>" + toHTML + "</body></html>",
     }).window.document;
 
     let fromNode = fromDocument.body;
@@ -40,7 +40,7 @@ autotest("fixtures", fixture => {
     );
     var expectedHTML = serializeNode(realToNode);
     fs.writeFileSync(resolve("expected.html"), expectedHTML, {
-      encoding: "utf8"
+      encoding: "utf8",
     });
 
     var toNode = targetVEl;
@@ -49,8 +49,8 @@ autotest("fixtures", fixture => {
       ___preserved: {},
       ___preservedBodies: {},
       ___globalContext: {
-        ___isHydrate: true
-      }
+        ___isHydrate: true,
+      },
     };
 
     morphdom(fromNode, toNode, doc, componentsContext);

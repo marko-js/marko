@@ -12,7 +12,7 @@ module.exports = function (componentProps) {
   return function bindComponent(renderBody, out) {
     renderer(
       {
-        $renderBody: renderBody
+        $renderBody: renderBody,
       },
       out
     );

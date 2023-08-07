@@ -16,5 +16,5 @@ module.exports = {
   testGetEl: function () {
     var wrapperEl = this.getEl("wrapper");
     expect(wrapperEl != null).to.equal(true);
-  }
+  },
 };

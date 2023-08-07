@@ -2,12 +2,12 @@ module.exports = require("marko/legacy-components").defineComponent({
   template: require("./template.marko"),
   getInitialState: function (input) {
     return {
-      version: input.version
+      version: input.version,
     };
   },
   getTemplateData: function (state) {
     return {
-      version: state.version
+      version: state.version,
     };
   },
   init: function () {
@@ -16,5 +16,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   },
   onUpdate: function () {
     window.rerenderInitOrder.push("parent");
-  }
+  },
 });

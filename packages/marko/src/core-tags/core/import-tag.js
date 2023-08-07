@@ -9,7 +9,7 @@ module.exports = function codeGenerator(el, codegen) {
   var args = parseImport(el.tagString);
   var vars = {};
 
-  args.forEach(arg => {
+  args.forEach((arg) => {
     var varName = arg.name;
 
     if (arg.value[0] === "<") {

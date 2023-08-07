@@ -4,7 +4,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   getTemplateData: function (state, input) {
     return {
       name: input.name,
-      messageCount: input.messageCount
+      messageCount: input.messageCount,
     };
   },
 
@@ -20,5 +20,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   handleButtonClick: function (event) {
     this.buttonClicked = true;
     event.stopPropagation();
-  }
+  },
 });

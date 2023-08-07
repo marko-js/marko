@@ -4,13 +4,13 @@ function getSpecifiers(importDeclaration) {
   var match = /^([\s\S]+)\bfrom\s*(("|')(.*?)("|'))$/.exec(importDeclaration);
   if (!match) {
     return {
-      moduleSpecifier: importDeclaration.replace(/"|'/g, "").trim()
+      moduleSpecifier: importDeclaration.replace(/"|'/g, "").trim(),
     };
   }
 
   return {
     importSpecifierSet: match[1].trim(),
-    moduleSpecifier: match[4].trim()
+    moduleSpecifier: match[4].trim(),
   };
 }
 
@@ -23,12 +23,12 @@ function getImportSpecifierGroups(importSpecifierSet) {
     defaultImport = defaultImport.replace(decomposedImports[0], "");
     decomposedImports = decomposedImports[1]
       .split(",")
-      .map(specifier => specifier.trim());
+      .map((specifier) => specifier.trim());
   }
 
   return {
     defaultImport: defaultImport,
-    decomposedImports: decomposedImports
+    decomposedImports: decomposedImports,
   };
 }
 
@@ -51,7 +51,7 @@ function getNames(importSpecifier) {
 
   return {
     exported: names[0].trim(),
-    local: names[1].trim()
+    local: names[1].trim(),
   };
 }
 
@@ -71,13 +71,13 @@ module.exports = function importToAssignments(tagString) {
     getVariableName(moduleSpecifier);
   var specifierList = importGroups.decomposedImports
     .map(getNames)
-    .map(names => {
+    .map((names) => {
       return {
         name: names.local,
         value: {
           object: rootVariable,
-          property: names.exported
-        }
+          property: names.exported,
+        },
       };
     });
 

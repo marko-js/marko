@@ -6,5 +6,5 @@ myMap.set("foo", "low");
 myMap.set("bar", "high");
 
 exports.templateData = {
-  myMap: myMap
+  myMap: myMap,
 };

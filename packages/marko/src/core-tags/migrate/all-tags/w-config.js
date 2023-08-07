@@ -24,7 +24,7 @@ module.exports = function migrate(el, context) {
             "="
           ),
           context
-        )
+        ),
       })
     );
   }

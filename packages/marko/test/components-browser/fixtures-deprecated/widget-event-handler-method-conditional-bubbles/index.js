@@ -11,5 +11,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   handleButtonClick: function () {
     this.clicked = true;
-  }
+  },
 });

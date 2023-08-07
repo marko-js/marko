@@ -9,7 +9,7 @@ module.exports = function handleComponentKeyAttrs() {
 
   var attrs = el.attributes.concat([]);
 
-  attrs.forEach(attribute => {
+  attrs.forEach((attribute) => {
     const attributeName = attribute.name;
     if (!attributeName) {
       return;

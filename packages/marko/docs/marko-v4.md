@@ -51,7 +51,7 @@ var clickCount = require("./src/components/click-count");
 
 var component = clickCount
   .renderSync({
-    value: 10
+    value: 10,
   })
   .appendTo(document.body)
   .getComponent();
@@ -97,7 +97,7 @@ _Compiled for VDOM output (browser-side):_
 
 ```javascript
 var marko_attrs0 = {
-    class: "color"
+    class: "color",
   },
   marko_node0 = marko_createElement("DIV", null, 1, marko_const_nextId()).t(
     "No colors!"
@@ -694,7 +694,7 @@ _Automatically inserted before `</body>`_
 
 ```js
 require("marko/node-require").install({
-  extension: ".marko"
+  extension: ".marko",
 });
 ```
 
@@ -702,7 +702,7 @@ require("marko/node-require").install({
 
 ```js
 require("marko/node-require").install({
-  extensions: [".marko", ".marko.xml", ".html"]
+  extensions: [".marko", ".marko.xml", ".html"],
 });
 ```
 

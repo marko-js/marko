@@ -6,17 +6,17 @@ module.exports = function (builder) {
     [
       {
         name: "class",
-        value: builder.literal("greeting")
-      }
+        value: builder.literal("greeting"),
+      },
     ],
     [builder.text(builder.literal("Hello World"))]
   );
 
-  htmlElement.onBeforeGenerateCode(event => {
+  htmlElement.onBeforeGenerateCode((event) => {
     event.insertCode(builder.functionCall("before", []));
   });
 
-  htmlElement.onAfterGenerateCode(event => {
+  htmlElement.onAfterGenerateCode((event) => {
     event.insertCode(builder.functionCall("after", []));
   });
 

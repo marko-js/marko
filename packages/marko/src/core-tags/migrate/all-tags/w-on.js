@@ -2,7 +2,7 @@ const printJS = require("../util/printJS");
 const findBoundParent = require("../util/findBoundParent");
 
 module.exports = function migrate(el, context) {
-  el.forEachAttribute(attr => {
+  el.forEachAttribute((attr) => {
     let name = attr.name;
     if (!name || !name.startsWith("w-on")) {
       return;

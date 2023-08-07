@@ -12,5 +12,5 @@ function resetWidgetLifecycleEvents() {
 module.exports = {
   events: widgetLifecycleEvents,
   reset: resetWidgetLifecycleEvents,
-  record: recordWidgetLifecycleEvent
+  record: recordWidgetLifecycleEvent,
 };

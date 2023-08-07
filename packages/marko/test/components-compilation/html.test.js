@@ -32,7 +32,7 @@ function run(fixture) {
     var compilerOptions = {
       output: "html",
       writeVersionComment: false,
-      autoKeyEnabled: true
+      autoKeyEnabled: true,
     };
 
     if (main && main.checkError) {

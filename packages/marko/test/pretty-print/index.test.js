@@ -8,7 +8,7 @@ var compiler = require("../../compiler");
 var builder = compiler.createBuilder();
 var autotest = require("../autotest");
 
-autotest("fixtures", fixture => {
+autotest("fixtures", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;

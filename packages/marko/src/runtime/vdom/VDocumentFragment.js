@@ -24,7 +24,7 @@ VDocumentFragment.prototype = {
 
   ___actualize: function (host) {
     return (host.ownerDocument || host).createDocumentFragment();
-  }
+  },
 };
 
 inherit(VDocumentFragment, VNode);

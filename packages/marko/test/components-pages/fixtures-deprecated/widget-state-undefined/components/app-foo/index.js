@@ -3,12 +3,12 @@ module.exports = require("marko-widgets").defineComponent({
 
   getInitialState: function (input) {
     return {
-      data: input.data
+      data: input.data,
     };
   },
 
   init: function () {
     window.fooWidgets = window.fooWidgets || [];
     window.fooWidgets.push(this);
-  }
+  },
 });

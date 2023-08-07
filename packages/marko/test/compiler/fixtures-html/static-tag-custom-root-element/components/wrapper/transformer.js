@@ -3,7 +3,7 @@ module.exports = function (el, context) {
   var rootNode = builder.containerNode(function () {
     return context.createNodeForEl({
       tagName: "div",
-      body: rootNode.body
+      body: rootNode.body,
     });
   });
 

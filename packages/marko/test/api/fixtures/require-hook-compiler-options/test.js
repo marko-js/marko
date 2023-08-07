@@ -22,8 +22,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     requireHook.install({
       compilerOptions: {
         writeToDisk: true,
-        preserveWhitespace: true
-      }
+        preserveWhitespace: true,
+      },
     }); // Reconfigure for testing
 
     expect(markoCompiler.config.writeToDisk).to.equal(true);
@@ -34,8 +34,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     requireHook.install({
       compilerOptions: {
         writeToDisk: false,
-        preserveWhitespace: false
-      }
+        preserveWhitespace: false,
+      },
     });
 
     expect(markoCompiler.config.writeToDisk).to.equal(false);
@@ -43,7 +43,7 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
 
     markoCompiler.configure({
       writeToDisk: true,
-      preserveWhitespace: true
+      preserveWhitespace: true,
     });
 
     expect(markoCompiler.config.writeToDisk).to.equal(true);
@@ -58,21 +58,21 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     requireHook.install({
       compilerOptions: {
         writeToDisk: true,
-        preserveWhitespace: false
-      }
+        preserveWhitespace: false,
+      },
     });
 
     compileAndCheck("./c.marko", true /* should write to disk */);
 
     requireHook.install({
       compilerOptions: {
-        preserveWhitespace: false
-      }
+        preserveWhitespace: false,
+      },
     });
 
     markoCompiler.configure({
       writeToDisk: false,
-      preserveWhitespace: true
+      preserveWhitespace: true,
     });
 
     compileAndCheck("./d.marko", false /* should write to disk */);
@@ -82,8 +82,8 @@ exports.check = function (marko, markoCompiler, expect, helpers, done) {
     // Reset require hook.
     requireHook.install({
       compilerOptions: {
-        writeToDisk: false
-      }
+        writeToDisk: false,
+      },
     });
   }
 };

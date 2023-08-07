@@ -20,7 +20,7 @@ class ForEachProp extends Node {
 
     return builder.functionCall(context.helper("forIn"), [
       inExpression,
-      builder.functionDeclaration(null, params, body)
+      builder.functionDeclaration(null, params, body),
     ]);
   }
 

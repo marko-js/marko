@@ -25,7 +25,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   template
     .render(
       {
-        name: "John"
+        name: "John",
       },
       out
     )

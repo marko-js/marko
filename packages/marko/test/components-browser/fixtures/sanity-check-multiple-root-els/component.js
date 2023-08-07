@@ -3,7 +3,7 @@ module.exports = {
     this.state = {
       name: input.name,
       age: input.age,
-      url: input.url
+      url: input.url,
     };
   },
   setName: function (newName) {
@@ -14,5 +14,5 @@ module.exports = {
   },
   setUrl: function (newUrl) {
     this.setState("url", newUrl);
-  }
+  },
 };

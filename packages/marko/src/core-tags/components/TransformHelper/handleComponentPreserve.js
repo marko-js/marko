@@ -7,7 +7,7 @@ function addPreserve(transformHelper, bodyOnly, condition) {
   var isCustomTag = el.type !== "HtmlElement";
 
   if (bodyOnly) {
-    el.forEachChild(child => {
+    el.forEachChild((child) => {
       child._canBePreserved = true;
     });
   } else {
@@ -15,7 +15,7 @@ function addPreserve(transformHelper, bodyOnly, condition) {
   }
 
   var preserveAttrs = {
-    key: transformHelper.assignComponentId().nestedIdExpression
+    key: transformHelper.assignComponentId().nestedIdExpression,
   };
 
   if (isCustomTag) {
@@ -100,20 +100,20 @@ const preserveTypes = [
   // The new preserve types
   {
     attribute: "no-update",
-    handler: preserveHandler
+    handler: preserveHandler,
   },
   {
     attribute: "no-update-if",
-    handler: preserveIfHandler
+    handler: preserveIfHandler,
   },
   {
     attribute: "no-update-body",
-    handler: preserveBodyHandler
+    handler: preserveBodyHandler,
   },
   {
     attribute: "no-update-body-if",
-    handler: preserveBodyIfHandler
-  }
+    handler: preserveBodyIfHandler,
+  },
 ];
 
 module.exports = function handleComponentPreserve() {

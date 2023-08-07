@@ -49,7 +49,7 @@ module.exports = function (node, codegen) {
 
   if (properties) {
     Object.keys(properties).forEach(
-      key => (properties[key] = codegen.generateCode(properties[key]))
+      (key) => (properties[key] = codegen.generateCode(properties[key]))
     );
   }
 
@@ -100,7 +100,7 @@ module.exports = function (node, codegen) {
     isHtmlOnly,
     nextConstId,
     runtimeFlags,
-    isAutoKeyed
+    isAutoKeyed,
   });
 
   if (isHtmlOnly) {
@@ -120,7 +120,7 @@ module.exports = function (node, codegen) {
             ),
             [
               builder.concat(builder.literal("f_"), node.key),
-              builder.identifier("component")
+              builder.identifier("component"),
             ]
           )
         )

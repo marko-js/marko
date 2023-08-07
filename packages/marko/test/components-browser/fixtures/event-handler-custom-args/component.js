@@ -5,5 +5,5 @@ module.exports = {
 
   handleButtonPress: function () {
     this.pressEvent = arguments;
-  }
+  },
 };

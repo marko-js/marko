@@ -26,7 +26,7 @@ class If extends Node {
       // correctly.
       let previous = this;
       let whitespaceNodes = [];
-      this.forEachNextSibling(curNode => {
+      this.forEachNextSibling((curNode) => {
         if (curNode.type === "Else") {
           curNode.detach();
           if (whitespaceNodes.length) {

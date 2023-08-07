@@ -7,5 +7,5 @@ module.exports = {
   },
   setLabel: function (label) {
     this.el.innerHTML = label;
-  }
+  },
 };

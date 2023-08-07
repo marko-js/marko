@@ -11,5 +11,5 @@ module.exports = {
 
   handleComponentClick() {
     this.appButtonClicks++;
-  }
+  },
 };

@@ -6,14 +6,14 @@ module.exports = function (helpers) {
 
   var component = helpers.mount(require.resolve("./index"), {
     items: items,
-    count: count
+    count: count,
   });
 
   expect(
     helpers.targetEl.firstElementChild.getAttribute("data-count")
   ).to.equal("0");
 
-  Array.from(helpers.targetEl.firstElementChild.childNodes).forEach(child => {
+  Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {
     if (child.tagName === "div") {
       expect(child.getAttribute("data-count")).to.equal("0");
     }
@@ -23,7 +23,7 @@ module.exports = function (helpers) {
 
   component.input = {
     count: ++count,
-    items: [].concat(items).reverse()
+    items: [].concat(items).reverse(),
   };
   component.update();
 
@@ -31,7 +31,7 @@ module.exports = function (helpers) {
     helpers.targetEl.firstElementChild.getAttribute("data-count")
   ).to.equal("1");
 
-  Array.from(helpers.targetEl.firstElementChild.childNodes).forEach(child => {
+  Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {
     if (child.tagName === "div") {
       expect(child.getAttribute("data-count")).to.equal("0");
     }

@@ -5,5 +5,5 @@ module.exports = {
 
   handleMouseMove: function (event, el) {
     el.innerHTML = "" + this.counter++;
-  }
+  },
 };

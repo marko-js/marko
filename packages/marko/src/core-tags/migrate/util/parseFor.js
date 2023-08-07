@@ -8,60 +8,60 @@ var numberRegExp = /^-?(?:\d+|\d+\.\d*|\d*\.\d+|\d+\.\d+)$/;
 var tokenizer = require("../../../compiler/util/tokenizer").create([
   {
     name: "stringDouble",
-    pattern: /"(?:[^"]|\\")*"/
+    pattern: /"(?:[^"]|\\")*"/,
   },
   {
     name: "stringSingle",
-    pattern: /'(?:[^']|\\')*'/
+    pattern: /'(?:[^']|\\')*'/,
   },
   {
     name: "in",
-    pattern: /\s+in\s+/
+    pattern: /\s+in\s+/,
   },
   {
     name: "from",
-    pattern: /\s+from\s+/
+    pattern: /\s+from\s+/,
   },
   {
     name: "to",
-    pattern: /\s+to\s+/
+    pattern: /\s+to\s+/,
   },
   {
     name: "step",
-    pattern: /\s+step\s+/
+    pattern: /\s+step\s+/,
   },
   {
     name: "semicolon",
-    pattern: /[;]/
+    pattern: /[;]/,
   },
   {
     name: "separator",
-    pattern: /separator\s?=\s?/
+    pattern: /separator\s?=\s?/,
   },
   {
     name: "status-var",
-    pattern: /status-var\s?=\s?/
+    pattern: /status-var\s?=\s?/,
   },
   {
     name: "iterator",
-    pattern: /iterator\s?=\s?/
+    pattern: /iterator\s?=\s?/,
   },
   {
     name: "pipe",
-    pattern: /\s+\|\s+/
+    pattern: /\s+\|\s+/,
   },
   {
     name: "groupOpen",
-    pattern: /[{([]/
+    pattern: /[{([]/,
   },
   {
     name: "groupClose",
-    pattern: /[})\]]/
+    pattern: /[})\]]/,
   },
   {
     name: "array",
-    pattern: /array/
-  }
+    pattern: /array/,
+  },
 ]);
 
 var inRegExp =
@@ -204,7 +204,7 @@ module.exports = function (str) {
     }
   }
 
-  tokenizer.forEachToken(str, token => {
+  tokenizer.forEachToken(str, (token) => {
     switch (token.name) {
       case "groupOpen":
         depth++;
@@ -371,7 +371,7 @@ module.exports = function (str) {
       separator: separatorExpression,
       statusVarName: statusVarName,
       iterator: iteratorExpression,
-      isArray: isArray
+      isArray: isArray,
     };
   } else if (loopType === "ForEachProp") {
     return {
@@ -380,7 +380,7 @@ module.exports = function (str) {
       valueVarName: valueVarName,
       in: inExpression,
       separator: separatorExpression,
-      statusVarName: statusVarName
+      statusVarName: statusVarName,
     };
   } else if (loopType === "ForRange") {
     return {
@@ -388,7 +388,7 @@ module.exports = function (str) {
       varName: varName,
       from: fromExpression,
       to: toExpression,
-      step: stepExpression
+      step: stepExpression,
     };
   } else if (loopType === "For") {
     if (forTest == null) {
@@ -400,7 +400,7 @@ module.exports = function (str) {
       loopType: loopType,
       init: forInit,
       test: forTest,
-      update: forUpdate
+      update: forUpdate,
     };
   } else {
     throwError("Invalid for loop");

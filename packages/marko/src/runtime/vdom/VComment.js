@@ -16,7 +16,7 @@ VComment.prototype = {
 
   ___cloneNode: function () {
     return new VComment(this.___nodeValue);
-  }
+  },
 };
 
 inherit(VComment, VNode);

@@ -53,7 +53,7 @@ class MemberExpression extends Node {
       type: "MemberExpression",
       object: this.object,
       property: this.property,
-      computed: this.computed
+      computed: this.computed,
     };
   }
 

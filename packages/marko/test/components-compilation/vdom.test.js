@@ -6,7 +6,7 @@ var fs = require("fs");
 var autotest = require("../autotest");
 var compiler = require("marko/compiler");
 
-autotest("fixtures-vdom", fixture => {
+autotest("fixtures-vdom", (fixture) => {
   let test = fixture.test;
   let resolve = fixture.resolve;
   let snapshot = fixture.snapshot;
@@ -29,7 +29,7 @@ autotest("fixtures-vdom", fixture => {
     var compilerOptions = {
       output: "vdom",
       writeVersionComment: false,
-      autoKeyEnabled: true
+      autoKeyEnabled: true,
     };
 
     if (main && main.checkError) {

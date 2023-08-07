@@ -3,5 +3,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   init: function () {
     this.name = "app-foo";
-  }
+  },
 });

@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
-    includeWidget: false
+    includeWidget: false,
   });
 
   expect(widget == null).to.equal(true);
@@ -10,7 +10,7 @@ module.exports = function (helpers) {
   expect(helpers.targetEl.innerHTML).contain("[app-conditional-widget]");
 
   widget = helpers.mount(require.resolve("./index"), {
-    includeWidget: true
+    includeWidget: true,
   });
 
   expect(widget != null).to.equal(true);

@@ -26,5 +26,5 @@ module.exports = {
   handleFooLinkMouseOut: function (event, el) {
     expect(event.target).to.equal(el);
     this.log("#fooLink:mouseout");
-  }
+  },
 };

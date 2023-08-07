@@ -3,11 +3,11 @@ module.exports = require("marko-widgets").defineComponent({
 
   getInitialState: function () {
     return {
-      name: "app-foo"
+      name: "app-foo",
     };
   },
 
   init: function () {
     window.fooWidget = this;
-  }
+  },
 });

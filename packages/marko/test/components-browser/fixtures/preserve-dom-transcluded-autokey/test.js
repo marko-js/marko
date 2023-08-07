@@ -4,7 +4,7 @@ module.exports = function (helpers) {
   var counter = 0;
 
   var component = helpers.mount(require.resolve("./index"), {
-    counter: counter
+    counter: counter,
   });
 
   expect(component.el.querySelector(".unpreserved-counter").innerHTML).to.equal(
@@ -18,7 +18,7 @@ module.exports = function (helpers) {
   );
 
   component.input = {
-    counter: ++counter
+    counter: ++counter,
   };
   component.update();
 

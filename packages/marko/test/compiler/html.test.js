@@ -28,7 +28,7 @@ function runTestForExtension(dir, snapshot, extension, done) {
   var compilerOptions = {
     output: "html",
     writeVersionComment: false,
-    autoKeyEnabled: true
+    autoKeyEnabled: true,
   };
 
   if (main && main.checkError) {
@@ -66,11 +66,11 @@ function runTestForExtension(dir, snapshot, extension, done) {
   return true;
 }
 
-autotest("fixtures-html", fixture => {
+autotest("fixtures-html", (fixture) => {
   let test = fixture.test;
   let dir = fixture.dir;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     for (let i = 0; i < EXTENSIONS.length; i++) {
       const extension = EXTENSIONS[i];
       let complete = runTestForExtension(dir, snapshot, extension, done);
@@ -82,11 +82,11 @@ autotest("fixtures-html", fixture => {
   });
 });
 
-autotest("fixtures-html-deprecated", fixture => {
+autotest("fixtures-html-deprecated", (fixture) => {
   let test = fixture.test;
   let dir = fixture.dir;
   let snapshot = fixture.snapshot;
-  test(done => {
+  test((done) => {
     for (let i = 0; i < EXTENSIONS.length; i++) {
       const extension = EXTENSIONS[i];
       let complete = runTestForExtension(dir, snapshot, extension, done);

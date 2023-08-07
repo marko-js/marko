@@ -61,11 +61,11 @@ const helpers = {
   merge: "marko/runtime/helpers/merge",
   attr: {
     html: "marko/runtime/html/helpers/attr",
-    vdom: "marko/runtime/vdom/helpers/attr"
+    vdom: "marko/runtime/vdom/helpers/attr",
   },
   attrs: {
     html: "marko/runtime/html/helpers/attrs",
-    vdom: "marko/runtime/vdom/helpers/attrs"
+    vdom: "marko/runtime/vdom/helpers/attrs",
   },
   mergeAttrs: { html: "marko/runtime/html/helpers/merge-attrs" },
   classAttr: { html: "marko/runtime/html/helpers/class-attr" },
@@ -76,31 +76,31 @@ const helpers = {
   dataMarko: { html: "marko/runtime/html/helpers/data-marko" },
   bindComponent: "marko/runtime/helpers/bind-component",
   defineComponent: {
-    vdom: "marko/runtime/components/defineComponent"
+    vdom: "marko/runtime/components/defineComponent",
   },
   "defineComponent-legacy": {
     vdom: "marko/runtime/components/legacy/defineComponent-legacy",
-    html: "marko/runtime/helpers/noop"
+    html: "marko/runtime/helpers/noop",
   },
   "defineWidget-legacy": "marko/runtime/components/legacy/defineWidget-legacy",
   dynamicTag: "marko/runtime/helpers/dynamic-tag",
   escapeXml: {
     html: {
       module: "marko/runtime/html/helpers/escape-xml",
-      method: "x"
-    }
+      method: "x",
+    },
   },
   escapeDoubleQuoteAttrValue: {
     html: {
       module: "marko/runtime/html/helpers/escape-quotes",
-      method: "d"
-    }
+      method: "d",
+    },
   },
   escapeScript: {
-    html: "marko/runtime/html/helpers/escape-script-placeholder"
+    html: "marko/runtime/html/helpers/escape-script-placeholder",
   },
   escapeStyle: {
-    html: "marko/runtime/html/helpers/escape-style-placeholder"
+    html: "marko/runtime/html/helpers/escape-style-placeholder",
   },
   forOf: "marko/runtime/helpers/for-of",
   forIn: "marko/runtime/helpers/for-in",
@@ -115,13 +115,13 @@ const helpers = {
   rendererLegacy: "marko/runtime/components/legacy/renderer-legacy",
   registerComponent: {
     module: "marko/runtime/components/registry",
-    method: "r"
+    method: "r",
   },
   str: "marko/runtime/helpers/to-string",
   styleValue: "marko/runtime/helpers/style-value",
   styleAttr: {
-    html: "marko/runtime/html/helpers/style-attr"
-  }
+    html: "marko/runtime/html/helpers/style-attr",
+  },
 };
 
 class CompileContext extends EventEmitter {
@@ -268,7 +268,7 @@ class CompileContext extends EventEmitter {
     return {
       pop: () => {
         this.popData(key);
-      }
+      },
     };
   }
 
@@ -337,7 +337,7 @@ class CompileContext extends EventEmitter {
         node,
         message,
         code,
-        pos
+        pos,
       };
     } else if (typeof errorInfo === "string") {
       let message = arguments[0];
@@ -347,7 +347,7 @@ class CompileContext extends EventEmitter {
       errorInfo = {
         message,
         code,
-        pos
+        pos,
       };
     }
 
@@ -489,7 +489,7 @@ class CompileContext extends EventEmitter {
       message:
         "Unrecognized tag: " +
         tagName +
-        " - More details: https://github.com/marko-js/marko/wiki/Error:-Unrecognized-Tag"
+        " - More details: https://github.com/marko-js/marko/wiki/Error:-Unrecognized-Tag",
     });
   }
 
@@ -510,9 +510,9 @@ class CompileContext extends EventEmitter {
     } else if (typeof attributes === "object") {
       if (!Array.isArray(attributes)) {
         attributes = elDef.attributes = Object.keys(attributes).map(
-          attrName => {
+          (attrName) => {
             var attrDef = {
-              name: attrName
+              name: attrName,
             };
 
             var val = attributes[attrName];
@@ -576,7 +576,7 @@ class CompileContext extends EventEmitter {
               // may be a macro that gets registered later
               this.unrecognizedTags.push({
                 node: elNode,
-                tagName: tagName
+                tagName: tagName,
               });
             }
           }
@@ -620,7 +620,7 @@ class CompileContext extends EventEmitter {
     var foundAttrs = {};
 
     // Validate the attributes
-    attributes.forEach(attr => {
+    attributes.forEach((attr) => {
       let attrName = attr.name;
       if (!attrName) {
         // Attribute will be name for placeholder attributes. For example: <div ${data.myAttrs}>
@@ -644,7 +644,7 @@ class CompileContext extends EventEmitter {
               getTaglibPath(tagDef.taglibId) +
               '" does not support attribute "' +
               attrName +
-              '"'
+              '"',
           });
         }
         return;
@@ -665,7 +665,7 @@ class CompileContext extends EventEmitter {
       // Add default values for any attributes. If an attribute has a declared
       // default value and the attribute was not found on the element
       // then add the attribute with the specified default value
-      tagDef.forEachAttribute(attrDef => {
+      tagDef.forEachAttribute((attrDef) => {
         var attrName = attrDef.name;
 
         if (
@@ -674,7 +674,7 @@ class CompileContext extends EventEmitter {
         ) {
           attributes.push({
             name: attrName,
-            value: builder.literal(attrDef.defaultValue)
+            value: builder.literal(attrDef.defaultValue),
           });
         } else if (attrDef.required === true) {
           // TODO Only throw an error if there is no data argument provided (just HTML attributes)
@@ -688,7 +688,7 @@ class CompileContext extends EventEmitter {
                 tagName +
                 '" in taglib "' +
                 getTaglibPath(tagDef.taglibId) +
-                '".'
+                '".',
             });
           }
         }
@@ -744,7 +744,7 @@ class CompileContext extends EventEmitter {
         builder.literal(relativePath)
       );
       let loadFunctionCall = builder.functionCall(this.helper("loadTemplate"), [
-        loadTemplateArg
+        loadTemplateArg,
       ]);
       templateVar = this.addStaticVar(varName, loadFunctionCall);
     }
@@ -773,7 +773,7 @@ class CompileContext extends EventEmitter {
       this.meta[key] = [value];
     } else if (
       !unique ||
-      !property.some(e => JSON.stringify(e) === JSON.stringify(value))
+      !property.some((e) => JSON.stringify(e) === JSON.stringify(value))
     ) {
       property.push(value);
     }
@@ -852,7 +852,7 @@ class CompileContext extends EventEmitter {
     let staticNodes = [];
     let staticVars = this.getStaticVars();
 
-    let staticVarNodes = Object.keys(staticVars).map(varName => {
+    let staticVarNodes = Object.keys(staticVars).map((varName) => {
       var varInit = staticVars[varName];
       return builder.variableDeclarator(varName, varInit);
     });
@@ -953,7 +953,7 @@ class CompileContext extends EventEmitter {
 
   optimize(rootNode) {
     if (this._optimizers) {
-      this._optimizers.forEach(optimizer => {
+      this._optimizers.forEach((optimizer) => {
         optimizer.optimize(rootNode, this);
       });
     }
@@ -978,7 +978,7 @@ class CompileContext extends EventEmitter {
 
 CompileContext.prototype.util = {
   isValidJavaScriptIdentifier: require("./util/isValidJavaScriptIdentifier"),
-  isJavaScriptReservedWord: require("./util/isJavaScriptReservedWord")
+  isJavaScriptReservedWord: require("./util/isJavaScriptReservedWord"),
 };
 
 module.exports = CompileContext;

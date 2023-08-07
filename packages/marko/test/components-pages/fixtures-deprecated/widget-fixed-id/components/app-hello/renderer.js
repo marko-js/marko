@@ -8,8 +8,8 @@ module.exports = function (input, out) {
       name: input.name,
       className: className,
       widgetConfig: {
-        name: input.name
-      }
+        name: input.name,
+      },
     },
     out
   );

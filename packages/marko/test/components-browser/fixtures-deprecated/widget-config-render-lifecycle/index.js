@@ -23,5 +23,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   init: function (config) {
     this.config = config;
-  }
+  },
 });

@@ -4,7 +4,7 @@ module.exports = function (helpers) {
       "div",
       {
         class: "foo",
-        onclick: "doSomething()"
+        onclick: "doSomething()",
       },
       1 /* childCount */
     )

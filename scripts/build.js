@@ -11,11 +11,11 @@ const babelOptions = {
         prefix: "",
         suffix: "_",
         hello: "world",
-        context: "marko"
-      }
+        context: "marko",
+      },
     ],
-    require.resolve("./babel-plugin-marko-debug")
-  ]
+    require.resolve("./babel-plugin-marko-debug"),
+  ],
 };
 
 var target = process.argv[2];
@@ -30,7 +30,7 @@ if (target === "src") {
 if (shouldBuildSrc) {
   buildDir("src", "dist", {
     babelExclude: ["/core-tags/core/async/client-reorder-runtime.min.js"],
-    babelOptions
+    babelOptions,
   });
 }
 
@@ -50,8 +50,8 @@ if (shouldBuildTest) {
       "*.skip",
       "*.generated.*",
       "*actual*.*",
-      "actualized-expected.html*"
+      "actualized-expected.html*",
     ],
-    babelOptions
+    babelOptions,
   });
 }

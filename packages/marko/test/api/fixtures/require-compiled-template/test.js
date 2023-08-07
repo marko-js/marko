@@ -9,7 +9,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var template = marko.load(templateModule);
   template.render(
     {
-      name: "John"
+      name: "John",
     },
     function (err, result) {
       if (err) {

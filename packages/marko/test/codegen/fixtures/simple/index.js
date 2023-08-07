@@ -11,6 +11,6 @@ module.exports = function (builder) {
       "foo",
       ["a", "b", identifier("c")],
       [functionCall("hello", ["arg1", "arg2"])]
-    )
+    ),
   ]);
 };

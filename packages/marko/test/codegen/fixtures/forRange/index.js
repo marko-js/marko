@@ -9,7 +9,7 @@ module.exports = function (builder) {
       from: builder.literal(0),
       to: "myArray.length",
       step: builder.literal(2),
-      body: [builder.functionCall("console.log", [builder.identifier("i")])]
-    })
+      body: [builder.functionCall("console.log", [builder.identifier("i")])],
+    }),
   ]);
 };

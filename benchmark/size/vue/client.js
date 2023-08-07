@@ -13,5 +13,5 @@ new Vue({
   el: document.body,
   render: function (createElement) {
     return createElement(App);
-  }
+  },
 });

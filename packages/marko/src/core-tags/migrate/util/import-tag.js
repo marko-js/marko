@@ -5,18 +5,18 @@ module.exports = function importTag(importIdentifier, context) {
   const builder = context.builder;
   const migrateImports = (context._migrateImports = context._migrateImports || {
     identifiers: {},
-    paths: {}
+    paths: {},
   });
   const isImportedAsTag = importIdentifier[0] === "<";
 
   // Create a camelcased tagName identifier based off of the matched file name.
   // Replace any invalid JS chars (We don't need to worry about reserved words because of camelcase).
-  const createTagName = fileName =>
+  const createTagName = (fileName) =>
     camelCase(fileName, {
-      pascalCase: true
+      pascalCase: true,
     }).replace(/^[^$A-Z_]|[^0-9A-Z_$]/gi, "_");
 
-  const getIdentifierName = importIdentifier => {
+  const getIdentifierName = (importIdentifier) => {
     let fileName;
     if (isImportedAsTag) fileName = importIdentifier.slice(1, -1);
     else {
@@ -44,7 +44,7 @@ module.exports = function importTag(importIdentifier, context) {
       } else if (node.type === "Scriptlet") {
         symbols.push(node.code);
       }
-    }
+    },
   });
   walker.walk(context.root);
 
@@ -53,7 +53,7 @@ module.exports = function importTag(importIdentifier, context) {
 
   while (
     migrateImports.identifiers[identifier] ||
-    symbols.some(symbol => symbol.includes(identifier))
+    symbols.some((symbol) => symbol.includes(identifier))
   ) {
     identifier = `${requestedTagName}_${i}`;
     i++;

@@ -5,8 +5,8 @@ module.exports = function (builder) {
     builder.vars([
       {
         id: "i",
-        init: builder.literal(0)
-      }
+        init: builder.literal(0),
+      },
     ]),
     builder.binaryExpression("i", "<", builder.literal(0)),
     builder.updateExpression("i", "++"),

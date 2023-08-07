@@ -13,7 +13,7 @@ function migrateNode(node, context) {
     return;
   }
 
-  context.taglibLookup.forEachTagMigrator(node, migration => {
+  context.taglibLookup.forEachTagMigrator(node, (migration) => {
     // Check to make sure a migration of a certain type is only applied once to a node
     if (node.isTransformerApplied(migration)) {
       return;
@@ -61,7 +61,7 @@ function migrateTreeHelper(node, context) {
 function migrateTree(ast, context) {
   // TODO: Consider moving this into the loop below so that root level migrations
   // are also run on new nodes.
-  context.taglibLookup.forEachTemplateMigrator(migration => {
+  context.taglibLookup.forEachTemplateMigrator((migration) => {
     migration(ast, context);
   });
 

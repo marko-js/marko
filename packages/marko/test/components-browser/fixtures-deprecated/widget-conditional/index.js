@@ -3,9 +3,9 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getTemplateData: function (state, input) {
     return {
-      includeWidget: input.includeWidget
+      includeWidget: input.includeWidget,
     };
   },
 
-  init: function () {}
+  init: function () {},
 });

@@ -24,10 +24,10 @@ module.exports = function transform(el, context) {
       el.prependChild(
         builder.vars({
           widget: builder.functionCall(getWidgetFromOut, [
-            builder.identifier("out")
+            builder.identifier("out"),
           ]),
           __component: builder.identifier("widget"),
-          component: builder.memberExpression("__component", "_c")
+          component: builder.memberExpression("__component", "_c"),
         })
       );
     }

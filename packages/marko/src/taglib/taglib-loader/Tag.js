@@ -98,24 +98,24 @@ class Tag {
     attr.filePath = this.filePath;
     if (attr.name === "key" && !this.isCoreTag()) {
       complain("@key property is deprecated", {
-        location: this.filePath
+        location: this.filePath,
       });
     }
     //
     if (attr.setFlag && attr.setFlag !== "hasComponentEvents") {
       complain(`${attr.name} - : set-flag property is deprecated`, {
-        location: this.filePath
+        location: this.filePath,
       });
     }
     if (attr.type === "template") {
       complain(`${attr.name} - attribute template type is deprecated`, {
-        location: this.filePath
+        location: this.filePath,
       });
     }
 
     if (attr.type === "path") {
       complain(`${attr.name} - attribute path type is deprecated`, {
-        location: this.filePath
+        location: this.filePath,
       });
     }
   }
@@ -137,7 +137,7 @@ class Tag {
             complain(
               'The default "targetProperty" for "@*" attribute definitions is changing from "*" to "null" (merged in with the rest of the input) in a future Marko release. In order to avoid an issue upgrading, please explicitly define the "targetProperty".',
               {
-                location: this.filePath
+                location: this.filePath,
               }
             );
           attr.targetProperty = "*";
@@ -186,13 +186,13 @@ class Tag {
    */
   addNestedVariable(nestedVariable) {
     complain("addNestedVariable is deprecated. Use tag parameters instead.", {
-      location: this.filePath
+      location: this.filePath,
     });
 
     if (!this.nestedVariables) {
       this.nestedVariables = {
         __noMerge: true,
-        vars: []
+        vars: [],
       };
     }
 
@@ -220,7 +220,7 @@ class Tag {
     this.bodyFunction = {
       __noMerge: true,
       name: name,
-      params: params
+      params: params,
     };
   }
   /**

@@ -7,8 +7,8 @@ module.exports = function (builder) {
     builder.vars([
       {
         id: "foo",
-        init: builder.literal("bar")
-      }
+        init: builder.literal("bar"),
+      },
     ])
   );
 

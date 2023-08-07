@@ -6,7 +6,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   renderer: function (input, out) {
     template.render(
       {
-        name: input.name
+        name: input.name,
       },
       out
     );
@@ -14,5 +14,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   setName: function (name) {
     this.getEl("name").innerHTML = name;
-  }
+  },
 });

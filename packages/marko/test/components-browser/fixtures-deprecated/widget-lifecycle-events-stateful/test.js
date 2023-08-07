@@ -4,7 +4,7 @@ var lifecycle = require("./lifecycle-recorder");
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    messageCount: 10
+    messageCount: 10,
   });
 
   var targetEl = helpers.targetEl;
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
 
   expect(lifecycle.events[widget.id]).to.deep.equal([
     "init",
-    "onRender:firstRender"
+    "onRender:firstRender",
   ]);
 
   expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
@@ -29,7 +29,7 @@ module.exports = function (helpers) {
   expect(targetEl.innerHTML).to.contain("10");
   expect(lifecycle.events[widget.id]).to.deep.equal([
     "init",
-    "onRender:firstRender"
+    "onRender:firstRender",
   ]);
   widget.update();
 
@@ -40,7 +40,7 @@ module.exports = function (helpers) {
     "init",
     "onRender:firstRender",
     "onBeforeUpdate",
-    "onUpdate"
+    "onUpdate",
   ]);
 
   expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
@@ -57,7 +57,7 @@ module.exports = function (helpers) {
     "init",
     "onRender:firstRender",
     "onBeforeUpdate",
-    "onUpdate"
+    "onUpdate",
   ]);
   widget.update();
 
@@ -71,7 +71,7 @@ module.exports = function (helpers) {
     "onUpdate",
     "onBeforeUpdate",
     "onUpdate",
-    "onRender"
+    "onRender",
   ]);
 
   expect(lifecycle.events[widget.getWidget("nestedStateful").id]).to.deep.equal(
@@ -83,7 +83,7 @@ module.exports = function (helpers) {
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
-    "onRender"
+    "onRender",
   ]);
 
   var nestedStateful = widget.getWidget("nestedStateful");
@@ -99,7 +99,7 @@ module.exports = function (helpers) {
     "onUpdate",
     "onRender",
     "onBeforeDestroy",
-    "onDestroy"
+    "onDestroy",
   ]);
 
   expect(lifecycle.events[nestedStateful.id]).to.deep.equal([
@@ -109,7 +109,7 @@ module.exports = function (helpers) {
     "onUpdate",
     "onRender",
     "onBeforeDestroy",
-    "onDestroy"
+    "onDestroy",
   ]);
 
   expect(lifecycle.events.foo).to.deep.equal([
@@ -119,7 +119,7 @@ module.exports = function (helpers) {
     "onUpdate",
     "onRender",
     "onBeforeDestroy",
-    "onDestroy"
+    "onDestroy",
   ]);
 
   lifecycle.reset();

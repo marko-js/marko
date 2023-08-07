@@ -18,7 +18,7 @@ module.exports = function (builder) {
         vars([
           { id: "str", init: "__helpers.s" },
           { id: "empty", init: "__helpers.e" },
-          { id: "notEmpty", init: "__helpers.ne" }
+          { id: "notEmpty", init: "__helpers.ne" },
         ]),
         returnStatement(
           functionDeclaration(
@@ -34,8 +34,8 @@ module.exports = function (builder) {
                   [
                     {
                       name: "class",
-                      value: literal("colors")
-                    }
+                      value: literal("colors"),
+                    },
                   ],
                   [
                     functionCall("forEach", [
@@ -47,20 +47,20 @@ module.exports = function (builder) {
                           htmlElement(
                             "li",
                             {
-                              class: literal("color")
+                              class: literal("color"),
                             },
                             [text("color")]
-                          )
+                          ),
                         ]
-                      )
-                    ])
+                      ),
+                    ]),
                   ]
-                )
-              ])
+                ),
+              ]),
             ]
           )
-        )
+        ),
       ]
-    )
+    ),
   ]);
 };

@@ -7,5 +7,5 @@ exports.templateData = {
       asyncOut.write("B");
       asyncOut.end();
     });
-  }
+  },
 };

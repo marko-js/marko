@@ -4,11 +4,11 @@ module.exports = function generateCode(elNode, codegen) {
   return builder.htmlElement(
     "div",
     {
-      class: builder.literal("greeting")
+      class: builder.literal("greeting"),
     },
     [
       builder.text(builder.literal("Hello ")),
-      builder.text(elNode.getAttributeValue("name"))
+      builder.text(elNode.getAttributeValue("name")),
     ]
   );
 };

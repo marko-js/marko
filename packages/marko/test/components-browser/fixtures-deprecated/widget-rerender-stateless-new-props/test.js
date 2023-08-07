@@ -5,7 +5,7 @@ module.exports = function (helpers) {
 
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    messageCount: 10
+    messageCount: 10,
   });
 
   expect(targetEl.innerHTML).to.contain(
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
 
   widget.setProps({
     name: "John",
-    messageCount: 20
+    messageCount: 20,
   });
   widget.update();
 
@@ -24,7 +24,7 @@ module.exports = function (helpers) {
 
   widget.setProps({
     name: "Jane",
-    messageCount: 30
+    messageCount: 30,
   });
   expect(targetEl.innerHTML).to.contain(
     "Hello John! You have 20 new messages."

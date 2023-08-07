@@ -16,7 +16,7 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   var template = marko.load(nodePath.join(__dirname, "template.marko"));
   template.render(
     {
-      name: "John"
+      name: "John",
     },
     out
   );

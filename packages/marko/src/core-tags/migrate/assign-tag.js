@@ -18,13 +18,13 @@ module.exports = function migrator(elNode, context) {
     return elNode;
   }
 
-  elNode.attributes.forEach(attr => {
+  elNode.attributes.forEach((attr) => {
     elNode.insertSiblingBefore(
       builder.scriptlet({
         value:
           attr.value == null
             ? attr.name
-            : `${attr.name} = ${printJS(attr.value, context, null, true)}`
+            : `${attr.name} = ${printJS(attr.value, context, null, true)}`,
       })
     );
   });

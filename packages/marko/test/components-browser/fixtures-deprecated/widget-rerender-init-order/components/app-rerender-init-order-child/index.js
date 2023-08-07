@@ -3,13 +3,13 @@ module.exports = require("marko/legacy-components").defineComponent({
   getInitialState: function (input) {
     return {
       version: input.version,
-      id: input.id
+      id: input.id,
     };
   },
   getTemplateData: function (state) {
     return {
       version: state.version,
-      id: state.id
+      id: state.id,
     };
   },
   init: function () {
@@ -20,5 +20,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   onUpdate: function () {
     // console.log(module.id, 'init()', this.state);
     window.rerenderInitOrder.push(this.state.id);
-  }
+  },
 });

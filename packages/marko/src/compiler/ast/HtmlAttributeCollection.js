@@ -96,7 +96,7 @@ class HtmlAttributeCollection {
     } else {
       this.addAttribute({
         name: name,
-        value: value
+        value: value,
       });
     }
   }
@@ -119,7 +119,7 @@ class HtmlAttributeCollection {
 
     if (attributes) {
       if (Array.isArray(attributes)) {
-        attributes.forEach(attr => {
+        attributes.forEach((attr) => {
           this.addAttribute(attr);
         });
       } else {
@@ -138,7 +138,7 @@ class HtmlAttributeCollection {
             } else {
               attrDef = {
                 name: attrName,
-                value: attrValue
+                value: attrValue,
               };
             }
 

@@ -10,7 +10,7 @@ function isIEConditionalComment(comment) {
 
 function mergeShorthandClassNames(el, shorthandClassNames, context) {
   var builder = context.builder;
-  let classNames = shorthandClassNames.map(className => {
+  let classNames = shorthandClassNames.map((className) => {
     return typeof className == "string"
       ? builder.literal(className)
       : className;
@@ -45,7 +45,7 @@ function mergeShorthandClassNames(el, shorthandClassNames, context) {
     el.setAttributeValue(
       "class",
       builder.functionCall(context.helper("classValue"), [
-        builder.literal(finalClassNames)
+        builder.literal(finalClassNames),
       ])
     );
   }
@@ -93,7 +93,7 @@ class Normalizer {
           if (newNode !== node) {
             return newNode;
           }
-        }
+        },
       })
       .walk(rootNode);
 
@@ -110,7 +110,7 @@ class Normalizer {
     }
 
     if (elNode.tagName === "marko-migration-flags") {
-      elNode.attributes.forEach(attr => {
+      elNode.attributes.forEach((attr) => {
         context.setFlag(attr.name);
       });
       elNode.detach();
@@ -147,7 +147,7 @@ class Normalizer {
       openTagOnly: elNode.openTagOnly,
       selfClosed: elNode.selfClosed,
       pos: elNode.pos,
-      attributes: elNode.attributes
+      attributes: elNode.attributes,
     });
 
     newNode.pos = elNode.pos;

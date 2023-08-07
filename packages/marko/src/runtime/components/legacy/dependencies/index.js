@@ -11,7 +11,7 @@ function getRootDeps(template, context) {
   attachDepsAndComponentsToTemplate(template, context);
 
   var deps = (template.___depsArray = Object.keys(template.___deps).map(
-    key => template.___deps[key]
+    (key) => template.___deps[key]
   ));
   var initModule = getInitModule(template.path, template.___components);
 
@@ -20,7 +20,7 @@ function getRootDeps(template, context) {
   deps.push({
     type: "require",
     path: require.resolve("../../boot"),
-    run: true
+    run: true,
   });
 
   // these dependencies should be last
@@ -59,7 +59,7 @@ function attachDepsAndComponentsToTemplate(target, context) {
   var root = nodePath.dirname(template.path);
 
   if (meta.deps) {
-    meta.deps.forEach(dep => {
+    meta.deps.forEach((dep) => {
       dep = resolveDep(dep, root, context);
       deps[dep.virtualPath || dep.path] = dep;
     });
@@ -69,12 +69,12 @@ function attachDepsAndComponentsToTemplate(target, context) {
     var resolveFrom = (context && context.resolveFrom) || defaultResolveFrom;
     components[meta.id] = {
       id: meta.id,
-      path: resolveFrom(root, meta.component)
+      path: resolveFrom(root, meta.component),
     };
   }
 
   if (meta.tags) {
-    meta.tags.forEach(tagPath => {
+    meta.tags.forEach((tagPath) => {
       var resolveFrom = context.resolveFrom || defaultResolveFrom;
       var tag = resolveFrom(root, tagPath);
       var ext = nodePath.extname(tag);
@@ -100,13 +100,13 @@ function getInitModule(path, components) {
   var module = null;
 
   if (components) {
-    components = Object.keys(components).map(key => components[key]);
+    components = Object.keys(components).map((key) => components[key]);
 
     if (components.length) {
       var root = nodePath.dirname(path);
       var virtualPath = path + ".init.js";
       var registrations = components.map(
-        component =>
+        (component) =>
           `components.register('${component.id}', require('.${
             nodePath.sep
           }${nodePath.relative(root, component.path)}'));`
@@ -128,8 +128,8 @@ function getInitModule(path, components) {
             } else {
               return code;
             }
-          }
-        }
+          },
+        },
       };
     }
   }
@@ -167,7 +167,7 @@ function parseDependencyString(string) {
   var match = /^(?:([\w-]+)(?::\s*|\s+))?(.*?(?:\.(\w+))?)$/.exec(string);
   return {
     type: match[1] || match[3],
-    path: match[2]
+    path: match[2],
   };
 }
 

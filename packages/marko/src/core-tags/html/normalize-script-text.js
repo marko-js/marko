@@ -1,6 +1,6 @@
 module.exports = function codeGenerator(elNode, codegen) {
   const builder = codegen.builder;
-  const body = elNode.body.array.map(text => text.argument);
+  const body = elNode.body.array.map((text) => text.argument);
   if (body.length > 1) {
     const quasis = [];
     const expressions = [];

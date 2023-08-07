@@ -2,13 +2,13 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var component = helpers.mount(require.resolve("./index"), {
-    name: "Frank"
+    name: "Frank",
   });
   expect(component.el.querySelector(".name").innerHTML).to.equal("Frank");
   expect(component.onInputCalls).to.deep.equal([
     {
-      name: "INITIAL"
-    }
+      name: "INITIAL",
+    },
   ]);
   expect(component.name).to.equal("Frank");
 
@@ -17,11 +17,11 @@ module.exports = function (helpers) {
 
   expect(component.onInputCalls).to.deep.equal([
     {
-      name: "INITIAL"
+      name: "INITIAL",
     },
     {
-      name: "Frank"
-    }
+      name: "Frank",
+    },
   ]);
 
   expect(component.el.querySelector(".name").innerHTML).to.equal("John");

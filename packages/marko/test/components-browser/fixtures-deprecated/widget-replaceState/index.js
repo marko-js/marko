@@ -4,14 +4,14 @@ module.exports = require("marko/legacy-components").defineComponent({
     return {
       heading: input.heading || "",
       message: input.message || "",
-      colors: input.colors || []
+      colors: input.colors || [],
     };
   },
   getTemplateData: function (state) {
     return {
       heading: state.heading,
       message: state.message,
-      colors: state.colors
+      colors: state.colors,
     };
-  }
+  },
 });

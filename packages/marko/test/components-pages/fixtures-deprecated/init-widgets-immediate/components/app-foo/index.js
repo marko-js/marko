@@ -4,19 +4,19 @@ module.exports = require("marko-widgets").defineComponent({
   getInitialState: function () {
     return {
       type: "state",
-      name: "foo"
+      name: "foo",
     };
   },
 
   getWidgetConfig: function () {
     return {
       type: "config",
-      name: "foo"
+      name: "foo",
     };
   },
 
   init: function (widgetConfig) {
     window.fooWidget = this;
     this.widgetConfig = widgetConfig;
-  }
+  },
 });

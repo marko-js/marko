@@ -260,7 +260,7 @@ http
       {
         name: "Frank",
         count: 30,
-        colors: ["red", "green", "blue"]
+        colors: ["red", "green", "blue"],
       },
       res
     );

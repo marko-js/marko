@@ -2,7 +2,7 @@ module.exports = require("marko/legacy-components").defineComponent({
   template: require("./template.marko"),
   getInitialState: function (input) {
     return {
-      name: input.name
+      name: input.name,
     };
   },
   getTemplateData: function (state) {
@@ -10,5 +10,5 @@ module.exports = require("marko/legacy-components").defineComponent({
   },
   setName: function (newName) {
     this.setState("name", newName);
-  }
+  },
 });

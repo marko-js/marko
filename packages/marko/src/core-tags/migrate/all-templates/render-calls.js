@@ -31,7 +31,7 @@ module.exports = function migrator(el, context) {
       }
 
       if (!replacement.type) {
-        replacement.forEachChild(child => node.insertSiblingBefore(child));
+        replacement.forEachChild((child) => node.insertSiblingBefore(child));
         node.detach();
       } else {
         node.replaceWith(replacement);
@@ -41,14 +41,14 @@ module.exports = function migrator(el, context) {
         const builder = context.builder;
         if (!node.type) {
           if (node.replaceChild) {
-            node.forEach(child => {
+            node.forEach((child) => {
               const replacement = replaceScriptlets(child, context);
               if (child !== replacement) {
                 node.replaceChild(replacement, child);
               }
             });
           } else if (node.body) {
-            node.body.forEach(child => {
+            node.body.forEach((child) => {
               const replacement = replaceScriptlets(child, context);
               if (child !== replacement) {
                 node.body.replaceChild(replacement, child);
@@ -128,7 +128,7 @@ module.exports = function migrator(el, context) {
 
         return node;
       }
-    }
+    },
   });
   walker.walk(el);
 };

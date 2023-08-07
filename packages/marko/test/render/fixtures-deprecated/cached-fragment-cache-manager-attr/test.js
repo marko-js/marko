@@ -26,18 +26,18 @@ function createCache() {
           callback(null, value);
         });
       }, 10);
-    }
+    },
   };
 }
 
 var myCacheManager = {
   getCache: function (cacheName) {
     return caches[cacheName] || (caches[cacheName] = createCache());
-  }
+  },
 };
 
 exports.templateData = {
-  myCacheManager: myCacheManager
+  myCacheManager: myCacheManager,
 };
 
 exports.noFlushComment = true;

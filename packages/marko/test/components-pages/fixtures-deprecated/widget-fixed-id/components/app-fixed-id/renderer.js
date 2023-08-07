@@ -6,8 +6,8 @@ exports.render = function (input, out) {
     {
       label: label,
       widgetConfig: {
-        label: label
-      }
+        label: label,
+      },
     },
     out
   );

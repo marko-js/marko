@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    count: 30
+    count: 30,
   });
 
   var targetEl = widget.el;

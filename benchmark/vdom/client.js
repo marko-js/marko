@@ -82,14 +82,14 @@ var vdom = (window.MarkoVDOM = {
   },
   createDocumentFragment: function () {
     return new DocumentFragment();
-  }
+  },
 });
 
 var app = {
   loadScript,
   loadScripts,
   runSuite,
-  vdom
+  vdom,
 };
 
 function registerBenchmark(name, func) {

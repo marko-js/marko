@@ -6,8 +6,8 @@ module.exports = function (builder) {
     [
       {
         name: "class",
-        value: builder.literal("greeting")
-      }
+        value: builder.literal("greeting"),
+      },
     ],
     [builder.text(builder.literal("Hello World"))]
   );

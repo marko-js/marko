@@ -56,7 +56,7 @@ class TemplateLiteral extends Node {
 
 function escapeQuasi(quasi, quote) {
   if (!quasi) return "";
-  return quasi.replace(/["`\\\n\r\u2028\u2029]|\${/g, match => {
+  return quasi.replace(/["`\\\n\r\u2028\u2029]|\${/g, (match) => {
     switch (match) {
       case quote:
       case "${":

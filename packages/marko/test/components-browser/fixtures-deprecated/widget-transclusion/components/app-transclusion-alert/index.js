@@ -5,7 +5,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     var type = input.type || "success";
 
     return {
-      type: type
+      type: type,
     };
   },
 
@@ -20,11 +20,11 @@ module.exports = require("marko/legacy-components").defineComponent({
 
     return {
       className: className,
-      type: type
+      type: type,
     };
   },
 
   setType: function (newType) {
     this.setState("type", newType);
-  }
+  },
 });

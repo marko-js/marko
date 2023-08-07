@@ -5,7 +5,7 @@ module.exports = require("marko/legacy-components").defineComponent({
     return {
       name: input.name,
       count: input.count,
-      className: input["class"]
+      className: input["class"],
     };
   },
 
@@ -15,7 +15,7 @@ module.exports = require("marko/legacy-components").defineComponent({
       count: state.count,
       foo: "bar",
       hello: "world",
-      className: state.className
+      className: state.className,
     };
-  }
+  },
 });

@@ -20,8 +20,8 @@ module.exports = function migrator(elNode, context) {
   const scopeExpression =
     elNode.getAttributeValue("scope") || (methodExpression ? provider : null);
   const argAssignments = elNode.attributes
-    .filter(attr => attr.name && attr.name.startsWith("arg-"))
-    .map(attr => {
+    .filter((attr) => attr.name && attr.name.startsWith("arg-"))
+    .map((attr) => {
       elNode.removeAttribute(attr.name);
       return [attr.name.slice(4), attr.value];
     });
@@ -50,14 +50,14 @@ module.exports = function migrator(elNode, context) {
         builder.scriptlet({
           value: printJS(
             builder.vars({
-              arg: argExpression
+              arg: argExpression,
             }),
             context
-          )
+          ),
         })
       );
 
-      argAssignments.forEach(assignment => {
+      argAssignments.forEach((assignment) => {
         elNode.insertSiblingBefore(
           builder.scriptlet({
             value: printJS(
@@ -71,7 +71,7 @@ module.exports = function migrator(elNode, context) {
                 "="
               ),
               context
-            )
+            ),
           })
         );
       });
@@ -129,7 +129,7 @@ module.exports = function migrator(elNode, context) {
     elNode.removeAttribute("error-message");
   }
 
-  elNode.forEachChild(childNode => {
+  elNode.forEachChild((childNode) => {
     if (childNode.type !== "HtmlElement") {
       return;
     }
@@ -202,7 +202,7 @@ module.exports = function migrator(elNode, context) {
         undefined,
         timeoutBody,
         'err.name === "TimeoutError"'
-      )
+      ),
     ];
 
     if (originalErrorBody) {

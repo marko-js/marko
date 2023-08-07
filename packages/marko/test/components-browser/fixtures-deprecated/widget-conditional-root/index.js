@@ -7,7 +7,7 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   getTemplateData: function (state) {
     return {
-      interactive: state.interactive
+      interactive: state.interactive,
     };
-  }
+  },
 });

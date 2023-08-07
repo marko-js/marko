@@ -8,8 +8,8 @@ exports.render = function (input, out) {
     {
       widgetConfig: {
         name: name,
-        channel: channel
-      }
+        channel: channel,
+      },
     },
     out
   );

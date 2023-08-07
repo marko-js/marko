@@ -26,5 +26,5 @@ module.exports = {
       expect(helloJane).to.be.an("object");
       expect(helloJane.name).to.equal("Jane");
     };
-  }
+  },
 };

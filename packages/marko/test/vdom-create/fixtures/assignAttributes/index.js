@@ -5,7 +5,7 @@ module.exports = function (helpers) {
   var vFromEl = helpers.vdom.virtualizeElement(fromEl);
   var toEl = helpers.vdom.createElement("div", {
     class: "foo",
-    "xlink:href": "bar.com"
+    "xlink:href": "bar.com",
   });
   morphAttrs(fromEl, vFromEl, toEl);
   return fromEl;

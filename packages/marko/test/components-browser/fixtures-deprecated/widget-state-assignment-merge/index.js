@@ -3,7 +3,7 @@ module.exports = require("marko-widgets").defineComponent({
   getInitialState: function () {
     return {
       size: "normal",
-      variant: "primary"
+      variant: "primary",
     };
-  }
+  },
 });

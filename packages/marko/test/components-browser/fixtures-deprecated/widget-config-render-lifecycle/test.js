@@ -2,14 +2,14 @@ var expect = require("chai").expect;
 
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
-    name: "Frank"
+    name: "Frank",
   });
 
   const expectedConfig = [
     "getInitialProps",
     "getInitialState",
     "getTemplateData",
-    "getWidgetConfig"
+    "getWidgetConfig",
   ];
 
   if (helpers.isHydrate) {

@@ -34,13 +34,13 @@ server.route({
       indexTemplate.stream({
         name: "Frank",
         count: 30,
-        colors: ["red", "green", "blue"]
+        colors: ["red", "green", "blue"],
       })
     ).type("text/html");
-  }
+  },
 });
 
-server.start(err => {
+server.start((err) => {
   if (err) {
     throw err;
   }

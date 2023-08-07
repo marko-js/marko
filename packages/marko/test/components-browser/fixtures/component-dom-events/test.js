@@ -31,7 +31,7 @@ module.exports = function (helpers) {
   );
   expect(component.logOutput).to.deep.equal([
     "button>span:mousemove",
-    "el:mousemove"
+    "el:mousemove",
   ]);
 
   component.clearLog();

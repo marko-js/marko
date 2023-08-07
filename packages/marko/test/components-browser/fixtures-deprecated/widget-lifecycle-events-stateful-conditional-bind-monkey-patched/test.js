@@ -4,7 +4,7 @@ var lifecycle = require("./lifecycle-recorder");
 module.exports = function (helpers) {
   var widget = helpers.mount(require.resolve("./index"), {
     shouldBind: true,
-    name: "Frank"
+    name: "Frank",
   });
 
   var targetEl = helpers.targetEl;
@@ -24,7 +24,7 @@ module.exports = function (helpers) {
     "onRender:firstRender",
     "onBeforeUpdate",
     "onUpdate",
-    "onRender"
+    "onRender",
   ]);
 
   widget.setState("shouldBind", false);
@@ -37,7 +37,7 @@ module.exports = function (helpers) {
     "onRender",
     "onBeforeUpdate",
     "onBeforeDestroy",
-    "onDestroy"
+    "onDestroy",
   ]);
 
   widget.setState("shouldBind", true);
@@ -51,7 +51,7 @@ module.exports = function (helpers) {
     "onBeforeUpdate",
     "onBeforeDestroy",
     "onDestroy",
-    "onRender:firstRender"
+    "onRender:firstRender",
   ]);
 
   lifecycle.reset();

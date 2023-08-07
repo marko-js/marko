@@ -26,7 +26,7 @@ function triggerClick(el) {
 
 var helpers = {
   triggerMouseEvent: triggerMouseEvent,
-  triggerClick: triggerClick
+  triggerClick: triggerClick,
 };
 
 it("should allow no args", function () {

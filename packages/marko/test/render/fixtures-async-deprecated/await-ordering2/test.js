@@ -9,9 +9,9 @@ exports.tests = [
       D4: callbackProvider(5),
       D5: callbackProvider(6),
       D6: callbackProvider(2),
-      D7: callbackProvider(1)
+      D7: callbackProvider(1),
     },
-    expectedFile: require.resolve("./expected.html")
+    expectedFile: require.resolve("./expected.html"),
   },
   {
     templateData: {
@@ -21,9 +21,9 @@ exports.tests = [
       D4: callbackProvider(4),
       D5: callbackProvider(5),
       D6: callbackProvider(1),
-      D7: callbackProvider(2)
+      D7: callbackProvider(2),
     },
-    expectedFile: require.resolve("./expected.html")
+    expectedFile: require.resolve("./expected.html"),
   },
   {
     templateData: {
@@ -33,8 +33,8 @@ exports.tests = [
       D4: callbackProvider(4),
       D5: callbackProvider(1),
       D6: callbackProvider(1),
-      D7: callbackProvider(2)
+      D7: callbackProvider(2),
     },
-    expectedFile: require.resolve("./expected.html")
-  }
+    expectedFile: require.resolve("./expected.html"),
+  },
 ];

@@ -9,7 +9,7 @@ function VComponent(component, key, ownerComponent, preserve) {
 }
 
 VComponent.prototype = {
-  ___nodeType: 2
+  ___nodeType: 2,
 };
 
 inherit(VComponent, VNode);

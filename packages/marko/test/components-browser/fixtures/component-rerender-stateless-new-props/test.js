@@ -5,7 +5,7 @@ module.exports = function (helpers) {
 
   var component = helpers.mount(require.resolve("./index"), {
     name: "Frank",
-    messageCount: 10
+    messageCount: 10,
   });
 
   expect(targetEl.innerHTML).to.contain(
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
 
   component.input = {
     name: "John",
-    messageCount: 20
+    messageCount: 20,
   };
 
   component.update();
@@ -25,7 +25,7 @@ module.exports = function (helpers) {
 
   component.input = {
     name: "Jane",
-    messageCount: 30
+    messageCount: 30,
   };
 
   expect(targetEl.innerHTML).to.contain(

@@ -61,7 +61,7 @@ module.exports = function handleLegacyBind() {
             builder.identifier("marko_componentTypes"),
             bindAttrValue,
             true /* computed */
-          )
+          ),
         ]
       )
     );
@@ -84,6 +84,6 @@ module.exports = function handleLegacyBind() {
     componentModule,
     rendererModule,
     isLegacyComponent: true,
-    rootNodes: [el]
+    rootNodes: [el],
   });
 };

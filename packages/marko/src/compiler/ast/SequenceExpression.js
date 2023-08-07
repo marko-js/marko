@@ -32,7 +32,7 @@ class SequenceExpression extends Node {
   toJSON() {
     return {
       type: "SequenceExpression",
-      expressions: this.expressions
+      expressions: this.expressions,
     };
   }
 

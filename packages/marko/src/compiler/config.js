@@ -66,7 +66,7 @@ if (g.__MARKO_CONFIG) {
      * Controls whether or not a key should be assigned to all HTML
      * and custom tags at compile-time. The default is `true`
      */
-    autoKeyEnabled: true
+    autoKeyEnabled: true,
   };
 
   if (process.env.MARKO_CONFIG) {

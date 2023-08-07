@@ -1,7 +1,7 @@
 module.exports = {
   onInput: function () {
     this.state = {
-      name: "app-foo"
+      name: "app-foo",
     };
   },
 
@@ -17,5 +17,5 @@ module.exports = {
 
   handleButtonClick: function () {
     this.clickEvent = arguments;
-  }
+  },
 };

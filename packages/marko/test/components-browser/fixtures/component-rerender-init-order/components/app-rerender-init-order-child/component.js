@@ -7,5 +7,5 @@ module.exports = {
   onUpdate: function () {
     // console.log(module.id, 'init()', this.state);
     window.rerenderInitOrder.push(this.input.id);
-  }
+  },
 };

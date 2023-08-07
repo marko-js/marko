@@ -7,8 +7,8 @@ module.exports = function (compiler) {
     builder.htmlElement("ul", null, [
       builder.htmlElement("li", null, [builder.text("a")]),
       builder.htmlElement("REMOVEME", null, [builder.text("b")]),
-      builder.htmlElement("li", null, [builder.text("c")])
-    ])
+      builder.htmlElement("li", null, [builder.text("c")]),
+    ]),
   ]);
 
   let walker = compiler.createWalker({
@@ -16,7 +16,7 @@ module.exports = function (compiler) {
       if (node.type === "HtmlElement" && node.tagName === "REMOVEME") {
         walker.remove();
       }
-    }
+    },
   });
 
   walker.walk(rootNode);

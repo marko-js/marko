@@ -45,7 +45,7 @@ class Text extends Node {
   toJSON() {
     return {
       type: this.type,
-      argument: this.argument
+      argument: this.argument,
     };
   }
 }

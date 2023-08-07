@@ -6,13 +6,13 @@ module.exports = require("marko/legacy-components").defineComponent({
   getInitialState: function (input) {
     return {
       messageCount: input.messageCount,
-      name: input.name
+      name: input.name,
     };
   },
 
   getTemplateData: function (state) {
     return {
-      messageCount: state.messageCount
+      messageCount: state.messageCount,
     };
   },
 
@@ -49,5 +49,5 @@ module.exports = require("marko/legacy-components").defineComponent({
 
   onUpdate: function () {
     lifecycle.record(this.state.name || this.id, "onUpdate");
-  }
+  },
 });

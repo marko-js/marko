@@ -1,7 +1,7 @@
 var expect = require("chai").expect;
 
 exports.templateData = {
-  short: "short"
+  short: "short",
 };
 
 exports.checkError = function (e) {
