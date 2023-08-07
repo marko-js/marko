@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.32.0
+
+### Minor Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compute node helper to replace babels `evaluate` helper. This helper is less aggressive and doesn't suffer from the false positives that popped up with babels version.
+
+### Patch Changes
+
+- Updated dependencies [[`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1)]:
+  - @marko/babel-utils@6.3.0
+
 ## 5.31.2
 
 ### Patch Changes

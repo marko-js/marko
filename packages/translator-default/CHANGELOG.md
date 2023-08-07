@@ -1,5 +1,20 @@
 # Change Log
 
+## 5.30.0
+
+### Minor Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compute node helper to replace babels `evaluate` helper. This helper is less aggressive and doesn't suffer from the false positives that popped up with babels version.
+
+### Patch Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid adding trailing semicolon to style attribute output.
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`d45962db1`](https://github.com/marko-js/marko/commit/d45962db1def9b025a1d75d98b4c655c0565e3ef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Include transitive Marko files loaded from `renderer` entry points in hydrate output.
+
+- Updated dependencies [[`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1)]:
+  - @marko/babel-utils@6.3.0
+
 ## 5.29.2
 
 ### Patch Changes
