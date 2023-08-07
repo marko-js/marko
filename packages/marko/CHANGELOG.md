@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.30.2
+
+### Patch Changes
+
+- [#2010](https://github.com/marko-js/marko/pull/2010) [`c08f940c8`](https://github.com/marko-js/marko/commit/c08f940c8ea73806ed79d35d435b3844fbfb6759) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve upgrade guide to reference the new `marko-widgets` and `@marko/compat-v4` modules.
+
 ## 5.30.1
 
 ### Patch Changes
