@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.27.0](https://github.com/marko-js/marko/compare/v4.26.5...v4.27.0) (2023-08-07)
+
+
+### Features
+
+* remove deprecations for features added in Marko 5 compat layer ([4b868ee](https://github.com/marko-js/marko/commit/4b868eeded4034fb50e50c6126ea6db8f0934612))
+
 ### [4.26.5](https://github.com/marko-js/marko/compare/v4.26.4...v4.26.5) (2023-06-27)
 
 ### [4.26.4](https://github.com/marko-js/marko/compare/v4.26.3...v4.26.4) (2023-06-27)
