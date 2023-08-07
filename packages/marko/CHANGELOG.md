@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.30.1
+
+### Patch Changes
+
+- [#2008](https://github.com/marko-js/marko/pull/2008) [`1235cf700`](https://github.com/marko-js/marko/commit/1235cf7005447bdad7a84bacf20d40c7c457c03a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with static template literal expressions.
+
+- Updated dependencies [[`1235cf700`](https://github.com/marko-js/marko/commit/1235cf7005447bdad7a84bacf20d40c7c457c03a)]:
+  - @marko/translator-default@5.30.1
+
 ## 5.30.0
 
 ### Minor Changes
