@@ -159,6 +159,10 @@ export default (entryFile, isHydrate) => {
           code,
           virtualPath,
         });
+
+        if (!dep) {
+          continue;
+        }
       } else if (dep.startsWith("package:")) {
         continue;
       }
