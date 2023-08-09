@@ -1,7 +1,9 @@
+import path from "path";
 import loader from "./loader";
 import finder from "./finder";
 import Lookup from "./lookup";
 import taglibConfig from "./config";
+import markoModules from "../../modules";
 import tryLoadTranslator from "../util/try-load-translator";
 
 export const excludeDir = finder.excludeDir;
@@ -77,6 +79,22 @@ export function buildLookup(dirname, requestedTranslator, onError) {
 }
 
 export function register(id, props) {
+  if (typeof props === "undefined") {
+    switch (id[0]) {
+      case ".":
+      case "/":
+      case "\\":
+        break;
+      default:
+        if (!id.endsWith(".json")) {
+          id = path.join(id, "marko.json");
+        }
+        break;
+    }
+    id = markoModules.require.resolve(id);
+    props = markoModules.require(id);
+  }
+
   registeredTaglibs.push(loadTaglib(id, props));
 }
 

@@ -68,6 +68,7 @@ export function getRuntimeEntryFiles(
 export namespace taglib {
   export function excludeDir(dirname: string): void;
   export function excludePackage(packageName: string): void;
+  export function register(id: string): void;
   export function register(id: string, props: { [x: string]: unknown }): void;
   export function buildLookup(
     dirname: string,
