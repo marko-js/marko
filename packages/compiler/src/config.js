@@ -137,6 +137,12 @@ const config = {
     /\.(css|less|s[ac]ss|styl|png|jpe?g|gif|svg|ico|webp|avif|mp4|webm|ogg|mp3|wav|flac|aac|woff2?|eot|ttf|otf)$/,
 
   /**
+   * When compiling in hydrate mode, this option will cause the compiler to
+   * call the `marko/components.init` function to begin hydrating components.
+   */
+  hydrateInit: true,
+
+  /**
    * Set to true in order to bring in the hot module replacement runtime.
    */
   hot: false,

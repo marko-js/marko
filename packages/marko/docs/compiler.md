@@ -296,6 +296,12 @@ import "./baz.wasm";
 
 For `hydrate` output, with the default `hydrateIncludeImports`, would only cause `./foo.css` to be loaded in the browser.
 
+#### `hydrateInit`
+
+This option is only used for `output: "hydrate"`. It defaults to `true` and causes the hydrate output to include code which tells the Marko runtime to begin hydrating any registered components.
+
+Setting to false will disable that `init` call and allow you to generate code which _just_ imports any hydrate dependencies for a template.
+
 #### `cache`
 
 Type: typeof [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) (specifically, `.get()` is required)<br>
