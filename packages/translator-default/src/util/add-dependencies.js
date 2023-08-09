@@ -9,7 +9,7 @@ import {
 } from "@marko/babel-utils";
 
 export default (entryFile, isHydrate) => {
-  const { resolveVirtualDependency, hydrateIncludeImports } =
+  const { resolveVirtualDependency, hydrateIncludeImports, hydrateInit } =
     entryFile.markoOpts;
   const hydratedFiles = new Set();
   const program = entryFile.path;
@@ -39,19 +39,26 @@ export default (entryFile, isHydrate) => {
         t.importSpecifier(t.identifier("register"), t.identifier("register"))
       );
     }
-    markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
+
+    if (hydrateInit) {
+      markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
+    }
+
     program.unshiftContainer("body", markoComponentsImport);
-    program.pushContainer(
-      "body",
-      t.expressionStatement(
-        t.callExpression(
-          initId,
-          entryFile.markoOpts.runtimeId
-            ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
-            : []
+
+    if (hydrateInit) {
+      program.pushContainer(
+        "body",
+        t.expressionStatement(
+          t.callExpression(
+            initId,
+            entryFile.markoOpts.runtimeId
+              ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
+              : []
+          )
         )
-      )
-    );
+      );
+    }
   }
 
   function addHydrateDeps(file) {

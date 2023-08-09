@@ -22,6 +22,7 @@ declare const Config: {
       ) => string)
     | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
+  hydrateInit?: boolean;
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;
