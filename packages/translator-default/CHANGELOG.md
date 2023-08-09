@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.31.0
+
+### Minor Changes
+
+- [#2012](https://github.com/marko-js/marko/pull/2012) [`9aede281f`](https://github.com/marko-js/marko/commit/9aede281f95a788df03d607b7d6ca10d9025d39f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compiler option to disable initializing components when outputting hydrate code.
+
+### Patch Changes
+
+- [#2012](https://github.com/marko-js/marko/pull/2012) [`17099cd8f`](https://github.com/marko-js/marko/commit/17099cd8ff4ef5868b79f32bdb682fd7393e7139) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow skipping output of virtual dependencies by returning a falsey value from the `resolveVirtualDependency` option.
+
+- [#2012](https://github.com/marko-js/marko/pull/2012) [`ec21e799f`](https://github.com/marko-js/marko/commit/ec21e799f39e74c3d5b0fcfb5839a3954fbc7ad0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where data (legacy alias of input) was overwritten by assignment but still being migrated.
+
 ## 5.30.1
 
 ### Patch Changes

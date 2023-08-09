@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.0
+
+### Minor Changes
+
+- [#2012](https://github.com/marko-js/marko/pull/2012) [`6ba268c84`](https://github.com/marko-js/marko/commit/6ba268c841631b3ed36964c8f532e543885ad4f5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support registering a taglib in the compiler by just passing in a module id.
+
 ## 5.32.0
 
 ### Minor Changes
