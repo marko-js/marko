@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.31.1
+
+### Patch Changes
+
+- [#2014](https://github.com/marko-js/marko/pull/2014) [`636ae526d`](https://github.com/marko-js/marko/commit/636ae526d7f58fa9fe21b0d9e30beb711258002c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid bundling load api when using legacy runtime.
+
+- [#2014](https://github.com/marko-js/marko/pull/2014) [`636ae526d`](https://github.com/marko-js/marko/commit/636ae526d7f58fa9fe21b0d9e30beb711258002c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid loading legacy Marko compiler api if possible when using load api.
+
 ## 5.31.0
 
 ### Minor Changes
