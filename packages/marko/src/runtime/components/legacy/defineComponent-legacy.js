@@ -8,11 +8,6 @@ var defineRenderer;
 var defineWidget;
 
 module.exports = function defineComponent(def) {
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    require("complain")("defineComponent is deprecated");
-  }
-
   if (def.___isComponent) {
     return def;
   }
