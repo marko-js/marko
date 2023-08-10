@@ -13,7 +13,7 @@
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write && sort-package-json './{,packages/*/}package.json' --quiet",
     "lint": "npm run lint:eslint && npm run lint:prettier -- -l",
     "lint:eslint": "eslint -f visualstudio .",
-    "lint:prettier": "prettier \"./**/*{.ts,.js,.json,.md,.yml}\"",
+    "lint:prettier": "prettier \"./**/*{.ts,.js,.json,.md,.yml}\" --with-node-modules",
     "prepare": "husky install",
     "publish": "ENTRY=main:npm npm run set-entry && npm run build && changeset publish && ENTRY=main:dev npm run set-entry && npm ci",
     "report": "open ./coverage/lcov-report/index.html",
