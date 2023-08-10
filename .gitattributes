@@ -1,1 +1,2 @@
 package-lock.json -diff
+packages/marko/src/node_modules/** linguist-generated=false

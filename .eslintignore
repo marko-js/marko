@@ -5,7 +5,8 @@
 *expected*
 .cache/
 .nyc_output/
-node_modules/
+node_modules
+!packages/marko/src/node_modules
 coverage/
 *dist/
 *generated/

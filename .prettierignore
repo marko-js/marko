@@ -19,6 +19,10 @@ coverage
 .sizes.json
 ~*
 
+# non internal modules
+node_modules
+!packages/marko/src/node_modules
+
 # controlled by npm's formatter
 package-lock.json
 package.json
