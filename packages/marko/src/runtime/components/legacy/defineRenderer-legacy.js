@@ -148,7 +148,7 @@ module.exports = function defineRenderer(renderingLogic) {
   renderer.template = template;
 
   makeRenderable(renderer, renderer);
-  renderer.render = renderer.render.bind(this);
+  renderer.render = renderer.render.bind(renderer);
 
   return renderer;
 };
