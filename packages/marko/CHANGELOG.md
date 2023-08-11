@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.31.2
+
+### Patch Changes
+
+- [#2016](https://github.com/marko-js/marko/pull/2016) [`fb46f0a91`](https://github.com/marko-js/marko/commit/fb46f0a9186a0b437e011b40fecf975eae0b9093) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize preserve-tag implementation to use browser remap again.
+
+- [#2016](https://github.com/marko-js/marko/pull/2016) [`1b1df3f56`](https://github.com/marko-js/marko/commit/1b1df3f5674e09914bca448f045ff720002c3ae6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where marko-widger renderers were not bound to the correct "this".
+
 ## 5.31.1
 
 ### Patch Changes
