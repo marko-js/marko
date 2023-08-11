@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.3
+
+### Patch Changes
+
+- [#2018](https://github.com/marko-js/marko/pull/2018) [`7a22dc3d1`](https://github.com/marko-js/marko/commit/7a22dc3d16b0d9da9abc7b62c9aa917e54738a16) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix loading of legacy components in some test environments.
+
 ## 5.31.2
 
 ### Patch Changes
