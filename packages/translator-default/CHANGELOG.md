@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.1
+
+### Patch Changes
+
+- [#2020](https://github.com/marko-js/marko/pull/2020) [`6a4e947b5`](https://github.com/marko-js/marko/commit/6a4e947b5ac9944e61d7871d314a6325a0522d1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure .marko files are resolved for legacy renderer taglib configs.
+
 ## 5.31.0
 
 ### Minor Changes
