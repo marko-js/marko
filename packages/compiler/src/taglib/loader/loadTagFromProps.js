@@ -16,6 +16,24 @@ function resolveRelative(dirname, value) {
   return value[0] === "." ? resolveFrom(dirname, value) : value;
 }
 
+function resolveWithMarkoExt(dirname, value) {
+  if (value[0] !== ".") return value;
+
+  if (
+    markoModules.require.extensions &&
+    !(".marko" in markoModules.require.extensions)
+  ) {
+    markoModules.require.extensions[".marko"] = undefined;
+    try {
+      return resolveFrom(dirname, value);
+    } finally {
+      delete markoModules.require.extensions[".marko"];
+    }
+  }
+
+  return resolveFrom(dirname, value);
+}
+
 function removeDashes(str) {
   return str.replace(/-([a-z])/g, function (match, lower) {
     return lower.toUpperCase();
@@ -300,7 +318,7 @@ class TagLoader {
    * @param {String} value The renderer path
    */
   renderer(value) {
-    this.tag.renderer = resolveRelative(this.dirname, value);
+    this.tag.renderer = resolveWithMarkoExt(this.dirname, value);
   }
 
   /**
