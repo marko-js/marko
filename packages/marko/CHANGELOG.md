@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.5
+
+### Patch Changes
+
+- [#2024](https://github.com/marko-js/marko/pull/2024) [`085c87387`](https://github.com/marko-js/marko/commit/085c8738701146877958d81f88248cdf67678174) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using the bare webpack include api to check if a module has already been loaded.
+
 ## 5.31.4
 
 ### Patch Changes
