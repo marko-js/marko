@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.6
+
+### Patch Changes
+
+- [#2027](https://github.com/marko-js/marko/pull/2027) [`db819d388`](https://github.com/marko-js/marko/commit/db819d388e9419d7354a9639c59faa0cd3518305) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Update Marko 5 Upgrade instructions
+
 ## 5.31.5
 
 ### Patch Changes
