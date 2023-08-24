@@ -18,7 +18,8 @@ npm install marko@^4
 yarn upgrade marko@^4
 ```
 
-> Note: Do _not_ run `npm install marko` (without the `@^4`). This will put you on Marko 5 and we're not quite there yet.
+> **Warning**
+> Do _not_ run `npm install marko` (without the `@^4`). This will put you on Marko 5 and we're not quite there yet.
 
 Run your application and tests to ensure your project is in a working state. There's little worse than finding an issue after you've started the upgrade process only to figure out the issue existed beforehand.
 
@@ -61,7 +62,7 @@ yarn install marko@^5 @marko/compiler @marko/compat-v4
 ### App entry updates
 
 If you're bundling your server code (common with `webpack` setups), your entry will be your bundler config.
-Otherwise it's probably something like `index.js` or `server.js` near your project root.
+Otherwise it's probably something like `index.js` or `server.js` near your project root.  
 
 - Register your compat module globally so that any dependencies also run through the compat layer:
 
@@ -69,8 +70,12 @@ Otherwise it's probably something like `index.js` or `server.js` near your proje
   require("@marko/compiler").taglib.register("marko-widgets");
   ```
 
-  > Note: if using `webpack` or `rollup` this line should also be added you your bundler config file
-
+  > **Note**
+  > if using `webpack` or `rollup` this line should also be added you your bundler config file
+  
+  > **Note**
+  > if using `jest` you should pass the [`register` options](https://github.com/marko-js/jest#customizing-the-marko-compiler) which requires the latest version of `jest` and `@marko/jest`
+ 
 - _If you're using `babel`_, Marko 5 picks up on your babel config which could change behavior. You may want to configure Marko to ignore your babel config:
   ```js
   require("@marko/compiler").configure({
@@ -102,4 +107,5 @@ Run your application and tests and ensure that there are no deprecation warnings
 
 Additionally, any deprecation warnings that start with `MIGRATION` are automatically migratable by [`marko migrate`](https://github.com/marko-js/cli/blob/master/packages/migrate/README.md). Most migrations are 100% safe and will run automatically. However, there are a few migrations which are considered unsafe: they may only get you 90% of the way there. These migrations will prompt and ask if you want to run the migration. It is highly recommended to run these only on a single component at a time and then finish the migration manually using the guide below so that your app is always in a working state.
 
-> **Note**: The [TagsAPI](https://dev.to/ryansolid/introducing-the-marko-tags-api-preview-37o4) is becoming stable soon. Deprecations related to `marko-widgets`, might be worth holding off on rather than migrating these widgets to the Class Components API.
+> **Note**
+> The [TagsAPI](https://dev.to/ryansolid/introducing-the-marko-tags-api-preview-37o4) is becoming stable soon. Deprecations related to `marko-widgets`, might be worth holding off on rather than migrating these widgets to the Class Components API.
