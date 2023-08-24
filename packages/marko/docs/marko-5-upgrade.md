@@ -62,7 +62,7 @@ yarn install marko@^5 @marko/compiler @marko/compat-v4
 ### App entry updates
 
 If you're bundling your server code (common with `webpack` setups), your entry will be your bundler config.
-Otherwise it's probably something like `index.js` or `server.js` near your project root.  
+Otherwise it's probably something like `index.js` or `server.js` near your project root.
 
 - Register your compat module globally so that any dependencies also run through the compat layer:
 
@@ -72,10 +72,10 @@ Otherwise it's probably something like `index.js` or `server.js` near your proje
 
   > **Note**
   > if using `webpack` or `rollup` this line should also be added you your bundler config file
-  
+
   > **Note**
   > if using `jest` you should pass the [`register` options](https://github.com/marko-js/jest#customizing-the-marko-compiler) which requires the latest version of `jest` and `@marko/jest`
- 
+
 - _If you're using `babel`_, Marko 5 picks up on your babel config which could change behavior. You may want to configure Marko to ignore your babel config:
   ```js
   require("@marko/compiler").configure({
