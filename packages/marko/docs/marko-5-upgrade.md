@@ -64,19 +64,21 @@ If you're bundling your server code (common with `webpack` setups), your entry w
 Otherwise it's probably something like `index.js` or `server.js` near your project root.
 
 - Register your compat module globally so that any dependencies also run through the compat layer:
+
   ```js
-  require('@marko/compiler').taglib.register('marko-widgets');
+  require("@marko/compiler").taglib.register("marko-widgets");
   ```
+
   > Note: if using `webpack` or `rollup` this line should also be added you your bundler config file
 
 - _If you're using `babel`_, Marko 5 picks up on your babel config which could change behavior. You may want to configure Marko to ignore your babel config:
   ```js
-  require('@marko/compiler').configure({
+  require("@marko/compiler").configure({
     babelConfig: {
       babelrc: false,
-      configFile: false
-    }
-  })
+      configFile: false,
+    },
+  });
   ```
   If you do this, you'll also want also want to pass the `babelConfig` option to your bundler plugin (`lasso-marko`, `@marko/webpack`, `@marko/rollup`)
 
