@@ -74,7 +74,7 @@ Otherwise it's probably something like `index.js` or `server.js` near your proje
   > if using `webpack` or `rollup` this line should also be added you your bundler config file
 
   > **Note**
-  > if using `jest` you should pass the [`register` options](https://github.com/marko-js/jest#customizing-the-marko-compiler) which requires the latest version of `jest` and `@marko/jest`
+  > if using `jest` you should pass the [`register` option](https://github.com/marko-js/jest#customizing-the-marko-compiler) which requires the latest version of `jest` and `@marko/jest`
 
 - _If you're using `babel`_, Marko 5 picks up on your babel config which could change behavior. You may want to configure Marko to ignore your babel config:
   ```js
