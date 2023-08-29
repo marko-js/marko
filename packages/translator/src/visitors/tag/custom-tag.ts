@@ -303,7 +303,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   tag.remove();
 }
 
-function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
+export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   const {
     node,
     hub: { file },

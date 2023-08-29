@@ -27,7 +27,8 @@ import {
 } from "../../util/reserve";
 import { addBindingToReferences, mergeReferences } from "../../util/references";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import customTag from "./custom-tag";
+import customTag, { getTagRelativePath } from "./custom-tag";
+import { importDefault } from "@marko/babel-utils";
 
 export default {
   analyze: {
@@ -63,13 +64,20 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
+      let tagExpression = node.name;
+
+      if (t.isStringLiteral(tagExpression)) {
+        const { file } = tag.hub;
+        const relativePath = getTagRelativePath(tag);
+        tagExpression = importDefault(file, relativePath, tagExpression.value);
+      }
 
       if (isOutputHTML()) {
         writer.flushInto(tag);
         const attrsObject = attrsToObject(tag, true);
         const renderBodyProp = getRenderBodyProp(attrsObject);
         const args: t.Expression[] = [
-          node.name,
+          tagExpression,
           attrsObject || t.nullLiteral(),
         ];
 
@@ -126,7 +134,7 @@ export default {
           t.stringLiteral(
             getScopeAccessorLiteral(node.extra.reserve!).value + "("
           ),
-          node.name
+          tagExpression
         );
       } else {
         const section = getSection(tag);
@@ -150,8 +158,8 @@ export default {
           node.extra?.nameReferences,
           signal,
           renderBodyIdentifier
-            ? t.logicalExpression("||", node.name, renderBodyIdentifier)
-            : node.name
+            ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
+            : tagExpression
         );
 
         const attrsObject = attrsToObject(tag, true);

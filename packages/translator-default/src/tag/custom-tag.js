@@ -3,6 +3,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
+  loadFileForTag,
   resolveRelativePath,
 } from "@marko/babel-utils";
 import { buildEventHandlerArray, getAttrs } from "./util";
@@ -43,7 +44,13 @@ export default function (path, isNullable) {
     let binding = path.scope.getBinding(tagName);
     if (binding && !binding.identifier.loc) binding = null;
 
-    if (relativePath) {
+    const childFile = loadFileForTag(path);
+    const childProgram = childFile?.ast.program;
+
+    if (childProgram?.extra?.___featureType === "tags") {
+      path.set("name", importDefault(file, relativePath, path.node.name.value));
+      return dynamicTag(path);
+    } else if (relativePath) {
       if (binding) {
         // TODO: implement auto migration for conflicts here
         // and log below warning

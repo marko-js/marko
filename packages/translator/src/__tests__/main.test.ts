@@ -52,7 +52,7 @@ const baseConfig: compiler.Config = {
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
 
-describe("translator", () => {
+describe("translator-tags", () => {
   before(() => {
     register({ ...htmlConfig, modules: "cjs" });
   });

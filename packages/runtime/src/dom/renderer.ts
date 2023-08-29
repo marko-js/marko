@@ -8,7 +8,7 @@ import { setContext } from "../common/context";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 import { createScope } from "./scope";
 import { WalkCodes, trimWalkString, walk } from "./walker";
-import { queueEffect, runEffects } from "./queue";
+import { runEffects } from "./queue";
 import { type DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
@@ -188,15 +188,13 @@ export function createRenderFn(
     templateId!,
     Object.assign((input: unknown, element: Element): RenderResult => {
       const scope = createScope();
-      queueEffect(scope, () => {
-        element.replaceChildren(dom);
-      });
       const dom = initRenderer(renderer, scope);
 
       if (attrs) {
         attrs(scope, input);
       }
 
+      element.replaceChildren(dom);
       runEffects();
 
       return {
