@@ -321,7 +321,7 @@ export const translate = {
               t.callExpression(
                 importNamed(
                   file,
-                  "marko/src/runtime/components/registry",
+                  "marko/src/runtime/components/registry.js",
                   "r",
                   "marko_registerComponent"
                 ),
