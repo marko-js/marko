@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _message$ifBody = /* @__PURE__ */_closure("message", (_scope, message) => _data(_scope["#text/0"], message));
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_message$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/1");
@@ -21,4 +21,4 @@ const _setup = _scope => {
 export const template = "<button></button><!>";
 export const walks = /* get, over(1), replace, over(1) */" b%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/batched-updates-cleanup/template.marko");

@@ -1,4 +1,4 @@
-import { data as _data, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _val$forBody2 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/0"], val));
 const _forBody2 = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let val;
@@ -27,4 +27,4 @@ const _setup = _scope => {
 export const template = "<div></div><div><!><div></div></div>";
 export const walks = /* get, over(1), next(1), replace, out(1) */" bD%l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/for-tag-siblings/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/for-tag-siblings/template.marko");

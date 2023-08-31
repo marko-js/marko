@@ -1,4 +1,3 @@
-import type { Writable } from "stream";
 import { Context, pushContext, setContext } from "../common/context";
 import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
@@ -10,10 +9,16 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   runtimeId
 );
 
-type MaybeFlushable = Writable & { flush?(): void };
+export interface Writable {
+  write(data: string): void;
+  end(): void;
+  flush?(): void;
+  emit(name: string, data: unknown): void;
+}
+
 type PartialScope = Record<string | number, unknown> | unknown[];
 let $_buffer: Buffer | null = null;
-let $_stream: MaybeFlushable | null = null;
+let $_stream: Writable | null = null;
 let $_flush: typeof flushToStream | null = null;
 let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
   null;
@@ -35,12 +40,12 @@ export function nextPlaceholderId() {
   return $_streamData!.placeholderId++;
 }
 
-export function createRenderer(renderer: Renderer) {
+export function createRenderFn(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
   return async (
+    stream: Writable,
     input: Input = {},
-    context: Record<string, unknown> = {},
-    stream: MaybeFlushable
+    context: Record<string, unknown> = {}
   ) => {
     $_buffer = createBuffer();
     $_stream = stream;

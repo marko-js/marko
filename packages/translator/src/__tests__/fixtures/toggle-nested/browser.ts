@@ -3,8 +3,8 @@ import {
   closure,
   conditional,
   conditionalOnlyChild,
-  createRenderFn,
   createRenderer,
+  createTemplate,
   data,
   dynamicFragment,
   inConditionalScope,
@@ -152,7 +152,19 @@ const _value2 = value(
   inConditionalScope(value2$if0, INDEX.conditional)
 );
 
-export default createRenderFn(template, walks, undefined, attrs as any);
+export default createTemplate(
+  createRenderer(
+    template,
+    walks,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    attrs as any
+  )
+);
 
 const ifBody0 = createRenderer(
   "<!><!>",

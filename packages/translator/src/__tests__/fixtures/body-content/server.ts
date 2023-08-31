@@ -1,4 +1,5 @@
 import {
+  createTemplate,
   markResumeNode,
   nextScopeId,
   register,
@@ -7,11 +8,11 @@ import {
   writeScope,
 } from "@marko/runtime-fluurt/src/html";
 
-export default () => {
+export default createTemplate(() => {
   write("<body>");
   counter();
   write("</body>");
-};
+});
 
 /////////////////////////
 // Main

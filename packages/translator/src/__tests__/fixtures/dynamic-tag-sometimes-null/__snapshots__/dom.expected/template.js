@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _xBody = /* @__PURE__ */_createRenderer("Body Content", "");
 const _x_input = _dynamicTagAttrs("#text/0", _xBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _x_input(_scope, () => ({})), void 0, _x_input);
@@ -18,4 +18,4 @@ const _setup = _scope => {
 export const template = "<!><button></button>";
 export const walks = /* replace, over(1), get, over(1) */"%b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko");

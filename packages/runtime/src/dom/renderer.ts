@@ -8,11 +8,9 @@ import { setContext } from "../common/context";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 import { createScope } from "./scope";
 import { WalkCodes, trimWalkString, walk } from "./walker";
-import { runEffects } from "./queue";
 import { type DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
 import { setConditionalRendererOnlyChild } from "./control-flow";
-import { register } from "./resume";
 
 const enum NodeType {
   Element = 1,
@@ -41,10 +39,6 @@ export type RendererOrElementName =
   | (string & Record<keyof Renderer, undefined>);
 
 type SetupFn = (scope: Scope) => void;
-type RenderResult = {
-  update: (input: unknown) => void;
-  destroy: () => void;
-};
 
 export function createScopeWithRenderer(
   renderer: RendererOrElementName,
@@ -161,56 +155,6 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
       }
     }
   };
-}
-
-export function createRenderFn(
-  template: string,
-  walks: string,
-  setup?: SetupFn,
-  attrs?: ValueSignal,
-  closureSignals?: ValueSignal[],
-  templateId?: string,
-  dynamicStartNodeOffset?: number,
-  dynamicEndNodeOffset?: number
-) {
-  const renderer = createRenderer(
-    template,
-    walks,
-    setup,
-    closureSignals,
-    0,
-    undefined,
-    dynamicStartNodeOffset,
-    dynamicEndNodeOffset,
-    attrs
-  );
-  return register(
-    templateId!,
-    Object.assign((input: unknown, element: Element): RenderResult => {
-      const scope = createScope();
-      const dom = initRenderer(renderer, scope);
-
-      if (attrs) {
-        attrs(scope, input);
-      }
-
-      element.replaceChildren(dom);
-      runEffects();
-
-      return {
-        update: (newInput: unknown) => {
-          if (attrs) {
-            attrs(scope, newInput, 1);
-            attrs(scope, newInput);
-            runEffects();
-          }
-        },
-        destroy: () => {
-          // TODO
-        },
-      };
-    }, renderer)
-  );
 }
 
 export function createRenderer(

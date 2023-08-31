@@ -12,6 +12,7 @@ import {
   type ValueSignal,
   renderBodyClosures,
 } from "./signals";
+import type { Template } from "./template";
 
 type LoopForEach = (
   value: unknown[],
@@ -27,7 +28,9 @@ export function conditional(
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   return (scope, newRenderer, clean) => {
-    newRenderer ||= undefined;
+    newRenderer = newRenderer
+      ? (newRenderer as any as Template)._ || newRenderer
+      : undefined;
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;

@@ -36,26 +36,61 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 
 export function run() {
   try {
-    for (let i = 0; i < currentBatch.length; i += BatchOffsets.TOTAL) {
-      const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
-      const signal = currentBatch[i + BatchOffsets.SIGNAL] as ValueSignal;
-      const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
-      signal(scope, value, true);
-    }
+    runBatch();
   } finally {
     currentBatch = [];
   }
-  runEffects();
-}
-
-export function runEffects() {
   try {
-    for (let i = 0; i < currentEffects.length; i += EffectOffsets.TOTAL) {
-      const scope = currentEffects[i] as Scope;
-      const fn = currentEffects[i + 1] as (scope: Scope) => void;
-      fn(scope);
-    }
+    runEffects();
   } finally {
     currentEffects = [];
+  }
+}
+
+export function runSync(fn: () => void) {
+  const prevBatch = currentBatch;
+  const prevEffects = currentEffects;
+  currentBatch = [];
+  currentEffects = [];
+  try {
+    fn();
+    runBatch();
+    currentBatch = prevBatch;
+    runEffects();
+  } finally {
+    currentBatch = prevBatch;
+    currentEffects = prevEffects;
+  }
+}
+
+export function prepare(fn: () => void) {
+  const prevBatch = currentBatch;
+  const prevEffects = currentEffects;
+  const preparedEffects = (currentEffects = []);
+  currentBatch = [];
+  try {
+    fn();
+    runBatch();
+  } finally {
+    currentBatch = prevBatch;
+    currentEffects = prevEffects;
+  }
+  return preparedEffects;
+}
+
+export function runEffects(effects: unknown[] = currentEffects) {
+  for (let i = 0; i < effects.length; i += EffectOffsets.TOTAL) {
+    const scope = effects[i] as Scope;
+    const fn = effects[i + 1] as (scope: Scope) => void;
+    fn(scope);
+  }
+}
+
+function runBatch() {
+  for (let i = 0; i < currentBatch.length; i += BatchOffsets.TOTAL) {
+    const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
+    const signal = currentBatch[i + BatchOffsets.SIGNAL] as ValueSignal;
+    const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
+    signal(scope, value, true);
   }
 }

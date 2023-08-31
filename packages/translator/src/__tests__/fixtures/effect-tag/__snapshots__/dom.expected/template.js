@@ -1,4 +1,4 @@
-import { register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/effect-tag/template.marko_0_x", _scope => {
   const {
     x
@@ -12,4 +12,4 @@ const _setup = _scope => {
 export const template = "<div id=ref>0</div>";
 export const walks = /* over(1) */"b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/effect-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/effect-tag/template.marko");

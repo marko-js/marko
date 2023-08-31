@@ -1,7 +1,7 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register(({
+import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = ({
   renderBody,
   x,
   show,
@@ -91,6 +91,5 @@ const _renderer = _register(({
     "#text/5!": _dynamicScope4,
     "#text/5(": _tagName5
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko");

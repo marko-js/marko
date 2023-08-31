@@ -1,4 +1,4 @@
-import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _x$ifBody_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x", _scope => _lifecycle(_scope, "cleanup", {
   onMount: function () {
     const {
@@ -47,4 +47,4 @@ const _setup = _scope => {
 export const template = "<!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
 export const walks = /* replace, over(2), get, over(1), get, over(1) */"%c b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

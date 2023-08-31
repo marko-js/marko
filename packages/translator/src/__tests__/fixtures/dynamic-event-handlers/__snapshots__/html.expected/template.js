@@ -1,5 +1,5 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
   _write(`<button>${_escapeXML(clickCount)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
@@ -7,6 +7,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _writeScope(_scope0_id, {
     "clickCount": clickCount
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko");

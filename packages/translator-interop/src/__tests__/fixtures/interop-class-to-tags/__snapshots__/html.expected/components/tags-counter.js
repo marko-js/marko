@@ -1,5 +1,5 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/dist/debug/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const count = 0;
   _write(`<button>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
@@ -7,6 +7,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _writeScope(_scope0_id, {
     "count": count
   }, _scope0_);
-}, "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags/components/tags-counter.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags/components/tags-counter.marko");

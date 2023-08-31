@@ -1,5 +1,5 @@
-import { SYMBOL_OWNER as _SYMBOL_OWNER, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { SYMBOL_OWNER as _SYMBOL_OWNER, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   let _ifScopeId, _scope1_, _ifRenderer;
   if (input.a + input.b) {
@@ -58,6 +58,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     "#text/2!": _scope3_,
     "#text/2(": _ifRenderer3
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/if-tag/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/if-tag/template.marko");

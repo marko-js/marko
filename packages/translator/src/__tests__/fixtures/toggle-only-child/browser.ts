@@ -2,8 +2,8 @@ import {
   type Scope,
   closure,
   conditionalOnlyChild,
-  createRenderFn,
   createRenderer,
+  createTemplate,
   data,
   inConditionalScope,
   value,
@@ -68,7 +68,19 @@ export const attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   _value(scope, value, clean);
 };
 
-export default createRenderFn(template, walks, undefined, attrs as any);
+export default createTemplate(
+  createRenderer(
+    template,
+    walks,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    attrs as any
+  )
+);
 
 const _ifBody = createRenderer(
   "<span> </span>",

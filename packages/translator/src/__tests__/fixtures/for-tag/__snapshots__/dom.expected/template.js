@@ -1,4 +1,4 @@
-import { data as _data, attr as _attr, createRenderer as _createRenderer, value as _value, loopTo as _loopTo, loopIn as _loopIn, loopOf as _loopOf, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, attr as _attr, createRenderer as _createRenderer, value as _value, loopTo as _loopTo, loopIn as _loopIn, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _forBody11 = /* @__PURE__ */_createRenderer("Hello", "");
 const _forBody10 = /* @__PURE__ */_createRenderer("Hello", "");
 const _i$forBody7 = /* @__PURE__ */_value("i", (_scope, i) => {
@@ -144,4 +144,4 @@ const _setup = _scope => {
 export const template = "<!><!><!><!><!><!><!><!><!><!>";
 export const walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"%b%b%b%b%b%b%b%b%b%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/for-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/for-tag/template.marko");

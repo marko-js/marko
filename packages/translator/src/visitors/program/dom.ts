@@ -153,12 +153,19 @@ export default {
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
-            "createRenderFn",
-            templateIdentifier,
-            walksIdentifier,
-            setupIdentifier,
-            attrs! && attrsSignalIdentifier,
-            closures.length && closuresIdentifier,
+            "createTemplate",
+            callRuntime(
+              "createRenderer",
+              templateIdentifier,
+              walksIdentifier,
+              setupIdentifier,
+              closures.length && closuresIdentifier,
+              undefined,
+              undefined,
+              undefined,
+              undefined,
+              attrs! && attrsSignalIdentifier
+            ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`))
           )
         )

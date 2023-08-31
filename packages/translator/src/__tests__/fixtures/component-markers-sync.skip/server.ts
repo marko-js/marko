@@ -1,4 +1,4 @@
-import { write } from "@marko/runtime-fluurt/src/html";
+import { createTemplate, write } from "@marko/runtime-fluurt/src/html";
 
 const renderer = () => {
   firstComponent();
@@ -22,4 +22,4 @@ const secondComponent = () => {
   write("z");
 };
 
-export default renderer;
+export default createTemplate(renderer);

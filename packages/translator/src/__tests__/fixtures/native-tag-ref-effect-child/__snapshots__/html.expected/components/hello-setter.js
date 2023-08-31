@@ -1,5 +1,5 @@
-import { nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register(({
+import { nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = ({
   el
 }, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -7,6 +7,5 @@ const _renderer = _register(({
   _writeScope(_scope0_id, {
     "el": el
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko");

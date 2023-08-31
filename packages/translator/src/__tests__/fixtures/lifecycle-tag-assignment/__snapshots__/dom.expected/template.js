@@ -1,4 +1,4 @@
-import { queueSource as _queueSource, lifecycle as _lifecycle, data as _data, on as _on, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { queueSource as _queueSource, lifecycle as _lifecycle, data as _data, on as _on, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _prev = /* @__PURE__ */_value("prev", (_scope, prev) => _data(_scope["#text/1"], prev));
 const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", _scope => {
   _lifecycle(_scope, "cleanup", {
@@ -34,4 +34,4 @@ const _setup = _scope => {
 export const template = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
 export const walks = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko");

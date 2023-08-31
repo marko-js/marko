@@ -22,7 +22,7 @@ type Falsy = false | 0 | "" | null | undefined;
 const pureFunctions: Array<
   keyof typeof import("@marko/runtime-fluurt/src/dom")
 > = [
-  "createRenderFn",
+  "createTemplate",
   "createRenderer",
   "value",
   "intersection",

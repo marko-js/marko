@@ -11,7 +11,6 @@ export { attr, attrs, classAttr, styleAttr } from "./attrs";
 export { dynamicTag } from "./dynamic-tag";
 
 export {
-  createRenderer,
   write,
   maybeFlush,
   fork,
@@ -26,6 +25,8 @@ export {
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
 } from "./writer";
+
+export { createTemplate } from "./template";
 
 export { register, SYMBOL_OWNER } from "./serializer";
 

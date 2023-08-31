@@ -2,14 +2,12 @@ import "./test-globals";
 import fs from "fs";
 import path from "path";
 import assert from "assert";
-import type { Writable } from "stream";
 import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import glob from "tiny-glob";
 import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
-import { createRenderer } from "@marko/runtime-fluurt/src/html";
 import createBrowser from "./utils/create-browser";
 import createMutationTracker from "./utils/track-mutations";
 import { isWait } from "./utils/resolve";
@@ -146,9 +144,9 @@ describe("translator-tags", () => {
       const ssr = async () => {
         if (ssrResult) return ssrResult;
 
-        const serverTemplate = require(manualSSR ? serverFile : templateFile);
-        const render =
-          serverTemplate.render ?? createRenderer(serverTemplate.default);
+        const serverTemplate = require(manualSSR
+          ? serverFile
+          : templateFile).default;
 
         let buffer = "";
         // let flushCount = 0;
@@ -171,32 +169,36 @@ describe("translator-tags", () => {
 
         const tracker = createMutationTracker(browser.window, document);
 
-        await render(input, config.context, {
-          write(data: string) {
-            buffer += data;
-            tracker.log(
-              `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME")
-              )}`
-            );
+        await serverTemplate.writeTo(
+          {
+            write(data: string) {
+              buffer += data;
+              tracker.log(
+                `# Write\n${indent(
+                  data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+                )}`
+              );
+            },
+            flush() {
+              // tracker.logUpdate("Flush");
+              // document.write(buffer);
+              // buffer = "";
+            },
+            end(data?: string) {
+              document.write(buffer + (data || ""));
+              document.close();
+              tracker.logUpdate("End");
+            },
+            emit(type: string, ...args: unknown[]) {
+              // console.log(...args);
+              tracker.log(
+                `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+              );
+            },
           },
-          flush() {
-            // tracker.logUpdate("Flush");
-            // document.write(buffer);
-            // buffer = "";
-          },
-          end(data?: string) {
-            document.write(buffer + (data || ""));
-            document.close();
-            tracker.logUpdate("End");
-          },
-          emit(type: string, ...args: unknown[]) {
-            // console.log(...args);
-            tracker.log(
-              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
-            );
-          },
-        } as Writable & { flush(): void });
+          input,
+          config.context
+        );
 
         tracker.cleanup();
 
@@ -225,7 +227,7 @@ describe("translator-tags", () => {
         const { run } = browser.require(
           "@marko/runtime-fluurt/src/dom"
         ) as typeof import("../../../runtime/src/dom");
-        const render = browser.require(
+        const template = browser.require(
           manualCSR ? browserFile : templateFile
         ).default;
         const container = Object.assign(document.createElement("div"), {
@@ -235,7 +237,7 @@ describe("translator-tags", () => {
 
         document.body.appendChild(container);
 
-        const instance = render(input, container);
+        const instance = template.insertBefore(container, null, input);
         throwErrors();
         tracker.logUpdate(input);
 

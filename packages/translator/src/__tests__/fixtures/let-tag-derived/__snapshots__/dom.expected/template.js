@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, initValue as _initValue, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, initValue as _initValue, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _b_effect = _register("packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko_0_b", _scope => _on(_scope["#button/0"], "click", () => {
   const {
     b
@@ -25,4 +25,4 @@ export { _input };
 export const template = "<button>Increment</button><!> <!>";
 export const walks = /* get, over(1), replace, over(2), replace, over(1) */" b%c%b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko");

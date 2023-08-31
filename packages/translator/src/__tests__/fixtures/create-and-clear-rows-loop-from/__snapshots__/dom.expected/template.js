@@ -1,4 +1,4 @@
-import { data as _data, value as _value, createRenderer as _createRenderer, loopTo as _loopTo, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, value as _value, createRenderer as _createRenderer, loopTo as _loopTo, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _n$forBody = /* @__PURE__ */_value("n", (_scope, n) => _data(_scope["#text/0"], n));
 const _forBody = /* @__PURE__ */_createRenderer("<!>, ", /* replace */"%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let n;
@@ -14,4 +14,4 @@ export { _input };
 export const template = "<div></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/create-and-clear-rows-loop-from/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/create-and-clear-rows-loop-from/template.marko");

@@ -1,6 +1,6 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
-const _renderer = _register(({
+const _renderer = ({
   x
 }, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -27,9 +27,8 @@ const _renderer = _register(({
     "#text/0!": _scope2_,
     "#text/0(": _ifRenderer
   });
-  _hello({
+  _hello._({
     item: _item
   });
-}, "packages/translator/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko");

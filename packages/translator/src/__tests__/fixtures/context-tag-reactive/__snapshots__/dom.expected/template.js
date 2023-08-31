@@ -1,4 +1,4 @@
-import { initContextProvider as _initContextProvider, childClosures as _childClosures, on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, register as _register, queueEffect as _queueEffect, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { initContextProvider as _initContextProvider, childClosures as _childClosures, on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 import { setup as _child, template as _child_template, walks as _child_walks, closures as _child_closures } from "./components/child.marko";
 const _setup$putBody = _scope => {
   _child(_scope["#childScope/0"]);
@@ -23,4 +23,4 @@ const _setup = _scope => {
 export const template = "<!><button id=increment> </button>";
 export const walks = /* replace, over(1), get, next(1), get, out(1) */"%b D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko");

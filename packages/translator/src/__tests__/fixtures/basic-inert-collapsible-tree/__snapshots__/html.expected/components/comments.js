@@ -1,6 +1,6 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _comments from "./comments.marko";
-const _renderer = _register(({
+const _renderer = ({
   comments,
   path = "c"
 }, _tagVar, _scope0_) => {
@@ -17,7 +17,7 @@ const _renderer = _register(({
     let _ifScopeId, _scope2_, _ifRenderer;
     if (comment.comments) {
       const _scope2_id = _nextScopeId();
-      _comments({
+      _comments._({
         comments: comment.comments,
         path: id,
         renderBody() {
@@ -48,6 +48,5 @@ const _renderer = _register(({
   _writeScope(_scope0_id, {
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

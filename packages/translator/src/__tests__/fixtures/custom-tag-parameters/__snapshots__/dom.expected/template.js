@@ -1,4 +1,4 @@
-import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, value as _value, createRenderer as _createRenderer, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 import { setup as _customTag, attrs as _customTag_attrs, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 const _count$customTagBody = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/0"], count));
 const _customTagBody = /* @__PURE__ */_createRenderer("<div>Count: <!></div>", /* next(1), over(1), replace */"Db%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
@@ -17,4 +17,4 @@ const _setup = _scope => {
 export const template = `${_customTag_template}`;
 export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/custom-tag-parameters/template.marko");

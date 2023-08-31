@@ -1,4 +1,5 @@
 import {
+  createTemplate,
   fork,
   getInContext,
   popContext,
@@ -36,4 +37,4 @@ const renderer = () => {
   }
 };
 
-export default renderer;
+export default createTemplate(renderer);

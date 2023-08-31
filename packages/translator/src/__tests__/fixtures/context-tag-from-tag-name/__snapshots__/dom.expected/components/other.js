@@ -1,4 +1,4 @@
-import { initContextProvider as _initContextProvider, conditional as _conditional, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { initContextProvider as _initContextProvider, conditional as _conditional, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _dynamicTagName$putBody = /* @__PURE__ */_conditional("#text/0");
 const _input$putBody = /* @__PURE__ */_dynamicClosure("input", (_scope, input) => _dynamicTagName$putBody(_scope, input.renderBody), void 0, void 0, _dynamicTagName$putBody);
 const _putBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", void 0, [_input$putBody]);
@@ -13,4 +13,4 @@ export { _input };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko");

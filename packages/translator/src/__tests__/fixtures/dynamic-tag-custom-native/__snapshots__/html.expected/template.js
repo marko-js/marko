@@ -1,6 +1,6 @@
 import child from "./components/child.marko";
-import { markResumeNode as _markResumeNode, write as _write, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { markResumeNode as _markResumeNode, write as _write, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const tagName = child;
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
@@ -14,6 +14,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     "#text/1!": _dynamicScope,
     "#text/1(": tagName
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko");

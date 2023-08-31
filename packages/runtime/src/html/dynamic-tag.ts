@@ -7,6 +7,7 @@ import {
   writeScope,
 } from "./writer";
 import { attrs } from "./attrs";
+import type { Template } from "./template";
 
 const voidElements = new Set([
   "area",
@@ -30,7 +31,7 @@ interface RenderBodyObject {
 }
 
 export function dynamicTag(
-  tag: unknown | string | Renderer | RenderBodyObject,
+  tag: unknown | string | Renderer | RenderBodyObject | Template,
   input: Record<string, unknown>,
   renderBody: (() => void) | undefined
 ) {
@@ -67,7 +68,8 @@ export function dynamicTag(
     return internalScope;
   }
 
-  const renderer = (tag as RenderBodyObject).renderBody || tag;
+  const renderer =
+    (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
 
   if (typeof renderer === "function") {
     renderer(

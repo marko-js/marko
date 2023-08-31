@@ -1,4 +1,9 @@
-import { fork, tryPlaceholder, write } from "@marko/runtime-fluurt/src/html";
+import {
+  createTemplate,
+  fork,
+  tryPlaceholder,
+  write,
+} from "@marko/runtime-fluurt/src/html";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
@@ -16,4 +21,4 @@ const renderer = () => {
   write("f");
 };
 
-export default renderer;
+export default createTemplate(renderer);

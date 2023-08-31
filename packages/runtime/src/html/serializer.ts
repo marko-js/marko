@@ -12,12 +12,12 @@ const SYMBOL_REGISTRY_ID = Symbol("REGISTRY_ID");
 const SYMBOL_SCOPE = Symbol("SCOPE");
 export const SYMBOL_OWNER = Symbol("OWNER");
 
-type Serializable<T> = T & {
+export type Serializable<T> = T & {
   [SYMBOL_REGISTRY_ID]: string;
   [SYMBOL_SCOPE]?: number;
 };
 
-export function register<T extends (...args: any[]) => any>(
+export function register<T>(
   entry: T,
   registryId: string,
   scopeId?: number
@@ -128,11 +128,6 @@ export class Serializer {
               return false;
             case false:
               switch (cur.constructor) {
-                case Function:
-                  return this.writeFunction(
-                    cur as Serializable<(...args: any[]) => any>
-                  );
-
                 case Object:
                   this.writeObject(cur as Record<string, unknown>);
                   break;
@@ -174,7 +169,9 @@ export class Serializer {
                   break;
 
                 default:
-                  return false;
+                  return this.writeRegistered(
+                    cur as Serializable<(...args: any[]) => any>
+                  );
               }
               break;
 
@@ -192,7 +189,7 @@ export class Serializer {
     return true;
   }
 
-  writeFunction(fn: Serializable<(...args: any[]) => any>) {
+  writeRegistered(fn: Serializable<(...args: any[]) => any>) {
     const { [SYMBOL_REGISTRY_ID]: registryId, [SYMBOL_SCOPE]: scopeId } = fn;
     if (registryId) {
       // ASSERT: fnId and scopeId don't need `quote` escaping

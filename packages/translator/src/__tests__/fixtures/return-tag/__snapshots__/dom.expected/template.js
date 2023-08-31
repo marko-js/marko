@@ -1,4 +1,4 @@
-import { tagVarSignal as _tagVarSignal, createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { tagVarSignal as _tagVarSignal, createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _setup$elseBody = _scope => {
   _tagVarSignal(_scope, 2);
 };
@@ -14,4 +14,4 @@ export { _input };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/return-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/return-tag/template.marko");

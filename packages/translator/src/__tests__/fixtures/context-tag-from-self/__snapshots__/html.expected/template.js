@@ -1,5 +1,5 @@
-import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, popContext as _popContext, register as _register, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, popContext as _popContext, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
   _pushContext("packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko", 1);
@@ -9,6 +9,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
   _write(`${_escapeXML(x)}${_markResumeNode(_scope1_id, "#text/0")}</span>`);
   _popContext();
   _write("</div>");
-}, "packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/context-tag-from-self/template.marko");

@@ -137,9 +137,9 @@ describe("translator-interop", () => {
         let updateInput: (input: unknown) => void;
         let runUpdates: () => void;
 
-        if (typeof template === "function") {
+        if (template.insertBefore) {
           // Marko 6
-          const instance = template(input, container);
+          const instance = template.insertBefore(container, null, input);
           const { run } = browser.require(
             "@marko/runtime-fluurt/src/dom"
           ) as typeof import("../../../runtime/src/dom");

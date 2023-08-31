@@ -1,4 +1,4 @@
-import { data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value2, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value2, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _value$ifBody = /* @__PURE__ */_closure("value", (_scope, value) => _data(_scope["#text/0"], value));
 const _ifBody = _register("packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
@@ -14,4 +14,4 @@ export { _value };
 export const template = "<div><!><span></span><span></span></div>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/toggle-first-child/template.marko");

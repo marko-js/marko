@@ -3,8 +3,8 @@ import {
   bindFunction,
   bindRenderer,
   conditional,
-  createRenderFn,
   createRenderer,
+  createTemplate,
   data,
   dynamicClosure,
   dynamicSubscribers,
@@ -73,11 +73,18 @@ export const FancyButton$onclick_effect = (scope: Scope) => {
   on(scope[FancyButton$Index.BUTTON], "click", onclick);
 };
 
-export const FancyButton = createRenderFn(
-  FancyButton$template,
-  FancyButton$walks,
-  undefined,
-  FancyButton$attrs
+export const FancyButton = createTemplate(
+  createRenderer(
+    FancyButton$template,
+    FancyButton$walks,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    FancyButton$attrs
+  )
 );
 
 /////////////////////////
@@ -141,4 +148,4 @@ const renderBody = createRenderer(" ", get + next(1), undefined, [
   clickCount$renderBody,
 ]);
 
-export default createRenderFn(template, walks, setup);
+export default createTemplate(createRenderer(template, walks, setup));

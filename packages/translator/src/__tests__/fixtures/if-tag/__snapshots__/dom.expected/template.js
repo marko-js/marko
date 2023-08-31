@@ -1,4 +1,4 @@
-import { createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _elseBody = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_5_renderer", /* @__PURE__ */_createRenderer("C", ""));
 const _elseIfBody = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_4_renderer", /* @__PURE__ */_createRenderer("B", ""));
 const _ifBody3 = _register("packages/translator/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_createRenderer("A", ""));
@@ -17,4 +17,4 @@ export { _input };
 export const template = "<!><!><div><!></div>";
 export const walks = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"%b%bD%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/if-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/if-tag/template.marko");

@@ -36,10 +36,11 @@ export type { Scope } from "../common/types";
 
 export {
   createRenderer,
-  createRenderFn,
   initContextProvider,
   dynamicTagAttrs,
 } from "./renderer";
+
+export { createTemplate } from "./template";
 
 export {
   value,

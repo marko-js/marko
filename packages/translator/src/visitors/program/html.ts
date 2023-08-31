@@ -42,30 +42,23 @@ export default {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             rendererId,
-            callRuntime(
-              "register",
-              t.arrowFunctionExpression(
-                [
-                  attrs ? (attrs.var as any) : t.identifier("input"),
-                  tagVarIdentifier,
-                  getScopeIdentifier(getSection(program)),
-                ],
-                t.blockStatement(renderContent)
-              ),
-              t.stringLiteral(getTemplateId(optimize, `${filename}`))
+            t.arrowFunctionExpression(
+              [
+                attrs ? (attrs.var as any) : t.identifier("input"),
+                tagVarIdentifier,
+                getScopeIdentifier(getSection(program)),
+              ],
+              t.blockStatement(renderContent)
             )
           ),
         ]),
 
-        t.exportDefaultDeclaration(rendererId),
-
-        t.exportNamedDeclaration(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              t.identifier("render"),
-              callRuntime("createRenderer", rendererId)
-            ),
-          ])
+        t.exportDefaultDeclaration(
+          callRuntime(
+            "createTemplate",
+            rendererId,
+            t.stringLiteral(getTemplateId(optimize, `${filename}`))
+          )
         ),
       ]);
     },

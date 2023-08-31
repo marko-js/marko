@@ -1,5 +1,5 @@
 import { setup as _counter, template as _counter_template, walks as _counter_walks } from "./components/counter.marko";
-import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _setup$tagNameBody = _scope => {
   _counter(_scope["#childScope/0"]);
 };
@@ -22,4 +22,4 @@ const _setup = _scope => {
 export const template = "<!><button id=changeTag></button>";
 export const walks = /* replace, over(1), get, over(1) */"%b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");

@@ -1,7 +1,8 @@
 import {
   type Scope,
   attrs,
-  createRenderFn,
+  createRenderer,
+  createTemplate,
   value,
 } from "@marko/runtime-fluurt/src/dom";
 import { get, over } from "../../utils/walks";
@@ -36,4 +37,16 @@ export const _attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
   _value(scope, value!, clean);
 };
 
-export default createRenderFn(template, walks, undefined, _attrs as any);
+export default createTemplate(
+  createRenderer(
+    template,
+    walks,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    _attrs as any
+  )
+);

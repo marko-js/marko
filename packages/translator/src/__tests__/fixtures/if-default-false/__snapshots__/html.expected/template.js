@@ -1,5 +1,5 @@
-import { markResumeNode as _markResumeNode, write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createRenderer as _createRenderer } from "@marko/runtime-fluurt/src/html";
-const _renderer = _register((input, _tagVar, _scope0_) => {
+import { markResumeNode as _markResumeNode, write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const show = false;
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
@@ -20,6 +20,5 @@ const _renderer = _register((input, _tagVar, _scope0_) => {
     "#text/1!": _scope1_,
     "#text/1(": _ifRenderer
   }, _scope0_);
-}, "packages/translator/src/__tests__/fixtures/if-default-false/template.marko");
-export default _renderer;
-export const render = /* @__PURE__ */_createRenderer(_renderer);
+};
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/if-default-false/template.marko");

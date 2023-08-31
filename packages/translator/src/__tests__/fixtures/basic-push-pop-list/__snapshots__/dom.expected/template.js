@@ -1,4 +1,4 @@
-import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, intersection as _intersection, loopOf as _loopOf, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, intersection as _intersection, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _data(_scope["#text/0"], item));
 const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let item;
@@ -43,4 +43,4 @@ const _setup = _scope => {
 export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const walks = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, void 0, void 0, "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko");

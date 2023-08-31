@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderFn as _createRenderFn } from "@marko/runtime-fluurt/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _inputRenderBody_input = _dynamicTagAttrs("#text/2");
 const _expr_dynamicTagName_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -29,4 +29,4 @@ export { _input };
 export const template = "<button class=inc> </button><!>";
 export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createRenderFn(template, walks, setup, attrs, void 0, "packages/translator/src/__tests__/fixtures/custom-tag-parameters/components/custom-tag.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator/src/__tests__/fixtures/custom-tag-parameters/components/custom-tag.marko");
