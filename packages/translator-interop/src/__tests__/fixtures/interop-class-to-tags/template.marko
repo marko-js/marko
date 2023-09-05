@@ -6,7 +6,7 @@ class {
     this.state.count++;
   }
 }
-<button onClick("increment")>
+<button id="class" onClick("increment")>
   ${state.count}
 </button>
-<tags-counter/>
+<tags-counter count=state.count/>

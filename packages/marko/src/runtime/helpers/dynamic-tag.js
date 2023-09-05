@@ -80,6 +80,10 @@ module.exports = function dynamicTag(
         }
       }
 
+      if (dynamicTag.___runtimeCompat) {
+        renderer = dynamicTag.___runtimeCompat(renderer);
+      }
+
       if (renderer) {
         out.c(componentDef, key, customEvents);
         renderer(attrs, out);

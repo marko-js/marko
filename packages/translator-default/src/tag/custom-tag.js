@@ -48,6 +48,11 @@ export default function (path, isNullable) {
     const childProgram = childFile?.ast.program;
 
     if (childProgram?.extra?.___featureType === "tags") {
+      importDefault(
+        file,
+        `marko/src/runtime/helpers/tags-compat.js`,
+        "marko_tags_compat"
+      );
       path.set("name", importDefault(file, relativePath, path.node.name.value));
       return dynamicTag(path);
     } else if (relativePath) {

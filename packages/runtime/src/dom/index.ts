@@ -28,9 +28,9 @@ export { init, register, resumeSubscription } from "./resume";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
-export { queueSource, queueEffect, run } from "./queue";
+export { queueSource, queueEffect, run, prepare, runEffects } from "./queue";
 
-export { write, bindFunction, bindRenderer } from "./scope";
+export { write, bindFunction, bindRenderer, createScope } from "./scope";
 
 export type { Scope } from "../common/types";
 
@@ -38,6 +38,7 @@ export {
   createRenderer,
   initContextProvider,
   dynamicTagAttrs,
+  initRenderer,
 } from "./renderer";
 
 export { createTemplate } from "./template";

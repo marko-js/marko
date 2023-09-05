@@ -88,7 +88,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
         ] = realNode;
       }
 
-      if (vNode.___nodeName !== "textarea") {
+      if (vNode.___nodeName !== "textarea" && !vNode.___ignoreChildren) {
         morphChildren(realNode, vNode, parentComponent);
       }
 

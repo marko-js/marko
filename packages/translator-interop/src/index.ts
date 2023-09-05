@@ -87,7 +87,7 @@ function mergeTaglibs(taglibs5: unknown[][], taglibs6: unknown[][]) {
         taglib5Merged[taglibKey],
         taglib6Merged[taglibKey]
       );
-    } else if (taglibKey === "migrator") {
+    } else if (taglibKey === "migrate") {
       mergedTaglib[taglibKey] = mergeVisitors(
         normalizeTagDefVisitors(taglib5Merged[taglibKey]),
         normalizeTagDefVisitors(taglib6Merged[taglibKey])

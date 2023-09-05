@@ -141,7 +141,7 @@ describe("translator-interop", () => {
           // Marko 6
           const instance = template.insertBefore(container, null, input);
           const { run } = browser.require(
-            "@marko/runtime-fluurt/src/dom"
+            "@marko/runtime-fluurt/dist/debug/dom"
           ) as typeof import("../../../runtime/src/dom");
           updateInput = (input) => instance.update(input);
           runUpdates = run;
@@ -153,6 +153,10 @@ describe("translator-interop", () => {
           runUpdates = () => component.update();
         }
 
+        const { run } = browser.require(
+          "@marko/runtime-fluurt/dist/debug/dom"
+        ) as typeof import("../../../runtime/src/dom");
+
         throwErrors();
         tracker.logUpdate(input);
 
@@ -162,6 +166,7 @@ describe("translator-interop", () => {
           } else if (typeof update === "function") {
             await update(document.documentElement);
             runUpdates();
+            run();
             tracker.logUpdate(update);
           } else {
             updateInput(update);

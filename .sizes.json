@@ -7,81 +7,81 @@
     {
       "name": "*",
       "total": {
-        "min": 12687,
-        "gzip": 5438,
-        "brotli": 4949
+        "min": 13233,
+        "gzip": 5701,
+        "brotli": 5174
       }
     },
     {
       "name": "counter",
       "user": {
-        "min": 355,
-        "gzip": 280,
-        "brotli": 240
+        "min": 351,
+        "gzip": 278,
+        "brotli": 235
       },
       "runtime": {
-        "min": 2973,
-        "gzip": 1435,
-        "brotli": 1282
+        "min": 3941,
+        "gzip": 1833,
+        "brotli": 1643
       },
       "total": {
-        "min": 3328,
-        "gzip": 1715,
-        "brotli": 1522
+        "min": 4292,
+        "gzip": 2111,
+        "brotli": 1878
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 204,
-        "gzip": 180,
+        "gzip": 181,
         "brotli": 153
       },
       "runtime": {
-        "min": 2453,
-        "gzip": 1278,
-        "brotli": 1140
+        "min": 2476,
+        "gzip": 1294,
+        "brotli": 1162
       },
       "total": {
-        "min": 2657,
-        "gzip": 1458,
-        "brotli": 1293
+        "min": 2680,
+        "gzip": 1475,
+        "brotli": 1315
       }
     },
     {
       "name": "comments",
       "user": {
-        "min": 1180,
-        "gzip": 696,
-        "brotli": 635
+        "min": 1216,
+        "gzip": 703,
+        "brotli": 636
       },
       "runtime": {
-        "min": 6974,
-        "gzip": 3237,
-        "brotli": 2926
+        "min": 7444,
+        "gzip": 3438,
+        "brotli": 3112
       },
       "total": {
-        "min": 8154,
-        "gzip": 3933,
-        "brotli": 3561
+        "min": 8660,
+        "gzip": 4141,
+        "brotli": 3748
       }
     },
     {
       "name": "comments 💧",
       "user": {
         "min": 988,
-        "gzip": 591,
-        "brotli": 556
+        "gzip": 590,
+        "brotli": 550
       },
       "runtime": {
-        "min": 7930,
-        "gzip": 3648,
-        "brotli": 3306
+        "min": 7960,
+        "gzip": 3676,
+        "brotli": 3321
       },
       "total": {
-        "min": 8918,
-        "gzip": 4239,
-        "brotli": 3862
+        "min": 8948,
+        "gzip": 4266,
+        "brotli": 3871
       }
     }
   ]
