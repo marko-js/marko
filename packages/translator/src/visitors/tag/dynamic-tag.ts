@@ -162,6 +162,14 @@ export default {
             : tagExpression
         );
 
+        if (tag.node.extra?.___featureType === "class") {
+          importDefault(
+            tag.hub.file,
+            `marko/src/runtime/helpers/tags-compat.js`,
+            "marko_tags_compat"
+          );
+        }
+
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {
           const attrsGetter = t.arrowFunctionExpression(

@@ -3,8 +3,10 @@ import _classCounter from "./components/class-counter.marko";
 const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const count = 0;
-  _write(`<button>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  const _dynamicScope = _dynamicTag(_classCounter, null);
+  _write(`<button id=tags>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
+  const _dynamicScope = _dynamicTag(_classCounter, {
+    count: count
+  });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/2")}`);
   _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-tags-to-class/template.marko_0_count");
   _writeScope(_scope0_id, {

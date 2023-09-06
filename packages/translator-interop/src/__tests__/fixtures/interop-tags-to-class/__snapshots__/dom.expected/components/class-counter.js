@@ -16,7 +16,10 @@ const _marko_component = {
   }
 };
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
-  out.be("button", null, "0", _component, null, 0, {
+  out.be("button", {
+    "id": "class",
+    "data-parent": input.count
+  }, "0", _component, null, 0, {
     "onclick": _componentDef.d("click", "increment", false)
   });
   out.t(state.count, _component);

@@ -135,27 +135,29 @@ describe("translator-interop", () => {
         document.body.appendChild(container);
 
         let updateInput: (input: unknown) => void;
-        let runUpdates: () => void;
 
         if (template.insertBefore) {
           // Marko 6
           const instance = template.insertBefore(container, null, input);
-          const { run } = browser.require(
-            "@marko/runtime-fluurt/dist/debug/dom"
-          ) as typeof import("../../../runtime/src/dom");
           updateInput = (input) => instance.update(input);
-          runUpdates = run;
         } else {
           // Marko 5
           const result = template.renderSync(input).appendTo(container);
           const component = result.getComponent();
           updateInput = (input) => (component.input = input);
-          runUpdates = () => component.update();
         }
 
         const { run } = browser.require(
           "@marko/runtime-fluurt/dist/debug/dom"
         ) as typeof import("../../../runtime/src/dom");
+        const { ___componentLookup } = browser.require(
+          "marko/src/node_modules/@internal/components-util/index-browser"
+        );
+
+        function runUpdates() {
+          run();
+          Object.values(___componentLookup).forEach((c: any) => c.update());
+        }
 
         throwErrors();
         tracker.logUpdate(input);
@@ -166,7 +168,6 @@ describe("translator-interop", () => {
           } else if (typeof update === "function") {
             await update(document.documentElement);
             runUpdates();
-            run();
             tracker.logUpdate(update);
           } else {
             updateInput(update);

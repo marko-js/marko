@@ -16,6 +16,9 @@ export function createScopeReadPattern(
   const rootPattern = t.objectPattern([]);
   let nestedPatterns: t.ObjectPattern[] | undefined;
   for (const ref of repeatableReserves.iterate(references)) {
+    // TODO: need a better way to exclude internal references
+    if (ref.name.includes("#")) continue;
+
     const propertyKey = getScopeAccessorLiteral(ref);
     const propertyValue = t.identifier(ref.name);
     const isShorthand = propertyKey.value === propertyValue.name;

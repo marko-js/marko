@@ -19,7 +19,14 @@ type LoopForEach = (
   cb: (key: unknown, args: unknown[]) => void
 ) => void;
 
-export function conditional(
+export function patchConditionals(
+  fn: <T extends typeof conditional | typeof conditionalOnlyChild>(cond: T) => T
+) {
+  conditional = fn(conditional);
+  conditionalOnlyChild = fn(conditionalOnlyChild);
+}
+
+export let conditional = function conditional(
   nodeAccessor: Accessor,
   dynamicTagAttrs?: IntersectionSignal,
   intersection?: IntersectionSignal,
@@ -44,7 +51,7 @@ export function conditional(
     intersection?.(scope, clean);
     renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
   };
-}
+};
 
 // TODO: remove this, use return from conditional instead
 export function inConditionalScope<S extends Scope>(
@@ -93,7 +100,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   prevFragment.___remove(destroyScope(prevScope));
 }
 
-export function conditionalOnlyChild(
+export let conditionalOnlyChild = function conditionalOnlyChild(
   nodeAccessor: Accessor,
   action?: ValueSignal<RendererOrElementName | undefined>
 ): ValueSignal<RendererOrElementName | undefined> {
@@ -110,7 +117,7 @@ export function conditionalOnlyChild(
     renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
     action?.(scope, currentRenderer, clean);
   };
-}
+};
 
 export function setConditionalRendererOnlyChild(
   scope: Scope,

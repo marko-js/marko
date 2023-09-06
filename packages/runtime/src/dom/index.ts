@@ -6,6 +6,7 @@ export {
   loopIn,
   loopTo,
   inLoopScope,
+  patchConditionals,
 } from "./control-flow";
 
 export {
