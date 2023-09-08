@@ -31,7 +31,7 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
     TagsCompat({ i: input, r: tagsRenderer || renderBody }, out);
 };
 
-const componentType = "tags-compat";
+const TagsCompatId = "tags-compat";
 const TagsCompat = createRenderer(
   function (_, out, componentDef, component) {
     let dom;
@@ -67,13 +67,13 @@ const TagsCompat = createRenderer(
     out.ef();
   },
   {
-    t: componentType,
+    t: TagsCompatId,
     d: "MARKO_DEBUG",
   },
   {}
 );
 
-registerComponent(componentType, () => ({
+registerComponent(TagsCompatId, () => ({
   _: TagsCompat,
   Component: defineComponent(
     {
@@ -102,38 +102,39 @@ patchConditionals((conditional) => (...args) => {
   const hasAttrs = args.length > 1;
   return (scope, renderer, clean) => {
     let newRenderer = renderer;
-    const rendererFromAnywhere =
-      renderer._ ||
-      renderer.render ||
-      (renderer.renderer && renderer.renderer.renderer) ||
-      renderer.renderer;
-    const isMarko6 = rendererFromAnywhere
-      ? rendererFromAnywhere.___clone
-      : renderer.___clone;
-    if (typeof renderer !== "string" && !isMarko6) {
-      newRenderer = rendererCache.get(renderer);
-      if (!newRenderer) {
-        newRenderer = {
-          ___setup(scope) {
-            if (!hasAttrs) {
-              renderAndMorph(scope, rendererFromAnywhere, renderer, {});
-            }
-          },
-          ___clone() {
-            const realFragment = document.createDocumentFragment();
-            ___createFragmentNode(null, null, realFragment);
-            return realFragment;
-          },
-          ___hasUserEffects: 1,
-          ___attrs(scope, input, clean) {
-            if (clean) return;
-            renderAndMorph(scope, rendererFromAnywhere, renderer, input);
-          },
-        };
-        rendererCache.set(renderer, newRenderer);
+    if (renderer) {
+      const rendererFromAnywhere =
+        renderer._ ||
+        renderer.render ||
+        (renderer.renderer && renderer.renderer.renderer) ||
+        renderer.renderer;
+      const isMarko6 = rendererFromAnywhere
+        ? rendererFromAnywhere.___clone
+        : renderer.___clone;
+      if (typeof renderer !== "string" && !isMarko6) {
+        newRenderer = rendererCache.get(renderer);
+        if (!newRenderer) {
+          newRenderer = {
+            ___setup(scope) {
+              if (!hasAttrs) {
+                renderAndMorph(scope, rendererFromAnywhere, renderer, {});
+              }
+            },
+            ___clone() {
+              const realFragment = document.createDocumentFragment();
+              ___createFragmentNode(null, null, realFragment);
+              return realFragment;
+            },
+            ___hasUserEffects: 1,
+            ___attrs(scope, input, clean) {
+              if (clean) return;
+              renderAndMorph(scope, rendererFromAnywhere, renderer, input);
+            },
+          };
+          rendererCache.set(renderer, newRenderer);
+        }
       }
     }
-
     return signal(scope, newRenderer, clean);
   };
 });
@@ -150,7 +151,7 @@ function renderAndMorph(scope, renderer, renderBody, input) {
   if (renderer) {
     renderer(input, out);
   } else {
-    renderBody(out, ...input.value);
+    RenderBodyComponent({ renderBody, args: input.value }, out);
   }
 
   queueEffect(scope, () => {
@@ -171,3 +172,30 @@ function getRootNode(el) {
   while (cur.parentNode) cur = cur.parentNode;
   return cur;
 }
+
+const RenderBodyComponentId = "renderbody-renderer";
+const RenderBodyComponent = createRenderer(
+  function (input, out, _componentDef) {
+    dynamicTag(
+      out,
+      input.renderBody,
+      null,
+      null,
+      input.args,
+      null,
+      _componentDef,
+      "0"
+    );
+  },
+  {
+    t: RenderBodyComponentId,
+    i: true,
+    d: "MARKO_DEBUG",
+  },
+  {}
+);
+
+registerComponent(RenderBodyComponentId, () => ({
+  _: RenderBodyComponent,
+  Component: defineComponent({}, RenderBodyComponent),
+}));
