@@ -6,7 +6,7 @@ import {
 } from "../common/types";
 import { setContext } from "../common/context";
 import type { IntersectionSignal, ValueSignal } from "./signals";
-import { createScope } from "./scope";
+import { bindRenderer, createScope } from "./scope";
 import { WalkCodes, trimWalkString, walk } from "./walker";
 import { type DOMFragment, defaultFragment } from "./fragment";
 import { attrs } from "./dom";
@@ -138,7 +138,11 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
       attrs(childScope, elementAccessor, getAttrs());
-      setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
+      setConditionalRendererOnlyChild(
+        childScope,
+        elementAccessor,
+        bindRenderer(scope, renderBody)
+      );
     } else if (renderer.___attrs) {
       if (clean) {
         renderer.___attrs(childScope, null as any, clean);
@@ -148,7 +152,8 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
           childScope,
           {
             ...attributes,
-            renderBody: renderBody ?? attributes.renderBody,
+            renderBody:
+              bindRenderer(scope, renderBody) ?? attributes.renderBody,
           },
           clean
         );

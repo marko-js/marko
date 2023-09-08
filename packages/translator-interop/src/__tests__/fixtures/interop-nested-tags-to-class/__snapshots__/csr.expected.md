@@ -1,23 +1,30 @@
 # Render {}
 ```html
 <button
-  id="tags"
->
-  0
-</button>
-<button
-  data-parent="0"
   id="class"
 >
   0
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    0
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-inserted button0, #text1, #text3
-inserted button2
-inserted button2/#text0
+inserted #text0, #text3
+inserted button1
+inserted button1/#text0
+inserted div2
+inserted div2/#text0
+inserted div2/#text4
+inserted div2/#text1
+inserted div2/#text3
+inserted div2/button2
 ```
 
 
@@ -26,22 +33,22 @@ container.querySelector("#tags").click()
 
 ```html
 <button
-  id="tags"
->
-  1
-</button>
-<button
-  data-parent="1"
   id="class"
 >
   0
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    1
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-button0/#text0: "0" => "1"
-button2: attr(data-parent) "0" => "1"
+div2/button2/#text0: "0" => "1"
 ```
 
 
@@ -50,21 +57,22 @@ container.querySelector("#class").click()
 
 ```html
 <button
-  id="tags"
->
-  1
-</button>
-<button
-  data-parent="1"
   id="class"
 >
   1
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    1
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-button2/#text0: "0" => "1"
+button1/#text0: "0" => "1"
 ```
 
 
@@ -73,22 +81,22 @@ container.querySelector("#tags").click()
 
 ```html
 <button
-  id="tags"
->
-  2
-</button>
-<button
-  data-parent="2"
   id="class"
 >
   1
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    2
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-button0/#text0: "1" => "2"
-button2: attr(data-parent) "1" => "2"
+div2/button2/#text0: "1" => "2"
 ```
 
 
@@ -97,21 +105,22 @@ container.querySelector("#class").click()
 
 ```html
 <button
-  id="tags"
->
-  2
-</button>
-<button
-  data-parent="2"
   id="class"
 >
   2
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    2
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-button2/#text0: "1" => "2"
+button1/#text0: "1" => "2"
 ```
 
 
@@ -120,20 +129,20 @@ container.querySelector("#tags").click()
 
 ```html
 <button
-  id="tags"
->
-  3
-</button>
-<button
-  data-parent="3"
   id="class"
 >
   2
 </button>
+<div>
+  <button
+    id="tags"
+  >
+    3
+  </button>
+</div>
 ```
 
 # Mutations
 ```
-button0/#text0: "2" => "3"
-button2: attr(data-parent) "2" => "3"
+div2/button2/#text0: "2" => "3"
 ```

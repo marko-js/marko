@@ -7,6 +7,7 @@ const {
   initRenderer,
   createScope,
   patchConditionals,
+  queueEffect,
 } = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
 const { r: registerComponent } = require("../components/registry");
@@ -15,10 +16,19 @@ const dynamicTag = require("./dynamic-tag");
 const morphdom = require("../vdom/morphdom");
 const defaultCreateOut = require("../createOut");
 
-export default dynamicTag.___runtimeCompat = function tagsToVdom(tagsRenderer) {
-  if (tagsRenderer.___template === undefined) return tagsRenderer;
+export default dynamicTag.___runtimeCompat = function tagsToVdom(
+  tagsRenderer,
+  renderBody
+) {
+  if (
+    tagsRenderer
+      ? tagsRenderer.___clone === undefined
+      : renderBody?.___clone === undefined
+  )
+    return tagsRenderer;
 
-  return (input, out) => TagsCompat({ i: input, r: tagsRenderer }, out);
+  return (input, out) =>
+    TagsCompat({ i: input, r: tagsRenderer || renderBody }, out);
 };
 
 const componentType = "tags-compat";
@@ -31,8 +41,18 @@ const TagsCompat = createRenderer(
     component.effects = prepare(() => {
       if (!component.scope) {
         component.scope = createScope();
-        // createScopeWithRenderer(tagsRenderer, /* out.global as context */);
+        component.scope._ = tagsRenderer.___owner;
         dom = initRenderer(tagsRenderer, component.scope);
+        if (tagsRenderer.___closureSignals) {
+          for (const signal of tagsRenderer.___closureSignals) {
+            signal.___subscribe?.(component.scope);
+          }
+        }
+        // component.scope = createScopeWithRenderer(tagsRenderer, /* out.global as context */);
+        // dom = component.scope.___startNode === component.scope.___endNode ? component.scope.___startNode : component.scope.___startNode.parentNode;
+        for (const signal of tagsRenderer.___closureSignals) {
+          signal(component.scope, true);
+        }
       } else {
         attrs && attrs(component.scope, input, 1);
       }
@@ -132,13 +152,18 @@ function renderAndMorph(scope, renderer, renderBody, input) {
   } else {
     renderBody(out, ...input.value);
   }
-  var targetNode = out.___getOutput().___firstChild;
-  morphdom(rootNode, targetNode, host, componentsContext);
-  const componentDefs = componentsContext.___initComponents(getRootNode(host));
-  const component = componentDefs[0].___component;
-  component.___rootNode = rootNode;
-  component.___input = input;
-  scope.marko5Component = component;
+
+  queueEffect(scope, () => {
+    const targetNode = out.___getOutput().___firstChild;
+    morphdom(rootNode, targetNode, host, componentsContext);
+    const componentDefs = componentsContext.___initComponents(
+      getRootNode(host)
+    );
+    const component = componentDefs[0].___component;
+    component.___rootNode = rootNode;
+    component.___input = input;
+    scope.marko5Component = component;
+  });
 }
 
 function getRootNode(el) {

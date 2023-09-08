@@ -70,6 +70,7 @@ module.exports = function dynamicTag(
         tag.render ||
         (tag.renderer && tag.renderer.renderer) ||
         tag.renderer;
+      var render = (tag && tag.renderBody) || tag;
 
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
@@ -81,7 +82,7 @@ module.exports = function dynamicTag(
       }
 
       if (dynamicTag.___runtimeCompat) {
-        renderer = dynamicTag.___runtimeCompat(renderer);
+        renderer = dynamicTag.___runtimeCompat(renderer, render);
       }
 
       if (renderer) {
@@ -89,7 +90,6 @@ module.exports = function dynamicTag(
         renderer(attrs, out);
         out.___assignedComponentDef = null;
       } else {
-        var render = (tag && tag.renderBody) || tag;
         var isFn = typeof render === "function";
 
         // eslint-disable-next-line no-constant-condition

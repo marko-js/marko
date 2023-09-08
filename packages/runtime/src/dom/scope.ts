@@ -2,8 +2,11 @@ import type { Scope, ScopeContext } from "../common/types";
 import { queueEffect } from "./queue";
 import type { Renderer } from "./renderer";
 
+let debugID = 0;
+
 export function createScope(context?: ScopeContext): Scope {
   const scope = {} as Scope;
+  scope.___debugId = debugID++;
   scope.___client = true;
   scope.___context = context;
   return scope;
@@ -40,10 +43,11 @@ function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
 }
 
 export const bindRenderer = binder(
-  (ownerScope, renderer: Renderer): Renderer => ({
-    ...renderer,
-    ___owner: ownerScope,
-  })
+  (ownerScope, renderer: Renderer): Renderer =>
+    renderer && {
+      ...renderer,
+      ___owner: ownerScope,
+    }
 );
 
 type BindableFunction = (

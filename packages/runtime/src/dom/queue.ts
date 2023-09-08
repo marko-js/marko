@@ -91,6 +91,6 @@ function runBatch() {
     const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
     const signal = currentBatch[i + BatchOffsets.SIGNAL] as ValueSignal;
     const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
-    signal(scope, value, true);
+    signal(scope, value);
   }
 }
