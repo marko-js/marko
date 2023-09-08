@@ -39,7 +39,7 @@ export {
   createRenderer,
   initContextProvider,
   dynamicTagAttrs,
-  initRenderer,
+  createScopeWithRenderer,
 } from "./renderer";
 
 export { createTemplate } from "./template";

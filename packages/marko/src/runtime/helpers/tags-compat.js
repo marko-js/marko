@@ -4,9 +4,8 @@ import { ___createFragmentNode } from "../vdom/morphdom/fragment";
 const {
   prepare,
   runEffects,
-  initRenderer,
-  createScope,
   patchConditionals,
+  createScopeWithRenderer,
   queueEffect,
 } = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
@@ -34,34 +33,31 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
 const TagsCompatId = "tags-compat";
 const TagsCompat = createRenderer(
   function (_, out, componentDef, component) {
-    let dom;
+    let existing;
     const input = _.i;
     const tagsRenderer = _.r;
     const attrs = tagsRenderer.___attrs;
     component.effects = prepare(() => {
       if (!component.scope) {
-        component.scope = createScope();
-        component.scope._ = tagsRenderer.___owner;
-        dom = initRenderer(tagsRenderer, component.scope);
-        if (tagsRenderer.___closureSignals) {
-          for (const signal of tagsRenderer.___closureSignals) {
-            signal.___subscribe?.(component.scope);
-          }
-        }
-        // component.scope = createScopeWithRenderer(tagsRenderer, /* out.global as context */);
-        // dom = component.scope.___startNode === component.scope.___endNode ? component.scope.___startNode : component.scope.___startNode.parentNode;
+        component.scope = createScopeWithRenderer(
+          tagsRenderer /* out.global as context */
+        );
         for (const signal of tagsRenderer.___closureSignals) {
           signal(component.scope, true);
         }
       } else {
         attrs && attrs(component.scope, input, 1);
+        existing = true;
       }
       attrs && attrs(component.scope, input);
     });
-    out.bf("0", component, !dom);
-    if (dom) {
+    out.bf("0", component, existing);
+    if (!existing) {
       out.node({
-        ___actualize: () => dom,
+        ___actualize: () =>
+          component.scope.___startNode === component.scope.___endNode
+            ? component.scope.___startNode
+            : component.scope.___startNode.parentNode,
       });
     }
     out.ef();
