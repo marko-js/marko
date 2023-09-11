@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.8
+
+### Patch Changes
+
+- [#2034](https://github.com/marko-js/marko/pull/2034) [`a340023b7`](https://github.com/marko-js/marko/commit/a340023b7ef59f1af9ad80f42ac69138ddd3d216) Thanks [@LuLaValva](https://github.com/LuLaValva)! - docs(concise-mode): add multiline attributes
+
 ## 5.31.7
 
 ### Patch Changes
