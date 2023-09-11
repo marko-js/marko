@@ -16,7 +16,7 @@ import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
 import _marko_merge_attrs from "marko/src/runtime/vdom/helpers/merge-attrs.js";
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {
   onCreate() {

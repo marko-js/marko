@@ -1,6 +1,6 @@
 {
     "name": "marko",
-    "version": "5.31.6",
+    "version": "5.31.7",
     "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
     "keywords": [
         "front-end",
@@ -65,7 +65,7 @@
     },
     "dependencies": {
         "@marko/compiler": "^5.33.1",
-        "@marko/translator-default": "^5.31.1",
+        "@marko/translator-default": "^5.31.2",
         "app-module-path": "^2.2.0",
         "argly": "^1.2.0",
         "browser-refresh-client": "1.1.4",

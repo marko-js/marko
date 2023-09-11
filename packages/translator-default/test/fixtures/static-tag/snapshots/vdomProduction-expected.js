@@ -6,7 +6,7 @@ var foo = 123;
 function bar() {}
 var baz = 456;
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {}, {

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.2
+
+### Patch Changes
+
+- [#2032](https://github.com/marko-js/marko/pull/2032) [`034f96741`](https://github.com/marko-js/marko/commit/034f967419d840ae7b8a8cead6c657d5cc64b0a6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add js file extension to compiled import of the registry runtime. This improves prebundling in Vite.
+
 ## 5.31.1
 
 ### Patch Changes
