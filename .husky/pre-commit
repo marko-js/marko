@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm exec -- lint-staged && npm run build:types && npm run build:sizes
+npm exec -- lint-staged && npm run build:types && npm run build:sizes && git add .sizes.json

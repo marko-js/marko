@@ -11,7 +11,7 @@ const _expr_dynamicTagName_ChildScope_count = /* @__PURE__ */_intersection(2, _s
   }));
 });
 const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/2", null, _expr_dynamicTagName_ChildScope_count);
-const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-tags-to-class/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
+const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
   const {
     count
   } = _scope;
@@ -28,4 +28,4 @@ const _setup = _scope => {
 export const template = "<button id=tags> </button><!>";
 export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-tags-to-class/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko");

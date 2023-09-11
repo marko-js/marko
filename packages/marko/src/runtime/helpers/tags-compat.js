@@ -17,7 +17,8 @@ const defaultCreateOut = require("../createOut");
 
 export default dynamicTag.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
-  renderBody
+  renderBody,
+  args
 ) {
   if (
     tagsRenderer
@@ -27,7 +28,10 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
     return tagsRenderer;
 
   return (input, out) =>
-    TagsCompat({ i: input, r: tagsRenderer || renderBody }, out);
+    TagsCompat(
+      { i: args ? { value: args } : input, r: tagsRenderer || renderBody },
+      out
+    );
 };
 
 const TagsCompatId = "tags-compat";

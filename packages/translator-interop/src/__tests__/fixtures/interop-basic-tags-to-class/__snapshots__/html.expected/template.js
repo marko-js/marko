@@ -8,11 +8,11 @@ const _renderer = (input, _tagVar, _scope0_) => {
     count: count
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/2")}`);
-  _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-tags-to-class/template.marko_0_count");
+  _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count");
   _writeScope(_scope0_id, {
     "count": count,
     "#text/2!": _dynamicScope,
     "#text/2(": _classCounter
   }, _scope0_);
 };
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-tags-to-class/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko");

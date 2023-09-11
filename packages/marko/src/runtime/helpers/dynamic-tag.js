@@ -82,7 +82,7 @@ module.exports = function dynamicTag(
       }
 
       if (dynamicTag.___runtimeCompat) {
-        renderer = dynamicTag.___runtimeCompat(renderer, render);
+        renderer = dynamicTag.___runtimeCompat(renderer, render, args);
       }
 
       if (renderer) {

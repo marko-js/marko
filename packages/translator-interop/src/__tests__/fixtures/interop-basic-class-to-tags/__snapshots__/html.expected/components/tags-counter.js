@@ -3,9 +3,9 @@ const _renderer = (input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const count = 0;
   _write(`<button id=tags${_attr("data-parent", input.count)}>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags/components/tags-counter.marko_0_count");
+  _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count");
   _writeScope(_scope0_id, {
     "count": count
   }, _scope0_);
 };
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags/components/tags-counter.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko");
