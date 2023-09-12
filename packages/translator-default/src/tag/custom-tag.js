@@ -50,7 +50,9 @@ export default function (path, isNullable) {
     if (childProgram?.extra?.___featureType === "tags") {
       importDefault(
         file,
-        `marko/src/runtime/helpers/tags-compat.js`,
+        `marko/src/runtime/helpers/tags-compat-${
+          markoOpts.output === "html" ? "html" : "dom"
+        }.js`,
         "marko_tags_compat"
       );
       path.set("name", importDefault(file, relativePath, path.node.name.value));

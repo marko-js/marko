@@ -7,6 +7,7 @@ const {
   patchConditionals,
   createScopeWithRenderer,
   queueEffect,
+  scopeLookup,
 } = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
 const { r: registerComponent } = require("../components/registry");
@@ -37,11 +38,18 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
 const TagsCompatId = "tags-compat";
 const TagsCompat = createRenderer(
   function (_, out, componentDef, component) {
-    let existing;
+    let existing = false;
+    const isHydrate =
+      ___getComponentsContext(out).___globalContext.___isHydrate;
     const input = _.i;
     const tagsRenderer = _.r;
     const attrs = tagsRenderer.___attrs;
+
     component.effects = prepare(() => {
+      if (isHydrate) {
+        const scopeId = out.global.componentIdToScopeId[component.id];
+        component.scope = scopeLookup[scopeId];
+      }
       if (!component.scope) {
         component.scope = createScopeWithRenderer(
           tagsRenderer /* out.global as context */

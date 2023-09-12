@@ -6,8 +6,15 @@ import snap from "mocha-snap";
 import createBrowser from "../../../translator/src/__tests__/utils/create-browser";
 import createMutationTracker from "../../../translator/src/__tests__/utils/track-mutations";
 import { isWait } from "../../../translator/src/__tests__/utils/resolve";
+import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import register from "@marko/compiler/register";
 import type { DOMWindow } from "jsdom";
+
+const runtimeId = "X";
+const reorderRuntimeString = String(reorderRuntime).replace(
+  "RUNTIME_ID",
+  runtimeId
+);
 
 const baseConfig: compiler.Config = {
   translator: require.resolve(".."),
@@ -45,6 +52,7 @@ describe("translator-interop", () => {
   before(() => {
     uncachePackage("@marko/translator-default");
     uncachePackage("@marko/translator-fluurt");
+    register({ ...htmlConfig, modules: "cjs" });
   });
 
   const fixturesDir = path.join(__dirname, "fixtures");
@@ -105,7 +113,73 @@ describe("translator-interop", () => {
         }
       };
 
+      let ssrResult: Result;
       let csrResult: Result;
+      let resumeResult: Result;
+
+      const ssr = async () => {
+        if (ssrResult) return ssrResult;
+
+        const serverTemplate = require(templateFile).default;
+
+        let buffer = "";
+        // let flushCount = 0;
+
+        const browser = createBrowser({
+          dir: __dirname,
+          extensions: register({
+            ...domConfig,
+            extensions: {},
+          }),
+        });
+        const document = browser.window.document;
+        const [input] =
+          typeof config.steps === "function"
+            ? await config.steps()
+            : config.steps || [];
+
+        document.open();
+
+        const tracker = createMutationTracker(browser.window, document);
+        const writable = {
+          write(data: string) {
+            buffer += data;
+            tracker.log(
+              `# Write\n${indent(
+                data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+              )}`
+            );
+          },
+          flush() {
+            // tracker.logUpdate("Flush");
+            // document.write(buffer);
+            // buffer = "";
+          },
+          end(data?: string) {
+            document.write(
+              `<html><body>` + buffer + (data || "") + `</body></html>`
+            );
+            document.close();
+            tracker.logUpdate("End");
+          },
+          emit(type: string, ...args: unknown[]) {
+            // console.log(...args);
+            tracker.log(
+              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+            );
+          },
+        };
+
+        if (serverTemplate.writeTo) {
+          await serverTemplate.writeTo(writable, input, config.context);
+        } else {
+          await serverTemplate.render(input, writable);
+        }
+
+        tracker.cleanup();
+
+        return (ssrResult = { browser, tracker });
+      };
 
       const csr = async () => {
         if (csrResult) return csrResult;
@@ -182,12 +256,73 @@ describe("translator-interop", () => {
         return (csrResult = { browser, tracker });
       };
 
+      const resume = async () => {
+        if (resumeResult) return resumeResult;
+        const { browser } = await ssr();
+        const { window } = browser;
+        const { document } = window;
+        const throwErrors = trackErrors(window);
+        const tracker = createMutationTracker(window, document);
+        const [input, ...steps] =
+          typeof config.steps === "function"
+            ? await config.steps()
+            : config.steps || [];
+
+        const { run, init } = browser.require(
+          "@marko/runtime-fluurt/dist/debug/dom"
+        ) as typeof import("@marko/runtime-fluurt/src/dom");
+
+        browser.require(templateFile);
+        browser.require("marko/src/runtime/components");
+        init();
+        browser.window.$initComponents();
+        throwErrors();
+        tracker.logUpdate(input);
+
+        const { ___componentLookup } = browser.require(
+          "marko/src/node_modules/@internal/components-util/index-browser"
+        );
+
+        function runUpdates() {
+          run();
+          Object.values(___componentLookup).forEach((c: any) => c.update());
+        }
+
+        for (const update of steps) {
+          if (isWait(update)) {
+            await update();
+          } else if (typeof update === "function") {
+            await update(document.documentElement);
+            runUpdates();
+            tracker.logUpdate(update);
+          } else {
+            // if new input is detected, stop testing
+            // this will be covered by the client tests
+            break;
+          }
+
+          throwErrors();
+        }
+
+        tracker.cleanup();
+
+        return (resumeResult = { browser, tracker });
+      };
+
       describe("compile", () => {
         it("html", () => snapAllTemplates(htmlConfig));
         it("dom", () => snapAllTemplates(domConfig));
       });
 
       describe("render", () => {
+        (config.skip_ssr ? it.skip : it)("ssr", async () => {
+          await snapMD(async () => (await ssr()).tracker.getLogs());
+        });
+
+        (config.skip_resume ? it.skip : it)("resume", async () => {
+          await snapMD(async () => (await resume()).tracker.getLogs());
+        });
+
         (config.skip_csr ? it.skip : it)("csr", async () => {
           await snapMD(async () => (await csr()).tracker.getLogs());
         });
@@ -233,4 +368,11 @@ function trackErrors(window: DOMWindow) {
   });
 
   return throwErrors;
+}
+
+function indent(data: unknown) {
+  return String(data)
+    .split("\n")
+    .map((line) => `  ${line}`)
+    .join("\n");
 }

@@ -1,6 +1,6 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
 import _classLayout from "./components/class-layout.marko";
-import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat.js";
+import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
 const _count$classLayoutBody_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count", _scope => _on(_scope["#button/0"], "click", function () {
   const {
     _: {

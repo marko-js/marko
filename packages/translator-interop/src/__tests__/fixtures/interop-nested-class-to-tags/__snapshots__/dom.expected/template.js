@@ -2,7 +2,7 @@ import { t as _t } from "marko/src/runtime/vdom/index.js";
 const _marko_componentType = "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat.js";
+import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
 import _tagsLayout from "./components/tags-layout.marko";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";

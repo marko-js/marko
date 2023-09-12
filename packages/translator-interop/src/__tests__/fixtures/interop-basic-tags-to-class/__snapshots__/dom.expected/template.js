@@ -1,6 +1,6 @@
 import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
 import _classCounter from "./components/class-counter.marko";
-import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat.js";
+import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
 const _classCounter_input = _dynamicTagAttrs("#text/2");
 const _expr_dynamicTagName_ChildScope_count = /* @__PURE__ */_intersection(2, _scope => {
   const {

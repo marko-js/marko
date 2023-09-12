@@ -7,9 +7,9 @@
     {
       "name": "*",
       "total": {
-        "min": 13343,
-        "gzip": 5746,
-        "brotli": 5211
+        "min": 13373,
+        "gzip": 5763,
+        "brotli": 5231
       }
     },
     {
@@ -35,17 +35,17 @@
       "user": {
         "min": 204,
         "gzip": 180,
-        "brotli": 152
+        "brotli": 159
       },
       "runtime": {
-        "min": 2474,
-        "gzip": 1291,
+        "min": 2478,
+        "gzip": 1292,
         "brotli": 1153
       },
       "total": {
-        "min": 2678,
-        "gzip": 1471,
-        "brotli": 1305
+        "min": 2682,
+        "gzip": 1472,
+        "brotli": 1312
       }
     },
     {
@@ -70,18 +70,18 @@
       "name": "comments 💧",
       "user": {
         "min": 988,
-        "gzip": 590,
-        "brotli": 551
+        "gzip": 591,
+        "brotli": 544
       },
       "runtime": {
-        "min": 7982,
-        "gzip": 3681,
-        "brotli": 3330
+        "min": 7988,
+        "gzip": 3690,
+        "brotli": 3339
       },
       "total": {
-        "min": 8970,
-        "gzip": 4271,
-        "brotli": 3881
+        "min": 8976,
+        "gzip": 4281,
+        "brotli": 3883
       }
     }
   ]

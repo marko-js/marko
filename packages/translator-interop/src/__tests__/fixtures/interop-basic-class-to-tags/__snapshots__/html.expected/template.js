@@ -3,9 +3,11 @@ const _marko_componentType = "packages/translator-interop/src/__tests__/fixtures
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
-import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat.js";
+import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-html.js";
 import _tagsCounter from "./components/tags-counter.marko";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
+import _initComponents from "marko/src/core-tags/components/init-components-tag.js";
+import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {
   onCreate() {
@@ -24,6 +26,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   _marko_dynamic_tag(out, _tagsCounter, () => ({
     "count": state.count
   }), null, null, null, _componentDef, "1");
+  _marko_tag(_initComponents, {}, out, _componentDef, "2");
 }, {
   t: _marko_componentType,
   d: true

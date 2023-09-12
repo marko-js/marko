@@ -16,6 +16,8 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
+export const scopeLookup = {} as Record<number, Scope>;
+
 export function init(
   runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */
 ) {
@@ -28,7 +30,7 @@ export function init(
 
   let currentScopeId: number;
   let currentNode: Node & ChildNode;
-  const scopeLookup: Record<number, Scope> = {};
+  // const scopeLookup: Record<number, Scope> = {};
   const getScope = (id: number) =>
     scopeLookup[id] ?? (scopeLookup[id] = {} as Scope);
   const stack: number[] = [];
@@ -131,8 +133,6 @@ export function init(
             // TODO: consider only setting ___startNode?
             childScope.___startNode = childScope.___endNode = currentNode;
           }
-        } else if (MARKO_DEBUG) {
-          throw new Error("MALFORMED MARKER: " + nodeValue);
         }
       }
     }

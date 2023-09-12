@@ -24,6 +24,7 @@ export {
   markResumeScopeStart,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
+  createRenderFn,
 } from "./writer";
 
 export { createTemplate } from "./template";

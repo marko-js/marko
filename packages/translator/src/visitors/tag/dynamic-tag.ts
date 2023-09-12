@@ -72,6 +72,16 @@ export default {
         tagExpression = importDefault(file, relativePath, tagExpression.value);
       }
 
+      if (tag.node.extra?.___featureType === "class") {
+        importDefault(
+          tag.hub.file,
+          `marko/src/runtime/helpers/tags-compat-${
+            isOutputHTML() ? "html" : "dom"
+          }.js`,
+          "marko_tags_compat"
+        );
+      }
+
       if (isOutputHTML()) {
         writer.flushInto(tag);
         const attrsObject = attrsToObject(tag, true);
@@ -161,14 +171,6 @@ export default {
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
             : tagExpression
         );
-
-        if (tag.node.extra?.___featureType === "class") {
-          importDefault(
-            tag.hub.file,
-            `marko/src/runtime/helpers/tags-compat.js`,
-            "marko_tags_compat"
-          );
-        }
 
         const attrsObject = attrsToObject(tag, true);
         if (attrsObject || renderBodyIdentifier) {

@@ -45,19 +45,19 @@ export function createRenderFn(renderer: Renderer) {
   return async (
     stream: Writable,
     input: Input = {},
-    context: Record<string, unknown> = {}
+    context: Record<string, unknown> = {},
+    streamData: Partial<NonNullable<typeof $_streamData>> = {}
   ) => {
     $_buffer = createBuffer();
     $_stream = stream;
     $_flush = flushToStream;
-    $_streamData = {
-      scopeId: 0,
-      tagId: 0,
-      placeholderId: 0,
-      scopeLookup: new Map(),
-      runtimeFlushed: false,
-      serializer: undefined,
-    };
+    $_streamData = streamData as typeof $_streamData;
+    streamData.scopeId ??= 0;
+    streamData.tagId ??= 0;
+    streamData.placeholderId ??= 0;
+    streamData.scopeLookup ??= new Map();
+    streamData.runtimeFlushed ??= false;
+    streamData.serializer ??= undefined;
     pushContext("$", context);
 
     try {
