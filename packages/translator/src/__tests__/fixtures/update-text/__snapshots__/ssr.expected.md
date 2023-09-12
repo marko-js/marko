@@ -1,5 +1,5 @@
 # Write
-  Static <!>Dynamic 1<!M#0 #text/0>
+  Static <!>Dynamic 1<!M*0 #text/0>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     Static 
     <!---->
     Dynamic 1
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
   </body>
 </html>
 ```

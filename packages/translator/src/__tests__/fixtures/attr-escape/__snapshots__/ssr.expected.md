@@ -1,5 +1,5 @@
 # Write
-  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!M#0 #div/0>
+  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!M*0 #div/0>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
       foo="acb"
       nested="a c nested d b"
     />
-    <!--M#0 #div/0-->
+    <!--M*0 #div/0-->
   </body>
 </html>
 ```

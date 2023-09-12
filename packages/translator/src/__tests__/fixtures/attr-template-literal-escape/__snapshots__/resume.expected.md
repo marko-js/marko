@@ -6,7 +6,7 @@
     <div
       foo="Hello Marko"
     />
-    <!--M#0 #div/0-->
+    <!--M*0 #div/0-->
   </body>
 </html>
 ```

@@ -5,11 +5,11 @@
   <body>
     <span>
       1
-      <!--M#0 #text/0-->
+      <!--M*0 #text/0-->
     </span>
     <span>
       0
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
@@ -31,11 +31,11 @@
   <body>
     <span>
       2
-      <!--M#0 #text/0-->
+      <!--M*0 #text/0-->
     </span>
     <span>
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
@@ -58,11 +58,11 @@
   <body>
     <span>
       2
-      <!--M#0 #text/0-->
+      <!--M*0 #text/0-->
     </span>
     <span>
       2
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])

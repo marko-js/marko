@@ -4,15 +4,15 @@
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
-    <!--M^1-->
+    <!--M*0 #button/0-->
+    <!--M[1-->
     <div>
       Id is 
       <!---->
       dynamic
-      <!--M#1 #text/0-->
+      <!--M*1 #text/0-->
     </div>
-    <!--M/0 #text/1-->
+    <!--M]0 #text/1-->
     <script>
       (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
@@ -34,11 +34,11 @@ container.querySelector("button").click()
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <div
       id="dynamic"
     />
-    <!--M/0 #text/1-->
+    <!--M]0 #text/1-->
     <script>
       (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
@@ -63,11 +63,11 @@ container.querySelector("button").click()
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <div>
       Id is dynamic
     </div>
-    <!--M/0 #text/1-->
+    <!--M]0 #text/1-->
     <script>
       (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>

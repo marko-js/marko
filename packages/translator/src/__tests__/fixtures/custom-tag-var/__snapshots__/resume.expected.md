@@ -7,12 +7,12 @@
       class="inc"
     >
       1
-      <!--M#1 #text/1-->
+      <!--M*1 #text/1-->
     </button>
-    <!--M#1 #button/0-->
+    <!--M*1 #button/0-->
     <div>
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </div>
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])
@@ -38,12 +38,12 @@ container.querySelector("button.inc").click()
       class="inc"
     >
       2
-      <!--M#1 #text/1-->
+      <!--M*1 #text/1-->
     </button>
-    <!--M#1 #button/0-->
+    <!--M*1 #button/0-->
     <div>
       2
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </div>
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])
@@ -70,12 +70,12 @@ container.querySelector("button.inc").click()
       class="inc"
     >
       3
-      <!--M#1 #text/1-->
+      <!--M*1 #text/1-->
     </button>
-    <!--M#1 #button/0-->
+    <!--M*1 #button/0-->
     <div>
       3
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </div>
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])
@@ -102,12 +102,12 @@ container.querySelector("button.inc").click()
       class="inc"
     >
       4
-      <!--M#1 #text/1-->
+      <!--M*1 #text/1-->
     </button>
-    <!--M#1 #button/0-->
+    <!--M*1 #button/0-->
     <div>
       4
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </div>
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{x:1,"/":b("packages/translator/src/__tests__/fixtures/custom-tag-var/template.marko_0_data",h)}}),[1,"packages/translator/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",])

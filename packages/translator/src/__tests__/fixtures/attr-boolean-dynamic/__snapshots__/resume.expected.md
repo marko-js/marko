@@ -6,12 +6,12 @@
     <input
       disabled=""
     />
-    <!--M#0 #input/0-->
+    <!--M*0 #input/0-->
     <button>
       enable
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </button>
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
@@ -33,12 +33,12 @@ container.querySelector("button").click()
   <head />
   <body>
     <input />
-    <!--M#0 #input/0-->
+    <!--M*0 #input/0-->
     <button>
       disable
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </button>
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
@@ -63,12 +63,12 @@ container.querySelector("button").click()
     <input
       disabled=""
     />
-    <!--M#0 #input/0-->
+    <!--M*0 #input/0-->
     <button>
       enable
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </button>
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
@@ -91,12 +91,12 @@ container.querySelector("button").click()
   <head />
   <body>
     <input />
-    <!--M#0 #input/0-->
+    <!--M*0 #input/0-->
     <button>
       disable
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </button>
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>

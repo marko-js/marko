@@ -12,7 +12,7 @@
     <strong>
       World
     </strong>
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
   </body>
 </html>
 ```

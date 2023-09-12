@@ -26,10 +26,11 @@ export type Scope<
 // TODO: SECTION_SIBLING that is both a SECTION_START and a SECTION_END (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
 export const enum ResumeSymbols {
-  SECTION_START = "^",
-  SECTION_END = "/",
+  DEFAULT_RUNTIME_ID = "M",
+  SECTION_START = "[",
+  SECTION_END = "]",
   SECTION_SINGLE_NODES_END = "|",
-  NODE = "#",
+  NODE = "*",
   PLACEHOLDER_START = "",
   PLACEHOLDER_END = "",
   REPLACEMENT_ID = "",

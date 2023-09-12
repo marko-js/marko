@@ -6,7 +6,7 @@
     <div>
       <span>
         Hello
-        <!--M#1 #text/0-->
+        <!--M*1 #text/0-->
       </span>
       <!--M|0 #text/0 1-->
       <span />

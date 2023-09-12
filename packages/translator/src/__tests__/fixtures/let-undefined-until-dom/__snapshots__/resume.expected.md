@@ -5,7 +5,7 @@
   <body>
     <div>
       ‍
-      <!--M#0 #text/0-->
+      <!--M*0 #text/0-->
     </div>
     <script>
       (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])
@@ -27,7 +27,7 @@
   <body>
     <div>
       Client Only
-      <!--M#0 #text/0-->
+      <!--M*0 #text/0-->
     </div>
     <script>
       (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])

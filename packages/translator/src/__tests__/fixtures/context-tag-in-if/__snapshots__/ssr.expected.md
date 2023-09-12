@@ -1,5 +1,5 @@
 # Write
-  <div><span>123<!M#2 #text/0></span><!M|1 #text/0 2><button id=toggle>Toggle</button><!M#0 #button/1></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:{show:!0},1:h={"#text/0!":j={},"#text/0(":b("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer")},2:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])</script>
+  <div><span>123<!M*2 #text/0></span><!M|1 #text/0 2><button id=toggle>Toggle</button><!M*0 #button/1></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:{show:!0},1:h={"#text/0!":j={},"#text/0(":b("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer")},2:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     <div>
       <span>
         123
-        <!--M#2 #text/0-->
+        <!--M*2 #text/0-->
       </span>
       <!--M|1 #text/0 2-->
       <button
@@ -18,7 +18,7 @@
       >
         Toggle
       </button>
-      <!--M#0 #button/1-->
+      <!--M*0 #button/1-->
     </div>
     <script>
       (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:{show:!0},1:h={"#text/0!":j={},"#text/0(":b("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer")},2:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show",])

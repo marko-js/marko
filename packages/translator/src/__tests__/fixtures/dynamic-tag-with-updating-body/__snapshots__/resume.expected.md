@@ -3,21 +3,21 @@
 <html>
   <head />
   <body>
-    <!--M^1-->
+    <!--M[1-->
     <div>
       <button
         id="count"
       >
         0
-        <!--M#2 #text/1-->
+        <!--M*2 #text/1-->
       </button>
-      <!--M#2 #button/0-->
+      <!--M*2 #button/0-->
     </div>
-    <!--M/0 #text/0-->
+    <!--M]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
@@ -39,21 +39,21 @@ container.querySelector("#count").click()
 <html>
   <head />
   <body>
-    <!--M^1-->
+    <!--M[1-->
     <div>
       <button
         id="count"
       >
         1
-        <!--M#2 #text/1-->
+        <!--M*2 #text/1-->
       </button>
-      <!--M#2 #button/0-->
+      <!--M*2 #button/0-->
     </div>
-    <!--M/0 #text/0-->
+    <!--M]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
@@ -81,11 +81,11 @@ container.querySelector("#changeTag").click()
         0
       </button>
     </span>
-    <!--M/0 #text/0-->
+    <!--M]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
@@ -116,11 +116,11 @@ container.querySelector("#count").click()
         1
       </button>
     </span>
-    <!--M/0 #text/0-->
+    <!--M]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>

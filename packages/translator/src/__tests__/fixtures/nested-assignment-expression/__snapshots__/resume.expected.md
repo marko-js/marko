@@ -5,18 +5,18 @@
   <body>
     <button>
       0
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     used to be 
     <span>
       0
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </span>
      which should be the same as 
     <span>
       0
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -40,18 +40,18 @@ container.querySelector("button").click()
   <body>
     <button>
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     used to be 
     <span>
       0
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </span>
      which should be the same as 
     <span>
       0
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -75,18 +75,18 @@ container.querySelector("button").click()
   <body>
     <button>
       2
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     used to be 
     <span>
       1
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </span>
      which should be the same as 
     <span>
       1
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])
@@ -112,18 +112,18 @@ container.querySelector("button").click()
   <body>
     <button>
       3
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     used to be 
     <span>
       2
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
     </span>
      which should be the same as 
     <span>
       2
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </span>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount",])

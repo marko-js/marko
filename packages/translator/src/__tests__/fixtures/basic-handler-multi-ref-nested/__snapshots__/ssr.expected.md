@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M#0 #text/1></button><!M#0 #button/0><script>(M$h=[]).push((b,s)=>({0:{a:[0],b:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])</script>
+  <button>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push((b,s)=>({0:{a:[0],b:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])</script>
 
 
 # Render "End"
@@ -9,9 +9,9 @@
   <body>
     <button>
       0
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{a:[0],b:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])
     </script>

@@ -1,5 +1,5 @@
 # Write
-  a<!M#0 #text/0> <!>b<!M#0 #text/1>
+  a<!M*0 #text/0> <!>b<!M*0 #text/1>
 
 
 # Render "End"
@@ -8,11 +8,11 @@
   <head />
   <body>
     a
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
      
     <!---->
     b
-    <!--M#0 #text/1-->
+    <!--M*0 #text/1-->
   </body>
 </html>
 ```

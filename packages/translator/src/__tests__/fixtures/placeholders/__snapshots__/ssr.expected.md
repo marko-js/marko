@@ -1,5 +1,5 @@
 # Write
-  replaced<!M#0 #text/0><span>replaced<!M#0 #text/1><div></div></span><div><div>a</div>replaced<!M#0 #text/2>Hello Text &lt;a/>replaced<!M#0 #text/3>Hello HTML <a/><script>
+  replaced<!M*0 #text/0><span>replaced<!M*0 #text/1><div></div></span><div><div>a</div>replaced<!M*0 #text/2>Hello Text &lt;a/>replaced<!M*0 #text/3>Hello HTML <a/><script>
       <!>Hello &lt;b> &lt;/script>
     </script></div>
 
@@ -10,10 +10,10 @@
   <head />
   <body>
     replaced
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
     <span>
       replaced
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
       <div />
     </span>
     <div>
@@ -21,9 +21,9 @@
         a
       </div>
       replaced
-      <!--M#0 #text/2-->
+      <!--M*0 #text/2-->
       Hello Text &lt;a/&gt;replaced
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
       Hello HTML 
       <a>
         <script>

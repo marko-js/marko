@@ -1,10 +1,10 @@
 # Write
-  <!M^1><h1 class="a b">Hello World</h1><!M/0 #text/0><script>(M$h=[]).push((b,s,h)=>({0:{"#text/0!":h={},"#text/0(":"h1"},1:h}),[])</script>
+  <!M[1><h1 class="a b">Hello World</h1><!M]0 #text/0><script>(M$h=[]).push((b,s,h)=>({0:{"#text/0!":h={},"#text/0(":"h1"},1:h}),[])</script>
 
 
 # Render "End"
 ```html
-<!--M^1-->
+<!--M[1-->
 <html>
   <head />
   <body>
@@ -13,7 +13,7 @@
     >
       Hello World
     </h1>
-    <!--M/0 #text/0-->
+    <!--M]0 #text/0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={},"#text/0(":"h1"},1:h}),[])
     </script>

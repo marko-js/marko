@@ -1,5 +1,5 @@
 # Write
-  <div a=0 b=1></div><!M#0 #div/0>
+  <div a=0 b=1></div><!M*0 #div/0>
 
 
 # Render "End"
@@ -11,7 +11,7 @@
       a="0"
       b="1"
     />
-    <!--M#0 #div/0-->
+    <!--M*0 #div/0-->
   </body>
 </html>
 ```

@@ -8,9 +8,9 @@
     >
       paragraph
     </p>
-    <!--M#0 #p/0-->
+    <!--M*0 #p/0-->
     <button />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
@@ -36,9 +36,9 @@ container.querySelector("button").click()
     >
       paragraph
     </p>
-    <!--M#0 #p/0-->
+    <!--M*0 #p/0-->
     <button />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
@@ -64,9 +64,9 @@ container.querySelector("button").click()
     >
       paragraph
     </p>
-    <!--M#0 #p/0-->
+    <!--M*0 #p/0-->
     <button />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>

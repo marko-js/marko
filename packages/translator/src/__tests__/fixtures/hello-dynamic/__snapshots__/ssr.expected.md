@@ -1,5 +1,5 @@
 # Write
-  Hello <!>Marko<!M#0 #text/0>! Hello <!>Marko<!M#0 #text/1>! Hello <!><!M#0 #text/2>!
+  Hello <!>Marko<!M*0 #text/0>! Hello <!>Marko<!M*0 #text/1>! Hello <!><!M*0 #text/2>!
 
 
 # Render "End"
@@ -10,14 +10,14 @@
     Hello 
     <!---->
     Marko
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
     ! Hello 
     <!---->
     Marko
-    <!--M#0 #text/1-->
+    <!--M*0 #text/1-->
     ! Hello 
     <!---->
-    <!--M#0 #text/2-->
+    <!--M*0 #text/2-->
     !
   </body>
 </html>

@@ -3,9 +3,9 @@
 <html>
   <head />
   <body>
-    <!--M^2-->
+    <!--M[2-->
     This is the body content
-    <!--M/1 #text/0-->
+    <!--M]1 #text/0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({1:{"#text/0!":h={}},2:h}),[])
     </script>

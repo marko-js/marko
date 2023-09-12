@@ -9,19 +9,19 @@
       increase multiplier (
       <!---->
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
       )
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       id="count"
     >
       increase count
     </button>
-    <!--M#0 #button/2-->
+    <!--M*0 #button/2-->
     <div>
       0
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
@@ -49,19 +49,19 @@ container.querySelector("button#count").click()
       increase multiplier (
       <!---->
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
       )
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       id="count"
     >
       increase count
     </button>
-    <!--M#0 #button/2-->
+    <!--M*0 #button/2-->
     <div>
       1
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
@@ -89,19 +89,19 @@ container.querySelector("button#count").click()
       increase multiplier (
       <!---->
       1
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
       )
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       id="count"
     >
       increase count
     </button>
-    <!--M#0 #button/2-->
+    <!--M*0 #button/2-->
     <div>
       2
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
@@ -129,19 +129,19 @@ container.querySelector("button#multiplier").click()
       increase multiplier (
       <!---->
       2
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
       )
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       id="count"
     >
       increase count
     </button>
-    <!--M#0 #button/2-->
+    <!--M*0 #button/2-->
     <div>
       4
-      <!--M#0 #text/3-->
+      <!--M*0 #text/3-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])

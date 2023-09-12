@@ -6,9 +6,9 @@
     <div>
       <button>
         0
-        <!--M#1 #text/1-->
+        <!--M*1 #text/1-->
       </button>
-      <!--M#1 #button/0-->
+      <!--M*1 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({1:{clickCount:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
@@ -33,9 +33,9 @@ container.querySelector("button").click()
     <div>
       <button>
         1
-        <!--M#1 #text/1-->
+        <!--M*1 #text/1-->
       </button>
-      <!--M#1 #button/0-->
+      <!--M*1 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({1:{clickCount:0}}),[1,"packages/translator/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])

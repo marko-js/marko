@@ -16,7 +16,9 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
-export function init(runtimeId = "M" /* [a-zA-Z0-9]+ */) {
+export function init(
+  runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */
+) {
   const runtimeLength = runtimeId.length;
   const resumeVar = runtimeId + ResumeSymbols.VAR_RESUME;
   // TODO: check if this is a fakeArray

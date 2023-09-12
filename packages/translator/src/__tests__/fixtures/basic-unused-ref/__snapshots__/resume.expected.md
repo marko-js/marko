@@ -6,9 +6,9 @@
     <div>
       <button>
         0
-        <!--M#0 #text/1-->
+        <!--M*0 #text/1-->
       </button>
-      <!--M#0 #button/0-->
+      <!--M*0 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
@@ -33,9 +33,9 @@ container.querySelector("button").click()
     <div>
       <button>
         1
-        <!--M#0 #text/1-->
+        <!--M*0 #text/1-->
       </button>
-      <!--M#0 #button/0-->
+      <!--M*0 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
@@ -60,9 +60,9 @@ container.querySelector("button").click()
     <div>
       <button>
         2
-        <!--M#0 #text/1-->
+        <!--M*0 #text/1-->
       </button>
-      <!--M#0 #button/0-->
+      <!--M*0 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
@@ -87,9 +87,9 @@ container.querySelector("button").click()
     <div>
       <button>
         3
-        <!--M#0 #text/1-->
+        <!--M*0 #text/1-->
       </button>
-      <!--M#0 #button/0-->
+      <!--M*0 #button/0-->
     </div>
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])

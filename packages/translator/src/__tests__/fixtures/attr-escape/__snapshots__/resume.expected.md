@@ -9,7 +9,7 @@
       foo="acb"
       nested="a c nested d b"
     />
-    <!--M#0 #div/0-->
+    <!--M*0 #div/0-->
   </body>
 </html>
 ```

@@ -1,5 +1,5 @@
 # Write
-  <em>Testing</em> <!>Hello <strong>World</strong><!M#0 #text/0>
+  <em>Testing</em> <!>Hello <strong>World</strong><!M*0 #text/0>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
     <strong>
       World
     </strong>
-    <!--M#0 #text/0-->
+    <!--M*0 #text/0-->
   </body>
 </html>
 ```

@@ -1,5 +1,5 @@
 # Write
-  <button><!M^2>0<!M#2 #text/0><!M/1 #text/1></button><!M#1 #button/0><script>(M$h=[]).push((b,s,h)=>({1:{"#text/1!":h={}},2:h}),[1,"packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",])</script>
+  <button><!M[2>0<!M*2 #text/0><!M]1 #text/1></button><!M*1 #button/0><script>(M$h=[]).push((b,s,h)=>({1:{"#text/1!":h={}},2:h}),[1,"packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",])</script>
 
 
 # Render "End"
@@ -8,12 +8,12 @@
   <head />
   <body>
     <button>
-      <!--M^2-->
+      <!--M[2-->
       0
-      <!--M#2 #text/0-->
-      <!--M/1 #text/1-->
+      <!--M*2 #text/0-->
+      <!--M]1 #text/1-->
     </button>
-    <!--M#1 #button/0-->
+    <!--M*1 #button/0-->
     <script>
       (M$h=[]).push((b,s,h)=&gt;({1:{"#text/1!":h={}},2:h}),[1,"packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",])
     </script>

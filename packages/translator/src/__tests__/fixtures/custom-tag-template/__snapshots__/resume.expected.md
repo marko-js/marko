@@ -6,7 +6,7 @@
     Hello 
     <!---->
     Frank
-    <!--M#1 #text/0-->
+    <!--M*1 #text/0-->
     !
   </body>
 </html>

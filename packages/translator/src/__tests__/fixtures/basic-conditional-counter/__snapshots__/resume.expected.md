@@ -6,14 +6,14 @@
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <span>
       0
-      <!--M#1 #text/0-->
+      <!--M*1 #text/0-->
     </span>
     <!--M|0 #text/2 1-->
     <script>
@@ -39,14 +39,14 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <span>
       1
-      <!--M#1 #text/0-->
+      <!--M*1 #text/0-->
     </span>
     <!--M|0 #text/2 1-->
     <script>
@@ -72,11 +72,11 @@ container.querySelector("button.toggle").click()
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <!--M|0 #text/2 1-->
     <script>
       (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
@@ -103,11 +103,11 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <!--M|0 #text/2 1-->
     <script>
       (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
@@ -132,11 +132,11 @@ container.querySelector("button.toggle").click()
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <span>
       2
     </span>
@@ -165,11 +165,11 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M#0 #button/1-->
+    <!--M*0 #button/1-->
     <span>
       3
     </span>

@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M#0 #text/1></button><!M#0 #button/0><script>(M$h=[]).push((b,s)=>({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])</script>
+  <button>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push((b,s)=>({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])</script>
 
 
 # Render "End"
@@ -9,9 +9,9 @@
   <body>
     <button>
       0
-      <!--M#0 #text/1-->
+      <!--M*0 #text/1-->
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
     </script>

@@ -1,5 +1,5 @@
 # Write
-  Hello <!>Frank<!M#1 #text/0>!
+  Hello <!>Frank<!M*1 #text/0>!
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     Hello 
     <!---->
     Frank
-    <!--M#1 #text/0-->
+    <!--M*1 #text/0-->
     !
   </body>
 </html>

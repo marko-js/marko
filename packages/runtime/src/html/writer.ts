@@ -3,7 +3,7 @@ import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
-const runtimeId = "M";
+const runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID;
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId

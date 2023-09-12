@@ -1,5 +1,5 @@
 # Write
-  <button>Increment</button><!M#0 #button/0>2<!M#0 #text/1> <!>4<!M#0 #text/2><script>(M$h=[]).push((b,s)=>({0:{b:4}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko_0_b",])</script>
+  <button>Increment</button><!M*0 #button/0>2<!M*0 #text/1> <!>4<!M*0 #text/2><script>(M$h=[]).push((b,s)=>({0:{b:4}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko_0_b",])</script>
 
 
 # Render "End"
@@ -10,13 +10,13 @@
     <button>
       Increment
     </button>
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     2
-    <!--M#0 #text/1-->
+    <!--M*0 #text/1-->
      
     <!---->
     4
-    <!--M#0 #text/2-->
+    <!--M*0 #text/2-->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{b:4}}),[0,"packages/translator/src/__tests__/fixtures/let-tag-derived/template.marko_0_b",])
     </script>

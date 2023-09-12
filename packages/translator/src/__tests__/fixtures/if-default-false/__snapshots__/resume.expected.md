@@ -4,7 +4,7 @@
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <!--M|0 #text/1 -->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{show:!1}}),[0,"packages/translator/src/__tests__/fixtures/if-default-false/template.marko_0_show",])
@@ -27,7 +27,7 @@ container.querySelector("button").click()
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     hi
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{show:!1}}),[0,"packages/translator/src/__tests__/fixtures/if-default-false/template.marko_0_show",])
@@ -51,7 +51,7 @@ container.querySelector("button").click()
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     <!--M|0 #text/1 -->
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{show:!1}}),[0,"packages/translator/src/__tests__/fixtures/if-default-false/template.marko_0_show",])
@@ -75,7 +75,7 @@ container.querySelector("button").click()
   <head />
   <body>
     <button />
-    <!--M#0 #button/0-->
+    <!--M*0 #button/0-->
     hi
     <script>
       (M$h=[]).push((b,s)=&gt;({0:{show:!1}}),[0,"packages/translator/src/__tests__/fixtures/if-default-false/template.marko_0_show",])

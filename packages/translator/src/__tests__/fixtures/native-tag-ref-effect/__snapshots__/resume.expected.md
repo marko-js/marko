@@ -6,7 +6,7 @@
     <div>
       hello
     </div>
-    <!--M#0 #div/0-->
+    <!--M*0 #div/0-->
     <script>
       (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])
     </script>
