@@ -68,8 +68,7 @@ export function dynamicTag(
     return internalScope;
   }
 
-  const renderer =
-    (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
+  const renderer = getDynamicRenderer(tag);
 
   if (typeof renderer === "function") {
     renderer(
@@ -81,4 +80,17 @@ export function dynamicTag(
   } else if (MARKO_DEBUG) {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }
+}
+
+let getDynamicRenderer = (
+  tag: unknown | string | Renderer | RenderBodyObject | Template
+) => (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
+export let createRenderer = (fn: Renderer) => fn;
+
+export function patchDynamicTag(
+  newGetDynamicRenderer: typeof getDynamicRenderer,
+  newCreateRenderer: typeof createRenderer
+) {
+  getDynamicRenderer = newGetDynamicRenderer;
+  createRenderer = newCreateRenderer;
 }

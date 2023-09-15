@@ -1,6 +1,6 @@
-import { pushContext as _pushContext, nextScopeId as _nextScopeId, popContext as _popContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { pushContext as _pushContext, nextScopeId as _nextScopeId, popContext as _popContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _child from "./components/child.marko";
-const _renderer = (input, _tagVar, _scope0_) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const x = 123;
   _pushContext("packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko", x);
@@ -16,5 +16,5 @@ const _renderer = (input, _tagVar, _scope0_) => {
   _writeScope(_scope0_id, {
     "x": x
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/context-tag-reactive/template.marko");

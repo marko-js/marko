@@ -1,5 +1,5 @@
-import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, register as _register, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar, _scope0_) => {
+import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, createRenderer as _createRenderer, register as _register, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const show = true;
   const count = 0;
@@ -11,7 +11,7 @@ const _renderer = (input, _tagVar, _scope0_) => {
     _writeScope(_scope1_id, _scope1_ = {
       [_SYMBOL_OWNER]: _scope0_id
     });
-    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer");
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/2")}`);
   _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show");
@@ -22,5 +22,5 @@ const _renderer = (input, _tagVar, _scope0_) => {
     "#text/2!": _scope1_,
     "#text/2(": _ifRenderer
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko");

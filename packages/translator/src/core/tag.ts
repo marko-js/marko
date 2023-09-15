@@ -3,6 +3,7 @@ import type { Tag } from "@marko/babel-utils";
 import * as writer from "../util/writer";
 import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
 import { isOutputHTML } from "../util/marko-config";
+import { callRuntime } from "../util/runtime";
 
 export default {
   translate: {
@@ -27,9 +28,12 @@ export default {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             tag.node.var!,
-            t.arrowFunctionExpression(
-              tag.node.body.params,
-              toFirstExpressionOrBlock(tag.node.body)
+            callRuntime(
+              "createRenderer",
+              t.arrowFunctionExpression(
+                tag.node.body.params,
+                toFirstExpressionOrBlock(tag.node.body)
+              )
             )
           ),
         ])

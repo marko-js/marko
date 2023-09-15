@@ -95,18 +95,21 @@ export default {
           (attrsObject as t.ObjectExpression).properties.pop();
 
           args.push(
-            t.arrowFunctionExpression(
-              renderBodyProp.params.length
-                ? [
-                    t.objectPattern([
-                      t.objectProperty(
-                        t.identifier("value"),
-                        t.arrayPattern(renderBodyProp.params)
-                      ),
-                    ]),
-                  ]
-                : [],
-              toFirstExpressionOrBlock(renderBodyProp.body)
+            callRuntime(
+              "createRenderer",
+              t.arrowFunctionExpression(
+                renderBodyProp.params.length
+                  ? [
+                      t.objectPattern([
+                        t.objectProperty(
+                          t.identifier("value"),
+                          t.arrayPattern(renderBodyProp.params)
+                        ),
+                      ]),
+                    ]
+                  : [],
+                toFirstExpressionOrBlock(renderBodyProp.body)
+              )
             )
           );
         }
@@ -144,7 +147,9 @@ export default {
           t.stringLiteral(
             getScopeAccessorLiteral(node.extra.reserve!).value + "("
           ),
-          tagExpression
+          t.isIdentifier(tagExpression)
+            ? t.identifier(tagExpression.name)
+            : tagExpression
         );
       } else {
         const section = getSection(tag);

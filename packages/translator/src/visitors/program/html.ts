@@ -42,13 +42,16 @@ export default {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             rendererId,
-            t.arrowFunctionExpression(
-              [
-                attrs ? (attrs.var as any) : t.identifier("input"),
-                tagVarIdentifier,
-                getScopeIdentifier(getSection(program)),
-              ],
-              t.blockStatement(renderContent)
+            callRuntime(
+              "createRenderer",
+              t.arrowFunctionExpression(
+                [
+                  attrs ? (attrs.var as any) : t.identifier("input"),
+                  tagVarIdentifier,
+                  getScopeIdentifier(getSection(program)),
+                ],
+                t.blockStatement(renderContent)
+              )
             )
           ),
         ]),

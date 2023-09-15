@@ -1,5 +1,5 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = ({
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer(({
   children
 }, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -24,5 +24,5 @@ const _renderer = ({
   _writeScope(_scope0_id, {
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/remove-and-add-rows/template.marko");

@@ -1,5 +1,5 @@
-import { SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, write as _write, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar, _scope0_) => {
+import { SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, write as _write, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const x = 0;
   const show = true;
@@ -11,7 +11,7 @@ const _renderer = (input, _tagVar, _scope0_) => {
       "x": x,
       [_SYMBOL_OWNER]: _scope0_id
     });
-    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<div id=ref></div><button id=increment>Increment</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_markResumeNode(_scope0_id, "#button/2")}`);
@@ -23,5 +23,5 @@ const _renderer = (input, _tagVar, _scope0_) => {
     "#text/0!": _scope1_,
     "#text/0(": _ifRenderer
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

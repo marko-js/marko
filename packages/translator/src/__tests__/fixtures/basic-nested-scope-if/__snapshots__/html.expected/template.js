@@ -1,5 +1,5 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar, _scope0_) => {
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeEffect as _writeEffect, writeScope as _writeScope, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
   _write("<div>");
@@ -12,7 +12,7 @@ const _renderer = (input, _tagVar, _scope0_) => {
       "clickCount": clickCount,
       [_SYMBOL_OWNER]: _scope0_id
     });
-    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   } else {
     const _scope2_id = _nextScopeId();
@@ -20,7 +20,7 @@ const _renderer = (input, _tagVar, _scope0_) => {
     _writeScope(_scope2_id, _scope1_ = {
       [_SYMBOL_OWNER]: _scope0_id
     });
-    _register(_ifRenderer = () => {}, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}</div>`);
@@ -28,5 +28,5 @@ const _renderer = (input, _tagVar, _scope0_) => {
     "#text/0!": _scope1_,
     "#text/0(": _ifRenderer
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko");

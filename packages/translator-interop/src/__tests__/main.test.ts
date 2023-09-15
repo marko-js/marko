@@ -163,7 +163,7 @@ describe("translator-interop", () => {
             tracker.logUpdate("End");
           },
           emit(type: string, ...args: unknown[]) {
-            // console.log(...args);
+            console.log(...args);
             tracker.log(
               `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
             );

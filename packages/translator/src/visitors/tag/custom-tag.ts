@@ -138,20 +138,27 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     if (renderBodyProp) {
       renderBodyId = tag.scope.generateUidIdentifier("renderBody");
       const [renderBodyPath] = tag.insertBefore(
-        t.functionDeclaration(
-          renderBodyId,
-          renderBodyProp.params.length
-            ? [
-                t.objectPattern([
-                  t.objectProperty(
-                    t.identifier("value"),
-                    t.arrayPattern(renderBodyProp.params)
-                  ),
-                ]),
-              ]
-            : [],
-          renderBodyProp.body
-        )
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            renderBodyId,
+            callRuntime(
+              "createRenderer",
+              t.arrowFunctionExpression(
+                renderBodyProp.params.length
+                  ? [
+                      t.objectPattern([
+                        t.objectProperty(
+                          t.identifier("value"),
+                          t.arrayPattern(renderBodyProp.params)
+                        ),
+                      ]),
+                    ]
+                  : [],
+                renderBodyProp.body
+              )
+            )
+          ),
+        ])
       );
 
       renderBodyPath.skip();
@@ -184,7 +191,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         attrsObject,
         callRuntime(
           "register",
-          t.arrowFunctionExpression([], t.blockStatement([])),
+          callRuntime(
+            "createRenderer",
+            t.arrowFunctionExpression([], t.blockStatement([]))
+          ),
           t.stringLiteral(
             getResumeRegisterId(
               section,

@@ -281,7 +281,7 @@ export class Serializer {
 
       if (knownParent === undefined) {
         PARENTS.set(cur, parent!);
-        KEYS.set(cur, accessor);
+        KEYS.set(cur, toObjectKey(accessor));
         return false;
       } else {
         let ref = "";
@@ -339,10 +339,10 @@ export class Serializer {
   }
 }
 
-function toObjectKey(name: string) {
-  const invalidPropertyPos = getInvalidPropertyPos(name);
-  return invalidPropertyPos === -1 ? name : quote(name, invalidPropertyPos);
-}
+// function toObjectKey(name: string) {
+//   const invalidPropertyPos = getInvalidPropertyPos(name);
+//   return invalidPropertyPos === -1 ? name : quote(name, invalidPropertyPos);
+// }
 
 function toAssignment(parent: string, key: string | number) {
   return parent + toPropertyAccess(key);
@@ -354,16 +354,19 @@ function toPropertyAccess(key: string | number) {
     : "." + key;
 }
 
-function getInvalidPropertyPos(name: string) {
+function toObjectKey(name: string | number) {
+  if (typeof name !== "string") return name;
+
   let char = name[0];
   if (char >= "0" && char <= "9") {
     // numeric
     for (let i = 1, len = name.length; i < len; i++) {
       char = name[i];
       if (!(char >= "0" && char <= "9")) {
-        return i;
+        return quote(name, i);
       }
     }
+    return parseInt(name, 10);
   } else {
     // or valid identifier
     for (let i = 0, len = name.length; i < len; i++) {
@@ -377,12 +380,12 @@ function getInvalidPropertyPos(name: string) {
           char === "_"
         )
       ) {
-        return i;
+        return quote(name, i);
       }
     }
   }
 
-  return -1;
+  return name;
 }
 
 // Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on

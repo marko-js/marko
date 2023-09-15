@@ -1,5 +1,5 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlEnd as _markResumeControlEnd, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = (input, _tagVar, _scope0_) => {
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlEnd as _markResumeControlEnd, write as _write, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const arr = [1, 2, 3];
   const obj = {
@@ -109,5 +109,5 @@ const _renderer = (input, _tagVar, _scope0_) => {
     "#text/4(": _scope5_.size ? _scope5_ : undefined,
     "#text/5(": _scope6_.size ? _scope6_ : undefined
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/for-tag/template.marko");

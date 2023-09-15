@@ -254,7 +254,10 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                 t.assignmentExpression(
                   "=",
                   ifRendererIdentifier,
-                  t.arrowFunctionExpression([], t.blockStatement([]))
+                  callRuntime(
+                    "createRenderer",
+                    t.arrowFunctionExpression([], t.blockStatement([]))
+                  )
                 ),
                 t.stringLiteral(getResumeRegisterId(section, "renderer"))
               )

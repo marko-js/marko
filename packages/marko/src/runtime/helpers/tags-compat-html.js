@@ -1,9 +1,17 @@
-const { createRenderFn } = require("@marko/runtime-fluurt/dist/debug/html"); // TODO: use the non-debug version when built for production
+import initComponentsTag from "../../core-tags/components/init-components-tag";
+
+const {
+  patchDynamicTag,
+  createRenderFn,
+  fork,
+  write,
+} = require("@marko/runtime-fluurt/dist/debug/html"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
 const dynamicTag5 = require("./dynamic-tag");
+const defaultCreateOut = require("../createOut");
 
-// TODO: this is really bad
-const isMarko5 = (fn) => /^(function[^(]*)?\(out/.test(fn.toString());
+const isMarko6 = (fn) => !!fn.___isTagsAPI;
+const isMarko5 = (fn) => !fn.___isTagsAPI;
 
 export default dynamicTag5.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
@@ -41,4 +49,40 @@ const TagsCompat = createRenderer(
     d: "MARKO_DEBUG",
   },
   {}
+);
+
+patchDynamicTag(
+  function getRenderer(tag) {
+    const renderer = tag._ || tag.renderBody || tag;
+    if (isMarko6(renderer)) return renderer;
+
+    const renderer5 =
+      tag._ ||
+      tag.render ||
+      (tag.renderer && tag.renderer.renderer) ||
+      tag.renderer;
+    const renderBody5 = tag.renderBody || tag;
+
+    return (input) => {
+      const out = defaultCreateOut();
+
+      fork(out, (result) => {
+        write(result.toString());
+      });
+
+      if (renderer5) {
+        renderer5(input, out);
+      } else {
+        renderBody5(out);
+      }
+
+      initComponentsTag({}, out);
+
+      out.end();
+    };
+  },
+  function createRenderer(renderFn) {
+    renderFn.___isTagsAPI = true;
+    return renderFn;
+  }
 );

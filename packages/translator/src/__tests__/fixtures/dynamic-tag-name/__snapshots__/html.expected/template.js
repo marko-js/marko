@@ -1,7 +1,7 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = ({
+import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer(({
   renderBody,
   x,
   show,
@@ -45,18 +45,18 @@ const _renderer = ({
     }
   });
   const _tagName3 = showTagA && tagA;
-  function _renderBody2() {
+  const _renderBody2 = /* @__PURE__ */_createRenderer(() => {
     const _scope3_id = _nextScopeId();
-  }
+  });
   if (_tagName3) _tagName3({
     class: ["a", "b"],
     other: other
   });else _renderBody2();
   const _tagName4 = showTagA && tagA;
-  function _renderBody3() {
+  const _renderBody3 = /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
-  }
+  });
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other
@@ -91,5 +91,5 @@ const _renderer = ({
     "#text/5!": _dynamicScope4,
     "#text/5(": _tagName5
   }, _scope0_);
-};
+});
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko");
