@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.9
+
+### Patch Changes
+
+- [#2036](https://github.com/marko-js/marko/pull/2036) [`ea08cc2a9`](https://github.com/marko-js/marko/commit/ea08cc2a9bb494d5735dc0fe69b6aa85cb5ed179) Thanks [@rturnq](https://github.com/rturnq)! - Simplify batching, prevent treeshaking bug
+
 ## 5.31.8
 
 ### Patch Changes
