@@ -1,0 +1,13 @@
+class {
+    onCreate() {
+        this.state = {
+            count: 0
+        }
+    }
+    handleCountChange(value) {
+        this.state.count = value
+    }
+}
+
+<counter key="counter" on-change('handleCountChange')/>
+<div>${state.count}</div>
