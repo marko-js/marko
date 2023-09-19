@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.2
+
+### Patch Changes
+
+- [#2038](https://github.com/marko-js/marko/pull/2038) [`71a227a5f`](https://github.com/marko-js/marko/commit/71a227a5ff8b16c0bb983e082f28280518f712ce) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where using the longhand nested attribute tag syntax in a marko.json with a `target-property` defined was not registering the alias as a known attribute, leading to compile errors.
+
 ## 5.33.1
 
 ### Patch Changes
