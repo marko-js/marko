@@ -500,16 +500,13 @@ class TagLoader {
 
       nestedTag.name = nestedTagName;
       tag.addNestedTag(nestedTag);
-
-      if (!nestedTag.isRepeated) {
-        let attr = loaders.loadAttributeFromProps(
+      tag.addAttribute(
+        loaders.loadAttributeFromProps(
           nestedTag.targetProperty,
-          { type: "object" },
+          { type: "expression" },
           dependencyChain
-        );
-
-        tag.addAttribute(attr);
-      }
+        )
+      );
     }
   }
 
