@@ -20,6 +20,10 @@ module.exports = function defineRenderer(renderingLogic) {
     template = req(template);
   }
 
+  if (template && template.default) {
+    template = template.default;
+  }
+
   if (!renderer) {
     var getInitialProps;
     var getTemplateData;
