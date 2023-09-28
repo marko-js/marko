@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.11
+
+### Patch Changes
+
+- [#2040](https://github.com/marko-js/marko/pull/2040) [`a5e3f0461`](https://github.com/marko-js/marko/commit/a5e3f046135bcdd054426974282d4ba870bdb97c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix compat issue where markoWidgets.defineRenderer was not resolving the default export of a Marko 5 template.
+
 ## 5.31.10
 
 ### Patch Changes
