@@ -23,7 +23,7 @@ export function configure(newConfig) {
 
 export async function compile(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
-  const babelConfig = loadBabelConfig(filename, markoConfig);
+  const babelConfig = await loadBabelConfig(filename, markoConfig);
   const babelResult = await babel.transformAsync(src, babelConfig);
   scheduleDefaultClear(markoConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
@@ -31,7 +31,7 @@ export async function compile(src, filename, config) {
 
 export function compileSync(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
-  const babelConfig = loadBabelConfig(filename, markoConfig);
+  const babelConfig = loadBabelConfigSync(filename, markoConfig);
   const babelResult = babel.transformSync(src, babelConfig);
   scheduleDefaultClear(markoConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
@@ -73,7 +73,21 @@ function loadMarkoConfig(config) {
   return markoConfig;
 }
 
-function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
+async function loadBabelConfig(filename, config) {
+  const baseBabelConfig = getBaseBabelConfig(filename, config);
+  return isTranslatedOutput(config.output)
+    ? (await babel.loadPartialConfigAsync(baseBabelConfig)).options
+    : baseBabelConfig;
+}
+
+function loadBabelConfigSync(filename, config) {
+  const baseBabelConfig = getBaseBabelConfig(filename, config);
+  return isTranslatedOutput(config.output)
+    ? babel.loadPartialConfigSync(baseBabelConfig).options
+    : baseBabelConfig;
+}
+
+function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
   const isTranslated = isTranslatedOutput(markoConfig.output);
   const requiredPlugins = [
     [corePlugin, markoConfig],
@@ -111,8 +125,6 @@ function loadBabelConfig(filename, { babelConfig, ...markoConfig }) {
     if (markoConfig.modules === "cjs") {
       baseBabelConfig.plugins.push([cjsPlugin, { loose: true }]);
     }
-
-    return babel.loadPartialConfig(baseBabelConfig).options;
   }
 
   return baseBabelConfig;
