@@ -10,11 +10,13 @@ const REF_CHARS =
 const REF_CHARS_LEN = REF_CHARS.length;
 const SYMBOL_REGISTRY_ID = Symbol("REGISTRY_ID");
 const SYMBOL_SCOPE = Symbol("SCOPE");
+const SYMBOL_SERIALIZE = Symbol("SERIALIZE");
 export const SYMBOL_OWNER = Symbol("OWNER");
 
 export type Serializable<T> = T & {
-  [SYMBOL_REGISTRY_ID]: string;
+  [SYMBOL_REGISTRY_ID]?: string;
   [SYMBOL_SCOPE]?: number;
+  [SYMBOL_SERIALIZE]?: (s: Serializer) => void;
 };
 
 export function register<T>(
@@ -25,6 +27,14 @@ export function register<T>(
   (entry as Serializable<T>)[SYMBOL_REGISTRY_ID] = registryId;
   (entry as Serializable<T>)[SYMBOL_SCOPE] = scopeId;
   return entry as Serializable<T>;
+}
+
+export function makeSerializable<T>(
+  object: T,
+  serialize: (s: Serializer) => void
+): T {
+  (object as Serializable<T>)[SYMBOL_SERIALIZE] = serialize;
+  return object;
 }
 
 export function stringify(root: unknown) {
@@ -40,6 +50,7 @@ export class Serializer {
   // These stay
   PARENTS: WeakMap<object, object> = new WeakMap();
   KEYS: WeakMap<object, number | string> = new WeakMap();
+  VALUES: unknown[] = [];
   scopeLookup: Map<number, any>;
 
   constructor(scopeLookup: Map<number, any>) {
@@ -95,6 +106,19 @@ export class Serializer {
     }
 
     return "void 0";
+  }
+
+  code(code: string) {
+    this.BUFFER.push(code);
+    return this;
+  }
+
+  value(value: unknown) {
+    // TODO: this should not push the same value twice
+    // this should be serialized in some way so we can access these values across flushes
+    const index = this.VALUES.push(value);
+    this.writeProp(value, index, this.VALUES);
+    return this;
   }
 
   writeProp(
@@ -169,9 +193,7 @@ export class Serializer {
                   break;
 
                 default:
-                  return this.writeRegistered(
-                    cur as Serializable<(...args: any[]) => any>
-                  );
+                  return this.writeRegistered(cur as Serializable<unknown>);
               }
               break;
 
@@ -189,8 +211,12 @@ export class Serializer {
     return true;
   }
 
-  writeRegistered(fn: Serializable<(...args: any[]) => any>) {
-    const { [SYMBOL_REGISTRY_ID]: registryId, [SYMBOL_SCOPE]: scopeId } = fn;
+  writeRegistered(value: Serializable<unknown>) {
+    const {
+      [SYMBOL_REGISTRY_ID]: registryId,
+      [SYMBOL_SCOPE]: scopeId,
+      [SYMBOL_SERIALIZE]: serialize,
+    } = value;
     if (registryId) {
       // ASSERT: fnId and scopeId don't need `quote` escaping
       const scope =
@@ -204,6 +230,9 @@ export class Serializer {
         );
       }
       this.BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
+      return true;
+    } else if (serialize) {
+      serialize(this);
       return true;
     }
     return false;
