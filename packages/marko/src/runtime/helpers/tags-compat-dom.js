@@ -8,6 +8,7 @@ const {
   createScopeWithRenderer,
   queueEffect,
   scopeLookup,
+  register,
 } = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
 const { r: registerComponent } = require("../components/registry");
@@ -15,6 +16,7 @@ const defineComponent = require("../components/defineComponent");
 const dynamicTag = require("./dynamic-tag");
 const morphdom = require("../vdom/morphdom");
 const defaultCreateOut = require("../createOut");
+const { ___componentLookup } = require("@internal/components-util");
 
 export default dynamicTag.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
@@ -109,47 +111,59 @@ patchConditionals((conditional) => (...args) => {
   const signal = conditional(...args);
   const hasAttrs = args.length > 1;
   return (scope, renderer, clean) => {
-    let newRenderer = renderer;
-    if (renderer) {
-      const rendererFromAnywhere =
-        renderer._ ||
-        renderer.render ||
-        (renderer.renderer && renderer.renderer.renderer) ||
-        renderer.renderer;
-      const isMarko6 = rendererFromAnywhere
-        ? rendererFromAnywhere.___clone
-        : renderer.___clone;
-      if (typeof renderer !== "string" && !isMarko6) {
-        newRenderer = rendererCache.get(renderer);
-        if (!newRenderer) {
-          newRenderer = {
-            ___setup(scope) {
-              if (!hasAttrs) {
-                renderAndMorph(scope, rendererFromAnywhere, renderer, {});
-              }
-            },
-            ___clone() {
-              const realFragment = document.createDocumentFragment();
-              ___createFragmentNode(null, null, realFragment);
-              return realFragment;
-            },
-            ___hasUserEffects: 1,
-            ___attrs(scope, input, clean) {
-              if (clean) return;
-              renderAndMorph(scope, rendererFromAnywhere, renderer, input);
-            },
-          };
-          rendererCache.set(renderer, newRenderer);
-        }
-      }
-    }
-    return signal(scope, newRenderer, clean);
+    return signal(scope, create5to6Renderer(renderer, hasAttrs), clean);
   };
 });
 
+function create5to6Renderer(renderer, hasAttrs) {
+  let newRenderer = renderer;
+  if (renderer) {
+    const rendererFromAnywhere =
+      renderer._ ||
+      renderer.render ||
+      (renderer.renderer && renderer.renderer.renderer) ||
+      renderer.renderer;
+    const isMarko6 = rendererFromAnywhere
+      ? rendererFromAnywhere.___clone
+      : renderer.___clone;
+    if (typeof renderer !== "string" && !isMarko6) {
+      newRenderer = rendererCache.get(renderer);
+      if (!newRenderer) {
+        newRenderer = {
+          ___setup(scope) {
+            if (!hasAttrs) {
+              renderAndMorph(scope, rendererFromAnywhere, renderer, {});
+            }
+          },
+          ___clone() {
+            const realFragment = document.createDocumentFragment();
+            ___createFragmentNode(null, null, realFragment);
+            return realFragment;
+          },
+          ___hasUserEffects: 1,
+          ___attrs(scope, input, clean) {
+            if (clean) return;
+            renderAndMorph(scope, rendererFromAnywhere, renderer, input);
+          },
+        };
+        rendererCache.set(renderer, newRenderer);
+      }
+    }
+  }
+  return newRenderer;
+}
+
+register("@marko/tags-compat-5-to-6", create5to6Renderer);
+
 function renderAndMorph(scope, renderer, renderBody, input) {
   const out = defaultCreateOut();
-  const rootNode = scope.___startNode.fragment;
+  let rootNode = scope.___startNode.fragment;
+  if (!rootNode) {
+    const component = (scope.marko5Component = ___componentLookup[scope.m5c]);
+    rootNode = component.___rootNode;
+    scope.___startNode = rootNode.startNode;
+    scope.___endNode = rootNode.endNode;
+  }
   const host = scope.___startNode;
   const existingComponent = scope.marko5Component;
   const componentsContext = ___getComponentsContext(out);

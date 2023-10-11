@@ -1,10 +1,13 @@
 import initComponentsTag from "../../core-tags/components/init-components-tag";
+import { ___getComponentsContext } from "../components/ComponentsContext";
 
 const {
   patchDynamicTag,
   createRenderFn,
   fork,
   write,
+  makeSerializable,
+  register,
 } = require("@marko/runtime-fluurt/dist/debug/html"); // TODO: use the non-debug version when built for production
 const createRenderer = require("../components/renderer");
 const dynamicTag5 = require("./dynamic-tag");
@@ -63,12 +66,8 @@ patchDynamicTag(
       tag.renderer;
     const renderBody5 = tag.renderBody || tag;
 
-    return (input) => {
+    return (input, _, scope) => {
       const out = defaultCreateOut();
-
-      fork(out, (result) => {
-        write(result.toString());
-      });
 
       if (renderer5) {
         renderer5(input, out);
@@ -76,8 +75,16 @@ patchDynamicTag(
         renderBody5(out);
       }
 
+      const componentsContext = ___getComponentsContext(out);
+      const componentId = componentsContext.___components[0]?.id;
+
+      scope.m5c = componentId;
+
       initComponentsTag({}, out);
 
+      fork(out, (result) => {
+        write(result.toString());
+      });
       out.end();
     };
   },
@@ -86,3 +93,15 @@ patchDynamicTag(
     return renderFn;
   }
 );
+
+function dummyCreate5to6Renderer() {}
+
+register(dummyCreate5to6Renderer, "@marko/tags-compat-5-to-6");
+
+export function serialized5to6(renderer, id) {
+  const dummyRenderer = () => {};
+  register(dummyRenderer, id);
+  return makeSerializable(renderer, (s) =>
+    s.value(dummyCreate5to6Renderer).code("(").value(dummyRenderer).code(",!0)")
+  );
+}

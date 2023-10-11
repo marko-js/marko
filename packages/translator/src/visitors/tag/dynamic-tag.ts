@@ -5,7 +5,7 @@ import * as writer from "../../util/writer";
 import * as walks from "../../util/walks";
 import { callRuntime } from "../../util/runtime";
 import translateVar from "../../util/translate-var";
-import { isOutputHTML } from "../../util/marko-config";
+import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -28,7 +28,12 @@ import {
 import { addBindingToReferences, mergeReferences } from "../../util/references";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import customTag, { getTagRelativePath } from "./custom-tag";
-import { importDefault } from "@marko/babel-utils";
+import {
+  getTemplateId,
+  importDefault,
+  importNamed,
+  loadFileForTag,
+} from "@marko/babel-utils";
 
 export default {
   analyze: {
@@ -80,6 +85,44 @@ export default {
           }.js`,
           "marko_tags_compat"
         );
+
+        if (isOutputHTML()) {
+          const serialized5to6 = importNamed(
+            tag.hub.file,
+            `marko/src/runtime/helpers/tags-compat-html.js`,
+            "serialized5to6"
+          );
+          currentProgramPath.pushContainer(
+            "body",
+            t.expressionStatement(
+              t.callExpression(serialized5to6, [
+                t.identifier((tagExpression as t.Identifier).name),
+                t.stringLiteral(
+                  getTemplateId(
+                    isOptimize(),
+                    loadFileForTag(tag)!.metadata.marko.id
+                  )
+                ),
+              ])
+            )
+          );
+        } else {
+          currentProgramPath.pushContainer(
+            "body",
+            t.expressionStatement(
+              callRuntime(
+                "register",
+                t.stringLiteral(
+                  getTemplateId(
+                    isOptimize(),
+                    loadFileForTag(tag)!.metadata.marko.id
+                  )
+                ),
+                t.identifier((tagExpression as t.Identifier).name)
+              )
+            )
+          );
+        }
       }
 
       if (isOutputHTML()) {

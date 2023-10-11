@@ -1,6 +1,7 @@
-import { data as _data, on as _on, queueSource as _queueSource, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
+import { data as _data, on as _on, queueSource as _queueSource, register as _register, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
+_register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko", _classLayout);
 const _expr_multiplier_baseCount$classLayoutBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
