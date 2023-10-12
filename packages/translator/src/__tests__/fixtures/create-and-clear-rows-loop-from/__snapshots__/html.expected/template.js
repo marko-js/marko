@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlEnd as _markResumeControlEnd, nextScopeId as _nextScopeId, writeScope as _writeScope, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");

@@ -47,7 +47,7 @@ export default {
 
       const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
       const info = parentExtra.nestedAttributeTags[attrName];
-      const attrsObject = attrsToObject(tag, true) || t.objectExpression([]);
+      const attrsObject = attrsToObject(tag, true);
 
       if (info.dynamic) {
         if (!info.identifier) {

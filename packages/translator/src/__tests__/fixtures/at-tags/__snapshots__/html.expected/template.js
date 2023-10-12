@@ -7,9 +7,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
       renderBody() {
         _write("Foo!");
       }
-    },
-    renderBody() {
-      const _scope1_id = _nextScopeId();
     }
   });
 });

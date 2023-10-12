@@ -1,4 +1,4 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   comments,
@@ -19,10 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
       const _scope2_id = _nextScopeId();
       _comments._({
         comments: comment.comments,
-        path: id,
-        renderBody() {
-          const _scope3_id = _nextScopeId();
-        }
+        path: id
       });
       _writeScope(_scope2_id, _scope2_ = {
         "comment": comment,

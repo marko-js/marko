@@ -39,34 +39,25 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     class: ["a", "b"],
     other: other,
     class: ["a", "b"],
-    other: other,
-    renderBody() {
-      const _scope2_id = _nextScopeId();
-    }
+    other: other
   });
   const _tagName3 = showTagA && tagA;
-  const _renderBody2 = /* @__PURE__ */_createRenderer(() => {
-    const _scope3_id = _nextScopeId();
-  });
   if (_tagName3) _tagName3({
     class: ["a", "b"],
     other: other
-  });else _renderBody2();
+  });
   const _tagName4 = showTagA && tagA;
-  const _renderBody3 = /* @__PURE__ */_createRenderer(() => {
+  const _renderBody2 = /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
   });
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other
-  });else _renderBody3();
+  });else _renderBody2();
   (tag || tagA)({
     class: ["a", "b"],
-    other: other,
-    renderBody() {
-      const _scope4_id = _nextScopeId();
-    }
+    other: other
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";

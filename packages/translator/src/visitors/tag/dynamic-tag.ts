@@ -18,6 +18,7 @@ import {
   getSerializedScopeProperties,
   getSignal,
   getSignalFn,
+  writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
   type Reserve,
@@ -127,11 +128,14 @@ export default {
 
       if (isOutputHTML()) {
         writer.flushInto(tag);
+        writeHTMLResumeStatements(tag.get("body"));
         const attrsObject = attrsToObject(tag, true);
+        const emptyAttrs =
+          t.isObjectExpression(attrsObject) && !attrsObject.properties.length;
         const renderBodyProp = getRenderBodyProp(attrsObject);
         const args: t.Expression[] = [
           tagExpression,
-          attrsObject || t.nullLiteral(),
+          emptyAttrs ? t.nullLiteral() : attrsObject,
         ];
 
         if (renderBodyProp) {
@@ -221,11 +225,10 @@ export default {
         );
 
         const attrsObject = attrsToObject(tag, true);
-        if (attrsObject || renderBodyIdentifier) {
-          const attrsGetter = t.arrowFunctionExpression(
-            [],
-            attrsObject ?? t.objectExpression([])
-          );
+        const emptyAttrs =
+          t.isObjectExpression(attrsObject) && !attrsObject.properties.length;
+        if (!emptyAttrs || renderBodyIdentifier) {
+          const attrsGetter = t.arrowFunctionExpression([], attrsObject);
           const id = currentProgramPath.scope.generateUidIdentifier(
             tag.get("name").toString() + "_input"
           );

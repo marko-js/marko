@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
@@ -14,16 +14,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     class: ["a", {
       b: c,
       d
-    }],
-    renderBody() {
-      const _scope3_id = _nextScopeId();
-    }
+    }]
   });
   _customTag._({
-    class: ["a", false, "b"],
-    renderBody() {
-      const _scope4_id = _nextScopeId();
-    }
+    class: ["a", false, "b"]
   });
   const _dynamicScope = _dynamicTag(input.test, {
     class: ["a", {
@@ -39,7 +33,13 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
         _write("Hello");
       }
     }
-  });
+  }, /* @__PURE__ */_createRenderer(() => {
+    const _scope1_id = _nextScopeId();
+    _writeScope(_scope1_id, {
+      "c": c,
+      "d": d
+    });
+  }));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
   _writeScope(_scope0_id, {
     "c": c,

@@ -9,9 +9,9 @@
         id="count"
       >
         0
-        <!--M*2 #text/1-->
+        <!--M*3 #text/1-->
       </button>
-      <!--M*2 #button/0-->
+      <!--M*3 #button/0-->
     </div>
     <!--M]0 #text/0-->
     <button
@@ -19,7 +19,7 @@
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,3:{count:0}}),[3,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -45,9 +45,9 @@ container.querySelector("#count").click()
         id="count"
       >
         1
-        <!--M*2 #text/1-->
+        <!--M*3 #text/1-->
       </button>
-      <!--M*2 #button/0-->
+      <!--M*3 #button/0-->
     </div>
     <!--M]0 #text/0-->
     <button
@@ -55,7 +55,7 @@ container.querySelector("#count").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,3:{count:0}}),[3,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -87,7 +87,7 @@ container.querySelector("#changeTag").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,3:{count:0}}),[3,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -122,7 +122,7 @@ container.querySelector("#count").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{count:0}}),[2,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,3:{count:0}}),[3,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>

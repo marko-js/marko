@@ -7,10 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   };
   _write(`<div></div>${_markResumeNode(_scope0_id, "#div/0")}`);
   _helloSetter._({
-    el: el,
-    renderBody() {
-      const _scope1_id = _nextScopeId();
-    }
+    el: el
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko");

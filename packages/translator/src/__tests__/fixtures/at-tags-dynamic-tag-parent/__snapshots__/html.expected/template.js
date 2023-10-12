@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, nextScopeId as _nextScopeId, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 const _renderer = /* @__PURE__ */_createRenderer(({
   x
 }, _tagVar, _scope0_) => {
@@ -16,7 +16,10 @@ const _renderer = /* @__PURE__ */_createRenderer(({
         _write("Footer content");
       }
     }
-  }, /* @__PURE__ */_createRenderer(() => _write("Body content")));
+  }, /* @__PURE__ */_createRenderer(() => {
+    const _scope1_id = _nextScopeId();
+    _write("Body content");
+  }));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {
     "#text/0!": _dynamicScope,

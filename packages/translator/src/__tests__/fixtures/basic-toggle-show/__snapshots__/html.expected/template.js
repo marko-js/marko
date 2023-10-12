@@ -1,4 +1,4 @@
-import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, nextScopeId as _nextScopeId, writeScope as _writeScope, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const show = true;

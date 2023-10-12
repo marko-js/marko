@@ -1,4 +1,4 @@
-import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   color,
@@ -11,24 +11,15 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   _customTag._({
     style: {
       color: color
-    },
-    renderBody() {
-      const _scope3_id = _nextScopeId();
     }
   });
   _customTag._({
     style: {
       width: 100
-    },
-    renderBody() {
-      const _scope4_id = _nextScopeId();
     }
   });
   _customTag._({
-    style: "color: green",
-    renderBody() {
-      const _scope5_id = _nextScopeId();
-    }
+    style: "color: green"
   });
   const _dynamicScope = _dynamicTag(test, {
     style: {

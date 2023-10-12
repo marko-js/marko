@@ -754,13 +754,6 @@ export function writeHTMLResumeStatements(
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   const scopeIdentifier = getScopeIdentifier(section, true);
 
-  path.unshiftContainer(
-    "body",
-    t.variableDeclaration("const", [
-      t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
-    ])
-  );
-
   const serializedReferences: Reserve[] = [];
 
   for (const intersection of intersections) {
@@ -825,6 +818,15 @@ export function writeHTMLResumeStatements(
           isRoot ? scopeIdentifier : null
         )
       )
+    );
+  }
+
+  if (path.get("body").length) {
+    path.unshiftContainer(
+      "body",
+      t.variableDeclaration("const", [
+        t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
+      ])
     );
   }
 }

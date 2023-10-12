@@ -1,5 +1,5 @@
-import { nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _myButton from "./components/my-button.marko";
+import { nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
@@ -7,9 +7,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     text: clickCount,
     onClick: function () {
       clickCount++;
-    },
-    renderBody() {
-      const _scope1_id = _nextScopeId();
     }
   });
 });

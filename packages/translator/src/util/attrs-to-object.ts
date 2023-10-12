@@ -5,7 +5,7 @@ import type { References } from "./references";
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
   withRenderBody = false
-): t.Expression | undefined {
+): t.Expression {
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
   const resultExtra: { references?: References } = (result.extra = {});
@@ -69,9 +69,9 @@ export default function attrsToObject(
         result.extra = resultExtra;
       }
     }
-
-    return result as t.Expression;
   }
+
+  return result;
 }
 
 export function getRenderBodyProp(
