@@ -125,7 +125,9 @@ declare global {
     }
 
     namespace CSS {
-      export interface Properties extends csstype.PropertiesHyphen {}
+      export interface Properties
+        extends csstype.PropertiesHyphen,
+          csstype.Properties {}
     }
 
     namespace HTML {
