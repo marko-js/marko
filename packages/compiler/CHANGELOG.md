@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.3
+
+### Patch Changes
+
+- [#2042](https://github.com/marko-js/marko/pull/2042) [`447104632`](https://github.com/marko-js/marko/commit/44710463258999ad037febef10264e32f3291157) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When compiling async, prefer using the async babel api for loading babel config files.
+
 ## 5.33.2
 
 ### Patch Changes
