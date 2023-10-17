@@ -1,5 +1,18 @@
 # Change Log
 
+## 5.31.12
+
+### Patch Changes
+
+- [#2042](https://github.com/marko-js/marko/pull/2042) [`447104632`](https://github.com/marko-js/marko/commit/44710463258999ad037febef10264e32f3291157) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When compiling async, prefer using the async babel api for loading babel config files.
+
+- [#2044](https://github.com/marko-js/marko/pull/2044) [`358fb2d22`](https://github.com/marko-js/marko/commit/358fb2d22e3e7bd7cba5e97f34547ff53c309f62) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix event handler types
+
+- [#2043](https://github.com/marko-js/marko/pull/2043) [`f94486b10`](https://github.com/marko-js/marko/commit/f94486b10fb8c7be63551d0aa4cbebdb8d03614b) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add CSS camelCase properties
+
+- Updated dependencies [[`447104632`](https://github.com/marko-js/marko/commit/44710463258999ad037febef10264e32f3291157)]:
+  - @marko/compiler@5.33.3
+
 ## 5.31.11
 
 ### Patch Changes
