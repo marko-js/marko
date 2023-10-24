@@ -3,7 +3,7 @@ var ready = require("./ready");
 var idRegExp = /^#(\S+)( .*)?/;
 
 exports.patchComponent = function (jQuery, proto, delayThrow) {
-  if (!(jQuery || (jQuery = window.$)) && !delayThrow) {
+  if (!jQuery && !delayThrow) {
     throw new Error("jQuery not found");
   }
 
@@ -11,7 +11,7 @@ exports.patchComponent = function (jQuery, proto, delayThrow) {
     var args = arguments;
     var self = this;
 
-    if (!jQuery) {
+    if (!(jQuery || (jQuery = window.$))) {
       throw new Error("jQuery not found");
     }
 
