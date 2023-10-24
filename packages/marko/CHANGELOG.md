@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.13
+
+### Patch Changes
+
+- [#2046](https://github.com/marko-js/marko/pull/2046) [`b7cefe4c6`](https://github.com/marko-js/marko/commit/b7cefe4c6f000fc01008ac5d75d2054a34f4f574) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Lazily check for global jQuery when patching legacy components.
+
 ## 5.31.12
 
 ### Patch Changes
