@@ -273,6 +273,9 @@ describe("translator-tags", () => {
             ? await config.steps()
             : config.steps || [];
 
+        // TODO: when this is removed, the resume test will fail if run by itself... why?
+        await new Promise((resolve) => setTimeout(resolve, 10));
+
         const { run, init } = browser.require(
           "@marko/runtime-fluurt/src/dom"
         ) as typeof import("@marko/runtime-fluurt/src/dom");

@@ -3,7 +3,7 @@ import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   color,
   test
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write(`<div${_styleAttr({
     color: color
@@ -38,6 +38,6 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   _writeScope(_scope0_id, {
     "#text/4!": _dynamicScope,
     "#text/4(": test
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/attr-style/template.marko");

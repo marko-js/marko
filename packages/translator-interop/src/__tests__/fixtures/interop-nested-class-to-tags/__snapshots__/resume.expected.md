@@ -19,7 +19,7 @@
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
@@ -37,7 +37,6 @@ removed #comment after #document/html0/body1/#text9
 inserted #document/html0/body1/div5/#text0
 inserted #document/html0/body1/div5/#text4
 removed #comment after #document/html0/body1/div5/#text4
-removed script after #document/html0/body1/div5/#text4
 removed button after #document/html0/body1/div5/#text4
 inserted #document/html0/body1/#text1
 inserted #document/html0/body1/#text8
@@ -77,7 +76,7 @@ container.querySelector("#tags").click()
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
@@ -115,7 +114,7 @@ container.querySelector("#class").click()
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
@@ -163,7 +162,7 @@ container.querySelector("#tags").click()
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
@@ -201,7 +200,7 @@ container.querySelector("#class").click()
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
@@ -249,7 +248,7 @@ container.querySelector("#tags").click()
       <!--M]0 #text/2-->
     </div>
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1]}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})

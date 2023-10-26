@@ -2,7 +2,7 @@ import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _w
 import _layout from "./components/layout.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   name
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _layout._({
     renderBody() {

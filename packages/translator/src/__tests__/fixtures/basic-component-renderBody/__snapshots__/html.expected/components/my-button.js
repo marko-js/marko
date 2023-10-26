@@ -2,7 +2,7 @@ import { write as _write, dynamicTag as _dynamicTag, markResumeControlEnd as _ma
 const _renderer = /* @__PURE__ */_createRenderer(({
   onClick,
   renderBody
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<button>");
   const _dynamicScope = _dynamicTag(renderBody, null);
@@ -12,6 +12,6 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "onClick": onClick,
     "#text/1!": _dynamicScope,
     "#text/1(": renderBody
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko");

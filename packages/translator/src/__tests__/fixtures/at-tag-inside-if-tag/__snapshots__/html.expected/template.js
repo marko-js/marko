@@ -1,8 +1,8 @@
-import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _customTag from "./components/custom-tag/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   x
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   let _thing;
   const _scope1_id = _nextScopeId();
@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
       }
     };
     _writeScope(_scope2_id, _scope2_ = {
-      [_SYMBOL_OWNER]: _scope1_id
+      "_": _serializedScope(_scope1_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer");
     _ifScopeId = _scope2_id;

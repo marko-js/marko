@@ -29,6 +29,6 @@ export {
 
 export { createTemplate } from "./template";
 
-export { register, makeSerializable, SYMBOL_OWNER } from "./serializer";
+export { register, makeSerializable, serializedScope } from "./serializer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

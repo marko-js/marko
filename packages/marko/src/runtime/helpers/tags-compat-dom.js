@@ -65,7 +65,7 @@ const TagsCompat = createRenderer(
       }
       attrs && attrs(component.scope, input);
     });
-    out.bf("0", component, existing);
+    out.bf(out.___assignedKey, component, existing);
     if (!existing) {
       out.node({
         ___actualize: () =>

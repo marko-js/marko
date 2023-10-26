@@ -1,5 +1,5 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const id = 0;
   const items = [{
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     _forScopeIds.push(_scope1_id);
     _write(`<div>${_escapeXML(name)}${_markResumeNode(_scope1_id, "#text/0")}: <!>${_escapeXML(description)}${_markResumeNode(_scope1_id, "#text/1")}</div>`);
     _writeScope(_scope1_id, (_s => (_scope1_.set(_i, _s), _s))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -28,6 +28,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   _writeScope(_scope0_id, {
     "items": items,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/for-destructure/template.marko");

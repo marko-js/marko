@@ -1,5 +1,5 @@
 import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const tagName = "span";
   const className = "A";
@@ -16,6 +16,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     "className": className,
     "#text/0!": _dynamicScope,
     "#text/0(": tagName
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");

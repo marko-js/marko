@@ -28,7 +28,7 @@ import {
   getScopeAccessorLiteral,
   reserveScope,
 } from "../util/reserve";
-import { callRuntime, importRuntime } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import customTag from "../visitors/tag/custom-tag";
 import { mergeReferences } from "../util/references";
@@ -303,9 +303,10 @@ const translateHTML = {
           [scope]
         );
       });
+      // TODO: redundant? already set by writeHTMLResumeStatements?
       getSerializedScopeProperties(bodySection).set(
-        importRuntime("SYMBOL_OWNER"),
-        getScopeIdIdentifier(tagSection)
+        t.stringLiteral("_"),
+        callRuntime("serializedScope", getScopeIdIdentifier(tagSection))
       );
     }
 

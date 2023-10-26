@@ -11,9 +11,6 @@
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="0"
       id="class"
@@ -25,7 +22,7 @@
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -33,11 +30,11 @@
 
 # Mutations
 ```
-inserted #document/html0/body1/#text4
-inserted #document/html0/body1/#text6
-removed #comment after #document/html0/body1/script3
-removed #comment after #document/html0/body1/#text6
-#document/html0/body1/button5: attr(data-parent) "0" => "0"
+inserted #document/html0/body1/#text3
+inserted #document/html0/body1/#text5
+removed #comment after #document/html0/body1/#comment2
+removed #comment after #document/html0/body1/#text5
+#document/html0/body1/button4: attr(data-parent) "0" => "0"
 ```
 
 
@@ -56,9 +53,6 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="1"
       id="class"
@@ -70,7 +64,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -79,7 +73,7 @@ container.querySelector("#tags").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "0" => "1"
-#document/html0/body1/button5: attr(data-parent) "0" => "1"
+#document/html0/body1/button4: attr(data-parent) "0" => "1"
 ```
 
 
@@ -98,9 +92,6 @@ container.querySelector("#class").click()
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="1"
       id="class"
@@ -112,7 +103,7 @@ container.querySelector("#class").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -120,7 +111,7 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/button5/#text0: "0" => "1"
+#document/html0/body1/button4/#text0: "0" => "1"
 ```
 
 
@@ -139,9 +130,6 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="2"
       id="class"
@@ -153,7 +141,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -162,7 +150,7 @@ container.querySelector("#tags").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "1" => "2"
-#document/html0/body1/button5: attr(data-parent) "1" => "2"
+#document/html0/body1/button4: attr(data-parent) "1" => "2"
 ```
 
 
@@ -181,9 +169,6 @@ container.querySelector("#class").click()
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="2"
       id="class"
@@ -195,7 +180,7 @@ container.querySelector("#class").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -203,7 +188,7 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/button5/#text0: "1" => "2"
+#document/html0/body1/button4/#text0: "1" => "2"
 ```
 
 
@@ -222,9 +207,6 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <!--M[1-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({1:{m5c:"s0"}}),[])
-    </script>
     <button
       data-parent="3"
       id="class"
@@ -236,7 +218,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      M$h.push((b,s)=&gt;({0:{count:0,"#text/2!":s[1],"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -245,5 +227,5 @@ container.querySelector("#tags").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "2" => "3"
-#document/html0/body1/button5: attr(data-parent) "2" => "3"
+#document/html0/body1/button4: attr(data-parent) "2" => "3"
 ```

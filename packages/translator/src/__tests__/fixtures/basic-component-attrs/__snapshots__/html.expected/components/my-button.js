@@ -2,12 +2,12 @@ import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _w
 const _renderer = /* @__PURE__ */_createRenderer(({
   onClick,
   text
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write(`<button>${_escapeXML(text)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
   _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko_0_onClick");
   _writeScope(_scope0_id, {
     "onClick": onClick
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");

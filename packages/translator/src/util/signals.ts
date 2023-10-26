@@ -13,7 +13,6 @@ import {
   createSectionState,
   getOrCreateSection,
   getScopeIdIdentifier,
-  getScopeIdentifier,
   getSection,
 } from "./sections";
 import {
@@ -111,7 +110,7 @@ export function setForceResumeScope(section: Section) {
   _setForceResumeScope(section, true);
 }
 export const [getSerializedScopeProperties] = createSectionState<
-  Map<t.Expression, t.Expression>
+  Map<t.StringLiteral | t.NumericLiteral, t.Expression>
 >("serializedScopeProperties", () => new Map());
 
 const [getRegisterScopeBuilder, _setRegisterScopeBuilder] = createSectionState<
@@ -752,7 +751,6 @@ export function writeHTMLResumeStatements(
     currentProgramPath.node.extra.intersectionsBySection?.[section.id] ?? [];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
-  const scopeIdentifier = getScopeIdentifier(section, true);
 
   const serializedReferences: Reserve[] = [];
 
@@ -782,10 +780,24 @@ export function writeHTMLResumeStatements(
     }
   }
 
+  const accessors = new Set<string | number>();
+  const additionalProperties = getSerializedScopeProperties(section);
   const serializedProperties = serializedReferences.reduce((acc, ref) => {
-    acc.push(
-      t.objectProperty(getScopeAccessorLiteral(ref), t.identifier(ref.name))
-    );
+    const accessor = getScopeAccessorLiteral(ref);
+    if (ref.section.id === section.id) {
+      acc.push(t.objectProperty(accessor, t.identifier(ref.name)));
+      accessors.add(accessor.value);
+    } else {
+      getSerializedScopeProperties(ref.section).set(
+        accessor,
+        t.identifier(ref.name)
+      );
+      // TODO: should work recursively for more than one level
+      getSerializedScopeProperties(section).set(
+        t.stringLiteral("_"),
+        callRuntime("serializedScope", getScopeIdIdentifier(ref.section)) // TODO: section.parent
+      );
+    }
     return acc;
   }, [] as Array<t.ObjectProperty>);
 
@@ -798,13 +810,16 @@ export function writeHTMLResumeStatements(
     );
   }
 
-  const additionalProperties = getSerializedScopeProperties(section);
   for (const [key, value] of additionalProperties) {
-    serializedProperties.push(t.objectProperty(key, value, !t.isLiteral(key)));
+    if (!accessors.has(key.value)) {
+      serializedProperties.push(
+        t.objectProperty(key, value, !t.isLiteral(key))
+      );
+      accessors.add(key.value);
+    }
   }
 
   if (serializedProperties.length || forceResumeScope(section)) {
-    const isRoot = path.isProgram();
     const builder = getRegisterScopeBuilder(section);
     path.pushContainer(
       "body",
@@ -814,8 +829,7 @@ export function writeHTMLResumeStatements(
           scopeIdIdentifier,
           builder
             ? builder(t.objectExpression(serializedProperties))
-            : t.objectExpression(serializedProperties),
-          isRoot ? scopeIdentifier : null
+            : t.objectExpression(serializedProperties)
         )
       )
     );

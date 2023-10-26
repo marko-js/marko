@@ -1,5 +1,5 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, markResumeControlEnd as _markResumeControlEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, serializedScope as _serializedScope, markResumeControlEnd as _markResumeControlEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const arr = [1, 2, 3];
   const obj = {
@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     let i = _i++;
     _write(`${_markResumeScopeStart(_scope1_id)}<div>${_escapeXML(i)}${_markResumeNode(_scope1_id, "#text/0")}: <!>${_escapeXML(val)}${_markResumeNode(_scope1_id, "#text/1")}</div><div></div><div></div>`);
     _writeScope(_scope1_id, (_s => (_scope1_.set(i, _s), _s))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -25,7 +25,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const val = obj[key];
     _write(`${_markResumeScopeStart(_scope2_id)}<div>${_escapeXML(key)}${_markResumeNode(_scope2_id, "#text/0")}: <!>${_escapeXML(val)}${_markResumeNode(_scope2_id, "#text/1")}</div><div></div><div></div>`);
     _writeScope(_scope2_id, (_s2 => (_scope2_.set(key, _s2), _s2))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -43,7 +43,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     let i = _i3++;
     _write(`${_markResumeScopeStart(_scope4_id)}<div${_attr("key", i)}>${_escapeXML(i)}${_markResumeNode(_scope4_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope4_id, "#text/2")}</div>${_markResumeNode(_scope4_id, "#div/0")}<div></div><div${_attr("key", `other-${i}`)}></div>${_markResumeNode(_scope4_id, "#div/3")}`);
     _writeScope(_scope4_id, (_s3 => (_scope4_.set(i, _s3), _s3))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -58,7 +58,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     _forScopeIds4.push(_scope5_id);
     _write(`<div${_attr("key", i)}>${_escapeXML(list.length)}${_markResumeNode(_scope5_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope5_id, "#text/2")}</div>${_markResumeNode(_scope5_id, "#div/0")}`);
     _writeScope(_scope5_id, (_s4 => (_scope5_.set(i, _s4), _s4))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -69,7 +69,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const val = obj[key];
     _write(`${_markResumeScopeStart(_scope6_id)}<div${_attr("key", key)}>${_escapeXML(key)}${_markResumeNode(_scope6_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope6_id, "#text/2")}</div>${_markResumeNode(_scope6_id, "#div/0")}<div></div><div${_attr("key", `other-${key}`)}></div>${_markResumeNode(_scope6_id, "#div/3")}`);
     _writeScope(_scope6_id, (_s5 => (_scope6_.set(key, _s5), _s5))({
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     }));
     _maybeFlush();
   }
@@ -108,6 +108,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     "#text/3(": _scope4_.size ? _scope4_ : undefined,
     "#text/4(": _scope5_.size ? _scope5_ : undefined,
     "#text/5(": _scope6_.size ? _scope6_ : undefined
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/for-tag/template.marko");

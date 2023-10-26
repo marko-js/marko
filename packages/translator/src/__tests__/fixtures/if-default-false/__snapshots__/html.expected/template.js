@@ -1,5 +1,5 @@
-import { markResumeNode as _markResumeNode, write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { markResumeNode as _markResumeNode, write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const show = false;
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const _scope1_id = _nextScopeId();
     _write("hi");
     _writeScope(_scope1_id, _scope1_ = {
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-default-false/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
@@ -19,6 +19,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     "show": show,
     "#text/1!": _scope1_,
     "#text/1(": _ifRenderer
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/if-default-false/template.marko");

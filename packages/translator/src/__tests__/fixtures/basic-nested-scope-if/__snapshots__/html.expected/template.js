@@ -1,5 +1,5 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
   _write("<div>");
@@ -9,8 +9,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     _write(`<button>${_escapeXML(clickCount)}${_markResumeNode(_scope1_id, "#text/1")}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
     _writeEffect(_scope1_id, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
     _writeScope(_scope1_id, _scope1_ = {
-      "clickCount": clickCount,
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
@@ -18,15 +17,16 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const _scope2_id = _nextScopeId();
     _write(`<span>The button was clicked <!>${_escapeXML(clickCount)}${_markResumeNode(_scope2_id, "#text/0")} times.</span>`);
     _writeScope(_scope2_id, _scope1_ = {
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}</div>`);
   _writeScope(_scope0_id, {
+    "clickCount": clickCount,
     "#text/0!": _scope1_,
     "#text/0(": _ifRenderer
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-nested-scope-if/template.marko");

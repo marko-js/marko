@@ -1,6 +1,6 @@
 import { nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _item = [];
   const _scope1_id = _nextScopeId();

@@ -13,7 +13,7 @@ import {
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { callRuntime, importRuntime } from "../../util/runtime";
+import { callRuntime } from "../../util/runtime";
 import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import {
@@ -175,9 +175,10 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           scope
         );
       });
+      // TODO: redundant? is this already getting set by writeHTMLResumeStatements?
       getSerializedScopeProperties(bodySection).set(
-        importRuntime("SYMBOL_OWNER"),
-        getScopeIdIdentifier(section)
+        t.stringLiteral("_"),
+        callRuntime("serializedScope", getScopeIdIdentifier(section))
       );
     }
     writer.flushInto(tag);

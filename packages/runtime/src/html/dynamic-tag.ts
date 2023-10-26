@@ -8,6 +8,7 @@ import {
 } from "./writer";
 import { attrs } from "./attrs";
 import type { Template } from "./template";
+import { serializedScope } from "./serializer";
 
 const voidElements = new Set([
   "area",
@@ -37,16 +38,15 @@ export function dynamicTag(
 ) {
   if (!tag && !renderBody) return undefined;
 
-  const internalScope = {};
-
   const futureScopeId = peekNextScopeId();
+  const futureScope = serializedScope(futureScopeId);
   write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, internalScope);
+  writeScope(futureScopeId, {});
 
   if (!tag) {
     renderBody!();
 
-    return internalScope;
+    return futureScope;
   }
 
   if (typeof tag === "string") {
@@ -65,18 +65,14 @@ export function dynamicTag(
       );
     }
 
-    return internalScope;
+    return futureScope;
   }
 
   const renderer = getDynamicRenderer(tag);
 
   if (typeof renderer === "function") {
-    renderer(
-      renderBody ? { ...input, renderBody } : input,
-      null,
-      internalScope
-    );
-    return internalScope;
+    renderer(renderBody ? { ...input, renderBody } : input);
+    return futureScope;
   } else if (MARKO_DEBUG) {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
   }

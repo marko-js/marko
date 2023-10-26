@@ -1,5 +1,5 @@
-import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, popContext as _popContext, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { write as _write, pushContext as _pushContext, getInContext as _getInContext, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, popContext as _popContext, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const show = true;
   _write("<div>");
@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const x = _getInContext("packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko");
     _write(`${_escapeXML(x)}${_markResumeNode(_scope2_id, "#text/0")}</span>`);
     _writeScope(_scope2_id, _scope2_ = {
-      [_SYMBOL_OWNER]: _scope1_id
+      "_": _serializedScope(_scope1_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
@@ -27,6 +27,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
   _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko_0_show");
   _writeScope(_scope0_id, {
     "show": show
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/context-tag-in-if/template.marko");

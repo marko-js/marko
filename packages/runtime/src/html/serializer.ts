@@ -11,12 +11,22 @@ const REF_CHARS_LEN = REF_CHARS.length;
 const SYMBOL_REGISTRY_ID = Symbol("REGISTRY_ID");
 const SYMBOL_SCOPE = Symbol("SCOPE");
 const SYMBOL_SERIALIZE = Symbol("SERIALIZE");
-export const SYMBOL_OWNER = Symbol("OWNER");
+
+class Scope {}
+export const serializedScope = (scopeId: string | number) => {
+  const scope = new Scope();
+  if (MARKO_DEBUG) {
+    (scope as any).id = scopeId;
+  }
+  return makeSerializable(scope, (s, a) => {
+    s.value(s.scopeLookup.get(scopeId as number), a);
+  });
+};
 
 export type Serializable<T> = T & {
   [SYMBOL_REGISTRY_ID]?: string;
   [SYMBOL_SCOPE]?: number;
-  [SYMBOL_SERIALIZE]?: (s: Serializer) => void;
+  [SYMBOL_SERIALIZE]?: (s: Serializer, accessor: string | number) => void;
 };
 
 export function register<T>(
@@ -31,7 +41,7 @@ export function register<T>(
 
 export function makeSerializable<T>(
   object: T,
-  serialize: (s: Serializer) => void
+  serialize: (s: Serializer, accessor: string | number) => void
 ): T {
   (object as Serializable<T>)[SYMBOL_SERIALIZE] = serialize;
   return object;
@@ -50,7 +60,7 @@ export class Serializer {
   // These stay
   PARENTS: WeakMap<object, object> = new WeakMap();
   KEYS: WeakMap<object, number | string> = new WeakMap();
-  VALUES: unknown[] = [];
+  VALUES: Map<unknown, string | unknown> = new Map();
   scopeLookup: Map<number, any>;
 
   constructor(scopeLookup: Map<number, any>) {
@@ -59,7 +69,7 @@ export class Serializer {
   }
 
   stringify(root: unknown) {
-    if (this.writeProp(root, "", undefined)) {
+    if (this.writeProp(root, "")) {
       const { BUFFER, REF_COUNT, ASSIGNMENTS, INDEX_OR_REF } = this;
 
       let result = BUFFER[0];
@@ -113,19 +123,19 @@ export class Serializer {
     return this;
   }
 
-  value(value: unknown) {
+  value(value: unknown, accessor: string | number = "") {
     // TODO: this should not push the same value twice
     // this should be serialized in some way so we can access these values across flushes
-    const index = this.VALUES.push(value);
-    this.writeProp(value, index, this.VALUES);
+    if (
+      !this.writeProp(value, accessor) &&
+      !this.STACK.includes(value as object)
+    ) {
+      this.BUFFER.push("void 0");
+    }
     return this;
   }
 
-  writeProp(
-    cur: unknown,
-    accessor: string | number,
-    parent: object | undefined
-  ): boolean {
+  writeProp(cur: unknown, accessor: string | number): boolean {
     const { BUFFER } = this;
     switch (typeof cur) {
       case "string":
@@ -145,7 +155,7 @@ export class Serializer {
         if (cur === null) {
           BUFFER.push("null");
         } else {
-          const ref = this.getRef(cur, accessor, parent);
+          const ref = this.getRef(cur, accessor);
 
           switch (ref) {
             case true:
@@ -193,7 +203,10 @@ export class Serializer {
                   break;
 
                 default:
-                  return this.writeRegistered(cur as Serializable<unknown>);
+                  return this.writeRegistered(
+                    cur as Serializable<unknown>,
+                    accessor
+                  );
               }
               break;
 
@@ -211,29 +224,31 @@ export class Serializer {
     return true;
   }
 
-  writeRegistered(value: Serializable<unknown>) {
+  writeRegistered(value: Serializable<unknown>, accessor: string | number) {
     const {
       [SYMBOL_REGISTRY_ID]: registryId,
       [SYMBOL_SCOPE]: scopeId,
       [SYMBOL_SERIALIZE]: serialize,
     } = value;
+    const { BUFFER } = this;
     if (registryId) {
       // ASSERT: fnId and scopeId don't need `quote` escaping
       const scope =
         scopeId !== undefined
           ? this.scopeLookup.get(scopeId) ?? false
           : undefined;
-      const ref = scope && this.getRef(scope, "", undefined);
+      const ref = scope && this.getRef(scope, "");
       if (ref === true || ref === false) {
         throw new Error(
           "The scope has not yet been defined or is circular. This needs to be fixed in the serializer."
         );
       }
-      this.BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
+      BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
       return true;
     } else if (serialize) {
-      serialize(this);
-      return true;
+      const prevSize = BUFFER.length;
+      serialize(this, accessor);
+      return prevSize !== BUFFER.length;
     }
     return false;
   }
@@ -244,27 +259,12 @@ export class Serializer {
     let sep = "{";
     STACK.push(obj);
 
-    if (SYMBOL_OWNER in obj) {
-      BUFFER.push("{_:");
-      if (
-        this.writeProp(
-          this.scopeLookup.get(obj[SYMBOL_OWNER] as number),
-          "_",
-          obj
-        )
-      ) {
-        sep = ",";
-      } else {
-        BUFFER.pop();
-      }
-    }
-
     for (const key in obj) {
       if (hasOwnProperty.call(obj, key)) {
         const val = obj[key];
         const escapedKey = toObjectKey(key);
         BUFFER.push(sep + escapedKey + ":");
-        if (this.writeProp(val, escapedKey, obj)) {
+        if (this.writeProp(val, escapedKey)) {
           sep = ",";
         } else {
           BUFFER.pop();
@@ -287,18 +287,18 @@ export class Serializer {
     BUFFER.push("[");
     STACK.push(arr);
 
-    this.writeProp(arr[0], 0, arr);
+    this.writeProp(arr[0], 0);
 
     for (let i = 1, len = arr.length; i < len; i++) {
       BUFFER.push(",");
-      this.writeProp(arr[i], i, arr);
+      this.writeProp(arr[i], i);
     }
 
     STACK.pop();
     BUFFER.push("]");
   }
 
-  getRef(cur: object, accessor: string | number, parent: object | undefined) {
+  getRef(cur: object, accessor: string | number) {
     const { STACK, BUFFER, INDEX_OR_REF, ASSIGNMENTS, PARENTS, KEYS } = this;
 
     let ref = INDEX_OR_REF.get(cur);
@@ -309,8 +309,14 @@ export class Serializer {
       let knownParent = PARENTS.get(cur);
 
       if (knownParent === undefined) {
-        PARENTS.set(cur, parent!);
-        KEYS.set(cur, toObjectKey(accessor));
+        const parent = STACK[STACK.length - 1];
+        if (!parent) {
+          // this.VALUES.set(cur, undefined);
+        } else {
+          // this.VALUES.delete(cur);
+          PARENTS.set(cur, parent!);
+          KEYS.set(cur, toObjectKey(accessor));
+        }
         return false;
       } else {
         let ref = "";
@@ -324,6 +330,9 @@ export class Serializer {
 
     if (typeof ref === "number") {
       ref = this.insertAndGetRef(cur, ref);
+      // if (this.VALUES.has(cur)) {
+      //   this.VALUES.set(cur, ref);
+      // }
     }
 
     if (STACK.includes(cur)) {

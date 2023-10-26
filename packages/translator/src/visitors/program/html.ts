@@ -5,7 +5,7 @@ import { callRuntime } from "../../util/runtime";
 import { flushInto } from "../../util/writer";
 import isStatic from "../../util/is-static";
 import { returnId } from "../../core/return";
-import { getScopeIdentifier, getSection } from "../../util/sections";
+import { getSection } from "../../util/sections";
 
 export default {
   translate: {
@@ -48,7 +48,6 @@ export default {
                 [
                   attrs ? (attrs.var as any) : t.identifier("input"),
                   tagVarIdentifier,
-                  getScopeIdentifier(getSection(program)),
                 ],
                 t.blockStatement(renderContent)
               )

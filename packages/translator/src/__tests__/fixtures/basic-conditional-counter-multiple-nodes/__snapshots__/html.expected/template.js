@@ -1,5 +1,5 @@
-import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, markResumeScopeStart as _markResumeScopeStart, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, markResumeScopeStart as _markResumeScopeStart, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const show = true;
   const count = 0;
@@ -9,7 +9,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     const _scope1_id = _nextScopeId();
     _write(`${_markResumeScopeStart(_scope1_id)}The count is <!>${_escapeXML(count)}${_markResumeNode(_scope1_id, "#text/0")}`);
     _writeScope(_scope1_id, _scope1_ = {
-      [_SYMBOL_OWNER]: _scope0_id
+      "_": _serializedScope(_scope0_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer");
   }
@@ -21,6 +21,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
     "count": count,
     "#text/2!": _scope1_,
     "#text/2(": _ifRenderer
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko");

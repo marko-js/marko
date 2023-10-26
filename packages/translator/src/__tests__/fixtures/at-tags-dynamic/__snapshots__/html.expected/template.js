@@ -1,6 +1,6 @@
-import { write as _write, SYMBOL_OWNER as _SYMBOL_OWNER, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
 import _hello from "./components/hello/index.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _col = [];
   const _scope1_id = _nextScopeId();
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
         }
       });
       _writeScope(_scope4_id, _scope4_ = {
-        [_SYMBOL_OWNER]: _scope3_id
+        "_": _serializedScope(_scope3_id)
       });
       _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
       _ifScopeId = _scope4_id;
@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar, _scope0_) => {
         }
       });
       _writeScope(_scope5_id, _scope4_ = {
-        [_SYMBOL_OWNER]: _scope3_id
+        "_": _serializedScope(_scope3_id)
       });
       _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
       _ifScopeId = _scope5_id;

@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   tag,
   level,
   other
-}, _tagVar, _scope0_) => {
+}, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _dynamicScope = _dynamicTag(renderBody, {
     class: ["a", "b"],
@@ -81,6 +81,6 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "#text/4(": large ? "h1" : "h2",
     "#text/5!": _dynamicScope4,
     "#text/5(": _tagName5
-  }, _scope0_);
+  });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/dynamic-tag-name/template.marko");
