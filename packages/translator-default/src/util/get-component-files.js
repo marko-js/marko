@@ -15,7 +15,7 @@ export default function getComponentFiles({ hub: { file } }) {
   const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
   const base = getBase(filename);
-  const isEntry = "index" === base;
+  const isEntry = "index" === base || "template" === base;
   const fileMatch = `(${escapeRegExp(base)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
