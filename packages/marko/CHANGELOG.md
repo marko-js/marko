@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.31.14
+
+### Patch Changes
+
+- [#2049](https://github.com/marko-js/marko/pull/2049) [`1554b1e1e`](https://github.com/marko-js/marko/commit/1554b1e1e53a75980af0b238cc27bed5ddfa215a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow `template.marko` to act as `index.marko` for backword compat with v4/v3.
+
+- Updated dependencies [[`1554b1e1e`](https://github.com/marko-js/marko/commit/1554b1e1e53a75980af0b238cc27bed5ddfa215a)]:
+  - @marko/translator-default@5.31.4
+  - @marko/compiler@5.33.4
+
 ## 5.31.13
 
 ### Patch Changes
