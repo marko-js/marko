@@ -36,6 +36,7 @@ export type Signal = {
   section: Section;
   build: () => t.Expression;
   register?: boolean;
+  isDynamicClosure?: boolean;
   values: Array<{
     signal: {
       identifier: t.Identifier;
@@ -183,8 +184,11 @@ export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
         const ownerScope = getScopeExpression(section, reserve.section);
         const isImmediateOwner =
           (ownerScope as t.MemberExpression).object === scopeIdentifier;
+        const isDynamicClosure = (signal.isDynamicClosure = !(
+          isImmediateOwner && builder
+        ));
         return callRuntime(
-          builder && isImmediateOwner ? "closure" : "dynamicClosure",
+          isDynamicClosure ? "dynamicClosure" : "closure",
           getScopeAccessorLiteral(reserve),
           getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)]),
           isImmediateOwner
@@ -624,7 +628,8 @@ export function addEffectReferences(signal: Signal, expression: t.Expression) {
 
 export function getResumeRegisterId(
   section: Section,
-  references: string | References
+  references: string | References,
+  type?: string
 ) {
   const {
     markoOpts: { optimize },
@@ -642,7 +647,10 @@ export function getResumeRegisterId(
       name += `_${references.name}`;
     }
   }
-  return getTemplateId(optimize, `${filename}_${section.id}${name}`);
+  return getTemplateId(
+    optimize,
+    `${filename}_${section.id}${name}${type ? "/" + type : ""}`
+  );
 }
 
 export function writeSignals(section: Section) {
@@ -684,16 +692,30 @@ export function writeSignals(section: Section) {
       );
     }
 
-    const value = signal.register
-      ? callRuntime(
-          "register",
-          t.stringLiteral(getResumeRegisterId(section, signal.reserve)),
-          signal.build()
-        )
-      : signal.build();
+    let value = signal.build();
+
     if (t.isCallExpression(value)) {
       finalizeSignalArgs(value.arguments as any as t.Expression[]);
     }
+
+    if (signal.register) {
+      value = callRuntime(
+        "register",
+        t.stringLiteral(getResumeRegisterId(section, signal.reserve)),
+        value
+      );
+    }
+
+    if (signal.isDynamicClosure) {
+      value = callRuntime(
+        "registerSubscriber",
+        t.stringLiteral(
+          getResumeRegisterId(section, signal.reserve, "subscriber")
+        ),
+        value
+      );
+    }
+
     const signalDeclarator = t.variableDeclarator(signal.identifier, value);
     const roots = currentProgramPath.pushContainer(
       "body",
@@ -788,6 +810,24 @@ export function writeHTMLResumeStatements(
       acc.push(t.objectProperty(accessor, t.identifier(ref.name)));
       accessors.add(accessor.value);
     } else {
+      const isImmediateOwner = section.parent?.id === ref.section.id;
+      // TODO: getSubscribeBuilder is not the right check
+      // the builder shouldn't get set for the HTML output
+      // we're setting it to an empty builder from if/for purely for this check
+      const isDynamicClosure =
+        !getSubscribeBuilder(section) || !isImmediateOwner;
+      if (isDynamicClosure) {
+        path.pushContainer(
+          "body",
+          t.expressionStatement(
+            callRuntime(
+              "writeEffect",
+              scopeIdIdentifier,
+              t.stringLiteral(getResumeRegisterId(section, ref, "subscriber"))
+            )
+          )
+        );
+      }
       getSerializedScopeProperties(ref.section).set(
         accessor,
         t.identifier(ref.name)

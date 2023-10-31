@@ -1,11 +1,15 @@
-import { init, register } from "@marko/runtime-fluurt/src/dom";
+import {
+  init,
+  register,
+  registerSubscriber,
+} from "@marko/runtime-fluurt/src/dom";
 import {
   FancyButton$onclick_effect,
+  clickCount$renderBody,
   clickHandler,
-  subscribe_clickCount$renderBody,
 } from "./browser";
 
 register("FancyButton$onclick_effect", FancyButton$onclick_effect);
-register("subscribe_clickCount$renderBody", subscribe_clickCount$renderBody);
+registerSubscriber("subscribe_clickCount$renderBody", clickCount$renderBody);
 register("clickHandler", clickHandler);
 init();

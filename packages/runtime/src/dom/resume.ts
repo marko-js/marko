@@ -1,4 +1,4 @@
-import { AccessorChars, ResumeSymbols, type Scope } from "../common/types";
+import { ResumeSymbols, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindFunction, bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
@@ -145,29 +145,34 @@ export function init(
   }
 }
 
-export function resumeSubscription(
-  signal: IntersectionSignal,
-  ownerValueAccessor: string | number,
-  getOwnerScope = (scope: Scope) => scope._!
+export function registerSubscriber(
+  id: string,
+  signal: IntersectionSignal
+  // ownerValueAccessor: string | number,
+  // getOwnerScope = (scope: Scope) => scope._!
 ) {
-  const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
-  const ownerSubscribersAccessor =
-    ownerValueAccessor + AccessorChars.SUBSCRIBERS;
+  register(id, signal.___subscribe!);
+  return signal;
 
-  return (subscriberScope: Scope) => {
-    const ownerScope = getOwnerScope(subscriberScope);
-    const boundSignal = bindFunction(subscriberScope, signal);
-    const ownerMark = ownerScope[ownerMarkAccessor];
-    (ownerScope[ownerSubscribersAccessor] ??= new Set()).add(boundSignal);
+  // TODO: we need to handle the async case - DO NOT REMOVE UNTIL WE DO
+  // const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
+  // const ownerSubscribersAccessor =
+  //   ownerValueAccessor + AccessorChars.SUBSCRIBERS;
 
-    // TODO: if the mark is not undefined, it means the value was updated clientside
-    // before this subscriber was flushed.
-    if (ownerMark === 0) {
-      // the value has finished updating
-      // we should trigger an update to `signal`
-    } else if (ownerMark >= 1) {
-      // the value is queued for update
-      // we should mark `signal` and let it be updated when the owner is updated
-    }
-  };
+  // register(id, (subscriberScope: Scope) => {
+  //   const ownerScope = getOwnerScope(subscriberScope);
+  //   const boundSignal = bindFunction(subscriberScope, signal);
+  //   const ownerMark = ownerScope[ownerMarkAccessor];
+  //   (ownerScope[ownerSubscribersAccessor] ??= new Set()).add(boundSignal);
+
+  //   // TODO: if the mark is not undefined, it means the value was updated clientside
+  //   // before this subscriber was flushed.
+  //   if (ownerMark === 0) {
+  //     // the value has finished updating
+  //     // we should trigger an update to `signal`
+  //   } else if (ownerMark >= 1) {
+  //     // the value is queued for update
+  //     // we should mark `signal` and let it be updated when the owner is updated
+  //   }
+  // });
 }

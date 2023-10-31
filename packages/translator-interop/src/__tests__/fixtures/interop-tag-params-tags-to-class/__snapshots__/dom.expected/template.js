@@ -1,4 +1,4 @@
-import { data as _data, on as _on, queueSource as _queueSource, register as _register, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
+import { data as _data, on as _on, queueSource as _queueSource, register as _register, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-fluurt/dist/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko", _classLayout);
@@ -21,10 +21,10 @@ const _multiplier$classLayoutBody_effect = _register("packages/translator-intero
   } = _scope;
   _queueSource(_scope._, _multiplier, multiplier + 1);
 }));
-const _multiplier$classLayoutBody = /* @__PURE__ */_dynamicClosure("multiplier", (_scope, multiplier) => {
+const _multiplier$classLayoutBody = _registerSubscriber("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber", /* @__PURE__ */_dynamicClosure("multiplier", (_scope, multiplier) => {
   _data(_scope["#text/2"], multiplier);
   _queueEffect(_scope, _multiplier$classLayoutBody_effect);
-}, void 0, _expr_multiplier_baseCount$classLayoutBody);
+}, void 0, _expr_multiplier_baseCount$classLayoutBody));
 const _classLayoutBody = /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let baseCount, message;
   if (!_clean) ({

@@ -182,6 +182,9 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       );
     }
     writer.flushInto(tag);
+    // TODO: this is a hack to get around the fact that we don't have a way to
+    // know if a scope requires dynamic subscriptions
+    setSubscriberBuilder(tag, (() => {}) as any);
     writeHTMLResumeStatements(tagBody);
   }
 

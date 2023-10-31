@@ -11,7 +11,6 @@ import {
   on,
   queueEffect,
   queueSource,
-  resumeSubscription,
   value,
 } from "@marko/runtime-fluurt/src/dom";
 import { beginChild, endChild, get, next } from "../../utils/walks";
@@ -124,7 +123,7 @@ export const clickHandler = (scope: Scope) => {
   queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
 };
 
-const clickCount$renderBody = dynamicClosure(
+export const clickCount$renderBody = dynamicClosure(
   Index.CLICK_COUNT,
   (scope: Scope, value: ComponentScope[Index.CLICK_COUNT]) => {
     data(scope[RenderBody$Index.TEXT], value);
@@ -138,11 +137,6 @@ const enum RenderBody$Index {
 // type RenderBody$Scope = Scope<{
 //   [RenderBody$Index.TEXT]: Text;
 // }>;
-
-export const subscribe_clickCount$renderBody = resumeSubscription(
-  clickCount$renderBody,
-  Index.CLICK_COUNT
-);
 
 const renderBody = createRenderer(" ", get + next(1), undefined, [
   clickCount$renderBody,

@@ -1,6 +1,6 @@
-import { initContextProvider as _initContextProvider, conditional as _conditional, dynamicClosure as _dynamicClosure, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
+import { initContextProvider as _initContextProvider, conditional as _conditional, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
 const _dynamicTagName$putBody = /* @__PURE__ */_conditional("#text/0");
-const _input$putBody = /* @__PURE__ */_dynamicClosure("input", (_scope, input) => _dynamicTagName$putBody(_scope, input.renderBody), void 0, void 0, _dynamicTagName$putBody);
+const _input$putBody = _registerSubscriber("packages/translator/src/__tests__/fixtures/context-tag-from-tag-name/components/other.marko_1_input/subscriber", /* @__PURE__ */_dynamicClosure("input", (_scope, input) => _dynamicTagName$putBody(_scope, input.renderBody), void 0, void 0, _dynamicTagName$putBody));
 const _putBody = /* @__PURE__ */_createRenderer("<!>", /* replace */"%", void 0, [_input$putBody]);
 const _put = /* @__PURE__ */_value("0:", null, _dynamicSubscribers("0:"));
 const _input = /* @__PURE__ */_value("input", null, _dynamicSubscribers("input"));

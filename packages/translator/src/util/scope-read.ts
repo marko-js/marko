@@ -55,7 +55,7 @@ export function createScopeReadPattern(
 }
 
 export function getScopeExpression(section: Section, targetSection: Section) {
-  let scope: t.Expression = scopeIdentifier;
+  let scope: t.Expression = scopeIdentifier ?? t.identifier("undefined");
   const diff = section.depth - targetSection.depth;
   for (let i = 0; i < diff; i++) {
     scope = t.memberExpression(scope, t.identifier("_"));

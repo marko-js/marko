@@ -25,7 +25,7 @@ export { on } from "./event";
 
 export { staticNodesFragment, dynamicFragment } from "./fragment";
 
-export { init, register, resumeSubscription, scopeLookup } from "./resume";
+export { init, register, registerSubscriber, scopeLookup } from "./resume";
 
 export { pushContext, popContext, getInContext } from "../common/context";
 
