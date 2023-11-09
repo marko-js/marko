@@ -82,6 +82,33 @@ export function parseTemplateLiteral(file, str, sourceStart, sourceEnd) {
   return ensureParseError(file, parsed, sourceStart, sourceEnd);
 }
 
+export function parseTypeArgs(file, str, sourceStart, sourceEnd) {
+  const parsed = parseExpression(file, `_<${str}>`, sourceStart, sourceEnd, 2);
+
+  if (parsed.type === "TSInstantiationExpression") {
+    // typeArguments is Flow only (not TS), we need to use typeParameters
+    return parsed.typeParameters;
+  }
+
+  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+}
+
+export function parseTypeParams(file, str, sourceStart, sourceEnd) {
+  const parsed = parseExpression(
+    file,
+    `<${str}>()=>{}`,
+    sourceStart,
+    sourceEnd,
+    1
+  );
+
+  if (parsed.type === "ArrowFunctionExpression") {
+    return parsed.typeParameters;
+  }
+
+  return [ensureParseError(file, parsed, sourceStart, sourceEnd)];
+}
+
 function tryParse(
   file,
   isExpression,

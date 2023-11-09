@@ -9,6 +9,7 @@ import {
   parseTemplateLiteral,
   parseVar,
 } from "@marko/babel-utils";
+import { parseTypeArgs, parseTypeParams } from "@marko/babel-utils/src/parse";
 
 const noop = () => {};
 const emptyRange = (part) => part.start === part.end;
@@ -196,6 +197,22 @@ export function parseMarko(file) {
     },
     onComment(part) {
       pushContent(withLoc(t.markoComment(parser.read(part.value)), part));
+    },
+    onTagTypeArgs(part) {
+      currentTag.node.typeArguments = parseTypeArgs(
+        file,
+        parser.read(part.value),
+        part.start,
+        part.end
+      );
+    },
+    onTagTypeParams(part) {
+      currentTag.node.typeParameters = parseTypeParams(
+        file,
+        parser.read(part.value),
+        part.start,
+        part.end
+      );
     },
     onPlaceholder(part) {
       pushContent(
