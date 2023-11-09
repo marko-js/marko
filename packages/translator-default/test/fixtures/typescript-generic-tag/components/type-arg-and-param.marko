@@ -1,0 +1,6 @@
+export interface Input<T> {
+    arg: T;
+    renderBody: Marko.Body<[T]>;
+}
+
+${input.renderBody}=[input.arg];
