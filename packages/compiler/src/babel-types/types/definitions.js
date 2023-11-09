@@ -192,6 +192,20 @@ const MarkoDefinitions = {
         ),
         optional: true,
       },
+      typeArguments: {
+        validate: chain(
+          assertValueType("array"),
+          assertEach(assertNodeType("TypeAnnotation"))
+        ),
+        optional: true,
+      },
+      typeParameters: {
+        validate: chain(
+          assertValueType("array"),
+          assertEach(assertNodeType("TypeAnnotation"))
+        ),
+        optional: true,
+      },
       rawValue: {
         validate: assertValueType("string"),
         optional: true,
