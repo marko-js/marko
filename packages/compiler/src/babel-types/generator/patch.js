@@ -171,6 +171,12 @@ Object.assign(Printer.prototype, {
         this.token(tagName);
       }
 
+      if (node.typeArguments) {
+        this.token("<");
+        this.printList(node.typeArguments.params, node);
+        this.token(">");
+      }
+
       if (node.var) {
         this.token("/");
         this.print(node.var, node);
@@ -187,6 +193,14 @@ Object.assign(Printer.prototype, {
       }
 
       if (node.body.params.length) {
+        if (node.typeParameters) {
+          if (!node.typeArguments) {
+            this.token(" ");
+          }
+          this.token("<");
+          this.printList(node.typeParameters.params, node);
+          this.token(">");
+        }
         this.token("|");
         this.printList(node.body.params, node);
         this.token("|");
