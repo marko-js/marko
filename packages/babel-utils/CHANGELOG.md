@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.3.2
+
+### Patch Changes
+
+- [#2051](https://github.com/marko-js/marko/pull/2051) [`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add ts to ast
+
 ## 6.3.1
 
 ### Patch Changes

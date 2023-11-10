@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.31.15
+
+### Patch Changes
+
+- [#2053](https://github.com/marko-js/marko/pull/2053) [`37b347eb5`](https://github.com/marko-js/marko/commit/37b347eb5e9e2d16badb170a880e2eed5d2892a9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve compatibility of legacy Marko widgets loading a template compiled as esm.
+
+- Updated dependencies [[`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c)]:
+  - @marko/translator-default@5.31.5
+  - @marko/compiler@5.33.5
+
 ## 5.31.14
 
 ### Patch Changes
