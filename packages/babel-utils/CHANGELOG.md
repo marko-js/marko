@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.3.3
+
+### Patch Changes
+
+- [#2054](https://github.com/marko-js/marko/pull/2054) [`1c5eccadf`](https://github.com/marko-js/marko/commit/1c5eccadf8d968552dbe8756905009107d783718) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with @marko/babel-utils not exposing new parse helpers.
+
 ## 6.3.2
 
 ### Patch Changes
