@@ -39,6 +39,8 @@ export {
   parseArgs,
   parseVar,
   parseTemplateLiteral,
+  parseTypeArgs,
+  parseTypeParams,
 } from "./parse";
 
 export { resolveRelativePath, importDefault, importNamed } from "./imports";

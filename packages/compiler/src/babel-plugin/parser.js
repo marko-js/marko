@@ -7,9 +7,10 @@ import {
   parseParams,
   parseStatements,
   parseTemplateLiteral,
+  parseTypeArgs,
+  parseTypeParams,
   parseVar,
 } from "@marko/babel-utils";
-import { parseTypeArgs, parseTypeParams } from "@marko/babel-utils/src/parse";
 
 const noop = () => {};
 const emptyRange = (part) => part.start === part.end;
