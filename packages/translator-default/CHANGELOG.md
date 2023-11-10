@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.31.5
+
+### Patch Changes
+
+- [#2051](https://github.com/marko-js/marko/pull/2051) [`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add ts to ast
+
+- Updated dependencies [[`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c)]:
+  - @marko/babel-utils@6.3.2
+
 ## 5.31.4
 
 ### Patch Changes
