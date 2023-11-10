@@ -9,7 +9,7 @@ var registered = {};
 var instancesByType = {};
 var queue;
 
-runtime.t = function (typeName) {
+exports.t = runtime.t = function (typeName) {
   if (registered[typeName]) {
     return registered[typeName];
   }
@@ -113,5 +113,3 @@ function batchUpdate() {
     }
   });
 }
-
-module.exports = runtime;
