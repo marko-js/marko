@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.7
+
+### Patch Changes
+
+- [#2056](https://github.com/marko-js/marko/pull/2056) [`84f443d60`](https://github.com/marko-js/marko/commit/84f443d60539cc1b3382c6b16da4061070f97aca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when the Marko hot-reload runtime is loaded in native esm
+
 ## 5.33.6
 
 ### Patch Changes
