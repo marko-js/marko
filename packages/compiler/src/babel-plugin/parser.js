@@ -208,7 +208,7 @@ export function parseMarko(file) {
       );
     },
     onTagTypeParams(part) {
-      currentTag.node.typeParameters = parseTypeParams(
+      currentBody.node.typeParameters = parseTypeParams(
         file,
         parser.read(part.value),
         part.start,
