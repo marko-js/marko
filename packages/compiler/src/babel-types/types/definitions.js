@@ -147,7 +147,7 @@ const MarkoDefinitions = {
   MarkoTagBody: {
     aliases: ["Marko", "BlockParent", "Scope"],
     builder: ["body", "params"],
-    visitor: ["params", "body"],
+    visitor: ["typeParameters", "params", "body"],
     fields: {
       params: {
         validate: chain(
@@ -155,6 +155,10 @@ const MarkoDefinitions = {
           assertEach(assertNodeType("Identifier", "Pattern", "RestElement"))
         ),
         default: [],
+      },
+      typeParameters: {
+        validate: assertNodeType("TSTypeParameterDeclaration"),
+        optional: true,
       },
       body: {
         validate: arrayOfType([
@@ -173,7 +177,14 @@ const MarkoDefinitions = {
   MarkoTag: {
     aliases: ["Marko", "Statement"],
     builder: ["name", "attributes", "body", "arguments", "var"],
-    visitor: ["name", "attributes", "body", "arguments", "var"],
+    visitor: [
+      "name",
+      "typeArguments",
+      "attributes",
+      "body",
+      "arguments",
+      "var",
+    ],
     fields: {
       name: {
         validate: assertNodeType("Expression"),
@@ -193,17 +204,7 @@ const MarkoDefinitions = {
         optional: true,
       },
       typeArguments: {
-        validate: chain(
-          assertValueType("array"),
-          assertEach(assertNodeType("TypeAnnotation"))
-        ),
-        optional: true,
-      },
-      typeParameters: {
-        validate: chain(
-          assertValueType("array"),
-          assertEach(assertNodeType("TypeAnnotation"))
-        ),
+        validate: assertNodeType("TSTypeParameterInstantiation"),
         optional: true,
       },
       rawValue: {

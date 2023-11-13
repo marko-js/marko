@@ -193,12 +193,12 @@ Object.assign(Printer.prototype, {
       }
 
       if (node.body.params.length) {
-        if (node.typeParameters) {
+        if (node.body.typeParameters) {
           if (!node.typeArguments) {
             this.token(" ");
           }
           this.token("<");
-          this.printList(node.typeParameters.params, node);
+          this.printList(node.body.typeParameters.params, node);
           this.token(">");
         }
         this.token("|");
