@@ -26,6 +26,7 @@ export interface MarkoMeta {
   watchFiles: string[];
   tags?: string[];
   deps: Array<string | Dep | VirtualDep>;
+  analyzedTags?: [string, ...string[]];
   diagnostics: Diagnostic[];
 }
 
