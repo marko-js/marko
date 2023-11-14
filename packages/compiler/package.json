@@ -1,6 +1,6 @@
 {
   "name": "@marko/compiler",
-  "version": "5.33.7",
+  "version": "5.33.8",
   "description": "Marko template to JS compiler.",
   "keywords": [
     "babel",
@@ -45,7 +45,7 @@
     "@babel/runtime": "^7.16.0",
     "@babel/traverse": "^7.16.0",
     "@babel/types": "^7.16.0",
-    "@marko/babel-utils": "^6.3.3",
+    "@marko/babel-utils": "^6.3.4",
     "complain": "^1.6.0",
     "he": "^1.2.0",
     "htmljs-parser": "^5.4.3",
@@ -61,7 +61,7 @@
     "strip-json-comments": "^3.1.1"
   },
   "devDependencies": {
-    "@marko/translator-default": "^5.31.7"
+    "@marko/translator-default": "^5.31.8"
   },
   "publishConfig": {
     "access": "public"

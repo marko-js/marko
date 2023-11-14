@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.33.8
+
+### Patch Changes
+
+- [#2060](https://github.com/marko-js/marko/pull/2060) [`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose meta data about which child Marko templates were analyzed for a given compilation.
+
+- [#2059](https://github.com/marko-js/marko/pull/2059) [`aed88284b`](https://github.com/marko-js/marko/commit/aed88284b8b3c68965f70b6bdf9412c7100c5df5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix AST types
+
+- Updated dependencies [[`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36)]:
+  - @marko/babel-utils@6.3.4
+
 ## 5.33.7
 
 ### Patch Changes

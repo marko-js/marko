@@ -1,6 +1,6 @@
 {
   "name": "@marko/babel-utils",
-  "version": "6.3.3",
+  "version": "6.3.4",
   "description": "Utilities for use with Marko babel plugins.",
   "keywords": [
     "htmljs",
@@ -33,7 +33,7 @@
     "relative-import-path": "^1.0.0"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.33.6"
+    "@marko/compiler": "^5.33.8"
   },
   "publishConfig": {
     "access": "public"
