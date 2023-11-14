@@ -236,6 +236,14 @@ export function loadFileForTag(tag) {
   const filename = def && def.template;
 
   if (filename) {
+    const markoMeta = file.metadata.marko;
+    const { analyzedTags } = markoMeta;
+    if (analyzedTags) {
+      analyzedTags.push(filename);
+    } else {
+      markoMeta.analyzedTags = [filename];
+    }
+
     return file.___getMarkoFile(
       fs.readFileSync(filename).toString("utf-8"),
       createNewFileOpts(file.opts, filename),
@@ -253,6 +261,14 @@ export function loadFileForImport(file, request) {
       relativeRequest[0] === "."
         ? resolve(file.opts.filename, "..", relativeRequest)
         : resolveFrom(dirname(file.opts.filename), relativeRequest);
+    const markoMeta = file.metadata.marko;
+    const { analyzedTags } = markoMeta;
+    if (analyzedTags) {
+      analyzedTags.push(filename);
+    } else {
+      markoMeta.analyzedTags = [filename];
+    }
+
     return file.___getMarkoFile(
       fs.readFileSync(filename).toString("utf-8"),
       createNewFileOpts(file.opts, filename),
