@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.31.18
+
+### Patch Changes
+
+- [#2060](https://github.com/marko-js/marko/pull/2060) [`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose meta data about which child Marko templates were analyzed for a given compilation.
+
+- Updated dependencies [[`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36), [`aed88284b`](https://github.com/marko-js/marko/commit/aed88284b8b3c68965f70b6bdf9412c7100c5df5)]:
+  - @marko/compiler@5.33.8
+  - @marko/translator-default@5.31.8
+
 ## 5.31.17
 
 ### Patch Changes
