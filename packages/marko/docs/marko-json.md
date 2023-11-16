@@ -131,6 +131,7 @@ Similar to [`marko-tag.json`](#single-component-definition), this file is discov
 ```js
 {
   "taglib-id": "my-custom-tag-library", // Names the component library, for better errors.
+  "exports": "./dist", // Where to export the compiled components.
   "tags-dir": "./ui-modules", // What directory to crawl to autodiscover components. Default:`./components/`
   "taglib-imports": ["./some-folder/marko.json", "./other-folder/marko.json"], // Creates a _combined_ tag library by referencing others.
 
