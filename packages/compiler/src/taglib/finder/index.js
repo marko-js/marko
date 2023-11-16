@@ -120,7 +120,7 @@ function find(dirname, registeredTaglibs) {
           nodePath.join(name, "marko.json")
         );
         if (taglibPath) {
-          var taglib = taglibLoader.loadTaglibFromFile(taglibPath);
+          var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true);
           helper.addTaglib(taglib);
         }
       }
