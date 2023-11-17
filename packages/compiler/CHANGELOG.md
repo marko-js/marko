@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.0
+
+### Minor Changes
+
+- [#2062](https://github.com/marko-js/marko/pull/2062) [`436ace040`](https://github.com/marko-js/marko/commit/436ace040b73d11908911d60c10845b6e99e8eca) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add "exports" to marko.json
+
 ## 5.33.8
 
 ### Patch Changes
