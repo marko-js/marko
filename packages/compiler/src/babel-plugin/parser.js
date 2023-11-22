@@ -203,16 +203,16 @@ export function parseMarko(file) {
       currentTag.node.typeArguments = parseTypeArgs(
         file,
         parser.read(part.value),
-        part.start,
-        part.end
+        part.value.start,
+        part.value.end
       );
     },
     onTagTypeParams(part) {
       currentBody.node.typeParameters = parseTypeParams(
         file,
         parser.read(part.value),
-        part.start,
-        part.end
+        part.value.start,
+        part.value.end
       );
     },
     onPlaceholder(part) {
