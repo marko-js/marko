@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.1
+
+### Patch Changes
+
+- [#2064](https://github.com/marko-js/marko/pull/2064) [`5e294103f`](https://github.com/marko-js/marko/commit/5e294103f78642b8a44887a1569ffd0eabcf6821) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix sourcemaps
+
 ## 5.34.0
 
 ### Minor Changes
