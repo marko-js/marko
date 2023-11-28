@@ -1,4 +1,9 @@
-import { Context, pushContext, setContext } from "../common/context";
+import {
+  Context,
+  popContext,
+  pushContext,
+  setContext,
+} from "../common/context";
 import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
@@ -9,6 +14,8 @@ const reorderRuntimeString = String(reorderRuntime).replace(
   runtimeId
 );
 
+type PartialScope = Record<string | number, unknown> | unknown[];
+
 export interface Writable {
   write(data: string): void;
   end(): void;
@@ -16,67 +23,71 @@ export interface Writable {
   emit(name: string, data: unknown): void;
 }
 
-type PartialScope = Record<string | number, unknown> | unknown[];
-let $_buffer: Buffer | null = null;
-let $_stream: Writable | null = null;
-let $_flush: typeof flushToStream | null = null;
-let $_promises: Array<Promise<unknown> & { isPlaceholder?: true }> | null =
-  null;
+interface Buffer {
+  stream?: Writable;
+  pending: boolean;
+  flushed: boolean;
+  disabled: boolean;
+  next: Buffer | null;
+  prev: Buffer | null;
+  content: string;
+  calls: string;
+  scopes: Record<string, PartialScope> | null;
+  onAsync?: (complete: boolean, isPlaceholder?: boolean) => void;
+  onReject?: (err: Error) => void;
+}
 
-let $_streamData: {
+interface StreamData {
   scopeId: number;
   tagId: number;
   placeholderId: number;
   scopeLookup: Map<number, PartialScope>;
   runtimeFlushed: boolean;
   serializer?: Serializer;
-} | null = null;
-
-export function nextTagId() {
-  return "s" + $_streamData!.tagId++;
 }
 
-export function nextPlaceholderId() {
-  return $_streamData!.placeholderId++;
-}
+let $_buffer: Buffer | null = null;
+export let $_streamData: StreamData | null = null;
 
 export function createRenderFn(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];
-  return async (
+  return (
     stream: Writable,
     input: Input = {},
     context: Record<string, unknown> = {},
-    streamData: Partial<NonNullable<typeof $_streamData>> = {}
+    streamState: Partial<StreamData> = {}
   ) => {
-    $_buffer = createBuffer();
-    $_stream = stream;
-    $_flush = flushToStream;
-    $_streamData = streamData as typeof $_streamData;
-    streamData.scopeId ??= 0;
-    streamData.tagId ??= 0;
-    streamData.placeholderId ??= 0;
-    streamData.scopeLookup ??= new Map();
-    streamData.runtimeFlushed ??= false;
-    streamData.serializer ??= undefined;
+    let remainingChildren = 1;
+
+    const originalBuffer = $_buffer;
+    const originalStreamState = $_streamData;
+    const reject = (err: Error) => {
+      stream.emit("error", err);
+    };
+    const async = (complete: boolean) => {
+      remainingChildren += complete ? -1 : 1;
+      if (!remainingChildren) {
+        setImmediate(() => stream.end());
+      }
+    };
+
+    $_buffer = createInitialBuffer(stream);
+    $_streamData = createStreamState(streamState);
     pushContext("$", context);
 
-    try {
-      let renderedPromises: typeof $_promises;
-      try {
-        renderer(input);
-      } finally {
-        renderedPromises = $_promises;
-        $_flush();
-        clearScope();
-      }
+    $_buffer.onReject = reject;
+    $_buffer.onAsync = async;
 
-      if (renderedPromises) {
-        await Promise.all(renderedPromises);
-      }
+    try {
+      scheduleFlush();
+      renderer(input);
+      async(true);
     } catch (err) {
-      stream.emit("error", err);
+      reject(err as Error);
     } finally {
-      stream.end();
+      $_buffer = originalBuffer;
+      $_streamData = originalStreamState;
+      popContext();
     }
   };
 }
@@ -87,68 +98,157 @@ export function write(data: string) {
 
 const TARGET_BUFFER_SIZE = 64000;
 export function maybeFlush() {
-  if (
-    $_flush === flushToStream &&
-    $_buffer!.content.length > TARGET_BUFFER_SIZE
-  ) {
-    flushToStream();
+  if (!$_buffer!.prev && $_buffer!.content.length > TARGET_BUFFER_SIZE) {
+    // TODO: figure out if we can do this
+    // The idea is to flush in a `<for>` if the buffer gets too large.
+    //
+    // However, a synchronous flush will break the owner scope reference
+    //   as things are currently implemented: the owner scope object will
+    //   not have been created if you flush in a scope that closes over it
+    // However, a scheduled flush will be too late:
+    //   the entire contents of the `<for>` will have been written
+    //   by the time the flush occurs defeating the purpose
+    // Additionally, because we aren't eagerly merging buffers,
+    //   buffer.content.length isn't necessarily 100% accurate
   }
 }
 
-function flushToStream() {
-  writeResumeScript();
-  $_stream!.write($_buffer!.content);
-  if ($_stream!.flush) {
-    $_stream!.flush();
+export function scheduleFlush() {
+  const buffer = $_buffer!;
+  const streamState = $_streamData!;
+  if (!buffer.prev) {
+    setImmediate(() => flushToStream(buffer, streamState));
   }
-  clearBuffer($_buffer!);
+}
+
+function flushToStream(buffer: Buffer, streamState: StreamData) {
+  while (buffer.prev) buffer = buffer.prev;
+  if (buffer.disabled) return;
+
+  const stream = buffer.stream!;
+
+  let { content, calls, scopes } = buffer;
+  buffer.flushed = true;
+  while (!buffer.pending && buffer.next) {
+    // TODO: we shouldn't need to clear here
+    clearBuffer(buffer);
+    buffer = buffer.next;
+    buffer.prev = null;
+    buffer.flushed = true;
+    content += buffer.content;
+    calls += buffer.calls;
+    if (buffer.scopes) {
+      if (scopes) {
+        Object.assign(scopes, buffer.scopes);
+      } else {
+        scopes = buffer.scopes;
+      }
+    }
+  }
+  const data = content + getResumeScript(calls, scopes, streamState);
+
+  if (data) {
+    stream.write(data);
+    stream.flush?.();
+  }
+
+  // TODO: we should only have to call clearBuffer if the buffer is pending
+  // (which means it will flush again in the future). Otherwise, it can just
+  // be garbage collected.
+  clearBuffer(buffer);
+}
+
+function createStreamState(state: Partial<StreamData>): StreamData {
+  state.scopeId ??= 0;
+  state.tagId ??= 0;
+  state.placeholderId ??= 0;
+  state.scopeLookup ??= new Map();
+  state.runtimeFlushed ??= false;
+  return state as StreamData;
+}
+
+function createNextBuffer(prevBuffer: Buffer): Buffer {
+  const newBuffer = {
+    stream: prevBuffer.stream,
+    pending: false,
+    flushed: false,
+    disabled: false,
+    prev: prevBuffer,
+    next: prevBuffer?.next ?? null,
+    content: "",
+    calls: "",
+    scopes: null,
+    onReject: prevBuffer.onReject,
+    onAsync: prevBuffer.onAsync,
+  };
+  if (prevBuffer.next) {
+    prevBuffer.next.prev = prevBuffer;
+  }
+  prevBuffer.next = newBuffer;
+  return newBuffer;
+}
+
+function createDetatchedBuffer(parentBuffer: Buffer): Buffer {
+  return {
+    stream: parentBuffer.stream,
+    pending: false,
+    flushed: false,
+    disabled: true,
+    prev: null,
+    next: null,
+    content: "",
+    calls: "",
+    scopes: null,
+    onReject: parentBuffer.onReject,
+    onAsync: parentBuffer.onAsync,
+  };
+}
+
+function createInitialBuffer(stream: Writable): Buffer {
+  return {
+    stream,
+    pending: false,
+    flushed: false,
+    disabled: false,
+    prev: null,
+    next: null,
+    content: "",
+    calls: "",
+    scopes: null,
+    onReject: undefined,
+    onAsync: undefined,
+  };
 }
 
 export function fork<T>(
   promise: Promise<T>,
   renderResult: (result: T) => void
 ) {
-  $_flush!();
-
-  let resolved = false;
-  let targetFlush = $_flush!;
-  const forkedBuffer = createBuffer();
-
-  $_promises = $_promises || [];
-  $_promises.push(
-    resolveWithScope(
-      promise,
-      (result) => {
-        resolved = true;
-        try {
-          renderResult(result);
-        } finally {
-          mergeBuffers(forkedBuffer, $_buffer!);
-          if ($_promises) {
-            const originalTargetFlush = targetFlush;
-            targetFlush = $_flush!;
-            Promise.all($_promises).then(
-              () => (targetFlush = originalTargetFlush)
-            );
-          }
-        }
-      },
-      (err) => {
-        resolved = true;
-        $_buffer = forkedBuffer;
-        $_flush = targetFlush;
-        throw err;
+  resolveWithScope(
+    promise,
+    (result) => {
+      try {
+        $_buffer!.pending = false;
+        renderResult(result);
+      } catch (err) {
+        $_buffer!.onReject?.(err as Error);
+      } finally {
+        $_buffer!.onAsync?.(true);
       }
-    )
+    },
+    (err) => {
+      try {
+        $_buffer!.onReject?.(err);
+      } finally {
+        $_buffer!.onAsync?.(true);
+      }
+    }
   );
 
-  $_flush = () => {
-    if (resolved) {
-      targetFlush();
-    } else {
-      mergeBuffers($_buffer!, forkedBuffer);
-    }
-  };
+  scheduleFlush();
+  $_buffer!.pending = true;
+  $_buffer!.onAsync?.(false);
+  $_buffer = createNextBuffer($_buffer!);
 }
 
 export function tryCatch(
@@ -158,45 +258,44 @@ export function tryCatch(
   const id = nextPlaceholderId();
   let err: Error | null = null;
 
-  const originalPromises = $_promises;
   const originalBuffer = $_buffer!;
-  const originalFlush = $_flush!;
-  const tryBuffer = createBuffer();
+  const tryBuffer = createDetatchedBuffer(originalBuffer);
+  let finalTryBuffer: Buffer;
 
-  $_flush = () => {
-    $_buffer = originalBuffer;
-    $_flush = originalFlush;
-    markReplaceStart(id);
-    mergeBuffers(tryBuffer, $_buffer);
-    $_flush();
+  tryBuffer.onReject = (asyncErr) => {
+    const errorBuffer = createDetatchedBuffer(originalBuffer);
+    $_buffer = errorBuffer;
+    renderError(asyncErr);
+    const finalErrorBuffer = $_buffer;
+    replaceBuffers(
+      id,
+      tryBuffer,
+      finalTryBuffer,
+      errorBuffer,
+      finalErrorBuffer
+    );
   };
 
   try {
     $_buffer = tryBuffer;
-    $_promises = null;
     renderBody();
   } catch (_err) {
     err = _err as Error;
   } finally {
-    const childPromises = $_promises;
-    $_promises = originalPromises;
-
     if (err) {
       $_buffer = originalBuffer;
-      $_flush = originalFlush;
       renderError(err);
-    } else if (!childPromises) {
-      $_buffer = originalBuffer;
-      $_flush = originalFlush;
-      mergeBuffers(tryBuffer, $_buffer);
     } else {
-      markReplaceEnd(id);
-      $_promises = $_promises || [];
-      $_promises.push(
-        resolveWithScope(Promise.all(childPromises), null, (asyncErr) => {
-          renderReplacement(renderError, asyncErr, id);
-        })
-      );
+      tryBuffer.disabled = false;
+      originalBuffer.next = tryBuffer;
+      tryBuffer.prev = originalBuffer;
+      if ($_buffer !== tryBuffer) {
+        tryBuffer.content = `<!${marker(id)}>` + tryBuffer.content;
+        markReplaceEnd(id);
+        finalTryBuffer = $_buffer!;
+        $_buffer = createNextBuffer(finalTryBuffer);
+      }
+      $_buffer.onReject = originalBuffer.onReject;
     }
   }
 }
@@ -206,73 +305,110 @@ export function tryPlaceholder(
   renderPlaceholder: () => void
 ) {
   const originalBuffer = $_buffer!;
-  const originalPromises = $_promises;
-  const originalFlush = $_flush!;
-  const asyncBuffer = createBuffer();
+  const asyncBuffer = createDetatchedBuffer(originalBuffer);
+  let id: number,
+    placeholderBuffer: Buffer,
+    finalPlaceholderBuffer: Buffer,
+    finalAsyncBuffer: Buffer;
+  let remainingChildren = 0;
+  let remainingPlaceholders = 0;
 
-  let resolved = false;
-  const targetFlush = originalFlush;
-  $_flush = () => {
-    if (resolved) {
-      targetFlush();
+  asyncBuffer.onAsync = (complete: boolean, isPlaceholder?: boolean) => {
+    const delta = complete ? -1 : 1;
+    if (isPlaceholder) {
+      remainingPlaceholders += delta;
     } else {
-      mergeBuffers($_buffer!, asyncBuffer);
+      remainingChildren += delta;
     }
-  };
-  $_buffer = createBuffer();
-  $_promises = null;
-
-  renderBody();
-  $_flush();
-
-  const childPromises = $_promises!;
-  $_buffer = originalBuffer;
-  $_promises = originalPromises;
-  $_flush = originalFlush;
-
-  if (childPromises) {
-    const contentPromises: Array<Promise<unknown>> = [];
-    const placeholderPromises: Array<
-      Promise<unknown> & { isPlaceholder: true }
-    > = [];
-    for (const promise of childPromises) {
-      if (promise.isPlaceholder) {
-        placeholderPromises.push(
-          promise as Promise<unknown> & {
-            isPlaceholder: true;
-          }
+    if (!remainingChildren) {
+      if (!isPlaceholder) {
+        // last child has finished, replace the placeholder
+        // however, the replacement content may contain its own placeholder(s)
+        replaceBuffers(
+          id,
+          placeholderBuffer,
+          finalPlaceholderBuffer,
+          asyncBuffer,
+          finalAsyncBuffer
         );
-      } else {
-        contentPromises.push(promise);
+      }
+      if (!remainingPlaceholders) {
+        // all async content under this placeholder is complete
+        originalBuffer.onAsync?.(true, true);
       }
     }
+  };
 
-    if (placeholderPromises.length) {
-      ($_promises = originalPromises || []).push(...placeholderPromises);
-    } else {
-      $_promises = originalPromises;
-    }
+  $_buffer = asyncBuffer;
+  renderBody();
 
-    if (contentPromises.length) {
-      const id = nextPlaceholderId();
-      $_promises = $_promises || [];
-      $_promises.push(
-        Object.assign(
-          resolveWithScope(Promise.all(contentPromises), () => {
-            resolved = true;
-            renderReplacement(mergeBuffers, asyncBuffer, id);
-          }),
-          { isPlaceholder: true } as const
-        )
-      );
-      markReplaceStart(id);
-      renderPlaceholder();
-      markReplaceEnd(id);
-      return;
-    }
+  if ($_buffer === asyncBuffer) {
+    originalBuffer.next = asyncBuffer;
+    asyncBuffer.prev = originalBuffer;
+    asyncBuffer.disabled = false;
+    asyncBuffer.onAsync = originalBuffer.onAsync;
+  } else {
+    id = nextPlaceholderId();
+    placeholderBuffer = createNextBuffer(originalBuffer);
+    finalAsyncBuffer = $_buffer;
+    $_buffer = placeholderBuffer;
+    markReplaceStart(id);
+    renderPlaceholder();
+    markReplaceEnd(id);
+    finalPlaceholderBuffer = $_buffer;
+    $_buffer = createNextBuffer(finalPlaceholderBuffer);
+    originalBuffer.onAsync?.(false, true);
   }
+}
 
-  mergeBuffers(asyncBuffer, originalBuffer);
+function resolveWithScope<T>(
+  promise: Promise<T>,
+  onResolve: null | ((r: T) => unknown),
+  onReject?: (e: Error) => unknown
+) {
+  const originalBuffer = $_buffer;
+  const originalStreamState = $_streamData;
+  const originalContext = Context;
+
+  return promise.then(
+    onResolve &&
+      ((result) => {
+        $_streamData = originalStreamState;
+        $_buffer = originalBuffer;
+        scheduleFlush();
+
+        try {
+          setContext(originalContext);
+          onResolve(result);
+        } finally {
+          clearScope();
+        }
+      }),
+    onReject &&
+      ((error) => {
+        $_streamData = originalStreamState;
+        $_buffer = originalBuffer;
+        scheduleFlush();
+
+        try {
+          setContext(originalContext);
+          onReject(error);
+        } finally {
+          clearScope();
+        }
+      })
+  );
+}
+
+function clearBuffer(buffer: Buffer) {
+  buffer.content = "";
+  buffer.calls = "";
+  buffer.scopes = null;
+}
+
+function clearScope() {
+  $_buffer = $_streamData = null;
+  setContext(null);
 }
 
 /* Async */
@@ -285,15 +421,61 @@ export function markReplaceEnd(id: number) {
   return ($_buffer!.content += `<!${marker(id)}/>`);
 }
 
-function renderReplacement<T>(render: (data: T) => void, data: T, id: number) {
+function replaceBuffers(
+  id: number,
+  placeholderStart: Buffer,
+  placeholderEnd: Buffer,
+  replacementStart: Buffer,
+  replacementEnd: Buffer
+) {
+  if (placeholderStart.flushed) {
+    addReplacementWrapper(id, replacementStart, replacementEnd);
+
+    let next: Buffer | null = placeholderEnd.next;
+    if (placeholderEnd.flushed) {
+      while (next && !next.pending && next.flushed) {
+        next = next.next;
+      }
+    } else {
+      // TODO: ensure the remaining original content cannot flush
+    }
+
+    if (next) {
+      replacementStart.next = next;
+      next.prev = replacementEnd;
+    }
+
+    $_buffer = replacementStart;
+    scheduleFlush();
+  } else {
+    const prev = placeholderStart.prev;
+    const next = placeholderEnd.next;
+    if (prev) {
+      prev.next = replacementStart;
+      replacementStart.prev = prev;
+    }
+    if (next) {
+      next.prev = replacementEnd;
+      replacementEnd.next = next;
+    }
+  }
+
+  replacementStart.disabled = false;
+}
+
+function addReplacementWrapper(
+  id: number,
+  replacementStart: Buffer,
+  replacementEnd: Buffer
+) {
   let runtimeCall = runtimeId + ResumeSymbols.VAR_REORDER_RUNTIME;
   if (!$_streamData!.runtimeFlushed) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
     $_streamData!.runtimeFlushed = true;
   }
-  $_buffer!.content += `<t id="${marker(id)}">`;
-  render(data);
-  $_buffer!.content += `</t><script>${runtimeCall}(${id})</script>`;
+  replacementStart.content =
+    `<t id="${marker(id)}">` + replacementStart.content;
+  replacementEnd.content += `</t><script>${runtimeCall}(${id})</script>`;
 }
 
 function marker(id: number) {
@@ -301,6 +483,14 @@ function marker(id: number) {
 }
 
 /* Hydration */
+
+export function nextTagId() {
+  return "s" + $_streamData!.tagId++;
+}
+
+export function nextPlaceholderId() {
+  return $_streamData!.placeholderId++;
+}
 
 export function nextScopeId() {
   return $_streamData!.scopeId++;
@@ -317,7 +507,10 @@ export function writeEffect(scopeId: number, fnId: string) {
 export function writeScope(
   scopeId: number,
   scope: PartialScope,
-  assignTo?: PartialScope | PartialScope[]
+  assignTo:
+    | PartialScope
+    | PartialScope[]
+    | undefined = $_streamData!.scopeLookup.get(scopeId)
 ) {
   if (assignTo !== undefined) {
     if (Array.isArray(assignTo)) {
@@ -356,106 +549,24 @@ export function markResumeControlSingleNodeEnd(
   }${scopeId} ${index} ${childScopeIds ?? ""}>`;
 }
 
-function writeResumeScript() {
-  if ($_buffer!.calls || $_buffer!.scopes) {
+function getResumeScript(
+  calls: string,
+  scopes: Buffer["scopes"],
+  streamState: StreamData
+) {
+  if (calls || scopes) {
     let isFirstFlush;
-    let serializer = $_streamData!.serializer;
+    let serializer = streamState.serializer;
     if ((isFirstFlush = !serializer)) {
-      serializer = $_streamData!.serializer = new Serializer(
-        $_streamData!.scopeLookup
+      serializer = streamState.serializer = new Serializer(
+        streamState.scopeLookup
       );
     }
-    $_buffer!.content += `<script>${
+    return `<script>${
       isFirstFlush
         ? `(${runtimeId + ResumeSymbols.VAR_RESUME}=[])`
         : runtimeId + ResumeSymbols.VAR_RESUME
-    }.push(${serializer.stringify($_buffer!.scopes)},[${
-      $_buffer!.calls
-    }])</script>`;
+    }.push(${serializer.stringify(scopes)},[${calls}])</script>`;
   }
-}
-
-interface Buffer {
-  content: string;
-  calls: string;
-  scopes: Record<string, PartialScope> | null;
-}
-
-function createBuffer() {
-  return {
-    content: "",
-    calls: "",
-    scopes: null,
-  } as Buffer;
-}
-
-function mergeBuffers(source: Buffer, target: Buffer = $_buffer!) {
-  target.content += source.content;
-  target.calls += source.calls;
-  if (source.scopes) {
-    if (target.scopes) {
-      Object.assign(target.scopes, source.scopes);
-    } else {
-      target.scopes = source.scopes;
-    }
-  }
-  clearBuffer(source);
-}
-
-function clearBuffer(buffer: Buffer) {
-  buffer.content = "";
-  buffer.calls = "";
-  buffer.scopes = null;
-}
-
-function clearScope() {
-  $_buffer = $_promises = $_stream = $_flush = $_streamData = null;
-  setContext(null);
-}
-
-function resolveWithScope<T>(
-  promise: Promise<T>,
-  onResolve: null | ((r: T) => unknown),
-  onReject?: (e: Error) => unknown
-) {
-  const originalStream = $_stream;
-  const originalBuffer = $_buffer;
-  const originalFlush = $_flush;
-  const originalIds = $_streamData;
-  const originalContext = Context;
-
-  return promise.then(
-    onResolve &&
-      ((result) => {
-        $_stream = originalStream;
-        $_buffer = originalBuffer;
-        $_flush = originalFlush;
-        $_streamData = originalIds;
-
-        try {
-          setContext(originalContext);
-          onResolve(result);
-          return $_promises && Promise.all($_promises);
-        } finally {
-          $_flush!();
-          clearScope();
-        }
-      }),
-    onReject &&
-      ((error) => {
-        $_stream = originalStream;
-        $_buffer = originalBuffer;
-        $_flush = originalFlush;
-        $_streamData = originalIds;
-
-        try {
-          setContext(originalContext);
-          onReject(error);
-          return $_promises && Promise.all($_promises);
-        } finally {
-          $_flush!();
-          clearScope();
-        }
-      })
-  );
+  return "";
 }

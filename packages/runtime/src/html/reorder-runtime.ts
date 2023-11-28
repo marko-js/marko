@@ -44,6 +44,7 @@ export default function (
   refNode = (walker as any)[id + "/"];
 
   while (
+    targetNode &&
     ((nextNode = targetNode!.nextSibling),
     targetParent.removeChild(targetNode!) !== refNode)
   ) {

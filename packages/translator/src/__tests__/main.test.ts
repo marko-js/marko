@@ -169,35 +169,42 @@ describe("translator-tags", () => {
 
         const tracker = createMutationTracker(browser.window, document);
 
-        await serverTemplate.writeTo(
-          {
-            write(data: string) {
-              buffer += data;
-              tracker.log(
-                `# Write\n${indent(
-                  data.replace(reorderRuntimeString, "REORDER_RUNTIME")
-                )}`
-              );
+        await new Promise<void>((resolve) =>
+          serverTemplate.writeTo(
+            {
+              write(data: string) {
+                buffer += data;
+                tracker.log(
+                  `# Write\n${indent(
+                    data.replace(reorderRuntimeString, "REORDER_RUNTIME")
+                  )}`
+                );
+              },
+              flush() {
+                // tracker.logUpdate("Flush");
+                // document.write(buffer);
+                // buffer = "";
+              },
+              end(data?: string) {
+                document.write(buffer + (data || ""));
+                document.close();
+                tracker.logUpdate("End");
+                resolve();
+              },
+              emit(type: string, ...args: unknown[]) {
+                // console.log(...args);
+                tracker.log(
+                  `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+                );
+                if (type === "error") {
+                  document.close();
+                  resolve();
+                }
+              },
             },
-            flush() {
-              // tracker.logUpdate("Flush");
-              // document.write(buffer);
-              // buffer = "";
-            },
-            end(data?: string) {
-              document.write(buffer + (data || ""));
-              document.close();
-              tracker.logUpdate("End");
-            },
-            emit(type: string, ...args: unknown[]) {
-              // console.log(...args);
-              tracker.log(
-                `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
-              );
-            },
-          },
-          input,
-          config.context
+            input,
+            config.context
+          )
         );
 
         tracker.cleanup();

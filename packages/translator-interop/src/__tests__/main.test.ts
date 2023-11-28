@@ -141,7 +141,7 @@ describe("translator-interop", () => {
         document.open();
 
         const tracker = createMutationTracker(browser.window, document);
-        const writable = {
+        const writable = (resolve?: () => void) => ({
           write(data: string) {
             buffer += data;
             tracker.log(
@@ -161,19 +161,26 @@ describe("translator-interop", () => {
             );
             document.close();
             tracker.logUpdate("End");
+            resolve?.();
           },
           emit(type: string, ...args: unknown[]) {
             console.log(...args);
             tracker.log(
               `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
             );
+            if (type === "error") {
+              document.close();
+              resolve?.();
+            }
           },
-        };
+        });
 
         if (serverTemplate.writeTo) {
-          await serverTemplate.writeTo(writable, input, config.context);
+          await new Promise<void>((resolve) =>
+            serverTemplate.writeTo(writable(resolve), input, config.context)
+          );
         } else {
-          await serverTemplate.render(input, writable);
+          await serverTemplate.render(input, writable());
         }
 
         tracker.cleanup();

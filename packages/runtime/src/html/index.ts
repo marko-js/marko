@@ -25,6 +25,7 @@ export {
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   createRenderFn,
+  $_streamData,
 } from "./writer";
 
 export { createTemplate } from "./template";
