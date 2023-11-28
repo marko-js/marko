@@ -86,7 +86,7 @@ patchDynamicTag(
       if (renderer5) {
         renderer5(input, out);
       } else {
-        renderBody5(out);
+        renderBody5(out, ...input.value);
       }
 
       const componentsContext = ___getComponentsContext(out);
