@@ -145,16 +145,7 @@ export default {
             callRuntime(
               "createRenderer",
               t.arrowFunctionExpression(
-                renderBodyProp.params.length
-                  ? [
-                      t.objectPattern([
-                        t.objectProperty(
-                          t.identifier("value"),
-                          t.arrayPattern(renderBodyProp.params)
-                        ),
-                      ]),
-                    ]
-                  : [],
+                renderBodyProp.params,
                 toFirstExpressionOrBlock(renderBodyProp.body)
               )
             )

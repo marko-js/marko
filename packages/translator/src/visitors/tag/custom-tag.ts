@@ -144,16 +144,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
             callRuntime(
               "createRenderer",
               t.arrowFunctionExpression(
-                renderBodyProp.params.length
-                  ? [
-                      t.objectPattern([
-                        t.objectProperty(
-                          t.identifier("value"),
-                          t.arrayPattern(renderBodyProp.params)
-                        ),
-                      ]),
-                    ]
-                  : [],
+                renderBodyProp.params,
                 renderBodyProp.body
               )
             )
