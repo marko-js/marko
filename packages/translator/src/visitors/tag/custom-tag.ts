@@ -69,6 +69,7 @@ export default {
 
       if (hasInteractiveChild) {
         (currentProgramPath.node.extra ?? {}).hasInteractiveChild = true;
+        // TODO: should check individual inputs to see if they are intersecting with state
       }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {

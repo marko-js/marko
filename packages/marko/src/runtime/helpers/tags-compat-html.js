@@ -16,9 +16,12 @@ const {
   nextScopeId,
 } = tagsAPI;
 
-// const w10NOOP = require("warp10/constants").NOOP;
+const w10NOOP = require("warp10/constants").NOOP;
 const RENDER_BODY_TO_JSON = function () {
-  return { ___isTagsAPI: true };
+  // TODO: this should instead return an object that contains getRegistryInfo
+  // then in the dom-compat, handle that object to lookup the function in the registry
+  // (we also need to do this for events)
+  return w10NOOP;
 };
 
 const isMarko6 = (fn) => !!fn.___isTagsAPI;
@@ -32,7 +35,7 @@ export default dynamicTag5.___runtimeCompat = function tagsToVdom(
   if (tagsRenderer ? isMarko5(tagsRenderer) : isMarko5(renderBody))
     return tagsRenderer;
 
-  if (renderBody) {
+  if (!tagsRenderer && renderBody) {
     renderBody.toJSON = RENDER_BODY_TO_JSON;
   }
 

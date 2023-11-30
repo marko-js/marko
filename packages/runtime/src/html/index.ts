@@ -30,6 +30,11 @@ export {
 
 export { createTemplate } from "./template";
 
-export { register, makeSerializable, serializedScope } from "./serializer";
+export {
+  register,
+  makeSerializable,
+  serializedScope,
+  getRegistryInfo,
+} from "./serializer";
 
 export { pushContext, popContext, getInContext } from "../common/context";

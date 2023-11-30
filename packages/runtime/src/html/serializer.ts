@@ -39,6 +39,10 @@ export function register<T>(
   return entry as Serializable<T>;
 }
 
+export function getRegistryInfo(entry: Serializable<unknown>) {
+  return [entry[SYMBOL_REGISTRY_ID], entry[SYMBOL_SCOPE]];
+}
+
 export function makeSerializable<T>(
   object: T,
   serialize: (s: Serializer, accessor: string | number) => void
