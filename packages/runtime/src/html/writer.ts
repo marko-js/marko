@@ -220,35 +220,37 @@ function createInitialBuffer(stream: Writable): Buffer {
   };
 }
 
-export function fork<T>(
+export async function fork<T>(
   promise: Promise<T>,
   renderResult: (result: T) => void
 ) {
-  resolveWithScope(
-    promise,
-    (result) => {
-      try {
-        $_buffer!.pending = false;
-        renderResult(result);
-      } catch (err) {
-        $_buffer!.onReject?.(err as Error);
-      } finally {
-        $_buffer!.onAsync?.(true);
-      }
-    },
-    (err) => {
-      try {
-        $_buffer!.onReject?.(err);
-      } finally {
-        $_buffer!.onAsync?.(true);
-      }
-    }
-  );
+  const originalBuffer = $_buffer!;
+  const originalStreamState = $_streamData!;
+  const originalContext = Context;
 
   scheduleFlush();
   $_buffer!.pending = true;
   $_buffer!.onAsync?.(false);
   $_buffer = createNextBuffer($_buffer!);
+
+  try {
+    let result;
+    try {
+      result = await promise;
+      originalBuffer!.pending = false;
+    } finally {
+      $_buffer = originalBuffer;
+      $_streamData = originalStreamState;
+      setContext(originalContext);
+      scheduleFlush();
+    }
+    renderResult(result);
+  } catch (err) {
+    $_buffer!.onReject?.(err as Error);
+  } finally {
+    $_buffer!.onAsync?.(true);
+    clearScope();
+  }
 }
 
 export function tryCatch(
@@ -359,45 +361,6 @@ export function tryPlaceholder(
     $_buffer = createNextBuffer(finalPlaceholderBuffer);
     originalBuffer.onAsync?.(false, true);
   }
-}
-
-function resolveWithScope<T>(
-  promise: Promise<T>,
-  onResolve: null | ((r: T) => unknown),
-  onReject?: (e: Error) => unknown
-) {
-  const originalBuffer = $_buffer;
-  const originalStreamState = $_streamData;
-  const originalContext = Context;
-
-  return promise.then(
-    onResolve &&
-      ((result) => {
-        $_streamData = originalStreamState;
-        $_buffer = originalBuffer;
-        scheduleFlush();
-
-        try {
-          setContext(originalContext);
-          onResolve(result);
-        } finally {
-          clearScope();
-        }
-      }),
-    onReject &&
-      ((error) => {
-        $_streamData = originalStreamState;
-        $_buffer = originalBuffer;
-        scheduleFlush();
-
-        try {
-          setContext(originalContext);
-          onReject(error);
-        } finally {
-          clearScope();
-        }
-      })
-  );
 }
 
 function clearBuffer(buffer: Buffer) {
