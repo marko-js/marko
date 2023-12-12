@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.1
+
+### Patch Changes
+
+- [#2067](https://github.com/marko-js/marko/pull/2067) [`ea859a547`](https://github.com/marko-js/marko/commit/ea859a547972be7a2fde6688890023c5bc85bc16) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Simplify the typings of Marko.NativeTags to work better across typescript versions.
+
 ## 5.32.0
 
 ### Minor Changes
