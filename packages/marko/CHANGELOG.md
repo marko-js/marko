@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.32.2
+
+### Patch Changes
+
+- [#2069](https://github.com/marko-js/marko/pull/2069) [`977d69078`](https://github.com/marko-js/marko/commit/977d690784f1d97acb3494bb822fa852c1380685) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with printing variable declarations with multiple variables.
+
+- Updated dependencies [[`977d69078`](https://github.com/marko-js/marko/commit/977d690784f1d97acb3494bb822fa852c1380685)]:
+  - @marko/translator-default@5.31.9
+  - @marko/compiler@5.34.2
+
 ## 5.32.1
 
 ### Patch Changes
