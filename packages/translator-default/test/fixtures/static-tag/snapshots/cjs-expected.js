@@ -12,6 +12,8 @@ exports.default = _default;
 var foo = 123;
 function bar() {}
 var baz = 456;
+let x = 1,
+  y = 2;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {}, {
   t: _marko_componentType,
