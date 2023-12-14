@@ -1,8 +1,8 @@
 export interface Input<T> {
   value: readonly [T];
-  then?: { renderBody: Marko.Body<[Awaited<T>]> };
-  catch?: { renderBody: Marko.Body<[unknown]> };
-  placeholder?: { renderBody: Marko.Body };
+  then?: Marko.AttrTag<{ renderBody: Marko.Body<[Awaited<T>]> }>;
+  catch?: Marko.AttrTag<{ renderBody: Marko.Body<[unknown]> }>;
+  placeholder?: Marko.AttrTag<{ renderBody: Marko.Body }>;
   "client-reorder"?: boolean;
   name?: string;
   timeout?: number;
