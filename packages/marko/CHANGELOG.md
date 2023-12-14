@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.32.3
+
+### Patch Changes
+
+- [#2071](https://github.com/marko-js/marko/pull/2071) [`652b7aa16`](https://github.com/marko-js/marko/commit/652b7aa1608ace877e713ce43486fca1b0a0400b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for onsecuritypolicyviolation native attribute.
+
+- [#2071](https://github.com/marko-js/marko/pull/2071) [`652b7aa16`](https://github.com/marko-js/marko/commit/652b7aa1608ace877e713ce43486fca1b0a0400b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for <await> tag attribute tags.
+
 ## 5.32.2
 
 ### Patch Changes
