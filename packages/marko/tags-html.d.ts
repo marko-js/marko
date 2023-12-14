@@ -3202,7 +3202,7 @@ declare global {
         T
       >;
       "on-securitypolicyviolation"?: this["onSecurityPolicyViolation"];
-      onsecuritypolicyviolation?: Attrstring;
+      onsecuritypolicyviolation?: AttrString;
 
       /**
        * Fired when a seek operation on a media element completes.
