@@ -222,6 +222,9 @@ class TaglibLoader {
       }
     }
   }
+  scriptLang() {
+    // Marko 4 doesn't read script-lang, but it shouldn't break the app
+  }
   tagsDir(dir) {
     // The "tags-dir" property is used to supporting scanning
     // of a directory to discover custom tags. Scanning a directory
