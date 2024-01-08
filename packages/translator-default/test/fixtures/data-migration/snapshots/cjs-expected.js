@@ -10,8 +10,7 @@ var _renderer = _interopRequireDefault(require("marko/src/runtime/components/ren
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/data-migration/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
-var _default = _marko_template;
-exports.default = _default;
+var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   (0, _renderTag.default)(_test2.default, {
