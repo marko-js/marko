@@ -14,8 +14,8 @@ export default function (path) {
     path.replaceWith(
       withPreviousLocation(
         write(method, value, path.hub.file._componentInstanceIdentifier),
-        node
-      )
+        node,
+      ),
     );
   }
 }

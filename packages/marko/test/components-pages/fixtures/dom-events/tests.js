@@ -17,7 +17,7 @@ function triggerMouseEvent(el, type) {
     false,
     false /* modifier keys */,
     0 /*left*/,
-    null
+    null,
   );
   el.dispatchEvent(ev);
 }
@@ -33,7 +33,7 @@ it("should invoke event handler method for non-bubbling events", function () {
 
   expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("mousemove");
   expect(window.fooComponent.mouseMoveEvent[1]).to.equal(
-    window.fooComponent.getEl("button")
+    window.fooComponent.getEl("button"),
   );
 });
 
@@ -46,7 +46,7 @@ it("should invoke event handler method for non-bubbling events with extra args",
   expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("ok");
   expect(window.fooComponent.mouseMoveEvent[1].type).to.equal("mousemove");
   expect(window.fooComponent.mouseMoveEvent[2]).to.equal(
-    window.fooComponent.getEl("ok")
+    window.fooComponent.getEl("ok"),
   );
 
   triggerMouseEvent(window.fooComponent.getEl("cancel"), "mousemove");
@@ -55,7 +55,7 @@ it("should invoke event handler method for non-bubbling events with extra args",
   expect(window.fooComponent.mouseMoveEvent[0].type).to.equal("cancel");
   expect(window.fooComponent.mouseMoveEvent[1].type).to.equal("mousemove");
   expect(window.fooComponent.mouseMoveEvent[2]).to.equal(
-    window.fooComponent.getEl("cancel")
+    window.fooComponent.getEl("cancel"),
   );
 });
 
@@ -65,7 +65,7 @@ it("should invoke event handler method for bubbling events", function () {
   expect(window.fooComponent.clickEvent != null).to.equal(true);
   expect(window.fooComponent.clickEvent[0].type).to.equal("click");
   expect(window.fooComponent.clickEvent[1]).to.equal(
-    window.fooComponent.getEl("button")
+    window.fooComponent.getEl("button"),
   );
 });
 

@@ -20,7 +20,7 @@ it("should allow a root element to not be updated", function () {
   var noUpdateComponent = app.getComponent("no-update-el");
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server"
+    "server",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
@@ -31,7 +31,7 @@ it("should allow a root element to not be updated", function () {
   noUpdateComponent.update();
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server"
+    "server",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 });
@@ -41,7 +41,7 @@ it("should allow a nested element to not be updated", function () {
   var noUpdateComponent = app.getComponent("no-update-el-nested");
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server"
+    "server",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
@@ -52,7 +52,7 @@ it("should allow a nested element to not be updated", function () {
   noUpdateComponent.update();
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server"
+    "server",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 });
@@ -62,7 +62,7 @@ it("should allow a body element to not be updated", function () {
   var noUpdateComponent = app.getComponent("no-update-body-el");
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "server"
+    "server",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 
@@ -73,7 +73,7 @@ it("should allow a body element to not be updated", function () {
   noUpdateComponent.update();
 
   expect(noUpdateComponent.getNoUpdateEl().getAttribute("data-foo")).to.equal(
-    "browser"
+    "browser",
   );
   expect(noUpdateComponent.getNoUpdateEl().innerHTML).to.equal("server");
 });

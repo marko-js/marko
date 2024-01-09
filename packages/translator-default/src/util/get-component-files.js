@@ -20,7 +20,7 @@ export default function getComponentFiles({ hub: { file } }) {
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
   const splitComponentMatch = new RegExp(
-    `^${fileMatch}component-browser\\.\\w+$`
+    `^${fileMatch}component-browser\\.\\w+$`,
   );
   const packageMatch = new RegExp(`^${fileMatch}browser\\.\\json$`);
   let styleFile;

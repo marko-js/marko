@@ -1,5 +1,5 @@
-import { SourceMap } from "magic-string";
 import { Diagnostic, TaglibLookup } from "@marko/babel-utils";
+import { SourceMap } from "magic-string";
 import * as types from "./babel-types";
 export { types };
 
@@ -42,28 +42,28 @@ export function configure(config: Config): void;
 export function compile(
   src: string,
   filename: string,
-  config?: Config
+  config?: Config,
 ): Promise<CompileResult>;
 
 export function compileSync(
   src: string,
   filename: string,
-  config?: Config
+  config?: Config,
 ): CompileResult;
 
 export function compileFile(
   filename: string,
-  config?: Config
+  config?: Config,
 ): Promise<CompileResult>;
 
 export function compileFileSync(
   filename: string,
-  config?: Config
+  config?: Config,
 ): CompileResult;
 
 export function getRuntimeEntryFiles(
   output: string,
-  translator?: string | undefined
+  translator?: string | undefined,
 ): string[];
 
 export namespace taglib {
@@ -74,7 +74,7 @@ export namespace taglib {
   export function buildLookup(
     dirname: string,
     translator?: unknown,
-    onError?: (err: Error) => void
+    onError?: (err: Error) => void,
   ): TaglibLookup;
   export function clearCaches(): void;
 }

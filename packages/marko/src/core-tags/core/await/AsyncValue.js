@@ -98,7 +98,7 @@ AsyncValue.prototype = {
         },
         function onRejected(err) {
           queueMicrotask(asyncValue.___reject.bind(asyncValue, err));
-        }
+        },
       );
 
       if (finalPromise.done) {

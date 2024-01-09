@@ -23,10 +23,10 @@ require("../createOut").___setCreateOut(
   (Template.prototype.createOut = function createOut(
     globalData,
     parent,
-    parentOut
+    parentOut,
   ) {
     return new AsyncVDOMBuilder(globalData, parent, parentOut);
-  })
+  }),
 );
 
 require("../renderable")(Template.prototype);

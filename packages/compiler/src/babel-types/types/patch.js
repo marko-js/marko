@@ -1,9 +1,9 @@
 /* eslint-disable no-import-assign */
 import * as babelTypes from "@babel/types";
 import defineType from "@babel/types/lib/definitions/utils";
-import validate from "@babel/types/lib/validators/validate";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
+import validate from "@babel/types/lib/validators/validate";
 import definitions, { MARKO_ALIAS_TYPES, MARKO_TYPES } from "./definitions";
 
 const {
@@ -64,8 +64,8 @@ function assert(typeName, node, opts) {
   if (!is(typeName, node, opts)) {
     throw new Error(
       `Expected type "${typeName}" with option ${JSON.stringify(
-        opts
-      )}, but instead got "${node.type}".`
+        opts,
+      )}, but instead got "${node.type}".`,
     );
   }
 }
@@ -76,7 +76,7 @@ function builder(type, args) {
   const countArgs = args.length;
   if (countArgs > keys.length) {
     throw new Error(
-      `${type}: Too many arguments passed. Received ${countArgs} but can receive no more than ${keys.length}`
+      `${type}: Too many arguments passed. Received ${countArgs} but can receive no more than ${keys.length}`,
     );
   }
 

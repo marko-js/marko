@@ -9,6 +9,6 @@ module.exports = function (helpers) {
   component.update();
 
   expect(component.el.querySelector("pre").innerHTML).to.equal(
-    "Placeholder error"
+    "Placeholder error",
   );
 };

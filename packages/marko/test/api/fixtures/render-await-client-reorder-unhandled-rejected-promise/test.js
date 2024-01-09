@@ -10,12 +10,12 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
     {
       userPromise: promiseProvider(1, new Error("User Promise Rejected Error")),
     },
-    out
+    out,
   );
 
   out.on("error", (err) => {
     expect(err.message.indexOf("User Promise Rejected Error") !== -1).to.equal(
-      true
+      true,
     );
     done();
   });

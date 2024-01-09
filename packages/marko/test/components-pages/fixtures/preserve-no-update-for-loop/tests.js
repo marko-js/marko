@@ -13,6 +13,6 @@ it("should update correctly", function () {
   component.append("b");
   component.update();
   expect($el.innerHTML).to.eql(
-    '<li id="a"><span>a</span></li><li id="b"><span>b</span></li>'
+    '<li id="a"><span>a</span></li><li id="b"><span>b</span></li>',
   );
 });

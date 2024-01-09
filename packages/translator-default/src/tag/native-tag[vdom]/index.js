@@ -1,23 +1,16 @@
-import { types as t } from "@marko/compiler";
-import write from "../../util/vdom-out-write";
-import * as FLAGS from "../../util/runtime-flags";
 import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
-import translateAttributes from "./attributes";
+import { types as t } from "@marko/compiler";
+import * as FLAGS from "../../util/runtime-flags";
+import write from "../../util/vdom-out-write";
 import withPreviousLocation from "../../util/with-previous-location";
+import translateAttributes from "./attributes";
 
 const SIMPLE_ATTRS = ["id", "class", "style"];
-const MAYBE_SVG = {
-  a: true,
-  script: true,
-  style: true,
-  title: true,
-};
 
 export function tagArguments(path, isStatic) {
   const {
     hub: { file },
     node,
-    parent,
   } = path;
   const {
     name,
@@ -41,8 +34,8 @@ export function tagArguments(path, isStatic) {
     isStatic
       ? t.numericLiteral(body.length)
       : body.length
-      ? t.nullLiteral()
-      : t.numericLiteral(0),
+        ? t.nullLiteral()
+        : t.numericLiteral(0),
   ];
 
   if (node.preserveAttrs) {
@@ -50,9 +43,9 @@ export function tagArguments(path, isStatic) {
       t.objectProperty(
         t.identifier("pa"),
         t.arrayExpression(
-          node.preserveAttrs.map((name) => t.stringLiteral(name))
-        )
-      )
+          node.preserveAttrs.map((name) => t.stringLiteral(name)),
+        ),
+      ),
     );
   }
 
@@ -75,13 +68,13 @@ export function tagArguments(path, isStatic) {
             t.callExpression(
               t.memberExpression(
                 file._componentDefIdentifier,
-                t.identifier("d")
+                t.identifier("d"),
               ),
-              delegateArgs
-            )
-          )
+              delegateArgs,
+            ),
+          ),
         );
-      }
+      },
     );
   }
 
@@ -96,19 +89,9 @@ export function tagArguments(path, isStatic) {
   const tagDef = getTagDef(path);
 
   if (tagDef) {
-    const { htmlType, name } = tagDef;
+    const { htmlType } = tagDef;
     if (htmlType === "custom-element") {
       runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
-    } else if (
-      htmlType === "svg" ||
-      (MAYBE_SVG[name] &&
-        t.isMarkoTag(parent) &&
-        parent.tagDef &&
-        parent.tagDef.htmlType === "svg")
-    ) {
-      runtimeFlags |= FLAGS.IS_SVG;
-    } else if (name === "textarea") {
-      runtimeFlags |= FLAGS.IS_TEXTAREA;
     }
   }
 
@@ -135,7 +118,7 @@ export default function (path, isNullable) {
   const writeArgs = tagArguments(path, false);
   let writeStartNode = withPreviousLocation(
     write(isEmpty ? "e" : "be", ...writeArgs),
-    node.name
+    node.name,
   );
 
   if (isNullable) {
@@ -148,9 +131,9 @@ export default function (path, isNullable) {
           [
             normalizeTemplateString`f_${key}`,
             path.hub.file._componentInstanceIdentifier,
-          ]
-        )
-      )
+          ],
+        ),
+      ),
     );
   }
 
@@ -167,9 +150,9 @@ export default function (path, isNullable) {
       t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("ef")),
-          []
-        )
-      )
+          [],
+        ),
+      ),
     );
   }
 
@@ -186,7 +169,7 @@ export default function (path, isNullable) {
   path.replaceWithMultiple(
     [writeStartNode]
       .concat(needsBlock ? t.blockStatement(body) : body)
-      .concat(writeEndNode)
+      .concat(writeEndNode),
   );
 }
 

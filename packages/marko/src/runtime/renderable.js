@@ -1,8 +1,8 @@
 "use strict";
 
-var defaultCreateOut = require("./createOut");
-var setImmediate = require("@internal/set-immediate").___setImmediate;
 var extend = require("raptor-util/extend");
+var setImmediate = require("@internal/set-immediate").___setImmediate;
+var defaultCreateOut = require("./createOut");
 
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
   try {
@@ -123,7 +123,7 @@ module.exports = function (target, renderer) {
           globalData, // global
           out, // writer(AsyncStream) or parentNode(AsyncVDOMBuilder)
           undefined, // parentOut
-          shouldBuffer // ignored by AsyncVDOMBuilder
+          shouldBuffer, // ignored by AsyncVDOMBuilder
         );
       }
 

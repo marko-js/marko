@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { computeNode, getTagDef } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import classToString from "marko/src/runtime/helpers/class-value";
 import styleToString from "marko/src/runtime/helpers/style-value";
 
@@ -39,8 +39,8 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
               properties.push(
                 t.objectProperty(
                   t.stringLiteral(key),
-                  (targetObject = targetObjects[key] = t.objectExpression([]))
-                )
+                  (targetObject = targetObjects[key] = t.objectExpression([])),
+                ),
               );
             }
 
@@ -62,7 +62,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
 
       foundProperties[targetProperty] = true;
       targetProperties.push(
-        t.objectProperty(t.stringLiteral(targetProperty), value)
+        t.objectProperty(t.stringLiteral(targetProperty), value),
       );
     } else {
       mergeSpread(properties, value);
@@ -75,7 +75,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
     if (hasDynamicAttrTags) {
       endDynamicAttrTagsIndex = findLastIndex(
         body,
-        ({ value }) => value === "END_ATTRIBUTE_TAGS"
+        ({ value }) => value === "END_ATTRIBUTE_TAGS",
       );
       path
         .insertBefore(body.slice(0, endDynamicAttrTagsIndex))
@@ -91,10 +91,10 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
             t.blockStatement(
               hasDynamicAttrTags
                 ? body.slice(endDynamicAttrTagsIndex + 1)
-                : body
-            )
-          )
-        )
+                : body,
+            ),
+          ),
+        ),
       );
     }
   }
@@ -111,8 +111,8 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
         properties.push(
           t.objectProperty(
             t.stringLiteral(attr.name),
-            t.stringLiteral(attr.defaultValue + "")
-          )
+            t.stringLiteral(attr.defaultValue + ""),
+          ),
         );
       } else if (attr.required) {
         throw path
@@ -152,7 +152,7 @@ export function buildEventHandlerArray(path) {
         }
 
         return t.arrayExpression(parts);
-      })
+      }),
     ),
   ];
 }

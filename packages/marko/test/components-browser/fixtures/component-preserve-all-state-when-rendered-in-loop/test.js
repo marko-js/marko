@@ -47,16 +47,16 @@ module.exports = function (helpers) {
         var fullPath = path + " " + key;
         expect(
           lookupA[key].el === lookupB[key].el,
-          'unpreserved element "' + fullPath + '"'
+          'unpreserved element "' + fullPath + '"',
         ).to.equal(true);
         expect(
           lookupA[key].component === lookupB[key].component,
-          'unpreserved component "' + fullPath + '"'
+          'unpreserved component "' + fullPath + '"',
         ).to.equal(true);
         ensurePreservedKeys(
           lookupA[key].children,
           lookupB[key].children,
-          fullPath
+          fullPath,
         );
       }
     }

@@ -1,9 +1,9 @@
 import classPlugin from "./class";
-import stylePlugin from "./style";
 import noUpdatePlugin from "./no-update";
-import noUpdateIfPlugin from "./no-update-if";
 import noUpdateBodyPlugin from "./no-update-body";
 import noUpdateBodyIfPlugin from "./no-update-body-if";
+import noUpdateIfPlugin from "./no-update-if";
+import stylePlugin from "./style";
 
 export default {
   class: classPlugin,

@@ -7,7 +7,7 @@ module.exports = function (helpers) {
       { href: "http://ebay.com" },
       null /* key */,
       null /* component */,
-      1 /* childCount */
+      1 /* childCount */,
     )
     .t("eBay");
 
@@ -17,7 +17,7 @@ module.exports = function (helpers) {
       { class: "foo", onclick: "doSomething()" },
       null /* key */,
       null /* component */,
-      2 /* childCount */
+      2 /* childCount */,
     )
     .n(link)
     .e("span", null, null /* key */, null /* component */, 0);

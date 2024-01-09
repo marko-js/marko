@@ -30,7 +30,7 @@ export default {
 
       if (!value.isBooleanLiteral(true)) {
         throw value.buildCodeFrameError(
-          `"${name}(handler, ...args)" does not accept a value.`
+          `"${name}(handler, ...args)" does not accept a value.`,
         );
       }
 
@@ -51,7 +51,7 @@ export default {
       const handlers = (tag.node.handlers = tag.node.handlers || {});
       if (handlers[eventName]) {
         throw attr.buildCodeFrameError(
-          "Duplicate event handlers are not supported."
+          "Duplicate event handlers are not supported.",
         );
       }
 
@@ -67,7 +67,7 @@ export default {
             attachedDetachedLoaded.add(file);
             importDefault(
               file,
-              "marko/src/runtime/components/attach-detach.js"
+              "marko/src/runtime/components/attach-detach.js",
             );
           }
         }
@@ -93,20 +93,20 @@ export default {
         throw attr.buildCodeFrameError(
           `<${
             tag.get("name.value").node
-          }> does not support the "${name}" attribute.`
+          }> does not support the "${name}" attribute.`,
         );
       }
     }
 
     if (args && args.length) {
       throw attr.buildCodeFrameError(
-        `Unsupported arguments on the "${name}" attribute.`
+        `Unsupported arguments on the "${name}" attribute.`,
       );
     }
 
     if (attr.node.bound) {
       throw attr.buildCodeFrameError(
-        `The binding syntax (:=) is only supported when using the "Tags API".`
+        `The binding syntax (:=) is only supported when using the "Tags API".`,
       );
     }
   },

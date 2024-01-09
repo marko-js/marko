@@ -3,7 +3,7 @@ var expect = require("chai").expect;
 it("should allow attributes to not be updated", function () {
   function testHelloComponent(helloComponent) {
     expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-      "Frank"
+      "Frank",
     );
     expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("1");
 
@@ -11,7 +11,7 @@ it("should allow attributes to not be updated", function () {
     helloComponent.update();
 
     expect(helloComponent.el.querySelector(".name").innerHTML).to.equal(
-      "Frank"
+      "Frank",
     );
     expect(helloComponent.el.querySelector(".count").innerHTML).to.equal("2");
   }

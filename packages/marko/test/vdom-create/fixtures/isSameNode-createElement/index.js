@@ -20,14 +20,14 @@ module.exports = function (helpers) {
     null /* component */,
     0 /* childCount */,
     null,
-    { i: "abc123" /* key */ }
+    { i: "abc123" /* key */ },
   );
   var span = helpers.vdom.createElement(
     "span",
     null,
     null /* key */,
     null /* component */,
-    0 /* childCount */
+    0 /* childCount */,
   );
 
   var divClone = div.___cloneNode();

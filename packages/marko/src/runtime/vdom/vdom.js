@@ -1,10 +1,10 @@
-var VNode = require("./VNode");
+var parseHTML = require("./parse-html");
+var VComponent = require("./VComponent");
 var VDocumentFragment = require("./VDocumentFragment");
 var VElement = require("./VElement");
-var VText = require("./VText");
-var VComponent = require("./VComponent");
 var VFragment = require("./VFragment");
-var parseHTML = require("./parse-html");
+var VNode = require("./VNode");
+var VText = require("./VText");
 
 var specialHtmlRegexp = /[&<]/;
 

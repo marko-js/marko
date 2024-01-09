@@ -10,7 +10,7 @@ export function exit(path) {
     throw path
       .get("name")
       .buildCodeFrameError(
-        "Invalid 'else-if' tag, expected preceding 'if' or 'else-if' tag."
+        "Invalid 'else-if' tag, expected preceding 'if' or 'else-if' tag.",
       );
   }
 

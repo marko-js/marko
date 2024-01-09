@@ -1,11 +1,11 @@
 /* jshint newcap:false */
 
 var complain = "MARKO_DEBUG" && require("complain");
-var domData = require("../components/dom-data");
+var inherit = require("raptor-util/inherit");
 var componentsUtil = require("@internal/components-util");
+var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
-var inherit = require("raptor-util/inherit");
 var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -37,7 +37,7 @@ function convertAttrValue(type, value) {
         // eslint-disable-next-line no-constant-condition
         if ("MARKO_DEBUG") {
           complain(
-            "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead."
+            "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
           );
         }
         return JSON.stringify(value);
@@ -94,7 +94,7 @@ function VElement(
   ownerComponent,
   childCount,
   flags,
-  props
+  props,
 ) {
   this.___VNode(childCount, ownerComponent);
 
@@ -138,8 +138,8 @@ VElement.prototype = {
         ownerComponent,
         childCount,
         flags,
-        props
-      )
+        props,
+      ),
     );
 
     if (childCount === 0) {
@@ -170,7 +170,7 @@ VElement.prototype = {
     var flags = this.___flags;
     var el = (host.ownerDocument || host).createElementNS(
       namespaceURI,
-      tagName
+      tagName,
     );
 
     if (flags & FLAG_CUSTOM_ELEMENT) {
@@ -237,9 +237,9 @@ defineProperty(proto, "___value", {
     return value != null && value !== false
       ? value + ""
       : this.___attributes.type === "checkbox" ||
-        this.___attributes.type === "radio"
-      ? "on"
-      : "";
+          this.___attributes.type === "radio"
+        ? "on"
+        : "";
   },
 });
 
@@ -288,7 +288,7 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
     ownerComponent,
     0 /*child count*/,
     0 /*flags*/,
-    props
+    props,
   );
 
   if (vdomEl.___nodeName === "textarea") {

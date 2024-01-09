@@ -1,5 +1,5 @@
-import noUpdateTransform from "./no-update";
 import { getArgOrSequence } from "@marko/babel-utils";
+import noUpdateTransform from "./no-update";
 
 export default {
   enter(tag) {

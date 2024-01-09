@@ -118,7 +118,7 @@ export default (async () => [
     },
     external: (id) =>
       externalDependencies.some(
-        (dependency) => id === dependency || id.startsWith(dependency + "/")
+        (dependency) => id === dependency || id.startsWith(dependency + "/"),
       ),
     plugins: [isWatch && runPlugin({ execArgv: ["--enable-source-maps"] })],
   }),
@@ -167,8 +167,8 @@ export default (async () => [
               `📊 Bundle visualizer at \x1b[4;36mfile://${path.join(
                 __dirname,
                 "../../",
-                bundleAnalyzerFilename
-              )}\x1b[0m`
+                bundleAnalyzerFilename,
+              )}\x1b[0m`,
             );
           },
         },
@@ -345,7 +345,7 @@ marko.browser({
             fileName,
             // only inline code chunks below 1kB
             inline: code.trim().length < 1024 && code,
-          }
+          },
     );
   },
 });

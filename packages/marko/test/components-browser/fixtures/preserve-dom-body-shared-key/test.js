@@ -8,7 +8,7 @@ module.exports = function (helpers) {
   });
 
   expect(
-    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML
+    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML,
   ).to.equal("0");
 
   component.input = {
@@ -18,6 +18,6 @@ module.exports = function (helpers) {
   component.update();
 
   expect(
-    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML
+    helpers.targetEl.querySelector(".unpreserved-counter").innerHTML,
   ).to.equal("1");
 };

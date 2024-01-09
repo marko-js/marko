@@ -4,7 +4,7 @@ function insertBefore(node, referenceNode, parentNode) {
   }
   return parentNode.insertBefore(
     node,
-    (referenceNode && referenceNode.startNode) || referenceNode
+    (referenceNode && referenceNode.startNode) || referenceNode,
   );
 }
 
@@ -12,7 +12,7 @@ function insertAfter(node, referenceNode, parentNode) {
   return insertBefore(
     node,
     referenceNode && referenceNode.nextSibling,
-    parentNode
+    parentNode,
   );
 }
 

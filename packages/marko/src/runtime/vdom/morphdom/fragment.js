@@ -42,7 +42,7 @@ var fragmentPrototype = {
     return insertBefore(
       newChildNode,
       actualReference,
-      this.startNode.parentNode
+      this.startNode.parentNode,
     );
   },
   insertInto: function (newParentNode, referenceNode) {
@@ -85,7 +85,7 @@ function beginFragmentNode(startNode, parentNode) {
     insertBefore(
       fragment.endNode,
       nextNode,
-      parentNode || startNode.parentNode
+      parentNode || startNode.parentNode,
     );
   };
   return fragment;

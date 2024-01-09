@@ -64,7 +64,7 @@ function runHydrateTest(fixture) {
       throw new Error("No components rendered by client version of test");
     var $global = components.reduce(
       ($g, c) => Object.assign($g, c.$global),
-      {}
+      {},
     );
     ssrTemplate
       .render({ components: components, $global: $global })

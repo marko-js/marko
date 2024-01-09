@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { isNativeTag, normalizeTemplateString } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 const EMPTY_OBJECT = {};
 
 export default {
@@ -12,18 +12,18 @@ export default {
     const replacement = t.markoTag(
       t.stringLiteral("_preserve"),
       [],
-      opts.bodyOnly ? node.body : t.markoTagBody([node])
+      opts.bodyOnly ? node.body : t.markoTagBody([node]),
     );
 
     if (isNativeTag(tag)) {
       replacement.key = node.key;
       replacement.attributes.push(
-        t.markoAttribute("n", t.booleanLiteral(true))
+        t.markoAttribute("n", t.booleanLiteral(true)),
       );
 
       if (opts.bodyOnly) {
         replacement.attributes.push(
-          t.markoAttribute("b", t.booleanLiteral(true))
+          t.markoAttribute("b", t.booleanLiteral(true)),
         );
       }
     } else {

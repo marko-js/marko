@@ -13,7 +13,7 @@ exports.callbackProvider = (delay, value) => {
   return function (callback) {
     exports.promiseProvider(delay, value).then(
       (resolved) => callback(null, resolved),
-      (rejected) => callback(rejected)
+      (rejected) => callback(rejected),
     );
   };
 };

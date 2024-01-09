@@ -20,7 +20,7 @@ autotest("fixtures", (fixture) => {
       markoCompiler,
       expect,
       snapshot,
-      done
+      done,
     );
   });
 });

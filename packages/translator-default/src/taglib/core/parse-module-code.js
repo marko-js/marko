@@ -1,6 +1,6 @@
 import path from "path";
-import resolveFrom from "resolve-from";
 import markoModules from "@marko/compiler/modules";
+import resolveFrom from "resolve-from";
 
 const startOffset = "module-code".length;
 

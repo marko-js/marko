@@ -5,6 +5,6 @@ exports.test = function (helpers) {
   helpers.spawnSync(["template.marko"]);
   var compiledFile = helpers.readSync("template.marko.js").toString();
   expect(compiledFile).to.contain(
-    "Compiled using marko@" + markoVersion + " - DO NOT EDIT"
+    "Compiled using marko@" + markoVersion + " - DO NOT EDIT",
   );
 };

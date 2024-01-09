@@ -1,6 +1,6 @@
+import { diagnosticError, getMacroIdentifierForName } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../../../util/with-previous-location";
-import { diagnosticError, getMacroIdentifierForName } from "@marko/babel-utils";
 
 export function exit(path) {
   const { node } = path;
@@ -36,9 +36,9 @@ export function exit(path) {
       t.functionDeclaration(
         getMacroIdentifierForName(path, nameAttr.value.value),
         [t.identifier("out"), ...body.params],
-        t.blockStatement(body.body)
+        t.blockStatement(body.body),
       ),
-      node
-    )
+      node,
+    ),
   );
 }

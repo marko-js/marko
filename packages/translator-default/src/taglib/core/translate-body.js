@@ -10,7 +10,7 @@ export function enter(path) {
       t.markoTag(
         t.stringLiteral("_preferred-script-location"),
         [],
-        t.markoTagBody()
+        t.markoTagBody(),
       ),
     ]);
   }

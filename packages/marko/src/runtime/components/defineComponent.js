@@ -1,9 +1,9 @@
 "use strict";
 /* jshint newcap:false */
 
-var BaseState = require("./State");
-var BaseComponent = require("./Component");
 var inherit = require("raptor-util/inherit");
+var BaseComponent = require("./Component");
+var BaseState = require("./State");
 
 module.exports = function defineComponent(def, renderer) {
   if (def.___isComponent) {

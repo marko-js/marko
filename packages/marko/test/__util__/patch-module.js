@@ -1,7 +1,7 @@
 var fs = require("fs");
+var Module = require("module").Module;
 var nodePath = require("path");
 
-var Module = require("module").Module;
 var oldResolveFilename = Module._resolveFilename;
 
 var isDebug = require("../../env").isDebug;
@@ -16,7 +16,7 @@ try {
   if (fs.existsSync(markoInstalledDir)) {
     fs.renameSync(
       markoInstalledDir,
-      markoInstalledDir.replace("node_modules/marko", "node_modules/~marko")
+      markoInstalledDir.replace("node_modules/marko", "node_modules/~marko"),
     );
   }
 } catch (e) {

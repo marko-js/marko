@@ -3,7 +3,7 @@ const { loadFileForTag } = require("@marko/babel-utils");
 module.exports = (helloTag, t) => {
   const messageTag = helloTag.getNextSibling();
   helloTag.insertAfter(
-    t.markoText(`${readFileText(helloTag)} ${readFileText(messageTag)}`)
+    t.markoText(`${readFileText(helloTag)} ${readFileText(messageTag)}`),
   );
   helloTag.remove();
   messageTag.remove();

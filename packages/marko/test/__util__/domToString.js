@@ -115,8 +115,7 @@ function vdomToHTML(node, options) {
     html +=
       indent +
       JSON.stringify(
-        getNodeValue(node)
-          .replace(/s\d+(-\d+)*/g, "s-normalized")
+        getNodeValue(node).replace(/s\d+(-\d+)*/g, "s-normalized"),
       ) +
       "\n";
   }
@@ -126,7 +125,7 @@ function vdomToHTML(node, options) {
       indent +
       "<!--" +
       JSON.stringify(
-        getNodeValue(node).replace(/s\d+(-\d+)*/g, "s-normalized")
+        getNodeValue(node).replace(/s\d+(-\d+)*/g, "s-normalized"),
       ) +
       "-->\n";
   }

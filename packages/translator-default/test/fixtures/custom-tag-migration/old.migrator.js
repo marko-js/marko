@@ -17,10 +17,10 @@ export function exit(path) {
       path.get("attributes").map((p) => p.node),
       t.markoTagBody(
         path.get("body.body").map((p) => p.node),
-        toNodes(path.get("params"))
+        toNodes(path.get("params")),
       ),
-      toNodes(path.get("arguments"))
-    )
+      toNodes(path.get("arguments")),
+    ),
   );
 }
 

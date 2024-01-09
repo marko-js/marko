@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { evaluateAttr } from "../util";
 
 export default function (path, attrs) {
@@ -10,9 +10,9 @@ export default function (path, attrs) {
       importDefault(
         path.hub.file,
         "marko/src/runtime/vdom/helpers/attrs.js",
-        "marko_attrs"
+        "marko_attrs",
       ),
-      [attrs[0].node.value]
+      [attrs[0].node.value],
     );
   }
 
@@ -32,7 +32,7 @@ export default function (path, attrs) {
           t.stringLiteral(name),
           computed?.value !== undefined
             ? t.stringLiteral(computed.value)
-            : value
+            : value,
         );
         if (props) {
           props.push(prop);
@@ -49,9 +49,9 @@ export default function (path, attrs) {
       importDefault(
         path.hub.file,
         "marko/src/runtime/vdom/helpers/merge-attrs.js",
-        "marko_merge_attrs"
+        "marko_merge_attrs",
       ),
-      attrsObjects
+      attrsObjects,
     );
   }
 
@@ -76,7 +76,7 @@ export default function (path, attrs) {
             confident: false,
             computed: undefined,
             value,
-          }
+          },
     );
   }
 
@@ -89,7 +89,7 @@ export default function (path, attrs) {
       }
 
       props.push(
-        t.objectProperty(t.stringLiteral(name), t.stringLiteral(computed))
+        t.objectProperty(t.stringLiteral(name), t.stringLiteral(computed)),
       );
     } else {
       props.push(t.objectProperty(t.stringLiteral(name), value));

@@ -7,7 +7,7 @@ module.exports = function (input, out) {
       {
         name: input.name,
       },
-      asyncOut
+      asyncOut,
     );
     asyncOut.end();
   }, 10);

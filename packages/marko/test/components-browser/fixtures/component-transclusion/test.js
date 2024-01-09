@@ -15,7 +15,7 @@ module.exports = function (helpers) {
   expect(el.querySelector("h1").innerHTML).to.equal(originalH1Html);
   expect(el.querySelector("h1").innerHTML).to.contain("success");
   expect(el.querySelector(".alert").className).to.contain(
-    "alert alert-success"
+    "alert alert-success",
   );
 
   // The inner HTML for the H1 should change since the state of the alert component changed
@@ -25,6 +25,6 @@ module.exports = function (helpers) {
   expect(el.querySelector("h1").innerHTML).to.not.equal(originalH1Html);
   expect(el.querySelector("h1").innerHTML).to.contain("failure");
   expect(el.querySelector(".alert").className).to.contain(
-    "alert alert-failure"
+    "alert alert-failure",
   );
 };

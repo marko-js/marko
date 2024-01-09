@@ -2,7 +2,7 @@ var nodePath = require("path");
 
 exports.check = function (taglibLoader, expect) {
   var taglib = taglibLoader.loadTaglibFromFile(
-    nodePath.join(__dirname, "marko.json")
+    nodePath.join(__dirname, "marko.json"),
   );
 
   expect(taglib != null).to.equal(true);

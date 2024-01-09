@@ -13,7 +13,7 @@ export function resolveRelativePath(file, request) {
   if (file.markoOpts.optimize) {
     request = request.replace(
       /(^|\/node-modules\/)marko\/src\//,
-      "$1marko/dist/"
+      "$1marko/dist/",
     );
   }
 
@@ -30,8 +30,8 @@ export function importDefault(file, request, nameHint) {
       request,
       (importDeclaration = file.path.pushContainer(
         "body",
-        t.importDeclaration([], t.stringLiteral(request))
-      )[0])
+        t.importDeclaration([], t.stringLiteral(request)),
+      )[0]),
     );
   }
 
@@ -41,14 +41,14 @@ export function importDefault(file, request, nameHint) {
 
   const specifiers = importDeclaration.get("specifiers");
   const specifier = specifiers.find((specifier) =>
-    specifier.isImportDefaultSpecifier()
+    specifier.isImportDefaultSpecifier(),
   );
 
   if (!specifier) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
     importDeclaration.pushContainer(
       "specifiers",
-      t.importDefaultSpecifier(identifier)
+      t.importDefaultSpecifier(identifier),
     );
     return identifier;
   }
@@ -66,22 +66,22 @@ export function importNamed(file, request, name, nameHint = name) {
       request,
       (importDeclaration = file.path.pushContainer(
         "body",
-        t.importDeclaration([], t.stringLiteral(request))
-      )[0])
+        t.importDeclaration([], t.stringLiteral(request)),
+      )[0]),
     );
   }
 
   const specifiers = importDeclaration.get("specifiers");
   const specifier = specifiers.find(
     (specifier) =>
-      specifier.isImportSpecifier() && specifier.node.imported.name === name
+      specifier.isImportSpecifier() && specifier.node.imported.name === name,
   );
 
   if (!specifier) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
     importDeclaration.pushContainer(
       "specifiers",
-      t.importSpecifier(identifier, t.identifier(name))
+      t.importSpecifier(identifier, t.identifier(name)),
     );
     return identifier;
   }

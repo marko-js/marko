@@ -1,5 +1,5 @@
-import { decode } from "he";
 import { types as t } from "@marko/compiler";
+import { decode } from "he";
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";
 
@@ -11,9 +11,9 @@ export default function (path) {
       write(
         "t",
         t.stringLiteral(decode(node.value)),
-        path.hub.file._componentInstanceIdentifier
+        path.hub.file._componentInstanceIdentifier,
       ),
-      node
-    )
+      node,
+    ),
   );
 }

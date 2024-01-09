@@ -2,14 +2,13 @@
 
 require("../__util__/test-init");
 
-var chai = require("chai");
-chai.config.includeStack = true;
-
-var autotest = require("mocha-autotest").default;
 const fs = require("fs");
 const path = require("path");
-const morphdom = require("marko/runtime/vdom/morphdom");
+var chai = require("chai");
 const createBrowser = require("jsdom-context-require");
+const morphdom = require("marko/runtime/vdom/morphdom");
+var autotest = require("mocha-autotest").default;
+chai.config.includeStack = true;
 
 autotest("fixtures", (fixture) => {
   let dir = fixture.dir;
@@ -36,7 +35,7 @@ autotest("fixtures", (fixture) => {
     let fromNode = fromDocument.body;
     let realToNode = toDocument.body;
     var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
-      realToNode
+      realToNode,
     );
     var expectedHTML = serializeNode(realToNode);
     fs.writeFileSync(resolve("expected.html"), expectedHTML, {

@@ -70,7 +70,7 @@ import * as compiler from "@marko/compiler";
 const asyncResult = await compiler.compile(
   "<h1>Hello!</>",
   "./src/index.marko",
-  { modules: "cjs" }
+  { modules: "cjs" },
 );
 const syncResult = compiler.compileSync("<h1>Hello!</>", "./src/index.marko", {
   modules: "cjs",
@@ -217,7 +217,7 @@ Type:
     code: string;
     virtualPath: string;
     map?: SourceMap;
-  }
+  },
 ) => string;
 ```
 

@@ -14,7 +14,7 @@ function register(taglibProps, taglibPath) {
 function registerFromFile(taglibPath) {
   return register(
     compiler.taglib._loader.loadTaglibFromFile(taglibPath),
-    taglibPath
+    taglibPath,
   );
 }
 
@@ -33,7 +33,7 @@ exports.lookup = {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain(
-          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`."
+          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`.",
         );
       }
     }

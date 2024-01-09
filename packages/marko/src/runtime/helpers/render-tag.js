@@ -9,12 +9,12 @@ module.exports = function renderTagHelper(
   out,
   componentDef,
   key,
-  customEvents
+  customEvents,
 ) {
   out.c(componentDef, key, customEvents);
   (handler._ || (handler._ = handler.render || handler.renderer || handler))(
     input,
-    out
+    out,
   );
   out.___assignedComponentDef = null;
 };

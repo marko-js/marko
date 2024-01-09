@@ -1,10 +1,9 @@
+var ok = require("assert").ok;
 var nodePath = require("path");
-var types = require("./types");
 var cache = require("./cache");
 var DependencyChain = require("./DependencyChain");
 var scanTagsDir = require("./scanTagsDir");
-
-var ok = require("assert").ok;
+var types = require("./types");
 
 function loadFromDir(dir) {
   ok(dir, '"dir" is required');
@@ -22,7 +21,7 @@ function loadFromDir(dir) {
       dir,
       "components",
       taglib,
-      new DependencyChain([componentsPath])
+      new DependencyChain([componentsPath]),
     );
   }
 

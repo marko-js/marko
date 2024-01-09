@@ -1,12 +1,16 @@
 import fs from "fs";
 import path from "path";
-import autotest from "mocha-autotest";
 import { compileFileSync } from "@marko/compiler";
+import autotest from "mocha-autotest";
 
-// eslint-disable-next-line no-control-regex
-const ansiReg = /([\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><])/g;
+const ansiReg =
+  // eslint-disable-next-line no-control-regex
+  /([\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><])/g;
 const regexpCharsReg = /[\\^$.*+?()[\]{}|]/g;
-const cwdRegExp = new RegExp(process.cwd().replace(regexpCharsReg, "\\$&") + "/", "g");
+const cwdRegExp = new RegExp(
+  process.cwd().replace(regexpCharsReg, "\\$&") + "/",
+  "g",
+);
 
 describe("translator-class", () => {
   autotest("fixtures", {
@@ -65,10 +69,15 @@ function runTest(config) {
         diags = result.meta.diagnostics;
       } catch (err) {
         try {
-          snapshot(stripCwd(stripModuleStackTrace(String(err.stack).replace(ansiReg, ""))), {
-            name: `${name}-error`,
-            ext: ".txt",
-          });
+          snapshot(
+            stripCwd(
+              stripModuleStackTrace(String(err.stack).replace(ansiReg, "")),
+            ),
+            {
+              name: `${name}-error`,
+              ext: ".txt",
+            },
+          );
           return;
         } catch {
           throw err;
@@ -115,7 +124,7 @@ function printDiags(diags) {
 
   for (const diag of diags) {
     result += `${diag.type}${diag.fix ? `[fixable]` : ""}${printLoc(
-      diag.loc
+      diag.loc,
     )}: ${diag.label}\n`;
   }
 

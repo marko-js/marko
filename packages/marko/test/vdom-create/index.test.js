@@ -3,16 +3,16 @@
 require("../__util__/test-init");
 
 var fs = require("fs");
-var domToString = require("../__util__/domToString");
 var createBrowser = require("jsdom-context-require");
+var vdom = require("marko/runtime/vdom/vdom");
 var autotest = require("mocha-autotest").default;
+var domToString = require("../__util__/domToString");
 
 var document = createBrowser({
   dir: __dirname,
   html: "<html><body></body></html>",
 }).window.document;
 
-var vdom = require("marko/runtime/vdom/vdom");
 var VElement = vdom.___VElement;
 var VText = vdom.___VText;
 var VDocumentFragment = vdom.___VDocumentFragment;
@@ -25,7 +25,7 @@ var vdomHelpers = {
     component,
     childCount,
     flags,
-    props
+    props,
   ) {
     return new VElement(
       tagName,
@@ -34,7 +34,7 @@ var vdomHelpers = {
       component,
       childCount,
       flags,
-      props
+      props,
     );
   },
   createText: function (value) {

@@ -11,12 +11,12 @@ export default {
         t.callExpression(
           t.memberExpression(
             file._componentDefIdentifier,
-            t.identifier("elId")
+            t.identifier("elId"),
           ),
-          [value.node]
+          [value.node],
         ),
-        value.node
-      )
+        value.node,
+      ),
     );
   },
 };

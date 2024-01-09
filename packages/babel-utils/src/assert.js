@@ -5,7 +5,7 @@ export function assertAllowedAttributes(path, allowed) {
       throw path
         .get(`attributes.${i}`)
         .buildCodeFrameError(
-          `Invalid "${node.name.value}" tag attribute: "${attr.name}".`
+          `Invalid "${node.name.value}" tag attribute: "${attr.name}".`,
         );
     }
   });
@@ -22,7 +22,7 @@ export function assertNoParams(path) {
     const end = params[params.length - 1].loc.end;
     throw path.hub.buildError(
       { loc: { start, end } },
-      "Tag does not support parameters."
+      "Tag does not support parameters.",
     );
   }
 }
@@ -44,7 +44,7 @@ export function assertNoArgs(path) {
     const end = args[args.length - 1].node.loc.end;
     throw hub.buildError(
       { loc: { start, end } },
-      "Tag does not support arguments."
+      "Tag does not support arguments.",
     );
   }
 }

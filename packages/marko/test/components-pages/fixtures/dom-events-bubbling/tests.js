@@ -15,7 +15,7 @@ function triggerMouseEvent(el, type) {
     false,
     false /* modifier keys */,
     0 /*left*/,
-    null
+    null,
   );
   el.dispatchEvent(ev);
 }

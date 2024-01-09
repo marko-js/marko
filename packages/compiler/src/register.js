@@ -1,7 +1,7 @@
 "use strict";
 
-const compiler = require(".");
 const shouldOptimize = require("./util/should-optimize").default;
+const compiler = require(".");
 const requiredOptions = { modules: "cjs" };
 const isDev = !shouldOptimize();
 const sourceMaps = new Map();
@@ -35,8 +35,8 @@ function register({ extensions = require.extensions, ...options } = {}) {
           sourceMaps: isDev ? "both" : false,
         },
         options,
-        requiredOptions
-      )
+        requiredOptions,
+      ),
     );
 
     if (compiled.map) {

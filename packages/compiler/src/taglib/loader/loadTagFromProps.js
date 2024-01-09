@@ -1,15 +1,15 @@
 "use strict";
 
 var ok = require("assert").ok;
-var resolveFrom = require("resolve-from").silent;
-var propertyHandlers = require("./property-handlers");
-var isObjectEmpty = require("raptor-util/isObjectEmpty");
 var nodePath = require("path");
 var createError = require("raptor-util/createError");
-var taglibConfig = require("../config");
-var types = require("./types");
-var loaders = require("./loaders");
+var isObjectEmpty = require("raptor-util/isObjectEmpty");
+var resolveFrom = require("resolve-from").silent;
 var markoModules = require("../../../modules");
+var taglibConfig = require("../config");
+var loaders = require("./loaders");
+var propertyHandlers = require("./property-handlers");
+var types = require("./types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
@@ -123,14 +123,14 @@ class TagLoader {
             nestedVariable.nameFromAttribute = value;
           },
         },
-        dependencyChain.toString()
+        dependencyChain.toString(),
       );
 
       if (!nestedVariable.name && !nestedVariable.nameFromAttribute) {
         throw new Error(
           'The "name" or "name-from-attribute" attribute is required for a nested variable (' +
             dependencyChain +
-            ")"
+            ")",
         );
       }
     }
@@ -221,7 +221,7 @@ class TagLoader {
       // with the user's taglib.
       if (!isObjectEmpty(value)) {
         throw new Error(
-          "Unsupported properties of [" + Object.keys(value).join(", ") + "]"
+          "Unsupported properties of [" + Object.keys(value).join(", ") + "]",
         );
       }
 
@@ -258,7 +258,7 @@ class TagLoader {
         var attr = loaders.loadAttributeFromProps(
           attrName,
           attrProps,
-          dependencyChain.append(part)
+          dependencyChain.append(part),
         );
 
         tag.addAttribute(attr);
@@ -289,7 +289,7 @@ class TagLoader {
           let attr = loaders.loadAttributeFromProps(
             nestedTag.targetProperty,
             { type: "object" },
-            dependencyChain.append(part)
+            dependencyChain.append(part),
           );
 
           tag.addAttribute(attr);
@@ -367,7 +367,7 @@ class TagLoader {
     loaders.loadAttributes(
       value,
       tag,
-      this.dependencyChain.append("attributes")
+      this.dependencyChain.append("attributes"),
     );
   }
 
@@ -492,7 +492,7 @@ class TagLoader {
     for (const nestedTagName in value) {
       const nestedTagDef = value[nestedTagName];
       var dependencyChain = this.dependencyChain.append(
-        `nestedTags["${nestedTagName}"]`
+        `nestedTags["${nestedTagName}"]`,
       );
       var nestedTag = new types.Tag(filePath);
 
@@ -504,8 +504,8 @@ class TagLoader {
         loaders.loadAttributeFromProps(
           nestedTag.targetProperty,
           { type: "expression" },
-          dependencyChain
-        )
+          dependencyChain,
+        ),
       );
     }
   }
@@ -571,7 +571,7 @@ function loadTagFromProps(tag, tagProps, dependencyChain) {
   } catch (err) {
     throw createError(
       "Unable to load tag (" + dependencyChain + "): " + err,
-      err
+      err,
     );
   }
 

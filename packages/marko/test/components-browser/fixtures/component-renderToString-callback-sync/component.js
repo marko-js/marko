@@ -13,7 +13,7 @@ module.exports = {
         } else {
           self.emit("html", html);
         }
-      }
+      },
     );
   },
 };

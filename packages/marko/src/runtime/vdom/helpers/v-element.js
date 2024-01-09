@@ -9,7 +9,7 @@ module.exports = function (
   component,
   childCount,
   flags,
-  props
+  props,
 ) {
   return new VElement(tagName, attrs, key, component, childCount, flags, props);
 };
