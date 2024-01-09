@@ -6,7 +6,7 @@ module.exports = (api) => ({
       {
         loose: true,
         targets: {
-          node: "16",
+          node: "18",
         },
       },
     ],

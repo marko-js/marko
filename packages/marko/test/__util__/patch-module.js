@@ -24,7 +24,7 @@ try {
 }
 
 Module._resolveFilename = function (request, parent, isMain) {
-  if (request.charAt(0) !== "." && parent.filename.startsWith(rootDir)) {
+  if (request.charAt(0) !== "." && parent?.filename.startsWith(rootDir)) {
     if (
       request === "marko/components" ||
       request === "marko/env" ||

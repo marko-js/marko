@@ -1,5 +1,6 @@
 {
   "all": true,
+  "excludeAfterRemap": true,
   "parserPlugins": ["objectRestSpread", "typescript"],
   "reporter": ["text-summary", "lcov"],
   "include": [

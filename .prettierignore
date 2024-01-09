@@ -1,35 +1,17 @@
-# minfied
-*.min.js
-
-# tests
+__snapshots__
+!packages/marko/src/node_modules
+.cache
+.nvm
+.sizes.json
+.vscode
 *actual*
 *expected*
-input.*
-__snapshots__
-
-# generated
-dist/
-*.marko.js
-*.html.js
-*.xml.js
-*.generated.js
-.nyc_output
-.cache/
-coverage
-.sizes.json
 ~*
-
-# non internal modules
+CHANGELOG.md
+coverage
+dist
+input.*
 node_modules
-!packages/marko/src/node_modules
-
-# controlled by npm's formatter
+node_modules
 package-lock.json
 package.json
-
-# controlled by lerna
-CHANGELOG.md
-lerna.json
-
-# editor
-.vscode
