@@ -2,7 +2,7 @@ var runtime = require(".");
 var createTemplate = runtime.t;
 var registered = {};
 
-runtime.t = function (typeName) {
+exports.t = runtime.t = function (typeName) {
   if (registered[typeName]) {
     return registered[typeName];
   }
@@ -24,5 +24,3 @@ runtime.t = function (typeName) {
     return renderFn.apply(this, arguments);
   }
 };
-
-module.exports = runtime;

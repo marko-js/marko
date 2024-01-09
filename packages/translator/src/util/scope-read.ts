@@ -1,16 +1,16 @@
 import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
 import type { References } from "./references";
-import type { Section } from "./sections";
 import {
   type Reserve,
   getScopeAccessorLiteral,
   repeatableReserves,
 } from "./reserve";
+import type { Section } from "./sections";
 
 export function createScopeReadPattern(
   section: Section,
-  references: References
+  references: References,
 ) {
   const rootDepth = section.depth;
   const rootPattern = t.objectPattern([]);
@@ -32,7 +32,7 @@ export function createScopeReadPattern(
       for (; i <= relativeDepth; i++) {
         const nestedPattern = t.objectPattern([]);
         prev.properties.push(
-          t.objectProperty(t.identifier("_"), nestedPattern)
+          t.objectProperty(t.identifier("_"), nestedPattern),
         );
         nestedPatterns.push(nestedPattern);
         prev = nestedPattern;
@@ -46,8 +46,8 @@ export function createScopeReadPattern(
         isShorthand ? propertyValue : propertyKey,
         propertyValue,
         false,
-        isShorthand
-      )
+        isShorthand,
+      ),
     );
   }
 
@@ -69,11 +69,11 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 
 export function createScopeReadExpression(
   section: Section,
-  reference: Reserve
+  reference: Reserve,
 ) {
   return t.memberExpression(
     getScopeExpression(section, reference.section),
     getScopeAccessorLiteral(reference),
-    true
+    true,
   );
 }

@@ -69,7 +69,7 @@ export function walk(startNode: Node, walkCodes: string, scope: Scope) {
 function walkInternal(
   walkCodes: string,
   scope: Scope,
-  currentWalkIndex: number
+  currentWalkIndex: number,
 ) {
   let value: number;
   let storedMultiplier = 0;
@@ -108,7 +108,7 @@ function walkInternal(
             ? getDebugKey(currentScopeIndex++, "#childScope")
             : currentScopeIndex++
         ] = createScope(scope.___context)),
-        currentWalkIndex
+        currentWalkIndex,
       )!;
     } else if (value === WalkCodes.EndChild) {
       return currentWalkIndex;

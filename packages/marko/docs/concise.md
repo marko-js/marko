@@ -38,6 +38,28 @@ _output.html_
 
 > **ProTip:** These shorthand attributes are available within the HTML syntax as well
 
+## Attributes on multiple lines
+
+If a component has lots of attributes, you can spread them across multiple lines by surrounding them with square brackets
+
+_input.marko_
+
+```marko
+div [
+    id="hello"
+    class=["class1", "class2", "class3"]
+    style={ border: "1px solid red" }
+] -- hello
+```
+
+_output.html_
+
+```html
+<div id="hello" class="class1 class2 class3" style="border:1px solid red">
+  hello
+</div>
+```
+
 ## Text
 
 Text in concise mode is denoted by two or more dashes (`--`).

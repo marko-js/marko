@@ -1,9 +1,9 @@
-import type { types as t } from "@marko/compiler";
 import type { Tag } from "@marko/babel-utils";
+import type { types as t } from "@marko/compiler";
 import { trackReferencesForBindings } from "../util/references";
 import { getOrCreateSection } from "../util/sections";
-import { currentProgramPath } from "../visitors/program";
 import { initValue } from "../util/signals";
+import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {

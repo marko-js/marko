@@ -5,7 +5,7 @@ module.exports = function (helpers) {
   // var rootEl = component.el;
   var helloComponent = component.getComponent("hello");
   expect(component.getEl("root").querySelector(".hello") != null).to.equal(
-    true
+    true,
   );
   // expect(helloComponent.el.parentNode).to.equal(rootEl);
 
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
   component.update();
 
   expect(component.getEl("root").querySelector(".hello") != null).to.equal(
-    true
+    true,
   );
 
   expect(component.getComponent("hello")).to.equal(helloComponent);

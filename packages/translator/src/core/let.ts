@@ -1,14 +1,14 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
-import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { addValue, initValue, queueSource } from "../util/signals";
 import { registerAssignmentReplacer } from "../util/replace-assignments";
-import { getSection } from "../util/sections";
-import { callRuntime } from "../util/runtime";
-import { currentProgramPath } from "../visitors/program";
 import { getScopeAccessorLiteral } from "../util/reserve";
+import { callRuntime } from "../util/runtime";
+import { getSection } from "../util/sections";
+import { addValue, initValue, queueSource } from "../util/signals";
+import translateVar from "../util/translate-var";
+import { currentProgramPath } from "../visitors/program";
 
 export default {
   translate(tag) {
@@ -17,7 +17,7 @@ export default {
     const defaultAttr =
       node.attributes.find(
         (attr) =>
-          t.isMarkoAttribute(attr) && (attr.default || attr.name === "value")
+          t.isMarkoAttribute(attr) && (attr.default || attr.name === "value"),
       ) ?? t.markoAttribute("value", t.identifier("undefined"));
 
     assertNoParams(tag);
@@ -51,7 +51,7 @@ export default {
             get identifier() {
               if (!initValueId) {
                 initValueId = tag.scope.generateUidIdentifier(
-                  source.identifier.name + "_init"
+                  source.identifier.name + "_init",
                 );
                 currentProgramPath.pushContainer(
                   "body",
@@ -61,10 +61,10 @@ export default {
                       callRuntime(
                         "initValue",
                         getScopeAccessorLiteral(binding),
-                        source.identifier
-                      )
+                        source.identifier,
+                      ),
                     ),
-                  ])
+                  ]),
                 );
               }
 
@@ -74,7 +74,7 @@ export default {
               return source.hasDownstreamIntersections();
             },
           },
-          defaultAttr.value
+          defaultAttr.value,
         );
       } else {
         addValue(section, references, source, defaultAttr.value);
@@ -83,7 +83,7 @@ export default {
       registerAssignmentReplacer(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
-          queueSource(source, value, getSection(assignment))
+          queueSource(source, value, getSection(assignment)),
       );
     } else {
       translateVar(tag, defaultAttr.value);

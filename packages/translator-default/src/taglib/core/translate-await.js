@@ -7,7 +7,7 @@ export function enter(path) {
     throw path
       .get("name")
       .buildCodeFrameError(
-        'You must provide a promise argument to the "<await>" tag, eg: "<await(promise)>".'
+        'You must provide a promise argument to the "<await>" tag, eg: "<await(promise)>".',
       );
   } else if (args.length > 1) {
     const {
@@ -18,14 +18,14 @@ export function enter(path) {
     } = args[args.length - 1].node;
     throw path.hub.file.buildCodeFrameError(
       { loc: { start, end } },
-      'You can only pass one argument to the "<await>" tag.'
+      'You can only pass one argument to the "<await>" tag.',
     );
   }
 
   const [provider] = args;
   path.pushContainer(
     "attributes",
-    t.markoAttribute("_provider", provider.node)
+    t.markoAttribute("_provider", provider.node),
   );
 
   if (
@@ -33,7 +33,7 @@ export function enter(path) {
   ) {
     path.pushContainer(
       "attributes",
-      t.markoAttribute("_name", t.stringLiteral(provider.toString()))
+      t.markoAttribute("_name", t.stringLiteral(provider.toString())),
     );
   }
 

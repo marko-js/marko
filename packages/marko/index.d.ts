@@ -58,11 +58,11 @@ declare global {
       once(eventName: PropertyKey, listener: (...args: any[]) => any): this;
       prependListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       removeListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       /** Register a callback executed when the last async out has completed. */
       onLast(listener: (next: () => void) => unknown): this;
@@ -84,7 +84,7 @@ declare global {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       in Params extends readonly any[] = [],
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      out Return = void
+      out Return = void,
     > {}
 
     /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
@@ -125,7 +125,7 @@ declare global {
        * cleaned up once this component is destroyed
        * */
       subscribeTo(
-        emitter: unknown
+        emitter: unknown,
       ): Omit<Emitter, "listenerCount" | "prependListener" | "emit">;
       /** Emits an event on the component instance. */
       emit(eventName: PropertyKey, ...args: any[]): boolean;
@@ -136,12 +136,12 @@ declare global {
       /** Listen to an event on the component instance before all other listeners. */
       prependListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       /** Remove a listener from the component instance. */
       removeListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       /** Remove all listeners from the component instance. */
       removeAllListeners(eventName?: PropertyKey): this;
@@ -156,14 +156,14 @@ declare global {
       /** Gets an element reference by its `key` attribute in the template. */
       getEl<T extends Element | void = Element | void>(
         key?: string,
-        index?: number
+        index?: number,
       ): T;
       /** Gets all element references by their `key` attribute in the template. */
       getEls<T extends Element[] = Element[]>(key: string): T;
       /** Gets a component reference by its `key` attribute in the template. */
       getComponent<T extends Component | void = Component | void>(
         key: string,
-        index?: number
+        index?: number,
       ): T;
       /** Gets all component references by their `key` attribute in the template. */
       getComponents<T extends Component[] = Component[]>(key: string): T;
@@ -178,14 +178,14 @@ declare global {
        */
       setState<Key extends PropertyKey>(
         name: Key & keyof this["state"],
-        value: (this["state"] & Record<PropertyKey, unknown>)[Key]
+        value: (this["state"] & Record<PropertyKey, unknown>)[Key],
       ): void;
       setState(value: Partial<this["state"]>): void;
 
       /** Schedules an update related to a specific state property and optionally updates the value. */
       setStateDirty<Key extends PropertyKey>(
         name: Key & keyof this["state"],
-        value?: (this["state"] & Record<PropertyKey, unknown>)[Key]
+        value?: (this["state"] & Record<PropertyKey, unknown>)[Key],
       ): void;
       /** Synchronously flush any scheduled updates. */
       update(): void;
@@ -238,7 +238,7 @@ declare global {
         stream?: {
           write: (chunk: string) => void;
           end: (chunk?: string) => void;
-        }
+        },
       ): Marko.Out<Marko.Component>;
 
       /** Asynchronously render the template in buffered mode. */
@@ -246,13 +246,13 @@ declare global {
         input: Marko.TemplateInput<Input>,
         cb?: (
           err: Error | null,
-          result: Marko.RenderResult<Marko.Component>
-        ) => void
+          result: Marko.RenderResult<Marko.Component>,
+        ) => void,
       ): Marko.Out<Marko.Component>;
 
       /** Synchronously render the template. */
       abstract renderSync(
-        input: Marko.TemplateInput<Input>
+        input: Marko.TemplateInput<Input>,
       ): Marko.RenderResult<Marko.Component>;
 
       /** Synchronously render a template to a string. */
@@ -260,13 +260,13 @@ declare global {
 
       /** Render a template and return a stream.Readable in nodejs or a ReadableStream in a web worker environment. */
       abstract stream(
-        input: Marko.TemplateInput<Input>
+        input: Marko.TemplateInput<Input>,
       ): ReadableStream<string> & NodeJS.ReadableStream;
       /** @marko-overload-end */
     }
 
     export interface RenderResult<
-      out Component extends Marko.Component = Marko.Component
+      out Component extends Marko.Component = Marko.Component,
     > {
       /** Returns the component created as a result of rendering the template. */
       getComponent(): Component;
@@ -307,11 +307,11 @@ declare global {
       once(eventName: PropertyKey, listener: (...args: any[]) => any): this;
       prependListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       removeListener(
         eventName: PropertyKey,
-        listener: (...args: any[]) => any
+        listener: (...args: any[]) => any,
       ): this;
       removeAllListeners(eventName?: PropertyKey): this;
     }
@@ -323,7 +323,7 @@ declare global {
 
     export interface NativeTag<
       Input extends Record<string, any>,
-      Return extends Element
+      Return extends Element,
     > {
       input: Input;
       return: () => Return;
@@ -335,37 +335,37 @@ declare global {
     export type Input<Name> = 0 extends 1 & Name
       ? any
       : Name extends string
-      ? Name extends keyof NativeTags
-        ? NativeTags[Name]["input"]
-        : Record<string, unknown>
-      : Name extends
-          | Template<infer Input, any>
-          | { _(): () => (input: infer Input) => any }
-      ? Input
-      : Name extends Body<infer Args, any>
-      ? Args extends {
-          length: infer Length;
-        }
-        ? number extends Length
-          ? { value?: Args }
-          : 0 extends Length
-          ? { value?: [] }
-          : { value: Args }
-        : never
-      : never;
+        ? Name extends keyof NativeTags
+          ? NativeTags[Name]["input"]
+          : Record<string, unknown>
+        : Name extends
+              | Template<infer Input, any>
+              | { _(): () => (input: infer Input) => any }
+          ? Input
+          : Name extends Body<infer Args, any>
+            ? Args extends {
+                length: infer Length;
+              }
+              ? number extends Length
+                ? { value?: Args }
+                : 0 extends Length
+                  ? { value?: [] }
+                  : { value: Args }
+              : never
+            : never;
 
     export type Return<Name> = 0 extends 1 & Name
       ? any
       : Name extends string
-      ? Name extends keyof NativeTags
-        ? NativeTags[Name]["return"]
-        : () => Element
-      : Name extends
-          | { _(): () => (input: any) => { return: infer Return } }
-          | Template<any, infer Return>
-          | Body<any, infer Return>
-      ? Return
-      : never;
+        ? Name extends keyof NativeTags
+          ? NativeTags[Name]["return"]
+          : () => Element
+        : Name extends
+              | { _(): () => (input: any) => { return: infer Return } }
+              | Template<any, infer Return>
+              | Body<any, infer Return>
+          ? Return
+          : never;
 
     /** @deprecated @see {@link Marko.Input} */
     export type NativeTagInput<Name extends keyof NativeTags> =

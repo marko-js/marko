@@ -1,7 +1,22 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import * as writer from "../../util/writer";
-import * as walks from "../../util/walks";
+import { types as t } from "@marko/compiler";
+import { isCoreTagName } from "../../util/is-core-tag";
+import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
+import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import { type References, mergeReferences } from "../../util/references";
+import {
+  ReserveType,
+  getScopeAccessorLiteral,
+  reserveScope,
+} from "../../util/reserve";
+import { callRuntime } from "../../util/runtime";
+import {
+  type Section,
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getScopeIdentifier,
+  getSection,
+} from "../../util/sections";
 import {
   addValue,
   getClosures,
@@ -13,26 +28,11 @@ import {
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import { callRuntime } from "../../util/runtime";
-import { isCoreTagName } from "../../util/is-core-tag";
 import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
-import {
-  type Section,
-  getOrCreateSection,
-  getScopeIdIdentifier,
-  getScopeIdentifier,
-  getSection,
-} from "../../util/sections";
-import {
-  ReserveType,
-  getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
-import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
-import analyzeAttributeTags from "../../util/nested-attribute-tags";
-import customTag from "../../visitors/tag/custom-tag";
-import { type References, mergeReferences } from "../../util/references";
+import * as walks from "../../util/walks";
+import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../../visitors/program";
+import customTag from "../../visitors/tag/custom-tag";
 
 export default {
   analyze: {
@@ -42,7 +42,7 @@ export default {
         getOrCreateSection(tag),
         tag.node,
         "if",
-        "#text"
+        "#text",
       );
       customTag.analyze.enter(tag);
     },
@@ -63,7 +63,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The '<if>' tag requires a default attribute like '<if=condition>'.`
+            `The '<if>' tag requires a default attribute like '<if=condition>'.`,
           );
       }
 
@@ -78,7 +78,7 @@ export default {
           throw tag.hub.buildError(
             { loc: { start, end } } as unknown as t.Node,
             msg,
-            Error
+            Error,
           );
         }
       }
@@ -141,7 +141,7 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
       section,
       branches
         .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
-        .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"])
+        .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"]),
     );
     rootExtra.conditionalReferences = conditionalReferences;
     rootExtra.isStateful = !!conditionalReferences;
@@ -165,20 +165,20 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
           "markResumeScopeStart",
-          getScopeIdIdentifier(bodySection)
+          getScopeIdIdentifier(bodySection),
         )}`;
       }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         return t.assignmentExpression(
           "=",
           getScopeIdentifier(bodySection),
-          scope
+          scope,
         );
       });
       // TODO: redundant? is this already getting set by writeHTMLResumeStatements?
       getSerializedScopeProperties(bodySection).set(
         t.stringLiteral("_"),
-        callRuntime("serializedScope", getScopeIdIdentifier(section))
+        callRuntime("serializedScope", getScopeIdIdentifier(section)),
       );
     }
     writer.flushInto(tag);
@@ -202,7 +202,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           return callRuntime(
             "inConditionalScope",
             subscriber,
-            getScopeAccessorLiteral(extra.reserve!)
+            getScopeAccessorLiteral(extra.reserve!),
             /*writer.getRenderer(section)*/
           );
         });
@@ -225,7 +225,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         return callRuntime(
           "conditional",
           getScopeAccessorLiteral(extra.reserve!),
-          getSignalFn(signal, [scopeIdentifier])
+          getSignalFn(signal, [scopeIdentifier]),
         );
       };
       signal.hasDownstreamIntersections = () =>
@@ -234,7 +234,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         section,
         extra.conditionalReferences as References,
         signal,
-        expr
+        expr,
       );
     } else {
       const write = writer.writeTo(tag);
@@ -260,12 +260,12 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                   ifRendererIdentifier,
                   callRuntime(
                     "createRenderer",
-                    t.arrowFunctionExpression([], t.blockStatement([]))
-                  )
+                    t.arrowFunctionExpression([], t.blockStatement([])),
+                  ),
                 ),
-                t.stringLiteral(getResumeRegisterId(section, "renderer"))
-              )
-            ) as any
+                t.stringLiteral(getResumeRegisterId(section, "renderer")),
+              ),
+            ) as any,
           );
 
           if (singleNodeOptimization) {
@@ -274,9 +274,9 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                 t.assignmentExpression(
                   "=",
                   ifScopeIdIdentifier,
-                  getScopeIdIdentifier(section)
-                )
-              ) as any
+                  getScopeIdIdentifier(section),
+                ),
+              ) as any,
             );
           }
         }
@@ -304,7 +304,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
                 t.variableDeclarator(ifScopeIdIdentifier),
               t.variableDeclarator(ifScopeIdentifier),
               t.variableDeclarator(ifRendererIdentifier),
-            ].filter(Boolean) as t.VariableDeclarator[]
+            ].filter(Boolean) as t.VariableDeclarator[],
           ),
           statement!,
         ]);
@@ -313,22 +313,22 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
             "markResumeControlSingleNodeEnd",
             getScopeIdIdentifier(section),
             getScopeAccessorLiteral(extra.reserve!),
-            ifScopeIdIdentifier
+            ifScopeIdIdentifier,
           )}`;
         } else {
           write`${callRuntime(
             "markResumeControlEnd",
             getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(extra.reserve!)
+            getScopeAccessorLiteral(extra.reserve!),
           )}`;
         }
         getSerializedScopeProperties(section).set(
           t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "!"),
-          ifScopeIdentifier
+          ifScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
           t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "("),
-          ifRendererIdentifier
+          ifRendererIdentifier,
         );
       }
     }

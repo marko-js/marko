@@ -38,7 +38,7 @@ npm install @lasso/marko-taglib
 After installing, the lasso custom tags can be used in your templates:
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />

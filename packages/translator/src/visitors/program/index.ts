@@ -4,10 +4,10 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import { startSection } from "../../util/sections";
-import { assignFinalIds } from "../../util/reserve";
 import { finalizeIntersections } from "../../util/references";
+import { assignFinalIds } from "../../util/reserve";
 import { callRuntime } from "../../util/runtime";
+import { startSection } from "../../util/sections";
 import programDOM from "./dom";
 import programHTML from "./html";
 
@@ -59,7 +59,7 @@ export default {
         program.node.body = [
           t.importDeclaration(
             [],
-            t.stringLiteral(program.hub.file.opts.filename as string)
+            t.stringLiteral(program.hub.file.opts.filename as string),
           ),
         ];
         if (

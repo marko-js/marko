@@ -1,5 +1,5 @@
 import path from "path";
-import escapeRegExp from "escape-string-regexp";
+import { escapeRegExp } from "./escape-regexp";
 
 const COMPONENT_FILES_KEY = Symbol();
 
@@ -15,12 +15,12 @@ export default function getComponentFiles({ hub: { file } }) {
   const dirname = path.dirname(filename);
   const dirFiles = fs.readdirSync(dirname).sort();
   const base = getBase(filename);
-  const isEntry = "index" === base;
+  const isEntry = "index" === base || "template" === base;
   const fileMatch = `(${escapeRegExp(base)}\\.${isEntry ? "|" : ""})`;
   const styleMatch = new RegExp(`^${fileMatch}style\\.\\w+$`);
   const componentMatch = new RegExp(`^${fileMatch}component\\.\\w+$`);
   const splitComponentMatch = new RegExp(
-    `^${fileMatch}component-browser\\.\\w+$`
+    `^${fileMatch}component-browser\\.\\w+$`,
   );
   const packageMatch = new RegExp(`^${fileMatch}browser\\.\\json$`);
   let styleFile;

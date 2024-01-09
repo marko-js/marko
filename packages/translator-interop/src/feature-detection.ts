@@ -1,7 +1,7 @@
-import type { types as t } from "@marko/compiler";
-import { taglibs as taglibs6 } from "@marko/translator-fluurt";
-import { taglibs as taglibs5 } from "@marko/translator-default";
 import { getTagDef, isDynamicTag } from "@marko/babel-utils";
+import type { types as t } from "@marko/compiler";
+import { taglibs as taglibs5 } from "@marko/translator-default";
+import { taglibs as taglibs6 } from "@marko/translator-fluurt";
 import { buildAggregateError } from "./build-aggregate-error";
 
 const enum FEATURE_TYPE {
@@ -49,7 +49,7 @@ const featureDetectionVisitor = {
       state,
       FEATURE_TYPE.CLASS,
       "Class block",
-      markoClass.get("body")
+      markoClass.get("body"),
     );
   },
   ReferencedIdentifier(ref: t.NodePath<t.Identifier>, state: FeatureState) {
@@ -68,7 +68,7 @@ const featureDetectionVisitor = {
         state,
         FEATURE_TYPE.TAGS,
         "Tag variable",
-        tag.get("var") as t.NodePath<t.LVal>
+        tag.get("var") as t.NodePath<t.LVal>,
       );
     }
 
@@ -79,7 +79,7 @@ const featureDetectionVisitor = {
             state,
             FEATURE_TYPE.CLASS,
             "Attribute arguments",
-            (attr.get("arguments") as t.NodePath<t.Expression>[])[0]
+            (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
           );
           break;
         } else if (attr.node.modifier) {
@@ -98,7 +98,7 @@ const featureDetectionVisitor = {
                 state,
                 FEATURE_TYPE.CLASS,
                 `"${attr.node.name}" attribute`,
-                attr
+                attr,
               );
               break;
           }
@@ -122,13 +122,13 @@ const featureDetectionVisitor = {
 const getFeatureByTagName = (() => {
   const taglib5UniqueTags = new Set(
     (taglibs5 as typeof taglibs6).flatMap((taglib) =>
-      Object.keys(taglib[1]).map((key) => /^<(.*)>$/.exec(key)?.[1])
-    )
+      Object.keys(taglib[1]).map((key) => /^<(.*)>$/.exec(key)?.[1]),
+    ),
   ) as Set<string | undefined>;
   const taglib6UniqueTags = new Set(
     taglibs6.flatMap((taglib) =>
-      Object.keys(taglib[1]).map((key) => /^<(.*)>$/.exec(key)?.[1])
-    )
+      Object.keys(taglib[1]).map((key) => /^<(.*)>$/.exec(key)?.[1]),
+    ),
   ) as Set<string | undefined>;
 
   for (const tagName of taglib5UniqueTags) {
@@ -148,7 +148,7 @@ function addFeature(
   state: FeatureState,
   type: Feature["type"],
   name: Feature["name"],
-  path: Feature["path"]
+  path: Feature["path"],
 ) {
   if (state.feature) {
     if (state.feature.type !== type) {
@@ -156,7 +156,7 @@ function addFeature(
         path.hub.file,
         'Cannot mix "tags api" and "class api" features',
         [state.feature.name, state.feature.path],
-        [name, path]
+        [name, path],
       );
     }
   } else {

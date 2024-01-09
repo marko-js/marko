@@ -18,7 +18,7 @@ function requestData(provider, timeout) {
     if ("MARKO_DEBUG") {
       complain(
         "Passing a callback function to the <await> tag has been deprecated, please use a promise instead.",
-        { level: 1, locationIndex: 3 }
+        { level: 1, locationIndex: 3 },
       );
     }
 
@@ -220,7 +220,11 @@ function renderContents(err, data, input, out) {
   if (err) {
     if (input.catch) {
       if (errorRenderer) {
-        errorRenderer(out, err);
+        try {
+          errorRenderer(out, err);
+        } catch (err2) {
+          out.error(err2);
+        }
       }
     } else {
       out.error(err);

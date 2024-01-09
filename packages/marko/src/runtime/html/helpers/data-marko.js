@@ -27,7 +27,7 @@ module.exports = function dataMarko(out, componentDef, props, key) {
       result +=
         ' data-marko-key="' +
         escapeDoubleQuotes(
-          componentDef.___nextKey(key) + " " + componentDef.id
+          componentDef.___nextKey(key) + " " + componentDef.id,
         ) +
         '"';
     }

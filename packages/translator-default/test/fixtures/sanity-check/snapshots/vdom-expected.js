@@ -13,9 +13,10 @@ import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _other from "./components/other/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
 import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
+import _marko_merge_attrs from "marko/src/runtime/vdom/helpers/merge-attrs.js";
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {
   onCreate() {
@@ -66,7 +67,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       b: c,
       d
     }]),
-    "style": "a:b;"
+    "style": "a:b"
   }, "8", _component, 0, 1);
   out.e("input", {
     "type": "text"
@@ -107,12 +108,11 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.e("div", null, "15", _component, 0, 0);
     }
   }, out, _componentDef, "14");
-  out.be("div", _marko_attrs({
+  out.be("div", _marko_merge_attrs({
     "class": "b c",
-    "a": "[object Object]",
-    "c": "${d}",
-    ...e,
-    ...f(),
+    "a": "{\"a\":1}",
+    "c": "${d}"
+  }, e, f(), {
     "id": "a"
   }), "18", _component, null, 4);
   out.t(a, _component);

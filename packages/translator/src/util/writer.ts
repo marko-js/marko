@@ -5,30 +5,30 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
+import { isOutputHTML } from "./marko-config";
+import { ReserveType, getScopeAccessorLiteral } from "./reserve";
 import { callRuntime } from "./runtime";
+import { getSetup } from "./signals";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
-import { getSetup } from "./signals";
-import { isOutputHTML } from "./marko-config";
-import { ReserveType, getScopeAccessorLiteral } from "./reserve";
 
 const [getRenderer] = createSectionState<t.Identifier>(
   "renderer",
-  (section: Section) => t.identifier(section.name)
+  (section: Section) => t.identifier(section.name),
 );
 
 export { getRenderer };
 
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",
-  () => [""]
+  () => [""],
 );
 
 const [getRegisterRenderer, setRegisterRenderer] = createSectionState<boolean>(
   "registerRenderer",
-  () => false
+  () => false,
 );
 
 export { setRegisterRenderer };
@@ -78,7 +78,7 @@ export function consumeHTML(path: t.NodePath<any>) {
 }
 
 export function hasPendingHTML(
-  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
+  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
 ) {
   const writes = getWrites(getSection(path));
   return Boolean(writes.length > 1 || writes[0]);
@@ -92,9 +92,11 @@ export function flushBefore(path: t.NodePath<any>) {
 }
 
 export function flushInto(
-  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>
+  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
 ) {
-  const target = path.isProgram() ? path : path.get("body");
+  const target = (path.isProgram() ? path : path.get("body")) as t.NodePath<
+    t.Program | t.MarkoTagBody
+  >;
   const expr = consumeHTML(target);
   if (expr) {
     target.pushContainer("body", expr)[0].skip();
@@ -117,7 +119,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
 
   if (reserve?.type !== ReserveType.Visit) {
     throw path.buildCodeFrameError(
-      "Tried to mark a node that was not determined to need a mark during analyze."
+      "Tried to mark a node that was not determined to need a mark during analyze.",
     );
   }
 
@@ -125,7 +127,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(reserve!)
+      getScopeAccessorLiteral(reserve!),
     )}`;
   }
 }

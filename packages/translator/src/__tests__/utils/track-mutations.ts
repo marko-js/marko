@@ -8,12 +8,12 @@ const { DOMElement, DOMCollection } = plugins;
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
-  runtimeId
+  runtimeId,
 );
 
 export default function createMutationTracker(
   window: JSDOM["window"],
-  container: ParentNode
+  container: ParentNode,
 ) {
   const result: string[] = [];
   const sanitizedResult: string[] = [];
@@ -36,15 +36,15 @@ export default function createMutationTracker(
         currentRecords = observer.takeRecords();
       }
       result.push(
-        getStatusString(cloneAndNormalize(container), currentRecords, update)
+        getStatusString(cloneAndNormalize(container), currentRecords, update),
       );
       sanitizedResult.push(
         getStatusString(
           cloneAndSanitize(window, container),
           currentRecords,
           update,
-          true
-        )
+          true,
+        ),
       );
       currentRecords = null;
     },
@@ -112,7 +112,7 @@ function getStatusString(
   container: Node,
   records: MutationRecord[],
   update: unknown,
-  omitMutations?: boolean
+  omitMutations?: boolean,
 ) {
   const updateString =
     typeof update === "function"
@@ -127,7 +127,7 @@ function getStatusString(
     .map((child) =>
       format(child, {
         plugins: [DOMElement, DOMCollection],
-      }).trim()
+      }).trim(),
     )
     .filter(Boolean)
     .join("\n")
@@ -150,10 +150,10 @@ function formatMutationRecord(record: MutationRecord) {
     case "attributes": {
       const { attributeName } = record;
       const newValue = (target as HTMLElement).getAttribute(
-        attributeName as string
+        attributeName as string,
       );
       return `${getNodePath(target)}: attr(${attributeName}) ${JSON.stringify(
-        oldValue
+        oldValue,
       )} => ${JSON.stringify(newValue)}`;
     }
 
@@ -173,12 +173,12 @@ function formatMutationRecord(record: MutationRecord) {
       }
 
       return `${getNodePath(target)}: ${JSON.stringify(
-        (oldValue || "").replace(reorderRuntimeString, "REORDER_RUNTIME")
+        (oldValue || "").replace(reorderRuntimeString, "REORDER_RUNTIME"),
       )} => ${JSON.stringify(
         (target.nodeValue || "").replace(
           reorderRuntimeString,
-          "REORDER_RUNTIME"
-        )
+          "REORDER_RUNTIME",
+        ),
       )}`;
     }
 
@@ -191,18 +191,18 @@ function formatMutationRecord(record: MutationRecord) {
           relativeNode === previousSibling
             ? "after"
             : relativeNode === nextSibling
-            ? "before"
-            : "in";
+              ? "before"
+              : "in";
         details.push(
           `removed ${Array.from(removedNodes)
             .map(getNodePath)
-            .join(", ")} ${position} ${getNodePath(relativeNode)}`
+            .join(", ")} ${position} ${getNodePath(relativeNode)}`,
         );
       }
 
       if (addedNodes.length) {
         details.push(
-          `inserted ${Array.from(addedNodes).map(getNodePath).join(", ")}`
+          `inserted ${Array.from(addedNodes).map(getNodePath).join(", ")}`,
         );
       }
 

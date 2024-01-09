@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { parseStatements } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 export default {
   parse(tag: t.NodePath<t.MarkoTag>) {
     const {

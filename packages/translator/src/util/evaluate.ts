@@ -20,7 +20,7 @@ declare module "@marko/compiler/dist/types" {
 export default function evaluate(
   path: t.NodePath<
     t.MarkoAttribute | t.MarkoSpreadAttribute | t.MarkoPlaceholder
-  >
+  >,
 ) {
   let { extra } = path.node;
 
@@ -44,7 +44,7 @@ export default function evaluate(
 export function getEvaluated(
   path: t.NodePath<
     t.MarkoAttribute | t.MarkoSpreadAttribute | t.MarkoPlaceholder
-  >
+  >,
 ) {
   const { extra } = path.node;
 

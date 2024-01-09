@@ -21,7 +21,7 @@ export function getEmptyScope(marker?: Comment) {
 export function write<S extends Scope, K extends keyof S>(
   scope: S,
   localIndex: K,
-  value: S[K]
+  value: S[K],
 ) {
   if (scope[localIndex] !== value) {
     scope[localIndex] = value;
@@ -47,7 +47,7 @@ export const bindRenderer = binder(
     renderer && {
       ...renderer,
       ___owner: ownerScope,
-    }
+    },
 );
 
 type BindableFunction = (
@@ -63,7 +63,7 @@ export const bindFunction = binder(
         }
       : function bound(this: unknown) {
           return fn.call(this, boundScope);
-        }
+        },
 );
 
 export function destroyScope(scope: Scope) {

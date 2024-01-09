@@ -1,25 +1,25 @@
-import { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import type { Identifier } from "@marko/compiler/babel-types";
-import { isOutputHTML } from "../../util/marko-config";
 import attrsToObject from "../../util/attrs-to-object";
-import { callRuntime, getHTMLRuntime } from "../../util/runtime";
-import translateVar from "../../util/translate-var";
 import evaluate from "../../util/evaluate";
-import { getOrCreateSection, getSection } from "../../util/sections";
+import { isOutputHTML } from "../../util/marko-config";
 import {
   ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
 } from "../../util/reserve";
-import { addHTMLEffectCall, addStatement } from "../../util/signals";
-import * as writer from "../../util/writer";
-import * as walks from "../../util/walks";
-import { currentProgramPath, scopeIdentifier } from "../program";
+import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
   createScopeReadExpression,
   getScopeExpression,
 } from "../../util/scope-read";
+import { getOrCreateSection, getSection } from "../../util/sections";
+import { addHTMLEffectCall, addStatement } from "../../util/signals";
+import translateVar from "../../util/translate-var";
+import * as walks from "../../util/walks";
+import * as writer from "../../util/writer";
+import { currentProgramPath, scopeIdentifier } from "../program";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -60,7 +60,7 @@ export default {
           section,
           node,
           name,
-          `#${tag.get("name").evaluate().value}`
+          `#${tag.get("name").evaluate().value}`,
         );
       }
     },
@@ -92,10 +92,10 @@ export default {
                 t.throwStatement(
                   t.newExpression(t.identifier("Error"), [
                     t.stringLiteral("Cannot reference DOM node from server"),
-                  ])
+                  ]),
                 ),
-              ])
-            )
+              ]),
+            ),
           );
         } else {
           const varName = (tag.node.var as Identifier).name;
@@ -106,8 +106,8 @@ export default {
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, extra.reserve!)
-                )
+                  createScopeReadExpression(referenceSection, extra.reserve!),
+                ),
               );
             } else {
               createElFunction ??= t.identifier(varName + "_getter");
@@ -115,8 +115,8 @@ export default {
                 callRuntime(
                   "bindFunction",
                   getScopeExpression(referenceSection, extra.reserve!.section),
-                  createElFunction
-                )
+                  createElFunction,
+                ),
               );
             }
           }
@@ -131,11 +131,11 @@ export default {
                     t.memberExpression(
                       scopeIdentifier,
                       getScopeAccessorLiteral(extra.reserve!),
-                      true
-                    )
-                  )
+                      true,
+                    ),
+                  ),
                 ),
-              ])
+              ]),
             );
           }
         }
@@ -154,7 +154,7 @@ export default {
         const attrsCallExpr = callRuntime(
           "attrs",
           scopeIdentifier,
-          attrsToObject(tag)!
+          attrsToObject(tag)!,
         );
 
         if (isHTML) {
@@ -187,9 +187,9 @@ export default {
                     callRuntime(
                       helper,
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      value.node
-                    )
-                  )
+                      value.node,
+                    ),
+                  ),
                 );
               }
               break;
@@ -204,7 +204,7 @@ export default {
                   write`${callRuntime(
                     "attr",
                     t.stringLiteral(name),
-                    value.node
+                    value.node,
                   )}`;
                 }
               } else if (isEventHandler(name)) {
@@ -217,10 +217,10 @@ export default {
                       "on",
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(getEventHandlerName(name)),
-                      value.node
-                    )
+                      value.node,
+                    ),
                   ),
-                  value.node
+                  value.node,
                 );
               } else {
                 addStatement(
@@ -232,9 +232,9 @@ export default {
                       "attr",
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(name),
-                      value.node
-                    )
-                  )
+                      value.node,
+                    ),
+                  ),
                 );
               }
 
@@ -284,7 +284,7 @@ export default {
       if (isHTML && extra.tagNameNullable) {
         tag
           .insertBefore(
-            t.ifStatement(tag.node.name, writer.consumeHTML(tag)!)
+            t.ifStatement(tag.node.name, writer.consumeHTML(tag)!),
           )[0]
           .skip();
       }
@@ -300,7 +300,7 @@ export default {
 };
 
 function isSpreadAttr(
-  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>
+  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
 ): attr is t.NodePath<t.MarkoAttribute> {
   return attr.type === "MarkoSpreadAttribute";
 }

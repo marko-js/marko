@@ -14,7 +14,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.w(`<div${_marko_attr("style", _marko_style_merge({
     color: input.color
   }))}></div>`);
-  out.w("<div style=width:100px;></div>");
+  out.w("<div style=width:100px></div>");
   out.w("<div style=\"color: green\"></div>");
   _marko_tag(_customTag, {
     "style": {

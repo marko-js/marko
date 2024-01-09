@@ -5,7 +5,7 @@ module.exports = function (helpers) {
     .createElement(
       "div",
       { class: "foo", onclick: "doSomething()" },
-      1 /* childCount */
+      1 /* childCount */,
     )
     .e(
       "svg",
@@ -14,7 +14,7 @@ module.exports = function (helpers) {
         height: "100",
         xmlns: "http://www.w3.org/2000/svg",
       },
-      1
+      1,
     )
     .e(
       "circle",
@@ -28,6 +28,6 @@ module.exports = function (helpers) {
         "xlink:href": "http://ebay.com/",
       },
       0,
-      FLAGS
+      FLAGS,
     );
 };

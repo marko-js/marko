@@ -5,7 +5,7 @@ export type DOMFragment = {
   ___insertBefore: (
     scope: Scope,
     parent: Node & ParentNode,
-    nextSibling: Node | null
+    nextSibling: Node | null,
   ) => void;
   ___remove: (scope: Scope) => void;
   ___getParentNode: (scope: Scope) => Node & ParentNode;
@@ -66,7 +66,7 @@ export const dynamicFragment: DOMFragment = {
 function getFirstNode(
   currentScope: Scope,
   nodeOrAccessor: (Node & ChildNode) | Accessor = currentScope.___startNode!,
-  last?: boolean
+  last?: boolean,
 ): Node & ChildNode {
   let scopeOrScopes: Scope | Scope[];
 
@@ -79,14 +79,14 @@ function getFirstNode(
   return typeof nodeOrAccessor === "object"
     ? nodeOrAccessor
     : !(scopeOrScopes = currentScope[
-        nodeOrAccessor + AccessorChars.COND_SCOPE
-      ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
-    ? (currentScope[nodeOrAccessor] as Comment)
-    : (last ? getLastNode : getFirstNode)(
-        Array.isArray(scopeOrScopes)
-          ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
-          : scopeOrScopes
-      );
+          nodeOrAccessor + AccessorChars.COND_SCOPE
+        ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
+      ? (currentScope[nodeOrAccessor] as Comment)
+      : (last ? getLastNode : getFirstNode)(
+          Array.isArray(scopeOrScopes)
+            ? scopeOrScopes[last ? scopeOrScopes.length - 1 : 0]
+            : scopeOrScopes,
+        );
 }
 
 function getLastNode(currentScope: Scope) {

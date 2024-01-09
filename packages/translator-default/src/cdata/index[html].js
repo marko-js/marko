@@ -8,7 +8,7 @@ export default function (path) {
   path.replaceWith(
     withPreviousLocation(
       write`<![CDATA[${t.stringLiteral(node.value)}]]>`,
-      node
-    )
+      node,
+    ),
   );
 }

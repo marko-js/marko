@@ -33,14 +33,14 @@ const { MARKO_TYPES } = require("../dist/babel-types/types/definitions");
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =
   "export class Hub implements HubInterface {\n    constructor();";
-const IMPORT = "import * as t from '@babel/types'";
+const IMPORT = 'import * as t from "@babel/types"';
 const EXPORT_NODE = "export import Node = t.Node;";
 const NODE_PATH_GET =
   "get(key: string, context?: boolean | TraversalContext): NodePath | NodePath[];";
 const IS =
-  "//#region ------------------------- isXXX -------------------------";
+  "// #region ------------------------- isXXX -------------------------";
 const ASSERT =
-  "//#region ------------------------- assertXXX -------------------------";
+  "// #region ------------------------- assertXXX -------------------------";
 const BREAK = "\n    ";
 
 fs.readFile(
@@ -53,11 +53,11 @@ fs.readFile(
       (str) => {
         if (data.indexOf(str) === -1) {
           console.error(
-            `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`
+            `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`,
           );
           process.exit(1);
         }
-      }
+      },
     );
 
     var result = data
@@ -76,12 +76,12 @@ fs.readFile(
 }
 
 ${HUB_INTERFACE}
-    file: BabelFile;`
+    file: BabelFile;`,
       )
       .replace(
         HUB_CLASS,
         `${HUB_CLASS}
-    file: BabelFile;`
+    file: BabelFile;`,
       )
       .replace(IMPORT, `import * as t from './types'`)
       .replace(EXPORT_NODE, "type Node = t.Node")
@@ -91,18 +91,18 @@ ${HUB_INTERFACE}
         IS +
           BREAK +
           MARKO_TYPES.map(
-            (t) => `is${t}(props?: object | null): this is NodePath<t.${t}>;`
-          ).join(BREAK)
+            (t) => `is${t}(opts?: object | null): this is NodePath<t.${t}>;`,
+          ).join(BREAK),
       )
       .replace(
         ASSERT,
         ASSERT +
           BREAK +
           MARKO_TYPES.map(
-            (t) => `assert${t}(props?: object | null): void;`
-          ).join(BREAK)
+            (t) => `assert${t}(opts?: object | null): void;`,
+          ).join(BREAK),
       );
 
     process.stdout.write(result);
-  }
+  },
 );

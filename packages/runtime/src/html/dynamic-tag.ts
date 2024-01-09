@@ -1,4 +1,7 @@
 import type { Renderer } from "../common/types";
+import { attrs } from "./attrs";
+import { serializedScope } from "./serializer";
+import type { Template } from "./template";
 import {
   markResumeScopeStart,
   nextScopeId,
@@ -6,9 +9,6 @@ import {
   write,
   writeScope,
 } from "./writer";
-import { attrs } from "./attrs";
-import type { Template } from "./template";
-import { serializedScope } from "./serializer";
 
 const voidElements = new Set([
   "area",
@@ -34,7 +34,7 @@ interface RenderBodyObject {
 export function dynamicTag(
   tag: unknown | string | Renderer | RenderBodyObject | Template,
   input: Record<string, unknown>,
-  renderBody: (() => void) | undefined
+  renderBody: (() => void) | undefined,
 ) {
   if (!tag && !renderBody) return undefined;
 
@@ -61,7 +61,7 @@ export function dynamicTag(
       write(`</${tag}>`);
     } else if (MARKO_DEBUG && renderBody) {
       throw new Error(
-        `A renderBody was provided for a "${tag}" tag, which cannot have children.`
+        `A renderBody was provided for a "${tag}" tag, which cannot have children.`,
       );
     }
 
@@ -79,13 +79,13 @@ export function dynamicTag(
 }
 
 let getDynamicRenderer = (
-  tag: unknown | string | Renderer | RenderBodyObject | Template
+  tag: unknown | string | Renderer | RenderBodyObject | Template,
 ) => (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
 export let createRenderer = (fn: Renderer) => fn;
 
 export function patchDynamicTag(
   newGetDynamicRenderer: typeof getDynamicRenderer,
-  newCreateRenderer: typeof createRenderer
+  newCreateRenderer: typeof createRenderer,
 ) {
   getDynamicRenderer = newGetDynamicRenderer;
   createRenderer = newCreateRenderer;

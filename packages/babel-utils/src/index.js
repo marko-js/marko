@@ -27,6 +27,7 @@ export {
   assertNoVar,
   assertNoAttributeTags,
 } from "./assert";
+export { computeNode } from "./compute";
 export { normalizeTemplateString } from "./template-string";
 
 export { getLoc, getLocRange, withLoc } from "./loc";
@@ -38,6 +39,8 @@ export {
   parseArgs,
   parseVar,
   parseTemplateLiteral,
+  parseTypeArgs,
+  parseTypeParams,
 } from "./parse";
 
 export { resolveRelativePath, importDefault, importNamed } from "./imports";

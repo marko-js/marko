@@ -94,7 +94,7 @@ const _show = value(
     _if0(scope, value ? ifBody0 : undefined);
   },
   undefined,
-  _if0
+  _if0,
 );
 
 const _if1 = conditional(INDEX_IF0.conditional0);
@@ -106,7 +106,7 @@ const value1$if1 = closure(
   },
   (scope) => {
     return (scope as If1Scope)._._;
-  }
+  },
 );
 
 const _if2 = conditional(INDEX_IF0.conditional1);
@@ -118,7 +118,7 @@ const value2$if2 = closure(
   },
   (scope) => {
     return (scope as If1Scope)._._;
-  }
+  },
 );
 
 const value1$if0 = closure(
@@ -128,7 +128,7 @@ const value1$if0 = closure(
   },
   undefined,
   inConditionalScope(value1$if1, INDEX_IF0.conditional0),
-  _if1
+  _if1,
 );
 
 const value2$if0 = closure(
@@ -138,18 +138,18 @@ const value2$if0 = closure(
   },
   undefined,
   inConditionalScope(value2$if2, INDEX_IF0.conditional1),
-  _if2
+  _if2,
 );
 
 const _value1 = value(
   INDEX.value1,
   undefined,
-  inConditionalScope(value1$if0, INDEX.conditional)
+  inConditionalScope(value1$if0, INDEX.conditional),
 );
 const _value2 = value(
   INDEX.value2,
   undefined,
-  inConditionalScope(value2$if0, INDEX.conditional)
+  inConditionalScope(value2$if0, INDEX.conditional),
 );
 
 export default createTemplate(
@@ -162,8 +162,8 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    attrs as any
-  )
+    attrs as any,
+  ),
 );
 
 const ifBody0 = createRenderer(
@@ -174,19 +174,19 @@ const ifBody0 = createRenderer(
   0,
   dynamicFragment,
   INDEX_IF0.conditional0,
-  INDEX_IF0.conditional1
+  INDEX_IF0.conditional1,
 );
 
 const ifBody1 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined,
-  [value1$if1]
+  [value1$if1],
 );
 
 const ifBody2 = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined,
-  [value2$if2]
+  [value2$if2],
 );

@@ -5,8 +5,8 @@ import {
   assertNoParams,
   assertNoVar,
 } from "@marko/babel-utils";
-import * as writer from "../util/writer";
 import * as walks from "../util/walks";
+import * as writer from "../util/writer";
 
 export default {
   analyze() {

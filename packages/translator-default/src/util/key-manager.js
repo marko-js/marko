@@ -1,9 +1,9 @@
-import { types as t } from "@marko/compiler";
 import {
   isLoopTag,
   isTransparentTag,
   normalizeTemplateString,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 const KeyManagerLookup = new WeakMap();
 
 /**
@@ -51,7 +51,7 @@ class KeyManager {
         firstChildTag.insertBefore(
           t.variableDeclaration("const", [
             t.variableDeclarator(keyValueIdentifier, firstChildKey),
-          ])
+          ]),
         );
 
         path.set("keyValue", keyValueIdentifier);
@@ -74,7 +74,7 @@ class KeyManager {
       "key",
       parentKeyScope
         ? t.binaryExpression("+", autoKey, parentKeyScope)
-        : autoKey
+        : autoKey,
     );
   }
 }
@@ -102,8 +102,8 @@ function getKeyScope(path) {
       "declarations",
       t.variableDeclarator(
         keyScopeIdentifier,
-        normalizeTemplateString`[${firstChildKeyValue}]`
-      )
+        normalizeTemplateString`[${firstChildKeyValue}]`,
+      ),
     );
   } else {
     let keyValue;
@@ -121,7 +121,7 @@ function getKeyScope(path) {
       path.insertBefore(
         t.variableDeclaration("let", [
           t.variableDeclarator(keyValueIdentifier, t.numericLiteral(0)),
-        ])
+        ]),
       );
 
       keyValue = t.updateExpression("++", keyValueIdentifier);
@@ -139,9 +139,9 @@ function getKeyScope(path) {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             keyScopeIdentifier,
-            normalizeTemplateString`[${keyValue}]`
+            normalizeTemplateString`[${keyValue}]`,
           ),
-        ])
+        ]),
       );
   }
 

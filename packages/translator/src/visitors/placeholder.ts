@@ -1,18 +1,18 @@
-import { types as t } from "@marko/compiler";
 import { isNativeTag } from "@marko/babel-utils";
-import { isOutputHTML } from "../util/marko-config";
-import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { types as t } from "@marko/compiler";
 import evaluate from "../util/evaluate";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { isCoreTag } from "../util/is-core-tag";
+import { isOutputHTML } from "../util/marko-config";
 import {
   ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
 } from "../util/reserve";
+import { callRuntime, getHTMLRuntime } from "../util/runtime";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
-import * as writer from "../util/writer";
 import * as walks from "../util/walks";
-import { isCoreTag } from "../util/is-core-tag";
+import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
 const ESCAPE_TYPES = {
@@ -34,7 +34,7 @@ export default {
         getOrCreateSection(placeholder),
         node,
         "placeholder",
-        "#text"
+        "#text",
       );
       needsMarker(placeholder);
     }
@@ -51,8 +51,8 @@ export default {
         ? ESCAPE_TYPES[getParentTagName(placeholder)] || "escapeXML"
         : "toString"
       : placeholder.node.escape
-      ? "data"
-      : "html";
+        ? "data"
+        : "html";
 
     if (confident && canWriteHTML) {
       write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
@@ -67,7 +67,7 @@ export default {
       if (isHTML) {
         write`${callRuntime(
           method as HTMLMethod | DOMMethod,
-          placeholder.node.value
+          placeholder.node.value,
         )}`;
         writer.markNode(placeholder);
       } else {
@@ -82,17 +82,17 @@ export default {
                   t.memberExpression(
                     scopeIdentifier,
                     getScopeAccessorLiteral(reserve!),
-                    true
+                    true,
                   ),
-                  placeholder.node.value
+                  placeholder.node.value,
                 )
               : callRuntime(
                   "html",
                   scopeIdentifier,
                   placeholder.node.value,
-                  getScopeAccessorLiteral(reserve!)
-                )
-          )
+                  getScopeAccessorLiteral(reserve!),
+                ),
+          ),
         );
       }
     }
@@ -117,7 +117,7 @@ function noOutput(path: t.NodePath<t.Node>) {
     (t.isMarkoTag(path) &&
       isCoreTag(path) &&
       ["let", "const", "effect", "lifecycle", "attrs", "get", "id"].includes(
-        path.node.name.value
+        path.node.name.value,
       ))
   );
 }

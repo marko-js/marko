@@ -6,7 +6,7 @@ module.exports = function (helpers) {
     { value: "foo" },
     null /* key */,
     null /* component */,
-    0 /* childCount */
+    0 /* childCount */,
   );
 
   expect(el.___value).to.equal("foo");

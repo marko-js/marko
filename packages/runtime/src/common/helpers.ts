@@ -30,7 +30,7 @@ function stringifyStyleObject(name: string, value: unknown) {
 function toDelimitedString(
   val: unknown,
   delimiter: string,
-  stringify: (n: string, v: unknown) => string | undefined
+  stringify: (n: string, v: unknown) => string | undefined,
 ) {
   switch (typeof val) {
     case "string":

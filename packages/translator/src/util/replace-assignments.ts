@@ -11,7 +11,7 @@ export function getReplacement(assignment: t.NodePath, value: t.Expression) {
 
 export function registerAssignmentReplacer(
   binding: t.Binding,
-  map: (assignment: t.NodePath, value: t.Expression) => t.Expression
+  map: (assignment: t.NodePath, value: t.Expression) => t.Expression,
 ): void {
   for (const assignment of binding.constantViolations) {
     assignmentReplacer.set(assignment.node, map);

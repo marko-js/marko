@@ -1,5 +1,5 @@
+var stripJsonComments = require("@luxass/strip-json-comments").strip;
 var taglibConfig = require("../config");
-var stripJsonComments = require("strip-json-comments");
 var fsReadOptions = { encoding: "utf8" };
 
 exports.readFileSync = function (path) {
@@ -10,7 +10,7 @@ exports.readFileSync = function (path) {
     return taglibProps;
   } catch (e) {
     throw new Error(
-      'Unable to parse JSON file at path "' + path + '". Error: ' + e
+      'Unable to parse JSON file at path "' + path + '". Error: ' + e,
     );
   }
 };

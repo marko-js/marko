@@ -30,7 +30,7 @@ function add(type, path, options) {
   if (rawFix) {
     if (file.___compileStage !== "migrate") {
       throw new Error(
-        "Diagnostic fixes can only be registered during the migrate stage."
+        "Diagnostic fixes can only be registered during the migrate stage.",
       );
     }
 

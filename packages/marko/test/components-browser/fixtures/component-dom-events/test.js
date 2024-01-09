@@ -16,7 +16,7 @@ module.exports = function (helpers) {
   component.clearLog();
   helpers.triggerMouseEvent(
     component.getEl("button").firstElementChild,
-    "click"
+    "click",
   );
   expect(component.logOutput).to.deep.equal(["button:click", "el:click"]);
 
@@ -27,7 +27,7 @@ module.exports = function (helpers) {
   component.clearLog();
   helpers.triggerMouseEvent(
     component.getEl("button").firstElementChild,
-    "mousemove"
+    "mousemove",
   );
   expect(component.logOutput).to.deep.equal([
     "button>span:mousemove",

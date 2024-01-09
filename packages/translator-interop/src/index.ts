@@ -1,15 +1,15 @@
 import { types as t } from "@marko/compiler";
 
 import {
-  analyze as analyze6,
-  taglibs as taglibs6,
-  translate as translate6,
-} from "@marko/translator-fluurt";
-import {
   analyze as analyze5,
   taglibs as taglibs5,
   translate as translate5,
 } from "@marko/translator-default";
+import {
+  analyze as analyze6,
+  taglibs as taglibs6,
+  translate as translate6,
+} from "@marko/translator-fluurt";
 import { isTagsAPI } from "./feature-detection";
 
 type TagDef = Record<string, unknown>;
@@ -39,7 +39,7 @@ function mergeVisitors(visitor5: t.Visitor = {}, visitor6: t.Visitor = {}) {
   for (const visitorKey of allVisitorKeys) {
     mergedVisitors[visitorKey as any] = mergedVisitor(
       visitor5[visitorKey] as any,
-      visitor6[visitorKey] as any
+      visitor6[visitorKey] as any,
     ) as any;
   }
 
@@ -48,7 +48,7 @@ function mergeVisitors(visitor5: t.Visitor = {}, visitor6: t.Visitor = {}) {
 
 function mergedVisitor<A, B extends t.Node>(
   visitor5: t.VisitNode<A, B> = {},
-  visitor6: t.VisitNode<A, B> = {}
+  visitor6: t.VisitNode<A, B> = {},
 ): t.VisitNode<A, B> {
   const visitor5Enter = getVisitorEnter(visitor5);
   const visitor5Exit = getVisitorExit(visitor5);
@@ -72,11 +72,11 @@ function mergedVisitor<A, B extends t.Node>(
 function mergeTaglibs(taglibs5: unknown[][], taglibs6: unknown[][]) {
   const taglib5Merged = taglibs5.reduce(
     (mergedTaglib, taglib) => Object.assign(mergedTaglib, taglib[1]),
-    {} as Record<string, TagDef>
+    {} as Record<string, TagDef>,
   );
   const taglib6Merged = taglibs6.reduce(
     (mergedTaglib, taglib) => Object.assign(mergedTaglib, taglib[1]),
-    {} as Record<string, TagDef>
+    {} as Record<string, TagDef>,
   );
   const allTaglibKeys = getSetOfAllKeys(taglib5Merged, taglib6Merged);
   const mergedTaglib = {} as Record<string, unknown>;
@@ -85,12 +85,12 @@ function mergeTaglibs(taglibs5: unknown[][], taglibs6: unknown[][]) {
     if (taglibKey.startsWith("<")) {
       mergedTaglib[taglibKey] = mergeTagdef(
         taglib5Merged[taglibKey],
-        taglib6Merged[taglibKey]
+        taglib6Merged[taglibKey],
       );
     } else if (taglibKey === "migrate") {
       mergedTaglib[taglibKey] = mergeVisitors(
         normalizeTagDefVisitors(taglib5Merged[taglibKey]),
-        normalizeTagDefVisitors(taglib6Merged[taglibKey])
+        normalizeTagDefVisitors(taglib6Merged[taglibKey]),
       );
     }
   }
@@ -108,7 +108,7 @@ function mergeTagdef(tagdef5: TagDef = {}, tagdef6: TagDef = {}) {
     if (VISITOR_TAGDEF_KEYS.includes(tagdefKey)) {
       mergedTagdef[tagdefKey] = mergedVisitor(
         normalizeTagDefVisitor(tagdef5Normalized[tagdefKey]),
-        normalizeTagDefVisitor(tagdef6Normalized[tagdefKey])
+        normalizeTagDefVisitor(tagdef6Normalized[tagdefKey]),
       );
     } else {
       mergedTagdef[tagdefKey] =
@@ -141,7 +141,7 @@ function normalizeTagdef<T extends Record<string, unknown>>(tagdef: T): T {
 }
 
 function getVisitorEnter<A, B extends t.Node>(
-  visit: t.VisitNode<A, B>
+  visit: t.VisitNode<A, B>,
 ): t.VisitNodeFunction<A, B> | undefined {
   if (typeof visit === "function") {
     return visit;
@@ -150,7 +150,7 @@ function getVisitorEnter<A, B extends t.Node>(
 }
 
 function getVisitorExit<A, B extends t.Node>(
-  visit: t.VisitNode<A, B>
+  visit: t.VisitNode<A, B>,
 ): t.VisitNodeFunction<A, B> | undefined {
   if (typeof visit === "function") {
     return undefined;
@@ -160,7 +160,7 @@ function getVisitorExit<A, B extends t.Node>(
 
 function getSetOfAllKeys<
   A extends Record<any, any>,
-  B extends Record<any, any>
+  B extends Record<any, any>,
 >(o1: A, o2: B): Set<keyof (A & B)> {
   return new Set(Object.keys(o1).concat(Object.keys(o2)));
 }

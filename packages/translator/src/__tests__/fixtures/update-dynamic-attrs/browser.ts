@@ -47,6 +47,6 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    _attrs as any
-  )
+    _attrs as any,
+  ),
 );

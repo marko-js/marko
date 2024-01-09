@@ -6,7 +6,7 @@ module.exports = function (helpers) {
     null /* attrs */,
     null /* key */,
     null /* component */,
-    null /* child count */
+    null /* child count */,
   );
 
   var docFragment = helpers.vdom.createDocumentFragment();

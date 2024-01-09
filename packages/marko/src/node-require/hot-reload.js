@@ -9,7 +9,7 @@ exports.handleFileModified = function (filename) {
   if (!fs.existsSync(filename)) {
     console.log(
       "[marko/hot-reload] WARNING cannot resolve template path: ",
-      filename
+      filename,
     );
     return;
   }
@@ -35,7 +35,7 @@ function tryReload(filename) {
     delete require.cache[filename];
     require(filename);
     console.log(
-      `[marko] Template successfully reloaded: ${cwdRelative(filename)}`
+      `[marko] Template successfully reloaded: ${cwdRelative(filename)}`,
     );
   } catch (e) {
     console.error(e);

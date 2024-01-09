@@ -53,9 +53,7 @@ function batchUpdate(func) {
   // is the outer batched update. After the outer
   // batched update completes we invoke the "afterUpdate"
   // event listeners.
-  var batch = {
-    ___queue: null,
-  };
+  var batch = [];
 
   batchStack.push(batch);
 
@@ -65,9 +63,7 @@ function batchUpdate(func) {
     try {
       // Update all of the components that where queued up
       // in this batch (if any)
-      if (batch.___queue) {
-        updateComponents(batch.___queue);
-      }
+      updateComponents(batch);
     } finally {
       // Now that we have completed the update of all the components
       // in this batch we need to remove it off the top of the stack
@@ -84,20 +80,11 @@ function queueComponentUpdate(component) {
     // If the stack has a non-zero length then we know that a batch has
     // been started so we can just queue the component on the top batch. When
     // the batch is ended this component will be updated.
-    var batch = batchStack[batchStackLen - 1];
-
-    // We default the batch queue to null to avoid creating an Array instance
-    // unnecessarily. If it is null then we create a new Array, otherwise
-    // we push it onto the existing Array queue
-    if (batch.___queue) {
-      batch.___queue.push(component);
-    } else {
-      batch.___queue = [component];
-    }
+    batchStack[batchStackLen - 1].push(component);
   } else {
     // We are not within a batched update. We need to schedule a batch update
     // for the nextTick (if that hasn't been done already) and we will
-    // add the component to the unbatched queued
+    // add the component to the unbatched queue
     scheduleUpdates();
     unbatchedQueue.push(component);
   }

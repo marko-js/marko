@@ -1,6 +1,6 @@
 import path from "path";
-import type { types as t } from "@marko/compiler";
 import { codeFrameColumns } from "@babel/code-frame";
+import type { types as t } from "@marko/compiler";
 const CWD = process.cwd();
 
 export function buildAggregateError(
@@ -15,8 +15,8 @@ export function buildAggregateError(
       ([msg, path]: [string, t.NodePath]) =>
         `\u001b[90m${msg} at ${getFileNameWithLoc(
           fileName,
-          path
-        )}:\x1b[0m\n${getFrame(file, path)}`
+          path,
+        )}:\x1b[0m\n${getFrame(file, path)}`,
     )
     .join("\n\n")}`;
 
@@ -52,7 +52,7 @@ function getFrame(file: t.BabelFile, { node: { loc } }: t.NodePath) {
                 }
               : undefined,
         },
-        { highlightCode: true }
+        { highlightCode: true },
       )
     : "";
 }

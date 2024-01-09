@@ -1,5 +1,41 @@
 # Change Log
 
+## 6.3.5
+
+### Patch Changes
+
+- [#2076](https://github.com/marko-js/marko/pull/2076) [`69b3ff5`](https://github.com/marko-js/marko/commit/69b3ff57c829418946e05c13b644a5560f589086) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all package deps to latest
+
+## 6.3.4
+
+### Patch Changes
+
+- [#2060](https://github.com/marko-js/marko/pull/2060) [`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose meta data about which child Marko templates were analyzed for a given compilation.
+
+## 6.3.3
+
+### Patch Changes
+
+- [#2054](https://github.com/marko-js/marko/pull/2054) [`1c5eccadf`](https://github.com/marko-js/marko/commit/1c5eccadf8d968552dbe8756905009107d783718) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with @marko/babel-utils not exposing new parse helpers.
+
+## 6.3.2
+
+### Patch Changes
+
+- [#2051](https://github.com/marko-js/marko/pull/2051) [`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add ts to ast
+
+## 6.3.1
+
+### Patch Changes
+
+- [#2008](https://github.com/marko-js/marko/pull/2008) [`1235cf700`](https://github.com/marko-js/marko/commit/1235cf7005447bdad7a84bacf20d40c7c457c03a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with static template literal expressions.
+
+## 6.3.0
+
+### Minor Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compute node helper to replace babels `evaluate` helper. This helper is less aggressive and doesn't suffer from the false positives that popped up with babels version.
+
 ## 6.2.1
 
 ### Patch Changes

@@ -8,13 +8,13 @@ module.exports = function (helpers) {
   });
 
   expect(component.el.querySelector(".unpreserved-counter").innerHTML).to.equal(
-    "0"
+    "0",
   );
   expect(
-    component.el.querySelector("#preserve").getAttribute("data-counter")
+    component.el.querySelector("#preserve").getAttribute("data-counter"),
   ).to.equal("0");
   expect(component.el.querySelector(".preserved-counter").innerHTML).to.equal(
-    "0"
+    "0",
   );
 
   component.input = {
@@ -23,12 +23,12 @@ module.exports = function (helpers) {
   component.update();
 
   expect(component.el.querySelector(".unpreserved-counter").innerHTML).to.equal(
-    "1"
+    "1",
   );
   expect(
-    component.el.querySelector("#preserve").getAttribute("data-counter")
+    component.el.querySelector("#preserve").getAttribute("data-counter"),
   ).to.equal("0");
   expect(component.el.querySelector(".preserved-counter").innerHTML).to.equal(
-    "0"
+    "0",
   );
 };

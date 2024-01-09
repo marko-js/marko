@@ -5,6 +5,8 @@ export default _marko_template;
 var foo = 123;
 function bar() {}
 var baz = 456;
+let x = 1,
+  y = 2;
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {}, {

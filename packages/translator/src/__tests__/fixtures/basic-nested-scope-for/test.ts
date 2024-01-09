@@ -7,7 +7,7 @@ export const steps = [
 
 function click(container: Element, number: number) {
   const buttons: HTMLButtonElement[] = Array.from(
-    container.querySelectorAll("button")
+    container.querySelectorAll("button"),
   );
   const button = buttons.find((b) => b.textContent === "" + number)!;
   button.click();

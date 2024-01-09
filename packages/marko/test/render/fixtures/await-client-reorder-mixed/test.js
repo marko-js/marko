@@ -1,5 +1,5 @@
-var extend = require("raptor-util/extend");
 var expect = require("chai").expect;
+var extend = require("raptor-util/extend");
 
 exports.templateData = {
   outer: Promise.resolve(),

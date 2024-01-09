@@ -1,14 +1,14 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import * as writer from "../util/writer";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
-import { addValue } from "../util/signals";
-import { createSectionState, getSection } from "../util/sections";
 import { importRuntime } from "../util/runtime";
+import { createSectionState, getSection } from "../util/sections";
+import { addValue } from "../util/signals";
+import * as writer from "../util/writer";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
-  "returnId"
+  "returnId",
 );
 export { returnId };
 
@@ -31,7 +31,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `The '<return>' tag requires default attribute like '<return=VALUE>'.`
+          `The '<return>' tag requires default attribute like '<return=VALUE>'.`,
         );
     }
 
@@ -46,7 +46,7 @@ export default {
         throw tag.hub.buildError(
           { loc: { start, end } } as unknown as t.Node,
           msg,
-          Error
+          Error,
         );
       }
     }
@@ -60,7 +60,7 @@ export default {
         .replaceWith(
           t.variableDeclaration("const", [
             t.variableDeclarator(returnId, defaultAttr.value!),
-          ])
+          ]),
         )[0]
         .skip();
     } else {
@@ -71,7 +71,7 @@ export default {
           identifier: importRuntime("tagVarSignal"),
           hasDownstreamIntersections: () => true,
         },
-        defaultAttr.value
+        defaultAttr.value,
       );
 
       tag.remove();

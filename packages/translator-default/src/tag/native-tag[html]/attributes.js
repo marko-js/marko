@@ -1,108 +1,119 @@
-import { types as t } from "@marko/compiler";
 import { importDefault, normalizeTemplateString } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { evaluateAttr } from "../util";
 
 export default function (path, attrs) {
-  if (!attrs.length) return t.stringLiteral("");
-
   const len = attrs.length;
   if (len === 0) return t.stringLiteral("");
+  if (len === 1 && attrs[0].node.type === "MarkoSpreadAttribute") {
+    return t.callExpression(
+      importDefault(
+        path.hub.file,
+        "marko/src/runtime/html/helpers/attrs.js",
+        "marko_attrs",
+      ),
+      [attrs[0].node.value],
+    );
+  }
 
-  if (attrs.some((attr) => !attr.node.name)) {
-    const attrsObject = t.objectExpression([]);
+  if (attrs.some((attr) => attr.node.type === "MarkoSpreadAttribute")) {
+    const attrsObjects = [];
+    let props;
+
     for (let i = 0; i < len; i++) {
+      const attr = attrs[i];
       const {
         node: { name, value },
-      } = attrs[i];
+      } = attr;
 
       if (name) {
-        attrsObject.properties.push(
-          t.objectProperty(t.stringLiteral(name), value)
+        const computed = evaluateAttr(attr);
+        const prop = t.objectProperty(
+          t.stringLiteral(name),
+          computed?.value !== undefined
+            ? t.stringLiteral(computed.value)
+            : value,
         );
+        if (props) {
+          props.push(prop);
+        } else {
+          attrsObjects.push(t.objectExpression((props = [prop])));
+        }
       } else {
-        mergeSpread(attrsObject.properties, value);
+        attrsObjects.push(value);
+        props = undefined;
       }
     }
 
     return t.callExpression(
       importDefault(
         path.hub.file,
-        "marko/src/runtime/html/helpers/attrs.js",
-        "marko_attrs"
+        "marko/src/runtime/html/helpers/merge-attrs.js",
+        "marko_merge_attrs",
       ),
-      [
-        attrsObject.properties.length === 1 &&
-        t.isSpreadElement(attrsObject.properties[0])
-          ? attrsObject.properties[0].argument
-          : attrsObject,
-      ]
+      attrsObjects,
     );
-  } else {
-    const file = path.hub.file;
-    const quasis = [];
-    const expressions = [];
-    const attrValues = new Map();
-    let curString = "";
+  }
 
-    // Remove duplicate attrs so last one wins.
-    for (let i = len; i--; ) {
-      const attr = attrs[i];
-      const { name, value } = attr.node;
-      if (attrValues.has(name)) continue;
-      const { confident, computed } = evaluateAttr(attr);
-      attrValues.set(name, {
-        confident,
-        computed,
-        value,
-      });
-    }
+  const file = path.hub.file;
+  const quasis = [];
+  const expressions = [];
+  const attrValues = new Map();
+  let curString = "";
 
-    for (const [name, { confident, computed, value }] of [
-      ...attrValues,
-    ].reverse()) {
-      if (confident) {
-        if (computed == null || computed === false) {
-          continue;
-        }
+  // Remove duplicate attrs so last one wins.
+  for (let i = len; i--; ) {
+    const attr = attrs[i];
+    const { name, value } = attr.node;
+    if (attrValues.has(name)) continue;
+    const computed = evaluateAttr(attr);
+    attrValues.set(
+      name,
+      computed
+        ? {
+            confident: true,
+            computed: computed.value,
+            value,
+          }
+        : {
+            confident: false,
+            computed: undefined,
+            value,
+          },
+    );
+  }
 
-        curString += attrHelper(name, computed);
-      } else {
-        quasis.push(curString);
-        curString = "";
-        expressions.push(
-          t.callExpression(
-            importDefault(
-              file,
-              "marko/src/runtime/html/helpers/attr.js",
-              "marko_attr"
-            ),
-            [t.stringLiteral(name), value]
-          )
-        );
+  for (const [name, { confident, computed, value }] of [
+    ...attrValues,
+  ].reverse()) {
+    if (confident) {
+      if (computed == null || computed === false) {
+        continue;
       }
-    }
 
-    quasis.push(curString);
-
-    if (expressions.length) {
-      return normalizeTemplateString(quasis, ...expressions);
+      curString += attrHelper(name, computed);
     } else {
-      return t.stringLiteral(quasis.join(""));
+      quasis.push(curString);
+      curString = "";
+      expressions.push(
+        t.callExpression(
+          importDefault(
+            file,
+            "marko/src/runtime/html/helpers/attr.js",
+            "marko_attr",
+          ),
+          [t.stringLiteral(name), value],
+        ),
+      );
     }
   }
-}
 
-function mergeSpread(properties, value) {
-  if (t.isObjectExpression(value)) {
-    for (const prop of value.properties) {
-      if (t.isSpreadElement(prop)) {
-        mergeSpread(properties, prop.argument);
-      } else {
-        properties.push(prop);
-      }
-    }
+  quasis.push(curString);
+
+  if (expressions.length) {
+    return normalizeTemplateString(quasis, ...expressions);
   } else {
-    properties.push(t.spreadElement(value));
+    return t.stringLiteral(quasis.join(""));
   }
 }

@@ -6,10 +6,10 @@ module.exports = function (helpers) {
   });
 
   expect(
-    component.getComponent("foo").el.querySelector(".render-count").innerHTML
+    component.getComponent("foo").el.querySelector(".render-count").innerHTML,
   ).to.equal("0");
   expect(
-    component.getComponent("foo").el.querySelector(".name").innerHTML
+    component.getComponent("foo").el.querySelector(".name").innerHTML,
   ).to.equal("Frank");
 
   // Rerender with a new props object that has the shallow properties
@@ -20,10 +20,10 @@ module.exports = function (helpers) {
   component.update();
 
   expect(
-    component.getComponent("foo").el.querySelector(".render-count").innerHTML
+    component.getComponent("foo").el.querySelector(".render-count").innerHTML,
   ).to.equal("0");
   expect(
-    component.getComponent("foo").el.querySelector(".name").innerHTML
+    component.getComponent("foo").el.querySelector(".name").innerHTML,
   ).to.equal("Frank");
 
   // Rerender with a new props object that has the shallow properties
@@ -34,9 +34,9 @@ module.exports = function (helpers) {
   component.update();
 
   expect(
-    component.getComponent("foo").el.querySelector(".render-count").innerHTML
+    component.getComponent("foo").el.querySelector(".render-count").innerHTML,
   ).to.equal("1");
   expect(
-    component.getComponent("foo").el.querySelector(".name").innerHTML
+    component.getComponent("foo").el.querySelector(".name").innerHTML,
   ).to.equal("John");
 };

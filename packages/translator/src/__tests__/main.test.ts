@@ -1,21 +1,21 @@
 import "./test-globals";
+import assert from "assert";
 import fs from "fs";
 import path from "path";
-import assert from "assert";
-import snap from "mocha-snap";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import glob from "tiny-glob";
 import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
+import snap from "mocha-snap";
+import glob from "tiny-glob";
 import createBrowser from "./utils/create-browser";
-import createMutationTracker from "./utils/track-mutations";
 import { isWait } from "./utils/resolve";
+import createMutationTracker from "./utils/track-mutations";
 
 const runtimeId = "M";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
-  runtimeId
+  runtimeId,
 );
 
 type TestConfig = {
@@ -102,7 +102,7 @@ describe("translator-tags", () => {
         } else if (errors.length > 1) {
           throw new AggregateError(
             errors,
-            "\n" + errors.map((e) => e.toString()).join("\n")
+            "\n" + errors.map((e) => e.toString()).join("\n"),
           );
         }
       };
@@ -144,9 +144,9 @@ describe("translator-tags", () => {
       const ssr = async () => {
         if (ssrResult) return ssrResult;
 
-        const serverTemplate = require(manualSSR
-          ? serverFile
-          : templateFile).default;
+        const serverTemplate = require(
+          manualSSR ? serverFile : templateFile,
+        ).default;
 
         let buffer = "";
         // let flushCount = 0;
@@ -176,8 +176,8 @@ describe("translator-tags", () => {
                 buffer += data;
                 tracker.log(
                   `# Write\n${indent(
-                    data.replace(reorderRuntimeString, "REORDER_RUNTIME")
-                  )}`
+                    data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
+                  )}`,
                 );
               },
               flush() {
@@ -194,7 +194,7 @@ describe("translator-tags", () => {
               emit(type: string, ...args: unknown[]) {
                 // console.log(...args);
                 tracker.log(
-                  `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+                  `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`,
                 );
                 if (type === "error") {
                   document.close();
@@ -203,8 +203,8 @@ describe("translator-tags", () => {
               },
             },
             input,
-            config.context
-          )
+            config.context,
+          ),
         );
 
         tracker.cleanup();
@@ -232,10 +232,10 @@ describe("translator-tags", () => {
             ? await config.steps()
             : config.steps || [];
         const { run } = browser.require(
-          "@marko/runtime-fluurt/src/dom"
+          "@marko/runtime-fluurt/src/dom",
         ) as typeof import("../../../runtime/src/dom");
         const template = browser.require(
-          manualCSR ? browserFile : templateFile
+          manualCSR ? browserFile : templateFile,
         ).default;
         const container = Object.assign(document.createElement("div"), {
           TEST_ROOT: true,
@@ -284,7 +284,7 @@ describe("translator-tags", () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
 
         const { run, init } = browser.require(
-          "@marko/runtime-fluurt/src/dom"
+          "@marko/runtime-fluurt/src/dom",
         ) as typeof import("@marko/runtime-fluurt/src/dom");
 
         browser.require(manualResume ? resumeFile : templateFile);
@@ -356,7 +356,7 @@ describe("translator-tags", () => {
             .slice(0, resumeLogs.length);
           assert.strictEqual(
             csrLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
-            resumeLogs.join("\n\n").replace(/[cs]\d+/g, "%id")
+            resumeLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
           );
         });
       });

@@ -1,11 +1,11 @@
-import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/babel-utils";
-import { writeHTMLResumeStatements } from "../../util/signals";
-import { callRuntime } from "../../util/runtime";
-import { flushInto } from "../../util/writer";
-import isStatic from "../../util/is-static";
+import { types as t } from "@marko/compiler";
 import { returnId } from "../../core/return";
+import isStatic from "../../util/is-static";
+import { callRuntime } from "../../util/runtime";
 import { getSection } from "../../util/sections";
+import { writeHTMLResumeStatements } from "../../util/signals";
+import { flushInto } from "../../util/writer";
 
 export default {
   translate: {
@@ -49,9 +49,9 @@ export default {
                   attrs ? (attrs.var as any) : t.identifier("input"),
                   tagVarIdentifier,
                 ],
-                t.blockStatement(renderContent)
-              )
-            )
+                t.blockStatement(renderContent),
+              ),
+            ),
           ),
         ]),
 
@@ -59,8 +59,8 @@ export default {
           callRuntime(
             "createTemplate",
             rendererId,
-            t.stringLiteral(getTemplateId(optimize, `${filename}`))
-          )
+            t.stringLiteral(getTemplateId(optimize, `${filename}`)),
+          ),
         ),
       ]);
     },

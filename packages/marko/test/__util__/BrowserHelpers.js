@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
 var assert = require("assert");
+var expect = require("chai").expect;
 var markoComponents = require("marko/components");
 var getComponentsFromMeta = require("./components-from-meta");
 
@@ -38,7 +38,7 @@ BrowserHelpers.prototype = {
       false,
       false /* modifier keys */,
       0 /*left*/,
-      null
+      null,
     );
     el.dispatchEvent(ev);
   },
@@ -113,7 +113,7 @@ BrowserHelpers.prototype = {
           " do not match. child 1: " +
           child1 +
           " child 2: " +
-          child2
+          child2,
       );
     }
   },

@@ -11,121 +11,123 @@ import * as csstype from "csstype";
 declare global {
   namespace Marko {
     interface NativeTags {
-      a: Tag<_.Marko·Inputᐸʺaʺᐳ>;
-      abbr: Tag<_.Marko·Inputᐸʺabbrʺᐳ>;
-      address: Tag<_.Marko·Inputᐸʺaddressʺᐳ>;
-      area: Tag<_.Marko·Inputᐸʺareaʺᐳ>;
-      article: Tag<_.Marko·Inputᐸʺarticleʺᐳ>;
-      aside: Tag<_.Marko·Inputᐸʺasideʺᐳ>;
-      audio: Tag<_.Marko·Inputᐸʺaudioʺᐳ>;
-      b: Tag<_.Marko·Inputᐸʺbʺᐳ>;
-      base: Tag<_.Marko·Inputᐸʺbaseʺᐳ>;
-      bdi: Tag<_.Marko·Inputᐸʺbdiʺᐳ>;
-      bdo: Tag<_.Marko·Inputᐸʺbdoʺᐳ>;
-      blockquote: Tag<_.Marko·Inputᐸʺblockquoteʺᐳ>;
-      body: Tag<_.Marko·Inputᐸʺbodyʺᐳ>;
-      br: Tag<_.Marko·Inputᐸʺbrʺᐳ>;
-      button: Tag<_.Marko·Inputᐸʺbuttonʺᐳ>;
-      canvas: Tag<_.Marko·Inputᐸʺcanvasʺᐳ>;
-      caption: Tag<_.Marko·Inputᐸʺcaptionʺᐳ>;
-      cite: Tag<_.Marko·Inputᐸʺciteʺᐳ>;
-      code: Tag<_.Marko·Inputᐸʺcodeʺᐳ>;
-      col: Tag<_.Marko·Inputᐸʺcolʺᐳ>;
-      colgroup: Tag<_.Marko·Inputᐸʺcolgroupʺᐳ>;
-      data: Tag<_.Marko·Inputᐸʺdataʺᐳ>;
-      datalist: Tag<_.Marko·Inputᐸʺdatalistʺᐳ>;
-      dd: Tag<_.Marko·Inputᐸʺddʺᐳ>;
-      del: Tag<_.Marko·Inputᐸʺdelʺᐳ>;
-      details: Tag<_.Marko·Inputᐸʺdetailsʺᐳ>;
-      dfn: Tag<_.Marko·Inputᐸʺdfnʺᐳ>;
-      dialog: Tag<_.Marko·Inputᐸʺdialogʺᐳ>;
-      div: Tag<_.Marko·Inputᐸʺdivʺᐳ>;
-      dl: Tag<_.Marko·Inputᐸʺdlʺᐳ>;
-      dt: Tag<_.Marko·Inputᐸʺdtʺᐳ>;
-      em: Tag<_.Marko·Inputᐸʺemʺᐳ>;
-      embed: Tag<_.Marko·Inputᐸʺembedʺᐳ>;
-      fieldset: Tag<_.Marko·Inputᐸʺfieldsetʺᐳ>;
-      figcaption: Tag<_.Marko·Inputᐸʺfigcaptionʺᐳ>;
-      figure: Tag<_.Marko·Inputᐸʺfigureʺᐳ>;
-      footer: Tag<_.Marko·Inputᐸʺfooterʺᐳ>;
-      form: Tag<_.Marko·Inputᐸʺformʺᐳ>;
-      h1: Tag<_.Marko·Inputᐸʺh1ʺᐳ>;
-      h2: Tag<_.Marko·Inputᐸʺh2ʺᐳ>;
-      h3: Tag<_.Marko·Inputᐸʺh3ʺᐳ>;
-      h4: Tag<_.Marko·Inputᐸʺh4ʺᐳ>;
-      h5: Tag<_.Marko·Inputᐸʺh5ʺᐳ>;
-      h6: Tag<_.Marko·Inputᐸʺh6ʺᐳ>;
-      head: Tag<_.Marko·Inputᐸʺheadʺᐳ>;
-      header: Tag<_.Marko·Inputᐸʺheaderʺᐳ>;
-      hgroup: Tag<_.Marko·Inputᐸʺhgroupʺᐳ>;
-      hr: Tag<_.Marko·Inputᐸʺhrʺᐳ>;
-      html: Tag<_.Marko·Inputᐸʺhtmlʺᐳ>;
-      i: Tag<_.Marko·Inputᐸʺiʺᐳ>;
-      iframe: Tag<_.Marko·Inputᐸʺiframeʺᐳ>;
-      img: Tag<_.Marko·Inputᐸʺimgʺᐳ>;
-      input: Tag<_.Marko·Inputᐸʺinputʺᐳ>;
-      ins: Tag<_.Marko·Inputᐸʺinsʺᐳ>;
-      kbd: Tag<_.Marko·Inputᐸʺkbdʺᐳ>;
-      label: Tag<_.Marko·Inputᐸʺlabelʺᐳ>;
-      legend: Tag<_.Marko·Inputᐸʺlegendʺᐳ>;
-      li: Tag<_.Marko·Inputᐸʺliʺᐳ>;
-      link: Tag<_.Marko·Inputᐸʺlinkʺᐳ>;
-      main: Tag<_.Marko·Inputᐸʺmainʺᐳ>;
-      map: Tag<_.Marko·Inputᐸʺmapʺᐳ>;
-      mark: Tag<_.Marko·Inputᐸʺmarkʺᐳ>;
-      menu: Tag<_.Marko·Inputᐸʺmenuʺᐳ>;
-      meta: Tag<_.Marko·Inputᐸʺmetaʺᐳ>;
-      meter: Tag<_.Marko·Inputᐸʺmeterʺᐳ>;
-      nav: Tag<_.Marko·Inputᐸʺnavʺᐳ>;
-      noscript: Tag<_.Marko·Inputᐸʺnoscriptʺᐳ>;
-      object: Tag<_.Marko·Inputᐸʺobjectʺᐳ>;
-      ol: Tag<_.Marko·Inputᐸʺolʺᐳ>;
-      optgroup: Tag<_.Marko·Inputᐸʺoptgroupʺᐳ>;
-      option: Tag<_.Marko·Inputᐸʺoptionʺᐳ>;
-      output: Tag<_.Marko·Inputᐸʺoutputʺᐳ>;
-      p: Tag<_.Marko·Inputᐸʺpʺᐳ>;
-      picture: Tag<_.Marko·Inputᐸʺpictureʺᐳ>;
-      pre: Tag<_.Marko·Inputᐸʺpreʺᐳ>;
-      progress: Tag<_.Marko·Inputᐸʺprogressʺᐳ>;
-      q: Tag<_.Marko·Inputᐸʺqʺᐳ>;
-      rp: Tag<_.Marko·Inputᐸʺrpʺᐳ>;
-      rt: Tag<_.Marko·Inputᐸʺrtʺᐳ>;
-      ruby: Tag<_.Marko·Inputᐸʺrubyʺᐳ>;
-      s: Tag<_.Marko·Inputᐸʺsʺᐳ>;
-      samp: Tag<_.Marko·Inputᐸʺsampʺᐳ>;
-      script: Tag<_.Marko·Inputᐸʺscriptʺᐳ>;
-      section: Tag<_.Marko·Inputᐸʺsectionʺᐳ>;
-      select: Tag<_.Marko·Inputᐸʺselectʺᐳ>;
-      slot: Tag<_.Marko·Inputᐸʺslotʺᐳ>;
-      small: Tag<_.Marko·Inputᐸʺsmallʺᐳ>;
-      source: Tag<_.Marko·Inputᐸʺsourceʺᐳ>;
-      span: Tag<_.Marko·Inputᐸʺspanʺᐳ>;
-      strong: Tag<_.Marko·Inputᐸʺstrongʺᐳ>;
-      style: Tag<_.Marko·Inputᐸʺstyleʺᐳ>;
-      sub: Tag<_.Marko·Inputᐸʺsubʺᐳ>;
-      summary: Tag<_.Marko·Inputᐸʺsummaryʺᐳ>;
-      sup: Tag<_.Marko·Inputᐸʺsupʺᐳ>;
-      table: Tag<_.Marko·Inputᐸʺtableʺᐳ>;
-      tbody: Tag<_.Marko·Inputᐸʺtbodyʺᐳ>;
-      td: Tag<_.Marko·Inputᐸʺtdʺᐳ>;
-      template: Tag<_.Marko·Inputᐸʺtemplateʺᐳ>;
-      textarea: Tag<_.Marko·Inputᐸʺtextareaʺᐳ>;
-      tfoot: Tag<_.Marko·Inputᐸʺtfootʺᐳ>;
-      th: Tag<_.Marko·Inputᐸʺthʺᐳ>;
-      thead: Tag<_.Marko·Inputᐸʺtheadʺᐳ>;
-      time: Tag<_.Marko·Inputᐸʺtimeʺᐳ>;
-      title: Tag<_.Marko·Inputᐸʺtitleʺᐳ>;
-      tr: Tag<_.Marko·Inputᐸʺtrʺᐳ>;
-      track: Tag<_.Marko·Inputᐸʺtrackʺᐳ>;
-      u: Tag<_.Marko·Inputᐸʺuʺᐳ>;
-      ul: Tag<_.Marko·Inputᐸʺulʺᐳ>;
-      var: Tag<_.Marko·Inputᐸʺvarʺᐳ>;
-      video: Tag<_.Marko·Inputᐸʺvideoʺᐳ>;
-      wbr: Tag<_.Marko·Inputᐸʺwbrʺᐳ>;
+      a: NativeTag<Marko.HTML.A, HTMLAnchorElement>;
+      abbr: NativeTag<Marko.HTML.Abbr, HTMLElement>;
+      address: NativeTag<Marko.HTML.Address, HTMLElement>;
+      area: NativeTag<Marko.HTML.Area, HTMLAreaElement>;
+      article: NativeTag<Marko.HTML.Article, HTMLElement>;
+      aside: NativeTag<Marko.HTML.Aside, HTMLElement>;
+      audio: NativeTag<Marko.HTML.Audio, HTMLAudioElement>;
+      b: NativeTag<Marko.HTML.B, HTMLElement>;
+      base: NativeTag<Marko.HTML.Base, HTMLBaseElement>;
+      bdi: NativeTag<Marko.HTML.BDI, HTMLElement>;
+      bdo: NativeTag<Marko.HTML.BDO, HTMLElement>;
+      blockquote: NativeTag<Marko.HTML.BlockQuote, HTMLQuoteElement>;
+      body: NativeTag<Marko.HTML.Body, HTMLBodyElement>;
+      br: NativeTag<Marko.HTML.Br, HTMLBRElement>;
+      button: NativeTag<Marko.HTML.Button, HTMLButtonElement>;
+      canvas: NativeTag<Marko.HTML.Canvas, HTMLCanvasElement>;
+      caption: NativeTag<Marko.HTML.Caption, HTMLTableCaptionElement>;
+      cite: NativeTag<Marko.HTML.Cite, HTMLElement>;
+      code: NativeTag<Marko.HTML.Code, HTMLElement>;
+      col: NativeTag<Marko.HTML.Col, HTMLTableColElement>;
+      colgroup: NativeTag<Marko.HTML.ColGroup, HTMLTableColElement>;
+      data: NativeTag<Marko.HTML.Data, HTMLDataElement>;
+      datalist: NativeTag<Marko.HTML.DataList, HTMLDataListElement>;
+      dd: NativeTag<Marko.HTML.DD, HTMLElement>;
+      del: NativeTag<Marko.HTML.Del, HTMLModElement>;
+      details: NativeTag<Marko.HTML.Details, HTMLDetailsElement>;
+      dfn: NativeTag<Marko.HTML.Dfn, HTMLElement>;
+      dialog: NativeTag<Marko.HTML.Dialog, HTMLDialogElement>;
+      div: NativeTag<Marko.HTML.Div, HTMLDivElement>;
+      dl: NativeTag<Marko.HTML.DL, HTMLDListElement>;
+      dt: NativeTag<Marko.HTML.DT, HTMLElement>;
+      em: NativeTag<Marko.HTML.Em, HTMLElement>;
+      embed: NativeTag<Marko.HTML.Embed, HTMLEmbedElement>;
+      fieldset: NativeTag<Marko.HTML.FieldSet, HTMLFieldSetElement>;
+      figcaption: NativeTag<Marko.HTML.FigCaption, HTMLElement>;
+      figure: NativeTag<Marko.HTML.Figure, HTMLElement>;
+      footer: NativeTag<Marko.HTML.Footer, HTMLElement>;
+      form: NativeTag<Marko.HTML.Form, HTMLFormElement>;
+      h1: NativeTag<Marko.HTML.H1, HTMLHeadingElement>;
+      h2: NativeTag<Marko.HTML.H2, HTMLHeadingElement>;
+      h3: NativeTag<Marko.HTML.H3, HTMLHeadingElement>;
+      h4: NativeTag<Marko.HTML.H4, HTMLHeadingElement>;
+      h5: NativeTag<Marko.HTML.H5, HTMLHeadingElement>;
+      h6: NativeTag<Marko.HTML.H6, HTMLHeadingElement>;
+      head: NativeTag<Marko.HTML.Head, HTMLHeadElement>;
+      header: NativeTag<Marko.HTML.Header, HTMLElement>;
+      hgroup: NativeTag<Marko.HTML.HGroup, HTMLElement>;
+      hr: NativeTag<Marko.HTML.HR, HTMLHRElement>;
+      html: NativeTag<Marko.HTML.HTML, HTMLHtmlElement>;
+      i: NativeTag<Marko.HTML.I, HTMLElement>;
+      iframe: NativeTag<Marko.HTML.IFrame, HTMLIFrameElement>;
+      img: NativeTag<Marko.HTML.Img, HTMLImageElement>;
+      input: NativeTag<Marko.HTML.Input, HTMLInputElement>;
+      ins: NativeTag<Marko.HTML.Ins, HTMLModElement>;
+      kbd: NativeTag<Marko.HTML.Kbd, HTMLElement>;
+      label: NativeTag<Marko.HTML.Label, HTMLLabelElement>;
+      legend: NativeTag<Marko.HTML.Legend, HTMLLegendElement>;
+      li: NativeTag<Marko.HTML.LI, HTMLLIElement>;
+      link: NativeTag<Marko.HTML.Link, HTMLLinkElement>;
+      main: NativeTag<Marko.HTML.Main, HTMLElement>;
+      map: NativeTag<Marko.HTML.Map, HTMLMapElement>;
+      mark: NativeTag<Marko.HTML.Mark, HTMLElement>;
+      menu: NativeTag<Marko.HTML.Menu, HTMLMenuElement>;
+      meta: NativeTag<Marko.HTML.Meta, HTMLMetaElement>;
+      meter: NativeTag<Marko.HTML.Meter, HTMLMeterElement>;
+      nav: NativeTag<Marko.HTML.Nav, HTMLElement>;
+      noscript: NativeTag<Marko.HTML.NoScript, HTMLElement>;
+      object: NativeTag<Marko.HTML.Object, HTMLObjectElement>;
+      ol: NativeTag<Marko.HTML.OL, HTMLOListElement>;
+      optgroup: NativeTag<Marko.HTML.OptGroup, HTMLOptGroupElement>;
+      option: NativeTag<Marko.HTML.Option, HTMLOptionElement>;
+      output: NativeTag<Marko.HTML.Output, HTMLOutputElement>;
+      p: NativeTag<Marko.HTML.P, HTMLParagraphElement>;
+      picture: NativeTag<Marko.HTML.Picture, HTMLPictureElement>;
+      pre: NativeTag<Marko.HTML.Pre, HTMLPreElement>;
+      progress: NativeTag<Marko.HTML.Progress, HTMLProgressElement>;
+      q: NativeTag<Marko.HTML.Q, HTMLQuoteElement>;
+      rp: NativeTag<Marko.HTML.RP, HTMLElement>;
+      rt: NativeTag<Marko.HTML.RT, HTMLElement>;
+      ruby: NativeTag<Marko.HTML.Ruby, HTMLElement>;
+      s: NativeTag<Marko.HTML.S, HTMLElement>;
+      samp: NativeTag<Marko.HTML.Samp, HTMLElement>;
+      script: NativeTag<Marko.HTML.Script, HTMLScriptElement>;
+      section: NativeTag<Marko.HTML.Section, HTMLElement>;
+      select: NativeTag<Marko.HTML.Select, HTMLSelectElement>;
+      slot: NativeTag<Marko.HTML.Slot, HTMLSlotElement>;
+      small: NativeTag<Marko.HTML.Small, HTMLElement>;
+      source: NativeTag<Marko.HTML.Source, HTMLSourceElement>;
+      span: NativeTag<Marko.HTML.Span, HTMLSpanElement>;
+      strong: NativeTag<Marko.HTML.Strong, HTMLElement>;
+      style: NativeTag<Marko.HTML.Style, HTMLStyleElement>;
+      sub: NativeTag<Marko.HTML.Sub, HTMLElement>;
+      summary: NativeTag<Marko.HTML.Summary, HTMLElement>;
+      sup: NativeTag<Marko.HTML.Sup, HTMLElement>;
+      table: NativeTag<Marko.HTML.Table, HTMLTableElement>;
+      tbody: NativeTag<Marko.HTML.TBody, HTMLTableSectionElement>;
+      td: NativeTag<Marko.HTML.TD, HTMLTableDataCellElement>;
+      template: NativeTag<Marko.HTML.Template, HTMLTemplateElement>;
+      textarea: NativeTag<Marko.HTML.TextArea, HTMLTextAreaElement>;
+      tfoot: NativeTag<Marko.HTML.TFoot, HTMLTableSectionElement>;
+      th: NativeTag<Marko.HTML.TH, HTMLTableHeaderCellElement>;
+      thead: NativeTag<Marko.HTML.THead, HTMLTableSectionElement>;
+      time: NativeTag<Marko.HTML.Time, HTMLTimeElement>;
+      title: NativeTag<Marko.HTML.Title, HTMLTitleElement>;
+      tr: NativeTag<Marko.HTML.TR, HTMLTableRowElement>;
+      track: NativeTag<Marko.HTML.Track, HTMLTrackElement>;
+      u: NativeTag<Marko.HTML.U, HTMLElement>;
+      ul: NativeTag<Marko.HTML.UL, HTMLUListElement>;
+      var: NativeTag<Marko.HTML.Var, HTMLElement>;
+      video: NativeTag<Marko.HTML.Video, HTMLVideoElement>;
+      wbr: NativeTag<Marko.HTML.WBr, HTMLElement>;
     }
 
     namespace CSS {
-      export interface Properties extends csstype.PropertiesHyphen {}
+      export interface Properties
+        extends csstype.PropertiesHyphen,
+          csstype.Properties {}
     }
 
     namespace HTML {
@@ -382,36 +384,36 @@ declare global {
          * Fires after printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-afterprint
          */
-        onAfterPrint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-afterprint"?: this["onAfterPrint"];
+        onAfterprint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-afterprint"?: this["onAfterprint"];
 
         /**
          * Fires before printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeprint
          */
-        onBeforePrint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-beforeprint"?: this["onBeforePrint"];
+        onBeforeprint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-beforeprint"?: this["onBeforeprint"];
 
         /**
          * Fired when the page is about to be unloaded, in case the page would like to show a warning prompt.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeunload
          */
-        onBeforeUnload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
-        "on-beforeunload"?: this["onBeforeUnload"];
+        onBeforeunload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
+        "on-beforeunload"?: this["onBeforeunload"];
 
         /**
          * Fired when the fragment part of the document's URL changes.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-hashchange
          */
-        onHashChange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
-        "on-hashchange"?: this["onHashChange"];
+        onHashchange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
+        "on-hashchange"?: this["onHashchange"];
 
         /**
          * Fired when the user's preferred languages change.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-languagechange
          */
-        onLanguageChange?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-languagechange"?: this["onLanguageChange"];
+        onLanguagechange?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-languagechange"?: this["onLanguagechange"];
 
         /**
          * Fired when the window receives a message.
@@ -424,8 +426,8 @@ declare global {
          * Fired when the window receives an error message.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-messageerror
          */
-        onMessageError?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
-        "on-messageerror"?: this["onMessageError"];
+        onMessageerror?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
+        "on-messageerror"?: this["onMessageerror"];
 
         /**
          * Fired when the network connection is lost.
@@ -445,29 +447,29 @@ declare global {
          * Fired when the page's session history entry stops being the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pagehide
          */
-        onPageHide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pagehide"?: this["onPageHide"];
+        onPagehide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pagehide"?: this["onPagehide"];
 
         /**
          * Fired when the page's session history entry becomes the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pageshow
          */
-        onPageShow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pageshow"?: this["onPageShow"];
+        onPageshow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pageshow"?: this["onPageshow"];
 
         /**
          * Fired when the window's session history is popped.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-popstate
          */
-        onPopState?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
-        "on-popstate"?: this["onPopState"];
+        onPopstate?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
+        "on-popstate"?: this["onPopstate"];
 
         /**
          * Fires when a previously-unhandled promise rejection becomes handled.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-rejectionhandled
          */
-        onRejectionHandled?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-rejectionhandled"?: this["onRejectionHandled"];
+        onRejectionhandled?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-rejectionhandled"?: this["onRejectionhandled"];
 
         /**
          * Fired when the corresponding localStorage or sessionStorage storage areas change.
@@ -832,8 +834,8 @@ declare global {
          * Fired at a form element when it is constructing the entry list
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
          */
-        onFormData?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
-        "on-formdata"?: this["onFormData"];
+        onFormdata?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
+        "on-formdata"?: this["onFormdata"];
 
         /**
          * Fired when a form is submitted, either by user interaction or through a script.
@@ -2575,61 +2577,61 @@ declare global {
        * Fired when an Animation unexpectedly aborts.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationcancel
        */
-      onAnimationCancel?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationcancel"?: this["onAnimationCancel"];
+      onAnimationcancel?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationcancel"?: this["onAnimationcancel"];
 
       /**
        * Fired when an animation has completed.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationend
        */
-      onAnimationEnd?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationend"?: this["onAnimationEnd"];
+      onAnimationend?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationend"?: this["onAnimationend"];
 
       /**
        * Fired at the end of each iteration of an animation, except when an animationend event would fire at the same time.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationiteration
        */
-      onAnimationIteration?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationiteration"?: this["onAnimationIteration"];
+      onAnimationiteration?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationiteration"?: this["onAnimationiteration"];
 
       /**
        * Fired when an animation has started.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationstart
        */
-      onAnimationStart?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationstart"?: this["onAnimationStart"];
+      onAnimationstart?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationstart"?: this["onAnimationstart"];
 
       /**
        * Fired when a non-primary pointing device button (any mouse button other than the primary—usually leftmost—button)
        * has been pressed and released both within the same element.
        * @see https://w3c.github.io/uievents/#event-type-auxclick
        */
-      onAuxClick?: AttrEventHandler<PointerEvent, T>;
-      "on-auxclick"?: this["onAuxClick"];
+      onAuxclick?: AttrEventHandler<PointerEvent, T>;
+      "on-auxclick"?: this["onAuxclick"];
       onauxclick?: AttrString;
 
       /**
        * Fires when the value of an <input>, or <textarea> element is about to be modified.
        * @see https://w3c.github.io/uievents/#event-type-beforeinput
        */
-      onBeforeInput?: AttrEventHandler<InputEvent, T>;
-      "on-beforeinput"?: this["onBeforeInput"];
+      onBeforeinput?: AttrEventHandler<InputEvent, T>;
+      "on-beforeinput"?: this["onBeforeinput"];
       onbeforeinput?: AttrString;
 
       /**
        * Fired on elements with the hidden=until-found attribute before they are revealed.
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
        */
-      onBeforeMatch?: AttrEventHandler<Event, T>;
-      "on-beforematch"?: this["onBeforeMatch"];
+      onBeforematch?: AttrEventHandler<Event, T>;
+      "on-beforematch"?: this["onBeforematch"];
       onbeforematch?: AttrString;
 
       /**
        * Fired on elements with the popover attribute when they are transitioning between showing and hidden
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
        */
-      onBeforeToggle?: AttrEventHandler<Event, T>;
-      "on-beforetoggle"?: this["onBeforeToggle"];
+      onBeforetoggle?: AttrEventHandler<Event, T>;
+      "on-beforetoggle"?: this["onBeforetoggle"];
       onbeforetoggle?: AttrString;
 
       /**
@@ -2654,16 +2656,16 @@ declare global {
        * playback rate up to its end without having to stop for further buffering of content.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplay
        */
-      onCanPlay?: AttrEventHandler<Event, T>;
-      "on-canplay"?: this["onCanPlay"];
+      onCanplay?: AttrEventHandler<Event, T>;
+      "on-canplay"?: this["onCanplay"];
       oncanplay?: AttrString;
 
       /**
        * Fires when the user agent can play through the media data without having to stop for further buffering of content.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplaythrough
        */
-      onCanPlayThrough?: AttrEventHandler<Event, T>;
-      "on-canplaythrough"?: this["onCanPlayThrough"];
+      onCanplaythrough?: AttrEventHandler<Event, T>;
+      "on-canplaythrough"?: this["onCanplaythrough"];
       oncanplaythrough?: AttrString;
 
       /**
@@ -2695,30 +2697,30 @@ declare global {
        * Fired when a text composition system such as an input method editor completes or cancels the current composition session.
        * @see https://w3c.github.io/uievents/#event-type-compositionend
        */
-      onCompositionEnd?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionend"?: this["onCompositionEnd"];
+      onCompositionend?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionend"?: this["onCompositionend"];
 
       /**
        * Fired when a text composition system such as an input method editor starts a new composition session.
        * @see https://w3c.github.io/uievents/#event-type-compositionstart
        */
-      onCompositionStart?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionstart"?: this["onCompositionStart"];
+      onCompositionstart?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionstart"?: this["onCompositionstart"];
 
       /**
        * Fired when a new character is received in the context of a text composition session controlled by a text
        * composition system such as an input method editor.
        * @see https://w3c.github.io/uievents/#event-type-compositionupdate
        */
-      onCompositionUpdate?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionupdate"?: this["onCompositionUpdate"];
+      onCompositionupdate?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionupdate"?: this["onCompositionupdate"];
 
       /**
        * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
        */
-      onContextLost?: AttrEventHandler<Event, T>;
-      "on-contextlost"?: this["onContextLost"];
+      onContextlost?: AttrEventHandler<Event, T>;
+      "on-contextlost"?: this["onContextlost"];
       oncontextlost?: AttrString;
 
       /**
@@ -2726,16 +2728,16 @@ declare global {
        * This event is typically triggered by clicking the right mouse button, or by pressing the context menu key.
        * @see https://w3c.github.io/uievents/#event-type-contextmenu
        */
-      onContextMenu?: AttrEventHandler<PointerEvent, T>;
-      "on-contextmenu"?: this["onContextMenu"];
+      onContextmenu?: AttrEventHandler<PointerEvent, T>;
+      "on-contextmenu"?: this["onContextmenu"];
       oncontextmenu?: AttrString;
 
       /**
        * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is restored after being lost
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
        */
-      onContextRestored?: AttrEventHandler<Event, T>;
-      "on-contextrestored"?: this["onContextRestored"];
+      onContextrestored?: AttrEventHandler<Event, T>;
+      "on-contextrestored"?: this["onContextrestored"];
       oncontextrestored?: AttrString;
 
       /**
@@ -2750,8 +2752,8 @@ declare global {
        * Fired when one or more cues in the track have become active or stopped being active.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
        */
-      onCueChange?: AttrEventHandler<Event, T>;
-      "on-cuechange"?: this["onCueChange"];
+      onCuechange?: AttrEventHandler<Event, T>;
+      "on-cuechange"?: this["onCuechange"];
       oncuechange?: AttrString;
 
       /**
@@ -2766,8 +2768,8 @@ declare global {
        * Fired when the user double-clicks on an element.
        * @see https://w3c.github.io/uievents/#event-type-dblclick
        */
-      onDblClick?: AttrEventHandler<MouseEvent, T>;
-      "on-dblclick"?: this["onDblClick"];
+      onDblclick?: AttrEventHandler<MouseEvent, T>;
+      "on-dblclick"?: this["onDblclick"];
       ondblclick?: AttrString;
 
       /**
@@ -2782,40 +2784,40 @@ declare global {
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragend
        */
-      onDragEnd?: AttrEventHandler<DragEvent, T>;
-      "on-dragend"?: this["onDragEnd"];
+      onDragend?: AttrEventHandler<DragEvent, T>;
+      "on-dragend"?: this["onDragend"];
       ondragend?: AttrString;
 
       /**
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragenter
        */
-      onDragEnter?: AttrEventHandler<DragEvent, T>;
-      "on-dragenter"?: this["onDragEnter"];
+      onDragenter?: AttrEventHandler<DragEvent, T>;
+      "on-dragenter"?: this["onDragenter"];
       ondragenter?: AttrString;
 
       /**
        * Fired when a dragged element or text selection leaves a valid drop target.
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragleave
        */
-      onDragLeave?: AttrEventHandler<DragEvent, T>;
-      "on-dragleave"?: this["onDragLeave"];
+      onDragleave?: AttrEventHandler<DragEvent, T>;
+      "on-dragleave"?: this["onDragleave"];
       ondragleave?: AttrString;
 
       /**
        * Fired an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragover
        */
-      onDragOver?: AttrEventHandler<DragEvent, T>;
-      "on-dragover"?: this["onDragOver"];
+      onDragover?: AttrEventHandler<DragEvent, T>;
+      "on-dragover"?: this["onDragover"];
       ondragover?: AttrString;
 
       /**
        * Fired when an element or text selection has started being dragged.
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragstart
        */
-      onDragStart?: AttrEventHandler<DragEvent, T>;
-      "on-dragstart"?: this["onDragStart"];
+      onDragstart?: AttrEventHandler<DragEvent, T>;
+      "on-dragstart"?: this["onDragstart"];
       ondragstart?: AttrString;
 
       /**
@@ -2830,8 +2832,8 @@ declare global {
        * Fired when the duration attribute of a media element has just been updated.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-durationchange
        */
-      onDurationChange?: AttrEventHandler<Event, T>;
-      "on-durationchange"?: this["onDurationChange"];
+      onDurationchange?: AttrEventHandler<Event, T>;
+      "on-durationchange"?: this["onDurationchange"];
       ondurationchange?: AttrString;
 
       /**
@@ -2878,38 +2880,38 @@ declare global {
        * @see HTMLAttributes.onFocus
        * @see https://w3c.github.io/uievents/#event-type-focusin
        */
-      onFocusIn?: AttrEventHandler<FocusEvent, T>;
-      "on-focusin"?: this["onFocusIn"];
+      onFocusin?: AttrEventHandler<FocusEvent, T>;
+      "on-focusin"?: this["onFocusin"];
 
       /**
        * Fires when an element has lost focus, after the blur event. The two events differ in that focusout bubbles, while blur does not.
        * @see HTMLAttributes.onBlur
        * @see https://w3c.github.io/uievents/#event-type-focusout
        */
-      onFocusOut?: AttrEventHandler<FocusEvent, T>;
-      "on-focusout"?: this["onFocusOut"];
+      onFocusout?: AttrEventHandler<FocusEvent, T>;
+      "on-focusout"?: this["onFocusout"];
 
       /**
        * Fired at a form element when it is constructing the entry list
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
        */
-      onFormData?: AttrEventHandler<FormDataEvent, T>;
-      "on-formdata"?: this["onFormData"];
+      onFormdata?: AttrEventHandler<FormDataEvent, T>;
+      "on-formdata"?: this["onFormdata"];
       onformdata?: AttrString;
 
       /**
        * Fired immediately after an Element switches into or out of fullscreen mode.
        * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenchange
        */
-      onFullscreenChange?: AttrEventHandler<Event, T>;
-      "on-fullscreenchange"?: this["onFullscreenChange"];
+      onFullscreenchange?: AttrEventHandler<Event, T>;
+      "on-fullscreenchange"?: this["onFullscreenchange"];
 
       /**
        * Fired when the browser cannot switch to fullscreen mode.
        * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenerror
        */
-      onFullscreenError?: AttrEventHandler<Event, T>;
-      "on-fullscreenerror"?: this["onFullscreenError"];
+      onFullscreenerror?: AttrEventHandler<Event, T>;
+      "on-fullscreenerror"?: this["onFullscreenerror"];
 
       /**
        * Fired when an element captures a pointer using setPointerCapture().
@@ -2917,8 +2919,8 @@ declare global {
        * @see Element.setPointerCapture
        * @see https://w3c.github.io/pointerevents/#the-gotpointercapture-event
        */
-      onGotPointerCapture?: AttrEventHandler<PointerEvent, T>;
-      "on-gotpointercapture"?: this["onGotPointerCapture"];
+      onGotpointercapture?: AttrEventHandler<PointerEvent, T>;
+      "on-gotpointercapture"?: this["onGotpointercapture"];
 
       /**
        * Fired when the form element's value changes, as a result of user input.
@@ -2940,24 +2942,24 @@ declare global {
        * Fired when a key is first pressed down.
        * @see https://w3c.github.io/uievents/#event-type-keydown
        */
-      onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keydown"?: this["onKeyDown"];
+      onKeydown?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keydown"?: this["onKeydown"];
       onkeydown?: AttrString;
 
       /**
        * Fired when a key is pressed down and then released, while the element has focus.
        * @see https://w3c.github.io/uievents/#event-type-keypress
        */
-      onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keypress"?: this["onKeyPress"];
+      onKeypress?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keypress"?: this["onKeypress"];
       onkeypress?: AttrString;
 
       /**
        * Fired when a key is released after being pressed down.
        * @see https://w3c.github.io/uievents/#event-type-keyup
        */
-      onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keyup"?: this["onKeyUp"];
+      onKeyup?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keyup"?: this["onKeyup"];
       onkeyup?: AttrString;
 
       /**
@@ -2972,87 +2974,87 @@ declare global {
        * Fired when the user agent can render the media data at the current playback position for the first time.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadeddata
        */
-      onLoadedData?: AttrEventHandler<Event, T>;
-      "on-loadeddata"?: this["onLoadedData"];
+      onLoadeddata?: AttrEventHandler<Event, T>;
+      "on-loadeddata"?: this["onLoadeddata"];
       onloadeddata?: AttrString;
 
       /**
        * Fired when the user agent has just determined the duration and dimensions of the media resource.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadedmetadata
        */
-      onLoadedMetadata?: AttrEventHandler<Event, T>;
-      "on-loadedmetadata"?: this["onLoadedMetadata"];
+      onLoadedmetadata?: AttrEventHandler<Event, T>;
+      "on-loadedmetadata"?: this["onLoadedmetadata"];
       onloadedmetadata?: AttrString;
 
       /**
        * Fired when the user agent begins looking for media data, before the media has begun to load.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadstart
        */
-      onLoadStart?: AttrEventHandler<Event, T>;
-      "on-loadstart"?: this["onLoadStart"];
+      onLoadstart?: AttrEventHandler<Event, T>;
+      "on-loadstart"?: this["onLoadstart"];
       onloadstart?: AttrString;
 
       /**
        * Fired when a captured pointer is released.
        * @see https://w3c.github.io/pointerevents/#dfn-lostpointercapture
        */
-      onLostPointerCapture?: AttrEventHandler<PointerEvent, T>;
-      "on-lostpointercapture"?: this["onLostPointerCapture"];
+      onLostpointercapture?: AttrEventHandler<PointerEvent, T>;
+      "on-lostpointercapture"?: this["onLostpointercapture"];
 
       /**
        * Fired when a pointing device button is pressed down over an element.
        * @see https://w3c.github.io/uievents/#event-type-mousedown
        */
-      onMouseDown?: AttrEventHandler<MouseEvent, T>;
-      "on-mousedown"?: this["onMouseDown"];
+      onMousedown?: AttrEventHandler<MouseEvent, T>;
+      "on-mousedown"?: this["onMousedown"];
       onmousedown?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element.
        * @see https://w3c.github.io/uievents/#event-type-mouseenter
        */
-      onMouseEnter?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseenter"?: this["onMouseEnter"];
+      onMouseenter?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseenter"?: this["onMouseenter"];
       onmouseenter?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element.
        * @see https://w3c.github.io/uievents/#event-type-mouseleave
        */
-      onMouseLeave?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseleave"?: this["onMouseLeave"];
+      onMouseleave?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseleave"?: this["onMouseleave"];
       onmouseleave?: AttrString;
 
       /**
        * Fired when a pointing device is moved over an element.
        * @see https://w3c.github.io/uievents/#event-type-mousemove
        */
-      onMouseMove?: AttrEventHandler<MouseEvent, T>;
-      "on-mousemove"?: this["onMouseMove"];
+      onMousemove?: AttrEventHandler<MouseEvent, T>;
+      "on-mousemove"?: this["onMousemove"];
       onmousemove?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element or off one of its children.
        * @see https://w3c.github.io/uievents/#event-type-mouseout
        */
-      onMouseOut?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseout"?: this["onMouseOut"];
+      onMouseout?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseout"?: this["onMouseout"];
       onmouseout?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element or onto one of its children.
        * @see https://w3c.github.io/uievents/#event-type-mouseover
        */
-      onMouseOver?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseover"?: this["onMouseOver"];
+      onMouseover?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseover"?: this["onMouseover"];
       onmouseover?: AttrString;
 
       /**
        * Fired when a pointing device button is released over an element.
        * @see https://w3c.github.io/uievents/#event-type-mouseup
        */
-      onMouseUp?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseup"?: this["onMouseUp"];
+      onMouseup?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseup"?: this["onMouseup"];
       onmouseup?: AttrString;
 
       /**
@@ -3091,57 +3093,57 @@ declare global {
        * Fired when the pointing device's hardware triggers a cancellation of the pointer event, such as due to a system event.
        * @see https://w3c.github.io/pointerevents/#the-pointercancel-event
        */
-      onPointerCancel?: AttrEventHandler<PointerEvent, T>;
-      "on-pointercancel"?: this["onPointerCancel"];
+      onPointercancel?: AttrEventHandler<PointerEvent, T>;
+      "on-pointercancel"?: this["onPointercancel"];
 
       /**
        * Fired when a pointing device's button is pressed down on an element.
        * @see https://w3c.github.io/pointerevents/#the-pointerdown-event
        */
-      onPointerDown?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerdown"?: this["onPointerDown"];
+      onPointerdown?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerdown"?: this["onPointerdown"];
 
       /**
        * Fired when a pointing device is moved onto the element.
        * @see https://w3c.github.io/pointerevents/#the-pointerenter-event
        */
-      onPointerEnter?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerenter"?: this["onPointerEnter"];
+      onPointerenter?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerenter"?: this["onPointerenter"];
 
       /**
        * Fired when a pointing device is moved off the element.
        * @see https://w3c.github.io/pointerevents/#the-pointerleave-event
        */
-      onPointerLeave?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerleave"?: this["onPointerLeave"];
+      onPointerleave?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerleave"?: this["onPointerleave"];
 
       /**
        * Fired when a pointing device is moved over an element.
        * @see https://w3c.github.io/pointerevents/#the-pointermove-event
        */
-      onPointerMove?: AttrEventHandler<PointerEvent, T>;
-      "on-pointermove"?: this["onPointerMove"];
+      onPointermove?: AttrEventHandler<PointerEvent, T>;
+      "on-pointermove"?: this["onPointermove"];
 
       /**
        * Fired when a pointing device is moved off the element or off one of its children.
        * @see https://w3c.github.io/pointerevents/#the-pointerout-event
        */
-      onPointerOut?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerout"?: this["onPointerOut"];
+      onPointerout?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerout"?: this["onPointerout"];
 
       /**
        * Fired when a pointing device is moved onto the element or onto one of its children.
        * @see https://w3c.github.io/pointerevents/#the-pointerover-event
        */
-      onPointerOver?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerover"?: this["onPointerOver"];
+      onPointerover?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerover"?: this["onPointerover"];
 
       /**
        * Fired when a pointing device's button is released over an element.
        * @see https://w3c.github.io/pointerevents/#the-pointerup-event
        */
-      onPointerUp?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerup"?: this["onPointerUp"];
+      onPointerup?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerup"?: this["onPointerup"];
 
       /**
        * Fired when the user agent is downloading media data or resources, to indicate progress.
@@ -3155,8 +3157,8 @@ declare global {
        * Fired when the playback rate of a media element has changed.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ratechange
        */
-      onRateChange?: AttrEventHandler<Event, T>;
-      "on-ratechange"?: this["onRateChange"];
+      onRatechange?: AttrEventHandler<Event, T>;
+      "on-ratechange"?: this["onRatechange"];
       onratechange?: AttrString;
 
       /**
@@ -3187,8 +3189,8 @@ declare global {
        * Fired when element scrolling has completed. Scrolling is considered completed when the scroll position has no more pending updates and the user has completed their gesture.
        * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scrollend
        */
-      onScrollEnd?: AttrEventHandler<Event, T>;
-      "on-scrollend"?: this["onScrollEnd"];
+      onScrollend?: AttrEventHandler<Event, T>;
+      "on-scrollend"?: this["onScrollend"];
       onscrollend?: AttrString;
 
       /**
@@ -3230,8 +3232,8 @@ declare global {
        * Fired when a <slot> element's distributed nodes change.
        * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
        */
-      onSlotChange?: AttrEventHandler<Event, T>;
-      "on-slotchange"?: this["onSlotChange"];
+      onSlotchange?: AttrEventHandler<Event, T>;
+      "on-slotchange"?: this["onSlotchange"];
       onslotchange?: AttrString;
 
       /**
@@ -3262,8 +3264,8 @@ declare global {
        * Fired when the current playback position of a media element changes as part of normal playback or due to a seek operation.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
        */
-      onTimeUpdate?: AttrEventHandler<Event, T>;
-      "on-timeupdate"?: this["onTimeUpdate"];
+      onTimeupdate?: AttrEventHandler<Event, T>;
+      "on-timeupdate"?: this["onTimeupdate"];
       ontimeupdate?: AttrString;
 
       /**
@@ -3278,64 +3280,64 @@ declare global {
        * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
        * @see https://w3c.github.io/touch-events/#event-touchcancel
        */
-      onTouchCancel?: AttrEventHandler<TouchEvent, T>;
-      "on-touchcancel"?: this["onTouchCancel"];
+      onTouchcancel?: AttrEventHandler<TouchEvent, T>;
+      "on-touchcancel"?: this["onTouchcancel"];
 
       /**
        * Fired when a finger is lifted from a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchend
        */
-      onTouchEnd?: AttrEventHandler<TouchEvent, T>;
-      "on-touchend"?: this["onTouchEnd"];
+      onTouchend?: AttrEventHandler<TouchEvent, T>;
+      "on-touchend"?: this["onTouchend"];
 
       /**
        * Fired when a finger is moved along a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchmove
        */
-      onTouchMove?: AttrEventHandler<TouchEvent, T>;
-      "on-touchmove"?: this["onTouchMove"];
+      onTouchmove?: AttrEventHandler<TouchEvent, T>;
+      "on-touchmove"?: this["onTouchmove"];
 
       /**
        * Fired when a finger is placed on a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchstart
        */
-      onTouchStart?: AttrEventHandler<TouchEvent, T>;
-      "on-touchstart"?: this["onTouchStart"];
+      onTouchstart?: AttrEventHandler<TouchEvent, T>;
+      "on-touchstart"?: this["onTouchstart"];
 
       /**
        * Fired when a CSS transition is canceled.
        * @see https://drafts.csswg.org/css-transitions/#transitioncancel
        */
-      onTransitionCancel?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitioncancel"?: this["onTransitionCancel"];
+      onTransitioncancel?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitioncancel"?: this["onTransitioncancel"];
 
       /**
        * Fired when a CSS transition has completed.
        * @see https://drafts.csswg.org/css-transitions/#transitionend
        */
-      onTransitionEnd?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionend"?: this["onTransitionEnd"];
+      onTransitionend?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionend"?: this["onTransitionend"];
 
       /**
        * Fired when a CSS transition is first created, i.e. before any transition-delay has begun.
        * @see https://drafts.csswg.org/css-transitions/#transitionrun
        */
-      onTransitionRun?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionrun"?: this["onTransitionRun"];
+      onTransitionrun?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionrun"?: this["onTransitionrun"];
 
       /**
        * Fired when a CSS transition has actually started, i.e., after any transition-delay has ended.
        * @see https://drafts.csswg.org/css-transitions/#transitionstart
        */
-      onTransitionStart?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionstart"?: this["onTransitionStart"];
+      onTransitionstart?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionstart"?: this["onTransitionstart"];
 
       /**
        * Fired when the volume level or muted state of a media element changes.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-volumechange
        */
-      onVolumeChange?: AttrEventHandler<Event, T>;
-      "on-volumechange"?: this["onVolumeChange"];
+      onVolumechange?: AttrEventHandler<Event, T>;
+      "on-volumechange"?: this["onVolumechange"];
       onvolumechange?: AttrString;
 
       /**
@@ -3752,154 +3754,6 @@ declare global {
         | "treegrid"
         | "treeitem";
     }
-
-    namespace _ {
-      type Marko·Inputᐸʺaʺᐳ = { [K in keyof HTML.A]: HTML.A[K] };
-      type Marko·Inputᐸʺabbrʺᐳ = { [K in keyof HTML.Abbr]: HTML.Abbr[K] };
-      type Marko·Inputᐸʺaddressʺᐳ = {
-        [K in keyof HTML.Address]: HTML.Address[K];
-      };
-      type Marko·Inputᐸʺareaʺᐳ = { [K in keyof HTML.Area]: HTML.Area[K] };
-      type Marko·Inputᐸʺarticleʺᐳ = {
-        [K in keyof HTML.Article]: HTML.Article[K];
-      };
-      type Marko·Inputᐸʺasideʺᐳ = { [K in keyof HTML.Aside]: HTML.Aside[K] };
-      type Marko·Inputᐸʺaudioʺᐳ = { [K in keyof HTML.Audio]: HTML.Audio[K] };
-      type Marko·Inputᐸʺbʺᐳ = { [K in keyof HTML.B]: HTML.B[K] };
-      type Marko·Inputᐸʺbaseʺᐳ = { [K in keyof HTML.Base]: HTML.Base[K] };
-      type Marko·Inputᐸʺbdiʺᐳ = { [K in keyof HTML.BDI]: HTML.BDI[K] };
-      type Marko·Inputᐸʺbdoʺᐳ = { [K in keyof HTML.BDO]: HTML.BDO[K] };
-      type Marko·Inputᐸʺblockquoteʺᐳ = {
-        [K in keyof HTML.BlockQuote]: HTML.BlockQuote[K];
-      };
-      type Marko·Inputᐸʺbodyʺᐳ = { [K in keyof HTML.Body]: HTML.Body[K] };
-      type Marko·Inputᐸʺbrʺᐳ = { [K in keyof HTML.Br]: HTML.Br[K] };
-      type Marko·Inputᐸʺbuttonʺᐳ = { [K in keyof HTML.Button]: HTML.Button[K] };
-      type Marko·Inputᐸʺcanvasʺᐳ = { [K in keyof HTML.Canvas]: HTML.Canvas[K] };
-      type Marko·Inputᐸʺcaptionʺᐳ = {
-        [K in keyof HTML.Caption]: HTML.Caption[K];
-      };
-      type Marko·Inputᐸʺciteʺᐳ = { [K in keyof HTML.Cite]: HTML.Cite[K] };
-      type Marko·Inputᐸʺcodeʺᐳ = { [K in keyof HTML.Code]: HTML.Code[K] };
-      type Marko·Inputᐸʺcolʺᐳ = { [K in keyof HTML.Col]: HTML.Col[K] };
-      type Marko·Inputᐸʺcolgroupʺᐳ = {
-        [K in keyof HTML.ColGroup]: HTML.ColGroup[K];
-      };
-      type Marko·Inputᐸʺdataʺᐳ = { [K in keyof HTML.Data]: HTML.Data[K] };
-      type Marko·Inputᐸʺdatalistʺᐳ = {
-        [K in keyof HTML.DataList]: HTML.DataList[K];
-      };
-      type Marko·Inputᐸʺddʺᐳ = { [K in keyof HTML.DD]: HTML.DD[K] };
-      type Marko·Inputᐸʺdelʺᐳ = { [K in keyof HTML.Del]: HTML.Del[K] };
-      type Marko·Inputᐸʺdetailsʺᐳ = {
-        [K in keyof HTML.Details]: HTML.Details[K];
-      };
-      type Marko·Inputᐸʺdfnʺᐳ = { [K in keyof HTML.Dfn]: HTML.Dfn[K] };
-      type Marko·Inputᐸʺdialogʺᐳ = { [K in keyof HTML.Dialog]: HTML.Dialog[K] };
-      type Marko·Inputᐸʺdivʺᐳ = { [K in keyof HTML.Div]: HTML.Div[K] };
-      type Marko·Inputᐸʺdlʺᐳ = { [K in keyof HTML.DL]: HTML.DL[K] };
-      type Marko·Inputᐸʺdtʺᐳ = { [K in keyof HTML.DT]: HTML.DT[K] };
-      type Marko·Inputᐸʺemʺᐳ = { [K in keyof HTML.Em]: HTML.Em[K] };
-      type Marko·Inputᐸʺembedʺᐳ = { [K in keyof HTML.Embed]: HTML.Embed[K] };
-      type Marko·Inputᐸʺfieldsetʺᐳ = {
-        [K in keyof HTML.FieldSet]: HTML.FieldSet[K];
-      };
-      type Marko·Inputᐸʺfigcaptionʺᐳ = {
-        [K in keyof HTML.FigCaption]: HTML.FigCaption[K];
-      };
-      type Marko·Inputᐸʺfigureʺᐳ = { [K in keyof HTML.Figure]: HTML.Figure[K] };
-      type Marko·Inputᐸʺfooterʺᐳ = { [K in keyof HTML.Footer]: HTML.Footer[K] };
-      type Marko·Inputᐸʺformʺᐳ = { [K in keyof HTML.Form]: HTML.Form[K] };
-      type Marko·Inputᐸʺh1ʺᐳ = { [K in keyof HTML.H1]: HTML.H1[K] };
-      type Marko·Inputᐸʺh2ʺᐳ = { [K in keyof HTML.H2]: HTML.H2[K] };
-      type Marko·Inputᐸʺh3ʺᐳ = { [K in keyof HTML.H3]: HTML.H3[K] };
-      type Marko·Inputᐸʺh4ʺᐳ = { [K in keyof HTML.H4]: HTML.H4[K] };
-      type Marko·Inputᐸʺh5ʺᐳ = { [K in keyof HTML.H5]: HTML.H5[K] };
-      type Marko·Inputᐸʺh6ʺᐳ = { [K in keyof HTML.H6]: HTML.H6[K] };
-      type Marko·Inputᐸʺheadʺᐳ = { [K in keyof HTML.Head]: HTML.Head[K] };
-      type Marko·Inputᐸʺheaderʺᐳ = { [K in keyof HTML.Header]: HTML.Header[K] };
-      type Marko·Inputᐸʺhgroupʺᐳ = { [K in keyof HTML.HGroup]: HTML.HGroup[K] };
-      type Marko·Inputᐸʺhrʺᐳ = { [K in keyof HTML.HR]: HTML.HR[K] };
-      type Marko·Inputᐸʺhtmlʺᐳ = { [K in keyof HTML.HTML]: HTML.HTML[K] };
-      type Marko·Inputᐸʺiʺᐳ = { [K in keyof HTML.I]: HTML.I[K] };
-      type Marko·Inputᐸʺiframeʺᐳ = { [K in keyof HTML.IFrame]: HTML.IFrame[K] };
-      type Marko·Inputᐸʺimgʺᐳ = { [K in keyof HTML.Img]: HTML.Img[K] };
-      type Marko·Inputᐸʺinputʺᐳ = { [K in keyof HTML.Input]: HTML.Input[K] };
-      type Marko·Inputᐸʺinsʺᐳ = { [K in keyof HTML.Ins]: HTML.Ins[K] };
-      type Marko·Inputᐸʺkbdʺᐳ = { [K in keyof HTML.Kbd]: HTML.Kbd[K] };
-      type Marko·Inputᐸʺlabelʺᐳ = { [K in keyof HTML.Label]: HTML.Label[K] };
-      type Marko·Inputᐸʺlegendʺᐳ = { [K in keyof HTML.Legend]: HTML.Legend[K] };
-      type Marko·Inputᐸʺliʺᐳ = { [K in keyof HTML.LI]: HTML.LI[K] };
-      type Marko·Inputᐸʺlinkʺᐳ = { [K in keyof HTML.Link]: HTML.Link[K] };
-      type Marko·Inputᐸʺmainʺᐳ = { [K in keyof HTML.Main]: HTML.Main[K] };
-      type Marko·Inputᐸʺmapʺᐳ = { [K in keyof HTML.Map]: HTML.Map[K] };
-      type Marko·Inputᐸʺmarkʺᐳ = { [K in keyof HTML.Mark]: HTML.Mark[K] };
-      type Marko·Inputᐸʺmenuʺᐳ = { [K in keyof HTML.Menu]: HTML.Menu[K] };
-      type Marko·Inputᐸʺmetaʺᐳ = { [K in keyof HTML.Meta]: HTML.Meta[K] };
-      type Marko·Inputᐸʺmeterʺᐳ = { [K in keyof HTML.Meter]: HTML.Meter[K] };
-      type Marko·Inputᐸʺnavʺᐳ = { [K in keyof HTML.Nav]: HTML.Nav[K] };
-      type Marko·Inputᐸʺnoscriptʺᐳ = {
-        [K in keyof HTML.NoScript]: HTML.NoScript[K];
-      };
-      type Marko·Inputᐸʺobjectʺᐳ = { [K in keyof HTML.Object]: HTML.Object[K] };
-      type Marko·Inputᐸʺolʺᐳ = { [K in keyof HTML.OL]: HTML.OL[K] };
-      type Marko·Inputᐸʺoptgroupʺᐳ = {
-        [K in keyof HTML.OptGroup]: HTML.OptGroup[K];
-      };
-      type Marko·Inputᐸʺoptionʺᐳ = { [K in keyof HTML.Option]: HTML.Option[K] };
-      type Marko·Inputᐸʺoutputʺᐳ = { [K in keyof HTML.Output]: HTML.Output[K] };
-      type Marko·Inputᐸʺpʺᐳ = { [K in keyof HTML.P]: HTML.P[K] };
-      type Marko·Inputᐸʺpictureʺᐳ = {
-        [K in keyof HTML.Picture]: HTML.Picture[K];
-      };
-      type Marko·Inputᐸʺpreʺᐳ = { [K in keyof HTML.Pre]: HTML.Pre[K] };
-      type Marko·Inputᐸʺprogressʺᐳ = {
-        [K in keyof HTML.Progress]: HTML.Progress[K];
-      };
-      type Marko·Inputᐸʺqʺᐳ = { [K in keyof HTML.Q]: HTML.Q[K] };
-      type Marko·Inputᐸʺrpʺᐳ = { [K in keyof HTML.RP]: HTML.RP[K] };
-      type Marko·Inputᐸʺrtʺᐳ = { [K in keyof HTML.RT]: HTML.RT[K] };
-      type Marko·Inputᐸʺrubyʺᐳ = { [K in keyof HTML.Ruby]: HTML.Ruby[K] };
-      type Marko·Inputᐸʺsʺᐳ = { [K in keyof HTML.S]: HTML.S[K] };
-      type Marko·Inputᐸʺsampʺᐳ = { [K in keyof HTML.Samp]: HTML.Samp[K] };
-      type Marko·Inputᐸʺscriptʺᐳ = { [K in keyof HTML.Script]: HTML.Script[K] };
-      type Marko·Inputᐸʺsectionʺᐳ = {
-        [K in keyof HTML.Section]: HTML.Section[K];
-      };
-      type Marko·Inputᐸʺselectʺᐳ = { [K in keyof HTML.Select]: HTML.Select[K] };
-      type Marko·Inputᐸʺslotʺᐳ = { [K in keyof HTML.Slot]: HTML.Slot[K] };
-      type Marko·Inputᐸʺsmallʺᐳ = { [K in keyof HTML.Small]: HTML.Small[K] };
-      type Marko·Inputᐸʺsourceʺᐳ = { [K in keyof HTML.Source]: HTML.Source[K] };
-      type Marko·Inputᐸʺspanʺᐳ = { [K in keyof HTML.Span]: HTML.Span[K] };
-      type Marko·Inputᐸʺstrongʺᐳ = { [K in keyof HTML.Strong]: HTML.Strong[K] };
-      type Marko·Inputᐸʺstyleʺᐳ = { [K in keyof HTML.Style]: HTML.Style[K] };
-      type Marko·Inputᐸʺsubʺᐳ = { [K in keyof HTML.Sub]: HTML.Sub[K] };
-      type Marko·Inputᐸʺsummaryʺᐳ = {
-        [K in keyof HTML.Summary]: HTML.Summary[K];
-      };
-      type Marko·Inputᐸʺsupʺᐳ = { [K in keyof HTML.Sup]: HTML.Sup[K] };
-      type Marko·Inputᐸʺtableʺᐳ = { [K in keyof HTML.Table]: HTML.Table[K] };
-      type Marko·Inputᐸʺtbodyʺᐳ = { [K in keyof HTML.TBody]: HTML.TBody[K] };
-      type Marko·Inputᐸʺtdʺᐳ = { [K in keyof HTML.TD]: HTML.TD[K] };
-      type Marko·Inputᐸʺtemplateʺᐳ = {
-        [K in keyof HTML.Template]: HTML.Template[K];
-      };
-      type Marko·Inputᐸʺtextareaʺᐳ = {
-        [K in keyof HTML.TextArea]: HTML.TextArea[K];
-      };
-      type Marko·Inputᐸʺtfootʺᐳ = { [K in keyof HTML.TFoot]: HTML.TFoot[K] };
-      type Marko·Inputᐸʺthʺᐳ = { [K in keyof HTML.TH]: HTML.TH[K] };
-      type Marko·Inputᐸʺtheadʺᐳ = { [K in keyof HTML.THead]: HTML.THead[K] };
-      type Marko·Inputᐸʺtimeʺᐳ = { [K in keyof HTML.Time]: HTML.Time[K] };
-      type Marko·Inputᐸʺtitleʺᐳ = { [K in keyof HTML.Title]: HTML.Title[K] };
-      type Marko·Inputᐸʺtrʺᐳ = { [K in keyof HTML.TR]: HTML.TR[K] };
-      type Marko·Inputᐸʺtrackʺᐳ = { [K in keyof HTML.Track]: HTML.Track[K] };
-      type Marko·Inputᐸʺuʺᐳ = { [K in keyof HTML.U]: HTML.U[K] };
-      type Marko·Inputᐸʺulʺᐳ = { [K in keyof HTML.UL]: HTML.UL[K] };
-      type Marko·Inputᐸʺvarʺᐳ = { [K in keyof HTML.Var]: HTML.Var[K] };
-      type Marko·Inputᐸʺvideoʺᐳ = { [K in keyof HTML.Video]: HTML.Video[K] };
-      type Marko·Inputᐸʺwbrʺᐳ = { [K in keyof HTML.WBr]: HTML.WBr[K] };
-    }
   }
 }
 
@@ -3995,6 +3849,3 @@ type AttrAutoComplete =
   | "pager"
   // eslint-disable-next-line @typescript-eslint/ban-types
   | (string & {});
-type Tag<Input> = Input extends Marko.HTMLAttributes<infer Element>
-  ? Marko.NativeTag<Input, Element>
-  : never;

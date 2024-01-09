@@ -70,7 +70,7 @@ import * as compiler from "@marko/compiler";
 const asyncResult = await compiler.compile(
   "<h1>Hello!</>",
   "./src/index.marko",
-  { modules: "cjs" }
+  { modules: "cjs" },
 );
 const syncResult = compiler.compileSync("<h1>Hello!</>", "./src/index.marko", {
   modules: "cjs",
@@ -217,7 +217,7 @@ Type:
     code: string;
     virtualPath: string;
     map?: SourceMap;
-  }
+  },
 ) => string;
 ```
 
@@ -295,6 +295,12 @@ import "./baz.wasm";
 ```
 
 For `hydrate` output, with the default `hydrateIncludeImports`, would only cause `./foo.css` to be loaded in the browser.
+
+#### `hydrateInit`
+
+This option is only used for `output: "hydrate"`. It defaults to `true` and causes the hydrate output to include code which tells the Marko runtime to begin hydrating any registered components.
+
+Setting to false will disable that `init` call and allow you to generate code which _just_ imports any hydrate dependencies for a template.
 
 #### `cache`
 

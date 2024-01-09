@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import customTag from "../../visitors/tag/custom-tag";
 import { exitBranchAnalyze, exitBranchTranslate } from "./if";
 
@@ -24,7 +24,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The '<else-if>' tag requires a default attribute like '<else-if=condition>'.`
+            `The '<else-if>' tag requires a default attribute like '<else-if=condition>'.`,
           );
       }
 
@@ -39,7 +39,7 @@ export default {
           throw tag.hub.buildError(
             { loc: { start, end } } as unknown as t.Node,
             msg,
-            Error
+            Error,
           );
         }
       }

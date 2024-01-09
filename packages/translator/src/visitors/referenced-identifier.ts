@@ -19,8 +19,8 @@ export default {
               undefined,
               t.markoTagBody(),
               undefined,
-              identifier.node
-            )
+              identifier.node,
+            ),
           );
         }
         break;
@@ -42,15 +42,15 @@ export default {
                 undefined,
                 t.markoTagBody(),
                 undefined,
-                globalIdentifier
-              )
+                globalIdentifier,
+              ),
             );
           }
 
           identifier.parentPath.replaceWith(globalIdentifier);
         } else {
           throw identifier.buildCodeFrameError(
-            "Only out.global is supported for compatibility."
+            "Only out.global is supported for compatibility.",
           );
         }
         break;
@@ -58,7 +58,7 @@ export default {
   },
 };
 
-function insertAfterStatic(node: t.Node) {
+function insertAfterStatic(node: t.Statement) {
   for (const child of currentProgramPath.get("body")) {
     if (!isStatic(child)) {
       child.insertBefore(node);

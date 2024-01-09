@@ -1,8 +1,8 @@
 "use strict";
 
 var ok = require("assert").ok;
-var taglibTypes = require("../loader/types");
 var extend = require("raptor-util/extend");
+var taglibTypes = require("../loader/types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function TAG_COMPARATOR(a, b) {
@@ -27,8 +27,8 @@ function merge(target, source) {
         target[key] = Array.isArray(targetVal)
           ? targetVal.concat(sourceVal)
           : Array.isArray(sourceVal)
-          ? [targetVal].concat(sourceVal)
-          : merge(merge(new targetVal.constructor(), targetVal), sourceVal);
+            ? [targetVal].concat(sourceVal)
+            : merge(merge(new targetVal.constructor(), targetVal), sourceVal);
         continue;
       }
     }

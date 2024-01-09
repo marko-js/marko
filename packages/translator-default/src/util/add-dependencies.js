@@ -1,10 +1,15 @@
 import path from "path";
-import MagicString from "magic-string";
+import {
+  loadFileForImport,
+  parseStatements,
+  resolveRelativePath,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
+import MagicString from "magic-string";
+import resolveFrom from "resolve-from";
 
 export default (entryFile, isHydrate) => {
-  const { resolveVirtualDependency, hydrateIncludeImports } =
+  const { resolveVirtualDependency, hydrateIncludeImports, hydrateInit } =
     entryFile.markoOpts;
   const hydratedFiles = new Set();
   const program = entryFile.path;
@@ -15,7 +20,6 @@ export default (entryFile, isHydrate) => {
     return;
   }
 
-  const registerId = t.identifier("register");
   const watchFiles = new Set();
   let hasComponents = false;
   let splitComponentIndex = 0;
@@ -28,26 +32,33 @@ export default (entryFile, isHydrate) => {
   if (hasComponents) {
     const initId = t.identifier("init");
     const markoComponentsImport = importPath(
-      resolvePath(entryFile, "marko/src/runtime/components/index.js")
+      resolvePath(entryFile, "marko/src/runtime/components/index.js"),
     );
     if (splitComponentIndex) {
       markoComponentsImport.specifiers.push(
-        t.importSpecifier(registerId, registerId)
+        t.importSpecifier(t.identifier("register"), t.identifier("register")),
       );
     }
-    markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
+
+    if (hydrateInit) {
+      markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
+    }
+
     program.unshiftContainer("body", markoComponentsImport);
-    program.pushContainer(
-      "body",
-      t.expressionStatement(
-        t.callExpression(
-          initId,
-          entryFile.markoOpts.runtimeId
-            ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
-            : []
-        )
-      )
-    );
+
+    if (hydrateInit) {
+      program.pushContainer(
+        "body",
+        t.expressionStatement(
+          t.callExpression(
+            initId,
+            entryFile.markoOpts.runtimeId
+              ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
+              : [],
+          ),
+        ),
+      );
+    }
   }
 
   function addHydrateDeps(file) {
@@ -86,29 +97,38 @@ export default (entryFile, isHydrate) => {
         if (!hydratedFiles.has(resolvePath(file, tag))) {
           addHydrateDeps(loadFileForImport(file, tag));
         }
+      } else {
+        const importedTemplates = tryGetTemplateImports(file, tag);
+        if (importedTemplates) {
+          for (const templateFile of importedTemplates) {
+            if (!hydratedFiles.has(resolvePath(file, templateFile))) {
+              addHydrateDeps(loadFileForImport(file, templateFile));
+            }
+          }
+        }
       }
     }
 
     if (meta.component) {
       // Split component
       const splitComponentId = t.identifier(
-        `component_${splitComponentIndex++}`
+        `component_${splitComponentIndex++}`,
       );
       const splitComponentImport = importPath(
-        resolvePath(file, meta.component)
+        resolvePath(file, meta.component),
       );
       splitComponentImport.specifiers.push(
-        t.importDefaultSpecifier(splitComponentId)
+        t.importDefaultSpecifier(splitComponentId),
       );
       program.pushContainer("body", splitComponentImport);
       program.pushContainer(
         "body",
         t.expressionStatement(
-          t.callExpression(registerId, [
+          t.callExpression(t.identifier("register"), [
             t.stringLiteral(meta.id),
             splitComponentId,
-          ])
-        )
+          ]),
+        ),
       );
     }
   }
@@ -146,6 +166,10 @@ export default (entryFile, isHydrate) => {
           code,
           virtualPath,
         });
+
+        if (!dep) {
+          continue;
+        }
       } else if (dep.startsWith("package:")) {
         continue;
       }
@@ -159,7 +183,7 @@ export default (entryFile, isHydrate) => {
       ? resolveRelativePath(file, req)
       : resolveRelativePath(
           entryFile,
-          path.join(file.opts.filename, "..", req)
+          path.join(file.opts.filename, "..", req),
         );
   }
 
@@ -167,6 +191,62 @@ export default (entryFile, isHydrate) => {
     return t.importDeclaration([], t.stringLiteral(path));
   }
 };
+
+function tryGetTemplateImports(file, rendererRelativePath) {
+  const resolvedRendererPath = path.join(
+    file.opts.filename,
+    "..",
+    rendererRelativePath,
+  );
+  let templateImports;
+
+  try {
+    for (const statement of parseStatements(
+      file,
+      file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8"),
+    )) {
+      if (statement.type === "ImportDeclaration") {
+        addImport(statement.source.value);
+      } else {
+        t.traverseFast(statement, (node) => {
+          if (
+            node.type === "CallExpression" &&
+            (node.callee.name === "require" ||
+              (node.callee.type === "MemberExpression" &&
+                node.callee.object.type === "Identifier" &&
+                node.callee.object.name === "require" &&
+                node.callee.property.type === "Identifier" &&
+                node.callee.property.name === "resolve")) &&
+            node.arguments.length === 1 &&
+            node.arguments[0].type === "StringLiteral"
+          ) {
+            addImport(node.arguments[0].value);
+          }
+        });
+      }
+    }
+  } catch {
+    // Ignore
+  }
+
+  return templateImports;
+
+  function addImport(request) {
+    if (request.endsWith(".marko")) {
+      const resolvedTemplatePath =
+        request[0] === "."
+          ? path.resolve(resolvedRendererPath, "..", request)
+          : resolveFrom.silent(path.dirname(resolvedRendererPath), request);
+      if (resolvedTemplatePath) {
+        if (templateImports) {
+          templateImports.push(resolvedTemplatePath);
+        } else {
+          templateImports = [resolvedTemplatePath];
+        }
+      }
+    }
+  }
+}
 
 function toTestFn(val) {
   if (typeof val === "function") {

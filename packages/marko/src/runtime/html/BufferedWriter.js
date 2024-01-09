@@ -32,7 +32,7 @@ BufferedWriter.prototype = Object.assign(
       }
     },
   },
-  StringWriter.prototype
+  StringWriter.prototype,
 );
 
 function flush(writer) {

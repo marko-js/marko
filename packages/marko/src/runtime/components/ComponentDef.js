@@ -1,16 +1,18 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
+var extend = require("raptor-util/extend");
 var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("@internal/components-util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler =
   require("./event-delegation").___addDelegatedEventHandler;
-var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 var EMPTY_OBJECT = {};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 var FLAG_HAS_RENDER_BODY = 2;
+var FLAG_IS_LEGACY = 4;
+var FLAG_OLD_HYDRATE_NO_CREATE = 8;
 
 /**
  * A ComponentDef is used to hold the metadata collected at runtime for
@@ -93,19 +95,31 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
   var extra = o[3] || EMPTY_OBJECT;
 
   var state = extra.s;
-  var componentProps = extra.w;
+  var componentProps = extra.w || EMPTY_OBJECT;
   var flags = extra.f;
-  var component = registry.___createComponent(typeName, id);
+  var isLegacy = flags & FLAG_IS_LEGACY;
+  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
+
+  var component =
+    typeName /* legacy */ &&
+    registry.___createComponent(typeName, id, isLegacy);
 
   // Prevent newly created component from being queued for update since we area
   // just building it from the server info
   component.___updateQueued = true;
 
-  if (flags & FLAG_HAS_RENDER_BODY) {
-    (input || (input = {})).renderBody = w10Noop;
+  if (isLegacy) {
+    component.widgetConfig = componentProps;
+    component.___widgetBody = renderBody;
+  } else if (renderBody) {
+    (input || (input = {})).renderBody = renderBody;
   }
 
-  if (flags & FLAG_WILL_RERENDER_IN_BROWSER) {
+  if (
+    !isLegacy &&
+    flags & FLAG_WILL_RERENDER_IN_BROWSER &&
+    !(flags & FLAG_OLD_HYDRATE_NO_CREATE)
+  ) {
     if (component.onCreate) {
       component.onCreate(input, { global: global });
     }
@@ -125,7 +139,7 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
       component.state = state;
     }
 
-    if (componentProps) {
+    if (!isLegacy && componentProps) {
       extend(component, componentProps);
     }
   }

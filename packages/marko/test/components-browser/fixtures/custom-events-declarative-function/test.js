@@ -11,7 +11,7 @@ module.exports = function (helpers) {
   expect(window.received1.length).to.equal(1);
   expect(window.received1[0].args.length).to.equal(3); // ['a', 'b', sourceComponent]
   expect(window.received1[0].component).to.equal(
-    component.getComponent("customEvents")
+    component.getComponent("customEvents"),
   );
 
   pubsub.channel("customEvents-" + component.id).emit("emitTestEvent2");

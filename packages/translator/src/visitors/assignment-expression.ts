@@ -12,10 +12,10 @@ export default {
             : t.binaryExpression(
                 assignment.node.operator.slice(
                   0,
-                  -1
+                  -1,
                 ) as t.BinaryExpression["operator"],
                 assignment.node.left as t.Identifier,
-                assignment.node.right
+                assignment.node.right,
               );
         const replacement = getReplacement(assignment, value);
 

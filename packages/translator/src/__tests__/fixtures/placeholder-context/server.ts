@@ -24,7 +24,7 @@ const renderer = () => {
     },
     () => {
       write("e...");
-    }
+    },
   );
   write("f");
   fork(resolveAfter("g", 1), write);

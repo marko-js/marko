@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 export default function translateVar(
   tag: t.NodePath<t.MarkoTag>,
   initialValue: t.Expression,
-  kind: "let" | "const" = "const"
+  kind: "let" | "const" = "const",
 ) {
   const {
     node: { var: tagVar },
@@ -17,7 +17,7 @@ export default function translateVar(
   tag.insertBefore(
     t.variableDeclaration(kind, [
       t.variableDeclarator(t.cloneDeep(tagVar), initialValue),
-    ])
+    ]),
   );
   tag.hub.file.path.scope.crawl();
 }

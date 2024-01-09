@@ -1,13 +1,25 @@
-import { types as t } from "@marko/compiler";
 import {
   type Tag,
   assertAllowedAttributes,
   assertNoVar,
   getTagDef,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
-import * as writer from "../util/writer";
-import * as walks from "../util/walks";
+import analyzeAttributeTags from "../util/nested-attribute-tags";
+import { mergeReferences } from "../util/references";
+import {
+  ReserveType,
+  getScopeAccessorLiteral,
+  reserveScope,
+} from "../util/reserve";
+import { callRuntime } from "../util/runtime";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getScopeIdentifier,
+  getSection,
+} from "../util/sections";
 import {
   addValue,
   getClosures,
@@ -17,22 +29,10 @@ import {
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import {
-  getOrCreateSection,
-  getScopeIdIdentifier,
-  getScopeIdentifier,
-  getSection,
-} from "../util/sections";
-import {
-  ReserveType,
-  getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
-import { callRuntime } from "../util/runtime";
-import analyzeAttributeTags from "../util/nested-attribute-tags";
-import customTag from "../visitors/tag/custom-tag";
-import { mergeReferences } from "../util/references";
+import * as walks from "../util/walks";
+import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
+import customTag from "../visitors/tag/custom-tag";
 
 export default {
   analyze: {
@@ -47,7 +47,7 @@ export default {
         getOrCreateSection(tag),
         isOnlyChild ? parentTag : tag.node,
         "for",
-        isOnlyChild ? `#${parentTagName}` : "#text"
+        isOnlyChild ? `#${parentTagName}` : "#text",
       );
       customTag.analyze.enter(tag);
     },
@@ -61,9 +61,9 @@ export default {
           .filter(
             (attr) =>
               t.isMarkoAttribute(attr) &&
-              attr.extra?.valueReferences !== undefined
+              attr.extra?.valueReferences !== undefined,
           )
-          .map((attr) => [attr.extra, "valueReferences"])
+          .map((attr) => [attr.extra, "valueReferences"]),
       );
 
       tag.node.extra.isStateful =
@@ -174,14 +174,14 @@ const translateDOM = {
       extra: { reserve },
     } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
     const paramIdentifiers = Object.values(
-      tagBody.getBindingIdentifiers()
+      tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
       return callRuntime(
         "inLoopScope",
         signal,
-        getScopeAccessorLiteral(reserve!)
+        getScopeAccessorLiteral(reserve!),
       );
     });
 
@@ -208,13 +208,13 @@ const translateDOM = {
       loopArgs.push(
         toAttr.value,
         fromAttr ? fromAttr.value : t.numericLiteral(0),
-        stepAttr ? stepAttr.value : t.numericLiteral(1)
+        stepAttr ? stepAttr.value : t.numericLiteral(1),
       );
     } else {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "Invalid <for> tag. Expected either an 'of', 'to', or 'in' attribute."
+          "Invalid <for> tag. Expected either an 'of', 'to', or 'in' attribute.",
         );
     }
 
@@ -228,7 +228,7 @@ const translateDOM = {
       return callRuntime(
         loopKind,
         getScopeAccessorLiteral(reserve!),
-        rendererId
+        rendererId,
       );
     };
 
@@ -237,7 +237,7 @@ const translateDOM = {
         if (
           getSignal(
             bodySection,
-            identifier.extra!.reserve
+            identifier.extra!.reserve,
           ).hasDownstreamIntersections()
         ) {
           return true;
@@ -280,7 +280,7 @@ const translateHTML = {
       if (!singleNodeOptimization) {
         writer.writePrependTo(tagBody)`${callRuntime(
           "markResumeScopeStart",
-          getScopeIdIdentifier(bodySection)
+          getScopeIdIdentifier(bodySection),
         )}`;
       }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
@@ -293,20 +293,20 @@ const translateHTML = {
               t.callExpression(
                 t.memberExpression(
                   getScopeIdentifier(bodySection),
-                  t.identifier("set")
+                  t.identifier("set"),
                 ),
-                [keyExpression!, tempScopeIdentifier]
+                [keyExpression!, tempScopeIdentifier],
               ),
               tempScopeIdentifier,
-            ])
+            ]),
           ),
-          [scope]
+          [scope],
         );
       });
       // TODO: redundant? already set by writeHTMLResumeStatements?
       getSerializedScopeProperties(bodySection).set(
         t.stringLiteral("_"),
-        callRuntime("serializedScope", getScopeIdIdentifier(tagSection))
+        callRuntime("serializedScope", getScopeIdIdentifier(tagSection)),
       );
     }
 
@@ -315,7 +315,7 @@ const translateHTML = {
       replacement.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(byIdentifier, byAttr.value!),
-        ])
+        ]),
       );
       byParams = [];
       keyExpression = t.callExpression(byIdentifier, byParams);
@@ -332,9 +332,9 @@ const translateHTML = {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               valParam,
-              t.memberExpression(inAttr.value!, keyParam as t.Identifier, true)
+              t.memberExpression(inAttr.value!, keyParam as t.Identifier, true),
             ),
-          ])
+          ]),
         );
       }
 
@@ -342,8 +342,8 @@ const translateHTML = {
         t.forInStatement(
           t.variableDeclaration("const", [t.variableDeclarator(keyParam)]),
           inAttr.value!,
-          block
-        )
+          block,
+        ),
       );
     } else if (ofAttr) {
       let ofAttrValue = ofAttr.value!;
@@ -352,7 +352,7 @@ const translateHTML = {
 
       if (!valParam) {
         throw namePath.buildCodeFrameError(
-          "Invalid 'for of' tag, missing |value, index| params."
+          "Invalid 'for of' tag, missing |value, index| params.",
         );
       }
 
@@ -362,7 +362,7 @@ const translateHTML = {
         block.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(valParam, tempValParam),
-          ])
+          ]),
         );
         valParam = tempValParam;
       }
@@ -371,21 +371,21 @@ const translateHTML = {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         const indexName = tag.scope.generateUidIdentifierBasedOnNode(
           indexParam,
-          "i"
+          "i",
         );
         replacement.push(
           t.variableDeclaration("let", [
             t.variableDeclarator(indexName, t.numericLiteral(0)),
-          ])
+          ]),
         );
 
         block.body.unshift(
           t.variableDeclaration("let", [
             t.variableDeclarator(
               indexParam,
-              t.updateExpression("++", indexName)
+              t.updateExpression("++", indexName),
             ),
-          ])
+          ]),
         );
       }
 
@@ -397,7 +397,7 @@ const translateHTML = {
         replacement.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(loopParam, ofAttr.value),
-          ])
+          ]),
         );
       }
 
@@ -411,8 +411,8 @@ const translateHTML = {
         t.forOfStatement(
           t.variableDeclaration("const", [t.variableDeclarator(valParam)]),
           ofAttrValue,
-          block
-        )
+          block,
+        ),
       );
     } else if (toAttr) {
       const stepValue =
@@ -435,10 +435,10 @@ const translateHTML = {
               t.binaryExpression(
                 "+",
                 fromName,
-                t.binaryExpression("*", indexName, stepName)
-              )
+                t.binaryExpression("*", indexName, stepName),
+              ),
             ),
-          ])
+          ]),
         );
       }
 
@@ -447,26 +447,26 @@ const translateHTML = {
           t.variableDeclaration("let", [
             t.variableDeclarator(
               fromName,
-              t.logicalExpression("??", fromValue, t.numericLiteral(0))
+              t.logicalExpression("??", fromValue, t.numericLiteral(0)),
             ),
             t.variableDeclarator(
               stepName,
-              t.logicalExpression("??", stepValue, t.numericLiteral(1))
+              t.logicalExpression("??", stepValue, t.numericLiteral(1)),
             ),
             t.variableDeclarator(
               stepsName,
               t.binaryExpression(
                 "/",
                 t.binaryExpression("-", toAttr.value, fromName),
-                stepName
-              )
+                stepName,
+              ),
             ),
             t.variableDeclarator(indexName, t.numericLiteral(0)),
           ]),
           t.binaryExpression("<=", indexName, stepsName),
           t.updateExpression("++", indexName),
-          block
-        )
+          block,
+        ),
       );
     }
 
@@ -482,14 +482,14 @@ const translateHTML = {
             singleNodeOptimization &&
               t.variableDeclarator(
                 forScopeIdsIdentifier,
-                t.arrayExpression([])
+                t.arrayExpression([]),
               ),
             t.variableDeclarator(
               forScopesIdentifier,
-              t.newExpression(t.identifier("Map"), [])
+              t.newExpression(t.identifier("Map"), []),
             ),
-          ].filter(Boolean) as t.VariableDeclarator[]
-        )
+          ].filter(Boolean) as t.VariableDeclarator[],
+        ),
       );
 
       if (singleNodeOptimization) {
@@ -497,21 +497,21 @@ const translateHTML = {
           t.expressionStatement(
             t.callExpression(
               t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
-              [getScopeIdIdentifier(bodySection)]
-            )
-          )
+              [getScopeIdIdentifier(bodySection)],
+            ),
+          ),
         );
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
           getScopeIdIdentifier(tagSection),
           getScopeAccessorLiteral(reserve!),
-          forScopeIdsIdentifier
+          forScopeIdsIdentifier,
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(reserve!)
+          getScopeAccessorLiteral(reserve!),
         )}`;
       }
       getSerializedScopeProperties(tagSection).set(
@@ -519,8 +519,8 @@ const translateHTML = {
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),
           forScopesIdentifier,
-          t.identifier("undefined")
-        )
+          t.identifier("undefined"),
+        ),
       );
     }
 
@@ -538,7 +538,7 @@ const translateHTML = {
 
 function findName(
   arr: (t.MarkoAttribute | t.MarkoSpreadAttribute)[],
-  value: string
+  value: string,
 ) {
   return arr.find((obj) => t.isMarkoAttribute(obj) && obj.name === value);
 }
@@ -553,21 +553,21 @@ function validateFor(tag: t.NodePath<t.MarkoTag>) {
     assertAllowedAttributes(tag, ["of", "by"]);
     if (!hasParams) {
       throw tag.buildCodeFrameError(
-        `Invalid 'for of' tag, missing |value, index| params.`
+        `Invalid 'for of' tag, missing |value, index| params.`,
       );
     }
   } else if (findName(attrs, "in")) {
     assertAllowedAttributes(tag, ["in", "by"]);
     if (!hasParams) {
       throw tag.buildCodeFrameError(
-        `Invalid 'for in' tag, missing |key, value| params.`
+        `Invalid 'for in' tag, missing |key, value| params.`,
       );
     }
   } else if (findName(attrs, "to")) {
     assertAllowedAttributes(tag, ["from", "to", "step", "by"]);
   } else {
     throw tag.buildCodeFrameError(
-      "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute."
+      "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute.",
     );
   }
 }

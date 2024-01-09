@@ -21,7 +21,7 @@ const firstComponent = () => {
     },
     () => {
       write("e...");
-    }
+    },
   );
   write("e");
   fork(resolveAfter("f", 1), write);
@@ -38,7 +38,7 @@ const secondComponent = () => {
     },
     () => {
       write("z...");
-    }
+    },
   );
   write("z");
 };

@@ -10,18 +10,18 @@ const {
   scopeLookup,
   register,
 } = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
-const createRenderer = require("../components/renderer");
-const { r: registerComponent } = require("../components/registry");
-const defineComponent = require("../components/defineComponent");
-const dynamicTag = require("./dynamic-tag");
-const morphdom = require("../vdom/morphdom");
-const defaultCreateOut = require("../createOut");
 const { ___componentLookup } = require("@internal/components-util");
+const defineComponent = require("../components/defineComponent");
+const { r: registerComponent } = require("../components/registry");
+const createRenderer = require("../components/renderer");
+const defaultCreateOut = require("../createOut");
+const morphdom = require("../vdom/morphdom");
+const dynamicTag = require("./dynamic-tag");
 
 export default dynamicTag.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
   renderBody,
-  args
+  args,
 ) {
   if (
     tagsRenderer
@@ -33,7 +33,7 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
   return (input, out) =>
     TagsCompat(
       { i: args ? { value: args } : input, r: tagsRenderer || renderBody },
-      out
+      out,
     );
 };
 
@@ -54,7 +54,7 @@ const TagsCompat = createRenderer(
       }
       if (!component.scope) {
         component.scope = createScopeWithRenderer(
-          tagsRenderer /* out.global as context */
+          tagsRenderer /* out.global as context */,
         );
         for (const signal of tagsRenderer.___closureSignals) {
           signal(component.scope, true);
@@ -80,7 +80,7 @@ const TagsCompat = createRenderer(
     t: TagsCompatId,
     d: "MARKO_DEBUG",
   },
-  {}
+  {},
 );
 
 registerComponent(TagsCompatId, () => ({
@@ -94,7 +94,7 @@ registerComponent(TagsCompatId, () => ({
         runEffects(this.effects);
       },
     },
-    TagsCompat
+    TagsCompat,
   ),
 }));
 
@@ -180,7 +180,7 @@ function renderAndMorph(scope, renderer, renderBody, input) {
     const targetNode = out.___getOutput().___firstChild;
     morphdom(rootNode, targetNode, host, componentsContext);
     const componentDefs = componentsContext.___initComponents(
-      getRootNode(host)
+      getRootNode(host),
     );
     const component = componentDefs[0].___component;
     component.___rootNode = rootNode;
@@ -206,7 +206,7 @@ const RenderBodyComponent = createRenderer(
       input.args,
       null,
       _componentDef,
-      "0"
+      "0",
     );
   },
   {
@@ -214,7 +214,7 @@ const RenderBodyComponent = createRenderer(
     i: true,
     d: "MARKO_DEBUG",
   },
-  {}
+  {},
 );
 
 registerComponent(RenderBodyComponentId, () => ({

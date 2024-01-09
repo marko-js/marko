@@ -1,4 +1,3 @@
-import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   importDefault,
@@ -6,19 +5,23 @@ import {
   loadFileForTag,
   resolveRelativePath,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
-import translateVar from "../../util/translate-var";
-import * as writer from "../../util/writer";
-import * as walks from "../../util/walks";
 import { isOutputHTML } from "../../util/marko-config";
+import trackReferences, { mergeReferences } from "../../util/references";
+import {
+  ReserveType,
+  getScopeAccessorLiteral,
+  reserveScope,
+} from "../../util/reserve";
 import { callRuntime } from "../../util/runtime";
+import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   startSection,
 } from "../../util/sections";
-import trackReferences, { mergeReferences } from "../../util/references";
 import {
   addStatement,
   addValue,
@@ -28,13 +31,10 @@ import {
   setForceResumeScope,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import {
-  ReserveType,
-  getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+import translateVar from "../../util/translate-var";
+import * as walks from "../../util/walks";
+import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import { createScopeReadExpression } from "../../util/scope-read";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -57,7 +57,7 @@ export default {
           ReserveType.Visit,
           getOrCreateSection(tag),
           tag.node,
-          "#childScope"
+          "#childScope",
         );
       }
 
@@ -82,7 +82,7 @@ export default {
           section,
           tag.node.attributes
             .filter((attr) => attr.extra?.valueReferences)
-            .map((attr) => [attr.extra, "valueReferences"])
+            .map((attr) => [attr.extra, "valueReferences"]),
         );
       }
     },
@@ -119,7 +119,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
     tagIdentifier = t.memberExpression(
       importDefault(file, relativePath, tagName),
-      t.identifier("_")
+      t.identifier("_"),
     );
   } else {
     tagIdentifier = node.name;
@@ -133,7 +133,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     let renderBodyId: t.Identifier | undefined = undefined;
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
-      attrsToObject(tag)
+      attrsToObject(tag),
     );
 
     if (renderBodyProp) {
@@ -146,11 +146,11 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
               "createRenderer",
               t.arrowFunctionExpression(
                 renderBodyProp.params,
-                renderBodyProp.body
-              )
-            )
+                renderBodyProp.body,
+              ),
+            ),
           ),
-        ])
+        ]),
       );
 
       renderBodyPath.skip();
@@ -170,8 +170,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         t.ifStatement(
           tagIdentifier,
           t.expressionStatement(renderTagExpr),
-          renderBodyId && callStatement(renderBodyId)
-        )
+          renderBodyId && callStatement(renderBodyId),
+        ),
       )[0]
       .skip();
   } else if (tagVar) {
@@ -185,17 +185,17 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           "register",
           callRuntime(
             "createRenderer",
-            t.arrowFunctionExpression([], t.blockStatement([]))
+            t.arrowFunctionExpression([], t.blockStatement([])),
           ),
           t.stringLiteral(
             getResumeRegisterId(
               section,
-              (node.var as t.Identifier).extra?.reserve
-            )
+              (node.var as t.Identifier).extra?.reserve,
+            ),
           ),
-          getScopeIdIdentifier(section)
-        )
-      )
+          getScopeIdIdentifier(section),
+        ),
+      ),
     );
     setForceResumeScope(section);
     tag.remove();
@@ -223,13 +223,13 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       file,
       relativePath,
       "attrs",
-      `${tagName}_attrs`
+      `${tagName}_attrs`,
     );
   }
   write`${importNamed(file, relativePath, "template", `${tagName}_template`)}`;
   walks.injectWalks(
     tag,
-    importNamed(file, relativePath, "walks", `${tagName}_walks`)
+    importNamed(file, relativePath, "walks", `${tagName}_walks`),
   );
 
   if (childProgram.extra.closures) {
@@ -237,8 +237,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       callRuntime(
         "childClosures",
         importNamed(file, relativePath, "closures", `${tagName}_closures`),
-        getScopeAccessorLiteral(binding)
-      )
+        getScopeAccessorLiteral(binding),
+      ),
     );
   }
 
@@ -252,16 +252,16 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "bindRenderer",
           scopeIdentifier,
-          writer.getRenderer(tagBodySection)
-        )
-      )
+          writer.getRenderer(tagBodySection),
+        ),
+      ),
     );
   }
 
   if (node.var) {
     const source = initValue(
       // TODO: support destructuring
-      (node.var as t.Identifier).extra.reserve!
+      (node.var as t.Identifier).extra.reserve!,
     );
     source.register = true;
     addStatement(
@@ -273,9 +273,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
           "setTagVar",
           scopeIdentifier,
           getScopeAccessorLiteral(binding),
-          source.identifier
-        )
-      )
+          source.identifier,
+        ),
+      ),
     );
   }
   addStatement(
@@ -285,8 +285,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     t.expressionStatement(
       t.callExpression(tagIdentifier, [
         createScopeReadExpression(tagSection, binding),
-      ])
-    )
+      ]),
+    ),
   );
   if (attrsObject && tagAttrsIdentifier) {
     addValue(
@@ -301,8 +301,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       callRuntime(
         "inChild",
         getScopeAccessorLiteral(binding),
-        t.identifier(tagAttrsIdentifier.name)
-      )
+        t.identifier(tagAttrsIdentifier.name),
+      ),
     );
   }
   tag.remove();
@@ -328,7 +328,7 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
       .buildCodeFrameError(
         `Unable to find entry point for custom tag <${
           nameIsString ? (node.name as t.StringLiteral).value : node.name
-        }>.`
+        }>.`,
       );
   }
 

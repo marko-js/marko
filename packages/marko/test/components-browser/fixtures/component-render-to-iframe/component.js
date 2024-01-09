@@ -13,7 +13,7 @@ module.exports = {
   test: function (helpers) {
     var contentComponent = this.renderIntoIframe();
     expect(contentComponent.el.ownerDocument).to.equal(
-      this.getEl("frame").contentWindow.document
+      this.getEl("frame").contentWindow.document,
     );
     expect(contentComponent.getEl("input").value).to.equal("test");
     expect(contentComponent.getComponent("more").getValue()).to.equal("hello");

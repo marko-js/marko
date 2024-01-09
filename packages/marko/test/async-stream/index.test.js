@@ -1,12 +1,12 @@
 "use strict";
 
 require("../__util__/test-init");
+var fs = require("fs");
+var nodePath = require("path");
 var chai = require("chai");
 chai.config.includeStack = true;
 
-var expect = require("chai").expect;
-var nodePath = require("path");
-var fs = require("fs");
+var expect = chai.expect;
 var fsReadOptions = { encoding: "utf8" };
 var AsyncStream = require("marko/runtime/html/AsyncStream");
 
@@ -328,14 +328,12 @@ describe("AsyncStream", function () {
 
   it("should support writing to a through2 stream", function (done) {
     var output = "";
-    var through2 = require("through2")(function write(
-      data,
-      encoding,
-      callback
-    ) {
-      output += data;
-      callback(null, data);
-    });
+    var through2 = require("through2")(
+      function write(data, encoding, callback) {
+        output += data;
+        callback(null, data);
+      },
+    );
 
     var errors = [];
     var out = createAsyncStream(through2)
@@ -423,7 +421,7 @@ describe("AsyncStream", function () {
 
     var helloReadStream = fs.createReadStream(
       nodePath.join(__dirname, "fixtures/hello.txt"),
-      fsReadOptions
+      fsReadOptions,
     );
     helloReadStream.pipe(asyncOut);
 
@@ -455,7 +453,7 @@ describe("AsyncStream", function () {
 
     var helloReadStream = fs.createReadStream(
       nodePath.join(__dirname, "fixtures/hello.txt"),
-      fsReadOptions
+      fsReadOptions,
     );
     helloReadStream.pipe(asyncOut);
 

@@ -28,7 +28,7 @@ Promise.all(
         await Promise.all([
           fs.promises.writeFile(
             `${outdir}/meta.${format}.json`,
-            JSON.stringify(metafile)
+            JSON.stringify(metafile),
           ),
           fs.promises.writeFile(
             `${outdir}/package.json`,
@@ -45,11 +45,11 @@ Promise.all(
                 types: path.relative(outdir, `dist/${name}/index.d.ts`),
               },
               null,
-              2
-            )
+              2,
+            ),
           ),
         ]);
       });
-    })
-  )
+    }),
+  ),
 );

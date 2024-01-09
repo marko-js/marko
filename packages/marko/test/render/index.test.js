@@ -4,12 +4,12 @@ require("../__util__/test-init");
 
 const fs = require("fs");
 const path = require("path");
-const marko = require("marko");
-const autotest = require("mocha-autotest").default;
-const domToString = require("../__util__/domToString");
-const createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
 const expect = require("chai").expect;
 const toDiffableHtml = require("diffable-html");
+const marko = require("marko");
+const autotest = require("mocha-autotest").default;
+const createBrowserWithMarko = require("../__util__/create-marko-jsdom-module");
+const domToString = require("../__util__/domToString");
 const browser = createBrowserWithMarko(__dirname, "<html><body></body></html>");
 
 autotest("fixtures", {
@@ -49,8 +49,8 @@ async function runRenderTest(fixture) {
   let main = !fs.existsSync(mainPath)
     ? {}
     : isVDOM
-    ? browser.require(mainPath)
-    : require(mainPath);
+      ? browser.require(mainPath)
+      : require(mainPath);
   let loadOptions = main && main.loadOptions;
 
   try {
@@ -117,13 +117,13 @@ async function runRenderTest(fixture) {
                 html = html.replace(/<!--FLUSH-->$/, "");
                 out.emit("finish");
               },
-            }
+            },
           );
       let asyncEventsVerifier = createAsyncVerifier(
         main,
         snapshot,
         out,
-        isVDOM
+        isVDOM,
       );
 
       if (main.sync) {

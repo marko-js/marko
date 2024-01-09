@@ -21,12 +21,12 @@ const renderer = () => {
         },
         () => {
           write("h...");
-        }
+        },
       );
     },
     () => {
       write("i...");
-    }
+    },
   );
   write("j");
   fork(resolveAfter("k", 1), write);

@@ -12,7 +12,7 @@ module.exports = function (helpers) {
       null,
       null /* key */,
       null /* component */,
-      2 /* childCount */
+      2 /* childCount */,
     )
     .e("span", null, null /* key */, null /* component */, 1)
     .e("a", attributes, null /* key */, null /* component */, 1)

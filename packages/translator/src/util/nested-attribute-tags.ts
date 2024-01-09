@@ -1,9 +1,9 @@
-import type { types as t } from "@marko/compiler";
 import {
   isAttributeTag,
   isLoopTag,
   isTransparentTag,
 } from "@marko/babel-utils";
+import type { types as t } from "@marko/compiler";
 
 type Lookup = Record<
   string,
@@ -32,7 +32,7 @@ function analyzeChildren(
   rootExtra: t.MarkoTag["extra"],
   repeated: boolean,
   dynamic: boolean,
-  tag: t.NodePath<t.MarkoTag>
+  tag: t.NodePath<t.MarkoTag>,
 ) {
   let hasAttributeTags = false;
   for (const child of tag.get("body").get("body")) {
@@ -50,7 +50,7 @@ function analyzeChild(
   rootExtra: t.MarkoTag["extra"],
   repeated: boolean,
   dynamic: boolean,
-  tag: t.NodePath<t.MarkoTag>
+  tag: t.NodePath<t.MarkoTag>,
 ) {
   if (isTransparentTag(tag)) {
     if (analyzeChildren(rootExtra, repeated || isLoopTag(tag), true, tag)) {

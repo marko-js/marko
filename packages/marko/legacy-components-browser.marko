@@ -1,0 +1,15 @@
+<module-code(function(require, opts) {
+    var file = `"./${opts.optimize ? "dist" : "src"}/runtime/components/legacy"`;
+
+    if (opts.modules === "cjs") {
+        return `module.exports = require(${file});\n`;
+    } else {
+        return `export { default } from ${file};\nexport * from ${file};\n`;
+    }
+})/>
+
+// What's going on here? We are using Marko to do JavaScript code generation
+// during the module bundling phase to conditionally export either the
+// "src" or the "dist" folder based on whether or not we are doing a
+// debug or non-debug build. We are using Marko since we know the Marko compiler
+// is enabled already (no extra babel transform required).

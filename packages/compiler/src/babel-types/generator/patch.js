@@ -1,18 +1,8 @@
 import "../types/patch";
 
+import Printer from "@babel/generator/lib/printer";
 import * as t from "@babel/types";
 import SELF_CLOSING from "self-closing-tags";
-import Printer from "@babel/generator/lib/printer";
-
-const UNENCLOSED_WHITESPACE_TYPES = [
-  "LogicalExpression",
-  "AssignmentExpression",
-  "ConditionalExpression",
-  "BinaryExpression",
-  "NewExpression",
-  "Function",
-  "AssignmentExpression",
-];
 
 Object.assign(Printer.prototype, {
   MarkoParseError(node) {
@@ -61,7 +51,10 @@ Object.assign(Printer.prototype, {
 
     this.token(`${node.static ? "static" : "$"} `);
 
-    if (node.body.length === 1) {
+    if (
+      node.body.length === 1 &&
+      !statementCouldHaveUnenclosedNewline(node.body[0])
+    ) {
       // TODO should determine if node has unenclosed newlines.
       this.print(node.body[0], node);
     } else {
@@ -171,6 +164,12 @@ Object.assign(Printer.prototype, {
         this.token(tagName);
       }
 
+      if (node.typeArguments) {
+        this.token("<");
+        this.printList(node.typeArguments.params, node);
+        this.token(">");
+      }
+
       if (node.var) {
         this.token("/");
         this.print(node.var, node);
@@ -187,6 +186,14 @@ Object.assign(Printer.prototype, {
       }
 
       if (node.body.params.length) {
+        if (node.body.typeParameters) {
+          if (!node.typeArguments) {
+            this.token(" ");
+          }
+          this.token("<");
+          this.printList(node.body.typeParameters.params, node);
+          this.token(">");
+        }
         this.token("|");
         this.printList(node.body.params, node);
         this.token("|");
@@ -228,7 +235,7 @@ function spaceSeparator() {
 }
 
 function printWithParansIfNeeded(value, parent) {
-  const needsParans = hasUnenclosedWhitespace(value);
+  const needsParans = expressionCouldHaveUnenclosedWhitespace(value);
 
   if (needsParans) {
     this.token("(");
@@ -241,6 +248,25 @@ function printWithParansIfNeeded(value, parent) {
   }
 }
 
-function hasUnenclosedWhitespace(node) {
-  return UNENCLOSED_WHITESPACE_TYPES.includes(node.type);
+function expressionCouldHaveUnenclosedWhitespace(node) {
+  switch (node.type) {
+    case "AssignmentExpression":
+    case "BinaryExpression":
+    case "ConditionalExpression":
+    case "Function":
+    case "LogicalExpression":
+    case "NewExpression":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function statementCouldHaveUnenclosedNewline(node) {
+  switch (node.type) {
+    case "VariableDeclaration":
+      return node.declarations.length > 1;
+    default:
+      return false;
+  }
 }

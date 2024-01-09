@@ -1,4 +1,7 @@
 var EventEmitter = require("events-light");
+var RenderResult = require("../RenderResult");
+var attrsHelper = require("./helpers/attrs");
+var morphdom = require("./morphdom");
 var vdom = require("./vdom");
 var VElement = vdom.___VElement;
 var VDocumentFragment = vdom.___VDocumentFragment;
@@ -6,9 +9,6 @@ var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
 var VFragment = vdom.___VFragment;
 var virtualizeHTML = vdom.___virtualizeHTML;
-var RenderResult = require("../RenderResult");
-var morphdom = require("./morphdom");
-var attrsHelper = require("./helpers/attrs");
 
 var EVENT_UPDATE = "update";
 var EVENT_FINISH = "finish";
@@ -82,7 +82,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
       component,
       childCount,
       flags,
-      props
+      props,
     );
     return this.___beginNode(element, childCount);
   },
@@ -95,7 +95,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
       componentDef.___component,
       0,
       0,
-      props
+      props,
     );
   },
 
@@ -149,7 +149,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
     component,
     childCount,
     flags,
-    props
+    props,
   ) {
     var element = new VElement(
       tagName,
@@ -158,7 +158,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
       component,
       childCount,
       flags,
-      props
+      props,
     );
     this.___beginNode(element, childCount, true);
     return this;
@@ -172,7 +172,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
       componentDef.___component,
       0,
       0,
-      props
+      props,
     );
   },
 
@@ -269,7 +269,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
   beginAsync: function (options) {
     if (this.___sync) {
       throw Error(
-        "Tried to render async while in sync mode. Note: Client side await is not currently supported in re-renders (Issue: #942)."
+        "Tried to render async while in sync mode. Note: Client side await is not currently supported in re-renders (Issue: #942).",
       );
     }
 

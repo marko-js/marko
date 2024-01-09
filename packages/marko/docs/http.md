@@ -19,7 +19,7 @@ server.on("request", (req, res) => {
       count: 30,
       colors: ["red", "green", "blue"],
     },
-    res
+    res,
   );
 });
 

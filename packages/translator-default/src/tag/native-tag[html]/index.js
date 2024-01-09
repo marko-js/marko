@@ -1,15 +1,15 @@
 import { resolve } from "path";
-import SELF_CLOSING from "self-closing-tags";
-import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   importDefault,
   normalizeTemplateString,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
+import SELF_CLOSING from "self-closing-tags";
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
-import translateAttributes from "./attributes";
 import withPreviousLocation from "../../util/with-previous-location";
+import translateAttributes from "./attributes";
 
 const EMPTY_OBJECT = {};
 
@@ -58,13 +58,13 @@ export default function (path, isNullable) {
             t.callExpression(
               t.memberExpression(
                 file._componentDefIdentifier,
-                t.identifier("d")
+                t.identifier("d"),
               ),
-              delegateArgs
-            )
-          )
+              delegateArgs,
+            ),
+          ),
         );
-      }
+      },
     );
   }
 
@@ -76,9 +76,9 @@ export default function (path, isNullable) {
       t.objectProperty(
         t.identifier("pa"),
         t.arrayExpression(
-          node.preserveAttrs.map((name) => t.stringLiteral(name))
-        )
-      )
+          node.preserveAttrs.map((name) => t.stringLiteral(name)),
+        ),
+      ),
     );
   }
 
@@ -108,9 +108,9 @@ export default function (path, isNullable) {
           importDefault(
             file,
             "marko/src/runtime/html/helpers/data-marko.js",
-            "marko_props"
+            "marko_props",
           ),
-          dataMarkoArgs
+          dataMarkoArgs,
         );
       }
     }
@@ -142,7 +142,7 @@ export default function (path, isNullable) {
     isEmpty && !isSelfClosing
       ? write`${writeStartNode}</${name}>`
       : write`${writeStartNode}`,
-    name
+    name,
   );
 
   if (isNullable) {
@@ -156,9 +156,9 @@ export default function (path, isNullable) {
             normalizeTemplateString`f_${key}`,
             file._componentInstanceIdentifier,
             t.numericLiteral(1),
-          ]
-        )
-      )
+          ],
+        ),
+      ),
     );
   }
 
@@ -186,16 +186,16 @@ export default function (path, isNullable) {
       t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("ef")),
-          []
-        )
-      )
+          [],
+        ),
+      ),
     );
   }
 
   path.replaceWithMultiple(
     [writeStartNode]
       .concat(needsBlock ? t.blockStatement(body) : body)
-      .concat(writeEndNode)
+      .concat(writeEndNode),
   );
 }
 

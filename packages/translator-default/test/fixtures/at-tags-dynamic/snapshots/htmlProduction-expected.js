@@ -11,7 +11,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   const _cols = [];
   const _items = [];
-  for (const color of input.colors) {
+  for (const color of input.colors || []) {
     if (x) {
       _items.push({
         "style": {
@@ -53,9 +53,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       [Symbol.iterator]: _marko_self_iterator
     });
   }
-  for (const col of input.table) {
+  for (const col of input.table || []) {
     const _rows = [];
-    for (const row of col) {
+    for (const row of col || []) {
       _rows.push({
         "row": row,
         "renderBody": out => {

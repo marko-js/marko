@@ -1,4 +1,3 @@
-import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   getTagDef,
@@ -6,10 +5,11 @@ import {
   loadFileForTag,
   resolveRelativePath,
 } from "@marko/babel-utils";
-import { buildEventHandlerArray, getAttrs } from "./util";
-import nativeTag from "./native-tag";
-import dynamicTag from "./dynamic-tag";
+import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../util/with-previous-location";
+import dynamicTag from "./dynamic-tag";
+import nativeTag from "./native-tag";
+import { buildEventHandlerArray, getAttrs } from "./util";
 
 export default function (path, isNullable) {
   const {
@@ -53,7 +53,7 @@ export default function (path, isNullable) {
         `marko/src/runtime/helpers/tags-compat-${
           markoOpts.output === "html" ? "html" : "dom"
         }.js`,
-        "marko_tags_compat"
+        "marko_tags_compat",
       );
       path.set("name", importDefault(file, relativePath, path.node.name.value));
       return dynamicTag(path);
@@ -78,7 +78,7 @@ export default function (path, isNullable) {
       throw path
         .get("name")
         .buildCodeFrameError(
-          `Unable to find entry point for custom tag <${tagName}>.`
+          `Unable to find entry point for custom tag <${tagName}>.`,
         );
     }
   } else {
@@ -92,7 +92,7 @@ export default function (path, isNullable) {
         importDefault(
           file,
           "marko/src/runtime/helpers/render-tag.js",
-          "marko_tag"
+          "marko_tag",
         ),
         [
           tagIdentifier,
@@ -102,10 +102,10 @@ export default function (path, isNullable) {
           file._componentDefIdentifier,
           key,
           ...buildEventHandlerArray(path),
-        ]
-      )
+        ],
+      ),
     ),
-    node
+    node,
   );
 
   if (isNullable) {
@@ -113,7 +113,7 @@ export default function (path, isNullable) {
     const renderBodyProp =
       t.isObjectExpression(foundAttrs) &&
       foundAttrs.properties.find(
-        (prop) => prop.key && prop.key.value === "renderBody"
+        (prop) => prop.key && prop.key.value === "renderBody",
       );
 
     if (renderBodyProp) {
@@ -121,7 +121,7 @@ export default function (path, isNullable) {
       path.insertBefore(
         t.variableDeclaration("const", [
           t.variableDeclarator(renderBodyIdentifier, renderBodyProp.value),
-        ])
+        ]),
       );
 
       renderBodyProp.value = renderBodyIdentifier;
@@ -133,9 +133,9 @@ export default function (path, isNullable) {
         customTagRenderCall,
         renderBodyIdentifier &&
           t.expressionStatement(
-            t.callExpression(renderBodyIdentifier, [t.identifier("out")])
-          )
-      )
+            t.callExpression(renderBodyIdentifier, [t.identifier("out")]),
+          ),
+      ),
     );
   } else {
     path.replaceWith(customTagRenderCall);

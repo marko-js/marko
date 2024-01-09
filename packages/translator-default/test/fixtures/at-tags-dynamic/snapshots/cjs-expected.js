@@ -11,13 +11,12 @@ var _renderer = _interopRequireDefault(require("marko/src/runtime/components/ren
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-dynamic/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
-var _default = _marko_template;
-exports.default = _default;
+var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   const _cols = [];
   const _items = [];
-  for (const color of input.colors) {
+  for (const color of input.colors || []) {
     if (x) {
       _items.push({
         "style": {
@@ -59,9 +58,9 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       [Symbol.iterator]: _selfIterator.default
     });
   }
-  for (const col of input.table) {
+  for (const col of input.table || []) {
     const _rows = [];
-    for (const row of col) {
+    for (const row of col || []) {
       _rows.push({
         "row": row,
         "renderBody": out => {

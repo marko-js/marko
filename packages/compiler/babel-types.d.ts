@@ -1,3 +1,4 @@
+/* eslint-disable import/export */
 import { Scope } from "./dist/traverse";
 export * from "./dist/types";
 export * from "./dist/traverse";

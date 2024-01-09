@@ -4,7 +4,7 @@ export default {
   parse(tag) {
     const { node } = tag;
     tag.replaceWith(
-      parseStatements(tag.hub.file, node.rawValue!, node.start!, node.end!)[0]
+      parseStatements(tag.hub.file, node.rawValue!, node.start!, node.end!)[0],
     );
   },
   parseOptions: {

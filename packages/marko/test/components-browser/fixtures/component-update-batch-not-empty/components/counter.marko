@@ -1,0 +1,15 @@
+class {
+    onCreate(input) {
+        this.state = {
+            count: 0
+        }
+    }
+    handleClick() {
+        this.state.count++;
+        this.once('update', () => {
+            this.emit('change', this.state.count);
+        });
+    }
+}
+
+<button key="button" on-click('handleClick')>${state.count}</button>

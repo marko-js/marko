@@ -1,4 +1,5 @@
 import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { defaultFragment } from "./fragment";
 import { reconcile } from "./reconcile";
 import {
   type Renderer,
@@ -6,7 +7,6 @@ import {
   createScopeWithRenderer,
 } from "./renderer";
 import { destroyScope, getEmptyScope } from "./scope";
-import { defaultFragment } from "./fragment";
 import {
   type IntersectionSignal,
   type ValueSignal,
@@ -16,11 +16,13 @@ import type { Template } from "./template";
 
 type LoopForEach = (
   value: unknown[],
-  cb: (key: unknown, args: unknown[]) => void
+  cb: (key: unknown, args: unknown[]) => void,
 ) => void;
 
 export function patchConditionals(
-  fn: <T extends typeof conditional | typeof conditionalOnlyChild>(cond: T) => T
+  fn: <T extends typeof conditional | typeof conditionalOnlyChild>(
+    cond: T,
+  ) => T,
 ) {
   conditional = fn(conditional);
   conditionalOnlyChild = fn(conditionalOnlyChild);
@@ -30,7 +32,7 @@ export let conditional = function conditional(
   nodeAccessor: Accessor,
   dynamicTagAttrs?: IntersectionSignal,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal
+  valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
@@ -56,7 +58,7 @@ export let conditional = function conditional(
 // TODO: remove this, use return from conditional instead
 export function inConditionalScope<S extends Scope>(
   signal: IntersectionSignal,
-  nodeAccessor: Accessor /* branch?: Renderer */
+  nodeAccessor: Accessor /* branch?: Renderer */,
 ): IntersectionSignal {
   const scopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
   // const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
@@ -72,7 +74,7 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | undefined
+  newRenderer: RendererOrElementName | undefined,
 ) {
   let newScope: ChildScope;
   let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
@@ -84,7 +86,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
       createScopeWithRenderer(
         newRenderer,
         (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
-        scope
+        scope,
       ) as ChildScope;
     prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
   } else {
@@ -95,14 +97,14 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   newFragment.___insertBefore(
     newScope,
     prevFragment.___getParentNode(prevScope),
-    prevFragment.___getFirstNode(prevScope)
+    prevFragment.___getFirstNode(prevScope),
   );
   prevFragment.___remove(destroyScope(prevScope));
 }
 
 export let conditionalOnlyChild = function conditionalOnlyChild(
   nodeAccessor: Accessor,
-  action?: ValueSignal<RendererOrElementName | undefined>
+  action?: ValueSignal<RendererOrElementName | undefined>,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
@@ -122,7 +124,7 @@ export let conditionalOnlyChild = function conditionalOnlyChild(
 export function setConditionalRendererOnlyChild(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | undefined
+  newRenderer: RendererOrElementName | undefined,
 ) {
   const prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
   const referenceNode = scope[nodeAccessor] as Element;
@@ -133,12 +135,12 @@ export function setConditionalRendererOnlyChild(
       createScopeWithRenderer(
         newRenderer,
         (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
-        scope
+        scope,
       ));
     (newRenderer.___fragment ?? defaultFragment).___insertBefore(
       newScope,
       referenceNode,
-      null
+      null,
     );
   }
 
@@ -168,7 +170,7 @@ export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
     const [all, getKey = keyByFirstArg] = value as typeof value &
       [
         all: Record<string, unknown>,
-        getKey?: (key: string, v: unknown) => unknown
+        getKey?: (key: string, v: unknown) => unknown,
       ];
     for (const key in all) {
       const v = all[key];
@@ -183,7 +185,7 @@ export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
       to: number,
       from: number,
       step: number,
-      getKey?: (v: number) => unknown
+      getKey?: (v: number) => unknown,
     ];
     const steps = (to - from) / step;
     for (let i = 0; i <= steps; i++) {
@@ -196,7 +198,7 @@ export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
 function loop(
   nodeAccessor: Accessor,
   renderer: Renderer,
-  forEach: LoopForEach
+  forEach: LoopForEach,
 ) {
   const loopScopeAccessor = nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   const closureSignals = renderer.___closureSignals;
@@ -204,7 +206,7 @@ function loop(
   return (
     scope: Scope,
     value: [unknown, (...args: unknown[]) => unknown],
-    clean: boolean | 1
+    clean: boolean | 1,
   ) => {
     if (clean) {
       for (const childScope of scope[loopScopeAccessor]) {
@@ -245,7 +247,7 @@ function loop(
           renderer,
           (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||=
             scope.___context),
-          scope
+          scope,
         );
         // TODO: once we can track moves
         // needsReconciliation = true;
@@ -308,7 +310,7 @@ function loop(
         oldArray,
         newArray!,
         afterReference,
-        renderer.___fragment
+        renderer.___fragment,
       );
     }
 
@@ -320,7 +322,7 @@ function loop(
 // TODO: remove this, use return from loop instead
 export function inLoopScope(
   signal: IntersectionSignal,
-  loopNodeAccessor: Accessor
+  loopNodeAccessor: Accessor,
 ) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   return (scope: Scope, clean?: boolean | 1) => {

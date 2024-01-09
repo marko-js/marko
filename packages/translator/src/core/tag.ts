@@ -1,9 +1,9 @@
-import { types as t } from "@marko/compiler";
 import type { Tag } from "@marko/babel-utils";
-import * as writer from "../util/writer";
-import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
+import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
 import { callRuntime } from "../util/runtime";
+import toFirstExpressionOrBlock from "../util/to-first-expression-or-block";
+import * as writer from "../util/writer";
 
 export default {
   translate: {
@@ -15,7 +15,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "<tag> requires a variable to be defined, eg <tag/NAME>."
+            "<tag> requires a variable to be defined, eg <tag/NAME>.",
           );
       }
     },
@@ -32,11 +32,11 @@ export default {
               "createRenderer",
               t.arrowFunctionExpression(
                 tag.node.body.params,
-                toFirstExpressionOrBlock(tag.node.body)
-              )
-            )
+                toFirstExpressionOrBlock(tag.node.body),
+              ),
+            ),
           ),
-        ])
+        ]),
       );
     },
   },

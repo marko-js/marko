@@ -9,7 +9,7 @@ module.exports = function (helpers) {
   });
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello Frank! You have 10 new messages."
+    "Hello Frank! You have 10 new messages.",
   );
 
   component.input = {
@@ -20,7 +20,7 @@ module.exports = function (helpers) {
   component.update();
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 20 new messages."
+    "Hello John! You have 20 new messages.",
   );
 
   component.input = {
@@ -29,12 +29,12 @@ module.exports = function (helpers) {
   };
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 20 new messages."
+    "Hello John! You have 20 new messages.",
   );
 
   component.update();
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello Jane! You have 30 new messages."
+    "Hello Jane! You have 30 new messages.",
   );
 };

@@ -13,7 +13,7 @@ export default function (path) {
     (prop) =>
       prop.computed === false &&
       t.isIdentifier(prop.key) &&
-      prop.key.name === "onCreate"
+      prop.key.name === "onCreate",
   );
 
   const objectProperties = body
@@ -30,8 +30,8 @@ export default function (path) {
             t.assignmentExpression(
               "=",
               t.memberExpression(t.thisExpression(), prop.key, prop.computed),
-              prop.value || t.unaryExpression("void", t.numericLiteral(0))
-            )
+              prop.value || t.unaryExpression("void", t.numericLiteral(0)),
+            ),
           );
         }
 
@@ -40,7 +40,7 @@ export default function (path) {
 
       throw file.buildCodeFrameError(
         prop,
-        "Unsupported class property on component."
+        "Unsupported class property on component.",
       );
     })
     .filter(Boolean);
@@ -52,8 +52,8 @@ export default function (path) {
           "method",
           t.identifier("onCreate"),
           [],
-          t.blockStatement([])
-        ))
+          t.blockStatement([]),
+        )),
       );
     }
 

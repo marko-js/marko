@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { normalizeTemplateString } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
 export default function write(strings, ...expressions) {
   const template = normalizeTemplateString(strings, ...expressions);
@@ -8,8 +8,8 @@ export default function write(strings, ...expressions) {
     return t.expressionStatement(
       t.callExpression(
         t.memberExpression(t.identifier("out"), t.identifier("w")),
-        [template]
-      )
+        [template],
+      ),
     );
   }
 }

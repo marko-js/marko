@@ -1,19 +1,19 @@
 import fs from "fs";
 import path from "path";
-import glob from "tiny-glob";
 import * as compiler from "@marko/compiler";
-import snap from "mocha-snap";
-import createBrowser from "../../../translator/src/__tests__/utils/create-browser";
-import createMutationTracker from "../../../translator/src/__tests__/utils/track-mutations";
-import { isWait } from "../../../translator/src/__tests__/utils/resolve";
-import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import register from "@marko/compiler/register";
+import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
+import snap from "mocha-snap";
+import glob from "tiny-glob";
+import createBrowser from "../../../translator/src/__tests__/utils/create-browser";
+import { isWait } from "../../../translator/src/__tests__/utils/resolve";
+import createMutationTracker from "../../../translator/src/__tests__/utils/track-mutations";
 
 const runtimeId = "X";
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
-  runtimeId
+  runtimeId,
 );
 
 const baseConfig: compiler.Config = {
@@ -95,7 +95,7 @@ describe("translator-interop", () => {
             .relative(fixtureDir, file)
             .replace(
               ".marko",
-              /* config.error_compiler ? ".error.txt" : */ ".js"
+              /* config.error_compiler ? ".error.txt" : */ ".js",
             );
           await targetSnap(() => compileCode(file, finalConfig), {
             file: name,
@@ -108,7 +108,7 @@ describe("translator-interop", () => {
         } else if (errors.length > 1) {
           throw new AggregateError(
             errors,
-            "\n" + errors.map((e) => e.toString()).join("\n")
+            "\n" + errors.map((e) => e.toString()).join("\n"),
           );
         }
       };
@@ -146,8 +146,8 @@ describe("translator-interop", () => {
             buffer += data;
             tracker.log(
               `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME")
-              )}`
+                data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
+              )}`,
             );
           },
           flush() {
@@ -157,7 +157,7 @@ describe("translator-interop", () => {
           },
           end(data?: string) {
             document.write(
-              `<html><body>` + buffer + (data || "") + `</body></html>`
+              `<html><body>` + buffer + (data || "") + `</body></html>`,
             );
             document.close();
             tracker.logUpdate("End");
@@ -166,7 +166,7 @@ describe("translator-interop", () => {
           emit(type: string, ...args: unknown[]) {
             console.log(...args);
             tracker.log(
-              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`
+              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`,
             );
             if (type === "error") {
               document.close();
@@ -177,7 +177,7 @@ describe("translator-interop", () => {
 
         if (serverTemplate.writeTo) {
           await new Promise<void>((resolve) =>
-            serverTemplate.writeTo(writable(resolve), input, config.context)
+            serverTemplate.writeTo(writable(resolve), input, config.context),
           );
         } else {
           await serverTemplate.render(input, writable());
@@ -229,10 +229,10 @@ describe("translator-interop", () => {
         }
 
         const { run } = browser.require(
-          "@marko/runtime-fluurt/dist/debug/dom"
+          "@marko/runtime-fluurt/dist/debug/dom",
         ) as typeof import("../../../runtime/src/dom");
         const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util/index-browser"
+          "marko/src/node_modules/@internal/components-util/index-browser",
         );
 
         function runUpdates() {
@@ -276,7 +276,7 @@ describe("translator-interop", () => {
             : config.steps || [];
 
         const { run, init } = browser.require(
-          "@marko/runtime-fluurt/dist/debug/dom"
+          "@marko/runtime-fluurt/dist/debug/dom",
         ) as typeof import("@marko/runtime-fluurt/src/dom");
 
         browser.require(templateFile);
@@ -287,7 +287,7 @@ describe("translator-interop", () => {
         tracker.logUpdate(input);
 
         const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util/index-browser"
+          "marko/src/node_modules/@internal/components-util/index-browser",
         );
 
         function runUpdates() {

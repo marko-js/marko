@@ -1,15 +1,15 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { addHTMLEffectCall, addStatement } from "../util/signals";
-import { callRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
 import {
   ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
 } from "../util/reserve";
+import { callRuntime } from "../util/runtime";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
@@ -24,7 +24,7 @@ export default {
       ReserveType.Store,
       getOrCreateSection(tag),
       tag.node,
-      "cleanup"
+      "cleanup",
     );
     (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },
@@ -40,7 +40,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The 'effect' tag requires a default attribute."
+            "The 'effect' tag requires a default attribute.",
           );
       }
 
@@ -52,7 +52,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The 'effect' tag only supports the 'default' attribute."
+            "The 'effect' tag only supports the 'default' attribute.",
           );
       }
 
@@ -81,11 +81,11 @@ export default {
                 "userEffect",
                 scopeIdentifier,
                 getScopeAccessorLiteral(tag.node.extra!.reserve!),
-                defaultAttr.value
-              )
+                defaultAttr.value,
+              ),
             ),
           value,
-          !!inlineStatements
+          !!inlineStatements,
         );
       } else {
         addHTMLEffectCall(section, defaultAttr.extra?.valueReferences);

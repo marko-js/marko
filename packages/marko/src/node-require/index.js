@@ -14,7 +14,7 @@ const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 // eslint-disable-next-line no-constant-condition
 if ("MARKO_DEBUG") {
   complain(
-    'Using "marko/node-require" has been replaced with "@marko/compiler/register".'
+    'Using "marko/node-require" has been replaced with "@marko/compiler/register".',
   );
 }
 
@@ -32,8 +32,8 @@ function compile(templatePath, markoCompiler, userCompilerOptions) {
       {},
       defaultCompilerOptions,
       userCompilerOptions,
-      requiredCompilerOptions
-    )
+      requiredCompilerOptions,
+    ),
   ).code;
 }
 

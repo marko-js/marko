@@ -9,7 +9,7 @@ export default {
         const value = t.binaryExpression(
           assignment.node.operator === "++" ? "+" : "-",
           assignment.node.argument,
-          t.numericLiteral(1)
+          t.numericLiteral(1),
         );
         const replacement = getReplacement(assignment, value);
 
@@ -18,7 +18,7 @@ export default {
             assignment.node.prefix ||
               assignment.parentPath.isExpressionStatement()
               ? replacement
-              : t.sequenceExpression([replacement, assignment.node.argument])
+              : t.sequenceExpression([replacement, assignment.node.argument]),
           );
         }
       }

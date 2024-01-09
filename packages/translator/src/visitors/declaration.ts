@@ -1,6 +1,6 @@
 import type { types as t } from "@marko/compiler";
-import * as writer from "../util/writer";
 import { isOutputHTML } from "../util/marko-config";
+import * as writer from "../util/writer";
 
 export default {
   translate(declaration: t.NodePath<t.MarkoDeclaration>) {

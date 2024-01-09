@@ -19,18 +19,22 @@ jobs:
       contents: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
       - name: Use node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Build
+        run: npm run build
       - name: Format Code
         run: npm run format
       - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[ci] format"
           commit_user_name: "github-actions[bot]"
@@ -46,7 +50,7 @@ jobs:
         node: [16, 18, 20]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Use node@${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
@@ -57,18 +61,18 @@ jobs:
       - name: Run tests
         run: npm run ci:test
       - name: Report code coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
   release:
     runs-on: ubuntu-latest
     needs: [format, test]
     if: "${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           cache: npm
       - name: Install dependencies
         run: npm ci
@@ -77,7 +81,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: npm run version
-          publish: npm run publish
+          publish: npm run release
           commit: "[ci] release"
           title: "[ci] release"
         env:

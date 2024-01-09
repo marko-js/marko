@@ -1,5 +1,114 @@
 # Change Log
 
+## 5.34.4
+
+### Patch Changes
+
+- [#2076](https://github.com/marko-js/marko/pull/2076) [`69b3ff5`](https://github.com/marko-js/marko/commit/69b3ff57c829418946e05c13b644a5560f589086) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all package deps to latest
+
+- Updated dependencies [[`69b3ff5`](https://github.com/marko-js/marko/commit/69b3ff57c829418946e05c13b644a5560f589086)]:
+  - @marko/babel-utils@6.3.5
+
+## 5.34.3
+
+### Patch Changes
+
+- [#2074](https://github.com/marko-js/marko/pull/2074) [`bf23c566fac02f4e2991be357a95483663493b3f`](https://github.com/marko-js/marko/commit/bf23c566fac02f4e2991be357a95483663493b3f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade package lock and built types.
+
+## 5.34.2
+
+### Patch Changes
+
+- [#2069](https://github.com/marko-js/marko/pull/2069) [`977d69078`](https://github.com/marko-js/marko/commit/977d690784f1d97acb3494bb822fa852c1380685) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with printing variable declarations with multiple variables.
+
+## 5.34.1
+
+### Patch Changes
+
+- [#2064](https://github.com/marko-js/marko/pull/2064) [`5e294103f`](https://github.com/marko-js/marko/commit/5e294103f78642b8a44887a1569ffd0eabcf6821) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix sourcemaps
+
+## 5.34.0
+
+### Minor Changes
+
+- [#2062](https://github.com/marko-js/marko/pull/2062) [`436ace040`](https://github.com/marko-js/marko/commit/436ace040b73d11908911d60c10845b6e99e8eca) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add "exports" to marko.json
+
+## 5.33.8
+
+### Patch Changes
+
+- [#2060](https://github.com/marko-js/marko/pull/2060) [`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose meta data about which child Marko templates were analyzed for a given compilation.
+
+- [#2059](https://github.com/marko-js/marko/pull/2059) [`aed88284b`](https://github.com/marko-js/marko/commit/aed88284b8b3c68965f70b6bdf9412c7100c5df5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix AST types
+
+- Updated dependencies [[`648a94928`](https://github.com/marko-js/marko/commit/648a94928f662b04634a61395d5d48a956a8ff36)]:
+  - @marko/babel-utils@6.3.4
+
+## 5.33.7
+
+### Patch Changes
+
+- [#2056](https://github.com/marko-js/marko/pull/2056) [`84f443d60`](https://github.com/marko-js/marko/commit/84f443d60539cc1b3382c6b16da4061070f97aca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when the Marko hot-reload runtime is loaded in native esm
+
+## 5.33.6
+
+### Patch Changes
+
+- [#2054](https://github.com/marko-js/marko/pull/2054) [`1c5eccadf`](https://github.com/marko-js/marko/commit/1c5eccadf8d968552dbe8756905009107d783718) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with @marko/babel-utils not exposing new parse helpers.
+
+- Updated dependencies [[`1c5eccadf`](https://github.com/marko-js/marko/commit/1c5eccadf8d968552dbe8756905009107d783718)]:
+  - @marko/babel-utils@6.3.3
+
+## 5.33.5
+
+### Patch Changes
+
+- [#2051](https://github.com/marko-js/marko/pull/2051) [`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add ts to ast
+
+- Updated dependencies [[`5354d4411`](https://github.com/marko-js/marko/commit/5354d44112c56fcbbd7f44dd3bf91be1e5a7747c)]:
+  - @marko/babel-utils@6.3.2
+
+## 5.33.4
+
+### Patch Changes
+
+- [#2049](https://github.com/marko-js/marko/pull/2049) [`1554b1e1e`](https://github.com/marko-js/marko/commit/1554b1e1e53a75980af0b238cc27bed5ddfa215a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow `template.marko` to act as `index.marko` for backword compat with v4/v3.
+
+## 5.33.3
+
+### Patch Changes
+
+- [#2042](https://github.com/marko-js/marko/pull/2042) [`447104632`](https://github.com/marko-js/marko/commit/44710463258999ad037febef10264e32f3291157) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When compiling async, prefer using the async babel api for loading babel config files.
+
+## 5.33.2
+
+### Patch Changes
+
+- [#2038](https://github.com/marko-js/marko/pull/2038) [`71a227a5f`](https://github.com/marko-js/marko/commit/71a227a5ff8b16c0bb983e082f28280518f712ce) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where using the longhand nested attribute tag syntax in a marko.json with a `target-property` defined was not registering the alias as a known attribute, leading to compile errors.
+
+## 5.33.1
+
+### Patch Changes
+
+- [#2020](https://github.com/marko-js/marko/pull/2020) [`6a4e947b5`](https://github.com/marko-js/marko/commit/6a4e947b5ac9944e61d7871d314a6325a0522d1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure .marko files are resolved for legacy renderer taglib configs.
+
+## 5.33.0
+
+### Minor Changes
+
+- [#2012](https://github.com/marko-js/marko/pull/2012) [`6ba268c84`](https://github.com/marko-js/marko/commit/6ba268c841631b3ed36964c8f532e543885ad4f5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support registering a taglib in the compiler by just passing in a module id.
+
+## 5.32.0
+
+### Minor Changes
+
+- [#2006](https://github.com/marko-js/marko/pull/2006) [`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add compute node helper to replace babels `evaluate` helper. This helper is less aggressive and doesn't suffer from the false positives that popped up with babels version.
+
+### Patch Changes
+
+- Updated dependencies [[`b2e70bc45`](https://github.com/marko-js/marko/commit/b2e70bc45006a8cccfa61ac99bbca40a71d05fd1)]:
+  - @marko/babel-utils@6.3.0
+
 ## 5.31.2
 
 ### Patch Changes

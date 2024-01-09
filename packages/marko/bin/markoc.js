@@ -5,35 +5,7 @@
 var fs = require("fs");
 var nodePath = require("path");
 var cwd = process.cwd();
-var resolveFrom = require("resolve-from").silent;
-
-// Try to use the Marko compiler installed with the project
-var markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
-const markocPkgVersion = require("../package.json").version;
-
-var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
-var markoPkgVersion = markoPkgPath && require(markoPkgPath).version;
-
-var markoCompiler = markoCompilerPath
-  ? require(markoCompilerPath)
-  : require("../compiler");
-
-var Minimatch = require("minimatch").Minimatch;
-
 var appModulePath = require("app-module-path");
-
-var mmOptions = {
-  matchBase: true,
-  dot: true,
-  flipNegate: true,
-};
-
-function relPath(path) {
-  if (path.startsWith(cwd)) {
-    return path.substring(cwd.length + 1);
-  }
-}
-
 var args = require("argly")
   .createParser({
     "--help": {
@@ -94,7 +66,7 @@ var args = require("argly")
   .example("Compile multiple templates", "$0 template.marko src/ foo/")
   .example(
     "Delete all *.marko.js files in the current directory",
-    "$0 . --clean"
+    "$0 . --clean",
   )
   .validate(function (result) {
     if (result.help) {
@@ -124,6 +96,31 @@ var args = require("argly")
     process.exit(1);
   })
   .parse();
+var Minimatch = require("minimatch").Minimatch;
+var resolveFrom = require("resolve-from").silent;
+
+// Try to use the Marko compiler installed with the project
+var markoCompilerPath = resolveFrom(process.cwd(), "marko/compiler");
+const markocPkgVersion = require("../package.json").version;
+
+var markoPkgPath = resolveFrom(process.cwd(), "marko/package.json");
+var markoPkgVersion = markoPkgPath && require(markoPkgPath).version;
+
+var markoCompiler = markoCompilerPath
+  ? require(markoCompilerPath)
+  : require("../compiler");
+
+var mmOptions = {
+  matchBase: true,
+  dot: true,
+  flipNegate: true,
+};
+
+function relPath(path) {
+  if (path.startsWith(cwd)) {
+    return path.substring(cwd.length + 1);
+  }
+}
 
 var output = "html";
 
@@ -324,7 +321,7 @@ if (args.clean) {
       } else {
         console.log("Deleted " + deleteCount + " file(s)");
       }
-    }
+    },
   );
 } else {
   var found = {};
@@ -345,7 +342,7 @@ if (args.clean) {
           relPath(path) +
           "\n  Output: " +
           relPath(outPath) +
-          "\n"
+          "\n",
       );
 
     context.beginAsync();
@@ -356,7 +353,7 @@ if (args.clean) {
           'Failed to compile "' +
             relPath(path) +
             '". Error: ' +
-            (err.stack || err)
+            (err.stack || err),
         );
         context.endAsync(err);
         return;
@@ -367,7 +364,7 @@ if (args.clean) {
       fs.writeFile(outPath, src, "utf8", function (err) {
         if (err) {
           failed.push(
-            'Failed to write "' + path + '". Error: ' + (err.stack || err)
+            'Failed to write "' + path + '". Error: ' + (err.stack || err),
           );
           context.endAsync(err);
           return;
@@ -384,7 +381,7 @@ if (args.clean) {
                   'Failed to write sourcemap"' +
                     path +
                     '". Error: ' +
-                    (err.stack || err)
+                    (err.stack || err),
                 );
                 context.endAsync(err);
                 return;
@@ -392,7 +389,7 @@ if (args.clean) {
 
               compileCount++;
               context.endAsync();
-            }
+            },
           );
 
           return;
@@ -426,7 +423,7 @@ if (args.clean) {
         if (err) {
           if (failed.length) {
             console.error(
-              "The following errors occurred:\n- " + failed.join("\n- ")
+              "The following errors occurred:\n- " + failed.join("\n- "),
             );
           } else {
             console.error(err);
@@ -440,7 +437,7 @@ if (args.clean) {
         } else {
           console.log("Compiled " + compileCount + " templates(s)");
         }
-      }
+      },
     );
   }
 }

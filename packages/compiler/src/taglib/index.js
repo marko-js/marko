@@ -1,15 +1,17 @@
-import loader from "./loader";
-import finder from "./finder";
-import Lookup from "./lookup";
-import taglibConfig from "./config";
+import path from "path";
+import markoModules from "../../modules";
 import tryLoadTranslator from "../util/try-load-translator";
+import taglibConfig from "./config";
+import finder from "./finder";
+import loader from "./loader";
+import Lookup from "./lookup";
 
 export const excludeDir = finder.excludeDir;
 export const excludePackage = finder.excludePackage;
 
 import markoHTMLTaglib from "./marko-html.json";
-import markoSVGTaglib from "./marko-svg.json";
 import markoMathTaglib from "./marko-math.json";
+import markoSVGTaglib from "./marko-svg.json";
 
 const registeredTaglibs = [];
 const loadedTranslatorsTaglibs = new Map();
@@ -23,7 +25,7 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   const translator = tryLoadTranslator(requestedTranslator);
   if (!translator || !Array.isArray(translator.taglibs)) {
     throw new Error(
-      "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)"
+      "@marko/compiler: Invalid translator provided to buildLookup(dir, translator)",
     );
   }
 
@@ -33,8 +35,8 @@ export function buildLookup(dirname, requestedTranslator, onError) {
     loadedTranslatorsTaglibs.set(
       translator,
       (taglibsForDir = registeredTaglibs.concat(
-        translator.taglibs.map(([id, props]) => loadTaglib(id, props))
-      ))
+        translator.taglibs.map(([id, props]) => loadTaglib(id, props)),
+      )),
     );
   }
 
@@ -77,6 +79,22 @@ export function buildLookup(dirname, requestedTranslator, onError) {
 }
 
 export function register(id, props) {
+  if (typeof props === "undefined") {
+    switch (id[0]) {
+      case ".":
+      case "/":
+      case "\\":
+        break;
+      default:
+        if (!id.endsWith(".json")) {
+          id = path.join(id, "marko.json");
+        }
+        break;
+    }
+    id = markoModules.require.resolve(id);
+    props = markoModules.require(id);
+  }
+
   registeredTaglibs.push(loadTaglib(id, props));
 }
 

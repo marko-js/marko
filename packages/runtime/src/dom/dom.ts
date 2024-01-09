@@ -41,7 +41,7 @@ export function data(node: Text | Comment, value: unknown) {
 export function attrs(
   scope: Scope,
   elementAccessor: Accessor,
-  nextAttrs: Record<string, unknown>
+  nextAttrs: Record<string, unknown>,
 ) {
   const prevAttrs = scope[
     elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES
@@ -128,7 +128,7 @@ type EffectFn<S extends Scope> = (scope: S) => void | (() => void);
 export function userEffect<S extends Scope>(
   scope: S,
   index: number,
-  fn: EffectFn<S>
+  fn: EffectFn<S>,
 ) {
   const cleanup = scope[index] as ReturnType<EffectFn<S>>;
   const nextCleanup = fn(scope);
@@ -147,7 +147,7 @@ export function lifecycle(
     onMount?: (this: unknown) => void;
     onUpdate?: (this: unknown) => void;
     onDestroy?: (this: unknown) => void;
-  }
+  },
 ) {
   let storedThis = scope[index] as typeof thisObj;
   if (!storedThis) {

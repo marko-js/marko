@@ -1,19 +1,19 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
-import { isOutputDOM } from "../util/marko-config";
-import { addHTMLEffectCall, addStatement } from "../util/signals";
-import { callRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
 import attrsToObject from "../util/attrs-to-object";
-import customTag from "../visitors/tag/custom-tag";
+import { isOutputDOM } from "../util/marko-config";
 import { type References, mergeReferences } from "../util/references";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import {
   ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
 } from "../util/reserve";
+import { callRuntime } from "../util/runtime";
+import { getOrCreateSection, getSection } from "../util/sections";
+import { addHTMLEffectCall, addStatement } from "../util/signals";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import customTag from "../visitors/tag/custom-tag";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -32,7 +32,7 @@ export default {
         ReserveType.Store,
         getOrCreateSection(tag),
         tag.node,
-        "cleanup"
+        "cleanup",
       );
       (currentProgramPath.node.extra ?? {}).isInteractive = true;
     },
@@ -43,7 +43,7 @@ export default {
         section,
         tag.node.attributes
           .filter((attr) => attr.extra?.valueReferences)
-          .map((attr) => [attr.extra, "valueReferences"])
+          .map((attr) => [attr.extra, "valueReferences"]),
       );
     },
   },
@@ -80,10 +80,10 @@ export default {
               "lifecycle",
               scopeIdentifier,
               getScopeAccessorLiteral(tag.node.extra!.reserve!),
-              attrsObject
-            )
+              attrsObject,
+            ),
           ),
-          node.attributes.map((a) => a.value)
+          node.attributes.map((a) => a.value),
         );
       } else {
         addHTMLEffectCall(section, node.extra.attrsReferences);

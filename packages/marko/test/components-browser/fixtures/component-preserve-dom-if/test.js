@@ -22,7 +22,7 @@ module.exports = function (helpers) {
       preserveBodyClassBody:
         component.el.querySelector(".preserve-body").innerHTML,
       componentClass: require("marko/components").getComponentForEl(
-        component.el.querySelector(".component-no-id")
+        component.el.querySelector(".component-no-id"),
       ).state.name,
     };
   }

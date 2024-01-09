@@ -1,7 +1,7 @@
-var runtime = require(".");
-var queueMicrotask = require("../queueMicrotask");
 var registry = require("@internal/components-registry");
 var updateManager = require("../components/update-manager");
+var queueMicrotask = require("../queueMicrotask");
+var runtime = require(".");
 
 var createTemplate = runtime.t;
 var createComponent = registry.___createComponent;
@@ -9,7 +9,7 @@ var registered = {};
 var instancesByType = {};
 var queue;
 
-runtime.t = function (typeName) {
+exports.t = runtime.t = function (typeName) {
   if (registered[typeName]) {
     return registered[typeName];
   }
@@ -113,5 +113,3 @@ function batchUpdate() {
     }
   });
 }
-
-module.exports = runtime;

@@ -113,7 +113,7 @@ function render(input, out) {
       }),
     },
     0,
-    4
+    4,
   );
 }
 ```

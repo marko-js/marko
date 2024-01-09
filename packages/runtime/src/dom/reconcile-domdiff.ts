@@ -9,7 +9,7 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment = defaultFragment
+  fragment: DOMFragment = defaultFragment,
 ): void {
   const bLength = newScopes.length;
   let aEnd = oldScopes.length;
@@ -68,7 +68,7 @@ export function reconcile(
       fragment.___insertBefore(
         newScopes[bStart++],
         parent,
-        fragment.___getAfterNode(oldScopes[aStart++])
+        fragment.___getAfterNode(oldScopes[aStart++]),
       );
       fragment.___insertBefore(newScopes[--bEnd], parent, node);
       // mark the future index as identical (yeah, it's dirty, but cheap 👍)
@@ -129,7 +129,7 @@ export function reconcile(
             fragment.___insertBefore(
               newScopes[bStart++],
               fragment.___getParentNode(oldNode),
-              fragment.___getFirstNode(oldNode)
+              fragment.___getFirstNode(oldNode),
             );
             fragment.___remove(destroyScope(oldNode));
           }

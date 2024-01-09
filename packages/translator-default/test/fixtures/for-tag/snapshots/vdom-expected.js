@@ -3,12 +3,12 @@ const _marko_componentType = "packages/translator-default/test/fixtures/for-tag/
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
-import { r as _marko_registerComponent } from "marko/src/runtime/components/registry";
+import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   let _i = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i++;
     const _keyScope = `[${i}]`;
     out.be("div", null, "0" + _keyScope, _component, null, 0);
@@ -40,7 +40,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     out.e("div", null, "8" + _keyScope3, _component, 0, 0);
   }
   let _i2 = 0;
-  for (const val of arr) {
+  for (const val of arr || []) {
     let i = _i2++;
     const _keyValue = `@${i}`,
       _keyScope4 = `[${_keyValue}]`;

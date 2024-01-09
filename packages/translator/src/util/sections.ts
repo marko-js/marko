@@ -21,7 +21,7 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export function startSection(
-  path: t.NodePath<t.MarkoTagBody | t.Program>
+  path: t.NodePath<t.MarkoTagBody | t.Program>,
 ): Section {
   const extra = (path.node.extra ??= {});
   let section = extra.section;
@@ -31,12 +31,12 @@ export function startSection(
       ? getOrCreateSection(path.parentPath)
       : undefined;
     const sectionNamePath = (path.parentPath as t.NodePath<t.MarkoTag>)?.get(
-      "name"
+      "name",
     );
     const sectionName = path.isProgram()
       ? ""
       : currentProgramPath.scope.generateUid(
-          sectionNamePath.toString() + "Body"
+          sectionNamePath.toString() + "Body",
         );
 
     const programExtra = (path.hub.file.path.node.extra ??= {});
@@ -80,7 +80,7 @@ export function getSection(path: t.NodePath) {
 
   _setSectionPath(
     section,
-    currentPath as t.NodePath<t.MarkoTagBody | t.Program>
+    currentPath as t.NodePath<t.MarkoTagBody | t.Program>,
   );
   return section;
 }
@@ -91,7 +91,7 @@ export function getParentSection(path: t.NodePath) {
 
 export function createSectionState<T = unknown>(
   key: string,
-  init?: ((section: Section) => T) | (() => T)
+  init?: ((section: Section) => T) | (() => T),
 ) {
   return [
     (section: Section): T => {
@@ -110,7 +110,7 @@ export function createSectionState<T = unknown>(
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   "scopeIdIdentifier",
   (section) =>
-    currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`)
+    currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`),
 );
 
 const [getSectionPath, _setSectionPath] =
@@ -119,12 +119,12 @@ export { getSectionPath };
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   "scopeIdentifier",
-  () => t.identifier("undefined")
+  () => t.identifier("undefined"),
 );
 
 export const getScopeIdentifier = (
   section: Section,
-  ignoreDefault?: boolean
+  ignoreDefault?: boolean,
 ) => {
   const scopeId = _getScopeIdentifier(section);
   if (!ignoreDefault && scopeId.name === "undefined") {

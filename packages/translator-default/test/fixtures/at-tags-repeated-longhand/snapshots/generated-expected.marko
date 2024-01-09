@@ -1,0 +1,27 @@
+<hello>
+  <@list>
+    <for|color| of=input.colors>
+      <if(x)>
+        <@item>
+          foo
+        </@item>
+      </if>
+      <else-if(y)>
+        <@item>
+          bar
+        </@item>
+      </else-if>
+      <else>
+        <@item>
+          baz
+        </@item>
+      </else>
+    </for>
+    $ let i = 10;
+    <while(i--)>
+      <@item>
+        ${i}
+      </@item>
+    </while>
+  </@list>
+</hello>

@@ -1,19 +1,19 @@
 "use strict";
-var specialElHandlers = require("./specialElHandlers");
-var KeySequence = require("../../components/KeySequence");
 var componentsUtil = require("@internal/components-util");
 var existingComponentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
 var addComponentRootToKeyedElements =
   componentsUtil.___addComponentRootToKeyedElements;
 var normalizeComponentKey = componentsUtil.___normalizeComponentKey;
-var VElement = require("../vdom").___VElement;
-var virtualizeElement = VElement.___virtualize;
-var morphAttrs = VElement.___morphAttrs;
+var domData = require("../../components/dom-data");
 var eventDelegation = require("../../components/event-delegation");
+var KeySequence = require("../../components/KeySequence");
+var VElement = require("../vdom").___VElement;
 var fragment = require("./fragment");
 var helpers = require("./helpers");
-var domData = require("../../components/dom-data");
+var specialElHandlers = require("./specialElHandlers");
+var virtualizeElement = VElement.___virtualize;
+var morphAttrs = VElement.___morphAttrs;
 var keysByDOMNode = domData.___keyByDOMNode;
 var componentByDOMNode = domData.___componentByDOMNode;
 var vElementByDOMNode = domData.___vElementByDOMNode;
@@ -72,7 +72,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
     referenceEl,
     parentEl,
     ownerComponent,
-    parentComponent
+    parentComponent,
   ) {
     var realNode = vNode.___actualize(host, parentEl.namespaceURI);
     insertBefore(realNode, referenceEl, parentEl);
@@ -103,12 +103,12 @@ function morphdom(fromNode, toNode, host, componentsContext) {
     component,
     key,
     ownerComponent,
-    parentComponent
+    parentComponent,
   ) {
     var rootNode = (component.___rootNode = insertBefore(
       createFragmentNode(),
       referenceNode,
-      referenceNodeParentEl
+      referenceNodeParentEl,
     ));
     componentByDOMNode.set(rootNode, component);
 
@@ -118,7 +118,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
         ownerComponent.___keyedElements,
         key,
         rootNode,
-        component.id
+        component.id,
       );
       keysByDOMNode.set(rootNode, key);
     }
@@ -188,13 +188,13 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             if (ownerComponent && curToNodeKey) {
               curToNodeKey = normalizeComponentKey(
                 curToNodeKey,
-                parentComponent.id
+                parentComponent.id,
               );
               addComponentRootToKeyedElements(
                 ownerComponent.___keyedElements,
                 curToNodeKey,
                 rootNode,
-                component.id
+                component.id,
               );
 
               keysByDOMNode.set(rootNode, curToNodeKey);
@@ -211,7 +211,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
               component,
               curToNodeKey,
               ownerComponent,
-              parentComponent
+              parentComponent,
             );
           }
         } else {
@@ -235,7 +235,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             insertBefore(
               matchingFromComponent.___rootNode,
               curFromNodeChild,
-              fromNode
+              fromNode,
             );
           } else {
             curFromNodeChild =
@@ -286,7 +286,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 curFromNodeChild,
                 curVFromNodeChild,
                 curToNodeChild,
-                parentComponent
+                parentComponent,
               );
             } else {
               // Remove the old node
@@ -299,7 +299,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 curFromNodeChild,
                 fromNode,
                 ownerComponent,
-                parentComponent
+                parentComponent,
               );
             }
           }
@@ -315,7 +315,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 (curToNodeChild.___preserve ||
                   caseInsensitiveCompare(
                     curFromNodeChild.nodeName,
-                    curToNodeChild.___nodeName || ""
+                    curToNodeChild.___nodeName || "",
                   ))
               ) {
                 curVFromNodeChild = virtualizeElement(curFromNodeChild);
@@ -331,7 +331,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                     curFromNodeChild,
                     curVFromNodeChild,
                     curToNodeChild,
-                    parentComponent
+                    parentComponent,
                   );
                 }
 
@@ -368,7 +368,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   var fragment = createFragmentNode(
                     curFromNodeChild,
                     endNode.nextSibling,
-                    fromNode
+                    fromNode,
                   );
                   keysByDOMNode.set(fragment, curToNodeKey);
                   vElementByDOMNode.set(fragment, curToNodeChild);
@@ -393,7 +393,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
               curFromNodeChild,
               fromNode,
               ownerComponent,
-              parentComponent
+              parentComponent,
             );
             fromNextSibling = curFromNodeChild;
           } else {
@@ -459,7 +459,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   matchingFromEl,
                   curVFromNodeChild,
                   curToNodeChild,
-                  parentComponent
+                  parentComponent,
                 );
               } else {
                 insertVirtualNodeBefore(
@@ -468,7 +468,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   curFromNodeChild,
                   fromNode,
                   ownerComponent,
-                  parentComponent
+                  parentComponent,
                 );
                 detachNode(matchingFromEl, fromNode, ownerComponent);
               }
@@ -525,7 +525,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 if (
                   caseInsensitiveCompare(
                     curVFromNodeChild.___nodeName,
-                    curToNodeChild.___nodeName
+                    curToNodeChild.___nodeName,
                   )
                 ) {
                   curVFromNodeChild.___nodeName = curToNodeChild.___nodeName;
@@ -553,7 +553,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 curFromNodeChild,
                 curVFromNodeChild,
                 curToNodeChild,
-                parentComponent
+                parentComponent,
               );
             }
           } else if (
@@ -572,7 +572,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
               toNextSibling.___nodeType === TEXT_NODE
             ) {
               fromNextSibling = curFromNodeChild.splitText(
-                curToNodeChild.___nodeValue.length
+                curToNodeChild.___nodeValue.length,
               );
             }
             if (curFromNodeChild.nodeValue !== curToNodeChild.___nodeValue) {
@@ -602,7 +602,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
         curFromNodeChild,
         fromNode,
         ownerComponent,
-        parentComponent
+        parentComponent,
       );
 
       curToNodeChild = toNextSibling;
@@ -695,7 +695,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       } else if (node.parentNode) {
         destroyNodeRecursive(
           node,
-          detachedFromComponent !== true && detachedFromComponent
+          detachedFromComponent !== true && detachedFromComponent,
         );
 
         if (eventDelegation.___handleNodeDetach(node) != false) {

@@ -117,7 +117,7 @@ module.exports = function scanTagsDir(
   tagsConfigDirname,
   dir,
   taglib,
-  dependencyChain
+  dependencyChain,
 ) {
   let prefix;
 
@@ -179,7 +179,7 @@ module.exports = function scanTagsDir(
               "Invalid tag file: " +
                 tagJsonPath +
                 ". Neither a renderer or a template was found for tag. " +
-                JSON.stringify(tagDef, null, 2)
+                JSON.stringify(tagDef, null, 2),
             );
           } else {
             // Skip this directory... there doesn't appear to be anything in it

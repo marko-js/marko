@@ -2,22 +2,21 @@
 /* jshint newcap:false */
 
 var complain = "MARKO_DEBUG" && require("complain");
-
-var domInsert = require("../dom-insert");
-var defaultCreateOut = require("../createOut");
-var getComponentsContext =
-  require("./ComponentsContext").___getComponentsContext;
+var EventEmitter = require("events-light");
+var SubscriptionTracker = require("listener-tracker");
+var inherit = require("raptor-util/inherit");
 var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
 var destroyNodeRecursive = componentsUtil.___destroyNodeRecursive;
-var EventEmitter = require("events-light");
+var defaultCreateOut = require("../createOut");
+var domInsert = require("../dom-insert");
 var RenderResult = require("../RenderResult");
-var SubscriptionTracker = require("listener-tracker");
-var inherit = require("raptor-util/inherit");
-var updateManager = require("./update-manager");
 var morphdom = require("../vdom/morphdom");
-var eventDelegation = require("./event-delegation");
+var getComponentsContext =
+  require("./ComponentsContext").___getComponentsContext;
 var domData = require("./dom-data");
+var eventDelegation = require("./event-delegation");
+var updateManager = require("./update-manager");
 var componentsByDOMNode = domData.___componentByDOMNode;
 var keyedElementsByComponentId = domData.___ssrKeyedElementsByComponentId;
 var CONTEXT_KEY = "__subtree_context__";
@@ -57,7 +56,7 @@ function handleCustomEventWithMethodListener(
   component,
   targetMethodName,
   args,
-  extraArgs
+  extraArgs,
 ) {
   // Remove the "eventType" argument
   args.push(component);
@@ -229,7 +228,7 @@ Component.prototype = componentProto = {
         this,
         targetMethodName,
         args,
-        extraArgs
+        extraArgs,
       );
 
       if (isOnce) {
@@ -247,19 +246,17 @@ Component.prototype = componentProto = {
   },
   getEl: function (key, index) {
     if (key) {
-      var keyedElement =
-        this.___keyedElements["@" + resolveKeyHelper(key, index)];
-
-      // eslint-disable-next-line no-constant-condition
-      if ("MARKO_DEBUG") {
-        if (
-          keyedElement &&
-          keyedElement.nodeType !== 1 /* Node.ELEMENT_NODE */
-        ) {
-          throw new Error(
-            "Using 'getEl(key)' to get a component instance is not supported, did you mean 'getComponent(key)'?"
+      var resolvedKey = resolveKeyHelper(key, index);
+      var keyedElement = this.___keyedElements["@" + resolvedKey];
+      if (keyedElement && keyedElement.nodeType === 12 /** FRAGMENT_NODE */) {
+        // eslint-disable-next-line no-constant-condition
+        if ("MARKO_DEBUG") {
+          complain(
+            "Accessing the elements of a child component using 'component.getEl' is deprecated.",
           );
         }
+
+        return walkFragments(keyedElement);
       }
 
       return keyedElement;
@@ -281,15 +278,15 @@ Component.prototype = componentProto = {
   },
   getComponent: function (key, index) {
     var rootNode = this.___keyedElements["@" + resolveKeyHelper(key, index)];
-    // eslint-disable-next-line no-constant-condition
-    if ("MARKO_DEBUG") {
-      if (/\[\]$/.test(key)) {
-        throw new Error(
-          "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components."
+    if (/\[\]$/.test(key)) {
+      // eslint-disable-next-line no-constant-condition
+      if ("MARKO_DEBUG") {
+        complain(
+          "A repeated key[] was passed to getComponent. Use a non-repeating key if there is only one of these components.",
         );
       }
+      rootNode = rootNode && rootNode[Object.keys(rootNode)[0]];
     }
-
     return rootNode && componentsByDOMNode.get(rootNode);
   },
   getComponents: function (key) {
@@ -405,7 +402,7 @@ Component.prototype = componentProto = {
       name,
       value,
       true /* ensure:true */,
-      true /* forceDirty:true */
+      true /* forceDirty:true */,
     );
   },
 
@@ -602,14 +599,14 @@ Component.prototype = componentProto = {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(
-        'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.'
+        'The "this.els" attribute is deprecated. Please use "this.getEls(key)" instead.',
       );
     }
-    return (this.___rootNode ? this.___rootNode.nodes : []).filter(function (
-      el
-    ) {
-      return el.nodeType === ELEMENT_NODE;
-    });
+    return (this.___rootNode ? this.___rootNode.nodes : []).filter(
+      function (el) {
+        return el.nodeType === ELEMENT_NODE;
+      },
+    );
   },
 
   ___emit: emit,
@@ -657,7 +654,7 @@ domInsert(
   },
   function afterInsert(component) {
     return component;
-  }
+  },
 );
 
 inherit(Component, EventEmitter);

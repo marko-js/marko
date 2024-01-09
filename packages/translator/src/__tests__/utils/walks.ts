@@ -62,7 +62,7 @@ function toCharString(value: number, startCode: number, rangeSize: number) {
     string += toCharString(
       multiplier,
       WalkCodes.Multiplier,
-      WalkRangeSizes.Multiplier
+      WalkRangeSizes.Multiplier,
     );
     value -= multiplier * rangeSize;
   }

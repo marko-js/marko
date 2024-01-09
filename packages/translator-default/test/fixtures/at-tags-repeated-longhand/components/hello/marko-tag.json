@@ -1,0 +1,15 @@
+{
+  "attributes": {},
+  "nested-tags": {
+    "list": {
+      "attributes": {},
+      "nested-tags": {
+        "item": {
+          "is-repeated": true,
+          "target-property": "items",
+          "attributes": {}
+        }
+      }
+    }
+  }
+}

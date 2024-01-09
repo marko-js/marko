@@ -57,7 +57,7 @@ const _value = value(
     _if(scope, value ? _ifBody : undefined);
   },
   inConditionalScope(value$if, INDEX.conditional),
-  _if
+  _if,
 );
 
 export const attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
@@ -78,13 +78,13 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    attrs as any
-  )
+    attrs as any,
+  ),
 );
 
 const _ifBody = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined, // optimization (value will always be set in _apply_value),
-  [value$if]
+  [value$if],
 );

@@ -15,7 +15,7 @@ exports.t = function createTemplate(typeName) {
 };
 
 function Template(typeName) {
-  this.___typeName = typeName;
+  this.path = this.___typeName = typeName;
 }
 
 Template.prototype.stream = require("@internal/create-readable");
@@ -26,10 +26,10 @@ require("../createOut").___setCreateOut(
     globalData,
     writer,
     parentOut,
-    buffer
+    buffer,
   ) {
     return new AsyncStream(globalData, writer, parentOut, buffer);
-  })
+  }),
 );
 
 require("../renderable")(Template.prototype);

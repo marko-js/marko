@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { importNamed } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import {
   attr,
   classAttr,
@@ -12,8 +12,8 @@ import {
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
-import type { Section } from "./sections";
 import { getScopeExpression } from "./scope-read";
+import type { Section } from "./sections";
 
 declare const MARKO_SRC: boolean;
 
@@ -40,7 +40,7 @@ const pureFunctions: Array<
 export function importRuntime(
   name:
     | keyof typeof import("@marko/runtime-fluurt/src/dom")
-    | keyof typeof import("@marko/runtime-fluurt/src/html")
+    | keyof typeof import("@marko/runtime-fluurt/src/html"),
 ) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
@@ -54,11 +54,11 @@ export function callRuntime(
 ) {
   const callExpression = t.callExpression(
     importRuntime(name),
-    filterArguments(args)
+    filterArguments(args),
   );
   if (
     pureFunctions.includes(
-      name as keyof typeof import("@marko/runtime-fluurt/src/dom")
+      name as keyof typeof import("@marko/runtime-fluurt/src/dom"),
     )
   ) {
     callExpression.leadingComments = [
@@ -94,13 +94,13 @@ export function callQueue(
   identifier: t.Identifier,
   reference: Reserve,
   value: t.Expression,
-  section: Section
+  section: Section,
 ) {
   return callRuntime(
     "queueSource",
     getScopeExpression(section, reference.section),
     identifier,
-    value
+    value,
   );
 }
 

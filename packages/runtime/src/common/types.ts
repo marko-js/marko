@@ -9,7 +9,7 @@ export type ScopeContext = Record<string, [Scope, number | string]>;
 export type Scope<
   T extends { [x: string | number]: unknown } = {
     [x: string | number]: unknown;
-  }
+  },
 > = [...unknown[]] & {
   ___attrs: unknown;
   ___startNode: (Node & ChildNode) | Accessor | undefined;
@@ -61,7 +61,7 @@ export type Accessor = string | number;
 export interface RenderResult {
   insertBefore(
     parent: ParentNode & Node,
-    reference: (ChildNode & Node) | null
+    reference: (ChildNode & Node) | null,
   ): InsertResult;
   toHTML(): Promise<string>;
   toPipableStream(): NodeJS.ReadableStream;
@@ -77,7 +77,7 @@ export interface ITemplate {
     parent: ParentNode & Node,
     reference: (ChildNode & Node) | null,
     input?: Input,
-    context?: Context
+    context?: Context,
   ): InsertResult;
   asHTML(input?: Input, context?: Context): Promise<string>;
   asReadableStream(input?: Input, context?: Context): ReadableStream;
@@ -85,7 +85,7 @@ export interface ITemplate {
   writeTo(
     writable: NodeJS.WritableStream,
     input?: Input,
-    context?: Context
+    context?: Context,
   ): void;
 }
 

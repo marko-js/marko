@@ -1,9 +1,9 @@
 import type { ITemplate, Input, InsertResult, Scope } from "../common/types";
+import { defaultFragment } from "./fragment";
 import { prepare, runEffects, runSync } from "./queue";
-import { createScope, destroyScope } from "./scope";
 import { type Renderer, initRenderer } from "./renderer";
 import { register } from "./resume";
-import { defaultFragment } from "./fragment";
+import { createScope, destroyScope } from "./scope";
 
 export const createTemplate = (renderer: Renderer, templateId?: string) =>
   register(templateId!, new Template(renderer));
@@ -18,7 +18,7 @@ export class Template implements ITemplate {
   insertBefore(
     parent: ParentNode & Node,
     reference: (ChildNode & Node) | null,
-    input?: Input
+    input?: Input,
     // context?: Context
   ): InsertResult {
     let scope!: Scope, dom!: Node;
@@ -68,6 +68,6 @@ export class Template implements ITemplate {
 
 function unimplemented(methodName: string) {
   return new Error(
-    `${methodName}() is not implemented for the DOM compilation of a Marko template`
+    `${methodName}() is not implemented for the DOM compilation of a Marko template`,
   );
 }

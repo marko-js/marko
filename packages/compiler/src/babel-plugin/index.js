@@ -1,25 +1,25 @@
-import path from "path";
 import { createHash } from "crypto";
-import * as t from "../babel-types";
-import { diagnosticError, getTemplateId } from "@marko/babel-utils";
+import path from "path";
 import { visitors } from "@babel/traverse";
+import { diagnosticError, getTemplateId } from "@marko/babel-utils";
+import * as t from "../babel-types";
 import { buildLookup } from "../taglib";
+import taglibConfig from "../taglib/config";
+import { buildCodeFrameError } from "../util/build-code-frame";
+import throwAggregateError from "../util/merge-errors";
+import shouldOptimize from "../util/should-optimize";
+import tryLoadTranslator from "../util/try-load-translator";
+import { MarkoFile } from "./file";
 import { parseMarko } from "./parser";
 import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
-import { MarkoFile } from "./file";
-import taglibConfig from "../taglib/config";
-import tryLoadTranslator from "../util/try-load-translator";
-import shouldOptimize from "../util/should-optimize";
-import { buildCodeFrameError } from "../util/build-code-frame";
-import throwAggregateError from "../util/merge-errors";
 
 const SOURCE_FILES = new WeakMap();
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
   const translator = (markoOpts.translator = tryLoadTranslator(
-    markoOpts.translator
+    markoOpts.translator,
   ));
   markoOpts.output = markoOpts.output || "html";
 
@@ -30,7 +30,7 @@ export default (api, markoOpts) => {
 
   if (!translator || !translator.translate) {
     throw new Error(
-      "@marko/compiler: translator must provide a translate visitor object"
+      "@marko/compiler: translator must provide a translate visitor object",
     );
   }
 
@@ -39,7 +39,7 @@ export default (api, markoOpts) => {
     typeof markoOpts.resolveVirtualDependency !== "function"
   ) {
     throw new Error(
-      `@marko/compiler: the "resolveVirtualDependency" option must be supplied when output is "hydrate".`
+      `@marko/compiler: the "resolveVirtualDependency" option must be supplied when output is "hydrate".`,
     );
   }
 
@@ -100,7 +100,7 @@ export default (api, markoOpts) => {
             addPlugin(
               metadata.marko,
               rootTranslators,
-              taglibLookup.taglibsById[id].translator
+              taglibLookup.taglibsById[id].translator,
             );
           }
         }
@@ -127,7 +127,7 @@ export default (api, markoOpts) => {
             MarkoClass(path) {
               // We replace the MarkoClass with a regular class declaration so babel can strip it's types.
               path.replaceWith(
-                t.classDeclaration(t.identifier(""), null, path.node.body)
+                t.classDeclaration(t.identifier(""), null, path.node.body),
               );
             },
             ExportNamedDeclaration: {
@@ -254,8 +254,8 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
               file.opts.filename,
               file.code,
               node.errorLoc || node.loc,
-              node.label
-            )
+              node.label,
+            ),
           );
         }
       });
@@ -396,4 +396,7 @@ function isMarkoOutput(output) {
 
 function finalizeMeta(meta) {
   meta.watchFiles = [...new Set(meta.watchFiles)];
+  if (meta.analyzedTags) {
+    meta.analyzedTags = [...new Set(meta.analyzedTags)];
+  }
 }

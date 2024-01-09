@@ -13,7 +13,7 @@ const renderer = () => {
     },
     (err) => {
       write(err.message);
-    }
+    },
   );
   write("d");
 };

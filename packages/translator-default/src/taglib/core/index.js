@@ -1,22 +1,22 @@
-import * as parseImport from "./parse-import";
-import * as parseExport from "./parse-export";
+import * as translateElse from "./conditional/translate-else";
+import * as translateElseIf from "./conditional/translate-else-if";
+import * as translateIf from "./conditional/translate-if";
+import * as parseMacro from "./macro/parse";
+import * as translateMacro from "./macro/translate";
 import * as parseClass from "./parse-class";
+import * as parseExport from "./parse-export";
+import * as parseImport from "./parse-import";
+import * as parseModuleCode from "./parse-module-code";
 import * as parseStatic from "./parse-static";
 import * as parseStyle from "./parse-style";
 import * as transformStyle from "./transform-style";
-import * as parseMacro from "./macro/parse";
-import * as translateMacro from "./macro/translate";
-import * as translateIncludeContent from "./translate-include-content";
-import * as translateIf from "./conditional/translate-if";
-import * as translateElseIf from "./conditional/translate-else-if";
-import * as translateElse from "./conditional/translate-else";
-import * as translateFor from "./translate-for";
-import * as translateWhile from "./translate-while";
-import * as translateHTMLComment from "./translate-html-comment";
-import * as translateServerOnly from "./translate-server-only";
-import * as translateBody from "./translate-body";
 import * as translateAwait from "./translate-await";
-import * as parseModuleCode from "./parse-module-code";
+import * as translateBody from "./translate-body";
+import * as translateFor from "./translate-for";
+import * as translateHTMLComment from "./translate-html-comment";
+import * as translateIncludeContent from "./translate-include-content";
+import * as translateServerOnly from "./translate-server-only";
+import * as translateWhile from "./translate-while";
 
 export default {
   "taglib-id": "marko-default-core",

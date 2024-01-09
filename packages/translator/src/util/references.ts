@@ -1,18 +1,18 @@
 import type { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
-import { SortedRepeatable } from "./sorted-repeatable";
-import {
-  type Section,
-  createSectionState,
-  forEachSection,
-  getOrCreateSection,
-} from "./sections";
 import {
   type Reserve,
   ReserveType,
   repeatableReserves,
   reserveScope,
 } from "./reserve";
+import {
+  type Section,
+  createSectionState,
+  forEachSection,
+  getOrCreateSection,
+} from "./sections";
+import { SortedRepeatable } from "./sorted-repeatable";
 
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
@@ -85,7 +85,7 @@ export default function trackReferences(tag: t.NodePath<t.MarkoTag>) {
 
 export function trackReferencesForBindings(
   section: Section,
-  path: t.NodePath<any>
+  path: t.NodePath<any>,
 ) {
   const scope = path.scope;
   const bindings = path.getBindingIdentifiers() as unknown as Record<
@@ -101,8 +101,8 @@ export function trackReferencesForBindings(
       scope
         .getBinding(name)!
         .constantViolations.filter(
-          (path) => path.isAssignmentExpression() && path.node.operator !== "="
-        )
+          (path) => path.isAssignmentExpression() && path.node.operator !== "=",
+        ),
     );
     const identifier = bindings[name];
     const binding = reserveScope(ReserveType.Store, section, identifier, name);
@@ -129,7 +129,7 @@ export function trackReferencesForBindings(
       addBindingToReferences(
         markoRoot,
         `${exprRoot.listKey || exprRoot.key}References`,
-        binding
+        binding,
       );
     }
   }
@@ -138,7 +138,7 @@ export function trackReferencesForBindings(
 export function addBindingToReferences(
   path: t.NodePath,
   referencesKey: string,
-  binding: Reserve
+  binding: Reserve,
 ) {
   const section = getOrCreateSection(path);
   const extra = (path.node.extra ??= {});
@@ -151,9 +151,9 @@ export function addBindingToReferences(
           section,
           repeatableReserves.add(
             repeatableReserves.clone(prevReferences),
-            binding
-          )
-        )
+            binding,
+          ),
+        ),
       );
 
       if (isIntersection(prevReferences)) {
@@ -167,7 +167,7 @@ export function addBindingToReferences(
 
 export function mergeReferences(
   section: Section,
-  groupEntries: [Record<string, unknown>, string][]
+  groupEntries: [Record<string, unknown>, string][],
 ) {
   let newReferences: References;
   for (const [extra, key] of groupEntries) {
@@ -228,7 +228,7 @@ function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
 }
 
 function isFunctionExpression(
-  path: t.NodePath<any>
+  path: t.NodePath<any>,
 ): path is t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression> {
   switch (path.type) {
     case "FunctionExpression":
@@ -265,9 +265,9 @@ export function finalizeIntersections() {
     ((currentProgramPath.node.extra ??= {}).intersectionsBySection = {});
   forEachSection((section) => {
     intersectionsBySection[section.id] = getIntersectionsBySection(
-      section
+      section,
     ).filter(
-      (intersection) => intersectionSubscribeCounts.get(intersection)! > 0
+      (intersection) => intersectionSubscribeCounts.get(intersection)! > 0,
     );
   });
 }
@@ -280,7 +280,7 @@ function getIntersection(section: Section, references: Intersection) {
     intersection = references;
     setIntersectionsBySection(
       section,
-      repeatableIntersections.add(intersections, references)
+      repeatableIntersections.add(intersections, references),
     );
   }
 
@@ -290,7 +290,7 @@ function getIntersection(section: Section, references: Intersection) {
 function addSubscriber(intersection: Intersection) {
   intersectionSubscribeCounts.set(
     intersection,
-    (intersectionSubscribeCounts.get(intersection) || 0) + 1
+    (intersectionSubscribeCounts.get(intersection) || 0) + 1,
   );
 
   return intersection;
@@ -299,7 +299,7 @@ function addSubscriber(intersection: Intersection) {
 function removeSubscriber(intersection: Intersection) {
   intersectionSubscribeCounts.set(
     intersection,
-    intersectionSubscribeCounts.get(intersection)! - 1
+    intersectionSubscribeCounts.get(intersection)! - 1,
   );
 
   return intersection;

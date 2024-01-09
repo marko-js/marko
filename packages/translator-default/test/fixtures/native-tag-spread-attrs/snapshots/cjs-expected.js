@@ -3,18 +3,18 @@
 exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
-var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
+var _mergeAttrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/merge-attrs.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/native-tag-spread-attrs/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
-var _default = _marko_template;
-exports.default = _default;
+var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
-  out.w(`<div${(0, _attrs.default)({
+  out.w(`<div${(0, _mergeAttrs.default)({
     a: 1,
-    b: 2,
+    b: 2
+  }, {
     "b": undefined
   })}></div>`);
 }, {

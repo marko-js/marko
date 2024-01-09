@@ -4,7 +4,7 @@ export function assertNoSpreadAttrs(tag: t.NodePath<t.MarkoTag>) {
   for (const attr of tag.get("attributes")) {
     if (attr.isMarkoSpreadAttribute()) {
       throw attr.buildCodeFrameError(
-        `The <${tag.get("name")}> tag does not support ...spread attributes.`
+        `The <${tag.get("name")}> tag does not support ...spread attributes.`,
       );
     }
   }
@@ -15,7 +15,7 @@ export function assertNoBodyContent(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `The <${tag.get("name")}> tag does not support body content.`
+        `The <${tag.get("name")}> tag does not support body content.`,
       );
   }
 }

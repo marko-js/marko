@@ -1,12 +1,12 @@
 import { types as t } from "@marko/compiler";
-import * as writer from "../util/writer";
-import * as walks from "../util/walks";
 import { isOutputHTML } from "../util/marko-config";
+import * as walks from "../util/walks";
+import * as writer from "../util/writer";
 
 export default {
   translate(text: t.NodePath<t.MarkoText>) {
     const followingSiblings = (text.container as t.Statement[]).slice(
-      (text.key as number) + 1
+      (text.key as number) + 1,
     );
     let needsSeparator = false;
     if (isOutputHTML()) {

@@ -1,4 +1,3 @@
-import { register } from "./serializer";
 import type {
   Context,
   ITemplate,
@@ -6,6 +5,7 @@ import type {
   InsertResult,
   Renderer,
 } from "../common/types";
+import { register } from "./serializer";
 import { type Writable, createRenderFn } from "./writer";
 
 export const createTemplate = (renderer: Renderer, id = "") =>
@@ -16,7 +16,7 @@ export class Template implements ITemplate {
   public writeTo: (
     writable: Writable,
     input?: Input,
-    context?: Context
+    context?: Context,
   ) => void;
 
   constructor(renderer: Renderer) {
@@ -48,7 +48,7 @@ export class Template implements ITemplate {
           },
         },
         input,
-        context
+        context,
       );
     });
   }
@@ -72,7 +72,7 @@ export class Template implements ITemplate {
             },
           },
           input,
-          context
+          context,
         );
       },
     });
@@ -85,7 +85,7 @@ export class Template implements ITemplate {
     // This should throw outside of Node.js
     const dynamicRequire = typeof require === "function" ? require : undefined;
     const stream = dynamicRequire!(
-      "node:stream"
+      "node:stream",
     ) as typeof import("node:stream");
     const readable = new stream.Readable({
       read() {
@@ -103,7 +103,7 @@ export class Template implements ITemplate {
             },
           },
           input,
-          context
+          context,
         );
       },
     });

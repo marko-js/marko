@@ -14,7 +14,7 @@ export function on<
   T extends EventNames,
   H extends
     | Unset
-    | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void)
+    | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
   const delegationRoot = element.getRootNode();
   let delegationEvents = delegationRoots.get(delegationRoot);

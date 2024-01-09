@@ -15,7 +15,7 @@ exports.t = function createTemplate(typeName) {
 };
 
 function Template(typeName) {
-  this.___typeName = typeName;
+  this.path = this.___typeName = typeName;
 }
 
 var AsyncVDOMBuilder = require("./AsyncVDOMBuilder");
@@ -23,10 +23,10 @@ require("../createOut").___setCreateOut(
   (Template.prototype.createOut = function createOut(
     globalData,
     parent,
-    parentOut
+    parentOut,
   ) {
     return new AsyncVDOMBuilder(globalData, parent, parentOut);
-  })
+  }),
 );
 
 require("../renderable")(Template.prototype);

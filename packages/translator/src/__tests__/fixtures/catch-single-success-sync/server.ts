@@ -12,7 +12,7 @@ const renderer = () => {
     },
     () => {
       write("ERROR!");
-    }
+    },
   );
   write("c");
 };

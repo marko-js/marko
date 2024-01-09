@@ -8,7 +8,7 @@ function $af(
   childNodes,
   i,
   len,
-  af
+  af,
 ) {
   af = $af;
 

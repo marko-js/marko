@@ -9,7 +9,7 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment = defaultFragment
+  fragment: DOMFragment = defaultFragment,
 ): void {
   let i: number;
   let j: number;
@@ -42,7 +42,7 @@ export function reconcile(
       fragment.___insertBefore(
         b,
         parent,
-        a ? fragment.___getFirstNode(a) : afterReference
+        a ? fragment.___getFirstNode(a) : afterReference,
       );
       j++;
     } else if (a === b) {
@@ -63,7 +63,7 @@ export function reconcile(
         fragment.___insertBefore(
           b,
           parent,
-          a ? fragment.___getFirstNode(a) : afterReference
+          a ? fragment.___getFirstNode(a) : afterReference,
         );
         j++;
       } else {
@@ -71,7 +71,7 @@ export function reconcile(
         fragment.___insertBefore(
           oldScopes[wantedElmInOld],
           parent,
-          a ? fragment.___getFirstNode(a) : afterReference
+          a ? fragment.___getFirstNode(a) : afterReference,
         );
         aIdx.delete(wantedElmInOld);
         oldScopes[wantedElmInOld] = null as unknown as Scope;

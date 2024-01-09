@@ -1,13 +1,13 @@
+var copyProps = require("raptor-util/copyProps");
+var beginComponent = require("@internal/components-beginComponent");
+var endComponent = require("@internal/components-endComponent");
+var registry = require("@internal/components-registry");
 var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
 
 var ComponentsContext = require("./ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var registry = require("@internal/components-registry");
-var copyProps = require("raptor-util/copyProps");
 var isServer = componentsUtil.___isServer === true;
-var beginComponent = require("@internal/components-beginComponent");
-var endComponent = require("@internal/components-endComponent");
 
 var COMPONENT_BEGIN_ASYNC_ADDED_KEY = "$wa";
 
@@ -42,7 +42,7 @@ function handleBeginAsync(event) {
   asyncOut.c(
     parentOut.___assignedComponentDef,
     parentOut.___assignedKey,
-    parentOut.___assignedCustomEvents
+    parentOut.___assignedCustomEvents,
   );
 }
 
@@ -56,7 +56,7 @@ function handleBeginDetachedAsync(event) {
 function createRendererFunc(
   templateRenderFunc,
   componentProps,
-  renderingLogic
+  renderingLogic,
 ) {
   var onInput = renderingLogic && renderingLogic.onInput;
   var typeName = componentProps.t;
@@ -69,7 +69,7 @@ function createRendererFunc(
   if ("MARKO_DEBUG") {
     if (!componentProps.d) {
       throw new Error(
-        "Component was compiled in a different NODE_ENV than the Marko runtime is using."
+        "Component was compiled in a different NODE_ENV than the Marko runtime is using.",
       );
     }
   } else if (componentProps.d) {
@@ -130,7 +130,7 @@ function createRendererFunc(
         out,
         typeName,
         customEvents,
-        ownerComponentId
+        ownerComponentId,
       );
 
       // This is the final input after running the lifecycle methods.
@@ -208,7 +208,7 @@ function createRendererFunc(
       key,
       ownerComponentDef,
       isSplit,
-      isImplicitComponent
+      isImplicitComponent,
     );
 
     componentDef.___isExisting = isExisting;
@@ -221,7 +221,7 @@ function createRendererFunc(
       componentDef,
       component,
       component.___rawState,
-      out.global
+      out.global,
     );
 
     endComponent(out, componentDef);
@@ -230,3 +230,7 @@ function createRendererFunc(
 }
 
 module.exports = createRendererFunc;
+
+// exports used by the legacy renderer
+createRendererFunc.___resolveComponentKey = resolveComponentKey;
+createRendererFunc.___trackAsyncComponents = trackAsyncComponents;

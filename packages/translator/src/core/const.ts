@@ -1,10 +1,10 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
-import translateVar from "../util/translate-var";
 import { isOutputDOM } from "../util/marko-config";
-import { addValue, getTagVarSignal } from "../util/signals";
 import { getSection } from "../util/sections";
+import { addValue, getTagVarSignal } from "../util/signals";
+import translateVar from "../util/translate-var";
 
 export default {
   translate(tag) {
@@ -34,7 +34,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'const' tag only supports the 'default' attribute."
+          "The 'const' tag only supports the 'default' attribute.",
         );
     }
 

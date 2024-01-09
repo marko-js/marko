@@ -1,23 +1,23 @@
 import { type Accessor, AccessorChars, type Scope } from "../common/types";
-import { bindFunction } from "./scope";
 import type { RendererOrElementName } from "./renderer";
+import { bindFunction } from "./scope";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
 export type ValueSignal<T = unknown> = (
   scope: Scope,
   value: T,
-  clean?: 1 | boolean
+  clean?: 1 | boolean,
 ) => void;
 
 export type BoundValueSignal<T = unknown> = (
   value: T,
-  clean?: 1 | boolean
+  clean?: 1 | boolean,
 ) => void;
 
 export type IntersectionSignal = ((
   scope: Scope,
-  clean?: 1 | boolean
+  clean?: 1 | boolean,
 ) => void) & {
   ___subscribe?(scope: Scope): void;
   ___unsubscribe?(scope: Scope): void;
@@ -30,7 +30,7 @@ export type BoundIntersectionSignal = ((clean?: 1 | boolean) => void) & {
 
 export function initValue<T>(
   valueAccessor: Accessor,
-  fn: ValueSignal<T>
+  fn: ValueSignal<T>,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChars.MARK;
   return (scope, nextValue, clean) => {
@@ -44,7 +44,7 @@ export function value<T>(
   valueAccessor: Accessor,
   render?: ValueSignal<T>,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal<any>
+  valueWithIntersection?: ValueSignal<any>,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChars.MARK;
   return (scope, nextValue, clean) => {
@@ -85,7 +85,7 @@ export function intersection(
   count: number,
   fn: IntersectionSignal,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal
+  valueWithIntersection?: ValueSignal,
 ): IntersectionSignal {
   const cleanAccessor = AccessorChars.DYNAMIC + accessorId++;
   const markAccessor = cleanAccessor + AccessorChars.MARK;
@@ -121,7 +121,7 @@ export function closure<T>(
   fn: ValueSignal<T>,
   _getOwnerScope?: (scope: Scope) => Scope,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal<any>
+  valueWithIntersection?: ValueSignal<any>,
 ): IntersectionSignal {
   const cleanAccessor = AccessorChars.DYNAMIC + accessorId++;
   const markAccessor = cleanAccessor + 1;
@@ -167,7 +167,7 @@ export function dynamicClosure<T>(
   fn: ValueSignal<T>,
   _getOwnerScope?: (scope: Scope) => Scope,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal
+  valueWithIntersection?: ValueSignal,
 ): IntersectionSignal {
   const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
@@ -179,7 +179,7 @@ export function dynamicClosure<T>(
     fn,
     getOwnerScope,
     intersection,
-    valueWithIntersection
+    valueWithIntersection,
   );
   return Object.assign(signalFn, {
     ___subscribe(scope: Scope) {
@@ -188,7 +188,7 @@ export function dynamicClosure<T>(
         getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
       ownerScope[providerSubscriptionsAccessor] ??= new Set();
       ownerScope[providerSubscriptionsAccessor].add(
-        bindFunction(scope, signalFn as any)
+        bindFunction(scope, signalFn as any),
       );
     },
     ___unsubscribe(scope: Scope) {
@@ -196,7 +196,7 @@ export function dynamicClosure<T>(
       const providerSubscriptionsAccessor =
         getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
       ownerScope[providerSubscriptionsAccessor]?.delete(
-        bindFunction(scope, signalFn as any)
+        bindFunction(scope, signalFn as any),
       );
     },
   });
@@ -207,7 +207,7 @@ export function contextClosure<T>(
   contextKey: string,
   fn: ValueSignal<T>,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal
+  valueWithIntersection?: ValueSignal,
 ) {
   // TODO: might be viable as a reliable way to get a unique id
   // const dirtyAccessor = valueAccessor - 2;
@@ -216,13 +216,13 @@ export function contextClosure<T>(
     value(valueAccessor, fn),
     (scope) => scope.___context![contextKey][0],
     intersection,
-    valueWithIntersection
+    valueWithIntersection,
   );
 }
 
 export function childClosures(
   closureSignals: IntersectionSignal[],
-  childAccessor: Accessor
+  childAccessor: Accessor,
 ) {
   const signal = (scope: Scope, clean?: boolean | 1) => {
     const childScope = scope[childAccessor] as Scope;
@@ -263,24 +263,24 @@ export function dynamicSubscribers(valueAccessor: Accessor) {
 export function setTagVar(
   scope: Scope,
   childAccessor: Accessor,
-  tagVarSignal: ValueSignal
+  tagVarSignal: ValueSignal,
 ) {
   scope[childAccessor][AccessorChars.TAG_VARIABLE] = bindFunction(
     scope,
-    tagVarSignal as any
+    tagVarSignal as any,
   ) as BoundValueSignal;
 }
 
 export const tagVarSignal = (
   scope: Scope,
   value: unknown,
-  clean?: boolean | 1
+  clean?: boolean | 1,
 ) => scope[AccessorChars.TAG_VARIABLE]?.(value, clean);
 
 export const renderBodyClosures = (
   renderBody: RendererOrElementName | undefined,
   childScope: Scope,
-  clean?: 1 | boolean
+  clean?: 1 | boolean,
 ) => {
   const signals = renderBody?.___closureSignals;
   if (signals) {
@@ -293,7 +293,7 @@ export const renderBodyClosures = (
 export const inMany = (
   scopes: Scope[],
   clean: 1 | boolean | undefined,
-  signal: IntersectionSignal
+  signal: IntersectionSignal,
 ) => {
   for (const scope of scopes) {
     signal(scope, clean);
@@ -312,7 +312,7 @@ export function inChild(childAccessor: Accessor, signal: ValueSignal) {
 }
 
 export function intersections(
-  signals: IntersectionSignal[]
+  signals: IntersectionSignal[],
 ): IntersectionSignal {
   return (scope, clean) => {
     for (const signal of signals) {

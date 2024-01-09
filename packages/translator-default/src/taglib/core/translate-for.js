@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { assertAllowedAttributes } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
 export function exit(path) {
   const { node } = path;
@@ -23,7 +23,7 @@ export function exit(path) {
 
     if (!keyParam) {
       throw namePath.buildCodeFrameError(
-        "Invalid 'for in' tag, missing |key, value| params."
+        "Invalid 'for in' tag, missing |key, value| params.",
       );
     }
 
@@ -32,26 +32,30 @@ export function exit(path) {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             valParam,
-            t.memberExpression(inAttr.value, keyParam, true)
+            t.memberExpression(inAttr.value, keyParam, true),
           ),
-        ])
+        ]),
       );
     }
 
     forNode = t.forInStatement(
       t.variableDeclaration("const", [t.variableDeclarator(keyParam)]),
       inAttr.value,
-      block
+      block,
     );
   } else if (ofAttr) {
-    let ofAttrValue = ofAttr.value;
+    let ofAttrValue = t.logicalExpression(
+      "||",
+      ofAttr.value,
+      t.arrayExpression([]),
+    );
     allowedAttributes.push("of");
 
     const [valParam, keyParam, loopParam] = params;
 
     if (!valParam) {
       throw namePath.buildCodeFrameError(
-        "Invalid 'for of' tag, missing |value, index| params."
+        "Invalid 'for of' tag, missing |value, index| params.",
       );
     }
 
@@ -62,13 +66,13 @@ export function exit(path) {
       forNode.push(
         t.variableDeclaration("let", [
           t.variableDeclarator(indexName, t.numericLiteral(0)),
-        ])
+        ]),
       );
 
       block.body.unshift(
         t.variableDeclaration("let", [
           t.variableDeclarator(keyParam, t.updateExpression("++", indexName)),
-        ])
+        ]),
       );
     }
 
@@ -77,7 +81,7 @@ export function exit(path) {
       forNode.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(loopParam, ofAttr.value),
-        ])
+        ]),
       );
     }
 
@@ -85,8 +89,8 @@ export function exit(path) {
       t.forOfStatement(
         t.variableDeclaration("const", [t.variableDeclarator(valParam)]),
         ofAttrValue,
-        block
-      )
+        block,
+      ),
     );
   } else if (fromAttr && toAttr) {
     allowedAttributes.push("from", "to", "step");
@@ -107,10 +111,10 @@ export function exit(path) {
             t.binaryExpression(
               "+",
               fromAttr.value,
-              t.binaryExpression("*", stepName, stepValue)
-            )
+              t.binaryExpression("*", stepName, stepValue),
+            ),
           ),
-        ])
+        ]),
       );
     }
 
@@ -121,18 +125,18 @@ export function exit(path) {
           t.binaryExpression(
             "/",
             t.binaryExpression("-", toAttr.value, fromAttr.value),
-            stepValue
-          )
+            stepValue,
+          ),
         ),
         t.variableDeclarator(stepName, t.numericLiteral(0)),
       ]),
       t.binaryExpression("<=", stepName, stepsName),
       t.updateExpression("++", stepName),
-      block
+      block,
     );
   } else {
     throw namePath.buildCodeFrameError(
-      "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute."
+      "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute.",
     );
   }
 

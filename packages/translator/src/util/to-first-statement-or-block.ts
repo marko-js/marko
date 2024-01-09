@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 export default function toFirstStatementOrBlock(
-  body: t.BlockStatement | t.MarkoTagBody
+  body: t.BlockStatement | t.MarkoTagBody,
 ) {
   const nodes = body.body;
 

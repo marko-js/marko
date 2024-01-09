@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 export default function toTemplateOrStringLiteral(
-  parts: (string | t.Expression)[]
+  parts: (string | t.Expression)[],
 ): t.StringLiteral | t.TemplateLiteral | undefined {
   const strs: string[] = [];
   const exprs: t.Expression[] = [];
@@ -41,7 +41,7 @@ export default function toTemplateOrStringLiteral(
 
     return t.templateLiteral(
       strs.map((raw) => t.templateElement({ raw })),
-      exprs
+      exprs,
     );
   } else if (curStr) {
     return t.stringLiteral(curStr);

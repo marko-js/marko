@@ -11,7 +11,7 @@ module.exports = function babelPluginMarkoDebug() {
           path,
           node.test,
           node.consequent,
-          node.alternate
+          node.alternate,
         );
       },
       ConditionalExpression: (path) => {
@@ -20,7 +20,7 @@ module.exports = function babelPluginMarkoDebug() {
           path,
           node.test,
           node.consequent,
-          node.alternate
+          node.alternate,
         );
       },
       LogicalExpression: (path) => {
@@ -56,7 +56,7 @@ function replaceMarkoDebug(path, test, consequent, alternate) {
   // If we found a condition that is a string (and isn't "MARKO_DEBUG") it's most likely a mistake.
   if (test.value !== "MARKO_DEBUG") {
     throw new Error(
-      `Found if statement with StringLiteral "${test.value}", did you mean "MARKO_DEBUG".`
+      `Found if statement with StringLiteral "${test.value}", did you mean "MARKO_DEBUG".`,
     );
   }
 

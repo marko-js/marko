@@ -1,16 +1,16 @@
-import { types as t } from "@marko/compiler";
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
-import * as writer from "../util/writer";
-import * as walks from "../util/walks";
-import { callRuntime } from "../util/runtime";
+import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../util/marko-config";
-import customTag from "../visitors/tag/custom-tag";
+import { ReserveType, reserveScope } from "../util/reserve";
+import { callRuntime } from "../util/runtime";
+import { getOrCreateSection, getSection } from "../util/sections";
 import {
   initContextProvider,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { ReserveType, reserveScope } from "../util/reserve";
-import { getOrCreateSection, getSection } from "../util/sections";
+import * as walks from "../util/walks";
+import * as writer from "../util/writer";
+import customTag from "../visitors/tag/custom-tag";
 
 export default {
   analyze: {
@@ -20,7 +20,7 @@ export default {
         getOrCreateSection(tag),
         tag.node,
         "put",
-        "#text"
+        "#text",
       );
       customTag.analyze.enter(tag);
     },
@@ -35,7 +35,7 @@ export default {
 
       if (!node.body.body.length) {
         throw tag.buildCodeFrameError(
-          `The '<put>' tag requires body content that the context is forwarded through.`
+          `The '<put>' tag requires body content that the context is forwarded through.`,
         );
       }
 
@@ -43,7 +43,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The '<put>' tag requires default attribute like '<put=val>'.`
+            `The '<put>' tag requires default attribute like '<put=val>'.`,
           );
       }
 
@@ -58,7 +58,7 @@ export default {
           throw tag.hub.buildError(
             { loc: { start, end } } as unknown as t.Node,
             msg,
-            Error
+            Error,
           );
         }
       }
@@ -70,9 +70,9 @@ export default {
             callRuntime(
               "pushContext",
               t.stringLiteral(tag.hub.file.metadata.marko.id),
-              defaultAttr.value!
-            )
-          )
+              defaultAttr.value!,
+            ),
+          ),
         );
       } else {
         walks.visit(tag, walks.WalkCodes.Replace);
@@ -86,7 +86,7 @@ export default {
           node.extra.reserve!,
           defaultAttr.extra?.valueReferences,
           defaultAttr.value,
-          rendererId
+          rendererId,
         );
       }
     },

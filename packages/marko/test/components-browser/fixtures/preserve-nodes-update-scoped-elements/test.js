@@ -10,10 +10,10 @@ module.exports = function (helpers) {
 
   expect(
     null === rootEl.querySelector("label"),
-    "label should have been removed"
+    "label should have been removed",
   ).to.equal(true);
   expect(
     inputEl === rootEl.querySelector("input"),
-    "input should not have been removed"
+    "input should not have been removed",
   ).to.equal(true);
 };

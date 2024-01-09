@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { isNativeTag, loadFileForTag } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -29,8 +29,8 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
         name.node.value[0] === "@"
           ? TagNameTypes.AttributeTag
           : isNativeTag(tag)
-          ? TagNameTypes.NativeTag
-          : TagNameTypes.CustomTag;
+            ? TagNameTypes.NativeTag
+            : TagNameTypes.CustomTag;
 
       if (extra.tagNameType === TagNameTypes.CustomTag) {
         const childFile = loadFileForTag(tag);
@@ -131,9 +131,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
               pending.push(
                 (
                   bindingTag.get(
-                    "attributes"
+                    "attributes",
                   )[0] as t.NodePath<t.MarkoAttribute>
-                ).get("value")
+                ).get("value"),
               );
               continue;
             }

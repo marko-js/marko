@@ -5,7 +5,7 @@ export default _marko_template;
 import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
 const _marko_node = _marko_createElement("head", null, "1", null, 1, 0).e("title", null, "2", null, 1, 0).t("Title of the document");
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
-import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry";
+import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {

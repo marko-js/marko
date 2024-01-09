@@ -1,10 +1,10 @@
-import type { types } from "@marko/compiler";
 import { loadFileForTag } from "@marko/babel-utils";
+import type { types } from "@marko/compiler";
 
 export default (helloTag: types.NodePath<types.MarkoTag>, t: typeof types) => {
   const messageTag = (helloTag as any).getNextSibling();
   helloTag.insertAfter(
-    t.markoText(`${readFileText(helloTag)} ${readFileText(messageTag)}`)
+    t.markoText(`${readFileText(helloTag)} ${readFileText(messageTag)}`),
   );
   helloTag.remove();
   messageTag.remove();

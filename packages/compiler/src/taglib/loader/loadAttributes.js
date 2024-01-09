@@ -10,7 +10,7 @@ module.exports = function loadAttributes(value, parent, dependencyChain) {
     var attr = loaders.loadAttributeFromProps(
       attrName,
       attrProps,
-      dependencyChain.append("@" + attrName)
+      dependencyChain.append("@" + attrName),
     );
 
     parent.addAttribute(attr);

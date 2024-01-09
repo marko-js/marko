@@ -1,11 +1,11 @@
 "use strict";
 
 require("../__util__/test-init");
-var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var fs = require("fs");
-var toHTML = require("../__util__/toHTML");
 var createBrowser = require("jsdom-context-require");
+var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var autotest = require("mocha-autotest").default;
+var toHTML = require("../__util__/toHTML");
 
 autotest("fixtures", (fixture) => {
   let test = fixture.test;

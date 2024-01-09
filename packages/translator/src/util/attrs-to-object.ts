@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import toPropertyName from "./to-property-name";
 import type { References } from "./references";
+import toPropertyName from "./to-property-name";
 
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
-  withRenderBody = false
+  withRenderBody = false,
 ): t.Expression {
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
@@ -17,7 +17,7 @@ export default function attrsToObject(
       result.properties.push(t.spreadElement(value));
     } else {
       result.properties.push(
-        t.objectProperty(toPropertyName(attr.name), value)
+        t.objectProperty(toPropertyName(attr.name), value),
       );
     }
   }
@@ -49,13 +49,13 @@ export default function attrsToObject(
                 t.objectPattern([
                   t.objectProperty(
                     t.identifier("value"),
-                    t.arrayPattern(params)
+                    t.arrayPattern(params),
                   ),
                 ]),
               ]
             : [],
-          t.blockStatement(body)
-        )
+          t.blockStatement(body),
+        ),
       );
     }
   }
@@ -75,7 +75,7 @@ export default function attrsToObject(
 }
 
 export function getRenderBodyProp(
-  attrsObject: ReturnType<typeof attrsToObject>
+  attrsObject: ReturnType<typeof attrsToObject>,
 ) {
   if (t.isObjectExpression(attrsObject)) {
     // renderBody prop is always added last.

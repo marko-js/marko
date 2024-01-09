@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
-import { type Section, createSectionState, getSection } from "../util/sections";
 import { ReserveType } from "../util/reserve";
+import { type Section, createSectionState, getSection } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import toTemplateOrStringLiteral, {
   appendLiteral,
@@ -9,11 +9,11 @@ import { writeTo } from "./writer";
 
 const [getWalks] = createSectionState<(string | t.Expression)[]>(
   "walks",
-  () => [""]
+  () => [""],
 );
 const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
   "walkComment",
-  () => []
+  () => [],
 );
 const [getSteps] = createSectionState<Step[]>("steps", () => []);
 
@@ -95,7 +95,7 @@ export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
   walkComment.push(
     `${walkCodeToName[WalkCodes.BeginChild]}`,
     (expr as t.Identifier).name,
-    walkCodeToName[WalkCodes.EndChild]
+    walkCodeToName[WalkCodes.EndChild],
   );
   appendLiteral(walks, String.fromCharCode(WalkCodes.BeginChild));
   walks.push(expr, String.fromCharCode(WalkCodes.EndChild));
@@ -103,12 +103,12 @@ export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
 
 export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
-  code?: VisitCodes
+  code?: VisitCodes,
 ) {
   const { reserve } = path.node.extra;
   if (code && (!reserve || reserve.type !== ReserveType.Visit)) {
     throw path.buildCodeFrameError(
-      "Tried to visit a node that was not marked as needing to visit during analyze."
+      "Tried to visit a node that was not marked as needing to visit during analyze.",
     );
   }
 
@@ -197,7 +197,7 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
     result += toCharString(
       multiplier,
       WalkCodes.Multiplier,
-      WalkRangeSizes.Multiplier
+      WalkRangeSizes.Multiplier,
     );
     number -= multiplier * rangeSize;
   }

@@ -1,11 +1,20 @@
+import {
+  getTemplateId,
+  importDefault,
+  importNamed,
+  loadFileForTag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import toFirstExpressionOrBlock from "../../util/to-first-expression-or-block";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
-import * as writer from "../../util/writer";
-import * as walks from "../../util/walks";
-import { callRuntime } from "../../util/runtime";
-import translateVar from "../../util/translate-var";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { addBindingToReferences, mergeReferences } from "../../util/references";
+import {
+  type Reserve,
+  ReserveType,
+  getScopeAccessorLiteral,
+  reserveScope,
+} from "../../util/reserve";
+import { callRuntime } from "../../util/runtime";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -20,21 +29,12 @@ import {
   getSignalFn,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import {
-  type Reserve,
-  ReserveType,
-  getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
-import { addBindingToReferences, mergeReferences } from "../../util/references";
+import toFirstExpressionOrBlock from "../../util/to-first-expression-or-block";
+import translateVar from "../../util/translate-var";
+import * as walks from "../../util/walks";
+import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import customTag, { getTagRelativePath } from "./custom-tag";
-import {
-  getTemplateId,
-  importDefault,
-  importNamed,
-  loadFileForTag,
-} from "@marko/babel-utils";
 
 export default {
   analyze: {
@@ -44,7 +44,7 @@ export default {
         getOrCreateSection(tag),
         tag.node as any as t.Identifier,
         "dynamicTagName",
-        "#text"
+        "#text",
       );
 
       customTag.analyze.enter(tag);
@@ -54,7 +54,7 @@ export default {
         getOrCreateSection(tag),
         tag.node.attributes
           .filter((attr) => attr.extra?.valueReferences)
-          .map((attr) => [attr.extra, "valueReferences"])
+          .map((attr) => [attr.extra, "valueReferences"]),
       );
       addBindingToReferences(tag, "attrsReferences", tag.node.extra.reserve!);
     },
@@ -84,14 +84,14 @@ export default {
           `marko/src/runtime/helpers/tags-compat-${
             isOutputHTML() ? "html" : "dom"
           }.js`,
-          "marko_tags_compat"
+          "marko_tags_compat",
         );
 
         if (isOutputHTML()) {
           const serialized5to6 = importNamed(
             tag.hub.file,
             `marko/src/runtime/helpers/tags-compat-html.js`,
-            "serialized5to6"
+            "serialized5to6",
           );
           currentProgramPath.pushContainer(
             "body",
@@ -101,11 +101,11 @@ export default {
                 t.stringLiteral(
                   getTemplateId(
                     isOptimize(),
-                    loadFileForTag(tag)!.metadata.marko.id
-                  )
+                    loadFileForTag(tag)!.metadata.marko.id,
+                  ),
                 ),
-              ])
-            )
+              ]),
+            ),
           );
         } else {
           currentProgramPath.pushContainer(
@@ -116,12 +116,12 @@ export default {
                 t.stringLiteral(
                   getTemplateId(
                     isOptimize(),
-                    loadFileForTag(tag)!.metadata.marko.id
-                  )
+                    loadFileForTag(tag)!.metadata.marko.id,
+                  ),
                 ),
-                t.identifier((tagExpression as t.Identifier).name)
-              )
-            )
+                t.identifier((tagExpression as t.Identifier).name),
+              ),
+            ),
           );
         }
       }
@@ -146,9 +146,9 @@ export default {
               "createRenderer",
               t.arrowFunctionExpression(
                 renderBodyProp.params,
-                toFirstExpressionOrBlock(renderBodyProp.body)
-              )
-            )
+                toFirstExpressionOrBlock(renderBodyProp.body),
+              ),
+            ),
           );
         }
 
@@ -164,7 +164,7 @@ export default {
             .replaceWith(
               t.variableDeclaration("const", [
                 t.variableDeclarator(dynamicScopeIdentifier, dynamicTagExpr),
-              ])
+              ]),
             )[0]
             .skip();
         }
@@ -172,22 +172,22 @@ export default {
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(node.extra.reserve!)
+          getScopeAccessorLiteral(node.extra.reserve!),
         )}`;
 
         getSerializedScopeProperties(section).set(
           t.stringLiteral(
-            getScopeAccessorLiteral(node.extra.reserve!).value + "!"
+            getScopeAccessorLiteral(node.extra.reserve!).value + "!",
           ),
-          dynamicScopeIdentifier
+          dynamicScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
           t.stringLiteral(
-            getScopeAccessorLiteral(node.extra.reserve!).value + "("
+            getScopeAccessorLiteral(node.extra.reserve!).value + "(",
           ),
           t.isIdentifier(tagExpression)
             ? t.identifier(tagExpression.name)
-            : tagExpression
+            : tagExpression,
         );
       } else {
         const section = getSection(tag);
@@ -202,7 +202,7 @@ export default {
             getScopeAccessorLiteral(tagNameReserve),
             getSignalFn(signal, [scopeIdentifier]),
             buildSignalIntersections(signal),
-            buildSignalValuesWithIntersections(signal)
+            buildSignalValuesWithIntersections(signal),
           );
         };
         signal.hasDownstreamIntersections = () => true;
@@ -212,7 +212,7 @@ export default {
           signal,
           renderBodyIdentifier
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
-            : tagExpression
+            : tagExpression,
         );
 
         const attrsObject = attrsToObject(tag, true);
@@ -221,7 +221,7 @@ export default {
         if (!emptyAttrs || renderBodyIdentifier) {
           const attrsGetter = t.arrowFunctionExpression([], attrsObject);
           const id = currentProgramPath.scope.generateUidIdentifier(
-            tag.get("name").toString() + "_input"
+            tag.get("name").toString() + "_input",
           );
           let added = false;
           addValue(
@@ -238,10 +238,10 @@ export default {
                         callRuntime(
                           "dynamicTagAttrs",
                           getScopeAccessorLiteral(tagNameReserve),
-                          renderBodyIdentifier
-                        )
+                          renderBodyIdentifier,
+                        ),
                       ),
-                    ])
+                    ]),
                   );
                   added = true;
                 }
@@ -249,7 +249,7 @@ export default {
               },
               hasDownstreamIntersections: () => true,
             },
-            attrsGetter
+            attrsGetter,
           );
         }
 

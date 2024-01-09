@@ -103,7 +103,7 @@ function quoteValue(
   val: string,
   startPos: number,
   quote: string,
-  escaped: string
+  escaped: string,
 ) {
   let result = quote;
   let lastPos = 0;

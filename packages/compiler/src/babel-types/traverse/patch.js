@@ -1,7 +1,7 @@
 import "../types/patch";
 
-import * as t from "@babel/types";
 import traverse, { NodePath, Scope } from "@babel/traverse";
+import * as t from "@babel/types";
 import { MARKO_ALIAS_TYPES, MARKO_TYPES } from "../types/definitions";
 
 MARKO_TYPES.forEach((typeName) => {
@@ -75,7 +75,7 @@ Scope.prototype.crawl = function () {
               }
             }
           },
-        })
+        }),
       );
     }
 
@@ -95,7 +95,7 @@ Scope.prototype.crawl = function () {
           if (hoistableBinding) {
             if (hoistableBinding === true) {
               throw ref.buildCodeFrameError(
-                "Ambiguous reference, variable was defined in multiple places and was not shadowed."
+                "Ambiguous reference, variable was defined in multiple places and was not shadowed.",
               );
             }
 

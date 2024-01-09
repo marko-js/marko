@@ -23,7 +23,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.w(`Hello ${_marko_escapeXml(input)}</span>`);
   if (true) {
     const data = "bar";
-    out.w("Hello bar");
+    out.w(`Hello ${_marko_escapeXml(data)}`);
   }
   out.w("</div>");
 }, {

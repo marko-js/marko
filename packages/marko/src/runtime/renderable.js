@@ -1,6 +1,8 @@
-var defaultCreateOut = require("./createOut");
-var setImmediate = require("@internal/set-immediate").___setImmediate;
+"use strict";
+
 var extend = require("raptor-util/extend");
+var setImmediate = require("@internal/set-immediate").___setImmediate;
+var defaultCreateOut = require("./createOut");
 
 function safeRender(renderFunc, finalData, finalOut, shouldEnd) {
   try {
@@ -27,6 +29,7 @@ module.exports = function (target, renderer) {
   var createOut = target.createOut || renderer.createOut || defaultCreateOut;
 
   return extend(target, {
+    _: renderFunc,
     createOut: createOut,
 
     renderToString: function (data, callback) {
@@ -120,14 +123,14 @@ module.exports = function (target, renderer) {
           globalData, // global
           out, // writer(AsyncStream) or parentNode(AsyncVDOMBuilder)
           undefined, // parentOut
-          shouldBuffer // ignored by AsyncVDOMBuilder
+          shouldBuffer, // ignored by AsyncVDOMBuilder
         );
       }
 
       if (callback) {
         finalOut
           .on("finish", function () {
-            callback(null, finalOut.___getResult());
+            callback(null, finalOut.___getResult(), finalOut);
           })
           .once("error", callback);
       }

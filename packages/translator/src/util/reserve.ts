@@ -5,7 +5,7 @@ import { SortedRepeatable } from "./sorted-repeatable";
 
 const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
   "reservesByType",
-  () => [undefined, undefined, undefined]
+  () => [undefined, undefined, undefined],
 );
 
 export enum ReserveType {
@@ -57,7 +57,7 @@ export function reserveScope(
     | t.Identifier
     | t.MarkoTagBody,
   name: string,
-  debugKey: string = name
+  debugKey: string = name,
 ): Reserve {
   const extra = (node.extra ??= {} as typeof node.extra);
 
@@ -106,13 +106,13 @@ export function getScopeAccessorLiteral(reserve: Reserve) {
 
   return t.stringLiteral(
     reserve.debugKey +
-      (reserve.type === ReserveType.Visit ? `/${reserve.id}` : "")
+      (reserve.type === ReserveType.Visit ? `/${reserve.id}` : ""),
   );
 }
 
 export const repeatableReserves = new SortedRepeatable(function compareReserves(
   a: Reserve,
-  b: Reserve
+  b: Reserve,
 ) {
   return a.section.id - b.section.id || a.type - b.type || a.id - b.id;
 });

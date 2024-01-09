@@ -1,11 +1,11 @@
 "use strict";
 
 var complain = "MARKO_DEBUG" && require("complain");
-var changeCase = require("./_change-case");
-var ComponentsContext = require("../components/ComponentsContext");
-var getComponentsContext = ComponentsContext.___getComponentsContext;
-var ComponentDef = require("../components/ComponentDef");
 var w10NOOP = require("warp10/constants").NOOP;
+var ComponentDef = require("../components/ComponentDef");
+var ComponentsContext = require("../components/ComponentsContext");
+var changeCase = require("./_change-case");
+var getComponentsContext = ComponentsContext.___getComponentsContext;
 var RENDER_BODY_TO_JSON = function () {
   return w10NOOP;
 };
@@ -26,7 +26,7 @@ module.exports = function dynamicTag(
   props,
   componentDef,
   key,
-  customEvents
+  customEvents,
 ) {
   if (tag) {
     if (tag.default) {
@@ -42,7 +42,7 @@ module.exports = function dynamicTag(
           attrs,
           key,
           componentDef,
-          addEvents(componentDef, customEvents, props)
+          addEvents(componentDef, customEvents, props),
         );
         renderBody(out);
         out.___endElement();
@@ -52,7 +52,7 @@ module.exports = function dynamicTag(
           attrs,
           key,
           componentDef,
-          addEvents(componentDef, customEvents, props)
+          addEvents(componentDef, customEvents, props),
         );
       }
     } else {
@@ -67,16 +67,14 @@ module.exports = function dynamicTag(
 
       var renderer =
         tag._ ||
-        tag.render ||
-        (tag.renderer && tag.renderer.renderer) ||
-        tag.renderer;
+        (tag.renderer ? tag.renderer.renderer || tag.renderer : tag.render);
       var render = (tag && tag.renderBody) || tag;
 
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
-        if (tag.renderer && tag.renderer.renderer === renderer) {
+        if (tag.renderer && tag.renderer.renderer) {
           complain(
-            "An object with a 'renderer' was passed to the dynamic tag, but renderer was another template."
+            "An object with a 'renderer' was passed to the dynamic tag, but renderer was another template.",
           );
         }
       }
@@ -96,7 +94,7 @@ module.exports = function dynamicTag(
         if ("MARKO_DEBUG") {
           if (render.safeHTML || render.toHTML) {
             throw new Error(
-              "Using `<include(x)/>` or the `<${dynamic}/>` tags with a `{ safeHTML: ... }` object is no longer supported. Use the unescaped text placeholder syntax instead."
+              "Using `<include(x)/>` or the `<${dynamic}/>` tags with a `{ safeHTML: ... }` object is no longer supported. Use the unescaped text placeholder syntax instead.",
             );
           }
         }
@@ -113,7 +111,7 @@ module.exports = function dynamicTag(
             componentsContext.___componentDef = new ComponentDef(
               component,
               parentComponentDef.id + "-" + parentComponentDef.___nextKey(key),
-              globalContext
+              globalContext,
             );
             render.toJSON = RENDER_BODY_TO_JSON;
 
@@ -137,7 +135,7 @@ module.exports = function dynamicTag(
       component,
       IS_SERVER &&
         componentDef &&
-        componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER
+        componentDef.___flags & FLAG_WILL_RERENDER_IN_BROWSER,
     );
     renderBody(out);
     out.ef();
@@ -170,7 +168,7 @@ function addEvents(componentDef, customEvents, props) {
       event[0],
       event[1],
       event[2],
-      event[3]
+      event[3],
     );
   }
 

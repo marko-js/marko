@@ -32,7 +32,7 @@ export type Serializable<T> = T & {
 export function register<T>(
   entry: T,
   registryId: string,
-  scopeId?: number
+  scopeId?: number,
 ): Serializable<T> {
   (entry as Serializable<T>)[SYMBOL_REGISTRY_ID] = registryId;
   (entry as Serializable<T>)[SYMBOL_SCOPE] = scopeId;
@@ -45,7 +45,7 @@ export function getRegistryInfo(entry: Serializable<unknown>) {
 
 export function makeSerializable<T>(
   object: T,
-  serialize: (s: Serializer, accessor: string | number) => void
+  serialize: (s: Serializer, accessor: string | number) => void,
 ): T {
   (object as Serializable<T>)[SYMBOL_SERIALIZE] = serialize;
   return object;
@@ -176,7 +176,7 @@ export class Serializer {
 
                 case Date:
                   BUFFER.push(
-                    'new Date("' + (cur as Date).toISOString() + '")'
+                    'new Date("' + (cur as Date).toISOString() + '")',
                   );
                   break;
 
@@ -187,7 +187,7 @@ export class Serializer {
                 case Map:
                   BUFFER.push("new Map(");
                   this.writeArray(
-                    Array.from(cur as Map<unknown, unknown> | Set<unknown>)
+                    Array.from(cur as Map<unknown, unknown> | Set<unknown>),
                   );
                   BUFFER.push(")");
                   break;
@@ -195,7 +195,7 @@ export class Serializer {
                 case Set:
                   BUFFER.push("new Set(");
                   this.writeArray(
-                    Array.from(cur as Map<unknown, unknown> | Set<unknown>)
+                    Array.from(cur as Map<unknown, unknown> | Set<unknown>),
                   );
                   BUFFER.push(")");
                   break;
@@ -209,7 +209,7 @@ export class Serializer {
                 default:
                   return this.writeRegistered(
                     cur as Serializable<unknown>,
-                    accessor
+                    accessor,
                   );
               }
               break;
@@ -244,7 +244,7 @@ export class Serializer {
       const ref = scope && this.getRef(scope, "");
       if (ref === true || ref === false) {
         throw new Error(
-          "The scope has not yet been defined or is circular. This needs to be fixed in the serializer."
+          "The scope has not yet been defined or is circular. This needs to be fixed in the serializer.",
         );
       }
       BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
@@ -349,7 +349,7 @@ export class Serializer {
 
       ASSIGNMENTS.set(
         ref,
-        (ASSIGNMENTS.get(ref) || "") + toAssignment(parentRef, accessor) + "="
+        (ASSIGNMENTS.get(ref) || "") + toAssignment(parentRef, accessor) + "=",
       );
       return true;
     }

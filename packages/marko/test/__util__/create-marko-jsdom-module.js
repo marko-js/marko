@@ -51,7 +51,13 @@ function compileMarkoModule(module, filename) {
       output: "vdom",
       browser: true,
       meta: true,
+      modules: "cjs",
+      babelConfig: {
+        babelrc: false,
+        configFile: false,
+        browserslistConfigFile: false,
+      },
     }),
-    filename
+    filename,
   );
 }

@@ -6,6 +6,6 @@ module.exports = function (helpers) {
   });
 
   expect(component.renderedHtml).to.equal(
-    '<div class="hello"><div>john</div></div>'
+    '<div class="hello"><div>john</div></div>',
   );
 };

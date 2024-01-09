@@ -19,7 +19,7 @@ export function register<T>(id: string, obj: T): T {
 export const scopeLookup = {} as Record<number, Scope>;
 
 export function init(
-  runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */
+  runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */,
 ) {
   const runtimeLength = runtimeId.length;
   const resumeVar = runtimeId + ResumeSymbols.VAR_RESUME;
@@ -64,7 +64,7 @@ export function init(
       s: typeof scopeLookup,
       ...rest: unknown[]
     ) => Record<string, Scope>,
-    calls: Array<string | number>
+    calls: Array<string | number>,
   ) {
     if (doc.readyState !== "loading") {
       walker.currentNode = doc;
@@ -119,7 +119,7 @@ export function init(
           ] = currentNode;
           // https://jsben.ch/dR7uk
           const childScopeIds = JSON.parse(
-            "[" + data.slice(data.indexOf(" ") + 1) + "]"
+            "[" + data.slice(data.indexOf(" ") + 1) + "]",
           );
           for (let i = childScopeIds.length - 1; i >= 0; i--) {
             const childScope = getScope(childScopeIds[i]);
@@ -139,7 +139,7 @@ export function init(
 
     for (let i = 0; i < calls.length; i += 2) {
       (registeredObjects.get(calls[i + 1] as string) as RegisteredFn)(
-        scopeLookup[calls[i] as number]!
+        scopeLookup[calls[i] as number]!,
       );
     }
   }
@@ -147,7 +147,7 @@ export function init(
 
 export function registerSubscriber(
   id: string,
-  signal: IntersectionSignal
+  signal: IntersectionSignal,
   // ownerValueAccessor: string | number,
   // getOwnerScope = (scope: Scope) => scope._!
 ) {

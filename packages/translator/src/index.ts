@@ -1,18 +1,18 @@
 import type { types as t } from "@marko/compiler";
-import Program from "./visitors/program";
-import ImportDeclaration from "./visitors/import-declaration";
-import MarkoDocumentType from "./visitors/document-type";
-import AssignmentExpression from "./visitors/assignment-expression";
-import UpdateExpression from "./visitors/update-expression";
-import MarkoDeclaration from "./visitors/declaration";
-import MarkoCDATA from "./visitors/cdata";
-import MarkoText from "./visitors/text";
-import MarkoTag from "./visitors/tag";
-import MarkoPlaceholder from "./visitors/placeholder";
-import MarkoScriptlet from "./visitors/scriptlet";
-import MarkoComment from "./visitors/comment";
 import coreTagLib from "./core";
+import AssignmentExpression from "./visitors/assignment-expression";
+import MarkoCDATA from "./visitors/cdata";
+import MarkoComment from "./visitors/comment";
+import MarkoDeclaration from "./visitors/declaration";
+import MarkoDocumentType from "./visitors/document-type";
+import ImportDeclaration from "./visitors/import-declaration";
+import MarkoPlaceholder from "./visitors/placeholder";
+import Program from "./visitors/program";
 import ReferencedIdentifier from "./visitors/referenced-identifier";
+import MarkoScriptlet from "./visitors/scriptlet";
+import MarkoTag from "./visitors/tag";
+import MarkoText from "./visitors/text";
+import UpdateExpression from "./visitors/update-expression";
 
 const visitors = {
   Program,
@@ -31,14 +31,14 @@ const visitors = {
 };
 
 const getVisitorOfType = (
-  typename: "migrate" | "analyze" | "translate"
+  typename: "migrate" | "analyze" | "translate",
 ): t.Visitor =>
   Object.entries(visitors).reduce((visitor, [name, value]) => {
     if (typename in value) {
-      visitor[name] = (value as any)[typename];
+      visitor[name as any] = (value as any)[typename];
     }
     return visitor;
-  }, {} as Record<string, t.Visitor[keyof t.Visitor]>);
+  }, {} as t.Visitor);
 
 export const analyze = getVisitorOfType("analyze");
 export const translate = getVisitorOfType("translate");

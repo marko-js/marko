@@ -643,7 +643,7 @@ import ReactDOM from "react-dom";
 
 ReactDOM.render(
   <HelloMessage name="John" />,
-  document.getElementById("container")
+  document.getElementById("container"),
 );
 ```
 

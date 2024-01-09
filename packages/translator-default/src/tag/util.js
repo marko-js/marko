@@ -1,5 +1,7 @@
+import { computeNode, getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/babel-utils";
+import classToString from "marko/src/runtime/helpers/class-value";
+import styleToString from "marko/src/runtime/helpers/style-value";
 
 export function getAttrs(path, preserveNames, skipRenderBody) {
   const { node } = path;
@@ -37,8 +39,8 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
               properties.push(
                 t.objectProperty(
                   t.stringLiteral(key),
-                  (targetObject = targetObjects[key] = t.objectExpression([]))
-                )
+                  (targetObject = targetObjects[key] = t.objectExpression([])),
+                ),
               );
             }
 
@@ -60,7 +62,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
 
       foundProperties[targetProperty] = true;
       targetProperties.push(
-        t.objectProperty(t.stringLiteral(targetProperty), value)
+        t.objectProperty(t.stringLiteral(targetProperty), value),
       );
     } else {
       mergeSpread(properties, value);
@@ -73,7 +75,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
     if (hasDynamicAttrTags) {
       endDynamicAttrTagsIndex = findLastIndex(
         body,
-        ({ value }) => value === "END_ATTRIBUTE_TAGS"
+        ({ value }) => value === "END_ATTRIBUTE_TAGS",
       );
       path
         .insertBefore(body.slice(0, endDynamicAttrTagsIndex))
@@ -89,10 +91,10 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
             t.blockStatement(
               hasDynamicAttrTags
                 ? body.slice(endDynamicAttrTagsIndex + 1)
-                : body
-            )
-          )
-        )
+                : body,
+            ),
+          ),
+        ),
       );
     }
   }
@@ -109,8 +111,8 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
         properties.push(
           t.objectProperty(
             t.stringLiteral(attr.name),
-            t.stringLiteral(attr.defaultValue + "")
-          )
+            t.stringLiteral(attr.defaultValue + ""),
+          ),
         );
       } else if (attr.required) {
         throw path
@@ -150,37 +152,49 @@ export function buildEventHandlerArray(path) {
         }
 
         return t.arrayExpression(parts);
-      })
+      }),
     ),
   ];
 }
 
 export function evaluateAttr(attr) {
-  const name = attr.get("name").node;
-  const value = attr.get("value");
-  let confident = false;
-  let computed = undefined;
+  const computed = computeNode(attr.node.value);
+  if (computed) {
+    const { value } = computed;
+    switch (attr.node.name) {
+      case "class":
+        return {
+          value: classToString(value)?.replace(/\s+/, " ").trim(),
+        };
+      case "style":
+        return {
+          value: styleToString(value)
+            ?.replace(/\s+/, " ")
+            .trim()
+            .replace(/;$/, ""),
+        };
+    }
 
-  if (name) {
-    if (value.isRegExpLiteral()) {
-      confident = true;
-      computed = value.get("pattern").node;
-    } else {
-      const evaluated = value.evaluate();
-      ({ confident, value: computed } = evaluated);
+    if (value == null || value === false) {
+      return { value: undefined };
+    }
 
-      if (computed === true) {
-        computed = "";
-      } else if (computed != null && computed !== false) {
-        computed = computed + "";
+    if (value === true) {
+      return { value: "" };
+    }
+
+    if (typeof value === "object") {
+      switch (value.toString) {
+        case Object.prototype.toString:
+        case Array.prototype.toString:
+          return { value: JSON.stringify(value) };
+        case RegExp.prototype.toString:
+          return { value: value.source };
       }
     }
-  }
 
-  return {
-    confident,
-    computed,
-  };
+    return { value: value + "" };
+  }
 }
 
 function camelCase(string) {

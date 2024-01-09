@@ -1,9 +1,9 @@
-import { types as t } from "@marko/compiler";
 import { assertNoVar, findParentTag } from "@marko/babel-utils";
-import { TagNameTypes } from "../../util/tag-name-type";
+import { types as t } from "@marko/compiler";
 import attrsToObject from "../../util/attrs-to-object";
-import * as writer from "../../util/writer";
 import { getSection, startSection } from "../../util/sections";
+import { TagNameTypes } from "../../util/tag-name-type";
+import * as writer from "../../util/writer";
 
 export default {
   analyze: {
@@ -21,7 +21,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "Dynamic @tags cannot be mixed with body content."
+            "Dynamic @tags cannot be mixed with body content.",
           );
       }
     },
@@ -59,12 +59,12 @@ export default {
                 ])
               : t.variableDeclaration("let", [
                   t.variableDeclarator(info.identifier),
-                ])
+                ]),
           );
 
           parentTag.pushContainer(
             "attributes",
-            t.markoAttribute(attrName, info.identifier)
+            t.markoAttribute(attrName, info.identifier),
           );
         }
 
@@ -73,10 +73,10 @@ export default {
             info.repeated
               ? t.callExpression(
                   t.memberExpression(info.identifier, t.identifier("push")),
-                  [attrsObject]
+                  [attrsObject],
                 )
-              : t.assignmentExpression("=", info.identifier, attrsObject)
-          )
+              : t.assignmentExpression("=", info.identifier, attrsObject),
+          ),
         );
       } else if (info.repeated) {
         const existingAttr = parentTag
@@ -90,7 +90,7 @@ export default {
         } else {
           parentTag.pushContainer(
             "attributes",
-            t.markoAttribute(attrName, t.arrayExpression([attrsObject]))
+            t.markoAttribute(attrName, t.arrayExpression([attrsObject])),
           );
         }
 
@@ -98,7 +98,7 @@ export default {
       } else {
         parentTag.pushContainer(
           "attributes",
-          t.markoAttribute(attrName, attrsObject)
+          t.markoAttribute(attrName, attrsObject),
         );
         tag.remove();
       }

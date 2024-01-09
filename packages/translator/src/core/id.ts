@@ -1,15 +1,15 @@
-import { types as t } from "@marko/compiler";
 import {
   type Tag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
-import { callRuntime } from "../util/runtime";
 import { isOutputHTML } from "../util/marko-config";
-import { addValue, initValue } from "../util/signals";
+import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
+import { addValue, initValue } from "../util/signals";
 
 export default {
   translate(tag) {
@@ -36,7 +36,7 @@ export default {
 
     if (isOutputHTML()) {
       tag.replaceWith(
-        t.variableDeclaration("const", [t.variableDeclarator(node.var, id)])
+        t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
       );
     } else {
       const source = initValue(tagVar.extra.reserve!);

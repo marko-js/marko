@@ -9,10 +9,10 @@ module.exports = function (helpers) {
   var fooComponent = component.getComponent("foo");
 
   expect(fooComponent.el.querySelector(".body").innerHTML).to.equal(
-    "Current index: 0"
+    "Current index: 0",
   );
   expect(fooComponent.el.querySelector("span").innerHTML).to.equal(
-    "Hello Frank!"
+    "Hello Frank!",
   );
 
   fooComponent.state.name = "Jane";
@@ -20,9 +20,9 @@ module.exports = function (helpers) {
   fooComponent.update();
 
   expect(fooComponent.el.querySelector(".body").innerHTML).to.equal(
-    "Current index: 0"
+    "Current index: 0",
   );
   expect(fooComponent.el.querySelector("span").innerHTML).to.equal(
-    "Hello Jane!"
+    "Hello Jane!",
   );
 };

@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 export default function toFirstExpressionOrBlock(
-  body: t.BlockStatement | t.MarkoTagBody
+  body: t.BlockStatement | t.MarkoTagBody,
 ) {
   const nodes = body.body;
   if (nodes.length === 1 && t.isExpressionStatement(nodes[0])) {

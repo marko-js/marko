@@ -6,13 +6,13 @@ module.exports = function (helpers) {
   });
 
   expect(component.getEl("current").getAttribute("style")).to.equal(
-    "color:#09c;"
+    "color:#09c",
   );
 
   component.increment();
   component.update();
 
   expect(component.getEl("current").getAttribute("style")).to.equal(
-    "color:#09c;"
+    "color:#09c",
   );
 };

@@ -2,9 +2,10 @@ import initComponentsTag from "../../core-tags/components/init-components-tag";
 import { ___getComponentsContext } from "../components/ComponentsContext";
 
 const tagsAPI = require("@marko/runtime-fluurt/dist/debug/html"); // TODO: use the non-debug version when built for production
+const w10NOOP = require("warp10/constants").NOOP;
 const createRenderer = require("../components/renderer");
-const dynamicTag5 = require("./dynamic-tag");
 const defaultCreateOut = require("../createOut");
+const dynamicTag5 = require("./dynamic-tag");
 const {
   patchDynamicTag,
   createRenderFn,
@@ -16,7 +17,6 @@ const {
   nextScopeId,
 } = tagsAPI;
 
-const w10NOOP = require("warp10/constants").NOOP;
 const RENDER_BODY_TO_JSON = function () {
   // TODO: this should instead return an object that contains getRegistryInfo
   // then in the dom-compat, handle that object to lookup the function in the registry
@@ -30,7 +30,7 @@ const isMarko5 = (fn) => !fn.___isTagsAPI;
 export default dynamicTag5.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
   renderBody,
-  args
+  args,
 ) {
   if (tagsRenderer ? isMarko5(tagsRenderer) : isMarko5(renderBody))
     return tagsRenderer;
@@ -42,7 +42,7 @@ export default dynamicTag5.___runtimeCompat = function tagsToVdom(
   return (input, out) =>
     TagsCompat(
       { i: args ? { value: args } : input, r: tagsRenderer || renderBody },
-      out
+      out,
     );
 };
 
@@ -67,7 +67,7 @@ const TagsCompat = createRenderer(
     t: TagsCompatId,
     d: "MARKO_DEBUG",
   },
-  {}
+  {},
 );
 
 patchDynamicTag(
@@ -126,7 +126,7 @@ patchDynamicTag(
   function createRenderer(renderFn) {
     renderFn.___isTagsAPI = true;
     return renderFn;
-  }
+  },
 );
 
 function dummyCreate5to6Renderer() {}
@@ -137,6 +137,10 @@ export function serialized5to6(renderer, id) {
   const dummyRenderer = () => {};
   register(dummyRenderer, id);
   return makeSerializable(renderer, (s) =>
-    s.value(dummyCreate5to6Renderer).code("(").value(dummyRenderer).code(",!0)")
+    s
+      .value(dummyCreate5to6Renderer)
+      .code("(")
+      .value(dummyRenderer)
+      .code(",!0)"),
   );
 }

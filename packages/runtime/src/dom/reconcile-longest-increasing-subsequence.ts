@@ -9,7 +9,7 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment = defaultFragment
+  fragment: DOMFragment = defaultFragment,
 ): void {
   let oldStart = 0;
   let newStart = 0;

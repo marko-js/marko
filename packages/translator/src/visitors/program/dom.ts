@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -14,8 +14,8 @@ import {
   getTagParamsSignal,
   writeSignals,
 } from "../../util/signals";
-import * as writer from "../../util/writer";
 import { visit } from "../../util/walks";
+import * as writer from "../../util/writer";
 
 export default {
   translate: {
@@ -35,7 +35,7 @@ export default {
         const tagParamsSignal = sectionPath.isProgram()
           ? undefined
           : getTagParamsSignal(
-              (sectionPath as t.NodePath<t.MarkoTagBody>).get("params")
+              (sectionPath as t.NodePath<t.MarkoTagBody>).get("params"),
             );
         writeSignals(childSection);
 
@@ -54,7 +54,7 @@ export default {
             undefined,
             undefined,
             undefined,
-            tagParamsSignal?.build()
+            tagParamsSignal?.build(),
           );
           program.node.body.push(
             t.variableDeclaration("const", [
@@ -64,13 +64,13 @@ export default {
                   ? callRuntime(
                       "register",
                       t.stringLiteral(
-                        getResumeRegisterId(childSection, "renderer")
+                        getResumeRegisterId(childSection, "renderer"),
                       ),
-                      renderer
+                      renderer,
                     )
-                  : renderer
+                  : renderer,
               ),
-            ])
+            ]),
           );
         }
       });
@@ -82,10 +82,10 @@ export default {
           const bindingIdentifier = attrs.bindings[name];
           const signalIdentifier = getSignal(
             section,
-            bindingIdentifier.extra.reserve
+            bindingIdentifier.extra.reserve,
           ).identifier;
           exportSpecifiers.push(
-            t.exportSpecifier(signalIdentifier, signalIdentifier)
+            t.exportSpecifier(signalIdentifier, signalIdentifier),
           );
         }
 
@@ -97,13 +97,13 @@ export default {
                 t.isIdentifier(attrs.var)
                   ? getSignal(
                       section,
-                      (attrs.var as t.Identifier).extra!.reserve!
+                      (attrs.var as t.Identifier).extra!.reserve!,
                     ).identifier
-                  : getDestructureSignal(attrs.bindings, attrs.var)?.build()
+                  : getDestructureSignal(attrs.bindings, attrs.var)?.build(),
               ),
-            ])
+            ]),
           ),
-          t.exportNamedDeclaration(null, exportSpecifiers)
+          t.exportNamedDeclaration(null, exportSpecifiers),
         );
       }
 
@@ -114,14 +114,14 @@ export default {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               templateIdentifier,
-              writes || t.stringLiteral("")
+              writes || t.stringLiteral(""),
             ),
-          ])
+          ]),
         ),
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
             t.variableDeclarator(walksIdentifier, walks || t.stringLiteral("")),
-          ])
+          ]),
         ),
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
@@ -129,10 +129,10 @@ export default {
               setupIdentifier,
               t.isNullLiteral(setup) || !setup
                 ? t.functionExpression(null, [], t.blockStatement([]))
-                : setup
+                : setup,
             ),
-          ])
-        )
+          ]),
+        ),
       );
       if (closures.length) {
         program.node.body.push(
@@ -140,10 +140,10 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 closuresIdentifier,
-                t.arrayExpression(closures)
+                t.arrayExpression(closures),
               ),
-            ])
-          )
+            ]),
+          ),
         );
       }
       const {
@@ -164,11 +164,11 @@ export default {
               undefined,
               undefined,
               undefined,
-              attrs! && attrsSignalIdentifier
+              attrs! && attrsSignalIdentifier,
             ),
-            t.stringLiteral(getTemplateId(optimize, `${filename}`))
-          )
-        )
+            t.stringLiteral(getTemplateId(optimize, `${filename}`)),
+          ),
+        ),
       );
     },
   },

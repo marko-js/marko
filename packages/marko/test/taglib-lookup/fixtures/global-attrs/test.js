@@ -4,7 +4,7 @@ exports.check = function (markoCompiler, expect) {
   // console.log('LOOKUP: ', Object.keys(lookup.attributes));
   var attrDef = lookup.getAttribute(
     "test-dynamic-attributes",
-    "global-attribute"
+    "global-attribute",
   );
   expect(attrDef != null).to.equal(true);
   expect(attrDef.type).to.equal("boolean");

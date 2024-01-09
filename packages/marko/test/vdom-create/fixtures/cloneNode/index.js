@@ -10,7 +10,7 @@ module.exports = function (helpers) {
       },
       null,
       null,
-      1 /* childCount */
+      1 /* childCount */,
     )
     .e(
       "svg",
@@ -20,7 +20,7 @@ module.exports = function (helpers) {
       },
       null,
       null,
-      1
+      1,
     )
     .e(
       "circle",
@@ -35,7 +35,7 @@ module.exports = function (helpers) {
       },
       null,
       null,
-      0
+      0,
     );
 
   var clone = el.___cloneNode();

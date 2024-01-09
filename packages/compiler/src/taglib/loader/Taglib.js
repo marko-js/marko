@@ -26,9 +26,10 @@ function handleImport(taglib, importedTaglib) {
 }
 
 class Taglib {
-  constructor(filePath) {
+  constructor(filePath, isFromPackageJson) {
     ok(filePath, '"filePath" expected');
     this.filePath = this.path /* deprecated */ = this.id = filePath;
+    this.isFromPackageJson = isFromPackageJson === true;
     this.dirname = path.dirname(this.filePath);
     this.scriptLang = undefined;
     this.tags = {};
@@ -47,7 +48,7 @@ class Taglib {
 
     if (!attribute.pattern && !attribute.name) {
       throw new Error(
-        "Invalid attribute: " + require("util").inspect(attribute)
+        "Invalid attribute: " + require("util").inspect(attribute),
       );
     }
 

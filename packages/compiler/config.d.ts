@@ -18,10 +18,11 @@ declare const Config: {
   resolveVirtualDependency?:
     | ((
         filename: string,
-        dep: { virtualPath: string; code: string; map?: any }
+        dep: { virtualPath: string; code: string; map?: any },
       ) => string)
     | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
+  hydrateInit?: boolean;
   optimize?: boolean;
   cache?: Map<unknown, unknown>;
   hot?: boolean;

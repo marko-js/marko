@@ -18,7 +18,7 @@ module.exports = function (helpers) {
   expect(component.callCount).to.equal(4);
 
   expect(component.getEl("bar").nextElementSibling.nextElementSibling).to.equal(
-    component.getEl("foo")
+    component.getEl("foo"),
   );
   expect(component.getEl("foo")).to.equal(fooEl);
   expect(component.getEl("foo").nextElementSibling).to.equal(fooNextSibling);

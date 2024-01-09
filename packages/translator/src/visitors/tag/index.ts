@@ -1,18 +1,18 @@
-import { types as t } from "@marko/compiler";
 import {
   type Plugin,
   assertNoArgs,
   getTagDef,
   isNativeTag,
 } from "@marko/babel-utils";
-import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
-import * as hooks from "../../util/plugin-hooks";
-import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../../util/marko-config";
-import NativeTag from "./native-tag";
+import analyzeAttributeTags from "../../util/nested-attribute-tags";
+import * as hooks from "../../util/plugin-hooks";
+import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
+import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
-import AttributeTag from "./attribute-tag";
+import NativeTag from "./native-tag";
 
 export default {
   analyze: {
@@ -89,7 +89,7 @@ export default {
         if (attr.isMarkoAttribute()) {
           if (attr.node.arguments) {
             throw attr.buildCodeFrameError(
-              `Unsupported arguments on the "${attr.node.name}" attribute.`
+              `Unsupported arguments on the "${attr.node.name}" attribute.`,
             );
           }
 
@@ -98,7 +98,7 @@ export default {
               attr.node.name += `:${attr.node.modifier}`;
             } else {
               throw attr.buildCodeFrameError(
-                `Unsupported modifier "${attr.node.modifier}".`
+                `Unsupported modifier "${attr.node.modifier}".`,
               );
             }
           }
@@ -115,7 +115,7 @@ export default {
         const [tagNameVarPath] = tag.insertBefore(
           t.variableDeclaration("const", [
             t.variableDeclarator(tagNameId, tag.node.name),
-          ])
+          ]),
         );
 
         tagNameVarPath.skip();

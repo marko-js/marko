@@ -41,7 +41,7 @@ const FancyButton$walks = get + next(1) + get + next(1);
 export const FancyButton$attrs = (
   scope: Scope,
   value: any,
-  clean?: boolean | 1
+  clean?: boolean | 1,
 ) => {
   let renderBody, onclick;
   if (!clean) {
@@ -59,7 +59,7 @@ const FancyButton$renderBody = value(
     FancyButton$renderBodyDynamicTag(scope, value);
   },
   undefined,
-  FancyButton$renderBodyDynamicTag
+  FancyButton$renderBodyDynamicTag,
 );
 
 const FancyButton$onclick = value(FancyButton$Index.ON_CLICK, (_scope) => {
@@ -82,8 +82,8 @@ export const FancyButton = createTemplate(
     undefined,
     undefined,
     undefined,
-    FancyButton$attrs
-  )
+    FancyButton$attrs,
+  ),
 );
 
 /////////////////////////
@@ -116,7 +116,7 @@ export const setup = (scope: Scope) => {
 const _clickCount = value(
   Index.CLICK_COUNT,
   undefined,
-  dynamicSubscribers(Index.CLICK_COUNT)
+  dynamicSubscribers(Index.CLICK_COUNT),
 );
 
 export const clickHandler = (scope: Scope) => {
@@ -127,7 +127,7 @@ export const clickCount$renderBody = dynamicClosure(
   Index.CLICK_COUNT,
   (scope: Scope, value: ComponentScope[Index.CLICK_COUNT]) => {
     data(scope[RenderBody$Index.TEXT], value);
-  }
+  },
 );
 
 const enum RenderBody$Index {

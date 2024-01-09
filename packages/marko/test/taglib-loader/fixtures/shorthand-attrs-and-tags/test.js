@@ -2,7 +2,7 @@ var nodePath = require("path");
 
 exports.check = function (taglibLoader, expect) {
   var taglib = taglibLoader.loadTaglibFromFile(
-    nodePath.join(__dirname, "marko.json")
+    nodePath.join(__dirname, "marko.json"),
   );
   expect(taglib != null).to.equal(true);
 
@@ -11,7 +11,7 @@ exports.check = function (taglibLoader, expect) {
   expect(shorthandCheckbox.attributes.label.type).to.equal("object");
   expect(shorthandCheckbox.nestedTags.label.type).to.equal("object");
   expect(shorthandCheckbox.nestedTags.foo.attributes.bar.type).to.equal(
-    "string"
+    "string",
   );
 
   var shorthandTabsTag = taglib.tags["shorthand-tabs"];

@@ -1,19 +1,19 @@
 import path from "path";
-import { types as t } from "@marko/compiler";
 import {
   type Tag,
   assertNoParams,
   getTemplateId,
   resolveTagImport,
 } from "@marko/babel-utils";
-import * as writer from "../util/writer";
-import { callRuntime } from "../util/runtime";
+import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
-import { initContextConsumer } from "../util/signals";
-import customTag from "../visitors/tag/custom-tag";
-import { currentProgramPath } from "../visitors/program";
+import { callRuntime } from "../util/runtime";
 import { getOrCreateSection } from "../util/sections";
+import { initContextConsumer } from "../util/signals";
+import * as writer from "../util/writer";
+import { currentProgramPath } from "../visitors/program";
+import customTag from "../visitors/tag/custom-tag";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -76,7 +76,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "<get> requires a variable to be defined, eg <get/NAME>."
+          "<get> requires a variable to be defined, eg <get/NAME>.",
         );
     }
 
@@ -91,7 +91,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The '<get>' tag requires default attribute that is a string that resolves to a Marko file like '<get/val="../file.marko">' or '<get/val="<tag-name>">'.`
+            `The '<get>' tag requires default attribute that is a string that resolves to a Marko file like '<get/val="../file.marko">' or '<get/val="<tag-name>">'.`,
           );
       }
 
@@ -106,7 +106,7 @@ export default {
           throw tag.hub.buildError(
             { loc: { start, end } } as unknown as t.Node,
             msg,
-            Error
+            Error,
           );
         }
       }
@@ -121,12 +121,12 @@ export default {
       } else {
         const relativeReferencePath = resolveTagImport(
           defaultAttrValue,
-          defaultAttrValue.node.value
+          defaultAttrValue.node.value,
         );
 
         if (!relativeReferencePath) {
           throw defaultAttrValue.buildCodeFrameError(
-            "Unable to resolve template provided to '<get>' tag."
+            "Unable to resolve template provided to '<get>' tag.",
           );
         }
 
@@ -135,8 +135,8 @@ export default {
           path.resolve(
             file.opts.filename as string,
             "..",
-            relativeReferencePath
-          )
+            relativeReferencePath,
+          ),
         );
       }
     }
@@ -146,13 +146,13 @@ export default {
         t.variableDeclaration("const", [
           t.variableDeclarator(
             node.var,
-            callRuntime("getInContext", t.stringLiteral(refId))
+            callRuntime("getInContext", t.stringLiteral(refId)),
           ),
-        ])
+        ]),
       );
     } else {
       const identifiers = Object.values(
-        tag.get("var").getBindingIdentifiers()
+        tag.get("var").getBindingIdentifiers(),
       ) as t.Identifier[];
 
       // if (refId === '$') {

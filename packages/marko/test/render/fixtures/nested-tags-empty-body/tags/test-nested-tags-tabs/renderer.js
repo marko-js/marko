@@ -7,6 +7,6 @@ exports.renderer = function (input, out) {
     {
       tabs: tabs,
     },
-    out
+    out,
   );
 };

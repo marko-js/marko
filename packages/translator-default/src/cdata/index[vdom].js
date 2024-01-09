@@ -6,6 +6,6 @@ export default function (path) {
   const { node } = path;
 
   path.replaceWith(
-    withPreviousLocation(write("t", t.stringLiteral(node.value)), node)
+    withPreviousLocation(write("t", t.stringLiteral(node.value)), node),
   );
 }

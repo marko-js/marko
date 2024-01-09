@@ -1,11 +1,10 @@
-var jsonFileReader = require("./json-file-reader");
-var types = require("./types");
-var cache = require("./cache");
-var loaders = require("./loaders");
-
 var ok = require("assert").ok;
+var cache = require("./cache");
+var jsonFileReader = require("./json-file-reader");
+var loaders = require("./loaders");
+var types = require("./types");
 
-function loadFromFile(filePath) {
+function loadFromFile(filePath, isFromPackageJson) {
   ok(filePath, '"filePath" is required');
 
   var taglib = cache.get(filePath);
@@ -13,7 +12,7 @@ function loadFromFile(filePath) {
   // Only load a taglib once by caching the loaded taglibs using the file
   // system file path as the key
   if (!taglib) {
-    taglib = new types.Taglib(filePath);
+    taglib = new types.Taglib(filePath, isFromPackageJson);
     cache.put(filePath, taglib);
 
     var taglibProps = jsonFileReader.readFileSync(filePath);

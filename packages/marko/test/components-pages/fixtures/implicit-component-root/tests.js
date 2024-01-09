@@ -6,6 +6,6 @@ it("should mount explicit components", function () {
 
 it("should mount implicit components nested in an explicit component", function () {
   expect(window.helloExplicitComponent.getComponent("nested") != null).to.equal(
-    true
+    true,
   );
 });
