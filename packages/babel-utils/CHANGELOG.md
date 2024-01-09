@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.3.5
+
+### Patch Changes
+
+- [#2076](https://github.com/marko-js/marko/pull/2076) [`69b3ff5`](https://github.com/marko-js/marko/commit/69b3ff57c829418946e05c13b644a5560f589086) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all package deps to latest
+
 ## 6.3.4
 
 ### Patch Changes
