@@ -29,6 +29,8 @@ jobs:
           cache: npm
       - name: Install dependencies
         run: npm ci
+      - name: Build
+        run: npm run build
       - name: Format Code
         run: npm run format
       - name: Commit changes
