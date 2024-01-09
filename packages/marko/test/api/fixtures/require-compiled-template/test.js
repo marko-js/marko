@@ -16,6 +16,6 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
       snapshot(result.toString());
       done();
-    }
+    },
   );
 };

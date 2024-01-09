@@ -26,6 +26,6 @@ var users = {
 exports.templateData = {
   userInfo: callbackProviderWithArgs(
     1,
-    (arg) => users[arg.userId][arg.property]
+    (arg) => users[arg.userId][arg.property],
   ),
 };

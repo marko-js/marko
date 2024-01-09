@@ -24,6 +24,6 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
         foo: "bar",
       },
     },
-    stream
+    stream,
   );
 };

@@ -1,10 +1,10 @@
 var complain = "MARKO_DEBUG" && require("complain");
+var componentLookup = require("@internal/components-util").___componentLookup;
+var req = require("@internal/require");
 var makeRenderable = require("../../renderable");
 var getComponentsContext =
   require("../ComponentsContext").___getComponentsContext;
-var componentLookup = require("@internal/components-util").___componentLookup;
 var modernRenderer = require("../renderer");
-var req = require("@internal/require");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 
 module.exports = function defineRenderer(renderingLogic) {
@@ -117,7 +117,7 @@ module.exports = function defineRenderer(renderingLogic) {
       var templateData = clone(
         getTemplateData
           ? getTemplateData(widgetState, newProps, out)
-          : widgetState || newProps
+          : widgetState || newProps,
       );
 
       if (isReceivingNewInput && getWidgetConfig) {

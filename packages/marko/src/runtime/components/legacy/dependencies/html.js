@@ -1,3 +1,3 @@
-var patch = require("./").patch;
 var Template = require("../../../html").Template;
+var patch = require("./").patch;
 patch(Template);

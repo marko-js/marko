@@ -5,7 +5,7 @@ module.exports = function (helpers, done) {
 
   template.render({}, function (err, html) {
     expect(html.toString()).to.include(
-      "console.log('hello');console.log('world');console.log('again');console.log('and again')"
+      "console.log('hello');console.log('world');console.log('again');console.log('and again')",
     );
     done();
   });

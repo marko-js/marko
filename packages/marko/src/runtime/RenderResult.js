@@ -74,7 +74,7 @@ Object.defineProperty(proto, "html", {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(
-        'The "html" property is deprecated. Please use "toString" instead.'
+        'The "html" property is deprecated. Please use "toString" instead.',
       );
     }
     return this.toString();
@@ -86,7 +86,7 @@ Object.defineProperty(proto, "context", {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(
-        'The "context" property is deprecated. Please use "out" instead.'
+        'The "context" property is deprecated. Please use "out" instead.',
       );
     }
     return this.___out;
@@ -107,5 +107,5 @@ domInsert(
   },
   function afterInsert(renderResult, referenceEl) {
     return renderResult.afterInsert(getRootNode(referenceEl));
-  }
+  },
 );

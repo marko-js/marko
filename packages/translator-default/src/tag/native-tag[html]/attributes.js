@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { importDefault, normalizeTemplateString } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { evaluateAttr } from "../util";
 
@@ -11,9 +11,9 @@ export default function (path, attrs) {
       importDefault(
         path.hub.file,
         "marko/src/runtime/html/helpers/attrs.js",
-        "marko_attrs"
+        "marko_attrs",
       ),
-      [attrs[0].node.value]
+      [attrs[0].node.value],
     );
   }
 
@@ -33,7 +33,7 @@ export default function (path, attrs) {
           t.stringLiteral(name),
           computed?.value !== undefined
             ? t.stringLiteral(computed.value)
-            : value
+            : value,
         );
         if (props) {
           props.push(prop);
@@ -50,9 +50,9 @@ export default function (path, attrs) {
       importDefault(
         path.hub.file,
         "marko/src/runtime/html/helpers/merge-attrs.js",
-        "marko_merge_attrs"
+        "marko_merge_attrs",
       ),
-      attrsObjects
+      attrsObjects,
     );
   }
 
@@ -80,7 +80,7 @@ export default function (path, attrs) {
             confident: false,
             computed: undefined,
             value,
-          }
+          },
     );
   }
 
@@ -101,10 +101,10 @@ export default function (path, attrs) {
           importDefault(
             file,
             "marko/src/runtime/html/helpers/attr.js",
-            "marko_attr"
+            "marko_attr",
           ),
-          [t.stringLiteral(name), value]
-        )
+          [t.stringLiteral(name), value],
+        ),
       );
     }
   }

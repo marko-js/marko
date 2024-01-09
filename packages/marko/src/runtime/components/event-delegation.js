@@ -125,7 +125,7 @@ function addDelegatedEventHandlerToHost(eventType, host) {
           delegateEvent(curNode, propName, target, event);
         }
       }),
-      true
+      true,
     );
   }
 }

@@ -29,7 +29,7 @@ exports.___dashToCamelCase = function dashToCamelCase(name) {
   if (!nameCamel) {
     nameCamel = dashToCamelLookup[name] = name.replace(
       /-([a-z])/g,
-      matchToUpperCase
+      matchToUpperCase,
     );
 
     if (nameCamel !== name) {

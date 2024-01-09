@@ -1,4 +1,3 @@
-import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   findParentTag,
@@ -7,8 +6,9 @@ import {
   isAttributeTag,
   isTransparentTag,
 } from "@marko/babel-utils";
-import { getAttrs } from "./util";
+import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../util/with-previous-location";
+import { getAttrs } from "./util";
 
 const EMPTY_OBJECT = {};
 const parentIdentifierLookup = new WeakMap();
@@ -25,7 +25,7 @@ export default function (tag) {
 
   if (!parentPath) {
     throw namePath.buildCodeFrameError(
-      "@tags must be nested within another element."
+      "@tags must be nested within another element.",
     );
   }
 
@@ -51,7 +51,7 @@ export default function (tag) {
     }
   } else {
     const previousAttr = parentAttributes.find(
-      (attr) => attr.get("name").node === targetProperty
+      (attr) => attr.get("name").node === targetProperty,
     );
 
     if (previousAttr) {
@@ -59,7 +59,7 @@ export default function (tag) {
       if (t.isObjectExpression(previousValue)) {
         previousAttr.set(
           "value",
-          t.arrayExpression([previousValue, getAttrTagObject(tag)])
+          t.arrayExpression([previousValue, getAttrTagObject(tag)]),
         );
       } else if (t.isArrayExpression(previousAttr)) {
         previousAttr.elements.push(getAttrTagObject(tag));
@@ -70,16 +70,16 @@ export default function (tag) {
             importDefault(
               tag.hub.file,
               "marko/src/runtime/helpers/repeatable.js",
-              "marko_repeatable"
+              "marko_repeatable",
             ),
-            [previousValue, getAttrTagObject(tag)]
-          )
+            [previousValue, getAttrTagObject(tag)],
+          ),
         );
       }
     } else {
       parentPath.pushContainer(
         "attributes",
-        t.markoAttribute(targetProperty, getAttrTagObject(tag))
+        t.markoAttribute(targetProperty, getAttrTagObject(tag)),
       );
     }
 
@@ -105,13 +105,13 @@ export default function (tag) {
         t.variableDeclaration(isRepeated ? "const" : "let", [
           t.variableDeclarator(
             identifier,
-            isRepeated ? t.arrayExpression([]) : t.nullLiteral()
+            isRepeated ? t.arrayExpression([]) : t.nullLiteral(),
           ),
-        ])
+        ]),
       );
     parentPath.pushContainer(
       "attributes",
-      t.markoAttribute(targetProperty, identifier)
+      t.markoAttribute(targetProperty, identifier),
     );
   }
 
@@ -121,11 +121,11 @@ export default function (tag) {
         t.expressionStatement(
           t.callExpression(
             t.memberExpression(identifier, t.identifier("push")),
-            [getAttrTagObject(tag)]
-          )
+            [getAttrTagObject(tag)],
+          ),
         ),
-        node
-      )
+        node,
+      ),
     );
   } else {
     tag.replaceWith(
@@ -138,14 +138,14 @@ export default function (tag) {
               importDefault(
                 tag.hub.file,
                 "marko/src/runtime/helpers/repeatable.js",
-                "marko_repeatable"
+                "marko_repeatable",
               ),
-              [identifier, getAttrTagObject(tag)]
-            )
-          )
+              [identifier, getAttrTagObject(tag)],
+            ),
+          ),
         ),
-        node
-      )
+        node,
+      ),
     );
   }
 }
@@ -157,9 +157,9 @@ function getAttrTagObject(tag) {
     importDefault(
       tag.hub.file,
       "marko/src/runtime/helpers/self-iterator.js",
-      "marko_self_iterator"
+      "marko_self_iterator",
     ),
-    true
+    true,
   );
 
   if (t.isNullLiteral(attrs)) {

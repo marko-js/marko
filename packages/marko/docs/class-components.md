@@ -782,7 +782,7 @@ Marko uses [`listener-tracker`](https://github.com/patrick-steele-idem/listener-
 
 ```js
 this.subscribeTo(window).on("scroll", () =>
-  console.log("The user scrolled the window!")
+  console.log("The user scrolled the window!"),
 );
 ```
 

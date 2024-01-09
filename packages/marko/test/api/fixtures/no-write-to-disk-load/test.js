@@ -1,5 +1,5 @@
-var nodePath = require("path");
 var fs = require("fs");
+var nodePath = require("path");
 
 exports.check = function (marko, markoCompiler, expect, snapshot, done) {
   markoCompiler.defaultOptions.writeToDisk = false;

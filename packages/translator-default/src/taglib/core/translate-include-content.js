@@ -1,6 +1,6 @@
 import path from "path";
-import { types as t } from "@marko/compiler";
 import { assertNoAttributes, assertNoParams } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
 export function enter(tag) {
   const {
@@ -16,7 +16,7 @@ export function enter(tag) {
 
   if (args.length !== 1) {
     throw tag.buildCodeFrameError(
-      `A single path argument is required for ${tagExample}.`
+      `A single path argument is required for ${tagExample}.`,
     );
   }
 
@@ -24,7 +24,7 @@ export function enter(tag) {
 
   if (!content.isStringLiteral()) {
     throw content.buildCodeFrameError(
-      `The argument to ${tagExample} must be a static string.`
+      `The argument to ${tagExample} must be a static string.`,
     );
   }
 
@@ -44,7 +44,7 @@ export function enter(tag) {
   tag.replaceWith(
     t.markoPlaceholder(
       t.stringLiteral(fs.readFileSync(fullPath).toString("utf-8")),
-      tagName === "include-text"
-    )
+      tagName === "include-text",
+    ),
   );
 }

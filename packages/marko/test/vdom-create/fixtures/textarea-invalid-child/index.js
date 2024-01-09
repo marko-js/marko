@@ -8,7 +8,7 @@ module.exports = function (helpers) {
         {},
         null /* key */,
         null /* component */,
-        2 /* childCount */
+        2 /* childCount */,
       )
       .e("div", {}, null /* key */, null /* component */, 0)
       .t("bar");

@@ -36,7 +36,7 @@ describe("node-require", function () {
         extension: ".marko.xml",
         extensions: [".marko", ".html"],
       },
-      [".marko.xml", ".marko", ".html"]
+      [".marko.xml", ".marko", ".html"],
     );
   });
 
@@ -45,7 +45,7 @@ describe("node-require", function () {
       {
         extensions: [".marko", ".html"],
       },
-      [".marko", ".html"]
+      [".marko", ".html"],
     );
   });
 
@@ -54,7 +54,7 @@ describe("node-require", function () {
       {
         extension: ".marko.xml",
       },
-      [".marko.xml"]
+      [".marko.xml"],
     );
   });
 
@@ -64,7 +64,7 @@ describe("node-require", function () {
         extension: ".marko.xml",
         extensions: [],
       },
-      [".marko.xml"]
+      [".marko.xml"],
     );
   });
 
@@ -78,7 +78,7 @@ describe("node-require", function () {
         extension: "marko.xml",
         extensions: ["html"],
       },
-      [".marko.xml", ".html"]
+      [".marko.xml", ".html"],
     );
   });
 });

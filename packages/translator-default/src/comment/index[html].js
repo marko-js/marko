@@ -8,7 +8,7 @@ export default function (path) {
 
   if (ieConditionalCommentRegExp.test(node.value)) {
     path.replaceWith(
-      withPreviousLocation(write`<!--${t.stringLiteral(node.value)}-->`, node)
+      withPreviousLocation(write`<!--${t.stringLiteral(node.value)}-->`, node),
     );
   } else {
     path.remove();

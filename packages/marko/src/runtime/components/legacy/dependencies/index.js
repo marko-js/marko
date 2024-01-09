@@ -11,7 +11,7 @@ function getRootDeps(template, context) {
   attachDepsAndComponentsToTemplate(template, context);
 
   var deps = (template.___depsArray = Object.keys(template.___deps).map(
-    (key) => template.___deps[key]
+    (key) => template.___deps[key],
   ));
   var initModule = getInitModule(template.path, template.___components);
 
@@ -103,7 +103,7 @@ function getInitModule(path, components) {
         (component) =>
           `components.register('${component.id}', require('.${
             nodePath.sep
-          }${nodePath.relative(root, component.path)}'));`
+          }${nodePath.relative(root, component.path)}'));`,
       );
       var code = `
                 var components = require('marko/components');

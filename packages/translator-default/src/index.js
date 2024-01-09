@@ -1,5 +1,4 @@
 import { resolve } from "path";
-import { types as t } from "@marko/compiler";
 import {
   findParentTag,
   getTagDef,
@@ -15,20 +14,21 @@ import {
   resolveRelativePath,
   resolveTagImport,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import { version } from "marko/package.json";
-import MarkoDocumentType from "./document-type";
-import MarkoDeclaration from "./declaration";
 import MarkoCDATA from "./cdata";
+import MarkoClass from "./class";
+import MarkoComment from "./comment";
+import MarkoDeclaration from "./declaration";
+import MarkoDocumentType from "./document-type";
+import MarkoPlaceholder from "./placeholder";
+import MarkoScriptlet from "./scriptlet";
 import MarkoTag from "./tag";
 import MarkoText from "./text";
-import MarkoPlaceholder from "./placeholder";
-import MarkoComment from "./comment";
-import MarkoScriptlet from "./scriptlet";
-import MarkoClass from "./class";
-import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
-import { optimizeHTMLWrites } from "./util/optimize-html-writes";
-import getComponentFiles from "./util/get-component-files";
 import addDependencies from "./util/add-dependencies";
+import getComponentFiles from "./util/get-component-files";
+import { optimizeHTMLWrites } from "./util/optimize-html-writes";
+import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
 export { default as taglibs } from "./taglib";
 
@@ -70,7 +70,7 @@ export const analyze = {
       meta.deps = meta.deps.map((filename) =>
         typeof filename === "string"
           ? resolveRelativePath(file, filename)
-          : filename
+          : filename,
       );
 
       meta.imports = program.node.body
@@ -92,8 +92,8 @@ export const analyze = {
             meta.deps.push(
               resolve(
                 tagDef.dir,
-                resolve(tagDef.dir, tagDef.parseOptions.import)
-              )
+                resolve(tagDef.dir, tagDef.parseOptions.import),
+              ),
             );
           }
         }
@@ -197,8 +197,8 @@ export const translate = {
             t.program(
               parseStatements(file, file.metadata.marko.moduleCode),
               undefined,
-              file.markoOpts.modules === "cjs" ? "script" : "module"
-            )
+              file.markoOpts.modules === "cjs" ? "script" : "module",
+            ),
           )[0]
           .skip();
         return;
@@ -242,7 +242,7 @@ export const translate = {
           importDefault(
             file,
             resolveRelativePath(file, componentFile),
-            "marko_component"
+            "marko_component",
           )) ||
         _inlineComponentClass ||
         t.objectExpression([]);
@@ -250,29 +250,29 @@ export const translate = {
       const componentIdentifier =
         path.scope.generateUidIdentifier("marko_component");
       const componentTypeIdentifier = path.scope.generateUidIdentifier(
-        "marko_componentType"
+        "marko_componentType",
       );
       const templateIdentifier =
         path.scope.generateUidIdentifier("marko_template");
       const rendererIdentifier = importDefault(
         file,
         "marko/src/runtime/components/renderer.js",
-        "marko_renderer"
+        "marko_renderer",
       );
       const templateRendererMember = t.memberExpression(
         templateIdentifier,
-        t.identifier("_")
+        t.identifier("_"),
       );
       const templateMetaMember = t.memberExpression(
         templateIdentifier,
-        t.identifier("meta")
+        t.identifier("meta"),
       );
 
       if (markoOpts.writeVersionComment) {
         path.addComment(
           "leading",
           ` Compiled using marko@${version} - DO NOT EDIT`,
-          true
+          true,
         );
       }
 
@@ -286,19 +286,19 @@ export const translate = {
             t.stringLiteral(
               `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/${
                 isHTML ? "html" : "vdom"
-              }/${markoOpts.hot ? "hot-reload.js" : "index.js"}`
-            )
+              }/${markoOpts.hot ? "hot-reload.js" : "index.js"}`,
+            ),
           ),
           t.variableDeclaration("const", [
             t.variableDeclarator(
               componentTypeIdentifier,
-              t.stringLiteral(meta.id)
+              t.stringLiteral(meta.id),
             ),
             t.variableDeclarator(
               templateIdentifier,
               t.callExpression(runtimeTemplateIdentifier, [
                 componentTypeIdentifier,
-              ])
+              ]),
             ),
           ]),
           includeMetaInSource &&
@@ -306,11 +306,11 @@ export const translate = {
               t.assignmentExpression(
                 "=",
                 t.memberExpression(templateIdentifier, t.identifier("path")),
-                t.identifier("__filename")
-              )
+                t.identifier("__filename"),
+              ),
             ),
           t.exportDefaultDeclaration(templateIdentifier),
-        ].filter(Boolean)
+        ].filter(Boolean),
       );
 
       path.pushContainer(
@@ -323,7 +323,7 @@ export const translate = {
                   file,
                   "marko/src/runtime/components/registry.js",
                   "r",
-                  "marko_registerComponent"
+                  "marko_registerComponent",
                 ),
                 [
                   componentTypeIdentifier,
@@ -333,17 +333,17 @@ export const translate = {
                       ? importDefault(
                           file,
                           resolveRelativePath(file, componentBrowserFile),
-                          "marko_split_component"
+                          "marko_split_component",
                         )
-                      : templateIdentifier
+                      : templateIdentifier,
                   ),
-                ]
-              )
+                ],
+              ),
             ),
           t.variableDeclaration("const", [
             t.variableDeclarator(componentIdentifier, componentClass),
           ]),
-        ].filter(Boolean)
+        ].filter(Boolean),
       );
 
       const templateRenderOptionsProps = [
@@ -352,19 +352,19 @@ export const translate = {
 
       if (!meta.component) {
         templateRenderOptionsProps.push(
-          t.objectProperty(t.identifier("i"), t.booleanLiteral(true))
+          t.objectProperty(t.identifier("i"), t.booleanLiteral(true)),
         );
       }
 
       if (componentBrowserFile) {
         templateRenderOptionsProps.push(
-          t.objectProperty(t.identifier("s"), t.booleanLiteral(true))
+          t.objectProperty(t.identifier("s"), t.booleanLiteral(true)),
         );
       }
 
       if (!markoOpts.optimize) {
         templateRenderOptionsProps.push(
-          t.objectProperty(t.identifier("d"), t.booleanLiteral(true))
+          t.objectProperty(t.identifier("d"), t.booleanLiteral(true)),
         );
       }
 
@@ -385,13 +385,13 @@ export const translate = {
                   t.identifier("state"),
                   t.identifier("$global"),
                 ],
-                renderBlock.node
+                renderBlock.node,
               ),
               t.objectExpression(templateRenderOptionsProps),
               componentIdentifier,
-            ])
-          )
-        )
+            ]),
+          ),
+        ),
       );
       renderBlock.remove();
 
@@ -406,12 +406,12 @@ export const translate = {
                 importDefault(
                   file,
                   "marko/src/runtime/components/defineComponent.js",
-                  "marko_defineComponent"
+                  "marko_defineComponent",
                 ),
-                [componentIdentifier, templateRendererMember]
-              )
-            )
-          )
+                [componentIdentifier, templateRendererMember],
+              ),
+            ),
+          ),
         );
       }
 
@@ -424,8 +424,8 @@ export const translate = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("component"),
-              t.stringLiteral(meta.component)
-            )
+              t.stringLiteral(meta.component),
+            ),
           );
         }
 
@@ -433,8 +433,8 @@ export const translate = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("deps"),
-              parseExpression(file, JSON.stringify(meta.deps))
-            )
+              parseExpression(file, JSON.stringify(meta.deps)),
+            ),
           );
         }
 
@@ -442,16 +442,16 @@ export const translate = {
           metaObject.properties.push(
             t.objectProperty(
               t.identifier("tags"),
-              t.arrayExpression(meta.tags.map((tag) => t.stringLiteral(tag)))
-            )
+              t.arrayExpression(meta.tags.map((tag) => t.stringLiteral(tag))),
+            ),
           );
         }
 
         path.pushContainer(
           "body",
           t.expressionStatement(
-            t.assignmentExpression("=", templateMetaMember, metaObject)
-          )
+            t.assignmentExpression("=", templateMetaMember, metaObject),
+          ),
         );
       }
 

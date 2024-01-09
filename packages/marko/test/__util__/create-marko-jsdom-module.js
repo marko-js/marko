@@ -58,6 +58,6 @@ function compileMarkoModule(module, filename) {
         browserslistConfigFile: false,
       },
     }),
-    filename
+    filename,
   );
 }

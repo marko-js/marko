@@ -9,7 +9,7 @@ module.exports = function (helpers) {
   var targetEl = component.el;
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello Frank! You have 30 new messages."
+    "Hello Frank! You have 30 new messages.",
   );
   expect(targetEl.innerHTML).to.contain("foo: bar");
   expect(targetEl.innerHTML).to.contain("hello: world");
@@ -20,7 +20,7 @@ module.exports = function (helpers) {
   component.update();
 
   expect(targetEl.innerHTML).to.contain(
-    "Hello John! You have 30 new messages."
+    "Hello John! You have 30 new messages.",
   );
   expect(targetEl.innerHTML).to.contain("foo: bar");
   expect(targetEl.innerHTML).to.contain("hello: world");

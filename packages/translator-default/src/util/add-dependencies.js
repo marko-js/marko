@@ -1,12 +1,12 @@
 import path from "path";
-import MagicString from "magic-string";
-import { types as t } from "@marko/compiler";
-import resolveFrom from "resolve-from";
 import {
   loadFileForImport,
   parseStatements,
   resolveRelativePath,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
+import MagicString from "magic-string";
+import resolveFrom from "resolve-from";
 
 export default (entryFile, isHydrate) => {
   const { resolveVirtualDependency, hydrateIncludeImports, hydrateInit } =
@@ -32,11 +32,11 @@ export default (entryFile, isHydrate) => {
   if (hasComponents) {
     const initId = t.identifier("init");
     const markoComponentsImport = importPath(
-      resolvePath(entryFile, "marko/src/runtime/components/index.js")
+      resolvePath(entryFile, "marko/src/runtime/components/index.js"),
     );
     if (splitComponentIndex) {
       markoComponentsImport.specifiers.push(
-        t.importSpecifier(t.identifier("register"), t.identifier("register"))
+        t.importSpecifier(t.identifier("register"), t.identifier("register")),
       );
     }
 
@@ -54,9 +54,9 @@ export default (entryFile, isHydrate) => {
             initId,
             entryFile.markoOpts.runtimeId
               ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
-              : []
-          )
-        )
+              : [],
+          ),
+        ),
       );
     }
   }
@@ -112,13 +112,13 @@ export default (entryFile, isHydrate) => {
     if (meta.component) {
       // Split component
       const splitComponentId = t.identifier(
-        `component_${splitComponentIndex++}`
+        `component_${splitComponentIndex++}`,
       );
       const splitComponentImport = importPath(
-        resolvePath(file, meta.component)
+        resolvePath(file, meta.component),
       );
       splitComponentImport.specifiers.push(
-        t.importDefaultSpecifier(splitComponentId)
+        t.importDefaultSpecifier(splitComponentId),
       );
       program.pushContainer("body", splitComponentImport);
       program.pushContainer(
@@ -127,8 +127,8 @@ export default (entryFile, isHydrate) => {
           t.callExpression(t.identifier("register"), [
             t.stringLiteral(meta.id),
             splitComponentId,
-          ])
-        )
+          ]),
+        ),
       );
     }
   }
@@ -183,7 +183,7 @@ export default (entryFile, isHydrate) => {
       ? resolveRelativePath(file, req)
       : resolveRelativePath(
           entryFile,
-          path.join(file.opts.filename, "..", req)
+          path.join(file.opts.filename, "..", req),
         );
   }
 
@@ -196,14 +196,14 @@ function tryGetTemplateImports(file, rendererRelativePath) {
   const resolvedRendererPath = path.join(
     file.opts.filename,
     "..",
-    rendererRelativePath
+    rendererRelativePath,
   );
   let templateImports;
 
   try {
     for (const statement of parseStatements(
       file,
-      file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8")
+      file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8"),
     )) {
       if (statement.type === "ImportDeclaration") {
         addImport(statement.source.value);

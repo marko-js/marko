@@ -11,6 +11,6 @@ exports.renderer = function (input, out) {
       body: body,
       footer: footer,
     },
-    out
+    out,
   );
 };

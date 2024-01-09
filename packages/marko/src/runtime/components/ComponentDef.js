@@ -1,11 +1,11 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
+var extend = require("raptor-util/extend");
 var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("@internal/components-util");
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler =
   require("./event-delegation").___addDelegatedEventHandler;
-var extend = require("raptor-util/extend");
 var KeySequence = require("./KeySequence");
 var EMPTY_OBJECT = {};
 

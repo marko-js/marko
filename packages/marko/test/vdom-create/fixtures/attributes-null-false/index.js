@@ -11,7 +11,7 @@ module.exports = function (helpers) {
         "data-bar": false,
         checked: true,
       },
-      0
+      0,
     )
     .e("a", null, 0);
 };

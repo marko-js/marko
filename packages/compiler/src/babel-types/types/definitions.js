@@ -118,7 +118,7 @@ const MarkoDefinitions = {
       arguments: {
         validate: chain(
           assertValueType("array"),
-          assertEach(assertNodeType("Expression", "SpreadElement"))
+          assertEach(assertNodeType("Expression", "SpreadElement")),
         ),
         optional: true,
       },
@@ -152,7 +152,7 @@ const MarkoDefinitions = {
       params: {
         validate: chain(
           assertValueType("array"),
-          assertEach(assertNodeType("Identifier", "Pattern", "RestElement"))
+          assertEach(assertNodeType("Identifier", "Pattern", "RestElement")),
         ),
         default: [],
       },
@@ -199,7 +199,7 @@ const MarkoDefinitions = {
       arguments: {
         validate: chain(
           assertValueType("array"),
-          assertEach(assertNodeType("Expression", "SpreadElement"))
+          assertEach(assertNodeType("Expression", "SpreadElement")),
         ),
         optional: true,
       },
@@ -223,6 +223,6 @@ export default MarkoDefinitions;
 export const MARKO_TYPES = Object.keys(MarkoDefinitions);
 export const MARKO_ALIAS_TYPES = Array.from(
   new Set(
-    MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), [])
-  )
+    MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), []),
+  ),
 );

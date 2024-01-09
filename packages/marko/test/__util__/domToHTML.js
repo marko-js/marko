@@ -75,7 +75,7 @@ function vdomToHTML(node, options) {
           continue;
         }
         attributesArray.push(
-          " " + attrName + '="' + escapeXmlAttr(attr.value) + '"'
+          " " + attrName + '="' + escapeXmlAttr(attr.value) + '"',
         );
       }
     } else {
@@ -97,7 +97,7 @@ function vdomToHTML(node, options) {
           attrName = "http://www.w3.org/1999/xlink:href";
         }
         attributesArray.push(
-          " " + attrName + '="' + escapeXmlAttr(attrValue) + '"'
+          " " + attrName + '="' + escapeXmlAttr(attrValue) + '"',
         );
       }
     }
@@ -122,8 +122,8 @@ function vdomToHTML(node, options) {
               tag === "SCRIPT"
                 ? escapeScript
                 : tag === "STYLE"
-                ? escapeStyle
-                : escapeXml;
+                  ? escapeStyle
+                  : escapeXml;
             serializeTextHelper(curChild, escapeText);
           } else {
             serializeHelper(curChild);

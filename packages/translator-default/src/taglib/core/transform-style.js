@@ -16,7 +16,7 @@ export default function (tag) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        "Style blocks must be at the root of your Marko template."
+        "Style blocks must be at the root of your Marko template.",
       );
   }
 
@@ -24,7 +24,7 @@ export default function (tag) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        "A Marko file can only contain a single inline style block."
+        "A Marko file can only contain a single inline style block.",
       );
   }
 
@@ -32,7 +32,7 @@ export default function (tag) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        'A Marko file can either have an inline style block, or an external "style.ext" file, but not both.'
+        'A Marko file can either have an inline style block, or an external "style.ext" file, but not both.',
       );
   }
 

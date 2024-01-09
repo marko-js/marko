@@ -32,7 +32,7 @@ function run(fixture) {
             end() {
               resolve(html);
             },
-          }
+          },
         )
         .once("error", reject);
     });

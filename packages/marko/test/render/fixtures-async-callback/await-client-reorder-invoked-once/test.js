@@ -1,5 +1,5 @@
-const extend = require("raptor-util/extend");
 const expect = require("chai").expect;
+const extend = require("raptor-util/extend");
 const { callbackProvider } = require("../../../__util__/async-helpers");
 
 exports.templateData = {

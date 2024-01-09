@@ -1,6 +1,6 @@
+import { diagnosticDeprecate } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../../util/with-previous-location";
-import { diagnosticDeprecate } from "@marko/babel-utils";
 const kHadAssignment = Symbol();
 
 export default {
@@ -22,7 +22,7 @@ export default {
           t.variableDeclaration("var", [
             t.variableDeclarator(t.identifier("data")),
           ]),
-        ])
+        ]),
       );
     }
   },
@@ -36,7 +36,7 @@ export default {
         label: "The 'data' variable is deprecated. Use 'input' instead.",
         fix() {
           path.replaceWith(
-            withPreviousLocation(t.identifier("input"), path.node)
+            withPreviousLocation(t.identifier("input"), path.node),
           );
         },
       });

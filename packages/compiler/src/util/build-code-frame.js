@@ -1,6 +1,6 @@
 import path from "path";
-import color from "kleur";
 import { codeFrameColumns } from "@babel/code-frame";
+import color from "kleur";
 const CWD = process.cwd();
 const indent = "    ";
 
@@ -12,7 +12,7 @@ class CompileError extends Error {
     this.stack = loc
       ? `CompileError\n${indent}at ${prettyFileName}\n${prettyMessage.replace(
           /^/gm,
-          indent
+          indent,
         )}`
       : `CompileError: ${prettyMessage}\n${indent}at ${prettyFileName}`;
 
@@ -71,7 +71,7 @@ function buildMessage(code, loc, message) {
                 }
               : undefined,
         },
-        { highlightCode: true, message }
+        { highlightCode: true, message },
       )
     : message;
 }

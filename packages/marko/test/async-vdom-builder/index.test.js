@@ -1,7 +1,7 @@
 require("../__util__/test-init");
+var expect = require("chai").expect;
 var AsyncVDOMBuilder = require("marko/runtime/vdom/AsyncVDOMBuilder");
 var VElement = require("marko/runtime/vdom/VElement");
-var expect = require("chai").expect;
 
 function getChildNodes(parentNode) {
   var childNodes = [];
@@ -51,7 +51,7 @@ describe("AsyncVDOMBuilder", function () {
       expect(tree.___firstChild.___nodeName).to.equal("div");
       expect(tree.___firstChild.___nextSibling.___nodeName).to.equal("span");
       expect(
-        tree.___firstChild.___nextSibling.___nextSibling.___nodeName
+        tree.___firstChild.___nextSibling.___nextSibling.___nodeName,
       ).to.equal("section");
       done();
     });

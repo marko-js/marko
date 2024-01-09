@@ -1,7 +1,7 @@
-import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/babel-utils";
-import { buildEventHandlerArray, getAttrs } from "./util";
+import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../util/with-previous-location";
+import { buildEventHandlerArray, getAttrs } from "./util";
 
 export default function (path) {
   const {
@@ -19,15 +19,15 @@ export default function (path) {
       t.objectProperty(
         t.identifier("pa"),
         t.arrayExpression(
-          node.preserveAttrs.map((name) => t.stringLiteral(name))
-        )
-      )
+          node.preserveAttrs.map((name) => t.stringLiteral(name)),
+        ),
+      ),
     );
   }
 
   if (t.isObjectExpression(foundAttrs)) {
     const renderBodyIndex = foundAttrs.properties.findIndex(
-      (prop) => prop.key && prop.key.value === "renderBody"
+      (prop) => prop.key && prop.key.value === "renderBody",
     );
 
     attrsLen = foundAttrs.properties.length;
@@ -44,7 +44,7 @@ export default function (path) {
       importDefault(
         file,
         `marko/src/runtime/helpers/dynamic-tag.js`,
-        "marko_dynamic_tag"
+        "marko_dynamic_tag",
       ),
       [
         t.identifier("out"),
@@ -58,8 +58,8 @@ export default function (path) {
         file._componentDefIdentifier,
         key,
         ...buildEventHandlerArray(path),
-      ]
-    )
+      ],
+    ),
   );
 
   path.replaceWith(withPreviousLocation(dynamicTagRenderCall, node));

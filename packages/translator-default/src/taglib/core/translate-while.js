@@ -1,9 +1,9 @@
-import { types as t } from "@marko/compiler";
 import {
   assertNoAttributes,
   assertNoParams,
   getArgOrSequence,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import withPreviousLocation from "../../util/with-previous-location";
 
 export function exit(path) {
@@ -15,7 +15,7 @@ export function exit(path) {
     throw path
       .get("name")
       .buildCodeFrameError(
-        "A condition is required for the <while(condition)> tag."
+        "A condition is required for the <while(condition)> tag.",
       );
   }
 
@@ -23,9 +23,9 @@ export function exit(path) {
     withPreviousLocation(
       t.whileStatement(
         getArgOrSequence(path),
-        t.blockStatement(path.node.body.body)
+        t.blockStatement(path.node.body.body),
       ),
-      path.node
-    )
+      path.node,
+    ),
   );
 }

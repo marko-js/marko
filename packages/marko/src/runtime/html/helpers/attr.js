@@ -34,7 +34,7 @@ function notEmptyAttr(name, value) {
           if ("MARKO_DEBUG") {
             complain(
               "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
-              { locationIndex: 2 }
+              { locationIndex: 2 },
             );
           }
 

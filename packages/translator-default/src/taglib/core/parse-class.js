@@ -1,9 +1,9 @@
-import { types as t } from "@marko/compiler";
 import {
   diagnosticDeprecate,
   diagnosticError,
   parseExpression,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import getComponentFiles from "../../util/get-component-files";
 
 export default function (path) {
@@ -51,7 +51,7 @@ export default function (path) {
   }
 
   const constructorPropIndex = parsed.body.body.findIndex(
-    (prop) => t.isClassMethod(prop) && prop.kind === "constructor"
+    (prop) => t.isClassMethod(prop) && prop.kind === "constructor",
   );
   if (constructorPropIndex !== -1) {
     const constructorProp = parsed.body.body[constructorPropIndex];

@@ -48,7 +48,7 @@ State.prototype = {
           key,
           undefined,
           false /* ensure:false */,
-          false /* forceDirty:false */
+          false /* forceDirty:false */,
         );
       }
     }
@@ -58,7 +58,7 @@ State.prototype = {
         key,
         newState[key],
         true /* ensure:true */,
-        false /* forceDirty:false */
+        false /* forceDirty:false */,
       );
     }
   },

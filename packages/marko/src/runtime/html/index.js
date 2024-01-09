@@ -26,10 +26,10 @@ require("../createOut").___setCreateOut(
     globalData,
     writer,
     parentOut,
-    buffer
+    buffer,
   ) {
     return new AsyncStream(globalData, writer, parentOut, buffer);
-  })
+  }),
 );
 
 require("../renderable")(Template.prototype);

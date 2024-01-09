@@ -9,7 +9,7 @@ if ("MARKO_DEBUG") {
       .enableSpecialReload(
         `${extensions
           .map((ext) => `*${ext}`)
-          .join(" ")} marko.json marko-tag.json`
+          .join(" ")} marko.json marko-tag.json`,
       )
       .onFileModified((path) => {
         hotReload.handleFileModified(path);

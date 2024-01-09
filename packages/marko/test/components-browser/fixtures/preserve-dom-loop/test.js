@@ -10,7 +10,7 @@ module.exports = function (helpers) {
   });
 
   expect(
-    helpers.targetEl.firstElementChild.getAttribute("data-count")
+    helpers.targetEl.firstElementChild.getAttribute("data-count"),
   ).to.equal("0");
 
   Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {
@@ -28,7 +28,7 @@ module.exports = function (helpers) {
   component.update();
 
   expect(
-    helpers.targetEl.firstElementChild.getAttribute("data-count")
+    helpers.targetEl.firstElementChild.getAttribute("data-count"),
   ).to.equal("1");
 
   Array.from(helpers.targetEl.firstElementChild.childNodes).forEach((child) => {

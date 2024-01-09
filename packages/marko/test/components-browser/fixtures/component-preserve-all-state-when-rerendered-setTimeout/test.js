@@ -13,7 +13,7 @@ module.exports = function (helpers, done) {
     component.update();
     expect(component.state.count).to.equal(100);
     expect(targetEl.innerHTML).to.contain(
-      "Hello Frank! You have 100 new messages."
+      "Hello Frank! You have 100 new messages.",
     );
   }, 100);
 
@@ -22,7 +22,7 @@ module.exports = function (helpers, done) {
     component.update();
     expect(component.state.count).to.equal(200);
     expect(targetEl.innerHTML).to.contain(
-      "Hello Frank! You have 200 new messages."
+      "Hello Frank! You have 200 new messages.",
     );
     done();
   }, 200);
@@ -32,7 +32,7 @@ module.exports = function (helpers, done) {
     component.update();
     expect(component.state.count).to.equal(1);
     expect(targetEl.innerHTML).to.contain(
-      "Hello Frank! You have 1 new messages."
+      "Hello Frank! You have 1 new messages.",
     );
   }, 1);
 };

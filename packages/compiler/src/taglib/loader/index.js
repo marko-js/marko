@@ -1,8 +1,8 @@
 var cache = require("./cache");
 
-var types = require("./types");
-var loaders = require("./loaders");
 var DependencyChain = require("./DependencyChain");
+var loaders = require("./loaders");
+var types = require("./types");
 
 function loadTaglibFromProps(taglib, taglibProps) {
   return loaders.loadTaglibFromProps(taglib, taglibProps);
@@ -29,7 +29,7 @@ function loadTag(tagProps, filePath) {
   loaders.loadTagFromProps(
     tag,
     tagProps,
-    new DependencyChain(filePath ? [filePath] : [])
+    new DependencyChain(filePath ? [filePath] : []),
   );
   return tag;
 }

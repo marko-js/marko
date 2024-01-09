@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { assertNoArgs, assertNoAttributes } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
 export function exit(path) {
   assertNoArgs(path);
@@ -14,7 +14,7 @@ export function exit(path) {
     throw path
       .get("name")
       .buildCodeFrameError(
-        "Invalid 'else' tag, expected preceding 'if' or 'else-if' tag."
+        "Invalid 'else' tag, expected preceding 'if' or 'else-if' tag.",
       );
   }
 

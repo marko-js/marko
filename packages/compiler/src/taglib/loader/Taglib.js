@@ -48,7 +48,7 @@ class Taglib {
 
     if (!attribute.pattern && !attribute.name) {
       throw new Error(
-        "Invalid attribute: " + require("util").inspect(attribute)
+        "Invalid attribute: " + require("util").inspect(attribute),
       );
     }
 

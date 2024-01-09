@@ -1,15 +1,15 @@
 "use strict";
 var EventEmitter = require("events-light");
-var StringWriter = require("./StringWriter");
-var BufferedWriter = require("./BufferedWriter");
+var selfClosingTags = require("self-closing-tags");
 var RenderResult = require("../RenderResult");
+var parseHTML = require("../vdom/parse-html");
+var BufferedWriter = require("./BufferedWriter");
 var attrsHelper = require("./helpers/attrs");
 var markoAttr = require("./helpers/data-marko");
 var escapeXmlHelper = require("./helpers/escape-xml");
-var parseHTML = require("../vdom/parse-html");
+var StringWriter = require("./StringWriter");
 var escapeXmlOrNullish = escapeXmlHelper.x;
 var escapeXmlString = escapeXmlHelper.___escapeXML;
-var selfClosingTags = require("self-closing-tags");
 
 function noop() {}
 
@@ -227,8 +227,8 @@ var proto = (AsyncStream.prototype = {
               (name ? "(" + name + ") " : "") +
               "timed out after " +
               timeout +
-              "ms"
-          )
+              "ms",
+          ),
         );
       }, timeout);
     }
@@ -508,7 +508,7 @@ var proto = (AsyncStream.prototype = {
     elementAttrs,
     key,
     componentDef,
-    props
+    props,
   ) {
     var str =
       "<" +
@@ -542,7 +542,7 @@ var proto = (AsyncStream.prototype = {
     elementAttrs,
     key,
     componentDef,
-    props
+    props,
   ) {
     var str =
       "<" +

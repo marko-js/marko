@@ -13,6 +13,6 @@ exports.check = function (marko, markoCompiler, expect, snapshot, done) {
 
       snapshot(html);
       done();
-    }
+    },
   );
 };

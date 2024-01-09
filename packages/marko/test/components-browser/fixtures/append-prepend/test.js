@@ -10,6 +10,6 @@ module.exports = function (helpers) {
   hello.renderSync({ value: "before" }).prependTo(renderTarget);
   hello.renderSync({ value: "after" }).appendTo(renderTarget);
   expect(renderTarget.innerHTML).to.equal(
-    "<div>Hello before</div><span>ref</span><div>Hello after</div>"
+    "<div>Hello before</div><span>ref</span><div>Hello after</div>",
   );
 };

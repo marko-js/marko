@@ -1,5 +1,5 @@
-import { types as t } from "@marko/compiler";
 import { computeNode, importDefault, isNativeTag } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 import styleToString from "marko/src/runtime/helpers/style-value";
 import withPreviousLocation from "../../../util/with-previous-location";
 
@@ -25,12 +25,12 @@ export default {
             importDefault(
               file,
               "marko/src/runtime/helpers/style-value.js",
-              "marko_style_merge"
+              "marko_style_merge",
             ),
-            [value.node]
+            [value.node],
           ),
-          value.node
-        )
+          value.node,
+        ),
       );
     }
   },

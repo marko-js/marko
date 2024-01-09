@@ -12,7 +12,7 @@ module.exports = function (helpers) {
     expect(component.events.length).to.equal(1);
     expect(component.events[0].color).to.equal("red");
     expect(component.events[0].node).to.equal(
-      component.el.querySelectorAll("li")[0]
+      component.el.querySelectorAll("li")[0],
     );
   }
 
@@ -25,7 +25,7 @@ module.exports = function (helpers) {
   expect(component.events.length).to.equal(OFFSET + 2);
   expect(component.events[OFFSET + 1].color).to.equal("blue");
   expect(component.events[OFFSET + 1].node).to.equal(
-    component.el.querySelectorAll("li")[1]
+    component.el.querySelectorAll("li")[1],
   );
 
   component.input = {
@@ -37,6 +37,6 @@ module.exports = function (helpers) {
   expect(component.events.length).to.equal(OFFSET + 3);
   expect(component.events[OFFSET + 2].color).to.equal("green");
   expect(component.events[OFFSET + 2].node).to.equal(
-    component.el.querySelectorAll("li")[1]
+    component.el.querySelectorAll("li")[1],
   );
 };

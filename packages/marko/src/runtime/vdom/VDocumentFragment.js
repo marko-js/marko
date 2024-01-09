@@ -1,6 +1,6 @@
-var VNode = require("./VNode");
-var inherit = require("raptor-util/inherit");
 var extend = require("raptor-util/extend");
+var inherit = require("raptor-util/inherit");
+var VNode = require("./VNode");
 
 function VDocumentFragmentClone(other) {
   extend(this, other);

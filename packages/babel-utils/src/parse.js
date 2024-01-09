@@ -1,6 +1,6 @@
 import * as babelParser from "@babel/parser";
-import { getLocRange } from "./loc";
 import { types as t } from "@marko/compiler";
+import { getLocRange } from "./loc";
 
 const CODE_AS_WHITE_SPACE_KEY = Symbol();
 
@@ -9,7 +9,7 @@ export function parseStatements(
   str,
   sourceStart,
   sourceEnd,
-  sourceOffset
+  sourceOffset,
 ) {
   return tryParse(file, false, str, sourceStart, sourceEnd, sourceOffset);
 }
@@ -19,7 +19,7 @@ export function parseExpression(
   str,
   sourceStart,
   sourceEnd,
-  sourceOffset
+  sourceOffset,
 ) {
   return tryParse(file, true, str, sourceStart, sourceEnd, sourceOffset);
 }
@@ -30,7 +30,7 @@ export function parseParams(file, str, sourceStart, sourceEnd) {
     `(${str})=>{}`,
     sourceStart,
     sourceEnd,
-    1
+    1,
   );
 
   if (parsed.type === "ArrowFunctionExpression") {
@@ -56,7 +56,7 @@ export function parseVar(file, str, sourceStart, sourceEnd) {
     `(${str})=>{}`,
     sourceStart,
     sourceEnd,
-    1
+    1,
   );
 
   if (parsed.type === "ArrowFunctionExpression" && parsed.params.length === 1) {
@@ -72,7 +72,7 @@ export function parseTemplateLiteral(file, str, sourceStart, sourceEnd) {
     "`" + str + "`",
     sourceStart,
     sourceEnd,
-    1
+    1,
   );
 
   if (parsed.type === "TemplateLiteral") {
@@ -99,7 +99,7 @@ export function parseTypeParams(file, str, sourceStart, sourceEnd) {
     `<${str}>()=>{}`,
     sourceStart,
     sourceEnd,
-    1
+    1,
   );
 
   if (parsed.type === "ArrowFunctionExpression") {
@@ -115,7 +115,7 @@ function tryParse(
   str,
   sourceStart,
   sourceEnd,
-  sourceOffset
+  sourceOffset,
 ) {
   const { parserOpts } = file.opts;
   let code = str;
@@ -125,12 +125,12 @@ function tryParse(
       file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] ||
       (file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] = file.code.replace(
         /[^\s]/g,
-        " "
+        " ",
       ));
     code =
       whitespace.slice(
         0,
-        sourceOffset ? sourceStart - sourceOffset : sourceStart
+        sourceOffset ? sourceStart - sourceOffset : sourceStart,
       ) + str;
 
     try {
@@ -143,7 +143,7 @@ function tryParse(
         sourceStart,
         sourceEnd,
         err.message,
-        err.loc
+        err.loc,
       );
 
       if (isExpression) {
@@ -167,7 +167,7 @@ function ensureParseError(file, node, sourceStart, sourceEnd) {
     file,
     sourceStart,
     sourceEnd,
-    `Unexpected node of type ${node.type} returned while parsing.`
+    `Unexpected node of type ${node.type} returned while parsing.`,
   );
 }
 

@@ -1,5 +1,3 @@
-import { TagType, createParser } from "htmljs-parser";
-import * as t from "../babel-types";
 import {
   getTagDefForTagName,
   parseArgs,
@@ -11,6 +9,8 @@ import {
   parseTypeParams,
   parseVar,
 } from "@marko/babel-utils";
+import { TagType, createParser } from "htmljs-parser";
+import * as t from "../babel-types";
 
 const noop = () => {};
 const emptyRange = (part) => part.start === part.end;
@@ -75,7 +75,7 @@ export function parseMarko(file) {
             file,
             parser.read(value),
             value.start,
-            value.end
+            value.end,
           );
           if (t.isStringLiteral(result)) {
             // convert to template literal just so that we don't mistake it for a native tag if this is a tag name.
@@ -86,7 +86,7 @@ export function parseMarko(file) {
                   cooked: result.value,
                 }),
               ],
-              []
+              [],
             );
           } else {
             return result;
@@ -204,7 +204,7 @@ export function parseMarko(file) {
         file,
         parser.read(part.value),
         part.value.start,
-        part.value.end
+        part.value.end,
       );
     },
     onTagTypeParams(part) {
@@ -212,7 +212,7 @@ export function parseMarko(file) {
         file,
         parser.read(part.value),
         part.value.start,
-        part.value.end
+        part.value.end,
       );
     },
     onPlaceholder(part) {
@@ -223,12 +223,12 @@ export function parseMarko(file) {
               file,
               parser.read(part.value),
               part.value.start,
-              part.value.end
+              part.value.end,
             ),
-            part.escape
+            part.escape,
           ),
-          part
-        )
+          part,
+        ),
       );
     },
     onScriptlet(part) {
@@ -239,11 +239,11 @@ export function parseMarko(file) {
               file,
               parser.read(part.value),
               part.value.start,
-              part.value.end
-            )
+              part.value.end,
+            ),
           ),
-          part
-        )
+          part,
+        ),
       );
     },
     onOpenTagName(part) {
@@ -259,13 +259,13 @@ export function parseMarko(file) {
         if (literalTagName === "%") {
           throw file.buildCodeFrameError(
             tagName,
-            "<% scriptlets %> are no longer supported."
+            "<% scriptlets %> are no longer supported.",
           );
         }
 
         const parseOptions = (node.tagDef = getTagDefForTagName(
           file,
-          literalTagName
+          literalTagName,
         ))?.parseOptions;
 
         if (parseOptions) {
@@ -302,7 +302,7 @@ export function parseMarko(file) {
         file,
         parser.read(value),
         value.start,
-        value.end
+        value.end,
       );
     },
 
@@ -311,7 +311,7 @@ export function parseMarko(file) {
         file,
         parser.read(value),
         value.start,
-        value.end
+        value.end,
       );
     },
 
@@ -320,7 +320,7 @@ export function parseMarko(file) {
         file,
         parser.read(value),
         value.start,
-        value.end
+        value.end,
       );
     },
 
@@ -333,8 +333,8 @@ export function parseMarko(file) {
           t.booleanLiteral(true),
           modifier,
           undefined,
-          !name
-        ))
+          !name,
+        )),
       );
 
       currentAttr.start = part.start;
@@ -346,7 +346,7 @@ export function parseMarko(file) {
         file,
         parser.read(value),
         value.start,
-        value.end
+        value.end,
       );
 
       currentAttr.end = end;
@@ -358,7 +358,7 @@ export function parseMarko(file) {
       currentAttr.value = parseExpression(
         file,
         parser.read(part.value),
-        part.value.start
+        part.value.start,
       );
     },
 
@@ -371,18 +371,18 @@ export function parseMarko(file) {
             file,
             parser.read(part.params.value),
             part.params.value.start,
-            part.params.value.end
+            part.params.value.end,
           ),
           t.blockStatement(
             parseStatements(
               file,
               parser.read(part.body.value),
               part.body.value.start,
-              part.body.value.end
-            )
-          )
+              part.body.value.end,
+            ),
+          ),
         ),
-        part
+        part,
       );
     },
 
@@ -391,10 +391,10 @@ export function parseMarko(file) {
       currentTag.node.attributes.push(
         withLoc(
           t.markoSpreadAttribute(
-            parseExpression(file, parser.read(part.value), part.value.start)
+            parseExpression(file, parser.read(part.value), part.value.start),
           ),
-          part
-        )
+          part,
+        ),
       );
     },
 
@@ -410,20 +410,22 @@ export function parseMarko(file) {
           currentShorthandClassNames.length === 1
             ? currentShorthandClassNames[0]
             : currentShorthandClassNames.every((expr) =>
-                t.isStringLiteral(expr)
-              )
-            ? withLoc(
-                t.stringLiteral(
-                  currentShorthandClassNames.map((node) => node.value).join(" ")
-                ),
-                {
-                  start: currentShorthandClassNames[0].start,
-                  end: currentShorthandClassNames[
-                    currentShorthandClassNames.length - 1
-                  ].end,
-                }
-              )
-            : t.arrayExpression(currentShorthandClassNames);
+                  t.isStringLiteral(expr),
+                )
+              ? withLoc(
+                  t.stringLiteral(
+                    currentShorthandClassNames
+                      .map((node) => node.value)
+                      .join(" "),
+                  ),
+                  {
+                    start: currentShorthandClassNames[0].start,
+                    end: currentShorthandClassNames[
+                      currentShorthandClassNames.length - 1
+                    ].end,
+                  },
+                )
+              : t.arrayExpression(currentShorthandClassNames);
 
         for (const attr of attributes) {
           if (attr.name === "class") {
@@ -461,12 +463,12 @@ export function parseMarko(file) {
           if (attr.name === "id") {
             throw file.buildCodeFrameError(
               attr,
-              "Cannot have shorthand id and id attribute."
+              "Cannot have shorthand id and id attribute.",
             );
           }
         }
         currentTag.node.attributes.push(
-          t.markoAttribute("id", currentShorthandId)
+          t.markoAttribute("id", currentShorthandId),
         );
         currentShorthandId = undefined;
       }

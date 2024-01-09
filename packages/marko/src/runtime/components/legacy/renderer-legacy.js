@@ -1,13 +1,13 @@
+var beginComponent = require("@internal/components-beginComponent");
+var endComponent = require("@internal/components-endComponent");
+var registry = require("@internal/components-registry");
+var componentsUtil = require("@internal/components-util");
 var getComponentsContext =
   require("../ComponentsContext").___getComponentsContext;
-var componentsUtil = require("@internal/components-util");
 var componentLookup = componentsUtil.___componentLookup;
-var registry = require("@internal/components-registry");
 var modernRenderer = require("../renderer");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var trackAsyncComponents = modernRenderer.___trackAsyncComponents;
-var beginComponent = require("@internal/components-beginComponent");
-var endComponent = require("@internal/components-endComponent");
 var complain = "MARKO_DEBUG" && require("complain");
 
 function createRendererFunc(templateRenderFunc, componentProps) {
@@ -29,7 +29,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         parentLegacyComponentDef,
         parentLegacyComponentDef.___component,
         parentLegacyComponentDef.___component.___rawState,
-        out.global
+        out.global,
       );
       return;
     }
@@ -74,7 +74,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         out,
         typeName,
         customEvents,
-        ownerComponentId
+        ownerComponentId,
       );
       if (isSplit || widgetState) {
         component.input = null;
@@ -83,7 +83,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
         if ("MARKO_DEBUG") {
           complain(
             "Possible performance impact: this widget does not contain state, but is marked as a stateful widget. This will result in additional hydration data serialized.  In order for marko to identify this as a split widget, w-bind should use a widget.js with defineWidget rather than index.js with defineComponent.",
-            { location: typeName, level: 1 }
+            { location: typeName, level: 1 },
           );
         }
         component.input = input.widgetProps;
@@ -135,7 +135,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       key,
       ownerComponentDef,
       isSplit,
-      isFakeComponent
+      isFakeComponent,
     );
     componentsContext.___legacyComponentDef = componentDef;
 
@@ -158,7 +158,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             out,
             typeName,
             customEvents,
-            ownerComponentId
+            ownerComponentId,
           );
           if (isSplit || widgetState) {
             component.input = null;
@@ -167,7 +167,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             if ("MARKO_DEBUG") {
               complain(
                 "Possible performance impact: this widget does not contain state, but is marked as a stateful widget. This will result in additional hydration data serialized.  In order for marko to identify this as a split widget, w-bind should use a widget.js with defineWidget rather than index.js with defineComponent.",
-                { location: typeName, level: 1 }
+                { location: typeName, level: 1 },
               );
             }
             component.input = input.widgetProps;
@@ -180,12 +180,12 @@ function createRendererFunc(templateRenderFunc, componentProps) {
             ownerComponentDef,
             isSplit,
             false,
-            this
+            this,
           );
         } else {
           vComponentNode.___component = component = registry.___createComponent(
             typeName,
-            component.id
+            component.id,
           );
         }
         this.___component = component;
@@ -206,7 +206,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       componentDef,
       component,
       component.___rawState,
-      out.global
+      out.global,
     );
 
     if (customEvents && componentDef.___component) {
@@ -216,7 +216,7 @@ function createRendererFunc(templateRenderFunc, componentProps) {
       } else {
         componentDef.___component.___setCustomEvents(
           customEvents,
-          ownerComponentId
+          ownerComponentId,
         );
       }
     }

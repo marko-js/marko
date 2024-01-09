@@ -1,12 +1,12 @@
 "use strict";
 
+var ok = require("assert").ok;
+var fs = require("fs");
 var complain = "MARKO_DEBUG" && require("complain");
 var compiler = require("@marko/compiler");
 var extend = require("raptor-util/extend");
-var globalConfig = require("./config");
-var ok = require("assert").ok;
-var fs = require("fs");
 var taglib = require("../taglib");
+var globalConfig = require("./config");
 var defaults = extend({}, globalConfig);
 
 // eslint-disable-next-line no-constant-condition
@@ -16,7 +16,7 @@ if ("MARKO_DEBUG") {
     require.main.filename !== require.resolve("../../bin/markoc")
   ) {
     complain(
-      "Using `marko/compiler` has been deprecated, please upgrade to the `@marko/compiler` module."
+      "Using `marko/compiler` has been deprecated, please upgrade to the `@marko/compiler` module.",
     );
   }
 }
@@ -67,7 +67,7 @@ function _compile(src, filename, userConfig, callback) {
   if (callback) {
     compiler.compile(src, filename, options).then(
       (result) => callback(null, resultCompat(result, options)),
-      (error) => callback(error)
+      (error) => callback(error),
     );
   } else {
     return resultCompat(compiler.compileSync(src, filename, options), options);
@@ -98,7 +98,7 @@ function compileForBrowser(src, filename, options, callback) {
       meta: false,
       sourceOnly: false,
     },
-    options
+    options,
   );
 
   return compile(src, filename, options, callback);

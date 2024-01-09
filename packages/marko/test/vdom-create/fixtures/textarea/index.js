@@ -10,7 +10,7 @@ module.exports = function (helpers) {
       null /* key */,
       null /* component */,
       2 /* childCount */,
-      FLAGS
+      FLAGS,
     )
     .t("foo")
     .t("bar");

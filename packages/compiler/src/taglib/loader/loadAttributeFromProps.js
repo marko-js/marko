@@ -2,9 +2,9 @@
 
 var assert = require("assert");
 var raptorRegexp = require("raptor-regexp");
+var createError = require("raptor-util/createError");
 var propertyHandlers = require("./property-handlers");
 var types = require("./types");
-var createError = require("raptor-util/createError");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 class AttrLoader {
@@ -229,7 +229,7 @@ function loadAttributeFromProps(attrName, attrProps, dependencyChain) {
         dependencyChain +
         "): " +
         err,
-      err
+      err,
     );
   }
 

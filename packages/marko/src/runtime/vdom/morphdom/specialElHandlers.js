@@ -93,7 +93,7 @@ SpecialElHandlers.prototype = {
             selected = i;
           }
         },
-        -1
+        -1,
       );
 
       if (fromEl.selectedIndex !== selected) {

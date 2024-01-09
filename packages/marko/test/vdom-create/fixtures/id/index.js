@@ -6,7 +6,7 @@ module.exports = function (helpers) {
     { id: "foo" },
     null /* key */,
     null /* component */,
-    0 /* childCount */
+    0 /* childCount */,
   );
   expect(el.___attributes.id).to.equal("foo");
   return el;

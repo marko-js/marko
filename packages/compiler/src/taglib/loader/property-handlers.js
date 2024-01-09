@@ -57,7 +57,7 @@ module.exports = function invokeHandlers(config, handlers, path) {
           "Invalid option of " +
             badProperty +
             ". Allowed: " +
-            Object.keys(handlers).join(", ")
+            Object.keys(handlers).join(", "),
         );
       }
 

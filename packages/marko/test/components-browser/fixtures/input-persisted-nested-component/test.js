@@ -7,10 +7,10 @@ module.exports = function (helpers) {
 
   expect(component.el.getAttribute("style")).to.equal("color:red");
   expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color:red"
+    "color:red",
   );
   expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML
+    component.getComponent("counter").el.querySelector(".count").innerHTML,
   ).to.equal("0");
 
   component.getComponent("counter").increment();
@@ -18,10 +18,10 @@ module.exports = function (helpers) {
 
   expect(component.el.getAttribute("style")).to.equal("color:red");
   expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color:red"
+    "color:red",
   );
   expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML
+    component.getComponent("counter").el.querySelector(".count").innerHTML,
   ).to.equal("1");
 
   component.updateColor("green");
@@ -29,10 +29,10 @@ module.exports = function (helpers) {
 
   expect(component.el.getAttribute("style")).to.equal("color: green;");
   expect(component.getComponent("counter").el.getAttribute("style")).to.equal(
-    "color: green;"
+    "color: green;",
   );
   expect(
-    component.getComponent("counter").el.querySelector(".count").innerHTML
+    component.getComponent("counter").el.querySelector(".count").innerHTML,
   ).to.equal("1");
 
   //

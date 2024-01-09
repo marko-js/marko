@@ -1,5 +1,4 @@
 import nodePath from "path";
-import { types as t } from "@marko/compiler";
 import {
   assertNoVar,
   findAttributeTags,
@@ -9,15 +8,16 @@ import {
   isMacroTag,
   isNativeTag,
 } from "@marko/babel-utils";
-import nativeTag from "./native-tag";
-import dynamicTag from "./dynamic-tag";
+import { types as t } from "@marko/compiler";
+import { getKeyManager } from "../util/key-manager";
+import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
+import { enter, exit } from "../util/plugin-hooks";
+import attributeTranslators from "./attribute";
 import attributeTag from "./attribute-tag";
 import customTag from "./custom-tag";
+import dynamicTag from "./dynamic-tag";
 import macroTag from "./macro-tag";
-import attributeTranslators from "./attribute";
-import { getKeyManager } from "../util/key-manager";
-import { enter, exit } from "../util/plugin-hooks";
-import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
+import nativeTag from "./native-tag";
 
 export default {
   enter(path) {
@@ -48,7 +48,7 @@ export default {
       findAttributeTags(path).forEach((child) => {
         child.set(
           "name",
-          t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`)
+          t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`),
         );
       });
     }
@@ -72,7 +72,7 @@ export default {
           path.insertBefore(
             t.variableDeclaration("const", [
               t.variableDeclarator(tagIdentifier, name.node),
-            ])
+            ]),
           );
 
           name.replaceWith(tagIdentifier);

@@ -17,7 +17,7 @@ module.exports = function mergeAttrs() {
     // eslint-disable-next-line no-constant-condition
     if ("MARKO_DEBUG") {
       complain(
-        "Passing a string as dynamic attributes ('<div ${string}>' or '<div ...string>') is deprecated, use an object instead."
+        "Passing a string as dynamic attributes ('<div ${string}>' or '<div ...string>') is deprecated, use an object instead.",
       );
     }
 
@@ -35,7 +35,7 @@ module.exports = function mergeAttrs() {
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain(
-          "Passing a string as dynamic attributes ('<div ${string}>' or '<div ...string>') is deprecated, use an object instead."
+          "Passing a string as dynamic attributes ('<div ${string}>' or '<div ...string>') is deprecated, use an object instead.",
         );
       }
 

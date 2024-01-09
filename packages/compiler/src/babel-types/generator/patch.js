@@ -1,8 +1,8 @@
 import "../types/patch";
 
+import Printer from "@babel/generator/lib/printer";
 import * as t from "@babel/types";
 import SELF_CLOSING from "self-closing-tags";
-import Printer from "@babel/generator/lib/printer";
 
 Object.assign(Printer.prototype, {
   MarkoParseError(node) {

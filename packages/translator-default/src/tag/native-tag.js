@@ -1,10 +1,10 @@
-import nativeTagHtml from "./native-tag[html]";
-import nativeTagVdom from "./native-tag[vdom]";
 import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
 } from "@marko/babel-utils";
+import nativeTagHtml from "./native-tag[html]";
+import nativeTagVdom from "./native-tag[vdom]";
 
 export default function (path, isNullable) {
   const {

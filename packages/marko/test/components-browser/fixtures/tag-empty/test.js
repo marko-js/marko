@@ -9,7 +9,7 @@ module.exports = function (helpers) {
     const openTag = tag ? `<${tag}>` : "";
     const closeTag = tag ? `</${tag}>` : "";
     expect(helpers.targetEl.innerHTML).to.contain(
-      `<div>${openTag}${innerHTML}${closeTag}</div>`
+      `<div>${openTag}${innerHTML}${closeTag}</div>`,
     );
   }
 

@@ -1,10 +1,10 @@
-import { basename, dirname, relative, resolve } from "path";
-import resolveFrom from "resolve-from";
 import { createHash } from "crypto";
+import { basename, dirname, relative, resolve } from "path";
 import { types as t } from "@marko/compiler";
 import { getRootDir } from "lasso-package-root";
-import { getTagDefForTagName } from "./taglib";
+import resolveFrom from "resolve-from";
 import { resolveRelativePath } from "./imports";
+import { getTagDefForTagName } from "./taglib";
 
 const MACRO_IDS_KEY = Symbol();
 const MACRO_NAMES_KEY = "__marko_macro_names__"; // must be a string literal since it is used across compiler stages.
@@ -64,7 +64,7 @@ export function registerMacro(path, name) {
   if (macroNames) {
     if (macroNames[name]) {
       throw path.buildCodeFrameError(
-        `A macro with the name "${name}" already exists.`
+        `A macro with the name "${name}" already exists.`,
       );
     }
     macroNames[name] = true;
@@ -88,7 +88,7 @@ export function getMacroIdentifierForName(path, name) {
 
   if (file.___compileStage !== "translate") {
     throw new Error(
-      "getMacroIdentifierForName can only be called during the translate phase of the compiler."
+      "getMacroIdentifierForName can only be called during the translate phase of the compiler.",
     );
   }
 
@@ -107,7 +107,7 @@ export function getMacroIdentifierForName(path, name) {
 
   if (!id) {
     throw new Error(
-      "<macro> was added programmatically, but was not registered via the 'registerMacro' api in @marko/babel-utils."
+      "<macro> was added programmatically, but was not registered via the 'registerMacro' api in @marko/babel-utils.",
     );
   }
 
@@ -119,13 +119,13 @@ export function getMacroIdentifier(path) {
 
   if (file.___compileStage !== "translate") {
     throw new Error(
-      "getMacroIdentifier can only be called during the translate phase of the compiler."
+      "getMacroIdentifier can only be called during the translate phase of the compiler.",
     );
   }
 
   if (!isMacroTag(path)) {
     throw path.buildCodeFrameError(
-      "getMacroIdentifier called on non macro referencing tag."
+      "getMacroIdentifier called on non macro referencing tag.",
     );
   }
 
@@ -145,7 +145,9 @@ export function getTagDef(path) {
       node.tagDef =
         getTagDefForTagName(
           file,
-          isAttributeTag(path) ? getFullyResolvedTagName(path) : node.name.value
+          isAttributeTag(path)
+            ? getFullyResolvedTagName(path)
+            : node.name.value,
         ) || null;
     }
   }
@@ -247,7 +249,7 @@ export function loadFileForTag(tag) {
     return file.___getMarkoFile(
       fs.readFileSync(filename).toString("utf-8"),
       createNewFileOpts(file.opts, filename),
-      file.markoOpts
+      file.markoOpts,
     );
   }
 }
@@ -272,7 +274,7 @@ export function loadFileForImport(file, request) {
     return file.___getMarkoFile(
       fs.readFileSync(filename).toString("utf-8"),
       createNewFileOpts(file.opts, filename),
-      file.markoOpts
+      file.markoOpts,
     );
   }
 }
@@ -299,7 +301,7 @@ export function resolveTagImport(path, request) {
 
     if (!relativePath) {
       throw path.buildCodeFrameError(
-        `Unable to find entry point for custom tag <${tagName}>.`
+        `Unable to find entry point for custom tag <${tagName}>.`,
       );
     }
 
