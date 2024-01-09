@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.3
+
+### Patch Changes
+
+- [#2074](https://github.com/marko-js/marko/pull/2074) [`bf23c566fac02f4e2991be357a95483663493b3f`](https://github.com/marko-js/marko/commit/bf23c566fac02f4e2991be357a95483663493b3f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade package lock and built types.
+
 ## 5.34.2
 
 ### Patch Changes
