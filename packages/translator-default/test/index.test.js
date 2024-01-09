@@ -1,11 +1,12 @@
 import fs from "fs";
 import path from "path";
 import autotest from "mocha-autotest";
-import stripAnsi from "strip-ansi";
-import escapeRegExp from "escape-string-regexp";
 import { compileFileSync } from "@marko/compiler";
 
-const cwdRegExp = new RegExp(escapeRegExp(process.cwd() + "/"), "g");
+// eslint-disable-next-line no-control-regex
+const ansiReg = /([\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><])/g;
+const regexpCharsReg = /[\\^$.*+?()[\]{}|]/g;
+const cwdRegExp = new RegExp(process.cwd().replace(regexpCharsReg, "\\$&") + "/", "g");
 
 describe("translator-class", () => {
   autotest("fixtures", {
@@ -64,7 +65,7 @@ function runTest(config) {
         diags = result.meta.diagnostics;
       } catch (err) {
         try {
-          snapshot(stripCwd(stripModuleStackTrace(stripAnsi(err.stack))), {
+          snapshot(stripCwd(stripModuleStackTrace(String(err.stack).replace(ansiReg, ""))), {
             name: `${name}-error`,
             ext: ".txt",
           });

@@ -1,5 +1,5 @@
 import path from "path";
-import escapeRegExp from "escape-string-regexp";
+import { escapeRegExp } from "./escape-regexp";
 
 const COMPONENT_FILES_KEY = Symbol();
 

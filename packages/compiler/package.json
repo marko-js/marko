@@ -35,20 +35,21 @@
     "build:types": "node scripts/types-babel-types.mjs > ./dist/types.d.ts && node scripts/types-babel-traverse.js > ./dist/traverse.d.ts"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/generator": "^7.16.0",
-    "@babel/parser": "^7.16.0",
-    "@babel/plugin-syntax-typescript": "^7.16.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
-    "@babel/plugin-transform-typescript": "^7.16.0",
-    "@babel/runtime": "^7.16.0",
-    "@babel/traverse": "^7.16.0",
-    "@babel/types": "^7.16.0",
+    "@babel/code-frame": "^7.23.5",
+    "@babel/core": "^7.23.7",
+    "@babel/generator": "^7.23.6",
+    "@babel/parser": "^7.23.6",
+    "@babel/plugin-syntax-typescript": "^7.23.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "@babel/plugin-transform-typescript": "^7.23.6",
+    "@babel/runtime": "^7.23.8",
+    "@babel/traverse": "^7.23.7",
+    "@babel/types": "^7.23.6",
+    "@luxass/strip-json-comments": "^1.1.1",
     "@marko/babel-utils": "^6.3.4",
     "complain": "^1.6.0",
     "he": "^1.2.0",
-    "htmljs-parser": "^5.4.3",
+    "htmljs-parser": "^5.5.2",
     "jsesc": "^3.0.2",
     "kleur": "^4.1.5",
     "lasso-package-root": "^1.0.1",
@@ -56,9 +57,7 @@
     "raptor-util": "^3.2.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
-    "source-map-support": "^0.5.21",
-    "strip-ansi": "^6.0.0",
-    "strip-json-comments": "^3.1.1"
+    "source-map-support": "^0.5.21"
   },
   "devDependencies": {
     "@marko/translator-default": "^5.31.10"

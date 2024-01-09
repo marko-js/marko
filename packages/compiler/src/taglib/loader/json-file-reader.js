@@ -1,5 +1,5 @@
 var taglibConfig = require("../config");
-var stripJsonComments = require("strip-json-comments");
+var stripJsonComments = require("@luxass/strip-json-comments").strip;
 var fsReadOptions = { encoding: "utf8" };
 
 exports.readFileSync = function (path) {

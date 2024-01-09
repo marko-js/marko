@@ -70,14 +70,14 @@
         "argly": "^1.2.0",
         "browser-refresh-client": "1.1.4",
         "complain": "^1.6.0",
-        "csstype": "^3.1.2",
+        "csstype": "^3.1.3",
         "events-light": "^1.0.5",
         "listener-tracker": "^2.0.0",
-        "minimatch": "^3.0.4",
+        "minimatch": "^9.0.3",
         "raptor-util": "^3.2.0",
         "resolve-from": "^5.0.0",
         "self-closing-tags": "^1.0.1",
-        "warp10": "^2.0.1"
+        "warp10": "^2.1.0"
     },
     "logo": {
         "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"

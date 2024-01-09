@@ -116,7 +116,6 @@ function vdomToHTML(node, options) {
       indent +
       JSON.stringify(
         getNodeValue(node)
-          .replace(/\/~vdom\.skip/g, "")
           .replace(/s\d+(-\d+)*/g, "s-normalized")
       ) +
       "\n";
