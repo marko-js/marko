@@ -61,7 +61,7 @@ export function value<T>(
     if (currentMark === 1) {
       if (
         clean !== 1 &&
-        (creation || !(clean &&= scope[valueAccessor] === nextValue))
+        (creation || !(clean ||= scope[valueAccessor] === nextValue))
       ) {
         scope[valueAccessor] = nextValue;
         render?.(scope, nextValue);
