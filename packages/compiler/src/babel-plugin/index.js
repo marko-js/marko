@@ -132,11 +132,13 @@ export default (api, markoOpts) => {
             },
             ExportNamedDeclaration: {
               exit(path) {
+                const { node } = path;
                 // The babel typescript plugin will add an empty export declaration
                 // if there are no other imports/exports in the file.
                 // This is not needed for Marko file outputs since there is always
                 // a default export.
-                if (path.node.specifiers.length === 0) path.remove();
+                if (!(node.declaration || node.specifiers.length))
+                  path.remove();
               },
             },
           }
