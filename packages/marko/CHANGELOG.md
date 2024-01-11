@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.32.6
+
+### Patch Changes
+
+- [#2079](https://github.com/marko-js/marko/pull/2079) [`2976dfa`](https://github.com/marko-js/marko/commit/2976dfac56c592dfd80ea79c6ea0e1389346f44c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where additional exports were being removed when stripping typescript types.
+
+- Updated dependencies [[`2976dfa`](https://github.com/marko-js/marko/commit/2976dfac56c592dfd80ea79c6ea0e1389346f44c)]:
+  - @marko/compiler@5.34.5
+  - @marko/translator-default@5.31.12
+
 ## 5.32.5
 
 ### Patch Changes
