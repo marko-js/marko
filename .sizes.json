@@ -1,7 +1,7 @@
 {
   "examples": {
-    "counter": "./packages/translator/src/__tests__/fixtures/basic-counter/template.marko",
-    "comments": "./packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
+    "counter": "./packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko",
+    "comments": "./packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
   },
   "results": [
     {
@@ -16,8 +16,8 @@
       "name": "counter",
       "user": {
         "min": 351,
-        "gzip": 279,
-        "brotli": 242
+        "gzip": 277,
+        "brotli": 239
       },
       "runtime": {
         "min": 3965,
@@ -26,8 +26,8 @@
       },
       "total": {
         "min": 4316,
-        "gzip": 2141,
-        "brotli": 1909
+        "gzip": 2139,
+        "brotli": 1906
       }
     },
     {
@@ -53,7 +53,7 @@
       "user": {
         "min": 1216,
         "gzip": 704,
-        "brotli": 636
+        "brotli": 640
       },
       "runtime": {
         "min": 7393,
@@ -63,15 +63,15 @@
       "total": {
         "min": 8609,
         "gzip": 4127,
-        "brotli": 3739
+        "brotli": 3743
       }
     },
     {
       "name": "comments 💧",
       "user": {
         "min": 988,
-        "gzip": 589,
-        "brotli": 572
+        "gzip": 585,
+        "brotli": 542
       },
       "runtime": {
         "min": 7914,
@@ -80,8 +80,8 @@
       },
       "total": {
         "min": 8902,
-        "gzip": 4249,
-        "brotli": 3902
+        "gzip": 4245,
+        "brotli": 3872
       }
     }
   ]

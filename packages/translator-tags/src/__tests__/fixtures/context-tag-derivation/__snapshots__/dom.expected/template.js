@@ -1,0 +1,15 @@
+import { initContextProvider as _initContextProvider, childClosures as _childClosures, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { setup as _child, template as _child_template, walks as _child_walks, closures as _child_closures } from "./components/child.marko";
+const _setup$putBody = _scope => {
+  _child(_scope["#childScope/0"]);
+};
+const _putBody = /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$putBody, [_childClosures(_child_closures, "#childScope/0")]);
+const _put = /* @__PURE__ */_value("0:", null, _dynamicSubscribers("0:"));
+const _setup = _scope => {
+  _initContextProvider(_scope, "#text/0", "0:", "packages/translator-tags/src/__tests__/fixtures/context-tag-derivation/template.marko", _putBody);
+  _put(_scope, 123);
+};
+export const template = "<!>";
+export const walks = /* replace, over(1) */"%b";
+export const setup = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/context-tag-derivation/template.marko");

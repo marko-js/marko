@@ -7,10 +7,10 @@
   },
   "references": [
     {
-      "path": "./packages/runtime"
+      "path": "./packages/runtime-tags"
     },
     {
-      "path": "./packages/translator"
+      "path": "./packages/translator-tags"
     }
   ]
 }

@@ -27,8 +27,14 @@ interface Saved {
 }
 
 const rootDir = path.join(__dirname, "..");
-const runtimePath = path.join(rootDir, "packages/runtime/dist/dom/index.mjs");
-const translatorPath = path.join(rootDir, "packages/translator/dist/index.js");
+const runtimePath = path.join(
+  rootDir,
+  "packages/runtime-tags/dist/dom/index.mjs",
+);
+const translatorPath = path.join(
+  rootDir,
+  "packages/translator-tags/dist/index.js",
+);
 const configPath = path.join(rootDir, ".sizes.json");
 const skipExamples = process.argv.includes("--no-examples");
 
@@ -179,7 +185,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
       {
         name: "marko",
         resolveId(source) {
-          if (source === "@marko/runtime-fluurt/dist/dom") {
+          if (source === "@marko/runtime-tags/dist/dom") {
             return runtimePath;
           }
         },
@@ -205,7 +211,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
         pluginVirtual({
           "./hydrate.js": `import ${JSON.stringify(
             examplePath,
-          )}; import { init } from "@marko/runtime-fluurt/dist/dom"; init();`,
+          )}; import { init } from "@marko/runtime-tags/dist/dom"; init();`,
         }),
       pluginTerser({ compress: {}, mangle: { module: true } }),
     ],

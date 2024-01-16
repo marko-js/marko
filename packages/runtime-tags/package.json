@@ -1,0 +1,26 @@
+{
+  "name": "@marko/runtime-tags",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Optimized runtime for Marko templates.",
+  "keywords": [
+    "tags",
+    "marko",
+    "runtime"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/master/packages/runtime-tags/README.md",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/master/packages/runtime-tags"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "!**/meta.*.json",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  }
+}

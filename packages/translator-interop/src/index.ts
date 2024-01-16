@@ -9,7 +9,7 @@ import {
   analyze as analyze6,
   taglibs as taglibs6,
   translate as translate6,
-} from "@marko/translator-fluurt";
+} from "@marko/translator-tags";
 import { isTagsAPI } from "./feature-detection";
 
 type TagDef = Record<string, unknown>;
