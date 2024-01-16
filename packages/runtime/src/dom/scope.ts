@@ -6,7 +6,9 @@ let debugID = 0;
 
 export function createScope(context?: ScopeContext): Scope {
   const scope = {} as Scope;
-  scope.___debugId = debugID++;
+  if (MARKO_DEBUG) {
+    scope.___debugId = debugID++;
+  }
   scope.___client = true;
   scope.___context = context;
   return scope;

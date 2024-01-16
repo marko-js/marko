@@ -1,56 +1,46 @@
-type Unset = false | null | undefined;
 type EventNames = keyof GlobalEventHandlersEventMap;
 
-const delegationRoots = new WeakMap<
-  Node,
-  Map<string, WeakMap<Element, Unset | ((...args: any[]) => void)>>
+const handlersByElement = new WeakMap<
+  Element,
+  undefined | ((...args: any[]) => void)
 >();
+const delegatedEventsByRoot = new WeakMap<Node, Set<string>>();
 
-const eventOpts: AddEventListenerOptions = {
-  capture: true,
-};
+const eventOpts: AddEventListenerOptions = { capture: true };
 
 export function on<
   T extends EventNames,
   H extends
-    | Unset
+    | false
+    | null
+    | undefined
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
-  const delegationRoot = element.getRootNode();
-  let delegationEvents = delegationRoots.get(delegationRoot);
-  if (!delegationEvents) {
-    delegationRoots.set(delegationRoot, (delegationEvents = new Map()));
-  }
-  let delegationHandlers = delegationEvents.get(type);
-  if (!delegationHandlers) {
-    delegationEvents!.set(type, (delegationHandlers = new WeakMap()));
-    delegationRoot.addEventListener(type, handleDelegated, eventOpts);
+  if (!handlersByElement.has(element)) {
+    const root = element.getRootNode();
+    const delegatedEvents = delegatedEventsByRoot.get(root);
+
+    if (!delegatedEvents) {
+      delegatedEventsByRoot.set(root, new Set([type]));
+    } else {
+      delegatedEvents.add(type);
+    }
+
+    root.addEventListener(type, handleDelegated, eventOpts);
   }
 
-  delegationHandlers.set(element, handler);
+  handlersByElement.set(element, handler || undefined);
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   let target = ev.target as Element | null;
   if (target) {
-    const delegationRoot = target.getRootNode();
-    const delegationEvents = delegationRoots.get(delegationRoot);
-    const delegationHandlers = delegationEvents!.get(ev.type!);
-
-    let handler = delegationHandlers!.get(target);
+    handlersByElement.get(target)?.(ev, target);
 
     if (ev.bubbles) {
-      while (
-        !handler &&
-        !ev.cancelBubble &&
-        (target = target!.parentElement!)
-      ) {
-        handler = delegationHandlers!.get(target);
+      while ((target = target.parentElement) && !ev.cancelBubble) {
+        handlersByElement.get(target)?.(ev, target);
       }
-    }
-
-    if (handler) {
-      handler(ev, target);
     }
   }
 }
