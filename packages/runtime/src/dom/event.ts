@@ -1,11 +1,10 @@
 type EventNames = keyof GlobalEventHandlersEventMap;
 
-const handlersByElement = new WeakMap<
-  Element,
-  undefined | ((...args: any[]) => void)
+const elementHandlersByEvent = new Map<
+  string,
+  WeakMap<Element, undefined | ((...args: any[]) => void)>
 >();
 const delegatedEventsByRoot = new WeakMap<Node, Set<string>>();
-
 const eventOpts: AddEventListenerOptions = { capture: true };
 
 export function on<
@@ -16,25 +15,37 @@ export function on<
     | undefined
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
+  let handlersByElement = elementHandlersByEvent.get(type);
+
+  if (!handlersByElement) {
+    elementHandlersByEvent.set(type, (handlersByElement = new WeakMap()));
+  }
+
   if (!handlersByElement.has(element)) {
-    const root = element.getRootNode();
-    const delegatedEvents = delegatedEventsByRoot.get(root);
-
-    if (!delegatedEvents) {
-      delegatedEventsByRoot.set(root, new Set([type]));
-    } else {
-      delegatedEvents.add(type);
-    }
-
-    root.addEventListener(type, handleDelegated, eventOpts);
+    ensureDelegated(element, type);
   }
 
   handlersByElement.set(element, handler || undefined);
 }
 
+function ensureDelegated(node: Node, type: string) {
+  const root = node.getRootNode();
+  let delegatedEvents = delegatedEventsByRoot.get(root);
+
+  if (!delegatedEvents) {
+    delegatedEventsByRoot.set(root, (delegatedEvents = new Set()));
+  }
+
+  if (!delegatedEvents.has(type)) {
+    delegatedEvents.add(type);
+    root.addEventListener(type, handleDelegated, eventOpts);
+  }
+}
+
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   let target = ev.target as Element | null;
   if (target) {
+    const handlersByElement = elementHandlersByEvent.get(ev.type)!;
     handlersByElement.get(target)?.(ev, target);
 
     if (ev.bubbles) {
