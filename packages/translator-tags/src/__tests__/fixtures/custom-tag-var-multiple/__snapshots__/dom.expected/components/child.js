@@ -1,4 +1,4 @@
-import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
+import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x,
@@ -15,4 +15,4 @@ const _setup = _scope => {
 export const template = "<span>child</span>";
 export const walks = /* over(1) */"b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/custom-tag-var-multiple/components/child.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-multiple/components/child.marko");

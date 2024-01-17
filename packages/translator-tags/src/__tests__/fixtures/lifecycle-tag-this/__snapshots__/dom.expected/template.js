@@ -1,5 +1,5 @@
-import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
-const _x_effect = _register("packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
+import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
   _lifecycle(_scope, "cleanup", {
     onMount: function () {
       this.onUpdate();
@@ -26,4 +26,4 @@ const _setup = _scope => {
 export const template = "<div id=ref></div><button id=increment>Increment</button>";
 export const walks = /* over(1), get, over(1) */"b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/lifecycle-tag-this/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko");

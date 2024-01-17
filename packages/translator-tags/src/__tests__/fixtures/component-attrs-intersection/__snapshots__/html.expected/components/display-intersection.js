@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer(({
   value
 }, _tagVar) => {
@@ -10,4 +10,4 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "dummy": dummy
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");

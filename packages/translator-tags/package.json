@@ -1,22 +1,22 @@
 {
-  "name": "@marko/translator-fluurt",
+  "name": "@marko/translator-tags",
   "version": "0.0.1",
   "private": true,
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
-    "fluurt",
+    "tags",
     "htmljs",
     "marko",
     "parse",
     "parser",
     "plugin"
   ],
-  "homepage": "https://github.com/marko-js/x/blob/master/packages/translator/README.md",
-  "bugs": "https://github.com/marko-js/x/issues/new?template=Bug_report.md",
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/translator-tags/README.md",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/x/tree/master/packages/translator"
+    "url": "https://github.com/marko-js/marko/tree/main/packages/translator-tags"
   },
   "license": "MIT",
   "exports": {
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@marko/babel-utils": "^6.2.1",
-    "@marko/runtime-fluurt": "^0.0.1"
+    "@marko/runtime-tags": "^0.0.1"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"

@@ -1,4 +1,4 @@
-import { data as _data, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _expr_a_b$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -22,4 +22,4 @@ const _setup = _scope => {
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/basic-converge-in-if/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-converge-in-if/template.marko");

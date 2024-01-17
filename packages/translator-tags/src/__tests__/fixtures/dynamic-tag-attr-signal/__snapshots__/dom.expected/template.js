@@ -1,5 +1,5 @@
-import { classAttr as _classAttr, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
-const _className_effect = _register("packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className", _scope => _on(_scope["#button/1"], "click", function () {
+import { classAttr as _classAttr, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+const _className_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className", _scope => _on(_scope["#button/1"], "click", function () {
   const {
     className
   } = _scope;
@@ -15,4 +15,4 @@ const _setup = _scope => {
 export const template = "<p>paragraph</p><button></button>";
 export const walks = /* get, over(1), get, over(1) */" b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");

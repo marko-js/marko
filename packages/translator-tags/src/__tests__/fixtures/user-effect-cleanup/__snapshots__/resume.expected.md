@@ -8,7 +8,7 @@
       <!--M*0 #text/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0},a:0,b:0}}),[0,"packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input",])
+      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0},a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input",])
     </script>
   </body>
 </html>
@@ -30,7 +30,7 @@
       <!--M*0 #text/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0},a:0,b:0}}),[0,"packages/translator/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input",])
+      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0},a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input",])
     </script>
   </body>
 </html>

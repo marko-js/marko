@@ -1,18 +1,19 @@
 {
-  "name": "@marko/runtime-fluurt",
+  "name": "@marko/runtime-tags",
   "version": "0.0.1",
   "private": true,
   "description": "Optimized runtime for Marko templates.",
   "keywords": [
-    "fluurt",
+    "api",
     "marko",
-    "runtime"
+    "runtime",
+    "tags"
   ],
-  "homepage": "https://github.com/marko-js/x",
-  "bugs": "https://github.com/marko-js/x/issues",
+  "homepage": "https://github.com/marko-js/marko",
+  "bugs": "https://github.com/marko-js/marko/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/x"
+    "url": "https://github.com/marko-js/marko"
   },
   "license": "MIT",
   "files": [

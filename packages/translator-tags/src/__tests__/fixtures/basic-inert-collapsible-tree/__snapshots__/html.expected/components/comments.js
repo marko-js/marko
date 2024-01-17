@@ -1,4 +1,4 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   comments,
@@ -24,11 +24,11 @@ const _renderer = /* @__PURE__ */_createRenderer(({
       _writeScope(_scope2_id, _scope2_ = {
         "_": _serializedScope(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _write(`${_markResumeScopeStart(_scope1_id)}${_markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_markResumeNode(_scope1_id, "#li/0")}`);
-    _writeEffect(_scope1_id, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
+    _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
     _writeScope(_scope1_id, (_s => (_scope1_.set(i, _s), _s))({
       "i": i,
       "open": open,
@@ -46,4 +46,4 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "path": path
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

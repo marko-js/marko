@@ -1,4 +1,4 @@
-import { createTemplate, fork, write } from "@marko/runtime-fluurt/src/html";
+import { createTemplate, fork, write } from "@marko/runtime-tags/src/html";
 import { rejectAfter } from "../../utils/resolve";
 
 const renderer = () => {

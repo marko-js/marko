@@ -1,8 +1,4 @@
-import {
-  createTemplate,
-  tryCatch,
-  write,
-} from "@marko/runtime-fluurt/src/html";
+import { createTemplate, tryCatch, write } from "@marko/runtime-tags/src/html";
 
 const renderer = () => {
   write("a");

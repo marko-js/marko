@@ -4,7 +4,7 @@ import {
   createRenderer,
   createTemplate,
   value,
-} from "@marko/runtime-fluurt/src/dom";
+} from "@marko/runtime-tags/src/dom";
 import { get, over } from "../../utils/walks";
 import type { steps } from "./test";
 

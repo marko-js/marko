@@ -14,7 +14,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -41,7 +41,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -70,7 +70,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"),val:3,"#text/0!":j={},"#text/0(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <!M|0 #text/0 1><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator/src/__tests__/fixtures/return-tag/template.marko_1_renderer")},1:j},j._=h,k),[])</script>
+  <!M|0 #text/0 1><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/return-tag/template.marko_1_renderer")},1:j},j._=h,k),[])</script>
 
 
 # Render "End"
@@ -8,7 +8,7 @@
 <html>
   <head>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator/src/__tests__/fixtures/return-tag/template.marko_1_renderer")},1:j},j._=h,k),[])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/return-tag/template.marko_1_renderer")},1:j},j._=h,k),[])
     </script>
   </head>
   <body />

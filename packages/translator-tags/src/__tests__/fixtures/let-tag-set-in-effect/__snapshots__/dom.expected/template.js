@@ -1,6 +1,6 @@
-import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
+import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
-const _x_effect = _register("packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x", _scope => {
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x", _scope => {
   const {
     x
   } = _scope;
@@ -18,4 +18,4 @@ const _setup = _scope => {
 export const template = "<span> </span><span> </span>";
 export const walks = /* next(1), get, out(1), next(1), get, out(1) */"D lD l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/let-tag-set-in-effect/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko");

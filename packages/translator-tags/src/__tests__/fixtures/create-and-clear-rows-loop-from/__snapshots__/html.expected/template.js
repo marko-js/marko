@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, serializedScope as _serializedScope, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, serializedScope as _serializedScope, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
@@ -17,4 +17,4 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/create-and-clear-rows-loop-from/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-from/template.marko");

@@ -6,7 +6,7 @@ import {
   write,
   writeEffect,
   writeScope,
-} from "@marko/runtime-fluurt/src/html";
+} from "@marko/runtime-tags/src/html";
 
 export default createTemplate(() => {
   write("<body>");

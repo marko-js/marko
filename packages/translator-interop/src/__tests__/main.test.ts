@@ -2,13 +2,13 @@ import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
+import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
-import createBrowser from "../../../translator/src/__tests__/utils/create-browser";
-import { isWait } from "../../../translator/src/__tests__/utils/resolve";
-import createMutationTracker from "../../../translator/src/__tests__/utils/track-mutations";
+import createBrowser from "../../../translator-tags/src/__tests__/utils/create-browser";
+import { isWait } from "../../../translator-tags/src/__tests__/utils/resolve";
+import createMutationTracker from "../../../translator-tags/src/__tests__/utils/track-mutations";
 
 const runtimeId = "X";
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -51,7 +51,7 @@ type TestConfig = {
 describe("translator-interop", () => {
   before(() => {
     uncachePackage("@marko/translator-default");
-    uncachePackage("@marko/translator-fluurt");
+    uncachePackage("@marko/translator-tags");
     register({ ...htmlConfig, modules: "cjs" });
   });
 
@@ -229,8 +229,8 @@ describe("translator-interop", () => {
         }
 
         const { run } = browser.require(
-          "@marko/runtime-fluurt/dist/debug/dom",
-        ) as typeof import("../../../runtime/src/dom");
+          "@marko/runtime-tags/dist/debug/dom",
+        ) as typeof import("../../../runtime-tags/src/dom");
         const { ___componentLookup } = browser.require(
           "marko/src/node_modules/@internal/components-util/index-browser",
         );
@@ -276,8 +276,8 @@ describe("translator-interop", () => {
             : config.steps || [];
 
         const { run, init } = browser.require(
-          "@marko/runtime-fluurt/dist/debug/dom",
-        ) as typeof import("@marko/runtime-fluurt/src/dom");
+          "@marko/runtime-tags/dist/debug/dom",
+        ) as typeof import("@marko/runtime-tags/src/dom");
 
         browser.require(templateFile);
         browser.require("marko/src/runtime/components");
