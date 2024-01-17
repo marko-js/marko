@@ -1,4 +1,4 @@
-import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
+import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _description$forBody = /* @__PURE__ */_value("description", (_scope, description) => _data(_scope["#text/1"], description));
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
 const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
@@ -13,7 +13,7 @@ const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1
   _description$forBody(_scope, description, _clean);
 });
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
-const _items_effect = _register("packages/translator/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
+const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
   _on(_scope["#button/1"], "click", function () {
     const {
       items
@@ -45,4 +45,4 @@ const _setup = _scope => {
 export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const walks = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/for-destructure/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko");

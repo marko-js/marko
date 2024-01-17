@@ -2,7 +2,7 @@ import {
   init,
   register,
   registerSubscriber,
-} from "@marko/runtime-fluurt/src/dom";
+} from "@marko/runtime-tags/src/dom";
 import {
   FancyButton$onclick_effect,
   clickCount$renderBody,

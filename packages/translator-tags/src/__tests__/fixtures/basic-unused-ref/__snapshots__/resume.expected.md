@@ -11,7 +11,7 @@
       <!--M*0 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
+      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@ container.querySelector("button").click()
       <!--M*0 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
+      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -65,7 +65,7 @@ container.querySelector("button").click()
       <!--M*0 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
+      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -92,7 +92,7 @@ container.querySelector("button").click()
       <!--M*0 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
+      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",])
     </script>
   </body>
 </html>

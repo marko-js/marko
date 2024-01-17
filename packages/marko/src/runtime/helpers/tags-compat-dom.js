@@ -9,7 +9,7 @@ const {
   queueEffect,
   scopeLookup,
   register,
-} = require("@marko/runtime-fluurt/dist/debug/dom"); // TODO: use the non-debug version when built for production
+} = require("@marko/runtime-tags/dist/debug/dom"); // TODO: use the non-debug version when built for production
 const { ___componentLookup } = require("@internal/components-util");
 const defineComponent = require("../components/defineComponent");
 const { r: registerComponent } = require("../components/registry");

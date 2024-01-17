@@ -1,4 +1,4 @@
-import { attr as _attr, write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { attr as _attr, write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const open = true;
@@ -21,12 +21,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _maybeFlush();
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#ul/0", _forScopeIds)}</ul>${_markResumeNode(_scope0_id, "#ul/0")}<button id=toggle>Toggle</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_markResumeNode(_scope0_id, "#button/2")}`);
-  _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list");
-  _writeEffect(_scope0_id, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open");
+  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list");
+  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open");
   _writeScope(_scope0_id, {
     "open": open,
     "list": list,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/basic-shared-node-ref/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko");

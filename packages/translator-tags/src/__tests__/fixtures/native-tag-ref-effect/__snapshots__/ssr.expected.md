@@ -1,5 +1,5 @@
 # Write
-  <div></div><!M*0 #div/0><script>(M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])</script>
+  <div></div><!M*0 #div/0><script>(M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     <div />
     <!--M*0 #div/0-->
     <script>
-      (M$h=[]).push(null,[0,"packages/translator/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])
+      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])
     </script>
   </body>
 </html>

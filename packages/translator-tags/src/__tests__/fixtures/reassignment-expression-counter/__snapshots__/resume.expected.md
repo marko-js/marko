@@ -25,7 +25,7 @@
     </button>
     <!--M*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -66,7 +66,7 @@ container.querySelector("#addTwo").click()
     </button>
     <!--M*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -109,7 +109,7 @@ container.querySelector("#triple").click()
     </button>
     <!--M*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -152,7 +152,7 @@ container.querySelector("#cube").click()
     </button>
     <!--M*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <p class=A>paragraph</p><!M*0 #p/0><button></button><!M*0 #button/1><script>(M$h=[]).push((b,s)=>({0:{className:"A"}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])</script>
+  <p class=A>paragraph</p><!M*0 #p/0><button></button><!M*0 #button/1><script>(M$h=[]).push((b,s)=>({0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
   </body>
 </html>

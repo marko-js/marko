@@ -1,7 +1,7 @@
 import initComponentsTag from "../../core-tags/components/init-components-tag";
 import { ___getComponentsContext } from "../components/ComponentsContext";
 
-const tagsAPI = require("@marko/runtime-fluurt/dist/debug/html"); // TODO: use the non-debug version when built for production
+const tagsAPI = require("@marko/runtime-tags/dist/debug/html"); // TODO: use the non-debug version when built for production
 const w10NOOP = require("warp10/constants").NOOP;
 const createRenderer = require("../components/renderer");
 const defaultCreateOut = require("../createOut");

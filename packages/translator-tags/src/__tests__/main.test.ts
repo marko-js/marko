@@ -4,7 +4,7 @@ import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import reorderRuntime from "@marko/runtime-fluurt/src/html/reorder-runtime";
+import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
@@ -232,8 +232,8 @@ describe("translator-tags", () => {
             ? await config.steps()
             : config.steps || [];
         const { run } = browser.require(
-          "@marko/runtime-fluurt/src/dom",
-        ) as typeof import("../../../runtime/src/dom");
+          "@marko/runtime-tags/src/dom",
+        ) as typeof import("../../../runtime-tags/src/dom");
         const template = browser.require(
           manualCSR ? browserFile : templateFile,
         ).default;
@@ -284,8 +284,8 @@ describe("translator-tags", () => {
         await new Promise((resolve) => setTimeout(resolve, 10));
 
         const { run, init } = browser.require(
-          "@marko/runtime-fluurt/src/dom",
-        ) as typeof import("@marko/runtime-fluurt/src/dom");
+          "@marko/runtime-tags/src/dom",
+        ) as typeof import("@marko/runtime-tags/src/dom");
 
         browser.require(manualResume ? resumeFile : templateFile);
         init();

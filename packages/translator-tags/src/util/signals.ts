@@ -56,7 +56,7 @@ export type Signal = {
   hasDynamicSubscribers?: true;
 };
 
-/** TODO: temporary location - duplicated from "@marko/runtime-fluurt/src/common/types" */
+/** TODO: temporary location - duplicated from "@marko/runtime-tags/src/common/types" */
 const enum AccessorChars {
   DYNAMIC = "?",
   MARK = "#",

@@ -5,5 +5,5 @@ const _setup = _scope => {
 export const template = `${_child_template}`;
 export const walks = /* beginChild, _child_walks, endChild */`/${_child_walks}&`;
 export const setup = _setup;
-import { createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/dom";
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator/src/__tests__/fixtures/return-tag-no-var/template.marko");
+import { createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/template.marko");

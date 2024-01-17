@@ -19,7 +19,7 @@
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
     </script>
   </body>
 </html>
@@ -54,7 +54,7 @@ container.querySelector("#add").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
     </script>
   </body>
 </html>
@@ -90,7 +90,7 @@ container.querySelector("#add").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
     </script>
   </body>
 </html>
@@ -125,7 +125,7 @@ container.querySelector("#remove").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
     </script>
   </body>
 </html>
@@ -160,7 +160,7 @@ container.querySelector("#add").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
     </script>
   </body>
 </html>

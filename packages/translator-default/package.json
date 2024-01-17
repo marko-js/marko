@@ -10,11 +10,11 @@
     "parser",
     "plugin"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/translator-default/README.md",
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/translator-default/README.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/translator-default"
+    "url": "https://github.com/marko-js/marko/tree/main/packages/translator-default"
   },
   "license": "MIT",
   "author": "Dylan Piercey <dpiercey@ebay.com>",

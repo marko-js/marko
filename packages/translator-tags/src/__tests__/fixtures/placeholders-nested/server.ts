@@ -3,7 +3,7 @@ import {
   fork,
   tryPlaceholder,
   write,
-} from "@marko/runtime-fluurt/src/html";
+} from "@marko/runtime-tags/src/html";
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {

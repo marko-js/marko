@@ -10,11 +10,11 @@
     "parse",
     "marko"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/master/packages/babel-utils/README.md",
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/babel-utils/README.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/master/packages/babel-utils"
+    "url": "https://github.com/marko-js/marko/tree/main/packages/babel-utils"
   },
   "license": "MIT",
   "author": "Dylan Piercey <dpiercey@ebay.com>",

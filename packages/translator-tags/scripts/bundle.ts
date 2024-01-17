@@ -11,7 +11,7 @@ const external = new Set([
   ...Object.keys(pkg.peerDependencies || {}),
 ]);
 
-external.delete("@marko/runtime-fluurt");
+external.delete("@marko/runtime-tags");
 
 Promise.all(
   (["esm", "cjs"] as const).map((format) =>

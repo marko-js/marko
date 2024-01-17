@@ -8,7 +8,7 @@ import {
   escapeXML,
   styleAttr,
   toString,
-} from "@marko/runtime-fluurt/src/html";
+} from "@marko/runtime-tags/src/html";
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
 import type { Reserve } from "./reserve";
@@ -19,28 +19,27 @@ declare const MARKO_SRC: boolean;
 
 type Falsy = false | 0 | "" | null | undefined;
 
-const pureFunctions: Array<
-  keyof typeof import("@marko/runtime-fluurt/src/dom")
-> = [
-  "createTemplate",
-  "createRenderer",
-  "value",
-  "intersection",
-  "closure",
-  "dynamicClosure",
-  "contextClosure",
-  "loopOf",
-  "loopIn",
-  "loopTo",
-  "conditional",
-  "bindFunction",
-  "bindRenderer",
-];
+const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/src/dom")> =
+  [
+    "createTemplate",
+    "createRenderer",
+    "value",
+    "intersection",
+    "closure",
+    "dynamicClosure",
+    "contextClosure",
+    "loopOf",
+    "loopIn",
+    "loopTo",
+    "conditional",
+    "bindFunction",
+    "bindRenderer",
+  ];
 
 export function importRuntime(
   name:
-    | keyof typeof import("@marko/runtime-fluurt/src/dom")
-    | keyof typeof import("@marko/runtime-fluurt/src/html"),
+    | keyof typeof import("@marko/runtime-tags/src/dom")
+    | keyof typeof import("@marko/runtime-tags/src/html"),
 ) {
   const { output } = getMarkoOpts();
   return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
@@ -48,8 +47,8 @@ export function importRuntime(
 
 export function callRuntime(
   name:
-    | keyof typeof import("@marko/runtime-fluurt/src/dom")
-    | keyof typeof import("@marko/runtime-fluurt/src/html"),
+    | keyof typeof import("@marko/runtime-tags/src/dom")
+    | keyof typeof import("@marko/runtime-tags/src/html"),
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
   const callExpression = t.callExpression(
@@ -58,7 +57,7 @@ export function callRuntime(
   );
   if (
     pureFunctions.includes(
-      name as keyof typeof import("@marko/runtime-fluurt/src/dom"),
+      name as keyof typeof import("@marko/runtime-tags/src/dom"),
     )
   ) {
     callExpression.leadingComments = [
@@ -85,7 +84,7 @@ export function getHTMLRuntime() {
 
 function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
-  return `@marko/runtime-fluurt/${
+  return `@marko/runtime-tags/${
     MARKO_SRC ? "src" : optimize ? "dist" : "dist/debug"
   }/${output === "html" ? "html" : "dom"}`;
 }

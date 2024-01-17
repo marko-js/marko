@@ -1,4 +1,4 @@
-import { serializedScope as _serializedScope, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-fluurt/src/html";
+import { serializedScope as _serializedScope, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   let _ifScopeId, _scope1_, _ifRenderer;
@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, _scope1_ = {
       "_": _serializedScope(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-tag/template.marko_1_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}`);
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope2_id, _scope2_ = {
       "_": _serializedScope(_scope0_id)
     });
-    _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-tag/template.marko_2_renderer");
+    _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer");
     _ifScopeId2 = _scope2_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId2)}<div>`);
@@ -30,7 +30,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope3_id, _scope3_ = {
       "_": _serializedScope(_scope0_id)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-tag/template.marko_3_renderer");
+    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer");
     _ifScopeId3 = _scope3_id;
   } else if (input.y) {
     const _scope4_id = _nextScopeId();
@@ -38,7 +38,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope4_id, _scope3_ = {
       "_": _serializedScope(_scope0_id)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-tag/template.marko_4_renderer");
+    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer");
     _ifScopeId3 = _scope4_id;
   } else {
     const _scope5_id = _nextScopeId();
@@ -46,7 +46,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope5_id, _scope3_ = {
       "_": _serializedScope(_scope0_id)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator/src/__tests__/fixtures/if-tag/template.marko_5_renderer");
+    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_5_renderer");
     _ifScopeId3 = _scope5_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _ifScopeId3)}</div>`);
@@ -59,4 +59,4 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "#text/2(": _ifRenderer3
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator/src/__tests__/fixtures/if-tag/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko");

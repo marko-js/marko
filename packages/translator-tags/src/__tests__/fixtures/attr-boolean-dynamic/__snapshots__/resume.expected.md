@@ -13,7 +13,7 @@
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
   </body>
 </html>
@@ -70,7 +70,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
   </body>
 </html>
@@ -98,7 +98,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
   </body>
 </html>
