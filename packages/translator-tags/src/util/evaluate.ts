@@ -1,3 +1,4 @@
+import { computeNode } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
 
 declare module "@marko/compiler/dist/types" {
@@ -29,10 +30,14 @@ export default function evaluate(
   }
 
   if (extra.confident === undefined) {
-    const value = path.get("value");
-    const { confident, value: computed } = value.evaluate();
-    extra.computed = computed;
-    extra.confident = confident;
+    const computed = computeNode(path.node.value);
+    if (computed) {
+      extra.computed = computed.value;
+      extra.confident = true;
+    } else {
+      extra.computed = undefined;
+      extra.confident = false;
+    }
   }
 
   return extra as typeof extra & {

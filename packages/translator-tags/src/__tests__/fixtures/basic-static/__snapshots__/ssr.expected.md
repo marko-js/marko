@@ -1,5 +1,5 @@
 # Write
-  <div><span>1</span></div>
+  <div><span>1<!M*0 #text/0></span></div>
 
 
 # Render "End"
@@ -10,6 +10,7 @@
     <div>
       <span>
         1
+        <!--M*0 #text/0-->
       </span>
     </div>
   </body>
@@ -24,4 +25,5 @@ inserted #document/html0/body1
 inserted #document/html0/body1/div0
 inserted #document/html0/body1/div0/span0
 inserted #document/html0/body1/div0/span0/#text0
+inserted #document/html0/body1/div0/span0/#comment1
 ```
