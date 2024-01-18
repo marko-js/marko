@@ -50,18 +50,17 @@ export default {
         }
       }
 
-      const name = node.var
-        ? (node.var as t.Identifier).name
-        : (node.name as t.StringLiteral).value;
-
       if (section !== undefined) {
-        reserveScope(
-          ReserveType.Visit,
-          section,
-          node,
-          name,
-          `#${tag.get("name").evaluate().value}`,
-        );
+        const tagName =
+          node.name.type === "StringLiteral"
+            ? node.name.value
+            : t.toIdentifier(tag.get("name"));
+        const varName = node.var
+          ? node.var.type === "Identifier"
+            ? node.var.name
+            : t.toIdentifier(tag.get("var"))
+          : tagName;
+        reserveScope(ReserveType.Visit, section, node, varName, `#${tagName}`);
       }
     },
   },

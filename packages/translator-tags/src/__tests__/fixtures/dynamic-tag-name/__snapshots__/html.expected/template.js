@@ -26,10 +26,10 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   if (_tagName) _write(`<${_tagName} class="a b"${_attr("other", other)}>`);
   if (_tagName) _write(`</${_tagName}>`);
   const _tagName2 = show && "div";
-  _write(`${_markResumeNode(_scope0_id, "#undefined/2")}`);
+  _write(`${_markResumeNode(_scope0_id, "#showDivNull/2")}`);
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
-  _write(`${_markResumeNode(_scope0_id, "#undefined/3")}`);
+  _write(`${_markResumeNode(_scope0_id, "#showDiv/3")}`);
   const _dynamicScope3 = _dynamicTag(large ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
@@ -67,10 +67,10 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   });
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markResumeNode(_scope0_id, "#undefined/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markResumeNode(_scope0_id, "#undefined/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markResumeNode(_scope0_id, "#undefined/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markResumeNode(_scope0_id, "#undefined/9")}`);
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markResumeNode(_scope0_id, "#globalXAB/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markResumeNode(_scope0_id, "#hLevel/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markResumeNode(_scope0_id, "#h$Level/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markResumeNode(_scope0_id, "#tagConstA/9")}`);
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}>`);
   if (tagConstB) _write(`</${tagConstB}>`);
-  _write(`${_markResumeNode(_scope0_id, "#undefined/10")}`);
+  _write(`${_markResumeNode(_scope0_id, "#tagConstB/10")}`);
   _writeScope(_scope0_id, {
     "other": other,
     "#text/0!": _dynamicScope,
