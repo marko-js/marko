@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.31.13
+
+### Patch Changes
+
+- [#2085](https://github.com/marko-js/marko/pull/2085) [`d82b21e`](https://github.com/marko-js/marko/commit/d82b21e8f505c5006d3781cf9056743dd9972fe1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve compile error output.
+
 ## 5.31.12
 
 ### Patch Changes

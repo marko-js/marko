@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.32.7
+
+### Patch Changes
+
+- [#2085](https://github.com/marko-js/marko/pull/2085) [`d82b21e`](https://github.com/marko-js/marko/commit/d82b21e8f505c5006d3781cf9056743dd9972fe1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve compile error output.
+
+- Updated dependencies [[`d82b21e`](https://github.com/marko-js/marko/commit/d82b21e8f505c5006d3781cf9056743dd9972fe1)]:
+  - @marko/translator-default@5.31.13
+  - @marko/compiler@5.34.6
+
 ## 5.32.6
 
 ### Patch Changes
