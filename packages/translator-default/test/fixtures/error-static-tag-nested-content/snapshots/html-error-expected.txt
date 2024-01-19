@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-static-tag-nested-content/template.marko:2:2
       1 | static { console.log(x); }
     > 2 |  <div/>

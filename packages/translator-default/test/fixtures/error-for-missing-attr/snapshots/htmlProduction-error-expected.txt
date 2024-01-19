@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-for-missing-attr/template.marko:1:2
     > 1 | <for|x|>
         |  ^^^ Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute.

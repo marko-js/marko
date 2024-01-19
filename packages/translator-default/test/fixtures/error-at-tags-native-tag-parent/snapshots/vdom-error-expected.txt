@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-at-tags-native-tag-parent/template.marko:9:6
        7 |     Body content
        8 |

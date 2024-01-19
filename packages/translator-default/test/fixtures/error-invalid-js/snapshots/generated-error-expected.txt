@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-invalid-js/template.marko:1:5
     > 1 | $ x..y();
         |     ^ Unexpected token
