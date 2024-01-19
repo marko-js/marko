@@ -1,21 +1,25 @@
 import path from "path";
 import { codeFrameColumns } from "@babel/code-frame";
 import color from "kleur";
+import { stripAnsi } from "./strip-ansi";
 const CWD = process.cwd();
 const indent = "    ";
 
 class CompileError extends Error {
-  constructor(filename, code, loc, message) {
-    super();
-    const prettyMessage = buildMessage(code, loc, message);
+  constructor(filename, code, loc, label) {
+    const prettyMessage = buildMessage(code, loc, label);
     const prettyFileName = buildFileName(filename, loc);
-    this.stack = loc
-      ? `CompileError\n${indent}at ${prettyFileName}\n${prettyMessage.replace(
+    const message = loc
+      ? `\n${indent}at ${prettyFileName}\n${prettyMessage.replace(
           /^/gm,
           indent,
         )}`
-      : `CompileError: ${prettyMessage}\n${indent}at ${prettyFileName}`;
-
+      : `${prettyMessage}\n${indent}at ${prettyFileName}`;
+    const { stackTraceLimit } = Error;
+    Error.stackTraceLimit = 0;
+    super(message);
+    this.name = "CompileError";
+    Error.stackTraceLimit = stackTraceLimit;
     Object.defineProperties(this, {
       loc: {
         value: loc,
@@ -24,7 +28,7 @@ class CompileError extends Error {
         configurable: true,
       },
       label: {
-        value: message,
+        value: label,
         enumerable: false,
         writable: true,
         configurable: true,
@@ -33,25 +37,38 @@ class CompileError extends Error {
       code: {
         enumerable: false,
         configurable: true,
-        get() {
-          return undefined;
-        },
-        set() {},
+        get: noop,
+        set: noop,
       },
       message: {
+        enumerable: true,
         configurable: true,
-        enumerable: false,
         get() {
-          return `${prettyFileName}: ${message}`;
+          return message;
         },
-        set() {},
+        set() {
+          Object.defineProperty(this, "message", {
+            value: message,
+            enumerable: true,
+            writable: true,
+            configurable: true,
+          });
+        },
       },
     });
   }
+
+  toJSON() {
+    return this.toString();
+  }
+
+  toString() {
+    return `${this.name}: ${stripAnsi(this.message)}`;
+  }
 }
 
-export function buildCodeFrameError(filename, code, loc, message) {
-  return new CompileError(filename, code, loc, message);
+export function buildCodeFrameError(filename, code, loc, label) {
+  return new CompileError(filename, code, loc, label);
 }
 
 function buildMessage(code, loc, message) {
@@ -83,3 +100,5 @@ function buildFileName(filename, loc) {
       : ""
   }`;
 }
+
+function noop() {}

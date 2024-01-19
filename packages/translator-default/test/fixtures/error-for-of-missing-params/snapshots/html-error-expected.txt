@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-for-of-missing-params/template.marko:1:2
     > 1 | <for|| of=x>
         |  ^^^ Invalid 'for of' tag, missing |value, index| params.

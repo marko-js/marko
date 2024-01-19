@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-import-tag-root-only/template.marko:2:4
       1 | <div>
     > 2 |   <import x from "y"/>

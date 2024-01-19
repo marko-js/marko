@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-native-tag-params/template.marko:1:6
     > 1 | <div|x|>
         |      ^ Tag does not support parameters.

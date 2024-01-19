@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-class-static-properties/template.marko:2:3
       1 | class {
     > 2 |   static x = 1;

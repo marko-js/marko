@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-macro-duplicate/template.marko:5:15
       3 | </macro>
       4 |

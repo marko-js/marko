@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-for-invalid-attribute/template.marko:1:25
     > 1 | <for|key, value| in=obj x=1>
         |                         ^^^ <for> does not support the "x" attribute.

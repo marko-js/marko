@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-mismatched-closing-tag/template.marko:4:1
       2 |   <span>
       3 |   <span>
