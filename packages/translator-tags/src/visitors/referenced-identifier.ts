@@ -1,15 +1,19 @@
 import { types as t } from "@marko/compiler";
 import isStatic from "../util/is-static";
+import { importRuntime } from "../util/runtime";
 import { currentProgramPath } from "./program";
 
-const outGlobalIdentifiers = new WeakMap<t.NodePath<t.Program>, t.Identifier>();
+const globalImportIdentifier = new WeakMap<
+  t.NodePath<t.Program>,
+  t.Identifier
+>();
 const hasAttrsTag = new WeakSet<t.NodePath<t.Program>>();
 
 export default {
   migrate(identifier: t.NodePath<t.Identifier>) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
-    switch (identifier.node.name) {
+    switch (name) {
       case "input": {
         if (!hasAttrsTag.has(currentProgramPath)) {
           hasAttrsTag.add(currentProgramPath);
@@ -31,26 +35,32 @@ export default {
           t.isIdentifier(identifier.parent.property) &&
           identifier.parent.property.name === "global"
         ) {
-          let globalIdentifier = outGlobalIdentifiers.get(currentProgramPath);
-          if (!globalIdentifier) {
-            globalIdentifier =
-              currentProgramPath.scope.generateUidIdentifier("$global");
-            outGlobalIdentifiers.set(currentProgramPath, globalIdentifier);
-            insertAfterStatic(
-              t.markoTag(
-                t.stringLiteral("get"),
-                undefined,
-                t.markoTagBody(),
-                undefined,
-                globalIdentifier,
-              ),
-            );
-          }
-
-          identifier.parentPath.replaceWith(globalIdentifier);
+          identifier.parentPath.replaceWith(t.identifier("$global"));
         } else {
           throw identifier.buildCodeFrameError(
             "Only out.global is supported for compatibility.",
+          );
+        }
+        break;
+    }
+  },
+  translate(identifier: t.NodePath<t.Identifier>) {
+    const { name } = identifier.node;
+    if (identifier.scope.hasBinding(name)) return;
+    switch (name) {
+      case "$global":
+        {
+          let streamDataIdentifier =
+            globalImportIdentifier.get(currentProgramPath);
+          if (!streamDataIdentifier) {
+            streamDataIdentifier = importRuntime("$_streamData");
+            globalImportIdentifier.set(
+              currentProgramPath,
+              streamDataIdentifier,
+            );
+          }
+          identifier.replaceWith(
+            t.memberExpression(streamDataIdentifier, t.identifier("global")),
           );
         }
         break;

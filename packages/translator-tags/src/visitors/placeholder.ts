@@ -39,66 +39,68 @@ export default {
       needsMarker(placeholder);
     }
   },
-  translate(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-    const isHTML = isOutputHTML();
-    const write = writer.writeTo(placeholder);
-    const extra = placeholder.node.extra;
-    const { confident, computed, valueReferences, reserve } = extra;
-    const canWriteHTML =
-      isHTML || (confident && (placeholder.node.escape || !computed));
-    const method = canWriteHTML
-      ? placeholder.node.escape
-        ? ESCAPE_TYPES[getParentTagName(placeholder)] || "escapeXML"
-        : "toString"
-      : placeholder.node.escape
-        ? "data"
-        : "html";
+  translate: {
+    exit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+      const isHTML = isOutputHTML();
+      const write = writer.writeTo(placeholder);
+      const extra = placeholder.node.extra;
+      const { confident, computed, valueReferences, reserve } = extra;
+      const canWriteHTML =
+        isHTML || (confident && (placeholder.node.escape || !computed));
+      const method = canWriteHTML
+        ? placeholder.node.escape
+          ? ESCAPE_TYPES[getParentTagName(placeholder)] || "escapeXML"
+          : "toString"
+        : placeholder.node.escape
+          ? "data"
+          : "html";
 
-    if (confident && canWriteHTML) {
-      write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
-    } else {
-      if (extra.needsMarker) {
-        walks.visit(placeholder, walks.WalkCodes.Replace);
+      if (confident && canWriteHTML) {
+        write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
-        if (!isHTML) write` `;
-        walks.visit(placeholder, walks.WalkCodes.Get);
-      }
+        if (extra.needsMarker) {
+          walks.visit(placeholder, walks.WalkCodes.Replace);
+        } else {
+          if (!isHTML) write` `;
+          walks.visit(placeholder, walks.WalkCodes.Get);
+        }
 
-      if (isHTML) {
-        write`${callRuntime(
-          method as HTMLMethod | DOMMethod,
-          placeholder.node.value,
-        )}`;
-        writer.markNode(placeholder);
-      } else {
-        addStatement(
-          "render",
-          getSection(placeholder),
-          valueReferences,
-          t.expressionStatement(
-            method === "data"
-              ? callRuntime(
-                  "data",
-                  t.memberExpression(
+        if (isHTML) {
+          write`${callRuntime(
+            method as HTMLMethod | DOMMethod,
+            placeholder.node.value,
+          )}`;
+          writer.markNode(placeholder);
+        } else {
+          addStatement(
+            "render",
+            getSection(placeholder),
+            valueReferences,
+            t.expressionStatement(
+              method === "data"
+                ? callRuntime(
+                    "data",
+                    t.memberExpression(
+                      scopeIdentifier,
+                      getScopeAccessorLiteral(reserve!),
+                      true,
+                    ),
+                    placeholder.node.value,
+                  )
+                : callRuntime(
+                    "html",
                     scopeIdentifier,
+                    placeholder.node.value,
                     getScopeAccessorLiteral(reserve!),
-                    true,
                   ),
-                  placeholder.node.value,
-                )
-              : callRuntime(
-                  "html",
-                  scopeIdentifier,
-                  placeholder.node.value,
-                  getScopeAccessorLiteral(reserve!),
-                ),
-          ),
-        );
+            ),
+          );
+        }
       }
-    }
 
-    walks.enterShallow(placeholder);
-    placeholder.remove();
+      walks.enterShallow(placeholder);
+      placeholder.remove();
+    },
   },
 };
 

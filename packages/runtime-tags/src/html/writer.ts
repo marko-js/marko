@@ -43,6 +43,7 @@ interface StreamData {
   placeholderId: number;
   scopeLookup: Map<number, PartialScope>;
   runtimeFlushed: boolean;
+  global: Record<string, unknown>;
   serializer?: Serializer;
 }
 
@@ -72,6 +73,7 @@ export function createRenderFn(renderer: Renderer) {
     };
 
     $_buffer = createInitialBuffer(stream);
+    streamState.global = context;
     $_streamData = createStreamState(streamState);
     pushContext("$", context);
 

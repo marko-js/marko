@@ -8,6 +8,7 @@ import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
+import * as translator from "..";
 import createBrowser from "./utils/create-browser";
 import { isWait } from "./utils/resolve";
 import createMutationTracker from "./utils/track-mutations";
@@ -39,7 +40,7 @@ type Result = {
 };
 
 const baseConfig: compiler.Config = {
-  translator: require.resolve(".."),
+  translator,
   babelConfig: {
     babelrc: false,
     configFile: false,
