@@ -8,14 +8,12 @@ import ConstTag from "./const";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
-import GetTag from "./get";
 import HTMLCommentTag from "./html-comment";
 import IdTag from "./id";
 import ImportTag from "./import";
 import LetTag from "./let";
 import LifecycleTag from "./lifecycle";
 import NoopTag from "./noop";
-import PutTag from "./put";
 import ReturnTag from "./return";
 import StaticTag from "./static";
 import StyleTag from "./style";
@@ -37,8 +35,6 @@ export default {
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
   "<tag>": TagTag,
-  "<put>": PutTag,
-  "<get>": GetTag,
   "<return>": ReturnTag,
   "<style>": StyleTag,
   "<await-reorderer>": NoopTag,
