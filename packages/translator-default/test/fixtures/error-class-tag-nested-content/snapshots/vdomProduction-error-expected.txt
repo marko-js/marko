@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-class-tag-nested-content/template.marko:2:2
       1 | class {}
     > 2 |  <div/>

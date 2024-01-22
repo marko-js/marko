@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-macro-invalid-attributes/template.marko:1:28
     > 1 | <macro|stuff| name="thing" x=1>
         |                            ^^^ <macro> does not support the "x" attribute.

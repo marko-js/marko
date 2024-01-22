@@ -1,12 +1,14 @@
-CompileErrors
-    CompileError
-        at packages/translator-default/test/fixtures/error-multiple-syntax-errors/template.marko:1:11
-        > 1 | <div a=(a b) b=(a b)/>
-            |           ^ Unexpected token, expected ","
-          2 |
+CompileErrors: 
+    at packages/translator-default/test/fixtures/error-multiple-syntax-errors/template.marko:3:11
+      1 | $ const a = 1;
+      2 | $ const b = 2;
+    > 3 | <div a=(a b) b=(a b)/>
+        |           ^ Unexpected token, expected ","
+      4 |
 
-    CompileError
-        at packages/translator-default/test/fixtures/error-multiple-syntax-errors/template.marko:1:19
-        > 1 | <div a=(a b) b=(a b)/>
-            |                   ^ Unexpected token, expected ","
-          2 |
+    at packages/translator-default/test/fixtures/error-multiple-syntax-errors/template.marko:3:19
+      1 | $ const a = 1;
+      2 | $ const b = 2;
+    > 3 | <div a=(a b) b=(a b)/>
+        |                   ^ Unexpected token, expected ","
+      4 |

@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-wrong-closing-tag/template.marko:3:1
       1 | <a>
       2 |   <div/>

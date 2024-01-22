@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-open-tag-only-concise/template.marko:2:5
       1 | input
     > 2 |     -- This should not be allowed!

@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-class-not-root/template.marko:2:3
       1 | div
     > 2 |   class extends Test {

@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-multiple-inline-class/template.marko:7:1
        5 | }
        6 |

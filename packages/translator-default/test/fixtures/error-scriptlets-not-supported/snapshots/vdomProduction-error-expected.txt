@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-scriptlets-not-supported/template.marko:1:2
     > 1 | <% console.log(x) %>
         |  ^ <% scriptlets %> are no longer supported.

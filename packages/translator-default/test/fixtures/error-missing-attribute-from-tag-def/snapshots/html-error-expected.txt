@@ -1,4 +1,4 @@
-CompileError
+CompileError: 
     at packages/translator-default/test/fixtures/error-missing-attribute-from-tag-def/template.marko:1:23
     > 1 | <custom-tag name="hi" x=1/>
         |                       ^^^ <custom-tag> does not support the "x" attribute.
