@@ -3,11 +3,13 @@ import { isOutputHTML } from "../util/marko-config";
 import * as writer from "../util/writer";
 
 export default {
-  translate(declaration: t.NodePath<t.MarkoDeclaration>) {
-    if (isOutputHTML()) {
-      writer.writeTo(declaration)`<?${declaration.node.value}?>`;
-    }
+  translate: {
+    exit(declaration: t.NodePath<t.MarkoDeclaration>) {
+      if (isOutputHTML()) {
+        writer.writeTo(declaration)`<?${declaration.node.value}?>`;
+      }
 
-    declaration.remove();
+      declaration.remove();
+    },
   },
 };
