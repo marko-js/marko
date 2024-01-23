@@ -12,7 +12,7 @@ import {
   type ValueSignal,
   renderBodyClosures,
 } from "./signals";
-import type { Template } from "./template";
+import type { ClientTemplate as Template } from "./template";
 
 type LoopForEach = (
   value: unknown[],

@@ -57,39 +57,25 @@ export const enum AccessorChars {
 }
 
 export type Accessor = string | number;
-
-export interface RenderResult {
-  insertBefore(
-    parent: ParentNode & Node,
-    reference: (ChildNode & Node) | null,
-  ): InsertResult;
-  toHTML(): Promise<string>;
-  toPipableStream(): NodeJS.ReadableStream;
-  toReadableStream(): ReadableStream;
-}
-
 export type Input = Record<string, unknown>;
 export type Context = Record<string, unknown>;
 
-export interface ITemplate {
+export interface Template {
   _: unknown;
-  insertBefore(
-    parent: ParentNode & Node,
-    reference: (ChildNode & Node) | null,
-    input?: Input,
-    context?: Context,
-  ): InsertResult;
-  asHTML(input?: Input, context?: Context): Promise<string>;
-  asReadableStream(input?: Input, context?: Context): ReadableStream;
-  asPipeableStream(input?: Input, context?: Context): NodeJS.ReadableStream;
-  writeTo(
-    writable: NodeJS.WritableStream,
-    input?: Input,
-    context?: Context,
-  ): void;
+  mount(
+    input: Input,
+    reference: ParentNode & Node,
+    position?: InsertPosition,
+  ): TemplateInstance;
+  render(input?: Input): RenderResult;
 }
 
-export interface InsertResult {
+export interface TemplateInstance {
   update(input: unknown): void;
   destroy(): void;
 }
+
+export type RenderResult = Promise<string> &
+  AsyncIterable<string> & {
+    toReadable(): ReadableStream;
+  };

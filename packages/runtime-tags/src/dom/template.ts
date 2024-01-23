@@ -1,4 +1,10 @@
-import type { ITemplate, Input, InsertResult, Scope } from "../common/types";
+import type {
+  Template,
+  Input,
+  TemplateInstance,
+  Scope,
+  RenderResult,
+} from "../common/types";
 import { defaultFragment } from "./fragment";
 import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
@@ -6,21 +12,20 @@ import { register } from "./resume";
 import { createScope, destroyScope } from "./scope";
 
 export const createTemplate = (renderer: Renderer, templateId?: string) =>
-  register(templateId!, new Template(renderer));
+  register(templateId!, new ClientTemplate(renderer));
 
-export class Template implements ITemplate {
+export class ClientTemplate implements Template {
   public _: Renderer;
 
   constructor(renderer: Renderer) {
     this._ = renderer;
   }
 
-  insertBefore(
-    parent: ParentNode & Node,
-    reference: (ChildNode & Node) | null,
-    input?: Input,
-    // context?: Context
-  ): InsertResult {
+  mount(
+    input: Input,
+    reference: ParentNode & Node,
+    position?: InsertPosition,
+  ): TemplateInstance {
     let scope!: Scope, dom!: Node;
     const attrs = this._.___attrs;
     const effects = prepare(() => {
@@ -31,7 +36,31 @@ export class Template implements ITemplate {
       }
     });
 
-    parent.insertBefore(dom, reference);
+    /*
+      <!-- beforebegin -->
+      <reference>
+        <!-- afterbegin -->
+        foo
+        <!-- beforeend -->
+      </reference>
+      <!-- afterend -->
+    */
+
+    switch (position) {
+      case "afterbegin":
+        reference.insertBefore(dom, reference.firstChild);
+        break;
+      case "afterend":
+        reference.parentElement!.insertBefore(dom, reference.nextSibling);
+        break;
+      case "beforebegin":
+        reference.parentElement!.insertBefore(dom, reference);
+        break;
+      default:
+        reference.appendChild(dom);
+        break;
+    }
+
     runEffects(effects);
 
     return {
@@ -49,25 +78,9 @@ export class Template implements ITemplate {
     };
   }
 
-  asHTML(): Promise<string> {
-    throw unimplemented("asHTML");
+  render(): RenderResult {
+    throw new Error(
+      `render() is not implemented for the DOM compilation of a Marko template`,
+    );
   }
-
-  asReadableStream(): ReadableStream {
-    throw unimplemented("asReadableStream");
-  }
-
-  asPipeableStream(): NodeJS.ReadableStream {
-    throw unimplemented("asPipeableStream");
-  }
-
-  writeTo(): void {
-    throw unimplemented("writeTo");
-  }
-}
-
-function unimplemented(methodName: string) {
-  return new Error(
-    `${methodName}() is not implemented for the DOM compilation of a Marko template`,
-  );
 }
