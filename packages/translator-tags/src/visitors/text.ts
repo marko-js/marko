@@ -5,7 +5,7 @@ import * as writer from "../util/writer";
 
 export default {
   translate: {
-    enter(text: t.NodePath<t.MarkoText>) {
+    exit(text: t.NodePath<t.MarkoText>) {
       const followingSiblings = (text.container as t.Statement[]).slice(
         (text.key as number) + 1,
       );
@@ -22,8 +22,7 @@ export default {
       }
       writer.writeTo(text)`${text.node.value}${needsSeparator ? "<!>" : ""}`;
       walks.enterShallow(text);
-    },
-    exit(text: t.NodePath<t.MarkoText>) {
+
       text.remove();
     },
   },

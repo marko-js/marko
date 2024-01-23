@@ -4,12 +4,10 @@ import * as writer from "../util/writer";
 
 export default {
   translate: {
-    enter(documentType: t.NodePath<t.MarkoDocumentType>) {
+    exit(documentType: t.NodePath<t.MarkoDocumentType>) {
       if (isOutputHTML()) {
         writer.writeTo(documentType)`<!${documentType.node.value}>`;
       }
-    },
-    exit(documentType: t.NodePath<t.MarkoDocumentType>) {
       documentType.remove();
     },
   },

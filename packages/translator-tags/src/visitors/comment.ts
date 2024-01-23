@@ -5,7 +5,7 @@ const ieConditionalCommentRegExp = /^\[if |<!\[endif\]$/;
 
 export default {
   translate: {
-    enter(comment: t.NodePath<t.MarkoComment>) {
+    exit(comment: t.NodePath<t.MarkoComment>) {
       if (isOutputHTML()) {
         const { value } = comment.node;
 
@@ -13,8 +13,7 @@ export default {
           writer.writeTo(comment)`<!--${value}-->`;
         }
       }
-    },
-    exit(comment: t.NodePath<t.MarkoComment>) {
+
       comment.remove();
     },
   },
