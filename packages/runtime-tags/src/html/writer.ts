@@ -1,9 +1,3 @@
-import {
-  Context,
-  popContext,
-  pushContext,
-  setContext,
-} from "../common/context";
 import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
@@ -55,7 +49,7 @@ export function createRenderFn(renderer: Renderer) {
   return (
     stream: Writable,
     input: Input = {},
-    context: Record<string, unknown> = {},
+    global: Record<string, unknown> = {},
     streamState: Partial<StreamData> = {},
   ) => {
     let remainingChildren = 1;
@@ -73,9 +67,8 @@ export function createRenderFn(renderer: Renderer) {
     };
 
     $_buffer = createInitialBuffer(stream);
-    streamState.global = context;
+    streamState.global = global;
     $_streamData = createStreamState(streamState);
-    pushContext("$", context);
 
     $_buffer.onReject = reject;
     $_buffer.onAsync = async;
@@ -89,7 +82,6 @@ export function createRenderFn(renderer: Renderer) {
     } finally {
       $_buffer = originalBuffer;
       $_streamData = originalStreamState;
-      popContext();
     }
   };
 }
@@ -228,7 +220,6 @@ export async function fork<T>(
 ) {
   const originalBuffer = $_buffer!;
   const originalStreamState = $_streamData!;
-  const originalContext = Context;
 
   scheduleFlush();
   $_buffer!.pending = true;
@@ -243,7 +234,6 @@ export async function fork<T>(
     } finally {
       $_buffer = originalBuffer;
       $_streamData = originalStreamState;
-      setContext(originalContext);
       scheduleFlush();
     }
     renderResult(result);
@@ -373,7 +363,6 @@ function clearBuffer(buffer: Buffer) {
 
 function clearScope() {
   $_buffer = $_streamData = null;
-  setContext(null);
 }
 
 /* Async */

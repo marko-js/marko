@@ -36,5 +36,3 @@ export {
   serializedScope,
   getRegistryInfo,
 } from "./serializer";
-
-export { pushContext, popContext, getInContext } from "../common/context";
