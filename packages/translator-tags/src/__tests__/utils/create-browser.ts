@@ -1,5 +1,5 @@
 import type { DOMWindow } from "jsdom";
-import createBrowser from "jsdom-context-require";
+import { createBrowser } from "jsdom-context-require";
 import init from "../test-globals";
 
 export default function (options: Parameters<typeof createBrowser>[0]) {

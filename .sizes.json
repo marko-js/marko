@@ -35,15 +35,18 @@
       "user": {
         "min": 204,
         "gzip": 179,
+        "gzip": 179,
         "brotli": 151
       },
       "runtime": {
         "min": 2612,
         "gzip": 1350,
+        "gzip": 1350,
         "brotli": 1210
       },
       "total": {
         "min": 2816,
+        "gzip": 1529,
         "gzip": 1529,
         "brotli": 1361
       }
@@ -71,10 +74,12 @@
       "user": {
         "min": 988,
         "gzip": 587,
+        "gzip": 587,
         "brotli": 544
       },
       "runtime": {
         "min": 7999,
+        "gzip": 3683,
         "gzip": 3683,
         "brotli": 3342
       },

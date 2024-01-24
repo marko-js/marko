@@ -36,7 +36,7 @@
     "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "dependencies": {
-    "@marko/babel-utils": "^6.2.1",
+    "@marko/babel-utils": "^6.3.5",
     "@marko/runtime-tags": "^0.0.1"
   },
   "peerDependencies": {

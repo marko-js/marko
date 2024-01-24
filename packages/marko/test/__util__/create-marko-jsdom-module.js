@@ -1,6 +1,6 @@
 "use strict";
 
-const createBrowser = require("jsdom-context-require");
+const { createBrowser } = require("jsdom-context-require");
 const compiler = require("../../compiler");
 const globals = [
   "console",
