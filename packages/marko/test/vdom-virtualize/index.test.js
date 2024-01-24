@@ -2,7 +2,7 @@
 
 require("../__util__/test-init");
 var fs = require("fs");
-var createBrowser = require("jsdom-context-require");
+var { createBrowser } = require("jsdom-context-require");
 var virtualize = require("marko/runtime/vdom/vdom").___virtualize;
 var autotest = require("mocha-autotest").default;
 var toHTML = require("../__util__/toHTML");

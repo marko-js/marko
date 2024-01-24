@@ -3,7 +3,7 @@
 require("../__util__/test-init");
 
 var fs = require("fs");
-var createBrowser = require("jsdom-context-require");
+var { createBrowser } = require("jsdom-context-require");
 var vdom = require("marko/runtime/vdom/vdom");
 var autotest = require("mocha-autotest").default;
 var domToString = require("../__util__/domToString");

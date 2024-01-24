@@ -205,7 +205,7 @@ describe("translator-interop", () => {
           "@marko/runtime-tags/dist/debug/dom",
         ) as typeof import("../../../runtime-tags/src/dom");
         const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util/index-browser",
+          "marko/src/node_modules/@internal/components-util",
         );
 
         function runUpdates() {
@@ -260,7 +260,7 @@ describe("translator-interop", () => {
         tracker.logUpdate(input);
 
         const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util/index-browser",
+          "marko/src/node_modules/@internal/components-util",
         );
 
         function runUpdates() {

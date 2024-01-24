@@ -45,7 +45,7 @@
     "@babel/runtime": "^7.23.8",
     "@babel/traverse": "^7.23.7",
     "@babel/types": "^7.23.6",
-    "@luxass/strip-json-comments": "^1.1.1",
+    "@luxass/strip-json-comments": "^1.2.0",
     "@marko/babel-utils": "^6.3.5",
     "complain": "^1.6.0",
     "he": "^1.2.0",

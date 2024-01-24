@@ -5,7 +5,7 @@ require("../__util__/test-init");
 const fs = require("fs");
 const path = require("path");
 var chai = require("chai");
-const createBrowser = require("jsdom-context-require");
+const { createBrowser } = require("jsdom-context-require");
 const morphdom = require("marko/runtime/vdom/morphdom");
 var autotest = require("mocha-autotest").default;
 chai.config.includeStack = true;
