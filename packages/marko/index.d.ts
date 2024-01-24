@@ -95,14 +95,12 @@ declare global {
       | string;
 
     /** Extract the return tag type from a renderBody. */
-    export type BodyReturnType<B> = B extends Body<any, infer Return>
-      ? Return
-      : never;
+    export type BodyReturnType<B> =
+      B extends Body<any, infer Return> ? Return : never;
 
     /** Extract the tag parameter types received by a renderBody. */
-    export type BodyParameters<B> = B extends Body<infer Params, any>
-      ? Params
-      : never;
+    export type BodyParameters<B> =
+      B extends Body<infer Params, any> ? Params : never;
 
     export class Component<Input = unknown, State = unknown>
       implements Emitter
