@@ -29,13 +29,13 @@ export default function createMutationTracker(
     },
     log(message: string) {
       if (!connected) {
-        return;
+        throw new Error(`log called after cleanup`);
       }
       result.push(message);
     },
     logUpdate(update: unknown) {
       if (!connected) {
-        return;
+        throw new Error(`logUpdate called after cleanup`);
       }
       if (currentRecords) {
         currentRecords = currentRecords.concat(observer.takeRecords());
