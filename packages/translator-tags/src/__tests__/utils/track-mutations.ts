@@ -15,6 +15,7 @@ export default function createMutationTracker(
   window: JSDOM["window"],
   container: ParentNode,
 ) {
+  let connected = true;
   const result: string[] = [];
   const sanitizedResult: string[] = [];
   let currentRecords: MutationRecord[] | null = null;
@@ -27,9 +28,15 @@ export default function createMutationTracker(
       currentRecords = null;
     },
     log(message: string) {
+      if (!connected) {
+        throw new Error(`log called after cleanup`);
+      }
       result.push(message);
     },
     logUpdate(update: unknown) {
+      if (!connected) {
+        throw new Error(`logUpdate called after cleanup`);
+      }
       if (currentRecords) {
         currentRecords = currentRecords.concat(observer.takeRecords());
       } else {
@@ -56,6 +63,7 @@ export default function createMutationTracker(
     },
     cleanup() {
       observer.disconnect();
+      connected = false;
     },
   };
   const observer = new window.MutationObserver((records) => {
@@ -86,7 +94,7 @@ function cloneAndNormalize(container: ParentNode) {
 
 function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
   if (!(container as any).TEST_ROOT) {
-    container = window.document.body;
+    container = window.document.body || window.document.createElement("body");
   }
   const clone = container.cloneNode(true);
   const treeWalker = window.document.createTreeWalker(clone);

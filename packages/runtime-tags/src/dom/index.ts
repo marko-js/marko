@@ -27,8 +27,6 @@ export { staticNodesFragment, dynamicFragment } from "./fragment";
 
 export { init, register, registerSubscriber, scopeLookup } from "./resume";
 
-export { pushContext, popContext, getInContext } from "../common/context";
-
 export { queueSource, queueEffect, run, prepare, runEffects } from "./queue";
 
 export { write, bindFunction, bindRenderer, createScope } from "./scope";

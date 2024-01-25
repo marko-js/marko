@@ -1,4 +1,4 @@
-# Render undefined
+# Render {}
 ```html
 <button>
   0

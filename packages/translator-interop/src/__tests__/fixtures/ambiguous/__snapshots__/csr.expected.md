@@ -1,4 +1,4 @@
-# Render undefined
+# Render {}
 ```html
 <h1>
   Hello world

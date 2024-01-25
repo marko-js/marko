@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
+import type { Input, Template } from "@marko/runtime-tags/src/common/types";
 import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
@@ -120,7 +121,7 @@ describe("translator-interop", () => {
       const ssr = async () => {
         if (ssrResult) return ssrResult;
 
-        const serverTemplate = require(templateFile).default;
+        const serverTemplate = require(templateFile).default as Template;
 
         let buffer = "";
         // let flushCount = 0;
@@ -133,54 +134,36 @@ describe("translator-interop", () => {
           }),
         });
         const document = browser.window.document;
-        const [input] =
+        const [input = {}] = (
           typeof config.steps === "function"
             ? await config.steps()
-            : config.steps || [];
+            : config.steps || []
+        ) as [Input];
+
+        input.$global = config.context;
 
         document.open();
 
         const tracker = createMutationTracker(browser.window, document);
-        const writable = (resolve?: () => void) => ({
-          write(data: string) {
+
+        try {
+          const iteratable = serverTemplate.render(input);
+          for await (const data of iteratable) {
             buffer += data;
             tracker.log(
               `# Write\n${indent(
                 data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
               )}`,
             );
-          },
-          flush() {
-            // tracker.logUpdate("Flush");
-            // document.write(buffer);
-            // buffer = "";
-          },
-          end(data?: string) {
-            document.write(
-              `<html><body>` + buffer + (data || "") + `</body></html>`,
-            );
-            document.close();
-            tracker.logUpdate("End");
-            resolve?.();
-          },
-          emit(type: string, ...args: unknown[]) {
-            console.log(...args);
-            tracker.log(
-              `# Emit ${type}${args.map((arg) => `\n${indent(arg)}`)}`,
-            );
-            if (type === "error") {
-              document.close();
-              resolve?.();
-            }
-          },
-        });
-
-        if (serverTemplate.writeTo) {
-          await new Promise<void>((resolve) =>
-            serverTemplate.writeTo(writable(resolve), input, config.context),
-          );
-        } else {
-          await serverTemplate.render(input, writable());
+          }
+          document.write(`<html><body>${buffer}</body></html>`);
+          document.close();
+          tracker.logUpdate("End");
+        } catch (error) {
+          tracker.log(`# Emit error\n${indent(error)}`);
+          document.write(`<html><body>${buffer}</body></html>`);
+          document.close();
+          tracker.logUpdate("Error");
         }
 
         tracker.cleanup();
@@ -203,11 +186,12 @@ describe("translator-interop", () => {
         const { document } = window;
         const throwErrors = trackErrors(window);
 
-        const [input, ...steps] =
+        const [input = {}, ...steps] = (
           typeof config.steps === "function"
             ? await config.steps()
-            : config.steps || [];
-        const template = browser.require(templateFile).default;
+            : config.steps || []
+        ) as [Input, ...unknown[]];
+        const template = browser.require(templateFile).default as Template;
         const container = Object.assign(document.createElement("div"), {
           TEST_ROOT: true,
         });
@@ -215,18 +199,7 @@ describe("translator-interop", () => {
 
         document.body.appendChild(container);
 
-        let updateInput: (input: unknown) => void;
-
-        if (template.insertBefore) {
-          // Marko 6
-          const instance = template.insertBefore(container, null, input);
-          updateInput = (input) => instance.update(input);
-        } else {
-          // Marko 5
-          const result = template.renderSync(input).appendTo(container);
-          const component = result.getComponent();
-          updateInput = (input) => (component.input = input);
-        }
+        const instance = template.mount(input, container, "beforeend");
 
         const { run } = browser.require(
           "@marko/runtime-tags/dist/debug/dom",
@@ -251,7 +224,7 @@ describe("translator-interop", () => {
             runUpdates();
             tracker.logUpdate(update);
           } else {
-            updateInput(update);
+            instance.update(update);
             tracker.logUpdate(update);
           }
 

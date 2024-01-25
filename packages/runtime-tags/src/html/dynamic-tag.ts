@@ -1,7 +1,7 @@
 import type { Renderer } from "../common/types";
 import { attrs } from "./attrs";
 import { serializedScope } from "./serializer";
-import type { Template } from "./template";
+import type { ServerTemplate as Template } from "./template";
 import {
   markResumeScopeStart,
   nextScopeId,

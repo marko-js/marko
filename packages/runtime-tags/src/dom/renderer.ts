@@ -1,4 +1,3 @@
-import { setContext } from "../common/context";
 import {
   type Accessor,
   AccessorChars,
@@ -45,7 +44,6 @@ export function createScopeWithRenderer(
   context: ScopeContext,
   ownerScope?: Scope,
 ) {
-  setContext(context);
   const newScope = createScope(context as ScopeContext);
   newScope._ = renderer.___owner || ownerScope;
   newScope.___renderer = renderer as Renderer;
@@ -55,7 +53,6 @@ export function createScopeWithRenderer(
       signal.___subscribe?.(newScope);
     }
   }
-  setContext(null);
   return newScope;
 }
 
