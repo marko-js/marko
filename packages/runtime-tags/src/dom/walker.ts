@@ -107,7 +107,7 @@ function walkInternal(
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#childScope")
             : currentScopeIndex++
-        ] = createScope(scope.___context)),
+        ] = createScope(scope.$global)),
         currentWalkIndex,
       )!;
     } else if (value === WalkCodes.EndChild) {

@@ -212,9 +212,9 @@ export function contextClosure<T>(
   // TODO: might be viable as a reliable way to get a unique id
   // const dirtyAccessor = valueAccessor - 2;
   return dynamicClosure(
-    (scope) => scope.___context![contextKey][1],
+    (scope) => (scope.$global![contextKey] as any)[1],
     value(valueAccessor, fn),
-    (scope) => scope.___context![contextKey][0],
+    (scope) => (scope.$global![contextKey] as any)[0],
     intersection,
     valueWithIntersection,
   );

@@ -1,5 +1,5 @@
 # Write
-  <!M[2>This is the body content<!M]1 #text/0><script>(M$h=[]).push((b,s,h)=>({1:{"#text/0!":h={}},2:h}),[])</script>
+  <!M[2>This is the body content<!M]1 #text/0><script>(M$h=[]).push((b,s,h)=>({1:{"#text/0!":h={}},2:h,$global:{}}),[])</script>
 
 
 # Render "End"
@@ -11,7 +11,7 @@
     This is the body content
     <!--M]1 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({1:{"#text/0!":h={}},2:h}),[])
+      (M$h=[]).push((b,s,h)=&gt;({1:{"#text/0!":h={}},2:h,$global:{}}),[])
     </script>
   </body>
 </html>

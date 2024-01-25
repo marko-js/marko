@@ -9,7 +9,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-fn-with-block/template.marko_0_count",])
     </script>
   </body>
 </html>

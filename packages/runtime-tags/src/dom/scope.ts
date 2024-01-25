@@ -1,20 +1,20 @@
-import type { Scope, ScopeContext } from "../common/types";
+import type { Scope } from "../common/types";
 import { queueEffect } from "./queue";
 import type { Renderer } from "./renderer";
 
 let debugID = 0;
 
-export function createScope(context?: ScopeContext): Scope {
+export function createScope($global: Scope["$global"]): Scope {
   const scope = {} as Scope;
   if (MARKO_DEBUG) {
     scope.___debugId = debugID++;
   }
   scope.___client = true;
-  scope.___context = context;
+  scope.$global = $global;
   return scope;
 }
 
-const emptyScope = createScope();
+const emptyScope = createScope({});
 export function getEmptyScope(marker?: Comment) {
   emptyScope.___startNode = emptyScope.___endNode = marker;
   return emptyScope;

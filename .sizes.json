@@ -7,9 +7,9 @@
     {
       "name": "*",
       "total": {
-        "min": 13105,
-        "gzip": 5618,
-        "brotli": 5130
+        "min": 13015,
+        "gzip": 5568,
+        "brotli": 5079
       }
     },
     {
@@ -43,9 +43,9 @@
         "brotli": 1210
       },
       "total": {
-        "min": 2816,
-        "gzip": 1529,
-        "brotli": 1361
+        "min": 2870,
+        "gzip": 1557,
+        "brotli": 1380
       }
     },
     {
@@ -79,9 +79,9 @@
         "brotli": 3342
       },
       "total": {
-        "min": 8987,
-        "gzip": 4270,
-        "brotli": 3886
+        "min": 9059,
+        "gzip": 4313,
+        "brotli": 3916
       }
     }
   ]

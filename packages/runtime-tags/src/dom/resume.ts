@@ -16,7 +16,7 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
-export const scopeLookup = {} as Record<number, Scope>;
+export const scopeLookup = {} as Record<number | "$global", Scope>;
 
 export function init(
   runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */,
@@ -78,12 +78,13 @@ export function init(
      * If so merge them and set/replace the scope in the scopeLookup.
      */
     for (const scopeIdAsString in scopes) {
+      if (scopeIdAsString === "$global") continue;
       const scopeId = parseInt(scopeIdAsString);
       const scope = scopes[scopeId];
       const storedScope = scopeLookup[scopeId];
-
+      scope.$global = scopeLookup.$global;
       if (storedScope !== scope) {
-        scopeLookup[scopeId] = Object.assign(scope, storedScope);
+        scopeLookup[scopeId] = Object.assign(scope, storedScope) as Scope;
       }
     }
 

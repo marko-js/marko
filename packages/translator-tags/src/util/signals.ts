@@ -236,59 +236,6 @@ export function initValue(
   return signal;
 }
 
-export function initContextProvider(
-  templateId: string,
-  reserve: Reserve,
-  providers: References,
-  compute: t.Expression,
-  renderer: t.Identifier,
-) {
-  const section = reserve.section;
-  const scopeAccessor = getScopeAccessorLiteral(reserve);
-  const valueAccessor = t.stringLiteral(
-    `${reserve.id}${AccessorChars.CONTEXT_VALUE}`,
-  );
-
-  const signal = initValue(reserve, valueAccessor);
-  addValue(section, providers, signal, compute);
-  signal.hasDynamicSubscribers = true;
-  signal.hasDownstreamIntersections = () => true;
-
-  addStatement(
-    "render",
-    reserve.section,
-    undefined,
-    t.expressionStatement(
-      callRuntime(
-        "initContextProvider",
-        scopeIdentifier,
-        scopeAccessor,
-        valueAccessor,
-        t.stringLiteral(templateId),
-        renderer,
-      ),
-    ),
-  );
-
-  return signal;
-}
-
-export function initContextConsumer(templateId: string, reserve: Reserve) {
-  const section = reserve.section;
-  const signal = getSignal(section, reserve);
-  getClosures(section).push(signal.identifier);
-  signal.build = () => {
-    return callRuntime(
-      "contextClosure",
-      getScopeAccessorLiteral(reserve),
-      t.stringLiteral(templateId),
-      getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)]),
-    );
-  };
-
-  return signal;
-}
-
 export function getSignalFn(
   signal: Signal,
   params: Array<t.Identifier | t.Pattern>,

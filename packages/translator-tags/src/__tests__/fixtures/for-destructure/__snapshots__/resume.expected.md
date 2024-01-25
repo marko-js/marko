@@ -27,7 +27,7 @@
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>
@@ -73,7 +73,7 @@ container.querySelector("#add").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>
@@ -116,7 +116,7 @@ container.querySelector("#remove").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>
@@ -151,7 +151,7 @@ container.querySelector("#remove").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>
@@ -190,7 +190,7 @@ container.querySelector("#add").click()
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,j={}]])},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>

@@ -32,7 +32,7 @@
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
+      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
     </script>
   </body>
 </html>
@@ -82,7 +82,7 @@ container.querySelector("#toggle").click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
+      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
     </script>
   </body>
 </html>
@@ -130,7 +130,7 @@ container.querySelector("#toggle").click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
+      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
     </script>
   </body>
 </html>
@@ -178,7 +178,7 @@ container.querySelector("#reverse").click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
+      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={open:!0,list:[1,2,3],"#ul/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
     </script>
   </body>
 </html>

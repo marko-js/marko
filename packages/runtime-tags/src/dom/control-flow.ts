@@ -85,7 +85,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     newScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
+        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.$global),
         scope,
       ) as ChildScope;
     prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
@@ -134,7 +134,7 @@ export function setConditionalRendererOnlyChild(
     const newScope = (scope[nodeAccessor + AccessorChars.COND_SCOPE] =
       createScopeWithRenderer(
         newRenderer,
-        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.___context),
+        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.$global),
         scope,
       ));
     (newRenderer.___fragment ?? defaultFragment).___insertBefore(
@@ -245,8 +245,7 @@ function loop(
       if (!childScope) {
         childScope = createScopeWithRenderer(
           renderer,
-          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||=
-            scope.___context),
+          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||= scope.$global),
           scope,
         );
         // TODO: once we can track moves

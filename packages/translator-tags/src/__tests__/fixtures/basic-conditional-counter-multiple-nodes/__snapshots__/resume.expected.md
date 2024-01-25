@@ -18,7 +18,7 @@
     <!--M*1 #text/0-->
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -52,7 +52,7 @@ container.querySelector("button.inc").click()
     <!--M*1 #text/0-->
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -81,7 +81,7 @@ container.querySelector("button.toggle").click()
     <!--M*0 #button/1-->
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -116,7 +116,7 @@ container.querySelector("button.inc").click()
     <!--M*0 #button/1-->
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -145,7 +145,7 @@ container.querySelector("button.toggle").click()
     <!--M*0 #button/1-->
     The count is 2
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -177,7 +177,7 @@ container.querySelector("button.inc").click()
     <!--M*0 #button/1-->
     The count is 3
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_0_count",])
     </script>
   </body>
 </html>

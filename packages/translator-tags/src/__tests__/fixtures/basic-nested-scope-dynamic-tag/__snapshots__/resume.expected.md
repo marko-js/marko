@@ -13,7 +13,7 @@
     <!--M]1 #text/0-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j,$global:{}},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
     </script>
   </body>
 </html>
@@ -45,7 +45,7 @@ container.querySelector("button").click()
     <!--M]1 #text/0-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j,$global:{}},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
     </script>
   </body>
 </html>
@@ -74,7 +74,7 @@ container.querySelector("button").click()
     <!--M]1 #text/0-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j,$global:{}},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
     </script>
   </body>
 </html>
@@ -103,7 +103,7 @@ container.querySelector("button").click()
     <!--M]1 #text/0-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#text/0!":k={"#text/0!":j={}},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko")},1:k,2:j,$global:{}},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber",])
     </script>
   </body>
 </html>

@@ -7,7 +7,7 @@
       child
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{}}),[])
+      (M$h=[]).push((b,s)=&gt;({1:{},$global:{}}),[])
     </script>
   </body>
 </html>

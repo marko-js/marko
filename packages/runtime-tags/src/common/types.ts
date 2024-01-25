@@ -4,8 +4,6 @@ export type Renderer = (...args: unknown[]) => unknown;
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 
-export type ScopeContext = Record<string, [Scope, number | string]>;
-
 export type Scope<
   T extends { [x: string | number]: unknown } = {
     [x: string | number]: unknown;
@@ -18,7 +16,7 @@ export type Scope<
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
-  ___context: ScopeContext | undefined;
+  $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
 } & T;

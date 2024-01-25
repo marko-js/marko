@@ -29,7 +29,7 @@ export class ClientTemplate implements Template {
     let scope!: Scope, dom!: Node;
     const attrs = this._.___attrs;
     const effects = prepare(() => {
-      scope = createScope();
+      scope = createScope({});
       dom = initRenderer(this._, scope);
       if (attrs) {
         attrs(scope, input);
