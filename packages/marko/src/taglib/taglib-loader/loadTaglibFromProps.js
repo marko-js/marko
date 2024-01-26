@@ -258,6 +258,24 @@ class TaglibLoader {
     }
   }
 
+  exports(dir) {
+    var taglib = this.taglib;
+    var path = this.filePath;
+    var dirname = this.dirname;
+
+    if (taglib.isFromPackageJson) {
+      taglib.tagsDir = false;
+
+      scanTagsDir(
+        path,
+        dirname,
+        dir,
+        taglib,
+        this.dependencyChain.append(`exports`)
+      );
+    }
+  }
+
   taglibImports(imports) {
     if (!resolveFrom) {
       return;

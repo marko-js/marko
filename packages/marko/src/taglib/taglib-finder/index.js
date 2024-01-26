@@ -123,7 +123,7 @@ function find(dirname, registeredTaglibs) {
       if (!excludedPackages[name]) {
         let taglibPath = resolveFrom(rootPkg.__dirname, name + "/marko.json");
         if (taglibPath) {
-          var taglib = taglibLoader.loadTaglibFromFile(taglibPath);
+          var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true);
           helper.addTaglib(taglib);
         }
       }
