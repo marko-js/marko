@@ -5,6 +5,7 @@ var changeCase = require("./_change-case");
 var ComponentsContext = require("../components/ComponentsContext");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
 var ComponentDef = require("../components/ComponentDef");
+var interopRequire = require("./interop-require");
 var w10NOOP = require("warp10/constants").NOOP;
 var RENDER_BODY_TO_JSON = function () {
   return w10NOOP;
@@ -65,6 +66,8 @@ module.exports = function dynamicTag(
           attrs.renderBody = renderBody;
         }
       }
+
+      tag = interopRequire(tag);
 
       var renderer =
         tag._ ||

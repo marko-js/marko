@@ -2,7 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr2/index.marko",
-    marko_component = require("./component"),
+    marko_interopRequireDefault = require("marko/src/runtime/helpers/interop-require"),
+    marko_component = marko_interopRequireDefault(require("./component")),
     marko_renderer = require("marko/src/runtime/components/renderer"),
     helpers_escape_xml = require("marko/src/runtime/html/helpers/escape-xml"),
     marko_escapeXml = helpers_escape_xml.x,

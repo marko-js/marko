@@ -115,7 +115,9 @@ module.exports = function handleComponentBind(options) {
     } else if (!isImplicitComponent) {
       markoComponentVar = context.addStaticVar(
         "marko_component",
-        builder.require(builder.literal(rendererModule.requirePath))
+        builder.functionCall(context.helper("interopRequireDefault"), [
+          builder.require(builder.literal(rendererModule.requirePath))
+        ])
       );
     }
   }

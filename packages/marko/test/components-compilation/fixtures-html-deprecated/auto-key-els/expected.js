@@ -2,7 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/auto-key-els/index.marko",
-    marko_component = require("./component"),
+    marko_interopRequireDefault = require("marko/src/runtime/helpers/interop-require"),
+    marko_component = marko_interopRequireDefault(require("./component")),
     marko_renderer = require("marko/src/runtime/components/renderer"),
     marko_loadTemplate = require("marko/src/runtime/helpers/load-template"),
     Foo = marko_loadTemplate(require.resolve("./foo.marko")),
