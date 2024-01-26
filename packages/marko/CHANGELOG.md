@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.28.0](https://github.com/marko-js/marko/compare/v4.27.0...v4.28.0) (2024-01-26)
+
+
+### Features
+
+* support esm compiled component files ([0b7f948](https://github.com/marko-js/marko/commit/0b7f94802825058f864a0e7c91e4e5f87df6b591))
+* support exports field in marko.json ([be0d24f](https://github.com/marko-js/marko/commit/be0d24f547a2e3e7c83c692b62963ce8dc7590ab))
+
 ## [4.27.0](https://github.com/marko-js/marko/compare/v4.26.5...v4.27.0) (2023-08-07)
 
 
