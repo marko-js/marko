@@ -2,7 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html-deprecated/component-include-attr/index",
-    marko_component = require("./"),
+    marko_interopRequireDefault = require("marko/src/runtime/helpers/interop-require"),
+    marko_component = marko_interopRequireDefault(require("./")),
     marko_rendererLegacy = require("marko/src/runtime/components/legacy/renderer-legacy"),
     marko_dynamicTag = require("marko/src/runtime/helpers/dynamic-tag"),
     helpers_escape_xml = require("marko/src/runtime/html/helpers/escape-xml"),

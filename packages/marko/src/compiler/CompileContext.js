@@ -106,6 +106,7 @@ const helpers = {
   forIn: "marko/runtime/helpers/for-in",
   forRange: "marko/runtime/helpers/for-range",
   getWidgetFromOut: "marko/runtime/components/legacy/helper-getWidgetFromOut",
+  interopRequireDefault: "marko/runtime/helpers/interop-require",
   loadNestedTag: "marko/runtime/helpers/load-nested-tag",
   loadTag: "marko/runtime/helpers/load-tag",
   loadTemplate: "marko/runtime/helpers/load-template",

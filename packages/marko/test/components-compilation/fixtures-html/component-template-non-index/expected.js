@@ -2,7 +2,8 @@
 
 var marko_template = module.exports = require("marko/src/html").t(__filename),
     marko_componentType = "/marko-test$1.0.0/components-compilation/fixtures-html/component-template-non-index/template.marko",
-    marko_component = require("./template.component"),
+    marko_interopRequireDefault = require("marko/src/runtime/helpers/interop-require"),
+    marko_component = marko_interopRequireDefault(require("./template.component")),
     marko_renderer = require("marko/src/runtime/components/renderer");
 
 function render(input, out, __component, component, state) {
