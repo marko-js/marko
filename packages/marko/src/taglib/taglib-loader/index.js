@@ -8,8 +8,8 @@ function loadTaglibFromProps(taglib, taglibProps) {
   return loaders.loadTaglibFromProps(taglib, taglibProps);
 }
 
-function loadTaglibFromFile(filePath) {
-  return loaders.loadTaglibFromFile(filePath);
+function loadTaglibFromFile(filePath, isFromPackageJson) {
+  return loaders.loadTaglibFromFile(filePath, isFromPackageJson);
 }
 
 function loadTaglibFromDir(filePath) {
