@@ -49,7 +49,7 @@ export function createRenderFn(renderer: Renderer) {
   return (
     stream: Writable,
     input: Input = {},
-    global: Record<string, unknown> = {},
+    $global?: Record<string, unknown>,
     streamState: Partial<StreamData> = {},
   ) => {
     let remainingChildren = 1;
@@ -67,7 +67,7 @@ export function createRenderFn(renderer: Renderer) {
     };
 
     $_buffer = createInitialBuffer(stream);
-    streamState.global = global;
+    streamState.global = $global;
     $_streamData = createStreamState(streamState);
 
     $_buffer.onReject = reject;
@@ -473,7 +473,9 @@ export function writeScope(
       scope = Object.assign(assignTo, scope);
     }
   }
-  $_buffer!.scopes = $_buffer!.scopes || {};
+  $_buffer!.scopes ??= {
+    $global: getFilteredGlobals($_streamData!.global) as any,
+  };
   $_buffer!.scopes[scopeId] = scope;
   $_streamData!.scopeLookup.set(scopeId, scope);
 }
@@ -523,4 +525,45 @@ function getResumeScript(
     }.push(${serializer.stringify(scopes)},[${calls}])</script>`;
   }
   return "";
+}
+
+function getFilteredGlobals($global: Record<string, unknown>) {
+  if (!$global) return undefined;
+
+  const serializedGlobals = $global.serializedGlobals as
+    | string[]
+    | Record<string, boolean>
+    | undefined;
+
+  if (!serializedGlobals) return undefined;
+
+  let filtered: undefined | Record<string, unknown>;
+
+  if (Array.isArray(serializedGlobals)) {
+    for (const key of serializedGlobals) {
+      const value = $global[key];
+      if (value !== undefined) {
+        if (filtered) {
+          filtered[key] = value;
+        } else {
+          filtered = { [key]: value };
+        }
+      }
+    }
+  } else {
+    for (const key in serializedGlobals) {
+      if (serializedGlobals[key]) {
+        const value = $global[key];
+        if (value !== undefined) {
+          if (filtered) {
+            filtered[key] = value;
+          } else {
+            filtered = { [key]: value };
+          }
+        }
+      }
+    }
+  }
+
+  return filtered;
 }

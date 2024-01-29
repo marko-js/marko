@@ -66,12 +66,9 @@ const enum AccessorChars {
   TAG_VARIABLE = "/",
   COND_SCOPE = "!",
   LOOP_SCOPE_ARRAY = "!",
-  COND_CONTEXT = "^",
-  LOOP_CONTEXT = "^",
   COND_RENDERER = "(",
   LOOP_SCOPE_MAP = "(",
   LOOP_VALUE = ")",
-  CONTEXT_VALUE = ":",
 }
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -233,59 +230,6 @@ export function initValue(
     }
   };
   signal.valueAccessor = valueAccessor;
-  return signal;
-}
-
-export function initContextProvider(
-  templateId: string,
-  reserve: Reserve,
-  providers: References,
-  compute: t.Expression,
-  renderer: t.Identifier,
-) {
-  const section = reserve.section;
-  const scopeAccessor = getScopeAccessorLiteral(reserve);
-  const valueAccessor = t.stringLiteral(
-    `${reserve.id}${AccessorChars.CONTEXT_VALUE}`,
-  );
-
-  const signal = initValue(reserve, valueAccessor);
-  addValue(section, providers, signal, compute);
-  signal.hasDynamicSubscribers = true;
-  signal.hasDownstreamIntersections = () => true;
-
-  addStatement(
-    "render",
-    reserve.section,
-    undefined,
-    t.expressionStatement(
-      callRuntime(
-        "initContextProvider",
-        scopeIdentifier,
-        scopeAccessor,
-        valueAccessor,
-        t.stringLiteral(templateId),
-        renderer,
-      ),
-    ),
-  );
-
-  return signal;
-}
-
-export function initContextConsumer(templateId: string, reserve: Reserve) {
-  const section = reserve.section;
-  const signal = getSignal(section, reserve);
-  getClosures(section).push(signal.identifier);
-  signal.build = () => {
-    return callRuntime(
-      "contextClosure",
-      getScopeAccessorLiteral(reserve),
-      t.stringLiteral(templateId),
-      getSignalFn(signal, [scopeIdentifier, t.identifier(reserve.name)]),
-    );
-  };
-
   return signal;
 }
 

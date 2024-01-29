@@ -22,14 +22,15 @@ export class ClientTemplate implements Template {
   }
 
   mount(
-    input: Input,
+    templateInput: Input & { $global?: Record<string, unknown> } = {},
     reference: ParentNode & Node,
     position?: InsertPosition,
   ): TemplateInstance {
     let scope!: Scope, dom!: Node;
+    const { $global = {}, ...input } = templateInput;
     const attrs = this._.___attrs;
     const effects = prepare(() => {
-      scope = createScope();
+      scope = createScope($global);
       dom = initRenderer(this._, scope);
       if (attrs) {
         attrs(scope, input);

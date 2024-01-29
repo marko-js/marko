@@ -4,8 +4,6 @@ export type Renderer = (...args: unknown[]) => unknown;
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 
-export type ScopeContext = Record<string, [Scope, number | string]>;
-
 export type Scope<
   T extends { [x: string | number]: unknown } = {
     [x: string | number]: unknown;
@@ -18,7 +16,7 @@ export type Scope<
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
-  ___context: ScopeContext | undefined;
+  $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
 } & T;
@@ -47,12 +45,9 @@ export const enum AccessorChars {
   TAG_VARIABLE = "/",
   COND_SCOPE = "!",
   LOOP_SCOPE_ARRAY = "!",
-  COND_CONTEXT = "^",
-  LOOP_CONTEXT = "^",
   COND_RENDERER = "(",
   LOOP_SCOPE_MAP = "(",
   LOOP_VALUE = ")",
-  CONTEXT_VALUE = ":",
   PREVIOUS_ATTRIBUTES = "~",
 }
 

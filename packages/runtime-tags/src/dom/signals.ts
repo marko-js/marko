@@ -202,24 +202,6 @@ export function dynamicClosure<T>(
   });
 }
 
-export function contextClosure<T>(
-  valueAccessor: Accessor,
-  contextKey: string,
-  fn: ValueSignal<T>,
-  intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal,
-) {
-  // TODO: might be viable as a reliable way to get a unique id
-  // const dirtyAccessor = valueAccessor - 2;
-  return dynamicClosure(
-    (scope) => scope.___context![contextKey][1],
-    value(valueAccessor, fn),
-    (scope) => scope.___context![contextKey][0],
-    intersection,
-    valueWithIntersection,
-  );
-}
-
 export function childClosures(
   closureSignals: IntersectionSignal[],
   childAccessor: Accessor,

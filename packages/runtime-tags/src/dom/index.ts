@@ -35,7 +35,6 @@ export type { Scope } from "../common/types";
 
 export {
   createRenderer,
-  initContextProvider,
   dynamicTagAttrs,
   createScopeWithRenderer,
 } from "./renderer";
@@ -48,7 +47,6 @@ export {
   intersection,
   closure,
   dynamicClosure,
-  contextClosure,
   dynamicSubscribers,
   childClosures,
   setTagVar,
