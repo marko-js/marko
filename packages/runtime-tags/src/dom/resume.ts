@@ -16,7 +16,7 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
-export const scopeLookup = {} as Record<number | "$global", Scope>;
+export const scopeLookup = {} as Record<number | string, Scope>;
 
 export function init(
   runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */,
@@ -46,52 +46,56 @@ export function init(
     }
   };
 
-  Object.defineProperty(window, resumeVar, {
-    get() {
-      return fakeArray;
-    },
-  });
-
   if (initialHydration) {
     for (let i = 0; i < initialHydration.length; i += 2) {
       resume(initialHydration[i], initialHydration[i + 1]);
     }
+  } else {
+    (window as any)[resumeVar] = fakeArray;
   }
 
   function resume(
-    scopesFn: (
-      b: typeof bind,
-      s: typeof scopeLookup,
-      ...rest: unknown[]
-    ) => Record<string, Scope>,
+    scopesFn:
+      | null
+      | ((
+          b: typeof bind,
+          s: typeof scopeLookup,
+          ...rest: unknown[]
+        ) => Record<string, Scope>),
     calls: Array<string | number>,
   ) {
+    // TODO: Can be refactored/removed when adding runtimeId and componentIdPrefix
+    /**
+     * Necessary for injecting content into an existing document (e.g. microframe)
+     */
     if (doc.readyState !== "loading") {
       walker.currentNode = doc;
     }
 
-    const scopes = scopesFn?.(bind, scopeLookup);
-    if (scopes) scopes.$global ??= {} as Scope;
+    if (scopesFn) {
+      const scopes = scopesFn(bind, scopeLookup);
+      scopeLookup.$global ||= scopes.$global || {};
 
-    /**
-     * Loop over all the new hydration scopes and see if a previous walk
-     * had to create a dummy scope to store Nodes of interest.
-     * If so merge them and set/replace the scope in the scopeLookup.
-     */
-    for (const scopeIdAsString in scopes) {
-      if (scopeIdAsString === "$global") continue;
-      const scopeId = parseInt(scopeIdAsString);
-      const scope = scopes[scopeId];
-      const storedScope = scopeLookup[scopeId];
-      scope.$global = scopes.$global;
-      if (storedScope !== scope) {
-        scopeLookup[scopeId] = Object.assign(scope, storedScope) as Scope;
+      /**
+       * Loop over all the new hydration scopes and see if a previous walk
+       * had to create a dummy scope to store Nodes of interest.
+       * If so merge them and set/replace the scope in the scopeLookup.
+       */
+      for (const scopeIdAsString in scopes) {
+        if (scopeIdAsString === "$global") continue;
+        const scopeId = parseInt(scopeIdAsString);
+        const scope = scopes[scopeId];
+        const storedScope = scopeLookup[scopeId];
+        scope.$global = scopes.$global;
+        if (storedScope !== scope) {
+          scopeLookup[scopeId] = Object.assign(scope, storedScope) as Scope;
+        }
       }
     }
 
     while ((currentNode = walker.nextNode() as ChildNode)) {
-      const nodeValue = currentNode.nodeValue;
-      if (nodeValue?.startsWith(`${runtimeId}`)) {
+      const nodeValue = currentNode.nodeValue!;
+      if (nodeValue.startsWith(runtimeId)) {
         const token = nodeValue[runtimeLength];
         const scopeId = parseInt(nodeValue.slice(runtimeLength + 1));
         const scope = getScope(scopeId);

@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><!--F#0--><button id=tags>0<!M*0 #text/1></button><!M*0 #button/0><div><!M[1><h1>hello</h1><button id=class>1 * 0 = 0</button><!M]0 #text/2></div><script>(M$h=[]).push((b,s,h)=>({0:{count:0,"#text/2!":h={}},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])</script><!--F/--><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})</script>
+  <!--M#s0--><!--F#0--><button id=tags>0<!M*0 #text/1></button><!M*0 #button/0><div><!M[1><h1>hello</h1><button id=class>1 * 0 = 0</button><!M]0 #text/2></div><script>(M$h=[]).push((b,s,h)=>({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])</script><!--F/--><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})</script>
 
 
 # Render "End"
@@ -29,7 +29,7 @@
       <!--M]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={}},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
     </script>
     <!--F/-->
     <!--M/-->

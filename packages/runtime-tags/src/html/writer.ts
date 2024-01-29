@@ -473,8 +473,9 @@ export function writeScope(
       scope = Object.assign(assignTo, scope);
     }
   }
-  const $global = getFilteredGlobals($_streamData!.global);
-  $_buffer!.scopes ??= $global ? { $global } : {};
+  $_buffer!.scopes ??= {
+    $global: getFilteredGlobals($_streamData!.global) as any,
+  };
   $_buffer!.scopes[scopeId] = scope;
   $_streamData!.scopeLookup.set(scopeId, scope);
 }
