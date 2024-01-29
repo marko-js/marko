@@ -37,7 +37,7 @@ type SetupFn = (scope: Scope) => void;
 export function createScopeWithRenderer(
   renderer: RendererOrElementName,
   $global: Scope["___global"],
-  ownerScope?: Scope
+  ownerScope?: Scope,
 ) {
   const newScope = createScope($global);
   newScope._ = renderer.___owner || ownerScope;
@@ -61,7 +61,7 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
       ? dom.firstChild!
       : (dom as ChildNode),
     renderer.___walks ?? " ",
-    scope
+    scope,
   );
   scope.___startNode =
     dom.nodeType === NodeType.DocumentFragment
@@ -87,7 +87,7 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
   return (
     scope: Scope,
     getAttrs: () => Record<string, unknown>,
-    clean?: boolean | 1
+    clean?: boolean | 1,
   ) => {
     const renderer = scope[
       nodeAccessor + AccessorChars.COND_RENDERER
@@ -105,7 +105,7 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
-        bindRenderer(scope, renderBody)
+        bindRenderer(scope, renderBody),
       );
     } else if (renderer.___attrs) {
       if (clean) {
@@ -119,7 +119,7 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
             renderBody:
               bindRenderer(scope, renderBody) ?? attributes.renderBody,
           },
-          clean
+          clean,
         );
       }
     }
@@ -135,7 +135,7 @@ export function createRenderer(
   fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
   dynamicEndNodeOffset?: Accessor,
-  attrs?: ValueSignal
+  attrs?: ValueSignal,
 ): Renderer {
   return {
     ___template: template,
@@ -159,7 +159,7 @@ function _clone(this: Renderer) {
     if (MARKO_DEBUG && this.___template === undefined) {
       throw new Error(
         "The renderer does not have a template to clone: " +
-          JSON.stringify(this)
+          JSON.stringify(this),
       );
     }
     const walks = this.___walks;
@@ -171,7 +171,7 @@ function _clone(this: Renderer) {
       walks.charCodeAt(walks.length - 1) !== WalkCodes.Get;
     this.___sourceNode = sourceNode = parse(
       this.___template,
-      ensureFragment as boolean
+      ensureFragment as boolean,
     );
   }
   return sourceNode.cloneNode(true);
