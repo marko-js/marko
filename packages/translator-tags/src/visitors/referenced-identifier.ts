@@ -1,7 +1,8 @@
 import { types as t } from "@marko/compiler";
 import isStatic from "../util/is-static";
+import { isOutputHTML } from "../util/marko-config";
 import { importRuntime } from "../util/runtime";
-import { currentProgramPath } from "./program";
+import { currentProgramPath, scopeIdentifier } from "./program";
 
 const globalImportIdentifier = new WeakMap<
   t.NodePath<t.Program>,
@@ -50,18 +51,24 @@ export default {
     switch (name) {
       case "$global":
         {
-          let streamDataIdentifier =
-            globalImportIdentifier.get(currentProgramPath);
-          if (!streamDataIdentifier) {
-            streamDataIdentifier = importRuntime("$_streamData");
-            globalImportIdentifier.set(
-              currentProgramPath,
-              streamDataIdentifier,
+          if (isOutputHTML()) {
+            let streamDataIdentifier =
+              globalImportIdentifier.get(currentProgramPath);
+            if (!streamDataIdentifier) {
+              streamDataIdentifier = importRuntime("$_streamData");
+              globalImportIdentifier.set(
+                currentProgramPath,
+                streamDataIdentifier,
+              );
+            }
+            identifier.replaceWith(
+              t.memberExpression(streamDataIdentifier, t.identifier("global")),
+            );
+          } else {
+            identifier.replaceWith(
+              t.memberExpression(scopeIdentifier, t.identifier("$global")),
             );
           }
-          identifier.replaceWith(
-            t.memberExpression(streamDataIdentifier, t.identifier("global")),
-          );
         }
         break;
     }

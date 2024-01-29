@@ -5,7 +5,7 @@ import { Serializer } from "./serializer";
 const runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID;
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
-  runtimeId
+  runtimeId,
 );
 
 type PartialScope = Record<string | number, unknown> | unknown[];
@@ -50,7 +50,7 @@ export function createRenderFn(renderer: Renderer) {
     stream: Writable,
     input: Input = {},
     $global: Record<string, unknown> = {},
-    streamState: Partial<StreamData> = {}
+    streamState: Partial<StreamData> = {},
   ) => {
     let remainingChildren = 1;
 
@@ -216,7 +216,7 @@ function createInitialBuffer(stream: Writable): Buffer {
 
 export async function fork<T>(
   promise: Promise<T>,
-  renderResult: (result: T) => void
+  renderResult: (result: T) => void,
 ) {
   const originalBuffer = $_buffer!;
   const originalStreamState = $_streamData!;
@@ -247,7 +247,7 @@ export async function fork<T>(
 
 export function tryCatch(
   renderBody: () => void,
-  renderError: (err: Error) => void
+  renderError: (err: Error) => void,
 ) {
   const id = nextPlaceholderId();
   let err: Error | null = null;
@@ -266,7 +266,7 @@ export function tryCatch(
       tryBuffer,
       finalTryBuffer,
       errorBuffer,
-      finalErrorBuffer
+      finalErrorBuffer,
     );
   };
 
@@ -296,7 +296,7 @@ export function tryCatch(
 
 export function tryPlaceholder(
   renderBody: () => void,
-  renderPlaceholder: () => void
+  renderPlaceholder: () => void,
 ) {
   const originalBuffer = $_buffer!;
   const asyncBuffer = createDetatchedBuffer(originalBuffer);
@@ -323,7 +323,7 @@ export function tryPlaceholder(
           placeholderBuffer,
           finalPlaceholderBuffer,
           asyncBuffer,
-          finalAsyncBuffer
+          finalAsyncBuffer,
         );
       }
       if (!remainingPlaceholders) {
@@ -380,7 +380,7 @@ function replaceBuffers(
   placeholderStart: Buffer,
   placeholderEnd: Buffer,
   replacementStart: Buffer,
-  replacementEnd: Buffer
+  replacementEnd: Buffer,
 ) {
   if (placeholderStart.flushed) {
     addReplacementWrapper(id, replacementStart, replacementEnd);
@@ -420,7 +420,7 @@ function replaceBuffers(
 function addReplacementWrapper(
   id: number,
   replacementStart: Buffer,
-  replacementEnd: Buffer
+  replacementEnd: Buffer,
 ) {
   let runtimeCall = runtimeId + ResumeSymbols.VAR_REORDER_RUNTIME;
   if (!$_streamData!.runtimeFlushed) {
@@ -464,7 +464,7 @@ export function writeScope(
   assignTo:
     | PartialScope
     | PartialScope[]
-    | undefined = $_streamData!.scopeLookup.get(scopeId)
+    | undefined = $_streamData!.scopeLookup.get(scopeId),
 ) {
   if (assignTo !== undefined) {
     if (Array.isArray(assignTo)) {
@@ -496,7 +496,7 @@ export function markResumeControlEnd(scopeId: number, index: Accessor) {
 export function markResumeControlSingleNodeEnd(
   scopeId: number,
   index: Accessor,
-  childScopeIds?: number | number[]
+  childScopeIds?: number | number[],
 ) {
   return `<!${runtimeId}${
     ResumeSymbols.SECTION_SINGLE_NODES_END
@@ -506,14 +506,14 @@ export function markResumeControlSingleNodeEnd(
 function getResumeScript(
   calls: string,
   scopes: Buffer["scopes"],
-  streamState: StreamData
+  streamState: StreamData,
 ) {
   if (calls || scopes) {
     let isFirstFlush;
     let serializer = streamState.serializer;
     if ((isFirstFlush = !serializer)) {
       serializer = streamState.serializer = new Serializer(
-        streamState.scopeLookup
+        streamState.scopeLookup,
       );
     }
     return `<script>${
@@ -526,11 +526,23 @@ function getResumeScript(
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {
-  const serializedGlobals = $global.serializedGlobals as string[];
+  const serializedGlobals = $global.serializedGlobals as
+    | string[]
+    | Record<string, boolean>
+    | undefined;
   if (serializedGlobals) {
-    const filtered = {} as Record<string, unknown>;
-    for (const key in serializedGlobals) {
-      filtered[key] = serializedGlobals[key];
+    const filtered: Record<string, unknown> = {};
+
+    if (Array.isArray(serializedGlobals)) {
+      for (const key of serializedGlobals) {
+        filtered[key] = $global[key];
+      }
+    } else {
+      for (const key in serializedGlobals) {
+        if (serializedGlobals[key]) {
+          filtered[key] = $global[key];
+        }
+      }
     }
 
     return filtered;

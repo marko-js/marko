@@ -35,7 +35,6 @@ type Result = {
 };
 
 type TestConfig = {
-  context?: Record<string, unknown>;
   steps?: unknown[] | (() => Promise<unknown[]>);
   skip_dom?: boolean;
   skip_html?: boolean;
@@ -134,13 +133,11 @@ describe("translator-interop", () => {
           }),
         });
         const document = browser.window.document;
-        const [input = {}] = (
+        const [input] = (
           typeof config.steps === "function"
             ? await config.steps()
             : config.steps || []
         ) as [Input];
-
-        input.$global = config.context;
 
         document.open();
 

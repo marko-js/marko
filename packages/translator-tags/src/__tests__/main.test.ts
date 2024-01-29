@@ -21,7 +21,6 @@ const reorderRuntimeString = String(reorderRuntime).replace(
 );
 
 type TestConfig = {
-  context?: Record<string, unknown>;
   steps?: unknown[] | (() => Promise<unknown[]>);
   skip_dom?: boolean;
   skip_html?: boolean;
@@ -166,8 +165,6 @@ describe("translator-tags", () => {
             ? await config.steps()
             : config.steps || []
         ) as [Input];
-
-        input.$global = config.context;
 
         document.open();
 

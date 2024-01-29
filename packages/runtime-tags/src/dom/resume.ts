@@ -82,7 +82,7 @@ export function init(
       const scopeId = parseInt(scopeIdAsString);
       const scope = scopes[scopeId];
       const storedScope = scopeLookup[scopeId];
-      scope.$global = scopeLookup.$global;
+      scope.$global = scopes.$global;
       if (storedScope !== scope) {
         scopeLookup[scopeId] = Object.assign(scope, storedScope) as Scope;
       }

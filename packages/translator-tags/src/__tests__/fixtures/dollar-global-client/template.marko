@@ -1,0 +1,10 @@
+static debugger;
+<div>
+  <let/show=false/>
+  <if=show>
+    <span>${$global.x}</span>
+  </if>
+  <button onClick() { show = !show; }>
+    Toggle
+  </button>
+</div>
