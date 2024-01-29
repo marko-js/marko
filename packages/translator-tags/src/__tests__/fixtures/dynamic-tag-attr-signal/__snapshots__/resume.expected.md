@@ -12,7 +12,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{className:"A"},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{className:"A"},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
   </body>
 </html>
@@ -68,7 +68,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{className:"A"},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      (M$h=[]).push((b,s)=&gt;({0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
     </script>
   </body>
 </html>

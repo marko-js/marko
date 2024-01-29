@@ -13,7 +13,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -42,7 +42,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -74,7 +74,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
     </script>
   </body>
 </html>

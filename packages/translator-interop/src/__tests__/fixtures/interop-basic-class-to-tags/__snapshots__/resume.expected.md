@@ -17,7 +17,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
@@ -65,7 +65,7 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
@@ -101,7 +101,7 @@ container.querySelector("#class").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
@@ -138,7 +138,7 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
@@ -174,7 +174,7 @@ container.querySelector("#class").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
@@ -211,7 +211,7 @@ container.querySelector("#tags").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push((b,s)=&gt;({0:{count:0},$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <script>
       $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})

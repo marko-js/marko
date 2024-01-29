@@ -22,7 +22,7 @@
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -103,7 +103,7 @@ container.querySelector("#class").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -141,7 +141,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -180,7 +180,7 @@ container.querySelector("#class").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -218,7 +218,7 @@ container.querySelector("#tags").click()
     </script>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#text/2!":h={m5c:"s0"},"#text/2(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"),!0)},1:h,$global:{}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
     </script>
   </body>
 </html>

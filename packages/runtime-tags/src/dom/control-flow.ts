@@ -83,11 +83,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
   if (newRenderer) {
     newScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] =
-      createScopeWithRenderer(
-        newRenderer,
-        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.$global),
-        scope,
-      ) as ChildScope;
+      createScopeWithRenderer(newRenderer, scope.$global, scope) as ChildScope;
     prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
   } else {
     newScope = getEmptyScope(scope[nodeAccessor] as Comment) as ChildScope;
@@ -132,11 +128,7 @@ export function setConditionalRendererOnlyChild(
 
   if (newRenderer) {
     const newScope = (scope[nodeAccessor + AccessorChars.COND_SCOPE] =
-      createScopeWithRenderer(
-        newRenderer,
-        (scope[nodeAccessor + AccessorChars.COND_CONTEXT] ||= scope.$global),
-        scope,
-      ));
+      createScopeWithRenderer(newRenderer, scope.$global, scope));
     (newRenderer.___fragment ?? defaultFragment).___insertBefore(
       newScope,
       referenceNode,
@@ -243,11 +235,7 @@ function loop(
       let childScope = oldMap.get(key);
       const isNew = !childScope;
       if (!childScope) {
-        childScope = createScopeWithRenderer(
-          renderer,
-          (scope[nodeAccessor + AccessorChars.LOOP_CONTEXT] ||= scope.$global),
-          scope,
-        );
+        childScope = createScopeWithRenderer(renderer, scope.$global, scope);
         // TODO: once we can track moves
         // needsReconciliation = true;
       } else {

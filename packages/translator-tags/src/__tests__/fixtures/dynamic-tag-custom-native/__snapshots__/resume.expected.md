@@ -14,7 +14,7 @@
     </div>
     <!--M]0 #text/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
     />
     <!--M]0 #text/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -69,7 +69,7 @@ container.querySelector("button").click()
     </div>
     <!--M]0 #text/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j,$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
+      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:h=b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"),"#text/1!":j={},"#text/1(":h},1:j}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
   </body>
 </html>

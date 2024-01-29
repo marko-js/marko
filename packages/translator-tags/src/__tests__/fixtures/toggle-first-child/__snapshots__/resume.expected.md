@@ -13,7 +13,7 @@
       <span />
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer")},1:j,$global:{}},j._=h,k),[])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer")},1:j},j._=h,k),[])
     </script>
   </body>
 </html>

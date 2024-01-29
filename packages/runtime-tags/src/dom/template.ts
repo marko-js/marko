@@ -22,7 +22,7 @@ export class ClientTemplate implements Template {
   }
 
   mount(
-    templateInput: Input & { $global?: Record<string, unknown> },
+    templateInput: Input & { $global?: Record<string, unknown> } = {},
     reference: ParentNode & Node,
     position?: InsertPosition,
   ): TemplateInstance {

@@ -1,4 +1,3 @@
-debugger;
 import { data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueEffect as _queueEffect, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _setup$ifBody = _scope => {
   _data(_scope["#text/0"], _scope.$global.x);

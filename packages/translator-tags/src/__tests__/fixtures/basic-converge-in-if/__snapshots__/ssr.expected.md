@@ -1,5 +1,5 @@
 # Write
-  0<!M*1 #text/0><script>(M$h=[]).push((b,s,h)=>({0:h={a:0,b:0},1:{_:h},$global:{}}),[])</script>
+  0<!M*1 #text/0><script>(M$h=[]).push((b,s,h)=>({0:h={a:0,b:0},1:{_:h}}),[])</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     0
     <!--M*1 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={a:0,b:0},1:{_:h},$global:{}}),[])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={a:0,b:0},1:{_:h}}),[])
     </script>
   </body>
 </html>

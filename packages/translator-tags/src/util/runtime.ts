@@ -27,7 +27,6 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/src/dom")> =
     "intersection",
     "closure",
     "dynamicClosure",
-    "contextClosure",
     "loopOf",
     "loopIn",
     "loopTo",

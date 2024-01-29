@@ -1,5 +1,5 @@
 # Write
-  Hello<!M|0 #text/0 1>World<!M|0 #text/1 2><div>B<!M|0 #text/2 3></div><script>(M$h=[]).push((b,s,h,j,k,m,o)=>(o={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"),"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"),"#text/2!":m={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer")},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[])</script>
+  Hello<!M|0 #text/0 1>World<!M|0 #text/1 2><div>B<!M|0 #text/2 3></div><script>(M$h=[]).push((b,s,h,j,k,m,o)=>(o={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"),"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"),"#text/2!":m={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer")},1:j,2:k,3:m},j._=k._=m._=h,o),[])</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
       <!--M|0 #text/2 3-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"),"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"),"#text/2!":m={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer")},1:j,2:k,3:m,$global:{}},j._=k._=m._=h,o),[])
+      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"),"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"),"#text/2!":m={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer")},1:j,2:k,3:m},j._=k._=m._=h,o),[])
     </script>
   </body>
 </html>

@@ -49,7 +49,7 @@ export function createRenderFn(renderer: Renderer) {
   return (
     stream: Writable,
     input: Input = {},
-    $global: Record<string, unknown> = {},
+    $global?: Record<string, unknown>,
     streamState: Partial<StreamData> = {},
   ) => {
     let remainingChildren = 1;
@@ -473,7 +473,8 @@ export function writeScope(
       scope = Object.assign(assignTo, scope);
     }
   }
-  $_buffer!.scopes ??= { $global: getFilteredGlobals($_streamData!.global) };
+  const $global = getFilteredGlobals($_streamData!.global);
+  $_buffer!.scopes ??= $global ? { $global } : {};
   $_buffer!.scopes[scopeId] = scope;
   $_streamData!.scopeLookup.set(scopeId, scope);
 }
@@ -526,27 +527,42 @@ function getResumeScript(
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {
+  if (!$global) return undefined;
+
   const serializedGlobals = $global.serializedGlobals as
     | string[]
     | Record<string, boolean>
     | undefined;
-  if (serializedGlobals) {
-    const filtered: Record<string, unknown> = {};
 
-    if (Array.isArray(serializedGlobals)) {
-      for (const key of serializedGlobals) {
-        filtered[key] = $global[key];
-      }
-    } else {
-      for (const key in serializedGlobals) {
-        if (serializedGlobals[key]) {
-          filtered[key] = $global[key];
+  if (!serializedGlobals) return undefined;
+
+  let filtered: undefined | Record<string, unknown>;
+
+  if (Array.isArray(serializedGlobals)) {
+    for (const key of serializedGlobals) {
+      const value = $global[key];
+      if (value !== undefined) {
+        if (filtered) {
+          filtered[key] = value;
+        } else {
+          filtered = { [key]: value };
         }
       }
     }
-
-    return filtered;
+  } else {
+    for (const key in serializedGlobals) {
+      if (serializedGlobals[key]) {
+        const value = $global[key];
+        if (value !== undefined) {
+          if (filtered) {
+            filtered[key] = value;
+          } else {
+            filtered = { [key]: value };
+          }
+        }
+      }
+    }
   }
 
-  return {};
+  return filtered;
 }

@@ -12,7 +12,7 @@
       <!--M*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@
       <!--M*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -65,7 +65,7 @@
       <!--M*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
     </script>
   </body>
 </html>

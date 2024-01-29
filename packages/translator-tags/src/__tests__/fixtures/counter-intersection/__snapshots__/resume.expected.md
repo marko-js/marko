@@ -25,7 +25,7 @@
       <!--M*0 #text/4-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
+      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
     </script>
   </body>
 </html>
@@ -66,7 +66,7 @@ container.querySelector("button.a").click()
       <!--M*0 #text/4-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
+      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
     </script>
   </body>
 </html>
@@ -108,7 +108,7 @@ container.querySelector("button.b").click()
       <!--M*0 #text/4-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
+      (M$h=[]).push((b,s)=&gt;({0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
     </script>
   </body>
 </html>

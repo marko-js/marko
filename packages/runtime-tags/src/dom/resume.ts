@@ -71,6 +71,7 @@ export function init(
     }
 
     const scopes = scopesFn?.(bind, scopeLookup);
+    if (scopes) scopes.$global ??= {} as Scope;
 
     /**
      * Loop over all the new hydration scopes and see if a previous walk

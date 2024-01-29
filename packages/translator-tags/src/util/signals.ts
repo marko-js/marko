@@ -66,12 +66,9 @@ const enum AccessorChars {
   TAG_VARIABLE = "/",
   COND_SCOPE = "!",
   LOOP_SCOPE_ARRAY = "!",
-  COND_CONTEXT = "^",
-  LOOP_CONTEXT = "^",
   COND_RENDERER = "(",
   LOOP_SCOPE_MAP = "(",
   LOOP_VALUE = ")",
-  CONTEXT_VALUE = ":",
 }
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(

@@ -1,5 +1,5 @@
 # Write
-  <input disabled><!M*0 #input/0><button>enable<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push((b,s)=>({0:{disabled:!0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])</script>
+  <input disabled><!M*0 #input/0><button>enable<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push((b,s)=>({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])</script>
 
 
 # Render "End"
@@ -17,7 +17,7 @@
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
     </script>
   </body>
 </html>

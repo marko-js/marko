@@ -47,7 +47,6 @@ export {
   intersection,
   closure,
   dynamicClosure,
-  contextClosure,
   dynamicSubscribers,
   childClosures,
   setTagVar,

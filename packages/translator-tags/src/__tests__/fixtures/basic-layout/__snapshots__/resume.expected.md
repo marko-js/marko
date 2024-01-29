@@ -12,7 +12,7 @@
     </h1>
     <!--M]1 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({1:{"#text/0!":h={}},2:h,$global:{}}),[])
+      (M$h=[]).push((b,s,h)=&gt;({1:{"#text/0!":h={}},2:h}),[])
     </script>
   </body>
 </html>

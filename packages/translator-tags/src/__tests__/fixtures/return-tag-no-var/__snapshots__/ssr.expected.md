@@ -1,5 +1,5 @@
 # Write
-  <span>child</span><script>(M$h=[]).push((b,s)=>({1:{},$global:{}}),[])</script>
+  <span>child</span><script>(M$h=[]).push((b,s)=>({1:{}}),[])</script>
 
 
 # Render "End"
@@ -11,7 +11,7 @@
       child
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{},$global:{}}),[])
+      (M$h=[]).push((b,s)=&gt;({1:{}}),[])
     </script>
   </body>
 </html>

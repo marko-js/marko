@@ -1,9 +1,9 @@
 # Write
-  <!M[1><script>(M$h=[]).push((b,s,h,j,k)=>(k={1:h={_:j={count:0,"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"),!0)}},2:{m5c:"s0"}},j["#text/0!"]=h,k),[])</script>
+  <!M[1><script>(M$h=[]).push((b,s,h,j,k)=>(k={1:h={_:j={count:0,"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"),!0)}},2:{m5c:"s0"},$global:{}},j["#text/0!"]=h,k),[])</script>
 
 
 # Write
-  <!--M#s0--><button id=class>0</button><div><!--F#2--><button id=tags>0<!M*1 #text/1></button><!M*1 #button/0><script>M$h.push((b,s)=>({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])</script><!--F/--></div><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})</script><!M]0 #text/0><script>M$h.push((b,s)=>({0:s[1]._}),[])</script>
+  <!--M#s0--><button id=class>0</button><div><!--F#2--><button id=tags>0<!M*1 #text/1></button><!M*1 #button/0><script>M$h.push((b,s)=>({1:s[1],$global:{}}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])</script><!--F/--></div><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})</script><!M]0 #text/0><script>M$h.push((b,s)=>({0:s[1]._,$global:{}}),[])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={1:h={_:j={count:0,"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"),!0)}},2:{m5c:"s0"}},j["#text/0!"]=h,k),[])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={1:h={_:j={count:0,"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"),!0)}},2:{m5c:"s0"},$global:{}},j["#text/0!"]=h,k),[])
     </script>
     <!--M#s0-->
     <button
@@ -31,7 +31,7 @@
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1],$global:{}}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
       </script>
       <!--F/-->
     </div>
@@ -41,7 +41,7 @@
     </script>
     <!--M]0 #text/0-->
     <script>
-      M$h.push((b,s)=&gt;({0:s[1]._}),[])
+      M$h.push((b,s)=&gt;({0:s[1]._,$global:{}}),[])
     </script>
   </body>
 </html>

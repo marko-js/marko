@@ -1,5 +1,5 @@
 # Write
-  <div id=ref>0</div><script>(M$h=[]).push((b,s)=>({0:{x:1},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])</script>
+  <div id=ref>0</div><script>(M$h=[]).push((b,s)=>({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
       0
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1},$global:{}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])
+      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])
     </script>
   </body>
 </html>

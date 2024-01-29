@@ -11,7 +11,7 @@
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{"/":b("packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data",h)},$global:{}}),[])
+      (M$h=[]).push((b,s,h)=&gt;({0:h={},1:{"/":b("packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data",h)}}),[])
     </script>
   </body>
 </html>
