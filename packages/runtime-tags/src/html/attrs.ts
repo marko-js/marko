@@ -17,7 +17,7 @@ export function attrs(data: Record<string, unknown>) {
   let result = "";
 
   for (const name in data) {
-    if (name[0] === "o" && name[1] === "n") {
+    if (/^on[A-Z-]/.test(name)) {
       continue;
     }
 
