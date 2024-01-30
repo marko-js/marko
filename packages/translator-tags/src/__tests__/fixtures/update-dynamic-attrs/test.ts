@@ -15,5 +15,3 @@ export const steps = [
     value: { a: 1 },
   },
 ];
-export const skip_ssr = true;
-export const skip_resume = true;

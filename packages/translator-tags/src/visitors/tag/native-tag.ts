@@ -1,9 +1,10 @@
 import { getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import type { Identifier } from "@marko/compiler/babel-types";
+import type { Identifier, MarkoAttribute } from "@marko/compiler/babel-types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
+import { mergeReferences } from "../../util/references";
 import {
   ReserveType,
   getScopeAccessorLiteral,
@@ -34,19 +35,20 @@ export default {
       const attrs = tag.get("attributes");
       let section = tag.has("var") ? getOrCreateSection(tag) : undefined;
 
-      if (attrs.some(isSpreadAttr)) {
-        // TODO
-      } else {
-        for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
-          const attrNode = attr.node;
-          const { name } = attrNode;
-
-          if (isEventHandler(name)) {
-            section ??= getOrCreateSection(tag);
-            (currentProgramPath.node.extra ?? {}).isInteractive = true;
-          } else if (!evaluate(attr).confident) {
-            section ??= getOrCreateSection(tag);
-          }
+      /**
+       * The reason this seems like it does more work than it needs to
+       * is because `evaluate` has side effects so it needs to be run
+       * for every attribute that isn't an event handler or a spread
+       */
+      for (const attr of attrs) {
+        if (
+          isSpreadAttr(attr) ||
+          isEventHandler((attr.node as MarkoAttribute).name)
+        ) {
+          section ??= getOrCreateSection(tag);
+          (currentProgramPath.node.extra ?? {}).isInteractive = true;
+        } else if (!evaluate(attr).confident) {
+          section ??= getOrCreateSection(tag);
         }
       }
 
@@ -149,17 +151,27 @@ export default {
       write`<${name.node}`;
 
       if (hasSpread) {
-        // TODO: #130 This doesn't work, parameters are wrong
-        const attrsCallExpr = callRuntime(
-          "attrs",
-          scopeIdentifier,
-          attrsToObject(tag)!,
-        );
-
         if (isHTML) {
-          write`${attrsCallExpr}`;
+          write`${callRuntime("attrs", attrsToObject(tag)!)}`;
         } else {
-          tag.insertBefore(t.expressionStatement(attrsCallExpr));
+          addStatement(
+            "render",
+            section,
+            mergeReferences(
+              section,
+              attrs
+                .filter((attr) => attr.node.extra.valueReferences !== undefined)
+                .map((attr) => [attr.node.extra, "valueReferences"]),
+            ),
+            t.expressionStatement(
+              callRuntime(
+                "attrs",
+                scopeIdentifier,
+                visitAccessor,
+                attrsToObject(tag)!,
+              ),
+            ),
+          );
         }
       } else {
         // TODO: #129 this should iterate backward and filter out duplicated attrs.
@@ -172,7 +184,7 @@ export default {
           switch (name) {
             case "class":
             case "style": {
-              const helper = `${name}Attr` as "classAttr" | "styleAttr";
+              const helper = `${name}Attr` as const;
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else if (isHTML) {
