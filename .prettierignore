@@ -10,9 +10,8 @@ __snapshots__
 CHANGELOG.md
 coverage
 dist
+fixtures
 input.*
 node_modules
-node_modules
 package-lock.json
-package.json
-tsconfig.json
+snapshots

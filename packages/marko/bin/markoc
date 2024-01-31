@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('./markoc.js');
+require("./markoc.js");
