@@ -5,11 +5,11 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "tsBuildInfoFile": "dist/.tsbuildinfo"
+    "tsBuildInfoFile": "dist/.tsbuildinfo",
   },
   "references": [
     {
-      "path": "../runtime-tags"
-    }
-  ]
+      "path": "../runtime-tags",
+    },
+  ],
 }
