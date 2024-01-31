@@ -35,6 +35,9 @@
   "devDependencies": {
     "@marko/compiler": "^5.34.4"
   },
+  "engines": {
+    "node": "18 || 20"
+  },
   "publishConfig": {
     "access": "public"
   },

@@ -41,6 +41,9 @@
     "@marko/compiler": "^5.16.1",
     "marko": "^5.17.2"
   },
+  "engines": {
+    "node": "18 || 20"
+  },
   "publishConfig": {
     "access": "public"
   },

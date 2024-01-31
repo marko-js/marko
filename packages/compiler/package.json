@@ -62,6 +62,9 @@
   "devDependencies": {
     "@marko/translator-default": "^5.31.13"
   },
+  "engines": {
+    "node": "18 || 20"
+  },
   "publishConfig": {
     "access": "public"
   },
