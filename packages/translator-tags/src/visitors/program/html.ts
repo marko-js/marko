@@ -33,7 +33,7 @@ export default {
       }
 
       const rendererId = program.scope.generateUidIdentifier("renderer");
-      const { attrs } = program.node.extra;
+      const { args } = program.node.extra;
       const {
         markoOpts: { optimize },
         opts: { filename },
@@ -46,7 +46,7 @@ export default {
               "createRenderer",
               t.arrowFunctionExpression(
                 [
-                  attrs ? (attrs.var as any) : t.identifier("input"),
+                  args ? (args.var as any) : t.identifier("input"),
                   tagVarIdentifier,
                 ],
                 t.blockStatement(renderContent),

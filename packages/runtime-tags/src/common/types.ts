@@ -9,7 +9,7 @@ export type Scope<
     [x: string | number]: unknown;
   },
 > = [...unknown[]] & {
-  ___attrs: unknown;
+  ___args: unknown;
   ___startNode: (Node & ChildNode) | Accessor | undefined;
   ___endNode: (Node & ChildNode) | Accessor | undefined;
   ___cleanup: Set<number | string | Scope> | undefined;

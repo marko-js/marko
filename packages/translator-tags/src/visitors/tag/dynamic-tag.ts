@@ -50,11 +50,23 @@ export default {
       customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
+      const referenceEntries: [Record<string, unknown>, string][] = [];
+      if (tag.node.arguments) {
+        for (const arg of tag.node.arguments) {
+          if (arg.extra?.references) {
+            referenceEntries.push([arg.extra, "references"]);
+          }
+        }
+      } else {
+        for (const attr of tag.node.attributes) {
+          if (attr.extra?.valueReferences) {
+            referenceEntries.push([attr.extra, "valueReferences"]);
+          }
+        }
+      }
       tag.node.extra.attrsReferences = mergeReferences(
         getOrCreateSection(tag),
-        tag.node.attributes
-          .filter((attr) => attr.extra?.valueReferences)
-          .map((attr) => [attr.extra, "valueReferences"]),
+        referenceEntries,
       );
       addBindingToReferences(tag, "attrsReferences", tag.node.extra.reserve!);
     },
@@ -130,17 +142,14 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
         const attrsObject = attrsToObject(tag, true);
-        const emptyAttrs =
-          t.isObjectExpression(attrsObject) && !attrsObject.properties.length;
         const renderBodyProp = getRenderBodyProp(attrsObject);
-        const args: t.Expression[] = [
+        const args: (t.Expression | t.SpreadElement)[] = [
           tagExpression,
-          emptyAttrs ? t.nullLiteral() : attrsObject,
+          attrsObject,
         ];
 
-        if (renderBodyProp) {
-          (attrsObject as t.ObjectExpression).properties.pop();
-
+        if (t.isObjectExpression(attrsObject) && renderBodyProp) {
+          attrsObject.properties.pop();
           args.push(
             callRuntime(
               "createRenderer",
@@ -154,7 +163,9 @@ export default {
 
         const dynamicScopeIdentifier =
           currentProgramPath.scope.generateUidIdentifier("dynamicScope");
-        const dynamicTagExpr = callRuntime("dynamicTag", ...args);
+        const dynamicTagExpr = t.isArrayExpression(attrsObject)
+          ? callRuntime("dynamicTagArgs", ...args)
+          : callRuntime("dynamicTagInput", ...args);
         if (node.var) {
           // TODO: This breaks now that _dynamicTag returns a scope
           translateVar(tag, dynamicTagExpr);
@@ -239,6 +250,9 @@ export default {
                           "dynamicTagAttrs",
                           getScopeAccessorLiteral(tagNameReserve),
                           renderBodyIdentifier,
+                          t.isArrayExpression(attrsObject)
+                            ? t.booleanLiteral(true)
+                            : false,
                         ),
                       ),
                     ]),

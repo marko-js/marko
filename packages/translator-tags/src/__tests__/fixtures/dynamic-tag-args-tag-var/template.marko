@@ -1,0 +1,6 @@
+import customTag from './components/custom-tag.marko';
+static const tags = [customTag];
+<let/x=1 />
+<button onClick() { x++ }>Count: ${x}</button>
+<${tags[0]}(x)/y />
+<div>Parent: ${y}</div>

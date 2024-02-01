@@ -168,6 +168,8 @@ export function assertNoVar(path: t.NodePath<t.MarkoTag>): void;
 export function assertNoAttributes(path: t.NodePath<t.MarkoTag>): void;
 export function assertNoParams(path: t.NodePath<t.MarkoTag>): void;
 export function assertNoAttributeTags(path: t.NodePath<t.MarkoTag>): void;
+export function assertAttributesOrArgs(path: t.NodePath<t.MarkoTag>): void;
+export function assertAttributesOrSingleArg(path: t.NodePath<t.MarkoTag>): void;
 
 export function isNativeTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isMacroTag(path: t.NodePath<t.MarkoTag>): boolean;

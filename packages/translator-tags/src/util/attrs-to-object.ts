@@ -44,16 +44,7 @@ export default function attrsToObject(
         t.objectMethod(
           "method",
           t.identifier("renderBody"),
-          params.length
-            ? [
-                t.objectPattern([
-                  t.objectProperty(
-                    t.identifier("value"),
-                    t.arrayPattern(params),
-                  ),
-                ]),
-              ]
-            : [],
+          params,
           t.blockStatement(body),
         ),
       );
@@ -68,6 +59,17 @@ export default function attrsToObject(
         result = prop.argument;
         result.extra = resultExtra;
       }
+    }
+  }
+
+  if (node.arguments?.length) {
+    if ((result as t.ObjectExpression).properties.length) {
+      result = t.arrayExpression([...node.arguments, result]);
+    } else if (node.arguments.length == 1) {
+      const arg = node.arguments[0];
+      result = t.isSpreadElement(arg) ? arg.argument : arg;
+    } else {
+      result = t.arrayExpression(node.arguments);
     }
   }
 

@@ -55,3 +55,30 @@ export function assertNoVar(path) {
     throw tagVar.buildCodeFrameError("Tag does not support a variable.");
   }
 }
+
+export function assertAttributesOrArgs(path) {
+  const { hub, node } = path;
+  const args = path.get("arguments");
+  if (args.length && (node.attributes.length > 0 || node.body.length)) {
+    const start = args[0].node.loc.start;
+    const end = args[args.length - 1].node.loc.end;
+    throw hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support arguments when attributes or body present.",
+    );
+  }
+}
+
+export function assertAttributesOrSingleArg(path) {
+  assertAttributesOrArgs(path);
+  const { hub } = path;
+  const args = path.get("arguments");
+  if (args.length > 1) {
+    const start = args[1].node.loc.start;
+    const end = args[args.length - 1].node.loc.end;
+    throw hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support multiple arguments.",
+    );
+  }
+}

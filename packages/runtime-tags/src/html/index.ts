@@ -8,7 +8,12 @@ export {
 
 export { attr, attrs, classAttr, styleAttr } from "./attrs";
 
-export { dynamicTag, createRenderer, patchDynamicTag } from "./dynamic-tag";
+export {
+  dynamicTagInput,
+  dynamicTagArgs,
+  createRenderer,
+  patchDynamicTag,
+} from "./dynamic-tag";
 
 export {
   write,

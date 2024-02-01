@@ -31,10 +31,10 @@ interface RenderBodyObject {
   renderBody: Renderer;
 }
 
-export function dynamicTag(
+export function dynamicTagInput(
   tag: unknown | string | Renderer | RenderBodyObject | Template,
   input: Record<string, unknown>,
-  renderBody: (() => void) | undefined,
+  renderBody?: () => void,
 ) {
   if (!tag && !renderBody) return undefined;
 
@@ -72,6 +72,41 @@ export function dynamicTag(
 
   if (typeof renderer === "function") {
     renderer(renderBody ? { ...input, renderBody } : input);
+    return futureScope;
+  } else if (MARKO_DEBUG) {
+    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+  }
+}
+
+export function dynamicTagArgs(
+  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  args: unknown[],
+) {
+  if (!tag) return undefined;
+
+  const futureScopeId = peekNextScopeId();
+  const futureScope = serializedScope(futureScopeId);
+  write(`${markResumeScopeStart(futureScopeId)}`);
+  writeScope(futureScopeId, {});
+
+  if (typeof tag === "string") {
+    nextScopeId();
+    write(`<${tag}${attrs(args[0] as Record<string, unknown>)}></${tag}>`);
+
+    // if (!voidElements.has(tag)) {
+    //   if (renderBody) {
+    //     renderBody();
+    //   }
+    //   write(`</${tag}>`);
+    // }
+
+    return futureScope;
+  }
+
+  const renderer = getDynamicRenderer(tag);
+
+  if (typeof renderer === "function") {
+    renderer(...args);
     return futureScope;
   } else if (MARKO_DEBUG) {
     throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);

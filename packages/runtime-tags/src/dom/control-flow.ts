@@ -194,7 +194,7 @@ function loop(
 ) {
   const loopScopeAccessor = nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
   const closureSignals = renderer.___closureSignals;
-  const params = renderer.___attrs;
+  const params = renderer.___args;
   return (
     scope: Scope,
     value: [unknown, (...args: unknown[]) => unknown],
@@ -243,7 +243,7 @@ function loop(
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
       if (params) {
-        params(childScope, { value: args });
+        params(childScope, args);
       }
       if (closureSignals) {
         for (const signal of closureSignals) {

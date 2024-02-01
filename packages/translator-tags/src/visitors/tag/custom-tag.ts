@@ -122,7 +122,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       t.identifier("_"),
     );
   } else {
-    tagIdentifier = node.name;
+    tagIdentifier = t.memberExpression(node.name, t.identifier("_"));
   }
 
   const tagVar = node.var;
@@ -218,12 +218,12 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childProgram = childFile.ast.program;
   const tagIdentifier = importNamed(file, relativePath, "setup", tagName);
   let tagAttrsIdentifier: t.Identifier | undefined;
-  if (childProgram.extra.attrs) {
+  if (childProgram.extra.args) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,
-      "attrs",
-      `${tagName}_attrs`,
+      "args",
+      `${tagName}_args`,
     );
   }
   write`${importNamed(file, relativePath, "template", `${tagName}_template`)}`;
@@ -296,7 +296,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         identifier: tagAttrsIdentifier,
         hasDownstreamIntersections: () => true,
       },
-      attrsObject,
+      t.arrayExpression([attrsObject]),
       createScopeReadExpression(tagSection, binding),
       callRuntime(
         "inChild",

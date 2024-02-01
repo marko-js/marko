@@ -26,6 +26,8 @@ export {
   assertNoParams,
   assertNoVar,
   assertNoAttributeTags,
+  assertAttributesOrArgs,
+  assertAttributesOrSingleArg,
 } from "./assert";
 export { computeNode } from "./compute";
 export { normalizeTemplateString } from "./template-string";

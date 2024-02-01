@@ -24,7 +24,7 @@ export type Renderer = {
   ___fragment: DOMFragment | undefined;
   ___dynamicStartNodeOffset: Accessor | undefined;
   ___dynamicEndNodeOffset: Accessor | undefined;
-  ___attrs: ValueSignal | undefined;
+  ___args: ValueSignal | undefined;
   ___owner: Scope | undefined;
 };
 
@@ -83,7 +83,11 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
   return dom;
 }
 
-export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
+export function dynamicTagAttrs(
+  nodeAccessor: Accessor,
+  renderBody?: Renderer,
+  inputIsArgs?: boolean,
+) {
   return (
     scope: Scope,
     getAttrs: () => Record<string, unknown>,
@@ -93,7 +97,7 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
       nodeAccessor + AccessorChars.COND_RENDERER
     ] as Renderer;
 
-    if (!renderer || renderer === renderBody || (clean && !renderer.___attrs)) {
+    if (!renderer || renderer === renderBody || (clean && !renderer.___args)) {
       return;
     }
 
@@ -105,20 +109,25 @@ export function dynamicTagAttrs(nodeAccessor: Accessor, renderBody: Renderer) {
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
-        bindRenderer(scope, renderBody),
+        renderBody && bindRenderer(scope, renderBody),
       );
-    } else if (renderer.___attrs) {
+    } else if (renderer.___args) {
       if (clean) {
-        renderer.___attrs(childScope, null as any, clean);
+        renderer.___args(childScope, null as any, clean);
       } else {
         const attributes = getAttrs();
-        renderer.___attrs(
+        renderer.___args(
           childScope,
-          {
-            ...attributes,
-            renderBody:
-              bindRenderer(scope, renderBody) ?? attributes.renderBody,
-          },
+          inputIsArgs
+            ? attributes
+            : [
+                renderBody
+                  ? {
+                      ...attributes,
+                      renderBody: bindRenderer(scope, renderBody),
+                    }
+                  : attributes,
+              ],
           clean,
         );
       }
@@ -135,7 +144,7 @@ export function createRenderer(
   fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
   dynamicEndNodeOffset?: Accessor,
-  attrs?: ValueSignal,
+  args?: ValueSignal,
 ): Renderer {
   return {
     ___template: template,
@@ -148,7 +157,7 @@ export function createRenderer(
     ___fragment: fragment,
     ___dynamicStartNodeOffset: dynamicStartNodeOffset,
     ___dynamicEndNodeOffset: dynamicEndNodeOffset,
-    ___attrs: attrs,
+    ___args: args,
     ___owner: undefined,
   };
 }
