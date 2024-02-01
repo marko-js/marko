@@ -8,10 +8,10 @@
     b    2    0
   </pre>
   <pre>
-    d  {d:4}  {}
+    c  {c:4}  0
   </pre>
   <pre>
-    e    7    0
+    d    7    0
   </pre>
   <pre>
     f   [9]   []
@@ -32,10 +32,10 @@ container?.querySelector("button").click()
     b    2    2
   </pre>
   <pre>
-    d  {d:4}  {"d":4}
+    c  {c:4}  7
   </pre>
   <pre>
-    e    7    7
+    d    7    7
   </pre>
   <pre>
     f   [9]   [9]

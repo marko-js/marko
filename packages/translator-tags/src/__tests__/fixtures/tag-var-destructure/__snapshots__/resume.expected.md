@@ -17,13 +17,13 @@
         <!--M*0 #text/2-->
       </pre>
       <pre>
-        d  {d:4}  
+        c  {c:4}  
         <!---->
-        {}
+        0
         <!--M*0 #text/3-->
       </pre>
       <pre>
-        e    7    
+        d    7    
         <!---->
         0
         <!--M*0 #text/4-->
@@ -70,13 +70,13 @@ container?.querySelector("button").click()
         <!--M*0 #text/2-->
       </pre>
       <pre>
-        d  {d:4}  
+        c  {c:4}  
         <!---->
-        {"d":4}
+        7
         <!--M*0 #text/3-->
       </pre>
       <pre>
-        e    7    
+        d    7    
         <!---->
         7
         <!--M*0 #text/4-->
@@ -98,9 +98,9 @@ container?.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/pre2/#text2: "{}" => "{\"d\":4}"
-#document/html0/body1/button0/pre1/#text2: "0" => "2"
 #document/html0/body1/button0/pre0/#text2: "0" => "1"
-#document/html0/body1/button0/pre4/#text2: "[]" => "[9]"
+#document/html0/body1/button0/pre1/#text2: "0" => "2"
+#document/html0/body1/button0/pre2/#text2: "0" => "7"
 #document/html0/body1/button0/pre3/#text2: "0" => "7"
+#document/html0/body1/button0/pre4/#text2: "[]" => "[9]"
 ```
