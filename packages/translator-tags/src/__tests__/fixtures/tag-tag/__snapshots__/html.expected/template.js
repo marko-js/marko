@@ -2,7 +2,7 @@ import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _w
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const MyTag = /* @__PURE__ */_createRenderer(input => _write(`Hello <!>${_escapeXML(input.name)}${_markResumeNode(_scope1_id, "#text/0")}`));
-  MyTag({
+  MyTag._({
     name: "World"
   });
 });

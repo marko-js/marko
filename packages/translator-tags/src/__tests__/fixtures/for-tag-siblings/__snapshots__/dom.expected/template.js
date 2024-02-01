@@ -2,17 +2,13 @@ import { data as _data, value as _value, createRenderer as _createRenderer, loop
 const _val$forBody2 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/0"], val));
 const _forBody2 = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let val;
-  if (!_clean) ({
-    value: [val]
-  } = _destructure);
+  if (!_clean) [val] = _destructure;
   _val$forBody2(_scope, val, _clean);
 });
 const _val$forBody = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/0"], val));
 const _forBody = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure2, _clean) => {
   let val;
-  if (!_clean) ({
-    value: [val]
-  } = _destructure2);
+  if (!_clean) [val] = _destructure2;
   _val$forBody(_scope, val, _clean);
 });
 const _for2 = /* @__PURE__ */_loopOf("#text/1", _forBody2);

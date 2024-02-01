@@ -25,12 +25,12 @@ const _setup = _scope => {
   _customTag(_scope["#childScope/2"]);
   _customTag(_scope["#childScope/3"]);
 };
-export const attrs = (_scope, _destructure, _clean) => {
+export const args = (_scope, _destructure, _clean) => {
   let color, test;
-  if (!_clean) ({
+  if (!_clean) [{
     color,
     test
-  } = _destructure);
+  }] = _destructure;
   _color(_scope, color, _clean);
   _test(_scope, test, _clean);
 };
@@ -38,4 +38,4 @@ export { _color, _test };
 export const template = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}<!>`;
 export const walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%b`;
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko");

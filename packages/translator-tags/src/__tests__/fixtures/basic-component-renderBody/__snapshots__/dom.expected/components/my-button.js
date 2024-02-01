@@ -8,12 +8,12 @@ const _onClick_effect = _register("packages/translator-tags/src/__tests__/fixtur
   _on(_scope["#button/0"], "click", onClick);
 });
 const _onClick = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick_effect));
-export const attrs = (_scope, _destructure, _clean) => {
+export const args = (_scope, _destructure, _clean) => {
   let onClick, renderBody;
-  if (!_clean) ({
+  if (!_clean) [{
     onClick,
     renderBody
-  } = _destructure);
+  }] = _destructure;
   _onClick(_scope, onClick, _clean);
   _renderBody(_scope, renderBody, _clean);
 };
@@ -21,4 +21,4 @@ export { _onClick, _renderBody };
 export const template = "<button><!></button>";
 export const walks = /* get, next(1), replace, out(1) */" D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko");

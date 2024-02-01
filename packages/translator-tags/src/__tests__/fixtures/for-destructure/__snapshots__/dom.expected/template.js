@@ -3,12 +3,10 @@ const _description$forBody = /* @__PURE__ */_value("description", (_scope, descr
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
 const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let name, description;
-  if (!_clean) ({
-    value: [{
-      name,
-      description
-    }]
-  } = _destructure);
+  if (!_clean) [{
+    name,
+    description
+  }] = _destructure;
   _name$forBody(_scope, name, _clean);
   _description$forBody(_scope, description, _clean);
 });

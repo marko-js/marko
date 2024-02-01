@@ -60,10 +60,14 @@ const _value = value(
   _if,
 );
 
-export const attrs = (scope: Scope, input: Input, clean?: boolean | 1) => {
+export const args = (
+  scope: Scope,
+  _destructure: [Input],
+  clean?: boolean | 1,
+) => {
   let value;
   if (!clean) {
-    ({ value } = input);
+    [{ value }] = _destructure;
   }
   _value(scope, value, clean);
 };
@@ -78,7 +82,7 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    attrs as any,
+    args as any,
   ),
 );
 

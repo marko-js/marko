@@ -20,9 +20,13 @@ const _destructure2 = (_scope, {
   _a(_scope, a);
 };
 const _input = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input));
-export const attrs = _input;
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
 export { _input };
 export const template = "<button>Increment</button><!> <!>";
 export const walks = /* get, over(1), replace, over(2), replace, over(1) */" b%c%b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");

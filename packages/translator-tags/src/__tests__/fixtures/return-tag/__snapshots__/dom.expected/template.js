@@ -9,9 +9,13 @@ const _setup$ifBody = _scope => {
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/return-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", _setup$ifBody));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _input = /* @__PURE__ */_value("input", (_scope, input) => _if(_scope, input.show ? _ifBody : _elseBody));
-export const attrs = _input;
+export const args = (_scope, _destructure, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure;
+  _input(_scope, input, _clean);
+};
 export { _input };
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/return-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/return-tag/template.marko");

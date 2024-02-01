@@ -1,5 +1,5 @@
 import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, inChild as _inChild, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueEffect as _queueEffect, value as _value, inConditionalScope as _inConditionalScope, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
-import { setup as _comments2, attrs as _comments_attrs, template as _comments_template, walks as _comments_walks } from "./comments.marko";
+import { setup as _comments2, args as _comments_args, template as _comments_template, walks as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -7,10 +7,10 @@ const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
       id
     }
   } = _scope;
-  _comments_attrs(_scope["#childScope/0"], {
+  _comments_args(_scope["#childScope/0"], [{
     comments: comment.comments,
     path: id
-  });
+  }]);
 });
 const _id$ifBody = /* @__PURE__ */_closure("id", null, void 0, _expr_comment_id$ifBody);
 const _comment$ifBody = /* @__PURE__ */_closure("comment", null, void 0, _expr_comment_id$ifBody);
@@ -51,21 +51,19 @@ const _setup$forBody = _scope => {
 };
 const _forBody = /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, [_path$forBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let comment, i;
-  if (!_clean) ({
-    value: [comment, i]
-  } = _destructure);
+  if (!_clean) [comment, i] = _destructure;
   _comment$forBody(_scope, comment, _clean);
   _i$forBody(_scope, i, _clean);
 });
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
 const _path = /* @__PURE__ */_value("path", null, _inLoopScope(_path$forBody, "#ul/0"));
 const _comments = /* @__PURE__ */_value("comments", (_scope, comments) => _for(_scope, [comments]), void 0, _for);
-export const attrs = (_scope, _destructure2, _clean) => {
+export const args = (_scope, _destructure2, _clean) => {
   let comments, path;
-  if (!_clean) ({
+  if (!_clean) [{
     comments,
     path = "c"
-  } = _destructure2);
+  }] = _destructure2;
   _comments(_scope, comments, _clean);
   _path(_scope, path, _clean);
 };
@@ -73,4 +71,4 @@ export { _comments, _path };
 export const template = "<ul></ul>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

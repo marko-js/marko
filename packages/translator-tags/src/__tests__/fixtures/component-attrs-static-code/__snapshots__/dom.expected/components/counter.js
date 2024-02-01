@@ -17,9 +17,13 @@ const _input = /* @__PURE__ */_value("input", null, _expr_input_count);
 const _setup = _scope => {
   _count(_scope, 0);
 };
-export const attrs = _input;
+export const args = (_scope, _destructure, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure;
+  _input(_scope, input, _clean);
+};
 export { _input };
 export const template = "<button> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, attrs), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko");

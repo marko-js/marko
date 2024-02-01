@@ -1,4 +1,4 @@
-import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
+import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   color,
@@ -21,7 +21,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   _customTag._({
     style: "color: green"
   });
-  const _dynamicScope = _dynamicTag(test, {
+  const _dynamicScope = _dynamicTagInput(test, {
     style: {
       color: "green"
     },

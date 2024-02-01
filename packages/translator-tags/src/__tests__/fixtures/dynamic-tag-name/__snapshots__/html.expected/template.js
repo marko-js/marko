@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
+import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer(({
   renderBody,
   x,
@@ -12,12 +12,12 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   other
 }, _tagVar) => {
   const _scope0_id = _nextScopeId();
-  const _dynamicScope = _dynamicTag(renderBody, {
+  const _dynamicScope = _dynamicTagInput(renderBody, {
     class: ["a", "b"],
     other: other
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
-  const _dynamicScope2 = _dynamicTag(x, {
+  const _dynamicScope2 = _dynamicTagInput(x, {
     class: ["a", "b"],
     other: other
   });
@@ -30,19 +30,19 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
   _write(`${_markResumeNode(_scope0_id, "#showDiv/3")}`);
-  const _dynamicScope3 = _dynamicTag(large ? "h1" : "h2", {
+  const _dynamicScope3 = _dynamicTagInput(large ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);
-  (showTagA ? tagA : tagB)({
+  (showTagA ? tagA : tagB)._({
     class: ["a", "b"],
     other: other,
     class: ["a", "b"],
     other: other
   });
   const _tagName3 = showTagA && tagA;
-  if (_tagName3) _tagName3({
+  if (_tagName3._) _tagName3._({
     class: ["a", "b"],
     other: other
   });
@@ -51,17 +51,17 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     const _scope1_id = _nextScopeId();
     _write("Body content");
   });
-  if (_tagName4) _tagName4({
+  if (_tagName4._) _tagName4._({
     class: ["a", "b"],
     other: other
   });else _renderBody2();
-  (tag || tagA)({
+  (tag || tagA)._({
     class: ["a", "b"],
     other: other
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
-  const _dynamicScope4 = _dynamicTag(_tagName5, {
+  const _dynamicScope4 = _dynamicTagInput(_tagName5, {
     class: ["a", "b"],
     other: other
   });
