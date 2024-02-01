@@ -8,7 +8,7 @@
       "name": "*",
       "total": {
         "min": 12923,
-        "gzip": 5527,
+        "gzip": 5520,
         "brotli": 5018
       }
     },
@@ -21,12 +21,12 @@
       },
       "runtime": {
         "min": 4123,
-        "gzip": 1920,
+        "gzip": 1905,
         "brotli": 1705
       },
       "total": {
         "min": 4474,
-        "gzip": 2194,
+        "gzip": 2179,
         "brotli": 1939
       }
     },
@@ -34,17 +34,17 @@
       "name": "counter 💧",
       "user": {
         "min": 204,
-        "gzip": 179,
+        "gzip": 178,
         "brotli": 154
       },
       "runtime": {
         "min": 2664,
-        "gzip": 1363,
+        "gzip": 1370,
         "brotli": 1223
       },
       "total": {
         "min": 2868,
-        "gzip": 1542,
+        "gzip": 1548,
         "brotli": 1377
       }
     },
@@ -52,17 +52,17 @@
       "name": "comments",
       "user": {
         "min": 1216,
-        "gzip": 703,
+        "gzip": 708,
         "brotli": 638
       },
       "runtime": {
         "min": 7536,
-        "gzip": 3480,
+        "gzip": 3491,
         "brotli": 3142
       },
       "total": {
         "min": 8752,
-        "gzip": 4183,
+        "gzip": 4199,
         "brotli": 3780
       }
     },
@@ -70,17 +70,17 @@
       "name": "comments 💧",
       "user": {
         "min": 988,
-        "gzip": 588,
+        "gzip": 591,
         "brotli": 554
       },
       "runtime": {
         "min": 8047,
-        "gzip": 3681,
+        "gzip": 3690,
         "brotli": 3345
       },
       "total": {
         "min": 9035,
-        "gzip": 4269,
+        "gzip": 4281,
         "brotli": 3899
       }
     }

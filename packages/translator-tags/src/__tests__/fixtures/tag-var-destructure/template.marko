@@ -1,0 +1,10 @@
+<let/a=0/>
+<let/b=0/>
+<let/d={}/>
+<button onClick() {
+  let c = a;
+  ({ a, _b: b, c, ...d } = { a: b, _b: a + b, c: b, foo: 1, bar: 2 });
+  console.log(c);
+}>
+  ${a} ${b}
+</button>

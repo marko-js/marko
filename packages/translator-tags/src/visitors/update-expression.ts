@@ -1,19 +1,25 @@
 import { types as t } from "@marko/compiler";
 import { isOutputDOM } from "../util/marko-config";
-import { getReplacement } from "../util/replace-assignments";
+import { getAssignmentGenerator } from "../util/replace-assignments";
 
 export default {
   translate: {
     exit(assignment: t.NodePath<t.UpdateExpression>) {
       if (isOutputDOM()) {
-        const value = t.binaryExpression(
-          assignment.node.operator === "++" ? "+" : "-",
-          assignment.node.argument,
-          t.numericLiteral(1),
+        const generator = getAssignmentGenerator(
+          assignment,
+          (assignment.node.argument as t.Identifier).name,
         );
-        const replacement = getReplacement(assignment, value);
 
-        if (replacement) {
+        if (generator) {
+          const replacement = generator(
+            assignment,
+            t.binaryExpression(
+              assignment.node.operator === "++" ? "+" : "-",
+              assignment.node.argument,
+              t.numericLiteral(1),
+            ),
+          );
           assignment.replaceWith(
             assignment.node.prefix ||
               assignment.parentPath.isExpressionStatement()
