@@ -68,9 +68,8 @@ export class ClientTemplate implements Template {
       update: (newInput: unknown) => {
         if (args) {
           runSync(() => {
-            const newInputArr = [newInput];
-            args(scope, newInputArr, 1);
-            args(scope, newInputArr);
+            args(scope, null, 1);
+            args(scope, [newInput]);
           });
         }
       },
