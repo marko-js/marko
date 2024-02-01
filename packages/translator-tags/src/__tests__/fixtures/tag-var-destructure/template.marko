@@ -1,10 +1,25 @@
 <let/a=0/>
 <let/b=0/>
 <let/d={}/>
+<let/e=0/>
+<let/f=[]/>
 <button onClick() {
-  let c = a;
-  ({ a, _b: b, c, ...d } = { a: b, _b: a + b, c: b, foo: 1, bar: 2 });
-  console.log(c);
+  let c;
+  ({
+    a,
+    _b: { _b: b },
+    c,
+    ...d
+  } = { a: 1, _b: { _b: 2 }, c: 3, d: 4 });
+  [
+    {
+      arr: [c, e, , ...f],
+    },
+  ] = [{ arr: [6, 7, 8, 9] }];
 }>
-  ${a} ${b}
+  <pre>a    1    ${a}</pre>
+  <pre>b    2    ${b}</pre>
+  <pre>d  {d:4}  ${JSON.stringify(d)}</pre>
+  <pre>e    7    ${e}</pre>
+  <pre>f   [9]   ${JSON.stringify(f)}</pre>
 </button>
