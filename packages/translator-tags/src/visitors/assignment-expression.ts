@@ -39,41 +39,46 @@ export default {
 
       function handleDestructure(
         node: t.LVal | t.ObjectProperty | t.ObjectProperty["value"],
+        replace?: (value: t.Identifier) => void,
       ) {
-        if (node.type === "ObjectPattern") {
-          for (const prop of node.properties) {
-            handleDestructure(prop);
-          }
-        } else if (node.type === "ArrayPattern") {
-          for (const i in node.elements) {
-            if (node.elements[i] === null) continue;
-
-            const newIdentifier = handleDestructure(node.elements[i]!);
-            if (newIdentifier) {
-              node.elements[i] = newIdentifier;
+        switch (node.type) {
+          case "ObjectPattern":
+            for (const prop of node.properties) {
+              handleDestructure(prop);
             }
-          }
-        } else if (node.type === "RestElement") {
-          const newIdentifier = handleDestructure(node.argument);
-          if (newIdentifier) {
-            node.argument = newIdentifier;
-          }
-        } else if (node.type === "ObjectProperty") {
-          const newIdentifier = handleDestructure(node.value);
-          if (newIdentifier) {
-            node.value = newIdentifier;
-          }
-        } else if (node.type === "Identifier") {
-          const generator = getAssignmentGenerator(assignment, node.name);
-          if (generator) {
-            const valueId = assignment.scope.generateUidIdentifier(node.name);
+            break;
+          case "ArrayPattern":
+            for (const i in node.elements) {
+              if (node.elements[i] === null) continue;
 
-            assignment.insertBefore(
-              t.variableDeclaration("let", [t.variableDeclarator(valueId)]),
-            );
-            assignment.insertAfter(generator(assignment, valueId));
-            return valueId;
-          }
+              handleDestructure(
+                node.elements[i]!,
+                (id) => (node.elements[i] = id),
+              );
+            }
+            break;
+          case "RestElement":
+            handleDestructure(node.argument, (id) => (node.argument = id));
+            break;
+          case "ObjectProperty":
+            handleDestructure(node.value, (id) => (node.value = id));
+            break;
+          case "Identifier":
+            {
+              const generator = getAssignmentGenerator(assignment, node.name);
+              if (generator) {
+                const valueId = assignment.scope.generateUidIdentifier(
+                  node.name,
+                );
+
+                assignment.insertBefore(
+                  t.variableDeclaration("let", [t.variableDeclarator(valueId)]),
+                );
+                replace?.(valueId);
+                assignment.insertAfter(generator(assignment, valueId));
+              }
+            }
+            break;
         }
       }
     },
