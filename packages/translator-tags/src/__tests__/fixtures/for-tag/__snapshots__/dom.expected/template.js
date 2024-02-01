@@ -8,9 +8,7 @@ const _i$forBody7 = /* @__PURE__ */_value("i", (_scope, i) => {
 });
 const _forBody9 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div>", /* get, next(1), get, out(1), over(1), get */" D lb ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let i;
-  if (!_clean) ({
-    value: [i]
-  } = _destructure);
+  if (!_clean) [i] = _destructure;
   _i$forBody7(_scope, i, _clean);
 });
 const _i$forBody6 = /* @__PURE__ */_value("i", (_scope, i) => {
@@ -20,9 +18,7 @@ const _i$forBody6 = /* @__PURE__ */_value("i", (_scope, i) => {
 });
 const _forBody8 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div>", /* get, next(1), get, out(1), over(1), get */" D lb ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure2, _clean) => {
   let i;
-  if (!_clean) ({
-    value: [i]
-  } = _destructure2);
+  if (!_clean) [i] = _destructure2;
   _i$forBody6(_scope, i, _clean);
 });
 const _for$forBody = /* @__PURE__ */_loopTo("#text/3", _forBody8);
@@ -36,9 +32,7 @@ const _setup$forBody = _scope => {
 };
 const _forBody7 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div><!>", /* get, next(1), get, out(1), over(1), get, over(1), replace */" D lb b%", _setup$forBody, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure3, _clean) => {
   let i;
-  if (!_clean) ({
-    value: [i]
-  } = _destructure3);
+  if (!_clean) [i] = _destructure3;
   _i$forBody5(_scope, i, _clean);
 });
 const _val$forBody5 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/2"], val));
@@ -49,9 +43,7 @@ const _key$forBody2 = /* @__PURE__ */_value("key", (_scope, key) => {
 });
 const _forBody6 = /* @__PURE__ */_createRenderer("<div><!>: <!></div><div></div><div></div>", /* get, next(1), replace, over(2), replace, out(1), over(1), get */" D%c%lb ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure4, _clean) => {
   let key, val;
-  if (!_clean) ({
-    value: [key, val]
-  } = _destructure4);
+  if (!_clean) [key, val] = _destructure4;
   _key$forBody2(_scope, key, _clean);
   _val$forBody5(_scope, val, _clean);
 });
@@ -60,9 +52,7 @@ const _i$forBody4 = /* @__PURE__ */_value("i", (_scope, i) => _attr(_scope["#div
 const _val$forBody4 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/2"], val));
 const _forBody5 = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* get, next(1), replace, over(2), replace */" D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure5, _clean) => {
   let val, i, list;
-  if (!_clean) ({
-    value: [val, i, list]
-  } = _destructure5);
+  if (!_clean) [val, i, list] = _destructure5;
   _val$forBody4(_scope, val, _clean);
   _i$forBody4(_scope, i, _clean);
   _list$forBody(_scope, list, _clean);
@@ -75,27 +65,21 @@ const _i$forBody3 = /* @__PURE__ */_value("i", (_scope, i) => {
 const _val$forBody3 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/2"], val));
 const _forBody4 = /* @__PURE__ */_createRenderer("<div><!>: <!></div><div></div><div></div>", /* get, next(1), replace, over(2), replace, out(1), over(1), get */" D%c%lb ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure6, _clean) => {
   let val, i;
-  if (!_clean) ({
-    value: [val, i]
-  } = _destructure6);
+  if (!_clean) [val, i] = _destructure6;
   _val$forBody3(_scope, val, _clean);
   _i$forBody3(_scope, i, _clean);
 });
 const _i$forBody2 = /* @__PURE__ */_value("i", (_scope, i) => _data(_scope["#text/0"], i));
 const _forBody3 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure7, _clean) => {
   let i;
-  if (!_clean) ({
-    value: [i]
-  } = _destructure7);
+  if (!_clean) [i] = _destructure7;
   _i$forBody2(_scope, i, _clean);
 });
 const _val$forBody2 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/1"], val));
 const _key$forBody = /* @__PURE__ */_value("key", (_scope, key) => _data(_scope["#text/0"], key));
 const _forBody2 = /* @__PURE__ */_createRenderer("<div><!>: <!></div><div></div><div></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure8, _clean) => {
   let key, val;
-  if (!_clean) ({
-    value: [key, val]
-  } = _destructure8);
+  if (!_clean) [key, val] = _destructure8;
   _key$forBody(_scope, key, _clean);
   _val$forBody2(_scope, val, _clean);
 });
@@ -103,9 +87,7 @@ const _i$forBody = /* @__PURE__ */_value("i", (_scope, i) => _data(_scope["#text
 const _val$forBody = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/1"], val));
 const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div><div></div><div></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure9, _clean) => {
   let val, i;
-  if (!_clean) ({
-    value: [val, i]
-  } = _destructure9);
+  if (!_clean) [val, i] = _destructure9;
   _val$forBody(_scope, val, _clean);
   _i$forBody(_scope, i, _clean);
 });

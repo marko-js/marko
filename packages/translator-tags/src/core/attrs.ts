@@ -1,5 +1,6 @@
 import type { Tag } from "@marko/babel-utils";
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
+import { isOutputHTML } from "../util/marko-config";
 import { trackReferencesForBindings } from "../util/references";
 import { getOrCreateSection } from "../util/sections";
 import { initValue } from "../util/signals";
@@ -7,7 +8,7 @@ import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
-    attrs?: {
+    args?: {
       bindings: Record<string, t.Identifier>;
       var: NonNullable<t.MarkoTag["var"]>;
     };
@@ -23,15 +24,15 @@ export default {
         t.Identifier
       >;
       trackReferencesForBindings(getOrCreateSection(tag), varPath);
-      (currentProgramPath.node.extra ??= {}).attrs = {
+      (currentProgramPath.node.extra ??= {}).args = {
         bindings,
-        var: varPath.node!,
+        var: isOutputHTML() ? varPath.node! : t.arrayPattern([varPath.node!]),
         // pathsToId: getPathsToId(varPath.node)
       };
     }
   },
   translate(tag) {
-    const bindings = currentProgramPath.node.extra?.attrs?.bindings;
+    const bindings = currentProgramPath.node.extra?.args?.bindings;
     if (bindings) {
       for (const key in bindings) {
         initValue(bindings[key].extra!.reserve!);

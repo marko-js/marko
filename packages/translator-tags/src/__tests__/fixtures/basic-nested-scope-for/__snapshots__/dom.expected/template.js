@@ -22,9 +22,7 @@ const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
 const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _expr_selected_num$forBody);
 const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let num;
-  if (!_clean) ({
-    value: [num]
-  } = _destructure);
+  if (!_clean) [num] = _destructure;
   _num$forBody(_scope, num, _clean);
 });
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);

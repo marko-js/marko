@@ -41,7 +41,9 @@ export default dynamicTag5.___runtimeCompat = function tagsToVdom(
 
   return (input, out) =>
     TagsCompat(
-      { i: args ? { value: args } : input, r: tagsRenderer || renderBody },
+      args
+        ? { i: args, r: (args) => (tagsRenderer || renderBody)(...args) }
+        : { i: input, r: tagsRenderer || renderBody },
       out,
     );
 };
@@ -82,18 +84,14 @@ patchDynamicTag(
       tag.renderer;
     const renderBody5 = tag.renderBody || tag;
 
-    return (input) => {
+    return (input, ...args) => {
       const out = defaultCreateOut();
       out.global.streamData = tagsAPI.$_streamData;
 
       if (renderer5) {
         renderer5(input, out);
       } else {
-        if (Array.isArray(input?.value)) {
-          renderBody5(out, ...input.value);
-        } else {
-          renderBody5(out);
-        }
+        renderBody5(out, input, ...args);
       }
 
       const componentsContext = ___getComponentsContext(out);

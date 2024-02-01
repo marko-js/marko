@@ -1,0 +1,4 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/custom-tag-args-and-attributes-error/template.marko:1:13
+    > 1 | <custom-tag(1) x=2 />
+        |             ^ Tag does not support arguments when attributes or body present.

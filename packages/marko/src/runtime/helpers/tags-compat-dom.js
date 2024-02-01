@@ -31,10 +31,7 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
     return tagsRenderer;
 
   return (input, out) =>
-    TagsCompat(
-      { i: args ? { value: args } : input, r: tagsRenderer || renderBody },
-      out,
-    );
+    TagsCompat({ i: args ? args : input, r: tagsRenderer || renderBody }, out);
 };
 
 const TagsCompatId = "tags-compat";
@@ -43,9 +40,9 @@ const TagsCompat = createRenderer(
     let existing = false;
     const isHydrate =
       ___getComponentsContext(out).___globalContext.___isHydrate;
-    const input = _.i;
+    const input = Array.isArray(_.i) ? _.i : [_.i];
     const tagsRenderer = _.r;
-    const attrs = tagsRenderer.___attrs;
+    const args = tagsRenderer.___args;
 
     component.effects = prepare(() => {
       if (isHydrate) {
@@ -60,10 +57,10 @@ const TagsCompat = createRenderer(
           signal(component.scope, true);
         }
       } else {
-        attrs && attrs(component.scope, input, 1);
+        args && args(component.scope, input, 1);
         existing = true;
       }
-      attrs && attrs(component.scope, input);
+      args && args(component.scope, input);
     });
     out.bf(out.___assignedKey, component, existing);
     if (!existing) {
@@ -141,7 +138,7 @@ function create5to6Renderer(renderer, hasAttrs) {
             return realFragment;
           },
           ___hasUserEffects: 1,
-          ___attrs(scope, input, clean) {
+          ___args(scope, input, clean) {
             if (clean) return;
             renderAndMorph(scope, rendererFromAnywhere, renderer, input);
           },
@@ -171,9 +168,9 @@ function renderAndMorph(scope, renderer, renderBody, input) {
   globalComponentsContext.___rerenderComponent = existingComponent;
   out.sync();
   if (renderer) {
-    renderer(input, out);
+    renderer(input[0], out);
   } else {
-    RenderBodyComponent({ renderBody, args: input.value }, out);
+    RenderBodyComponent({ renderBody, args: input }, out);
   }
 
   queueEffect(scope, () => {
@@ -184,7 +181,7 @@ function renderAndMorph(scope, renderer, renderBody, input) {
     );
     const component = componentDefs[0].___component;
     component.___rootNode = rootNode;
-    component.___input = input;
+    component.___input = input[0];
     scope.marko5Component = component;
   });
 }

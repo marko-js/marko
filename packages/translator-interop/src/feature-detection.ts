@@ -1,4 +1,4 @@
-import { getTagDef, isDynamicTag } from "@marko/babel-utils";
+import { getTagDef } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
 import { taglibs as taglibs5 } from "@marko/translator-default";
 import { taglibs as taglibs6 } from "@marko/translator-tags";
@@ -113,8 +113,6 @@ const featureDetectionVisitor = {
       if (feature) {
         addFeature(state, feature, `<${tagDef.name}> tag`, tag.get("name"));
       }
-    } else if (isDynamicTag(tag) && tag.node.arguments?.length) {
-      addFeature(state, FEATURE_TYPE.CLASS, "Dynamic tag arguments", tag);
     }
   },
 } as t.Visitor<FeatureState>;

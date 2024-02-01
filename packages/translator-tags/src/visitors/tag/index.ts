@@ -1,6 +1,8 @@
 import {
   type Plugin,
   assertNoArgs,
+  assertAttributesOrArgs,
+  assertAttributesOrSingleArg,
   getTagDef,
   isNativeTag,
 } from "@marko/babel-utils";
@@ -75,8 +77,6 @@ export default {
       const tagDef = getTagDef(tag);
       const extra = tag.node.extra;
 
-      assertNoArgs(tag);
-
       if (tagDef?.translator) {
         if (tagDef.translator.path) {
           tag.hub.file.metadata.marko.watchFiles.push(tagDef.translator.path);
@@ -124,15 +124,19 @@ export default {
 
       switch (extra.tagNameType) {
         case TagNameTypes.NativeTag:
+          assertNoArgs(tag);
           NativeTag.translate.enter(tag);
           break;
         case TagNameTypes.CustomTag:
+          assertAttributesOrSingleArg(tag);
           CustomTag.translate.enter(tag);
           break;
         case TagNameTypes.DynamicTag:
+          assertAttributesOrArgs(tag);
           DynamicTag.translate.enter(tag);
           break;
         case TagNameTypes.AttributeTag:
+          assertNoArgs(tag);
           AttributeTag.translate.enter(tag);
           break;
       }

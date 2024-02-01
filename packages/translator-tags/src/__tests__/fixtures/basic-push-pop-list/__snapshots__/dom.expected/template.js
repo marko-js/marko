@@ -2,9 +2,7 @@ import { data as _data, on as _on, queueSource as _queueSource, value as _value,
 const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _data(_scope["#text/0"], item));
 const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let item;
-  if (!_clean) ({
-    value: [item]
-  } = _destructure);
+  if (!_clean) [item] = _destructure;
   _item$forBody(_scope, item, _clean);
 });
 const _expr_id_items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _scope => _on(_scope["#button/1"], "click", function () {

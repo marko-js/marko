@@ -10,9 +10,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   if (x) {
     const _scope2_id = _nextScopeId();
     _item = {
-      renderBody({
-        value: [y]
-      }) {
+      renderBody(y) {
         _write(`${_escapeXML(y)}${_markResumeNode(_scope3_id, "#text/0")}`);
       }
     };

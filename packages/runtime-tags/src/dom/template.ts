@@ -28,12 +28,12 @@ export class ClientTemplate implements Template {
   ): TemplateInstance {
     let scope!: Scope, dom!: Node;
     const { $global = {}, ...input } = templateInput;
-    const attrs = this._.___attrs;
+    const args = this._.___args;
     const effects = prepare(() => {
       scope = createScope($global);
       dom = initRenderer(this._, scope);
-      if (attrs) {
-        attrs(scope, input);
+      if (args) {
+        args(scope, [input]);
       }
     });
 
@@ -66,10 +66,10 @@ export class ClientTemplate implements Template {
 
     return {
       update: (newInput: unknown) => {
-        if (attrs) {
+        if (args) {
           runSync(() => {
-            attrs(scope, newInput, 1);
-            attrs(scope, newInput);
+            args(scope, null, 1);
+            args(scope, [newInput]);
           });
         }
       },

@@ -1,9 +1,9 @@
 import _counter from "./components/counter.marko";
-import { nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTag as _dynamicTag, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
+import { nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const tagName = "div";
-  const _dynamicScope = _dynamicTag(tagName, {}, /* @__PURE__ */_createRenderer(() => {
+  const _dynamicScope = _dynamicTagInput(tagName, {}, /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _counter._({});
   }));

@@ -25,9 +25,9 @@ export default {
       const templateIdentifier = t.identifier("template");
       const walksIdentifier = t.identifier("walks");
       const setupIdentifier = t.identifier("setup");
-      const attrsSignalIdentifier = t.identifier("attrs");
+      const argsSignalIdentifier = t.identifier("args");
       const closuresIdentifier = t.identifier("closures");
-      const { attrs } = program.node.extra;
+      const { args } = program.node.extra;
       const { walks, writes, setup } = writer.getSectionMeta(section);
 
       forEachSectionReverse((childSection) => {
@@ -75,11 +75,11 @@ export default {
         }
       });
 
-      if (attrs) {
+      if (args) {
         const exportSpecifiers: t.ExportSpecifier[] = [];
 
-        for (const name in attrs.bindings) {
-          const bindingIdentifier = attrs.bindings[name];
+        for (const name in args.bindings) {
+          const bindingIdentifier = args.bindings[name];
           const signalIdentifier = getSignal(
             section,
             bindingIdentifier.extra.reserve,
@@ -93,13 +93,10 @@ export default {
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
               t.variableDeclarator(
-                attrsSignalIdentifier,
-                t.isIdentifier(attrs.var)
-                  ? getSignal(
-                      section,
-                      (attrs.var as t.Identifier).extra!.reserve!,
-                    ).identifier
-                  : getDestructureSignal(attrs.bindings, attrs.var)?.build(),
+                argsSignalIdentifier,
+                t.isIdentifier(args.var)
+                  ? getSignal(section, args.var.extra!.reserve!).identifier
+                  : getDestructureSignal(args.bindings, args.var)?.build(),
               ),
             ]),
           ),
@@ -164,7 +161,7 @@ export default {
               undefined,
               undefined,
               undefined,
-              attrs! && attrsSignalIdentifier,
+              args! && argsSignalIdentifier,
             ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`)),
           ),

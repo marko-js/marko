@@ -76,10 +76,14 @@ const enum INDEX_IF2 {
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-export const attrs = (scope: Scope, input: Input, clean?: 1 | boolean) => {
+export const args = (
+  scope: Scope,
+  _destructure: [Input],
+  clean?: 1 | boolean,
+) => {
   let show, value1, value2;
   if (!clean) {
-    ({ show, value1, value2 } = input);
+    [{ show, value1, value2 }] = _destructure;
   }
   _show(scope, show, clean);
   _value1(scope, value1, clean);
@@ -162,7 +166,7 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    attrs as any,
+    args as any,
   ),
 );
 

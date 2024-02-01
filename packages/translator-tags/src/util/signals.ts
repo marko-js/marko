@@ -346,10 +346,7 @@ export function getTagParamsSignal(
   const parameterBindings = paramsPaths.reduce((bindingsLookup, path) => {
     return Object.assign(bindingsLookup, path.getBindingIdentifiers());
   }, {});
-  return getDestructureSignal(
-    parameterBindings,
-    t.objectPattern([t.objectProperty(t.identifier("value"), pattern)]),
-  );
+  return getDestructureSignal(parameterBindings, pattern);
 }
 
 export function getDestructureSignal(

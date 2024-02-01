@@ -2,9 +2,7 @@ import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, v
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let x;
-  if (!_clean) ({
-    value: [x]
-  } = _destructure);
+  if (!_clean) [x] = _destructure;
   _x$forBody(_scope, x, _clean);
 });
 const _ul_for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
