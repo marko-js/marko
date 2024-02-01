@@ -44,7 +44,7 @@ type TestConfig = {
   manual_csr?: boolean;
   manual_ssr?: boolean;
   manual_resume?: boolean;
-  error_compiler?: boolean;
+  error_compiler?: true | string[];
   error_runtime?: boolean;
 };
 
@@ -88,15 +88,19 @@ describe("translator-interop", () => {
           },
         };
         const errors: Error[] = [];
-        const targetSnap = /* config.error_compiler ? snap.catch : */ snap;
 
         for (const file of additionalMarkoFiles) {
-          const name = path
-            .relative(fixtureDir, file)
-            .replace(
-              ".marko",
-              /* config.error_compiler ? ".error.txt" : */ ".js",
-            );
+          let name = path.relative(fixtureDir, file);
+          let targetSnap: typeof snap.catch = snap;
+          if (
+            config.error_compiler === true ||
+            config.error_compiler?.includes(name)
+          ) {
+            name = name.replace(".marko", ".error.txt");
+            targetSnap = snap.catch;
+          } else {
+            name = name.replace(".marko", ".js");
+          }
           await targetSnap(() => compileCode(file, finalConfig), {
             file: name,
             dir: fixtureDir,
