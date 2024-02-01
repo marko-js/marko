@@ -2,7 +2,7 @@ import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { registerAssignmentReplacer } from "../util/replace-assignments";
+import { registerAssignmentGenerator } from "../util/replace-assignments";
 import { getScopeAccessorLiteral } from "../util/reserve";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
@@ -80,7 +80,7 @@ export default {
         addValue(section, references, source, defaultAttr.value);
       }
 
-      registerAssignmentReplacer(
+      registerAssignmentGenerator(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
           queueSource(source, value, getSection(assignment)),

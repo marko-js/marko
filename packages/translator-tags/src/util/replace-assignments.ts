@@ -1,19 +1,27 @@
 import type { types as t } from "@marko/compiler";
 
-const assignmentReplacer = new WeakMap<
+const assignmentGeneratorMaps = new WeakMap<
   t.Node,
-  (assignment: t.NodePath, value: t.Expression) => t.Expression
+  Record<string, (assignment: t.NodePath, value: t.Expression) => t.Expression>
 >();
 
-export function getReplacement(assignment: t.NodePath, value: t.Expression) {
-  return assignmentReplacer.get(assignment.node)?.(assignment, value);
+export function getAssignmentGenerator(
+  assignment: t.NodePath,
+  identifier: string,
+) {
+  return assignmentGeneratorMaps.get(assignment.node)?.[identifier];
 }
 
-export function registerAssignmentReplacer(
+export function registerAssignmentGenerator(
   binding: t.Binding,
   map: (assignment: t.NodePath, value: t.Expression) => t.Expression,
 ): void {
   for (const assignment of binding.constantViolations) {
-    assignmentReplacer.set(assignment.node, map);
+    let generatorMap = assignmentGeneratorMaps.get(assignment.node);
+    if (!generatorMap) {
+      generatorMap = {};
+      assignmentGeneratorMaps.set(assignment.node, generatorMap);
+    }
+    generatorMap[binding.identifier.name] = map;
   }
 }
