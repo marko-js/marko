@@ -4,16 +4,16 @@ export {
   escapeStyle,
   escapeXML,
   escapeAttrValue,
-} from "./content";
+} from "./html/content";
 
-export { attr, attrs, classAttr, styleAttr } from "./attrs";
+export { attr, attrs, classAttr, styleAttr } from "./html/attrs";
 
 export {
   dynamicTagInput,
   dynamicTagArgs,
   createRenderer,
   patchDynamicTag,
-} from "./dynamic-tag";
+} from "./html/dynamic-tag";
 
 export {
   write,
@@ -31,13 +31,13 @@ export {
   markResumeControlSingleNodeEnd,
   createRenderFn,
   $_streamData,
-} from "./writer";
+} from "./html/writer";
 
-export { createTemplate } from "./template";
+export { createTemplate } from "./html/template";
 
 export {
   register,
   makeSerializable,
   serializedScope,
   getRegistryInfo,
-} from "./serializer";
+} from "./html/serializer";

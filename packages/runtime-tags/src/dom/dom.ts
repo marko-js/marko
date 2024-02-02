@@ -2,7 +2,7 @@ import { classValue, styleValue } from "../common/helpers";
 import { type Accessor, AccessorChars, type Scope } from "../common/types";
 import { onDestroy, write } from "./scope";
 
-export const enum NodeType {
+export enum NodeType {
   Element = 1,
   Text = 3,
   Comment = 8,

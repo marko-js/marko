@@ -2,8 +2,8 @@ import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type { Input, Template } from "@marko/runtime-tags/src/common/types";
-import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
+import type { Input, Template } from "@marko/runtime-tags/common/types";
+import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
@@ -53,6 +53,15 @@ describe("translator-interop", () => {
     uncachePackage("@marko/translator-default");
     uncachePackage("@marko/translator-tags");
     register({ ...htmlConfig, modules: "cjs" });
+  });
+
+  after(() => {
+    // TODO: remove this once we have a better way to patch dynamic tags
+    delete require("marko/src/runtime/helpers/dynamic-tag").___runtimeCompat;
+    require("@marko/runtime-tags/html").patchDynamicTag(
+      (tag: any) => tag._ || tag.renderBody || tag,
+      (v: any) => v,
+    );
   });
 
   const fixturesDir = path.join(__dirname, "fixtures");
@@ -192,7 +201,9 @@ describe("translator-interop", () => {
             ? await config.steps()
             : config.steps || []
         ) as [Input, ...unknown[]];
-        const template = browser.require(templateFile).default as Template;
+        const template = browser.require<{ default: Template }>(
+          templateFile,
+        ).default;
         const container = Object.assign(document.createElement("div"), {
           TEST_ROOT: true,
         });
@@ -202,9 +213,9 @@ describe("translator-interop", () => {
 
         const instance = template.mount(input, container, "beforeend");
 
-        const { run } = browser.require(
-          "@marko/runtime-tags/dist/debug/dom",
-        ) as typeof import("../../../runtime-tags/src/dom");
+        const { run } = browser.require<
+          typeof import("@marko/runtime-tags/dom")
+        >("@marko/runtime-tags/dom");
         const { ___componentLookup } = browser.require(
           "marko/src/node_modules/@internal/components-util",
         );
@@ -249,9 +260,9 @@ describe("translator-interop", () => {
             ? await config.steps()
             : config.steps || [];
 
-        const { run, init } = browser.require(
-          "@marko/runtime-tags/dist/debug/dom",
-        ) as typeof import("@marko/runtime-tags/src/dom");
+        const { run, init } = browser.require<
+          typeof import("@marko/runtime-tags/dom")
+        >("@marko/runtime-tags/dom");
 
         browser.require(templateFile);
         browser.require("marko/src/runtime/components");

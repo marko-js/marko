@@ -28,7 +28,7 @@
     "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.8",
+    "@babel/runtime": "^7.23.9",
     "jsesc": "^3.0.2",
     "relative-import-path": "^1.0.0"
   },
@@ -38,6 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js"
+  "main:override": "dist/index.js"
 }
