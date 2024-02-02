@@ -24,7 +24,7 @@ export default {
       ReserveType.Store,
       getOrCreateSection(tag),
       tag.node,
-      "cleanup",
+      tag.scope.generateUid("cleanup"),
     );
     (currentProgramPath.node.extra ?? {}).isInteractive = true;
   },

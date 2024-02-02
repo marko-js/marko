@@ -46,7 +46,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSection(tag),
         isOnlyChild ? parentTag : tag.node,
-        "for",
+        tag.scope.generateUid("for"),
         isOnlyChild ? `#${parentTagName}` : "#text",
       );
       customTag.analyze.enter(tag);

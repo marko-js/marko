@@ -43,7 +43,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSection(tag),
         tag.node as any as t.Identifier,
-        "dynamicTagName",
+        tag.scope.generateUid("dynamicTagName"),
         "#text",
       );
 
