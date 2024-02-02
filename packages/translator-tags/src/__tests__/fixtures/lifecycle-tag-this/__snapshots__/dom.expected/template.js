@@ -1,6 +1,6 @@
 import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
-  _lifecycle(_scope, "cleanup", {
+  _lifecycle(_scope, "_cleanup", {
     onMount: function () {
       this.onUpdate();
     },

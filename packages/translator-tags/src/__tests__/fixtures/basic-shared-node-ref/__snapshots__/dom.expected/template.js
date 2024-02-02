@@ -5,7 +5,7 @@ const _forBody = /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */
   if (!_clean) [x] = _destructure;
   _x$forBody(_scope, x, _clean);
 });
-const _ul_for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
+const _ul__for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
 const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
   const {
     list
@@ -14,7 +14,7 @@ const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/
 }));
 const _list = /* @__PURE__ */_value("list", (_scope, list) => {
   _queueEffect(_scope, _list_effect);
-  _ul_for(_scope, [list, function (x) {
+  _ul__for(_scope, [list, function (x) {
     return x;
   }]);
 });

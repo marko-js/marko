@@ -8,7 +8,7 @@ const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _b = /* @__PURE__ */_value("b", null, _expr_a_b);
 const _a = /* @__PURE__ */_value("a", null, _expr_a_b);
-const _input_effect = _register("packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input", _scope => _userEffect(_scope, "cleanup", function () {
+const _input_effect = _register("packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input", _scope => _userEffect(_scope, "_cleanup", function () {
   const {
     input
   } = _scope;

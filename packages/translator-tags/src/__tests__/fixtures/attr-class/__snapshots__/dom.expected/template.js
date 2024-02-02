@@ -3,9 +3,9 @@ import { setup as _customTag, template as _customTag_template, walks as _customT
 const _testBody = /* @__PURE__ */_createRenderer("", "");
 const _inputTestBody = /* @__PURE__ */_createRenderer("", "");
 const _inputTest_input = _dynamicTagAttrs("#text/3", _inputTestBody);
-const _expr_dynamicTagName_c_d = /* @__PURE__ */_intersection(3, _scope => {
+const _expr__dynamicTagName_c_d = /* @__PURE__ */_intersection(3, _scope => {
   const {
-    "#text/3": dynamicTagName,
+    "#text/3": _dynamicTagName,
     c,
     d
   } = _scope;
@@ -35,9 +35,9 @@ const _expr_c_d = /* @__PURE__ */_intersection(2, _scope => {
     d
   }]);
 });
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, _expr_dynamicTagName_c_d);
-const _d = /* @__PURE__ */_value("d", null, _intersections([_expr_c_d, _expr_dynamicTagName_c_d]));
-const _c = /* @__PURE__ */_value("c", null, _intersections([_expr_c_d, _expr_dynamicTagName_c_d]));
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, _expr__dynamicTagName_c_d);
+const _d = /* @__PURE__ */_value("d", null, _intersections([_expr_c_d, _expr__dynamicTagName_c_d]));
+const _c = /* @__PURE__ */_value("c", null, _intersections([_expr_c_d, _expr__dynamicTagName_c_d]));
 const _destructure2 = (_scope, _destructure, _clean) => {
   let c, d;
   if (!_clean) ({

@@ -1,7 +1,7 @@
 import { queueSource as _queueSource, lifecycle as _lifecycle, data as _data, on as _on, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
 const _prev = /* @__PURE__ */_value("prev", (_scope, prev) => _data(_scope["#text/1"], prev));
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", _scope => {
-  _lifecycle(_scope, "cleanup", {
+  _lifecycle(_scope, "_cleanup", {
     onMount: function () {
       const {
         x
