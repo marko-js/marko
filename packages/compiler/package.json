@@ -19,6 +19,42 @@
   "license": "MIT",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "main": "src/index.js",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./config": {
+      "types": "./config.d.ts",
+      "default": "./src/config.js"
+    },
+    "./register": {
+      "types": "./register.d.ts",
+      "default": "./src/register.js"
+    },
+    "./modules": "./modules.js",
+    "./babel-types": "./babel-types.d.ts",
+    "./dist/types": "./dist/types.d.ts",
+    "./package.json": "./package.json"
+  },
+  "exports:override": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./register": {
+      "types": "./register.d.ts",
+      "default": "./dist/register.js"
+    },
+    "./modules": "./modules.js",
+    "./babel-types": "./babel-types.d.ts",
+    "./dist/types": "./dist/types.d.ts",
+    "./package.json": "./package.json"
+  },
   "types": "index.d.ts",
   "files": [
     "dist",
@@ -36,15 +72,15 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.23.5",
-    "@babel/core": "^7.23.7",
+    "@babel/core": "^7.23.9",
     "@babel/generator": "^7.23.6",
-    "@babel/parser": "^7.23.6",
+    "@babel/parser": "^7.23.9",
     "@babel/plugin-syntax-typescript": "^7.23.3",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/plugin-transform-typescript": "^7.23.6",
-    "@babel/runtime": "^7.23.8",
-    "@babel/traverse": "^7.23.7",
-    "@babel/types": "^7.23.6",
+    "@babel/runtime": "^7.23.9",
+    "@babel/traverse": "^7.23.9",
+    "@babel/types": "^7.23.9",
     "@luxass/strip-json-comments": "^1.2.0",
     "@marko/babel-utils": "^6.3.5",
     "complain": "^1.6.0",
@@ -65,6 +101,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js"
+  "main:override": "dist/index.js"
 }

@@ -1,6 +1,5 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import type { NodePath } from "@marko/compiler/babel-types";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -56,7 +55,7 @@ export type Signal = {
   hasDynamicSubscribers?: true;
 };
 
-/** TODO: temporary location - duplicated from "@marko/runtime-tags/src/common/types" */
+/** TODO: temporary location - duplicated from "@marko/runtime-tags/common/types" */
 const enum AccessorChars {
   DYNAMIC = "?",
   MARK = "#",
@@ -326,7 +325,7 @@ function pushRepeatable<T>(repeatable: Repeatable<T>, value: T) {
   }
 }
 
-export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
+export function getTagVarSignal(varPath: t.NodePath<t.LVal | null>) {
   if (varPath.isIdentifier()) {
     return initValue(varPath.node.extra.reserve!);
   } else {
@@ -338,7 +337,7 @@ export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
 }
 
 export function getTagParamsSignal(
-  paramsPaths: NodePath<t.Identifier | t.RestElement | t.Pattern>[],
+  paramsPaths: t.NodePath<t.Identifier | t.RestElement | t.Pattern>[],
   pattern: t.ArrayPattern = t.arrayPattern(
     paramsPaths.map((path) => path.node!),
   ),
@@ -863,7 +862,7 @@ function bindFunction(
     );
   }
 
-  let parent: NodePath | null = fn.parentPath;
+  let parent: t.NodePath | null = fn.parentPath;
   while (parent) {
     if (parent.isFunction()) return;
     if (parent === root) return;

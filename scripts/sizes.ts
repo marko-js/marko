@@ -27,10 +27,7 @@ interface Saved {
 }
 
 const rootDir = path.join(__dirname, "..");
-const runtimePath = path.join(
-  rootDir,
-  "packages/runtime-tags/dist/dom/index.mjs",
-);
+const runtimePath = path.join(rootDir, "packages/runtime-tags/dist/dom.mjs");
 const translatorPath = path.join(
   rootDir,
   "packages/translator-tags/dist/index.js",
@@ -185,7 +182,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
       {
         name: "marko",
         resolveId(source) {
-          if (source === "@marko/runtime-tags/dist/dom") {
+          if (source === "@marko/runtime-tags/dom") {
             return runtimePath;
           }
         },
@@ -211,7 +208,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
         pluginVirtual({
           "./hydrate.js": `import ${JSON.stringify(
             examplePath,
-          )}; import { init } from "@marko/runtime-tags/dist/dom"; init();`,
+          )}; import { init } from "@marko/runtime-tags/dom"; init();`,
         }),
       pluginTerser({ compress: {}, mangle: { module: true } }),
     ],

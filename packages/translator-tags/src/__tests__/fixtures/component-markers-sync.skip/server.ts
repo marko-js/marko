@@ -1,4 +1,4 @@
-import { createTemplate, write } from "@marko/runtime-tags/src/html";
+import { createTemplate, write } from "@marko/runtime-tags/html";
 
 const renderer = () => {
   firstComponent();

@@ -1,6 +1,5 @@
 import { getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import type { Identifier, MarkoAttribute } from "@marko/compiler/babel-types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
@@ -43,7 +42,7 @@ export default {
       for (const attr of attrs) {
         if (
           isSpreadAttr(attr) ||
-          isEventHandler((attr.node as MarkoAttribute).name)
+          isEventHandler((attr.node as t.MarkoAttribute).name)
         ) {
           section ??= getOrCreateSection(tag);
           (currentProgramPath.node.extra ?? {}).isInteractive = true;
@@ -99,7 +98,7 @@ export default {
             ),
           );
         } else {
-          const varName = (tag.node.var as Identifier).name;
+          const varName = (tag.node.var as t.Identifier).name;
           const references = tag.scope.getBinding(varName)!.referencePaths;
           let createElFunction = undefined;
           for (const reference of references) {
