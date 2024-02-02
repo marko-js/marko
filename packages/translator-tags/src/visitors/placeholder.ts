@@ -33,7 +33,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSection(placeholder),
         node,
-        "placeholder",
+        placeholder.scope.generateUid("placeholder"),
         "#text",
       );
       needsMarker(placeholder);

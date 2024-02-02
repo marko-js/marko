@@ -41,7 +41,7 @@ export default {
         ReserveType.Visit,
         getOrCreateSection(tag),
         tag.node,
-        "if",
+        tag.scope.generateUid("if"),
         "#text",
       );
       customTag.analyze.enter(tag);

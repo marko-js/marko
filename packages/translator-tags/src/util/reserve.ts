@@ -59,7 +59,7 @@ export function reserveScope(
   name: string,
   debugKey: string = name,
 ): Reserve {
-  const extra = (node.extra ??= {} as typeof node.extra);
+  const extra = (node.extra ??= {});
 
   if (extra.reserve) {
     const reserve = extra.reserve as Reserve;
