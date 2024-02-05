@@ -17,7 +17,7 @@ export type Renderer = {
   ___template: string;
   ___walks: string | undefined;
   ___setup: SetupFn | undefined;
-  ___closureSignals: IntersectionSignal[];
+  ___closureSignals: Set<IntersectionSignal>;
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
@@ -139,7 +139,7 @@ export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
-  closureSignals: IntersectionSignal[] = [],
+  closureSignals?: IntersectionSignal[],
   hasUserEffects: 0 | 1 = 0,
   fragment?: DOMFragment,
   dynamicStartNodeOffset?: Accessor,
@@ -151,7 +151,7 @@ export function createRenderer(
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
     ___setup: setup,
     ___clone: _clone,
-    ___closureSignals: closureSignals,
+    ___closureSignals: new Set(closureSignals),
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
     ___fragment: fragment,
