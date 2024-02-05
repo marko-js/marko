@@ -61,12 +61,17 @@ export function inConditionalScope<S extends Scope>(
   nodeAccessor: Accessor /* branch?: Renderer */,
 ): IntersectionSignal {
   const scopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
-  // const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
+  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
   return (scope: Scope, clean?: boolean | 1) => {
     const conditionalScope = scope[scopeAccessor] as S;
-    // const conditionalRenderer = scope[rendererAccessor] as Renderer;
-    if (conditionalScope /* && conditionalRenderer === branch */) {
-      signal(conditionalScope, clean);
+    if (conditionalScope) {
+      const conditionalRenderer = scope[rendererAccessor] as Renderer;
+      if (
+        !conditionalRenderer?.___closureSignals ||
+        conditionalRenderer.___closureSignals.has(signal)
+      ) {
+        signal(conditionalScope, clean);
+      }
     }
   };
 }
