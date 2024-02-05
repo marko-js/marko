@@ -1,4 +1,4 @@
-import { data as _data, value as _value, createRenderer as _createRenderer, loopTo as _loopTo, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, value as _value, createRenderer as _createRenderer, loopTo as _loopTo, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _n$forBody = /* @__PURE__ */_value("n", (_scope, n) => _data(_scope["#text/0"], n));
 const _forBody = /* @__PURE__ */_createRenderer("<!>, ", /* replace */"%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let n;

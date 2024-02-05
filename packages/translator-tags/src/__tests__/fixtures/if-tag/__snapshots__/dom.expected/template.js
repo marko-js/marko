@@ -1,4 +1,4 @@
-import { createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { createRenderer as _createRenderer, register as _register, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _elseBody = _register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_5_renderer", /* @__PURE__ */_createRenderer("C", ""));
 const _elseIfBody = _register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer", /* @__PURE__ */_createRenderer("B", ""));
 const _ifBody3 = _register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_createRenderer("A", ""));

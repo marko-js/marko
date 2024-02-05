@@ -1,4 +1,4 @@
-import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x,

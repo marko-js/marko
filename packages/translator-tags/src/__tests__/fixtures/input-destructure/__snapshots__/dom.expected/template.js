@@ -1,4 +1,4 @@
-import { data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/1"], b));
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/0"], a));
 const _destructure2 = (_scope, {

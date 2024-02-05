@@ -1,4 +1,4 @@
-import { attrs as _attrs, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { attrs as _attrs, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_input_a = /* @__PURE__ */_intersection(2, _scope => {
   const {
     input,

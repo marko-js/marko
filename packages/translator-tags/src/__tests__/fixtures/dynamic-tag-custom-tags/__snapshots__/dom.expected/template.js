@@ -1,6 +1,6 @@
 import child1 from "./components/child1.marko";
 import child2 from "./components/child2.marko";
-import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tagName_input = _dynamicTagAttrs("#text/0");
 const _expr__dynamicTagName_val = /* @__PURE__ */_intersection(2, _scope => {
   const {
