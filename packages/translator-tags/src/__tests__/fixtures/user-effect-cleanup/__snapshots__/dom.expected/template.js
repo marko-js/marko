@@ -1,4 +1,4 @@
-import { data as _data, queueSource as _queueSource, userEffect as _userEffect, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, queueSource as _queueSource, userEffect as _userEffect, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   const {
     a,

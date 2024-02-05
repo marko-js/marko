@@ -1,5 +1,5 @@
 import { setup as _child, args as _child_args, template as _child_template, walks as _child_walks } from "./components/child.marko";
-import { inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _child_args(_scope["#childScope/1"], [{
   value: x
 }]), void 0, _inChild("#childScope/1", _child_args));

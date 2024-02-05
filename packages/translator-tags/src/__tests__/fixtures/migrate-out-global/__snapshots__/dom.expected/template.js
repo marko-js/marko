@@ -1,4 +1,4 @@
-import { data as _data, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup = _scope => {
   _data(_scope["#text/0"], _scope.$global.x);
 };

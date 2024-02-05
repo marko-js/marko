@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/dist/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2");
 const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
   const {

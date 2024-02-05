@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, tagVarSignal as _tagVarSignal, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, tagVarSignal as _tagVarSignal, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x", _scope => _on(_scope["#button/0"], "click", function () {
   const {
     x

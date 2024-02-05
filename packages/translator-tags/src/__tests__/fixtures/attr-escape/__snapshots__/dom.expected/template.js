@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, attr as _attr, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { classAttr as _classAttr, attr as _attr, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _classAttr(_scope["#div/0"], input.foo);
   _attr(_scope["#div/0"], "foo", 'a' + input.foo + 'b');

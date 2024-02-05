@@ -1,5 +1,5 @@
 function noop(_) {}
-import { on as _on, queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { on as _on, queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _e = /* @__PURE__ */_value("e", (_scope, e) => _data(_scope["#text/5"], JSON.stringify(e)));
 const _d = /* @__PURE__ */_value("d", (_scope, d) => {
   _data(_scope["#text/3"], JSON.stringify(d));

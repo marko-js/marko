@@ -1,4 +1,4 @@
-import { data as _data, intersection as _intersection, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, intersection as _intersection, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
   const {
     value,
