@@ -1,6 +1,7 @@
 import { classValue, styleValue } from "../common/helpers";
 import { type Accessor, AccessorChars, type Scope } from "../common/types";
-import { onDestroy, write } from "./scope";
+import { getAbortSignal } from "./abort-signal";
+import { write } from "./scope";
 
 export enum NodeType {
   Element = 1,
@@ -123,41 +124,25 @@ function normalizeAttrValue(value: unknown) {
 function normalizeString(value: unknown) {
   return value || value === 0 ? value + "" : "\u200d";
 }
-
-type EffectFn<S extends Scope> = (scope: S) => void | (() => void);
-export function userEffect<S extends Scope>(
-  scope: S,
-  index: number,
-  fn: EffectFn<S>,
-) {
-  const cleanup = scope[index] as ReturnType<EffectFn<S>>;
-  const nextCleanup = fn(scope);
-  if (cleanup) {
-    cleanup();
-  } else {
-    onDestroy(scope, index);
-  }
-  scope[index] = nextCleanup;
-}
-
 export function lifecycle(
   scope: Scope,
-  index: number,
+  index: string | number,
   thisObj: Record<string, unknown> & {
     onMount?: (this: unknown) => void;
     onUpdate?: (this: unknown) => void;
     onDestroy?: (this: unknown) => void;
   },
 ) {
-  let storedThis = scope[index] as typeof thisObj;
-  if (!storedThis) {
-    storedThis = scope[index] = thisObj;
-    scope[AccessorChars.CLEANUP + index] = () =>
-      storedThis.onDestroy?.call(storedThis);
-    onDestroy(scope, AccessorChars.CLEANUP + index);
-    storedThis.onMount?.call(storedThis);
+  const instance = scope[index] as typeof thisObj;
+  if (instance) {
+    Object.assign(instance, thisObj);
+    instance.onUpdate?.();
   } else {
-    Object.assign(storedThis, thisObj);
-    storedThis.onUpdate?.call(storedThis);
+    scope[index] = thisObj;
+    thisObj.onMount?.();
+    getAbortSignal(
+      scope,
+      AccessorChars.LIFECYCLE_ABORT_CONTROLLER + index,
+    ).onabort = () => thisObj.onDestroy?.();
   }
 }

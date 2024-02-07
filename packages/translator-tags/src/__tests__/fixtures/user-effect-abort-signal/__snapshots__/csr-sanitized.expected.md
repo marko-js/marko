@@ -1,7 +1,7 @@
 # Render {"value":0}
 ```html
 <div>
-  00
+  0 0
 </div>
 ```
 
@@ -9,7 +9,7 @@
 # Render "ASYNC"
 ```html
 <div>
-  10
+  1 0
 </div>
 ```
 
@@ -17,7 +17,7 @@
 # Render {"value":1}
 ```html
 <div>
-  10
+  1 1
 </div>
 ```
 
@@ -25,6 +25,6 @@
 # Render "ASYNC"
 ```html
 <div>
-  21
+  2 1
 </div>
 ```

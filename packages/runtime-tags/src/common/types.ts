@@ -12,10 +12,11 @@ export type Scope<
   ___args: unknown;
   ___startNode: (Node & ChildNode) | Accessor | undefined;
   ___endNode: (Node & ChildNode) | Accessor | undefined;
-  ___cleanup: Set<number | string | Scope> | undefined;
+  ___cleanup: Set<Scope> | undefined;
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
+  ___abortControllers: Map<string | number, AbortController> | undefined;
   $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
@@ -41,7 +42,7 @@ export const enum AccessorChars {
   MARK = "#",
   STALE = "&",
   SUBSCRIBERS = "*",
-  CLEANUP = "-",
+  LIFECYCLE_ABORT_CONTROLLER = "-",
   TAG_VARIABLE = "/",
   COND_SCOPE = "!",
   LOOP_SCOPE_ARRAY = "!",

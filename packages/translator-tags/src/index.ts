@@ -59,7 +59,6 @@ declare module "@marko/compiler/dist/types" {
   export interface IdentifierExtra {}
   export interface FunctionExpressionExtra {}
   export interface ArrowFunctionExpressionExtra {}
-  export interface ExpressionExtra {}
   export interface MarkoTagExtra {}
   export interface MarkoTagBodyExtra {}
   export interface MarkoAttributeExtra {}

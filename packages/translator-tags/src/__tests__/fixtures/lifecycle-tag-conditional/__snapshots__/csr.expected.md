@@ -76,9 +76,9 @@ container.querySelector("#toggle")?.click()
 # Mutations
 ```
 inserted #text0
-removed #text after #text0
 removed #text in div1
 inserted div1/#text0
+removed #text after #text0
 ```
 
 

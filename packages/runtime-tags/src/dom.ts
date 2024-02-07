@@ -17,9 +17,10 @@ export {
   classAttr,
   styleAttr,
   props,
-  userEffect,
   lifecycle,
 } from "./dom/dom";
+
+export { resetAbortSignal, getAbortSignal } from "./dom/abort-signal";
 
 export { on } from "./dom/event";
 
