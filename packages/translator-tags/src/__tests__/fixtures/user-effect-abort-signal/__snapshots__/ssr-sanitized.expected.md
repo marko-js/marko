@@ -1,6 +1,6 @@
 # Render "End"
 ```html
 <div>
-  00
+  0 0
 </div>
 ```

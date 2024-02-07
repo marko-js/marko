@@ -1,7 +1,7 @@
 # Render {"value":0}
 ```html
 <div>
-  00
+  0 0
 </div>
 ```
 
@@ -14,37 +14,37 @@ inserted div0
 # Render "ASYNC"
 ```html
 <div>
-  10
+  1 0
 </div>
 ```
 
 # Mutations
 ```
-div0/#text0: "00" => "10"
+div0/#text0: "0" => "1"
 ```
 
 
 # Render {"value":1}
 ```html
 <div>
-  10
+  1 1
 </div>
 ```
 
 # Mutations
 ```
-
+div0/#text2: "0" => "1"
 ```
 
 
 # Render "ASYNC"
 ```html
 <div>
-  21
+  2 1
 </div>
 ```
 
 # Mutations
 ```
-div0/#text0: "10" => "21"
+div0/#text0: "1" => "2"
 ```

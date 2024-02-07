@@ -3,12 +3,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const a = 0;
   const b = 0;
-  _write(`<div>${_escapeXML("" + a + b)}${_markResumeNode(_scope0_id, "#text/0")}</div>`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko_0_input");
+  _write(`<div>${_escapeXML(a)}${_markResumeNode(_scope0_id, "#text/0")} <!>${_escapeXML(b)}${_markResumeNode(_scope0_id, "#text/1")}</div>`);
+  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input");
   _writeScope(_scope0_id, {
-    "input": input,
-    "a": a,
-    "b": b
+    "input": input
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/user-effect-cleanup/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko");

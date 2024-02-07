@@ -2,13 +2,7 @@ import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import {
-  ReserveType,
-  getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
-import { callRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
@@ -19,14 +13,8 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(tag) {
-    reserveScope(
-      ReserveType.Store,
-      getOrCreateSection(tag),
-      tag.node,
-      tag.scope.generateUid("cleanup"),
-    );
-    (currentProgramPath.node.extra ?? {}).isInteractive = true;
+  analyze() {
+    (currentProgramPath.node.extra ??= {}).isInteractive = true;
   },
   translate: {
     exit(tag) {
@@ -59,33 +47,35 @@ export default {
       const section = getSection(tag);
       if (isOutputDOM()) {
         const { value } = defaultAttr;
-        let inlineStatements = null;
+        let inlineBody: t.Statement | t.Statement[] | null = null;
         if (
           t.isFunctionExpression(value) ||
-          (t.isArrowFunctionExpression(value) && t.isBlockStatement(value.body))
+          t.isArrowFunctionExpression(value)
         ) {
-          inlineStatements = (value.body as t.BlockStatement).body;
-          t.traverse(value.body, (node) => {
-            if (t.isReturnStatement(node)) {
-              inlineStatements = null;
+          if (t.isBlockStatement(value.body)) {
+            let hasDeclaration = false;
+            for (const child of value.body.body) {
+              if (t.isDeclaration(child)) {
+                hasDeclaration = true;
+                break;
+              }
             }
-          });
+
+            inlineBody = hasDeclaration ? value.body : value.body.body;
+          } else {
+            inlineBody = t.expressionStatement(value.body);
+          }
         }
         addStatement(
           "effect",
           section,
           defaultAttr.extra?.valueReferences,
-          inlineStatements ||
+          inlineBody ||
             t.expressionStatement(
-              callRuntime(
-                "userEffect",
-                scopeIdentifier,
-                getScopeAccessorLiteral(tag.node.extra!.reserve!),
-                defaultAttr.value,
-              ),
+              t.callExpression(defaultAttr.value, [scopeIdentifier]),
             ),
           value,
-          !!inlineStatements,
+          !!inlineBody,
         );
       } else {
         addHTMLEffectCall(section, defaultAttr.extra?.valueReferences);

@@ -32,9 +32,9 @@ export default {
         ReserveType.Store,
         getOrCreateSection(tag),
         tag.node,
-        tag.scope.generateUid("cleanup"),
+        tag.scope.generateUid("lifecycle"),
       );
-      (currentProgramPath.node.extra ?? {}).isInteractive = true;
+      (currentProgramPath.node.extra ??= {}).isInteractive = true;
     },
     exit(tag) {
       customTag.analyze.exit(tag);
