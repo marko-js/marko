@@ -185,6 +185,9 @@ export function getMacroIdentifierForName(
   name: string,
 ): t.Identifier;
 export function getMacroIdentifier(path: t.NodePath<t.MarkoTag>): t.Identifier;
+export function getTagTemplate(
+  path: t.NodePath<t.MarkoTag>,
+): string | undefined;
 export function getTagDef(
   path: t.NodePath<t.MarkoTag>,
 ): TagDefinition | undefined;

@@ -1,7 +1,6 @@
-<attrs/{ comments, path = "c" }/>
 <ul>
-  <for|comment, i| of=comments>
-    <const/id=`${path}-${i}`/>
+  <for|comment, i| of=input.comments>
+    <const/id=`${input.path || "c"}-${i}`/>
     <let/open=true/>
     <li id=id hidden=!open>
       <span>${comment.text}</span>

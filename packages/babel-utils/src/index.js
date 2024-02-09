@@ -9,6 +9,7 @@ export {
   hasMacro,
   getMacroIdentifierForName,
   getMacroIdentifier,
+  getTagTemplate,
   getTagDef,
   getFullyResolvedTagName,
   findParentTag,
