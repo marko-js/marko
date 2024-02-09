@@ -1,6 +1,7 @@
-import "./foo"
-import { b as c } from "./bar"
-import baz from "<baz>"
-
-<${baz}/>
+import "./foo";
+import { b as c } from "./bar";
+import bazComp from "./components/baz.marko";
+<${bazComp}/>
+<bazComp/>
+<baz />
 -- ${c}

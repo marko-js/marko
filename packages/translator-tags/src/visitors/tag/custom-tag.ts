@@ -1,5 +1,5 @@
 import {
-  getTagDef,
+  getTagTemplate,
   importDefault,
   importNamed,
   loadFileForTag,
@@ -52,7 +52,7 @@ export default {
         startSection(body);
       }
 
-      if (getTagDef(tag)?.template) {
+      if (getTagTemplate(tag)) {
         reserveScope(
           ReserveType.Visit,
           getOrCreateSection(tag),
@@ -74,8 +74,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       // TODO: only if dynamic attributes
-      const tagDef = getTagDef(tag);
-      const template = tagDef?.template;
+      const template = getTagTemplate(tag);
       const section = getOrCreateSection(tag);
       if (template) {
         tag.node.extra.attrsReferences = mergeReferences(
@@ -212,7 +211,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const write = writer.writeTo(tag);
   const binding = node.extra.reserve!;
   const { file } = tag.hub;
-  const tagName = (node.name as t.StringLiteral).value;
+  const tagName = t.isIdentifier(node.name)
+    ? node.name.name
+    : (node.name as t.StringLiteral).value;
   const relativePath = getTagRelativePath(tag);
   const childFile = loadFileForTag(tag)!;
   const childProgram = childFile.ast.program;
@@ -317,9 +318,10 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   let relativePath: string | undefined;
 
   if (nameIsString) {
-    const tagDef = getTagDef(tag);
-    const template = tagDef?.template;
+    const template = getTagTemplate(tag);
     relativePath = template && resolveRelativePath(file, template);
+  } else if (node.extra?.tagNameImported) {
+    relativePath = node.extra.tagNameImported;
   }
 
   if (!relativePath) {
