@@ -10,7 +10,7 @@ import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import * as hooks from "../../util/plugin-hooks";
-import analyzeTagNameType, { TagNameTypes } from "../../util/tag-name-type";
+import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
@@ -29,16 +29,16 @@ export default {
       }
 
       switch (type) {
-        case TagNameTypes.NativeTag:
+        case TagNameType.NativeTag:
           NativeTag.analyze.enter(tag);
           break;
-        case TagNameTypes.CustomTag:
+        case TagNameType.CustomTag:
           CustomTag.analyze.enter(tag);
           break;
-        case TagNameTypes.AttributeTag:
+        case TagNameType.AttributeTag:
           AttributeTag.analyze.enter(tag);
           break;
-        case TagNameTypes.DynamicTag:
+        case TagNameType.DynamicTag:
           DynamicTag.analyze.enter(tag);
           break;
       }
@@ -53,20 +53,20 @@ export default {
         return;
       }
 
-      if (type === TagNameTypes.NativeTag) {
+      if (type === TagNameType.NativeTag) {
         // NativeTag.analyze.exit(tag);
         return;
       }
 
       analyzeAttributeTags(tag);
       switch (type) {
-        case TagNameTypes.CustomTag:
+        case TagNameType.CustomTag:
           CustomTag.analyze.exit(tag);
           break;
-        case TagNameTypes.AttributeTag:
+        case TagNameType.AttributeTag:
           // AttributeTag.analyze.exit(tag);
           break;
-        case TagNameTypes.DynamicTag:
+        case TagNameType.DynamicTag:
           DynamicTag.analyze.exit(tag);
           break;
       }
@@ -123,19 +123,19 @@ export default {
       }
 
       switch (extra.tagNameType) {
-        case TagNameTypes.NativeTag:
+        case TagNameType.NativeTag:
           assertNoArgs(tag);
           NativeTag.translate.enter(tag);
           break;
-        case TagNameTypes.CustomTag:
+        case TagNameType.CustomTag:
           assertAttributesOrSingleArg(tag);
           CustomTag.translate.enter(tag);
           break;
-        case TagNameTypes.DynamicTag:
+        case TagNameType.DynamicTag:
           assertAttributesOrArgs(tag);
           DynamicTag.translate.enter(tag);
           break;
-        case TagNameTypes.AttributeTag:
+        case TagNameType.AttributeTag:
           assertNoArgs(tag);
           AttributeTag.translate.enter(tag);
           break;
@@ -151,16 +151,16 @@ export default {
       }
 
       switch (tag.node.extra.tagNameType) {
-        case TagNameTypes.NativeTag:
+        case TagNameType.NativeTag:
           NativeTag.translate.exit(tag);
           break;
-        case TagNameTypes.CustomTag:
+        case TagNameType.CustomTag:
           CustomTag.translate.exit(tag);
           break;
-        case TagNameTypes.DynamicTag:
+        case TagNameType.DynamicTag:
           DynamicTag.translate.exit(tag);
           break;
-        case TagNameTypes.AttributeTag:
+        case TagNameType.AttributeTag:
           AttributeTag.translate.exit(tag);
           break;
       }

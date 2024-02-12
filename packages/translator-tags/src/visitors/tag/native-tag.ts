@@ -144,7 +144,7 @@ export default {
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
       if (extra.reserve) {
         visitAccessor = getScopeAccessorLiteral(extra.reserve);
-        walks.visit(tag, walks.WalkCodes.Get);
+        walks.visit(tag, walks.WalkCode.Get);
       }
 
       write`<${name.node}`;

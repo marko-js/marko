@@ -1,5 +1,5 @@
 import { classValue, styleValue } from "../common/helpers";
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { write } from "./scope";
 
@@ -44,9 +44,9 @@ export function attrs(
   elementAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const prevAttrs = scope[
-    elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES
-  ] as typeof nextAttrs | undefined;
+  const prevAttrs = scope[elementAccessor + AccessorChar.PreviousAttributes] as
+    | typeof nextAttrs
+    | undefined;
   const element = scope[elementAccessor] as Element;
 
   if (prevAttrs) {
@@ -69,7 +69,7 @@ export function attrs(
     }
   }
 
-  scope[elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES] = nextAttrs;
+  scope[elementAccessor + AccessorChar.PreviousAttributes] = nextAttrs;
 }
 
 const doc = document;
@@ -142,7 +142,7 @@ export function lifecycle(
     thisObj.onMount?.();
     getAbortSignal(
       scope,
-      AccessorChars.LIFECYCLE_ABORT_CONTROLLER + index,
+      AccessorChar.LifecycleAbortController + index,
     ).onabort = () => thisObj.onDestroy?.();
   }
 }

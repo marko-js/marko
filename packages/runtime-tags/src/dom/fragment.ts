@@ -1,4 +1,4 @@
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { emptyMarkerArray } from "./control-flow";
 
 export type DOMFragment = {
@@ -71,7 +71,7 @@ function getFirstNode(
   let scopeOrScopes: Scope | Scope[];
 
   if (MARKO_DEBUG) {
-    if (AccessorChars.COND_SCOPE !== AccessorChars.LOOP_SCOPE_ARRAY) {
+    if (AccessorChar.ConditionalScope !== AccessorChar.LoopScopeArray) {
       throw new Error("Offset mismatch between conditionals and loops");
     }
   }
@@ -79,7 +79,7 @@ function getFirstNode(
   return typeof nodeOrAccessor === "object"
     ? nodeOrAccessor
     : !(scopeOrScopes = currentScope[
-          nodeOrAccessor + AccessorChars.COND_SCOPE
+          nodeOrAccessor + AccessorChar.ConditionalScope
         ] as Scope | Scope[]) || scopeOrScopes === emptyMarkerArray
       ? (currentScope[nodeOrAccessor] as Comment)
       : (last ? getLastNode : getFirstNode)(

@@ -73,7 +73,7 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      walks.visit(tag, walks.WalkCodes.Replace);
+      walks.visit(tag, walks.WalkCode.Replace);
       walks.enterShallow(tag);
 
       if (isOutputHTML()) {

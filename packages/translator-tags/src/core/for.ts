@@ -80,7 +80,7 @@ export default {
         extra: { isOnlyChild },
       } = tag.node;
       if (!isOnlyChild) {
-        walks.visit(tag, walks.WalkCodes.Replace);
+        walks.visit(tag, walks.WalkCode.Replace);
         walks.enterShallow(tag);
       }
       if (isOutputHTML()) {

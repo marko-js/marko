@@ -22,34 +22,34 @@ export type Scope<
   [x: string | number]: any;
 } & T;
 
-// TODO: SECTION_SIBLING that is both a SECTION_START and a SECTION_END (<for> siblings)
+// TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
-export const enum ResumeSymbols {
-  DEFAULT_RUNTIME_ID = "M",
-  SECTION_START = "[",
-  SECTION_END = "]",
-  SECTION_SINGLE_NODES_END = "|",
-  NODE = "*",
-  PLACEHOLDER_START = "",
-  PLACEHOLDER_END = "",
-  REPLACEMENT_ID = "",
-  VAR_RESUME = "$h",
-  VAR_REORDER_RUNTIME = "$r",
+export enum ResumeSymbol {
+  DefaultRuntimeId = "M",
+  SectionStart = "[",
+  SectionEnd = "]",
+  SectionSingleNodesEnd = "|",
+  Node = "*",
+  PlaceholderStart = "",
+  PlaceholderEnd = "",
+  ReplacementId = "",
+  VarResume = "$h",
+  VarReorderRuntime = "$r",
 }
 
-export const enum AccessorChars {
-  DYNAMIC = "?",
-  MARK = "#",
-  STALE = "&",
-  SUBSCRIBERS = "*",
-  LIFECYCLE_ABORT_CONTROLLER = "-",
-  TAG_VARIABLE = "/",
-  COND_SCOPE = "!",
-  LOOP_SCOPE_ARRAY = "!",
-  COND_RENDERER = "(",
-  LOOP_SCOPE_MAP = "(",
-  LOOP_VALUE = ")",
-  PREVIOUS_ATTRIBUTES = "~",
+export enum AccessorChar {
+  Dynamic = "?",
+  Mark = "#",
+  Stale = "&",
+  Subscribers = "*",
+  LifecycleAbortController = "-",
+  TagVariable = "/",
+  ConditionalScope = "!",
+  ConditionalRenderer = "(",
+  LoopScopeArray = "!",
+  LoopScopeMap = "(",
+  LoopValue = ")",
+  PreviousAttributes = "~",
 }
 
 export type Accessor = string | number;

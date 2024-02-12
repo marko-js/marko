@@ -56,18 +56,19 @@ export type Signal = {
 };
 
 /** TODO: temporary location - duplicated from "@marko/runtime-tags/common/types" */
-const enum AccessorChars {
-  DYNAMIC = "?",
-  MARK = "#",
-  STALE = "&",
-  SUBSCRIBERS = "*",
-  CLEANUP = "-",
-  TAG_VARIABLE = "/",
-  COND_SCOPE = "!",
-  LOOP_SCOPE_ARRAY = "!",
-  COND_RENDERER = "(",
-  LOOP_SCOPE_MAP = "(",
-  LOOP_VALUE = ")",
+const enum AccessorChar {
+  Dynamic = "?",
+  Mark = "#",
+  Stale = "&",
+  Subscribers = "*",
+  Cleanup = "-",
+  TagVariable = "/",
+  ConditionalScope = "!",
+  ConditionalRenderer = "(",
+  LoopScopeArray = "!",
+  LoopScopeMap = "(",
+  LoopValue = ")",
+  PreviousAttributes = "~",
 }
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -788,7 +789,7 @@ export function writeHTMLResumeStatements(
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(
       t.objectProperty(
-        t.stringLiteral(AccessorChars.TAG_VARIABLE),
+        t.stringLiteral(AccessorChar.TagVariable),
         tagVarIdentifier,
       ),
     );

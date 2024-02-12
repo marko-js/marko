@@ -59,10 +59,10 @@ export default {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
         if (extra.needsMarker) {
-          walks.visit(placeholder, walks.WalkCodes.Replace);
+          walks.visit(placeholder, walks.WalkCode.Replace);
         } else {
           if (!isHTML) write` `;
-          walks.visit(placeholder, walks.WalkCodes.Get);
+          walks.visit(placeholder, walks.WalkCode.Get);
         }
 
         if (isHTML) {

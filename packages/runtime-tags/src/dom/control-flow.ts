@@ -1,4 +1,4 @@
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { defaultFragment } from "./fragment";
 import { reconcile } from "./reconcile";
 import {
@@ -34,8 +34,8 @@ export let conditional = function conditional(
   intersection?: IntersectionSignal,
   valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
-  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
-  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
+  const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRenderer, clean) => {
     newRenderer = newRenderer
       ? (newRenderer as any as Template)._ || newRenderer
@@ -60,8 +60,8 @@ export function inConditionalScope<S extends Scope>(
   signal: IntersectionSignal,
   nodeAccessor: Accessor /* branch?: Renderer */,
 ): IntersectionSignal {
-  const scopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
-  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
+  const scopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
+  const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   return (scope: Scope, clean?: boolean | 1) => {
     const conditionalScope = scope[scopeAccessor] as S;
     if (conditionalScope) {
@@ -82,17 +82,19 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   newRenderer: RendererOrElementName | undefined,
 ) {
   let newScope: ChildScope;
-  let prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as ChildScope;
+  let prevScope = scope[
+    nodeAccessor + AccessorChar.ConditionalScope
+  ] as ChildScope;
   const newFragment = newRenderer?.___fragment ?? defaultFragment;
   const prevFragment = prevScope?.___renderer?.___fragment ?? defaultFragment;
 
   if (newRenderer) {
-    newScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] =
+    newScope = scope[nodeAccessor + AccessorChar.ConditionalScope] =
       createScopeWithRenderer(newRenderer, scope.$global, scope) as ChildScope;
     prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
   } else {
     newScope = getEmptyScope(scope[nodeAccessor] as Comment) as ChildScope;
-    scope[nodeAccessor + AccessorChars.COND_SCOPE] = undefined;
+    scope[nodeAccessor + AccessorChar.ConditionalScope] = undefined;
   }
 
   newFragment.___insertBefore(
@@ -107,8 +109,8 @@ export let conditionalOnlyChild = function conditionalOnlyChild(
   nodeAccessor: Accessor,
   action?: ValueSignal<RendererOrElementName | undefined>,
 ): ValueSignal<RendererOrElementName | undefined> {
-  const rendererAccessor = nodeAccessor + AccessorChars.COND_RENDERER;
-  const childScopeAccessor = nodeAccessor + AccessorChars.COND_SCOPE;
+  const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
+  const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRenderer, clean) => {
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
@@ -127,12 +129,14 @@ export function setConditionalRendererOnlyChild(
   nodeAccessor: Accessor,
   newRenderer: RendererOrElementName | undefined,
 ) {
-  const prevScope = scope[nodeAccessor + AccessorChars.COND_SCOPE] as Scope;
+  const prevScope = scope[
+    nodeAccessor + AccessorChar.ConditionalScope
+  ] as Scope;
   const referenceNode = scope[nodeAccessor] as Element;
   referenceNode.textContent = "";
 
   if (newRenderer) {
-    const newScope = (scope[nodeAccessor + AccessorChars.COND_SCOPE] =
+    const newScope = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
       createScopeWithRenderer(newRenderer, scope.$global, scope));
     (newRenderer.___fragment ?? defaultFragment).___insertBefore(
       newScope,
@@ -197,7 +201,7 @@ function loop(
   renderer: Renderer,
   forEach: LoopForEach,
 ) {
-  const loopScopeAccessor = nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
+  const loopScopeAccessor = nodeAccessor + AccessorChar.LoopScopeArray;
   const closureSignals = renderer.___closureSignals;
   const params = renderer.___args;
   return (
@@ -222,12 +226,12 @@ function loop(
       referenceNode.nodeType === 8 /* Comment */ ||
       referenceNode.nodeType === 3; /* Text */
     const oldMap =
-      (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] as Map<
+      (scope[nodeAccessor + AccessorChar.LoopScopeMap] as Map<
         unknown,
         Scope
       >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
     const oldArray =
-      (scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] as Scope[]) ||
+      (scope[nodeAccessor + AccessorChar.LoopScopeArray] as Scope[]) ||
       Array.from(oldMap.values());
 
     let newMap!: Map<unknown, Scope>;
@@ -306,8 +310,8 @@ function loop(
       );
     }
 
-    scope[nodeAccessor + AccessorChars.LOOP_SCOPE_MAP] = newMap;
-    scope[nodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY] = newArray;
+    scope[nodeAccessor + AccessorChar.LoopScopeMap] = newMap;
+    scope[nodeAccessor + AccessorChar.LoopScopeArray] = newArray;
   };
 }
 
@@ -316,7 +320,7 @@ export function inLoopScope(
   signal: IntersectionSignal,
   loopNodeAccessor: Accessor,
 ) {
-  const loopScopeAccessor = loopNodeAccessor + AccessorChars.LOOP_SCOPE_ARRAY;
+  const loopScopeAccessor = loopNodeAccessor + AccessorChar.LoopScopeArray;
   return (scope: Scope, clean?: boolean | 1) => {
     const loopScopes = scope[loopScopeAccessor] ?? [];
     for (const scope of loopScopes) {

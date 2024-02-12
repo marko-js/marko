@@ -1,4 +1,4 @@
-import { ResumeSymbols, type Scope } from "../common/types";
+import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindFunction, bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
@@ -19,10 +19,10 @@ export function register<T>(id: string, obj: T): T {
 export const scopeLookup = {} as Record<number | string, Scope>;
 
 export function init(
-  runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID /* [a-zA-Z0-9]+ */,
+  runtimeId = ResumeSymbol.DefaultRuntimeId /* [a-zA-Z0-9]+ */,
 ) {
   const runtimeLength = runtimeId.length;
-  const resumeVar = runtimeId + ResumeSymbols.VAR_RESUME;
+  const resumeVar = runtimeId + ResumeSymbol.VarResume;
   // TODO: check if this is a fakeArray
   // and warn in dev that there are conflicting runtime ids
   const initialHydration = (window as any)[resumeVar];
@@ -101,13 +101,13 @@ export function init(
         const scope = getScope(scopeId);
         const data = nodeValue.slice(nodeValue.indexOf(" ") + 1);
 
-        if (token === ResumeSymbols.NODE) {
+        if (token === ResumeSymbol.Node) {
           scope[data] = currentNode.previousSibling;
-        } else if (token === ResumeSymbols.SECTION_START) {
+        } else if (token === ResumeSymbol.SectionStart) {
           stack.push(currentScopeId);
           currentScopeId = scopeId;
           scope.___startNode = currentNode;
-        } else if (token === ResumeSymbols.SECTION_END) {
+        } else if (token === ResumeSymbol.SectionEnd) {
           scope[data] = currentNode;
           if (scopeId < currentScopeId) {
             const currScope = scopeLookup[currentScopeId];
@@ -119,7 +119,7 @@ export function init(
             currScope.___endNode = currentNode.previousSibling!;
             currentScopeId = stack.pop()!;
           }
-        } else if (token === ResumeSymbols.SECTION_SINGLE_NODES_END) {
+        } else if (token === ResumeSymbol.SectionSingleNodesEnd) {
           scope[
             MARKO_DEBUG ? data.slice(0, data.indexOf(" ")) : parseInt(data)
           ] = currentNode;

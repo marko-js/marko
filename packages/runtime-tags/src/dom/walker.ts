@@ -24,7 +24,7 @@ export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 // 39 ' [single quote]
 // 92 \ [backslash]
 // 96 ` [backtick]
-export const enum WalkCodes {
+export enum WalkCode {
   Get = 32,
   Before = 33,
   After = 35,
@@ -47,7 +47,7 @@ export const enum WalkCodes {
   MultiplierEnd = 126,
 }
 
-export const enum WalkRangeSizes {
+export enum WalkRangeSize {
   Next = 20, // 67 through 91
   Over = 10, // 97 through 106
   Out = 10, // 107 through 116
@@ -56,7 +56,7 @@ export const enum WalkRangeSizes {
 
 export function trimWalkString(walkString: string): string {
   let end = walkString.length;
-  while (walkString.charCodeAt(--end) > WalkCodes.BeginChild);
+  while (walkString.charCodeAt(--end) > WalkCode.BeginChild);
   return walkString.slice(0, end + 1);
 }
 
@@ -79,28 +79,28 @@ function walkInternal(
   while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
     currentMultiplier = storedMultiplier;
     storedMultiplier = 0;
-    if (value >= WalkCodes.Multiplier) {
+    if (value >= WalkCode.Multiplier) {
       storedMultiplier =
-        currentMultiplier * WalkRangeSizes.Multiplier +
+        currentMultiplier * WalkRangeSize.Multiplier +
         value -
-        WalkCodes.Multiplier;
-    } else if (value >= WalkCodes.Out) {
-      value = WalkRangeSizes.Out * currentMultiplier + value - WalkCodes.Out;
+        WalkCode.Multiplier;
+    } else if (value >= WalkCode.Out) {
+      value = WalkRangeSize.Out * currentMultiplier + value - WalkCode.Out;
       while (value--) {
         walker.parentNode();
       }
       walker.nextSibling();
-    } else if (value >= WalkCodes.Over) {
-      value = WalkRangeSizes.Over * currentMultiplier + value - WalkCodes.Over;
+    } else if (value >= WalkCode.Over) {
+      value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
       while (value--) {
         !walker.nextSibling() && !walker.nextNode();
       }
-    } else if (value >= WalkCodes.Next) {
-      value = WalkRangeSizes.Next * currentMultiplier + value - WalkCodes.Next;
+    } else if (value >= WalkCode.Next) {
+      value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
       while (value--) {
         walker.nextNode();
       }
-    } else if (value === WalkCodes.BeginChild) {
+    } else if (value === WalkCode.BeginChild) {
       currentWalkIndex = walkInternal(
         walkCodes,
         (scope[
@@ -110,9 +110,9 @@ function walkInternal(
         ] = createScope(scope.$global)),
         currentWalkIndex,
       )!;
-    } else if (value === WalkCodes.EndChild) {
+    } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;
-    } else if (value === WalkCodes.Get) {
+    } else if (value === WalkCode.Get) {
       scope[
         MARKO_DEBUG
           ? getDebugKey(currentScopeIndex++, walker.currentNode)
@@ -127,13 +127,13 @@ function walkInternal(
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
 
-      if (value === WalkCodes.Before) {
+      if (value === WalkCode.Before) {
         parentNode.insertBefore(newNode, current);
       } else {
-        if (value === WalkCodes.After) {
+        if (value === WalkCode.After) {
           parentNode.insertBefore(newNode, current.nextSibling);
         } else {
-          if (MARKO_DEBUG && value !== WalkCodes.Replace) {
+          if (MARKO_DEBUG && value !== WalkCode.Replace) {
             throw new Error(`Unknown walk code: ${value}`);
           }
           parentNode.replaceChild(newNode, current);

@@ -1,17 +1,10 @@
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
-import { attrs } from "./dom";
+import { NodeType, attrs } from "./dom";
 import { type DOMFragment } from "./fragment";
 import { bindRenderer, createScope } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
-import { WalkCodes, trimWalkString, walk } from "./walker";
-
-const enum NodeType {
-  Element = 1,
-  Text = 3,
-  Comment = 8,
-  DocumentFragment = 11,
-}
+import { WalkCode, trimWalkString, walk } from "./walker";
 
 export type Renderer = {
   ___template: string;
@@ -94,14 +87,14 @@ export function dynamicTagAttrs(
     clean?: boolean | 1,
   ) => {
     const renderer = scope[
-      nodeAccessor + AccessorChars.COND_RENDERER
+      nodeAccessor + AccessorChar.ConditionalRenderer
     ] as Renderer;
 
     if (!renderer || renderer === renderBody || (clean && !renderer.___args)) {
       return;
     }
 
-    const childScope = scope[nodeAccessor + AccessorChars.COND_SCOPE];
+    const childScope = scope[nodeAccessor + AccessorChar.ConditionalScope];
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
@@ -177,7 +170,7 @@ function _clone(this: Renderer) {
     const ensureFragment =
       walks &&
       walks.length < 4 &&
-      walks.charCodeAt(walks.length - 1) !== WalkCodes.Get;
+      walks.charCodeAt(walks.length - 1) !== WalkCode.Get;
     this.___sourceNode = sourceNode = parse(
       this.___template,
       ensureFragment as boolean,

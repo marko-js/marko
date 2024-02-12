@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
-import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
+import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export type Section = {
   id: number;
@@ -62,7 +62,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
-          TagNameTypes.NativeTag)
+          TagNameType.NativeTag)
     ) {
       return startSection(cur);
     }
