@@ -5,6 +5,7 @@ import {
   loadFileForTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { addBindingToReferences, mergeReferences } from "../../util/references";
@@ -73,7 +74,7 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      walks.visit(tag, walks.WalkCode.Replace);
+      walks.visit(tag, WalkCode.Replace);
       walks.enterShallow(tag);
 
       if (isOutputHTML()) {

@@ -1,5 +1,6 @@
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
@@ -83,7 +84,7 @@ export default {
         }
       }
 
-      walks.visit(tag, walks.WalkCode.Replace);
+      walks.visit(tag, WalkCode.Replace);
       walks.enterShallow(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);

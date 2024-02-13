@@ -1,5 +1,6 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -54,22 +55,6 @@ export type Signal = {
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
 };
-
-/** TODO: temporary location - duplicated from "@marko/runtime-tags/common/types" */
-const enum AccessorChar {
-  Dynamic = "?",
-  Mark = "#",
-  Stale = "&",
-  Subscribers = "*",
-  Cleanup = "-",
-  TagVariable = "/",
-  ConditionalScope = "!",
-  ConditionalRenderer = "(",
-  LoopScopeArray = "!",
-  LoopScopeMap = "(",
-  LoopValue = ")",
-  PreviousAttributes = "~",
-}
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",

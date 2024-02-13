@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
 import { ReserveType } from "../util/reserve";
 import { type Section, createSectionState, getSection } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
@@ -16,36 +17,6 @@ const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
   () => [],
 );
 const [getSteps] = createSectionState<Step[]>("steps", () => []);
-
-export enum WalkCode {
-  Get = 32,
-  Before = 33,
-  After = 35,
-  Inside = 36,
-  Replace = 37,
-  EndChild = 38,
-
-  BeginChild = 47,
-
-  Next = 67,
-  NextEnd = 91,
-
-  Over = 97,
-  OverEnd = 106,
-
-  Out = 107,
-  OutEnd = 116,
-
-  Multiplier = 117,
-  MultiplierEnd = 126,
-}
-
-export enum WalkRangeSize {
-  Next = 20, // 67 through 91
-  Over = 10, // 97 through 106
-  Out = 10, // 107 through 116
-  Multiplier = 10, // 117 through 126
-}
 
 export enum Step {
   Enter,

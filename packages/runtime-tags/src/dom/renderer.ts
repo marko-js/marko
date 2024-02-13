@@ -1,10 +1,16 @@
-import { type Accessor, AccessorChar, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorChar,
+  NodeType,
+  WalkCode,
+  type Scope,
+} from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
-import { NodeType, attrs } from "./dom";
+import { attrs } from "./dom";
 import { type DOMFragment } from "./fragment";
 import { bindRenderer, createScope } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
-import { WalkCode, trimWalkString, walk } from "./walker";
+import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
   ___template: string;

@@ -1,14 +1,12 @@
 import { classValue, styleValue } from "../common/helpers";
-import { type Accessor, AccessorChar, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorChar,
+  NodeType,
+  type Scope,
+} from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { write } from "./scope";
-
-export enum NodeType {
-  Element = 1,
-  Text = 3,
-  Comment = 8,
-  DocumentFragment = 11,
-}
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;

@@ -1,5 +1,6 @@
 import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import evaluate from "../util/evaluate";
 import { isCoreTag } from "../util/is-core-tag";
 import { isOutputHTML } from "../util/marko-config";
@@ -59,10 +60,10 @@ export default {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
         if (extra.needsMarker) {
-          walks.visit(placeholder, walks.WalkCode.Replace);
+          walks.visit(placeholder, WalkCode.Replace);
         } else {
           if (!isHTML) write` `;
-          walks.visit(placeholder, walks.WalkCode.Get);
+          walks.visit(placeholder, WalkCode.Get);
         }
 
         if (isHTML) {
