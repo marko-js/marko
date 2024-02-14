@@ -5,6 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
+import { isOutputDOM } from "./marko-config";
 import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
@@ -13,6 +14,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable: boolean;
     tagNameDynamic: boolean;
     tagNameImported?: string;
+    tagNameDefine?: boolean;
   }
 }
 
@@ -48,6 +50,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             t.identifier(name.node.value),
             name.node,
           );
+          extra.nameReferences = tag.scope.getBinding(
+            name.node.value,
+          )?.identifier?.extra?.reserve;
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {
           const childFile = loadFileForTag(tag);
@@ -163,6 +168,17 @@ function analyzeExpressionTagName(
             type !== undefined && type !== TagNameType.CustomTag
               ? TagNameType.DynamicTag
               : TagNameType.CustomTag;
+          continue;
+        }
+
+        if (bindingTagName === "define") {
+          // TODO: Make work as a custom tag on the DOM
+          type =
+            (type !== undefined && type !== TagNameTypes.CustomTag) ||
+            isOutputDOM()
+              ? TagNameTypes.DynamicTag
+              : TagNameTypes.CustomTag;
+          extra.tagNameDefine = true;
           continue;
         }
 

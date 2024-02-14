@@ -1,4 +1,5 @@
 import {
+  assertAttributesOrArgs,
   getTemplateId,
   importDefault,
   importNamed,
@@ -75,6 +76,8 @@ export default {
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       walks.visit(tag, WalkCode.Replace);
+      assertAttributesOrArgs(tag);
+
       walks.enterShallow(tag);
 
       if (isOutputHTML()) {
@@ -85,7 +88,12 @@ export default {
       const { node } = tag;
       let tagExpression = node.name;
 
-      if (t.isStringLiteral(tagExpression)) {
+      if (node.extra.tagNameDefine) {
+        tagExpression = t.memberExpression(
+          node.name,
+          t.identifier("renderBody"),
+        );
+      } else if (t.isStringLiteral(tagExpression)) {
         const { file } = tag.hub;
         const relativePath = getTagRelativePath(tag);
         tagExpression = importDefault(file, relativePath, tagExpression.value);

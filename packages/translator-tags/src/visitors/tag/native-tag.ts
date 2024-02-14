@@ -1,4 +1,4 @@
-import { getTagDef } from "@marko/babel-utils";
+import { assertNoArgs, getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject from "../../util/attrs-to-object";
@@ -68,6 +68,8 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoArgs(tag);
+
       const { extra } = tag.node;
       const isHTML = isOutputHTML();
       const name = tag.get("name");

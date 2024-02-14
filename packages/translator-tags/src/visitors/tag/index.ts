@@ -1,11 +1,4 @@
-import {
-  type Plugin,
-  assertNoArgs,
-  assertAttributesOrArgs,
-  assertAttributesOrSingleArg,
-  getTagDef,
-  isNativeTag,
-} from "@marko/babel-utils";
+import { type Plugin, getTagDef, isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
@@ -124,19 +117,15 @@ export default {
 
       switch (extra.tagNameType) {
         case TagNameType.NativeTag:
-          assertNoArgs(tag);
           NativeTag.translate.enter(tag);
           break;
         case TagNameType.CustomTag:
-          assertAttributesOrSingleArg(tag);
           CustomTag.translate.enter(tag);
           break;
         case TagNameType.DynamicTag:
-          assertAttributesOrArgs(tag);
           DynamicTag.translate.enter(tag);
           break;
         case TagNameType.AttributeTag:
-          assertNoArgs(tag);
           AttributeTag.translate.enter(tag);
           break;
       }
