@@ -7,8 +7,8 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { decode } from "he";
-import { tagArguments } from "../tag/native-tag[vdom]";
-import { getKeyManager } from "./key-manager";
+import translateAttributes from "../tag/native-tag[vdom]/attributes";
+import { getKeyManager, hasUserKey } from "./key-manager";
 import write from "./vdom-out-write";
 
 const skipDirectives = new Set([
@@ -40,10 +40,9 @@ const mergeStaticCreateVisitor = {
   },
   MarkoTag(path, state) {
     getKeyManager(path).resolveKey(path);
-    const writeArgs = tagArguments(path, true);
     state.currentRoot = t.callExpression(
       t.memberExpression(state.currentRoot, t.identifier("e")),
-      writeArgs,
+      getConstElementArgs(path),
     );
   },
 };
@@ -70,7 +69,8 @@ const analyzeStaticVisitor = {
       let isStatic =
         isNativeTag(path) &&
         !path.node.body.params.length &&
-        !path.node.arguments;
+        !path.node.arguments &&
+        !hasUserKey(path);
 
       const tagDef = getTagDef(path);
       isStatic = isStatic && !tagDef.translator;
@@ -118,15 +118,14 @@ export function optimizeStaticVDOM(path) {
   }
 
   const identifier = path.scope.generateUidIdentifier("marko_node");
-  const writeArgs = tagArguments(path, true);
   const state = {
     currentRoot: t.callExpression(
       importDefault(
         file,
-        "marko/src/runtime/vdom/helpers/v-element.js",
-        "marko_createElement",
+        "marko/src/runtime/vdom/helpers/const-element.js",
+        "marko_constElement",
       ),
-      writeArgs,
+      getConstElementArgs(path),
     ),
   };
 
@@ -148,4 +147,13 @@ export function analyzeStaticVDOM(path) {
 
 function shouldRun(markoOpts) {
   return markoOpts.optimize && markoOpts.output !== "html";
+}
+
+function getConstElementArgs(path) {
+  const { node } = path;
+  return [
+    node.name,
+    translateAttributes(path, path.get("attributes")),
+    t.numericLiteral(node.body.body.length),
+  ];
 }

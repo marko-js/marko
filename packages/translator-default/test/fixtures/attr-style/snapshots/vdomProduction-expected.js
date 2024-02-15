@@ -3,13 +3,13 @@ const _marko_componentType = "Up7A+MWi",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_style_merge from "marko/dist/runtime/helpers/style-value.js";
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
-const _marko_node = _marko_createElement("div", {
+import _marko_constElement from "marko/dist/runtime/vdom/helpers/const-element.js";
+const _marko_node = _marko_constElement("div", {
   "style": "width:100px"
-}, "1", null, 0, 1);
-const _marko_node2 = _marko_createElement("div", {
+}, 0);
+const _marko_node2 = _marko_constElement("div", {
   "style": "color: green"
-}, "2", null, 0, 1);
+}, 0);
 import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
