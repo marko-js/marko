@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.31.14
+
+### Patch Changes
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`9a18ced`](https://github.com/marko-js/marko/commit/9a18ced27b04b6fbd391d84c61d97269bcf7f851) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix and optimize the output for vdom hoisting.
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`a87b692`](https://github.com/marko-js/marko/commit/a87b69212f8b204dbe3d5a1396d95ddafd1adb85) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix diffing issues when swapping keyed elements between native tags, custom tags and fragments.
+
 ## 5.31.13
 
 ### Patch Changes
