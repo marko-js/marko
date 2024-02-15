@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-default",
-  "version": "5.31.13",
+  "version": "5.31.14",
   "description": "Translates Marko templates to the default Marko runtime.",
   "keywords": [
     "babel",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@marko/compiler": "^5.34.6",
-    "marko": "^5.32.7"
+    "marko": "^5.32.8"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.16.1",
