@@ -281,13 +281,26 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           if (!curToNodeChild.___preserve) {
             // We just skip over the fromNode if it is preserved
 
-            if (compareNodeNames(curToNodeChild, curVFromNodeChild)) {
-              morphEl(
-                curFromNodeChild,
-                curVFromNodeChild,
-                curToNodeChild,
-                parentComponent,
-              );
+            if (
+              curVFromNodeChild &&
+              curToNodeType === curVFromNodeChild.___nodeType &&
+              (curToNodeType !== ELEMENT_NODE ||
+                compareNodeNames(curToNodeChild, curVFromNodeChild))
+            ) {
+              if (curToNodeType === ELEMENT_NODE) {
+                morphEl(
+                  curFromNodeChild,
+                  curVFromNodeChild,
+                  curToNodeChild,
+                  parentComponent,
+                );
+              } else {
+                morphChildren(
+                  curFromNodeChild,
+                  curToNodeChild,
+                  parentComponent,
+                );
+              }
             } else {
               // Remove the old node
               detachNode(curFromNodeChild, fromNode, ownerComponent);
@@ -404,7 +417,12 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             if (!curToNodeChild.___preserve) {
               curVFromNodeChild = vElementByDOMNode.get(matchingFromEl);
 
-              if (compareNodeNames(curVFromNodeChild, curToNodeChild)) {
+              if (
+                curVFromNodeChild &&
+                curToNodeType === curVFromNodeChild.___nodeType &&
+                (curToNodeType !== ELEMENT_NODE ||
+                  compareNodeNames(curVFromNodeChild, curToNodeChild))
+              ) {
                 if (fromNextSibling === matchingFromEl) {
                   // Single element removal:
                   // A <-> A
@@ -455,12 +473,21 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   }
                 }
 
-                morphEl(
-                  matchingFromEl,
-                  curVFromNodeChild,
-                  curToNodeChild,
-                  parentComponent,
-                );
+                if (curToNodeType === ELEMENT_NODE) {
+                  morphEl(
+                    matchingFromEl,
+                    curVFromNodeChild,
+                    curToNodeChild,
+                    parentComponent
+                  );
+                } else {
+                  morphChildren(
+                    matchingFromEl,
+                    curToNodeChild,
+                    parentComponent,
+                  );
+                }
+
               } else {
                 insertVirtualNodeBefore(
                   curToNodeChild,
