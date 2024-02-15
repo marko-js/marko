@@ -109,9 +109,7 @@ function tagArguments(path) {
     attrsObj,
     key,
     file._componentInstanceIdentifier,
-       body.length
-        ? t.nullLiteral()
-        : t.numericLiteral(0),
+    body.length ? t.nullLiteral() : t.numericLiteral(0),
   ];
 
   if (node.preserveAttrs) {
