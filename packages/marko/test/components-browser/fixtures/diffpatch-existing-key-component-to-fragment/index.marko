@@ -1,0 +1,19 @@
+class {
+    onCreate() {
+        this.state = {
+            toggle: false
+        }
+    }
+    toggle() {
+        this.state.toggle = !this.state.toggle;
+    }
+}
+
+<macro|{ renderBody }| name="content">
+    <app-hello key=state.toggle ? "b" : "c"/>
+    <${renderBody} key=state.toggle ? "c" : "b"/>
+</>
+
+<div key="renderTarget">
+    <content>A</>
+</div>
