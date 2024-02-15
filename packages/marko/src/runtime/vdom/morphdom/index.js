@@ -478,7 +478,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                     matchingFromEl,
                     curVFromNodeChild,
                     curToNodeChild,
-                    parentComponent
+                    parentComponent,
                   );
                 } else {
                   morphChildren(
@@ -487,7 +487,6 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                     parentComponent,
                   );
                 }
-
               } else {
                 insertVirtualNodeBefore(
                   curToNodeChild,
