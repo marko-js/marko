@@ -505,9 +505,7 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/vdom/index.js`,
           `${base}runtime/vdom/hot-reload.js`,
           `${base}runtime/vdom/helpers/attrs.js`,
-          `${base}runtime/vdom/helpers/const.js`,
-          `${base}runtime/vdom/helpers/v-element.js`,
-          `${base}runtime/vdom/helpers/v-text.js`,
+          `${base}runtime/vdom/helpers/const-element.js`,
           `${base}runtime/vdom/preserve-attrs.js`,
         ]),
   ];
