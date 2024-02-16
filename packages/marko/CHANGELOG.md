@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.1](https://github.com/marko-js/marko/compare/v4.28.0...v4.28.1) (2024-02-16)
+
+
+### Bug Fixes
+
+* diffing edge cases ([236d92b](https://github.com/marko-js/marko/commit/236d92ba4a035407e5fcdeac2d440813563343ba))
+* relax dynamic nested attr tag restrictions ([e9cb3c7](https://github.com/marko-js/marko/commit/e9cb3c72832121cd0defb3f00985ff7219f143fd))
+
 ## [4.28.0](https://github.com/marko-js/marko/compare/v4.27.0...v4.28.0) (2024-01-26)
 
 
