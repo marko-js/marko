@@ -115,7 +115,9 @@ module.exports = function awaitTag(input, out) {
         nextId: 0,
       });
 
-    var id = (awaitInfo.id = input.name || clientReorderContext.nextId++);
+    var id = (awaitInfo.id =
+      input.name ||
+      (out.global.componentIdPrefix || "") + clientReorderContext.nextId++);
     var placeholderIdAttrValue = "afph" + id;
 
     if (placeholderRenderer) {
