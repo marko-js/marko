@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.9
+
+### Patch Changes
+
+- [#2111](https://github.com/marko-js/marko/pull/2111) [`022879d`](https://github.com/marko-js/marko/commit/022879da1a7589f6207d7bbf47b97d1a2d596781) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add componentIdPrefix to id of await client-reorder
+
 ## 5.32.8
 
 ### Patch Changes
