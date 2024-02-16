@@ -560,6 +560,7 @@ class CustomTag extends HtmlElement {
         inputProps,
         builder.identifierOut(),
       ]);
+      renderTagNode._isTagCall = true;
     } else {
       if (rendererRequirePath) {
         codegen.pushMeta("tags", rendererRequirePath, true);
@@ -623,8 +624,10 @@ class CustomTag extends HtmlElement {
 
       if (isNestedTag) {
         renderTagNode = builder.functionCall(tagVar, tagArgs);
+        renderTagNode._isNestedTagCall = true
       } else {
         renderTagNode = this.generateRenderTagCode(codegen, tagVar, tagArgs);
+        renderTagNode._isTagCall = true;
       }
     }
 
@@ -640,12 +643,22 @@ class CustomTag extends HtmlElement {
     let renderBodyFunction;
 
     if (hasBody) {
-      if (this._mergedRenderBodyStart !== undefined) {
-        const mergedRenderBody = builder.renderBodyFunction(
-          body.slice(this._mergedRenderBodyStart)
-        );
-        body = body.slice(0, this._mergedRenderBodyStart);
-        body.push(builder.returnStatement(mergedRenderBody));
+      if (this._hasDynamicNestedTags) {
+        const renderBody = [];
+        const newBody = [];
+
+        for (const child of body) {
+          if (hasHTML(child, context)) {
+            renderBody.push(child);
+          } else {
+            newBody.push(child);
+          }
+        }
+
+        if (renderBody.length) {
+          newBody.push(builder.returnStatement(builder.renderBodyFunction(renderBody)));
+          body = newBody;
+        }
       }
 
       if (tagDef.bodyFunction) {
@@ -756,40 +769,7 @@ class CustomTag extends HtmlElement {
         return null;
       } else {
         this._isDirectlyNestedTag = false;
-
-        if (!parentCustomTag._hasDynamicNestedTags) {
-          parentCustomTag._hasDynamicNestedTags = true;
-
-          let nextBodyContent = parentCustomTag.firstChild;
-          let i = 0;
-
-          do {
-            if (
-              nextBodyContent.type === "Text" ||
-              nextBodyContent.type === "Scriptlet" ||
-              ((nextBodyContent.type === "HtmlElement" ||
-                nextBodyContent.type === "CustomTag") &&
-                !(
-                  nextBodyContent.tagDef &&
-                  (nextBodyContent.tagDef.isNestedTag ||
-                    nextBodyContent.tagDef.codeGeneratorModulePath)
-                ))
-            ) {
-              parentCustomTag._mergedRenderBodyStart = i;
-              break;
-            }
-
-            nextBodyContent = nextBodyContent.nextSibling;
-            i++;
-          } while (nextBodyContent);
-
-          if (!i) {
-            context.addError(
-              parentCustomTag,
-              "Render body content must come after any dynamic nested attribute tags."
-            );
-          }
-        }
+        parentCustomTag._hasDynamicNestedTags = true;
       }
     }
 
@@ -810,6 +790,23 @@ class CustomTag extends HtmlElement {
 
     return renderTagNode;
   }
+}
+
+function hasHTML(node, context) {
+  let hasHTML = false;
+  const walker = context.createWalker({
+    enter(node) {
+      if (node.type === "Html" || node.type === "TextVDOM" || node._isTagCall) {
+        hasHTML = true;
+        walker.stop();
+      } else if (node._isNestedTagCall) {
+        walker.skip();
+      }
+    },
+  });
+
+  walker.walk(node);
+  return hasHTML;
 }
 
 module.exports = CustomTag;
