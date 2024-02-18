@@ -62,6 +62,10 @@ export interface SourceLocation {
   };
 }
 
+export interface NodeExtra {
+  [key: string]: unknown;
+}
+
 interface BaseNode {
   leadingComments: ReadonlyArray<Comment> | null;
   innerComments: ReadonlyArray<Comment> | null;
@@ -70,7 +74,7 @@ interface BaseNode {
   end: number | null;
   loc: SourceLocation | null;
   type: Node["type"];
-  extra?: Record<string, unknown>;
+  extra?: NodeExtra;
 }
 
 export type Node = ${t.TYPES.sort().join(" | ")};\n\n`;

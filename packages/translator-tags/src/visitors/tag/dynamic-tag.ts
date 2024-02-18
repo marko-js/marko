@@ -9,9 +9,8 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
-import { addBindingToReferences, mergeReferences } from "../../util/references";
+import { addReference, mergeReferences } from "../../util/references";
 import {
-  type Reserve,
   ReserveType,
   getScopeAccessorLiteral,
   reserveScope,
@@ -52,25 +51,20 @@ export default {
       customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const referenceEntries: [Record<string, unknown>, string][] = [];
+      const extra = (tag.node.extra ??= {});
+      const referenceNodes: t.Node[] = [];
       if (tag.node.arguments) {
         for (const arg of tag.node.arguments) {
-          if (arg.extra?.references) {
-            referenceEntries.push([arg.extra, "references"]);
-          }
-        }
-      } else {
-        for (const attr of tag.node.attributes) {
-          if (attr.extra?.valueReferences) {
-            referenceEntries.push([attr.extra, "valueReferences"]);
-          }
+          referenceNodes.push(arg);
         }
       }
-      tag.node.extra.attrsReferences = mergeReferences(
-        getOrCreateSection(tag),
-        referenceEntries,
-      );
-      addBindingToReferences(tag, "attrsReferences", tag.node.extra.reserve!);
+
+      for (const attr of tag.node.attributes) {
+        referenceNodes.push(attr.value);
+      }
+
+      mergeReferences(tag, referenceNodes);
+      addReference(tag, extra.reserve!);
     },
   },
   translate: {
@@ -86,9 +80,11 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
+      const extra = node.extra!;
+      const tagNameReserve = extra.reserve!;
       let tagExpression = node.name;
 
-      if (node.extra.tagNameDefine) {
+      if (node.extra!.tagNameDefine) {
         tagExpression = t.memberExpression(
           node.name,
           t.identifier("renderBody"),
@@ -99,7 +95,7 @@ export default {
         tagExpression = importDefault(file, relativePath, tagExpression.value);
       }
 
-      if (tag.node.extra?.___featureType === "class") {
+      if (extra.___featureType === "class") {
         importDefault(
           tag.hub.file,
           `marko/src/runtime/helpers/tags-compat-${
@@ -192,19 +188,15 @@ export default {
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(node.extra.reserve!),
+          getScopeAccessorLiteral(tagNameReserve),
         )}`;
 
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(
-            getScopeAccessorLiteral(node.extra.reserve!).value + "!",
-          ),
+          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "!"),
           dynamicScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(
-            getScopeAccessorLiteral(node.extra.reserve!).value + "(",
-          ),
+          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "("),
           t.isIdentifier(tagExpression)
             ? t.identifier(tagExpression.name)
             : tagExpression,
@@ -214,7 +206,6 @@ export default {
         const bodySection = getSection(tag.get("body"));
         const hasBody = section !== bodySection;
         const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
-        const tagNameReserve = node.extra?.reserve as Reserve;
         const signal = getSignal(section, tagNameReserve);
         signal.build = () => {
           return callRuntime(
@@ -228,7 +219,7 @@ export default {
         signal.hasDownstreamIntersections = () => true;
         addValue(
           section,
-          node.extra?.nameReferences,
+          node.name.extra?.references,
           signal,
           renderBodyIdentifier
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
@@ -246,7 +237,7 @@ export default {
           let added = false;
           addValue(
             section,
-            node.extra?.attrsReferences,
+            node.extra?.references,
             {
               get identifier() {
                 if (!added) {

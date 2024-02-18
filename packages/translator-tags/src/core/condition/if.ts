@@ -4,7 +4,7 @@ import { WalkCode } from "@marko/runtime-tags/common/types";
 import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
-import { type References, mergeReferences } from "../../util/references";
+import { mergeReferences } from "../../util/references";
 import {
   ReserveType,
   getScopeAccessorLiteral,
@@ -132,20 +132,17 @@ function getBranches(tag: t.NodePath<t.MarkoTag>, bodySection: Section) {
 }
 
 export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
-  const section = getOrCreateSection(tag);
   const tagBody = tag.get("body");
   const bodySection = getOrCreateSection(tagBody);
   const [isLast, branches] = getBranches(tag, bodySection);
   if (isLast) {
-    const rootExtra = branches[0].tag.node.extra;
-    const conditionalReferences = mergeReferences(
-      section,
-      branches
-        .filter(({ tag }) => tag.node.attributes[0]?.extra?.valueReferences)
-        .map(({ tag }) => [tag.node.attributes[0].extra, "valueReferences"]),
+    const rootTag = branches[0].tag;
+    const rootExtra = rootTag.node.extra!;
+    const references = mergeReferences(
+      rootTag,
+      branches.map(({ tag }) => tag.node.attributes[0]?.value),
     );
-    rootExtra.conditionalReferences = conditionalReferences;
-    rootExtra.isStateful = !!conditionalReferences;
+    rootExtra.isStateful = !!references;
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
@@ -157,7 +154,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const section = getSection(tag);
   const bodySection = getSection(tagBody);
   const [isLast, branches] = getBranches(tag, bodySection);
-  const rootExtra = branches[0].tag.node.extra;
+  const rootExtra = branches[0].tag.node.extra!;
   const isStateful = rootExtra.isStateful;
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
@@ -190,7 +187,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (isLast) {
-    const { extra } = branches[0].tag.node;
+    const extra = branches[0].tag.node.extra!;
     if (isOutputDOM()) {
       let expr: t.Expression = t.nullLiteral();
 
@@ -231,12 +228,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       };
       signal.hasDownstreamIntersections = () =>
         branches.some((b) => getClosures(b.section).length > 0);
-      addValue(
-        section,
-        extra.conditionalReferences as References,
-        signal,
-        expr,
-      );
+      addValue(section, extra.references, signal, expr);
     } else {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();

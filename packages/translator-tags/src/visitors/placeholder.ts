@@ -44,15 +44,16 @@ export default {
     exit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(placeholder);
-      const extra = placeholder.node.extra;
-      const { confident, computed, valueReferences, reserve } = extra;
-      const canWriteHTML =
-        isHTML || (confident && (placeholder.node.escape || !computed));
+      const { node } = placeholder;
+      const { value } = node;
+      const extra = node.extra!;
+      const { confident, computed, reserve } = extra;
+      const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
-        ? placeholder.node.escape
+        ? node.escape
           ? ESCAPE_TYPES[getParentTagName(placeholder)] || "escapeXML"
           : "toString"
-        : placeholder.node.escape
+        : node.escape
           ? "data"
           : "html";
 
@@ -67,16 +68,13 @@ export default {
         }
 
         if (isHTML) {
-          write`${callRuntime(
-            method as HTMLMethod | DOMMethod,
-            placeholder.node.value,
-          )}`;
+          write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
           writer.markNode(placeholder);
         } else {
           addStatement(
             "render",
             getSection(placeholder),
-            valueReferences,
+            value.extra?.references,
             t.expressionStatement(
               method === "data"
                 ? callRuntime(
@@ -86,12 +84,12 @@ export default {
                       getScopeAccessorLiteral(reserve!),
                       true,
                     ),
-                    placeholder.node.value,
+                    value,
                   )
                 : callRuntime(
                     "html",
                     scopeIdentifier,
-                    placeholder.node.value,
+                    value,
                     getScopeAccessorLiteral(reserve!),
                   ),
             ),
@@ -135,7 +133,7 @@ function needsMarker(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     (prev.node || t.isProgram(placeholder.parentPath)) &&
     !(t.isMarkoTag(prev) && isNativeTag(prev as t.NodePath<t.MarkoTag>))
   ) {
-    return (placeholder.node.extra.needsMarker = true);
+    return (placeholder.node.extra!.needsMarker = true);
   }
 
   let next = placeholder.getNextSibling();
@@ -146,8 +144,8 @@ function needsMarker(placeholder: t.NodePath<t.MarkoPlaceholder>) {
     (next.node || t.isProgram(placeholder.parentPath)) &&
     !(t.isMarkoTag(next) && isNativeTag(next as t.NodePath<t.MarkoTag>))
   ) {
-    return (placeholder.node.extra.needsMarker = true);
+    return (placeholder.node.extra!.needsMarker = true);
   }
 
-  return (placeholder.node.extra.needsMarker = false);
+  return (placeholder.node.extra!.needsMarker = false);
 }

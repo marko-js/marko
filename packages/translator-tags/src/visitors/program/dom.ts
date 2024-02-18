@@ -82,7 +82,7 @@ export default {
           const bindingIdentifier = args.bindings[name];
           const signalIdentifier = getSignal(
             section,
-            bindingIdentifier.extra.reserve,
+            bindingIdentifier.extra!.reserve,
           ).identifier;
           exportSpecifiers.push(
             t.exportSpecifier(signalIdentifier, signalIdentifier),
