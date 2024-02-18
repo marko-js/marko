@@ -38,15 +38,16 @@ export default {
         );
     }
 
+    const { value } = defaultAttr;
+
     if (isOutputDOM()) {
       const section = getSection(tag);
-      const references = defaultAttr.extra?.valueReferences;
       const derivation = getTagVarSignal(tag.get("var"))!;
 
       // TODO: optimize for cases like `const/x=y`
-      addValue(section, references, derivation, defaultAttr.value);
+      addValue(section, value.extra?.references, derivation, value);
     } else {
-      translateVar(tag, defaultAttr.value);
+      translateVar(tag, value);
     }
 
     tag.remove();

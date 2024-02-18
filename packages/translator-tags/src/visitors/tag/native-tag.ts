@@ -34,6 +34,7 @@ export default {
       const { node } = tag;
       const attrs = tag.get("attributes");
       let section = tag.has("var") ? getOrCreateSection(tag) : undefined;
+      let isInteractive = false;
 
       /**
        * The reason this seems like it does more work than it needs to
@@ -41,18 +42,24 @@ export default {
        * for every attribute that isn't an event handler or a spread
        */
       for (const attr of attrs) {
-        if (
-          isSpreadAttr(attr) ||
-          isEventHandler((attr.node as t.MarkoAttribute).name)
-        ) {
+        if (isSpreadAttr(attr)) {
           section ??= getOrCreateSection(tag);
-          (currentProgramPath.node.extra ?? {}).isInteractive = true;
+          mergeReferences(
+            tag,
+            attrs.map((attr) => attr.node.value),
+          );
+          isInteractive = true;
+          break;
+        } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
+          section ??= getOrCreateSection(tag);
+          isInteractive = true;
         } else if (!evaluate(attr).confident) {
           section ??= getOrCreateSection(tag);
         }
       }
 
       if (section !== undefined) {
+        currentProgramPath.node.extra.isInteractive = isInteractive;
         const tagName =
           node.name.type === "StringLiteral"
             ? node.name.value
@@ -70,7 +77,7 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       assertNoArgs(tag);
 
-      const { extra } = tag.node;
+      const extra = tag.node.extra!;
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
@@ -159,12 +166,7 @@ export default {
           addStatement(
             "render",
             section,
-            mergeReferences(
-              section,
-              attrs
-                .filter((attr) => attr.node.extra.valueReferences !== undefined)
-                .map((attr) => [attr.node.extra, "valueReferences"]),
-            ),
+            extra.references,
             t.expressionStatement(
               callRuntime(
                 "attrs",
@@ -179,9 +181,9 @@ export default {
         // TODO: #129 this should iterate backward and filter out duplicated attrs.
         for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
           const name = attr.node.name;
-          const extra = attr.node.extra ?? {};
           const value = attr.get("value");
-          const { confident, computed, valueReferences } = extra;
+          const { confident, computed } = attr.node.extra ?? {};
+          const valueReferences = value.node.extra?.references;
 
           switch (name) {
             case "class":
@@ -279,7 +281,7 @@ export default {
       walks.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const { extra } = tag.node;
+      const extra = tag.node.extra!;
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 
@@ -314,7 +316,7 @@ export default {
 
 function isSpreadAttr(
   attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
-): attr is t.NodePath<t.MarkoAttribute> {
+): attr is t.NodePath<t.MarkoSpreadAttribute> {
   return attr.type === "MarkoSpreadAttribute";
 }
 

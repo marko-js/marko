@@ -77,13 +77,10 @@ export default {
     exit(tag: t.NodePath<t.MarkoTag>) {
       // TODO: only if dynamic attributes
       const template = getTagTemplate(tag);
-      const section = getOrCreateSection(tag);
       if (template) {
-        tag.node.extra.attrsReferences = mergeReferences(
-          section,
-          tag.node.attributes
-            .filter((attr) => attr.extra?.valueReferences)
-            .map((attr) => [attr.extra, "valueReferences"]),
+        mergeReferences(
+          tag,
+          tag.node.attributes.map((attr) => attr.value),
         );
       }
     },
@@ -119,7 +116,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   writer.flushInto(tag);
   writeHTMLResumeStatements(tagBody);
 
-  if (node.extra.tagNameDefine) {
+  if (node.extra!.tagNameDefine) {
     tagIdentifier = t.memberExpression(node.name, t.identifier("renderBody"));
   } else if (t.isStringLiteral(node.name)) {
     const { file } = tag.hub;
@@ -138,7 +135,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const attrsObject = attrsToObject(tag, true);
   const renderBodyProp = getRenderBodyProp(attrsObject);
 
-  if (node.extra.tagNameNullable) {
+  if (node.extra!.tagNameNullable) {
     let renderBodyId: t.Identifier | undefined = undefined;
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
@@ -218,8 +215,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const tagBodySection = getSection(tagBody);
   const { node } = tag;
+  const extra = node.extra!;
   const write = writer.writeTo(tag);
-  const binding = node.extra.reserve!;
+  const binding = extra.reserve!;
   const { file } = tag.hub;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
@@ -272,7 +270,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (node.var) {
     const source = initValue(
       // TODO: support destructuring
-      (node.var as t.Identifier).extra.reserve!,
+      node.var.extra!.reserve!,
     );
     source.register = true;
     addStatement(
@@ -302,7 +300,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (attrsObject && tagAttrsIdentifier) {
     addValue(
       tagSection,
-      tag.node.extra.attrsReferences,
+      extra.references,
       {
         identifier: tagAttrsIdentifier,
         hasDownstreamIntersections: () => true,

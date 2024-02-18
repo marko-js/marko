@@ -37,9 +37,9 @@ export default {
 
     if (isOutputDOM()) {
       const section = getSection(tag);
-      const binding = tagVar.extra.reserve!;
+      const binding = tagVar.extra!.reserve!;
       const source = initValue(binding);
-      const references = defaultAttr.extra?.valueReferences;
+      const references = defaultAttr.value.extra?.references;
       const isSetup = !references;
 
       if (!isSetup) {

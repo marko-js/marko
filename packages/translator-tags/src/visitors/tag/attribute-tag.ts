@@ -39,7 +39,7 @@ export default {
           .buildCodeFrameError("@tags must be nested within another tag.");
       }
 
-      const parentExtra = parentTag.node.extra;
+      const parentExtra = parentTag.node.extra!;
 
       if (parentExtra.tagNameType === TagNameType.NativeTag) {
         throw tag
@@ -48,7 +48,7 @@ export default {
       }
 
       const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
-      const info = parentExtra.nestedAttributeTags[attrName];
+      const info = parentExtra.nestedAttributeTags![attrName];
       const attrsObject = attrsToObject(tag, true);
 
       if (info.dynamic) {

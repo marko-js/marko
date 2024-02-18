@@ -115,7 +115,7 @@ export function getSectionMeta(section: Section) {
 
 export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
   const section = getSection(path);
-  const { reserve } = path.node.extra;
+  const { reserve } = path.node.extra!;
 
   if (reserve?.type !== ReserveType.Visit) {
     throw path.buildCodeFrameError(

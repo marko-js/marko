@@ -16,20 +16,20 @@ type Lookup = Record<
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    hoistedControlFlows: number;
-    nestedAttributeTags: Lookup;
+    hoistedControlFlows?: number;
+    nestedAttributeTags?: Lookup;
   }
 }
 
 export default function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
-  const { extra } = tag.node;
+  const extra = (tag.node.extra ??= {});
   extra.nestedAttributeTags = {};
   extra.hoistedControlFlows = 0;
   analyzeChildren(extra, false, false, tag);
 }
 
 function analyzeChildren(
-  rootExtra: t.MarkoTag["extra"],
+  rootExtra: NonNullable<t.MarkoTag["extra"]>,
   repeated: boolean,
   dynamic: boolean,
   tag: t.NodePath<t.MarkoTag>,
@@ -47,7 +47,7 @@ function analyzeChildren(
 }
 
 function analyzeChild(
-  rootExtra: t.MarkoTag["extra"],
+  rootExtra: NonNullable<t.MarkoTag["extra"]>,
   repeated: boolean,
   dynamic: boolean,
   tag: t.NodePath<t.MarkoTag>,
@@ -57,13 +57,13 @@ function analyzeChild(
       if (
         !isTransparentTag(tag.parentPath.parentPath as t.NodePath<t.MarkoTag>)
       ) {
-        rootExtra.hoistedControlFlows++;
+        rootExtra.hoistedControlFlows!++;
       }
       return true;
     }
   } else if (isAttributeTag(tag)) {
     const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
-    const lookup = rootExtra.nestedAttributeTags;
+    const lookup = rootExtra.nestedAttributeTags!;
     const existing = lookup[attrName];
     const info =
       existing ||

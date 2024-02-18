@@ -51,6 +51,8 @@ export default {
       }
     }
 
+    const { value } = defaultAttr;
+
     if (isOutputHTML()) {
       writer.flushBefore(tag);
       const returnId = file.path.scope.generateUidIdentifier("return");
@@ -59,19 +61,19 @@ export default {
       tag
         .replaceWith(
           t.variableDeclaration("const", [
-            t.variableDeclarator(returnId, defaultAttr.value!),
+            t.variableDeclarator(returnId, value),
           ]),
         )[0]
         .skip();
     } else {
       addValue(
         section,
-        defaultAttr.extra?.valueReferences,
+        value.extra?.references,
         {
           identifier: importRuntime("tagVarSignal"),
           hasDownstreamIntersections: () => true,
         },
-        defaultAttr.value,
+        value,
       );
 
       tag.remove();

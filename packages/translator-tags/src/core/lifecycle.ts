@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputDOM } from "../util/marko-config";
-import { type References, mergeReferences } from "../util/references";
+import { mergeReferences } from "../util/references";
 import {
   ReserveType,
   getScopeAccessorLiteral,
@@ -18,9 +18,6 @@ import customTag from "../visitors/tag/custom-tag";
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     isInteractive?: boolean;
-  }
-  export interface MarkoTagExtra {
-    attrsReferences: References;
   }
 }
 
@@ -38,12 +35,9 @@ export default {
     },
     exit(tag) {
       customTag.analyze.exit(tag);
-      const section = getOrCreateSection(tag);
-      tag.node.extra.attrsReferences = mergeReferences(
-        section,
-        tag.node.attributes
-          .filter((attr) => attr.extra?.valueReferences)
-          .map((attr) => [attr.extra, "valueReferences"]),
+      mergeReferences(
+        tag,
+        tag.node.attributes.map((attr) => attr.value),
       );
     },
   },
@@ -68,13 +62,14 @@ export default {
       // }
 
       const section = getSection(tag);
+      const { references } = node.extra!;
 
       if (isOutputDOM()) {
         const attrsObject = attrsToObject(tag);
         addStatement(
           "effect",
           section,
-          node.extra.attrsReferences,
+          references,
           t.expressionStatement(
             callRuntime(
               "lifecycle",
@@ -86,7 +81,7 @@ export default {
           node.attributes.map((a) => a.value),
         );
       } else {
-        addHTMLEffectCall(section, node.extra.attrsReferences);
+        addHTMLEffectCall(section, references);
       }
 
       tag.remove();

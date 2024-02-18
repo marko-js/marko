@@ -4,7 +4,7 @@ import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getSection } from "../util/sections";
 import {
   addValue,
   getTagVarSignal,
@@ -22,13 +22,9 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       customTag.analyze.exit(tag);
-
-      const section = getOrCreateSection(tag);
-      tag.node.extra.attrsReferences = mergeReferences(
-        section,
-        tag.node.attributes
-          .filter((attr) => attr.extra?.valueReferences)
-          .map((attr) => [attr.extra, "valueReferences"]),
+      mergeReferences(
+        tag,
+        tag.node.attributes.map((attr) => attr.value),
       );
     },
   },
@@ -57,7 +53,7 @@ export default {
         const section = getSection(tag);
         const tagBody = tag.get("body");
         const tagBodySection = getSection(tagBody);
-        const references = node.extra?.attrsReferences;
+        const references = node.extra?.references;
         const derivation = getTagVarSignal(tag.get("var"))!;
 
         let attrsObject = attrsToObject(tag);

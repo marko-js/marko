@@ -8,12 +8,13 @@ import {
   scopeIdentifier,
 } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
+import { type Opt, type OneMany, push, forEach } from "./optional";
 import type { References } from "./references";
 import {
   type Reserve,
   ReserveType,
   getScopeAccessorLiteral,
-  repeatableReserves,
+  reserveUtil,
 } from "./reserve";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
@@ -24,7 +25,6 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "./sections";
-import type { Repeatable } from "./sorted-repeatable";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
@@ -32,7 +32,7 @@ export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 export type Signal = {
   identifier: t.Identifier;
   valueAccessor?: t.Expression;
-  reserve: undefined | Reserve | Reserve[];
+  reserve: Opt<Reserve>;
   section: Section;
   build: () => t.Expression;
   register?: boolean;
@@ -47,10 +47,10 @@ export type Signal = {
     scope: t.Expression;
     intersectionExpression?: t.Expression;
   }>;
-  intersection: Repeatable<t.Expression>;
+  intersection: Opt<t.Expression>;
   render: t.Statement[];
   effect: t.Statement[];
-  effectInlineReferences: undefined | Reserve | Reserve[];
+  effectInlineReferences: Opt<Reserve>;
   closures: Map<Section, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
@@ -110,7 +110,7 @@ const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
 };
 
-export function getSignal(section: Section, reserve?: Reserve | Reserve[]) {
+export function getSignal(section: Section, reserve?: OneMany<Reserve>) {
   const signals = getSignals(section);
   let signal = signals.get(reserve)!;
   if (!signal) {
@@ -248,8 +248,8 @@ export function getSignalFn(
 }
 
 export function buildSignalIntersections(signal: Signal) {
-  let intersections: Repeatable<t.Expression> = signal.intersection;
   const section = signal.section;
+  let intersections = signal.intersection;
 
   // In order to ensure correct topological ordering, closures must be called last
   // with closures higher in the tree called before calling closures lower in the tree
@@ -261,17 +261,14 @@ export function buildSignalIntersections(signal: Signal) {
     const builder = getSubscribeBuilder(closureSection);
     const isImmediateOwner = closureSection.parent === section;
     if (builder && isImmediateOwner) {
-      intersections = pushRepeatable(
-        intersections,
-        builder(closureSignal.identifier),
-      );
+      intersections = push(intersections, builder(closureSignal.identifier));
     } else if (!signal.hasDynamicSubscribers) {
       signal.hasDynamicSubscribers = true;
     }
   }
   if (signal.hasDynamicSubscribers) {
     signal.hasDynamicSubscribers = true;
-    intersections = pushRepeatable(
+    intersections = push(
       intersections,
       callRuntime("dynamicSubscribers", signal.valueAccessor),
     );
@@ -283,11 +280,11 @@ export function buildSignalIntersections(signal: Signal) {
 }
 
 export function buildSignalValuesWithIntersections(signal: Signal) {
-  let valuesWithIntersections: Repeatable<t.Expression>;
+  let valuesWithIntersections: Opt<t.Expression>;
 
   for (const value of signal.values) {
     if (value.signal.hasDownstreamIntersections()) {
-      valuesWithIntersections = pushRepeatable(
+      valuesWithIntersections = push(
         valuesWithIntersections,
         value.intersectionExpression ??
           t.identifier(value.signal.identifier.name),
@@ -300,20 +297,9 @@ export function buildSignalValuesWithIntersections(signal: Signal) {
     : valuesWithIntersections;
 }
 
-function pushRepeatable<T>(repeatable: Repeatable<T>, value: T) {
-  if (!repeatable) {
-    return value;
-  } else if (Array.isArray(repeatable)) {
-    repeatable.push(value);
-    return repeatable;
-  } else {
-    return [repeatable, value];
-  }
-}
-
 export function getTagVarSignal(varPath: t.NodePath<t.LVal | null>) {
   if (varPath.isIdentifier()) {
-    return initValue(varPath.node.extra.reserve!);
+    return initValue(varPath.node.extra!.reserve!);
   } else {
     return getDestructureSignal(
       Object.values(varPath.getBindingIdentifiers()) as t.Identifier[],
@@ -426,7 +412,7 @@ export function subscribe(
     return;
   }
   const providerSignal = getSignal(subscriber.section, provider);
-  providerSignal.intersection = pushRepeatable(
+  providerSignal.intersection = push(
     providerSignal.intersection,
     subscriber.identifier,
   );
@@ -550,7 +536,7 @@ export function addValue(
 }
 
 export function addEffectReferences(signal: Signal, expression: t.Expression) {
-  signal.effectInlineReferences = repeatableReserves.addAll(
+  signal.effectInlineReferences = reserveUtil.union(
     signal.effectInlineReferences,
     (expression as t.FunctionExpression).extra?.references,
   );
@@ -700,17 +686,24 @@ export function writeHTMLResumeStatements(
 ) {
   const section = getOrCreateSection(path);
   const intersections =
-    currentProgramPath.node.extra.intersectionsBySection?.[section.id] ?? [];
+    currentProgramPath.node.extra.intersectionsBySection?.[section.id];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
 
-  const serializedReferences: Reserve[] = [];
+  let serializedReferences: Opt<Reserve>;
 
-  for (const intersection of intersections) {
-    for (const reference of intersection) {
-      if (reference.type !== ReserveType.Visit) {
-        // TODO: this should not be needed
-        repeatableReserves.add(serializedReferences, reference);
+  // TODO: currently reserves do not know what their references are.
+  // ideally we calculate that in analyze and use that to find intersections.
+  if (intersections) {
+    for (const intersection of intersections) {
+      for (const reference of intersection) {
+        if (reference.type !== ReserveType.Visit) {
+          // TODO: this should not be needed
+          serializedReferences = reserveUtil.add(
+            serializedReferences,
+            reference,
+          );
+        }
       }
     }
   }
@@ -718,7 +711,10 @@ export function writeHTMLResumeStatements(
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
       const signalRefs = allSignals[i].reserve;
-      repeatableReserves.addAll(serializedReferences, signalRefs);
+      serializedReferences = reserveUtil.union(
+        serializedReferences,
+        signalRefs,
+      );
       path.pushContainer(
         "body",
         t.expressionStatement(
@@ -734,10 +730,13 @@ export function writeHTMLResumeStatements(
 
   const accessors = new Set<string | number>();
   const additionalProperties = getSerializedScopeProperties(section);
-  const serializedProperties = serializedReferences.reduce((acc, ref) => {
+  const serializedProperties: t.ObjectProperty[] = [];
+  forEach(serializedReferences, (ref) => {
     const accessor = getScopeAccessorLiteral(ref);
     if (ref.section.id === section.id) {
-      acc.push(t.objectProperty(accessor, t.identifier(ref.name)));
+      serializedProperties.push(
+        t.objectProperty(accessor, t.identifier(ref.name)),
+      );
       accessors.add(accessor.value);
     } else {
       const isImmediateOwner = section.parent?.id === ref.section.id;
@@ -768,8 +767,7 @@ export function writeHTMLResumeStatements(
         callRuntime("serializedScope", getScopeIdIdentifier(ref.section)), // TODO: section.parent
       );
     }
-    return acc;
-  }, [] as Array<t.ObjectProperty>);
+  });
 
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(

@@ -68,7 +68,7 @@ export default {
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const tagDef = getTagDef(tag);
-      const extra = tag.node.extra;
+      const extra = tag.node.extra!;
 
       if (tagDef?.translator) {
         if (tagDef.translator.path) {
@@ -139,7 +139,7 @@ export default {
         return;
       }
 
-      switch (tag.node.extra.tagNameType) {
+      switch (tag.node.extra!.tagNameType) {
         case TagNameType.NativeTag:
           NativeTag.translate.exit(tag);
           break;
