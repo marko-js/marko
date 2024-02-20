@@ -1,5 +1,6 @@
 import { getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
@@ -144,7 +145,7 @@ export default {
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
       if (extra.reserve) {
         visitAccessor = getScopeAccessorLiteral(extra.reserve);
-        walks.visit(tag, walks.WalkCodes.Get);
+        walks.visit(tag, WalkCode.Get);
       }
 
       write`<${name.node}`;

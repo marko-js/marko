@@ -2,17 +2,17 @@ import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
 import type { ValueSignal } from "./signals";
 
-const enum BatchOffsets {
-  SCOPE = 0,
-  SIGNAL = 1,
-  VALUE = 2,
-  TOTAL = 3,
+const enum BatchOffset {
+  Scope = 0,
+  Signal = 1,
+  Value = 2,
+  Total = 3,
 }
 
-const enum EffectOffsets {
-  SCOPE = 0,
-  FN = 1,
-  TOTAL = 2,
+const enum EffectOffset {
+  Scope = 0,
+  Function = 1,
+  Total = 2,
 }
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -79,7 +79,7 @@ export function prepare(fn: () => void) {
 }
 
 export function runEffects(effects: unknown[] = currentEffects) {
-  for (let i = 0; i < effects.length; i += EffectOffsets.TOTAL) {
+  for (let i = 0; i < effects.length; i += EffectOffset.Total) {
     const scope = effects[i] as Scope;
     const fn = effects[i + 1] as (scope: Scope) => void;
     fn(scope);
@@ -87,10 +87,10 @@ export function runEffects(effects: unknown[] = currentEffects) {
 }
 
 function runBatch() {
-  for (let i = 0; i < currentBatch.length; i += BatchOffsets.TOTAL) {
-    const scope = currentBatch[i + BatchOffsets.SCOPE] as Scope;
-    const signal = currentBatch[i + BatchOffsets.SIGNAL] as ValueSignal;
-    const value = currentBatch[i + BatchOffsets.VALUE] as unknown;
+  for (let i = 0; i < currentBatch.length; i += BatchOffset.Total) {
+    const scope = currentBatch[i + BatchOffset.Scope] as Scope;
+    const signal = currentBatch[i + BatchOffset.Signal] as ValueSignal;
+    const value = currentBatch[i + BatchOffset.Value] as unknown;
     signal(scope, value);
   }
 }

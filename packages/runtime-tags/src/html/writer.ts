@@ -1,8 +1,8 @@
-import { type Accessor, type Renderer, ResumeSymbols } from "../common/types";
+import { type Accessor, type Renderer, ResumeSymbol } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
 import { Serializer } from "./serializer";
 
-const runtimeId = ResumeSymbols.DEFAULT_RUNTIME_ID;
+const runtimeId = ResumeSymbol.DefaultRuntimeId;
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId,
@@ -422,7 +422,7 @@ function addReplacementWrapper(
   replacementStart: Buffer,
   replacementEnd: Buffer,
 ) {
-  let runtimeCall = runtimeId + ResumeSymbols.VAR_REORDER_RUNTIME;
+  let runtimeCall = runtimeId + ResumeSymbol.VarReorderRuntime;
   if (!$_streamData!.runtimeFlushed) {
     runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
     $_streamData!.runtimeFlushed = true;
@@ -482,17 +482,17 @@ export function writeScope(
 
 export function markResumeNode(scopeId: number, index: Accessor) {
   // TODO: can we only include the scope id when it differs from the prvious node marker?
-  return `<!${runtimeId}${ResumeSymbols.NODE}${scopeId} ${index}>`;
+  return `<!${runtimeId}${ResumeSymbol.Node}${scopeId} ${index}>`;
 }
 
 export function markResumeScopeStart(scopeId: number, key?: string) {
-  return `<!${runtimeId}${ResumeSymbols.SECTION_START}${scopeId}${
+  return `<!${runtimeId}${ResumeSymbol.SectionStart}${scopeId}${
     key ? " " + key : ""
   }>`;
 }
 
 export function markResumeControlEnd(scopeId: number, index: Accessor) {
-  return `<!${runtimeId}${ResumeSymbols.SECTION_END}${scopeId} ${index}>`;
+  return `<!${runtimeId}${ResumeSymbol.SectionEnd}${scopeId} ${index}>`;
 }
 
 export function markResumeControlSingleNodeEnd(
@@ -501,7 +501,7 @@ export function markResumeControlSingleNodeEnd(
   childScopeIds?: number | number[],
 ) {
   return `<!${runtimeId}${
-    ResumeSymbols.SECTION_SINGLE_NODES_END
+    ResumeSymbol.SectionSingleNodesEnd
   }${scopeId} ${index} ${childScopeIds ?? ""}>`;
 }
 
@@ -520,8 +520,8 @@ function getResumeScript(
     }
     return `<script>${
       isFirstFlush
-        ? `(${runtimeId + ResumeSymbols.VAR_RESUME}=[])`
-        : runtimeId + ResumeSymbols.VAR_RESUME
+        ? `(${runtimeId + ResumeSymbol.VarResume}=[])`
+        : runtimeId + ResumeSymbol.VarResume
     }.push(${serializer.stringify(scopes)},[${calls}])</script>`;
   }
   return "";

@@ -1,5 +1,6 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -54,21 +55,6 @@ export type Signal = {
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
 };
-
-/** TODO: temporary location - duplicated from "@marko/runtime-tags/common/types" */
-const enum AccessorChars {
-  DYNAMIC = "?",
-  MARK = "#",
-  STALE = "&",
-  SUBSCRIBERS = "*",
-  CLEANUP = "-",
-  TAG_VARIABLE = "/",
-  COND_SCOPE = "!",
-  LOOP_SCOPE_ARRAY = "!",
-  COND_RENDERER = "(",
-  LOOP_SCOPE_MAP = "(",
-  LOOP_VALUE = ")",
-}
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
@@ -788,7 +774,7 @@ export function writeHTMLResumeStatements(
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(
       t.objectProperty(
-        t.stringLiteral(AccessorChars.TAG_VARIABLE),
+        t.stringLiteral(AccessorChar.TagVariable),
         tagVarIdentifier,
       ),
     );
