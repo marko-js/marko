@@ -38,7 +38,7 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "<tag> requires a variable to be defined, eg <tag/NAME>.",
+            "<define> requires a variable to be specified, eg <define/NAME>.",
           );
       }
       if (isOutputHTML()) {
