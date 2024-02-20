@@ -3,6 +3,7 @@
 <html>
   <head />
   <body>
+    <!--M[1-->
     <div>
       Hello 
       <!---->
@@ -18,8 +19,9 @@
       <!--M*1 #text/3-->
     </button>
     <!--M*1 #button/2-->
+    <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{y:1}}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -27,7 +29,8 @@
 
 # Mutations
 ```
-
+removed #document/html0/body1/#comment0 before #document/html0
+inserted #document/html0/body1/#comment0
 ```
 
 
@@ -38,6 +41,7 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
+    <!--M[1-->
     <div>
       Hello 
       <!---->
@@ -53,8 +57,9 @@ container.querySelector("button").click()
       <!--M*1 #text/3-->
     </button>
     <!--M*1 #button/2-->
+    <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{y:1}}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -62,8 +67,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/div0/#text6: "1" => "2"
-#document/html0/body1/button1/#text0: "1" => "2"
+#document/html0/body1/div1/#text6: "1" => "2"
+#document/html0/body1/button2/#text0: "1" => "2"
 ```
 
 
@@ -74,6 +79,7 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
+    <!--M[1-->
     <div>
       Hello 
       <!---->
@@ -89,8 +95,9 @@ container.querySelector("button").click()
       <!--M*1 #text/3-->
     </button>
     <!--M*1 #button/2-->
+    <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{y:1}}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -98,8 +105,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/div0/#text6: "2" => "3"
-#document/html0/body1/button1/#text0: "2" => "3"
+#document/html0/body1/div1/#text6: "2" => "3"
+#document/html0/body1/button2/#text0: "2" => "3"
 ```
 
 
@@ -110,6 +117,7 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
+    <!--M[1-->
     <div>
       Hello 
       <!---->
@@ -125,8 +133,9 @@ container.querySelector("button").click()
       <!--M*1 #text/3-->
     </button>
     <!--M*1 #button/2-->
+    <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{y:1}}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -134,6 +143,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/div0/#text6: "3" => "4"
-#document/html0/body1/button1/#text0: "3" => "4"
+#document/html0/body1/div1/#text6: "3" => "4"
+#document/html0/body1/button2/#text0: "3" => "4"
 ```

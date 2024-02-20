@@ -5,7 +5,6 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
-import { isOutputDOM } from "./marko-config";
 import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
@@ -173,11 +172,11 @@ function analyzeExpressionTagName(
 
         if (bindingTagName === "define") {
           // TODO: Make work as a custom tag on the DOM
-          type =
-            (type !== undefined && type !== TagNameTypes.CustomTag) ||
-            isOutputDOM()
-              ? TagNameTypes.DynamicTag
-              : TagNameTypes.CustomTag;
+          // type =
+          //   (type !== undefined && type !== TagNameTypes.CustomTag)
+          //     ? TagNameTypes.DynamicTag
+          //     : TagNameTypes.CustomTag;
+          type = TagNameTypes.DynamicTag;
           extra.tagNameDefine = true;
           continue;
         }
