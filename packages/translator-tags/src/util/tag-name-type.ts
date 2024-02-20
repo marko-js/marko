@@ -161,14 +161,6 @@ function analyzeExpressionTagName(
       ) {
         const bindingTagName = (bindingTag.get("name").node as t.StringLiteral)
           .value;
-        if (bindingTagName === "tag") {
-          // treat <tag/name> as a custom tag.
-          type =
-            type !== undefined && type !== TagNameType.CustomTag
-              ? TagNameType.DynamicTag
-              : TagNameType.CustomTag;
-          continue;
-        }
 
         if (bindingTagName === "define") {
           // TODO: Make work as a custom tag on the DOM
@@ -176,7 +168,7 @@ function analyzeExpressionTagName(
           //   (type !== undefined && type !== TagNameTypes.CustomTag)
           //     ? TagNameTypes.DynamicTag
           //     : TagNameTypes.CustomTag;
-          type = TagNameTypes.DynamicTag;
+          type = TagNameType.DynamicTag;
           extra.tagNameDefine = true;
           continue;
         }

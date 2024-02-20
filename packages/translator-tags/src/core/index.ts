@@ -18,7 +18,6 @@ import NoopTag from "./noop";
 import ReturnTag from "./return";
 import StaticTag from "./static";
 import StyleTag from "./style";
-import TagTag from "./tag";
 
 export default {
   taglibId,
@@ -36,7 +35,6 @@ export default {
   "<lifecycle>": LifecycleTag,
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
-  "<tag>": TagTag,
   "<return>": ReturnTag,
   "<style>": StyleTag,
   "<await-reorderer>": NoopTag,
