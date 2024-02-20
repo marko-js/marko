@@ -13,6 +13,7 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable: boolean;
     tagNameDynamic: boolean;
     tagNameImported?: string;
+    tagNameDefine?: boolean;
   }
 }
 
@@ -48,6 +49,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             t.identifier(name.node.value),
             name.node,
           );
+          extra.nameReferences = tag.scope.getBinding(
+            name.node.value,
+          )?.identifier?.extra?.reserve;
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {
           const childFile = loadFileForTag(tag);
@@ -157,12 +161,15 @@ function analyzeExpressionTagName(
       ) {
         const bindingTagName = (bindingTag.get("name").node as t.StringLiteral)
           .value;
-        if (bindingTagName === "tag") {
-          // treat <tag/name> as a custom tag.
-          type =
-            type !== undefined && type !== TagNameType.CustomTag
-              ? TagNameType.DynamicTag
-              : TagNameType.CustomTag;
+
+        if (bindingTagName === "define") {
+          // TODO: Make work as a custom tag on the DOM
+          // type =
+          //   (type !== undefined && type !== TagNameTypes.CustomTag)
+          //     ? TagNameTypes.DynamicTag
+          //     : TagNameTypes.CustomTag;
+          type = TagNameType.DynamicTag;
+          extra.tagNameDefine = true;
           continue;
         }
 

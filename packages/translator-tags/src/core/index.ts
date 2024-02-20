@@ -5,6 +5,7 @@ import ElseTag from "./condition/else";
 import ElseIfTag from "./condition/else-if";
 import IfTag from "./condition/if";
 import ConstTag from "./const";
+import DefineTag from "./define";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
@@ -17,7 +18,6 @@ import NoopTag from "./noop";
 import ReturnTag from "./return";
 import StaticTag from "./static";
 import StyleTag from "./style";
-import TagTag from "./tag";
 
 export default {
   taglibId,
@@ -30,11 +30,11 @@ export default {
   "<for>": ForTag,
   "<let>": LetTag,
   "<const>": ConstTag,
+  "<define>": DefineTag,
   "<effect>": EffectTag,
   "<lifecycle>": LifecycleTag,
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
-  "<tag>": TagTag,
   "<return>": ReturnTag,
   "<style>": StyleTag,
   "<await-reorderer>": NoopTag,

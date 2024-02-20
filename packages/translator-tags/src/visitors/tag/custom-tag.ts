@@ -1,4 +1,6 @@
 import {
+  assertAttributesOrArgs,
+  assertAttributesOrSingleArg,
   getTagTemplate,
   importDefault,
   importNamed,
@@ -88,6 +90,12 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      if (tag.node.extra?.tagNameDefine) {
+        assertAttributesOrArgs(tag);
+      } else {
+        assertAttributesOrSingleArg(tag);
+      }
+
       walks.visit(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
@@ -111,7 +119,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   writer.flushInto(tag);
   writeHTMLResumeStatements(tagBody);
 
-  if (t.isStringLiteral(node.name)) {
+  if (node.extra.tagNameDefine) {
+    tagIdentifier = t.memberExpression(node.name, t.identifier("renderBody"));
+  } else if (t.isStringLiteral(node.name)) {
     const { file } = tag.hub;
     const tagName = node.name.value;
     const relativePath = getTagRelativePath(tag);

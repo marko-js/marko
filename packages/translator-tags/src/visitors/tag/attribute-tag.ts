@@ -1,4 +1,4 @@
-import { assertNoVar, findParentTag } from "@marko/babel-utils";
+import { assertNoArgs, assertNoVar, findParentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrsToObject from "../../util/attrs-to-object";
 import { getSection, startSection } from "../../util/sections";
@@ -16,6 +16,8 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoArgs(tag);
+
       getSection(tag.get("body"));
       if (writer.hasPendingHTML(tag)) {
         throw tag
