@@ -1,6 +1,5 @@
 # Render {}
 ```html
-<!---->
 <div>
   {"foo":1,"bar":2}
 </div>
@@ -11,7 +10,7 @@
 
 # Mutations
 ```
-inserted #comment0, div1, button2
+inserted div0, button1
 ```
 
 
@@ -19,7 +18,6 @@ inserted #comment0, div1, button2
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div>
   {"foo":1,"bar":3}
 </div>
@@ -30,8 +28,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button2/#text0: "1" => "2"
-div1/#text0: "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
+button1/#text0: "1" => "2"
+div0/#text0: "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
 ```
 
 
@@ -39,7 +37,6 @@ div1/#text0: "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div>
   {"foo":1,"bar":4}
 </div>
@@ -50,8 +47,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button2/#text0: "2" => "3"
-div1/#text0: "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
+button1/#text0: "2" => "3"
+div0/#text0: "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
 ```
 
 
@@ -59,7 +56,6 @@ div1/#text0: "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div>
   {"foo":1,"bar":5}
 </div>
@@ -70,6 +66,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button2/#text0: "3" => "4"
-div1/#text0: "{\"foo\":1,\"bar\":4}" => "{\"foo\":1,\"bar\":5}"
+button1/#text0: "3" => "4"
+div0/#text0: "{\"foo\":1,\"bar\":4}" => "{\"foo\":1,\"bar\":5}"
 ```

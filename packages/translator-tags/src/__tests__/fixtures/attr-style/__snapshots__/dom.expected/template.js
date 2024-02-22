@@ -1,7 +1,7 @@
 import { styleAttr as _styleAttr, write as _write, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { setup as _customTag, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 const _testBody2 = /* @__PURE__ */_createRenderer("", "");
-const _testBody = /* @__PURE__ */_createRenderer("<!><!>", /*  */"DD");
+const _testBody = /* @__PURE__ */_createRenderer("", "");
 const _test_input = _dynamicTagAttrs("#text/4", _testBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_input(_scope, () => ({
   style: {

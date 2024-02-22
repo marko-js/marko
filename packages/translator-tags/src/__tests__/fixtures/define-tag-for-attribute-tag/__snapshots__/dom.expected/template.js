@@ -21,7 +21,7 @@ const _setup = _scope => {
   _child(_scope["#childScope/0"]);
   _selected(_scope, false);
 };
-export const template = `<!>${_child_template}<button>Toggle</button>`;
-export const walks = /* beginChild, _child_walks, endChild, get, over(1) */`D/${_child_walks}& b`;
+export const template = `${_child_template}<button>Toggle</button>`;
+export const walks = /* beginChild, _child_walks, endChild, get, over(1) */`/${_child_walks}& b`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko");

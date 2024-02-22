@@ -1,4 +1,8 @@
-import { isNativeTag, loadFileForTag } from "@marko/babel-utils";
+import {
+  isAttributeTag,
+  isNativeTag,
+  loadFileForTag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -8,8 +12,8 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
-  hasDynamicStart: boolean;
-  hasDynamicEnd: boolean;
+  hasDynamicStart: boolean | null;
+  hasDynamicEnd: boolean | null;
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -48,8 +52,8 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      hasDynamicStart: !!hasDynamicStart(path),
-      hasDynamicEnd: !!hasDynamicEnd(path),
+      hasDynamicStart: hasDynamicStart(path),
+      hasDynamicEnd: hasDynamicEnd(path),
     };
     sections.push(section);
   }
@@ -151,8 +155,8 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
 
 function hasDynamicStart(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   for (const child of path.get("body")) {
-    const dynamic = isDynamic(child, hasDynamicStart);
-    if (dynamic !== null) {
+    const dynamic = isDynamic(child, "hasDynamicStart");
+    if (dynamic != null) {
       return dynamic;
     }
   }
@@ -162,8 +166,8 @@ function hasDynamicStart(path: t.NodePath<t.Program | t.MarkoTagBody>) {
 function hasDynamicEnd(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   const body = path.get("body");
   for (let i = body.length; i--; ) {
-    const dynamic = isDynamic(body[i], hasDynamicEnd);
-    if (dynamic !== null) {
+    const dynamic = isDynamic(body[i], "hasDynamicEnd");
+    if (dynamic != null) {
       return dynamic;
     }
   }
@@ -175,9 +179,7 @@ function hasDynamicEnd(path: t.NodePath<t.Program | t.MarkoTagBody>) {
  */
 function isDynamic(
   path: t.NodePath<t.Statement>,
-  customTagCallback: (
-    path: t.NodePath<t.Program | t.MarkoTagBody>,
-  ) => boolean | null,
+  extraMember: "hasDynamicStart" | "hasDynamicEnd",
 ) {
   if (
     t.isMarkoText(path) ||
@@ -191,8 +193,12 @@ function isDynamic(
     return null;
   }
   if (t.isMarkoTag(path.node)) {
-    if (isNativeTag(path as t.NodePath<t.MarkoTag>)) {
+    const tag = path as t.NodePath<t.MarkoTag>;
+    if (isNativeTag(tag)) {
       return false;
+    }
+    if (isAttributeTag(tag)) {
+      return null;
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
@@ -203,11 +209,12 @@ function isDynamic(
         case "lifecycle":
         case "return":
         case "id":
+        case "define":
           return null;
       }
-      const tagFile = loadFileForTag(path as t.NodePath<t.MarkoTag>);
-      if (tagFile) {
-        return customTagCallback(tagFile.path);
+      const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
+      if (tagSection) {
+        return tagSection[extraMember] ?? null;
       }
     }
   }

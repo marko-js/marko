@@ -1,6 +1,5 @@
 # Render {}
 ```html
-<!---->
 <div>
   <span>
     The thing
@@ -13,7 +12,7 @@
 
 # Mutations
 ```
-inserted #comment0, div1, button2
+inserted div0, button1
 ```
 
 
@@ -21,7 +20,6 @@ inserted #comment0, div1, button2
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div
   class="selected"
 >
@@ -36,7 +34,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1: attr(class) null => "selected"
+div0: attr(class) null => "selected"
 ```
 
 
@@ -44,7 +42,6 @@ div1: attr(class) null => "selected"
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div>
   <span>
     The thing
@@ -57,7 +54,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1: attr(class) "selected" => null
+div0: attr(class) "selected" => null
 ```
 
 
@@ -65,7 +62,6 @@ div1: attr(class) "selected" => null
 container.querySelector("button").click()
 
 ```html
-<!---->
 <div
   class="selected"
 >
@@ -80,5 +76,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1: attr(class) null => "selected"
+div0: attr(class) null => "selected"
 ```
