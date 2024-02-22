@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.7
+
+### Patch Changes
+
+- [#2115](https://github.com/marko-js/marko/pull/2115) [`a55fb06`](https://github.com/marko-js/marko/commit/a55fb06ec638eb830eb72c71cb766fc05b6ea8cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve nested attribute tag handling with scriptlets.
+
 ## 5.34.6
 
 ### Patch Changes
