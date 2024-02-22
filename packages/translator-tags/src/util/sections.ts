@@ -7,13 +7,19 @@ import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
+export enum ContentType {
+  Static,
+  Dynamic,
+  Empty,
+}
+
 export type Section = {
   id: number;
   name: string;
   depth: number;
   parent?: Section;
-  hasDynamicStart: boolean | null;
-  hasDynamicEnd: boolean | null;
+  startNodeContentType: ContentType;
+  endNodeContentType: ContentType;
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -52,8 +58,8 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      hasDynamicStart: hasDynamicStart(path),
-      hasDynamicEnd: hasDynamicEnd(path),
+      startNodeContentType: getStartNodeContentType(path),
+      endNodeContentType: getEndNodeContentType(path),
     };
     sections.push(section);
   }
@@ -153,33 +159,33 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function hasDynamicStart(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+function getStartNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   for (const child of path.get("body")) {
-    const dynamic = isDynamic(child, "hasDynamicStart");
-    if (dynamic != null) {
-      return dynamic;
+    const contentType = getNodeContentType(child, "startNodeContentType");
+    if (contentType !== ContentType.Empty) {
+      return contentType;
     }
   }
-  return null;
+  return ContentType.Empty;
 }
 
-function hasDynamicEnd(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   const body = path.get("body");
   for (let i = body.length; i--; ) {
-    const dynamic = isDynamic(body[i], "hasDynamicEnd");
-    if (dynamic != null) {
-      return dynamic;
+    const contentType = getNodeContentType(body[i], "endNodeContentType");
+    if (contentType !== ContentType.Empty) {
+      return contentType;
     }
   }
-  return null;
+  return ContentType.Empty;
 }
 
 /**
  * @returns null if the node should be skipped
  */
-function isDynamic(
+function getNodeContentType(
   path: t.NodePath<t.Statement>,
-  extraMember: "hasDynamicStart" | "hasDynamicEnd",
+  extraMember: "startNodeContentType" | "endNodeContentType",
 ) {
   if (
     t.isMarkoText(path) ||
@@ -187,18 +193,18 @@ function isDynamic(
     t.isMarkoPlaceholder(path) ||
     t.isMarkoCDATA(path)
   ) {
-    return false;
+    return ContentType.Static;
   }
   if (t.isMarkoScriptlet(path)) {
-    return null;
+    return ContentType.Empty;
   }
   if (t.isMarkoTag(path.node)) {
     const tag = path as t.NodePath<t.MarkoTag>;
     if (isNativeTag(tag)) {
-      return false;
+      return ContentType.Static;
     }
     if (isAttributeTag(tag)) {
-      return null;
+      return ContentType.Empty;
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
@@ -210,13 +216,13 @@ function isDynamic(
         case "return":
         case "id":
         case "define":
-          return null;
+          return ContentType.Empty;
       }
       const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
       if (tagSection) {
-        return tagSection[extraMember] ?? null;
+        return tagSection[extraMember] ?? ContentType.Empty;
       }
     }
   }
-  return true;
+  return ContentType.Dynamic;
 }

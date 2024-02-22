@@ -1,7 +1,12 @@
 import { types as t } from "@marko/compiler";
 import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
 import { ReserveType } from "../util/reserve";
-import { type Section, createSectionState, getSection } from "../util/sections";
+import {
+  type Section,
+  createSectionState,
+  getSection,
+  ContentType,
+} from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import toTemplateOrStringLiteral, {
   appendLiteral,
@@ -178,12 +183,14 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 }
 
 export function getWalkString(section: Section) {
-  const prefix = section.hasDynamicStart
-    ? String.fromCharCode(WalkCode.Next + 1)
-    : "";
-  const postfix = section.hasDynamicEnd
-    ? String.fromCharCode(WalkCode.Next + 1)
-    : "";
+  const prefix =
+    section.startNodeContentType === ContentType.Dynamic
+      ? String.fromCharCode(WalkCode.Next + 1)
+      : "";
+  const postfix =
+    section.endNodeContentType === ContentType.Dynamic
+      ? String.fromCharCode(WalkCode.Next + 1)
+      : "";
   const walks = getWalks(section);
   const walkLiteral =
     toTemplateOrStringLiteral([prefix, ...walks, postfix]) ||

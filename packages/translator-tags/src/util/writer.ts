@@ -4,6 +4,7 @@ import {
   createSectionState,
   getScopeIdIdentifier,
   getSection,
+  ContentType,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import { ReserveType, getScopeAccessorLiteral } from "./reserve";
@@ -104,8 +105,10 @@ export function flushInto(
 }
 
 export function getSectionMeta(section: Section) {
-  const writePrefix = section.hasDynamicStart ? "<!>" : "";
-  const writePostfix = section.hasDynamicEnd ? "<!>" : "";
+  const writePrefix =
+    section.startNodeContentType === ContentType.Dynamic ? "<!>" : "";
+  const writePostfix =
+    section.endNodeContentType === ContentType.Dynamic ? "<!>" : "";
   const writes = getWrites(section);
   return {
     setup: getSetup(section),
