@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, staticNodesFragment as _staticNodesFragment, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _inputRenderBody_input = _dynamicTagAttrs("#text/2", void 0, true);
 const _expr__dynamicTagName_count = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -31,4 +31,4 @@ export { _input };
 export const template = "<button id=tags> </button><div><!></div>";
 export const walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, _staticNodesFragment, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko");

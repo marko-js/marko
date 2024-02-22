@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <button
   id="class"
 >
@@ -12,19 +13,20 @@
     0
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-inserted #text0, #text3
-inserted button1
-inserted button1/#text0
-inserted div2
-inserted div2/#text0
-inserted div2/#text4
-inserted div2/#text1
-inserted div2/#text3
-inserted div2/button2
+inserted #comment0, #text1, #text4, #comment5
+inserted button2
+inserted button2/#text0
+inserted div3
+inserted div3/#text0
+inserted div3/#text4
+inserted div3/#text1
+inserted div3/#text3
+inserted div3/button2
 ```
 
 
@@ -32,6 +34,7 @@ inserted div2/button2
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -44,11 +47,12 @@ container.querySelector("#tags").click()
     1
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button2/#text0: "0" => "1"
+div3/button2/#text0: "0" => "1"
 ```
 
 
@@ -56,6 +60,7 @@ div2/button2/#text0: "0" => "1"
 container.querySelector("#class").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -68,11 +73,12 @@ container.querySelector("#class").click()
     1
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-button1/#text0: "0" => "1"
+button2/#text0: "0" => "1"
 ```
 
 
@@ -80,6 +86,7 @@ button1/#text0: "0" => "1"
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -92,11 +99,12 @@ container.querySelector("#tags").click()
     2
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button2/#text0: "1" => "2"
+div3/button2/#text0: "1" => "2"
 ```
 
 
@@ -104,6 +112,7 @@ div2/button2/#text0: "1" => "2"
 container.querySelector("#class").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -116,11 +125,12 @@ container.querySelector("#class").click()
     2
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-button1/#text0: "1" => "2"
+button2/#text0: "1" => "2"
 ```
 
 
@@ -128,6 +138,7 @@ button1/#text0: "1" => "2"
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -140,9 +151,10 @@ container.querySelector("#tags").click()
     3
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button2/#text0: "2" => "3"
+div3/button2/#text0: "2" => "3"
 ```

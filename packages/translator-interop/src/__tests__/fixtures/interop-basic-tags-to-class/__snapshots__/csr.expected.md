@@ -11,11 +11,12 @@
 >
   0
 </button>
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, #text1, #text3
+inserted button0, #text1, #text3, #comment4
 inserted button2
 inserted button2/#text0
 ```
@@ -36,6 +37,7 @@ container.querySelector("#tags").click()
 >
   0
 </button>
+<!---->
 ```
 
 # Mutations
@@ -60,6 +62,7 @@ container.querySelector("#class").click()
 >
   1
 </button>
+<!---->
 ```
 
 # Mutations
@@ -83,6 +86,7 @@ container.querySelector("#tags").click()
 >
   1
 </button>
+<!---->
 ```
 
 # Mutations
@@ -107,6 +111,7 @@ container.querySelector("#class").click()
 >
   2
 </button>
+<!---->
 ```
 
 # Mutations
@@ -130,6 +135,7 @@ container.querySelector("#tags").click()
 >
   2
 </button>
+<!---->
 ```
 
 # Mutations

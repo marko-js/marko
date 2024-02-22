@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <button
   id="class"
 >
@@ -15,19 +16,20 @@
     1 * 0 = 0
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-inserted #text0, #text3
-inserted button1
-inserted button1/#text0
-inserted div2
-inserted div2/#text0
-inserted div2/#text5
-inserted div2/#text1
-inserted div2/#text4
-inserted div2/h12, div2/button3
+inserted #comment0, #text1, #text4, #comment5
+inserted button2
+inserted button2/#text0
+inserted div3
+inserted div3/#text0
+inserted div3/#text5
+inserted div3/#text1
+inserted div3/#text4
+inserted div3/h12, div3/button3
 ```
 
 
@@ -35,6 +37,7 @@ inserted div2/h12, div2/button3
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -50,11 +53,12 @@ container.querySelector("#tags").click()
     2 * 0 = 0
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button3/#text0: "1" => "2"
+div3/button3/#text0: "1" => "2"
 ```
 
 
@@ -62,6 +66,7 @@ div2/button3/#text0: "1" => "2"
 container.querySelector("#class").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -77,13 +82,14 @@ container.querySelector("#class").click()
     2 * 1 = 2
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button3/#text2: "0" => "1"
-div2/button3/#text4: "0" => "2"
-button1/#text0: "0" => "1"
+div3/button3/#text2: "0" => "1"
+div3/button3/#text4: "0" => "2"
+button2/#text0: "0" => "1"
 ```
 
 
@@ -91,6 +97,7 @@ button1/#text0: "0" => "1"
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -106,12 +113,13 @@ container.querySelector("#tags").click()
     3 * 1 = 3
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button3/#text0: "2" => "3"
-div2/button3/#text4: "2" => "3"
+div3/button3/#text0: "2" => "3"
+div3/button3/#text4: "2" => "3"
 ```
 
 
@@ -119,6 +127,7 @@ div2/button3/#text4: "2" => "3"
 container.querySelector("#class").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -134,13 +143,14 @@ container.querySelector("#class").click()
     3 * 2 = 6
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button3/#text2: "1" => "2"
-div2/button3/#text4: "3" => "6"
-button1/#text0: "1" => "2"
+div3/button3/#text2: "1" => "2"
+div3/button3/#text4: "3" => "6"
+button2/#text0: "1" => "2"
 ```
 
 
@@ -148,6 +158,7 @@ button1/#text0: "1" => "2"
 container.querySelector("#tags").click()
 
 ```html
+<!---->
 <button
   id="class"
 >
@@ -163,10 +174,11 @@ container.querySelector("#tags").click()
     4 * 2 = 8
   </button>
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-div2/button3/#text0: "3" => "4"
-div2/button3/#text4: "6" => "8"
+div3/button3/#text0: "3" => "4"
+div3/button3/#text4: "6" => "8"
 ```

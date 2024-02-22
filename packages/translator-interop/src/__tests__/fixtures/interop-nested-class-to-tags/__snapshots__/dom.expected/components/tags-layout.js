@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, staticNodesFragment as _staticNodesFragment, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2");
 const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
   const {
@@ -23,4 +23,4 @@ export { _input };
 export const template = "<button id=tags> </button><div><!></div>";
 export const walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, _staticNodesFragment, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko");
