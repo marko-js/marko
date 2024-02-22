@@ -1,4 +1,4 @@
-import { data as _data, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/0"], value));
 export const args = (_scope, _destructure, _clean) => {
   let value;

@@ -1,4 +1,4 @@
-import { bindFunction as _bindFunction, inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { bindFunction as _bindFunction, inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const el_getter = _scope => _scope["#div/0"];
 import { setup as _helloSetter, args as _helloSetter_args, template as _helloSetter_template, walks as _helloSetter_walks } from "./components/hello-setter.marko";
 const _setup = _scope => {

@@ -1,4 +1,4 @@
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
+import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import type { RendererOrElementName } from "./renderer";
 import { bindFunction } from "./scope";
 
@@ -32,7 +32,7 @@ export function initValue<T>(
   valueAccessor: Accessor,
   fn: ValueSignal<T>,
 ): ValueSignal<T> {
-  const markAccessor = valueAccessor + AccessorChars.MARK;
+  const markAccessor = valueAccessor + AccessorChar.Mark;
   return (scope, nextValue, clean) => {
     if (clean !== 1 && scope[markAccessor] === undefined) {
       fn(scope, nextValue, clean);
@@ -46,7 +46,7 @@ export function value<T>(
   intersection?: IntersectionSignal,
   valueWithIntersection?: ValueSignal<any>,
 ): ValueSignal<T> {
-  const markAccessor = valueAccessor + AccessorChars.MARK;
+  const markAccessor = valueAccessor + AccessorChar.Mark;
   return (scope, nextValue, clean) => {
     let creation: boolean | undefined;
     let currentMark: number;
@@ -87,8 +87,8 @@ export function intersection(
   intersection?: IntersectionSignal,
   valueWithIntersection?: ValueSignal,
 ): IntersectionSignal {
-  const cleanAccessor = AccessorChars.DYNAMIC + accessorId++;
-  const markAccessor = cleanAccessor + AccessorChars.MARK;
+  const cleanAccessor = AccessorChar.Dynamic + accessorId++;
+  const markAccessor = cleanAccessor + AccessorChar.Mark;
   return (scope, clean) => {
     let currentMark;
     if (clean === 1) {
@@ -123,7 +123,7 @@ export function closure<T>(
   intersection?: IntersectionSignal,
   valueWithIntersection?: ValueSignal<any>,
 ): IntersectionSignal {
-  const cleanAccessor = AccessorChars.DYNAMIC + accessorId++;
+  const cleanAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = cleanAccessor + 1;
   const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
@@ -138,7 +138,7 @@ export function closure<T>(
       if (scope[markAccessor] === undefined) {
         ownerScope = getOwnerScope(scope);
         ownerValueAccessor = getOwnerValueAccessor(scope);
-        const ownerMark = ownerScope[ownerValueAccessor + AccessorChars.MARK];
+        const ownerMark = ownerScope[ownerValueAccessor + AccessorChar.Mark];
         const ownerHasRun =
           ownerMark === undefined ? !ownerScope.___client : ownerMark === 0;
         scope[markAccessor] = (currentMark = ownerHasRun ? 1 : 2) - 1;
@@ -185,7 +185,7 @@ export function dynamicClosure<T>(
     ___subscribe(scope: Scope) {
       const ownerScope = getOwnerScope(scope);
       const providerSubscriptionsAccessor =
-        getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
+        getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
       ownerScope[providerSubscriptionsAccessor] ??= new Set();
       ownerScope[providerSubscriptionsAccessor].add(
         bindFunction(scope, signalFn as any),
@@ -194,7 +194,7 @@ export function dynamicClosure<T>(
     ___unsubscribe(scope: Scope) {
       const ownerScope = getOwnerScope(scope);
       const providerSubscriptionsAccessor =
-        getOwnerValueAccessor(scope) + AccessorChars.SUBSCRIBERS;
+        getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
       ownerScope[providerSubscriptionsAccessor]?.delete(
         bindFunction(scope, signalFn as any),
       );
@@ -229,7 +229,7 @@ export function childClosures(
 }
 
 export function dynamicSubscribers(valueAccessor: Accessor) {
-  const subscribersAccessor = valueAccessor + AccessorChars.SUBSCRIBERS;
+  const subscribersAccessor = valueAccessor + AccessorChar.Subscribers;
   return (scope: Scope, clean?: boolean | 1) => {
     const subscribers = scope[
       subscribersAccessor
@@ -247,7 +247,7 @@ export function setTagVar(
   childAccessor: Accessor,
   tagVarSignal: ValueSignal,
 ) {
-  scope[childAccessor][AccessorChars.TAG_VARIABLE] = bindFunction(
+  scope[childAccessor][AccessorChar.TagVariable] = bindFunction(
     scope,
     tagVarSignal as any,
   ) as BoundValueSignal;
@@ -257,7 +257,7 @@ export const tagVarSignal = (
   scope: Scope,
   value: unknown,
   clean?: boolean | 1,
-) => scope[AccessorChars.TAG_VARIABLE]?.(value, clean);
+) => scope[AccessorChar.TagVariable]?.(value, clean);
 
 export const renderBodyClosures = (
   renderBody: RendererOrElementName | undefined,

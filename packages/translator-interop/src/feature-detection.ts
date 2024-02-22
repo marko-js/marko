@@ -4,21 +4,21 @@ import { taglibs as taglibs5 } from "@marko/translator-default";
 import { taglibs as taglibs6 } from "@marko/translator-tags";
 import { buildAggregateError } from "./build-aggregate-error";
 
-const enum FEATURE_TYPE {
-  CLASS = "class",
-  TAGS = "tags",
+const enum FeatureType {
+  Class = "class",
+  Tags = "tags",
 }
 
 type Feature = {
   name: string;
   path: t.NodePath;
-  type: FEATURE_TYPE;
+  type: FeatureType;
 };
 type FeatureState = {
   feature?: Feature;
 };
 
-const DEFAULT_FEATURE_TYPE = FEATURE_TYPE.CLASS;
+const DEFAULT_FEATURE_TYPE = FeatureType.Class;
 
 export function isTagsAPI(path: t.NodePath) {
   const program = path.hub.file.path;
@@ -30,27 +30,22 @@ export function isTagsAPI(path: t.NodePath) {
     featureType = program.node.extra.___featureType =
       state.feature?.type || DEFAULT_FEATURE_TYPE;
   }
-  return featureType === FEATURE_TYPE.TAGS;
+  return featureType === FeatureType.Tags;
 }
 
 const featureDetectionVisitor = {
   MarkoComment(comment, state) {
     if (/^\s*use tags\s*$/.test(comment.node.value)) {
-      addFeature(state, FEATURE_TYPE.TAGS, "<!-- use tags -->", comment);
+      addFeature(state, FeatureType.Tags, "<!-- use tags -->", comment);
     }
   },
   MarkoScriptlet(scriptlet, state) {
     if (!scriptlet.node.static) {
-      addFeature(state, FEATURE_TYPE.CLASS, "Scriptlet", scriptlet);
+      addFeature(state, FeatureType.Class, "Scriptlet", scriptlet);
     }
   },
   MarkoClass(markoClass, state) {
-    addFeature(
-      state,
-      FEATURE_TYPE.CLASS,
-      "Class block",
-      markoClass.get("body"),
-    );
+    addFeature(state, FeatureType.Class, "Class block", markoClass.get("body"));
   },
   ReferencedIdentifier(ref: t.NodePath<t.Identifier>, state: FeatureState) {
     const name = ref.node.name;
@@ -59,14 +54,14 @@ const featureDetectionVisitor = {
       (name === "component" || name === "out") &&
       !ref.scope.hasBinding(name)
     ) {
-      addFeature(state, FEATURE_TYPE.CLASS, `${name} template global`, ref);
+      addFeature(state, FeatureType.Class, `${name} template global`, ref);
     }
   },
   MarkoTag(tag, state) {
     if (tag.node.var) {
       addFeature(
         state,
-        FEATURE_TYPE.TAGS,
+        FeatureType.Tags,
         "Tag variable",
         tag.get("var") as t.NodePath<t.LVal>,
       );
@@ -77,16 +72,16 @@ const featureDetectionVisitor = {
         if (attr.node.arguments?.length) {
           addFeature(
             state,
-            FEATURE_TYPE.CLASS,
+            FeatureType.Class,
             "Attribute arguments",
             (attr.get("arguments") as t.NodePath<t.Expression>[])[0],
           );
           break;
         } else if (attr.node.modifier) {
-          addFeature(state, FEATURE_TYPE.CLASS, "Attribute modifier", attr);
+          addFeature(state, FeatureType.Class, "Attribute modifier", attr);
           break;
         } else if (attr.node.bound) {
-          addFeature(state, FEATURE_TYPE.TAGS, "Bound attribute", attr);
+          addFeature(state, FeatureType.Tags, "Bound attribute", attr);
           break;
         } else {
           switch (attr.node.name) {
@@ -96,7 +91,7 @@ const featureDetectionVisitor = {
             case "no-update-body-if":
               addFeature(
                 state,
-                FEATURE_TYPE.CLASS,
+                FeatureType.Class,
                 `"${attr.node.name}" attribute`,
                 attr,
               );
@@ -137,8 +132,8 @@ const getFeatureByTagName = (() => {
   }
 
   return (tagName: string) => {
-    if (taglib5UniqueTags.has(tagName)) return FEATURE_TYPE.CLASS;
-    if (taglib6UniqueTags.has(tagName)) return FEATURE_TYPE.TAGS;
+    if (taglib5UniqueTags.has(tagName)) return FeatureType.Class;
+    if (taglib6UniqueTags.has(tagName)) return FeatureType.Tags;
   };
 })();
 

@@ -19,15 +19,8 @@
     "url": "https://github.com/marko-js/marko/tree/main/packages/translator-tags"
   },
   "license": "MIT",
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
-    }
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "main": "src/index.ts",
+  "main:override": "dist/index.js",
   "files": [
     "dist",
     "!**/*.tsbuildinfo"

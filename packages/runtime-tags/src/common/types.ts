@@ -12,43 +12,87 @@ export type Scope<
   ___args: unknown;
   ___startNode: (Node & ChildNode) | Accessor | undefined;
   ___endNode: (Node & ChildNode) | Accessor | undefined;
-  ___cleanup: Set<number | string | Scope> | undefined;
+  ___cleanup: Set<Scope> | undefined;
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
+  ___abortControllers: Map<string | number, AbortController> | undefined;
   $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
 } & T;
 
-// TODO: SECTION_SIBLING that is both a SECTION_START and a SECTION_END (<for> siblings)
+// TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
-export const enum ResumeSymbols {
-  DEFAULT_RUNTIME_ID = "M",
-  SECTION_START = "[",
-  SECTION_END = "]",
-  SECTION_SINGLE_NODES_END = "|",
-  NODE = "*",
-  PLACEHOLDER_START = "",
-  PLACEHOLDER_END = "",
-  REPLACEMENT_ID = "",
-  VAR_RESUME = "$h",
-  VAR_REORDER_RUNTIME = "$r",
+export enum ResumeSymbol {
+  DefaultRuntimeId = "M",
+  SectionStart = "[",
+  SectionEnd = "]",
+  SectionSingleNodesEnd = "|",
+  Node = "*",
+  PlaceholderStart = "",
+  PlaceholderEnd = "",
+  ReplacementId = "",
+  VarResume = "$h",
+  VarReorderRuntime = "$r",
 }
 
-export const enum AccessorChars {
-  DYNAMIC = "?",
-  MARK = "#",
-  STALE = "&",
-  SUBSCRIBERS = "*",
-  CLEANUP = "-",
-  TAG_VARIABLE = "/",
-  COND_SCOPE = "!",
-  LOOP_SCOPE_ARRAY = "!",
-  COND_RENDERER = "(",
-  LOOP_SCOPE_MAP = "(",
-  LOOP_VALUE = ")",
-  PREVIOUS_ATTRIBUTES = "~",
+export enum AccessorChar {
+  Dynamic = "?",
+  Mark = "#",
+  Stale = "&",
+  Subscribers = "*",
+  LifecycleAbortController = "-",
+  TagVariable = "/",
+  ConditionalScope = "!",
+  ConditionalRenderer = "(",
+  LoopScopeArray = "!",
+  LoopScopeMap = "(",
+  LoopValue = ")",
+  PreviousAttributes = "~",
+}
+
+export enum NodeType {
+  Element = 1,
+  Text = 3,
+  Comment = 8,
+  DocumentFragment = 11,
+}
+
+// Reserved Character Codes
+// 0-31 [control characters]
+// 34 " [double quote]
+// 39 ' [single quote]
+// 92 \ [backslash]
+// 96 ` [backtick]
+export enum WalkCode {
+  Get = 32,
+  Before = 33,
+  After = 35,
+  Inside = 36,
+  Replace = 37,
+  EndChild = 38,
+
+  BeginChild = 47,
+
+  Next = 67,
+  NextEnd = 91,
+
+  Over = 97,
+  OverEnd = 106,
+
+  Out = 107,
+  OutEnd = 116,
+
+  Multiplier = 117,
+  MultiplierEnd = 126,
+}
+
+export enum WalkRangeSize {
+  Next = 20, // 67 through 91
+  Over = 10, // 97 through 106
+  Out = 10, // 107 through 116
+  Multiplier = 10, // 117 through 126
 }
 
 export type Accessor = string | number;

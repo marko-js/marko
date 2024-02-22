@@ -9,7 +9,7 @@ Promise.all(
     ["dom", "html"].flatMap((name) => {
       (["esm", "cjs"] as const).map(async (format) => {
         const isProd = env === "dist";
-        const outdir = path.join(absWorkingDir, `${env}/${name}`);
+        const outdir = path.join(absWorkingDir, env);
         const { metafile } = await build({
           format,
           outdir,
@@ -17,11 +17,11 @@ Promise.all(
           bundle: true,
           metafile: true,
           sourcemap: true,
-          platform: "browser",
           minifySyntax: isProd,
-          entryPoints: [`src/${name}/index.ts`],
+          entryPoints: [`src/${name}.ts`],
           define: { MARKO_DEBUG: String(!isProd) },
           mangleProps: isProd ? /^___/ : undefined,
+          platform: name === "dom" ? "browser" : "node",
           outExtension: { ".js": format === "esm" ? ".mjs" : ".js" },
         });
 
@@ -29,24 +29,6 @@ Promise.all(
           fs.promises.writeFile(
             `${outdir}/meta.${format}.json`,
             JSON.stringify(metafile),
-          ),
-          fs.promises.writeFile(
-            `${outdir}/package.json`,
-            JSON.stringify(
-              {
-                main: "index.js",
-                module: "index.mjs",
-                exports: {
-                  ".": {
-                    import: "./index.mjs",
-                    default: "./index.js",
-                  },
-                },
-                types: path.relative(outdir, `dist/${name}/index.d.ts`),
-              },
-              null,
-              2,
-            ),
           ),
         ]);
       });

@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
+import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer(({
   renderBody,
   x,
@@ -30,18 +30,19 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
   _write(`${_markResumeNode(_scope0_id, "#showDiv/3")}`);
-  const _dynamicScope3 = _dynamicTagInput(large ? "h1" : "h2", {
+  const _dynamicScope3 = _dynamicTagInput(isLarge ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);
-  (showTagA ? tagA : tagB)._({
+  const _dynamicScope4 = _dynamicTagInput(showTagA ? tagA : tagB, {
     class: ["a", "b"],
     other: other,
     class: ["a", "b"],
     other: other
   });
   const _tagName3 = showTagA && tagA;
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}`);
   if (_tagName3._) _tagName3._({
     class: ["a", "b"],
     other: other
@@ -61,16 +62,16 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
-  const _dynamicScope4 = _dynamicTagInput(_tagName5, {
+  const _dynamicScope5 = _dynamicTagInput(_tagName5, {
     class: ["a", "b"],
     other: other
   });
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markResumeNode(_scope0_id, "#globalXAB/6")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markResumeNode(_scope0_id, "#hLevel/7")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markResumeNode(_scope0_id, "#h$Level/8")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markResumeNode(_scope0_id, "#tagConstA/9")}`);
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/9")}<${global.x = "a" + "b"} class="a b"${_attr("other", other)}></${global.x = "a" + "b"}>${_markResumeNode(_scope0_id, "#globalXAB/10")}<${"h" + level} class="a b"${_attr("other", other)}></${"h" + level}>${_markResumeNode(_scope0_id, "#hLevel/11")}<h${level} class="a b"${_attr("other", other)}></h${level}>${_markResumeNode(_scope0_id, "#h$Level/12")}<${tagConstA} class="a b"${_attr("other", other)}></${tagConstA}>${_markResumeNode(_scope0_id, "#tagConstA/13")}`);
   if (tagConstB) _write(`<${tagConstB} class="a b"${_attr("other", other)}>`);
   if (tagConstB) _write(`</${tagConstB}>`);
-  _write(`${_markResumeNode(_scope0_id, "#tagConstB/10")}`);
+  _write(`${_markResumeNode(_scope0_id, "#tagConstB/14")}`);
   _writeScope(_scope0_id, {
     "other": other,
     "#text/0!": _dynamicScope,
@@ -78,9 +79,11 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "#text/1!": _dynamicScope2,
     "#text/1(": x,
     "#text/4!": _dynamicScope3,
-    "#text/4(": large ? "h1" : "h2",
+    "#text/4(": isLarge ? "h1" : "h2",
     "#text/5!": _dynamicScope4,
-    "#text/5(": _tagName5
+    "#text/5(": showTagA ? tagA : tagB,
+    "#text/9!": _dynamicScope5,
+    "#text/9(": _tagName5
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko");

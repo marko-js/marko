@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
 import { ReserveType } from "../util/reserve";
 import { type Section, createSectionState, getSection } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
@@ -17,88 +18,58 @@ const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
 );
 const [getSteps] = createSectionState<Step[]>("steps", () => []);
 
-export enum WalkCodes {
-  Get = 32,
-  Before = 33,
-  After = 35,
-  Inside = 36,
-  Replace = 37,
-  EndChild = 38,
-
-  BeginChild = 47,
-
-  Next = 67,
-  NextEnd = 91,
-
-  Over = 97,
-  OverEnd = 106,
-
-  Out = 107,
-  OutEnd = 116,
-
-  Multiplier = 117,
-  MultiplierEnd = 126,
-}
-
-export enum WalkRangeSizes {
-  Next = 20, // 67 through 91
-  Over = 10, // 97 through 106
-  Out = 10, // 107 through 116
-  Multiplier = 10, // 117 through 126
-}
-
 export enum Step {
-  enter,
-  exit,
+  Enter,
+  Exit,
 }
 
 const walkCodeToName = {
-  [WalkCodes.Get]: "get",
-  [WalkCodes.Before]: "before",
-  [WalkCodes.After]: "after",
-  [WalkCodes.Inside]: "inside",
-  [WalkCodes.Replace]: "replace",
-  [WalkCodes.EndChild]: "endChild",
-  [WalkCodes.BeginChild]: "beginChild",
-  [WalkCodes.Next]: "next",
-  [WalkCodes.Over]: "over",
-  [WalkCodes.Out]: "out",
-  [WalkCodes.Multiplier]: "multiplier",
-  [WalkCodes.NextEnd]: "nextEnd",
-  [WalkCodes.OverEnd]: "overEnd",
-  [WalkCodes.OutEnd]: "outEnd",
-  [WalkCodes.MultiplierEnd]: "multiplierEnd",
+  [WalkCode.Get]: "get",
+  [WalkCode.Before]: "before",
+  [WalkCode.After]: "after",
+  [WalkCode.Inside]: "inside",
+  [WalkCode.Replace]: "replace",
+  [WalkCode.EndChild]: "endChild",
+  [WalkCode.BeginChild]: "beginChild",
+  [WalkCode.Next]: "next",
+  [WalkCode.Over]: "over",
+  [WalkCode.Out]: "out",
+  [WalkCode.Multiplier]: "multiplier",
+  [WalkCode.NextEnd]: "nextEnd",
+  [WalkCode.OverEnd]: "overEnd",
+  [WalkCode.OutEnd]: "outEnd",
+  [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
 type VisitCodes =
-  | WalkCodes.Get
-  | WalkCodes.Before
-  | WalkCodes.After
-  | WalkCodes.Inside
-  | WalkCodes.Replace;
+  | WalkCode.Get
+  | WalkCode.Before
+  | WalkCode.After
+  | WalkCode.Inside
+  | WalkCode.Replace;
 
 export function enter(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.enter);
+  getSteps(getSection(path)).push(Step.Enter);
 }
 
 export function exit(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.exit);
+  getSteps(getSection(path)).push(Step.Exit);
 }
 
 export function enterShallow(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.enter, Step.exit);
+  getSteps(getSection(path)).push(Step.Enter, Step.Exit);
 }
 
 export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
   const walks = getWalks(getSection(path));
   const walkComment = getWalkComment(getSection(path));
   walkComment.push(
-    `${walkCodeToName[WalkCodes.BeginChild]}`,
+    `${walkCodeToName[WalkCode.BeginChild]}`,
     (expr as t.Identifier).name,
-    walkCodeToName[WalkCodes.EndChild],
+    walkCodeToName[WalkCode.EndChild],
   );
-  appendLiteral(walks, String.fromCharCode(WalkCodes.BeginChild));
-  walks.push(expr, String.fromCharCode(WalkCodes.EndChild));
+  appendLiteral(walks, String.fromCharCode(WalkCode.BeginChild));
+  walks.push(expr, String.fromCharCode(WalkCode.EndChild));
 }
 
 export function visit(
@@ -124,23 +95,23 @@ export function visit(
   let walkString = "";
 
   if (steps.length) {
-    const walks: WalkCodes[] = [];
+    const walks: WalkCode[] = [];
     let depth = 0;
 
     for (const step of steps) {
-      if (step === Step.enter) {
+      if (step === Step.Enter) {
         depth++;
-        walks.push(WalkCodes.Next);
+        walks.push(WalkCode.Next);
       } else {
         depth--;
         if (depth >= 0) {
           // delete back to and including previous NEXT
-          walks.length = walks.lastIndexOf(WalkCodes.Next);
-          walks.push(WalkCodes.Over);
+          walks.length = walks.lastIndexOf(WalkCode.Next);
+          walks.push(WalkCode.Over);
         } else {
           // delete back to previous OUT
-          walks.length = walks.lastIndexOf(WalkCodes.Out) + 1;
-          walks.push(WalkCodes.Out);
+          walks.length = walks.lastIndexOf(WalkCode.Out) + 1;
+          walks.push(WalkCode.Out);
           depth = 0;
         }
       }
@@ -166,7 +137,7 @@ export function visit(
   }
 
   if (code !== undefined) {
-    if (code !== WalkCodes.Get) {
+    if (code !== WalkCode.Get) {
       writeTo(path)`<!>`;
     }
     walkComment.push(`${walkCodeToName[code]}`);
@@ -176,14 +147,14 @@ export function visit(
   appendLiteral(walks, walkString);
 }
 
-function nCodeString(code: WalkCodes, number: number) {
+function nCodeString(code: WalkCode, number: number) {
   switch (code) {
-    case WalkCodes.Next:
-      return toCharString(number, code, WalkRangeSizes.Next);
-    case WalkCodes.Over:
-      return toCharString(number, code, WalkRangeSizes.Over);
-    case WalkCodes.Out:
-      return toCharString(number, code, WalkRangeSizes.Out);
+    case WalkCode.Next:
+      return toCharString(number, code, WalkRangeSize.Next);
+    case WalkCode.Over:
+      return toCharString(number, code, WalkRangeSize.Over);
+    case WalkCode.Out:
+      return toCharString(number, code, WalkRangeSize.Out);
     default:
       throw new Error(`Unexpected walk code: ${code}`);
   }
@@ -196,8 +167,8 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
     const multiplier = Math.floor(number / rangeSize);
     result += toCharString(
       multiplier,
-      WalkCodes.Multiplier,
-      WalkRangeSizes.Multiplier,
+      WalkCode.Multiplier,
+      WalkRangeSize.Multiplier,
     );
     number -= multiplier * rangeSize;
   }
@@ -208,10 +179,10 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 
 export function getWalkString(section: Section) {
   const prefix = section.hasDynamicStart
-    ? String.fromCharCode(WalkCodes.Next + 1)
+    ? String.fromCharCode(WalkCode.Next + 1)
     : "";
   const postfix = section.hasDynamicEnd
-    ? String.fromCharCode(WalkCodes.Next + 1)
+    ? String.fromCharCode(WalkCode.Next + 1)
     : "";
   const walks = getWalks(section);
   const walkLiteral =

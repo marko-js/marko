@@ -1,6 +1,6 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import type { NodePath } from "@marko/compiler/babel-types";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -55,21 +55,6 @@ export type Signal = {
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
 };
-
-/** TODO: temporary location - duplicated from "@marko/runtime-tags/src/common/types" */
-const enum AccessorChars {
-  DYNAMIC = "?",
-  MARK = "#",
-  STALE = "&",
-  SUBSCRIBERS = "*",
-  CLEANUP = "-",
-  TAG_VARIABLE = "/",
-  COND_SCOPE = "!",
-  LOOP_SCOPE_ARRAY = "!",
-  COND_RENDERER = "(",
-  LOOP_SCOPE_MAP = "(",
-  LOOP_VALUE = ")",
-}
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
@@ -326,7 +311,7 @@ function pushRepeatable<T>(repeatable: Repeatable<T>, value: T) {
   }
 }
 
-export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
+export function getTagVarSignal(varPath: t.NodePath<t.LVal | null>) {
   if (varPath.isIdentifier()) {
     return initValue(varPath.node.extra.reserve!);
   } else {
@@ -338,7 +323,7 @@ export function getTagVarSignal(varPath: NodePath<t.LVal | null>) {
 }
 
 export function getTagParamsSignal(
-  paramsPaths: NodePath<t.Identifier | t.RestElement | t.Pattern>[],
+  paramsPaths: t.NodePath<t.Identifier | t.RestElement | t.Pattern>[],
   pattern: t.ArrayPattern = t.arrayPattern(
     paramsPaths.map((path) => path.node!),
   ),
@@ -789,7 +774,7 @@ export function writeHTMLResumeStatements(
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(
       t.objectProperty(
-        t.stringLiteral(AccessorChars.TAG_VARIABLE),
+        t.stringLiteral(AccessorChar.TagVariable),
         tagVarIdentifier,
       ),
     );
@@ -863,7 +848,7 @@ function bindFunction(
     );
   }
 
-  let parent: NodePath | null = fn.parentPath;
+  let parent: t.NodePath | null = fn.parentPath;
   while (parent) {
     if (parent.isFunction()) return;
     if (parent === root) return;

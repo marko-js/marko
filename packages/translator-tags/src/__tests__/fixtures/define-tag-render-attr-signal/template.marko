@@ -1,0 +1,9 @@
+<let/x=1 />
+<define/myTag|{number}|>
+  <div>${number}</div>
+</define>
+
+<myTag number=x />
+<button onClick() { x++; }>
+  ${x}
+</button>

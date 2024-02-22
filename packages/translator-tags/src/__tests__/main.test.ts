@@ -4,8 +4,8 @@ import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type { Template, Input } from "@marko/runtime-tags/src/common/types";
-import reorderRuntime from "@marko/runtime-tags/src/html/reorder-runtime";
+import type { Template, Input } from "@marko/runtime-tags/common/types";
+import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
@@ -222,11 +222,12 @@ describe("translator-tags", () => {
             ? await config.steps()
             : config.steps || []
         ) as [Input, ...unknown[]];
-        const { run } = browser.require(
-          "@marko/runtime-tags/src/dom",
-        ) as typeof import("../../../runtime-tags/src/dom");
-        const template = browser.require(manualCSR ? browserFile : templateFile)
-          .default as Template;
+        const { run } = browser.require<
+          typeof import("@marko/runtime-tags/dom")
+        >("@marko/runtime-tags/dom");
+        const template = browser.require<{ default: Template }>(
+          manualCSR ? browserFile : templateFile,
+        ).default;
         const container = Object.assign(document.createElement("div"), {
           TEST_ROOT: true,
         });
@@ -273,9 +274,9 @@ describe("translator-tags", () => {
         // TODO: when this is removed, the resume test will fail if run by itself... why?
         await new Promise((resolve) => setTimeout(resolve, 10));
 
-        const { run, init } = browser.require(
-          "@marko/runtime-tags/src/dom",
-        ) as typeof import("@marko/runtime-tags/src/dom");
+        const { run, init } = browser.require<
+          typeof import("@marko/runtime-tags/dom")
+        >("@marko/runtime-tags/dom");
 
         browser.require(manualResume ? resumeFile : templateFile);
         init();

@@ -4,9 +4,8 @@ const shouldOptimize = require("./util/should-optimize").default;
 const compiler = require(".");
 const requiredOptions = { modules: "cjs" };
 const isDev = !shouldOptimize();
-const sourceMaps = new Map();
-let installSourceMaps = () => {
-  installSourceMaps = () => {};
+let setSourceMap = (filename, map) => {
+  const sourceMaps = new Map([[filename, map]]);
   require("source-map-support").install({
     handleUncaughtExceptions: false,
     environment: "node",
@@ -18,6 +17,10 @@ let installSourceMaps = () => {
       return null;
     },
   });
+
+  setSourceMap = (filename, map) => {
+    sourceMaps.set(filename, map);
+  };
 };
 
 module.exports = register;
@@ -40,8 +43,7 @@ function register({ extensions = require.extensions, ...options } = {}) {
     );
 
     if (compiled.map) {
-      sourceMaps.set(filename, compiled.map);
-      installSourceMaps();
+      setSourceMap(filename, compiled.map);
     }
 
     return module._compile(compiled.code, filename);

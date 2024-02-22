@@ -1,6 +1,6 @@
-import { getTagDef } from "@marko/babel-utils";
+import { assertNoArgs, getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import type { Identifier, MarkoAttribute } from "@marko/compiler/babel-types";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
@@ -43,7 +43,7 @@ export default {
       for (const attr of attrs) {
         if (
           isSpreadAttr(attr) ||
-          isEventHandler((attr.node as MarkoAttribute).name)
+          isEventHandler((attr.node as t.MarkoAttribute).name)
         ) {
           section ??= getOrCreateSection(tag);
           (currentProgramPath.node.extra ?? {}).isInteractive = true;
@@ -68,6 +68,8 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoArgs(tag);
+
       const { extra } = tag.node;
       const isHTML = isOutputHTML();
       const name = tag.get("name");
@@ -99,7 +101,7 @@ export default {
             ),
           );
         } else {
-          const varName = (tag.node.var as Identifier).name;
+          const varName = (tag.node.var as t.Identifier).name;
           const references = tag.scope.getBinding(varName)!.referencePaths;
           let createElFunction = undefined;
           for (const reference of references) {
@@ -145,7 +147,7 @@ export default {
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
       if (extra.reserve) {
         visitAccessor = getScopeAccessorLiteral(extra.reserve);
-        walks.visit(tag, walks.WalkCodes.Get);
+        walks.visit(tag, WalkCode.Get);
       }
 
       write`<${name.node}`;

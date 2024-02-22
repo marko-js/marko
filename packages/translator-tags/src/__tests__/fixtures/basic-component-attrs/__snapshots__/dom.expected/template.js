@@ -1,4 +1,4 @@
-import { queueSource as _queueSource, inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { queueSource as _queueSource, inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { setup as _myButton, args as _myButton_args, template as _myButton_template, walks as _myButton_walks } from "./components/my-button.marko";
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _myButton_args(_scope["#childScope/0"], [{
   text: clickCount,

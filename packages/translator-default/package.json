@@ -28,9 +28,9 @@
     "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.8",
+    "@babel/runtime": "^7.23.9",
     "@marko/babel-utils": "^6.3.5",
-    "magic-string": "^0.30.5",
+    "magic-string": "^0.30.6",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {
@@ -44,6 +44,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "main:dev": "src/index.js",
-  "main:npm": "dist/index.js"
+  "main:override": "dist/index.js"
 }

@@ -1,13 +1,12 @@
 import { classValue, styleValue } from "../common/helpers";
-import { type Accessor, AccessorChars, type Scope } from "../common/types";
-import { onDestroy, write } from "./scope";
-
-export const enum NodeType {
-  Element = 1,
-  Text = 3,
-  Comment = 8,
-  DocumentFragment = 11,
-}
+import {
+  type Accessor,
+  AccessorChar,
+  NodeType,
+  type Scope,
+} from "../common/types";
+import { getAbortSignal } from "./abort-signal";
+import { write } from "./scope";
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
@@ -43,9 +42,9 @@ export function attrs(
   elementAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const prevAttrs = scope[
-    elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES
-  ] as typeof nextAttrs | undefined;
+  const prevAttrs = scope[elementAccessor + AccessorChar.PreviousAttributes] as
+    | typeof nextAttrs
+    | undefined;
   const element = scope[elementAccessor] as Element;
 
   if (prevAttrs) {
@@ -68,7 +67,7 @@ export function attrs(
     }
   }
 
-  scope[elementAccessor + AccessorChars.PREVIOUS_ATTRIBUTES] = nextAttrs;
+  scope[elementAccessor + AccessorChar.PreviousAttributes] = nextAttrs;
 }
 
 const doc = document;
@@ -123,41 +122,25 @@ function normalizeAttrValue(value: unknown) {
 function normalizeString(value: unknown) {
   return value || value === 0 ? value + "" : "\u200d";
 }
-
-type EffectFn<S extends Scope> = (scope: S) => void | (() => void);
-export function userEffect<S extends Scope>(
-  scope: S,
-  index: number,
-  fn: EffectFn<S>,
-) {
-  const cleanup = scope[index] as ReturnType<EffectFn<S>>;
-  const nextCleanup = fn(scope);
-  if (cleanup) {
-    cleanup();
-  } else {
-    onDestroy(scope, index);
-  }
-  scope[index] = nextCleanup;
-}
-
 export function lifecycle(
   scope: Scope,
-  index: number,
+  index: string | number,
   thisObj: Record<string, unknown> & {
     onMount?: (this: unknown) => void;
     onUpdate?: (this: unknown) => void;
     onDestroy?: (this: unknown) => void;
   },
 ) {
-  let storedThis = scope[index] as typeof thisObj;
-  if (!storedThis) {
-    storedThis = scope[index] = thisObj;
-    scope[AccessorChars.CLEANUP + index] = () =>
-      storedThis.onDestroy?.call(storedThis);
-    onDestroy(scope, AccessorChars.CLEANUP + index);
-    storedThis.onMount?.call(storedThis);
+  const instance = scope[index] as typeof thisObj;
+  if (instance) {
+    Object.assign(instance, thisObj);
+    instance.onUpdate?.();
   } else {
-    Object.assign(storedThis, thisObj);
-    storedThis.onUpdate?.call(storedThis);
+    scope[index] = thisObj;
+    thisObj.onMount?.();
+    getAbortSignal(
+      scope,
+      AccessorChar.LifecycleAbortController + index,
+    ).onabort = () => thisObj.onDestroy?.();
   }
 }

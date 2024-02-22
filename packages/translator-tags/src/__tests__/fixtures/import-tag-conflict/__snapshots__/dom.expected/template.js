@@ -1,6 +1,6 @@
 import { asset as asset1 } from "./asset1";
 import { asset as asset2 } from "./asset2";
-import { data as _data, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup = _scope => {
   _data(_scope["#text/0"], asset1);
   _data(_scope["#text/1"], asset2);

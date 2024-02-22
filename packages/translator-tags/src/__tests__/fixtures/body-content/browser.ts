@@ -12,7 +12,7 @@ import {
   queueEffect,
   queueSource,
   value,
-} from "@marko/runtime-tags/src/dom";
+} from "@marko/runtime-tags/dom";
 import { beginChild, endChild, get, next } from "../../utils/walks";
 
 ////////////////////////////////////////////////////

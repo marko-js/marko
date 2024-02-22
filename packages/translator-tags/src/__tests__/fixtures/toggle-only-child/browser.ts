@@ -7,7 +7,7 @@ import {
   data,
   inConditionalScope,
   value,
-} from "@marko/runtime-tags/src/dom";
+} from "@marko/runtime-tags/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
 

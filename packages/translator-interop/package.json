@@ -19,16 +19,15 @@
     "url": "https://github.com/marko-js/marko/tree/main/packages/translator-interop"
   },
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main:override": "dist/index.js",
+  "main": "src/index.ts",
   "files": [
     "dist",
     "!**/__tests__",
     "!**/*.tsbuildinfo"
   ],
   "scripts": {
-    "build": "echo 'todo'"
+    "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "dependencies": {
     "@babel/code-frame": "^7.23.5",
@@ -38,6 +37,5 @@
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
-  },
-  "jsnext": "dist/index.esm.js"
+  }
 }

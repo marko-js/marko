@@ -1,6 +1,6 @@
+import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
-import reorderRuntime from "../../../../runtime-tags/src/html/reorder-runtime";
 import { getNodePath } from "./get-node-info";
 
 const { DOMElement, DOMCollection } = plugins;

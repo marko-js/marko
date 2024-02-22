@@ -1,5 +1,6 @@
 import type { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
+import { getExprRoot, getFnRoot } from "./get-root";
 import {
   type Reserve,
   ReserveType,
@@ -13,14 +14,6 @@ import {
   getOrCreateSection,
 } from "./sections";
 import { SortedRepeatable } from "./sorted-repeatable";
-
-type MarkoExprRootPath = t.NodePath<
-  | t.MarkoTag
-  | t.MarkoTagBody
-  | t.MarkoAttribute
-  | t.MarkoSpreadAttribute
-  | t.MarkoPlaceholder
->;
 
 const intersectionSubscribeCounts = new WeakMap<Reserve[], number>();
 const repeatableIntersections = new SortedRepeatable(compareIntersections);
@@ -111,20 +104,23 @@ export function trackReferencesForBindings(
       const fnRoot = getFnRoot(reference.scope.path);
       const exprRoot = getExprRoot(fnRoot || reference);
       const markoRoot = exprRoot.parentPath;
-      const immediateRoot = fnRoot ?? exprRoot;
 
       // TODO: remove
-      if (immediateRoot) {
-        const name = (immediateRoot.node as t.FunctionExpression).id?.name;
+      if (fnRoot) {
+        const name = (fnRoot.node as t.FunctionExpression).id?.name;
 
         if (!name) {
           if (markoRoot.isMarkoAttribute() && !markoRoot.node.default) {
-            (immediateRoot.node.extra ??= {}).name = markoRoot.node.name;
+            (fnRoot.node.extra ??= {}).name = markoRoot.node.name;
           }
         }
 
-        addBindingToReferences(immediateRoot, "references", binding);
+        if (fnRoot !== exprRoot) {
+          addBindingToReferences(fnRoot, "references", binding);
+        }
       }
+
+      addBindingToReferences(exprRoot, "references", binding);
 
       addBindingToReferences(
         markoRoot,
@@ -186,57 +182,6 @@ export function mergeReferences(
   }
 
   return newReferences;
-}
-
-function getExprRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
-  while (!isMarkoPath(curPath.parentPath!)) {
-    curPath = curPath.parentPath!;
-  }
-
-  return curPath as t.NodePath<t.Node> & {
-    parentPath: MarkoExprRootPath;
-  };
-}
-
-function getFnRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
-  if (curPath.isProgram()) return;
-
-  while (!isFunctionExpression(curPath)) {
-    if (isMarkoPath(curPath)) return;
-    curPath = (curPath as t.NodePath<t.Node>).parentPath!;
-  }
-
-  return curPath as
-    | undefined
-    | t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>;
-}
-
-function isMarkoPath(path: t.NodePath<any>): path is MarkoExprRootPath {
-  switch (path.type) {
-    case "MarkoTag":
-    case "MarkoTagBody":
-    case "MarkoAttribute":
-    case "MarkoSpreadAttribute":
-    case "MarkoPlaceholder":
-    case "MarkoScriptlet":
-      return true;
-    default:
-      return false;
-  }
-}
-
-function isFunctionExpression(
-  path: t.NodePath<any>,
-): path is t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression> {
-  switch (path.type) {
-    case "FunctionExpression":
-    case "ArrowFunctionExpression":
-      return true;
-    default:
-      return false;
-  }
 }
 
 /**

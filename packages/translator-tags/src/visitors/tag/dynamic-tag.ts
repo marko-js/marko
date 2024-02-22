@@ -1,10 +1,12 @@
 import {
+  assertAttributesOrArgs,
   getTemplateId,
   importDefault,
   importNamed,
   loadFileForTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import { addBindingToReferences, mergeReferences } from "../../util/references";
@@ -73,7 +75,9 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      walks.visit(tag, walks.WalkCodes.Replace);
+      walks.visit(tag, WalkCode.Replace);
+      assertAttributesOrArgs(tag);
+
       walks.enterShallow(tag);
 
       if (isOutputHTML()) {
@@ -84,7 +88,12 @@ export default {
       const { node } = tag;
       let tagExpression = node.name;
 
-      if (t.isStringLiteral(tagExpression)) {
+      if (node.extra.tagNameDefine) {
+        tagExpression = t.memberExpression(
+          node.name,
+          t.identifier("renderBody"),
+        );
+      } else if (t.isStringLiteral(tagExpression)) {
         const { file } = tag.hub;
         const relativePath = getTagRelativePath(tag);
         tagExpression = importDefault(file, relativePath, tagExpression.value);

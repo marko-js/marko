@@ -1,17 +1,14 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/src/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _comments from "./comments.marko";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  comments,
-  path = "c"
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<ul>");
   const _scope1_ = new Map();
   let _i = 0;
-  for (const comment of comments) {
+  for (const comment of input.comments) {
     const _scope1_id = _nextScopeId();
     let i = _i++;
-    const id = `${path}-${i}`;
+    const id = `${input.path || "c"}-${i}`;
     const open = true;
     _write(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escapeXML(comment.text)}${_markResumeNode(_scope1_id, "#text/1")}</span><button>${_escapeXML(open ? "[-]" : "[+]")}${_markResumeNode(_scope1_id, "#text/3")}</button>${_markResumeNode(_scope1_id, "#button/2")}`);
     let _ifScopeId, _scope2_, _ifRenderer;
@@ -43,7 +40,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   _write(`${_markResumeControlEnd(_scope0_id, "#ul/0")}</ul>${_markResumeNode(_scope0_id, "#ul/0")}`);
   _writeScope(_scope0_id, {
     "#ul/0(": _scope1_.size ? _scope1_ : undefined,
-    "path": path
+    "input": input
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

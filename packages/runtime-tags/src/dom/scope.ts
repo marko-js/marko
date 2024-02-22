@@ -1,5 +1,4 @@
 import type { Scope } from "../common/types";
-import { queueEffect } from "./queue";
 import type { Renderer } from "./renderer";
 
 let debugID = 0;
@@ -86,21 +85,22 @@ function _destroyScope(scope: Scope) {
   const cleanup = scope.___cleanup;
   if (cleanup) {
     for (const instance of cleanup) {
-      if (typeof instance === "object") {
-        _destroyScope(instance);
-      } else {
-        queueEffect(scope, scope[instance] as () => void);
-      }
+      _destroyScope(instance);
+    }
+  }
+
+  const controllers = scope.___abortControllers;
+  if (controllers) {
+    for (const ctrl of controllers.values()) {
+      ctrl.abort();
     }
   }
 }
 
-export function onDestroy(scope: Scope, localIndex: number | string) {
-  (scope.___cleanup = scope.___cleanup || new Set()).add(localIndex);
-
+export function onDestroy(scope: Scope) {
   let parentScope = scope._;
   while (parentScope && !parentScope.___cleanup?.has(scope)) {
-    (parentScope.___cleanup = parentScope.___cleanup || new Set()).add(scope);
+    (parentScope.___cleanup ||= new Set()).add(scope);
     scope = parentScope;
     parentScope = scope._;
   }

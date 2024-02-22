@@ -9,7 +9,10 @@ const {
   queueEffect,
   scopeLookup,
   register,
-} = require("@marko/runtime-tags/dist/debug/dom"); // TODO: use the non-debug version when built for production
+} = require(
+  // eslint-disable-next-line no-constant-condition
+  "MARKO_DEBUG" ? "@marko/runtime-tags/debug/dom" : "@marko/runtime-tags/dom",
+);
 const { ___componentLookup } = require("@internal/components-util");
 const defineComponent = require("../components/defineComponent");
 const { r: registerComponent } = require("../components/registry");

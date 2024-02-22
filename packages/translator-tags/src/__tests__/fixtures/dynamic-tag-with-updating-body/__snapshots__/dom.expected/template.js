@@ -1,5 +1,5 @@
 import { setup as _counter, template as _counter_template, walks as _counter_walks } from "./components/counter.marko";
-import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$tagNameBody = _scope => {
   _counter(_scope["#childScope/0"]);
 };

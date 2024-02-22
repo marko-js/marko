@@ -1,8 +1,8 @@
-import { assertNoVar, findParentTag } from "@marko/babel-utils";
+import { assertNoArgs, assertNoVar, findParentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrsToObject from "../../util/attrs-to-object";
 import { getSection, startSection } from "../../util/sections";
-import { TagNameTypes } from "../../util/tag-name-type";
+import { TagNameType } from "../../util/tag-name-type";
 import * as writer from "../../util/writer";
 
 export default {
@@ -16,6 +16,8 @@ export default {
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoArgs(tag);
+
       getSection(tag.get("body"));
       if (writer.hasPendingHTML(tag)) {
         throw tag
@@ -39,7 +41,7 @@ export default {
 
       const parentExtra = parentTag.node.extra;
 
-      if (parentExtra.tagNameType === TagNameTypes.NativeTag) {
+      if (parentExtra.tagNameType === TagNameType.NativeTag) {
         throw tag
           .get("name")
           .buildCodeFrameError("@tags cannot be nested under native tags.");

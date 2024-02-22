@@ -1,4 +1,4 @@
-import { data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value2, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value2, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _value$ifBody = /* @__PURE__ */_closure("value", (_scope, value) => _data(_scope["#text/0"], value));
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");

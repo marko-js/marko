@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { on as _on, queueSource as _queueSource, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tagNameBody = /* @__PURE__ */_createRenderer("body content", "");
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
 const _expr__dynamicTagName_className = /* @__PURE__ */_intersection(2, _scope => {

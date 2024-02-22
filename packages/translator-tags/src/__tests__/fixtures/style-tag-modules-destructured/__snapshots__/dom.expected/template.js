@@ -2,7 +2,7 @@ import _style from "virtual:./template.marko.module.css \n  .content {\n    colo
 const {
   content
 } = _style;
-import { classAttr as _classAttr, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { classAttr as _classAttr, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup = _scope => {
   _classAttr(_scope["#div/1"], content);
 };

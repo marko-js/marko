@@ -1,4 +1,4 @@
-import { data as _data, html as _html, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/src/dom";
+import { data as _data, html as _html, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _data(_scope["#text/0"], input.name);
   _html(_scope, input.name, "#text/1");
