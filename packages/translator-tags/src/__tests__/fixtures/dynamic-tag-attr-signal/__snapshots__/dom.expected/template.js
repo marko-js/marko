@@ -12,7 +12,7 @@ const _className = /* @__PURE__ */_value("className", (_scope, className) => {
 const _setup = _scope => {
   _className(_scope, "A");
 };
-export const template = "<p>paragraph</p><button></button>";
-export const walks = /* get, over(1), get, over(1) */" b b";
+export const template = "<!><p>paragraph</p><button></button>";
+export const walks = /* get, over(1), get, over(1) */"D b b";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");

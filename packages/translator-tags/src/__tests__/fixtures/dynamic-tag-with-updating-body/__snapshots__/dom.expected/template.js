@@ -19,7 +19,7 @@ const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
 const _setup = _scope => {
   _tagName(_scope, "div");
 };
-export const template = "<!><button id=changeTag></button>";
-export const walks = /* replace, over(1), get, over(1) */"%b b";
+export const template = "<!><!><button id=changeTag></button>";
+export const walks = /* replace, over(1), get, over(1) */"D%b b";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");

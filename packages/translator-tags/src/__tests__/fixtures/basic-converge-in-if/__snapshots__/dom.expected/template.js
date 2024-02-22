@@ -19,7 +19,7 @@ const _setup = _scope => {
   _b(_scope, 0);
   _if(_scope, true ? _ifBody : null);
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-converge-in-if/template.marko");

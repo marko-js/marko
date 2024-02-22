@@ -18,7 +18,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _customTagBody)
   }]);
 };
-export const template = `${_customTag_template}`;
-export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&`;
+export const template = `${_customTag_template}<!>`;
+export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&D`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko");

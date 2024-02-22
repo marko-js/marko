@@ -9,11 +9,12 @@
 <span>
   0
 </span>
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, button1, span2
+inserted button0, button1, span2, #comment3
 ```
 
 
@@ -30,6 +31,7 @@ container.querySelector("button.inc").click()
 <span>
   1
 </span>
+<!---->
 ```
 
 # Mutations
@@ -48,6 +50,7 @@ container.querySelector("button.toggle").click()
 <button
   class="toggle"
 />
+<!---->
 ```
 
 # Mutations
@@ -67,6 +70,7 @@ container.querySelector("button.inc").click()
 <button
   class="toggle"
 />
+<!---->
 ```
 
 # Mutations
@@ -88,6 +92,7 @@ container.querySelector("button.toggle").click()
 <span>
   2
 </span>
+<!---->
 ```
 
 # Mutations
@@ -111,6 +116,7 @@ container.querySelector("button.inc").click()
 <span>
   3
 </span>
+<!---->
 ```
 
 # Mutations

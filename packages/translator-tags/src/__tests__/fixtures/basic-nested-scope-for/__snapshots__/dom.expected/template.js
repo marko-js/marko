@@ -31,7 +31,7 @@ const _setup = _scope => {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko");

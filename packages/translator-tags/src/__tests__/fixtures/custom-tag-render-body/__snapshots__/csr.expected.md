@@ -1,9 +1,13 @@
 # Render undefined
 ```html
+<!---->
+<!---->
 This is the body content
+<!---->
+<!---->
 ```
 
 # Mutations
 ```
-inserted #text0
+inserted #comment0, #comment1, #text2, #comment3, #comment4
 ```

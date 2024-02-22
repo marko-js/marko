@@ -8,11 +8,13 @@
 <div>
   Counts: 1,10
 </div>
+<!---->
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, div1
+inserted button0, div1, #comment2, #comment3
 ```
 
 
@@ -28,6 +30,8 @@ container.querySelector("button").click()
 <div>
   Counts: 2,11
 </div>
+<!---->
+<!---->
 ```
 
 # Mutations
@@ -51,6 +55,8 @@ container.querySelector("button").click()
 <div>
   Counts: 3,12
 </div>
+<!---->
+<!---->
 ```
 
 # Mutations
@@ -74,6 +80,8 @@ container.querySelector("button").click()
 <div>
   Counts: 4,13
 </div>
+<!---->
+<!---->
 ```
 
 # Mutations

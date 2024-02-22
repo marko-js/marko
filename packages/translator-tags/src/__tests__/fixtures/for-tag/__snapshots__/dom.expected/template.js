@@ -30,7 +30,7 @@ const _i$forBody5 = /* @__PURE__ */_value("i", (_scope, i) => {
 const _setup$forBody = _scope => {
   _for8$forBody(_scope, [10, 0, 2]);
 };
-const _forBody7 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div><!>", /* get, next(1), get, out(1), over(1), get, over(1), replace */" D lb b%", _setup$forBody, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure3, _clean) => {
+const _forBody7 = /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div><!><!>", /* get, next(1), get, out(1), over(1), get, over(1), replace */" D lb b%D", _setup$forBody, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure3, _clean) => {
   let i;
   if (!_clean) [i] = _destructure3;
   _i$forBody5(_scope, i, _clean);
@@ -123,7 +123,7 @@ const _setup = _scope => {
   _for9(_scope, [10, 0, 1]);
   _for10(_scope, [10, 0, 1]);
 };
-export const template = "<!><!><!><!><!><!><!><!><!><!>";
-export const walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"%b%b%b%b%b%b%b%b%b%b";
+export const template = "<!><!><!><!><!><!><!><!><!><!><!>";
+export const walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"%b%b%b%b%b%b%b%b%b%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko");

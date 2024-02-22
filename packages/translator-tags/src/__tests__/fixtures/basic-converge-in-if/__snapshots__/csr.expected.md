@@ -1,9 +1,11 @@
 # Render undefined
 ```html
+<!---->
 0
+<!---->
 ```
 
 # Mutations
 ```
-inserted #text0
+inserted #comment0, #text1, #comment2
 ```

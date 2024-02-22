@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <div
   id="ref"
 >
@@ -19,8 +20,8 @@
 
 # Mutations
 ```
-inserted #text0, div1, button2, button3
-inserted div1/#text0
+inserted #comment0, #text1, div2, button3, button4
+inserted div2/#text0
 ```
 
 
@@ -28,6 +29,7 @@ inserted div1/#text0
 container.querySelector("#increment")?.click()
 
 ```html
+<!---->
 <div
   id="ref"
 >
@@ -47,8 +49,8 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-removed #text in div1
-inserted div1/#text0
+removed #text in div2
+inserted div2/#text0
 ```
 
 
@@ -56,6 +58,7 @@ inserted div1/#text0
 container.querySelector("#toggle")?.click()
 
 ```html
+<!---->
 <div
   id="ref"
 >
@@ -75,10 +78,10 @@ container.querySelector("#toggle")?.click()
 
 # Mutations
 ```
-inserted #text0
-removed #text after #text0
-removed #text in div1
-inserted div1/#text0
+inserted #text1
+removed #text after #text1
+removed #text in div2
+inserted div2/#text0
 ```
 
 
@@ -86,6 +89,7 @@ inserted div1/#text0
 container.querySelector("#increment")?.click()
 
 ```html
+<!---->
 <div
   id="ref"
 >
@@ -113,6 +117,7 @@ container.querySelector("#increment")?.click()
 container.querySelector("#toggle")?.click()
 
 ```html
+<!---->
 <div
   id="ref"
 >
@@ -132,8 +137,8 @@ container.querySelector("#toggle")?.click()
 
 # Mutations
 ```
-inserted #text0
-removed #text after #text0
-removed #text in div1
-inserted div1/#text0
+inserted #text1
+removed #text after #text1
+removed #text in div2
+inserted div2/#text0
 ```

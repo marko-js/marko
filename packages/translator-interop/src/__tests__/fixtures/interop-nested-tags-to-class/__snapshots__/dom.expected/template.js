@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/dist/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, staticNodesFragment as _staticNodesFragment, createTemplate as _createTemplate } from "@marko/runtime-tags/dist/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import _marko_tags_compat from "marko/src/runtime/helpers/tags-compat-dom.js";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko", _classLayout);
@@ -25,4 +25,4 @@ const _setup = _scope => {
 export const template = "<!>";
 export const walks = /* replace, over(1) */"%b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, _staticNodesFragment), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");

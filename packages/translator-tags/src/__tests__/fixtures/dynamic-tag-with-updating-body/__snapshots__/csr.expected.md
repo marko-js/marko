@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <div>
   <button
     id="count"
@@ -14,7 +15,7 @@
 
 # Mutations
 ```
-inserted div0, button1
+inserted #comment0, div1, button2
 ```
 
 
@@ -22,6 +23,7 @@ inserted div0, button1
 container.querySelector("#count").click()
 
 ```html
+<!---->
 <div>
   <button
     id="count"
@@ -36,7 +38,7 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-div0/button0/#text0: "0" => "1"
+div1/button0/#text0: "0" => "1"
 ```
 
 
@@ -44,6 +46,7 @@ div0/button0/#text0: "0" => "1"
 container.querySelector("#changeTag").click()
 
 ```html
+<!---->
 <span>
   <button
     id="count"
@@ -58,9 +61,9 @@ container.querySelector("#changeTag").click()
 
 # Mutations
 ```
-inserted span0
-removed div after span0
-inserted span0/button0
+inserted span1
+removed div after span1
+inserted span1/button0
 ```
 
 
@@ -68,6 +71,7 @@ inserted span0/button0
 container.querySelector("#count").click()
 
 ```html
+<!---->
 <span>
   <button
     id="count"
@@ -82,5 +86,5 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-span0/button0/#text0: "0" => "1"
+span1/button0/#text0: "0" => "1"
 ```

@@ -4,11 +4,12 @@
 <span>
   hi
 </span>
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, span1
+inserted button0, span1, #comment2
 ```
 
 
@@ -17,6 +18,7 @@ container.querySelector("button").click()
 
 ```html
 <button />
+<!---->
 ```
 
 # Mutations

@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <div>
   Child 1 has 3
 </div>
@@ -8,7 +9,7 @@
 
 # Mutations
 ```
-inserted div0, button1
+inserted #comment0, div1, button2
 ```
 
 
@@ -16,6 +17,7 @@ inserted div0, button1
 container.querySelector("button").click()
 
 ```html
+<!---->
 <div>
   Child 2 has 3
 </div>
@@ -24,9 +26,9 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted div0
-removed div after div0
-div0/#text1: "" => "3"
+inserted div1
+removed div after div1
+div1/#text1: "" => "3"
 ```
 
 
@@ -34,6 +36,7 @@ div0/#text1: "" => "3"
 container.querySelector("button").click()
 
 ```html
+<!---->
 <div>
   Child 1 has 3
 </div>
@@ -42,7 +45,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted div0
-removed div after div0
-div0/#text1: "" => "3"
+inserted div1
+removed div after div1
+div1/#text1: "" => "3"
 ```

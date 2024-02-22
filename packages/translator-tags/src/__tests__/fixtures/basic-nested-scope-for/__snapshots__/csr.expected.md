@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <button>
   1
 </button>
@@ -36,11 +37,12 @@
 <button>
   12
 </button>
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11
+inserted #comment0, button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, #comment13
 ```
 
 
@@ -48,6 +50,7 @@ inserted button0, button1, button2, button3, button4, button5, button6, button7,
 c => click(c, 2)
 
 ```html
+<!---->
 <button>
   1
 </button>
@@ -97,17 +100,18 @@ c => click(c, 2)
 >
   12
 </button>
+<!---->
 ```
 
 # Mutations
 ```
-button1: attr(data-selected) null => ""
-button1: attr(data-multiple) null => ""
-button3: attr(data-multiple) null => ""
-button5: attr(data-multiple) null => ""
-button7: attr(data-multiple) null => ""
-button9: attr(data-multiple) null => ""
-button11: attr(data-multiple) null => ""
+button2: attr(data-selected) null => ""
+button2: attr(data-multiple) null => ""
+button4: attr(data-multiple) null => ""
+button6: attr(data-multiple) null => ""
+button8: attr(data-multiple) null => ""
+button10: attr(data-multiple) null => ""
+button12: attr(data-multiple) null => ""
 ```
 
 
@@ -115,6 +119,7 @@ button11: attr(data-multiple) null => ""
 c => click(c, 3)
 
 ```html
+<!---->
 <button>
   1
 </button>
@@ -160,20 +165,21 @@ c => click(c, 3)
 >
   12
 </button>
+<!---->
 ```
 
 # Mutations
 ```
-button1: attr(data-selected) "" => null
-button1: attr(data-multiple) "" => null
-button2: attr(data-selected) null => ""
-button2: attr(data-multiple) null => ""
-button3: attr(data-multiple) "" => null
-button5: attr(data-multiple) "" => ""
-button7: attr(data-multiple) "" => null
-button8: attr(data-multiple) null => ""
-button9: attr(data-multiple) "" => null
-button11: attr(data-multiple) "" => ""
+button2: attr(data-selected) "" => null
+button2: attr(data-multiple) "" => null
+button3: attr(data-selected) null => ""
+button3: attr(data-multiple) null => ""
+button4: attr(data-multiple) "" => null
+button6: attr(data-multiple) "" => ""
+button8: attr(data-multiple) "" => null
+button9: attr(data-multiple) null => ""
+button10: attr(data-multiple) "" => null
+button12: attr(data-multiple) "" => ""
 ```
 
 
@@ -181,6 +187,7 @@ button11: attr(data-multiple) "" => ""
 c => click(c, 5)
 
 ```html
+<!---->
 <button>
   1
 </button>
@@ -222,16 +229,17 @@ c => click(c, 5)
 <button>
   12
 </button>
+<!---->
 ```
 
 # Mutations
 ```
-button2: attr(data-selected) "" => null
-button2: attr(data-multiple) "" => null
-button4: attr(data-selected) null => ""
-button4: attr(data-multiple) null => ""
-button5: attr(data-multiple) "" => null
-button8: attr(data-multiple) "" => null
-button9: attr(data-multiple) null => ""
-button11: attr(data-multiple) "" => null
+button3: attr(data-selected) "" => null
+button3: attr(data-multiple) "" => null
+button5: attr(data-selected) null => ""
+button5: attr(data-multiple) null => ""
+button6: attr(data-multiple) "" => null
+button9: attr(data-multiple) "" => null
+button10: attr(data-multiple) null => ""
+button12: attr(data-multiple) "" => null
 ```

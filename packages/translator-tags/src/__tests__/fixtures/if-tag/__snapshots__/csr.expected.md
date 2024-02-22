@@ -1,5 +1,6 @@
 # Render {"a":1,"b":2,"x":false,"y":true}
 ```html
+<!---->
 HelloWorld
 <div>
   B
@@ -8,5 +9,5 @@ HelloWorld
 
 # Mutations
 ```
-inserted #text0, #text1, div2
+inserted #comment0, #text1, #text2, div3
 ```

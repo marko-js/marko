@@ -26,7 +26,7 @@ const _setup = _scope => {
   _tagName(_scope, "span");
   _className(_scope, "A");
 };
-export const template = "<!><button></button>";
-export const walks = /* replace, over(1), get, over(1) */"%b b";
+export const template = "<!><!><button></button>";
+export const walks = /* replace, over(1), get, over(1) */"D%b b";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");

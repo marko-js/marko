@@ -1,9 +1,10 @@
 # Render {"show":true}
 ```html
-
+<!---->
+<!---->
 ```
 
 # Mutations
 ```
-inserted #text0
+inserted #comment0, #text1, #comment2
 ```

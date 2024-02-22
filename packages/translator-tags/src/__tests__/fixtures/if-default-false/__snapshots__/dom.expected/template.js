@@ -14,7 +14,7 @@ const _show = /* @__PURE__ */_value("show", (_scope, show) => {
 const _setup = _scope => {
   _show(_scope, false);
 };
-export const template = "<button></button><!>";
-export const walks = /* get, over(1), replace, over(1) */" b%b";
+export const template = "<button></button><!><!>";
+export const walks = /* get, over(1), replace, over(1) */" b%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko");
