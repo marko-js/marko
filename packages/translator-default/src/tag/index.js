@@ -13,7 +13,7 @@ import { getKeyManager } from "../util/key-manager";
 import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 import { enter, exit } from "../util/plugin-hooks";
 import attributeTranslators from "./attribute";
-import attributeTag from "./attribute-tag";
+import attributeTag, { analyzeAttributeTags } from "./attribute-tag";
 import customTag from "./custom-tag";
 import dynamicTag from "./dynamic-tag";
 import macroTag from "./macro-tag";
@@ -54,6 +54,10 @@ export default {
     }
 
     if (!isAttributeTag(path)) {
+      if (isDynamicTag(path) || !(isMacroTag(path) || isNativeTag(path))) {
+        analyzeAttributeTags(path);
+      }
+
       getKeyManager(path).resolveKey(path);
     }
 
