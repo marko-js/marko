@@ -104,11 +104,15 @@ export function flushInto(
 }
 
 export function getSectionMeta(section: Section) {
+  const writePrefix = section.hasDynamicStart ? "<!>" : "";
+  const writePostfix = section.hasDynamicEnd ? "<!>" : "";
   const writes = getWrites(section);
   return {
     setup: getSetup(section),
     walks: getWalkString(section),
-    writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
+    writes:
+      toTemplateOrStringLiteral([writePrefix, ...writes, writePostfix]) ||
+      t.stringLiteral(""),
     register: getRegisterRenderer(section),
   };
 }

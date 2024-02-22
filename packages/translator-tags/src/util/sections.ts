@@ -1,3 +1,4 @@
+import { isNativeTag, loadFileForTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameTypes } from "./tag-name-type";
@@ -7,6 +8,8 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
+  hasDynamicStart: boolean;
+  hasDynamicEnd: boolean;
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -38,7 +41,6 @@ export function startSection(
       : currentProgramPath.scope.generateUid(
           sectionNamePath.toString() + "Body",
         );
-
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
@@ -46,6 +48,8 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      hasDynamicStart: !!hasDynamicStart(path),
+      hasDynamicEnd: !!hasDynamicEnd(path),
     };
     sections.push(section);
   }
@@ -143,4 +147,69 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   for (let i = sections!.length; i--; ) {
     fn(sections![i]);
   }
+}
+
+function hasDynamicStart(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+  for (const child of path.get("body")) {
+    const dynamic = isDynamic(child, hasDynamicStart);
+    if (dynamic !== null) {
+      return dynamic;
+    }
+  }
+  return null;
+}
+
+function hasDynamicEnd(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+  const body = path.get("body");
+  for (let i = body.length; i--; ) {
+    const dynamic = isDynamic(body[i], hasDynamicEnd);
+    if (dynamic !== null) {
+      return dynamic;
+    }
+  }
+  return null;
+}
+
+/**
+ * @returns null if the node should be skipped
+ */
+function isDynamic(
+  path: t.NodePath<t.Statement>,
+  customTagCallback: (
+    path: t.NodePath<t.Program | t.MarkoTagBody>,
+  ) => boolean | null,
+) {
+  if (
+    t.isMarkoText(path) ||
+    t.isMarkoComment(path) ||
+    t.isMarkoPlaceholder(path) ||
+    t.isMarkoCDATA(path)
+  ) {
+    return false;
+  }
+  if (t.isMarkoScriptlet(path)) {
+    return null;
+  }
+  if (t.isMarkoTag(path.node)) {
+    if (isNativeTag(path as t.NodePath<t.MarkoTag>)) {
+      return false;
+    }
+    if (t.isStringLiteral(path.node.name)) {
+      switch (path.node.name.value) {
+        case "let":
+        case "const":
+        case "attrs":
+        case "effect":
+        case "lifecycle":
+        case "return":
+        case "id":
+          return null;
+      }
+      const tagFile = loadFileForTag(path as t.NodePath<t.MarkoTag>);
+      if (tagFile) {
+        return customTagCallback(tagFile.path);
+      }
+    }
+  }
+  return true;
 }

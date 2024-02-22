@@ -207,8 +207,16 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 }
 
 export function getWalkString(section: Section) {
+  const prefix = section.hasDynamicStart
+    ? String.fromCharCode(WalkCodes.Next + 1)
+    : "";
+  const postfix = section.hasDynamicEnd
+    ? String.fromCharCode(WalkCodes.Next + 1)
+    : "";
+  const walks = getWalks(section);
   const walkLiteral =
-    toTemplateOrStringLiteral(getWalks(section)) || t.stringLiteral("");
+    toTemplateOrStringLiteral([prefix, ...walks, postfix]) ||
+    t.stringLiteral("");
   if ((walkLiteral as t.StringLiteral).value !== "") {
     walkLiteral.leadingComments = [
       {
