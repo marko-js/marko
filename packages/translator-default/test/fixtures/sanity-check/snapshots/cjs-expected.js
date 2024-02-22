@@ -11,7 +11,7 @@ var _classValue = _interopRequireDefault(require("marko/src/runtime/helpers/clas
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _index2 = _interopRequireDefault(require("./components/other/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
+var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _mergeAttrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/merge-attrs.js"));
 var _attrs = _interopRequireDefault(require("marko/src/runtime/html/helpers/attrs.js"));
@@ -71,31 +71,31 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
       out.w("<div></div>");
     }
   }, out, _componentDef, "12", [["click", "handleClick", false, [_b.default, b, ...d]]]);
-  (0, _renderTag.default)(_index2.default, {
+  (0, _renderTag.default)(_index2.default, (0, _attrTag.i)(() => {
+    (0, _attrTag.a)("c", (0, _attrTag.i)(() => {
+      (0, _attrTag.a)("d", {
+        "d": 1,
+        "renderBody": out => {
+          out.w("<div></div>");
+        }
+      });
+      return out => {
+        out.w("<div></div>");
+      };
+    }, {
+      "c": 1
+    }));
+    return out => {
+      out.w("<div></div>");
+    };
+  }, {
     "x": 1,
     ...thing,
     "b": {
       a: 1
     },
-    ...c,
-    "c": {
-      "c": 1,
-      "d": {
-        "d": 1,
-        "renderBody": out => {
-          out.w("<div></div>");
-        },
-        [Symbol.iterator]: _selfIterator.default
-      },
-      "renderBody": out => {
-        out.w("<div></div>");
-      },
-      [Symbol.iterator]: _selfIterator.default
-    },
-    "renderBody": (out, b) => {
-      out.w("<div></div>");
-    }
-  }, out, _componentDef, "14");
+    ...c
+  }), out, _componentDef, "14");
   out.w(`<div${(0, _mergeAttrs.default)({
     "class": "b c",
     "a": "{\"a\":1}",

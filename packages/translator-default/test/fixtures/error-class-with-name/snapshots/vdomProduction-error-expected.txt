@@ -1,7 +1,0 @@
-CompileError
-    at packages/translator-default/test/fixtures/error-class-with-name/template.marko:1:7
-    > 1 | class Test {
-        |       ^^^^ Component class cannot have a name.
-      2 |   onCreate() {
-      3 |
-      4 |   }

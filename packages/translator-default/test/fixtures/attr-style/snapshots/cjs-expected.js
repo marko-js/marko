@@ -7,7 +7,7 @@ var _styleValue = _interopRequireDefault(require("marko/src/runtime/helpers/styl
 var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr.js"));
 var _customTag2 = _interopRequireDefault(require("./components/custom-tag.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
+var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -34,18 +34,18 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   (0, _renderTag.default)(_customTag2.default, {
     "style": "color: green"
   }, out, _componentDef, "5");
-  (0, _dynamicTag.default)(out, input.test, () => ({
-    "style": {
-      color: "green"
-    },
-    "test": {
+  (0, _dynamicTag.default)(out, input.test, () => (0, _attrTag.i)(() => {
+    (0, _attrTag.a)("test", {
       "style": {
         color: "green"
       },
       "renderBody": out => {
         out.w("Hello");
-      },
-      [Symbol.iterator]: _selfIterator.default
+      }
+    });
+  }, {
+    "style": {
+      color: "green"
     }
   }), null, null, null, _componentDef, "6");
 }, {
