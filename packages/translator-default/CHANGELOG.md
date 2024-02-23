@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.31.16
+
+### Patch Changes
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where `:no-update` modifier was not working on special element handlers.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use vdom to vdom comparison for special attributes (input.value, input.checked and option.selected) to improve consistency with how other attributes are handled.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid setting attribute value for special properties (like input.value, input.checked and option.selected)
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize attribute values before setting value to avoid unnecessary work.
+
 ## 5.31.15
 
 ### Patch Changes
