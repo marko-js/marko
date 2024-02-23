@@ -1,0 +1,18 @@
+<test item={ value: "BAD" }>
+    <@item value=1/>
+</>
+
+<test item={ value: "BAD" }>
+    <@item value=1/>
+    <@item value=2/>
+</>
+
+$ const stuff = { item: { value: "BAD" } };
+<test ...stuff>
+    <@item value=1/>
+</>
+
+<test ...stuff>
+    <@item value=1/>
+    <@item value=2/>
+</>

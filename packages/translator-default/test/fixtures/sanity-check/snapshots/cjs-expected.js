@@ -94,7 +94,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     "b": {
       a: 1
     },
-    ...c
+    ...c,
+    "c": void 0
   }), out, _componentDef, "14");
   out.w(`<div${(0, _mergeAttrs.default)({
     "class": "b c",
