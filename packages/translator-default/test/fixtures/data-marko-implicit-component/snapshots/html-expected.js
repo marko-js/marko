@@ -8,7 +8,9 @@ import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.w(`<div${_marko_props(out, _componentDef, {
-    pa: ["class"]
+    pa: {
+      "class": 1
+    }
   })} class=test>`);
   out.w("Hello ");
   out.w(_marko_escapeXml(input.name));
