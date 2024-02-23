@@ -86,7 +86,10 @@ function toHTML(node) {
 
     if (tagName.toUpperCase() === "TEXTAREA") {
       html +=
-        indent + "  VALUE: " + JSON.stringify(el.value || el.___value) + "\n";
+        indent +
+        "  VALUE: " +
+        JSON.stringify(el.value || el.___valueInternal) +
+        "\n";
     } else {
       var curChild = getFirstChild(el);
       while (curChild) {

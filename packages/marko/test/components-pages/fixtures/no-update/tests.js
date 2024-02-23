@@ -3,8 +3,7 @@ var expect = require("chai").expect;
 it("should allow attributes to not be updated", function () {
   var app = window.app;
   var noUpdateComponent = app.getComponent("no-update-attr");
-  var foo = noUpdateComponent.el.getAttribute("data-foo");
-  expect(foo).to.equal("server");
+  expect(noUpdateComponent.el.getAttribute("data-foo")).to.equal("server");
 
   noUpdateComponent.input = {
     name: "browser",
@@ -12,7 +11,35 @@ it("should allow attributes to not be updated", function () {
 
   noUpdateComponent.update();
 
-  expect(foo).to.equal("server");
+  expect(noUpdateComponent.el.getAttribute("data-foo")).to.equal("server");
+});
+
+it("should allow input value to not be updated", function () {
+  var app = window.app;
+  var noUpdateComponent = app.getComponent("no-update-input-value");
+  expect(noUpdateComponent.el.value).to.equal("server");
+
+  noUpdateComponent.input = {
+    name: "browser",
+  };
+
+  noUpdateComponent.update();
+
+  expect(noUpdateComponent.el.value).to.equal("server");
+});
+
+it("should allow textarea value to not be updated", function () {
+  var app = window.app;
+  var noUpdateComponent = app.getComponent("no-update-body-textarea");
+  expect(noUpdateComponent.el.value).to.equal("server");
+
+  noUpdateComponent.input = {
+    name: "browser",
+  };
+
+  noUpdateComponent.update();
+
+  expect(noUpdateComponent.el.value).to.equal("server");
 });
 
 it("should allow a root element to not be updated", function () {
