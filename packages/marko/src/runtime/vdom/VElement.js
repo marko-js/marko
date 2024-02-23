@@ -25,7 +25,7 @@ var FLAG_SPREAD_ATTRS = 4;
 var defineProperty = Object.defineProperty;
 
 var ATTR_HREF = "href";
-var EMPTY_OBJECT = Object.freeze({});
+var EMPTY_OBJECT = Object.freeze(Object.create(null));
 
 function convertAttrValue(type, value) {
   if (value === true) {
@@ -243,14 +243,6 @@ defineProperty(proto, "___value", {
   },
 });
 
-VElement.___removePreservedAttributes = function (attrs) {
-  // By default this static method is a no-op, but if there are any
-  // compiled components that have "no-update" attributes then
-  // `preserve-attrs.js` will be imported and this method will be replaced
-  // with a method that actually does something
-  return attrs;
-};
-
 function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
   var attributes = node.attributes;
   var attrCount = attributes.length;
@@ -303,20 +295,15 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
 VElement.___virtualize = virtualizeElement;
 
 VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
-  var removePreservedAttributes = VElement.___removePreservedAttributes;
-
   var fromFlags = vFromEl.___flags;
   var toFlags = toEl.___flags;
-
-  vElementByDOMNode.set(fromEl, toEl);
-
   var attrs = toEl.___attributes;
-  var props = toEl.___properties;
 
   if (toFlags & FLAG_CUSTOM_ELEMENT) {
     return assign(fromEl, attrs);
   }
 
+  var props = toEl.___properties;
   var attrName;
 
   // We use expando properties to associate the previous HTML
@@ -329,16 +316,12 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
 
   var oldAttrs = vFromEl.___attributes;
 
-  if (oldAttrs) {
-    if (oldAttrs === attrs) {
-      // For constant attributes the same object will be provided
-      // every render and we can use that to our advantage to
-      // not waste time diffing a constant, immutable attribute
-      // map.
-      return;
-    } else {
-      oldAttrs = removePreservedAttributes(oldAttrs, props);
-    }
+  if (oldAttrs === attrs) {
+    // For constant attributes the same object will be provided
+    // every render and we can use that to our advantage to
+    // not waste time diffing a constant, immutable attribute
+    // map.
+    return;
   }
 
   var attrValue;
@@ -356,12 +339,7 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
     return;
   }
 
-  // In some cases we only want to set an attribute value for the first
-  // render or we don't want certain attributes to be touched. To support
-  // that use case we delete out all of the preserved attributes
-  // so it's as if they never existed.
-  attrs = removePreservedAttributes(attrs, props, true);
-
+  var preserve = (props && props.pa) || EMPTY_OBJECT;
   var namespaceURI;
 
   // Loop over all of the attributes in the attribute map and compare
@@ -369,6 +347,10 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
   // null/undefined/false then we want to remove the attribute
   for (attrName in attrs) {
     attrValue = attrs[attrName];
+    if (preserve[attrName] || oldAttrs[attrName] === attrValue) {
+      continue;
+    }
+
     namespaceURI = null;
 
     if (attrName === ATTR_XLINK_HREF) {
@@ -378,7 +360,7 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
 
     if (attrValue == null || attrValue === false) {
       removeAttribute(fromEl, namespaceURI, attrName);
-    } else if (oldAttrs[attrName] !== attrValue) {
+    } else {
       var type = typeof attrValue;
 
       if (type !== "string") {

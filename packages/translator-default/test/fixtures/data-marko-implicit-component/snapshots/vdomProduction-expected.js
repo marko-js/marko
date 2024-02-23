@@ -2,7 +2,6 @@ import { t as _t } from "marko/dist/runtime/vdom/index.js";
 const _marko_componentType = "qc7Y7xBI",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import "marko/dist/runtime/vdom/preserve-attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
@@ -11,7 +10,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.be("div", {
     "class": "test"
   }, "0", _component, null, 0, {
-    pa: ["class"]
+    pa: {
+      "class": 1
+    }
   });
   out.t("Hello ", _component);
   out.t(input.name, _component);

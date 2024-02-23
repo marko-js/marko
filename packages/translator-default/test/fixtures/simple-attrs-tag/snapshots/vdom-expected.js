@@ -2,7 +2,6 @@ import { t as _t } from "marko/src/runtime/vdom/index.js";
 const _marko_componentType = "packages/translator-default/test/fixtures/simple-attrs-tag/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import "marko/src/runtime/vdom/preserve-attrs.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
@@ -23,7 +22,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.e("div", {
     "style": "c:1px"
   }, "3", _component, 0, 0, {
-    pa: ["style"]
+    pa: {
+      style: 1
+    }
   });
   out.e("div", {
     "a": "1",

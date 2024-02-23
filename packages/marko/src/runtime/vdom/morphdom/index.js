@@ -680,8 +680,9 @@ function morphdom(fromNode, toNode, host, componentsContext) {
 
   function morphEl(fromEl, vFromEl, toEl, parentComponent) {
     var nodeName = toEl.___nodeName;
-
     var constId = toEl.___constId;
+    vElementByDOMNode.set(fromEl, toEl);
+
     if (constId !== undefined && vFromEl.___constId === constId) {
       return;
     }

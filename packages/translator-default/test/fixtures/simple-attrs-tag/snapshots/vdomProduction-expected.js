@@ -15,7 +15,6 @@ const _marko_node2 = _marko_constElement("div", {
 const _marko_node3 = _marko_constElement("div", {
   "style": "c:1px"
 }, 0);
-import "marko/dist/runtime/vdom/preserve-attrs.js";
 const _marko_node4 = _marko_constElement("div", {
   "a": "1",
   "style": "c:1px"
@@ -31,7 +30,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.e("div", {
     "style": "c:1px"
   }, "3", _component, 0, 0, {
-    pa: ["style"]
+    pa: {
+      style: 1
+    }
   });
   out.n(_marko_node4, _component);
 }, {
