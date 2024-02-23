@@ -11,7 +11,6 @@ var KeySequence = require("../../components/KeySequence");
 var VElement = require("../vdom").___VElement;
 var fragment = require("./fragment");
 var helpers = require("./helpers");
-var specialElHandlers = require("./specialElHandlers");
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var keysByDOMNode = domData.___keyByDOMNode;
@@ -693,13 +692,14 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       return;
     }
 
-    if (nodeName !== "textarea") {
+    if (nodeName === "textarea") {
+      var newValue = toEl.___valueInternal || "";
+      var oldValue = vFromEl.___valueInternal || "";
+      if (oldValue !== newValue) {
+        fromEl.value = newValue;
+      }
+    } else {
       morphChildren(fromEl, toEl, parentComponent);
-    }
-
-    var specialElHandler = specialElHandlers[nodeName];
-    if (specialElHandler !== undefined) {
-      specialElHandler(fromEl, toEl);
     }
   } // END: morphEl(...)
 

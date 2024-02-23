@@ -104,10 +104,39 @@ function serializeNode(node) {
           continue;
         }
 
+        if (nodeName === "INPUT") {
+          if (qualifiedName === "checked" || qualifiedName === "value") {
+            continue;
+          }
+        } else if (nodeName === "OPTION") {
+          if (qualifiedName === "selected") {
+            continue;
+          }
+        }
+
         if (attr.namespaceURI) {
           qualifiedName = attr.namespaceURI + ":" + qualifiedName;
         }
         attributesArray.push(" " + qualifiedName + '="' + attr.value + '"');
+      }
+    }
+
+    if (nodeName === "INPUT") {
+      if (el.checked) {
+        attributesArray.push(' checked=""');
+      }
+
+      if (el.value) {
+        if (
+          el.value !== "on" ||
+          (el.type !== "radio" && el.type !== "checkbox")
+        ) {
+          attributesArray.push(' value="' + el.value + '"');
+        }
+      }
+    } else if (nodeName === "OPTION") {
+      if (el.selected) {
+        attributesArray.push(' selected=""');
       }
     }
 
@@ -117,11 +146,15 @@ function serializeNode(node) {
 
     html += ">\n";
 
-    var childNodes = el.childNodes;
+    if (nodeName === "TEXTAREA" && el.value) {
+      html += indent + "  " + JSON.stringify(el.value) + "\n";
+    } else {
+      var childNodes = el.childNodes;
 
-    if (childNodes && childNodes.length) {
-      for (i = 0; i < childNodes.length; i++) {
-        serializeHelper(childNodes[i], indent + "  ");
+      if (childNodes && childNodes.length) {
+        for (i = 0; i < childNodes.length; i++) {
+          serializeHelper(childNodes[i], indent + "  ");
+        }
       }
     }
   }
