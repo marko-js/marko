@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.32.12
+
+### Patch Changes
+
+- [#2119](https://github.com/marko-js/marko/pull/2119) [`ee2d9f9`](https://github.com/marko-js/marko/commit/ee2d9f9880273382812690bf2609c6b8d698c0b1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with merging input and attribute tags if input defined the same property as the attribute tag name.
+
+- Updated dependencies [[`ee2d9f9`](https://github.com/marko-js/marko/commit/ee2d9f9880273382812690bf2609c6b8d698c0b1)]:
+  - @marko/translator-default@5.31.17
+
 ## 5.32.11
 
 ### Patch Changes
