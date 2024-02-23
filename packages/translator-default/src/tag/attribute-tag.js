@@ -10,6 +10,7 @@ import {
 import { types as t } from "@marko/compiler";
 import { getAttrs } from "./util";
 
+const attributeTagsForTag = new WeakMap();
 const contentTypeCache = new WeakMap();
 const ContentType = {
   attribute: 0,
@@ -51,7 +52,39 @@ export function analyzeAttributeTags(rootTag) {
 
         const parentTag = findParentTag(child);
         const parentTagExtra = (parentTag.node.extra ||= {});
-        parentTagExtra.hasAttributeTags = true;
+        const parentSeenAttributeTagProperties =
+          attributeTagsForTag.get(parentTag);
+        let hasAttributeTags = false;
+
+        if (!parentSeenAttributeTagProperties) {
+          parentTagExtra.hasAttributeTags = true;
+          attributeTagsForTag.set(parentTag, new Set([targetProperty]));
+        } else if (parentSeenAttributeTagProperties.has(targetProperty)) {
+          hasAttributeTags = true;
+        } else {
+          parentSeenAttributeTagProperties.add(targetProperty);
+        }
+
+        if (!hasAttributeTags) {
+          if (
+            parentTag
+              .get("attributes")
+              .some(
+                (attr) =>
+                  attr.isMarkoSpreadAttribute() ||
+                  attr.node.name === targetProperty,
+              )
+          ) {
+            parentTag.pushContainer(
+              "attributes",
+              t.markoAttribute(
+                targetProperty,
+                t.unaryExpression("void", t.numericLiteral(0)),
+              ),
+            );
+          }
+        }
+
         parentTags.push(child);
         visit.push(child);
       } else if (isTransparentTag(child)) {

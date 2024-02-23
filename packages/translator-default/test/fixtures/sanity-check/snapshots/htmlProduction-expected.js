@@ -76,7 +76,8 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "b": {
       a: 1
     },
-    ...c
+    ...c,
+    "c": void 0
   }), out, _componentDef, "14");
   out.w(`<div${_marko_merge_attrs({
     "class": "b c",
