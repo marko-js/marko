@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.13
+
+### Patch Changes
+
+- [#2121](https://github.com/marko-js/marko/pull/2121) [`ddf3b5e`](https://github.com/marko-js/marko/commit/ddf3b5ef3279e3b0a93271d3022074393559aafd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where splitText was incorrectly called during hydrate when the text node content did not match up.
+
 ## 5.32.12
 
 ### Patch Changes
