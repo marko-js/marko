@@ -180,7 +180,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           (matchingFromComponent = existingComponentLookup[component.id]) ===
           undefined
         ) {
-          if (isHydrate === true) {
+          if (isHydrate) {
             var rootNode = beginFragmentNode(curFromNodeChild, fromNode);
             component.___rootNode = rootNode;
             componentByDOMNode.set(rootNode, component);
@@ -322,7 +322,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             matchingFromEl === undefined ||
             matchingFromEl === curFromNodeChild
           ) {
-            if (isHydrate === true && curFromNodeChild) {
+            if (isHydrate && curFromNodeChild) {
               if (
                 curFromNodeChild.nodeType === ELEMENT_NODE &&
                 (curToNodeChild.___preserve ||
@@ -546,7 +546,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             // Both nodes being compared are Element nodes
             curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
             if (curVFromNodeChild === undefined) {
-              if (isHydrate === true) {
+              if (isHydrate) {
                 curVFromNodeChild = virtualizeElement(curFromNodeChild);
 
                 if (
@@ -589,21 +589,24 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           ) {
             // Both nodes being compared are Text or Comment nodes
             isCompatible = true;
-            // Simply update nodeValue on the original node to
-            // change the text value
-
-            if (
-              isHydrate === true &&
-              toNextSibling &&
-              curFromNodeType === TEXT_NODE &&
-              toNextSibling.___nodeType === TEXT_NODE
-            ) {
-              fromNextSibling = curFromNodeChild.splitText(
-                curToNodeChild.___nodeValue.length
-              );
-            }
-            if (curFromNodeChild.nodeValue !== curToNodeChild.___nodeValue) {
-              curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
+            var curToNodeValue = curToNodeChild.___nodeValue;
+            var curFromNodeValue = curFromNodeChild.nodeValue;
+            if (curFromNodeValue !== curToNodeValue) {
+              if (
+                isHydrate &&
+                curFromNodeType === TEXT_NODE &&
+                curFromNodeValue.startsWith(curToNodeValue)
+              ) {
+                // In hydrate mode we can use splitText to more efficiently handle
+                // adjacent text vdom nodes that were merged.
+                fromNextSibling = curFromNodeChild.splitText(
+                  curToNodeValue.length,
+                );
+              } else {
+                // Simply update nodeValue on the original node to
+                // change the text value
+                curFromNodeChild.nodeValue = curToNodeValue;
+              }
             }
           }
         }
