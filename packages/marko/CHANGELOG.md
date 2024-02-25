@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.2](https://github.com/marko-js/marko/compare/v4.28.1...v4.28.2) (2024-02-25)
+
+
+### Bug Fixes
+
+* split text node hydrate issue ([cf71c44](https://github.com/marko-js/marko/commit/cf71c4426e815bbc8ee6ca5c977dc7998e0f93e5))
+
 ### [4.28.1](https://github.com/marko-js/marko/compare/v4.28.0...v4.28.1) (2024-02-16)
 
 
