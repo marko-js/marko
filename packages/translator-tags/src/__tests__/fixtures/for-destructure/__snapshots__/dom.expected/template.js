@@ -1,7 +1,7 @@
 import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _description$forBody = /* @__PURE__ */_value("description", (_scope, description) => _data(_scope["#text/1"], description));
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
-const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let name, description;
   if (!_clean) [{
     name,

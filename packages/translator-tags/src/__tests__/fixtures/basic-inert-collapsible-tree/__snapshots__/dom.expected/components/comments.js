@@ -49,7 +49,7 @@ const _input$forBody = /* @__PURE__ */_closure("input", null, void 0, _expr_inpu
 const _setup$forBody = _scope => {
   _open$forBody(_scope, true);
 };
-const _forBody = /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, [_input$forBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, [_input$forBody], void 0, (_scope, _destructure, _clean) => {
   let comment, i;
   if (!_clean) [comment, i] = _destructure;
   _comment$forBody(_scope, comment, _clean);
@@ -66,4 +66,4 @@ export { _input };
 export const template = "<ul></ul>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

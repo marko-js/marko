@@ -24,8 +24,6 @@ export { resetAbortSignal, getAbortSignal } from "./dom/abort-signal";
 
 export { on } from "./dom/event";
 
-export { staticNodesFragment, dynamicFragment } from "./dom/fragment";
-
 export { init, register, registerSubscriber, scopeLookup } from "./dom/resume";
 
 export {

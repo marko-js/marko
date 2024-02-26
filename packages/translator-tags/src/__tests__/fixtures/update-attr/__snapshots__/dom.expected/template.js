@@ -9,4 +9,4 @@ export { _input };
 export const template = "<div a=0></div>";
 export const walks = /* get, over(1) */" b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-attr/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-attr/template.marko");

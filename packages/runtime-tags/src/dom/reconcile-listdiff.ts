@@ -1,6 +1,5 @@
 import type { Scope } from "../common/types";
-import { type DOMFragment, defaultFragment } from "./fragment";
-import { destroyScope } from "./scope";
+import { insertBefore, removeAndDestroyScope } from "./fragment";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller
@@ -9,7 +8,6 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment = defaultFragment,
 ): void {
   let i: number;
   let j: number;
@@ -35,14 +33,14 @@ export function reconcile(
       i++;
     } else if (newScopes.length <= j) {
       // No more elements in new, this is a delete
-      fragment.___remove(destroyScope(a));
+      removeAndDestroyScope(a);
       i++;
     } else if (oldScopes.length <= i) {
       // No more elements in old, this is an addition
-      fragment.___insertBefore(
+      insertBefore(
         b,
         parent,
-        a ? fragment.___getFirstNode(a) : afterReference,
+        a ? (a.___startNode as ChildNode) : afterReference,
       );
       j++;
     } else if (a === b) {
@@ -56,22 +54,22 @@ export function reconcile(
       const wantedElmInOld = aIdx.get(b);
       if (curElmInNew === undefined) {
         // Current element is not in new list, it has been removed
-        fragment.___remove(destroyScope(a));
+        removeAndDestroyScope(a);
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added
-        fragment.___insertBefore(
+        insertBefore(
           b,
           parent,
-          a ? fragment.___getFirstNode(a) : afterReference,
+          a ? (a.___startNode as ChildNode) : afterReference,
         );
         j++;
       } else {
         // Element is in both lists, it has been moved
-        fragment.___insertBefore(
+        insertBefore(
           oldScopes[wantedElmInOld],
           parent,
-          a ? fragment.___getFirstNode(a) : afterReference,
+          a ? (a.___startNode as ChildNode) : afterReference,
         );
         aIdx.delete(wantedElmInOld);
         oldScopes[wantedElmInOld] = null as unknown as Scope;

@@ -79,9 +79,6 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    undefined,
-    undefined,
-    undefined,
     args as any,
   ),
 );

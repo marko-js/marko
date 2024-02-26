@@ -29,4 +29,4 @@ export { _input };
 export const template = "<button>Increment</button><!> <!>";
 export const walks = /* get, over(1), replace, over(2), replace, over(1) */" b%c%b";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");

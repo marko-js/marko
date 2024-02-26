@@ -20,4 +20,4 @@ export { _name };
 export const template = `${_layout_template}`;
 export const walks = /* beginChild, _layout_walks, endChild */`/${_layout_walks}&`;
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");

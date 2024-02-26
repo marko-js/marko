@@ -10,4 +10,4 @@ export { _input };
 export const template = "<!><!><!>";
 export const walks = /* replace, over(1) */"D%bD";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/components/child.marko");

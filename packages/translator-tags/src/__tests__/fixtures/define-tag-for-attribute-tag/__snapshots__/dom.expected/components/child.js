@@ -15,4 +15,4 @@ export { _input };
 export const template = "<div><!></div>";
 export const walks = /* get, next(1), replace, out(1) */" D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko");

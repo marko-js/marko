@@ -27,4 +27,4 @@ export { _input };
 export const template = "<div><!> <!></div>";
 export const walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko");

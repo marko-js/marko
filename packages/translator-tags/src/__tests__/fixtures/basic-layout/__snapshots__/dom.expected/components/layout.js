@@ -12,4 +12,4 @@ export { _renderBody };
 export const template = "<body><!></body>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-layout/components/layout.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-layout/components/layout.marko");

@@ -1,7 +1,7 @@
 import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { setup as _customTag, args as _customTag_args, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 const _count$customTagBody = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/0"], count));
-const _customTagBody = /* @__PURE__ */_createRenderer("<div>Count: <!></div>", /* next(1), over(1), replace */"Db%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _customTagBody = /* @__PURE__ */_createRenderer("<div>Count: <!></div>", /* next(1), over(1), replace */"Db%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let count;
   if (!_clean) [count] = _destructure;
   _count$customTagBody(_scope, count, _clean);

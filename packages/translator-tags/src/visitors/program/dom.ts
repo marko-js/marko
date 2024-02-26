@@ -51,9 +51,6 @@ export default {
             setup,
             closures.length && t.arrayExpression(closures),
             undefined,
-            undefined,
-            undefined,
-            undefined,
             tagParamsSignal?.build(),
           );
           program.node.body.push(
@@ -157,9 +154,6 @@ export default {
               walksIdentifier,
               setupIdentifier,
               closures.length && closuresIdentifier,
-              undefined,
-              undefined,
-              undefined,
               undefined,
               args! && argsSignalIdentifier,
             ),

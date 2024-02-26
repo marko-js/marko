@@ -40,4 +40,4 @@ export { _input };
 export const template = "<button class=inc><!>,<!></button><!><!>";
 export const walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");

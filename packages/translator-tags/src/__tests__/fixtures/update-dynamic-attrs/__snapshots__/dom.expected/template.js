@@ -27,4 +27,4 @@ export { _input };
 export const template = "<div></div><div></div><div></div>";
 export const walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");

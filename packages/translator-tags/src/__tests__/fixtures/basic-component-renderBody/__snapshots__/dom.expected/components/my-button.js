@@ -21,4 +21,4 @@ export { _onClick, _renderBody };
 export const template = "<button><!></button>";
 export const walks = /* get, next(1), replace, out(1) */" D%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko");

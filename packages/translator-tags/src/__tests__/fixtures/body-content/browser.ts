@@ -79,9 +79,6 @@ export const FancyButton = createTemplate(
     undefined,
     undefined,
     undefined,
-    undefined,
-    undefined,
-    undefined,
     FancyButton$attrs,
   ),
 );

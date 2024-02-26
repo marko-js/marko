@@ -1,6 +1,6 @@
 import { data as _data, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _child$forBody = /* @__PURE__ */_value("child", (_scope, child) => _data(_scope["#text/0"], child.text));
-const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let child;
   if (!_clean) [child] = _destructure;
   _child$forBody(_scope, child, _clean);
@@ -18,4 +18,4 @@ export { _input };
 export const template = "<!><!><!>";
 export const walks = /* replace, over(1) */"D%bD";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/move-and-clear-top-level/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/move-and-clear-top-level/template.marko");

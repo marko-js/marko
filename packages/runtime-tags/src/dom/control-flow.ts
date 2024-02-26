@@ -1,5 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import { defaultFragment } from "./fragment";
+import { insertBefore, removeAndDestroyScope } from "./fragment";
 import { reconcile } from "./reconcile";
 import {
   type Renderer,
@@ -85,8 +85,6 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   let prevScope = scope[
     nodeAccessor + AccessorChar.ConditionalScope
   ] as ChildScope;
-  const newFragment = newRenderer?.___fragment ?? defaultFragment;
-  const prevFragment = prevScope?.___renderer?.___fragment ?? defaultFragment;
 
   if (newRenderer) {
     newScope = scope[nodeAccessor + AccessorChar.ConditionalScope] =
@@ -97,12 +95,12 @@ export function setConditionalRenderer<ChildScope extends Scope>(
     scope[nodeAccessor + AccessorChar.ConditionalScope] = undefined;
   }
 
-  newFragment.___insertBefore(
+  insertBefore(
     newScope,
-    prevFragment.___getParentNode(prevScope),
-    prevFragment.___getFirstNode(prevScope),
+    (prevScope.___startNode as ChildNode).parentNode!,
+    prevScope.___startNode as ChildNode,
   );
-  prevFragment.___remove(destroyScope(prevScope));
+  removeAndDestroyScope(prevScope);
 }
 
 export let conditionalOnlyChild = function conditionalOnlyChild(
@@ -138,11 +136,7 @@ export function setConditionalRendererOnlyChild(
   if (newRenderer) {
     const newScope = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
       createScopeWithRenderer(newRenderer, scope.$global, scope));
-    (newRenderer.___fragment ?? defaultFragment).___insertBefore(
-      newScope,
-      referenceNode,
-      null,
-    );
+    insertBefore(newScope, referenceNode, null);
   }
 
   prevScope && destroyScope(prevScope);
@@ -294,20 +288,13 @@ function loop(
           getEmptyScope(referenceNode as Comment);
         }
         const oldLastChild = oldArray[oldArray.length - 1];
-        const fragment = renderer.___fragment ?? defaultFragment;
-        afterReference = fragment.___getAfterNode(oldLastChild);
-        parentNode = fragment.___getParentNode(oldLastChild);
+        afterReference = (oldLastChild.___endNode as ChildNode).nextSibling;
+        parentNode = (oldLastChild.___startNode as ChildNode).parentNode!;
       } else {
         afterReference = null;
         parentNode = referenceNode as Element;
       }
-      reconcile(
-        parentNode,
-        oldArray,
-        newArray!,
-        afterReference,
-        renderer.___fragment,
-      );
+      reconcile(parentNode, oldArray, newArray!, afterReference);
     }
 
     scope[nodeAccessor + AccessorChar.LoopScopeMap] = newMap;

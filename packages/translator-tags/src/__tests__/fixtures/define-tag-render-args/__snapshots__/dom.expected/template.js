@@ -2,7 +2,7 @@ import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as
 const _c$defineBody = /* @__PURE__ */_value("c", (_scope, c) => _data(_scope["#text/2"], c));
 const _b$defineBody = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/1"], b));
 const _a$defineBody = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/0"], a));
-const _defineBody = /* @__PURE__ */_createRenderer("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _defineBody = /* @__PURE__ */_createRenderer("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let a, b, c;
   if (!_clean) [a, b, c] = _destructure;
   _a$defineBody(_scope, a, _clean);
