@@ -22,4 +22,4 @@ export { _input };
 export const template = "<button id=tags> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";
 export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko");
