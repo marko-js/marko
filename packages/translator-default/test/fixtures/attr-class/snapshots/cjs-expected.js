@@ -7,7 +7,7 @@ var _classValue = _interopRequireDefault(require("marko/src/runtime/helpers/clas
 var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr.js"));
 var _customTag2 = _interopRequireDefault(require("./components/custom-tag.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
-var _selfIterator = _interopRequireDefault(require("marko/src/runtime/helpers/self-iterator.js"));
+var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
 var _dynamicTag = _interopRequireDefault(require("marko/src/runtime/helpers/dynamic-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31,21 +31,21 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   (0, _renderTag.default)(_customTag2.default, {
     "class": ["a", false, "b"]
   }, out, _componentDef, "4");
-  (0, _dynamicTag.default)(out, input.test, () => ({
-    "class": ["a", {
-      b: c,
-      d
-    }],
-    "test": {
+  (0, _dynamicTag.default)(out, input.test, () => (0, _attrTag.i)(() => {
+    (0, _attrTag.a)("test", {
       "class": ["a", {
         b: c,
         d
       }],
       "renderBody": out => {
         out.w("Hello");
-      },
-      [Symbol.iterator]: _selfIterator.default
-    }
+      }
+    });
+  }, {
+    "class": ["a", {
+      b: c,
+      d
+    }]
   }), null, null, null, _componentDef, "5");
 }, {
   t: _marko_componentType,

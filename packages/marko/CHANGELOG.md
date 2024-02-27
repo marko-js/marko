@@ -1,5 +1,68 @@
 # Change Log
 
+## 5.32.14
+
+### Patch Changes
+
+- [#2123](https://github.com/marko-js/marko/pull/2123) [`5bcc111`](https://github.com/marko-js/marko/commit/5bcc111a1c7607948413a5cf798d66afc3077a91) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where attribute tags used without renderBody content was clearing existing renderBody content in the input, eg via a spread.
+
+## 5.32.13
+
+### Patch Changes
+
+- [#2121](https://github.com/marko-js/marko/pull/2121) [`ddf3b5e`](https://github.com/marko-js/marko/commit/ddf3b5ef3279e3b0a93271d3022074393559aafd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where splitText was incorrectly called during hydrate when the text node content did not match up.
+
+## 5.32.12
+
+### Patch Changes
+
+- [#2119](https://github.com/marko-js/marko/pull/2119) [`ee2d9f9`](https://github.com/marko-js/marko/commit/ee2d9f9880273382812690bf2609c6b8d698c0b1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with merging input and attribute tags if input defined the same property as the attribute tag name.
+
+- Updated dependencies [[`ee2d9f9`](https://github.com/marko-js/marko/commit/ee2d9f9880273382812690bf2609c6b8d698c0b1)]:
+  - @marko/translator-default@5.31.17
+
+## 5.32.11
+
+### Patch Changes
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where `:no-update` modifier was not working on special element handlers.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use vdom to vdom comparison for special attributes (input.value, input.checked and option.selected) to improve consistency with how other attributes are handled.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid setting attribute value for special properties (like input.value, input.checked and option.selected)
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize attribute values before setting value to avoid unnecessary work.
+
+- Updated dependencies [[`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0), [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0), [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0), [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0)]:
+  - @marko/translator-default@5.31.16
+
+## 5.32.10
+
+### Patch Changes
+
+- [#2115](https://github.com/marko-js/marko/pull/2115) [`a55fb06`](https://github.com/marko-js/marko/commit/a55fb06ec638eb830eb72c71cb766fc05b6ea8cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve nested attribute tag handling with scriptlets.
+
+- Updated dependencies [[`a55fb06`](https://github.com/marko-js/marko/commit/a55fb06ec638eb830eb72c71cb766fc05b6ea8cb)]:
+  - @marko/translator-default@5.31.15
+  - @marko/compiler@5.34.7
+
+## 5.32.9
+
+### Patch Changes
+
+- [#2111](https://github.com/marko-js/marko/pull/2111) [`022879d`](https://github.com/marko-js/marko/commit/022879da1a7589f6207d7bbf47b97d1a2d596781) Thanks [@LuLaValva](https://github.com/LuLaValva)! - add componentIdPrefix to id of await client-reorder
+
+## 5.32.8
+
+### Patch Changes
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`9a18ced`](https://github.com/marko-js/marko/commit/9a18ced27b04b6fbd391d84c61d97269bcf7f851) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix and optimize the output for vdom hoisting.
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`a87b692`](https://github.com/marko-js/marko/commit/a87b69212f8b204dbe3d5a1396d95ddafd1adb85) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix diffing issues when swapping keyed elements between native tags, custom tags and fragments.
+
+- Updated dependencies [[`9a18ced`](https://github.com/marko-js/marko/commit/9a18ced27b04b6fbd391d84c61d97269bcf7f851), [`a87b692`](https://github.com/marko-js/marko/commit/a87b69212f8b204dbe3d5a1396d95ddafd1adb85)]:
+  - @marko/translator-default@5.31.14
+
 ## 5.32.7
 
 ### Patch Changes

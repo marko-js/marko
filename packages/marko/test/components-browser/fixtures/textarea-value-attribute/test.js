@@ -11,11 +11,6 @@ module.exports = function (helpers) {
 
   expect(textarea.value).to.equal("World");
 
-  component.state.value = false;
-  component.update();
-
-  expect(textarea.value).to.equal("");
-
   component.state.value = undefined;
   component.update();
 

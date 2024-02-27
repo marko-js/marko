@@ -7,102 +7,6 @@ import translateAttributes from "./attributes";
 
 const SIMPLE_ATTRS = ["id", "class", "style"];
 
-export function tagArguments(path, isStatic) {
-  const {
-    hub: { file },
-    node,
-  } = path;
-  const {
-    name,
-    key,
-    body: { body },
-    handlers,
-  } = node;
-  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
-  const attrsObj = translateAttributes(path, path.get("attributes"));
-  let runtimeFlags = 0;
-
-  if (!t.isNullLiteral(attrsObj) && !t.isObjectExpression(attrsObj)) {
-    runtimeFlags |= FLAGS.SPREAD_ATTRS;
-  }
-
-  const writeArgs = [
-    name,
-    attrsObj,
-    !key && isStatic ? t.nullLiteral() : key,
-    isStatic ? t.nullLiteral() : file._componentInstanceIdentifier,
-    isStatic
-      ? t.numericLiteral(body.length)
-      : body.length
-        ? t.nullLiteral()
-        : t.numericLiteral(0),
-  ];
-
-  if (node.preserveAttrs) {
-    tagProperties.push(
-      t.objectProperty(
-        t.identifier("pa"),
-        t.arrayExpression(
-          node.preserveAttrs.map((name) => t.stringLiteral(name)),
-        ),
-      ),
-    );
-  }
-
-  if (handlers) {
-    Object.entries(handlers).forEach(
-      ([eventName, { arguments: args, once }]) => {
-        const delegateArgs = [t.stringLiteral(eventName), args[0]];
-
-        // TODO: look into only sending this if once is true.
-        delegateArgs.push(t.booleanLiteral(once));
-
-        if (args.length > 1) {
-          delegateArgs.push(t.arrayExpression(args.slice(1)));
-        }
-
-        // TODO: why do we output eventName twice.
-        tagProperties.push(
-          t.objectProperty(
-            t.stringLiteral(`on${eventName}`),
-            t.callExpression(
-              t.memberExpression(
-                file._componentDefIdentifier,
-                t.identifier("d"),
-              ),
-              delegateArgs,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  if (
-    t.isObjectExpression(attrsObj) &&
-    attrsObj.properties.every((n) => isPropertyName(n, SIMPLE_ATTRS)) &&
-    !node.preserveAttrs
-  ) {
-    runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
-  }
-
-  const tagDef = getTagDef(path);
-
-  if (tagDef) {
-    const { htmlType } = tagDef;
-    if (htmlType === "custom-element") {
-      runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
-    }
-  }
-
-  writeArgs.push(t.numericLiteral(runtimeFlags));
-
-  if (tagProperties.length) {
-    writeArgs.push(t.objectExpression(tagProperties));
-  }
-  return writeArgs;
-}
-
 /**
  * Translates the html streaming version of a standard html element.
  */
@@ -179,4 +83,103 @@ function isPropertyName({ key }, names) {
   } else if (t.isIdentifier(key)) {
     return names.includes(key.name);
   }
+}
+
+function tagArguments(path) {
+  const {
+    hub: { file },
+    node,
+  } = path;
+  const {
+    name,
+    key,
+    body: { body },
+    handlers,
+  } = node;
+  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
+  const attrsObj = translateAttributes(path, path.get("attributes"));
+  let runtimeFlags = 0;
+
+  if (!t.isNullLiteral(attrsObj) && !t.isObjectExpression(attrsObj)) {
+    runtimeFlags |= FLAGS.SPREAD_ATTRS;
+  }
+
+  const writeArgs = [
+    name,
+    attrsObj,
+    key,
+    file._componentInstanceIdentifier,
+    body.length ? t.nullLiteral() : t.numericLiteral(0),
+  ];
+
+  if (node.preserveAttrs) {
+    tagProperties.push(
+      t.objectProperty(
+        t.identifier("pa"),
+        t.objectExpression(
+          node.preserveAttrs.map((name) =>
+            t.objectProperty(
+              t.isValidIdentifier(name)
+                ? t.identifier(name)
+                : t.stringLiteral(name),
+              t.numericLiteral(1),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  if (handlers) {
+    Object.entries(handlers).forEach(
+      ([eventName, { arguments: args, once }]) => {
+        const delegateArgs = [t.stringLiteral(eventName), args[0]];
+
+        // TODO: look into only sending this if once is true.
+        delegateArgs.push(t.booleanLiteral(once));
+
+        if (args.length > 1) {
+          delegateArgs.push(t.arrayExpression(args.slice(1)));
+        }
+
+        // TODO: why do we output eventName twice.
+        tagProperties.push(
+          t.objectProperty(
+            t.stringLiteral(`on${eventName}`),
+            t.callExpression(
+              t.memberExpression(
+                file._componentDefIdentifier,
+                t.identifier("d"),
+              ),
+              delegateArgs,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  if (
+    t.isObjectExpression(attrsObj) &&
+    attrsObj.properties.every((n) => isPropertyName(n, SIMPLE_ATTRS)) &&
+    !node.preserveAttrs
+  ) {
+    runtimeFlags |= FLAGS.HAS_SIMPLE_ATTRS;
+  }
+
+  const tagDef = getTagDef(path);
+
+  if (tagDef) {
+    const { htmlType } = tagDef;
+    if (htmlType === "custom-element") {
+      runtimeFlags |= FLAGS.IS_CUSTOM_ELEMENT;
+    }
+  }
+
+  writeArgs.push(t.numericLiteral(runtimeFlags));
+
+  if (tagProperties.length) {
+    writeArgs.push(t.objectExpression(tagProperties));
+  }
+  return writeArgs;
 }

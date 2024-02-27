@@ -1,5 +1,37 @@
 # Change Log
 
+## 5.31.17
+
+### Patch Changes
+
+- [#2119](https://github.com/marko-js/marko/pull/2119) [`ee2d9f9`](https://github.com/marko-js/marko/commit/ee2d9f9880273382812690bf2609c6b8d698c0b1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression with merging input and attribute tags if input defined the same property as the attribute tag name.
+
+## 5.31.16
+
+### Patch Changes
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where `:no-update` modifier was not working on special element handlers.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use vdom to vdom comparison for special attributes (input.value, input.checked and option.selected) to improve consistency with how other attributes are handled.
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid setting attribute value for special properties (like input.value, input.checked and option.selected)
+
+- [#2117](https://github.com/marko-js/marko/pull/2117) [`462992e`](https://github.com/marko-js/marko/commit/462992ee51fea27e56894b367870e608ea1009a0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Normalize attribute values before setting value to avoid unnecessary work.
+
+## 5.31.15
+
+### Patch Changes
+
+- [#2115](https://github.com/marko-js/marko/pull/2115) [`a55fb06`](https://github.com/marko-js/marko/commit/a55fb06ec638eb830eb72c71cb766fc05b6ea8cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve nested attribute tag handling with scriptlets.
+
+## 5.31.14
+
+### Patch Changes
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`9a18ced`](https://github.com/marko-js/marko/commit/9a18ced27b04b6fbd391d84c61d97269bcf7f851) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix and optimize the output for vdom hoisting.
+
+- [#2108](https://github.com/marko-js/marko/pull/2108) [`a87b692`](https://github.com/marko-js/marko/commit/a87b69212f8b204dbe3d5a1396d95ddafd1adb85) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix diffing issues when swapping keyed elements between native tags, custom tags and fragments.
+
 ## 5.31.13
 
 ### Patch Changes

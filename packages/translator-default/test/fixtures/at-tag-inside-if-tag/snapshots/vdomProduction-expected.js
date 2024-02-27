@@ -2,8 +2,7 @@ import { t as _t } from "marko/dist/runtime/vdom/index.js";
 const _marko_componentType = "cY5vQoUJ",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import _marko_repeatable from "marko/dist/runtime/helpers/repeatable.js";
-import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
+import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/dist/runtime/helpers/attr-tag.js";
 import _customTag from "./components/custom-tag/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
@@ -11,19 +10,16 @@ import { r as _marko_registerComponent } from "marko/dist/runtime/components/reg
 _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
-  let _thing = null;
-  if (x) {
-    _thing = _marko_repeatable(_thing, {
-      "x": 1,
-      "renderBody": out => {
-        out.t("Hello", _component);
-      },
-      [Symbol.iterator]: _marko_self_iterator
-    });
-  }
-  _marko_tag(_customTag, {
-    "thing": _thing
-  }, out, _componentDef, "0");
+  _marko_tag(_customTag, _marko_render_input(() => {
+    if (x) {
+      _marko_repeatable_attr_tag("thing", {
+        "x": 1,
+        "renderBody": out => {
+          out.t("Hello", _component);
+        }
+      });
+    }
+  }), out, _componentDef, "0");
 }, {
   t: _marko_componentType,
   i: true

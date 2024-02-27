@@ -472,10 +472,9 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/helpers/assign.js`,
     `${base}runtime/helpers/class-value.js`,
     `${base}runtime/helpers/dynamic-tag.js`,
-    `${base}runtime/helpers/load-nested-tag.js`,
+    `${base}runtime/helpers/attr-tag.js`,
     `${base}runtime/helpers/merge.js`,
     `${base}runtime/helpers/repeatable.js`,
-    `${base}runtime/helpers/self-iterator.js`,
     `${base}runtime/helpers/render-tag.js`,
     `${base}runtime/helpers/style-value.js`,
     `${base}runtime/helpers/to-string.js`,
@@ -505,10 +504,7 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/vdom/index.js`,
           `${base}runtime/vdom/hot-reload.js`,
           `${base}runtime/vdom/helpers/attrs.js`,
-          `${base}runtime/vdom/helpers/const.js`,
-          `${base}runtime/vdom/helpers/v-element.js`,
-          `${base}runtime/vdom/helpers/v-text.js`,
-          `${base}runtime/vdom/preserve-attrs.js`,
+          `${base}runtime/vdom/helpers/const-element.js`,
         ]),
   ];
 }

@@ -15,7 +15,7 @@ module.exports = function (helpers) {
     .t("foo")
     .t("bar");
 
-  expect(textarea.___value).to.equal("foobar");
+  expect(textarea.___valueInternal).to.equal("foobar");
 
   return textarea;
 };

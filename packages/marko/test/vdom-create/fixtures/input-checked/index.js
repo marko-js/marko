@@ -7,6 +7,6 @@ module.exports = function (helpers) {
     0 /* childCount */,
   );
 
-  expect(el.checked).to.equal(true);
+  expect(el.___attributes.checked).to.equal(true);
   return el;
 };

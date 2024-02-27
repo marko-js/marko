@@ -75,8 +75,15 @@ export default function (path, isNullable) {
     tagProperties.push(
       t.objectProperty(
         t.identifier("pa"),
-        t.arrayExpression(
-          node.preserveAttrs.map((name) => t.stringLiteral(name)),
+        t.objectExpression(
+          node.preserveAttrs.map((name) =>
+            t.objectProperty(
+              t.isValidIdentifier(name)
+                ? t.identifier(name)
+                : t.stringLiteral(name),
+              t.numericLiteral(1),
+            ),
+          ),
         ),
       ),
     );

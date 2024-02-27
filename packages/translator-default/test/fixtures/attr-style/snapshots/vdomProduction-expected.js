@@ -3,16 +3,16 @@ const _marko_componentType = "Up7A+MWi",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_style_merge from "marko/dist/runtime/helpers/style-value.js";
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
-const _marko_node = _marko_createElement("div", {
+import _marko_constElement from "marko/dist/runtime/vdom/helpers/const-element.js";
+const _marko_node = _marko_constElement("div", {
   "style": "width:100px"
-}, "1", null, 0, 1);
-const _marko_node2 = _marko_createElement("div", {
+}, 0);
+const _marko_node2 = _marko_constElement("div", {
   "style": "color: green"
-}, "2", null, 0, 1);
+}, 0);
 import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
-import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
+import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/dist/runtime/helpers/attr-tag.js";
 import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
@@ -39,18 +39,18 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   _marko_tag(_customTag, {
     "style": "color: green"
   }, out, _componentDef, "5");
-  _marko_dynamic_tag(out, input.test, () => ({
-    "style": {
-      color: "green"
-    },
-    "test": {
+  _marko_dynamic_tag(out, input.test, () => _marko_render_input(() => {
+    _marko_repeatable_attr_tag("test", {
       "style": {
         color: "green"
       },
       "renderBody": out => {
         out.t("Hello", _component);
-      },
-      [Symbol.iterator]: _marko_self_iterator
+      }
+    });
+  }, {
+    "style": {
+      color: "green"
     }
   }), null, null, null, _componentDef, "6");
 }, {

@@ -9,6 +9,6 @@ module.exports = function (helpers) {
     0 /* childCount */,
   );
 
-  expect(el.___value).to.equal("foo");
+  expect(el.___attributes.value).to.equal("foo");
   return el;
 };

@@ -7,6 +7,6 @@ module.exports = function (helpers) {
     0 /* childCount */,
   );
 
-  expect(el.disabled).to.equal(true);
+  expect(el.___attributes.disabled).to.equal("disabled");
   return el;
 };

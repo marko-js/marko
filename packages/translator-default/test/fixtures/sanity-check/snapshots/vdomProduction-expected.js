@@ -9,30 +9,30 @@ function more() {
   abc();
 }
 import _marko_class_merge from "marko/dist/runtime/helpers/class-value.js";
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
-const _marko_node = _marko_createElement("input", {
+import _marko_constElement from "marko/dist/runtime/vdom/helpers/const-element.js";
+const _marko_node = _marko_constElement("input", {
   "type": "text"
-}, "9", null, 0, 0);
-const _marko_node2 = _marko_createElement("div", null, "10", null, 0, 0);
+}, 0);
+const _marko_node2 = _marko_constElement("div", null, 0);
 import _marko_dynamic_tag from "marko/dist/runtime/helpers/dynamic-tag.js";
-const _marko_node3 = _marko_createElement("div", null, "13", null, 0, 0);
+const _marko_node3 = _marko_constElement("div", null, 0);
 import _other from "./components/other/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
-const _marko_node4 = _marko_createElement("div", null, "15", null, 0, 0);
-const _marko_node5 = _marko_createElement("div", null, "16", null, 0, 0);
-const _marko_node6 = _marko_createElement("div", null, "17", null, 0, 0);
-import _marko_self_iterator from "marko/dist/runtime/helpers/self-iterator.js";
-const _marko_node7 = _marko_createElement("div", {
+const _marko_node4 = _marko_constElement("div", null, 0);
+import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/dist/runtime/helpers/attr-tag.js";
+const _marko_node5 = _marko_constElement("div", null, 0);
+const _marko_node6 = _marko_constElement("div", null, 0);
+const _marko_node7 = _marko_constElement("div", {
   "c": "1"
-}, "19", null, 0, 0);
-const _marko_node8 = _marko_createElement("div", {
+}, 0);
+const _marko_node8 = _marko_constElement("div", {
   "d": "1"
-}, "20", null, 0, 0);
+}, 0);
 import _marko_merge_attrs from "marko/dist/runtime/vdom/helpers/merge-attrs.js";
-const _marko_node9 = _marko_createElement("div", {
+const _marko_node9 = _marko_constElement("div", {
   "b": "1"
-}, "21", null, 0, 0);
-const _marko_node10 = _marko_createElement("div", null, "22", null, 1, 0).t("123 abc 123");
+}, 0);
+const _marko_node10 = _marko_constElement("div", null, 1).t("123 abc 123");
 import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
@@ -100,31 +100,32 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.n(_marko_node3, _component);
     }
   }, out, _componentDef, "12", [["click", "handleClick", false, [a, b, ...d]]]);
-  _marko_tag(_other, {
+  _marko_tag(_other, _marko_render_input(() => {
+    _marko_repeatable_attr_tag("c", _marko_render_input(() => {
+      _marko_repeatable_attr_tag("d", {
+        "d": 1,
+        "renderBody": out => {
+          out.n(_marko_node4, _component);
+        }
+      });
+      return out => {
+        out.n(_marko_node5, _component);
+      };
+    }, {
+      "c": 1
+    }));
+    return out => {
+      out.n(_marko_node6, _component);
+    };
+  }, {
     "x": 1,
     ...thing,
     "b": {
       a: 1
     },
     ...c,
-    "c": {
-      "c": 1,
-      "d": {
-        "d": 1,
-        "renderBody": out => {
-          out.n(_marko_node6, _component);
-        },
-        [Symbol.iterator]: _marko_self_iterator
-      },
-      "renderBody": out => {
-        out.n(_marko_node5, _component);
-      },
-      [Symbol.iterator]: _marko_self_iterator
-    },
-    "renderBody": (out, b) => {
-      out.n(_marko_node4, _component);
-    }
-  }, out, _componentDef, "14");
+    "c": void 0
+  }), out, _componentDef, "14");
   out.be("div", _marko_merge_attrs({
     "class": "b c",
     "a": "{\"a\":1}",

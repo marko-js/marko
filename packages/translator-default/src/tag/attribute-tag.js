@@ -1,188 +1,219 @@
 import {
   assertNoArgs,
   findParentTag,
+  getFullyResolvedTagName,
   getTagDef,
-  importDefault,
+  importNamed,
   isAttributeTag,
   isTransparentTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import withPreviousLocation from "../util/with-previous-location";
 import { getAttrs } from "./util";
 
-const EMPTY_OBJECT = {};
-const parentIdentifierLookup = new WeakMap();
+const attributeTagsForTag = new WeakMap();
+const contentTypeCache = new WeakMap();
+const ContentType = {
+  attribute: 0,
+  render: 1,
+  mixed: 2,
+};
 
-// TODO: optimize inline repeated @tags.
+export function analyzeAttributeTags(rootTag) {
+  const visit = [rootTag];
+  const parentTags = [rootTag];
+  let i = 0;
+  let attributeTags;
 
-export default function (tag) {
-  const { node } = tag;
-  const namePath = tag.get("name");
-  const tagName = namePath.node.value;
-  const parentPath = findParentTag(tag);
+  while (i < visit.length) {
+    const tag = visit[i++];
+    for (const child of tag.get("body").get("body")) {
+      if (isAttributeTag(child)) {
+        assertNoArgs(child);
+        const tagDef = getTagDef(child) || {};
+        const name = getFullyResolvedTagName(child);
+        let {
+          targetProperty = child.node.name.value.slice(1),
+          isRepeated = false,
+        } = tagDef;
 
-  assertNoArgs(tag);
+        const preserveName =
+          tagDef.preserveName === true || tagDef.removeDashes === false;
 
-  if (!parentPath) {
-    throw namePath.buildCodeFrameError(
-      "@tags must be nested within another element.",
-    );
-  }
+        if (!preserveName) {
+          targetProperty = removeDashes(targetProperty);
+        }
 
-  const parentAttributes = parentPath.get("attributes");
-  const tagDef = getTagDef(tag);
-  const { isRepeated, targetProperty = tagName.slice(1) } =
-    tagDef || EMPTY_OBJECT;
-  const isDynamic = isRepeated || parentPath !== tag.parentPath.parentPath;
-  parentPath.node.exampleAttributeTag = node;
+        const attrTagMeta = ((attributeTags ||= {})[name] ||= {
+          targetProperty,
+          isRepeated,
+        });
 
-  if (isDynamic) {
-    if (!parentPath.node.hasDynamicAttrTags) {
-      const body = parentPath.get("body").get("body");
-      parentPath.node.hasDynamicAttrTags = true;
+        (child.node.extra ||= {}).attributeTag = attrTagMeta;
 
-      for (let i = body.length; i--; ) {
-        const child = body[i];
-        if (isAttributeTagChild(child)) {
-          child.insertAfter(t.stringLiteral("END_ATTRIBUTE_TAGS"));
-          break;
+        const parentTag = findParentTag(child);
+        const parentTagExtra = (parentTag.node.extra ||= {});
+        const parentSeenAttributeTagProperties =
+          attributeTagsForTag.get(parentTag);
+        let hasAttributeTags = false;
+
+        if (!parentSeenAttributeTagProperties) {
+          parentTagExtra.hasAttributeTags = true;
+          attributeTagsForTag.set(parentTag, new Set([targetProperty]));
+        } else if (parentSeenAttributeTagProperties.has(targetProperty)) {
+          hasAttributeTags = true;
+        } else {
+          parentSeenAttributeTagProperties.add(targetProperty);
+        }
+
+        if (!hasAttributeTags) {
+          if (
+            parentTag
+              .get("attributes")
+              .some(
+                (attr) =>
+                  attr.isMarkoSpreadAttribute() ||
+                  attr.node.name === targetProperty,
+              )
+          ) {
+            parentTag.pushContainer(
+              "attributes",
+              t.markoAttribute(
+                targetProperty,
+                t.unaryExpression("void", t.numericLiteral(0)),
+              ),
+            );
+          }
+        }
+
+        parentTags.push(child);
+        visit.push(child);
+      } else if (isTransparentTag(child)) {
+        switch (getContentType(child)) {
+          case ContentType.mixed:
+            throw child.buildCodeFrameError(
+              "Cannot mix @tags with other content when under a control flow.",
+            );
+          case ContentType.attribute:
+            visit.push(child);
+            break;
+          case ContentType.render:
+            break;
         }
       }
     }
-  } else {
-    const previousAttr = parentAttributes.find(
-      (attr) => attr.get("name").node === targetProperty,
-    );
+  }
 
-    if (previousAttr) {
-      const previousValue = previousAttr.get("value").node;
-      if (t.isObjectExpression(previousValue)) {
-        previousAttr.set(
-          "value",
-          t.arrayExpression([previousValue, getAttrTagObject(tag)]),
-        );
-      } else if (t.isArrayExpression(previousAttr)) {
-        previousAttr.elements.push(getAttrTagObject(tag));
-      } else {
-        previousAttr.set(
-          "value",
-          t.callExpression(
-            importDefault(
-              tag.hub.file,
-              "marko/src/runtime/helpers/repeatable.js",
-              "marko_repeatable",
-            ),
-            [previousValue, getAttrTagObject(tag)],
-          ),
-        );
+  if (attributeTags) {
+    (rootTag.node.extra ??= {}).attributeTags = attributeTags;
+
+    for (const parentTag of parentTags) {
+      if (getContentType(parentTag) === ContentType.mixed) {
+        // move all non scriptlet / attribute tag children to the end of the renderbody
+        const renderBody = [
+          t.expressionStatement(t.stringLiteral("END_ATTRIBUTE_TAGS")),
+        ];
+        const body = parentTag.get("body");
+        for (const child of body.get("body")) {
+          if (
+            child.isMarkoScriptlet() ||
+            isAttributeTag(child) ||
+            (isTransparentTag(child) &&
+              getContentType(child) === ContentType.attribute)
+          ) {
+            continue;
+          }
+
+          renderBody.push(child.node);
+          child.remove();
+        }
+
+        body.node.body = body.node.body.concat(renderBody);
       }
-    } else {
-      parentPath.pushContainer(
-        "attributes",
-        t.markoAttribute(targetProperty, getAttrTagObject(tag)),
-      );
     }
+  }
+}
 
-    tag.remove();
-    return;
+export default function translateAttributeTag(tag) {
+  const { node } = tag;
+  const meta = node.extra?.attributeTag;
+  if (!meta) {
+    throw tag
+      .get("name")
+      .buildCodeFrameError("@tags must be nested within another element.");
   }
 
-  let identifiers = parentIdentifierLookup.get(parentPath);
+  assertNoArgs(tag);
 
-  if (!identifiers) {
-    parentIdentifierLookup.set(parentPath, (identifiers = {}));
-  }
-
-  let identifier = identifiers[targetProperty];
-
-  if (!identifier) {
-    identifier = identifiers[targetProperty] =
-      tag.scope.generateUidIdentifier(targetProperty);
-    parentPath
-      .get("body")
-      .unshiftContainer(
-        "body",
-        t.variableDeclaration(isRepeated ? "const" : "let", [
-          t.variableDeclarator(
-            identifier,
-            isRepeated ? t.arrayExpression([]) : t.nullLiteral(),
-          ),
-        ]),
-      );
-    parentPath.pushContainer(
-      "attributes",
-      t.markoAttribute(targetProperty, identifier),
-    );
-  }
-
-  if (isRepeated) {
-    tag.replaceWith(
-      withPreviousLocation(
-        t.expressionStatement(
-          t.callExpression(
-            t.memberExpression(identifier, t.identifier("push")),
-            [getAttrTagObject(tag)],
-          ),
+  tag.replaceWith(
+    t.expressionStatement(
+      t.callExpression(
+        importNamed(
+          tag.hub.file,
+          "marko/src/runtime/helpers/attr-tag.js",
+          meta.isRepeated ? "r" : "a",
+          meta.isRepeated
+            ? "marko_repeated_attr_tag"
+            : "marko_repeatable_attr_tag",
         ),
-        node,
+        [t.stringLiteral(meta.targetProperty), getAttrTagObject(tag)],
       ),
-    );
-  } else {
-    tag.replaceWith(
-      withPreviousLocation(
-        t.expressionStatement(
-          t.assignmentExpression(
-            "=",
-            identifier,
-            t.callExpression(
-              importDefault(
-                tag.hub.file,
-                "marko/src/runtime/helpers/repeatable.js",
-                "marko_repeatable",
-              ),
-              [identifier, getAttrTagObject(tag)],
-            ),
-          ),
-        ),
-        node,
-      ),
-    );
-  }
+    ),
+  );
 }
 
 function getAttrTagObject(tag) {
   const attrs = getAttrs(tag);
-  const iteratorProp = t.objectProperty(
-    t.memberExpression(t.identifier("Symbol"), t.identifier("iterator")),
-    importDefault(
-      tag.hub.file,
-      "marko/src/runtime/helpers/self-iterator.js",
-      "marko_self_iterator",
-    ),
-    true,
-  );
 
   if (t.isNullLiteral(attrs)) {
-    return t.objectExpression([iteratorProp]);
+    return t.objectExpression([]);
   }
 
-  if (t.isObjectExpression(attrs)) {
-    attrs.properties.push(iteratorProp);
-    return attrs;
-  }
-
-  return t.objectExpression([iteratorProp, t.spreadElement(attrs)]);
+  return attrs;
 }
 
-function isAttributeTagChild(tag) {
-  if (isAttributeTag(tag)) {
-    return true;
+function getContentType(tag) {
+  const { node } = tag;
+  const cached = contentTypeCache.get(node);
+  if (cached !== undefined) return cached;
+
+  const body = tag.get("body").get("body");
+  let hasAttributeTag = false;
+  let hasRenderBody = false;
+
+  for (const child of body) {
+    if (isAttributeTag(child)) {
+      hasAttributeTag = true;
+    } else if (isTransparentTag(child)) {
+      switch (getContentType(child)) {
+        case ContentType.mixed:
+          contentTypeCache.set(node, ContentType.mixed);
+          return ContentType.mixed;
+        case ContentType.attribute:
+          hasAttributeTag = true;
+          break;
+        case ContentType.render:
+          hasRenderBody = true;
+          break;
+      }
+    } else if (!child.isMarkoScriptlet()) {
+      hasRenderBody = true;
+    }
+
+    if (hasAttributeTag && hasRenderBody) {
+      contentTypeCache.set(node, ContentType.mixed);
+      return ContentType.mixed;
+    }
   }
 
-  if (isTransparentTag(tag)) {
-    const body = tag.get("body").get("body");
-    return isAttributeTagChild(body[body.length - 1]);
-  }
+  const result = hasAttributeTag ? ContentType.attribute : ContentType.render;
+  contentTypeCache.set(node, result);
+  return result;
+}
 
-  return false;
+function removeDashes(str) {
+  return str.replace(/-([a-z])/g, matchToUpperCase);
+}
+
+function matchToUpperCase(_match, lower) {
+  return lower.toUpperCase();
 }

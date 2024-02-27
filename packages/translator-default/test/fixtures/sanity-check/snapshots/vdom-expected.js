@@ -12,7 +12,7 @@ import _marko_class_merge from "marko/src/runtime/helpers/class-value.js";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _other from "./components/other/index.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
-import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
+import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/src/runtime/helpers/attr-tag.js";
 import _marko_merge_attrs from "marko/src/runtime/vdom/helpers/merge-attrs.js";
 import _marko_attrs from "marko/src/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
@@ -83,31 +83,32 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
       out.e("div", null, "13", _component, 0, 0);
     }
   }, out, _componentDef, "12", [["click", "handleClick", false, [a, b, ...d]]]);
-  _marko_tag(_other, {
+  _marko_tag(_other, _marko_render_input(() => {
+    _marko_repeatable_attr_tag("c", _marko_render_input(() => {
+      _marko_repeatable_attr_tag("d", {
+        "d": 1,
+        "renderBody": out => {
+          out.e("div", null, "15", _component, 0, 0);
+        }
+      });
+      return out => {
+        out.e("div", null, "16", _component, 0, 0);
+      };
+    }, {
+      "c": 1
+    }));
+    return out => {
+      out.e("div", null, "17", _component, 0, 0);
+    };
+  }, {
     "x": 1,
     ...thing,
     "b": {
       a: 1
     },
     ...c,
-    "c": {
-      "c": 1,
-      "d": {
-        "d": 1,
-        "renderBody": out => {
-          out.e("div", null, "17", _component, 0, 0);
-        },
-        [Symbol.iterator]: _marko_self_iterator
-      },
-      "renderBody": out => {
-        out.e("div", null, "16", _component, 0, 0);
-      },
-      [Symbol.iterator]: _marko_self_iterator
-    },
-    "renderBody": (out, b) => {
-      out.e("div", null, "15", _component, 0, 0);
-    }
-  }, out, _componentDef, "14");
+    "c": void 0
+  }), out, _componentDef, "14");
   out.be("div", _marko_merge_attrs({
     "class": "b c",
     "a": "{\"a\":1}",
