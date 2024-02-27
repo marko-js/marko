@@ -22,28 +22,51 @@ var FLAG_SIMPLE_ATTRS = 1;
 var FLAG_CUSTOM_ELEMENT = 2;
 var FLAG_SPREAD_ATTRS = 4;
 
-var defineProperty = Object.defineProperty;
-
 var ATTR_HREF = "href";
-var EMPTY_OBJECT = Object.freeze({});
+var EMPTY_OBJECT = Object.freeze(Object.create(null));
+var specialElHandlers = {
+  option: {
+    selected: function (fromEl, value) {
+      fromEl.selected = value !== undefined;
+    },
+  },
+  input: {
+    value: function (fromEl, value) {
+      fromEl.value = value === undefined ? "" : value;
+    },
+    checked: function (fromEl, value) {
+      fromEl.checked = value !== undefined;
+    },
+  },
+};
 
-function convertAttrValue(type, value) {
+function normalizeValue(value) {
   if (value === true) {
     return "";
-  } else if (type == "object") {
-    switch (value.toString) {
-      case Object.prototype.toString:
-      case Array.prototype.toString:
-        // eslint-disable-next-line no-constant-condition
-        if ("MARKO_DEBUG") {
-          complain(
-            "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
-          );
-        }
-        return JSON.stringify(value);
-      case RegExp.prototype.toString:
-        return value.source;
-    }
+  }
+
+  if (value == null || value === false) {
+    return;
+  }
+
+  switch (typeof value) {
+    case "string":
+      return value;
+    case "object":
+      switch (value.toString) {
+        case Object.prototype.toString:
+        case Array.prototype.toString:
+          // eslint-disable-next-line no-constant-condition
+          if ("MARKO_DEBUG") {
+            complain(
+              "Relying on JSON.stringify for attribute values is deprecated, in future versions of Marko these will be cast to strings instead.",
+            );
+          }
+          return JSON.stringify(value);
+        case RegExp.prototype.toString:
+          return value.source;
+      }
+      break;
   }
 
   return value + "";
@@ -54,22 +77,6 @@ function assign(a, b) {
     if (hasOwnProperty.call(b, key)) {
       a[key] = b[key];
     }
-  }
-}
-
-function setAttribute(el, namespaceURI, name, value) {
-  if (namespaceURI === null) {
-    el.setAttribute(name, value);
-  } else {
-    el.setAttributeNS(namespaceURI, name, value);
-  }
-}
-
-function removeAttribute(el, namespaceURI, name) {
-  if (namespaceURI === null) {
-    el.removeAttribute(name);
-  } else {
-    el.removeAttributeNS(namespaceURI, name);
   }
 }
 
@@ -177,19 +184,11 @@ VElement.prototype = {
       assign(el, attributes);
     } else {
       for (var attrName in attributes) {
-        var attrValue = attributes[attrName];
+        var attrValue = normalizeValue(attributes[attrName]);
 
-        if (attrValue !== false && attrValue != null) {
-          var type = typeof attrValue;
-
-          if (type !== "string") {
-            // Special attributes aren't copied to the real DOM. They are only
-            // kept in the virtual attributes map
-            attrValue = convertAttrValue(type, attrValue);
-          }
-
+        if (attrValue !== undefined) {
           if (attrName == ATTR_XLINK_HREF) {
-            setAttribute(el, NS_XLINK, ATTR_HREF, attrValue);
+            el.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
           } else {
             el.setAttribute(attrName, attrValue);
           }
@@ -197,7 +196,7 @@ VElement.prototype = {
       }
 
       if (tagName === "textarea") {
-        el.defaultValue = el.value = this.___value;
+        el.defaultValue = this.___valueInternal;
       }
     }
 
@@ -217,39 +216,7 @@ VElement.prototype = {
 
 inherit(VElement, VNode);
 
-var proto = (VElementClone.prototype = VElement.prototype);
-
-["checked", "selected", "disabled"].forEach(function (name) {
-  defineProperty(proto, name, {
-    get: function () {
-      var value = this.___attributes[name];
-      return value !== false && value != null;
-    },
-  });
-});
-
-defineProperty(proto, "___value", {
-  get: function () {
-    var value = this.___valueInternal;
-    if (value == null) {
-      value = this.___attributes.value;
-    }
-    return value != null && value !== false
-      ? value + ""
-      : this.___attributes.type === "checkbox" ||
-          this.___attributes.type === "radio"
-        ? "on"
-        : "";
-  },
-});
-
-VElement.___removePreservedAttributes = function (attrs) {
-  // By default this static method is a no-op, but if there are any
-  // compiled components that have "no-update" attributes then
-  // `preserve-attrs.js` will be imported and this method will be replaced
-  // with a method that actually does something
-  return attrs;
-};
+VElementClone.prototype = VElement.prototype;
 
 function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
   var attributes = node.attributes;
@@ -303,20 +270,15 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
 VElement.___virtualize = virtualizeElement;
 
 VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
-  var removePreservedAttributes = VElement.___removePreservedAttributes;
-
   var fromFlags = vFromEl.___flags;
   var toFlags = toEl.___flags;
-
-  vElementByDOMNode.set(fromEl, toEl);
-
   var attrs = toEl.___attributes;
-  var props = toEl.___properties;
 
   if (toFlags & FLAG_CUSTOM_ELEMENT) {
     return assign(fromEl, attrs);
   }
 
+  var props = toEl.___properties;
   var attrName;
 
   // We use expando properties to associate the previous HTML
@@ -329,16 +291,12 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
 
   var oldAttrs = vFromEl.___attributes;
 
-  if (oldAttrs) {
-    if (oldAttrs === attrs) {
-      // For constant attributes the same object will be provided
-      // every render and we can use that to our advantage to
-      // not waste time diffing a constant, immutable attribute
-      // map.
-      return;
-    } else {
-      oldAttrs = removePreservedAttributes(oldAttrs, props);
-    }
+  if (oldAttrs === attrs) {
+    // For constant attributes the same object will be provided
+    // every render and we can use that to our advantage to
+    // not waste time diffing a constant, immutable attribute
+    // map.
+    return;
   }
 
   var attrValue;
@@ -356,36 +314,32 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
     return;
   }
 
-  // In some cases we only want to set an attribute value for the first
-  // render or we don't want certain attributes to be touched. To support
-  // that use case we delete out all of the preserved attributes
-  // so it's as if they never existed.
-  attrs = removePreservedAttributes(attrs, props, true);
-
-  var namespaceURI;
+  var preserve = (props && props.pa) || EMPTY_OBJECT;
+  var specialAttrs = specialElHandlers[toEl.___nodeName] || EMPTY_OBJECT;
+  var specialAttr;
 
   // Loop over all of the attributes in the attribute map and compare
   // them to the value in the old map. However, if the value is
   // null/undefined/false then we want to remove the attribute
   for (attrName in attrs) {
-    attrValue = attrs[attrName];
-    namespaceURI = null;
-
-    if (attrName === ATTR_XLINK_HREF) {
-      namespaceURI = NS_XLINK;
-      attrName = ATTR_HREF;
-    }
-
-    if (attrValue == null || attrValue === false) {
-      removeAttribute(fromEl, namespaceURI, attrName);
-    } else if (oldAttrs[attrName] !== attrValue) {
-      var type = typeof attrValue;
-
-      if (type !== "string") {
-        attrValue = convertAttrValue(type, attrValue);
+    if (
+      !preserve[attrName] &&
+      normalizeValue(oldAttrs[attrName]) !==
+        (attrValue = normalizeValue(attrs[attrName]))
+    ) {
+      if ((specialAttr = specialAttrs[attrName])) {
+        specialAttr(fromEl, attrValue);
+      } else if (attrName === ATTR_XLINK_HREF) {
+        if (attrValue === undefined) {
+          fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
+        } else {
+          fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+        }
+      } else if (attrValue === undefined) {
+        fromEl.removeAttribute(attrName);
+      } else {
+        fromEl.setAttribute(attrName, attrValue);
       }
-
-      setAttribute(fromEl, namespaceURI, attrName, attrValue);
     }
   }
 
@@ -402,7 +356,9 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
   if (toEl.___key === null || fromFlags & FLAG_SPREAD_ATTRS) {
     for (attrName in oldAttrs) {
       if (!(attrName in attrs)) {
-        if (attrName === ATTR_XLINK_HREF) {
+        if ((specialAttr = specialAttrs[attrName])) {
+          specialAttr(fromEl, undefined);
+        } else if (attrName === ATTR_XLINK_HREF) {
           fromEl.removeAttributeNS(ATTR_XLINK_HREF, ATTR_HREF);
         } else {
           fromEl.removeAttribute(attrName);

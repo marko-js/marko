@@ -1,8 +1,0 @@
-packages/translator-default/test/fixtures/error-at-tags-repeated-not-allowed/template.marko(5,6): Only one "@header" tag is allowed here.
-  3 |         Header content
-  4 |     </@header>
-> 5 |     <@header class="my-header">
-    |      ^^^^^^^
-  6 |         Header content
-  7 |     </@header>
-  8 | </some-tag>

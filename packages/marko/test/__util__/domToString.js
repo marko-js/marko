@@ -100,7 +100,7 @@ function vdomToHTML(node, options) {
       html +=
         indent +
         "  VALUE: " +
-        JSON.stringify(ltrim(el.value || el.___value)) +
+        JSON.stringify(ltrim(el.value || el.___valueInternal)) +
         "\n";
     } else {
       var curChild = getFirstChild(el);

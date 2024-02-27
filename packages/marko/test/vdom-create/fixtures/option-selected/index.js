@@ -6,6 +6,6 @@ module.exports = function (helpers) {
     { selected: "" },
     0 /* childCount */,
   );
-  expect(el.selected).to.equal(true);
+  expect(el.___attributes.selected).to.equal("");
   return el;
 };

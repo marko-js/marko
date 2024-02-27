@@ -1,0 +1,19 @@
+import Hello from "./components/app-hello/index.marko"
+class {
+    onCreate() {
+        this.state = {
+            tagName: Hello
+        }
+    }
+    toggle() {
+        this.state.tagName = this.state.tagName === Hello ? "div" : Hello;
+    }
+}
+
+<div key="renderTarget">
+    <${state.tagName}/>
+    <${state.tagName} key="a"/>
+    <if(state.tagName === "div")>
+        <div key="d"/>
+    </>
+</div>

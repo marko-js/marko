@@ -1,14 +1,14 @@
-import { computeNode, getTagDef } from "@marko/babel-utils";
+import { computeNode, getTagDef, importNamed } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import classToString from "marko/src/runtime/helpers/class-value";
 import styleToString from "marko/src/runtime/helpers/style-value";
 
-export function getAttrs(path, preserveNames, skipRenderBody) {
+export function getAttrs(path, preserveNames) {
   const { node } = path;
   const {
+    extra,
     attributes,
     body: { body, params },
-    hasDynamicAttrTags,
   } = node;
   const attrsLen = attributes.length;
   const childLen = body.length;
@@ -16,6 +16,7 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
   const targetObjects = {};
   const tagDef = getTagDef(path);
   const foundProperties = {};
+  const hasAttributeTags = extra?.hasAttributeTags;
 
   for (let i = 0; i < attrsLen; i++) {
     const { name, value } = attributes[i];
@@ -69,34 +70,16 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
     }
   }
 
-  if (!skipRenderBody && childLen) {
-    let endDynamicAttrTagsIndex = -1;
-
-    if (hasDynamicAttrTags) {
-      endDynamicAttrTagsIndex = findLastIndex(
-        body,
-        ({ value }) => value === "END_ATTRIBUTE_TAGS",
-      );
-      path
-        .insertBefore(body.slice(0, endDynamicAttrTagsIndex))
-        .map((child) => child.skip());
-    }
-
-    if (!hasDynamicAttrTags || endDynamicAttrTagsIndex !== childLen - 1) {
-      properties.push(
-        t.objectProperty(
-          t.stringLiteral("renderBody"),
-          t.arrowFunctionExpression(
-            [t.identifier("out"), ...params],
-            t.blockStatement(
-              hasDynamicAttrTags
-                ? body.slice(endDynamicAttrTagsIndex + 1)
-                : body,
-            ),
-          ),
+  if (childLen && !hasAttributeTags) {
+    properties.push(
+      t.objectProperty(
+        t.stringLiteral("renderBody"),
+        t.arrowFunctionExpression(
+          [t.identifier("out"), ...params],
+          t.blockStatement(body),
         ),
-      );
-    }
+      ),
+    );
   }
 
   // Default parameters
@@ -121,15 +104,55 @@ export function getAttrs(path, preserveNames, skipRenderBody) {
       }
     });
 
-  if (properties.length === 0) {
-    return t.nullLiteral();
+  let attrsObject =
+    properties.length === 0
+      ? t.nullLiteral()
+      : !hasAttributeTags &&
+          properties.length === 1 &&
+          t.isSpreadElement(properties[0])
+        ? properties[0].argument
+        : t.objectExpression(properties);
+
+  if (hasAttributeTags) {
+    const endAttributeTagsIndex = findLastIndex(
+      body,
+      (node) =>
+        t.isExpressionStatement(node) &&
+        t.isStringLiteral(node.expression) &&
+        node.expression.value === "END_ATTRIBUTE_TAGS",
+    );
+
+    let attrTagBody = body;
+
+    if (endAttributeTagsIndex !== -1) {
+      attrTagBody = body.slice(0, endAttributeTagsIndex);
+      attrTagBody.push(
+        t.returnStatement(
+          t.arrowFunctionExpression(
+            [t.identifier("out"), ...params],
+            t.blockStatement(body.slice(endAttributeTagsIndex + 1)),
+          ),
+        ),
+      );
+    }
+
+    const attrTagFn = t.arrowFunctionExpression(
+      [],
+      t.blockStatement(attrTagBody),
+    );
+
+    attrsObject = t.callExpression(
+      importNamed(
+        path.hub.file,
+        "marko/src/runtime/helpers/attr-tag.js",
+        "i",
+        "marko_render_input",
+      ),
+      properties.length === 0 ? [attrTagFn] : [attrTagFn, attrsObject],
+    );
   }
 
-  if (properties.length === 1 && t.isSpreadElement(properties[0])) {
-    return properties[0].argument;
-  }
-
-  return t.objectExpression(properties);
+  return attrsObject;
 }
 
 export function buildEventHandlerArray(path) {
@@ -207,6 +230,8 @@ function findLastIndex(arr, check) {
       return i;
     }
   }
+
+  return -1;
 }
 
 function mergeSpread(properties, value) {

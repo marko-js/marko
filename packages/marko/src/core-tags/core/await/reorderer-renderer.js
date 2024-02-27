@@ -24,6 +24,10 @@ module.exports = function (input, out) {
     out.flush();
   }
 
+  /** SHOULD MATCH THE renderer.js IMPLEMENTATION */
+  var reorderFunctionId =
+    out.global.runtimeId !== "M" ? "af" + out.global.runtimeId : "af";
+
   var asyncOut = out.beginAsync({
     last: true,
     timeout: -1,
@@ -52,7 +56,7 @@ module.exports = function (input, out) {
           if (!global._afRuntime) {
             // Minified version of ./client-reorder-runtime.js
             asyncOut.script(
-              `function $af(d,a,e,l,g,h,k,b,f,c){c=$af;if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("af"+d);g=e.getElementById("afph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`,
+              `function $${reorderFunctionId}(d,a,e,l,g,h,k,b,f,c){c=$${reorderFunctionId};if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("${reorderFunctionId}"+d);g=e.getElementById("${reorderFunctionId}ph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`,
             );
             global._afRuntime = true;
           }
@@ -62,11 +66,11 @@ module.exports = function (input, out) {
               '<style nonce="' +
                 escapeDoubleQuotes(global.cspNonce) +
                 '">' +
-                "#af" +
+                `#${reorderFunctionId}` +
                 awaitInfo.id +
                 "{display:none;}" +
                 "</style>" +
-                '<div id="af' +
+                `<div id="${reorderFunctionId}` +
                 awaitInfo.id +
                 '">' +
                 result.toString() +
@@ -74,7 +78,7 @@ module.exports = function (input, out) {
             );
           } else {
             asyncOut.write(
-              '<div id="af' +
+              `<div id="${reorderFunctionId}` +
                 awaitInfo.id +
                 '" style="display:none">' +
                 result.toString() +
@@ -83,7 +87,7 @@ module.exports = function (input, out) {
           }
 
           asyncOut.script(
-            "$af(" +
+            `$${reorderFunctionId}(` +
               (typeof awaitInfo.id === "number"
                 ? awaitInfo.id
                 : '"' + awaitInfo.id + '"') +

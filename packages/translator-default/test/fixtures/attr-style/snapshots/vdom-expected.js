@@ -5,7 +5,7 @@ export default _marko_template;
 import _marko_style_merge from "marko/src/runtime/helpers/style-value.js";
 import _customTag from "./components/custom-tag.marko";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
-import _marko_self_iterator from "marko/src/runtime/helpers/self-iterator.js";
+import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/src/runtime/helpers/attr-tag.js";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
@@ -36,18 +36,18 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   _marko_tag(_customTag, {
     "style": "color: green"
   }, out, _componentDef, "5");
-  _marko_dynamic_tag(out, input.test, () => ({
-    "style": {
-      color: "green"
-    },
-    "test": {
+  _marko_dynamic_tag(out, input.test, () => _marko_render_input(() => {
+    _marko_repeatable_attr_tag("test", {
       "style": {
         color: "green"
       },
       "renderBody": out => {
         out.t("Hello", _component);
-      },
-      [Symbol.iterator]: _marko_self_iterator
+      }
+    });
+  }, {
+    "style": {
+      color: "green"
     }
   }), null, null, null, _componentDef, "6");
 }, {

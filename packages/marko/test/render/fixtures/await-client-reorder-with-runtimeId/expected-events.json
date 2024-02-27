@@ -1,0 +1,30 @@
+[
+    {
+        "event": "await:begin",
+        "arg": {
+            "name": "input.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": "testComponentIdPrefix0"
+        }
+    },
+    {
+        "event": "await:beforeRender",
+        "arg": {
+            "name": "input.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": "testComponentIdPrefix0"
+        }
+    },
+    {
+        "event": "await:finish",
+        "arg": {
+            "name": "input.outer",
+            "clientReorder": true,
+            "dataProvider": {},
+            "id": "testComponentIdPrefix0",
+            "finished": true
+        }
+    }
+]

@@ -11,7 +11,6 @@ var KeySequence = require("../../components/KeySequence");
 var VElement = require("../vdom").___VElement;
 var fragment = require("./fragment");
 var helpers = require("./helpers");
-var specialElHandlers = require("./specialElHandlers");
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var keysByDOMNode = domData.___keyByDOMNode;
@@ -180,7 +179,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           (matchingFromComponent = existingComponentLookup[component.id]) ===
           undefined
         ) {
-          if (isHydrate === true) {
+          if (isHydrate) {
             var rootNode = beginFragmentNode(curFromNodeChild, fromNode);
             component.___rootNode = rootNode;
             componentByDOMNode.set(rootNode, component);
@@ -281,13 +280,26 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           if (!curToNodeChild.___preserve) {
             // We just skip over the fromNode if it is preserved
 
-            if (compareNodeNames(curToNodeChild, curVFromNodeChild)) {
-              morphEl(
-                curFromNodeChild,
-                curVFromNodeChild,
-                curToNodeChild,
-                parentComponent,
-              );
+            if (
+              curVFromNodeChild &&
+              curToNodeType === curVFromNodeChild.___nodeType &&
+              (curToNodeType !== ELEMENT_NODE ||
+                compareNodeNames(curToNodeChild, curVFromNodeChild))
+            ) {
+              if (curToNodeType === ELEMENT_NODE) {
+                morphEl(
+                  curFromNodeChild,
+                  curVFromNodeChild,
+                  curToNodeChild,
+                  parentComponent,
+                );
+              } else {
+                morphChildren(
+                  curFromNodeChild,
+                  curToNodeChild,
+                  parentComponent,
+                );
+              }
             } else {
               // Remove the old node
               detachNode(curFromNodeChild, fromNode, ownerComponent);
@@ -309,7 +321,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             matchingFromEl === undefined ||
             matchingFromEl === curFromNodeChild
           ) {
-            if (isHydrate === true && curFromNodeChild) {
+            if (isHydrate && curFromNodeChild) {
               if (
                 curFromNodeChild.nodeType === ELEMENT_NODE &&
                 (curToNodeChild.___preserve ||
@@ -404,7 +416,12 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             if (!curToNodeChild.___preserve) {
               curVFromNodeChild = vElementByDOMNode.get(matchingFromEl);
 
-              if (compareNodeNames(curVFromNodeChild, curToNodeChild)) {
+              if (
+                curVFromNodeChild &&
+                curToNodeType === curVFromNodeChild.___nodeType &&
+                (curToNodeType !== ELEMENT_NODE ||
+                  compareNodeNames(curVFromNodeChild, curToNodeChild))
+              ) {
                 if (fromNextSibling === matchingFromEl) {
                   // Single element removal:
                   // A <-> A
@@ -455,12 +472,20 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   }
                 }
 
-                morphEl(
-                  matchingFromEl,
-                  curVFromNodeChild,
-                  curToNodeChild,
-                  parentComponent,
-                );
+                if (curToNodeType === ELEMENT_NODE) {
+                  morphEl(
+                    matchingFromEl,
+                    curVFromNodeChild,
+                    curToNodeChild,
+                    parentComponent,
+                  );
+                } else {
+                  morphChildren(
+                    matchingFromEl,
+                    curToNodeChild,
+                    parentComponent,
+                  );
+                }
               } else {
                 insertVirtualNodeBefore(
                   curToNodeChild,
@@ -519,7 +544,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             // Both nodes being compared are Element nodes
             curVFromNodeChild = vElementByDOMNode.get(curFromNodeChild);
             if (curVFromNodeChild === undefined) {
-              if (isHydrate === true) {
+              if (isHydrate) {
                 curVFromNodeChild = virtualizeElement(curFromNodeChild);
 
                 if (
@@ -562,21 +587,24 @@ function morphdom(fromNode, toNode, host, componentsContext) {
           ) {
             // Both nodes being compared are Text or Comment nodes
             isCompatible = true;
-            // Simply update nodeValue on the original node to
-            // change the text value
-
-            if (
-              isHydrate === true &&
-              toNextSibling &&
-              curFromNodeType === TEXT_NODE &&
-              toNextSibling.___nodeType === TEXT_NODE
-            ) {
-              fromNextSibling = curFromNodeChild.splitText(
-                curToNodeChild.___nodeValue.length,
-              );
-            }
-            if (curFromNodeChild.nodeValue !== curToNodeChild.___nodeValue) {
-              curFromNodeChild.nodeValue = curToNodeChild.___nodeValue;
+            var curToNodeValue = curToNodeChild.___nodeValue;
+            var curFromNodeValue = curFromNodeChild.nodeValue;
+            if (curFromNodeValue !== curToNodeValue) {
+              if (
+                isHydrate &&
+                curFromNodeType === TEXT_NODE &&
+                curFromNodeValue.startsWith(curToNodeValue)
+              ) {
+                // In hydrate mode we can use splitText to more efficiently handle
+                // adjacent text vdom nodes that were merged.
+                fromNextSibling = curFromNodeChild.splitText(
+                  curToNodeValue.length,
+                );
+              } else {
+                // Simply update nodeValue on the original node to
+                // change the text value
+                curFromNodeChild.nodeValue = curToNodeValue;
+              }
             }
           }
         }
@@ -654,8 +682,9 @@ function morphdom(fromNode, toNode, host, componentsContext) {
 
   function morphEl(fromEl, vFromEl, toEl, parentComponent) {
     var nodeName = toEl.___nodeName;
-
     var constId = toEl.___constId;
+    vElementByDOMNode.set(fromEl, toEl);
+
     if (constId !== undefined && vFromEl.___constId === constId) {
       return;
     }
@@ -666,13 +695,14 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       return;
     }
 
-    if (nodeName !== "textarea") {
+    if (nodeName === "textarea") {
+      var newValue = toEl.___valueInternal || "";
+      var oldValue = vFromEl.___valueInternal || "";
+      if (oldValue !== newValue) {
+        fromEl.value = newValue;
+      }
+    } else {
       morphChildren(fromEl, toEl, parentComponent);
-    }
-
-    var specialElHandler = specialElHandlers[nodeName];
-    if (specialElHandler !== undefined) {
-      specialElHandler(fromEl, toEl);
     }
   } // END: morphEl(...)
 

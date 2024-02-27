@@ -34,7 +34,6 @@ inserted #document/html0/body1/#text3
 inserted #document/html0/body1/#text5
 removed #comment after #document/html0/body1/#comment2
 removed #comment after #document/html0/body1/#text5
-#document/html0/body1/button4: attr(data-parent) "0" => "0"
 ```
 
 

@@ -2,8 +2,8 @@ import { t as _t } from "marko/dist/runtime/vdom/index.js";
 const _marko_componentType = "O83mlmop",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import _marko_createElement from "marko/dist/runtime/vdom/helpers/v-element.js";
-const _marko_node = _marko_createElement("hello", null, "0", null, 0, 2);
+import _marko_constElement from "marko/dist/runtime/vdom/helpers/const-element.js";
+const _marko_node = _marko_constElement("hello", null, 0);
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
 _marko_registerComponent(_marko_componentType, () => _marko_template);
