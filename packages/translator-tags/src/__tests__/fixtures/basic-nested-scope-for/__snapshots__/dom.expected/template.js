@@ -20,11 +20,11 @@ const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
   _queueEffect(_scope, _num$forBody_effect);
 }, _expr_selected_num$forBody);
 const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _expr_selected_num$forBody);
-const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, (_scope, _destructure, _clean) => {
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, (_scope, _destructure, _clean) => {
   let num;
   if (!_clean) [num] = _destructure;
   _num$forBody(_scope, num, _clean);
-});
+}));
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _selected = /* @__PURE__ */_value("selected", null, _inLoopScope(_selected$forBody, "#text/0"));
 const _setup = _scope => {

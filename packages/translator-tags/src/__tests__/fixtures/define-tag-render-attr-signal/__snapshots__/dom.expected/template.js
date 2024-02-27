@@ -1,12 +1,12 @@
-import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _number$defineBody = /* @__PURE__ */_value("number", (_scope, number) => _data(_scope["#text/0"], number));
-const _defineBody = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let number;
   if (!_clean) [{
     number
   }] = _destructure;
   _number$defineBody(_scope, number, _clean);
-});
+}));
 const _myTag_input = _dynamicTagAttrs("#text/0");
 const _expr__dynamicTagName_x = /* @__PURE__ */_intersection(2, _scope => {
   const {

@@ -1,7 +1,7 @@
-import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, register as _register, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { setup as _layout, args as _layout_args, template as _layout_template, walks as _layout_walks } from "./components/layout.marko";
 const _name$layoutBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_name/subscriber", /* @__PURE__ */_dynamicClosure("name", (_scope, name) => _data(_scope["#text/0"], name)));
-const _layoutBody = /* @__PURE__ */_createRenderer("<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", void 0, [_name$layoutBody]);
+const _layoutBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", void 0, [_name$layoutBody]));
 const _name = /* @__PURE__ */_value("name", null, _dynamicSubscribers("name"));
 const _setup = _scope => {
   _layout(_scope["#childScope/0"]);

@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -33,14 +33,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         _write("Hello");
       }
     }
-  }, /* @__PURE__ */_createRenderer(() => {
+  }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_c/subscriber");
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_d/subscriber");
     _writeScope(_scope1_id, {
       "_": _serializedScope(_scope0_id)
     });
-  }));
+  }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", _scope0_id));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
   _writeScope(_scope0_id, {
     "c": c,

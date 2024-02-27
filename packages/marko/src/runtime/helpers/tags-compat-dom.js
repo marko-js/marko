@@ -8,6 +8,7 @@ const {
   createScopeWithRenderer,
   queueEffect,
   scopeLookup,
+  getRegisteredWithScope,
   register,
 } = require(
   // eslint-disable-next-line no-constant-condition
@@ -29,7 +30,7 @@ export default dynamicTag.___runtimeCompat = function tagsToVdom(
   if (
     tagsRenderer
       ? tagsRenderer.___clone === undefined
-      : renderBody?.___clone === undefined
+      : !Array.isArray(renderBody) && renderBody?.___clone === undefined
   )
     return tagsRenderer;
 
@@ -44,7 +45,7 @@ const TagsCompat = createRenderer(
     const isHydrate =
       ___getComponentsContext(out).___globalContext.___isHydrate;
     const input = Array.isArray(_.i) ? _.i : [_.i];
-    const tagsRenderer = _.r;
+    const tagsRenderer = resolveRegisteredRenderer(_.r);
     const args = tagsRenderer.___args;
 
     component.effects = prepare(() => {
@@ -126,6 +127,7 @@ function create5to6Renderer(renderer, hasAttrs) {
     const isMarko6 = rendererFromAnywhere
       ? rendererFromAnywhere.___clone
       : renderer.___clone;
+
     if (typeof renderer !== "string" && !isMarko6) {
       newRenderer = rendererCache.get(renderer);
       if (!newRenderer) {
@@ -221,3 +223,11 @@ registerComponent(RenderBodyComponentId, () => ({
   _: RenderBodyComponent,
   Component: defineComponent({}, RenderBodyComponent),
 }));
+
+function resolveRegisteredRenderer(renderer) {
+  if (!Array.isArray(renderer)) return renderer;
+
+  const [registerId, scopeId] = renderer;
+  const scope = scopeLookup[scopeId];
+  return getRegisteredWithScope(registerId, scope);
+}

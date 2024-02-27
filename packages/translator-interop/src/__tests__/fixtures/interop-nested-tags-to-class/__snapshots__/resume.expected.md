@@ -25,7 +25,7 @@
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -42,9 +42,13 @@ inserted #document/html0/body1/#text5
 removed #comment after #document/html0/body1/script1
 removed #comment after #document/html0/body1/#text5
 inserted #document/html0/body1/div4/#text0
-inserted #document/html0/body1/div4/#text4
-removed #comment after #document/html0/body1/div4/#text0
-removed #comment after #document/html0/body1/div4/script3
+inserted #document/html0/body1/div4/#text6
+inserted #document/html0/body1/div4/#text1
+inserted #document/html0/body1/div4/#text5
+removed #comment after #document/html0/body1/div4/#text1
+removed #comment after #document/html0/body1/div4/script4
+removed #document/html0/body1/div4/#text6 after #document/html0/body1/div4/#text5
+inserted #document/html0/body1/div4/#text6
 ```
 
 
@@ -77,7 +81,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -89,7 +93,7 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div4/button1/#text0: "0" => "1"
+#document/html0/body1/div4/button2/#text0: "0" => "1"
 ```
 
 
@@ -122,7 +126,7 @@ container.querySelector("#class").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -167,7 +171,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -179,7 +183,7 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div4/button1/#text0: "1" => "2"
+#document/html0/body1/div4/button2/#text0: "1" => "2"
 ```
 
 
@@ -212,7 +216,7 @@ container.querySelector("#class").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -257,7 +261,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -269,5 +273,5 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div4/button1/#text0: "2" => "3"
+#document/html0/body1/div4/button2/#text0: "2" => "3"
 ```

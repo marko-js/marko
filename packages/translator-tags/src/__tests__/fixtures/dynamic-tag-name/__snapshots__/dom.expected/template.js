@@ -1,8 +1,8 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { attr as _attr, bindRenderer as _bindRenderer, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, values as _values, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, bindRenderer as _bindRenderer, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, values as _values, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { setup as _setup, template as _undefined_template, walks as _undefined_walks } from "./components/tag-a/index.marko";
-const _showTagATagABody = /* @__PURE__ */_createRenderer("Body content", "");
+const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
 const _expr__dynamicTagName5_other = /* @__PURE__ */_intersection(2, _scope => {
   const {

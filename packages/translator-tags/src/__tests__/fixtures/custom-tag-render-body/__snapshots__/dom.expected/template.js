@@ -1,6 +1,6 @@
 import { setup as _child, args as _child_args, template as _child_template, walks as _child_walks } from "./components/child/index.marko";
-import { bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _childBody = /* @__PURE__ */_createRenderer("This is the body content", "");
+import { bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, register as _register, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _childBody = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer", /* @__PURE__ */_createRenderer("This is the body content", ""));
 const _setup = _scope => {
   _child(_scope["#childScope/0"]);
   _child_args(_scope["#childScope/0"], [{

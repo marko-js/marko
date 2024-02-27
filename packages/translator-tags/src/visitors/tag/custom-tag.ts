@@ -134,6 +134,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const tagVar = node.var;
   const attrsObject = attrsToObject(tag, true);
   const renderBodyProp = getRenderBodyProp(attrsObject);
+  const section = getSection(tag);
 
   if (node.extra!.tagNameNullable) {
     let renderBodyId: t.Identifier | undefined = undefined;
@@ -143,17 +144,26 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     );
 
     if (renderBodyProp) {
+      const renderBodySection = getSection(tag.get("body"));
       renderBodyId = tag.scope.generateUidIdentifier("renderBody");
       const [renderBodyPath] = tag.insertBefore(
         t.variableDeclaration("const", [
           t.variableDeclarator(
             renderBodyId,
+            // TODO: only register if needed (child template analysis)
             callRuntime(
-              "createRenderer",
-              t.arrowFunctionExpression(
-                renderBodyProp.params,
-                renderBodyProp.body,
+              "register",
+              callRuntime(
+                "createRenderer",
+                t.arrowFunctionExpression(
+                  renderBodyProp.params,
+                  renderBodyProp.body,
+                ),
               ),
+              t.stringLiteral(
+                getResumeRegisterId(renderBodySection, "renderer"),
+              ),
+              getScopeIdIdentifier(section),
             ),
           ),
         ]),
@@ -181,7 +191,6 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       )[0]
       .skip();
   } else if (tagVar) {
-    const section = getSection(tag);
     translateVar(
       tag,
       callExpression(

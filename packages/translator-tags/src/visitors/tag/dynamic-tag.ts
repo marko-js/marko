@@ -25,6 +25,7 @@ import {
   addValue,
   buildSignalIntersections,
   buildSignalValuesWithIntersections,
+  getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
   getSignalFn,
@@ -154,14 +155,24 @@ export default {
         ];
 
         if (t.isObjectExpression(attrsObject) && renderBodyProp) {
+          const section = getSection(tag);
+          const renderBodySection = getSection(tag.get("body"));
           attrsObject.properties.pop();
           args.push(
+            // TODO: omit register if dynamic tag is string only
             callRuntime(
-              "createRenderer",
-              t.arrowFunctionExpression(
-                renderBodyProp.params,
-                toFirstExpressionOrBlock(renderBodyProp.body),
+              "register",
+              callRuntime(
+                "createRenderer",
+                t.arrowFunctionExpression(
+                  renderBodyProp.params,
+                  toFirstExpressionOrBlock(renderBodyProp.body),
+                ),
               ),
+              t.stringLiteral(
+                getResumeRegisterId(renderBodySection, "renderer"),
+              ),
+              getScopeIdIdentifier(section),
             ),
           );
         }
