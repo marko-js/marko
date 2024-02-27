@@ -57,7 +57,8 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 identifier,
-                register
+                //eslint-disable-next-line no-constant-condition
+                register || true
                   ? callRuntime(
                       "register",
                       t.stringLiteral(

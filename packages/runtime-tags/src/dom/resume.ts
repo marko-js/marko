@@ -16,6 +16,17 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
+export function getRegisteredWithScope(registryId: string, scope: Scope) {
+  const obj = registeredObjects.get(registryId);
+  if (!scope) {
+    return obj;
+  } else if ((obj as Renderer).___template) {
+    return bindRenderer(scope, obj as Renderer);
+  } else {
+    return bindFunction(scope, obj as RegisteredFn);
+  }
+}
+
 export const scopeLookup = {} as Record<number | string, Scope>;
 
 export function init(
@@ -35,16 +46,6 @@ export function init(
     scopeLookup[id] ?? (scopeLookup[id] = {} as Scope);
   const stack: number[] = [];
   const fakeArray = { push: resume };
-  const bind = (registryId: string, scope: Scope) => {
-    const obj = registeredObjects.get(registryId);
-    if (!scope) {
-      return obj;
-    } else if ((obj as Renderer).___template) {
-      return bindRenderer(scope, obj as Renderer);
-    } else {
-      return bindFunction(scope, obj as RegisteredFn);
-    }
-  };
 
   if (initialHydration) {
     for (let i = 0; i < initialHydration.length; i += 2) {
@@ -58,7 +59,7 @@ export function init(
     scopesFn:
       | null
       | ((
-          b: typeof bind,
+          b: typeof getRegisteredWithScope,
           s: typeof scopeLookup,
           ...rest: unknown[]
         ) => Record<string, Scope>),
@@ -73,7 +74,7 @@ export function init(
     }
 
     if (scopesFn) {
-      const scopes = scopesFn(bind, scopeLookup);
+      const scopes = scopesFn(getRegisteredWithScope, scopeLookup);
       scopeLookup.$global ||= scopes.$global || {};
 
       /**

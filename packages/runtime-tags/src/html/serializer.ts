@@ -242,13 +242,26 @@ export class Serializer {
           ? this.scopeLookup.get(scopeId) ?? false
           : undefined;
       const ref = scope && this.getRef(scope, "");
-      if (ref === true || ref === false) {
-        throw new Error(
-          "The scope has not yet been defined or is circular. This needs to be fixed in the serializer.",
+      if (ref === true) {
+        const { STACK, INDEX_OR_REF, ASSIGNMENTS } = this;
+        const parent = STACK[STACK.length - 1];
+        const parentRef = INDEX_OR_REF.get(parent) as string;
+        const resolvedRef = INDEX_OR_REF.get(scope);
+        ASSIGNMENTS.set(
+          `${PARAM_BIND}("${registryId}",${resolvedRef})`,
+          (ASSIGNMENTS.get(ref) || "") +
+            toAssignment(parentRef, accessor) +
+            "=",
         );
+        return false;
+      } else if (ref === false) {
+        throw new Error(
+          "The scope has not yet been defined. This needs to be fixed in the serializer.",
+        );
+      } else {
+        BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
+        return true;
       }
-      BUFFER.push(`${PARAM_BIND}("${registryId}"${ref ? "," + ref : ""})`);
-      return true;
     } else if (serialize) {
       const prevSize = BUFFER.length;
       serialize(this, accessor);
@@ -347,10 +360,14 @@ export class Serializer {
         parentRef = this.insertAndGetRef(parent, parentRef);
       }
 
-      ASSIGNMENTS.set(
-        ref,
-        (ASSIGNMENTS.get(ref) || "") + toAssignment(parentRef, accessor) + "=",
-      );
+      if (accessor !== "") {
+        ASSIGNMENTS.set(
+          ref,
+          (ASSIGNMENTS.get(ref) || "") +
+            toAssignment(parentRef, accessor) +
+            "=",
+        );
+      }
       return true;
     }
 

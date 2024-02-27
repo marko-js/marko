@@ -1,5 +1,5 @@
-import { createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _tagNameBody = /* @__PURE__ */_createRenderer("Hello World", "");
+import { createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _tagNameBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-dynamic-native-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Hello World", ""));
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({
   class: ["a", "b"]

@@ -24,7 +24,13 @@ export { resetAbortSignal, getAbortSignal } from "./dom/abort-signal";
 
 export { on } from "./dom/event";
 
-export { init, register, registerSubscriber, scopeLookup } from "./dom/resume";
+export {
+  init,
+  register,
+  registerSubscriber,
+  getRegisteredWithScope,
+  scopeLookup,
+} from "./dom/resume";
 
 export {
   queueSource,

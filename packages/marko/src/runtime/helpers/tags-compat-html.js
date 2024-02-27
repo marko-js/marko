@@ -5,7 +5,6 @@ const tagsAPI = require(
   // eslint-disable-next-line no-constant-condition
   "MARKO_DEBUG" ? "@marko/runtime-tags/debug/html" : "@marko/runtime-tags/html",
 );
-const w10NOOP = require("warp10/constants").NOOP;
 const createRenderer = require("../components/renderer");
 const defaultCreateOut = require("../createOut");
 const dynamicTag5 = require("./dynamic-tag");
@@ -18,13 +17,14 @@ const {
   register,
   writeScope,
   nextScopeId,
+  getRegistryInfo,
 } = tagsAPI;
 
 const RENDER_BODY_TO_JSON = function () {
   // TODO: this should instead return an object that contains getRegistryInfo
   // then in the dom-compat, handle that object to lookup the function in the registry
   // (we also need to do this for events)
-  return w10NOOP;
+  return getRegistryInfo(this);
 };
 
 const isMarko6 = (fn) => !!fn.___isTagsAPI;

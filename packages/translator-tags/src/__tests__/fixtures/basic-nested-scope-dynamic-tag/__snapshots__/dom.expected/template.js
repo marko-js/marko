@@ -12,7 +12,7 @@ const _count$falseChildBody = _registerSubscriber("packages/translator-tags/src/
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count$falseChildBody_effect);
 }));
-const _falseChildBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_count$falseChildBody]);
+const _falseChildBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_count$falseChildBody]));
 const _falseChild_input = _dynamicTagAttrs("#text/0", _falseChildBody);
 const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), void 0, _falseChild_input);
 const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));

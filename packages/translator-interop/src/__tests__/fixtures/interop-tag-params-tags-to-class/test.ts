@@ -14,5 +14,3 @@ function clickClass(container: Element) {
 function clickTags(container: Element) {
   (container.querySelector("#tags") as HTMLButtonElement).click();
 }
-
-export const skip_resume = true;

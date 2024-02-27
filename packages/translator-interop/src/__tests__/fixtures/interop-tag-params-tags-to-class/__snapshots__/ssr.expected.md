@@ -3,7 +3,7 @@
 
 
 # Write
-  <!--M#s0--><button id=class>0</button><div><!--F#2--><h1>hello<!M*1 #text/0></h1><button id=tags>1<!M*1 #text/2> * <!>0<!M*1 #text/3> = <!>0<!M*1 #text/4></button><!M*1 #button/1><script>M$h.push((b,s)=>({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])</script><!--F/--></div><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})</script><!M]0 #text/0><script>M$h.push((b,s)=>({0:s[1]._}),[])</script>
+  <!--M#s0--><button id=class>0</button><div><!--F#2--><h1>hello<!M*1 #text/0></h1><button id=tags>1<!M*1 #text/2> * <!>0<!M*1 #text/3> = <!>0<!M*1 #text/4></button><!M*1 #button/1><script>M$h.push((b,s)=>({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])</script><!--F/--></div><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})</script><!M]0 #text/0><script>M$h.push((b,s)=>({0:s[1]._}),[])</script>
 
 
 # Render "End"
@@ -49,7 +49,7 @@
     </div>
     <!--M/-->
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{},{"f":3}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>

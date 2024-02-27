@@ -3,7 +3,7 @@ const _setup$ifBody_effect = _register("packages/translator-tags/src/__tests__/f
 const _setup$ifBody = _scope => {
   _queueEffect(_scope, _setup$ifBody_effect);
 };
-const _ifBody = /* @__PURE__ */_createRenderer("", "", _setup$ifBody);
+const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", _setup$ifBody));
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _setup = _scope => {
   _if(_scope, true ? _ifBody : null);
