@@ -5,11 +5,10 @@ import type {
   Scope,
   RenderResult,
 } from "../common/types";
-import { removeAndDestroyScope } from "./fragment";
 import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
 import { register } from "./resume";
-import { createScope } from "./scope";
+import { createScope, removeAndDestroyScope } from "./scope";
 
 export const createTemplate = (renderer: Renderer, templateId?: string) =>
   register(templateId!, new ClientTemplate(renderer));

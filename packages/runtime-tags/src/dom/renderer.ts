@@ -52,9 +52,7 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
       ? document.createElement(renderer)
       : renderer.___clone();
   walk(
-    dom.nodeType === NodeType.DocumentFragment
-      ? dom.firstChild!
-      : (dom as ChildNode),
+    dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
     renderer.___walks ?? " ",
     scope,
   );

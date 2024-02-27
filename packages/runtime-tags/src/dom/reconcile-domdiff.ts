@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { insertBefore, removeAndDestroyScope } from "./fragment";
+import { insertBefore, removeAndDestroyScope } from "./scope";
 
 // based off https://github.com/WebReflection/udomdiff/blob/master/esm/index.js
 // middle sized ~.6kb minified smaller
@@ -26,7 +26,7 @@ export function reconcile(
       const node =
         bEnd < bLength
           ? bStart
-            ? (newScopes[bStart - 1].___endNode as ChildNode).nextSibling
+            ? newScopes[bStart - 1].___endNode.nextSibling
             : newScopes[bEnd - bStart].___startNode
           : afterReference;
       while (bStart < bEnd)
@@ -62,11 +62,11 @@ export function reconcile(
       // or asymmetric too
       // [1, 2, 3, 4, 5]
       // [1, 2, 3, 5, 6, 4]
-      const node = (oldScopes[--aEnd].___endNode as ChildNode).nextSibling;
+      const node = oldScopes[--aEnd].___endNode.nextSibling;
       insertBefore(
         newScopes[bStart++],
         parent,
-        (oldScopes[aStart++].___endNode as ChildNode).nextSibling,
+        oldScopes[aStart++].___endNode.nextSibling,
       );
       insertBefore(newScopes[--bEnd], parent, node);
       // mark the future index as identical (yeah, it's dirty, but cheap 👍)
@@ -126,8 +126,8 @@ export function reconcile(
             const oldNode = oldScopes[aStart++];
             insertBefore(
               newScopes[bStart++],
-              (oldNode.___startNode as ChildNode).parentNode!,
-              oldNode.___startNode as ChildNode,
+              oldNode.___startNode.parentNode!,
+              oldNode.___startNode,
             );
             removeAndDestroyScope(oldNode);
           }

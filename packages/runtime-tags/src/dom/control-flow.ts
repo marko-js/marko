@@ -1,12 +1,16 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import { insertBefore, removeAndDestroyScope } from "./fragment";
 import { reconcile } from "./reconcile";
 import {
   type Renderer,
   type RendererOrElementName,
   createScopeWithRenderer,
 } from "./renderer";
-import { destroyScope, getEmptyScope } from "./scope";
+import {
+  destroyScope,
+  getEmptyScope,
+  insertBefore,
+  removeAndDestroyScope,
+} from "./scope";
 import {
   type IntersectionSignal,
   type ValueSignal,
@@ -97,8 +101,8 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
   insertBefore(
     newScope,
-    (prevScope.___startNode as ChildNode).parentNode!,
-    prevScope.___startNode as ChildNode,
+    prevScope.___startNode.parentNode!,
+    prevScope.___startNode,
   );
   removeAndDestroyScope(prevScope);
 }
@@ -143,8 +147,10 @@ export function setConditionalRendererOnlyChild(
 }
 
 const emptyMarkerMap = /* @__PURE__ */ (() =>
-  new Map().set(Symbol("empty"), getEmptyScope()))();
-export const emptyMarkerArray = [/* @__PURE__ */ getEmptyScope()];
+  new Map().set(Symbol("empty"), getEmptyScope(undefined as any)))();
+export const emptyMarkerArray = [
+  /* @__PURE__ */ getEmptyScope(undefined as any),
+];
 const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
@@ -288,8 +294,8 @@ function loop(
           getEmptyScope(referenceNode as Comment);
         }
         const oldLastChild = oldArray[oldArray.length - 1];
-        afterReference = (oldLastChild.___endNode as ChildNode).nextSibling;
-        parentNode = (oldLastChild.___startNode as ChildNode).parentNode!;
+        afterReference = oldLastChild.___endNode.nextSibling;
+        parentNode = oldLastChild.___startNode.parentNode!;
       } else {
         afterReference = null;
         parentNode = referenceNode as Element;

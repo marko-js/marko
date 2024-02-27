@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { insertBefore, removeAndDestroyScope } from "./fragment";
+import { insertBefore, removeAndDestroyScope } from "./scope";
 
 const WRONG_POS = 2147483647;
 
@@ -55,9 +55,7 @@ export function reconcile(
     if (newStart <= newEnd) {
       k = newEnd + 1;
       nextSibling =
-        k < newScopes.length
-          ? (newScopes[k].___startNode as ChildNode)
-          : afterReference;
+        k < newScopes.length ? newScopes[k].___startNode : afterReference;
       do {
         insertBefore(newScopes[newStart++], parent, nextSibling);
       } while (newStart <= newEnd);
@@ -130,18 +128,14 @@ export function reconcile(
             pos = i + newStart;
             newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? (newScopes[pos].___startNode as ChildNode)
-                : afterReference;
+              pos < k ? newScopes[pos].___startNode : afterReference;
             insertBefore(newScope, parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newScope = newScopes[pos++];
               nextSibling =
-                pos < k
-                  ? (newScopes[pos].___startNode as ChildNode)
-                  : afterReference;
+                pos < k ? newScopes[pos].___startNode : afterReference;
               insertBefore(newScope, parent, nextSibling);
             } else {
               --j;
@@ -155,9 +149,7 @@ export function reconcile(
             pos = i + newStart;
             newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? (newScopes[pos].___startNode as ChildNode)
-                : afterReference;
+              pos < k ? newScopes[pos].___startNode : afterReference;
             insertBefore(newScope, parent, nextSibling);
           }
         }

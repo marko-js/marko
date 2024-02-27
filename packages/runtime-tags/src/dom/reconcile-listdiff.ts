@@ -1,5 +1,5 @@
 import type { Scope } from "../common/types";
-import { insertBefore, removeAndDestroyScope } from "./fragment";
+import { insertBefore, removeAndDestroyScope } from "./scope";
 
 // based off https://github.com/luwes/sinuous/blob/master/packages/sinuous/map/src/diff.js
 // naive implementation(optimizes swap over sort) but it sure is small ~1kb minified smaller
@@ -37,11 +37,7 @@ export function reconcile(
       i++;
     } else if (oldScopes.length <= i) {
       // No more elements in old, this is an addition
-      insertBefore(
-        b,
-        parent,
-        a ? (a.___startNode as ChildNode) : afterReference,
-      );
+      insertBefore(b, parent, a ? a.___startNode : afterReference);
       j++;
     } else if (a === b) {
       // No difference, we move on
@@ -58,18 +54,14 @@ export function reconcile(
         i++;
       } else if (wantedElmInOld === undefined) {
         // New element is not in old list, it has been added
-        insertBefore(
-          b,
-          parent,
-          a ? (a.___startNode as ChildNode) : afterReference,
-        );
+        insertBefore(b, parent, a ? a.___startNode : afterReference);
         j++;
       } else {
         // Element is in both lists, it has been moved
         insertBefore(
           oldScopes[wantedElmInOld],
           parent,
-          a ? (a.___startNode as ChildNode) : afterReference,
+          a ? a.___startNode : afterReference,
         );
         aIdx.delete(wantedElmInOld);
         oldScopes[wantedElmInOld] = null as unknown as Scope;
