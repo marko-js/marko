@@ -10,8 +10,8 @@ export type Scope<
   },
 > = [...unknown[]] & {
   ___args: unknown;
-  ___startNode: (Node & ChildNode) | Accessor | undefined;
-  ___endNode: (Node & ChildNode) | Accessor | undefined;
+  ___startNode: Node & ChildNode;
+  ___endNode: Node & ChildNode;
   ___cleanup: Set<Scope> | undefined;
   ___client: boolean;
   ___bound: Map<unknown, unknown> | undefined;

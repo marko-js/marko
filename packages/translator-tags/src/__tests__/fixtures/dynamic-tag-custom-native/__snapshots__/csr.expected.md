@@ -1,14 +1,16 @@
 # Render {}
 ```html
+<!---->
 <button />
 <div>
   Id is dynamic
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, div1
+inserted #comment0, button1, div2, #comment3
 ```
 
 
@@ -16,17 +18,19 @@ inserted button0, div1
 container.querySelector("button").click()
 
 ```html
+<!---->
 <button />
 <div
   id="dynamic"
 />
+<!---->
 ```
 
 # Mutations
 ```
-inserted div1
-removed div after div1
-div1: attr(id) null => "dynamic"
+inserted div2
+removed div after div2
+div2: attr(id) null => "dynamic"
 ```
 
 
@@ -34,15 +38,17 @@ div1: attr(id) null => "dynamic"
 container.querySelector("button").click()
 
 ```html
+<!---->
 <button />
 <div>
   Id is dynamic
 </div>
+<!---->
 ```
 
 # Mutations
 ```
-inserted div1
-removed div after div1
-div1/#text1: "" => "dynamic"
+inserted div2
+removed div after div2
+div2/#text1: "" => "dynamic"
 ```

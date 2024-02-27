@@ -1,12 +1,25 @@
+import {
+  isAttributeTag,
+  isNativeTag,
+  loadFileForTag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
+
+export enum ContentType {
+  Static,
+  Dynamic,
+  Empty,
+}
 
 export type Section = {
   id: number;
   name: string;
   depth: number;
   parent?: Section;
+  startNodeContentType: ContentType;
+  endNodeContentType: ContentType;
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -38,7 +51,6 @@ export function startSection(
       : currentProgramPath.scope.generateUid(
           sectionNamePath.toString() + "Body",
         );
-
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
@@ -46,6 +58,8 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      startNodeContentType: getStartNodeContentType(path),
+      endNodeContentType: getEndNodeContentType(path),
     };
     sections.push(section);
   }
@@ -143,4 +157,72 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   for (let i = sections!.length; i--; ) {
     fn(sections![i]);
   }
+}
+
+function getStartNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+  for (const child of path.get("body")) {
+    const contentType = getNodeContentType(child, "startNodeContentType");
+    if (contentType !== ContentType.Empty) {
+      return contentType;
+    }
+  }
+  return ContentType.Empty;
+}
+
+function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+  const body = path.get("body");
+  for (let i = body.length; i--; ) {
+    const contentType = getNodeContentType(body[i], "endNodeContentType");
+    if (contentType !== ContentType.Empty) {
+      return contentType;
+    }
+  }
+  return ContentType.Empty;
+}
+
+/**
+ * @returns null if the node should be skipped
+ */
+function getNodeContentType(
+  path: t.NodePath<t.Statement>,
+  extraMember: "startNodeContentType" | "endNodeContentType",
+) {
+  if (
+    t.isMarkoText(path) ||
+    t.isMarkoComment(path) ||
+    t.isMarkoPlaceholder(path) ||
+    t.isMarkoCDATA(path)
+  ) {
+    return ContentType.Static;
+  }
+  if (t.isMarkoScriptlet(path)) {
+    return ContentType.Empty;
+  }
+  if (t.isMarkoTag(path.node)) {
+    const tag = path as t.NodePath<t.MarkoTag>;
+    if (isNativeTag(tag)) {
+      return ContentType.Static;
+    }
+    if (isAttributeTag(tag)) {
+      return ContentType.Empty;
+    }
+    if (t.isStringLiteral(path.node.name)) {
+      switch (path.node.name.value) {
+        case "let":
+        case "const":
+        case "attrs":
+        case "effect":
+        case "lifecycle":
+        case "return":
+        case "id":
+        case "define":
+          return ContentType.Empty;
+      }
+      const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
+      if (tagSection) {
+        return tagSection[extraMember] ?? ContentType.Empty;
+      }
+    }
+  }
+  return ContentType.Dynamic;
 }

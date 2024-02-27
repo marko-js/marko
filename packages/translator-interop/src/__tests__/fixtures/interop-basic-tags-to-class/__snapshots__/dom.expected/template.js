@@ -26,7 +26,7 @@ const _setup = _scope => {
   _count(_scope, 0);
   _dynamicTagName_ChildScope(_scope, _classCounter);
 };
-export const template = "<button id=tags> </button><!>";
-export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%b";
+export const template = "<button id=tags> </button><!><!>";
+export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko");

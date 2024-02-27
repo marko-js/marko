@@ -6,7 +6,6 @@ import {
   createRenderer,
   createTemplate,
   data,
-  dynamicFragment,
   inConditionalScope,
   value,
 } from "@marko/runtime-tags/dom";
@@ -163,9 +162,6 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    undefined,
-    undefined,
-    undefined,
     args as any,
   ),
 );
@@ -176,9 +172,6 @@ const ifBody0 = createRenderer(
   undefined,
   [value1$if0, value2$if0],
   0,
-  dynamicFragment,
-  INDEX_IF0.conditional0,
-  INDEX_IF0.conditional1,
 );
 
 const ifBody1 = createRenderer(

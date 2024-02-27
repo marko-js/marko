@@ -21,7 +21,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _childBody)
   }]);
 };
-export const template = `${_child_template}`;
-export const walks = /* beginChild, _child_walks, endChild */`/${_child_walks}&`;
+export const template = `<!>${_child_template}<!>`;
+export const walks = /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko");

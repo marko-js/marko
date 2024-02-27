@@ -7,11 +7,12 @@
   class="toggle"
 />
 The count is 0
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, button1, #text2, #text3
+inserted button0, button1, #text2, #text3, #comment4
 ```
 
 
@@ -26,6 +27,7 @@ container.querySelector("button.inc").click()
   class="toggle"
 />
 The count is 1
+<!---->
 ```
 
 # Mutations
@@ -44,6 +46,7 @@ container.querySelector("button.toggle").click()
 <button
   class="toggle"
 />
+<!---->
 ```
 
 # Mutations
@@ -64,6 +67,7 @@ container.querySelector("button.inc").click()
 <button
   class="toggle"
 />
+<!---->
 ```
 
 # Mutations
@@ -83,6 +87,7 @@ container.querySelector("button.toggle").click()
   class="toggle"
 />
 The count is 2
+<!---->
 ```
 
 # Mutations
@@ -105,6 +110,7 @@ container.querySelector("button.inc").click()
   class="toggle"
 />
 The count is 3
+<!---->
 ```
 
 # Mutations

@@ -2,7 +2,7 @@ import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, valu
 import { setup as _customTag, args as _customTag_args, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
 const _name$customTagBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
 const _count$customTagBody = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/1"], count));
-const _customTagBody = /* @__PURE__ */_createRenderer("<div>Count (<!>): <!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _customTagBody = /* @__PURE__ */_createRenderer("<div>Count (<!>): <!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let count, name;
   if (!_clean) [{
     count,
@@ -18,7 +18,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _customTagBody)
   }]);
 };
-export const template = `${_customTag_template}`;
-export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&`;
+export const template = `${_customTag_template}<!>`;
+export const walks = /* beginChild, _customTag_walks, endChild */`/${_customTag_walks}&D`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko");

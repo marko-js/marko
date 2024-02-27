@@ -1,6 +1,5 @@
 import type { Scope } from "../common/types";
-import { type DOMFragment, defaultFragment } from "./fragment";
-import { destroyScope } from "./scope";
+import { insertBefore, removeAndDestroyScope } from "./scope";
 
 const WRONG_POS = 2147483647;
 
@@ -9,7 +8,6 @@ export function reconcile(
   oldScopes: Scope[],
   newScopes: Scope[],
   afterReference: Node | null,
-  fragment: DOMFragment = defaultFragment,
 ): void {
   let oldStart = 0;
   let newStart = 0;
@@ -57,17 +55,15 @@ export function reconcile(
     if (newStart <= newEnd) {
       k = newEnd + 1;
       nextSibling =
-        k < newScopes.length
-          ? fragment.___getFirstNode(newScopes[k])
-          : afterReference;
+        k < newScopes.length ? newScopes[k].___startNode : afterReference;
       do {
-        fragment.___insertBefore(newScopes[newStart++], parent, nextSibling);
+        insertBefore(newScopes[newStart++], parent, nextSibling);
       } while (newStart <= newEnd);
     }
   } else if (newStart > newEnd) {
     // All new nodes are in the correct place, remove the remaining old nodes.
     do {
-      fragment.___remove(destroyScope(oldScopes[oldStart++]));
+      removeAndDestroyScope(oldScopes[oldStart++]);
     } while (oldStart <= oldEnd);
   } else {
     // Step 2
@@ -106,18 +102,18 @@ export function reconcile(
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        fragment.___insertBefore(newScopes[newStart], parent, afterReference);
+        insertBefore(newScopes[newStart], parent, afterReference);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
-        fragment.___remove(destroyScope(oldScopes[oldStart]));
+        removeAndDestroyScope(oldScopes[oldStart]);
       }
     } else {
       i = oldLength - synced;
       while (i > 0) {
         oldScope = aNullable[oldStart++];
         if (oldScope !== null) {
-          fragment.___remove(destroyScope(oldScope));
+          removeAndDestroyScope(oldScope);
           i--;
         }
       }
@@ -132,19 +128,15 @@ export function reconcile(
             pos = i + newStart;
             newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? fragment.___getFirstNode(newScopes[pos])
-                : afterReference;
-            fragment.___insertBefore(newScope, parent, nextSibling);
+              pos < k ? newScopes[pos].___startNode : afterReference;
+            insertBefore(newScope, parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newScope = newScopes[pos++];
               nextSibling =
-                pos < k
-                  ? fragment.___getFirstNode(newScopes[pos])
-                  : afterReference;
-              fragment.___insertBefore(newScope, parent, nextSibling);
+                pos < k ? newScopes[pos].___startNode : afterReference;
+              insertBefore(newScope, parent, nextSibling);
             } else {
               --j;
             }
@@ -157,10 +149,8 @@ export function reconcile(
             pos = i + newStart;
             newScope = newScopes[pos++];
             nextSibling =
-              pos < k
-                ? fragment.___getFirstNode(newScopes[pos])
-                : afterReference;
-            fragment.___insertBefore(newScope, parent, nextSibling);
+              pos < k ? newScopes[pos].___startNode : afterReference;
+            insertBefore(newScope, parent, nextSibling);
           }
         }
       }

@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <p
   class="A"
 >
@@ -10,7 +11,7 @@
 
 # Mutations
 ```
-inserted p0, button1
+inserted #comment0, p1, button2
 ```
 
 
@@ -18,6 +19,7 @@ inserted p0, button1
 container.querySelector("button").click()
 
 ```html
+<!---->
 <p
   class="B"
 >
@@ -28,7 +30,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-p0: attr(class) "A" => "B"
+p1: attr(class) "A" => "B"
 ```
 
 
@@ -36,6 +38,7 @@ p0: attr(class) "A" => "B"
 container.querySelector("button").click()
 
 ```html
+<!---->
 <p
   class="A"
 >
@@ -46,5 +49,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-p0: attr(class) "B" => "A"
+p1: attr(class) "B" => "A"
 ```

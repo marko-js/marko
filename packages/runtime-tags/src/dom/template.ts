@@ -5,11 +5,10 @@ import type {
   Scope,
   RenderResult,
 } from "../common/types";
-import { defaultFragment } from "./fragment";
 import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
 import { register } from "./resume";
-import { createScope, destroyScope } from "./scope";
+import { createScope, removeAndDestroyScope } from "./scope";
 
 export const createTemplate = (renderer: Renderer, templateId?: string) =>
   register(templateId!, new ClientTemplate(renderer));
@@ -74,7 +73,7 @@ export class ClientTemplate implements Template {
         }
       },
       destroy: () => {
-        (this._.___fragment ?? defaultFragment).___remove(destroyScope(scope));
+        removeAndDestroyScope(scope);
       },
     };
   }

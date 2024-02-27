@@ -4,6 +4,7 @@ import {
   createSectionState,
   getScopeIdIdentifier,
   getSection,
+  ContentType,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import { ReserveType, getScopeAccessorLiteral } from "./reserve";
@@ -104,11 +105,17 @@ export function flushInto(
 }
 
 export function getSectionMeta(section: Section) {
+  const writePrefix =
+    section.startNodeContentType === ContentType.Dynamic ? "<!>" : "";
+  const writePostfix =
+    section.endNodeContentType === ContentType.Dynamic ? "<!>" : "";
   const writes = getWrites(section);
   return {
     setup: getSetup(section),
     walks: getWalkString(section),
-    writes: toTemplateOrStringLiteral(writes) || t.stringLiteral(""),
+    writes:
+      toTemplateOrStringLiteral([writePrefix, ...writes, writePostfix]) ||
+      t.stringLiteral(""),
     register: getRegisterRenderer(section),
   };
 }

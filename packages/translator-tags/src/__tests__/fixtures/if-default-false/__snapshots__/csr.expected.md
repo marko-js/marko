@@ -1,11 +1,12 @@
 # Render {}
 ```html
 <button />
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, #text1
+inserted button0, #text1, #comment2
 ```
 
 
@@ -15,6 +16,7 @@ container.querySelector("button").click()
 ```html
 <button />
 hi
+<!---->
 ```
 
 # Mutations
@@ -29,6 +31,7 @@ container.querySelector("button").click()
 
 ```html
 <button />
+<!---->
 ```
 
 # Mutations
@@ -44,6 +47,7 @@ container.querySelector("button").click()
 ```html
 <button />
 hi
+<!---->
 ```
 
 # Mutations

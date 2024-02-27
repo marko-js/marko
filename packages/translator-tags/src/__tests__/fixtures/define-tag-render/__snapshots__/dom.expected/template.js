@@ -14,7 +14,7 @@ const _name$defineBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_
 const _setup$defineBody = _scope => {
   _y$defineBody(_scope, 1);
 };
-const _defineBody = /* @__PURE__ */_createRenderer("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _defineBody = /* @__PURE__ */_createRenderer("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, void 0, (_scope, _destructure, _clean) => {
   let name;
   if (!_clean) [{
     name
@@ -31,7 +31,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko");

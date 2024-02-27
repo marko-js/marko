@@ -7,7 +7,7 @@ export const args = (_scope, _destructure, _clean) => {
   _input(_scope, input, _clean);
 };
 export { _input };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/components/child/index.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/components/child/index.marko");

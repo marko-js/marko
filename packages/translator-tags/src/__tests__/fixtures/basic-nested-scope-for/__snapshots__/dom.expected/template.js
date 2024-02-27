@@ -20,7 +20,7 @@ const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
   _queueEffect(_scope, _num$forBody_effect);
 }, _expr_selected_num$forBody);
 const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _expr_selected_num$forBody);
-const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, (_scope, _destructure, _clean) => {
   let num;
   if (!_clean) [num] = _destructure;
   _num$forBody(_scope, num, _clean);
@@ -31,7 +31,7 @@ const _setup = _scope => {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko");

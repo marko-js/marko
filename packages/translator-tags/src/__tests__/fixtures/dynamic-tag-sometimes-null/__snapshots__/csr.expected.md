@@ -1,12 +1,13 @@
 # Render {}
 ```html
+<!---->
 Body Content
 <button />
 ```
 
 # Mutations
 ```
-inserted #text0, button1
+inserted #comment0, #text1, button2
 ```
 
 
@@ -14,6 +15,7 @@ inserted #text0, button1
 container.querySelector("button").click()
 
 ```html
+<!---->
 <div>
   Body Content
 </div>
@@ -22,9 +24,9 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted div0
-removed #text after div0
-inserted div0/#text0
+inserted div1
+removed #text after div1
+inserted div1/#text0
 ```
 
 
@@ -32,12 +34,13 @@ inserted div0/#text0
 container.querySelector("button").click()
 
 ```html
+<!---->
 Body Content
 <button />
 ```
 
 # Mutations
 ```
-inserted #text0
-removed div after #text0
+inserted #text1
+removed div after #text1
 ```

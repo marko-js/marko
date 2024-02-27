@@ -4,11 +4,12 @@
   hide
 </button>
 hi
+<!---->
 ```
 
 # Mutations
 ```
-inserted button0, #text1
+inserted button0, #text1, #comment2
 ```
 
 
@@ -19,6 +20,7 @@ container.querySelector("button").click()
 <button>
   hide
 </button>
+<!---->
 ```
 
 # Mutations

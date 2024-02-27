@@ -25,7 +25,7 @@ const _multiplier$classLayoutBody = _registerSubscriber("packages/translator-int
   _data(_scope["#text/2"], multiplier);
   _queueEffect(_scope, _multiplier$classLayoutBody_effect);
 }, void 0, _expr_multiplier_baseCount$classLayoutBody));
-const _classLayoutBody = /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _classLayoutBody = /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, (_scope, _destructure, _clean) => {
   let baseCount, message;
   if (!_clean) [baseCount, message] = _destructure;
   _baseCount$classLayoutBody(_scope, baseCount, _clean);
@@ -38,7 +38,7 @@ const _setup = _scope => {
   _multiplier(_scope, 1);
   _dynamicTagName_ChildScope(_scope, _classLayout || _classLayoutBody);
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");

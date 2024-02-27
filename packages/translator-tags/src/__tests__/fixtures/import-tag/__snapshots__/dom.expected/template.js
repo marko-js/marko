@@ -9,7 +9,7 @@ const _setup = _scope => {
   _bazComp(_scope["#childScope/2"]);
   _data(_scope["#text/3"], c);
 };
-export const template = `${_bazComp_template}${_bazComp_template}${_bazComp_template}<!>`;
-export const walks = /* beginChild, _bazComp_walks, endChild, beginChild, _bazComp_walks, endChild, beginChild, _bazComp_walks, endChild, replace, over(1) */`/${_bazComp_walks}&/${_bazComp_walks}&/${_bazComp_walks}&%b`;
+export const template = `<!>${_bazComp_template}${_bazComp_template}${_bazComp_template}<!>`;
+export const walks = /* beginChild, _bazComp_walks, endChild, beginChild, _bazComp_walks, endChild, beginChild, _bazComp_walks, endChild, replace, over(1) */`D/${_bazComp_walks}&/${_bazComp_walks}&/${_bazComp_walks}&%b`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/import-tag/template.marko");

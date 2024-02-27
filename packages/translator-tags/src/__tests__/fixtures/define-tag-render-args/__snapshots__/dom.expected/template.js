@@ -2,7 +2,7 @@ import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as
 const _c$defineBody = /* @__PURE__ */_value("c", (_scope, c) => _data(_scope["#text/2"], c));
 const _b$defineBody = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/1"], b));
 const _a$defineBody = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/0"], a));
-const _defineBody = /* @__PURE__ */_createRenderer("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, void 0, void 0, void 0, void 0, (_scope, _destructure, _clean) => {
+const _defineBody = /* @__PURE__ */_createRenderer("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
   let a, b, c;
   if (!_clean) [a, b, c] = _destructure;
   _a$defineBody(_scope, a, _clean);
@@ -35,7 +35,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
 };
-export const template = "<!><button> </button>";
-export const walks = /* replace, over(1), get, next(1), get, out(1) */"%b D l";
+export const template = "<!><!><button> </button>";
+export const walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko");

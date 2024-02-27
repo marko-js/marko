@@ -19,7 +19,7 @@ const _setup = _scope => {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
 };
-export const template = "<!><button> </button>";
-export const walks = /* replace, over(1), get, next(1), get, out(1) */"%b D l";
+export const template = "<!><!><button> </button>";
+export const walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko");

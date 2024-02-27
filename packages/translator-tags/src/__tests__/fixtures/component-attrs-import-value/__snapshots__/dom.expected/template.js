@@ -7,7 +7,7 @@ const _setup = _scope => {
     format: formatNumber
   }]);
 };
-export const template = `${_counter_template}`;
-export const walks = /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`;
+export const template = `<!>${_counter_template}`;
+export const walks = /* beginChild, _counter_walks, endChild */`D/${_counter_walks}&`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/template.marko");

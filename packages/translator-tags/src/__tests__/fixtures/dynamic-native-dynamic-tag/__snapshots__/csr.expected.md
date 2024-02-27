@@ -1,5 +1,6 @@
 # Render {}
 ```html
+<!---->
 <span
   class="A"
 >
@@ -10,7 +11,7 @@
 
 # Mutations
 ```
-inserted span0, button1
+inserted #comment0, span1, button2
 ```
 
 
@@ -18,6 +19,7 @@ inserted span0, button1
 container.querySelector("button").click()
 
 ```html
+<!---->
 <div
   class="A"
 >
@@ -28,10 +30,10 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted div0
-removed span after div0
-div0: attr(class) null => "A"
-inserted div0/#text0
+inserted div1
+removed span after div1
+div1: attr(class) null => "A"
+inserted div1/#text0
 ```
 
 
@@ -39,6 +41,7 @@ inserted div0/#text0
 container.querySelector("button").click()
 
 ```html
+<!---->
 <span
   class="A"
 >
@@ -49,8 +52,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted span0
-removed div after span0
-span0: attr(class) null => "A"
-inserted span0/#text0
+inserted span1
+removed div after span1
+span1: attr(class) null => "A"
+inserted span1/#text0
 ```

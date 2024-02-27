@@ -11,4 +11,4 @@ export { _value };
 export const template = "<div>Child 2 has <!></div>";
 export const walks = /* next(1), over(1), replace, out(1) */"Db%l";
 export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, void 0, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child2.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child2.marko");

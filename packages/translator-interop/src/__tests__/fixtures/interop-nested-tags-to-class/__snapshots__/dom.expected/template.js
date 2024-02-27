@@ -22,7 +22,7 @@ const _setup = _scope => {
   _count(_scope, 0);
   _dynamicTagName_ChildScope(_scope, _classLayout || _classLayoutBody);
 };
-export const template = "<!>";
-export const walks = /* replace, over(1) */"%b";
+export const template = "<!><!><!>";
+export const walks = /* replace, over(1) */"D%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");

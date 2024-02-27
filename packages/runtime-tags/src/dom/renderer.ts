@@ -7,7 +7,6 @@ import {
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
-import { type DOMFragment } from "./fragment";
 import { bindRenderer, createScope } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 import { trimWalkString, walk } from "./walker";
@@ -20,9 +19,6 @@ export type Renderer = {
   ___clone: () => Node;
   ___hasUserEffects: 0 | 1;
   ___sourceNode: Node | undefined;
-  ___fragment: DOMFragment | undefined;
-  ___dynamicStartNodeOffset: Accessor | undefined;
-  ___dynamicEndNodeOffset: Accessor | undefined;
   ___args: ValueSignal | undefined;
   ___owner: Scope | undefined;
 };
@@ -56,9 +52,7 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
       ? document.createElement(renderer)
       : renderer.___clone();
   walk(
-    dom.nodeType === NodeType.DocumentFragment
-      ? dom.firstChild!
-      : (dom as ChildNode),
+    dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
     renderer.___walks ?? " ",
     scope,
   );
@@ -72,12 +66,6 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
       : (dom as ChildNode);
   if (renderer.___setup) {
     renderer.___setup(scope);
-  }
-  if (renderer.___dynamicStartNodeOffset !== undefined) {
-    scope.___startNode = renderer.___dynamicStartNodeOffset;
-  }
-  if (renderer.___dynamicEndNodeOffset !== undefined) {
-    scope.___endNode = renderer.___dynamicEndNodeOffset;
   }
   return dom;
 }
@@ -140,9 +128,6 @@ export function createRenderer(
   setup?: SetupFn,
   closureSignals?: IntersectionSignal[],
   hasUserEffects: 0 | 1 = 0,
-  fragment?: DOMFragment,
-  dynamicStartNodeOffset?: Accessor,
-  dynamicEndNodeOffset?: Accessor,
   args?: ValueSignal,
 ): Renderer {
   return {
@@ -153,9 +138,6 @@ export function createRenderer(
     ___closureSignals: new Set(closureSignals),
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
-    ___fragment: fragment,
-    ___dynamicStartNodeOffset: dynamicStartNodeOffset,
-    ___dynamicEndNodeOffset: dynamicEndNodeOffset,
     ___args: args,
     ___owner: undefined,
   };

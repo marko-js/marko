@@ -14,7 +14,7 @@ export function createScope($global: Scope["$global"]): Scope {
 }
 
 const emptyScope = createScope({});
-export function getEmptyScope(marker?: Comment) {
+export function getEmptyScope(marker: Comment) {
   emptyScope.___startNode = emptyScope.___endNode = marker;
   return emptyScope;
 }
@@ -103,5 +103,30 @@ export function onDestroy(scope: Scope) {
     (parentScope.___cleanup ||= new Set()).add(scope);
     scope = parentScope;
     parentScope = scope._;
+  }
+}
+
+export function removeAndDestroyScope(scope: Scope) {
+  destroyScope(scope);
+  let current = scope.___startNode;
+  const stop = scope.___endNode.nextSibling;
+  while (current !== stop) {
+    const next = current.nextSibling;
+    current.remove();
+    current = next!;
+  }
+}
+
+export function insertBefore(
+  scope: Scope,
+  parent: Node & ParentNode,
+  nextSibling: Node | null,
+) {
+  let current = scope.___startNode as Node;
+  const stop = scope.___endNode.nextSibling;
+  while (current !== stop) {
+    const next = current.nextSibling;
+    parent.insertBefore(current, nextSibling);
+    current = next!;
   }
 }

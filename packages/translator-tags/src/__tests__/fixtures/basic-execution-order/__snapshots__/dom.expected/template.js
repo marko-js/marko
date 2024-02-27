@@ -15,7 +15,7 @@ const _setup = _scope => {
   });
   _show(_scope, true);
 };
-export const template = "<button>hide</button><!>";
-export const walks = /* get, over(1), replace, over(1) */" b%b";
+export const template = "<button>hide</button><!><!>";
+export const walks = /* get, over(1), replace, over(1) */" b%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko");
