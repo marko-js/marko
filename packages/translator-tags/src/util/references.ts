@@ -1,10 +1,11 @@
 import type { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import { getExprRoot, getFnRoot } from "./get-root";
+import { addSorted, findSorted, type Opt, type Many } from "./optional";
 import {
   type Reserve,
   ReserveType,
-  repeatableReserves,
+  reserveUtil,
   reserveScope,
 } from "./reserve";
 import {
@@ -13,55 +14,34 @@ import {
   forEachSection,
   getOrCreateSection,
 } from "./sections";
-import { SortedRepeatable } from "./sorted-repeatable";
 
 const intersectionSubscribeCounts = new WeakMap<Reserve[], number>();
-const repeatableIntersections = new SortedRepeatable(compareIntersections);
 const [getIntersectionsBySection, setIntersectionsBySection] =
   createSectionState<Intersection[]>("intersectionsBySection", () => []);
 
 export interface IntersectionsBySection {
   [sectionId: number]: Intersection[];
 }
-export type Intersection = Reserve[];
-export type References = undefined | Reserve | Intersection;
+export type Intersection = Many<Reserve>;
+export type References = Opt<Reserve>;
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     intersectionsBySection?: IntersectionsBySection;
   }
 
+  export interface NodeExtra {
+    references?: References;
+  }
+
   // TODO: remove
   export interface FunctionExpressionExtra {
-    references?: References;
     name?: string;
   }
 
   // TODO: remove
   export interface ArrowFunctionExpressionExtra {
-    references?: References;
     name?: string;
-  }
-
-  export interface MarkoTagExtra {
-    varReferences?: References;
-    nameReferences?: References;
-  }
-
-  export interface MarkoTagBodyExtra {
-    paramsReferences?: References;
-  }
-
-  export interface MarkoAttributeExtra {
-    valueReferences?: References;
-  }
-
-  export interface MarkoSpreadAttributeExtra {
-    valueReferences?: References;
-  }
-
-  export interface MarkoPlaceholderExtra {
-    valueReferences?: References;
   }
 }
 
@@ -81,105 +61,124 @@ export function trackReferencesForBindings(
   path: t.NodePath<any>,
 ) {
   const scope = path.scope;
-  const bindings = path.getBindingIdentifiers() as unknown as Record<
-    string,
-    t.Identifier
-  >;
-  for (const name in bindings) {
-    const references = scope.getBinding(name)!.referencePaths.concat(
-      /*
-        https://github.com/babel/babel/issues/11313
-        We need this so we can handle `+=` and friends
-      */
-      scope
-        .getBinding(name)!
-        .constantViolations.filter(
-          (path) => path.isAssignmentExpression() && path.node.operator !== "=",
-        ),
+  const identifiers = path.getBindingIdentifiers();
+
+  for (const name in identifiers) {
+    const { referencePaths, constantViolations } = scope.getBinding(name)!;
+    const binding = reserveScope(
+      ReserveType.Store,
+      section,
+      identifiers[name],
+      name,
     );
-    const identifier = bindings[name];
-    const binding = reserveScope(ReserveType.Store, section, identifier, name);
 
-    for (const reference of references) {
-      const fnRoot = getFnRoot(reference.scope.path);
-      const exprRoot = getExprRoot(fnRoot || reference);
-      const markoRoot = exprRoot.parentPath;
+    for (const reference of referencePaths) {
+      addBindingToReference(binding, reference);
+    }
 
-      // TODO: remove
-      if (fnRoot) {
-        const name = (fnRoot.node as t.FunctionExpression).id?.name;
-
-        if (!name) {
-          if (markoRoot.isMarkoAttribute() && !markoRoot.node.default) {
-            (fnRoot.node.extra ??= {}).name = markoRoot.node.name;
-          }
-        }
-
-        if (fnRoot !== exprRoot) {
-          addBindingToReferences(fnRoot, "references", binding);
-        }
+    for (const reference of constantViolations) {
+      /*
+       * https://github.com/babel/babel/issues/11313
+       * We need this so we can handle `+=` and friends
+       */
+      if (
+        reference.isAssignmentExpression() &&
+        reference.node.operator !== "="
+      ) {
+        addBindingToReference(binding, reference);
       }
-
-      addBindingToReferences(exprRoot, "references", binding);
-
-      addBindingToReferences(
-        markoRoot,
-        `${exprRoot.listKey || exprRoot.key}References`,
-        binding,
-      );
     }
   }
 }
 
-export function addBindingToReferences(
-  path: t.NodePath,
-  referencesKey: string,
-  binding: Reserve,
-) {
-  const section = getOrCreateSection(path);
-  const extra = (path.node.extra ??= {});
-  const prevReferences = extra[referencesKey] as References | undefined;
+function addBindingToReference(binding: Reserve, reference: t.NodePath) {
+  const fnRoot = getFnRoot(reference.scope.path);
+  const exprRoot = getExprRoot(fnRoot || reference);
+  const markoRoot = exprRoot.parentPath;
+  const extra = (exprRoot.node.extra ??= {});
+  const previousReferences = extra.references;
+  let newReferences = reserveUtil.add(previousReferences, binding);
 
-  if (prevReferences) {
-    if (prevReferences !== binding) {
-      extra[referencesKey] = addSubscriber(
-        getIntersection(
-          section,
-          repeatableReserves.add(
-            repeatableReserves.clone(prevReferences),
-            binding,
-          ),
-        ),
-      );
+  if (previousReferences !== newReferences) {
+    let section: Section | undefined;
+    if (isIntersection(previousReferences)) {
+      section ||= getOrCreateSection(exprRoot);
+      removeSubscriber(getIntersection(section, previousReferences));
+    }
 
-      if (isIntersection(prevReferences)) {
-        removeSubscriber(getIntersection(section, prevReferences));
+    if (isIntersection(newReferences)) {
+      section ||= getOrCreateSection(exprRoot);
+      newReferences = getIntersection(section, newReferences);
+      addSubscriber(newReferences);
+    }
+
+    extra.references = newReferences;
+  }
+
+  // TODO: remove
+  if (fnRoot) {
+    const name = (fnRoot.node as t.FunctionExpression).id?.name;
+    let fnExtra = extra;
+
+    if (fnRoot !== exprRoot) {
+      fnExtra = fnRoot.node.extra ??= {};
+      fnExtra.references = reserveUtil.add(fnExtra.references, binding);
+    }
+
+    if (!name) {
+      if (markoRoot.isMarkoAttribute() && !markoRoot.node.default) {
+        fnExtra.name = markoRoot.node.name;
       }
     }
-  } else {
-    extra[referencesKey] = binding;
   }
+}
+
+export function addReference(target: t.NodePath, reference: Reserve) {
+  const { node } = target;
+  const extra = (node.extra ??= {});
+  const previousReferences = extra.references;
+  const section = getOrCreateSection(target);
+  let newReferences = reserveUtil.add(previousReferences, reference);
+
+  if (previousReferences !== newReferences) {
+    if (isIntersection(newReferences)) {
+      newReferences = getIntersection(section, newReferences);
+      addSubscriber(newReferences);
+    }
+
+    if (isIntersection(previousReferences)) {
+      removeSubscriber(getIntersection(section, previousReferences));
+    }
+
+    extra.references = newReferences;
+  }
+
+  return newReferences;
 }
 
 export function mergeReferences(
-  section: Section,
-  groupEntries: [Record<string, unknown>, string][],
+  target: t.NodePath,
+  nodes: (t.Node | undefined)[],
 ) {
   let newReferences: References;
-  for (const [extra, key] of groupEntries) {
-    const references = extra[key] as References;
-
-    if (isIntersection(references)) {
-      removeSubscriber(getIntersection(section, references));
+  for (const node of nodes) {
+    const extra = node?.extra;
+    if (extra) {
+      if (isIntersection(extra.references)) {
+        removeSubscriber(
+          getIntersection(getOrCreateSection(target), extra.references),
+        );
+      }
+      newReferences = reserveUtil.union(newReferences, extra.references);
     }
-
-    newReferences = repeatableReserves.addAll(newReferences, references);
-    delete extra[key];
   }
 
   if (isIntersection(newReferences)) {
-    newReferences = addSubscriber(getIntersection(section, newReferences));
+    newReferences = getIntersection(getOrCreateSection(target), newReferences);
+    addSubscriber(newReferences);
   }
+
+  (target.node.extra ??= {}).references = newReferences;
 
   return newReferences;
 }
@@ -196,7 +195,7 @@ function compareIntersections(a: Intersection, b: Intersection) {
   }
 
   for (let i = 0; i < len; i++) {
-    const compareResult = repeatableReserves.compare(a[i], b[i]);
+    const compareResult = reserveUtil.compare(a[i], b[i]);
     if (compareResult !== 0) {
       return compareResult;
     }
@@ -219,13 +218,17 @@ export function finalizeIntersections() {
 
 function getIntersection(section: Section, references: Intersection) {
   const intersections = getIntersectionsBySection(section);
-  let intersection = repeatableIntersections.find(intersections, references);
+  let intersection = findSorted(
+    compareIntersections,
+    intersections,
+    references,
+  );
 
   if (!intersection) {
     intersection = references;
     setIntersectionsBySection(
       section,
-      repeatableIntersections.add(intersections, references),
+      addSorted(compareIntersections, intersections, references),
     );
   }
 

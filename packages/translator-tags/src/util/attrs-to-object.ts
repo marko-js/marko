@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import type { References } from "./references";
 import toPropertyName from "./to-property-name";
 
 export default function attrsToObject(
@@ -8,7 +7,7 @@ export default function attrsToObject(
 ): t.Expression {
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
-  const resultExtra: { references?: References } = (result.extra = {});
+  const resultExtra = (result.extra = {});
 
   for (const attr of node.attributes) {
     const value = attr.value!;
@@ -24,7 +23,7 @@ export default function attrsToObject(
 
   if (withRenderBody) {
     const { body, params } = node.body;
-    let hoistedControlFlows = node.extra.hoistedControlFlows;
+    let hoistedControlFlows = node.extra!.hoistedControlFlows;
 
     if (hoistedControlFlows) {
       for (const child of tag.get("body").get("body")) {

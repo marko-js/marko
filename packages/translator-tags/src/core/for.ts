@@ -38,6 +38,7 @@ import customTag from "../visitors/tag/custom-tag";
 export default {
   analyze: {
     enter(tag) {
+      tag.node.extra ??= {};
       const isOnlyChild = checkOnlyChild(tag);
       const parentTag = (
         isOnlyChild ? tag.parentPath.parent : undefined
@@ -53,33 +54,28 @@ export default {
       customTag.analyze.enter(tag);
     },
     exit(tag) {
+      const extra = tag.node.extra!;
       analyzeAttributeTags(tag);
 
-      const section = getOrCreateSection(tag);
-      tag.node.extra.attrsReferences = mergeReferences(
-        section,
-        tag.node.attributes
-          .filter(
-            (attr) =>
-              t.isMarkoAttribute(attr) &&
-              attr.extra?.valueReferences !== undefined,
-          )
-          .map((attr) => [attr.extra, "valueReferences"]),
+      mergeReferences(
+        tag,
+        tag.node.attributes.map((attr) => attr.value),
       );
 
-      tag.node.extra.isStateful =
-        !!tag.node.extra.attrsReferences &&
-        !Object.keys(tag.node.extra.nestedAttributeTags).length;
-      tag.node.extra.singleNodeOptimization = tag.node.body.body.length === 1;
+      extra.isStateful =
+        !!extra.references &&
+        !(
+          extra.nestedAttributeTags &&
+          Object.keys(extra.nestedAttributeTags).length
+        );
+      extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
   },
   translate: {
     enter(tag) {
       validateFor(tag);
 
-      const {
-        extra: { isOnlyChild },
-      } = tag.node;
+      const { isOnlyChild } = tag.node.extra!;
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
@@ -167,13 +163,11 @@ const translateDOM = {
     const tagSection = getSection(tag);
     const bodySection = getSection(tagBody);
     const { node } = tag;
-    const {
-      attributes,
-      extra: { isOnlyChild, attrsReferences },
-    } = node;
-    const {
-      extra: { reserve },
-    } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node;
+    const { attributes } = node;
+    const { isOnlyChild, references } = node.extra!;
+    const { reserve } = (
+      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node
+    ).extra!;
     const paramIdentifiers = Object.values(
       tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
@@ -248,7 +242,7 @@ const translateDOM = {
       return getClosures(bodySection).length > 0;
     };
 
-    addValue(tagSection, attrsReferences, signal, t.arrayExpression(loopArgs));
+    addValue(tagSection, references, signal, t.arrayExpression(loopArgs));
   },
 };
 
@@ -261,11 +255,12 @@ const translateHTML = {
     const {
       attributes,
       body: { body, params },
-      extra: { isStateful, singleNodeOptimization, isOnlyChild },
     } = node;
-    const {
-      extra: { reserve },
-    } = isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node;
+    const extra = node.extra!;
+    const { isStateful, singleNodeOptimization, isOnlyChild } = extra;
+    const { reserve } = (
+      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node
+    ).extra!;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
@@ -574,13 +569,13 @@ function validateFor(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function checkOnlyChild(tag: t.NodePath<t.MarkoTag>) {
-  tag.node.extra ??= {} as any;
+  const extra = tag.node.extra!;
   if (
     t.isMarkoTag(tag.parentPath?.parent) &&
     getTagDef(tag.parentPath!.parentPath! as t.NodePath<t.MarkoTag>)?.html
   ) {
-    return (tag.node.extra.isOnlyChild =
+    return (extra.isOnlyChild =
       (tag.parent as t.MarkoTagBody).body.length === 1);
   }
-  return (tag.node.extra.isOnlyChild = false);
+  return (extra.isOnlyChild = false);
 }

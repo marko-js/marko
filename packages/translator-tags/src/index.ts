@@ -56,7 +56,6 @@ export const taglibs = [
 declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   export interface ProgramExtra {}
-  export interface IdentifierExtra {}
   export interface FunctionExpressionExtra {}
   export interface ArrowFunctionExpressionExtra {}
   export interface MarkoTagExtra {}
@@ -66,38 +65,34 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {}
 
   export interface Program {
-    extra: ProgramExtra & Record<string, unknown>;
-  }
-
-  export interface Identifier {
-    extra: IdentifierExtra & Record<string, unknown>;
+    extra: ProgramExtra & NodeExtra;
   }
 
   export interface FunctionExpression {
-    extra: FunctionExpressionExtra & Record<string, unknown>;
+    extra?: FunctionExpressionExtra & NodeExtra;
   }
 
   export interface ArrowFunctionExpression {
-    extra: ArrowFunctionExpressionExtra & Record<string, unknown>;
+    extra?: ArrowFunctionExpressionExtra & NodeExtra;
   }
 
   export interface MarkoTag {
-    extra: MarkoTagExtra & Record<string, unknown>;
+    extra?: MarkoTagExtra & NodeExtra;
   }
 
   export interface MarkoTagBody {
-    extra: MarkoTagBodyExtra & Record<string, unknown>;
+    extra?: MarkoTagBodyExtra & NodeExtra;
   }
 
   export interface MarkoAttribute {
-    extra: MarkoAttributeExtra & Record<string, unknown>;
+    extra?: MarkoAttributeExtra & NodeExtra;
   }
 
   export interface MarkoSpreadAttribute {
-    extra: MarkoSpreadAttributeExtra & Record<string, unknown>;
+    extra?: MarkoSpreadAttributeExtra & NodeExtra;
   }
 
   export interface MarkoPlaceholder {
-    extra: MarkoPlaceholderExtra & Record<string, unknown>;
+    extra?: MarkoPlaceholderExtra & NodeExtra;
   }
 }

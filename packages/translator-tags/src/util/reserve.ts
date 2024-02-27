@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { isOptimize } from "./marko-config";
+import { Sorted } from "./optional";
 import { type Section, createSectionState, forEachSection } from "./sections";
-import { SortedRepeatable } from "./sorted-repeatable";
 
 const [getReservesByType] = createSectionState<Array<Reserve[] | undefined>>(
   "reservesByType",
@@ -22,28 +22,12 @@ export interface Reserve {
 }
 
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
+  export interface NodeExtra {
     reserve?: Reserve;
   }
 
   export interface MarkoTagBodyExtra {
     section?: Section;
-  }
-
-  export interface MarkoTagExtra {
-    reserve?: Reserve;
-  }
-
-  export interface MarkoAttributeExtra {
-    reserve?: Reserve;
-  }
-
-  export interface MarkoPlaceholderExtra {
-    reserve?: Reserve;
-  }
-
-  export interface IdentifierExtra {
-    reserve?: Reserve;
   }
 }
 
@@ -110,7 +94,7 @@ export function getScopeAccessorLiteral(reserve: Reserve) {
   );
 }
 
-export const repeatableReserves = new SortedRepeatable(function compareReserves(
+export const reserveUtil = new Sorted(function compareReserves(
   a: Reserve,
   b: Reserve,
 ) {

@@ -24,7 +24,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
       _ifScopeId = _scope4_id;
     } else {
-      const _scope5_id = _nextScopeId();
+      const _scope6_id = _nextScopeId();
       _item.push({
         style: {
           color
@@ -33,11 +33,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
           _write("bar");
         }
       });
-      _writeScope(_scope5_id, _scope4_ = {
+      _writeScope(_scope6_id, _scope4_ = {
         "_": _serializedScope(_scope3_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
-      _ifScopeId = _scope5_id;
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_6_renderer");
+      _ifScopeId = _scope6_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
     _writeScope(_scope3_id, {

@@ -81,7 +81,7 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
   code?: VisitCodes,
 ) {
-  const { reserve } = path.node.extra;
+  const { reserve } = path.node.extra!;
   if (code && (!reserve || reserve.type !== ReserveType.Visit)) {
     throw path.buildCodeFrameError(
       "Tried to visit a node that was not marked as needing to visit during analyze.",

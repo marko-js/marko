@@ -45,6 +45,8 @@ export default {
       }
 
       const section = getSection(tag);
+      const { value } = defaultAttr;
+      const references = value.extra?.references;
       if (isOutputDOM()) {
         const { value } = defaultAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;
@@ -69,16 +71,14 @@ export default {
         addStatement(
           "effect",
           section,
-          defaultAttr.extra?.valueReferences,
+          references,
           inlineBody ||
-            t.expressionStatement(
-              t.callExpression(defaultAttr.value, [scopeIdentifier]),
-            ),
+            t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
           value,
           !!inlineBody,
         );
       } else {
-        addHTMLEffectCall(section, defaultAttr.extra?.valueReferences);
+        addHTMLEffectCall(section, references);
       }
 
       tag.remove();

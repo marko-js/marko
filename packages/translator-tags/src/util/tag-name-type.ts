@@ -9,9 +9,9 @@ import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    tagNameType: TagNameType;
-    tagNameNullable: boolean;
-    tagNameDynamic: boolean;
+    tagNameType?: TagNameType;
+    tagNameNullable?: boolean;
+    tagNameDynamic?: boolean;
     tagNameImported?: string;
     tagNameDefine?: boolean;
   }
@@ -27,7 +27,7 @@ export enum TagNameType {
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
 
 export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
-  const extra = (tag.node.extra ??= {} as typeof tag.node.extra);
+  const extra = (tag.node.extra ??= {});
 
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
@@ -49,14 +49,15 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             t.identifier(name.node.value),
             name.node,
           );
-          extra.nameReferences = tag.scope.getBinding(
-            name.node.value,
-          )?.identifier?.extra?.reserve;
+          tagIdentifier.extra = {
+            references: tag.scope.getBinding(name.node.value)?.identifier?.extra
+              ?.reserve,
+          };
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {
           const childFile = loadFileForTag(tag);
           const childProgram = childFile?.ast.program;
-          if (childProgram?.extra.___featureType === "class") {
+          if (childProgram?.extra!.___featureType === "class") {
             extra.tagNameType = TagNameType.DynamicTag;
             extra.___featureType = "class";
           }

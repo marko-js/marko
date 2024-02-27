@@ -1,11 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
+import { forEach } from "./optional";
 import type { References } from "./references";
-import {
-  type Reserve,
-  getScopeAccessorLiteral,
-  repeatableReserves,
-} from "./reserve";
+import { type Reserve, getScopeAccessorLiteral } from "./reserve";
 import type { Section } from "./sections";
 
 export function createScopeReadPattern(
@@ -15,9 +12,9 @@ export function createScopeReadPattern(
   const rootDepth = section.depth;
   const rootPattern = t.objectPattern([]);
   let nestedPatterns: t.ObjectPattern[] | undefined;
-  for (const ref of repeatableReserves.iterate(references)) {
+  forEach(references, (ref) => {
     // TODO: need a better way to exclude internal references
-    if (ref.name.includes("#")) continue;
+    if (ref.name.includes("#")) return;
 
     const propertyKey = getScopeAccessorLiteral(ref);
     const propertyValue = t.identifier(ref.name);
@@ -49,7 +46,7 @@ export function createScopeReadPattern(
         isShorthand,
       ),
     );
-  }
+  });
 
   return rootPattern;
 }
