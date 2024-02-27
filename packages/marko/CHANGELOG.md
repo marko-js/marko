@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.14
+
+### Patch Changes
+
+- [#2123](https://github.com/marko-js/marko/pull/2123) [`5bcc111`](https://github.com/marko-js/marko/commit/5bcc111a1c7607948413a5cf798d66afc3077a91) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where attribute tags used without renderBody content was clearing existing renderBody content in the input, eg via a spread.
+
 ## 5.32.13
 
 ### Patch Changes
