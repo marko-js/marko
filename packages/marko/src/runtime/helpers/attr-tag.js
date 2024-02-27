@@ -28,7 +28,10 @@ exports.i = function attrTagInput(render, input) {
   var prevOwnerInput = ownerInput;
   ownerInput = input || {};
   try {
-    ownerInput.renderBody = render();
+    var renderBody = render();
+    if (renderBody) {
+      ownerInput.renderBody = renderBody;
+    }
     return ownerInput;
   } finally {
     ownerInput = prevOwnerInput;
