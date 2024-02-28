@@ -23,6 +23,7 @@
   "main:override": "dist/index.js",
   "files": [
     "dist",
+    "!**/__tests__",
     "!**/*.tsbuildinfo"
   ],
   "scripts": {

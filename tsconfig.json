@@ -2,6 +2,7 @@
   "compilerOptions": {
     "lib": ["dom", "ESNext"],
     "strict": true,
+    "allowJs": true,
     "outDir": "dist",
     "composite": true,
     "target": "ESNext",

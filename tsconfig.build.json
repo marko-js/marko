@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/dist"],
+  "include": ["scripts"],
   "compilerOptions": {
     "noEmit": true,
     "emitDeclarationOnly": false
