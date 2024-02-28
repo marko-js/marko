@@ -1,4 +1,4 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -14,11 +14,13 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     let _ifScopeId, _scope2_, _ifRenderer;
     if (comment.comments) {
       const _scope2_id = _nextScopeId();
+      const _childScope = _peekSerializedScope();
       _comments._({
         comments: comment.comments,
         path: id
       });
       _writeScope(_scope2_id, _scope2_ = {
+        "#childScope/0": _childScope,
         "_": _serializedScope(_scope1_id)
       });
       _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");

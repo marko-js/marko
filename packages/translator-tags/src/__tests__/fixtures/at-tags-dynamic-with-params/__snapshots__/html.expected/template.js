@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer(({
   x
@@ -25,8 +25,12 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "#text/0!": _scope2_,
     "#text/0(": _ifRenderer
   });
+  const _childScope = _peekSerializedScope();
   _hello._({
     item: _item
+  });
+  _writeScope(_scope0_id, {
+    "#childScope/0": _childScope
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko");

@@ -1,6 +1,6 @@
 import { type Accessor, type Renderer, ResumeSymbol } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
-import { Serializer } from "./serializer";
+import { Serializer, serializedScope } from "./serializer";
 
 const runtimeId = ResumeSymbol.DefaultRuntimeId;
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -452,6 +452,10 @@ export function nextScopeId() {
 
 export function peekNextScopeId() {
   return $_streamData!.scopeId;
+}
+
+export function peekSerializedScope() {
+  return serializedScope(peekNextScopeId());
 }
 
 export function writeEffect(scopeId: number, fnId: string) {
