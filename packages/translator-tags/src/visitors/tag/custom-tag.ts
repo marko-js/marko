@@ -29,6 +29,7 @@ import {
   addValue,
   getClosures,
   getResumeRegisterId,
+  getSerializedScopeProperties,
   initValue,
   setForceResumeScope,
   writeHTMLResumeStatements,
@@ -135,6 +136,18 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const attrsObject = attrsToObject(tag, true);
   const renderBodyProp = getRenderBodyProp(attrsObject);
   const section = getSection(tag);
+  const binding = node.extra!.reserve!;
+  const peekScopeId = tag.scope.generateUidIdentifier(binding.name);
+  tag.insertBefore(
+    t.variableDeclaration("const", [
+      t.variableDeclarator(peekScopeId, callRuntime("peekSerializedScope")),
+    ]),
+  );
+
+  getSerializedScopeProperties(section).set(
+    getScopeAccessorLiteral(node.extra!.reserve!),
+    peekScopeId,
+  );
 
   if (node.extra!.tagNameNullable) {
     let renderBodyId: t.Identifier | undefined = undefined;

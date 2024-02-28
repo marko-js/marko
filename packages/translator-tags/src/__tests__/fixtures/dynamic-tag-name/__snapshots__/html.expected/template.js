@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer(({
   renderBody,
   x,
@@ -43,11 +43,13 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   });
   const _tagName3 = showTagA && tagA;
   _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}`);
+  const _childScope = _peekSerializedScope();
   if (_tagName3._) _tagName3._({
     class: ["a", "b"],
     other: other
   });
   const _tagName4 = showTagA && tagA;
+  const _childScope2 = _peekSerializedScope();
   const _renderBody2 = _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
@@ -56,6 +58,7 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     class: ["a", "b"],
     other: other
   });else _renderBody2();
+  const _childScope3 = _peekSerializedScope();
   (tag || tagA)._({
     class: ["a", "b"],
     other: other
@@ -82,6 +85,9 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "#text/4(": isLarge ? "h1" : "h2",
     "#text/5!": _dynamicScope4,
     "#text/5(": showTagA ? tagA : tagB,
+    "#childScope/6": _childScope,
+    "#childScope/7": _childScope2,
+    "#childScope/8": _childScope3,
     "#text/9!": _dynamicScope5,
     "#text/9(": _tagName5
   });

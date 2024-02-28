@@ -5,6 +5,7 @@ import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
 import MarkoDeclaration from "./visitors/declaration";
 import MarkoDocumentType from "./visitors/document-type";
+import Function from "./visitors/function";
 import ImportDeclaration from "./visitors/import-declaration";
 import MarkoPlaceholder from "./visitors/placeholder";
 import Program from "./visitors/program";
@@ -16,6 +17,7 @@ import UpdateExpression from "./visitors/update-expression";
 
 const visitors = {
   Program,
+  Function,
   AssignmentExpression,
   UpdateExpression,
   ReferencedIdentifier,

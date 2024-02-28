@@ -1,5 +1,84 @@
 import { types as t } from "@marko/compiler";
+import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { isOutputHTML } from "./marko-config";
+import { forEach } from "./optional";
+import { getScopeAccessorLiteral } from "./reserve";
+import { callRuntime } from "./runtime";
+import { createScopeReadPattern } from "./scope-read";
+import { getScopeIdIdentifier, getSection, type Section } from "./sections";
+import { getSerializedScopeProperties } from "./signals";
 import toPropertyName from "./to-property-name";
+
+const htmlHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
+  FunctionExpression: { exit: htmlFunctionVisit },
+  ArrowFunctionExpression: { exit: htmlFunctionVisit },
+};
+
+const domHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
+  FunctionExpression: { exit: domFunctionVisit },
+  ArrowFunctionExpression: { exit: domFunctionVisit },
+};
+
+function htmlFunctionVisit(
+  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
+  state: { section: Section },
+) {
+  const serializedScopeProperties = getSerializedScopeProperties(state.section);
+  const extra = fn.node.extra!;
+  forEach(extra.references, (ref) => {
+    serializedScopeProperties.set(
+      getScopeAccessorLiteral(ref),
+      t.identifier(ref.name),
+    );
+  });
+  fn.replaceWith(
+    callRuntime(
+      "register",
+      fn.node,
+      t.stringLiteral(extra.registerId!),
+      getScopeIdIdentifier(state.section),
+    ),
+  )[0].skip();
+}
+
+function domFunctionVisit(
+  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
+  state: { section: Section },
+) {
+  const { node } = fn;
+  const extra = node.extra!;
+  const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
+
+  if (extra.references) {
+    if (node.body.type !== "BlockStatement") {
+      node.body = t.blockStatement([t.returnStatement(node.body)]);
+    }
+
+    node.body.body.unshift(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          createScopeReadPattern(state.section, extra.references),
+          scopeIdentifier,
+        ),
+      ]),
+    );
+  }
+
+  node.params.unshift(scopeIdentifier);
+  currentProgramPath
+    .pushContainer(
+      "body",
+      t.variableDeclaration("const", [
+        t.variableDeclarator(
+          fnId,
+          callRuntime("register", t.stringLiteral(extra.registerId!), node),
+        ),
+      ]),
+    )[0]
+    .skip();
+
+  fn.replaceWith(callRuntime("bindFunction", scopeIdentifier, fnId))[0].skip();
+}
 
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
@@ -8,15 +87,23 @@ export default function attrsToObject(
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
   const resultExtra = (result.extra = {});
+  const section = getSection(tag);
+  const hoistVisitor = isOutputHTML()
+    ? htmlHoistFunctionVisitor
+    : domHoistFunctionVisitor;
 
-  for (const attr of node.attributes) {
-    const value = attr.value!;
+  for (const attr of tag.get("attributes")) {
+    attr.traverse(hoistVisitor, { section });
+    const value = attr.node.value!;
 
-    if (t.isMarkoSpreadAttribute(attr)) {
+    if (attr.isMarkoSpreadAttribute()) {
       result.properties.push(t.spreadElement(value));
     } else {
       result.properties.push(
-        t.objectProperty(toPropertyName(attr.name), value),
+        t.objectProperty(
+          toPropertyName((attr as t.NodePath<t.MarkoAttribute>).node.name),
+          value,
+        ),
       );
     }
   }

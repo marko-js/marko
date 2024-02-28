@@ -1,16 +1,18 @@
-import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, bindFunction as _bindFunction, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _temp = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/anonymous", function (_scope) {
+  this.onUpdate();
+});
+const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/onUpdate", function (_scope) {
+  const {
+    x
+  } = _scope;
+  document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
+  this.cur = x;
+});
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
   _lifecycle(_scope, "_lifecycle", {
-    onMount: function () {
-      this.onUpdate();
-    },
-    onUpdate: function () {
-      const {
-        x
-      } = _scope;
-      document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
-      this.cur = x;
-    }
+    onMount: /* @__PURE__ */_bindFunction(_scope, _temp),
+    onUpdate: /* @__PURE__ */_bindFunction(_scope, _onUpdate)
   });
   _on(_scope["#button/0"], "click", function () {
     const {

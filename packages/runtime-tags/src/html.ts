@@ -30,6 +30,7 @@ export {
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   createRenderFn,
+  peekSerializedScope,
   $_streamData,
 } from "./html/writer";
 

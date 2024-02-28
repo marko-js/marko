@@ -11,7 +11,7 @@
       <!--M*1 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{clickCount:0}}),[1,"packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/0":h={clickCount:0}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@ container.querySelector("button").click()
       <!--M*1 #button/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({1:{clickCount:0}}),[1,"packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/0":h={clickCount:0}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount",])
     </script>
   </body>
 </html>
