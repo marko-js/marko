@@ -26,9 +26,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ***********************************************************************************************/
 
-const fs = require("fs");
-require("../dist/babel-types/types/patch");
-const { MARKO_TYPES } = require("../dist/babel-types/types/definitions");
+import fs from "fs";
+import { MARKO_TYPES } from "../../src/babel-types/types/definitions";
 
 const HUB_INTERFACE = "export interface HubInterface {";
 const HUB_CLASS =
@@ -43,27 +42,23 @@ const ASSERT =
   "// #region ------------------------- assertXXX -------------------------";
 const BREAK = "\n    ";
 
-fs.readFile(
+const data = fs.readFileSync(
   require.resolve("@types/babel__traverse/index.d.ts"),
   "utf8",
-  (err, data) => {
-    if (err) return console.error(err);
-
-    [HUB_INTERFACE, HUB_CLASS, IMPORT, EXPORT_NODE, IS, ASSERT].forEach(
-      (str) => {
-        if (data.indexOf(str) === -1) {
-          console.error(
-            `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`,
-          );
-          process.exit(1);
-        }
-      },
+);
+[HUB_INTERFACE, HUB_CLASS, IMPORT, EXPORT_NODE, IS, ASSERT].forEach((str) => {
+  if (data.indexOf(str) === -1) {
+    console.error(
+      `Unable to find \`${str}\` in @types/babel__traverse/index.d.ts`,
     );
+    process.exit(1);
+  }
+});
 
-    var result = data
-      .replace(
-        HUB_INTERFACE,
-        `export interface BabelFile {
+var result = data
+  .replace(
+    HUB_INTERFACE,
+    `export interface BabelFile {
     ast: t.File,
     path: NodePath<t.Program>,
     hub: HubInterface,
@@ -77,32 +72,30 @@ fs.readFile(
 
 ${HUB_INTERFACE}
     file: BabelFile;`,
-      )
-      .replace(
-        HUB_CLASS,
-        `${HUB_CLASS}
+  )
+  .replace(
+    HUB_CLASS,
+    `${HUB_CLASS}
     file: BabelFile;`,
-      )
-      .replace(IMPORT, `import * as t from './types'`)
-      .replace(EXPORT_NODE, "type Node = t.Node")
-      .replace(NODE_PATH_GET, "")
-      .replace(
-        IS,
-        IS +
-          BREAK +
-          MARKO_TYPES.map(
-            (t) => `is${t}(opts?: object | null): this is NodePath<t.${t}>;`,
-          ).join(BREAK),
-      )
-      .replace(
-        ASSERT,
-        ASSERT +
-          BREAK +
-          MARKO_TYPES.map(
-            (t) => `assert${t}(opts?: object | null): void;`,
-          ).join(BREAK),
-      );
+  )
+  .replace(IMPORT, `import * as t from './types'`)
+  .replace(EXPORT_NODE, "type Node = t.Node")
+  .replace(NODE_PATH_GET, "")
+  .replace(
+    IS,
+    IS +
+      BREAK +
+      MARKO_TYPES.map(
+        (t) => `is${t}(opts?: object | null): this is NodePath<t.${t}>;`,
+      ).join(BREAK),
+  )
+  .replace(
+    ASSERT,
+    ASSERT +
+      BREAK +
+      MARKO_TYPES.map((t) => `assert${t}(opts?: object | null): void;`).join(
+        BREAK,
+      ),
+  );
 
-    process.stdout.write(result);
-  },
-);
+export default result;

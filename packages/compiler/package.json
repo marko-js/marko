@@ -67,8 +67,8 @@
     "register.d.ts"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production",
-    "build:types": "node scripts/types-babel-types.mjs > ./dist/types.d.ts && node scripts/types-babel-traverse.js > ./dist/traverse.d.ts"
+    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production",
+    "prepare": "node -r ~ts scripts/types"
   },
   "dependencies": {
     "@babel/code-frame": "^7.23.5",
