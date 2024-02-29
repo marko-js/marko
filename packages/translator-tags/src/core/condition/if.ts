@@ -89,6 +89,7 @@ export default {
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
+      enterBranchTranslate(tag);
     },
     exit(tag) {
       exitBranchTranslate(tag);
@@ -131,6 +132,13 @@ function getBranches(tag: t.NodePath<t.MarkoTag>, bodySection: Section) {
   return [isLast, branches] as const;
 }
 
+function getRoot(tag: t.NodePath<t.MarkoTag>) {
+  if (isCoreTagName(tag, "if")) {
+    return tag;
+  }
+  return BRANCHES_LOOKUP.get(tag)![0].tag;
+}
+
 export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const bodySection = getOrCreateSection(tagBody);
@@ -149,6 +157,21 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
+export function enterBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
+  const tagBody = tag.get("body");
+  const bodySection = getSection(tagBody);
+  const rootExtra = getRoot(tag).node.extra!;
+  const isStateful = rootExtra.isStateful;
+  const singleNodeOptimization = rootExtra.singleNodeOptimization;
+
+  if (isOutputHTML() && isStateful && !singleNodeOptimization) {
+    writer.writeTo(tagBody)`${callRuntime(
+      "markResumeScopeStart",
+      getScopeIdIdentifier(bodySection),
+    )}`;
+  }
+}
+
 export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const section = getSection(tag);
@@ -160,12 +183,6 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
 
   if (isOutputHTML()) {
     if (isStateful) {
-      if (!singleNodeOptimization) {
-        writer.writePrependTo(tagBody)`${callRuntime(
-          "markResumeScopeStart",
-          getScopeIdIdentifier(bodySection),
-        )}`;
-      }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         return t.assignmentExpression(
           "=",

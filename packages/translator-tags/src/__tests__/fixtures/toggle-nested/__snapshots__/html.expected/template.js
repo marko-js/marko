@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeScopeStart as _markResumeScopeStart, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, markResumeScopeStart as _markResumeScopeStart, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -10,6 +10,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   let _scope1_, _ifRenderer3;
   if (show) {
     const _scope1_id = _nextScopeId();
+    _write(`${_markResumeScopeStart(_scope1_id)}`);
     let _ifScopeId, _scope2_, _ifRenderer;
     if (value1) {
       const _scope2_id = _nextScopeId();
@@ -31,7 +32,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer");
       _ifScopeId2 = _scope3_id;
     }
-    _write(`${_markResumeScopeStart(_scope1_id)}${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}`);
+    _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}`);
     _writeScope(_scope1_id, _scope1_ = {
       "#text/0!": _scope2_,
       "#text/0(": _ifRenderer,

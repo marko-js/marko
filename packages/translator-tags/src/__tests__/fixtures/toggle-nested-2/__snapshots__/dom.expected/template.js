@@ -1,0 +1,52 @@
+import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, conditional as _conditional, closure as _closure, dynamicSubscribers as _dynamicSubscribers, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _count$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count", _scope => _on(_scope["#button/0"], "click", function () {
+  const {
+    _: {
+      _: {
+        count
+      }
+    }
+  } = _scope;
+  _queueSource(_scope._._, _count, count + 1);
+}));
+const _count$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber", /* @__PURE__ */_dynamicClosure("count", (_scope, count) => {
+  _data(_scope["#text/1"], count);
+  _queueEffect(_scope, _count$ifBody_effect);
+}, _scope => _scope._._));
+const _ifBody2 = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer", /* @__PURE__ */_createRenderer("<button id=count> </button>", /* get, next(1), get */" D ", void 0, [_count$ifBody]));
+const _if2$ifBody = /* @__PURE__ */_conditional("#text/1");
+const _inner$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner", _scope => _on(_scope["#button/0"], "click", function () {
+  const {
+    _: {
+      inner
+    }
+  } = _scope;
+  _queueSource(_scope._, _inner, !inner);
+}));
+const _inner$ifBody = /* @__PURE__ */_closure("inner", (_scope, inner) => {
+  _queueEffect(_scope, _inner$ifBody_effect);
+  _if2$ifBody(_scope, inner ? _ifBody2 : null);
+}, void 0, void 0, _if2$ifBody);
+const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button id=inner></button><!><!>", /* get, over(1), replace */" b%D", void 0, [_inner$ifBody]));
+const _if = /* @__PURE__ */_conditional("#text/1");
+const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
+const _inner = /* @__PURE__ */_value("inner", null, _inConditionalScope(_inner$ifBody, "#text/1"));
+const _outer_effect = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer", _scope => _on(_scope["#button/0"], "click", function () {
+  const {
+    outer
+  } = _scope;
+  _queueSource(_scope, _outer, !outer);
+}));
+const _outer = /* @__PURE__ */_value("outer", (_scope, outer) => {
+  _queueEffect(_scope, _outer_effect);
+  _if(_scope, outer ? _ifBody : null);
+}, void 0, _if);
+const _setup = _scope => {
+  _outer(_scope, true);
+  _inner(_scope, true);
+  _count(_scope, 0);
+};
+export const template = "<div><button id=outer></button><!></div>";
+export const walks = /* next(1), get, over(1), replace, out(1) */"D b%l";
+export const setup = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko");
