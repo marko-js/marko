@@ -50,22 +50,6 @@ export function writeTo(path: t.NodePath<any>) {
   };
 }
 
-export function writePrependTo(path: t.NodePath<any>) {
-  const section = getSection(path);
-  return (
-    strs: TemplateStringsArray,
-    ...exprs: Array<string | t.Expression>
-  ): void => {
-    const exprsLen = exprs.length;
-    const writes = getWrites(section);
-    writes[0] += strs[exprsLen];
-
-    for (let i = 0; i < exprsLen; i++) {
-      writes.unshift(strs[i], exprs[i]);
-    }
-  };
-}
-
 export function consumeHTML(path: t.NodePath<any>) {
   const writes = getWrites(getSection(path));
   const result = toTemplateOrStringLiteral(writes);

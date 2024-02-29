@@ -75,13 +75,22 @@ export default {
     enter(tag) {
       validateFor(tag);
 
-      const { isOnlyChild } = tag.node.extra!;
+      const tagBody = tag.get("body");
+      const bodySection = getSection(tagBody);
+      const { isStateful, singleNodeOptimization, isOnlyChild } =
+        tag.node.extra!;
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
       }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
+        if (isStateful && !singleNodeOptimization) {
+          writer.writeTo(tagBody)`${callRuntime(
+            "markResumeScopeStart",
+            getScopeIdIdentifier(bodySection),
+          )}`;
+        }
       }
     },
     exit(tag) {
@@ -273,12 +282,6 @@ const translateHTML = {
     let keyExpression: t.Expression | undefined = t.identifier("NOO");
 
     if (isStateful) {
-      if (!singleNodeOptimization) {
-        writer.writePrependTo(tagBody)`${callRuntime(
-          "markResumeScopeStart",
-          getScopeIdIdentifier(bodySection),
-        )}`;
-      }
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         const tempScopeIdentifier =
           currentProgramPath.scope.generateUidIdentifier("s");
