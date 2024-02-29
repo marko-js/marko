@@ -159,7 +159,11 @@ export function getSignal(section: Section, reserve?: OneMany<Reserve>) {
       };
     } else if (reserve.section !== section) {
       const provider = getSignal(reserve.section, reserve);
-      addClosure(section, reserve.section, signal.identifier);
+      addClosure(
+        section,
+        section.parent! /*reserve.section*/,
+        signal.identifier,
+      );
       provider.closures.set(section, signal);
       signal.build = () => {
         const builder = getSubscribeBuilder(section);
