@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm run build --ws && npm run build:types",
     "build:sizes": "npm run build --ws && node -r ~ts scripts/sizes.ts",
-    "build:types": "npm run build:types --ws --if-present && tsc -b tsconfig.build.json",
+    "build:types": "tsc -b tsconfig.build.json",
     "change": "changeset add",
     "ci:test": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" MARKO_DEBUG=1 c8 npm test",
     "format": "npm run lint:eslint -- --fix && npm run lint:prettier -- --write",

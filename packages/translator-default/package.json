@@ -25,7 +25,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "babel ./src --out-dir ./dist --delete-dir-on-start --copy-files --config-file ../../babel.config.js --env-name=production"
+    "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.9",
