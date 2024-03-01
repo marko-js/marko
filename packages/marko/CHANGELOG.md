@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.15
+
+### Patch Changes
+
+- [#2132](https://github.com/marko-js/marko/pull/2132) [`f3004d7`](https://github.com/marko-js/marko/commit/f3004d7baddd22a022217bb5e50ef8e6b6a80354) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect check for if a component has custom events
+
 ## 5.32.14
 
 ### Patch Changes
