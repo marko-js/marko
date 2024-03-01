@@ -45,7 +45,7 @@ const TagsCompat = createRenderer(
     const isHydrate =
       ___getComponentsContext(out).___globalContext.___isHydrate;
     const input = Array.isArray(_.i) ? _.i : [_.i];
-    const tagsRenderer = resolveRegisteredRenderer(_.r);
+    const tagsRenderer = resolveRegistered(_.r);
     const args = tagsRenderer.___args;
 
     component.effects = prepare(() => {
@@ -131,6 +131,20 @@ function create5to6Renderer(renderer, hasAttrs) {
     if (typeof renderer !== "string" && !isMarko6) {
       newRenderer = rendererCache.get(renderer);
       if (!newRenderer) {
+        const { Component } = renderer;
+        if (Component) {
+          const setCustomEvents = Component.prototype.___setCustomEvents;
+          Component.prototype.___setCustomEvents = function (
+            customEvents,
+            scopeId,
+          ) {
+            for (const customEvent of customEvents) {
+              customEvent[1] = resolveRegistered(customEvent[1]);
+            }
+
+            setCustomEvents.call(this, customEvents, scopeId);
+          };
+        }
         newRenderer = {
           ___setup(scope) {
             if (!hasAttrs) {
@@ -170,10 +184,27 @@ function renderAndMorph(scope, renderer, renderBody, input) {
   const existingComponent = scope.marko5Component;
   const componentsContext = ___getComponentsContext(out);
   const globalComponentsContext = componentsContext.___globalContext;
+  let customEvents;
   globalComponentsContext.___rerenderComponent = existingComponent;
   out.sync();
   if (renderer) {
-    renderer(input[0], out);
+    const [rawInput] = input;
+    const normalizedInput = {};
+
+    for (const key in rawInput) {
+      let value = rawInput[key];
+      if (key.startsWith("on")) {
+        const c = key[2];
+        customEvents = customEvents || {};
+        customEvents[(c === "-" ? "" : c.toLowerCase()) + key.slice(3)] = [
+          value,
+        ];
+      } else {
+        normalizedInput[key] = rawInput[key];
+      }
+    }
+
+    renderer(normalizedInput, out);
   } else {
     RenderBodyComponent({ renderBody, args: input }, out);
   }
@@ -187,6 +218,7 @@ function renderAndMorph(scope, renderer, renderBody, input) {
     const component = componentDefs[0].___component;
     component.___rootNode = rootNode;
     component.___input = input[0];
+    component.___customEvents = customEvents;
     scope.marko5Component = component;
   });
 }
@@ -224,7 +256,7 @@ registerComponent(RenderBodyComponentId, () => ({
   Component: defineComponent({}, RenderBodyComponent),
 }));
 
-function resolveRegisteredRenderer(renderer) {
+function resolveRegistered(renderer) {
   if (!Array.isArray(renderer)) return renderer;
 
   const [registerId, scopeId] = renderer;
