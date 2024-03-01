@@ -1,4 +1,4 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const id = 0;
@@ -12,9 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     let _i = _i2++;
     _forScopeIds.push(_scope1_id);
     _write(`${_escapeXML(item)}${_markResumeNode(_scope1_id, "#text/0")}`);
-    _writeScope(_scope1_id, (_s => (_scope1_.set(_i, _s), _s))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope1_id, (_s => (_scope1_.set(_i, _s), _s))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}<button id=add>Add</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=remove>Remove</button>${_markResumeNode(_scope0_id, "#button/2")}</div>`);

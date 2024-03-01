@@ -1,4 +1,4 @@
-import { markResumeNode as _markResumeNode, write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const show = false;
@@ -7,9 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (show) {
     const _scope1_id = _nextScopeId();
     _write("hi");
-    _writeScope(_scope1_id, _scope1_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope1_id, _scope1_ = {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }

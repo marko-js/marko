@@ -34,11 +34,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}`);
     _writeScope(_scope1_id, _scope1_ = {
+      "_": _serializedScope(_scope0_id),
       "#text/0!": _scope2_,
       "#text/0(": _ifRenderer,
       "#text/1!": _scope3_,
-      "#text/1(": _ifRenderer2,
-      "_": _serializedScope(_scope0_id)
+      "#text/1(": _ifRenderer2
     });
     _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer");
   }
