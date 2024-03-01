@@ -1,0 +1,12 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  handleClick() {
+    this.state.count++
+    this.emit("count", this.state.count);
+  }
+}
+<button id="class-api" onClick("handleClick")>
+  ${state.count}
+</button>
