@@ -5,6 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
+import type { Reserve } from "./reserve";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
@@ -18,6 +19,7 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
+  closures?: Reserve[];
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
 };

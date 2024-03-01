@@ -693,6 +693,7 @@ export function writeHTMLResumeStatements(
     currentProgramPath.node.extra.intersectionsBySection?.[section.id];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
+  const closures = section.closures;
 
   let serializedReferences: Opt<Reserve>;
 
@@ -708,6 +709,21 @@ export function writeHTMLResumeStatements(
             reference,
           );
         }
+      }
+    }
+  }
+
+  if (closures) {
+    for (const closure of closures) {
+      let currentSection = section;
+      while (currentSection !== closure.section) {
+        getSerializedScopeProperties(currentSection).set(
+          t.stringLiteral("_"),
+          callRuntime(
+            "serializedScope",
+            getScopeIdIdentifier((currentSection = currentSection.parent!)),
+          ),
+        );
       }
     }
   }
@@ -764,11 +780,6 @@ export function writeHTMLResumeStatements(
       getSerializedScopeProperties(ref.section).set(
         accessor,
         t.identifier(ref.name),
-      );
-      // TODO: should work recursively for more than one level
-      getSerializedScopeProperties(section).set(
-        t.stringLiteral("_"),
-        callRuntime("serializedScope", getScopeIdIdentifier(ref.section)), // TODO: section.parent
       );
     }
   });

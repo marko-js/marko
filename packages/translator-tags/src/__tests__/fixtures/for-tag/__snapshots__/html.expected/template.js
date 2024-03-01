@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeScopeStart as _markResumeScopeStart, serializedScope as _serializedScope, markResumeControlEnd as _markResumeControlEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeScopeStart as _markResumeScopeStart, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlEnd as _markResumeControlEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, attr as _attr, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const arr = [1, 2, 3];
@@ -13,9 +13,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     let i = _i++;
     _write(`${_markResumeScopeStart(_scope1_id)}<div>${_escapeXML(i)}${_markResumeNode(_scope1_id, "#text/0")}: <!>${_escapeXML(val)}${_markResumeNode(_scope1_id, "#text/1")}</div><div></div><div></div>`);
-    _writeScope(_scope1_id, (_s => (_scope1_.set(i, _s), _s))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope1_id, (_s => (_scope1_.set(i, _s), _s))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
@@ -24,9 +22,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope2_id = _nextScopeId();
     const val = obj[key];
     _write(`${_markResumeScopeStart(_scope2_id)}<div>${_escapeXML(key)}${_markResumeNode(_scope2_id, "#text/0")}: <!>${_escapeXML(val)}${_markResumeNode(_scope2_id, "#text/1")}</div><div></div><div></div>`);
-    _writeScope(_scope2_id, (_s2 => (_scope2_.set(key, _s2), _s2))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope2_id, (_s2 => (_scope2_.set(key, _s2), _s2))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/1")}`);
@@ -42,9 +38,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope4_id = _nextScopeId();
     let i = _i3++;
     _write(`${_markResumeScopeStart(_scope4_id)}<div${_attr("key", i)}>${_escapeXML(i)}${_markResumeNode(_scope4_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope4_id, "#text/2")}</div>${_markResumeNode(_scope4_id, "#div/0")}<div></div><div${_attr("key", `other-${i}`)}></div>${_markResumeNode(_scope4_id, "#div/3")}`);
-    _writeScope(_scope4_id, (_s3 => (_scope4_.set(i, _s3), _s3))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope4_id, (_s3 => (_scope4_.set(i, _s3), _s3))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
@@ -57,9 +51,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     let i = _i4++;
     _forScopeIds4.push(_scope5_id);
     _write(`<div${_attr("key", i)}>${_escapeXML(list.length)}${_markResumeNode(_scope5_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope5_id, "#text/2")}</div>${_markResumeNode(_scope5_id, "#div/0")}`);
-    _writeScope(_scope5_id, (_s4 => (_scope5_.set(i, _s4), _s4))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope5_id, (_s4 => (_scope5_.set(i, _s4), _s4))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _forScopeIds4)}`);
@@ -68,9 +60,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope6_id = _nextScopeId();
     const val = obj[key];
     _write(`${_markResumeScopeStart(_scope6_id)}<div${_attr("key", key)}>${_escapeXML(key)}${_markResumeNode(_scope6_id, "#text/1")}: <!>${_escapeXML(val)}${_markResumeNode(_scope6_id, "#text/2")}</div>${_markResumeNode(_scope6_id, "#div/0")}<div></div><div${_attr("key", `other-${key}`)}></div>${_markResumeNode(_scope6_id, "#div/3")}`);
-    _writeScope(_scope6_id, (_s5 => (_scope6_.set(key, _s5), _s5))({
-      "_": _serializedScope(_scope0_id)
-    }));
+    _writeScope(_scope6_id, (_s5 => (_scope6_.set(key, _s5), _s5))({}));
     _maybeFlush();
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}`);

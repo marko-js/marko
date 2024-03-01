@@ -1,13 +1,11 @@
-import { serializedScope as _serializedScope, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   let _ifScopeId, _scope1_, _ifRenderer;
   if (input.a + input.b) {
     const _scope1_id = _nextScopeId();
     _write("Hello");
-    _writeScope(_scope1_id, _scope1_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope1_id, _scope1_ = {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
@@ -16,9 +14,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (input.a, input.b) {
     const _scope2_id = _nextScopeId();
     _write("World");
-    _writeScope(_scope2_id, _scope2_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope2_id, _scope2_ = {});
     _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer");
     _ifScopeId2 = _scope2_id;
   }
@@ -27,25 +23,19 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (input.x) {
     const _scope3_id = _nextScopeId();
     _write("A");
-    _writeScope(_scope3_id, _scope3_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope3_id, _scope3_ = {});
     _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer");
     _ifScopeId3 = _scope3_id;
   } else if (input.y) {
     const _scope4_id = _nextScopeId();
     _write("B");
-    _writeScope(_scope4_id, _scope3_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope4_id, _scope3_ = {});
     _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer");
     _ifScopeId3 = _scope4_id;
   } else {
     const _scope5_id = _nextScopeId();
     _write("C");
-    _writeScope(_scope5_id, _scope3_ = {
-      "_": _serializedScope(_scope0_id)
-    });
+    _writeScope(_scope5_id, _scope3_ = {});
     _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_5_renderer");
     _ifScopeId3 = _scope5_id;
   }

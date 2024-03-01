@@ -26,6 +26,7 @@ import {
   getClosures,
   getSerializedScopeProperties,
   getSignal,
+  setForceResumeScope,
   setRegisterScopeBuilder,
   setSubscriberBuilder,
   writeHTMLResumeStatements,
@@ -302,11 +303,7 @@ const translateHTML = {
           [scope],
         );
       });
-      // TODO: redundant? already set by writeHTMLResumeStatements?
-      getSerializedScopeProperties(bodySection).set(
-        t.stringLiteral("_"),
-        callRuntime("serializedScope", getScopeIdIdentifier(tagSection)),
-      );
+      setForceResumeScope(bodySection);
     }
 
     if (byAttr && isStateful) {

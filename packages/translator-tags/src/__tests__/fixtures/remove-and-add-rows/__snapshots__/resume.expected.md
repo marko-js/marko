@@ -14,7 +14,7 @@
     </div>
     <!--M*0 #div/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o)=&gt;(o={0:h={"#div/0(":new Map([[1,j={}],[2,k={}],[3,m={}]])},1:j,2:k,3:m},j._=k._=m._=h,o),[])
+      (M$h=[]).push((b,s,h,j,k)=&gt;({0:{"#div/0(":new Map([[1,h={}],[2,j={}],[3,k={}]])},1:h,2:j,3:k}),[])
     </script>
   </body>
 </html>

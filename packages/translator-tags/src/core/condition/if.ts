@@ -25,6 +25,7 @@ import {
   getSerializedScopeProperties,
   getSignal,
   getSignalFn,
+  setForceResumeScope,
   setRegisterScopeBuilder,
   setSubscriberBuilder,
   writeHTMLResumeStatements,
@@ -190,11 +191,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           scope,
         );
       });
-      // TODO: redundant? is this already getting set by writeHTMLResumeStatements?
-      getSerializedScopeProperties(bodySection).set(
-        t.stringLiteral("_"),
-        callRuntime("serializedScope", getScopeIdIdentifier(section)),
-      );
+      setForceResumeScope(bodySection);
     }
     writer.flushInto(tag);
     // TODO: this is a hack to get around the fact that we don't have a way to

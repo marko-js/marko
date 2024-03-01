@@ -24,9 +24,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId)}`);
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner");
     _writeScope(_scope1_id, _scope1_ = {
+      "_": _serializedScope(_scope0_id),
       "#text/1!": _scope2_,
-      "#text/1(": _ifRenderer,
-      "_": _serializedScope(_scope0_id)
+      "#text/1(": _ifRenderer
     });
     _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer");
   }

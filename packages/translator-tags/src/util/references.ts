@@ -100,16 +100,19 @@ function addBindingToReference(binding: Reserve, reference: t.NodePath) {
   let newReferences = reserveUtil.add(previousReferences, binding);
 
   if (previousReferences !== newReferences) {
-    let section: Section | undefined;
+    const section = getOrCreateSection(exprRoot);
     if (isIntersection(previousReferences)) {
-      section ||= getOrCreateSection(exprRoot);
       removeSubscriber(getIntersection(section, previousReferences));
     }
 
     if (isIntersection(newReferences)) {
-      section ||= getOrCreateSection(exprRoot);
       newReferences = getIntersection(section, newReferences);
       addSubscriber(newReferences);
+    }
+
+    if (section !== binding.section) {
+      section.closures ??= [];
+      section.closures.push(binding);
     }
 
     extra.references = newReferences;
