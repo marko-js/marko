@@ -172,7 +172,7 @@ function createRendererFunc(
         // so we don't want to queue it up as a result of calling `setInput()`
         component.___updateQueued = true;
 
-        if (customEvents !== undefined) {
+        if (customEvents) {
           component.___setCustomEvents(customEvents, ownerComponentId);
         }
 
