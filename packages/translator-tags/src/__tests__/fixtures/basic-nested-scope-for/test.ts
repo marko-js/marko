@@ -12,5 +12,3 @@ function click(container: Element, number: number) {
   const button = buttons.find((b) => b.textContent === "" + number)!;
   button.click();
 }
-
-export const skip_ssr = true;
