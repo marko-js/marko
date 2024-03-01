@@ -7,8 +7,16 @@ export function wait(timeout: number) {
   });
 }
 
+export function throws(fn: (...args: any[]) => void) {
+  return Object.assign(fn, { throws: true });
+}
+
 export function isWait(value: any): value is ReturnType<typeof wait> {
   return value.wait;
+}
+
+export function isThrows(value: any): value is ReturnType<typeof throws> {
+  return value.throws;
 }
 
 export function resolveAfter<T>(value: T, timeout: number) {

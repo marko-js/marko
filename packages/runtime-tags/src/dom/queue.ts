@@ -20,6 +20,19 @@ type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 let currentBatch: unknown[] = [];
 let currentEffects: unknown[] = [];
 
+export function queueControllableSource<T>(
+  scope: Scope,
+  signal: ValueSignal,
+  changeHandler: ((newValue: T) => void) | undefined,
+  value: T,
+) {
+  if (changeHandler) {
+    changeHandler(value);
+    return value;
+  }
+  return queueSource(scope, signal, value);
+}
+
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
   signal(scope, MARK);

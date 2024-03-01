@@ -12,7 +12,7 @@ import glob from "tiny-glob";
 import * as translator from "..";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
-import { isWait } from "./utils/resolve";
+import { isThrows, isWait } from "./utils/resolve";
 import createMutationTracker from "./utils/track-mutations";
 
 const runtimeId = "M";
@@ -288,8 +288,19 @@ describe("translator-tags", () => {
             await update();
           } else if (typeof update === "function") {
             await update(document.documentElement);
-            run();
-            tracker.logUpdate(update);
+            if (isThrows(update)) {
+              try {
+                run();
+                throw new Error("Expected error to be thrown");
+              } catch (err) {
+                tracker.logUpdate(update, err as Error);
+                throwErrors();
+                break;
+              }
+            } else {
+              run();
+              tracker.logUpdate(update);
+            }
           } else {
             instance.update(update);
             tracker.logUpdate(update);

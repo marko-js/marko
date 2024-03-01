@@ -33,26 +33,34 @@ export default function createMutationTracker(
       }
       result.push(message);
     },
-    logUpdate(update: unknown) {
+    logUpdate(update: unknown, expectedError?: Error) {
       if (!connected) {
         throw new Error(`logUpdate called after cleanup`);
       }
+
       if (currentRecords) {
         currentRecords = currentRecords.concat(observer.takeRecords());
       } else {
         currentRecords = observer.takeRecords();
       }
-      result.push(
-        getStatusString(cloneAndNormalize(container), currentRecords, update),
-      );
-      sanitizedResult.push(
-        getStatusString(
-          cloneAndSanitize(window, container),
-          currentRecords,
-          update,
-          true,
-        ),
-      );
+
+      if (expectedError) {
+        result.push(getErrorStatusString(expectedError, update));
+        sanitizedResult.push(getErrorStatusString(expectedError, update, true));
+      } else {
+        result.push(
+          getStatusString(cloneAndNormalize(container), currentRecords, update),
+        );
+        sanitizedResult.push(
+          getStatusString(
+            cloneAndSanitize(window, container),
+            currentRecords,
+            update,
+            true,
+          ),
+        );
+      }
+
       currentRecords = null;
     },
     getRawLogs(sanitized?: boolean) {
@@ -116,21 +124,23 @@ function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
   return clone;
 }
 
+function getUpdateString(update: unknown) {
+  return typeof update === "function"
+    ? `\n${update
+        .toString()
+        .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
+        .replace(/^ {4}/gm, "")
+        .replace(/;$/, "")}\n`
+    : JSON.stringify(update);
+}
+
 function getStatusString(
   container: Node,
   records: MutationRecord[],
   update: unknown,
   omitMutations?: boolean,
 ) {
-  const updateString =
-    typeof update === "function"
-      ? `\n${update
-          .toString()
-          .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
-          .replace(/^ {4}/gm, "")
-          .replace(/;$/, "")}\n`
-      : JSON.stringify(update);
-
+  const updateString = getUpdateString(update);
   const formattedHTML = Array.from(container.childNodes)
     .map((child) =>
       format(child, {
@@ -149,6 +159,19 @@ function getStatusString(
           .filter(Boolean)
           .join("\n")}\n\`\`\``
   }`;
+}
+
+function getErrorStatusString(
+  error: Error,
+  update: unknown,
+  omitStack?: boolean,
+) {
+  const updateString = getUpdateString(update);
+  const formattedError =
+    !omitStack && error.stack
+      ? error.stack.replaceAll(process.cwd(), "")
+      : error.message;
+  return `# Render ${updateString}\n# Error\n\`\`\`\n${formattedError}\n\`\`\``;
 }
 
 function formatMutationRecord(record: MutationRecord) {
