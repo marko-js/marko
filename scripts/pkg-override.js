@@ -3,11 +3,14 @@ const path = require("path");
 for (const name of fs.readdirSync("packages")) {
   const file = path.join("packages", name, "package.json");
   const details = JSON.parse(fs.readFileSync(file, "utf8"));
+
   if (
-    override(details, "main") ||
-    override(details, "module") ||
-    override(details, "browser") ||
-    override(details, "exports")
+    [
+      override(details, "main"),
+      override(details, "module"),
+      override(details, "browser"),
+      override(details, "exports"),
+    ].some(Boolean)
   ) {
     fs.writeFileSync(file, `${JSON.stringify(details, null, 2)}\n`);
   }
