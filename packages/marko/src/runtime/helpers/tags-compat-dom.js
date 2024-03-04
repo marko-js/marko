@@ -77,10 +77,15 @@ const TagsCompat = createRenderer(
     }
     out.ef();
   },
-  {
-    t: TagsCompatId,
-    d: "MARKO_DEBUG",
-  },
+  // eslint-disable-next-line no-constant-condition
+  "MARKO_DEBUG"
+    ? {
+        t: TagsCompatId,
+        d: true,
+      }
+    : {
+        t: TagsCompatId,
+      },
   {},
 );
 
@@ -243,11 +248,17 @@ const RenderBodyComponent = createRenderer(
       "0",
     );
   },
-  {
-    t: RenderBodyComponentId,
-    i: true,
-    d: "MARKO_DEBUG",
-  },
+  // eslint-disable-next-line no-constant-condition
+  "MARKO_DEBUG"
+    ? {
+        t: RenderBodyComponentId,
+        i: true,
+        d: true,
+      }
+    : {
+        t: RenderBodyComponentId,
+        i: true,
+      },
   {},
 );
 

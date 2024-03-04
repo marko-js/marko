@@ -68,10 +68,15 @@ const TagsCompat = createRenderer(
     renderFn(out.beginAsync(), input, {}, streamData);
     out.ef();
   },
-  {
-    t: TagsCompatId,
-    d: "MARKO_DEBUG",
-  },
+  // eslint-disable-next-line no-constant-condition
+  "MARKO_DEBUG"
+    ? {
+        t: TagsCompatId,
+        d: true,
+      }
+    : {
+        t: TagsCompatId,
+      },
   {},
 );
 
