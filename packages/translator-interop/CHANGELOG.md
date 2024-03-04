@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.3
+
+### Patch Changes
+
+- [#2148](https://github.com/marko-js/marko/pull/2148) [`b095755`](https://github.com/marko-js/marko/commit/b09575529493039ade02d9c35bcf21d5d4e6ef1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with interop translator loading init-components tag.
+
+- Updated dependencies [[`b095755`](https://github.com/marko-js/marko/commit/b09575529493039ade02d9c35bcf21d5d4e6ef1d)]:
+  - @marko/translator-default@5.32.2
+
 ## 0.1.2
 
 ### Patch Changes

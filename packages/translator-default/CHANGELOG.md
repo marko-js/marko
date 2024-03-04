@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.2
+
+### Patch Changes
+
+- [#2148](https://github.com/marko-js/marko/pull/2148) [`b095755`](https://github.com/marko-js/marko/commit/b09575529493039ade02d9c35bcf21d5d4e6ef1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with interop translator loading init-components tag.
+
 ## 5.32.1
 
 ### Patch Changes
