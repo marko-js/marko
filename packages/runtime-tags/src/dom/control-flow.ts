@@ -315,7 +315,10 @@ export function inLoopScope(
 ) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChar.LoopScopeArray;
   return (scope: Scope, clean?: boolean | 1) => {
-    const loopScopes = scope[loopScopeAccessor] ?? [];
+    const loopScopes =
+      scope[loopScopeAccessor] ??
+      scope[loopNodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
+      [];
     for (const scope of loopScopes) {
       signal(scope, clean);
     }

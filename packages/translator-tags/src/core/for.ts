@@ -5,7 +5,7 @@ import {
   getTagDef,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { WalkCode } from "@marko/runtime-tags/common/types";
+import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 import { isOutputHTML } from "../util/marko-config";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import { mergeReferences } from "../util/references";
@@ -282,7 +282,7 @@ const translateHTML = {
     let byParams: t.Expression[];
     let keyExpression: t.Expression | undefined = t.identifier("NOO");
 
-    if (isStateful) {
+    if (isStateful || bodySection.closures) {
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         const tempScopeIdentifier =
           currentProgramPath.scope.generateUidIdentifier("s");
@@ -363,7 +363,7 @@ const translateHTML = {
         valParam = tempValParam;
       }
 
-      if (indexParam || isStateful) {
+      if (indexParam || isStateful || bodySection.closures) {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         const indexName = tag.scope.generateUidIdentifierBasedOnNode(
           indexParam,
@@ -421,7 +421,7 @@ const translateHTML = {
       const stepName = tag.scope.generateUidIdentifier("step");
       const fromName = tag.scope.generateUidIdentifier("from");
 
-      if (indexParam || isStateful) {
+      if (indexParam || isStateful || bodySection.closures) {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         keyExpression = indexParam as t.Identifier;
         block.body.unshift(
@@ -466,7 +466,7 @@ const translateHTML = {
       );
     }
 
-    if (isStateful) {
+    if (isStateful || bodySection.closures) {
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
       const forScopesIdentifier = getScopeIdentifier(bodySection);
@@ -511,7 +511,9 @@ const translateHTML = {
         )}`;
       }
       getSerializedScopeProperties(tagSection).set(
-        t.stringLiteral(getScopeAccessorLiteral(reserve!).value + "("),
+        t.stringLiteral(
+          getScopeAccessorLiteral(reserve!).value + AccessorChar.LoopScopeMap,
+        ),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),
           forScopesIdentifier,
