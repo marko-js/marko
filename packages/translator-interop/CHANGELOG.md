@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.1
+
+### Patch Changes
+
+- [#2136](https://github.com/marko-js/marko/pull/2136) [`6546c68`](https://github.com/marko-js/marko/commit/6546c68346f6935c98419626662088571549852a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove private field from package.json
+
+- Updated dependencies [[`6546c68`](https://github.com/marko-js/marko/commit/6546c68346f6935c98419626662088571549852a)]:
+  - @marko/translator-tags@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
