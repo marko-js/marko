@@ -29,11 +29,7 @@ export default function (path, isNullable) {
 
     if (!relativePath) {
       const tagDef = getTagDef(path);
-      if (
-        tagDef &&
-        tagDef.taglibId === "marko-default-core" &&
-        tagDef.renderer
-      ) {
+      if (tagDef && tagDef.renderer) {
         // Normally new tags should not be added in the translate stage.
         // We make an exception here for core tags, init-components & _preserve being the primary culprits.
         // TODO: in the future refactor so this is not needed.
