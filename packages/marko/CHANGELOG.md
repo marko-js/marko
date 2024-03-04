@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.33.2
+
+### Patch Changes
+
+- [#2145](https://github.com/marko-js/marko/pull/2145) [`ccc19e2`](https://github.com/marko-js/marko/commit/ccc19e2657f992acdf6822c5bebc6bc7cf6e3460) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where a textarea created with no value in the browser was setting `null` as the value.
+
+- [#2143](https://github.com/marko-js/marko/pull/2143) [`bb250c9`](https://github.com/marko-js/marko/commit/bb250c9bd530e37b11e41bf938312f0b4fe1c348) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where interop helpers were mixed commonjs and esm
+
 ## 5.33.1
 
 ### Patch Changes
