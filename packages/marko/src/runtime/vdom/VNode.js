@@ -50,8 +50,7 @@ VNode.prototype = {
 
     if (this.___nodeName === "textarea") {
       if (child.___Text) {
-        var childValue = child.___nodeValue;
-        this.___valueInternal = (this.___valueInternal || "") + childValue;
+        this.___valueInternal += child.___nodeValue;
       } else {
         throw TypeError();
       }
