@@ -1,5 +1,5 @@
-import initComponentsTag from "../../core-tags/components/init-components-tag";
-import { ___getComponentsContext } from "../components/ComponentsContext";
+const initComponentsTag = require("../../core-tags/components/init-components-tag");
+const { ___getComponentsContext } = require("../components/ComponentsContext");
 
 const tagsAPI = require(
   // eslint-disable-next-line no-constant-condition
@@ -30,7 +30,7 @@ const FN_TO_JSON = function () {
 const isMarko6 = (fn) => !!fn.___isTagsAPI;
 const isMarko5 = (fn) => !fn.___isTagsAPI;
 
-export default dynamicTag5.___runtimeCompat = function tagsToVdom(
+dynamicTag5.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
   renderBody,
   args,
@@ -154,7 +154,7 @@ function dummyCreate5to6Renderer() {}
 
 register(dummyCreate5to6Renderer, "@marko/tags-compat-5-to-6");
 
-export function serialized5to6(renderer, id) {
+exports.serialized5to6 = function serialized5to6(renderer, id) {
   const dummyRenderer = () => {};
   register(dummyRenderer, id);
   return makeSerializable(renderer, (s) =>
@@ -164,4 +164,4 @@ export function serialized5to6(renderer, id) {
       .value(dummyRenderer)
       .code(",!0)"),
   );
-}
+};

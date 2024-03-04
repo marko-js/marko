@@ -1,5 +1,5 @@
-import { ___getComponentsContext } from "../components/ComponentsContext";
-import { ___createFragmentNode } from "../vdom/morphdom/fragment";
+const { ___componentLookup } = require("@internal/components-util");
+const { ___getComponentsContext } = require("../components/ComponentsContext");
 
 const {
   prepare,
@@ -14,15 +14,15 @@ const {
   // eslint-disable-next-line no-constant-condition
   "MARKO_DEBUG" ? "@marko/runtime-tags/debug/dom" : "@marko/runtime-tags/dom",
 );
-const { ___componentLookup } = require("@internal/components-util");
 const defineComponent = require("../components/defineComponent");
 const { r: registerComponent } = require("../components/registry");
 const createRenderer = require("../components/renderer");
 const defaultCreateOut = require("../createOut");
 const morphdom = require("../vdom/morphdom");
+const { ___createFragmentNode } = require("../vdom/morphdom/fragment");
 const dynamicTag = require("./dynamic-tag");
 
-export default dynamicTag.___runtimeCompat = function tagsToVdom(
+dynamicTag.___runtimeCompat = function tagsToVdom(
   tagsRenderer,
   renderBody,
   args,
