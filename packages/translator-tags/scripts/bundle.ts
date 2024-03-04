@@ -1,7 +1,17 @@
+import fs from "fs";
 import path from "path";
 import { build } from "esbuild";
 
 const absWorkingDir = path.join(__dirname, "..");
+const pkg = JSON.parse(
+  fs.readFileSync(path.join(absWorkingDir, "package.json"), "utf8"),
+);
+const external = new Set([
+  ...Object.keys(pkg.dependencies || {}),
+  ...Object.keys(pkg.peerDependencies || {}),
+]);
+
+external.delete("@marko/runtime-tags");
 
 build({
   format: "cjs",
@@ -10,7 +20,7 @@ build({
   outdir: "dist",
   sourcemap: true,
   platform: "node",
-  packages: "external",
+  external: [...external],
   entryPoints: [`src/index.ts`],
 }).catch((err) => {
   console.error(err);
