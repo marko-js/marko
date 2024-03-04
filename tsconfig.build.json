@@ -1,8 +1,16 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/dist"],
+  "include": ["scripts"],
   "compilerOptions": {
     "noEmit": true,
     "emitDeclarationOnly": false
-  }
+  },
+  "references": [
+    {
+      "path": "./packages/runtime-tags"
+    },
+    {
+      "path": "./packages/translator-tags"
+    }
+  ]
 }

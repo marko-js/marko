@@ -1,0 +1,24 @@
+<hello>
+    <@list>
+        <for|color| of=["red", "blue", "green"]>
+            <if=color === "red">
+                <@item style={ color }>foo</@item>
+            </if>
+            <else>
+                <@item style={ color }>bar</@item>
+            </else>
+        </for>
+    </@list>
+
+    <for|col, i| of=[["a", "b"], ["c", "d"]]>
+        <@col x=i>
+            <for|row| of=col>
+                <@row row=row>${row}</@row>
+            </for>
+        </@col>
+    </for>
+
+    <@col outside>
+        <@row row=-1>Outside</@row>
+    </@col>
+</hello>

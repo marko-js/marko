@@ -5,10 +5,14 @@ require("../__util__/test-init");
 const fs = require("fs");
 const path = require("path");
 var chai = require("chai");
-const createBrowser = require("jsdom-context-require");
+const { JSDOM } = require("jsdom");
 const morphdom = require("marko/runtime/vdom/morphdom");
 var autotest = require("mocha-autotest").default;
 chai.config.includeStack = true;
+
+let doc;
+before(() => (doc = new JSDOM("").window.document));
+after(() => (doc = undefined));
 
 autotest("fixtures", (fixture) => {
   let dir = fixture.dir;
@@ -23,17 +27,8 @@ autotest("fixtures", (fixture) => {
       encoding: "utf8",
     });
 
-    let fromDocument = createBrowser({
-      dir: __dirname,
-      html: "<html><body>" + fromHTML + "</body></html>",
-    }).window.document;
-    let toDocument = createBrowser({
-      dir: __dirname,
-      html: "<html><body>" + toHTML + "</body></html>",
-    }).window.document;
-
-    let fromNode = fromDocument.body;
-    let realToNode = toDocument.body;
+    let fromNode = JSDOM.fragment(fromHTML);
+    let realToNode = JSDOM.fragment(toHTML);
     var targetVEl = require("marko/runtime/vdom/vdom").___virtualize(
       realToNode,
     );
@@ -43,7 +38,6 @@ autotest("fixtures", (fixture) => {
     });
 
     var toNode = targetVEl;
-    var doc = fromDocument;
     var componentsContext = {
       ___preserved: {},
       ___preservedBodies: {},
@@ -72,8 +66,14 @@ function serializeNode(node) {
       serializeElHelper(node, indent);
     } else if (node.nodeType === 3) {
       serializeTextHelper(node, indent);
+    } else if (node.nodeType === 11) {
+      var curChild = node.firstChild;
+      while (curChild) {
+        serializeHelper(curChild, indent);
+        curChild = curChild.nextSibling;
+      }
     } else {
-      throw new Error("Unexpected node type");
+      throw new Error("Unexpected node type: " + node.nodeType);
     }
   }
 

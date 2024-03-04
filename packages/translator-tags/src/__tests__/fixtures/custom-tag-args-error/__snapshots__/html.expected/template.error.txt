@@ -1,0 +1,4 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/custom-tag-args-error/template.marko:1:15
+    > 1 | <custom-tag(1,2) />
+        |               ^ Tag does not support multiple arguments.

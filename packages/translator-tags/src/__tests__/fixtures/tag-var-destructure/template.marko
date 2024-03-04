@@ -1,0 +1,27 @@
+static function noop(_) {}
+
+<let/a=0/>
+<let/b=0/>
+<let/c={}/>
+<let/d=0/>
+<let/e=[]/>
+<button onClick() {
+  let local;
+  ({
+    a,
+    _b: { _b: b },
+    local,
+    ...c
+  } = { a: 1, _b: { _b: 2 }, local: 3, c: 4 });
+  noop([
+    {
+      arr: [local, d, , ...e],
+    },
+  ] = [{ arr: [6, 7, 8, 9] }]);
+}>
+  <pre>a    1    ${a}</pre>
+  <pre>b    2    ${b}</pre>
+  <pre>c  {c:4}  ${JSON.stringify(d)}</pre>
+  <pre>d    7    ${d}</pre>
+  <pre>f   [9]   ${JSON.stringify(e)}</pre>
+</button>

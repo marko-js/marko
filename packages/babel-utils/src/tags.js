@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { basename, dirname, relative, resolve } from "path";
+import { basename, dirname, relative, resolve, join } from "path";
 import { types as t } from "@marko/compiler";
 import { getRootDir } from "lasso-package-root";
 import resolveFrom from "resolve-from";
@@ -132,13 +132,25 @@ export function getMacroIdentifier(path) {
   return getMacroIdentifierForName(path, path.node.name.value);
 }
 
+export function getTagTemplate(tag) {
+  const {
+    node,
+    hub: { file },
+  } = tag;
+
+  if (node.extra?.tagNameImported) {
+    return join(file.opts.filename, node.extra.tagNameImported);
+  }
+  return getTagDef(tag)?.template;
+}
+
 export function getTagDef(path) {
   const {
     node,
     hub: { file },
   } = path;
 
-  if (!node.tagDef) {
+  if (node.tagDef === undefined) {
     if (isDynamicTag(path) || isMacroTag(path)) {
       node.tagDef = null;
     } else {
@@ -232,8 +244,12 @@ export function isLoopTag(path) {
 }
 
 export function loadFileForTag(tag) {
-  const def = getTagDef(tag);
   const { file } = tag.hub;
+  if (tag.node.extra?.tagNameImported) {
+    return loadFileForImport(file, tag.node.extra?.tagNameImported);
+  }
+
+  const def = getTagDef(tag);
   const fs = file.markoOpts.fileSystem;
   const filename = def && def.template;
 

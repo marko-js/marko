@@ -463,4 +463,4 @@ For full definitions, view the source code for Babel and Marko:
 
 - [Babel’s Core Definitions](https://github.com/babel/babel/blob/master/packages/babel-types/src/definitions/core.js)
 - [Babel’s Extended Definitions](https://github.com/babel/babel/tree/master/packages/babel-types/src/definitions)
-- [Marko’s Definitions](https://github.com/marko-js/marko/blob/master/packages/compiler/src/babel-types/types/definitions.js)
+- [Marko’s Definitions](https://github.com/marko-js/marko/blob/main/packages/compiler/src/babel-types/types/definitions.js)

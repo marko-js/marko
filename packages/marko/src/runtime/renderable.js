@@ -77,6 +77,55 @@ module.exports = function (target, renderer) {
     },
 
     /**
+     * Renders a template to nodes and inserts them into the DOM relative
+     * to the provided reference based on the optional position parameter.
+     *
+     * Supported signatures:
+     *
+     * mount(data, reference)
+     * mount(data, reference, position)
+     *
+     * @param  {Object} data The view model data for the template
+     * @param  {Node} reference DOM node to insert the rendered node(s) relative to
+     * @param  {string} [position] A string representing the position relative to the `reference`; must match (case-insensitively) one of the following strings:
+     *  'beforebegin': Before the targetElement itself.
+     *  'afterbegin': Just inside the targetElement, before its first child.
+     *  'beforeend': Just inside the targetElement, after its last child.
+     *  'afterend': After the targetElement itself.
+     * @return {TemplateInstance} Object with `update` and `dispose` methods
+     */
+    mount: function (data, reference, position) {
+      const result = this.renderSync(data);
+
+      switch (position) {
+        case "afterbegin":
+          result.prependTo(reference);
+          break;
+        case "afterend":
+          result.insertAfter(reference);
+          break;
+        case "beforebegin":
+          result.insertBefore(reference);
+          break;
+        default:
+          result.appendTo(reference);
+          break;
+      }
+
+      const component = result.getComponent();
+
+      return {
+        update(input) {
+          component.input = input;
+          component.update();
+        },
+        destroy() {
+          component.destroy();
+        },
+      };
+    },
+
+    /**
      * Renders a template to either a stream (if the last
      * argument is a Stream instance) or
      * provides the output to a callback function (if the last

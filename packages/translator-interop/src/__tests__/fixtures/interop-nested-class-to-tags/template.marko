@@ -1,0 +1,16 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+
+<tags-layout>
+  <button id="class" onClick("increment")>
+    ${state.count}
+  </button>
+</tags-layout>
+
+<init-components/>

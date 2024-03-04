@@ -1,0 +1,39 @@
+{
+  "name": "@marko/translator-tags",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
+  "keywords": [
+    "babel",
+    "tags",
+    "htmljs",
+    "marko",
+    "parse",
+    "parser",
+    "plugin"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/translator-tags/README.md",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/main/packages/translator-tags"
+  },
+  "license": "MIT",
+  "main": "src/index.ts",
+  "main:override": "dist/index.js",
+  "files": [
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  },
+  "dependencies": {
+    "@marko/babel-utils": "^6.3.5",
+    "@marko/runtime-tags": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@marko/compiler": "^5.23.0"
+  }
+}

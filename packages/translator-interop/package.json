@@ -1,0 +1,41 @@
+{
+  "name": "@marko/translator-interop-class-tags",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Combines the Class API translator from Marko 5 and the Tags API translator from Marko 6",
+  "keywords": [
+    "babel",
+    "tags",
+    "htmljs",
+    "marko",
+    "parse",
+    "parser",
+    "plugin"
+  ],
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/translator-interop/README.md",
+  "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko/tree/main/packages/translator-interop"
+  },
+  "license": "MIT",
+  "main:override": "dist/index.js",
+  "main": "src/index.ts",
+  "files": [
+    "dist",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  },
+  "dependencies": {
+    "@babel/code-frame": "^7.23.5",
+    "@marko/babel-utils": "^6.3.5",
+    "@marko/translator-default": "^5.31.13",
+    "@marko/translator-tags": "^0.0.1"
+  },
+  "peerDependencies": {
+    "@marko/compiler": "^5.23.0"
+  }
+}

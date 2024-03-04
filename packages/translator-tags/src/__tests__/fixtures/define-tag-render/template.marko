@@ -1,0 +1,9 @@
+<define/myTag|{name}|>
+  <let/y=1 />
+  <div>Hello ${name} ${y}</div>
+  <button onClick() { y++; }>
+    ${y}
+  </button>
+</define>
+
+<myTag name="Ryan" />

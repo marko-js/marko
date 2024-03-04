@@ -39,6 +39,16 @@ function escapeEndingComment(text) {
   return text.replace(/(--!?)>/g, "$1&gt;");
 }
 
+function deferred() {
+  let resolve;
+  let reject;
+  const promise = new Promise((res, rej) => {
+    resolve = res;
+    reject = rej;
+  });
+  return { promise, resolve, reject };
+}
+
 function AsyncStream(global, writer, parentOut) {
   if (parentOut === null) {
     throw new Error("illegal state");
@@ -116,6 +126,77 @@ var proto = (AsyncStream.prototype = {
   constructor: AsyncStream,
   ___host: typeof document === "object" && document,
   ___isOut: true,
+
+  [Symbol.asyncIterator]() {
+    if (this.___iterator) {
+      return this.___iterator;
+    }
+
+    const originalWriter = this._state.writer;
+    let buffer = "";
+    let iteratorNextFn;
+
+    if (!originalWriter.stream) {
+      // Writing has finished completely so we can use a simple iterator
+      buffer = this.toString();
+      iteratorNextFn = () => {
+        const value = buffer;
+        buffer = "";
+        return { value, done: !value };
+      };
+    } else {
+      let done = false;
+      let pending = deferred();
+      const stream = {
+        write(data) {
+          buffer += data;
+        },
+        end() {
+          done = true;
+          pending.resolve({
+            value: "",
+            done,
+          });
+        },
+        flush() {
+          pending.resolve({
+            value: buffer,
+            done: false,
+          });
+          buffer = "";
+          pending = deferred();
+        },
+      };
+
+      this.on("error", pending.reject);
+
+      const writer = new BufferedWriter(stream);
+      writer.stream = originalWriter.stream;
+      writer.stream.writer = writer;
+      writer.next = originalWriter.next;
+      writer.state = this._state;
+      writer.merge(originalWriter);
+
+      this._state.stream = stream;
+      this._state.writer = writer;
+
+      iteratorNextFn = async () => {
+        if (buffer || done) {
+          const value = buffer;
+          buffer = "";
+          return { value, done };
+        }
+        return pending.promise;
+      };
+    }
+
+    return (this.___iterator = {
+      next: iteratorNextFn,
+      [Symbol.asyncIterator]() {
+        return this;
+      },
+    });
+  },
 
   sync: function () {
     this._sync = true;
@@ -637,18 +718,20 @@ var proto = (AsyncStream.prototype = {
 
   then: function (fn, fnErr) {
     var out = this;
-    var promise = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
       out.on("error", reject);
       out.on("finish", function (result) {
         resolve(result);
       });
-    });
-
-    return Promise.resolve(promise).then(fn, fnErr);
+    }).then(fn, fnErr);
   },
 
   catch: function (fnErr) {
     return this.then(undefined, fnErr);
+  },
+
+  finally: function (fn) {
+    return this.then(undefined, undefined).finally(fn);
   },
 
   c: function (componentDef, key, customEvents) {

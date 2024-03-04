@@ -1,0 +1,11 @@
+<let/clickCount = 0/>
+<let/lastCount = 0/>
+<let/lastCount2 = 0/>
+
+<button onClick() {
+  const last = lastCount = clickCount++;
+  lastCount2 = last;
+}>
+  ${clickCount}
+</button>
+-- used to be <span>${lastCount}</span> which should be the same as <span>${lastCount2}</span>

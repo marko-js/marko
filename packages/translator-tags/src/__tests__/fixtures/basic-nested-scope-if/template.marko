@@ -1,0 +1,13 @@
+<div>
+  <let/clickCount = 0/>
+  <if=clickCount < 3>
+    <button onClick() {
+      clickCount++
+    }>${clickCount}</button>
+  </if>
+  <else>
+    <span>
+      The button was clicked ${clickCount} times.
+    </span>
+  </else>
+</div>

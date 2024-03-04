@@ -1,0 +1,16 @@
+class {
+  onCreate() {
+    this.state = { multiplier: 1 };
+  }
+  increment() {
+    this.state.multiplier++;
+  }
+}
+<tags-layout|baseCount, message|>
+  <h1>${message}</h1>
+  <button id="class" onClick("increment")>
+    ${state.multiplier} * ${baseCount} = ${baseCount * state.multiplier}
+  </button>
+</tags-layout>
+
+<init-components/>

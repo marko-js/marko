@@ -1,0 +1,14 @@
+<div>
+  <let/id=0/>
+  <let/items=[]/>
+
+  <for|item| of=items>${item}</for>
+
+  <button id="add" onClick() { 
+    // TODO: nested writes ([...items, id++]) don't work
+    const nextId = id + 1;
+    id = nextId;
+    items = [...items, nextId];
+  }>Add</button>
+  <button id="remove" onClick() { items = items.slice(0, -1); }>Remove</button>
+</div>

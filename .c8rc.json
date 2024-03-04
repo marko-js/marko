@@ -10,7 +10,7 @@
   ],
   "exclude": [
     "**/__tests__",
-    "packages/runtime/src/html/reorder-runtime.ts",
+    "packages/runtime-tags/src/html/reorder-runtime.ts",
     "**/*.d.ts"
   ]
 }

@@ -1,0 +1,40 @@
+{
+  "name": "@marko/runtime-tags",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Optimized runtime for Marko templates.",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./debug/*": "./src/*.ts"
+  },
+  "exports:override": {
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "default": "./dist/*.js"
+    }
+  },
+  "keywords": [
+    "api",
+    "marko",
+    "runtime",
+    "tags"
+  ],
+  "homepage": "https://github.com/marko-js/marko",
+  "bugs": "https://github.com/marko-js/marko/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marko-js/marko"
+  },
+  "license": "MIT",
+  "files": [
+    "dist",
+    "!**/meta.*.json",
+    "!**/__tests__",
+    "!**/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "node -r ~ts ./scripts/bundle.ts"
+  }
+}

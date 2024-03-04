@@ -3,16 +3,12 @@
 require("../__util__/test-init");
 
 var fs = require("fs");
-var createBrowser = require("jsdom-context-require");
+var { JSDOM } = require("jsdom");
 var vdom = require("marko/runtime/vdom/vdom");
 var autotest = require("mocha-autotest").default;
 var domToString = require("../__util__/domToString");
 
-var document = createBrowser({
-  dir: __dirname,
-  html: "<html><body></body></html>",
-}).window.document;
-
+var document = new JSDOM().window.document;
 var VElement = vdom.___VElement;
 var VText = vdom.___VText;
 var VDocumentFragment = vdom.___VDocumentFragment;

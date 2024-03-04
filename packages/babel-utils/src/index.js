@@ -9,6 +9,7 @@ export {
   hasMacro,
   getMacroIdentifierForName,
   getMacroIdentifier,
+  getTagTemplate,
   getTagDef,
   getFullyResolvedTagName,
   findParentTag,
@@ -26,6 +27,8 @@ export {
   assertNoParams,
   assertNoVar,
   assertNoAttributeTags,
+  assertAttributesOrArgs,
+  assertAttributesOrSingleArg,
 } from "./assert";
 export { computeNode } from "./compute";
 export { normalizeTemplateString } from "./template-string";

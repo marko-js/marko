@@ -1,5 +1,5 @@
 {
-    "browser": {
-        "./test-init.js": "./test-init-browser.js"
-    }
+  "browser": {
+    "./test-init.js": "./test-init-browser.js"
+  }
 }

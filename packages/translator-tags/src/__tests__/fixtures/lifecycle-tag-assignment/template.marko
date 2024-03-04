@@ -1,0 +1,11 @@
+<let/x=0/>
+<let/prev=false/>
+<lifecycle
+  onMount() { this.cur = x; }
+  onUpdate() {
+    prev = this.cur;
+    this.cur = x;
+  }
+/>
+<div>x=<span>${x}</span>, was=${prev}</div>
+<button#increment onClick() { x++; }>Increment</button>

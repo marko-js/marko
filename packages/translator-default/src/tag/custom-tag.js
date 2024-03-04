@@ -2,6 +2,7 @@ import {
   assertNoArgs,
   getTagDef,
   importDefault,
+  loadFileForTag,
   resolveRelativePath,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
@@ -43,7 +44,20 @@ export default function (path, isNullable) {
     let binding = path.scope.getBinding(tagName);
     if (binding && !binding.identifier.loc) binding = null;
 
-    if (relativePath) {
+    const childFile = loadFileForTag(path);
+    const childProgram = childFile?.ast.program;
+
+    if (childProgram?.extra?.___featureType === "tags") {
+      importDefault(
+        file,
+        `marko/src/runtime/helpers/tags-compat-${
+          markoOpts.output === "html" ? "html" : "dom"
+        }.js`,
+        "marko_tags_compat",
+      );
+      path.set("name", importDefault(file, relativePath, path.node.name.value));
+      return dynamicTag(path);
+    } else if (relativePath) {
       if (binding) {
         // TODO: implement auto migration for conflicts here
         // and log below warning
