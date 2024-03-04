@@ -1,7 +1,6 @@
 {
   "name": "@marko/runtime-tags",
   "version": "0.1.0",
-  "private": true,
   "description": "Optimized runtime for Marko templates.",
   "exports": {
     "./*": "./src/*.ts",
