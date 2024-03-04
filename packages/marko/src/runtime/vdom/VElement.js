@@ -116,7 +116,7 @@ function VElement(
   this.___attributes = attrs || EMPTY_OBJECT;
   this.___properties = props || EMPTY_OBJECT;
   this.___nodeName = tagName;
-  this.___valueInternal = null;
+  this.___valueInternal = "";
   this.___constId = constId;
   this.___preserve = false;
   this.___preserveBody = false;

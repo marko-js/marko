@@ -696,10 +696,8 @@ function morphdom(fromNode, toNode, host, componentsContext) {
     }
 
     if (nodeName === "textarea") {
-      var newValue = toEl.___valueInternal || "";
-      var oldValue = vFromEl.___valueInternal || "";
-      if (oldValue !== newValue) {
-        fromEl.value = newValue;
+      if (toEl.___valueInternal !== vFromEl.___valueInternal) {
+        fromEl.value = toEl.___valueInternal;
       }
     } else {
       morphChildren(fromEl, toEl, parentComponent);
