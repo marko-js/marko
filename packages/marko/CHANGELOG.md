@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.3
+
+### Patch Changes
+
+- [#2146](https://github.com/marko-js/marko/pull/2146) [`e2b48ef`](https://github.com/marko-js/marko/commit/e2b48ef89dd8b7416da723ea9ac2f9fe5dded315) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix MARKO_DEBUG output for compat runtime.
+
 ## 5.33.2
 
 ### Patch Changes
