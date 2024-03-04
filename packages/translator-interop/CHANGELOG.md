@@ -1,5 +1,16 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.2
+
+### Patch Changes
+
+- [#2138](https://github.com/marko-js/marko/pull/2138) [`105c26b`](https://github.com/marko-js/marko/commit/105c26bd4f7f37bd6073e4795b01b83d31ecda06) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with package json src/dist override script.
+
+- Updated dependencies [[`105c26b`](https://github.com/marko-js/marko/commit/105c26bd4f7f37bd6073e4795b01b83d31ecda06)]:
+  - @marko/babel-utils@6.4.1
+  - @marko/translator-default@5.32.1
+  - @marko/translator-tags@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
