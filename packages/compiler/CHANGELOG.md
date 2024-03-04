@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.2
+
+### Patch Changes
+
+- [#2140](https://github.com/marko-js/marko/pull/2140) [`4a1db86`](https://github.com/marko-js/marko/commit/4a1db8683d6c67fcff1bdbdaa76ab907c8b09170) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Some packages rely on a `@marko/compiler/package` entry point existing, adds back that export.
+
 ## 5.35.1
 
 ### Patch Changes

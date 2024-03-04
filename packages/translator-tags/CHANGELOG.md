@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.1.3
+
+### Patch Changes
+
+- [#2140](https://github.com/marko-js/marko/pull/2140) [`4a1db86`](https://github.com/marko-js/marko/commit/4a1db8683d6c67fcff1bdbdaa76ab907c8b09170) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where runtime was not being inlined into the translator bundle.
+
 ## 0.1.2
 
 ### Patch Changes
