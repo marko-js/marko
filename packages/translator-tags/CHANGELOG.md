@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.1.4
+
+### Patch Changes
+
+- [#2153](https://github.com/marko-js/marko/pull/2153) [`f2a924b`](https://github.com/marko-js/marko/commit/f2a924b2afa3d8f8810b71d72f91695c23bff4a2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues with importing both cjs and mjs @marko/runtime-tags when loaded via compat layer.
+
 ## 0.1.3
 
 ### Patch Changes
