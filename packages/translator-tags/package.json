@@ -19,7 +19,6 @@
   },
   "license": "MIT",
   "main": "src/index.ts",
-  "main:override": "dist/index.js",
   "files": [
     "dist",
     "!**/__tests__",
@@ -34,5 +33,6 @@
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
-  }
+  },
+  "main:override": "dist/index.js"
 }

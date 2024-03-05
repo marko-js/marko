@@ -2,18 +2,6 @@
   "name": "@marko/runtime-tags",
   "version": "0.1.2",
   "description": "Optimized runtime for Marko templates.",
-  "exports": {
-    "./*": "./src/*.ts",
-    "./debug/*": "./src/*.ts"
-  },
-  "exports:override": {
-    "./package.json": "./package.json",
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "default": "./dist/*.js"
-    }
-  },
   "keywords": [
     "api",
     "marko",
@@ -27,6 +15,10 @@
     "url": "https://github.com/marko-js/marko"
   },
   "license": "MIT",
+  "exports": {
+    "./*": "./src/*.ts",
+    "./debug/*": "./src/*.ts"
+  },
   "files": [
     "dist",
     "!**/meta.*.json",
@@ -35,5 +27,13 @@
   ],
   "scripts": {
     "build": "node -r ~ts ./scripts/bundle.ts"
+  },
+  "exports:override": {
+    "./package.json": "./package.json",
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "default": "./dist/*.js"
+    }
   }
 }
