@@ -97,19 +97,17 @@ export default {
       }
 
       if (extra.___featureType === "class") {
-        importDefault(
-          tag.hub.file,
-          `marko/src/runtime/helpers/tags-compat-${
-            isOutputHTML() ? "html" : "dom"
-          }.js`,
-          "marko_tags_compat",
-        );
+        const { markoOpts } = tag.hub.file;
+        const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
+          isOutputHTML() ? "html" : "dom"
+        }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
+        importDefault(tag.hub.file, compatRuntimeFile);
 
         if (isOutputHTML()) {
           const serialized5to6 = importNamed(
             tag.hub.file,
-            `marko/src/runtime/helpers/tags-compat-html.js`,
-            "serialized5to6",
+            compatRuntimeFile,
+            "s",
           );
           currentProgramPath.pushContainer(
             "body",
