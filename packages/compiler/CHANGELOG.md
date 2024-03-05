@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.4
+
+### Patch Changes
+
+- [#2150](https://github.com/marko-js/marko/pull/2150) [`7ef2b89`](https://github.com/marko-js/marko/commit/7ef2b8956982455953f3c1180b2f9094ca489e52) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose all files from compiler exports.
+
 ## 5.35.3
 
 ### Patch Changes
