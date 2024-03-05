@@ -44,13 +44,10 @@ export default function (path, isNullable) {
     const childProgram = childFile?.ast.program;
 
     if (childProgram?.extra?.___featureType === "tags") {
-      importDefault(
-        file,
-        `marko/src/runtime/helpers/tags-compat-${
-          markoOpts.output === "html" ? "html" : "dom"
-        }.js`,
-        "marko_tags_compat",
-      );
+      const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
+        markoOpts.output === "html" ? "html" : "dom"
+      }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
+      importDefault(file, compatRuntimeFile);
       path.set("name", importDefault(file, relativePath, path.node.name.value));
       return dynamicTag(path);
     } else if (relativePath) {

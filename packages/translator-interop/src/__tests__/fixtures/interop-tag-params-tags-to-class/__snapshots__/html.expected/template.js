@@ -1,6 +1,6 @@
 import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _classLayout from "./components/class-layout.marko";
-import _marko_tags_compat, { serialized5to6 as _serialized5to } from "marko/src/runtime/helpers/tags-compat-html.js";
+import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const multiplier = 1;
@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "_": _serializedScope(_scope0_id)
     });
   }), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", _scope0_id));
-  _serialized5to(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko");
+  _s(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko");
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {
     "multiplier": multiplier,

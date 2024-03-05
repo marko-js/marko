@@ -11,23 +11,25 @@ import resolveFrom from "resolve-from";
 export default (entryFile, isHydrate) => {
   const { resolveVirtualDependency, hydrateIncludeImports, hydrateInit } =
     entryFile.markoOpts;
-  const hydratedFiles = new Set();
   const program = entryFile.path;
   const shouldIncludeImport = toTestFn(hydrateIncludeImports);
+  const resolvedDeps = new Set();
+  const body = [];
 
   if (!isHydrate) {
-    addBrowserDeps(entryFile);
+    scanBrowserDeps(entryFile);
+    if (body.length) {
+      program.node.body = body.concat(program.node.body);
+    }
     return;
   }
 
+  const hydratedTemplates = new Set();
   const watchFiles = new Set();
   let hasComponents = false;
   let splitComponentIndex = 0;
-  program.set("body", []);
-  program.skip();
 
-  addHydrateDeps(entryFile);
-  entryFile.metadata.marko.watchFiles = Array.from(watchFiles);
+  scanHydrateDeps(entryFile);
 
   if (hasComponents) {
     const initId = t.identifier("init");
@@ -40,15 +42,11 @@ export default (entryFile, isHydrate) => {
       );
     }
 
+    body.unshift(markoComponentsImport);
+
     if (hydrateInit) {
       markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
-    }
-
-    program.unshiftContainer("body", markoComponentsImport);
-
-    if (hydrateInit) {
-      program.pushContainer(
-        "body",
+      body.push(
         t.expressionStatement(
           t.callExpression(
             initId,
@@ -61,19 +59,23 @@ export default (entryFile, isHydrate) => {
     }
   }
 
-  function addHydrateDeps(file) {
+  entryFile.metadata.marko.watchFiles = Array.from(watchFiles);
+  program.node.body = body;
+  program.skip();
+
+  function scanHydrateDeps(file) {
     const meta = file.metadata.marko;
     const resolved = resolveRelativePath(entryFile, file.opts.filename);
-    if (hydratedFiles.has(resolved)) return;
+    if (hydratedTemplates.has(resolved)) return;
 
-    hydratedFiles.add(resolved);
+    hydratedTemplates.add(resolved);
 
     if (meta.component) {
       hasComponents = true;
 
       if (path.basename(meta.component) === path.basename(file.opts.filename)) {
         // Stateful component.
-        program.pushContainer("body", importPath(resolved));
+        addDep(resolved);
         return;
       }
     }
@@ -84,25 +86,28 @@ export default (entryFile, isHydrate) => {
       watchFiles.add(watchFile);
     }
 
-    addBrowserDeps(file);
+    scanBrowserDeps(file);
 
-    for (const imported of meta.imports) {
-      if (shouldIncludeImport(imported)) {
-        program.pushContainer("body", importPath(resolvePath(file, imported)));
+    for (const child of file.path.node.body) {
+      if (t.isImportDeclaration(child)) {
+        const { value } = child.source;
+        if (shouldIncludeImport(value)) {
+          addDep(resolvePath(file, value));
+        }
       }
     }
 
     for (const tag of meta.tags) {
       if (tag.endsWith(".marko")) {
-        if (!hydratedFiles.has(resolvePath(file, tag))) {
-          addHydrateDeps(loadFileForImport(file, tag));
+        if (!hydratedTemplates.has(resolvePath(file, tag))) {
+          scanHydrateDeps(loadFileForImport(file, tag));
         }
       } else {
         const importedTemplates = tryGetTemplateImports(file, tag);
         if (importedTemplates) {
           for (const templateFile of importedTemplates) {
-            if (!hydratedFiles.has(resolvePath(file, templateFile))) {
-              addHydrateDeps(loadFileForImport(file, templateFile));
+            if (!hydratedTemplates.has(resolvePath(file, templateFile))) {
+              scanHydrateDeps(loadFileForImport(file, templateFile));
             }
           }
         }
@@ -120,9 +125,8 @@ export default (entryFile, isHydrate) => {
       splitComponentImport.specifiers.push(
         t.importDefaultSpecifier(splitComponentId),
       );
-      program.pushContainer("body", splitComponentImport);
-      program.pushContainer(
-        "body",
+      body.push(
+        splitComponentImport,
         t.expressionStatement(
           t.callExpression(t.identifier("register"), [
             t.stringLiteral(meta.id),
@@ -133,7 +137,7 @@ export default (entryFile, isHydrate) => {
     }
   }
 
-  function addBrowserDeps(file) {
+  function scanBrowserDeps(file) {
     const { filename, sourceMaps } = file.opts;
     let s;
 
@@ -174,8 +178,14 @@ export default (entryFile, isHydrate) => {
         continue;
       }
 
-      program.pushContainer("body", importPath(resolvePath(file, dep)));
+      addDep(resolvePath(file, dep));
     }
+  }
+
+  function addDep(resolved) {
+    if (resolvedDeps.has(resolved)) return;
+    resolvedDeps.add(resolved);
+    body.push(importPath(resolved));
   }
 
   function resolvePath(file, req) {
