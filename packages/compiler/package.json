@@ -36,7 +36,8 @@
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./*": "./*"
   },
   "exports:override": {
     ".": {
@@ -55,7 +56,8 @@
     "./babel-types": "./babel-types.d.ts",
     "./dist/types": "./dist/types.d.ts",
     "./package": "./package.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./*": "./*"
   },
   "types": "index.d.ts",
   "files": [
