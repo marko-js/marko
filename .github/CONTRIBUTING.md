@@ -39,7 +39,7 @@ Prior to merging your PR, you will need to sign the [Open JS Foundation CLA](htt
 Before submitting your PR, make sure that all new and previous tests pass and that [coverage](https://codecov.io/gh/marko-js/marko) has not decreased:
 
 ```
-npm run ci:test
+npm run @ci:test
 
 # to view the coverage report
 npm run report

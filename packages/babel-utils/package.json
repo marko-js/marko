@@ -28,12 +28,12 @@
     "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.23.9",
+    "@babel/runtime": "^7.24.0",
     "jsesc": "^3.0.2",
     "relative-import-path": "^1.0.0"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.35.1"
+    "@marko/compiler": "^5.35.4"
   },
   "publishConfig": {
     "access": "public"
