@@ -10,71 +10,40 @@ const morphdom = require("../../vdom/morphdom");
 const { ___createFragmentNode } = require("../../vdom/morphdom/fragment");
 const dynamicTag = require("../dynamic-tag");
 
-exports.p = function ({
-  prepare,
-  runEffects,
-  patchConditionals,
-  createScopeWithRenderer,
-  queueEffect,
-  scopeLookup,
-  getRegisteredWithScope,
-  register,
-}) {
+exports.p = function (domCompat) {
   dynamicTag.___runtimeCompat = function tagsToVdom(
-    tagsRenderer,
+    renderer,
     renderBody,
     args,
   ) {
-    if (
-      tagsRenderer
-        ? tagsRenderer.___clone === undefined
-        : !Array.isArray(renderBody) && renderBody?.___clone === undefined
-    )
-      return tagsRenderer;
+    const tagsRenderer = domCompat.resolveRenderer(renderer || renderBody);
 
-    return (input, out) =>
-      TagsCompat(
-        { i: args ? args : input, r: tagsRenderer || renderBody },
-        out,
-      );
+    if (tagsRenderer) {
+      return (input, out) =>
+        TagsCompat({ i: args ? args : input, r: tagsRenderer }, out);
+    }
+
+    return renderer;
   };
 
   const TagsCompatId = "tags-compat";
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
-      let existing = false;
       const isHydrate =
         ___getComponentsContext(out).___globalContext.___isHydrate;
       const input = Array.isArray(_.i) ? _.i : [_.i];
-      const tagsRenderer = resolveRegistered(_.r);
-      const args = tagsRenderer.___args;
+      const tagsRenderer = domCompat.resolveRenderer(_.r);
+      const newNode = domCompat.render(
+        isHydrate,
+        out,
+        component,
+        tagsRenderer,
+        input,
+      );
 
-      component.effects = prepare(() => {
-        if (isHydrate) {
-          const scopeId = out.global.componentIdToScopeId[component.id];
-          component.scope = scopeLookup[scopeId];
-        }
-        if (!component.scope) {
-          component.scope = createScopeWithRenderer(
-            tagsRenderer /* out.global as context */,
-          );
-          for (const signal of tagsRenderer.___closureSignals) {
-            signal(component.scope, true);
-          }
-        } else {
-          args && args(component.scope, input, 1);
-          existing = true;
-        }
-        args && args(component.scope, input);
-      });
-      out.bf(out.___assignedKey, component, existing);
-      if (!existing) {
-        out.node({
-          ___actualize: () =>
-            component.scope.___startNode === component.scope.___endNode
-              ? component.scope.___startNode
-              : component.scope.___startNode.parentNode,
-        });
+      out.bf(out.___assignedKey, component, !newNode);
+      if (newNode) {
+        out.node({ ___actualize: () => newNode });
       }
       out.ef();
     },
@@ -94,12 +63,8 @@ exports.p = function ({
     _: TagsCompat,
     Component: defineComponent(
       {
-        onMount() {
-          runEffects(this.effects);
-        },
-        onUpdate() {
-          runEffects(this.effects);
-        },
+        onMount: domCompat.runComponentEffects,
+        onUpdate: domCompat.runComponentEffects,
       },
       TagsCompat,
     ),
@@ -114,7 +79,7 @@ exports.p = function ({
 
   const rendererCache = new WeakMap();
 
-  patchConditionals((conditional) => (...args) => {
+  domCompat.patchConditionals((conditional) => (...args) => {
     const signal = conditional(...args);
     const hasAttrs = args.length > 1;
     return (scope, renderer, clean) => {
@@ -124,17 +89,14 @@ exports.p = function ({
 
   function create5to6Renderer(renderer, hasAttrs) {
     let newRenderer = renderer;
-    if (renderer) {
+    if (renderer && typeof renderer !== "string") {
       const rendererFromAnywhere =
         renderer._ ||
         renderer.render ||
         (renderer.renderer && renderer.renderer.renderer) ||
         renderer.renderer;
-      const isMarko6 = rendererFromAnywhere
-        ? rendererFromAnywhere.___clone
-        : renderer.___clone;
 
-      if (typeof renderer !== "string" && !isMarko6) {
+      if (!domCompat.isRenderer(rendererFromAnywhere || renderer)) {
         newRenderer = rendererCache.get(renderer);
         if (!newRenderer) {
           const { Component } = renderer;
@@ -145,29 +107,28 @@ exports.p = function ({
               scopeId,
             ) {
               for (const customEvent of customEvents) {
-                customEvent[1] = resolveRegistered(customEvent[1]);
+                customEvent[1] = domCompat.resolveRenderer(customEvent[1]);
               }
 
               setCustomEvents.call(this, customEvents, scopeId);
             };
           }
-          newRenderer = {
-            ___setup(scope) {
+          newRenderer = domCompat.createRenderer(
+            (scope) => {
               if (!hasAttrs) {
                 renderAndMorph(scope, rendererFromAnywhere, renderer, {});
               }
             },
-            ___clone() {
+            () => {
               const realFragment = document.createDocumentFragment();
               ___createFragmentNode(null, null, realFragment);
               return realFragment;
             },
-            ___hasUserEffects: 1,
-            ___args(scope, input, clean) {
+            (scope, input, clean) => {
               if (clean) return;
               renderAndMorph(scope, rendererFromAnywhere, renderer, input);
             },
-          };
+          );
           rendererCache.set(renderer, newRenderer);
         }
       }
@@ -175,18 +136,18 @@ exports.p = function ({
     return newRenderer;
   }
 
-  register("@marko/tags-compat-5-to-6", create5to6Renderer);
+  domCompat.register("@marko/tags-compat-5-to-6", create5to6Renderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
     const out = defaultCreateOut();
-    let rootNode = scope.___startNode.fragment;
+    let host = domCompat.getStartNode(scope);
+    let rootNode = host.fragment;
     if (!rootNode) {
       const component = (scope.marko5Component = ___componentLookup[scope.m5c]);
       rootNode = component.___rootNode;
-      scope.___startNode = rootNode.startNode;
-      scope.___endNode = rootNode.endNode;
+      host = rootNode.startNode;
+      domCompat.setScopeNodes(host, rootNode.endNode);
     }
-    const host = scope.___startNode;
     const existingComponent = scope.marko5Component;
     const componentsContext = ___getComponentsContext(out);
     const globalComponentsContext = componentsContext.___globalContext;
@@ -215,7 +176,7 @@ exports.p = function ({
       RenderBodyComponent({ renderBody, args: input }, out);
     }
 
-    queueEffect(scope, () => {
+    domCompat.queueEffect(scope, () => {
       const targetNode = out.___getOutput().___firstChild;
       morphdom(rootNode, targetNode, host, componentsContext);
       const componentDefs = componentsContext.___initComponents(
@@ -267,12 +228,4 @@ exports.p = function ({
     _: RenderBodyComponent,
     Component: defineComponent({}, RenderBodyComponent),
   }));
-
-  function resolveRegistered(renderer) {
-    if (!Array.isArray(renderer)) return renderer;
-
-    const [registerId, scopeId] = renderer;
-    const scope = scopeLookup[scopeId];
-    return getRegisteredWithScope(registerId, scope);
-  }
 };

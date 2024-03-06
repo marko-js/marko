@@ -6,7 +6,6 @@ export {
   loopIn,
   loopTo,
   inLoopScope,
-  patchConditionals,
 } from "./dom/control-flow";
 
 export {
@@ -67,3 +66,5 @@ export {
   values,
   intersections,
 } from "./dom/signals";
+
+export { compat } from "./dom/compat";
