@@ -10,7 +10,6 @@ import { table } from "table";
 
 interface Sizes {
   min: number;
-  gzip: number;
   brotli: number;
 }
 
@@ -40,7 +39,7 @@ run(configPath);
 async function run(configPath: string) {
   const { examples, results: previous } = loadData(configPath);
   const current = await getResults(skipExamples ? {} : examples);
-  const measure = (process.env.MEASURE as undefined | keyof Sizes) || "gzip";
+  const measure = (process.env.MEASURE as undefined | keyof Sizes) || "brotli";
 
   console.log(measure);
 
@@ -153,23 +152,18 @@ async function getResults(examples: Record<string, string>) {
 }
 
 async function getSizesForSrc(minified: string): Promise<Sizes> {
-  const [gzipped, brotlied] = await Promise.all([
-    gzip(minified),
-    brotli(minified),
-  ]);
+  const [brotlied] = await Promise.all([brotli(minified)]);
 
   return {
     min: minified.length,
-    gzip: gzipped.length,
     brotli: brotlied.length,
   };
 }
 
 function addSizes(all: Sizes[]) {
-  const total = { min: 0, gzip: 0, brotli: 0 };
-  for (const { min, gzip, brotli } of all) {
+  const total = { min: 0, brotli: 0 };
+  for (const { min, brotli } of all) {
     total.min += min;
-    total.gzip += gzip;
     total.brotli += brotli;
   }
   return total;
@@ -242,14 +236,6 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
 function brotli(src: string): Promise<Buffer> {
   return new Promise((resolve, reject) =>
     zlib.brotliCompress(src, (error, result) =>
-      error ? reject(error) : resolve(result),
-    ),
-  );
-}
-
-function gzip(src: string): Promise<Buffer> {
-  return new Promise((resolve, reject) =>
-    zlib.gzip(src, (error, result) =>
       error ? reject(error) : resolve(result),
     ),
   );
