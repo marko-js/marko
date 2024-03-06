@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.5
+
+### Patch Changes
+
+- [#2156](https://github.com/marko-js/marko/pull/2156) [`cbb9f95`](https://github.com/marko-js/marko/commit/cbb9f95cb09d27e739d017cf7734d9f7b6149adf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using internal mangled props from tags api in the interop runtime.
+
 ## 5.33.4
 
 ### Patch Changes
