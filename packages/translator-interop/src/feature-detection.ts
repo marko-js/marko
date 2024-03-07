@@ -21,7 +21,13 @@ type FeatureState = {
 const DEFAULT_FEATURE_TYPE = FeatureType.Class;
 
 export function isTagsAPI(path: t.NodePath) {
-  const program = path.hub.file.path;
+  const { file } = path.hub;
+
+  if ((file as any).___compileStage === "parse") {
+    return false; // can't analyze the entire program for parse hooks
+  }
+
+  const program = file.path;
   let featureType = program.node.extra?.___featureType;
   if (!featureType) {
     const state = {} as FeatureState;

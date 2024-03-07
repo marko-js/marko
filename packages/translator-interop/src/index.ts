@@ -1,11 +1,13 @@
-import { types as t } from "@marko/compiler";
+import { types as t, type Config } from "@marko/compiler";
 
 import {
+  getRuntimeEntryFiles as getRuntimeEntryFiles5,
   analyze as analyze5,
   taglibs as taglibs5,
   translate as translate5,
 } from "@marko/translator-default";
 import {
+  getRuntimeEntryFiles as getRuntimeEntryFiles6,
   analyze as analyze6,
   taglibs as taglibs6,
   translate as translate6,
@@ -29,6 +31,15 @@ const VISITOR_TAGDEF_KEYS = ["parse", "migrate", "transform", "translate"];
 export const analyze = mergeVisitors(analyze5, analyze6);
 export const translate = mergeVisitors(translate5, translate6);
 export const taglibs = mergeTaglibs(taglibs5, taglibs6);
+export function getRuntimeEntryFiles(
+  output: Config["output"],
+  optimize: boolean,
+) {
+  return [
+    ...getRuntimeEntryFiles5(output, optimize),
+    ...getRuntimeEntryFiles6(output, optimize),
+  ];
+}
 
 function mergeVisitors(visitor5: t.Visitor = {}, visitor6: t.Visitor = {}) {
   const allVisitorKeys = getSetOfAllKeys(visitor5, visitor6) as Set<
