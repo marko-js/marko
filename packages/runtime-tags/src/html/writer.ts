@@ -42,7 +42,11 @@ interface StreamData {
 }
 
 let $_buffer: Buffer | null = null;
-export let $_streamData: StreamData | null = null;
+let $_streamData: StreamData | null = null;
+
+export function getStreamData() {
+  return $_streamData;
+}
 
 export function createRenderFn(renderer: Renderer) {
   type Input = Parameters<Renderer>[0];

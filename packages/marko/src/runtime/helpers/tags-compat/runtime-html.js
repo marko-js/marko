@@ -94,7 +94,7 @@ exports.p = function (tagsAPI) {
         const out = defaultCreateOut();
         let customEvents;
 
-        out.global.streamData = tagsAPI.$_streamData;
+        out.global.streamData = tagsAPI.getStreamData();
 
         if (renderer5) {
           const normalizedInput = {};

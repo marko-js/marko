@@ -56,7 +56,7 @@ export default {
         if (isOutputHTML()) {
           identifier.replaceWith(
             t.memberExpression(
-              importRuntime("$_streamData"),
+              t.callExpression(importRuntime("getStreamData"), []),
               t.identifier("global"),
             ),
           );

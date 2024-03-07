@@ -31,7 +31,7 @@ export {
   markResumeControlSingleNodeEnd,
   createRenderFn,
   peekSerializedScope,
-  $_streamData,
+  getStreamData,
 } from "./html/writer";
 
 export { createTemplate } from "./html/template";
