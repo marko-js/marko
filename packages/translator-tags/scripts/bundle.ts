@@ -18,7 +18,7 @@ build({
   bundle: true,
   absWorkingDir,
   outdir: "dist",
-  sourcemap: true,
+  sourcemap: false,
   platform: "node",
   external: [...external],
   entryPoints: [`src/index.ts`],

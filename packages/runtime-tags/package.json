@@ -34,6 +34,11 @@
       "types": "./dist/*.d.ts",
       "import": "./dist/*.mjs",
       "default": "./dist/*.js"
+    },
+    "./debug/*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/debug/*.mjs",
+      "default": "./dist/debug/*.js"
     }
   }
 }

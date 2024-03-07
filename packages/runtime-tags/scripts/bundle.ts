@@ -16,7 +16,7 @@ Promise.all(
           absWorkingDir,
           bundle: true,
           metafile: true,
-          sourcemap: true,
+          sourcemap: false,
           minifySyntax: isProd,
           entryPoints: [`src/${name}.ts`],
           define: { MARKO_DEBUG: String(!isProd) },

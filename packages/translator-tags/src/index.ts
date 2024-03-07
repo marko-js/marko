@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import type { types as t, Config } from "@marko/compiler";
 import coreTagLib from "./core";
 import AssignmentExpression from "./visitors/assignment-expression";
 import MarkoCDATA from "./visitors/cdata";
@@ -53,6 +53,15 @@ export const taglibs = [
     },
   ],
 ];
+
+export function getRuntimeEntryFiles(
+  output: Config["output"],
+  optimize: boolean,
+) {
+  return [
+    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}.mjs`,
+  ];
+}
 
 /* eslint-disable @typescript-eslint/no-empty-interface */
 declare module "@marko/compiler/dist/types" {
