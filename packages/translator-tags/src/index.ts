@@ -59,7 +59,7 @@ export function getRuntimeEntryFiles(
   optimize: boolean,
 ) {
   return [
-    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}.mjs`,
+    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
   ];
 }
 
