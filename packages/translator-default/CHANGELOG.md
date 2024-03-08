@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.5
+
+### Patch Changes
+
+- [#2162](https://github.com/marko-js/marko/pull/2162) [`88b45d4`](https://github.com/marko-js/marko/commit/88b45d4901647ae99e8cfab29c5aa13ee4599358) Thanks [@rturnq](https://github.com/rturnq)! - Avoid pre-bundling interop and including tags runtime
+
 ## 5.32.4
 
 ### Patch Changes
