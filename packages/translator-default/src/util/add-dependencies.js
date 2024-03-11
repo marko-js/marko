@@ -31,7 +31,12 @@ export default (entryFile, isHydrate) => {
       visitedFiles.add(resolved);
       const file = loadFileForImport(entryFile, resolved);
       if (file) {
-        entryBuilder.visit(file, entryFile, visitChild);
+        entryBuilder.visit(file, entryFile, (id) =>
+          resolveRelativePath(
+            entryFile,
+            path.join(file.opts.filename, "..", id),
+          ),
+        );
       }
     }
   });
@@ -130,12 +135,12 @@ export const entryBuilder = {
 
     for (const tag of fileMeta.tags) {
       if (tag.endsWith(".marko")) {
-        visitChild(resolveRelativePath(entryFile, tag));
+        visitChild(tag);
       } else {
         const importedTemplates = tryGetTemplateImports(file, tag);
         if (importedTemplates) {
           for (const templateFile of importedTemplates) {
-            visitChild(resolveRelativePath(entryFile, templateFile));
+            visitChild(templateFile);
           }
         }
       }

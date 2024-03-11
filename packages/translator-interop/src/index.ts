@@ -138,7 +138,12 @@ function patchTranslateProgram(visitor: t.Visitor) {
           visitedFiles.add(resolved);
           const file = loadFileForImport(entryFile, resolved);
           if (file) {
-            entryBuilder.visit(file, entryFile, visitChild);
+            entryBuilder.visit(file, entryFile, (id) =>
+              resolveRelativePath(
+                entryFile,
+                path.join(file.opts.filename as string, "..", id),
+              ),
+            );
           }
         }
       });
