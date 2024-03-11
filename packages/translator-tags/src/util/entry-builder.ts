@@ -55,7 +55,7 @@ export default {
       false;
 
     for (const tag of analyzedTags || []) {
-      visitChild(tag);
+      visitChild(resolveRelativePath(entryFile, tag));
     }
   },
 };
