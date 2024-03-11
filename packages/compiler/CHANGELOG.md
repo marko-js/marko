@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.6
+
+### Patch Changes
+
+- [`409ef4e`](https://github.com/marko-js/marko/commit/409ef4e76d680b6e4202658fdf9567c663898d8b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where hydrate entry files had incorrect relative paths.
+
 ## 5.35.5
 
 ### Patch Changes

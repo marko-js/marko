@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.7
+
+### Patch Changes
+
+- [`409ef4e`](https://github.com/marko-js/marko/commit/409ef4e76d680b6e4202658fdf9567c663898d8b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where hydrate entry files had incorrect relative paths.
+
+- Updated dependencies [[`409ef4e`](https://github.com/marko-js/marko/commit/409ef4e76d680b6e4202658fdf9567c663898d8b)]:
+  - @marko/translator-default@5.32.7
+  - @marko/translator-tags@0.1.8
+
 ## 0.1.6
 
 ### Patch Changes
