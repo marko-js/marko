@@ -130,12 +130,12 @@ export const entryBuilder = {
 
     for (const tag of fileMeta.tags) {
       if (tag.endsWith(".marko")) {
-        visitChild(tag);
+        visitChild(resolveRelativePath(entryFile, tag));
       } else {
         const importedTemplates = tryGetTemplateImports(file, tag);
         if (importedTemplates) {
           for (const templateFile of importedTemplates) {
-            visitChild(templateFile);
+            visitChild(resolveRelativePath(entryFile, templateFile));
           }
         }
       }
