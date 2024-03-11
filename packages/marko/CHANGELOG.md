@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.3](https://github.com/marko-js/marko/compare/v4.28.2...v4.28.3) (2024-03-11)
+
+
+### Bug Fixes
+
+* issue with ignoreUnrecognizedTags and nested attribute tags ([a0861ed](https://github.com/marko-js/marko/commit/a0861edfe5c97ee478f889ca71c56a1d69f56821))
+* **ts:** add script-lang to v4 ([924df52](https://github.com/marko-js/marko/commit/924df5237108556c8032e25f15ba5367c491a840))
+
 ### [4.28.2](https://github.com/marko-js/marko/compare/v4.28.1...v4.28.2) (2024-02-25)
 
 
