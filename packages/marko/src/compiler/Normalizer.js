@@ -125,7 +125,7 @@ class Normalizer {
       } else if (context.ignoreUnrecognizedTags && tagName[0] === "@") {
         let owner = elNode.parentNode;
 
-        while (owner && /^(?:for|while|if|else(?:-if))$/.test(owner.tagName)) {
+        while (owner && /^(?:for|while|if|else(?:-if))$|^@/.test(owner.tagName)) {
           owner = owner.parentNode;
         }
 
