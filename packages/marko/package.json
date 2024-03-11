@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@marko/compiler": "^5.35.4",
-    "@marko/translator-default": "^5.32.4",
+    "@marko/translator-default": "^5.32.5",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",

@@ -30,8 +30,8 @@
   "dependencies": {
     "@babel/code-frame": "^7.23.5",
     "@marko/babel-utils": "^6.4.1",
-    "@marko/translator-default": "^5.32.4",
-    "@marko/translator-tags": "^0.1.5"
+    "@marko/translator-default": "^5.32.5",
+    "@marko/translator-tags": "^0.1.6"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
