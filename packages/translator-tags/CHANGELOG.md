@@ -1,5 +1,14 @@
 # @marko/translator-tags
 
+## 0.1.7
+
+### Patch Changes
+
+- [#2164](https://github.com/marko-js/marko/pull/2164) [`08823b9`](https://github.com/marko-js/marko/commit/08823b916b0aca172edeaba86b632a4cf5462a8a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with interop translator not outputting correct hydrate entry code.
+
+- Updated dependencies [[`08823b9`](https://github.com/marko-js/marko/commit/08823b916b0aca172edeaba86b632a4cf5462a8a)]:
+  - @marko/babel-utils@6.4.2
+
 ## 0.1.6
 
 ### Patch Changes
