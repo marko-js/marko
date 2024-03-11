@@ -55,14 +55,17 @@ exports.p = function (tagsAPI) {
       const input = _.i;
       const tagsRenderer = _.r;
       const renderFn = createRenderFn(tagsRenderer);
+      const willRerender = componentDef._wrr;
       const $global = out.global;
       const streamData = ($global.streamData = $global.streamData || {});
 
-      $global.serializedGlobals = $global.serializedGlobals || {};
-      $global.serializedGlobals.componentIdToScopeId = true;
-      $global.componentIdToScopeId = $global.componentIdToScopeId || {};
-      $global.componentIdToScopeId[component.id] = streamData.scopeId || 0;
-      out.bf(out.___assignedKey, component, true);
+      if (willRerender) {
+        $global.serializedGlobals = $global.serializedGlobals || {};
+        $global.serializedGlobals.componentIdToScopeId = true;
+        $global.componentIdToScopeId = $global.componentIdToScopeId || {};
+        $global.componentIdToScopeId[component.id] = streamData.scopeId || 0;
+      }
+      out.bf(out.___assignedKey, component, willRerender);
       renderFn(out.beginAsync(), input, {}, streamData);
       out.ef();
     },
@@ -70,10 +73,12 @@ exports.p = function (tagsAPI) {
     "MARKO_DEBUG"
       ? {
           t: TagsCompatId,
+          i: true,
           d: true,
         }
       : {
           t: TagsCompatId,
+          i: true,
         },
     {},
   );
