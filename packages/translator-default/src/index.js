@@ -31,6 +31,7 @@ import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
 export { default as taglibs } from "./taglib";
+export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 
 export const analyze = {
   Program: {

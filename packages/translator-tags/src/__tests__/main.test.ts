@@ -68,54 +68,6 @@ describe("translator-tags", () => {
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
-      const snapMD = (fn: () => unknown) =>
-        (config.error_runtime ? snap.catch : snap)(fn, {
-          ext: `.md`,
-          dir: fixtureDir,
-        });
-      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
-        const additionalMarkoFiles = await glob(resolve("**/*.marko"));
-        const finalConfig: compiler.Config = {
-          ...compilerConfig,
-          resolveVirtualDependency(_filename, { code, virtualPath }) {
-            return `virtual:${virtualPath} ${code}`;
-          },
-        };
-        const errors: Error[] = [];
-
-        for (const file of additionalMarkoFiles) {
-          try {
-            let name = path.relative(fixtureDir, file);
-            let targetSnap: typeof snap.catch = snap;
-            if (
-              config.error_compiler === true ||
-              config.error_compiler?.includes(name)
-            ) {
-              name = name.replace(".marko", ".error.txt");
-              targetSnap = snap.catch;
-            } else {
-              name = name.replace(".marko", ".js");
-            }
-
-            await targetSnap(() => compileCode(file, finalConfig), {
-              file: name,
-              dir: fixtureDir,
-            });
-          } catch (e) {
-            errors.push(e as Error);
-          }
-        }
-
-        if (errors.length === 1) {
-          throw errors[0];
-        } else if (errors.length > 1) {
-          throw new AggregateError(
-            errors,
-            "\n" + errors.map((e) => e.toString()).join("\n"),
-          );
-        }
-      };
-
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -124,11 +76,6 @@ describe("translator-tags", () => {
           return {};
         }
       })();
-
-      let ssrResult: Result;
-      let csrResult: Result;
-      let resumeResult: Result;
-
       const skipHTML = !hasTemplate || config.skip_html;
       const skipDOM = !hasTemplate || config.skip_dom;
 
@@ -149,6 +96,80 @@ describe("translator-tags", () => {
         config.skip_resume ||
         skipSSR ||
         skipCSR;
+      const snapMD = (fn: () => unknown) =>
+        (config.error_runtime ? snap.catch : snap)(fn, {
+          ext: `.md`,
+          dir: fixtureDir,
+        });
+      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
+        const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
+          absolute: true,
+          cwd: fixtureDir,
+        });
+        const finalConfig: compiler.Config = {
+          ...compilerConfig,
+          resolveVirtualDependency(_filename, { code, virtualPath }) {
+            return `virtual:${virtualPath} ${code}`;
+          },
+        };
+        const errors: Error[] = [];
+
+        for (const file of additionalMarkoFiles) {
+          try {
+            const name = path.relative(fixtureDir, file);
+            let snapName = name;
+            let targetSnap: typeof snap.catch = snap;
+            if (
+              config.error_compiler === true ||
+              config.error_compiler?.includes(name)
+            ) {
+              snapName = name.replace(".marko", ".error.txt");
+              targetSnap = snap.catch;
+            } else {
+              snapName = name.replace(".marko", ".js");
+            }
+
+            await targetSnap(() => compileCode(file, finalConfig), {
+              file: snapName,
+              dir: fixtureDir,
+            });
+
+            if (
+              compilerConfig.output === "dom" &&
+              file === templateFile &&
+              !skipResume &&
+              !config.error_compiler
+            ) {
+              await targetSnap(
+                () =>
+                  compileCode(file, {
+                    ...finalConfig,
+                    output: "hydrate",
+                  }),
+                {
+                  file: name.replace(".marko", ".hydrate.js"),
+                  dir: fixtureDir,
+                },
+              );
+            }
+          } catch (e) {
+            errors.push(e as Error);
+          }
+        }
+
+        if (errors.length === 1) {
+          throw errors[0];
+        } else if (errors.length > 1) {
+          throw new AggregateError(
+            errors,
+            "\n" + errors.map((e) => e.toString()).join("\n"),
+          );
+        }
+      };
+
+      let ssrResult: Result;
+      let csrResult: Result;
+      let resumeResult: Result;
 
       const ssr = async () => {
         if (ssrResult) return ssrResult;

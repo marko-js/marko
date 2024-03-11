@@ -399,6 +399,6 @@ function isMarkoOutput(output) {
 function finalizeMeta(meta) {
   meta.watchFiles = [...new Set(meta.watchFiles)];
   if (meta.analyzedTags) {
-    meta.analyzedTags = [...new Set(meta.analyzedTags)];
+    meta.analyzedTags = [...meta.analyzedTags];
   }
 }

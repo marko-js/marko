@@ -1,4 +1,6 @@
+import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import entryBuilder from "../../util/entry-builder";
 import {
   getMarkoOpts,
   isOutputDOM,
@@ -6,7 +8,6 @@ import {
 } from "../../util/marko-config";
 import { finalizeIntersections } from "../../util/references";
 import { assignFinalIds } from "../../util/reserve";
-import { callRuntime } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -54,20 +55,23 @@ export default {
       cleanIdentifier = isOutputDOM()
         ? program.scope.generateUidIdentifier("clean")
         : (null as any as t.Identifier);
-      if (getMarkoOpts().output === ("hydrate" as "html")) {
+      if (getMarkoOpts().output === "hydrate") {
+        const entryFile = program.hub.file;
+        const visitedFiles = new Set([
+          resolveRelativePath(entryFile, entryFile.opts.filename as string),
+        ]);
+        entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
+          if (!visitedFiles.has(resolved)) {
+            visitedFiles.add(resolved);
+            const file = loadFileForImport(entryFile, resolved);
+            if (file) {
+              entryBuilder.visit(file, entryFile, visitChild);
+            }
+          }
+        });
+
+        program.node.body = entryBuilder.build(entryFile);
         program.skip();
-        program.node.body = [
-          t.importDeclaration(
-            [],
-            t.stringLiteral(program.hub.file.opts.filename as string),
-          ),
-        ];
-        if (
-          program.node.extra.hasInteractiveChild ||
-          program.node.extra.isInteractive
-        ) {
-          program.node.body.push(t.expressionStatement(callRuntime("init")));
-        }
         return;
       }
     },

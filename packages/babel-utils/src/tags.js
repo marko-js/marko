@@ -255,11 +255,12 @@ export function loadFileForTag(tag) {
 
   if (filename) {
     const markoMeta = file.metadata.marko;
+    const relativeFileName = resolveRelativePath(file, filename);
     const { analyzedTags } = markoMeta;
     if (analyzedTags) {
-      analyzedTags.push(filename);
+      analyzedTags.add(relativeFileName);
     } else {
-      markoMeta.analyzedTags = [filename];
+      markoMeta.analyzedTags = new Set([relativeFileName]);
     }
 
     return file.___getMarkoFile(
@@ -282,9 +283,9 @@ export function loadFileForImport(file, request) {
     const markoMeta = file.metadata.marko;
     const { analyzedTags } = markoMeta;
     if (analyzedTags) {
-      analyzedTags.push(filename);
+      analyzedTags.add(relativeRequest);
     } else {
-      markoMeta.analyzedTags = [filename];
+      markoMeta.analyzedTags = new Set([relativeRequest]);
     }
 
     return file.___getMarkoFile(
