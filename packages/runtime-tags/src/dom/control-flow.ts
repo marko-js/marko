@@ -146,8 +146,7 @@ export function setConditionalRendererOnlyChild(
   prevScope && destroyScope(prevScope);
 }
 
-const emptyMarkerMap = /* @__PURE__ */ (() =>
-  new Map().set(Symbol("empty"), getEmptyScope(undefined as any)))();
+const emptyMarkerMap = new Map([[Symbol(), getEmptyScope(undefined as any)]]);
 export const emptyMarkerArray = [
   /* @__PURE__ */ getEmptyScope(undefined as any),
 ];
