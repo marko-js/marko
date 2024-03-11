@@ -89,7 +89,10 @@ describe("translator-interop", () => {
         });
 
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
-        const additionalMarkoFiles = await glob(resolve("**/*.marko"));
+        const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
+          absolute: true,
+          cwd: fixtureDir,
+        });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
           resolveVirtualDependency(_filename, { code, virtualPath }) {
@@ -99,21 +102,41 @@ describe("translator-interop", () => {
         const errors: Error[] = [];
 
         for (const file of additionalMarkoFiles) {
-          let name = path.relative(fixtureDir, file);
+          const name = path.relative(fixtureDir, file);
+          let snapName = name;
           let targetSnap: typeof snap.catch = snap;
           if (
             config.error_compiler === true ||
-            config.error_compiler?.includes(name)
+            config.error_compiler?.includes(snapName)
           ) {
-            name = name.replace(".marko", ".error.txt");
+            snapName = snapName.replace(".marko", ".error.txt");
             targetSnap = snap.catch;
           } else {
-            name = name.replace(".marko", ".js");
+            snapName = snapName.replace(".marko", ".js");
           }
           await targetSnap(() => compileCode(file, finalConfig), {
-            file: name,
+            file: snapName,
             dir: fixtureDir,
           });
+
+          if (
+            compilerConfig.output === "dom" &&
+            file === templateFile &&
+            !config.skip_resume &&
+            !config.error_compiler
+          ) {
+            await targetSnap(
+              () =>
+                compileCode(file, {
+                  ...finalConfig,
+                  output: "hydrate",
+                }),
+              {
+                file: name.replace(".marko", ".hydrate.js"),
+                dir: fixtureDir,
+              },
+            );
+          }
         }
 
         if (errors.length === 1) {

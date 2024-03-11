@@ -42,6 +42,8 @@ const getVisitorOfType = (
     return visitor;
   }, {} as t.Visitor);
 
+export { default as internalEntryBuilder } from "./util/entry-builder";
+
 export const analyze = getVisitorOfType("analyze");
 export const translate = getVisitorOfType("translate");
 export const taglibs = [
