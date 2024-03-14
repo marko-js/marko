@@ -30,7 +30,7 @@
       "name": "counter 💧",
       "user": {
         "min": 204,
-        "brotli": 157
+        "brotli": 152
       },
       "runtime": {
         "min": 2570,
@@ -38,7 +38,7 @@
       },
       "total": {
         "min": 2774,
-        "brotli": 1337
+        "brotli": 1332
       }
     },
     {
@@ -67,8 +67,8 @@
         "brotli": 3283
       },
       "total": {
-        "min": 8841,
-        "brotli": 3829
+        "min": 8827,
+        "brotli": 3816
       }
     }
   ]

@@ -203,6 +203,8 @@ function getNodeContentType(
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
+        case "html-comment":
+          return ContentType.Static;
         case "let":
         case "const":
         case "attrs":
