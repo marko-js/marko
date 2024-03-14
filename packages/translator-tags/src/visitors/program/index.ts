@@ -67,12 +67,7 @@ export default {
             const file = loadFileForImport(entryFile, resolved);
             if (file) {
               entryBuilder.visit(file, entryFile, (id) =>
-                visitChild(
-                  resolveRelativePath(
-                    entryFile,
-                    path.join(file.opts.filename as string, "..", id),
-                  ),
-                ),
+                visitChild(resolveRelativeToEntry(entryFile, file, id)),
               );
             }
           }
@@ -93,3 +88,18 @@ export default {
     },
   },
 };
+
+function resolveRelativeToEntry(
+  entryFile: t.BabelFile,
+  file: t.BabelFile,
+  req: string,
+) {
+  return file === entryFile
+    ? resolveRelativePath(file, req)
+    : resolveRelativePath(
+        entryFile,
+        req[0] === "."
+          ? path.join(file.opts.filename as string, "..", req)
+          : req,
+      );
+}
