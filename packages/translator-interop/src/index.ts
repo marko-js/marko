@@ -139,12 +139,7 @@ function patchTranslateProgram(visitor: t.Visitor) {
           const file = loadFileForImport(entryFile, resolved);
           if (file) {
             entryBuilder.visit(file, entryFile, (id) =>
-              visitChild(
-                resolveRelativePath(
-                  entryFile,
-                  path.join(file.opts.filename as string, "..", id),
-                ),
-              ),
+              visitChild(resolveRelativeToEntry(entryFile, file, id)),
             );
           }
         }
@@ -157,6 +152,21 @@ function patchTranslateProgram(visitor: t.Visitor) {
   };
 
   return visitor;
+}
+
+function resolveRelativeToEntry(
+  entryFile: t.BabelFile,
+  file: t.BabelFile,
+  req: string,
+) {
+  return file === entryFile
+    ? resolveRelativePath(file, req)
+    : resolveRelativePath(
+        entryFile,
+        req[0] === "."
+          ? path.join(file.opts.filename as string, "..", req)
+          : req,
+      );
 }
 
 function mergeVisitors(visitor5: t.Visitor = {}, visitor6: t.Visitor = {}) {

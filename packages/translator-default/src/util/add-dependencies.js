@@ -32,12 +32,7 @@ export default (entryFile, isHydrate) => {
       const file = loadFileForImport(entryFile, resolved);
       if (file) {
         entryBuilder.visit(file, entryFile, (id) =>
-          visitChild(
-            resolveRelativePath(
-              entryFile,
-              path.join(file.opts.filename, "..", id),
-            ),
-          ),
+          visitChild(resolveRelativeToEntry(entryFile, file, id)),
         );
       }
     }
@@ -226,7 +221,10 @@ function addImport(seenImports, body, resolved) {
 function resolveRelativeToEntry(entryFile, file, req) {
   return file === entryFile
     ? resolveRelativePath(file, req)
-    : resolveRelativePath(entryFile, path.join(file.opts.filename, "..", req));
+    : resolveRelativePath(
+        entryFile,
+        req[0] === "." ? path.join(file.opts.filename, "..", req) : req,
+      );
 }
 
 function importPath(path) {
