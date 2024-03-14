@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.1.9
+
+### Patch Changes
+
+- [#2173](https://github.com/marko-js/marko/pull/2173) [`614f432`](https://github.com/marko-js/marko/commit/614f432bfeab93eb35c23d6e378e914b27540f7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where hydrate dependencies had the incorrect resolved path if they were in node_modules.
+
 ## 0.1.8
 
 ### Patch Changes
