@@ -10,6 +10,7 @@ var escapeXmlHelper = require("./helpers/escape-xml");
 var StringWriter = require("./StringWriter");
 var escapeXmlOrNullish = escapeXmlHelper.x;
 var escapeXmlString = escapeXmlHelper.___escapeXML;
+var missingSetTimeout = typeof setTimeout !== "function";
 
 function noop() {}
 
@@ -293,7 +294,9 @@ var proto = (AsyncStream.prototype = {
       }
     }
 
-    if (timeout == null) {
+    if (missingSetTimeout) {
+      timeout = 0;
+    } else if (timeout == null) {
       timeout = AsyncStream.DEFAULT_TIMEOUT;
     }
 

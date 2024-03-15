@@ -1,4 +1,4 @@
-var queueMicrotask = require("../../../runtime/queueMicrotask");
+var queueMicrotask = require("@internal/set-immediate").___queueMicrotask;
 
 function AsyncValue() {
   /**

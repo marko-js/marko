@@ -1,6 +1,6 @@
 var registry = require("@internal/components-registry");
+var setImmediate = require("@internal/set-immediate").___setImmediate;
 var updateManager = require("../components/update-manager");
-var queueMicrotask = require("../queueMicrotask");
 var runtime = require(".");
 
 var createTemplate = runtime.t;
@@ -27,7 +27,7 @@ exports.t = runtime.t = function (typeName) {
       if (instances.size) {
         if (!queue) {
           queue = [];
-          queueMicrotask(batchUpdate);
+          setImmediate(batchUpdate);
         }
 
         queue.push(function () {
