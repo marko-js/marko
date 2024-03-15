@@ -47,7 +47,7 @@ reply.locals.newProperty = 'Your value';
 ```
 
 To use this in marko components we just need to refer out.global
-```marko.js
+```marko
 $ const { newProperty } = out.global;
 ```
 ### BYOB (Bring your own bundler)
