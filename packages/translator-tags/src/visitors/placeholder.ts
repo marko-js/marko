@@ -12,7 +12,12 @@ import {
   type Binding,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  ContentType,
+  getNodeContentType,
+  getOrCreateSection,
+  getSection,
+} from "../util/sections";
 import { addStatement } from "../util/signals";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -166,7 +171,14 @@ function noOutput(path: t.NodePath<t.Node>) {
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
   let prev = placeholder.getPrevSibling();
-  while (noOutput(prev)) {
+
+  while (
+    prev.node &&
+    getNodeContentType(
+      prev as t.NodePath<t.Statement>,
+      "endNodeContentType",
+    ) === ContentType.Empty
+  ) {
     prev = prev.getPrevSibling();
   }
   if (
@@ -177,7 +189,13 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   }
 
   let next = placeholder.getNextSibling();
-  while (noOutput(next)) {
+  while (
+    next.node &&
+    getNodeContentType(
+      next as t.NodePath<t.Statement>,
+      "startNodeContentType",
+    ) === ContentType.Empty
+  ) {
     next = next.getNextSibling();
   }
   if (

@@ -175,22 +175,18 @@ function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   return ContentType.Empty;
 }
 
-/**
- * @returns null if the node should be skipped
- */
-function getNodeContentType(
+export function getNodeContentType(
   path: t.NodePath<t.Statement>,
   extraMember: "startNodeContentType" | "endNodeContentType",
 ) {
   if (
     t.isMarkoText(path) ||
-    t.isMarkoComment(path) ||
     t.isMarkoPlaceholder(path) ||
     t.isMarkoCDATA(path)
   ) {
     return ContentType.Static;
   }
-  if (t.isMarkoScriptlet(path)) {
+  if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
     return ContentType.Empty;
   }
   if (t.isMarkoTag(path.node)) {
@@ -212,6 +208,7 @@ function getNodeContentType(
         case "lifecycle":
         case "return":
         case "id":
+        case "context":
         case "define":
           return ContentType.Empty;
       }
