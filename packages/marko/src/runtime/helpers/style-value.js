@@ -7,7 +7,7 @@ var changeCase = require("./_change-case");
  */
 module.exports = function styleHelper(style) {
   if (!style) {
-    return null;
+    return;
   }
 
   var type = typeof style;
@@ -38,7 +38,7 @@ module.exports = function styleHelper(style) {
       }
     }
 
-    return styles || null;
+    return styles || undefined;
   }
 
   return style;

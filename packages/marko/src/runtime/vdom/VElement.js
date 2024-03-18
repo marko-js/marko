@@ -204,14 +204,6 @@ VElement.prototype = {
 
     return el;
   },
-
-  ___hasAttribute: function (name) {
-    // We don't care about the namespaces since the there
-    // is no chance that attributes with the same name will have
-    // different namespaces
-    var value = this.___attributes[name];
-    return value != null && value !== false;
-  },
 };
 
 inherit(VElement, VNode);
@@ -303,13 +295,25 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
 
   if (toFlags & FLAG_SIMPLE_ATTRS && fromFlags & FLAG_SIMPLE_ATTRS) {
     if (oldAttrs["class"] !== (attrValue = attrs["class"])) {
-      fromEl.className = attrValue;
+      if (attrValue) {
+        fromEl.className = attrValue;
+      } else {
+        fromEl.removeAttribute("class");
+      }
     }
     if (oldAttrs.id !== (attrValue = attrs.id)) {
-      fromEl.id = attrValue;
+      if (attrValue) {
+        fromEl.id = attrValue;
+      } else {
+        fromEl.removeAttribute("id");
+      }
     }
     if (oldAttrs.style !== (attrValue = attrs.style)) {
-      fromEl.style.cssText = attrValue;
+      if (attrValue) {
+        fromEl.style.cssText = attrValue;
+      } else {
+        fromEl.removeAttribute("style");
+      }
     }
     return;
   }

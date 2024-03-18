@@ -41,7 +41,7 @@ module.exports = function (helpers) {
   var clone = el.___cloneNode();
   expect(clone).to.not.equal(el);
   expect(clone.___nodeName).to.equal("div");
-  expect(clone.___hasAttribute("class")).to.equal(true);
+  expect(clone.___attributes.class === "foo").to.equal(true);
   expect(clone.firstChild).to.equal(el.firstChild);
 
   var root = helpers.vdom.createElement("div", { class: "root" });
