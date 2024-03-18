@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.9
+
+### Patch Changes
+
+- [#2178](https://github.com/marko-js/marko/pull/2178) [`f8c66c6`](https://github.com/marko-js/marko/commit/f8c66c6c5bef4b124bb26242459fb1d9174258e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fixes an issue where elements with "simple attributes" (those with a combination of class, style and id attributes) were not correctly removing the attribute value when a new value was false, null or undefined.
+
 ## 5.33.8
 
 ### Patch Changes
