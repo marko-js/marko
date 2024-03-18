@@ -1,6 +1,6 @@
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { WalkCode } from "@marko/runtime-tags/common/types";
+import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 import { isCoreTagName } from "../../util/is-core-tag";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
@@ -330,11 +330,11 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           )}`;
         }
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "!"),
+          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + AccessorChar.ConditionalScope),
           ifScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "("),
+          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + AccessorChar.ConditionalRenderer),
           ifRendererIdentifier,
         );
       }

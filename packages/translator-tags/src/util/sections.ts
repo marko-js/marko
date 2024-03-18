@@ -5,7 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
-import type { Reserve } from "./reserve";
+import type { Reference, Source } from "./references";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
@@ -19,7 +19,8 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
-  closures?: Reserve[];
+  closures?: Source[];
+  serializedReferences: Set<Reference>
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
 };
@@ -60,6 +61,7 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      serializedReferences: new Set(),
       startNodeContentType: getStartNodeContentType(path),
       endNodeContentType: getEndNodeContentType(path),
     };

@@ -7,10 +7,7 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import {
-  finalizeIntersections,
-  trackReferencesForBindings,
-} from "../../util/references";
+import { finalizeReferences, trackReferencesForBinding } from "../../util/references";
 import { assignFinalIds } from "../../util/reserve";
 import { startSection } from "../../util/sections";
 import { initValue } from "../../util/signals";
@@ -20,6 +17,21 @@ import programHTML from "./html";
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
 export let cleanIdentifier: t.Identifier;
+export const createProgramState = <T>(init: () => T) =>{
+  const map = new WeakMap<t.NodePath<t.Program>, T>();
+  return [
+    () => {
+      let state = map.get(currentProgramPath);
+      if (!state) {
+        map.set(currentProgramPath, state = init());
+      }
+      return state;
+    },
+    (value: T) => {
+      map.set(currentProgramPath, value);
+    }
+  ] as const;
+}
 
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,
@@ -42,19 +54,19 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      const section = startSection(program);
+      startSection(program);
       const inputBinding = program.scope.getBinding("input")!;
       if (
         inputBinding.referencePaths.length ||
         inputBinding.constantViolations.length
       ) {
-        trackReferencesForBindings(section, program);
+        trackReferencesForBinding(program, "input", undefined);
       }
     },
 
     exit() {
       assignFinalIds();
-      finalizeIntersections();
+      finalizeReferences();
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },

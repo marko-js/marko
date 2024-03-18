@@ -702,34 +702,34 @@ export function writeHTMLResumeStatements(
 
   // TODO: currently reserves do not know what their references are.
   // ideally we calculate that in analyze and use that to find intersections.
-  if (intersections) {
-    for (const intersection of intersections) {
-      for (const reference of intersection) {
-        if (reference.type !== ReserveType.Visit) {
-          // TODO: this should not be needed
-          serializedReferences = reserveUtil.add(
-            serializedReferences,
-            reference,
-          );
-        }
-      }
-    }
-  }
+  // if (intersections) {
+  //   for (const intersection of intersections) {
+  //     for (const reference of intersection) {
+  //       if (reference.type !== ReserveType.Visit) {
+  //         // TODO: this should not be needed
+  //         serializedReferences = reserveUtil.add(
+  //           serializedReferences,
+  //           reference,
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 
-  if (closures) {
-    for (const closure of closures) {
-      let currentSection = section;
-      while (currentSection !== closure.section) {
-        getSerializedScopeProperties(currentSection).set(
-          t.stringLiteral("_"),
-          callRuntime(
-            "serializedScope",
-            getScopeIdIdentifier((currentSection = currentSection.parent!)),
-          ),
-        );
-      }
-    }
-  }
+  // if (closures) {
+  //   for (const closure of closures) {
+  //     let currentSection = section;
+  //     while (currentSection !== closure.section) {
+  //       getSerializedScopeProperties(currentSection).set(
+  //         t.stringLiteral("_"),
+  //         callRuntime(
+  //           "serializedScope",
+  //           getScopeIdIdentifier((currentSection = currentSection.parent!)),
+  //         ),
+  //       );
+  //     }
+  //   }
+  // }
 
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
