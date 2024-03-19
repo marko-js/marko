@@ -11,7 +11,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.be("html", null, "0", _component, null, 0);
   out.n(_marko_node, _component);
-  out.be("body", null, "3", _component, null, 0);
+  out.be("body", null, "2", _component, null, 0);
   out.t("The content of the document......", _component);
   out.ee();
   out.ee();
