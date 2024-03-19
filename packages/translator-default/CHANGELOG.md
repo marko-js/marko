@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.9
+
+### Patch Changes
+
+- [#2180](https://github.com/marko-js/marko/pull/2180) [`a8bfb50`](https://github.com/marko-js/marko/commit/a8bfb50d7617d338c8e6b11c3f18cbb4829a5cba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where vdom optimizer was including elements with user key attributes.
+
 ## 5.32.8
 
 ### Patch Changes
