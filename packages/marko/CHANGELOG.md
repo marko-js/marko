@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.33.10
+
+### Patch Changes
+
+- [#2180](https://github.com/marko-js/marko/pull/2180) [`a8bfb50`](https://github.com/marko-js/marko/commit/a8bfb50d7617d338c8e6b11c3f18cbb4829a5cba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where vdom optimizer was including elements with user key attributes.
+
+- [#2177](https://github.com/marko-js/marko/pull/2177) [`ba110fb`](https://github.com/marko-js/marko/commit/ba110fb99092ffa1a254ab369626cba4a6e83430) Thanks [@rturnq](https://github.com/rturnq)! - Remove dependency on setTimeout which is not implemented in some isolates
+
+- Updated dependencies [[`a8bfb50`](https://github.com/marko-js/marko/commit/a8bfb50d7617d338c8e6b11c3f18cbb4829a5cba)]:
+  - @marko/translator-default@5.32.9
+  - @marko/compiler@5.35.8
+
 ## 5.33.9
 
 ### Patch Changes
