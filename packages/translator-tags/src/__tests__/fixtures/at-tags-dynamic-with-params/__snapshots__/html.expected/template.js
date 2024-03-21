@@ -1,9 +1,10 @@
 import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, serializedScope as _serializedScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  x
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  const {
+    x
+  } = input;
   let _item;
   const _scope1_id = _nextScopeId();
   let _ifScopeId, _scope2_, _ifRenderer;

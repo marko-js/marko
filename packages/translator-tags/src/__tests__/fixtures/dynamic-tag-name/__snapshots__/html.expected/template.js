@@ -1,17 +1,18 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
 import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  renderBody,
-  x,
-  show,
-  showTagA,
-  isLarge,
-  tag,
-  level,
-  other
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  const {
+    renderBody,
+    x,
+    show,
+    showTagA,
+    isLarge,
+    tag,
+    level,
+    other
+  } = input;
   const _dynamicScope = _dynamicTagInput(renderBody, {
     class: ["a", "b"],
     other: other
@@ -50,22 +51,22 @@ const _renderer = /* @__PURE__ */_createRenderer(({
   });
   const _tagName4 = showTagA && tagA;
   const _childScope2 = _peekSerializedScope();
-  const _renderBody2 = _register( /* @__PURE__ */_createRenderer(() => {
+  const _renderBody = _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", _scope0_id);
   if (_tagName4._) _tagName4._({
     class: ["a", "b"],
     other: other
-  });else _renderBody2();
-  const _childScope3 = _peekSerializedScope();
-  (tag || tagA)._({
+  });else _renderBody();
+  const _dynamicScope5 = _dynamicTagInput(tag || tagA, {
     class: ["a", "b"],
     other: other
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
-  const _dynamicScope5 = _dynamicTagInput(_tagName5, {
+  _write(`${_markResumeControlEnd(_scope0_id, "#text/8")}`);
+  const _dynamicScope6 = _dynamicTagInput(_tagName5, {
     class: ["a", "b"],
     other: other
   });
@@ -87,8 +88,9 @@ const _renderer = /* @__PURE__ */_createRenderer(({
     "#text/5(": showTagA ? tagA : tagB,
     "#childScope/6": _childScope,
     "#childScope/7": _childScope2,
-    "#childScope/8": _childScope3,
-    "#text/9!": _dynamicScope5,
+    "#text/8!": _dynamicScope5,
+    "#text/8(": tag || tagA,
+    "#text/9!": _dynamicScope6,
     "#text/9(": _tagName5
   });
 });

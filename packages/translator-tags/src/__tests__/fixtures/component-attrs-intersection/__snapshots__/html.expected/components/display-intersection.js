@@ -1,8 +1,9 @@
 import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  value
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  const {
+    value
+  } = input;
   const dummy = {};
   _write(`<div>${_escapeXML((dummy, value))}${_markResumeNode(_scope0_id, "#text/0")}</div>`);
   _writeScope(_scope0_id, {

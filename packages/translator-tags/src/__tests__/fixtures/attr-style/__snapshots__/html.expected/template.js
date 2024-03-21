@@ -1,10 +1,11 @@
 import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  color,
-  test
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  const {
+    color,
+    test
+  } = input;
   _write(`<div${_styleAttr({
     color: color
   })}></div>${_markResumeNode(_scope0_id, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);

@@ -7,16 +7,19 @@ const _onClick_effect = _register("packages/translator-tags/src/__tests__/fixtur
   _on(_scope["#button/0"], "click", onClick);
 });
 const _onClick = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick_effect));
-export const args = (_scope, _destructure, _clean) => {
-  let onClick, text;
-  if (!_clean) [{
-    onClick,
-    text
-  }] = _destructure;
-  _onClick(_scope, onClick, _clean);
-  _text(_scope, text, _clean);
+const _destructure2 = (_scope, {
+  onClick,
+  text
+}) => {
+  _onClick(_scope, onClick);
+  _text(_scope, text);
 };
-export { _onClick, _text };
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input));
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
 export const template = "<button> </button>";
 export const walks = /* get, next(1), get, out(1) */" D l";
 export const setup = function () {};

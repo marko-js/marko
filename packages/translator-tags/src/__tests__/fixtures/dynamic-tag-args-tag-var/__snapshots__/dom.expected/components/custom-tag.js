@@ -8,7 +8,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<div>Child: <!></div>";
 export const walks = /* next(1), over(1), replace, out(1) */"Db%l";
 export const setup = function () {};

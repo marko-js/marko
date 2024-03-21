@@ -27,7 +27,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<button id=tags> </button><div><!></div>";
 export const walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 export const setup = _setup;

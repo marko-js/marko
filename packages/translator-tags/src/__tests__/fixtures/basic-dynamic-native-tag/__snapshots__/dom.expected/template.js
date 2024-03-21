@@ -5,14 +5,19 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagNam
   class: ["a", "b"]
 })), void 0, _tagName_input);
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => _dynamicTagName(_scope, tagName || _tagNameBody), void 0, _dynamicTagName);
-export const args = (_scope, _destructure, _clean) => {
+const _destructure2 = (_scope, _destructure, _clean) => {
   let tagName;
-  if (!_clean) [{
+  if (!_clean) ({
     tagName
-  }] = _destructure;
+  } = _destructure);
   _tagName(_scope, tagName, _clean);
 };
-export { _tagName };
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
 export const template = "<!><!><!>";
 export const walks = /* replace, over(1) */"D%bD";
 export const setup = function () {};

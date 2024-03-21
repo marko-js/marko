@@ -343,16 +343,19 @@ export function getDestructureSignal(
       bindings.map((binding) => t.variableDeclarator(binding)),
     );
 
+    let id: t.Identifier | undefined;
+
     return {
       get identifier() {
-        const name =
-          currentProgramPath.scope.generateUidIdentifier("destructure");
-        currentProgramPath.pushContainer("body", [
-          t.variableDeclaration("const", [
-            t.variableDeclarator(name, this.build(true)),
-          ]),
-        ]);
-        return name;
+        if (!id) {
+          id = currentProgramPath.scope.generateUidIdentifier("destructure");
+          currentProgramPath.pushContainer("body", [
+            t.variableDeclaration("const", [
+              t.variableDeclarator(id, this.build(true)),
+            ]),
+          ]);
+        }
+        return id;
       },
       build(canCallOnlyWhenDirty?: boolean) {
         if (canCallOnlyWhenDirty && !this.hasDownstreamIntersections()) {

@@ -47,29 +47,19 @@ const _destructure2 = (_scope, _destructure, _clean) => {
   _c(_scope, c, _clean);
   _d(_scope, d, _clean);
 };
-const _destructure3 = (_scope, _destructure, _clean) => {
-  let c, d;
-  if (!_clean) ({
-    c,
-    d
-  } = _destructure);
-  _c(_scope, c, _clean);
-  _d(_scope, d, _clean);
-};
 const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _destructure2(_scope, input);
   _dynamicTagName(_scope, input.test || _inputTestBody);
-}, void 0, _values([_destructure3, _dynamicTagName]));
+}, void 0, _values([_destructure2, _dynamicTagName]));
 const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
 };
-export const args = (_scope, _destructure4, _clean) => {
+export const args = (_scope, _destructure3, _clean) => {
   let input;
-  if (!_clean) [input] = _destructure4;
+  if (!_clean) [input] = _destructure3;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
 export const walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
 export const setup = _setup;

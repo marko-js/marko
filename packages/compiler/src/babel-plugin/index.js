@@ -201,6 +201,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
         sourceType: "module",
         body: [],
         directives: [],
+        params: [t.identifier("input")],
       },
     },
   });

@@ -249,7 +249,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childProgram = childFile.ast.program;
   const tagIdentifier = importNamed(file, relativePath, "setup", tagName);
   let tagAttrsIdentifier: t.Identifier | undefined;
-  if (childProgram.extra.args) {
+  if (childProgram.params[0].extra?.reserve) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,

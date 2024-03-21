@@ -15,12 +15,16 @@ const {
   getBindingIdentifiers,
 } = babelTypes;
 
-getBindingIdentifiers.keys["MarkoTag"] = ["var"];
-getBindingIdentifiers.keys["MarkoTagBody"] = ["params"];
+getBindingIdentifiers.keys.Program = ["params"];
+getBindingIdentifiers.keys.MarkoTag = ["var"];
+getBindingIdentifiers.keys.MarkoTagBody = ["params"];
 
 MARKO_TYPES.forEach((typeName) => {
   defineType(typeName, definitions[typeName]);
 });
+
+babelTypes.NODE_FIELDS.Program.params =
+  babelTypes.NODE_FIELDS.MarkoTagBody.params;
 
 for (const type of [
   ...Object.keys(VISITOR_KEYS),

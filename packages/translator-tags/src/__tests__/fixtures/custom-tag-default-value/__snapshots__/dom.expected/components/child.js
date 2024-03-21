@@ -6,7 +6,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<!> ";
 export const walks = /* replace, over(2) */"%c";
 export const setup = function () {};

@@ -10,7 +10,6 @@ import {
   getClosures,
   getDestructureSignal,
   getResumeRegisterId,
-  getSignal,
   getTagParamsSignal,
   writeSignals,
 } from "../../util/signals";
@@ -27,7 +26,6 @@ export default {
       const setupIdentifier = t.identifier("setup");
       const argsSignalIdentifier = t.identifier("args");
       const closuresIdentifier = t.identifier("closures");
-      const { args } = program.node.extra;
       const { walks, writes, setup } = writer.getSectionMeta(section);
 
       forEachSectionReverse((childSection) => {
@@ -73,32 +71,21 @@ export default {
         }
       });
 
-      if (args) {
-        const exportSpecifiers: t.ExportSpecifier[] = [];
-
-        for (const name in args.bindings) {
-          const bindingIdentifier = args.bindings[name];
-          const signalIdentifier = getSignal(
-            section,
-            bindingIdentifier.extra!.reserve,
-          ).identifier;
-          exportSpecifiers.push(
-            t.exportSpecifier(signalIdentifier, signalIdentifier),
-          );
-        }
-
+      const [programInput] = program.node.params;
+      const inputReserve = programInput.extra?.reserve;
+      if (inputReserve) {
         program.node.body.push(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 argsSignalIdentifier,
-                t.isIdentifier(args.var)
-                  ? getSignal(section, args.var.extra!.reserve!).identifier
-                  : getDestructureSignal(args.bindings, args.var)?.build(),
+                getDestructureSignal(
+                  { input: programInput as t.Identifier },
+                  t.arrayPattern([programInput]),
+                )?.build(),
               ),
             ]),
           ),
-          t.exportNamedDeclaration(null, exportSpecifiers),
         );
       }
 
@@ -156,7 +143,7 @@ export default {
               setupIdentifier,
               closures.length && closuresIdentifier,
               undefined,
-              args! && argsSignalIdentifier,
+              inputReserve && argsSignalIdentifier,
             ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`)),
           ),

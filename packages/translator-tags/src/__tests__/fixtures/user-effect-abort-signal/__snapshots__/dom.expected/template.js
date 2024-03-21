@@ -23,7 +23,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<div><!> <!></div>";
 export const walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
 export const setup = _setup;

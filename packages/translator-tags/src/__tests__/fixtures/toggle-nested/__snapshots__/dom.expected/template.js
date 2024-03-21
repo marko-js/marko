@@ -23,24 +23,12 @@ const _destructure2 = (_scope, _destructure, _clean) => {
   _value(_scope, value1, _clean);
   _value2(_scope, value2, _clean);
 };
-const _destructure3 = (_scope, _destructure, _clean) => {
-  let show, value1, value2;
-  if (!_clean) ({
-    show,
-    value1,
-    value2
-  } = _destructure);
-  _show(_scope, show, _clean);
-  _value(_scope, value1, _clean);
-  _value2(_scope, value2, _clean);
-};
-const _input = /* @__PURE__ */_value3("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure3);
-export const args = (_scope, _destructure4, _clean) => {
+const _input = /* @__PURE__ */_value3("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const args = (_scope, _destructure3, _clean) => {
   let input;
-  if (!_clean) [input] = _destructure4;
+  if (!_clean) [input] = _destructure3;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<div><!></div>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};

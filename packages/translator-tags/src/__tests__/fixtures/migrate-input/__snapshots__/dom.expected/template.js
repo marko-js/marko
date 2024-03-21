@@ -5,7 +5,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = "<div><span> </span></div>";
 export const walks = /* next(2), get, out(2) */"E m";
 export const setup = function () {};
