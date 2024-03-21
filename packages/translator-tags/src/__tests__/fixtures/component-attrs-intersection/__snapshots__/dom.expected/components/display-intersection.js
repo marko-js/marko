@@ -8,17 +8,22 @@ const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dummy = /* @__PURE__ */_value2("dummy", null, _expr_value_dummy);
 const _value = /* @__PURE__ */_value2("value", null, _expr_value_dummy);
+const _destructure2 = (_scope, _destructure, _clean) => {
+  let value;
+  if (!_clean) ({
+    value
+  } = _destructure);
+  _value(_scope, value, _clean);
+};
+const _input = /* @__PURE__ */_value2("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
 const _setup = _scope => {
   _dummy(_scope, {});
 };
-export const args = (_scope, _destructure, _clean) => {
-  let value;
-  if (!_clean) [{
-    value
-  }] = _destructure;
-  _value(_scope, value, _clean);
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
 };
-export { _value };
 export const template = "<div> </div>";
 export const walks = /* next(1), get, out(1) */"D l";
 export const setup = _setup;

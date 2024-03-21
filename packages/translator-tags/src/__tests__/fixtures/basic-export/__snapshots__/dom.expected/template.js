@@ -1,14 +1,17 @@
 export const v = 123;
 import { data as _data, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/0"], value));
-export const args = (_scope, _destructure, _clean) => {
-  let value;
-  if (!_clean) [{
-    value
-  }] = _destructure;
-  _value(_scope, value, _clean);
+const _destructure2 = (_scope, {
+  value
+}) => {
+  _value(_scope, value);
 };
-export { _value };
+const _input = /* @__PURE__ */_value2("input", (_scope, input) => _destructure2(_scope, input));
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
 export const template = "<!><div> </div>";
 export const walks = /* next(1), get, out(1) */"DD l";
 export const setup = function () {};

@@ -7,9 +7,13 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
-import { finalizeIntersections } from "../../util/references";
+import {
+  finalizeIntersections,
+  trackReferencesForBindings,
+} from "../../util/references";
 import { assignFinalIds } from "../../util/reserve";
 import { startSection } from "../../util/sections";
+import { initValue } from "../../util/signals";
 import programDOM from "./dom";
 import programHTML from "./html";
 
@@ -26,6 +30,7 @@ export default {
   migrate: {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
+      program.node.params = [t.identifier("input")];
       currentProgramPath = program;
     },
     exit() {
@@ -37,7 +42,14 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      startSection(program);
+      const section = startSection(program);
+      const inputBinding = program.scope.getBinding("input")!;
+      if (
+        inputBinding.referencePaths.length ||
+        inputBinding.constantViolations.length
+      ) {
+        trackReferencesForBindings(section, program);
+      }
     },
 
     exit() {
@@ -76,6 +88,11 @@ export default {
         program.node.body = entryBuilder.build(entryFile);
         program.skip();
         return;
+      }
+
+      const reserveInput = program.node.params[0].extra?.reserve;
+      if (reserveInput) {
+        initValue(reserveInput);
       }
     },
     exit(program: t.NodePath<t.Program>) {

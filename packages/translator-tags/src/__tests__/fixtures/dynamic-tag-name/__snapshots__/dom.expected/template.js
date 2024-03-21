@@ -4,12 +4,22 @@ import { attr as _attr, bindRenderer as _bindRenderer, createRenderer as _create
 import { setup as _setup, template as _undefined_template, walks as _undefined_walks } from "./components/tag-a/index.marko";
 const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
-const _expr__dynamicTagName5_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr__dynamicTagName6_other = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/9": _dynamicTagName5,
+    "#text/9": _dynamicTagName6,
     other
   } = _scope;
   _largeHeadingH2_input(_scope, () => ({
+    class: ["a", "b"],
+    other: other
+  }));
+});
+const _tagTagA_input = _dynamicTagAttrs("#text/8");
+const _expr__dynamicTagName5_ChildScope_other = /* @__PURE__ */_intersection(2, _scope => {
+  const {
+    other
+  } = _scope;
+  _tagTagA_input(_scope, () => ({
     class: ["a", "b"],
     other: other
   }));
@@ -60,7 +70,8 @@ const _expr__dynamicTagName_other = /* @__PURE__ */_intersection(2, _scope => {
     other: other
   }));
 });
-const _dynamicTagName5 = /* @__PURE__ */_conditional("#text/9", null, _expr__dynamicTagName5_other);
+const _dynamicTagName5 = /* @__PURE__ */_conditional("#text/9", null, _expr__dynamicTagName6_other);
+const _dynamicTagName5_ChildScope = /* @__PURE__ */_conditional("#text/8", null, _expr__dynamicTagName5_ChildScope_other);
 const _dynamicTagName4 = /* @__PURE__ */_conditional("#text/5", null, _expr__dynamicTagName4_other);
 const _dynamicTagName3 = /* @__PURE__ */_conditional("#text/4", null, _expr__dynamicTagName3_other);
 const _dynamicTagName2 = /* @__PURE__ */_conditional("#text/1", null, _expr__dynamicTagName2_other);
@@ -76,9 +87,9 @@ const _other = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#h$Level/12"], "other", other);
   _attr(_scope["#tagConstA/13"], "other", other);
   _attr(_scope["#tagConstB/14"], "other", other);
-}, _intersections([_expr__dynamicTagName_other, _expr__dynamicTagName2_other, _expr__dynamicTagName3_other, _expr__dynamicTagName4_other, _expr__dynamicTagName5_other]));
+}, _intersections([_expr__dynamicTagName_other, _expr__dynamicTagName2_other, _expr__dynamicTagName3_other, _expr__dynamicTagName4_other, _expr__dynamicTagName5_ChildScope_other, _expr__dynamicTagName6_other]));
 const _level = (_scope, level) => {};
-const _tag = (_scope, tag) => {};
+const _tag = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5_ChildScope(_scope, tag || tagA), void 0, _dynamicTagName5_ChildScope);
 const _isLarge = /* @__PURE__ */_value("isLarge", (_scope, isLarge) => {
   _dynamicTagName3(_scope, isLarge ? "h1" : "h2");
   _largeHeading(_scope, isLarge && "h1");
@@ -87,15 +98,9 @@ const _showTagA = /* @__PURE__ */_value("showTagA", (_scope, showTagA) => _dynam
 const _show = /* @__PURE__ */_value("show", (_scope, show) => _tagConstB(_scope, show ? "div" : null));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _dynamicTagName2(_scope, x), void 0, _dynamicTagName2);
 const _renderBody = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), void 0, _dynamicTagName);
-const _setup2 = _scope => {
-  _setup(_scope["#childScope/6"]);
-  _setup(_scope["#childScope/7"]);
-  _setup(_scope["#childScope/8"]);
-  _tagConstA(_scope, "a");
-};
-export const args = (_scope, _destructure, _clean) => {
+const _destructure2 = (_scope, _destructure, _clean) => {
   let renderBody, x, show, showTagA, isLarge, tag, level, other;
-  if (!_clean) [{
+  if (!_clean) ({
     renderBody,
     x,
     show,
@@ -104,7 +109,7 @@ export const args = (_scope, _destructure, _clean) => {
     tag,
     level,
     other
-  }] = _destructure;
+  } = _destructure);
   _renderBody(_scope, renderBody, _clean);
   _x(_scope, x, _clean);
   _show(_scope, show, _clean);
@@ -114,8 +119,18 @@ export const args = (_scope, _destructure, _clean) => {
   _level(_scope, level, _clean);
   _other(_scope, other, _clean);
 };
-export { _renderBody, _x, _show, _showTagA, _isLarge, _tag, _level, _other };
-export const template = `<!><!><!><${show ? "div" : null} class="a b"></${show ? "div" : null}><${show && "div"} class="a b"></${show && "div"}><!><!>${_undefined_template}${_undefined_template}${_undefined_template}<!><${global.x = "a" + "b"} class="a b"></${global.x = "a" + "b"}><${"h" + level} class="a b"></${"h" + level}><h${level} class="a b"></h${level}><${tagConstA} class="a b"></${tagConstA}><${tagConstB} class="a b"></${tagConstB}><!>`;
-export const walks = /* replace, over(1), replace, over(1), get, over(1), get, over(1), replace, over(1), replace, over(1), beginChild, _undefined_walks, endChild, beginChild, _undefined_walks, endChild, beginChild, _undefined_walks, endChild, replace, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */`D%b%b b b%b%b/${_undefined_walks}&/${_undefined_walks}&/${_undefined_walks}&%b b b b b bD`;
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+const _setup2 = _scope => {
+  _setup(_scope["#childScope/6"]);
+  _setup(_scope["#childScope/7"]);
+  _tagConstA(_scope, "a");
+};
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
+export const template = `<!><!><!><${show ? "div" : null} class="a b"></${show ? "div" : null}><${show && "div"} class="a b"></${show && "div"}><!><!>${_undefined_template}${_undefined_template}<!><!><${global.x = "a" + "b"} class="a b"></${global.x = "a" + "b"}><${"h" + level} class="a b"></${"h" + level}><h${level} class="a b"></h${level}><${tagConstA} class="a b"></${tagConstA}><${tagConstB} class="a b"></${tagConstB}><!>`;
+export const walks = /* replace, over(1), replace, over(1), get, over(1), get, over(1), replace, over(1), replace, over(1), beginChild, _undefined_walks, endChild, beginChild, _undefined_walks, endChild, replace, over(1), replace, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */`D%b%b b b%b%b/${_undefined_walks}&/${_undefined_walks}&%b%b b b b b bD`;
 export const setup = _setup2;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko");

@@ -9,7 +9,6 @@ export const args = (_scope, _destructure, _clean) => {
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export { _input };
 export const template = `${_comments_template}`;
 export const walks = /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`;
 export const setup = _setup;

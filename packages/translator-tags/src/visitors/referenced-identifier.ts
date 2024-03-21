@@ -1,13 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { getExprRoot } from "../util/get-root";
-import isStatic from "../util/is-static";
 import { isOutputHTML } from "../util/marko-config";
 import { importRuntime } from "../util/runtime";
 import { getSection, type Section } from "../util/sections";
 import { addStatement } from "../util/signals";
-import { currentProgramPath, scopeIdentifier } from "./program";
+import { scopeIdentifier } from "./program";
 
-const programsWithInputReference = new WeakSet<t.NodePath<t.Program>>();
 const abortIdsByExpressionForSection = new WeakMap<
   Section,
   Map<t.NodePath<t.Node>, number>
@@ -18,21 +16,6 @@ export default {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
-      case "input": {
-        if (!programsWithInputReference.has(currentProgramPath)) {
-          programsWithInputReference.add(currentProgramPath);
-          insertAfterStatic(
-            t.markoTag(
-              t.stringLiteral("attrs"),
-              undefined,
-              t.markoTagBody(),
-              undefined,
-              identifier.node,
-            ),
-          );
-        }
-        break;
-      }
       case "out":
         if (
           t.isMemberExpression(identifier.parent) &&
@@ -123,14 +106,3 @@ export default {
     }
   },
 };
-
-function insertAfterStatic(node: t.Statement) {
-  for (const child of currentProgramPath.get("body")) {
-    if (!isStatic(child)) {
-      child.insertBefore(node);
-      return;
-    }
-  }
-
-  currentProgramPath.unshiftContainer("body", node);
-}

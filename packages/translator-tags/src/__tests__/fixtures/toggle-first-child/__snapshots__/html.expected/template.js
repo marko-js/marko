@@ -1,8 +1,9 @@
 import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  value
-}, _tagVar) => {
+const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  const {
+    value
+  } = input;
   _write("<div>");
   let _ifScopeId, _scope1_, _ifRenderer;
   if (value) {

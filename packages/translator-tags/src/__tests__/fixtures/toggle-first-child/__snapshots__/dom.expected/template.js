@@ -3,14 +3,19 @@ const _value$ifBody = /* @__PURE__ */_closure("value", (_scope, value) => _data(
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _value = /* @__PURE__ */_value2("value", (_scope, value) => _if(_scope, value ? _ifBody : null), _inConditionalScope(_value$ifBody, "#text/0"), _if);
-export const args = (_scope, _destructure, _clean) => {
+const _destructure2 = (_scope, _destructure, _clean) => {
   let value;
-  if (!_clean) [{
+  if (!_clean) ({
     value
-  }] = _destructure;
+  } = _destructure);
   _value(_scope, value, _clean);
 };
-export { _value };
+const _input = /* @__PURE__ */_value2("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const args = (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input(_scope, input, _clean);
+};
 export const template = "<div><!><span></span><span></span></div>";
 export const walks = /* next(1), replace, out(1) */"D%l";
 export const setup = function () {};

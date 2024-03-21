@@ -79,6 +79,10 @@ Scope.prototype.crawl = function () {
       );
     }
 
+    if (this.type === "Program" && this.node.params?.length) {
+      this.scope.registerBinding("params", this);
+    }
+
     this.traverse(visitor, state);
 
     if (state.references.length) {
