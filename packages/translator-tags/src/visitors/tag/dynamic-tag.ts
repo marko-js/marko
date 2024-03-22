@@ -9,18 +9,18 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
-import { addReference, mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  createSelfReference,
+  mergeReferences,
+  SourceType,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Reference,
+  type References,
+  referenceUtil,
+  createSource,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
-import {
-  getOrCreateSection,
-  getScopeIdIdentifier,
-  getSection,
-} from "../../util/sections";
+import { getScopeIdIdentifier, getSection } from "../../util/sections";
 import {
   addValue,
   buildSignalIntersections,
@@ -38,21 +38,50 @@ import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import customTag, { getTagRelativePath } from "./custom-tag";
 
+const kRef = Symbol("dynamic tag reference");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kRef]?: Reference;
+  }
+}
+
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(tag),
-        tag.node as any as t.Identifier,
-        tag.scope.generateUid("dynamicTagName"),
-        "#text",
+      const tagExtra = (tag.node.extra ??= {});
+      tagExtra[kRef] = createSelfReference(
+        tag,
+        tag.scope.generateUid("childScope"),
+        SourceType.dom,
+        undefined,
+        tagExtra,
       );
+      let attrsReferences: References;
 
+      for (const attr of tag.node.attributes) {
+        attrsReferences = referenceUtil.add(
+          attrsReferences,
+          createSelfReference(
+            tag,
+            tag.scope.generateUid("name" in attr ? attr.name : "spread"),
+            SourceType.derived,
+            undefined, // TODO
+            (attr.value.extra ??= {}),
+          ),
+        );
+      }
+
+      tagExtra.references = attrsReferences;
+      (tag.node.extra ??= {}).source = createSource(
+        tag,
+        SourceType.derived,
+        undefined,
+        tagExtra,
+      );
       customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const extra = (tag.node.extra ??= {});
       const referenceNodes: t.Node[] = [];
       if (tag.node.arguments) {
         for (const arg of tag.node.arguments) {
@@ -65,7 +94,7 @@ export default {
       }
 
       mergeReferences(tag, referenceNodes);
-      addReference(tag, extra.reserve!);
+      // addReference(tag, extra.reserve!); // todo
     },
   },
   translate: {
@@ -82,7 +111,7 @@ export default {
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const extra = node.extra!;
-      const tagNameReserve = extra.reserve!;
+      const nodeRef = extra[kRef]!;
       let tagExpression = node.name;
 
       if (node.extra!.tagNameDefine) {
@@ -197,15 +226,15 @@ export default {
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tagNameReserve),
+          getScopeAccessorLiteral(nodeRef),
         )}`;
 
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "!"),
+          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "!"),
           dynamicScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "("),
+          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "("),
           t.isIdentifier(tagExpression)
             ? t.identifier(tagExpression.name)
             : tagExpression,
@@ -215,11 +244,11 @@ export default {
         const bodySection = getSection(tag.get("body"));
         const hasBody = section !== bodySection;
         const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
-        const signal = getSignal(section, tagNameReserve);
+        const signal = getSignal(section, nodeRef);
         signal.build = () => {
           return callRuntime(
             "conditional",
-            getScopeAccessorLiteral(tagNameReserve),
+            getScopeAccessorLiteral(nodeRef),
             getSignalFn(signal, [scopeIdentifier]),
             buildSignalIntersections(signal),
             buildSignalValuesWithIntersections(signal),
@@ -257,7 +286,7 @@ export default {
                         id,
                         callRuntime(
                           "dynamicTagAttrs",
-                          getScopeAccessorLiteral(tagNameReserve),
+                          getScopeAccessorLiteral(nodeRef),
                           renderBodyIdentifier,
                           t.isArrayExpression(attrsObject)
                             ? t.booleanLiteral(true)

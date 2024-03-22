@@ -5,16 +5,25 @@ import evaluate from "../util/evaluate";
 import { isCoreTag } from "../util/is-core-tag";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  ReserveType,
+  SourceType,
+  createSelfReference,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  type Reference,
+} from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
+
+const kRef = Symbol("placeholder node reference");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoPlaceholderExtra {
+    [kRef]?: Reference;
+  }
+}
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
@@ -30,12 +39,12 @@ export default {
     const { confident, computed } = evaluate(placeholder);
 
     if (!(confident && (node.escape || !computed))) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(placeholder),
-        node,
+      (node.extra ??= {}).placeholderNodeReference = createSelfReference(
+        placeholder,
         placeholder.scope.generateUid("placeholder"),
-        "#text",
+        SourceType.dom,
+        undefined,
+        node.value.extra,
       );
       needsMarker(placeholder);
     }
@@ -47,7 +56,8 @@ export default {
       const { node } = placeholder;
       const { value } = node;
       const extra = node.extra!;
-      const { confident, computed, reserve } = extra;
+      const { confident, computed } = extra;
+      const nodeRef = extra[kRef]!;
       const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
         ? node.escape
@@ -69,7 +79,7 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          writer.markNode(placeholder);
+          writer.markNode(placeholder, nodeRef);
         } else {
           addStatement(
             "render",
@@ -81,7 +91,7 @@ export default {
                     "data",
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(reserve!),
+                      getScopeAccessorLiteral(nodeRef),
                       true,
                     ),
                     value,
@@ -90,7 +100,7 @@ export default {
                     "html",
                     scopeIdentifier,
                     value,
-                    getScopeAccessorLiteral(reserve!),
+                    getScopeAccessorLiteral(nodeRef),
                   ),
             ),
           );

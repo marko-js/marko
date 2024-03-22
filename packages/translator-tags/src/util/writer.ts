@@ -7,7 +7,11 @@ import {
   ContentType,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
-import { ReserveType, getScopeAccessorLiteral } from "./reserve";
+import {
+  SourceType,
+  getScopeAccessorLiteral,
+  type Reference,
+} from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
 import toTemplateOrStringLiteral, {
@@ -104,11 +108,13 @@ export function getSectionMeta(section: Section) {
   };
 }
 
-export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
+export function markNode(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  reference: Reference,
+) {
   const section = getSection(path);
-  const { reserve } = path.node.extra!;
 
-  if (reserve?.type !== ReserveType.Visit) {
+  if (reference.source.type !== SourceType.dom) {
     throw path.buildCodeFrameError(
       "Tried to mark a node that was not determined to need a mark during analyze.",
     );
@@ -118,7 +124,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(reserve!),
+      getScopeAccessorLiteral(reference),
     )}`;
   }
 }

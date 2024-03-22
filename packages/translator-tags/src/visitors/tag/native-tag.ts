@@ -4,12 +4,13 @@ import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
-import { mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Reference,
+  createSelfReference,
+  SourceType,
+} from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
   createScopeReadExpression,
@@ -22,9 +23,11 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
+const kRef = Symbol("native tag reference");
+
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
+  export interface MarkoTagExtra {
+    [kRef]?: Reference;
   }
 }
 
@@ -49,8 +52,10 @@ export default {
             attrs.map((attr) => attr.node.value),
           );
           isInteractive = true;
+          // TODO: should add isEffect to all attributes in a spread?
           break;
         } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
+          (attr.node.extra ??= {}).isEffect = true;
           section ??= getOrCreateSection(tag);
           isInteractive = true;
         } else if (!evaluate(attr).confident) {
@@ -69,7 +74,12 @@ export default {
             ? node.var.name
             : t.toIdentifier(tag.get("var"))
           : tagName;
-        reserveScope(ReserveType.Visit, section, node, varName, `#${tagName}`);
+
+        (node.extra ??= {})[kRef] = createSelfReference(
+          tag,
+          varName,
+          SourceType.dom,
+        );
       }
     },
   },
@@ -78,6 +88,7 @@ export default {
       assertNoArgs(tag);
 
       const extra = tag.node.extra!;
+      const nodeRef = extra[kRef];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
@@ -116,7 +127,7 @@ export default {
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, extra.reserve!),
+                  createScopeReadExpression(referenceSection, nodeRef!),
                 ),
               );
             } else {
@@ -124,7 +135,7 @@ export default {
               reference.replaceWith(
                 callRuntime(
                   "bindFunction",
-                  getScopeExpression(referenceSection, extra.reserve!.section),
+                  getScopeExpression(referenceSection, section),
                   createElFunction,
                 ),
               );
@@ -140,7 +151,7 @@ export default {
                     [scopeIdentifier],
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(extra.reserve!),
+                      getScopeAccessorLiteral(nodeRef!),
                       true,
                     ),
                   ),
@@ -152,8 +163,8 @@ export default {
       }
 
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
-      if (extra.reserve) {
-        visitAccessor = getScopeAccessorLiteral(extra.reserve);
+      if (nodeRef) {
+        visitAccessor = getScopeAccessorLiteral(nodeRef);
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -282,6 +293,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const extra = tag.node.extra!;
+      const nodeRef = extra[kRef];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 
@@ -304,8 +316,8 @@ export default {
           .skip();
       }
 
-      if (extra.reserve) {
-        writer.markNode(tag);
+      if (nodeRef) {
+        writer.markNode(tag, nodeRef);
       }
 
       walks.exit(tag);

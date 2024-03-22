@@ -3,38 +3,51 @@ import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputDOM } from "../util/marko-config";
-import { mergeReferences } from "../util/references";
 import {
-  ReserveType,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  type Reference,
+  createSelfReference,
+  SourceType,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import customTag from "../visitors/tag/custom-tag";
 
+const kRef = Symbol("lifecycle attrs reference");
+
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
+  export interface MarkoTagExtra {
+    [kRef]?: Reference;
   }
 }
 
 export default {
   analyze: {
     enter(tag) {
+      assertNoParams(tag);
+      assertNoBodyContent(tag);
       customTag.analyze.enter(tag);
-      reserveScope(
-        ReserveType.Store,
-        getOrCreateSection(tag),
-        tag.node,
+
+      const { node } = tag;
+      const tagExtra = (node.extra ??= {});
+      tagExtra[kRef] = createSelfReference(
+        tag,
         tag.scope.generateUid("lifecycle"),
+        SourceType.derived,
+        undefined,
+        tagExtra,
       );
+
+      for (const attr of node.attributes) {
+        (attr.value.extra ??= {}).isEffect = true;
+      }
+
       (currentProgramPath.node.extra ??= {}).isInteractive = true;
     },
     exit(tag) {
-      customTag.analyze.exit(tag);
       mergeReferences(
         tag,
         tag.node.attributes.map((attr) => attr.value),
@@ -44,9 +57,6 @@ export default {
   translate: {
     exit(tag) {
       const { node } = tag;
-
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
 
       // TODO: Check attributes?
       // if (
@@ -62,7 +72,9 @@ export default {
       // }
 
       const section = getSection(tag);
-      const { references } = node.extra!;
+      const tagExtra = node.extra!;
+      const { references } = tagExtra;
+      const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {
         const attrsObject = attrsToObject(tag);
@@ -74,7 +86,7 @@ export default {
             callRuntime(
               "lifecycle",
               scopeIdentifier,
-              getScopeAccessorLiteral(tag.node.extra!.reserve!),
+              getScopeAccessorLiteral(lifecycleAttrsRef),
               attrsObject,
             ),
           ),

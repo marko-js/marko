@@ -20,7 +20,7 @@ export type Section = {
   depth: number;
   parent?: Section;
   closures?: Source[];
-  serializedReferences: Set<Reference>
+  serializedReferences: Set<Reference>;
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
 };

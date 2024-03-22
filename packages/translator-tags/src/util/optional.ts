@@ -75,7 +75,7 @@ export function concat<T>(a: Opt<T>, b: Opt<T>): Opt<T> {
       }
     }
     return a;
-  } 
+  }
   return b;
 }
 

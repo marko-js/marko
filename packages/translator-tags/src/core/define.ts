@@ -21,7 +21,6 @@ export default {
       customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      customTag.analyze.exit(tag);
       mergeReferences(
         tag,
         tag.node.attributes.map((attr) => attr.value),

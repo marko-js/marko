@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { forEach } from "./optional";
-import { getScopeAccessorLiteral } from "./reserve";
+import { getScopeAccessorLiteral } from "./references";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern } from "./scope-read";
 import { getScopeIdIdentifier, getSection, type Section } from "./sections";

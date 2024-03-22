@@ -6,17 +6,18 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
+import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
-import { mergeReferences } from "../util/references";
 import {
-  ReserveType,
+  createSelfReference,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  SourceType,
+  type Reference,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
-  getOrCreateSection,
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
@@ -36,21 +37,27 @@ import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
 import customTag from "../visitors/tag/custom-tag";
 
+const kRef = Symbol("for node reference");
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kRef]?: Reference;
+  }
+}
+
 export default {
   analyze: {
     enter(tag) {
-      tag.node.extra ??= {};
       const isOnlyChild = checkOnlyChild(tag);
-      const parentTag = (
-        isOnlyChild ? tag.parentPath.parent : undefined
-      ) as t.MarkoTag;
-      const parentTagName = (parentTag?.name as t.StringLiteral)?.value;
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(tag),
-        isOnlyChild ? parentTag : tag.node,
+      const tagExtra = (tag.node.extra ??= {});
+      const containerExtra = isOnlyChild
+        ? (tag.parentPath.parent.extra ??= {})
+        : tagExtra;
+      containerExtra[kRef] = createSelfReference(
+        tag,
         tag.scope.generateUid("for"),
-        isOnlyChild ? `#${parentTagName}` : "#text",
+        SourceType.dom,
+        undefined,
+        tagExtra,
       );
       customTag.analyze.enter(tag);
     },
@@ -63,12 +70,6 @@ export default {
         tag.node.attributes.map((attr) => attr.value),
       );
 
-      extra.isStateful =
-        !!extra.references &&
-        !(
-          extra.nestedAttributeTags &&
-          Object.keys(extra.nestedAttributeTags).length
-        );
       extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
   },
@@ -78,8 +79,9 @@ export default {
 
       const tagBody = tag.get("body");
       const bodySection = getSection(tagBody);
-      const { isStateful, singleNodeOptimization, isOnlyChild } =
-        tag.node.extra!;
+      const tagExtra = tag.node.extra!;
+      const { singleNodeOptimization, isOnlyChild } = tagExtra;
+      const isStateful = isStatefulReferences(tagExtra.references);
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
@@ -175,9 +177,9 @@ const translateDOM = {
     const { node } = tag;
     const { attributes } = node;
     const { isOnlyChild, references } = node.extra!;
-    const { reserve } = (
+    const nodeRef = (
       isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node
-    ).extra!;
+    ).extra![kRef]!;
     const paramIdentifiers = Object.values(
       tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
@@ -186,7 +188,7 @@ const translateDOM = {
       return callRuntime(
         "inLoopScope",
         signal,
-        getScopeAccessorLiteral(reserve!),
+        getScopeAccessorLiteral(nodeRef),
       );
     });
 
@@ -228,28 +230,30 @@ const translateDOM = {
       loopArgs.push(byAttr.value);
     }
 
-    const signal = getSignal(tagSection, reserve);
+    const signal = getSignal(tagSection, nodeRef);
     signal.build = () => {
       return callRuntime(
         loopKind,
-        getScopeAccessorLiteral(reserve!),
+        getScopeAccessorLiteral(nodeRef),
         rendererId,
       );
     };
 
     signal.hasDownstreamIntersections = () => {
-      for (const identifier of paramIdentifiers) {
-        if (
-          getSignal(
-            bodySection,
-            identifier.extra!.reserve,
-          ).hasDownstreamIntersections()
-        ) {
-          return true;
+      if (getClosures(bodySection).length > 0) {
+        return true;
+      }
+
+      if (paramIdentifiers.length) {
+        const source = paramIdentifiers[0].extra!.source!;
+        for (const { references } of source.downstream) {
+          if (getSignal(bodySection, references).hasDownstreamIntersections()) {
+            return true;
+          }
         }
       }
 
-      return getClosures(bodySection).length > 0;
+      return false;
     };
 
     addValue(tagSection, references, signal, t.arrayExpression(loopArgs));
@@ -266,11 +270,11 @@ const translateHTML = {
       attributes,
       body: { body, params },
     } = node;
-    const extra = node.extra!;
-    const { isStateful, singleNodeOptimization, isOnlyChild } = extra;
-    const { reserve } = (
-      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node
-    ).extra!;
+    const tagExtra = node.extra!;
+    const { singleNodeOptimization, isOnlyChild } = tagExtra;
+    const isStateful = isStatefulReferences(tagExtra.references);
+    const nodeRef = (isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node)
+      .extra![kRef]!;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
@@ -500,19 +504,19 @@ const translateHTML = {
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
           getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(reserve!),
+          getScopeAccessorLiteral(nodeRef),
           forScopeIdsIdentifier,
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(reserve!),
+          getScopeAccessorLiteral(nodeRef),
         )}`;
       }
       getSerializedScopeProperties(tagSection).set(
         t.stringLiteral(
-          getScopeAccessorLiteral(reserve!).value + AccessorChar.LoopScopeMap,
+          getScopeAccessorLiteral(nodeRef).value + AccessorChar.LoopScopeMap,
         ),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),

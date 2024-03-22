@@ -10,16 +10,20 @@ import {
 import { types as t } from "@marko/compiler";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
-import trackReferences, { mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  SourceType,
+  createSource,
+  trackVarReferences,
+  trackParamsReferences,
+  type References,
+  referenceUtil,
+  createSelfReference,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Reference,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
-  getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   startSection,
@@ -27,7 +31,6 @@ import {
 import {
   addStatement,
   addValue,
-  getClosures,
   getResumeRegisterId,
   getSerializedScopeProperties,
   initValue,
@@ -39,28 +42,55 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
+const kRef = Symbol("custom tag reference");
+
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    hasInteractiveChild?: boolean;
+  export interface MarkoTagExtra {
+    [kRef]?: Reference;
   }
 }
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      trackReferences(tag);
+      trackVarReferences(tag);
 
       const body = tag.get("body");
       if (body.get("body").length) {
         startSection(body);
+        trackParamsReferences(body);
       }
 
       if (getTagTemplate(tag)) {
-        reserveScope(
-          ReserveType.Visit,
-          getOrCreateSection(tag),
-          tag.node,
-          "#childScope",
+        const tagExtra = (tag.node.extra ??= {});
+        tagExtra[kRef] = createSelfReference(
+          tag,
+          tag.scope.generateUid("childScope"),
+          SourceType.dom,
+          undefined,
+          tagExtra,
+        );
+        let attrsReferences: References;
+
+        for (const attr of tag.node.attributes) {
+          attrsReferences = referenceUtil.add(
+            attrsReferences,
+            createSelfReference(
+              tag,
+              tag.scope.generateUid("name" in attr ? attr.name : "spread"),
+              SourceType.derived,
+              undefined, // TODO
+              (attr.value.extra ??= {}),
+            ),
+          );
+        }
+
+        tagExtra.references = attrsReferences;
+        (tag.node.extra ??= {}).source = createSource(
+          tag,
+          SourceType.derived,
+          undefined,
+          tagExtra,
         );
       }
 
@@ -73,16 +103,6 @@ export default {
       if (hasInteractiveChild) {
         (currentProgramPath.node.extra ?? {}).hasInteractiveChild = true;
         // TODO: should check individual inputs to see if they are intersecting with state
-      }
-    },
-    exit(tag: t.NodePath<t.MarkoTag>) {
-      // TODO: only if dynamic attributes
-      const template = getTagTemplate(tag);
-      if (template) {
-        mergeReferences(
-          tag,
-          tag.node.attributes.map((attr) => attr.value),
-        );
       }
     },
   },
@@ -136,8 +156,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const attrsObject = attrsToObject(tag, true);
   const renderBodyProp = getRenderBodyProp(attrsObject);
   const section = getSection(tag);
-  const binding = node.extra!.reserve!;
-  const peekScopeId = tag.scope.generateUidIdentifier(binding.name);
+  const nodeRef = node.extra![kRef]!;
+  const peekScopeId = tag.scope.generateUidIdentifier(nodeRef?.name);
   tag.insertBefore(
     t.variableDeclaration("const", [
       t.variableDeclarator(peekScopeId, callRuntime("peekSerializedScope")),
@@ -145,7 +165,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   );
 
   getSerializedScopeProperties(section).set(
-    getScopeAccessorLiteral(node.extra!.reserve!),
+    getScopeAccessorLiteral(nodeRef),
     peekScopeId,
   );
 
@@ -218,7 +238,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           t.stringLiteral(
             getResumeRegisterId(
               section,
-              (node.var as t.Identifier).extra?.reserve,
+              (node.var as t.Identifier).extra?.references, // TODO: node.var is not always an identifier.
             ),
           ),
           getScopeIdIdentifier(section),
@@ -238,8 +258,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const tagBodySection = getSection(tagBody);
   const { node } = tag;
   const extra = node.extra!;
+  const nodeRef = extra[kRef]!;
   const write = writer.writeTo(tag);
-  const binding = extra.reserve!;
   const { file } = tag.hub;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
@@ -249,7 +269,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childProgram = childFile.ast.program;
   const tagIdentifier = importNamed(file, relativePath, "setup", tagName);
   let tagAttrsIdentifier: t.Identifier | undefined;
-  if (childProgram.params[0].extra?.reserve) {
+  if (childProgram.params[0].extra?.references) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,
@@ -263,17 +283,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     importNamed(file, relativePath, "walks", `${tagName}_walks`),
   );
 
-  if (childProgram.extra.closures) {
-    getClosures(tagSection).push(
-      callRuntime(
-        "childClosures",
-        importNamed(file, relativePath, "closures", `${tagName}_closures`),
-        getScopeAccessorLiteral(binding),
-      ),
-    );
-  }
-
-  let attrsObject = attrsToObject(tag);
+  let attrsObject = attrsToObject(tag); // TODO: need to build each attribute individually
 
   if (tagBodySection !== tagSection) {
     attrsObject ??= t.objectExpression([]);
@@ -292,7 +302,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   if (node.var) {
     const source = initValue(
       // TODO: support destructuring
-      node.var.extra!.reserve!,
+      node.var.extra!.reserve!, // todo
     );
     source.register = true;
     addStatement(
@@ -303,7 +313,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "setTagVar",
           scopeIdentifier,
-          getScopeAccessorLiteral(binding),
+          getScopeAccessorLiteral(nodeRef),
           source.identifier,
         ),
       ),
@@ -315,7 +325,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     undefined,
     t.expressionStatement(
       t.callExpression(tagIdentifier, [
-        createScopeReadExpression(tagSection, binding),
+        createScopeReadExpression(tagSection, nodeRef),
       ]),
     ),
   );
@@ -328,10 +338,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         hasDownstreamIntersections: () => true,
       },
       t.arrayExpression([attrsObject]),
-      createScopeReadExpression(tagSection, binding),
+      createScopeReadExpression(tagSection, nodeRef),
       callRuntime(
         "inChild",
-        getScopeAccessorLiteral(binding),
+        getScopeAccessorLiteral(nodeRef),
         t.identifier(tagAttrsIdentifier.name),
       ),
     );

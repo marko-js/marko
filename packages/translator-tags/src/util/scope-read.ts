@@ -1,8 +1,11 @@
 import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
 import { forEach } from "./optional";
-import type { References } from "./references";
-import { type Reserve, getScopeAccessorLiteral } from "./reserve";
+import {
+  type Reference,
+  type References,
+  getScopeAccessorLiteral,
+} from "./references";
 import type { Section } from "./sections";
 
 export function createScopeReadPattern(
@@ -66,7 +69,7 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 
 export function createScopeReadExpression(
   section: Section,
-  reference: Reserve,
+  reference: Reference,
 ) {
   return t.memberExpression(
     getScopeExpression(section, reference.section),

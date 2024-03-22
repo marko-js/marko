@@ -1,5 +1,13 @@
 import { resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    isInteractive?: boolean;
+    hasInteractiveChild?: boolean;
+  }
+}
+
 type EntryFile = t.BabelFile & {
   [kState]?: {
     imports: string[];

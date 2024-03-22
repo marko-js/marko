@@ -1,42 +1,53 @@
 import { types as t } from "@marko/compiler";
-import { createProgramState, currentProgramPath } from "../visitors/program";
+import { createProgramState } from "../visitors/program";
 import { getExprRoot, getFnRoot } from "./get-root";
-import { addSorted, findSorted, type Opt, type Many, Sorted, concat, push, type OneMany, pop, forEach } from "./optional";
+import { isOptimize } from "./marko-config";
+import {
+  addSorted,
+  findSorted,
+  type Opt,
+  type Many,
+  Sorted,
+  concat,
+  push,
+  type OneMany,
+  pop,
+  forEach,
+} from "./optional";
 import {
   type Section,
   getOrCreateSection,
   createSectionState,
-  forEachSection,
 } from "./sections";
 
 export type Aliases = undefined | Reference | { [property: string]: Aliases };
 
 export enum SourceType {
+  dom,
   let,
   input,
   param,
   derived,
-  dom
-};
+  // todo: constant
+}
 
 export type Source = {
-  id: number,
-  type: SourceType,
-  section: Section,
-  value: undefined | {
-    aliases: Aliases,
-    expression: t.NodeExtra,
-  },
-  expressions: Set<t.NodeExtra>,
-}
+  id: number;
+  type: SourceType;
+  section: Section;
+  aliases: Aliases;
+  upstream: t.NodeExtra | undefined;
+  downstream: Set<t.NodeExtra>;
+};
 
 export type Reference = {
-  source: Source,
-  section: Section,
-  property: Opt<string>,
-  name: string
-  serialize: boolean | Set<Source>
-}
+  id: number;
+  source: Source;
+  section: Section;
+  property: Opt<string>;
+  name: string;
+  serialize: boolean | Set<Source>;
+};
 
 export type References = Opt<Reference>;
 export type Intersection = Many<Reference>;
@@ -45,7 +56,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     references?: References;
     source?: Source;
-    hasOwnGuard?: true;
+    isEffect?: true;
   }
 
   // TODO: remove
@@ -61,61 +72,94 @@ declare module "@marko/compiler/dist/types" {
 
 const [getSources] = createProgramState(() => new Set<Source>());
 const [getNextSourceId, setNextSourceId] = createProgramState(() => 0);
-function createSource(path: t.NodePath<any>, value: Source["value"], type: SourceType): Source {
-  const section = getOrCreateSection(path);
+export function createSource(
+  path: t.NodePath<any>,
+  type: Source["type"] = SourceType.derived,
+  aliases?: Source["aliases"],
+  upstream?: Source["upstream"],
+): Source {
   const id = getNextSourceId();
-
+  const section = getOrCreateSection(path);
   const source: Source = {
     id,
     type,
     section,
-    value,
-    expressions: new Set(),
+    aliases,
+    upstream,
+    downstream: new Set(),
   };
   setNextSourceId(id + 1);
   getSources().add(source);
   return source;
 }
 
-export default function trackReferences(tag: t.NodePath<t.MarkoTag>, value: Source["value"], sourceType: SourceType = SourceType.derived) {
+export function createSelfReference(
+  path: t.NodePath<any>,
+  debugName: string,
+  type: Source["type"] = SourceType.derived,
+  aliases?: Source["aliases"],
+  upstream?: Source["upstream"],
+) {
+  const source = createSource(path, type, aliases, upstream);
+  return resolveReferenceAliases({
+    id: 0,
+    source,
+    section: source.section,
+    property: undefined,
+    name: debugName,
+    serialize: false,
+  });
+}
+
+export function trackVarReferences(
+  tag: t.NodePath<t.MarkoTag>,
+  type?: Source["type"],
+  aliases?: Source["aliases"],
+  upstream?: Source["upstream"],
+) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const source = (tag.node.extra ??= {}).source = createSource(tag, value, sourceType);
+    const source = createSource(tag, type, aliases, upstream);
     for (const { identifier, property } of getBindingIdentifiers(tagVar)) {
       (identifier.extra ??= {}).source = source;
-      trackReferencesForBinding(tag, identifier.name, property);
+      trackReferencesForBinding(
+        tag.scope.getBinding(identifier.name)!,
+        property,
+      );
     }
   }
+}
 
-  const body = tag.get("body");
+export function trackParamsReferences(
+  body: t.NodePath<t.MarkoTagBody | t.Program>,
+  type?: Source["type"],
+  aliases?: Source["aliases"],
+  upstream?: Source["upstream"],
+) {
   const params = body.node.params;
   if (body.get("body").length && params.length) {
-    const source = (body.node.extra ??= {}).source = createSource(body, undefined, SourceType.param);
+    const source = createSource(body, type, aliases, upstream);
     for (let i = 0; i < params.length; i++) {
-      for (const { identifier, property } of getBindingIdentifiers(params[i], i + "")) {
+      for (const { identifier, property } of getBindingIdentifiers(
+        params[i],
+        i + "",
+      )) {
         (identifier.extra ??= {}).source = source;
-        trackReferencesForBinding(body, identifier.name, property);
+        trackReferencesForBinding(
+          body.scope.getBinding(identifier.name)!,
+          property,
+        );
       }
     }
   }
 }
 
 export function trackReferencesForBinding(
-  sourcePath: t.NodePath<t.MarkoTag | t.MarkoTagBody | t.Program>,
-  name: string,
-  property: Opt<string>
+  binding: t.Binding,
+  property?: Opt<string>,
 ) {
-  const scope = sourcePath.scope;
-  const source = sourcePath.node.extra!.source!;
-
-  const { referencePaths, constantViolations } = scope.getBinding(name)!;
-
-  // const binding = reserveScope(
-  //   ReserveType.Store,
-  //   section,
-  //   identifiers[name],
-  //   name,
-  // );
+  const { identifier, referencePaths, constantViolations } = binding;
+  const source = identifier.extra!.source!;
 
   for (const referencePath of referencePaths) {
     trackReference(referencePath as t.NodePath<t.Identifier>, source, property);
@@ -128,32 +172,51 @@ export function trackReferencesForBinding(
      */
     const node = referencePath.node;
     if (
-      t.isAssignmentExpression(node) && t.isIdentifier(node.left) && node.operator !== "="
+      t.isAssignmentExpression(node) &&
+      t.isIdentifier(node.left) &&
+      node.operator !== "="
     ) {
-      trackReference((referencePath as t.NodePath<t.AssignmentExpression>).get("left") as t.NodePath<t.Identifier>, source, property);
+      trackReference(
+        (referencePath as t.NodePath<t.AssignmentExpression>).get(
+          "left",
+        ) as t.NodePath<t.Identifier>,
+        source,
+        property,
+      );
     }
   }
 }
 
-function getBindingIdentifiers(path: t.LVal, extraProperty?: Opt<string>): Array<{ identifier: t.Identifier, property: Opt<string> }> {
-
+function getBindingIdentifiers(
+  path: t.LVal,
+  extraProperty?: Opt<string>,
+): Array<{ identifier: t.Identifier; property: Opt<string> }> {
   return path.getBindingIdentifiers();
-
 }
 
-function trackReference(referencePath: t.NodePath<t.Identifier>, source: Source, property: Opt<string>) {
+function trackReference(
+  referencePath: t.NodePath<t.Identifier>,
+  source: Source,
+  property: Opt<string>,
+) {
   const fnRoot = getFnRoot(referencePath.scope.path);
   const [readRoot, readProperty] = getReadRoot(referencePath);
   const exprRoot = getExprRoot(fnRoot || readRoot);
   const markoRoot = exprRoot.parentPath;
   const section = getOrCreateSection(exprRoot);
-  const reference = getReference(source, section, concat(property, readProperty), referencePath.node.name + (readProperty ? `[${readProperty.toString()}]` : ""));
+  const reference = getReference(
+    source,
+    section,
+    concat(property, readProperty),
+    referencePath.node.name +
+      (readProperty ? `[${readProperty.toString()}]` : ""),
+  );
   const exprExtra = (exprRoot.node.extra ??= {});
   const readExtra = (readRoot.node.extra ??= {});
   exprExtra.references = addReference(exprExtra.references, reference);
   readExtra.reference = reference;
-  source.expressions.add(exprExtra);
-  
+  source.downstream.add(exprExtra);
+
   // TODO: this should be in finalizeReferences
   // probably should be a set
   if (section !== source.section) {
@@ -185,7 +248,7 @@ function getReadRoot(path: t.NodePath<t.Identifier>) {
   while (t.isMemberExpression(curPath.parent)) {
     if (!curPath.parent.computed) {
       property = push(property, (curPath.parent.property as t.Identifier).name);
-    } else if(t.isStringLiteral(curPath.parent.property)) {
+    } else if (t.isStringLiteral(curPath.parent.property)) {
       property = push(property, curPath.parent.property.value);
     } else {
       break;
@@ -195,40 +258,14 @@ function getReadRoot(path: t.NodePath<t.Identifier>) {
   return [curPath, property] as const;
 }
 
-// export function addReferenceOld(target: t.NodePath, reference: Reserve) {
-//   const { node } = target;
-//   const extra = (node.extra ??= {});
-//   const previousReferences = extra.references;
-//   const section = getOrCreateSection(target);
-//   let newReferences = reserveUtil.add(previousReferences, reference);
-
-//   if (previousReferences !== newReferences) {
-//     if (isIntersection(newReferences)) {
-//       newReferences = getIntersection(section, newReferences);
-//       addSubscriber(newReferences);
-//     }
-
-//     if (isIntersection(previousReferences)) {
-//       removeSubscriber(getIntersection(section, previousReferences));
-//     }
-
-//     extra.references = newReferences;
-//   }
-
-//   return newReferences;
-// }
-
-const mergedReferencesForProgram = new WeakMap<t.NodePath<t.Program>, Map<t.NodePath, (t.Node | undefined)[]>>();
+const [getMergedReferences] = createProgramState(
+  () => new Map<t.NodePath, (t.Node | undefined)[]>(),
+);
 export function mergeReferences(
   target: t.NodePath,
   nodes: (t.Node | undefined)[],
 ) {
-  const mergedReferences = mergedReferencesForProgram.get(currentProgramPath);
-  if (mergedReferences) {
-    mergedReferences.set(target, nodes);
-  } else {
-    mergedReferencesForProgram.set(currentProgramPath, new Map([[target, nodes]]));
-  }
+  getMergedReferences().set(target, nodes);
 }
 
 /**
@@ -253,10 +290,8 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
-  const mergedReferences = mergedReferencesForProgram.get(currentProgramPath);
-  if (mergedReferences) {
-    mergedReferencesForProgram.delete(currentProgramPath);
-
+  const mergedReferences = getMergedReferences();
+  if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
       let newReferences: References;
       for (const node of nodes) {
@@ -265,48 +300,56 @@ export function finalizeReferences() {
         if (references) {
           newReferences = referenceUtil.union(newReferences, references);
           forEach(references, (reference) => {
-            reference.source.expressions.delete(extra);
+            reference.source.downstream.delete(extra);
           });
         }
       }
-    
+
       newReferences = findReferences(getOrCreateSection(target), newReferences);
       (target.node.extra ??= {}).references = newReferences;
     }
+
+    mergedReferences.clear();
   }
 
   const sources = getSources();
   sources.forEach(function pruneSource(source: Source) {
-    const { expressions, value } = source;
-    if (value && !expressions.size) {
-      forEach(value.expression.references, ref => {
-        ref.source.expressions.delete(value.expression);
+    const { upstream, downstream } = source;
+    if (upstream && !downstream.size) {
+      forEach(upstream.references, (ref) => {
+        ref.source.downstream.delete(upstream);
         pruneSource(ref.source);
       });
       sources.delete(source);
     }
   });
 
+  const referencesBySection = new Map<Section, Set<Reference>>();
   const intersections = new Set<Intersection>();
-  const mayNotNeedGuard = new Set();
-  const defNeedsGuard = new Set();
-  sources.forEach((source) => {
-    source.expressions.forEach((expr) => {
-      if (Array.isArray(expr.references)) {
-        intersections.add(expr.references);
-      }
-      if (!expr.hasOwnGuard) {
-        if (!defNeedsGuard.has(expr.references)) {
-          mayNotNeedGuard.add(expr.references);
-        }
-      } else {
-        mayNotNeedGuard.delete(expr.references);
-        defNeedsGuard.add(expr.references);
-      }
-    });
-  });
 
-  intersections.forEach((intersection) => {
+  for (const source of sources) {
+    for (const { references, isEffect } of source.downstream) {
+      if (Array.isArray(references)) {
+        intersections.add(references);
+      }
+
+      forEach(references, (ref) => {
+        const { section } = ref;
+        let sectionReferences = referencesBySection.get(section);
+        if (!sectionReferences) {
+          referencesBySection.set(section, (sectionReferences = new Set()));
+        }
+        if (isEffect) {
+          ref.serialize = true;
+          ref.section.serializedReferences.add(ref);
+        }
+
+        sectionReferences.add(ref);
+      });
+    }
+  }
+
+  for (const intersection of intersections) {
     const numReferences = intersection.length;
     // TODO: in some cases we should be able to short circuit this
     // if we know that the references are already serialized
@@ -316,25 +359,24 @@ export function finalizeReferences() {
         const ref2 = intersection[j];
         const sources1 = getReferenceSources(ref1);
         const sources2 = getReferenceSources(ref2);
-        if (!isSuperset(sources1, sources2)) {
+        if (!ref1.serialize && !isSuperset(sources1, sources2)) {
           ref1.serialize = true;
           ref1.section.serializedReferences.add(ref1);
         }
-        if (!isSuperset(sources2, sources1)) {
+        if (!ref2.serialize && !isSuperset(sources2, sources1)) {
           ref2.serialize = true;
           ref2.section.serializedReferences.add(ref2);
         }
       }
     }
-  });
+  }
 
-  // TODO: assign scope accessors to references
-  forEachSection((section) => {
-
-  })
-
-  // TODO: assign references to sections
-
+  for (const [, references] of referencesBySection) {
+    const sortedReferences = [...references].sort(referenceUtil.compare);
+    for (let i = sortedReferences.length; i--; ) {
+      sortedReferences[i].id = i;
+    }
+  }
 }
 
 function isSuperset(set: Set<any>, subset: Set<any>) {
@@ -355,7 +397,12 @@ export const referenceUtil = new Sorted(function compareReferences(
   a: Reference,
   b: Reference,
 ) {
-  return a.section.id - b.section.id || a.source.id - b.source.id || compareProperties(a.property, b.property);
+  return (
+    a.section.id - b.section.id ||
+    a.source.type - b.source.type ||
+    a.source.id - b.source.id ||
+    compareProperties(a.property, b.property)
+  );
 });
 
 function compareProperties(a: Opt<string>, b: Opt<string>) {
@@ -384,15 +431,21 @@ function compareProperties(a: Opt<string>, b: Opt<string>) {
     return 1;
   }
   return -1;
-};
+}
 
-function compareStr(a: string, b: string)  {
+function compareStr(a: string, b: string) {
   return a === b ? 0 : a > b ? 1 : -1;
 }
 
 const referenceBySource = new WeakMap<Source, OneMany<Reference>>();
-function getReference(source: Source, section: Section, property: Opt<string>, debugName: string) {
+export function getReference(
+  source: Source,
+  section: Section,
+  property: Opt<string>,
+  debugName: string,
+) {
   const newReference = resolveReferenceAliases({
+    id: 0,
     source,
     section,
     property,
@@ -403,52 +456,38 @@ function getReference(source: Source, section: Section, property: Opt<string>, d
   const references = referenceBySource.get(newReference.source);
   let reference = referenceUtil.find(references, newReference);
   if (!reference) {
-    referenceBySource.set(newReference.source, referenceUtil.add(references, newReference));
+    referenceBySource.set(
+      newReference.source,
+      referenceUtil.add(references, newReference),
+    );
     reference = newReference;
   }
   return reference;
 }
 
-// function resolveReferenceAliases(reference: Reference) {
-//   return getAlias(reference.source.aliases, reference.property) ?? reference;
-// }
-
-// function getAlias(aliases: Aliases, property: Opt<string>): Reference | undefined {
-//   if (aliases) {
-//     if (isReference(aliases)) {
-//       const resolved = resolveReferenceAliases(aliases);
-//       if (property) {
-//         return { ...resolved, property: concat(resolved.property, property) };
-//       } else {
-//         return resolved;
-//       }
-//     } else if (property) {
-//       const [remainingProperty, lastProperty] = pop(property);
-//       return getAlias(aliases[lastProperty], remainingProperty);
-//     }
-//   }
-// }
-
 function resolveReferenceAliases(reference: Reference) {
   let extraProperty: Opt<string>;
-  let aliases = reference.source.value?.aliases;
+  let aliases = reference.source.aliases;
   let property = reference.property;
   while (aliases) {
     if (isReference(aliases)) {
       extraProperty = concat(property, extraProperty);
       reference = aliases;
-      aliases = reference.source.value?.aliases;
+      aliases = reference.source.aliases;
       property = reference.property;
     } else if (property) {
       const [remainingProperty, lastProperty] = pop(property);
-      aliases = aliases[lastProperty]
+      aliases = aliases[lastProperty];
       property = remainingProperty;
     } else {
       break;
     }
   }
   if (extraProperty) {
-    return { ...reference, property: concat(reference.property, extraProperty) };
+    return {
+      ...reference,
+      property: concat(reference.property, extraProperty),
+    };
   } else {
     return reference;
   }
@@ -458,7 +497,10 @@ function isReference<T>(value: T | Reference): value is Reference {
   return !!((value as Reference).source && (value as Reference).section);
 }
 
-const [getIntersections, setIntersections] = createSectionState("intersections", () => [] as Intersection[]);
+const [getIntersections, setIntersections] = createSectionState(
+  "intersections",
+  () => [] as Intersection[],
+);
 function addReference(references: References, reference: Reference) {
   const newIntersection = referenceUtil.add(references, reference);
   return findReferences(reference.section, newIntersection);
@@ -470,10 +512,28 @@ function findReferences(section: Section, references: References) {
   }
 
   const intersections = getIntersections(section);
-  let intersection = findSorted(compareIntersections, intersections, references);
+  let intersection = findSorted(
+    compareIntersections,
+    intersections,
+    references,
+  );
   if (!intersection) {
-    setIntersections(section, addSorted(compareIntersections, intersections, references));
+    setIntersections(
+      section,
+      addSorted(compareIntersections, intersections, references),
+    );
     intersection = references;
   }
   return intersection;
+}
+
+export function getScopeAccessorLiteral(reference: Reference) {
+  if (isOptimize()) {
+    return t.numericLiteral(reference.id);
+  }
+
+  return t.stringLiteral(
+    reference.name +
+      (reference.source.type === SourceType.dom ? `/${reference.id}` : ""),
+  );
 }
