@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
   type Section,
-  createSectionState,
   getScopeIdIdentifier,
   getSection,
   ContentType,
@@ -14,6 +13,7 @@ import {
 } from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
+import { createSectionState } from "./state";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";

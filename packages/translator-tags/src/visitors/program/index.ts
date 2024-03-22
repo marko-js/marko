@@ -21,21 +21,6 @@ import programHTML from "./html";
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
 export let cleanIdentifier: t.Identifier;
-export const createProgramState = <T>(init: () => T) => {
-  const map = new WeakMap<t.NodePath<t.Program>, T>();
-  return [
-    () => {
-      let state = map.get(currentProgramPath);
-      if (!state) {
-        map.set(currentProgramPath, (state = init()));
-      }
-      return state;
-    },
-    (value: T) => {
-      map.set(currentProgramPath, value);
-    },
-  ] as const;
-};
 
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,

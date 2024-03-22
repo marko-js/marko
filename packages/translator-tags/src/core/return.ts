@@ -3,8 +3,9 @@ import { types as t } from "@marko/compiler";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { importRuntime } from "../util/runtime";
-import { createSectionState, getSection } from "../util/sections";
+import { getSection } from "../util/sections";
 import { addValue } from "../util/signals";
+import { createSectionState } from "../util/state";
 import * as writer from "../util/writer";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(

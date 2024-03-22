@@ -21,11 +21,11 @@ import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   type Section,
-  createSectionState,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
 } from "./sections";
+import { createSectionState } from "./state";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;

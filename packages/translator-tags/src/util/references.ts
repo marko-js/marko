@@ -1,5 +1,4 @@
 import { types as t } from "@marko/compiler";
-import { createProgramState } from "../visitors/program";
 import { getExprRoot, getFnRoot } from "./get-root";
 import { isOptimize } from "./marko-config";
 import {
@@ -14,11 +13,8 @@ import {
   pop,
   forEach,
 } from "./optional";
-import {
-  type Section,
-  getOrCreateSection,
-  createSectionState,
-} from "./sections";
+import { type Section, getOrCreateSection } from "./sections";
+import { createProgramState, createSectionState } from "./state";
 
 export type Aliases = undefined | Reference | { [property: string]: Aliases };
 
@@ -38,6 +34,7 @@ export type Source = {
   aliases: Aliases;
   upstream: t.NodeExtra | undefined;
   downstream: Set<t.NodeExtra>;
+  references: Set<Reference>;
 };
 
 export type Reference = {
@@ -87,6 +84,7 @@ export function createSource(
     aliases,
     upstream,
     downstream: new Set(),
+    references: new Set(),
   };
   setNextSourceId(id + 1);
   getSources().add(source);
@@ -187,11 +185,67 @@ export function trackReferencesForBinding(
   }
 }
 
-function getBindingIdentifiers(
-  path: t.LVal,
-  extraProperty?: Opt<string>,
-): Array<{ identifier: t.Identifier; property: Opt<string> }> {
-  return path.getBindingIdentifiers();
+function* getBindingIdentifiers(
+  lVal: t.LVal,
+  property?: Opt<string>,
+): Generator<{
+  identifier: t.Identifier;
+  property: Opt<string>;
+}> {
+  switch (lVal.type) {
+    case "Identifier":
+      yield {
+        identifier: lVal,
+        property,
+      };
+      break;
+    case "ObjectPattern":
+      for (const prop of lVal.properties) {
+        if (prop.type === "RestElement") {
+          // TODO: this makes rest an alias, but it really should be
+          // a partial alias with some keys removed
+          yield* getBindingIdentifiers(prop.argument, property);
+        } else {
+          let key: string;
+
+          if (prop.key.type === "Identifier") {
+            key = prop.key.name;
+          } else if (prop.key.type === "StringLiteral") {
+            key = prop.key.value;
+          } else {
+            // TODO: it should be a computed value
+            throw new Error("computed keys not supported in object pattern");
+          }
+
+          yield* getBindingIdentifiers(
+            prop.value as t.LVal,
+            push(property, key),
+          );
+        }
+      }
+      break;
+    case "ArrayPattern": {
+      let i = -1;
+      for (const element of lVal.elements) {
+        i++;
+        if (element) {
+          if (element.type === "RestElement") {
+            // TODO: this makes rest an alias, but it really should be
+            // a partial alias with some keys removed
+            yield* getBindingIdentifiers(element.argument, property);
+          } else {
+            yield* getBindingIdentifiers(element, push(property, `${i}`));
+          }
+        }
+      }
+      break;
+    }
+    case "AssignmentPattern":
+      // TODO: this makes a default value an alias,
+      // but it really should be a computed value
+      yield* getBindingIdentifiers(lVal.left, property);
+      break;
+  }
 }
 
 function trackReference(
@@ -343,7 +397,6 @@ export function finalizeReferences() {
           ref.serialize = true;
           ref.section.serializedReferences.add(ref);
         }
-
         sectionReferences.add(ref);
       });
     }
@@ -374,7 +427,9 @@ export function finalizeReferences() {
   for (const [, references] of referencesBySection) {
     const sortedReferences = [...references].sort(referenceUtil.compare);
     for (let i = sortedReferences.length; i--; ) {
-      sortedReferences[i].id = i;
+      const reference = sortedReferences[i];
+      reference.id = i;
+      reference.source.references.add(reference);
     }
   }
 }
@@ -410,20 +465,17 @@ function compareProperties(a: Opt<string>, b: Opt<string>) {
     if (b) {
       if (Array.isArray(a)) {
         if (Array.isArray(b)) {
-          const len = a.length;
-          let diff = len - b.length;
-          if (diff === 0) {
-            for (let i = 0; i < len; i++) {
-              diff = compareStr(a[i], b[i]);
-              if (diff) break;
-            }
+          const minLength = Math.min(a.length, b.length);
+          for (let i = 0; i < minLength; i++) {
+            const diff = compareStr(a[i], b[i]);
+            if (diff) return diff;
           }
 
-          return diff;
+          return a.length - b.length;
         }
-        return 1;
+        return compareStr(a[0], b);
       } else if (Array.isArray(b)) {
-        return -1;
+        return compareStr(a, b[0]);
       }
 
       return compareStr(a, b);
@@ -536,4 +588,8 @@ export function getScopeAccessorLiteral(reference: Reference) {
     reference.name +
       (reference.source.type === SourceType.dom ? `/${reference.id}` : ""),
   );
+}
+
+function sourceToObjectPattern(source: Source): t.ObjectPattern {
+  const references = source.references;
 }

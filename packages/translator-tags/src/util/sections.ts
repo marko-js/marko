@@ -6,6 +6,7 @@ import {
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import type { Reference, Source } from "./references";
+import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
@@ -105,24 +106,6 @@ export function getSection(path: t.NodePath) {
 
 export function getParentSection(path: t.NodePath) {
   return getSection(path.parentPath!);
-}
-
-export function createSectionState<T = unknown>(
-  key: string,
-  init?: ((section: Section) => T) | (() => T),
-) {
-  return [
-    (section: Section): T => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      const sectionData = (arrayOfSectionData[section.id] ??=
-        init && init(section));
-      return sectionData as T;
-    },
-    (section: Section, value: T): void => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      arrayOfSectionData[section.id] = value;
-    },
-  ] as const;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
