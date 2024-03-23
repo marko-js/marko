@@ -53,5 +53,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
     },
   ],
-  template: "tag-types/id.marko",
+  template: "tag-types/id.d.marko",
 } as Tag;
