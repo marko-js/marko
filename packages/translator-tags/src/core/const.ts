@@ -59,4 +59,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
     },
   ],
+  template: "tag-types/const.marko",
 } as Tag;

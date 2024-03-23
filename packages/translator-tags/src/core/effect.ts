@@ -91,4 +91,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
+  template: "tag-types/effect.marko",
 } as Tag;
