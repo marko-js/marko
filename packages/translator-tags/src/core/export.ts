@@ -8,11 +8,8 @@ export default {
     );
   },
   parseOptions: {
-    rootOnly: true,
+    statement: true,
     rawOpenTag: true,
-    openTagOnly: true,
-    ignoreAttributes: true,
-    relaxRequireCommas: true,
   },
   autocomplete: [
     {

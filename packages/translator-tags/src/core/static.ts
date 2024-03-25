@@ -16,11 +16,9 @@ export default {
 
     tag.replaceWith(t.markoScriptlet(body, true));
   },
-  "parse-options": {
-    rootOnly: true,
+  parseOptions: {
+    statement: true,
     rawOpenTag: true,
-    openTagOnly: true,
-    ignoreAttributes: true,
   },
   autocomplete: [
     {

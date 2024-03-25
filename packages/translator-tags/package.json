@@ -21,6 +21,8 @@
   "main": "src/index.ts",
   "files": [
     "dist",
+    "tag-types",
+    "marko.json",
     "!**/__tests__",
     "!**/*.tsbuildinfo"
   ],
