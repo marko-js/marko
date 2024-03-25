@@ -1,5 +1,13 @@
 # @marko/translator-tags
 
+## 0.1.10
+
+### Patch Changes
+
+- [#2184](https://github.com/marko-js/marko/pull/2184) [`5513027`](https://github.com/marko-js/marko/commit/551302723bd6e5f6ab89b9202eb538990003ea1f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for tags
+
+- [#2182](https://github.com/marko-js/marko/pull/2182) [`1fa3b05`](https://github.com/marko-js/marko/commit/1fa3b056006d5d0e3ac221b5b4a18b78de5add21) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support tracking the "input" using babels scope analysis.
+
 ## 0.1.9
 
 ### Patch Changes

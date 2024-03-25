@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.10
+
+### Patch Changes
+
+- [#2182](https://github.com/marko-js/marko/pull/2182) [`1fa3b05`](https://github.com/marko-js/marko/commit/1fa3b056006d5d0e3ac221b5b4a18b78de5add21) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support tracking the "input" using babels scope analysis.
+
 ## 5.32.9
 
 ### Patch Changes
