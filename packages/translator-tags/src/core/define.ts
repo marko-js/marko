@@ -85,5 +85,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#define",
     },
   ],
-  template: "tag-types/define.d.marko",
+  types: "@marko/translator-tags/tag-types/define.d.marko",
 } as Tag;

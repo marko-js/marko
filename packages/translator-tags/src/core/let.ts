@@ -98,5 +98,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
     },
   ],
-  template: "tag-types/let.d.marko",
+  types: "@marko/translator-tags/tag-types/let.d.marko",
 } as Tag;
