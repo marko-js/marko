@@ -10,17 +10,20 @@ import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
 import {
-  createSelfReference,
   mergeReferences,
-  SourceType,
   getScopeAccessorLiteral,
-  type Reference,
-  type References,
-  referenceUtil,
-  createSource,
+  type Binding,
+  type ReferencedBindings,
+  bindingUtil,
+  createBinding,
+  BindingType,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
-import { getScopeIdIdentifier, getSection } from "../../util/sections";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../../util/sections";
 import {
   addValue,
   buildSignalIntersections,
@@ -38,11 +41,13 @@ import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 import customTag, { getTagRelativePath } from "./custom-tag";
 
-const kRef = Symbol("dynamic tag reference");
+const kDOMBinding = Symbol("dynamic tag dom binding");
+const kAttrsBinding = Symbol("dynamic tag attrs binding");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kRef]?: Reference;
+    [kDOMBinding]?: Binding;
+    [kAttrsBinding]?: Binding;
   }
 }
 
@@ -50,32 +55,38 @@ export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const tagExtra = (tag.node.extra ??= {});
-      tagExtra[kRef] = createSelfReference(
-        tag,
-        tag.scope.generateUid("childScope"),
-        SourceType.dom,
+      const section = getOrCreateSection(tag);
+      tagExtra[kDOMBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        section,
         undefined,
         tagExtra,
       );
-      let attrsReferences: References;
+      let attrsReferencedBindings: ReferencedBindings;
 
       for (const attr of tag.node.attributes) {
-        attrsReferences = referenceUtil.add(
-          attrsReferences,
-          createSelfReference(
-            tag,
-            tag.scope.generateUid("name" in attr ? attr.name : "spread"),
-            SourceType.derived,
-            undefined, // TODO
-            (attr.value.extra ??= {}),
-          ),
+        const attrExtra = (attr.value.extra ??= {});
+        const attrBinding = createBinding(
+          tag.scope.generateUid("name" in attr ? attr.name : "spread"),
+          BindingType.derived,
+          section,
+          undefined, // TODO
+          attrExtra,
+        );
+        attrBinding.downstreamExpressions.add(tagExtra);
+        attrsReferencedBindings = bindingUtil.add(
+          attrsReferencedBindings,
+          attrBinding,
         );
       }
 
-      tagExtra.references = attrsReferences;
-      (tag.node.extra ??= {}).source = createSource(
-        tag,
-        SourceType.derived,
+      tagExtra.referencedBindings = attrsReferencedBindings;
+      tagExtra.isEffect = true;
+      tagExtra[kAttrsBinding] = createBinding(
+        tag.scope.generateUid("attrs"),
+        BindingType.derived,
+        section,
         undefined,
         tagExtra,
       );
@@ -111,7 +122,7 @@ export default {
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const extra = node.extra!;
-      const nodeRef = extra[kRef]!;
+      const nodeRef = extra[kDOMBinding]!;
       let tagExpression = node.name;
 
       if (node.extra!.tagNameDefine) {
@@ -257,7 +268,7 @@ export default {
         signal.hasDownstreamIntersections = () => true;
         addValue(
           section,
-          node.name.extra?.references,
+          node.name.extra?.referencedBindings,
           signal,
           renderBodyIdentifier
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
@@ -275,7 +286,7 @@ export default {
           let added = false;
           addValue(
             section,
-            node.extra?.references,
+            node.extra?.referencedBindings,
             {
               get identifier() {
                 if (!added) {

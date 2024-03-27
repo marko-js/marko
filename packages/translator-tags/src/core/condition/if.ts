@@ -6,11 +6,11 @@ import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import {
-  createSelfReference,
   mergeReferences,
-  SourceType,
+  BindingType,
   getScopeAccessorLiteral,
-  type Reference,
+  type Binding,
+  createBinding,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
@@ -38,11 +38,11 @@ import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../../visitors/program";
 import customTag from "../../visitors/tag/custom-tag";
 
-const kRef = Symbol("if node reference");
+const kBinding = Symbol("if node binding");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kRef]?: Reference;
+    [kBinding]?: Binding;
   }
 }
 
@@ -50,10 +50,10 @@ export default {
   analyze: {
     enter(tag) {
       const tagExtra = (tag.node.extra ??= {});
-      tagExtra[kRef] = createSelfReference(
-        tag,
-        tag.scope.generateUid("if"),
-        SourceType.dom,
+      tagExtra[kBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        getOrCreateSection(tag),
         undefined,
         tagExtra,
       );
@@ -172,7 +172,7 @@ export function enterBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const bodySection = getSection(tagBody);
   const rootExtra = getRoot(tag).node.extra!;
-  const isStateful = isStatefulReferences(rootExtra.references);
+  const isStateful = isStatefulReferences(rootExtra.referencedBindings);
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
   if (isOutputHTML() && isStateful && !singleNodeOptimization) {
@@ -189,8 +189,8 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const bodySection = getSection(tagBody);
   const [isLast, branches] = getBranches(tag, bodySection);
   const rootExtra = branches[0].tag.node.extra!;
-  const nodeRef = rootExtra[kRef]!;
-  const isStateful = isStatefulReferences(rootExtra.references);
+  const nodeRef = rootExtra[kBinding]!;
+  const isStateful = isStatefulReferences(rootExtra.referencedBindings);
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
   if (isOutputHTML()) {
@@ -253,7 +253,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       };
       signal.hasDownstreamIntersections = () =>
         branches.some((b) => getClosures(b.section).length > 0);
-      addValue(section, extra.references, signal, expr);
+      addValue(section, extra.referencedBindings, signal, expr);
     } else {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();

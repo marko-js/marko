@@ -10,14 +10,15 @@ import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
 import {
-  createSelfReference,
   mergeReferences,
   getScopeAccessorLiteral,
-  SourceType,
-  type Reference,
+  type Binding,
+  createBinding,
+  BindingType,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
+  getOrCreateSection,
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
@@ -37,10 +38,10 @@ import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
 import customTag from "../visitors/tag/custom-tag";
 
-const kRef = Symbol("for node reference");
+const kBinding = Symbol("for node binding");
 declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kRef]?: Reference;
+  export interface NodeExtra {
+    [kBinding]?: Binding;
   }
 }
 
@@ -52,10 +53,10 @@ export default {
       const containerExtra = isOnlyChild
         ? (tag.parentPath.parent.extra ??= {})
         : tagExtra;
-      containerExtra[kRef] = createSelfReference(
-        tag,
-        tag.scope.generateUid("for"),
-        SourceType.dom,
+      containerExtra[kBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        getOrCreateSection(tag),
         undefined,
         tagExtra,
       );
@@ -81,7 +82,7 @@ export default {
       const bodySection = getSection(tagBody);
       const tagExtra = tag.node.extra!;
       const { singleNodeOptimization, isOnlyChild } = tagExtra;
-      const isStateful = isStatefulReferences(tagExtra.references);
+      const isStateful = isStatefulReferences(tagExtra.referencedBindings);
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
@@ -176,10 +177,10 @@ const translateDOM = {
     const bodySection = getSection(tagBody);
     const { node } = tag;
     const { attributes } = node;
-    const { isOnlyChild, references } = node.extra!;
+    const { isOnlyChild, referencedBindings: references } = node.extra!;
     const nodeRef = (
       isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node
-    ).extra![kRef]!;
+    ).extra![kBinding]!;
     const paramIdentifiers = Object.values(
       tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
@@ -245,9 +246,14 @@ const translateDOM = {
       }
 
       if (paramIdentifiers.length) {
-        const source = paramIdentifiers[0].extra!.source!;
-        for (const { references } of source.downstream) {
-          if (getSignal(bodySection, references).hasDownstreamIntersections()) {
+        const binding = paramIdentifiers[0].extra!.binding!;
+        for (const { referencedBindings } of binding.downstreamExpressions) {
+          if (
+            getSignal(
+              bodySection,
+              referencedBindings,
+            ).hasDownstreamIntersections()
+          ) {
             return true;
           }
         }
@@ -272,9 +278,9 @@ const translateHTML = {
     } = node;
     const tagExtra = node.extra!;
     const { singleNodeOptimization, isOnlyChild } = tagExtra;
-    const isStateful = isStatefulReferences(tagExtra.references);
+    const isStateful = isStatefulReferences(tagExtra.referencedBindings);
     const nodeRef = (isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node)
-      .extra![kRef]!;
+      .extra![kBinding]!;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");

@@ -7,9 +7,9 @@ import {
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import {
-  SourceType,
+  BindingType,
   getScopeAccessorLiteral,
-  type Reference,
+  type Binding,
 } from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
@@ -110,11 +110,11 @@ export function getSectionMeta(section: Section) {
 
 export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
-  reference: Reference,
+  binding: Binding,
 ) {
   const section = getSection(path);
 
-  if (reference.source.type !== SourceType.dom) {
+  if (binding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
       "Tried to mark a node that was not determined to need a mark during analyze.",
     );
@@ -124,7 +124,7 @@ export function markNode(
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(reference),
+      getScopeAccessorLiteral(binding),
     )}`;
   }
 }

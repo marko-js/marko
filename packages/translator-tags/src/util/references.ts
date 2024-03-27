@@ -1,5 +1,5 @@
 import { types as t } from "@marko/compiler";
-import { getExprRoot, getFnRoot } from "./get-root";
+import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
@@ -9,16 +9,14 @@ import {
   Sorted,
   concat,
   push,
-  type OneMany,
-  pop,
   forEach,
 } from "./optional";
-import { type Section, getOrCreateSection } from "./sections";
+import { type Section, getOrCreateSection, forEachSection } from "./sections";
 import { createProgramState, createSectionState } from "./state";
 
-export type Aliases = undefined | Reference | { [property: string]: Aliases };
+export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
-export enum SourceType {
+export enum BindingType {
   dom,
   let,
   input,
@@ -27,32 +25,25 @@ export enum SourceType {
   // todo: constant
 }
 
-export type Source = {
+export type Binding = {
   id: number;
-  type: SourceType;
-  section: Section;
-  aliases: Aliases;
-  upstream: t.NodeExtra | undefined;
-  downstream: Set<t.NodeExtra>;
-  references: Set<Reference>;
-};
-
-export type Reference = {
-  id: number;
-  source: Source;
-  section: Section;
-  property: Opt<string>;
   name: string;
-  serialize: boolean | Set<Source>;
+  type: BindingType;
+  section: Section;
+  serialize: boolean | Set<Binding>;
+  upstreamAlias: Binding | undefined;
+  upstreamExpression: t.NodeExtra | undefined;
+  downstreamAliases: Map<Binding, Opt<string>>;
+  downstreamExpressions: Set<t.NodeExtra>;
 };
 
-export type References = Opt<Reference>;
-export type Intersection = Many<Reference>;
+export type ReferencedBindings = Opt<Binding>;
+export type Intersection = Many<Binding>;
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    references?: References;
-    source?: Source;
+    referencedBindings?: ReferencedBindings;
+    binding?: Binding;
     isEffect?: true;
   }
 
@@ -67,100 +58,103 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-const [getSources] = createProgramState(() => new Set<Source>());
-const [getNextSourceId, setNextSourceId] = createProgramState(() => 0);
-export function createSource(
-  path: t.NodePath<any>,
-  type: Source["type"] = SourceType.derived,
-  aliases?: Source["aliases"],
-  upstream?: Source["upstream"],
-): Source {
-  const id = getNextSourceId();
-  const section = getOrCreateSection(path);
-  const source: Source = {
+const [getBindings] = createProgramState(() => new Set<Binding>());
+const [getNextBindingId, setNextBindingId] = createProgramState(() => 0);
+export function createBinding(
+  name: string,
+  type: Binding["type"],
+  section: Section,
+  upstreamAlias?: Binding["upstreamAlias"],
+  upstreamExpression?: Binding["upstreamExpression"],
+  property?: Opt<string>,
+): Binding {
+  const id = getNextBindingId();
+  const binding: Binding = {
     id,
+    name,
     type,
     section,
-    aliases,
-    upstream,
-    downstream: new Set(),
-    references: new Set(),
-  };
-  setNextSourceId(id + 1);
-  getSources().add(source);
-  return source;
-}
-
-export function createSelfReference(
-  path: t.NodePath<any>,
-  debugName: string,
-  type: Source["type"] = SourceType.derived,
-  aliases?: Source["aliases"],
-  upstream?: Source["upstream"],
-) {
-  const source = createSource(path, type, aliases, upstream);
-  return resolveReferenceAliases({
-    id: 0,
-    source,
-    section: source.section,
-    property: undefined,
-    name: debugName,
     serialize: false,
-  });
+    upstreamAlias,
+    upstreamExpression,
+    downstreamAliases: new Map(),
+    downstreamExpressions: new Set(),
+  };
+  while (upstreamAlias?.upstreamAlias) {
+    property = concat(
+      upstreamAlias.upstreamAlias.downstreamAliases.get(upstreamAlias),
+      property,
+    );
+    upstreamAlias = upstreamAlias.upstreamAlias;
+  }
+  if (upstreamAlias) {
+    upstreamAlias.downstreamAliases.set(binding, property);
+    binding.upstreamAlias = upstreamAlias;
+  }
+  setNextBindingId(id + 1);
+  getBindings().add(binding);
+  return binding;
 }
 
 export function trackVarReferences(
   tag: t.NodePath<t.MarkoTag>,
-  type?: Source["type"],
-  aliases?: Source["aliases"],
-  upstream?: Source["upstream"],
+  type: BindingType,
+  upstreamAlias?: Binding["upstreamAlias"],
+  upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const source = createSource(tag, type, aliases, upstream);
+    const section = getOrCreateSection(tag);
     for (const { identifier, property } of getBindingIdentifiers(tagVar)) {
-      (identifier.extra ??= {}).source = source;
-      trackReferencesForBinding(
-        tag.scope.getBinding(identifier.name)!,
+      const binding = createBinding(
+        identifier.name,
+        type,
+        section,
+        upstreamAlias,
+        upstreamExpression,
         property,
       );
+      (identifier.extra ??= {}).binding = binding;
+      trackReferencesForBinding(tag.scope.getBinding(identifier.name)!);
     }
   }
 }
 
 export function trackParamsReferences(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
-  type?: Source["type"],
-  aliases?: Source["aliases"],
-  upstream?: Source["upstream"],
+  type: BindingType,
+  upstreamAlias?: Binding["upstreamAlias"],
+  upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const params = body.node.params;
   if (body.get("body").length && params.length) {
-    const source = createSource(body, type, aliases, upstream);
+    const section = getOrCreateSection(body);
     for (let i = 0; i < params.length; i++) {
       for (const { identifier, property } of getBindingIdentifiers(
         params[i],
         i + "",
       )) {
-        (identifier.extra ??= {}).source = source;
-        trackReferencesForBinding(
-          body.scope.getBinding(identifier.name)!,
+        const binding = createBinding(
+          identifier.name,
+          type,
+          section,
+          upstreamAlias,
+          upstreamExpression,
           property,
         );
+        (identifier.extra ??= {}).binding = binding;
+        trackReferencesForBinding(body.scope.getBinding(identifier.name)!);
       }
     }
   }
 }
 
-export function trackReferencesForBinding(
-  binding: t.Binding,
-  property?: Opt<string>,
-) {
-  const { identifier, referencePaths, constantViolations } = binding;
-  const source = identifier.extra!.source!;
+export function trackReferencesForBinding(babelBinding: t.Binding) {
+  const { identifier, referencePaths, constantViolations } = babelBinding;
+  const binding = identifier.extra!.binding!;
 
   for (const referencePath of referencePaths) {
-    trackReference(referencePath as t.NodePath<t.Identifier>, source, property);
+    trackReference(referencePath as t.NodePath<t.Identifier>, binding);
   }
 
   for (const referencePath of constantViolations) {
@@ -178,8 +172,7 @@ export function trackReferencesForBinding(
         (referencePath as t.NodePath<t.AssignmentExpression>).get(
           "left",
         ) as t.NodePath<t.Identifier>,
-        source,
-        property,
+        binding,
       );
     }
   }
@@ -250,32 +243,25 @@ function* getBindingIdentifiers(
 
 function trackReference(
   referencePath: t.NodePath<t.Identifier>,
-  source: Source,
-  property: Opt<string>,
+  binding: Binding,
 ) {
   const fnRoot = getFnRoot(referencePath.scope.path);
-  const [readRoot, readProperty] = getReadRoot(referencePath);
-  const exprRoot = getExprRoot(fnRoot || readRoot);
-  const markoRoot = exprRoot.parentPath;
+  const exprRoot = getExprRoot(fnRoot || referencePath);
+  const markoRoot = getMarkoRoot(exprRoot);
   const section = getOrCreateSection(exprRoot);
-  const reference = getReference(
-    source,
-    section,
-    concat(property, readProperty),
-    referencePath.node.name +
-      (readProperty ? `[${readProperty.toString()}]` : ""),
-  );
+  const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
-  const readExtra = (readRoot.node.extra ??= {});
-  exprExtra.references = addReference(exprExtra.references, reference);
-  readExtra.reference = reference;
-  source.downstream.add(exprExtra);
+  exprExtra.referencedBindings = addReference(
+    exprExtra.referencedBindings,
+    binding,
+  );
+  binding.downstreamExpressions.add(exprExtra);
 
   // TODO: this should be in finalizeReferences
   // probably should be a set
-  if (section !== source.section) {
+  if (section !== binding.section) {
     section.closures ??= [];
-    section.closures.push(source);
+    section.closures.push(binding);
   }
 
   // TODO: remove
@@ -285,7 +271,10 @@ function trackReference(
 
     if (fnRoot !== exprRoot) {
       fnExtra = fnRoot.node.extra ??= {};
-      fnExtra.references = addReference(fnExtra.references, reference);
+      fnExtra.referencedBindings = addReference(
+        fnExtra.referencedBindings,
+        reference,
+      );
     }
 
     if (!name) {
@@ -294,22 +283,6 @@ function trackReference(
       }
     }
   }
-}
-
-function getReadRoot(path: t.NodePath<t.Identifier>) {
-  let curPath: t.NodePath<t.Identifier | t.MemberExpression> = path;
-  let property: Opt<string> = undefined;
-  while (t.isMemberExpression(curPath.parent)) {
-    if (!curPath.parent.computed) {
-      property = push(property, (curPath.parent.property as t.Identifier).name);
-    } else if (t.isStringLiteral(curPath.parent.property)) {
-      property = push(property, curPath.parent.property.value);
-    } else {
-      break;
-    }
-    curPath = curPath.parentPath as t.NodePath<t.MemberExpression>;
-  }
-  return [curPath, property] as const;
 }
 
 const [getMergedReferences] = createProgramState(
@@ -334,7 +307,7 @@ function compareIntersections(a: Intersection, b: Intersection) {
   }
 
   for (let i = 0; i < len; i++) {
-    const compareResult = referenceUtil.compare(a[i], b[i]);
+    const compareResult = bindingUtil.compare(a[i], b[i]);
     if (compareResult !== 0) {
       return compareResult;
     }
@@ -347,57 +320,59 @@ export function finalizeReferences() {
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
-      let newReferences: References;
+      let newReferences: ReferencedBindings;
       for (const node of nodes) {
         const extra = node?.extra;
-        const references = extra?.references;
+        const references = extra?.referencedBindings;
         if (references) {
-          newReferences = referenceUtil.union(newReferences, references);
+          newReferences = bindingUtil.union(newReferences, references);
           forEach(references, (reference) => {
-            reference.source.downstream.delete(extra);
+            reference.downstreamExpressions.delete(extra);
           });
         }
       }
 
       newReferences = findReferences(getOrCreateSection(target), newReferences);
-      (target.node.extra ??= {}).references = newReferences;
+      (target.node.extra ??= {}).referencedBindings = newReferences;
     }
 
     mergedReferences.clear();
   }
 
-  const sources = getSources();
-  sources.forEach(function pruneSource(source: Source) {
-    const { upstream, downstream } = source;
-    if (upstream && !downstream.size) {
-      forEach(upstream.references, (ref) => {
-        ref.source.downstream.delete(upstream);
-        pruneSource(ref.source);
+  const bindings = getBindings();
+  bindings.forEach(function pruneBinding(binding: Binding) {
+    const { upstreamExpression, downstreamExpressions, type } = binding;
+    if (
+      upstreamExpression &&
+      !downstreamExpressions.size &&
+      type !== BindingType.dom
+    ) {
+      forEach(upstreamExpression.referencedBindings, (bindingReference) => {
+        bindingReference.downstreamExpressions.delete(upstreamExpression);
+        pruneBinding(bindingReference);
       });
-      sources.delete(source);
+      bindings.delete(binding);
+      binding.upstreamAlias?.downstreamAliases.delete(binding);
     }
   });
 
-  const referencesBySection = new Map<Section, Set<Reference>>();
   const intersections = new Set<Intersection>();
 
-  for (const source of sources) {
-    for (const { references, isEffect } of source.downstream) {
+  for (const binding of bindings) {
+    const { section } = binding;
+    section.bindings.add(binding);
+    for (const {
+      referencedBindings: references,
+      isEffect,
+    } of binding.downstreamExpressions) {
       if (Array.isArray(references)) {
         intersections.add(references);
       }
 
-      forEach(references, (ref) => {
-        const { section } = ref;
-        let sectionReferences = referencesBySection.get(section);
-        if (!sectionReferences) {
-          referencesBySection.set(section, (sectionReferences = new Set()));
-        }
+      forEach(references, (bindingReference) => {
         if (isEffect) {
-          ref.serialize = true;
-          ref.section.serializedReferences.add(ref);
+          bindingReference.serialize = true;
         }
-        sectionReferences.add(ref);
       });
     }
   }
@@ -408,30 +383,27 @@ export function finalizeReferences() {
     // if we know that the references are already serialized
     for (let i = 0; i < numReferences - 1; i++) {
       for (let j = i + 1; j < numReferences; j++) {
-        const ref1 = intersection[i];
-        const ref2 = intersection[j];
-        const sources1 = getReferenceSources(ref1);
-        const sources2 = getReferenceSources(ref2);
-        if (!ref1.serialize && !isSuperset(sources1, sources2)) {
-          ref1.serialize = true;
-          ref1.section.serializedReferences.add(ref1);
+        const binding1 = intersection[i];
+        const binding2 = intersection[j];
+        const states1 = getStatefulUpstreams(binding1);
+        const states2 = getStatefulUpstreams(binding2);
+        if (!binding1.serialize && !isSuperset(states1, states2)) {
+          binding1.serialize = true;
         }
-        if (!ref2.serialize && !isSuperset(sources2, sources1)) {
-          ref2.serialize = true;
-          ref2.section.serializedReferences.add(ref2);
+        if (!binding2.serialize && !isSuperset(states2, states1)) {
+          binding2.serialize = true;
         }
       }
     }
   }
 
-  for (const [, references] of referencesBySection) {
-    const sortedReferences = [...references].sort(referenceUtil.compare);
-    for (let i = sortedReferences.length; i--; ) {
-      const reference = sortedReferences[i];
-      reference.id = i;
-      reference.source.references.add(reference);
+  forEachSection(({ bindings }) => {
+    const sortedBindings = [...bindings].sort(bindingUtil.compare);
+    for (let i = sortedBindings.length; i--; ) {
+      const binding = sortedBindings[i];
+      binding.id = i;
     }
-  }
+  });
 }
 
 function isSuperset(set: Set<any>, subset: Set<any>) {
@@ -443,122 +415,28 @@ function isSuperset(set: Set<any>, subset: Set<any>) {
   return true;
 }
 
-function getReferenceSources(reference: Reference): Set<Source> {
-  // TODO: walk up the sources
-  return new Set([reference.source]);
+function getStatefulUpstreams(binding: Binding): Set<Binding> {
+  // TODO: walk up the sources, without implementing this properly more values may be serialized than necessary
+  return new Set([binding]);
 }
 
-export const referenceUtil = new Sorted(function compareReferences(
-  a: Reference,
-  b: Reference,
+export const bindingUtil = new Sorted(function compareBindings(
+  a: Binding,
+  b: Binding,
 ) {
-  return (
-    a.section.id - b.section.id ||
-    a.source.type - b.source.type ||
-    a.source.id - b.source.id ||
-    compareProperties(a.property, b.property)
-  );
+  return a.section.id - b.section.id || a.type - b.type || a.id - b.id;
 });
-
-function compareProperties(a: Opt<string>, b: Opt<string>) {
-  if (a) {
-    if (b) {
-      if (Array.isArray(a)) {
-        if (Array.isArray(b)) {
-          const minLength = Math.min(a.length, b.length);
-          for (let i = 0; i < minLength; i++) {
-            const diff = compareStr(a[i], b[i]);
-            if (diff) return diff;
-          }
-
-          return a.length - b.length;
-        }
-        return compareStr(a[0], b);
-      } else if (Array.isArray(b)) {
-        return compareStr(a, b[0]);
-      }
-
-      return compareStr(a, b);
-    }
-    return 1;
-  }
-  return -1;
-}
-
-function compareStr(a: string, b: string) {
-  return a === b ? 0 : a > b ? 1 : -1;
-}
-
-const referenceBySource = new WeakMap<Source, OneMany<Reference>>();
-export function getReference(
-  source: Source,
-  section: Section,
-  property: Opt<string>,
-  debugName: string,
-) {
-  const newReference = resolveReferenceAliases({
-    id: 0,
-    source,
-    section,
-    property,
-    name: debugName,
-    serialize: false,
-  });
-
-  const references = referenceBySource.get(newReference.source);
-  let reference = referenceUtil.find(references, newReference);
-  if (!reference) {
-    referenceBySource.set(
-      newReference.source,
-      referenceUtil.add(references, newReference),
-    );
-    reference = newReference;
-  }
-  return reference;
-}
-
-function resolveReferenceAliases(reference: Reference) {
-  let extraProperty: Opt<string>;
-  let aliases = reference.source.aliases;
-  let property = reference.property;
-  while (aliases) {
-    if (isReference(aliases)) {
-      extraProperty = concat(property, extraProperty);
-      reference = aliases;
-      aliases = reference.source.aliases;
-      property = reference.property;
-    } else if (property) {
-      const [remainingProperty, lastProperty] = pop(property);
-      aliases = aliases[lastProperty];
-      property = remainingProperty;
-    } else {
-      break;
-    }
-  }
-  if (extraProperty) {
-    return {
-      ...reference,
-      property: concat(reference.property, extraProperty),
-    };
-  } else {
-    return reference;
-  }
-}
-
-function isReference<T>(value: T | Reference): value is Reference {
-  return !!((value as Reference).source && (value as Reference).section);
-}
 
 const [getIntersections, setIntersections] = createSectionState(
   "intersections",
   () => [] as Intersection[],
 );
-function addReference(references: References, reference: Reference) {
-  const newIntersection = referenceUtil.add(references, reference);
+function addReference(references: ReferencedBindings, reference: Binding) {
+  const newIntersection = bindingUtil.add(references, reference);
   return findReferences(reference.section, newIntersection);
 }
 
-function findReferences(section: Section, references: References) {
+function findReferences(section: Section, references: ReferencedBindings) {
   if (!references || !Array.isArray(references)) {
     return references;
   }
@@ -579,17 +457,53 @@ function findReferences(section: Section, references: References) {
   return intersection;
 }
 
-export function getScopeAccessorLiteral(reference: Reference) {
+export function getScopeAccessorLiteral(binding: Binding) {
   if (isOptimize()) {
-    return t.numericLiteral(reference.id);
+    return t.numericLiteral(binding.id);
   }
 
   return t.stringLiteral(
-    reference.name +
-      (reference.source.type === SourceType.dom ? `/${reference.id}` : ""),
+    binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : ""),
   );
 }
 
-function sourceToObjectPattern(source: Source): t.ObjectPattern {
-  const references = source.references;
-}
+// TODO: we need this? maybe for passing input to child?
+// function aliasesToObjectPattern(
+//   aliases: Binding["downstreamAliases"],
+// ): t.ObjectPattern {
+//   // sort the properties by key, then length
+//   const properties = [...aliases].sort(([, a], [, b]) =>
+//     compareProperties(a, b),
+//   );
+//   //
+//   const stack = [t.objectPattern([])];
+//   for (const [binding, property] of properties) {
+//   }
+// }
+// function compareProperties(a: Opt<string>, b: Opt<string>) {
+//   if (a) {
+//     if (b) {
+//       if (Array.isArray(a)) {
+//         if (Array.isArray(b)) {
+//           const minLength = Math.min(a.length, b.length);
+//           for (let i = 0; i < minLength; i++) {
+//             const diff = compareStr(a[i], b[i]);
+//             if (diff) return diff;
+//           }
+
+//           return a.length - b.length;
+//         }
+//         return compareStr(a[0], b);
+//       } else if (Array.isArray(b)) {
+//         return compareStr(a, b[0]);
+//       }
+
+//       return compareStr(a, b);
+//     }
+//     return 1;
+//   }
+//   return -1;
+// }
+// function compareStr(a: string, b: string) {
+//   return a === b ? 0 : a > b ? 1 : -1;
+// }

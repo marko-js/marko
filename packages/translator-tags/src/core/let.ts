@@ -37,9 +37,9 @@ export default {
 
     if (isOutputDOM()) {
       const section = getSection(tag);
-      const binding = tagVar.extra!.reserve!;
-      const source = initValue(binding);
-      const references = defaultAttr.value.extra?.references;
+      const binding = tagVar.extra!.binding!;
+      const signal = initValue(binding);
+      const references = defaultAttr.value.extra?.referencedBindings;
       const isSetup = !references;
 
       if (!isSetup) {
@@ -51,7 +51,7 @@ export default {
             get identifier() {
               if (!initValueId) {
                 initValueId = tag.scope.generateUidIdentifier(
-                  source.identifier.name + "_init",
+                  signal.identifier.name + "_init",
                 );
                 currentProgramPath.pushContainer(
                   "body",
@@ -61,7 +61,7 @@ export default {
                       callRuntime(
                         "initValue",
                         getScopeAccessorLiteral(binding),
-                        source.identifier,
+                        signal.identifier,
                       ),
                     ),
                   ]),
@@ -71,19 +71,19 @@ export default {
               return initValueId;
             },
             hasDownstreamIntersections() {
-              return source.hasDownstreamIntersections();
+              return signal.hasDownstreamIntersections();
             },
           },
           defaultAttr.value,
         );
       } else {
-        addValue(section, references, source, defaultAttr.value);
+        addValue(section, references, signal, defaultAttr.value);
       }
 
       registerAssignmentGenerator(
         tag.scope.getBinding(binding.name)!,
         (assignment, value) =>
-          queueSource(source, value, getSection(assignment)),
+          queueSource(signal, value, getSection(assignment)),
       );
     } else {
       translateVar(tag, defaultAttr.value);

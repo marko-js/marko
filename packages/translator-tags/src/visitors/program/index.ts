@@ -8,8 +8,8 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import {
-  SourceType,
-  createSource,
+  BindingType,
+  createBinding,
   finalizeReferences,
   trackReferencesForBinding,
 } from "../../util/references";
@@ -43,16 +43,17 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      startSection(program);
+      const section = startSection(program);
 
       const inputBinding = program.scope.getBinding("input")!;
       if (
         inputBinding.referencePaths.length ||
         inputBinding.constantViolations.length
       ) {
-        (inputBinding.identifier.extra ??= {}).source = createSource(
-          program,
-          SourceType.input,
+        (inputBinding.identifier.extra ??= {}).binding = createBinding(
+          "input",
+          BindingType.input,
+          section,
         );
         trackReferencesForBinding(inputBinding);
       }
@@ -95,9 +96,9 @@ export default {
         return;
       }
 
-      const reserveInput = program.node.params[0].extra?.reserve;
-      if (reserveInput) {
-        initValue(reserveInput);
+      const inputBinding = program.node.params[0].extra?.binding;
+      if (inputBinding) {
+        initValue(inputBinding);
       }
     },
     exit(program: t.NodePath<t.Program>) {

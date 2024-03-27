@@ -40,7 +40,7 @@ export default {
       const [defaultAttr] = node.attributes;
       const section = getSection(tag);
       const { value } = defaultAttr;
-      const references = value.extra?.references;
+      const references = value.extra?.referencedBindings;
       if (isOutputDOM()) {
         const { value } = defaultAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;

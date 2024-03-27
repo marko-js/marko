@@ -69,7 +69,7 @@ export default {
     } else {
       addValue(
         section,
-        value.extra?.references,
+        value.extra?.referencedBindings,
         {
           identifier: importRuntime("tagVarSignal"),
           hasDownstreamIntersections: () => true,

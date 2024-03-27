@@ -25,7 +25,7 @@ function htmlFunctionVisit(
 ) {
   const serializedScopeProperties = getSerializedScopeProperties(state.section);
   const extra = fn.node.extra!;
-  forEach(extra.references, (ref) => {
+  forEach(extra.referencedBindings, (ref) => {
     serializedScopeProperties.set(
       getScopeAccessorLiteral(ref),
       t.identifier(ref.name),
@@ -49,7 +49,7 @@ function domFunctionVisit(
   const extra = node.extra!;
   const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
-  if (extra.references) {
+  if (extra.referencedBindings) {
     if (node.body.type !== "BlockStatement") {
       node.body = t.blockStatement([t.returnStatement(node.body)]);
     }
@@ -57,7 +57,7 @@ function domFunctionVisit(
     node.body.body.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(state.section, extra.references),
+          createScopeReadPattern(state.section, extra.referencedBindings),
           scopeIdentifier,
         ),
       ]),

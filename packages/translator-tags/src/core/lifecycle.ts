@@ -6,7 +6,7 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   mergeReferences,
   getScopeAccessorLiteral,
-  type Reference,
+  type Binding,
   createSelfReference,
   SourceType,
 } from "../util/references";
@@ -20,7 +20,7 @@ const kRef = Symbol("lifecycle attrs reference");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kRef]?: Reference;
+    [kRef]?: Binding;
   }
 }
 
@@ -73,7 +73,7 @@ export default {
 
       const section = getSection(tag);
       const tagExtra = node.extra!;
-      const { references } = tagExtra;
+      const { referencedBindings: references } = tagExtra;
       const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {

@@ -52,7 +52,7 @@ export default {
         const section = getSection(tag);
         const tagBody = tag.get("body");
         const tagBodySection = getSection(tagBody);
-        const references = node.extra?.references;
+        const references = node.extra?.referencedBindings;
         const derivation = getTagVarSignal(tag.get("var"))!;
 
         let attrsObject = attrsToObject(tag);

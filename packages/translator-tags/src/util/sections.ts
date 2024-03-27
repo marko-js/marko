@@ -5,7 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
-import type { Reference, Source } from "./references";
+import type { Binding } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -20,8 +20,8 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
-  closures?: Source[];
-  serializedReferences: Set<Reference>;
+  closures?: Binding[];
+  bindings: Set<Binding>;
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
 };
@@ -62,7 +62,7 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      serializedReferences: new Set(),
+      bindings: new Set(),
       startNodeContentType: getStartNodeContentType(path),
       endNodeContentType: getEndNodeContentType(path),
     };

@@ -2,15 +2,15 @@ import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
 import { forEach } from "./optional";
 import {
-  type Reference,
-  type References,
+  type Binding,
+  type ReferencedBindings,
   getScopeAccessorLiteral,
 } from "./references";
 import type { Section } from "./sections";
 
 export function createScopeReadPattern(
   section: Section,
-  references: References,
+  references: ReferencedBindings,
 ) {
   const rootDepth = section.depth;
   const rootPattern = t.objectPattern([]);
@@ -69,7 +69,7 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 
 export function createScopeReadExpression(
   section: Section,
-  reference: Reference,
+  reference: Binding,
 ) {
   return t.memberExpression(
     getScopeExpression(section, reference.section),

@@ -86,7 +86,7 @@ export default {
             addStatement(
               "render",
               section,
-              exprRoot.node.extra?.references,
+              exprRoot.node.extra?.referencedBindings,
               t.expressionStatement(
                 t.callExpression(importRuntime("resetAbortSignal"), [
                   scopeIdentifier,

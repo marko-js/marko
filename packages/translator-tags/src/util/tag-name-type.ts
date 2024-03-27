@@ -50,8 +50,8 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             name.node,
           );
           tagIdentifier.extra = {
-            references: tag.scope.getBinding(name.node.value)?.identifier?.extra
-              ?.reserve,
+            referencedBindings: tag.scope.getBinding(name.node.value)
+              ?.identifier?.extra?.reserve,
           };
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {

@@ -10,11 +10,10 @@ import {
 import { isOutputHTML } from "./marko-config";
 import { type Opt, push } from "./optional";
 import {
-  SourceType,
-  type Reference,
-  type References,
-  type Source,
-  referenceUtil,
+  BindingType,
+  type Binding,
+  type ReferencedBindings,
+  bindingUtil,
   getScopeAccessorLiteral,
 } from "./references";
 import { callRuntime } from "./runtime";
@@ -33,7 +32,7 @@ export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 export type Signal = {
   identifier: t.Identifier;
   valueAccessor?: t.Expression;
-  references: References;
+  references: ReferencedBindings;
   section: Section;
   build: () => t.Expression;
   register?: boolean;
@@ -51,7 +50,7 @@ export type Signal = {
   intersection: Opt<t.Expression>;
   render: t.Statement[];
   effect: t.Statement[];
-  effectInlineReferences: References;
+  effectInlineReferences: ReferencedBindings;
   closures: Map<Section, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
@@ -111,7 +110,7 @@ const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
 };
 
-export function getSignal(section: Section, references?: References) {
+export function getSignal(section: Section, references?: ReferencedBindings) {
   const signals = getSignals(section);
   let signal = signals.get(references)!;
   if (!signal) {
@@ -191,7 +190,7 @@ export function getSignal(section: Section, references?: References) {
 }
 
 export function initValue(
-  reference: Reference,
+  reference: Binding,
   valueAccessor = getScopeAccessorLiteral(reference),
 ) {
   const section = reference.section;
@@ -226,7 +225,7 @@ export function initValue(
 export function getSignalFn(
   signal: Signal,
   params: Array<t.Identifier | t.Pattern>,
-  references?: References,
+  references?: ReferencedBindings,
 ) {
   const section = signal.section;
 
@@ -302,6 +301,17 @@ export function buildSignalValuesWithIntersections(signal: Signal) {
     : valuesWithIntersections;
 }
 
+export function getTagVarSignal(varPath: t.NodePath<t.LVal | null>) {
+  if (varPath.isIdentifier()) {
+    return initValue(varPath.node.extra!.binding!);
+  } else {
+    return getDestructureSignal(
+      Object.values(varPath.getBindingIdentifiers()) as t.Identifier[],
+      varPath.node!,
+    )!;
+  }
+}
+
 export function getTagParamsSignal(
   paramsPaths: t.NodePath<t.Identifier | t.RestElement | t.Pattern>[],
   pattern: t.ArrayPattern = t.arrayPattern(
@@ -315,22 +325,24 @@ export function getTagParamsSignal(
 }
 
 export function getDestructureSignal(
-  bindingsByName: Record<string, t.Identifier> | t.Identifier[],
+  bindingIdentifiersByName: Record<string, t.Identifier> | t.Identifier[],
   destructurePattern: t.LVal,
 ) {
-  const bindings = Array.isArray(bindingsByName)
-    ? bindingsByName
-    : Object.values(bindingsByName);
-  if (bindings.length) {
+  const bindingIdentifiers = Array.isArray(bindingIdentifiersByName)
+    ? bindingIdentifiersByName
+    : Object.values(bindingIdentifiersByName);
+  if (bindingIdentifiers.length) {
     const valueIdentifier =
       currentProgramPath.scope.generateUidIdentifier("destructure");
-    const bindingSignals = bindings.map((binding) =>
-      initValue(binding.extra?.reserve as Reserve),
+    const bindingSignals = bindingIdentifiers.map((bindingIdentifier) =>
+      initValue(bindingIdentifier.extra?.binding as Binding),
     );
 
     const declarations = t.variableDeclaration(
       "let",
-      bindings.map((binding) => t.variableDeclarator(binding)),
+      bindingIdentifiers.map((bindingIdentifier) =>
+        t.variableDeclarator(bindingIdentifier),
+      ),
     );
 
     let id: t.Identifier | undefined;
@@ -356,7 +368,7 @@ export function getDestructureSignal(
                 t.expressionStatement(
                   t.callExpression(signal.identifier, [
                     scopeIdentifier,
-                    bindings[i],
+                    bindingIdentifiers[i],
                   ]),
                 ),
               ),
@@ -381,7 +393,7 @@ export function getDestructureSignal(
               t.expressionStatement(
                 t.callExpression(signal.identifier, [
                   scopeIdentifier,
-                  bindings[i],
+                  bindingIdentifiers[i],
                   cleanIdentifier,
                 ]),
               ),
@@ -390,9 +402,9 @@ export function getDestructureSignal(
         );
       },
       hasDownstreamIntersections() {
-        return bindings.some((binding) => {
-          const reserve = binding.extra!.reserve!;
-          const signal = getSignal(reserve.section, reserve);
+        return bindingIdentifiers.some((bindingIdentifier) => {
+          const binding = bindingIdentifier.extra!.binding!;
+          const signal = getSignal(binding.section, binding);
           return signal.hasDownstreamIntersections();
         });
       },
@@ -400,7 +412,7 @@ export function getDestructureSignal(
   }
 }
 
-export function subscribe(provider: References, subscriber: Signal) {
+export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
   if (Array.isArray(provider)) {
     provider.forEach((p) => subscribe(p, subscriber));
     return;
@@ -412,7 +424,7 @@ export function subscribe(provider: References, subscriber: Signal) {
   );
 }
 
-function generateSignalName(section: Section, references?: References) {
+function generateSignalName(section: Section, references?: ReferencedBindings) {
   let name;
 
   if (references) {
@@ -467,7 +479,7 @@ export function finalizeSignalArgs(args: t.Expression[]) {
 export function addStatement(
   type: "effect",
   targetSection: Section,
-  references: References,
+  references: ReferencedBindings,
   statement: t.Statement | t.Statement[],
   originalNodes: t.Expression | t.Expression[],
   isInlined?: boolean,
@@ -475,13 +487,13 @@ export function addStatement(
 export function addStatement(
   type: "render",
   targetSection: Section,
-  references: References,
+  references: ReferencedBindings,
   statement: t.Statement | t.Statement[],
 ): void;
 export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
-  references: References,
+  references: ReferencedBindings,
   statement: t.Statement | t.Statement[],
   originalNodes?: t.Expression | t.Expression[],
   isInlined?: boolean,
@@ -512,7 +524,7 @@ export function addStatement(
 
 export function addValue(
   targetSection: Section,
-  references: References,
+  references: ReferencedBindings,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
   scope: t.Expression = scopeIdentifier,
@@ -526,30 +538,16 @@ export function addValue(
   });
 }
 
-export function addSource(
-  source: Source,
-  value: t.Expression,
-  scope: t.Expression = scopeIdentifier,
-  intersectionExpression?: t.Expression,
-) {
-  // getSignal(targetSection, references).values.push({
-  //   signal,
-  //   value,
-  //   scope,
-  //   intersectionExpression,
-  // });
-}
-
 export function addEffectReferences(signal: Signal, expression: t.Expression) {
-  signal.effectInlineReferences = referenceUtil.union(
+  signal.effectInlineReferences = bindingUtil.union(
     signal.effectInlineReferences,
-    (expression as t.FunctionExpression).extra?.references,
+    (expression as t.FunctionExpression).extra?.referencedBindings,
   );
 }
 
 export function getResumeRegisterId(
   section: Section,
-  references: string | References,
+  references: string | ReferencedBindings,
   type?: string,
 ) {
   const {
@@ -676,14 +674,15 @@ function getReserves({ references: reserve }: Signal) {
   }
 }
 
-function getMappedId(reference: Reference) {
+function getMappedId(reference: Binding) {
   // TODO: this is wrong.
-  return (
-    (reference.source.type === SourceType.dom ? 1 : 0) * 10000 + reference.id
-  );
+  return (reference.type === BindingType.dom ? 1 : 0) * 10000 + reference.id;
 }
 
-export function addHTMLEffectCall(section: Section, references?: References) {
+export function addHTMLEffectCall(
+  section: Section,
+  references?: ReferencedBindings,
+) {
   // TODO: this should not add an undefined statement.
   addStatement("effect", section, references, undefined as any, []);
 }
@@ -696,23 +695,6 @@ export function writeHTMLResumeStatements(
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   const closures = section.closures;
-  const serializedReferences = section.serializedReferences;
-
-  // TODO: currently reserves do not know what their references are.
-  // ideally we calculate that in analyze and use that to find intersections.
-  // if (intersections) {
-  //   for (const intersection of intersections) {
-  //     for (const reference of intersection) {
-  //       if (reference.type !== ReserveType.Visit) {
-  //         // TODO: this should not be needed
-  //         serializedReferences = reserveUtil.add(
-  //           serializedReferences,
-  //           reference,
-  //         );
-  //       }
-  //     }
-  //   }
-  // }
 
   if (closures) {
     for (const closure of closures) {
@@ -748,36 +730,40 @@ export function writeHTMLResumeStatements(
   const accessors = new Set<string | number>();
   const additionalProperties = getSerializedScopeProperties(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  serializedReferences.forEach((ref) => {
-    const accessor = getScopeAccessorLiteral(ref);
-    if (ref.section.id === section.id) {
-      serializedProperties.push(
-        t.objectProperty(accessor, t.identifier(ref.name)),
-      );
-      accessors.add(accessor.value);
-    } else {
-      const isImmediateOwner = section.parent?.id === ref.section.id;
-      // TODO: getSubscribeBuilder is not the right check
-      // the builder shouldn't get set for the HTML output
-      // we're setting it to an empty builder from if/for purely for this check
-      const isDynamicClosure =
-        !getSubscribeBuilder(section) || !isImmediateOwner;
-      if (isDynamicClosure) {
-        path.pushContainer(
-          "body",
-          t.expressionStatement(
-            callRuntime(
-              "writeEffect",
-              scopeIdIdentifier,
-              t.stringLiteral(getResumeRegisterId(section, ref, "subscriber")),
+  section.bindings.forEach((binding) => {
+    if (binding.serialize) {
+      const accessor = getScopeAccessorLiteral(binding);
+      if (binding.section.id === section.id) {
+        serializedProperties.push(
+          t.objectProperty(accessor, t.identifier(binding.name)),
+        );
+        accessors.add(accessor.value);
+      } else {
+        const isImmediateOwner = section.parent?.id === binding.section.id;
+        // TODO: getSubscribeBuilder is not the right check
+        // the builder shouldn't get set for the HTML output
+        // we're setting it to an empty builder from if/for purely for this check
+        const isDynamicClosure =
+          !getSubscribeBuilder(section) || !isImmediateOwner;
+        if (isDynamicClosure) {
+          path.pushContainer(
+            "body",
+            t.expressionStatement(
+              callRuntime(
+                "writeEffect",
+                scopeIdIdentifier,
+                t.stringLiteral(
+                  getResumeRegisterId(section, binding, "subscriber"),
+                ),
+              ),
             ),
-          ),
+          );
+        }
+        getSerializedScopeProperties(binding.section).set(
+          accessor,
+          t.identifier(binding.name),
         );
       }
-      getSerializedScopeProperties(ref.section).set(
-        accessor,
-        t.identifier(ref.name),
-      );
     }
   });
 
@@ -839,7 +825,7 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  const references = extra?.references;
+  const references = extra?.referencedBindings;
   const program = fn.hub.file.path;
   const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 

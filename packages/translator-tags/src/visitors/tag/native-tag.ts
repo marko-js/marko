@@ -7,9 +7,9 @@ import { isOutputHTML } from "../../util/marko-config";
 import {
   mergeReferences,
   getScopeAccessorLiteral,
-  type Reference,
-  createSelfReference,
-  SourceType,
+  type Binding,
+  createBinding,
+  BindingType,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
@@ -23,11 +23,11 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
-const kRef = Symbol("native tag reference");
+const kBinding = Symbol("native tag binding");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
-    [kRef]?: Reference;
+    [kBinding]?: Binding;
   }
 }
 
@@ -55,7 +55,7 @@ export default {
           // TODO: should add isEffect to all attributes in a spread?
           break;
         } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
-          (attr.node.extra ??= {}).isEffect = true;
+          (attr.node.value.extra ??= {}).isEffect = true;
           section ??= getOrCreateSection(tag);
           isInteractive = true;
         } else if (!evaluate(attr).confident) {
@@ -75,10 +75,10 @@ export default {
             : t.toIdentifier(tag.get("var"))
           : tagName;
 
-        (node.extra ??= {})[kRef] = createSelfReference(
-          tag,
-          varName,
-          SourceType.dom,
+        (node.extra ??= {})[kBinding] = createBinding(
+          "#" + varName,
+          BindingType.dom,
+          section,
         );
       }
     },
@@ -88,7 +88,7 @@ export default {
       assertNoArgs(tag);
 
       const extra = tag.node.extra!;
-      const nodeRef = extra[kRef];
+      const nodeRef = extra[kBinding];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
@@ -177,7 +177,7 @@ export default {
           addStatement(
             "render",
             section,
-            extra.references,
+            extra.referencedBindings,
             t.expressionStatement(
               callRuntime(
                 "attrs",
@@ -194,7 +194,7 @@ export default {
           const name = attr.node.name;
           const value = attr.get("value");
           const { confident, computed } = attr.node.extra ?? {};
-          const valueReferences = value.node.extra?.references;
+          const valueReferences = value.node.extra?.referencedBindings;
 
           switch (name) {
             case "class":
@@ -293,7 +293,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const extra = tag.node.extra!;
-      const nodeRef = extra[kRef];
+      const nodeRef = extra[kBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 

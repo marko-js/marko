@@ -1,30 +1,35 @@
-import { SourceType, type References, type Source } from "./references";
+import {
+  BindingType,
+  type ReferencedBindings,
+  type Binding,
+} from "./references";
 
-export function isStatefulReferences(references: References) {
+export function isStatefulReferences(references: ReferencedBindings) {
   if (references) {
     if (Array.isArray(references)) {
       for (const ref of references) {
-        if (isStatefulSource(ref.source)) {
+        if (isStatefulBinding(ref)) {
           return true;
         }
       }
     } else {
-      return isStatefulSource(references.source);
+      return isStatefulBinding(references);
     }
   }
 
   return false;
 }
 
-export function isStatefulSource(source: Source) {
-  switch (source.type) {
-    case SourceType.let:
-    case SourceType.input:
-    case SourceType.param:
+export function isStatefulBinding(binding: Binding): boolean {
+  switch (binding.type) {
+    case BindingType.let:
+    case BindingType.input:
+    case BindingType.param:
       return true;
     default:
-      if (source.upstream && isStatefulReferences(source.upstream.references)) {
-        return true;
-      }
+      return !!(
+        binding.upstreamExpression &&
+        isStatefulReferences(binding.upstreamExpression.referencedBindings)
+      );
   }
 }

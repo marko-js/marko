@@ -72,8 +72,8 @@ export default {
       });
 
       const [programInput] = program.node.params;
-      const inputReserve = programInput.extra?.reserve;
-      if (inputReserve) {
+      const inputBinding = programInput.extra?.binding;
+      if (inputBinding) {
         program.node.body.push(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
@@ -143,7 +143,7 @@ export default {
               setupIdentifier,
               closures.length && closuresIdentifier,
               undefined,
-              inputReserve && argsSignalIdentifier,
+              inputBinding && argsSignalIdentifier,
             ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`)),
           ),

@@ -23,7 +23,7 @@ export default {
           addStatement(
             "render",
             getSection(scriptlet),
-            node.extra?.references,
+            node.extra?.referencedBindings,
             node.body,
           );
           scriptlet.remove();
