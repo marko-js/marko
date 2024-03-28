@@ -230,7 +230,7 @@ declare global {
   namespace Marko {
     interface NativeTags {
       // By adding this entry, you can now use `my-custom-element` as a native html tag.
-      "my-custom-element": MyCustomElementAttributes
+      "my-custom-element": MyCustomElementAttributes;
     }
   }
 }
