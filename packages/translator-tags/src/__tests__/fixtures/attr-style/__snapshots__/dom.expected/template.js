@@ -11,7 +11,7 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_i
     style: {
       color: "green"
     },
-    renderBody() {
+    renderBody: () => {
       _write("Hello");
     }
   }
