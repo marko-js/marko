@@ -19,7 +19,7 @@ const _expr__dynamicTagName_c_d = /* @__PURE__ */_intersection(3, _scope => {
         b: c,
         d
       }],
-      renderBody() {
+      renderBody: () => {
         _write("Hello");
       }
     }

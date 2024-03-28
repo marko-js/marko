@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, createRenderer as _createRenderer, serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -31,9 +31,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         b: c,
         d
       }],
-      renderBody() {
+      renderBody: /* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      }
+      })
     }
   }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();

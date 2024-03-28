@@ -1,4 +1,4 @@
-import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -33,9 +33,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       style: {
         color: "green"
       },
-      renderBody() {
+      renderBody: /* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      }
+      })
     }
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);

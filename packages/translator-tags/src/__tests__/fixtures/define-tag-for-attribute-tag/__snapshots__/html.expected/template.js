@@ -1,14 +1,14 @@
-import { write as _write, nextScopeId as _nextScopeId, peekSerializedScope as _peekSerializedScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, peekSerializedScope as _peekSerializedScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const selected = false;
   const myThing = {
     selected: selected,
-    renderBody() {
+    renderBody: /* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write("<span>The thing</span>");
-    }
+    })
   };
   const _childScope = _peekSerializedScope();
   _child._({

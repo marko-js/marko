@@ -65,8 +65,18 @@ exports.p = function (tagsAPI) {
         $global.componentIdToScopeId = $global.componentIdToScopeId || {};
         $global.componentIdToScopeId[component.id] = streamData.scopeId || 0;
       }
+
       out.bf(out.___assignedKey, component, willRerender);
-      renderFn(out.beginAsync(), input, {}, streamData);
+      renderFn(
+        out.beginAsync(),
+        input,
+        {
+          ...$global,
+          componentIdToScopeId: undefined,
+          streamData: undefined,
+        },
+        streamData,
+      );
       out.ef();
     },
     // eslint-disable-next-line no-constant-condition
