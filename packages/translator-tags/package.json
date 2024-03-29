@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-tags",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
@@ -21,6 +21,8 @@
   "main": "src/index.ts",
   "files": [
     "dist",
+    "tag-types",
+    "marko.json",
     "!**/__tests__",
     "!**/*.tsbuildinfo"
   ],

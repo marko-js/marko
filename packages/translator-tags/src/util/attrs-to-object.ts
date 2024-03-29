@@ -9,6 +9,7 @@ import { getScopeIdIdentifier, getSection, type Section } from "./sections";
 import { getSerializedScopeProperties } from "./signals";
 import toPropertyName from "./to-property-name";
 
+const renderBodyProps = new WeakMap<t.Expression, t.ArrowFunctionExpression>();
 const htmlHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
   FunctionExpression: { exit: htmlFunctionVisit },
   ArrowFunctionExpression: { exit: htmlFunctionVisit },
@@ -23,8 +24,10 @@ function htmlFunctionVisit(
   fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
   state: { section: Section },
 ) {
+  const extra = fn.node.extra;
+  if (!extra) return;
+
   const serializedScopeProperties = getSerializedScopeProperties(state.section);
-  const extra = fn.node.extra!;
   forEach(extra.referencedBindings, (ref) => {
     serializedScopeProperties.set(
       getScopeAccessorLiteral(ref),
@@ -46,7 +49,9 @@ function domFunctionVisit(
   state: { section: Section },
 ) {
   const { node } = fn;
-  const extra = node.extra!;
+  const extra = node.extra;
+  if (!extra) return;
+
   const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
   if (extra.referencedBindings) {
@@ -126,12 +131,18 @@ export default function attrsToObject(
     }
 
     if (body.length) {
+      const renderBodyExpression = t.arrowFunctionExpression(
+        params,
+        t.blockStatement(body),
+      );
+
+      renderBodyProps.set(result, renderBodyExpression);
       (result as t.ObjectExpression).properties.push(
-        t.objectMethod(
-          "method",
+        t.objectProperty(
           t.identifier("renderBody"),
-          params,
-          t.blockStatement(body),
+          isOutputHTML()
+            ? callRuntime("createRenderer", renderBodyExpression)
+            : renderBodyExpression,
         ),
       );
     }
@@ -170,10 +181,12 @@ export function getRenderBodyProp(
     const lastProp = attrsObject.properties[attrsObject.properties.length - 1];
 
     if (
-      t.isObjectMethod(lastProp) &&
+      t.isObjectProperty(lastProp) &&
       (lastProp.key as t.Identifier).name === "renderBody"
     ) {
-      return lastProp;
+      return renderBodyProps.get(attrsObject) as t.ArrowFunctionExpression & {
+        body: t.BlockStatement;
+      };
     }
   }
 }

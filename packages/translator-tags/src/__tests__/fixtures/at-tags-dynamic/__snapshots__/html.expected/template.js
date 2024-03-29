@@ -1,4 +1,4 @@
-import { write as _write, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -14,9 +14,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody() {
+        renderBody: /* @__PURE__ */_createRenderer(() => {
           _write("foo");
-        }
+        })
       });
       _writeScope(_scope4_id, _scope4_ = {
         "_": _serializedScope(_scope3_id)
@@ -29,9 +29,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody() {
+        renderBody: /* @__PURE__ */_createRenderer(() => {
           _write("bar");
-        }
+        })
       });
       _writeScope(_scope5_id, _scope4_ = {
         "_": _serializedScope(_scope3_id)
@@ -57,9 +57,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       let _i = _i2++;
       _row.push({
         row: row,
-        renderBody() {
+        renderBody: /* @__PURE__ */_createRenderer(() => {
           _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
-        }
+        })
       });
       _writeScope(_scope10_id, (_s => (_scope10_.set(_i, _s), _s))({}));
       _maybeFlush();
@@ -74,9 +74,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     outside: true,
     row: {
       row: -1,
-      renderBody() {
+      renderBody: /* @__PURE__ */_createRenderer(() => {
         _write("Outside");
-      }
+      })
     }
   });
   const _childScope = _peekSerializedScope();

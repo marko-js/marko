@@ -1,4 +1,4 @@
-import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -7,15 +7,15 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _dynamicTagInput(x, {
     header: {
       class: "my-header",
-      renderBody() {
+      renderBody: /* @__PURE__ */_createRenderer(() => {
         _write("Header content");
-      }
+      })
     },
     footer: {
       class: "my-footer",
-      renderBody() {
+      renderBody: /* @__PURE__ */_createRenderer(() => {
         _write("Footer content");
-      }
+      })
     }
   }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();

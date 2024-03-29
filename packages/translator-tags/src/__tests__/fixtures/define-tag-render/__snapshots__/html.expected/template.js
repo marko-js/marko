@@ -1,10 +1,10 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const myTag = {
-    renderBody({
+    renderBody: /* @__PURE__ */_createRenderer(({
       name
-    }) {
+    }) => {
       const _scope1_id = _nextScopeId();
       const y = 1;
       _write(`<div>Hello <!>${_escapeXML(name)}${_markResumeNode(_scope1_id, "#text/0")} <!>${_escapeXML(y)}${_markResumeNode(_scope1_id, "#text/1")}</div><button>${_escapeXML(y)}${_markResumeNode(_scope1_id, "#text/3")}</button>${_markResumeNode(_scope1_id, "#button/2")}`);
@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _writeScope(_scope1_id, {
         "y": y
       });
-    }
+    })
   };
   const _dynamicScope = _dynamicTagInput(myTag, {
     name: "Ryan"
