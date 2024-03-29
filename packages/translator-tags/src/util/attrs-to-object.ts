@@ -2,7 +2,7 @@ import { types as t } from "@marko/compiler";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { forEach } from "./optional";
-import { getScopeAccessorLiteral } from "./reserve";
+import { getScopeAccessorLiteral } from "./references";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern } from "./scope-read";
 import { getScopeIdIdentifier, getSection, type Section } from "./sections";
@@ -28,7 +28,7 @@ function htmlFunctionVisit(
   if (!extra) return;
 
   const serializedScopeProperties = getSerializedScopeProperties(state.section);
-  forEach(extra.references, (ref) => {
+  forEach(extra.referencedBindings, (ref) => {
     serializedScopeProperties.set(
       getScopeAccessorLiteral(ref),
       t.identifier(ref.name),
@@ -54,7 +54,7 @@ function domFunctionVisit(
 
   const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
-  if (extra.references) {
+  if (extra.referencedBindings) {
     if (node.body.type !== "BlockStatement") {
       node.body = t.blockStatement([t.returnStatement(node.body)]);
     }
@@ -62,7 +62,7 @@ function domFunctionVisit(
     node.body.body.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(state.section, extra.references),
+          createScopeReadPattern(state.section, extra.referencedBindings),
           scopeIdentifier,
         ),
       ]),

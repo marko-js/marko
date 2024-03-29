@@ -14,11 +14,11 @@ const _count$falseChildBody = _registerSubscriber("packages/translator-tags/src/
 }));
 const _falseChildBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_count$falseChildBody]));
 const _falseChild_input = _dynamicTagAttrs("#text/0", _falseChildBody);
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), void 0, _falseChild_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), void 0, _falseChild_input);
 const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
 const _setup = _scope => {
   _count(_scope, 0);
-  _dynamicTagName_ChildScope(_scope, false || Child || _falseChildBody);
+  _dynamicTagName(_scope, false || Child || _falseChildBody);
 };
 export const template = "<!><!><!>";
 export const walks = /* replace, over(1) */"D%bD";

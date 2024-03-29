@@ -14,13 +14,13 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       });
     })
   };
-  const _dynamicScope = _dynamicTagInput(myTag.renderBody, {
+  const _dynamicScope = _dynamicTagInput(myTag, {
     name: "Ryan"
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {
     "#text/0!": _dynamicScope,
-    "#text/0(": myTag.renderBody
+    "#text/0(": myTag
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko");

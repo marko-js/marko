@@ -1,13 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
-import { ReserveType } from "../util/reserve";
-import {
-  type Section,
-  createSectionState,
-  getSection,
-  ContentType,
-} from "../util/sections";
+import { type Section, getSection, ContentType } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
+import { createSectionState } from "./state";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
@@ -81,12 +76,12 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
   code?: VisitCodes,
 ) {
-  const { reserve } = path.node.extra!;
-  if (code && (!reserve || reserve.type !== ReserveType.Visit)) {
-    throw path.buildCodeFrameError(
-      "Tried to visit a node that was not marked as needing to visit during analyze.",
-    );
-  }
+  // const { binding } = path.node.extra!;
+  // if (code && (!binding || binding.type !== BindingType.dom)) {
+  //   throw path.buildCodeFrameError(
+  //     "Tried to visit a node that was not marked as needing to visit during analyze.",
+  //   );
+  // }
 
   if (isOutputHTML()) {
     return;

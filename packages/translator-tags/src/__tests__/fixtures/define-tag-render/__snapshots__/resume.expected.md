@@ -21,7 +21,7 @@
     <!--M*1 #button/2-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1},"#text/0(":{}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click()
     <!--M*1 #button/2-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1},"#text/0(":{}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -97,7 +97,7 @@ container.querySelector("button").click()
     <!--M*1 #button/2-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1},"#text/0(":{}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>
@@ -135,7 +135,7 @@ container.querySelector("button").click()
     <!--M*1 #button/2-->
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={y:1},"#text/0(":{}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
     </script>
   </body>
 </html>

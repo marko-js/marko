@@ -39,7 +39,7 @@ export default {
         t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
       );
     } else {
-      const source = initValue(tagVar.extra!.reserve!);
+      const source = initValue(tagVar.extra!.binding!);
       addValue(getSection(tag), undefined, source, id);
       tag.remove();
     }

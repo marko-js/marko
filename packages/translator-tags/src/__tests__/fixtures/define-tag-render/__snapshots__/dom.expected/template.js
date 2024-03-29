@@ -25,7 +25,7 @@ const _myTag_input = _dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _myTag_input(_scope, () => ({
   name: "Ryan"
 })), void 0, _myTag_input);
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag.renderBody), void 0, _dynamicTagName);
+const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), void 0, _dynamicTagName);
 const _setup = _scope => {
   _myTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)

@@ -6,47 +6,41 @@ import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
-declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
-  }
-}
-
 export default {
-  analyze() {
+  analyze(tag) {
+    const { node } = tag;
+    const [defaultAttr] = node.attributes;
+    assertNoParams(tag);
+    assertNoBodyContent(tag);
+
+    if (
+      node.attributes.length > 1 ||
+      !t.isMarkoAttribute(defaultAttr) ||
+      (!defaultAttr.default && defaultAttr.name !== "value")
+    ) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The 'effect' tag only supports the 'default' attribute.",
+        );
+    }
+
+    if (!defaultAttr) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The 'effect' tag requires a default attribute.");
+    }
+
+    (defaultAttr.value.extra ??= {}).isEffect = true;
     (currentProgramPath.node.extra ??= {}).isInteractive = true;
   },
   translate: {
     exit(tag) {
       const { node } = tag;
       const [defaultAttr] = node.attributes;
-
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
-
-      if (!defaultAttr) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "The 'effect' tag requires a default attribute.",
-          );
-      }
-
-      if (
-        node.attributes.length > 1 ||
-        !t.isMarkoAttribute(defaultAttr) ||
-        (!defaultAttr.default && defaultAttr.name !== "value")
-      ) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "The 'effect' tag only supports the 'default' attribute.",
-          );
-      }
-
       const section = getSection(tag);
       const { value } = defaultAttr;
-      const references = value.extra?.references;
+      const references = value.extra?.referencedBindings;
       if (isOutputDOM()) {
         const { value } = defaultAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;

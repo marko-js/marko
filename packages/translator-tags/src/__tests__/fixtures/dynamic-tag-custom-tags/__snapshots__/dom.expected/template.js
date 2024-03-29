@@ -2,17 +2,16 @@ import child1 from "./components/child1.marko";
 import child2 from "./components/child2.marko";
 import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tagName_input = _dynamicTagAttrs("#text/0");
-const _expr__dynamicTagName_val = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_val = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/0": _dynamicTagName,
     val
   } = _scope;
   _tagName_input(_scope, () => ({
     value: val
   }));
 });
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr__dynamicTagName_val);
-const _val = /* @__PURE__ */_value("val", null, _expr__dynamicTagName_val);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_val);
+const _val = /* @__PURE__ */_value("val", null, _expr_Text_val);
 const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
   const {
     tagName

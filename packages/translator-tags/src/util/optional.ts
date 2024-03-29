@@ -63,6 +63,22 @@ export function push<T>(data: Opt<T>, item: T): Opt<T> {
   return item;
 }
 
+export function concat<T>(a: Opt<T>, b: Opt<T>): Opt<T> {
+  if (a) {
+    if (b) {
+      if (Array.isArray(a)) {
+        return a.concat(b) as Many<T>;
+      } else if (Array.isArray(b)) {
+        return [a, ...b];
+      } else {
+        return [a, b];
+      }
+    }
+    return a;
+  }
+  return b;
+}
+
 export function size<T>(data: Opt<T>) {
   return data ? (Array.isArray(data) ? data.length : 1) : 0;
 }
@@ -213,4 +229,15 @@ function unionSortedRepeatable<T>(
 function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
   const compareResult = compare(a, b);
   return compareResult === 0 ? a : compareResult < 0 ? [a, b] : [b, a];
+}
+
+export function pop<T>(data: Opt<T>): [Opt<T>, T] {
+  if (Array.isArray(data)) {
+    const len = data.length;
+    if (len === 2) {
+      return [data[0], data[1]];
+    }
+    return [data.slice(0, len - 1) as Many<T>, data[len - 1]];
+  }
+  return [undefined, data as T];
 }

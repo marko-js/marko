@@ -1,9 +1,9 @@
 const div = "span";
 const baz = "div";
 import { conditional as _conditional, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0");
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0");
 const _setup = _scope => {
-  _dynamicTagName_ChildScope(_scope, baz);
+  _dynamicTagName(_scope, baz);
 };
 export const template = "<div></div><!>";
 export const walks = /* over(1), replace, over(1) */"b%b";

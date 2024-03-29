@@ -19,8 +19,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
   _writeScope(_scope0_id, {
-    "#text/0(": _scope1_.size ? _scope1_ : undefined,
-    "selected": selected
+    "selected": selected,
+    "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko");

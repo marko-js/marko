@@ -9,17 +9,22 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOptimize, isOutputHTML } from "../../util/marko-config";
-import { addReference, mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Binding,
+  createBinding,
+  BindingType,
+  addReferenceToExpression,
+  trackVarReferences,
+  trackParamsReferences,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  startSection,
 } from "../../util/sections";
 import {
   addValue,
@@ -36,24 +41,38 @@ import translateVar from "../../util/translate-var";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import customTag, { getTagRelativePath } from "./custom-tag";
+import { getTagRelativePath } from "./custom-tag";
+
+const kDOMBinding = Symbol("dynamic tag dom binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kDOMBinding]?: Binding;
+  }
+}
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(tag),
-        tag.node as any as t.Identifier,
-        tag.scope.generateUid("dynamicTagName"),
-        "#text",
-      );
+      const section = getOrCreateSection(tag);
+      const tagExtra = (tag.node.extra ??= {});
+      const tagBody = tag.get("body");
+      startSection(tagBody);
 
-      customTag.analyze.enter(tag);
+      trackVarReferences(tag, BindingType.derived);
+      trackParamsReferences(tagBody, BindingType.param);
+
+      tagExtra[kDOMBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        section,
+        undefined,
+        tagExtra,
+      );
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const extra = (tag.node.extra ??= {});
       const referenceNodes: t.Node[] = [];
+      const tagExtra = tag.node.extra!;
       if (tag.node.arguments) {
         for (const arg of tag.node.arguments) {
           referenceNodes.push(arg);
@@ -65,7 +84,7 @@ export default {
       }
 
       mergeReferences(tag, referenceNodes);
-      addReference(tag, extra.reserve!);
+      addReferenceToExpression(tag, tagExtra[kDOMBinding]!);
     },
   },
   translate: {
@@ -82,15 +101,12 @@ export default {
     exit(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const extra = node.extra!;
-      const tagNameReserve = extra.reserve!;
+      const nodeRef = extra[kDOMBinding]!;
       let tagExpression = node.name;
 
-      if (node.extra!.tagNameDefine) {
-        tagExpression = t.memberExpression(
-          node.name,
-          t.identifier("renderBody"),
-        );
-      } else if (t.isStringLiteral(tagExpression)) {
+      // This is the interop layer leaking into the translator
+      // We use the dynamic tag when a custom tag from the class runtime is used
+      if (t.isStringLiteral(tagExpression)) {
         const { file } = tag.hub;
         const relativePath = getTagRelativePath(tag);
         tagExpression = importDefault(file, relativePath, tagExpression.value);
@@ -197,15 +213,15 @@ export default {
         writer.writeTo(tag)`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(tagNameReserve),
+          getScopeAccessorLiteral(nodeRef),
         )}`;
 
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "!"),
+          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "!"),
           dynamicScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(tagNameReserve).value + "("),
+          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "("),
           t.isIdentifier(tagExpression)
             ? t.identifier(tagExpression.name)
             : tagExpression,
@@ -215,11 +231,11 @@ export default {
         const bodySection = getSection(tag.get("body"));
         const hasBody = section !== bodySection;
         const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
-        const signal = getSignal(section, tagNameReserve);
+        const signal = getSignal(section, nodeRef, "dynamicTagName");
         signal.build = () => {
           return callRuntime(
             "conditional",
-            getScopeAccessorLiteral(tagNameReserve),
+            getScopeAccessorLiteral(nodeRef),
             getSignalFn(signal, [scopeIdentifier]),
             buildSignalIntersections(signal),
             buildSignalValuesWithIntersections(signal),
@@ -228,7 +244,7 @@ export default {
         signal.hasDownstreamIntersections = () => true;
         addValue(
           section,
-          node.name.extra?.references,
+          node.name.extra?.referencedBindings,
           signal,
           renderBodyIdentifier
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
@@ -246,7 +262,7 @@ export default {
           let added = false;
           addValue(
             section,
-            node.extra?.references,
+            node.extra?.referencedBindings,
             {
               get identifier() {
                 if (!added) {
@@ -257,7 +273,7 @@ export default {
                         id,
                         callRuntime(
                           "dynamicTagAttrs",
-                          getScopeAccessorLiteral(tagNameReserve),
+                          getScopeAccessorLiteral(nodeRef),
                           renderBodyIdentifier,
                           t.isArrayExpression(attrsObject)
                             ? t.booleanLiteral(true)

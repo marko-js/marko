@@ -1,8 +1,7 @@
 import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, register as _register, queueEffect as _queueEffect, conditional as _conditional, intersections as _intersections, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _inputRenderBody_input = _dynamicTagAttrs("#text/3", void 0, true);
-const _expr__dynamicTagName_x_y = /* @__PURE__ */_intersection(3, _scope => {
+const _expr_Text_x_y = /* @__PURE__ */_intersection(3, _scope => {
   const {
-    "#text/3": _dynamicTagName,
     x,
     y
   } = _scope;
@@ -23,9 +22,9 @@ const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr_x_y_effect);
 });
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, _expr__dynamicTagName_x_y);
-const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _intersections([_expr_x_y, _expr__dynamicTagName_x_y]));
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/1"], x), _intersections([_expr_x_y, _expr__dynamicTagName_x_y]));
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, _expr_Text_x_y);
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _intersections([_expr_x_y, _expr_Text_x_y]));
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/1"], x), _intersections([_expr_x_y, _expr_Text_x_y]));
 const _input = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), void 0, _dynamicTagName);
 const _setup = _scope => {
   _x(_scope, 1);

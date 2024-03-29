@@ -5,16 +5,25 @@ import evaluate from "../util/evaluate";
 import { isCoreTag } from "../util/is-core-tag";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  ReserveType,
+  BindingType,
+  createBinding,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  type Binding,
+} from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
+
+const kBinding = Symbol("placeholder node binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoPlaceholderExtra {
+    [kBinding]?: Binding;
+  }
+}
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
@@ -30,12 +39,12 @@ export default {
     const { confident, computed } = evaluate(placeholder);
 
     if (!(confident && (node.escape || !computed))) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(placeholder),
-        node,
-        placeholder.scope.generateUid("placeholder"),
+      (node.extra ??= {})[kBinding] = createBinding(
         "#text",
+        BindingType.dom,
+        getOrCreateSection(placeholder),
+        undefined,
+        node.value.extra,
       );
       needsMarker(placeholder);
     }
@@ -47,7 +56,8 @@ export default {
       const { node } = placeholder;
       const { value } = node;
       const extra = node.extra!;
-      const { confident, computed, reserve } = extra;
+      const { confident, computed } = extra;
+      const nodeBinding = extra[kBinding]!;
       const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
         ? node.escape
@@ -69,19 +79,19 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          writer.markNode(placeholder);
+          writer.markNode(placeholder, nodeBinding);
         } else {
           addStatement(
             "render",
             getSection(placeholder),
-            value.extra?.references,
+            value.extra?.referencedBindings,
             t.expressionStatement(
               method === "data"
                 ? callRuntime(
                     "data",
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(reserve!),
+                      getScopeAccessorLiteral(nodeBinding),
                       true,
                     ),
                     value,
@@ -90,7 +100,7 @@ export default {
                     "html",
                     scopeIdentifier,
                     value,
-                    getScopeAccessorLiteral(reserve!),
+                    getScopeAccessorLiteral(nodeBinding),
                   ),
             ),
           );

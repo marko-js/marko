@@ -1,5 +1,4 @@
 import type { types as t } from "@marko/compiler";
-import type { References } from "./references";
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
   | t.MarkoTagBody
@@ -8,21 +7,27 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoPlaceholder
 >;
 
+export function getMarkoRoot(path: t.NodePath<t.Node>) {
+  let curPath = path;
+  do curPath = curPath.parentPath!;
+  while (!isMarko(curPath));
+  return curPath as MarkoExprRootPath;
+}
+
 export function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   while (!isMarko(curPath.parentPath!)) {
     curPath = curPath.parentPath!;
-  }
-
-  return curPath as t.NodePath<
-    t.Node & {
-      extra?: {
-        references?: References;
-      };
+    if (curPath.type === "AssignmentExpression") {
+      const destructRoot = getDestructureRoot(curPath);
+      if (isMarko(destructRoot.parentPath!)) {
+        curPath = (curPath as t.NodePath<t.AssignmentExpression>).get("right");
+        break;
+      }
+      curPath = destructRoot.parentPath!;
     }
-  > & {
-    parentPath: MarkoExprRootPath;
-  };
+  }
+  return curPath;
 }
 
 export function getFnRoot(path: t.NodePath<t.Node>) {
@@ -34,15 +39,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
     curPath = (curPath as t.NodePath<t.Node>).parentPath!;
   }
 
-  return curPath as
-    | undefined
-    | t.NodePath<
-        (t.FunctionExpression | t.ArrowFunctionExpression) & {
-          extra?: {
-            references?: References;
-          };
-        }
-      >;
+  return curPath;
 }
 
 function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
@@ -68,5 +65,16 @@ function isFunctionExpression(
       return true;
     default:
       return false;
+  }
+}
+
+function getDestructureRoot(path: t.NodePath): t.NodePath {
+  switch (path.parent.type) {
+    case "ArrayPattern":
+    case "ObjectPattern":
+    case "ObjectProperty":
+      return getDestructureRoot(path.parentPath!);
+    default:
+      return path;
   }
 }

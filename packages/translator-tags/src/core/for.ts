@@ -6,20 +6,24 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
+import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
-import { mergeReferences } from "../util/references";
 import {
-  ReserveType,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  type Binding,
+  createBinding,
+  BindingType,
+  trackParamsReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
+  startSection,
 } from "../util/sections";
 import {
   addValue,
@@ -34,25 +38,41 @@ import {
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
-import customTag from "../visitors/tag/custom-tag";
+import { kNativeTagBinding } from "../visitors/tag/native-tag";
+
+const kForMarkerBinding = Symbol("for marker binding");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kForMarkerBinding]?: Binding;
+  }
+}
 
 export default {
   analyze: {
     enter(tag) {
-      tag.node.extra ??= {};
       const isOnlyChild = checkOnlyChild(tag);
-      const parentTag = (
-        isOnlyChild ? tag.parentPath.parent : undefined
-      ) as t.MarkoTag;
-      const parentTagName = (parentTag?.name as t.StringLiteral)?.value;
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(tag),
-        isOnlyChild ? parentTag : tag.node,
-        tag.scope.generateUid("for"),
-        isOnlyChild ? `#${parentTagName}` : "#text",
-      );
-      customTag.analyze.enter(tag);
+      const tagExtra = (tag.node.extra ??= {});
+      const tagBody = tag.get("body");
+      const section = getOrCreateSection(tag)!;
+      startSection(tagBody);
+
+      if (isOnlyChild) {
+        const parentTag = tag.parentPath.parent as t.MarkoTag;
+        const parentTagName = (parentTag.name as t.StringLiteral)?.value;
+        (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
+          "#" + parentTagName,
+          BindingType.dom,
+          section,
+        );
+      } else {
+        tagExtra[kForMarkerBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          section,
+        );
+      }
+
+      trackParamsReferences(tagBody, BindingType.param);
     },
     exit(tag) {
       const extra = tag.node.extra!;
@@ -63,12 +83,6 @@ export default {
         tag.node.attributes.map((attr) => attr.value),
       );
 
-      extra.isStateful =
-        !!extra.references &&
-        !(
-          extra.nestedAttributeTags &&
-          Object.keys(extra.nestedAttributeTags).length
-        );
       extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
   },
@@ -78,15 +92,19 @@ export default {
 
       const tagBody = tag.get("body");
       const bodySection = getSection(tagBody);
-      const { isStateful, singleNodeOptimization, isOnlyChild } =
-        tag.node.extra!;
+      const tagExtra = tag.node.extra!;
+      const { singleNodeOptimization, isOnlyChild } = tagExtra;
+      const isStateful = isStatefulReferences(tagExtra.referencedBindings);
+      const hasNestedAttributeTags =
+        tagExtra.nestedAttributeTags &&
+        Object.keys(tagExtra.nestedAttributeTags).length > 0;
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
       }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
-        if (isStateful && !singleNodeOptimization) {
+        if (isStateful && !singleNodeOptimization && !hasNestedAttributeTags) {
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
             getScopeIdIdentifier(bodySection),
@@ -174,10 +192,10 @@ const translateDOM = {
     const bodySection = getSection(tagBody);
     const { node } = tag;
     const { attributes } = node;
-    const { isOnlyChild, references } = node.extra!;
-    const { reserve } = (
-      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node
-    ).extra!;
+    const { isOnlyChild, referencedBindings } = node.extra!;
+    const nodeRef = isOnlyChild
+      ? tag.parentPath.parent.extra![kNativeTagBinding]!
+      : tag.node.extra![kForMarkerBinding]!;
     const paramIdentifiers = Object.values(
       tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
@@ -186,7 +204,7 @@ const translateDOM = {
       return callRuntime(
         "inLoopScope",
         signal,
-        getScopeAccessorLiteral(reserve!),
+        getScopeAccessorLiteral(nodeRef),
       );
     });
 
@@ -228,31 +246,43 @@ const translateDOM = {
       loopArgs.push(byAttr.value);
     }
 
-    const signal = getSignal(tagSection, reserve);
+    const signal = getSignal(tagSection, nodeRef, "for");
     signal.build = () => {
       return callRuntime(
         loopKind,
-        getScopeAccessorLiteral(reserve!),
+        getScopeAccessorLiteral(nodeRef),
         rendererId,
       );
     };
 
     signal.hasDownstreamIntersections = () => {
-      for (const identifier of paramIdentifiers) {
-        if (
-          getSignal(
-            bodySection,
-            identifier.extra!.reserve,
-          ).hasDownstreamIntersections()
-        ) {
-          return true;
+      if (getClosures(bodySection).length > 0) {
+        return true;
+      }
+
+      if (paramIdentifiers.length) {
+        const binding = paramIdentifiers[0].extra!.binding!;
+        for (const { referencedBindings } of binding.downstreamExpressions) {
+          if (
+            getSignal(
+              bodySection,
+              referencedBindings,
+            ).hasDownstreamIntersections()
+          ) {
+            return true;
+          }
         }
       }
 
-      return getClosures(bodySection).length > 0;
+      return false;
     };
 
-    addValue(tagSection, references, signal, t.arrayExpression(loopArgs));
+    addValue(
+      tagSection,
+      referencedBindings,
+      signal,
+      t.arrayExpression(loopArgs),
+    );
   },
 };
 
@@ -266,11 +296,15 @@ const translateHTML = {
       attributes,
       body: { body, params },
     } = node;
-    const extra = node.extra!;
-    const { isStateful, singleNodeOptimization, isOnlyChild } = extra;
-    const { reserve } = (
-      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node
-    ).extra!;
+    const tagExtra = node.extra!;
+    const { singleNodeOptimization, isOnlyChild } = tagExtra;
+    const isStateful = isStatefulReferences(tagExtra.referencedBindings);
+    const hasNestedAttributeTags =
+      tagExtra.nestedAttributeTags &&
+      Object.keys(tagExtra.nestedAttributeTags).length > 0;
+    const nodeRef = isOnlyChild
+      ? tag.parentPath.parent.extra![kNativeTagBinding]!
+      : tag.node.extra![kForMarkerBinding]!;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
@@ -466,7 +500,7 @@ const translateHTML = {
       );
     }
 
-    if (isStateful || bodySection.closures) {
+    if ((isStateful || bodySection.closures) && !hasNestedAttributeTags) {
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
       const forScopesIdentifier = getScopeIdentifier(bodySection);
@@ -500,19 +534,19 @@ const translateHTML = {
         write`${callRuntime(
           "markResumeControlSingleNodeEnd",
           getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(reserve!),
+          getScopeAccessorLiteral(nodeRef),
           forScopeIdsIdentifier,
         )}`;
       } else {
         write`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(reserve!),
+          getScopeAccessorLiteral(nodeRef),
         )}`;
       }
       getSerializedScopeProperties(tagSection).set(
         t.stringLiteral(
-          getScopeAccessorLiteral(reserve!).value + AccessorChar.LoopScopeMap,
+          getScopeAccessorLiteral(nodeRef).value + AccessorChar.LoopScopeMap,
         ),
         t.conditionalExpression(
           t.memberExpression(forScopesIdentifier, t.identifier("size")),

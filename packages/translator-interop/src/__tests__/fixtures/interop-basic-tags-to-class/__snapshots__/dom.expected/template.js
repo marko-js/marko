@@ -3,7 +3,7 @@ import _classCounter from "./components/class-counter.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko", _classCounter);
 const _classCounter_input = _dynamicTagAttrs("#text/2");
-const _expr__dynamicTagName_ChildScope_count = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_count = /* @__PURE__ */_intersection(2, _scope => {
   const {
     count
   } = _scope;
@@ -11,7 +11,7 @@ const _expr__dynamicTagName_ChildScope_count = /* @__PURE__ */_intersection(2, _
     count: count
   }));
 });
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/2", null, _expr__dynamicTagName_ChildScope_count);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_count);
 const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
   const {
     count
@@ -21,10 +21,10 @@ const _count_effect = _register("packages/translator-interop/src/__tests__/fixtu
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count_effect);
-}, _expr__dynamicTagName_ChildScope_count);
+}, _expr_Text_count);
 const _setup = _scope => {
   _count(_scope, 0);
-  _dynamicTagName_ChildScope(_scope, _classCounter);
+  _dynamicTagName(_scope, _classCounter);
 };
 export const template = "<button id=tags> </button><!><!>";
 export const walks = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";

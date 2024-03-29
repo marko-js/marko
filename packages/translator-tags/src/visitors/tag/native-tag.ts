@@ -4,12 +4,13 @@ import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isOutputHTML } from "../../util/marko-config";
-import { mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  mergeReferences,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Binding,
+  createBinding,
+  BindingType,
+} from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
   createScopeReadExpression,
@@ -22,9 +23,11 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
+export const kNativeTagBinding = Symbol("native tag binding");
+
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
+  export interface NodeExtra {
+    [kNativeTagBinding]?: Binding;
   }
 }
 
@@ -49,8 +52,10 @@ export default {
             attrs.map((attr) => attr.node.value),
           );
           isInteractive = true;
+          // TODO: should add isEffect to all attributes in a spread?
           break;
         } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
+          (attr.node.value.extra ??= {}).isEffect = true;
           section ??= getOrCreateSection(tag);
           isInteractive = true;
         } else if (!evaluate(attr).confident) {
@@ -64,12 +69,12 @@ export default {
           node.name.type === "StringLiteral"
             ? node.name.value
             : t.toIdentifier(tag.get("name"));
-        const varName = node.var
-          ? node.var.type === "Identifier"
-            ? node.var.name
-            : t.toIdentifier(tag.get("var"))
-          : tagName;
-        reserveScope(ReserveType.Visit, section, node, varName, `#${tagName}`);
+        const tagExtra = (node.extra ??= {});
+        tagExtra[kNativeTagBinding] = createBinding(
+          "#" + tagName,
+          BindingType.dom,
+          section,
+        );
       }
     },
   },
@@ -78,6 +83,7 @@ export default {
       assertNoArgs(tag);
 
       const extra = tag.node.extra!;
+      const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
@@ -116,7 +122,7 @@ export default {
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, extra.reserve!),
+                  createScopeReadExpression(referenceSection, nodeRef!),
                 ),
               );
             } else {
@@ -124,7 +130,7 @@ export default {
               reference.replaceWith(
                 callRuntime(
                   "bindFunction",
-                  getScopeExpression(referenceSection, extra.reserve!.section),
+                  getScopeExpression(referenceSection, section),
                   createElFunction,
                 ),
               );
@@ -140,7 +146,7 @@ export default {
                     [scopeIdentifier],
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(extra.reserve!),
+                      getScopeAccessorLiteral(nodeRef!),
                       true,
                     ),
                   ),
@@ -152,8 +158,8 @@ export default {
       }
 
       let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
-      if (extra.reserve) {
-        visitAccessor = getScopeAccessorLiteral(extra.reserve);
+      if (nodeRef) {
+        visitAccessor = getScopeAccessorLiteral(nodeRef);
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -166,7 +172,7 @@ export default {
           addStatement(
             "render",
             section,
-            extra.references,
+            extra.referencedBindings,
             t.expressionStatement(
               callRuntime(
                 "attrs",
@@ -183,7 +189,7 @@ export default {
           const name = attr.node.name;
           const value = attr.get("value");
           const { confident, computed } = attr.node.extra ?? {};
-          const valueReferences = value.node.extra?.references;
+          const valueReferences = value.node.extra?.referencedBindings;
 
           switch (name) {
             case "class":
@@ -282,6 +288,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const extra = tag.node.extra!;
+      const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 
@@ -304,8 +311,8 @@ export default {
           .skip();
       }
 
-      if (extra.reserve) {
-        writer.markNode(tag);
+      if (nodeRef) {
+        writer.markNode(tag, nodeRef);
       }
 
       walks.exit(tag);

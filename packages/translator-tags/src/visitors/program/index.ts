@@ -8,10 +8,11 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import {
-  finalizeIntersections,
-  trackReferencesForBindings,
+  BindingType,
+  createBinding,
+  finalizeReferences,
+  trackReferencesForBinding,
 } from "../../util/references";
-import { assignFinalIds } from "../../util/reserve";
 import { startSection } from "../../util/sections";
 import { initValue } from "../../util/signals";
 import programDOM from "./dom";
@@ -42,19 +43,24 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      const section = startSection(program);
+      const section = startSection(program)!;
+
       const inputBinding = program.scope.getBinding("input")!;
       if (
         inputBinding.referencePaths.length ||
         inputBinding.constantViolations.length
       ) {
-        trackReferencesForBindings(section, program);
+        (inputBinding.identifier.extra ??= {}).binding = createBinding(
+          "input",
+          BindingType.input,
+          section,
+        );
+        trackReferencesForBinding(inputBinding);
       }
     },
 
     exit() {
-      assignFinalIds();
-      finalizeIntersections();
+      finalizeReferences();
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
@@ -90,9 +96,9 @@ export default {
         return;
       }
 
-      const reserveInput = program.node.params[0].extra?.reserve;
-      if (reserveInput) {
-        initValue(reserveInput);
+      const inputBinding = program.node.params[0].extra?.binding;
+      if (inputBinding) {
+        initValue(inputBinding);
       }
     },
     exit(program: t.NodePath<t.Program>) {

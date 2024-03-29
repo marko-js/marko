@@ -1,15 +1,19 @@
 import { types as t } from "@marko/compiler";
 import {
   type Section,
-  createSectionState,
   getScopeIdIdentifier,
   getSection,
   ContentType,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
-import { ReserveType, getScopeAccessorLiteral } from "./reserve";
+import {
+  BindingType,
+  getScopeAccessorLiteral,
+  type Binding,
+} from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
+import { createSectionState } from "./state";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
@@ -104,11 +108,13 @@ export function getSectionMeta(section: Section) {
   };
 }
 
-export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
+export function markNode(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  binding: Binding,
+) {
   const section = getSection(path);
-  const { reserve } = path.node.extra!;
 
-  if (reserve?.type !== ReserveType.Visit) {
+  if (binding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
       "Tried to mark a node that was not determined to need a mark during analyze.",
     );
@@ -118,7 +124,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(reserve!),
+      getScopeAccessorLiteral(binding),
     )}`;
   }
 }

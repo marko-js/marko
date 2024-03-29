@@ -45,7 +45,7 @@ export default {
       const derivation = getTagVarSignal(tag.get("var"))!;
 
       // TODO: optimize for cases like `const/x=y`
-      addValue(section, value.extra?.references, derivation, value);
+      addValue(section, value.extra?.referencedBindings, derivation, value);
     } else {
       translateVar(tag, value);
     }

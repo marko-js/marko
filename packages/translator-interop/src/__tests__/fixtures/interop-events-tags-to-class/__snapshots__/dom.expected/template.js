@@ -6,13 +6,13 @@ const _temp = _register("packages/translator-interop/src/__tests__/fixtures/inte
   _queueSource(_scope, _count, newCount);
 });
 const _classCounter_input = _dynamicTagAttrs("#text/0");
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
   onCount: /* @__PURE__ */_bindFunction(_scope, _temp)
 })), void 0, _classCounter_input);
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/1"], count));
 const _setup = _scope => {
   _count(_scope, 0);
-  _dynamicTagName_ChildScope(_scope, _classCounter);
+  _dynamicTagName(_scope, _classCounter);
 };
 export const template = "<!><!><div id=tags-api> </div>";
 export const walks = /* replace, over(1), next(1), get, out(1) */"D%bD l";

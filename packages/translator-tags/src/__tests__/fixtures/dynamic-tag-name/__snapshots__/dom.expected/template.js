@@ -4,9 +4,8 @@ import { attr as _attr, bindRenderer as _bindRenderer, createRenderer as _create
 import { setup as _setup, template as _undefined_template, walks as _undefined_walks } from "./components/tag-a/index.marko";
 const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
-const _expr__dynamicTagName6_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other6 = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/9": _dynamicTagName6,
     other
   } = _scope;
   _largeHeadingH2_input(_scope, () => ({
@@ -15,7 +14,7 @@ const _expr__dynamicTagName6_other = /* @__PURE__ */_intersection(2, _scope => {
   }));
 });
 const _tagTagA_input = _dynamicTagAttrs("#text/8");
-const _expr__dynamicTagName5_ChildScope_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other5 = /* @__PURE__ */_intersection(2, _scope => {
   const {
     other
   } = _scope;
@@ -25,9 +24,8 @@ const _expr__dynamicTagName5_ChildScope_other = /* @__PURE__ */_intersection(2, 
   }));
 });
 const _showTagATagATagB_input = _dynamicTagAttrs("#text/5");
-const _expr__dynamicTagName4_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other4 = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/5": _dynamicTagName4,
     other
   } = _scope;
   _showTagATagATagB_input(_scope, () => ({
@@ -38,9 +36,8 @@ const _expr__dynamicTagName4_other = /* @__PURE__ */_intersection(2, _scope => {
   }));
 });
 const _isLargeH1H2_input = _dynamicTagAttrs("#text/4");
-const _expr__dynamicTagName3_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other3 = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/4": _dynamicTagName3,
     other
   } = _scope;
   _isLargeH1H2_input(_scope, () => ({
@@ -49,9 +46,8 @@ const _expr__dynamicTagName3_other = /* @__PURE__ */_intersection(2, _scope => {
   }));
 });
 const _x_input = _dynamicTagAttrs("#text/1");
-const _expr__dynamicTagName2_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other2 = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/1": _dynamicTagName2,
     other
   } = _scope;
   _x_input(_scope, () => ({
@@ -60,9 +56,8 @@ const _expr__dynamicTagName2_other = /* @__PURE__ */_intersection(2, _scope => {
   }));
 });
 const _renderBody_input = _dynamicTagAttrs("#text/0");
-const _expr__dynamicTagName_other = /* @__PURE__ */_intersection(2, _scope => {
+const _expr_Text_other = /* @__PURE__ */_intersection(2, _scope => {
   const {
-    "#text/0": _dynamicTagName,
     other
   } = _scope;
   _renderBody_input(_scope, () => ({
@@ -70,15 +65,15 @@ const _expr__dynamicTagName_other = /* @__PURE__ */_intersection(2, _scope => {
     other: other
   }));
 });
-const _dynamicTagName5 = /* @__PURE__ */_conditional("#text/9", null, _expr__dynamicTagName6_other);
-const _dynamicTagName5_ChildScope = /* @__PURE__ */_conditional("#text/8", null, _expr__dynamicTagName5_ChildScope_other);
-const _dynamicTagName4 = /* @__PURE__ */_conditional("#text/5", null, _expr__dynamicTagName4_other);
-const _dynamicTagName3 = /* @__PURE__ */_conditional("#text/4", null, _expr__dynamicTagName3_other);
-const _dynamicTagName2 = /* @__PURE__ */_conditional("#text/1", null, _expr__dynamicTagName2_other);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr__dynamicTagName_other);
+const _dynamicTagName6 = /* @__PURE__ */_conditional("#text/9", null, _expr_Text_other6);
+const _dynamicTagName5 = /* @__PURE__ */_conditional("#text/8", null, _expr_Text_other5);
+const _dynamicTagName4 = /* @__PURE__ */_conditional("#text/5", null, _expr_Text_other4);
+const _dynamicTagName3 = /* @__PURE__ */_conditional("#text/4", null, _expr_Text_other3);
+const _dynamicTagName2 = /* @__PURE__ */_conditional("#text/1", null, _expr_Text_other2);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_other);
 const _tagConstB = (_scope, tagConstB) => {};
 const _tagConstA = (_scope, tagConstA) => {};
-const _largeHeading = /* @__PURE__ */_value("largeHeading", (_scope, largeHeading) => _dynamicTagName5(_scope, largeHeading || "h2"), void 0, _dynamicTagName5);
+const _largeHeading = /* @__PURE__ */_value("largeHeading", (_scope, largeHeading) => _dynamicTagName6(_scope, largeHeading || "h2"), void 0, _dynamicTagName6);
 const _other = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#showDivNull/2"], "other", other);
   _attr(_scope["#showDiv/3"], "other", other);
@@ -87,9 +82,9 @@ const _other = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#h$Level/12"], "other", other);
   _attr(_scope["#tagConstA/13"], "other", other);
   _attr(_scope["#tagConstB/14"], "other", other);
-}, _intersections([_expr__dynamicTagName_other, _expr__dynamicTagName2_other, _expr__dynamicTagName3_other, _expr__dynamicTagName4_other, _expr__dynamicTagName5_ChildScope_other, _expr__dynamicTagName6_other]));
+}, _intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6]));
 const _level = (_scope, level) => {};
-const _tag = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5_ChildScope(_scope, tag || tagA), void 0, _dynamicTagName5_ChildScope);
+const _tag = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5(_scope, tag || tagA), void 0, _dynamicTagName5);
 const _isLarge = /* @__PURE__ */_value("isLarge", (_scope, isLarge) => {
   _dynamicTagName3(_scope, isLarge ? "h1" : "h2");
   _largeHeading(_scope, isLarge && "h1");

@@ -5,7 +5,8 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
-import type { Reserve } from "./reserve";
+import type { Binding } from "./references";
+import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
@@ -19,7 +20,8 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
-  closures?: Reserve[];
+  closures?: Binding[];
+  bindings: Set<Binding>;
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
 };
@@ -37,11 +39,11 @@ declare module "@marko/compiler/dist/types" {
 
 export function startSection(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
-): Section {
+): Section | undefined {
   const extra = (path.node.extra ??= {});
   let section = extra.section;
 
-  if (!section) {
+  if (!section && (path.type === "Program" || path.get("body").length)) {
     const parentSection = path.parentPath
       ? getOrCreateSection(path.parentPath)
       : undefined;
@@ -60,6 +62,7 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      bindings: new Set(),
       startNodeContentType: getStartNodeContentType(path),
       endNodeContentType: getEndNodeContentType(path),
     };
@@ -80,11 +83,15 @@ export function getOrCreateSection(path: t.NodePath<any>) {
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
           TagNameType.NativeTag)
     ) {
-      return startSection(cur);
+      return startSection(cur)!;
     }
 
     cur = cur.parentPath!;
   }
+}
+
+export function hasSection(path: t.NodePath) {
+  return path.node.extra?.section !== undefined;
 }
 
 export function getSection(path: t.NodePath) {
@@ -103,24 +110,6 @@ export function getSection(path: t.NodePath) {
 
 export function getParentSection(path: t.NodePath) {
   return getSection(path.parentPath!);
-}
-
-export function createSectionState<T = unknown>(
-  key: string,
-  init?: ((section: Section) => T) | (() => T),
-) {
-  return [
-    (section: Section): T => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      const sectionData = (arrayOfSectionData[section.id] ??=
-        init && init(section));
-      return sectionData as T;
-    },
-    (section: Section, value: T): void => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      arrayOfSectionData[section.id] = value;
-    },
-  ] as const;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(

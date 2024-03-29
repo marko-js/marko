@@ -46,19 +46,22 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     });
     _maybeFlush();
   }
-  let _i = 0;
+  let _i3 = 0;
   for (const col of [["a", "b"], ["c", "d"]]) {
     const _scope8_id = _nextScopeId();
-    let i = _i++;
+    let i = _i3++;
     const _row = [];
+    let _i2 = 0;
     for (const row of col) {
       const _scope10_id = _nextScopeId();
+      let _i = _i2++;
       _row.push({
         row: row,
         renderBody: /* @__PURE__ */_createRenderer(() => {
           _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
         })
       });
+      _writeScope(_scope10_id, (_s => (_scope10_.set(_i, _s), _s))({}));
       _maybeFlush();
     }
     _col.push({

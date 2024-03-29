@@ -2,9 +2,14 @@ import { type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
-import { mergeReferences } from "../util/references";
+import {
+  BindingType,
+  mergeReferences,
+  trackParamsReferences,
+  trackVarReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { getSection } from "../util/sections";
+import { getSection, startSection } from "../util/sections";
 import {
   addValue,
   getTagVarSignal,
@@ -13,15 +18,17 @@ import {
 import translateVar from "../util/translate-var";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
-import customTag from "../visitors/tag/custom-tag";
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      customTag.analyze.enter(tag);
+      const tagBody = tag.get("body");
+      startSection(tagBody);
+
+      trackVarReferences(tag, BindingType.derived);
+      trackParamsReferences(tagBody, BindingType.param);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      customTag.analyze.exit(tag);
       mergeReferences(
         tag,
         tag.node.attributes.map((attr) => attr.value),
@@ -53,7 +60,7 @@ export default {
         const section = getSection(tag);
         const tagBody = tag.get("body");
         const tagBodySection = getSection(tagBody);
-        const references = node.extra?.references;
+        const references = node.extra?.referencedBindings;
         const derivation = getTagVarSignal(tag.get("var"))!;
 
         let attrsObject = attrsToObject(tag);

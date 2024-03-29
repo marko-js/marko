@@ -1,18 +1,21 @@
 import { types as t } from "@marko/compiler";
 import { scopeIdentifier } from "../visitors/program";
 import { forEach } from "./optional";
-import type { References } from "./references";
-import { type Reserve, getScopeAccessorLiteral } from "./reserve";
+import {
+  type Binding,
+  type ReferencedBindings,
+  getScopeAccessorLiteral,
+} from "./references";
 import type { Section } from "./sections";
 
 export function createScopeReadPattern(
   section: Section,
-  references: References,
+  referencedBindings: ReferencedBindings,
 ) {
   const rootDepth = section.depth;
   const rootPattern = t.objectPattern([]);
   let nestedPatterns: t.ObjectPattern[] | undefined;
-  forEach(references, (ref) => {
+  forEach(referencedBindings, (ref) => {
     // TODO: need a better way to exclude internal references
     if (ref.name.includes("#")) return;
 
@@ -66,7 +69,7 @@ export function getScopeExpression(section: Section, targetSection: Section) {
 
 export function createScopeReadExpression(
   section: Section,
-  reference: Reserve,
+  reference: Binding,
 ) {
   return t.memberExpression(
     getScopeExpression(section, reference.section),

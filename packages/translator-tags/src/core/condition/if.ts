@@ -1,15 +1,17 @@
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { WalkCode } from "@marko/runtime-tags/common/types";
+import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 import { isCoreTagName } from "../../util/is-core-tag";
+import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
-import { mergeReferences } from "../../util/references";
 import {
-  ReserveType,
+  mergeReferences,
+  BindingType,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../../util/reserve";
+  type Binding,
+  createBinding,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   type Section,
@@ -17,6 +19,7 @@ import {
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
+  startSection,
 } from "../../util/sections";
 import {
   addValue,
@@ -34,19 +37,29 @@ import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../../visitors/program";
-import customTag from "../../visitors/tag/custom-tag";
+
+const kBinding = Symbol("if node binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kBinding]?: Binding;
+  }
+}
 
 export default {
   analyze: {
     enter(tag) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(tag),
-        tag.node,
-        tag.scope.generateUid("if"),
+      const tagBody = tag.get("body");
+      const section = getOrCreateSection(tag);
+      const tagExtra = (tag.node.extra ??= {});
+      startSection(tagBody);
+      tagExtra[kBinding] = createBinding(
         "#text",
+        BindingType.dom,
+        section,
+        undefined,
+        tagExtra,
       );
-      customTag.analyze.enter(tag);
     },
     exit(tag) {
       analyzeAttributeTags(tag);
@@ -147,11 +160,10 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
   if (isLast) {
     const rootTag = branches[0].tag;
     const rootExtra = rootTag.node.extra!;
-    const references = mergeReferences(
+    mergeReferences(
       rootTag,
       branches.map(({ tag }) => tag.node.attributes[0]?.value),
     );
-    rootExtra.isStateful = !!references;
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
@@ -162,7 +174,7 @@ export function enterBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const bodySection = getSection(tagBody);
   const rootExtra = getRoot(tag).node.extra!;
-  const isStateful = rootExtra.isStateful;
+  const isStateful = isStatefulReferences(rootExtra.referencedBindings);
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
   if (isOutputHTML() && isStateful && !singleNodeOptimization) {
@@ -179,7 +191,8 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const bodySection = getSection(tagBody);
   const [isLast, branches] = getBranches(tag, bodySection);
   const rootExtra = branches[0].tag.node.extra!;
-  const isStateful = rootExtra.isStateful;
+  const nodeRef = rootExtra[kBinding]!;
+  const isStateful = isStatefulReferences(rootExtra.referencedBindings);
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
   if (isOutputHTML()) {
@@ -214,7 +227,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           return callRuntime(
             "inConditionalScope",
             subscriber,
-            getScopeAccessorLiteral(extra.reserve!),
+            getScopeAccessorLiteral(nodeRef),
             /*writer.getRenderer(section)*/
           );
         });
@@ -232,17 +245,17 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      const signal = getSignal(section, extra.reserve);
+      const signal = getSignal(section, nodeRef, "if");
       signal.build = () => {
         return callRuntime(
           "conditional",
-          getScopeAccessorLiteral(extra.reserve!),
+          getScopeAccessorLiteral(nodeRef),
           getSignalFn(signal, [scopeIdentifier]),
         );
       };
       signal.hasDownstreamIntersections = () =>
         branches.some((b) => getClosures(b.section).length > 0);
-      addValue(section, extra.references, signal, expr);
+      addValue(section, extra.referencedBindings, signal, expr);
     } else {
       const write = writer.writeTo(tag);
       const nextTag = tag.getNextSibling();
@@ -319,22 +332,28 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           write`${callRuntime(
             "markResumeControlSingleNodeEnd",
             getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(extra.reserve!),
+            getScopeAccessorLiteral(nodeRef),
             ifScopeIdIdentifier,
           )}`;
         } else {
           write`${callRuntime(
             "markResumeControlEnd",
             getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(extra.reserve!),
+            getScopeAccessorLiteral(nodeRef),
           )}`;
         }
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "!"),
+          t.stringLiteral(
+            getScopeAccessorLiteral(nodeRef).value +
+              AccessorChar.ConditionalScope,
+          ),
           ifScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(extra.reserve!).value + "("),
+          t.stringLiteral(
+            getScopeAccessorLiteral(nodeRef).value +
+              AccessorChar.ConditionalRenderer,
+          ),
           ifRendererIdentifier,
         );
       }

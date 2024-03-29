@@ -8,13 +8,13 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _write(`<div>${_escapeXML(a)}${_markResumeNode(_scope1_id, "#text/0")}|<!>${_escapeXML(b)}${_markResumeNode(_scope1_id, "#text/1")}|<!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}</div>`);
     })
   };
-  const _dynamicScope = _dynamicTagArgs(myTag.renderBody, [1, "Hello", x]);
+  const _dynamicScope = _dynamicTagArgs(myTag, [1, "Hello", x]);
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}<button>${_escapeXML(x)}${_markResumeNode(_scope0_id, "#text/2")}</button>${_markResumeNode(_scope0_id, "#button/1")}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x");
   _writeScope(_scope0_id, {
     "x": x,
     "#text/0!": _dynamicScope,
-    "#text/0(": myTag.renderBody
+    "#text/0(": myTag
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko");

@@ -21,14 +21,14 @@ const _forBody8 = _register("packages/translator-tags/src/__tests__/fixtures/for
   if (!_clean) [i] = _destructure2;
   _i$forBody6(_scope, i, _clean);
 }));
-const _for8$forBody = /* @__PURE__ */_loopTo("#text/3", _forBody8);
+const _for$forBody = /* @__PURE__ */_loopTo("#text/3", _forBody8);
 const _i$forBody5 = /* @__PURE__ */_value("i", (_scope, i) => {
   _attr(_scope["#div/0"], "key", i);
   _data(_scope["#text/1"], i);
   _attr(_scope["#div/2"], "key", `other-${i}`);
 });
 const _setup$forBody = _scope => {
-  _for8$forBody(_scope, [10, 0, 2]);
+  _for$forBody(_scope, [10, 0, 2]);
 };
 const _forBody7 = _register("packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko_7_renderer", /* @__PURE__ */_createRenderer("<div> </div><div></div><div></div><!><!>", /* get, next(1), get, out(1), over(1), get, over(1), replace */" D lb b%D", _setup$forBody, void 0, void 0, (_scope, _destructure3, _clean) => {
   let i;

@@ -11,7 +11,7 @@ import {
 } from "@marko/runtime-tags/html";
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
-import type { Reserve } from "./reserve";
+import type { Binding } from "./references";
 import { getScopeExpression } from "./scope-read";
 import type { Section } from "./sections";
 
@@ -87,13 +87,13 @@ function getRuntimePath(output: string) {
 
 export function callQueue(
   identifier: t.Identifier,
-  reference: Reserve,
+  binding: Binding,
   value: t.Expression,
   section: Section,
 ) {
   return callRuntime(
     "queueSource",
-    getScopeExpression(section, reference.section),
+    getScopeExpression(section, binding.section),
     identifier,
     value,
   );
