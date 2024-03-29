@@ -7,14 +7,13 @@ import {
   mergeReferences,
   getScopeAccessorLiteral,
   type Binding,
-  createSelfReference,
-  SourceType,
+  createBinding,
+  BindingType,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import customTag from "../visitors/tag/custom-tag";
 
 const kRef = Symbol("lifecycle attrs reference");
 
@@ -29,14 +28,13 @@ export default {
     enter(tag) {
       assertNoParams(tag);
       assertNoBodyContent(tag);
-      customTag.analyze.enter(tag);
 
       const { node } = tag;
       const tagExtra = (node.extra ??= {});
-      tagExtra[kRef] = createSelfReference(
-        tag,
+      tagExtra[kRef] = createBinding(
         tag.scope.generateUid("lifecycle"),
-        SourceType.derived,
+        BindingType.derived,
+        getOrCreateSection(tag),
         undefined,
         tagExtra,
       );

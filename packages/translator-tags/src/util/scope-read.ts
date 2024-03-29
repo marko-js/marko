@@ -10,12 +10,12 @@ import type { Section } from "./sections";
 
 export function createScopeReadPattern(
   section: Section,
-  references: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
 ) {
   const rootDepth = section.depth;
   const rootPattern = t.objectPattern([]);
   let nestedPatterns: t.ObjectPattern[] | undefined;
-  forEach(references, (ref) => {
+  forEach(referencedBindings, (ref) => {
     // TODO: need a better way to exclude internal references
     if (ref.name.includes("#")) return;
 

@@ -13,7 +13,6 @@ declare module "@marko/compiler/dist/types" {
     tagNameNullable?: boolean;
     tagNameDynamic?: boolean;
     tagNameImported?: string;
-    tagNameDefine?: boolean;
   }
 }
 
@@ -41,17 +40,15 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             : TagNameType.CustomTag;
 
       if (extra.tagNameType === TagNameType.CustomTag) {
-        if (
-          t.isValidIdentifier(name.node.value) &&
-          tag.scope.hasBinding(name.node.value)
-        ) {
+        const bindingName = name.node.value;
+        const bindingIdentifier = tag.scope.getBinding(bindingName)?.identifier;
+        if (bindingIdentifier) {
           const tagIdentifier = withPreviousLocation(
-            t.identifier(name.node.value),
+            t.identifier(bindingName),
             name.node,
           );
           tagIdentifier.extra = {
-            referencedBindings: tag.scope.getBinding(name.node.value)
-              ?.identifier?.extra?.reserve,
+            referencedBindings: bindingIdentifier.extra?.binding,
           };
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {
@@ -83,8 +80,9 @@ function analyzeExpressionTagName(
 ) {
   const pending = [name] as t.NodePath<t.Expression>[];
   let path: (typeof pending)[0] | undefined;
-  let type: TagNameType | undefined = undefined;
+  let type: TagNameType | undefined;
   let nullable = false;
+  let tagNameImported: string | undefined;
 
   while ((path = pending.pop()) && type !== TagNameType.DynamicTag) {
     if (path.isConditionalExpression()) {
@@ -139,13 +137,13 @@ function analyzeExpressionTagName(
             resolveTagImport(name, decl.source.value) || decl.source.value;
           if (
             type === TagNameType.NativeTag ||
-            (extra.tagNameImported && extra.tagNameImported !== resolvedImport)
+            (tagNameImported && tagNameImported !== resolvedImport)
           ) {
             type = TagNameType.DynamicTag;
-            extra.tagNameImported = undefined;
+            tagNameImported = undefined;
           } else {
             type = TagNameType.CustomTag;
-            extra.tagNameImported = resolvedImport;
+            tagNameImported = resolvedImport;
           }
         } else {
           type = TagNameType.DynamicTag;
@@ -162,17 +160,6 @@ function analyzeExpressionTagName(
       ) {
         const bindingTagName = (bindingTag.get("name").node as t.StringLiteral)
           .value;
-
-        if (bindingTagName === "define") {
-          // TODO: Make work as a custom tag on the DOM
-          // type =
-          //   (type !== undefined && type !== TagNameTypes.CustomTag)
-          //     ? TagNameTypes.DynamicTag
-          //     : TagNameTypes.CustomTag;
-          type = TagNameType.DynamicTag;
-          extra.tagNameDefine = true;
-          continue;
-        }
 
         if (bindingTagName === "const") {
           pending.push(
@@ -199,7 +186,11 @@ function analyzeExpressionTagName(
   }
 
   // DOM implementation requires non strings actually be a dynamic tag call.
-  extra.tagNameType = type!;
+  extra.tagNameType = type;
   extra.tagNameNullable = nullable;
   extra.tagNameDynamic = true;
+
+  if (type === TagNameType.CustomTag && tagNameImported) {
+    extra.tagNameImported = tagNameImported;
+  }
 }

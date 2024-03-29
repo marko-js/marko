@@ -19,6 +19,7 @@ import {
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
+  startSection,
 } from "../../util/sections";
 import {
   addValue,
@@ -36,7 +37,6 @@ import toFirstStatementOrBlock from "../../util/to-first-statement-or-block";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../../visitors/program";
-import customTag from "../../visitors/tag/custom-tag";
 
 const kBinding = Symbol("if node binding");
 
@@ -49,15 +49,17 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
+      const tagBody = tag.get("body");
+      const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
+      startSection(tagBody);
       tagExtra[kBinding] = createBinding(
         "#text",
         BindingType.dom,
-        getOrCreateSection(tag),
+        section,
         undefined,
         tagExtra,
       );
-      customTag.analyze.enter(tag);
     },
     exit(tag) {
       analyzeAttributeTags(tag);
@@ -243,7 +245,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         }
       }
 
-      const signal = getSignal(section, nodeRef);
+      const signal = getSignal(section, nodeRef, "if");
       signal.build = () => {
         return callRuntime(
           "conditional",

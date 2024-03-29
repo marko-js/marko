@@ -3,10 +3,10 @@ const _value2$ifBody = _registerSubscriber("packages/translator-tags/src/__tests
 const _ifBody3 = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value2$ifBody]));
 const _value1$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_value1/subscriber", /* @__PURE__ */_dynamicClosure("value1", (_scope, value1) => _data(_scope["#text/0"], value1), _scope => _scope._._));
 const _ifBody2 = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value1$ifBody]));
-const _if3$ifBody = /* @__PURE__ */_conditional("#text/1");
-const _if2$ifBody = /* @__PURE__ */_conditional("#text/0");
-const _value2$ifBody2 = /* @__PURE__ */_closure("value2", (_scope, value2) => _if3$ifBody(_scope, value2 ? _ifBody3 : null), void 0, void 0, _if3$ifBody);
-const _value1$ifBody2 = /* @__PURE__ */_closure("value1", (_scope, value1) => _if2$ifBody(_scope, value1 ? _ifBody2 : null), void 0, void 0, _if2$ifBody);
+const _if$ifBody2 = /* @__PURE__ */_conditional("#text/1");
+const _if$ifBody = /* @__PURE__ */_conditional("#text/0");
+const _value2$ifBody2 = /* @__PURE__ */_closure("value2", (_scope, value2) => _if$ifBody2(_scope, value2 ? _ifBody3 : null), void 0, void 0, _if$ifBody2);
+const _value1$ifBody2 = /* @__PURE__ */_closure("value1", (_scope, value1) => _if$ifBody(_scope, value1 ? _ifBody2 : null), void 0, void 0, _if$ifBody);
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!><!><!><!>", /* replace, over(1), replace */"D%b%D", void 0, [_value1$ifBody2, _value2$ifBody2]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _value2 = /* @__PURE__ */_value3("value2", null, _intersections([_inConditionalScope(_value2$ifBody2, "#text/0"), _dynamicSubscribers("value2")]));

@@ -34,8 +34,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer");
   _writeScope(_scope0_id, {
     "outer": outer,
-    "count": count,
     "inner": inner,
+    "count": count,
     "#text/1!": _scope1_,
     "#text/1(": _ifRenderer2
   });

@@ -13,16 +13,18 @@ import {
   mergeReferences,
   getScopeAccessorLiteral,
   type Binding,
-  type ReferencedBindings,
-  bindingUtil,
   createBinding,
   BindingType,
+  addReferenceToExpression,
+  trackVarReferences,
+  trackParamsReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  startSection,
 } from "../../util/sections";
 import {
   addValue,
@@ -39,23 +41,27 @@ import translateVar from "../../util/translate-var";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import customTag, { getTagRelativePath } from "./custom-tag";
+import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
-const kAttrsBinding = Symbol("dynamic tag attrs binding");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kDOMBinding]?: Binding;
-    [kAttrsBinding]?: Binding;
   }
 }
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      const tagExtra = (tag.node.extra ??= {});
       const section = getOrCreateSection(tag);
+      const tagExtra = (tag.node.extra ??= {});
+      const tagBody = tag.get("body");
+      startSection(tagBody);
+
+      trackVarReferences(tag, BindingType.derived);
+      trackParamsReferences(tagBody, BindingType.param);
+
       tagExtra[kDOMBinding] = createBinding(
         "#text",
         BindingType.dom,
@@ -63,37 +69,10 @@ export default {
         undefined,
         tagExtra,
       );
-      let attrsReferencedBindings: ReferencedBindings;
-
-      for (const attr of tag.node.attributes) {
-        const attrExtra = (attr.value.extra ??= {});
-        const attrBinding = createBinding(
-          tag.scope.generateUid("name" in attr ? attr.name : "spread"),
-          BindingType.derived,
-          section,
-          undefined, // TODO
-          attrExtra,
-        );
-        attrBinding.downstreamExpressions.add(tagExtra);
-        attrsReferencedBindings = bindingUtil.add(
-          attrsReferencedBindings,
-          attrBinding,
-        );
-      }
-
-      tagExtra.referencedBindings = attrsReferencedBindings;
-      tagExtra.isEffect = true;
-      tagExtra[kAttrsBinding] = createBinding(
-        tag.scope.generateUid("attrs"),
-        BindingType.derived,
-        section,
-        undefined,
-        tagExtra,
-      );
-      customTag.analyze.enter(tag);
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const referenceNodes: t.Node[] = [];
+      const tagExtra = tag.node.extra!;
       if (tag.node.arguments) {
         for (const arg of tag.node.arguments) {
           referenceNodes.push(arg);
@@ -105,7 +84,7 @@ export default {
       }
 
       mergeReferences(tag, referenceNodes);
-      // addReference(tag, extra.reserve!); // todo
+      addReferenceToExpression(tag, tagExtra[kDOMBinding]!);
     },
   },
   translate: {
@@ -125,12 +104,9 @@ export default {
       const nodeRef = extra[kDOMBinding]!;
       let tagExpression = node.name;
 
-      if (node.extra!.tagNameDefine) {
-        tagExpression = t.memberExpression(
-          node.name,
-          t.identifier("renderBody"),
-        );
-      } else if (t.isStringLiteral(tagExpression)) {
+      // This is the interop layer leaking into the translator
+      // We use the dynamic tag when a custom tag from the class runtime is used
+      if (t.isStringLiteral(tagExpression)) {
         const { file } = tag.hub;
         const relativePath = getTagRelativePath(tag);
         tagExpression = importDefault(file, relativePath, tagExpression.value);
@@ -255,7 +231,7 @@ export default {
         const bodySection = getSection(tag.get("body"));
         const hasBody = section !== bodySection;
         const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
-        const signal = getSignal(section, nodeRef);
+        const signal = getSignal(section, nodeRef, "dynamicTagName");
         signal.build = () => {
           return callRuntime(
             "conditional",

@@ -39,11 +39,11 @@ declare module "@marko/compiler/dist/types" {
 
 export function startSection(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
-): Section {
+): Section | undefined {
   const extra = (path.node.extra ??= {});
   let section = extra.section;
 
-  if (!section) {
+  if (!section && (path.type === "Program" || path.get("body").length)) {
     const parentSection = path.parentPath
       ? getOrCreateSection(path.parentPath)
       : undefined;
@@ -83,11 +83,15 @@ export function getOrCreateSection(path: t.NodePath<any>) {
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
           TagNameType.NativeTag)
     ) {
-      return startSection(cur);
+      return startSection(cur)!;
     }
 
     cur = cur.parentPath!;
   }
+}
+
+export function hasSection(path: t.NodePath) {
+  return path.node.extra?.section !== undefined;
 }
 
 export function getSection(path: t.NodePath) {

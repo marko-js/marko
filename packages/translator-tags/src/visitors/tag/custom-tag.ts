@@ -1,5 +1,4 @@
 import {
-  assertAttributesOrArgs,
   assertAttributesOrSingleArg,
   getTagTemplate,
   importDefault,
@@ -14,11 +13,10 @@ import {
   createBinding,
   trackVarReferences,
   trackParamsReferences,
-  type ReferencedBindings,
-  bindingUtil,
   getScopeAccessorLiteral,
   type Binding,
   BindingType,
+  mergeReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
@@ -43,55 +41,28 @@ import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
 const kChildScopeBinding = Symbol("custom tag child scope");
-const kAttrsBinding = Symbol("custom tag attrs");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kChildScopeBinding]?: Binding;
-    [kAttrsBinding]?: Binding;
   }
 }
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      trackVarReferences(tag, BindingType.derived);
-
       const section = getOrCreateSection(tag);
-      const body = tag.get("body");
-      if (body.get("body").length) {
-        startSection(body);
-        trackParamsReferences(body, BindingType.param);
-      }
+      const tagBody = tag.get("body");
+
+      startSection(tagBody);
+      trackVarReferences(tag, BindingType.derived);
+      trackParamsReferences(tagBody, BindingType.param);
 
       if (getTagTemplate(tag)) {
         const tagExtra = (tag.node.extra ??= {});
         tagExtra[kChildScopeBinding] = createBinding(
-          tag.scope.generateUid("childScope"),
+          "#childScope",
           BindingType.dom,
-          section,
-          undefined,
-          tagExtra,
-        );
-        let attrsReferences: ReferencedBindings;
-
-        for (const attr of tag.node.attributes) {
-          attrsReferences = bindingUtil.add(
-            attrsReferences,
-            createBinding(
-              tag.scope.generateUid("name" in attr ? attr.name : "spread"),
-              BindingType.derived,
-              section,
-              undefined, // TODO
-              (attr.value.extra ??= {}),
-            ),
-          );
-        }
-
-        tagExtra.referencedBindings = attrsReferences;
-        (tag.node.extra ??= {})[kAttrsBinding] = createBinding(
-          tag.scope.generateUid("attrs"),
-          BindingType.derived,
           section,
           undefined,
           tagExtra,
@@ -109,15 +80,20 @@ export default {
         // TODO: should check individual inputs to see if they are intersecting with state
       }
     },
+    exit(tag: t.NodePath<t.MarkoTag>) {
+      // TODO: only if dynamic attributes
+      const template = getTagTemplate(tag);
+      if (template) {
+        mergeReferences(
+          tag,
+          tag.node.attributes.map((attr) => attr.value),
+        );
+      }
+    },
   },
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      if (tag.node.extra?.tagNameDefine) {
-        assertAttributesOrArgs(tag);
-      } else {
-        assertAttributesOrSingleArg(tag);
-      }
-
+      assertAttributesOrSingleArg(tag);
       walks.visit(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
@@ -141,9 +117,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   writer.flushInto(tag);
   writeHTMLResumeStatements(tagBody);
 
-  if (node.extra!.tagNameDefine) {
-    tagIdentifier = t.memberExpression(node.name, t.identifier("renderBody"));
-  } else if (t.isStringLiteral(node.name)) {
+  if (t.isStringLiteral(node.name)) {
     const { file } = tag.hub;
     const tagName = node.name.value;
     const relativePath = getTagRelativePath(tag);
@@ -160,8 +134,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const attrsObject = attrsToObject(tag, true);
   const renderBodyProp = getRenderBodyProp(attrsObject);
   const section = getSection(tag);
-  const nodeRef = node.extra![kChildScopeBinding]!;
-  const peekScopeId = tag.scope.generateUidIdentifier(nodeRef?.name);
+  const childScopeBinding = node.extra![kChildScopeBinding]!;
+  const peekScopeId = tag.scope.generateUidIdentifier(childScopeBinding?.name);
   tag.insertBefore(
     t.variableDeclaration("const", [
       t.variableDeclarator(peekScopeId, callRuntime("peekSerializedScope")),
@@ -169,7 +143,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   );
 
   getSerializedScopeProperties(section).set(
-    getScopeAccessorLiteral(nodeRef),
+    getScopeAccessorLiteral(childScopeBinding),
     peekScopeId,
   );
 
@@ -242,7 +216,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           t.stringLiteral(
             getResumeRegisterId(
               section,
-              (node.var as t.Identifier).extra?.referencedBindings, // TODO: node.var is not always an identifier.
+              (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
             ),
           ),
           getScopeIdIdentifier(section),
@@ -262,7 +236,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const tagBodySection = getSection(tagBody);
   const { node } = tag;
   const extra = node.extra!;
-  const nodeRef = extra[kChildScopeBinding]!;
+  const childScopeBinding = extra[kChildScopeBinding]!;
   const write = writer.writeTo(tag);
   const { file } = tag.hub;
   const tagName = t.isIdentifier(node.name)
@@ -273,7 +247,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const childProgram = childFile.ast.program;
   const tagIdentifier = importNamed(file, relativePath, "setup", tagName);
   let tagAttrsIdentifier: t.Identifier | undefined;
-  if (childProgram.params[0].extra?.referencedBindings) {
+  if (childProgram.params[0].extra?.binding?.downstreamExpressions.size) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,
@@ -317,7 +291,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         callRuntime(
           "setTagVar",
           scopeIdentifier,
-          getScopeAccessorLiteral(nodeRef),
+          getScopeAccessorLiteral(childScopeBinding),
           source.identifier,
         ),
       ),
@@ -329,7 +303,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     undefined,
     t.expressionStatement(
       t.callExpression(tagIdentifier, [
-        createScopeReadExpression(tagSection, nodeRef),
+        createScopeReadExpression(tagSection, childScopeBinding),
       ]),
     ),
   );
@@ -342,10 +316,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         hasDownstreamIntersections: () => true,
       },
       t.arrayExpression([attrsObject]),
-      createScopeReadExpression(tagSection, nodeRef),
+      createScopeReadExpression(tagSection, childScopeBinding),
       callRuntime(
         "inChild",
-        getScopeAccessorLiteral(nodeRef),
+        getScopeAccessorLiteral(childScopeBinding),
         t.identifier(tagAttrsIdentifier.name),
       ),
     );

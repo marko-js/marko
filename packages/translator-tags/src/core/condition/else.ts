@@ -1,6 +1,6 @@
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
-import customTag from "../../visitors/tag/custom-tag";
+import { startSection } from "../../util/sections";
 import {
   enterBranchTranslate,
   exitBranchAnalyze,
@@ -10,7 +10,7 @@ import {
 export default {
   analyze: {
     enter(tag) {
-      customTag.analyze.enter(tag);
+      startSection(tag.get("body"));
     },
     exit(tag) {
       exitBranchAnalyze(tag);

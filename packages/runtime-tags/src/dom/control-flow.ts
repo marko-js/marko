@@ -42,7 +42,9 @@ export let conditional = function conditional(
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRenderer, clean) => {
     newRenderer = newRenderer
-      ? (newRenderer as any as Template)._ || newRenderer
+      ? (newRenderer as any as Template)._ ||
+        (newRenderer as any).renderBody ||
+        newRenderer
       : undefined;
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName

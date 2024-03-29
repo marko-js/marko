@@ -20,9 +20,9 @@ import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   type Section,
-  getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  hasSection,
 } from "./sections";
 import { createSectionState } from "./state";
 
@@ -32,7 +32,7 @@ export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 export type Signal = {
   identifier: t.Identifier;
   valueAccessor?: t.Expression;
-  references: ReferencedBindings;
+  referencedBindings: ReferencedBindings;
   section: Section;
   build: () => t.Expression;
   register?: boolean;
@@ -110,15 +110,21 @@ const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
 };
 
-export function getSignal(section: Section, references?: ReferencedBindings) {
+export function getSignal(
+  section: Section,
+  references?: ReferencedBindings,
+  name: string = generateSignalName(references),
+) {
   const signals = getSignals(section);
   let signal = signals.get(references)!;
   if (!signal) {
     signals.set(
       references,
       (signal = {
-        identifier: t.identifier(generateSignalName(section, references)),
-        references: references,
+        identifier: currentProgramPath.scope.generateUidIdentifier(
+          name + section.name.replace("_", "$"),
+        ),
+        referencedBindings: references,
         section,
         values: [],
         intersection: undefined,
@@ -190,15 +196,15 @@ export function getSignal(section: Section, references?: ReferencedBindings) {
 }
 
 export function initValue(
-  reference: Binding,
-  valueAccessor = getScopeAccessorLiteral(reference),
+  binding: Binding,
+  valueAccessor = getScopeAccessorLiteral(binding),
 ) {
-  const section = reference.section;
-  const signal = getSignal(section, reference);
+  const section = binding.section;
+  const signal = getSignal(section, binding);
   signal.build = () => {
     const fn = getSignalFn(signal, [
       scopeIdentifier,
-      t.identifier(reference.name),
+      t.identifier(binding.name),
     ]);
     const intersections = buildSignalIntersections(signal);
     const valuesWithIntersections = buildSignalValuesWithIntersections(signal);
@@ -424,7 +430,7 @@ export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
   );
 }
 
-function generateSignalName(section: Section, references?: ReferencedBindings) {
+function generateSignalName(references?: ReferencedBindings) {
   let name;
 
   if (references) {
@@ -439,9 +445,7 @@ function generateSignalName(section: Section, references?: ReferencedBindings) {
   } else {
     name = "setup";
   }
-
-  name += section.name.replace("_", "$");
-  return currentProgramPath.scope.generateUid(name);
+  return name;
 }
 
 export function queueSource(
@@ -594,7 +598,9 @@ export function writeSignals(section: Section) {
         effectIdentifier,
         callRuntime(
           "register",
-          t.stringLiteral(getResumeRegisterId(section, signal.references)),
+          t.stringLiteral(
+            getResumeRegisterId(section, signal.referencedBindings),
+          ),
           t.arrowFunctionExpression(
             [scopeIdentifier],
             signal.effect.length === 1 &&
@@ -620,7 +626,9 @@ export function writeSignals(section: Section) {
     if (signal.register) {
       value = callRuntime(
         "register",
-        t.stringLiteral(getResumeRegisterId(section, signal.references)),
+        t.stringLiteral(
+          getResumeRegisterId(section, signal.referencedBindings),
+        ),
         value,
       );
     }
@@ -629,7 +637,7 @@ export function writeSignals(section: Section) {
       value = callRuntime(
         "registerSubscriber",
         t.stringLiteral(
-          getResumeRegisterId(section, signal.references, "subscriber"),
+          getResumeRegisterId(section, signal.referencedBindings, "subscriber"),
         ),
         value,
       );
@@ -664,7 +672,7 @@ function sortSignals(a: Signal, b: Signal) {
   return 0;
 }
 
-function getReserves({ references: reserve }: Signal) {
+function getReserves({ referencedBindings: reserve }: Signal) {
   if (!reserve) {
     return [];
   } else if (Array.isArray(reserve)) {
@@ -691,7 +699,9 @@ export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
   tagVarIdentifier?: t.Identifier,
 ) {
-  const section = getOrCreateSection(path);
+  if (!hasSection(path)) return;
+
+  const section = getSection(path);
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   const closures = section.closures;
@@ -713,7 +723,7 @@ export function writeHTMLResumeStatements(
 
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
-      const signalRefs = allSignals[i].references;
+      const signalRefs = allSignals[i].referencedBindings;
       path.pushContainer(
         "body",
         t.expressionStatement(
@@ -731,7 +741,7 @@ export function writeHTMLResumeStatements(
   const additionalProperties = getSerializedScopeProperties(section);
   const serializedProperties: t.ObjectProperty[] = [];
   section.bindings.forEach((binding) => {
-    if (binding.serialize) {
+    if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
       if (binding.section.id === section.id) {
         serializedProperties.push(

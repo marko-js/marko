@@ -23,11 +23,11 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
 
-const kBinding = Symbol("native tag binding");
+export const kNativeTagBinding = Symbol("native tag binding");
 
 declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kBinding]?: Binding;
+  export interface NodeExtra {
+    [kNativeTagBinding]?: Binding;
   }
 }
 
@@ -69,14 +69,9 @@ export default {
           node.name.type === "StringLiteral"
             ? node.name.value
             : t.toIdentifier(tag.get("name"));
-        const varName = node.var
-          ? node.var.type === "Identifier"
-            ? node.var.name
-            : t.toIdentifier(tag.get("var"))
-          : tagName;
-
-        (node.extra ??= {})[kBinding] = createBinding(
-          "#" + varName,
+        const tagExtra = (node.extra ??= {});
+        tagExtra[kNativeTagBinding] = createBinding(
+          "#" + tagName,
           BindingType.dom,
           section,
         );
@@ -88,7 +83,7 @@ export default {
       assertNoArgs(tag);
 
       const extra = tag.node.extra!;
-      const nodeRef = extra[kBinding];
+      const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const attrs = tag.get("attributes");
@@ -293,7 +288,7 @@ export default {
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
       const extra = tag.node.extra!;
-      const nodeRef = extra[kBinding];
+      const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
 

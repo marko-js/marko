@@ -251,11 +251,7 @@ function trackReference(
   const section = getOrCreateSection(exprRoot);
   const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
-  exprExtra.referencedBindings = addReference(
-    exprExtra.referencedBindings,
-    binding,
-  );
-  binding.downstreamExpressions.add(exprExtra);
+  addReferenceToExpression(exprRoot, binding);
 
   // TODO: this should be in finalizeReferences
   // probably should be a set
@@ -272,6 +268,7 @@ function trackReference(
     if (fnRoot !== exprRoot) {
       fnExtra = fnRoot.node.extra ??= {};
       fnExtra.referencedBindings = addReference(
+        section,
         fnExtra.referencedBindings,
         reference,
       );
@@ -320,20 +317,22 @@ export function finalizeReferences() {
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
-      let newReferences: ReferencedBindings;
+      const targetExtra = (target.node.extra ??= {});
+      let newReferences: ReferencedBindings = targetExtra.referencedBindings;
       for (const node of nodes) {
         const extra = node?.extra;
         const references = extra?.referencedBindings;
         if (references) {
           newReferences = bindingUtil.union(newReferences, references);
-          forEach(references, (reference) => {
-            reference.downstreamExpressions.delete(extra);
+          forEach(references, ({ downstreamExpressions }) => {
+            downstreamExpressions.delete(extra);
+            downstreamExpressions.add(targetExtra);
           });
         }
       }
 
       newReferences = findReferences(getOrCreateSection(target), newReferences);
-      (target.node.extra ??= {}).referencedBindings = newReferences;
+      targetExtra.referencedBindings = newReferences;
     }
 
     mergedReferences.clear();
@@ -362,16 +361,17 @@ export function finalizeReferences() {
     const { section } = binding;
     section.bindings.add(binding);
     for (const {
-      referencedBindings: references,
+      referencedBindings,
       isEffect,
     } of binding.downstreamExpressions) {
-      if (Array.isArray(references)) {
-        intersections.add(references);
+      if (Array.isArray(referencedBindings)) {
+        intersections.add(referencedBindings);
       }
 
-      forEach(references, (bindingReference) => {
+      forEach(referencedBindings, (bindingReference) => {
         if (isEffect) {
           bindingReference.serialize = true;
+          section.bindings.add(bindingReference);
         }
       });
     }
@@ -397,8 +397,10 @@ export function finalizeReferences() {
     }
   }
 
-  forEachSection(({ bindings }) => {
-    const sortedBindings = [...bindings].sort(bindingUtil.compare);
+  forEachSection(({ id, bindings }) => {
+    const sortedBindings = [...bindings]
+      .filter((b) => b.section.id === id)
+      .sort(bindingUtil.compare);
     for (let i = sortedBindings.length; i--; ) {
       const binding = sortedBindings[i];
       binding.id = i;
@@ -431,28 +433,47 @@ const [getIntersections, setIntersections] = createSectionState(
   "intersections",
   () => [] as Intersection[],
 );
-function addReference(references: ReferencedBindings, reference: Binding) {
-  const newIntersection = bindingUtil.add(references, reference);
-  return findReferences(reference.section, newIntersection);
+export function addReferenceToExpression(path: t.NodePath, binding: Binding) {
+  const exprExtra = (path.node.extra ??= {});
+  const section = getOrCreateSection(path);
+  exprExtra.referencedBindings = addReference(
+    section,
+    exprExtra.referencedBindings,
+    binding,
+  );
+  binding.downstreamExpressions.add(exprExtra);
 }
 
-function findReferences(section: Section, references: ReferencedBindings) {
-  if (!references || !Array.isArray(references)) {
-    return references;
+function addReference(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+  binding: Binding,
+) {
+  section.bindings.add(binding);
+  const newIntersection = bindingUtil.add(referencedBindings, binding);
+  return findReferences(section, newIntersection);
+}
+
+function findReferences(
+  section: Section,
+  referencedBindings: ReferencedBindings,
+) {
+  if (!referencedBindings || !Array.isArray(referencedBindings)) {
+    return referencedBindings;
   }
 
   const intersections = getIntersections(section);
   let intersection = findSorted(
     compareIntersections,
     intersections,
-    references,
+    referencedBindings,
   );
   if (!intersection) {
     setIntersections(
       section,
-      addSorted(compareIntersections, intersections, references),
+      addSorted(compareIntersections, intersections, referencedBindings),
     );
-    intersection = references;
+    intersection = referencedBindings;
   }
   return intersection;
 }

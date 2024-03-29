@@ -15,6 +15,7 @@ import {
   type Binding,
   createBinding,
   BindingType,
+  trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
@@ -22,6 +23,7 @@ import {
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
+  startSection,
 } from "../util/sections";
 import {
   addValue,
@@ -36,12 +38,12 @@ import {
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
-import customTag from "../visitors/tag/custom-tag";
+import { kNativeTagBinding } from "../visitors/tag/native-tag";
 
-const kBinding = Symbol("for node binding");
+const kForMarkerBinding = Symbol("for marker binding");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kBinding]?: Binding;
+    [kForMarkerBinding]?: Binding;
   }
 }
 
@@ -50,17 +52,27 @@ export default {
     enter(tag) {
       const isOnlyChild = checkOnlyChild(tag);
       const tagExtra = (tag.node.extra ??= {});
-      const containerExtra = isOnlyChild
-        ? (tag.parentPath.parent.extra ??= {})
-        : tagExtra;
-      containerExtra[kBinding] = createBinding(
-        "#text",
-        BindingType.dom,
-        getOrCreateSection(tag),
-        undefined,
-        tagExtra,
-      );
-      customTag.analyze.enter(tag);
+      const tagBody = tag.get("body");
+      const section = getOrCreateSection(tag)!;
+      startSection(tagBody);
+
+      if (isOnlyChild) {
+        const parentTag = tag.parentPath.parent as t.MarkoTag;
+        const parentTagName = (parentTag.name as t.StringLiteral)?.value;
+        (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
+          "#" + parentTagName,
+          BindingType.dom,
+          section,
+        );
+      } else {
+        tagExtra[kForMarkerBinding] = createBinding(
+          "#text",
+          BindingType.dom,
+          section,
+        );
+      }
+
+      trackParamsReferences(tagBody, BindingType.param);
     },
     exit(tag) {
       const extra = tag.node.extra!;
@@ -83,13 +95,16 @@ export default {
       const tagExtra = tag.node.extra!;
       const { singleNodeOptimization, isOnlyChild } = tagExtra;
       const isStateful = isStatefulReferences(tagExtra.referencedBindings);
+      const hasNestedAttributeTags =
+        tagExtra.nestedAttributeTags &&
+        Object.keys(tagExtra.nestedAttributeTags).length > 0;
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);
       }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
-        if (isStateful && !singleNodeOptimization) {
+        if (isStateful && !singleNodeOptimization && !hasNestedAttributeTags) {
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
             getScopeIdIdentifier(bodySection),
@@ -177,10 +192,10 @@ const translateDOM = {
     const bodySection = getSection(tagBody);
     const { node } = tag;
     const { attributes } = node;
-    const { isOnlyChild, referencedBindings: references } = node.extra!;
-    const nodeRef = (
-      isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : tag.node
-    ).extra![kBinding]!;
+    const { isOnlyChild, referencedBindings } = node.extra!;
+    const nodeRef = isOnlyChild
+      ? tag.parentPath.parent.extra![kNativeTagBinding]!
+      : tag.node.extra![kForMarkerBinding]!;
     const paramIdentifiers = Object.values(
       tagBody.getBindingIdentifiers(),
     ) as t.Identifier[];
@@ -231,7 +246,7 @@ const translateDOM = {
       loopArgs.push(byAttr.value);
     }
 
-    const signal = getSignal(tagSection, nodeRef);
+    const signal = getSignal(tagSection, nodeRef, "for");
     signal.build = () => {
       return callRuntime(
         loopKind,
@@ -262,7 +277,12 @@ const translateDOM = {
       return false;
     };
 
-    addValue(tagSection, references, signal, t.arrayExpression(loopArgs));
+    addValue(
+      tagSection,
+      referencedBindings,
+      signal,
+      t.arrayExpression(loopArgs),
+    );
   },
 };
 
@@ -279,8 +299,12 @@ const translateHTML = {
     const tagExtra = node.extra!;
     const { singleNodeOptimization, isOnlyChild } = tagExtra;
     const isStateful = isStatefulReferences(tagExtra.referencedBindings);
-    const nodeRef = (isOnlyChild ? (tag.parentPath.parent as t.MarkoTag) : node)
-      .extra![kBinding]!;
+    const hasNestedAttributeTags =
+      tagExtra.nestedAttributeTags &&
+      Object.keys(tagExtra.nestedAttributeTags).length > 0;
+    const nodeRef = isOnlyChild
+      ? tag.parentPath.parent.extra![kNativeTagBinding]!
+      : tag.node.extra![kForMarkerBinding]!;
     const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
@@ -476,7 +500,7 @@ const translateHTML = {
       );
     }
 
-    if (isStateful || bodySection.closures) {
+    if ((isStateful || bodySection.closures) && !hasNestedAttributeTags) {
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
       const forScopesIdentifier = getScopeIdentifier(bodySection);

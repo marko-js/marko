@@ -32,11 +32,11 @@ const _classLayoutBody = _register("packages/translator-interop/src/__tests__/fi
   _message$classLayoutBody(_scope, message, _clean);
 }));
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), void 0, _classLayout_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), void 0, _classLayout_input);
 const _multiplier = /* @__PURE__ */_value("multiplier", null, _dynamicSubscribers("multiplier"));
 const _setup = _scope => {
   _multiplier(_scope, 1);
-  _dynamicTagName_ChildScope(_scope, _classLayout || _classLayoutBody);
+  _dynamicTagName(_scope, _classLayout || _classLayoutBody);
 };
 export const template = "<!><!><!>";
 export const walks = /* replace, over(1) */"D%bD";

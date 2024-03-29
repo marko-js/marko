@@ -1,5 +1,4 @@
 import type { types as t } from "@marko/compiler";
-import type { ReferencedBindings } from "./references";
 type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
   | t.MarkoTagBody
@@ -40,15 +39,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
     curPath = (curPath as t.NodePath<t.Node>).parentPath!;
   }
 
-  return curPath as
-    | undefined
-    | t.NodePath<
-        (t.FunctionExpression | t.ArrowFunctionExpression) & {
-          extra?: {
-            references?: ReferencedBindings;
-          };
-        }
-      >;
+  return curPath;
 }
 
 function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {

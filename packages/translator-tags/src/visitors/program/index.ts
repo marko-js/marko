@@ -43,7 +43,7 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      const section = startSection(program);
+      const section = startSection(program)!;
 
       const inputBinding = program.scope.getBinding("input")!;
       if (
