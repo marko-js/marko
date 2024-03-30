@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@marko/babel-utils": "^6.4.2",
-    "@marko/runtime-tags": "^0.1.4"
+    "@marko/runtime-tags": "^0.1.5"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
