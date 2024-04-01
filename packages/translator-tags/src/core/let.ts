@@ -2,7 +2,11 @@ import { type Tag, assertNoParams } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import { getScopeAccessorLiteral } from "../util/references";
+import {
+  BindingType,
+  getScopeAccessorLiteral,
+  trackVarReferences,
+} from "../util/references";
 import { registerAssignmentGenerator } from "../util/replace-assignments";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
@@ -11,42 +15,61 @@ import translateVar from "../util/translate-var";
 import { currentProgramPath } from "../visitors/program";
 
 export default {
+  analyze: {
+    enter(tag: t.NodePath<t.MarkoTag>) {
+      const { node } = tag;
+      const tagVar = node.var;
+      const defaultAttr = node.attributes.find(
+        (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
+      );
+
+      assertNoParams(tag);
+      assertNoBodyContent(tag);
+
+      if (!tagVar) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError("The 'let' tag requires a tag variable.");
+      }
+
+      if (!t.isIdentifier(tagVar)) {
+        throw tag
+          .get("var")
+          .buildCodeFrameError("The 'let' cannot be destructured.");
+      }
+
+      const upstreamExpressionExtra = defaultAttr
+        ? (defaultAttr.value.extra ??= {})
+        : undefined;
+      trackVarReferences(
+        tag,
+        BindingType.let,
+        undefined,
+        upstreamExpressionExtra,
+      );
+    },
+  },
   translate(tag) {
     const { node } = tag;
-    const tagVar = node.var;
+    const tagVar = node.var!;
     const defaultAttr =
       node.attributes.find(
         (attr) =>
           t.isMarkoAttribute(attr) && (attr.default || attr.name === "value"),
       ) ?? t.markoAttribute("value", t.identifier("undefined"));
 
-    assertNoParams(tag);
-    assertNoBodyContent(tag);
-
-    if (!tagVar) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'let' tag requires a tag variable.");
-    }
-
-    if (!t.isIdentifier(tagVar)) {
-      throw tag
-        .get("var")
-        .buildCodeFrameError("The 'let' cannot be destructured.");
-    }
-
     if (isOutputDOM()) {
       const section = getSection(tag);
       const binding = tagVar.extra!.binding!;
       const signal = initValue(binding);
-      const references = defaultAttr.value.extra?.referencedBindings;
-      const isSetup = !references;
+      const referencedBindings = defaultAttr.value.extra?.referencedBindings;
+      const isSetup = !referencedBindings;
 
       if (!isSetup) {
         let initValueId: t.Identifier | undefined;
         addValue(
           section,
-          references,
+          referencedBindings,
           {
             get identifier() {
               if (!initValueId) {
@@ -77,7 +100,7 @@ export default {
           defaultAttr.value,
         );
       } else {
-        addValue(section, references, signal, defaultAttr.value);
+        addValue(section, referencedBindings, signal, defaultAttr.value);
       }
 
       registerAssignmentGenerator(

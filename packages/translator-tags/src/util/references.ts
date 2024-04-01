@@ -321,10 +321,10 @@ export function finalizeReferences() {
       let newReferences: ReferencedBindings = targetExtra.referencedBindings;
       for (const node of nodes) {
         const extra = node?.extra;
-        const references = extra?.referencedBindings;
-        if (references) {
-          newReferences = bindingUtil.union(newReferences, references);
-          forEach(references, ({ downstreamExpressions }) => {
+        const referencedBindings = extra?.referencedBindings;
+        if (referencedBindings) {
+          newReferences = bindingUtil.union(newReferences, referencedBindings);
+          forEach(referencedBindings, ({ downstreamExpressions }) => {
             downstreamExpressions.delete(extra);
             downstreamExpressions.add(targetExtra);
           });
@@ -385,12 +385,12 @@ export function finalizeReferences() {
       for (let j = i + 1; j < numReferences; j++) {
         const binding1 = intersection[i];
         const binding2 = intersection[j];
-        const states1 = getStatefulUpstreams(binding1);
-        const states2 = getStatefulUpstreams(binding2);
-        if (!binding1.serialize && !isSuperset(states1, states2)) {
+        const sources1 = getSourceBindings(binding1);
+        const sources2 = getSourceBindings(binding2);
+        if (!binding1.serialize && !isSuperset(sources1, sources2)) {
           binding1.serialize = true;
         }
-        if (!binding2.serialize && !isSuperset(states2, states1)) {
+        if (!binding2.serialize && !isSuperset(sources2, sources1)) {
           binding2.serialize = true;
         }
       }
@@ -417,16 +417,48 @@ function isSuperset(set: Set<any>, subset: Set<any>) {
   return true;
 }
 
-function getStatefulUpstreams(binding: Binding): Set<Binding> {
-  // TODO: walk up the sources, without implementing this properly more values may be serialized than necessary
-  return new Set([binding]);
+function getSourceBindings(binding: Binding): Set<Binding> {
+  // TODO: is this right?
+  const derived = new Set<Binding>();
+  const sources = new Set<Binding>();
+  crawl(binding);
+  return sources;
+
+  function crawl(binding: Binding) {
+    if (binding.type === BindingType.derived) {
+      let alias: Binding | undefined;
+      let curBinding = binding;
+      while ((alias = curBinding.upstreamAlias)) {
+        curBinding = alias;
+      }
+
+      if (curBinding.upstreamExpression) {
+        if (derived.has(curBinding)) return;
+        derived.add(curBinding);
+        forEach(
+          curBinding.upstreamExpression.referencedBindings,
+          (curBinding) => {
+            crawl(curBinding);
+          },
+        );
+      } else {
+        sources.add(curBinding);
+      }
+    } else {
+      sources.add(binding);
+    }
+  }
 }
 
 export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
-  return a.section.id - b.section.id || a.type - b.type || a.id - b.id;
+  return a.section.id - b.section.id ||
+    (a.type !== b.type &&
+      (a.type === BindingType.dom || b.type === BindingType.dom))
+    ? a.type - b.type
+    : a.id - b.id;
 });
 
 const [getIntersections, setIntersections] = createSectionState(

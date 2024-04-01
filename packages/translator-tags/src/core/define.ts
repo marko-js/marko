@@ -60,7 +60,7 @@ export default {
         const section = getSection(tag);
         const tagBody = tag.get("body");
         const tagBodySection = getSection(tagBody);
-        const references = node.extra?.referencedBindings;
+        const referencedBindings = node.extra?.referencedBindings;
         const derivation = getTagVarSignal(tag.get("var"))!;
 
         let attrsObject = attrsToObject(tag);
@@ -78,7 +78,7 @@ export default {
           );
         }
 
-        addValue(section, references, derivation, attrsObject);
+        addValue(section, referencedBindings, derivation, attrsObject);
       }
 
       tag.remove();

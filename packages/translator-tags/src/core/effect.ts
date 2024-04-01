@@ -40,7 +40,7 @@ export default {
       const [defaultAttr] = node.attributes;
       const section = getSection(tag);
       const { value } = defaultAttr;
-      const references = value.extra?.referencedBindings;
+      const referencedBindings = value.extra?.referencedBindings;
       if (isOutputDOM()) {
         const { value } = defaultAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;
@@ -65,14 +65,14 @@ export default {
         addStatement(
           "effect",
           section,
-          references,
+          referencedBindings,
           inlineBody ||
             t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
           value,
           !!inlineBody,
         );
       } else {
-        addHTMLEffectCall(section, references);
+        addHTMLEffectCall(section, referencedBindings);
       }
 
       tag.remove();

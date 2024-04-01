@@ -71,7 +71,7 @@ export default {
 
       const section = getSection(tag);
       const tagExtra = node.extra!;
-      const { referencedBindings: references } = tagExtra;
+      const { referencedBindings } = tagExtra;
       const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {
@@ -79,7 +79,7 @@ export default {
         addStatement(
           "effect",
           section,
-          references,
+          referencedBindings,
           t.expressionStatement(
             callRuntime(
               "lifecycle",
@@ -91,7 +91,7 @@ export default {
           node.attributes.map((a) => a.value),
         );
       } else {
-        addHTMLEffectCall(section, references);
+        addHTMLEffectCall(section, referencedBindings);
       }
 
       tag.remove();
