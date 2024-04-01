@@ -112,19 +112,19 @@ const unimplementedBuild = () => {
 
 export function getSignal(
   section: Section,
-  references?: ReferencedBindings,
-  name: string = generateSignalName(references),
+  referencedBindings: ReferencedBindings,
+  name: string = generateSignalName(referencedBindings),
 ) {
   const signals = getSignals(section);
-  let signal = signals.get(references)!;
+  let signal = signals.get(referencedBindings)!;
   if (!signal) {
     signals.set(
-      references,
+      referencedBindings,
       (signal = {
         identifier: currentProgramPath.scope.generateUidIdentifier(
           name + section.name.replace("_", "$"),
         ),
-        referencedBindings: references,
+        referencedBindings,
         section,
         values: [],
         intersection: undefined,
@@ -152,19 +152,22 @@ export function getSignal(
 
     if (isOutputHTML()) {
       return signal;
-    } else if (!references) {
+    } else if (!referencedBindings) {
       signal.build = () => getSignalFn(signal, [scopeIdentifier]);
-    } else if (Array.isArray(references)) {
-      subscribe(references, signal);
+    } else if (Array.isArray(referencedBindings)) {
+      subscribe(referencedBindings, signal);
       signal.build = () => {
         return callRuntime(
           "intersection",
-          t.numericLiteral(references.length),
-          getSignalFn(signal, [scopeIdentifier], references),
+          t.numericLiteral(referencedBindings.length),
+          getSignalFn(signal, [scopeIdentifier], referencedBindings),
         );
       };
-    } else if (references.section !== section) {
-      const provider = getSignal(references.section, references);
+    } else if (referencedBindings.section !== section) {
+      const provider = getSignal(
+        referencedBindings.section,
+        referencedBindings,
+      );
       addClosure(
         section,
         section.parent! /*reserve.section*/,
@@ -173,7 +176,10 @@ export function getSignal(
       provider.closures.set(section, signal);
       signal.build = () => {
         const builder = getSubscribeBuilder(section);
-        const ownerScope = getScopeExpression(section, references.section);
+        const ownerScope = getScopeExpression(
+          section,
+          referencedBindings.section,
+        );
         const isImmediateOwner =
           (ownerScope as t.MemberExpression).object === scopeIdentifier;
         const isDynamicClosure = (signal.isDynamicClosure = !(
@@ -181,8 +187,11 @@ export function getSignal(
         ));
         return callRuntime(
           isDynamicClosure ? "dynamicClosure" : "closure",
-          getScopeAccessorLiteral(references),
-          getSignalFn(signal, [scopeIdentifier, t.identifier(references.name)]),
+          getScopeAccessorLiteral(referencedBindings),
+          getSignalFn(signal, [
+            scopeIdentifier,
+            t.identifier(referencedBindings.name),
+          ]),
           isImmediateOwner
             ? null
             : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
@@ -231,7 +240,7 @@ export function initValue(
 export function getSignalFn(
   signal: Signal,
   params: Array<t.Identifier | t.Pattern>,
-  references?: ReferencedBindings,
+  referencedBindings?: ReferencedBindings,
 ) {
   const section = signal.section;
 
@@ -243,11 +252,11 @@ export function getSignalFn(
     );
   }
 
-  if (references) {
+  if (referencedBindings) {
     signal.render.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(section, references),
+          createScopeReadPattern(section, referencedBindings),
           scopeIdentifier,
         ),
       ]),
@@ -430,17 +439,17 @@ export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
   );
 }
 
-function generateSignalName(references?: ReferencedBindings) {
+function generateSignalName(referencedBindings?: ReferencedBindings) {
   let name;
 
-  if (references) {
-    if (Array.isArray(references)) {
+  if (referencedBindings) {
+    if (Array.isArray(referencedBindings)) {
       name = "expr";
-      for (const ref of references) {
+      for (const ref of referencedBindings) {
         name += `_${ref.name}`;
       }
     } else {
-      name = references.name;
+      name = referencedBindings.name;
     }
   } else {
     name = "setup";
@@ -483,7 +492,7 @@ export function finalizeSignalArgs(args: t.Expression[]) {
 export function addStatement(
   type: "effect",
   targetSection: Section,
-  references: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
   originalNodes: t.Expression | t.Expression[],
   isInlined?: boolean,
@@ -491,18 +500,18 @@ export function addStatement(
 export function addStatement(
   type: "render",
   targetSection: Section,
-  references: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
 ): void;
 export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
-  references: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
   originalNodes?: t.Expression | t.Expression[],
   isInlined?: boolean,
 ): void {
-  const signal = getSignal(targetSection, references);
+  const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
 
   if (Array.isArray(statement)) {
@@ -528,13 +537,13 @@ export function addStatement(
 
 export function addValue(
   targetSection: Section,
-  references: ReferencedBindings,
+  referencedBindings: ReferencedBindings,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
   scope: t.Expression = scopeIdentifier,
   intersectionExpression?: t.Expression,
 ) {
-  getSignal(targetSection, references).values.push({
+  getSignal(targetSection, referencedBindings).values.push({
     signal,
     value,
     scope,
@@ -545,13 +554,13 @@ export function addValue(
 export function addEffectReferences(signal: Signal, expression: t.Expression) {
   signal.effectInlineReferences = bindingUtil.union(
     signal.effectInlineReferences,
-    (expression as t.FunctionExpression).extra?.referencedBindings,
+    expression.extra?.referencedBindings,
   );
 }
 
 export function getResumeRegisterId(
   section: Section,
-  references: string | ReferencedBindings,
+  referencedBindings: string | ReferencedBindings,
   type?: string,
 ) {
   const {
@@ -559,15 +568,15 @@ export function getResumeRegisterId(
     opts: { filename },
   } = currentProgramPath.hub.file;
   let name = "";
-  if (references) {
-    if (typeof references === "string") {
-      name += `_${references}`;
-    } else if (Array.isArray(references)) {
-      for (const ref of references) {
+  if (referencedBindings) {
+    if (typeof referencedBindings === "string") {
+      name += `_${referencedBindings}`;
+    } else if (Array.isArray(referencedBindings)) {
+      for (const ref of referencedBindings) {
         name += `_${ref.name}`;
       }
     } else {
-      name += `_${references.name}`;
+      name += `_${referencedBindings.name}`;
     }
   }
   return getTemplateId(
@@ -661,18 +670,24 @@ export function writeSignals(section: Section) {
 }
 
 function sortSignals(a: Signal, b: Signal) {
-  const aReserves = getReserves(a);
-  const bReserves = getReserves(b);
+  const aReferencedBindings = getReferencedBindings(a);
+  const bReferencedBindings = getReferencedBindings(b);
 
-  for (let i = Math.max(aReserves.length, bReserves.length) - 1; i >= 0; i--) {
-    const diff = (bReserves[i] ?? -1) - (aReserves[i] ?? -1);
+  for (
+    let i =
+      Math.max(aReferencedBindings.length, bReferencedBindings.length) - 1;
+    i >= 0;
+    i--
+  ) {
+    const diff =
+      (bReferencedBindings[i] ?? -1) - (aReferencedBindings[i] ?? -1);
     if (diff !== 0) return diff;
   }
 
   return 0;
 }
 
-function getReserves({ referencedBindings: reserve }: Signal) {
+function getReferencedBindings({ referencedBindings: reserve }: Signal) {
   if (!reserve) {
     return [];
   } else if (Array.isArray(reserve)) {
@@ -689,10 +704,10 @@ function getMappedId(reference: Binding) {
 
 export function addHTMLEffectCall(
   section: Section,
-  references?: ReferencedBindings,
+  referencedBindings?: ReferencedBindings,
 ) {
   // TODO: this should not add an undefined statement.
-  addStatement("effect", section, references, undefined as any, []);
+  addStatement("effect", section, referencedBindings, undefined as any, []);
 }
 
 export function writeHTMLResumeStatements(
@@ -835,11 +850,11 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  const references = extra?.referencedBindings;
+  const referencedBindings = extra?.referencedBindings;
   const program = fn.hub.file.path;
   const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
 
-  if (references) {
+  if (referencedBindings) {
     if (node.body.type !== "BlockStatement") {
       node.body = t.blockStatement([t.returnStatement(node.body)]);
     }
@@ -847,7 +862,7 @@ function bindFunction(
     node.body.body.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(section, references),
+          createScopeReadPattern(section, referencedBindings),
           scopeIdentifier,
         ),
       ]),

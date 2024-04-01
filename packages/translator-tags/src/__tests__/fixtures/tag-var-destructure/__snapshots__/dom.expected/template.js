@@ -5,9 +5,9 @@ const _d = /* @__PURE__ */_value("d", (_scope, d) => {
   _data(_scope["#text/3"], JSON.stringify(d));
   _data(_scope["#text/4"], d);
 });
-const _c = (_scope, c) => {};
 const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a));
+const _c = (_scope, c) => {};
 const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
   let local;
   let _a2;
