@@ -1,6 +1,5 @@
 # Render undefined
 ```html
-<!--M[1-->
 <html>
   <head />
   <body>
@@ -14,7 +13,6 @@
     </div>
     <div />
     <div />
-    <!--M[2-->
     <div>
       1
       <!--M*2 #text/0-->
@@ -25,7 +23,6 @@
     </div>
     <div />
     <div />
-    <!--M[3-->
     <div>
       2
       <!--M*3 #text/0-->
@@ -36,8 +33,6 @@
     </div>
     <div />
     <div />
-    <!--M]0 #text/0-->
-    <!--M[4-->
     <div>
       a
       <!--M*4 #text/0-->
@@ -48,7 +43,6 @@
     </div>
     <div />
     <div />
-    <!--M[5-->
     <div>
       b
       <!--M*5 #text/0-->
@@ -59,7 +53,6 @@
     </div>
     <div />
     <div />
-    <!--M[6-->
     <div>
       c
       <!--M*6 #text/0-->
@@ -70,7 +63,6 @@
     </div>
     <div />
     <div />
-    <!--M]0 #text/1-->
     <div>
       0
       <!--M*7 #text/0-->
@@ -107,7 +99,6 @@
     </div>
     <div />
     <div />
-    <!--M[13-->
     <div
       key="0"
     >
@@ -124,7 +115,6 @@
       key="other-0"
     />
     <!--M*13 #div/3-->
-    <!--M[14-->
     <div
       key="1"
     >
@@ -141,7 +131,6 @@
       key="other-1"
     />
     <!--M*14 #div/3-->
-    <!--M[15-->
     <div
       key="2"
     >
@@ -158,7 +147,6 @@
       key="other-2"
     />
     <!--M*15 #div/3-->
-    <!--M]0 #text/3-->
     <div
       key="0"
     >
@@ -192,8 +180,6 @@
       <!--M*18 #text/2-->
     </div>
     <!--M*18 #div/0-->
-    <!--M|0 #text/4 16,17,18-->
-    <!--M[19-->
     <div
       key="a"
     >
@@ -210,7 +196,6 @@
       key="other-a"
     />
     <!--M*19 #div/3-->
-    <!--M[20-->
     <div
       key="b"
     >
@@ -227,7 +212,6 @@
       key="other-b"
     />
     <!--M*20 #div/3-->
-    <!--M[21-->
     <div
       key="c"
     >
@@ -244,7 +228,6 @@
       key="other-c"
     />
     <!--M*21 #div/3-->
-    <!--M]0 #text/5-->
     <div
       key="0"
     >
@@ -822,9 +805,6 @@
     />
     <!--M*69 #div/2-->
     HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello
-    <script>
-      (M$h=[]).push((b,s,h,j,k,m,o,q,u,x,z,A,B,C,D,E,F)=&gt;({0:{"#text/0(":new Map([[0,h={}],[1,j={}],[2,k={}]]),"#text/1(":new Map([["a",m={}],["b",o={}],["c",q={}]]),"#text/3(":new Map([[0,u={}],[1,x={}],[2,z={}]]),"#text/4(":new Map([[0,A={}],[1,B={}],[2,C={}]]),"#text/5(":new Map([["a",D={}],["b",E={}],["c",F={}]])},1:h,2:j,3:k,4:m,5:o,6:q,13:u,14:x,15:z,16:A,17:B,18:C,19:D,20:E,21:F}),[])
-    </script>
   </body>
 </html>
 ```
