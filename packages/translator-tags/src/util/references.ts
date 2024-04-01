@@ -417,7 +417,7 @@ function isSuperset(set: Set<any>, subset: Set<any>) {
   return true;
 }
 
-function getSourceBindings(binding: Binding): Set<Binding> {
+export function getSourceBindings(binding: Binding): Set<Binding> {
   // TODO: is this right?
   const derived = new Set<Binding>();
   const sources = new Set<Binding>();

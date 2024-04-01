@@ -5,21 +5,19 @@ import {
 } from "./references";
 
 export function isStatefulReferences(referencedBindings: ReferencedBindings) {
-  return !!referencedBindings;
+  if (referencedBindings) {
+    if (Array.isArray(referencedBindings)) {
+      for (const ref of referencedBindings) {
+        if (isStatefulBinding(ref)) {
+          return true;
+        }
+      }
+    } else {
+      return isStatefulBinding(referencedBindings);
+    }
+  }
 
-  // if (referencedBindings) {
-  //   if (Array.isArray(referencedBindings)) {
-  //     for (const ref of referencedBindings) {
-  //       if (isStatefulBinding(ref)) {
-  //         return true;
-  //       }
-  //     }
-  //   } else {
-  //     return isStatefulBinding(referencedBindings);
-  //   }
-  // }
-
-  // return false;
+  return false;
 }
 
 export function isStatefulBinding(binding: Binding): boolean {
@@ -29,8 +27,8 @@ export function isStatefulBinding(binding: Binding): boolean {
     case BindingType.param:
       return true;
     default:
-      return !!(
-        binding.upstreamExpression &&
+      return (
+        !binding.upstreamExpression ||
         isStatefulReferences(binding.upstreamExpression.referencedBindings)
       );
   }
