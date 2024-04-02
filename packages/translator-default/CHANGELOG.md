@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.32.12
+
+### Patch Changes
+
+- [#2190](https://github.com/marko-js/marko/pull/2190) [`638ca07`](https://github.com/marko-js/marko/commit/638ca07db382345c26f90247115eef13394e9905) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies
+
+- Updated dependencies [[`638ca07`](https://github.com/marko-js/marko/commit/638ca07db382345c26f90247115eef13394e9905)]:
+  - @marko/babel-utils@6.4.3
+
 ## 5.32.11
 
 ### Patch Changes

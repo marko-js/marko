@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.4.3
+
+### Patch Changes
+
+- [#2190](https://github.com/marko-js/marko/pull/2190) [`638ca07`](https://github.com/marko-js/marko/commit/638ca07db382345c26f90247115eef13394e9905) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies
+
 ## 6.4.2
 
 ### Patch Changes
