@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const arrA = [1, 2, 3];
@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   for (const val of arrA) {
     const _scope1_id = _nextScopeId();
     let i = _i++;
-    _write(`<div>${_escapeXML(i)}${_markResumeNode(_scope1_id, "#text/0")}: <!>${_escapeXML(val)}${_markResumeNode(_scope1_id, "#text/1")}</div>`);
+    _write(`<div>${_escapeXML(i)}: ${_escapeXML(val)}</div>`);
     _maybeFlush();
   }
   const arrB = [1, 2, 3];

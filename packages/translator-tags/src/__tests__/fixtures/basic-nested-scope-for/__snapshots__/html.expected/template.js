@@ -9,7 +9,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     let _i = _i2++;
     _forScopeIds.push(_scope1_id);
-    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}${_markResumeNode(_scope1_id, "#text/1")}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
+    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
     _writeScope(_scope1_id, (_s => (_scope1_.set(_i, _s), _s))({
       "num": num,

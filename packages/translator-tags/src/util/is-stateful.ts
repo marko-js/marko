@@ -24,7 +24,6 @@ export function isStatefulBinding(binding: Binding): boolean {
   switch (binding.type) {
     case BindingType.let:
     case BindingType.input:
-    case BindingType.param:
       return true;
     default:
       return (
