@@ -1,5 +1,6 @@
 # Render {"x":"replaced"}
 ```html
+<!---->
 <html>
   <head />
   <body>
@@ -16,13 +17,15 @@
       </div>
       replaced
       <!--M*0 #text/2-->
-      Hello Text &lt;a/&gt;replaced
+      Hello Text &lt;a/&gt;
+      <!---->
+      replaced
       <!--M*0 #text/3-->
       Hello HTML 
       <a>
         <script>
           
-    &lt;!&gt;Hello &lt;b&gt; &lt;/script&gt;
+    Hello &lt;b&gt; &lt;/script&gt;
   
         </script>
       </a>

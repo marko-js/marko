@@ -5,6 +5,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     a,
     b
   } = input;
-  _write(`${_escapeXML(a)}${_markResumeNode(_scope0_id, "#text/0")} <!>${_escapeXML(b)}${_markResumeNode(_scope0_id, "#text/1")}`);
+  _write(`<!>${_escapeXML(a)}${_markResumeNode(_scope0_id, "#text/0")} <!>${_escapeXML(b)}${_markResumeNode(_scope0_id, "#text/1")}`);
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/input-destructure/template.marko");

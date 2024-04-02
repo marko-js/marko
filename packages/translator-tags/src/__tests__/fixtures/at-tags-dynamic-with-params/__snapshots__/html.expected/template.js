@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, createRenderer as _createRenderer, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, serializedScope as _serializedScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, write as _write, createRenderer as _createRenderer, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, serializedScope as _serializedScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope2_id = _nextScopeId();
     _item = {
       renderBody: /* @__PURE__ */_createRenderer(y => {
-        _write(`${_escapeXML(y)}${_markResumeNode(_scope3_id, "#text/0")}`);
+        _write(`${_escapeXML(y)}`);
       })
     };
     _writeScope(_scope2_id, _scope2_ = {});

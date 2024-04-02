@@ -6,7 +6,6 @@
     <div>
       <span>
         1
-        <!--M*0 #text/0-->
       </span>
     </div>
   </body>
