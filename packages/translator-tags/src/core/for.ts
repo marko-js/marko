@@ -38,7 +38,10 @@ import {
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
-import { kNativeTagBinding } from "../visitors/tag/native-tag";
+import {
+  kNativeTagBinding,
+  kSerializeMarker,
+} from "../visitors/tag/native-tag";
 
 const kForMarkerBinding = Symbol("for marker binding");
 declare module "@marko/compiler/dist/types" {
@@ -53,7 +56,7 @@ export default {
       const isOnlyChild = checkOnlyChild(tag);
       const tagExtra = (tag.node.extra ??= {});
       const tagBody = tag.get("body");
-      const section = getOrCreateSection(tag)!;
+      const section = getOrCreateSection(tag);
       startSection(tagBody);
 
       if (isOnlyChild) {
@@ -72,7 +75,7 @@ export default {
         );
       }
 
-      trackParamsReferences(tagBody, BindingType.param);
+      trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     },
     exit(tag) {
       const extra = tag.node.extra!;
@@ -315,6 +318,10 @@ const translateHTML = {
     const replacement: t.Node[] = [];
     let byParams: t.Expression[];
     let keyExpression: t.Expression | undefined = t.identifier("NOO");
+
+    if (isStateful && isOnlyChild) {
+      tag.parentPath.parent.extra![kSerializeMarker] = true;
+    }
 
     if (isStateful || bodySection.closures) {
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
