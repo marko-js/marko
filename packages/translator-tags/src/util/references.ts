@@ -318,21 +318,31 @@ export function finalizeReferences() {
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
       const targetExtra = (target.node.extra ??= {});
-      let newReferences: ReferencedBindings = targetExtra.referencedBindings;
+      let { referencedBindings, isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
-        const referencedBindings = extra?.referencedBindings;
-        if (referencedBindings) {
-          newReferences = bindingUtil.union(newReferences, referencedBindings);
-          forEach(referencedBindings, ({ downstreamExpressions }) => {
-            downstreamExpressions.delete(extra);
-            downstreamExpressions.add(targetExtra);
-          });
+        if (extra) {
+          const additionalBindings = extra.referencedBindings;
+          isEffect ||= extra.isEffect;
+          if (additionalBindings) {
+            referencedBindings = bindingUtil.union(
+              referencedBindings,
+              additionalBindings,
+            );
+            forEach(additionalBindings, ({ downstreamExpressions }) => {
+              downstreamExpressions.delete(extra);
+              downstreamExpressions.add(targetExtra);
+            });
+          }
         }
       }
 
-      newReferences = findReferences(getOrCreateSection(target), newReferences);
-      targetExtra.referencedBindings = newReferences;
+      referencedBindings = findReferences(
+        getOrCreateSection(target),
+        referencedBindings,
+      );
+      targetExtra.referencedBindings = referencedBindings;
+      targetExtra.isEffect = isEffect;
     }
 
     mergedReferences.clear();

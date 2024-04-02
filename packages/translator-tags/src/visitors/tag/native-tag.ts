@@ -26,11 +26,9 @@ import { currentProgramPath, scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
-const kHasEventHandlers = Symbol("has event handlers");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
-    [kHasEventHandlers]?: boolean;
     [kSerializeMarker]?: boolean;
   }
 }
@@ -40,8 +38,8 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const attrs = tag.get("attributes");
-      let section = tag.has("var") ? getOrCreateSection(tag) : undefined;
       let hasEventHandlers = false;
+      let hasDynamicAttributes = false;
 
       /**
        * The reason this seems like it does more work than it needs to
@@ -50,31 +48,30 @@ export default {
        */
       for (const attr of attrs) {
         if (isSpreadAttr(attr)) {
-          section ??= getOrCreateSection(tag);
+          (attr.node.value.extra ??= {}).isEffect = true;
+          hasEventHandlers = true;
+          hasDynamicAttributes = true;
           mergeReferences(
             tag,
             attrs.map((attr) => attr.node.value),
           );
-          hasEventHandlers = true;
-          // TODO: should add isEffect to all attributes in a spread?
-          break;
         } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
           (attr.node.value.extra ??= {}).isEffect = true;
-          section ??= getOrCreateSection(tag);
           hasEventHandlers = true;
         } else if (!evaluate(attr).confident) {
-          section ??= getOrCreateSection(tag);
+          hasDynamicAttributes = true;
         }
       }
 
-      if (section !== undefined) {
+      if (tag.has("var") || hasEventHandlers || hasDynamicAttributes) {
         currentProgramPath.node.extra.isInteractive ||= hasEventHandlers;
+        const section = getOrCreateSection(tag);
         const tagName =
           node.name.type === "StringLiteral"
             ? node.name.value
             : t.toIdentifier(tag.get("name"));
         const tagExtra = (node.extra ??= {});
-        tagExtra[kHasEventHandlers] = hasEventHandlers;
+        tagExtra[kSerializeMarker] = tag.has("var") || hasEventHandlers;
         tagExtra[kNativeTagBinding] = createBinding(
           "#" + tagName,
           BindingType.dom,
@@ -318,9 +315,7 @@ export default {
 
       if (
         nodeRef &&
-        (extra[kHasEventHandlers] ||
-          extra[kSerializeMarker] ||
-          tag.has("var") ||
+        (extra[kSerializeMarker] ||
           tag.node.attributes.some((attr) =>
             isStatefulReferences(attr.value.extra?.referencedBindings),
           ))
