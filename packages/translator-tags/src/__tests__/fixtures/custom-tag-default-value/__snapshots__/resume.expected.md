@@ -1,11 +1,14 @@
 # Render undefined
 ```html
+<!---->
 <html>
   <head />
   <body>
     3
     <!--M*1 #text/0-->
-     y
+     
+    <!---->
+    y
     <!--M*2 #text/0-->
      
     <script>

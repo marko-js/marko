@@ -3,7 +3,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
   const doubleCount = clickCount * 2;
-  _write(`<div><button>${_escapeXML(doubleCount)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}</div>`);
+  _write(`<div><button>${_escapeXML(doubleCount)}</button>${_markResumeNode(_scope0_id, "#button/0")}</div>`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-scriptlet/template.marko_0_clickCount");
   _writeScope(_scope0_id, {
     "clickCount": clickCount
