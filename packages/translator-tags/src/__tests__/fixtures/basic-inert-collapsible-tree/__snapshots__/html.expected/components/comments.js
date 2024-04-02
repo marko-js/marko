@@ -29,9 +29,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_markResumeNode(_scope1_id, "#li/0")}`);
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
     _writeScope(_scope1_id, (_s => (_scope1_.set(i, _s), _s))({
-      "comment": comment,
-      "i": i,
-      "id": id,
       "open": open,
       "#text/4!": _scope2_,
       "#text/4(": _ifRenderer,
@@ -41,7 +38,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#ul/0")}</ul>${_markResumeNode(_scope0_id, "#ul/0")}`);
   _writeScope(_scope0_id, {
-    "input": input,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   });
 });

@@ -435,22 +435,19 @@ export function getSourceBindings(binding: Binding): Set<Binding> {
   return sources;
 
   function crawl(binding: Binding) {
-    if (binding.type === BindingType.derived) {
+    if (
+      binding.type === BindingType.derived ||
+      binding.type === BindingType.param
+    ) {
       let alias: Binding | undefined;
       let curBinding = binding;
       while ((alias = curBinding.upstreamAlias)) {
         curBinding = alias;
       }
-
       if (curBinding.upstreamExpression) {
         if (derived.has(curBinding)) return;
         derived.add(curBinding);
-        forEach(
-          curBinding.upstreamExpression.referencedBindings,
-          (curBinding) => {
-            crawl(curBinding);
-          },
-        );
+        forEach(curBinding.upstreamExpression.referencedBindings, crawl);
       } else {
         sources.add(curBinding);
       }

@@ -19,7 +19,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
   _writeScope(_scope0_id, {
-    "selected": selected,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
