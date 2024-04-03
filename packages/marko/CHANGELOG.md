@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.4](https://github.com/marko-js/marko/compare/v4.28.3...v4.28.4) (2024-04-03)
+
+
+### Bug Fixes
+
+* regression with split text nodes across component hydration ([8994a91](https://github.com/marko-js/marko/commit/8994a915dadfdaedb876fa816cb4554a8ceb6fff))
+
 ### [4.28.3](https://github.com/marko-js/marko/compare/v4.28.2...v4.28.3) (2024-03-11)
 
 
