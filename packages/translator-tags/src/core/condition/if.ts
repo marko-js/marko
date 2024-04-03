@@ -167,6 +167,9 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
+    branches.forEach(({ section }) => {
+      section.upstreamExpression = rootExtra;
+    });
   }
 }
 
@@ -231,10 +234,6 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
             /*writer.getRenderer(section)*/
           );
         });
-
-        if (isStateful) {
-          writer.setRegisterRenderer(section, true);
-        }
 
         tag.remove();
 

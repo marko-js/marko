@@ -78,6 +78,7 @@ export default {
       trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     },
     exit(tag) {
+      const bodySection = getSection(tag.get("body"));
       const extra = tag.node.extra!;
       analyzeAttributeTags(tag);
 
@@ -85,6 +86,8 @@ export default {
         tag,
         tag.node.attributes.map((attr) => attr.value),
       );
+
+      bodySection.upstreamExpression = extra;
 
       extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },

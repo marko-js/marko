@@ -24,6 +24,7 @@ export type Section = {
   bindings: Set<Binding>;
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
+  upstreamExpression: t.NodeExtra | undefined;
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -65,6 +66,7 @@ export function startSection(
       bindings: new Set(),
       startNodeContentType: getStartNodeContentType(path),
       endNodeContentType: getEndNodeContentType(path),
+      upstreamExpression: undefined,
     };
     sections.push(section);
   }
