@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.14
+
+### Patch Changes
+
+- [#2192](https://github.com/marko-js/marko/pull/2192) [`e2d5f18`](https://github.com/marko-js/marko/commit/e2d5f18d3cdc522251fdb8c314648d36e6dcf793) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where text was bring split too eagerly while hydrating including text which was not rendered by the current component. This lead to a diffing issue where elements could display in the wrong order.
+
 ## 5.33.13
 
 ### Patch Changes
