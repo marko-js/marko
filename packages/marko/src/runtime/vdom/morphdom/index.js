@@ -292,13 +292,13 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   curFromNodeChild,
                   curVFromNodeChild,
                   curToNodeChild,
-                  parentComponent,
+                  parentComponent
                 );
               } else {
                 morphChildren(
                   curFromNodeChild,
                   curToNodeChild,
-                  parentComponent,
+                  parentComponent
                 );
               }
             } else {
@@ -484,10 +484,9 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   morphChildren(
                     matchingFromEl,
                     curToNodeChild,
-                    parentComponent,
+                    parentComponent
                   );
                 }
-
               } else {
                 insertVirtualNodeBefore(
                   curToNodeChild,
@@ -594,13 +593,18 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             if (curFromNodeValue !== curToNodeValue) {
               if (
                 isHydrate &&
+                toNextSibling &&
                 curFromNodeType === TEXT_NODE &&
-                curFromNodeValue.startsWith(curToNodeValue)
+                toNextSibling.___nodeType === TEXT_NODE &&
+                curFromNodeValue.startsWith(curToNodeValue) &&
+                toNextSibling.___nodeValue.startsWith(
+                  curFromNodeValue.slice(curToNodeValue.length)
+                )
               ) {
                 // In hydrate mode we can use splitText to more efficiently handle
                 // adjacent text vdom nodes that were merged.
                 fromNextSibling = curFromNodeChild.splitText(
-                  curToNodeValue.length,
+                  curToNodeValue.length
                 );
               } else {
                 // Simply update nodeValue on the original node to
