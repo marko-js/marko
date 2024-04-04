@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.12
+
+### Patch Changes
+
+- [#2194](https://github.com/marko-js/marko/pull/2194) [`db33782`](https://github.com/marko-js/marko/commit/db337828c3b28fc13f902b42b1c96707954ff07e) Thanks [@mlrawlings](https://github.com/mlrawlings)! - State based registration & serialization
+
+- Updated dependencies [[`db33782`](https://github.com/marko-js/marko/commit/db337828c3b28fc13f902b42b1c96707954ff07e)]:
+  - @marko/translator-tags@0.1.13
+
 ## 0.1.11
 
 ### Patch Changes
