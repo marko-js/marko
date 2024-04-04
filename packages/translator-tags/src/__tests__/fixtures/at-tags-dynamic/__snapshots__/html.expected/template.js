@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, escapeXML as _escapeXML, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, escapeXML as _escapeXML, writeScope as _writeScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -17,9 +17,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
           _write("foo");
         })
       });
-      _writeScope(_scope4_id, {
-        "_": _serializedScope(_scope3_id)
-      });
     } else {
       const _scope5_id = _nextScopeId();
       _item.push({
@@ -29,9 +26,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         renderBody: /* @__PURE__ */_createRenderer(() => {
           _write("bar");
         })
-      });
-      _writeScope(_scope5_id, {
-        "_": _serializedScope(_scope3_id)
       });
     }
     _maybeFlush();
@@ -49,11 +43,17 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
           _write(`${_escapeXML(row)}`);
         })
       });
+      _writeScope(_scope10_id, {
+        "row": row
+      });
       _maybeFlush();
     }
     _col.push({
       x: i,
       row: _row
+    });
+    _writeScope(_scope8_id, {
+      "col": col
     });
     _maybeFlush();
   }

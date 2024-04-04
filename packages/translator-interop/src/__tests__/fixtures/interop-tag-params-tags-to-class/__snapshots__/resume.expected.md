@@ -33,7 +33,7 @@
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>
@@ -101,7 +101,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>
@@ -158,7 +158,7 @@ container.querySelector("#class").click()
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>
@@ -217,7 +217,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>
@@ -275,7 +275,7 @@ container.querySelector("#class").click()
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>
@@ -334,7 +334,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/1-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier",])
       </script>
     </div>
     <script>

@@ -12,7 +12,7 @@
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer"),"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -39,7 +39,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer"),"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -68,7 +68,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer"),"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -96,7 +96,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
+      (M$h=[]).push((b,s,h)=&gt;({0:{show:!0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_1_renderer"),"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show",])
     </script>
   </body>
 </html>

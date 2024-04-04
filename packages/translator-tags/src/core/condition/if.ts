@@ -20,6 +20,7 @@ import {
   getScopeIdentifier,
   getSection,
   startSection,
+  checkStatefulClosures,
 } from "../../util/sections";
 import {
   addValue,
@@ -167,6 +168,9 @@ export function exitBranchAnalyze(tag: t.NodePath<t.MarkoTag>) {
     rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
       return tag.node.body.body.length === 1;
     });
+    branches.forEach(({ section }) => {
+      section.upstreamExpression = rootExtra;
+    });
   }
 }
 
@@ -194,9 +198,10 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
   const nodeRef = rootExtra[kBinding]!;
   const isStateful = isStatefulReferences(rootExtra.referencedBindings);
   const singleNodeOptimization = rootExtra.singleNodeOptimization;
+  const hasStatefulClosures = checkStatefulClosures(bodySection, true);
 
   if (isOutputHTML()) {
-    if (isStateful) {
+    if (isStateful || hasStatefulClosures) {
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         return t.assignmentExpression(
           "=",
@@ -232,10 +237,6 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
           );
         });
 
-        if (isStateful) {
-          writer.setRegisterRenderer(section, true);
-        }
-
         tag.remove();
 
         if (testAttr) {
@@ -268,6 +269,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
       for (let i = branches.length; i--; ) {
         const { tag, section } = branches[i];
         const branchScopeIdentifier = getScopeIdentifier(section, true);
+        const branchHasStatefulClosures = checkStatefulClosures(section, true);
         branchScopeIdentifier.name = ifScopeIdentifier.name;
 
         if (isStateful) {
@@ -287,7 +289,8 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
               ),
             ) as any,
           );
-
+        }
+        if (isStateful || branchHasStatefulClosures) {
           if (singleNodeOptimization) {
             tag.node.body.body.push(
               t.expressionStatement(
@@ -313,7 +316,7 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
         tag.remove();
       }
 
-      if (!isStateful) {
+      if (!isStateful && !hasStatefulClosures) {
         nextTag.insertBefore(statement!);
       } else {
         nextTag.insertBefore([
@@ -323,24 +326,33 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
               singleNodeOptimization &&
                 t.variableDeclarator(ifScopeIdIdentifier),
               t.variableDeclarator(ifScopeIdentifier),
-              t.variableDeclarator(ifRendererIdentifier),
+              isStateful && t.variableDeclarator(ifRendererIdentifier),
             ].filter(Boolean) as t.VariableDeclarator[],
           ),
           statement!,
         ]);
-        if (singleNodeOptimization) {
-          write`${callRuntime(
-            "markResumeControlSingleNodeEnd",
-            getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(nodeRef),
-            ifScopeIdIdentifier,
-          )}`;
-        } else {
-          write`${callRuntime(
-            "markResumeControlEnd",
-            getScopeIdIdentifier(section),
-            getScopeAccessorLiteral(nodeRef),
-          )}`;
+        if (isStateful) {
+          if (singleNodeOptimization) {
+            write`${callRuntime(
+              "markResumeControlSingleNodeEnd",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeRef),
+              ifScopeIdIdentifier,
+            )}`;
+          } else {
+            write`${callRuntime(
+              "markResumeControlEnd",
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeRef),
+            )}`;
+          }
+          getSerializedScopeProperties(section).set(
+            t.stringLiteral(
+              getScopeAccessorLiteral(nodeRef).value +
+                AccessorChar.ConditionalRenderer,
+            ),
+            ifRendererIdentifier,
+          );
         }
         getSerializedScopeProperties(section).set(
           t.stringLiteral(
@@ -348,13 +360,6 @@ export function exitBranchTranslate(tag: t.NodePath<t.MarkoTag>) {
               AccessorChar.ConditionalScope,
           ),
           ifScopeIdentifier,
-        );
-        getSerializedScopeProperties(section).set(
-          t.stringLiteral(
-            getScopeAccessorLiteral(nodeRef).value +
-              AccessorChar.ConditionalRenderer,
-          ),
-          ifRendererIdentifier,
         );
       }
     }

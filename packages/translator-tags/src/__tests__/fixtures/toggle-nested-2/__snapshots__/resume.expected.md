@@ -24,7 +24,7 @@
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelector("#count").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -104,7 +104,7 @@ container.querySelector("#count").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -138,7 +138,7 @@ container.querySelector("#inner").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -178,7 +178,7 @@ container.querySelector("#inner").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -218,7 +218,7 @@ container.querySelector("#count").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -245,7 +245,7 @@ container.querySelector("#outer").click()
       <!--M]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -286,7 +286,7 @@ container.querySelector("#outer").click()
       <!---->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>
@@ -327,7 +327,7 @@ container.querySelector("#count").click()
       <!---->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1!":j={"#text/1!":k={},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer")},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer")},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={outer:!0,inner:!0,count:0,"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"),"#text/1!":j={"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"),"#text/1!":k={}}},1:j,2:k},j._=h,k._=j,m),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
     </script>
   </body>
 </html>

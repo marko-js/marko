@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
+import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
@@ -253,13 +254,6 @@ function trackReference(
   const exprExtra = (exprRoot.node.extra ??= {});
   addReferenceToExpression(exprRoot, binding);
 
-  // TODO: this should be in finalizeReferences
-  // probably should be a set
-  if (section !== binding.section) {
-    section.closures ??= [];
-    section.closures.push(binding);
-  }
-
   // TODO: remove
   if (fnRoot) {
     const name = (fnRoot.node as t.FunctionExpression).id?.name;
@@ -381,12 +375,12 @@ export function finalizeReferences() {
       forEach(referencedBindings, (bindingReference) => {
         if (isEffect) {
           bindingReference.serialize = true;
-          section.bindings.add(bindingReference);
         }
       });
     }
   }
 
+  // mark bindings that need to be serialized due to being in an intersection with state
   for (const intersection of intersections) {
     const numReferences = intersection.length;
     // TODO: in some cases we should be able to short circuit this
@@ -406,6 +400,28 @@ export function finalizeReferences() {
       }
     }
   }
+
+  // mark bindings that need to be serialized due to being closed over by stateful sections
+  forEachSection((section) => {
+    for (const binding of section.closures) {
+      if (!binding.serialize) {
+        let serialize = false;
+        const sourceSection = binding.section;
+        let currentSection = section;
+        while (
+          currentSection !== sourceSection &&
+          !(serialize =
+            !currentSection.upstreamExpression ||
+            isStatefulReferences(
+              currentSection.upstreamExpression.referencedBindings,
+            ))
+        ) {
+          currentSection = currentSection.parent!;
+        }
+        binding.serialize = serialize;
+      }
+    }
+  });
 
   forEachSection(({ id, bindings }) => {
     const sortedBindings = [...bindings]
@@ -488,7 +504,9 @@ function addReference(
   referencedBindings: ReferencedBindings,
   binding: Binding,
 ) {
-  section.bindings.add(binding);
+  if (section !== binding.section) {
+    section.closures.add(binding);
+  }
   const newIntersection = bindingUtil.add(referencedBindings, binding);
   return findReferences(section, newIntersection);
 }

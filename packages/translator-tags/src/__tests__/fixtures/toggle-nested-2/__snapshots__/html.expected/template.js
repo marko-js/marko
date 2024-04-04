@@ -13,8 +13,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     if (inner) {
       const _scope2_id = _nextScopeId();
       _write(`<button id=count>${_escapeXML(count)}${_markResumeNode(_scope2_id, "#text/1")}</button>${_markResumeNode(_scope2_id, "#button/0")}`);
-      _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count");
       _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber");
+      _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count");
       _writeScope(_scope2_id, _scope2_ = {
         "_": _serializedScope(_scope1_id)
       });
@@ -25,8 +25,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner");
     _writeScope(_scope1_id, _scope1_ = {
       "_": _serializedScope(_scope0_id),
-      "#text/1!": _scope2_,
-      "#text/1(": _ifRenderer
+      "#text/1(": _ifRenderer,
+      "#text/1!": _scope2_
     });
     _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer");
   }
@@ -36,8 +36,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "outer": outer,
     "inner": inner,
     "count": count,
-    "#text/1!": _scope1_,
-    "#text/1(": _ifRenderer2
+    "#text/1(": _ifRenderer2,
+    "#text/1!": _scope1_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko");

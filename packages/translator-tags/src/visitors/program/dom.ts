@@ -5,6 +5,7 @@ import {
   forEachSectionReverse,
   getSection,
   getSectionPath,
+  isStatefulSection,
 } from "../../util/sections";
 import {
   getClosures,
@@ -38,8 +39,7 @@ export default {
         writeSignals(childSection);
 
         if (childSection !== section) {
-          const { walks, writes, setup, register } =
-            writer.getSectionMeta(childSection);
+          const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const closures = getClosures(childSection);
           const identifier = writer.getRenderer(childSection);
           const renderer = callRuntime(
@@ -55,8 +55,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 identifier,
-                //eslint-disable-next-line no-constant-condition
-                register || true
+                isStatefulSection(childSection)
                   ? callRuntime(
                       "register",
                       t.stringLiteral(

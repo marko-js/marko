@@ -6,8 +6,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _dynamicTagInput(false || Child, {}, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write(`<button>${_escapeXML(count)}${_markResumeNode(_scope1_id, "#text/1")}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
-    _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count");
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber");
+    _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count");
     _writeScope(_scope1_id, {
       "_": _serializedScope(_scope0_id)
     });

@@ -9,12 +9,12 @@ const _forBody2 = _register("packages/translator-tags/src/__tests__/fixtures/for
 }));
 const _i$forBody = /* @__PURE__ */_value("i", (_scope, i) => _data(_scope["#text/0"], i));
 const _val$forBody = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/1"], val));
-const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, (_scope, _destructure2, _clean) => {
+const _forBody = /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, (_scope, _destructure2, _clean) => {
   let val, i;
   if (!_clean) [val, i] = _destructure2;
   _val$forBody(_scope, val, _clean);
   _i$forBody(_scope, i, _clean);
-}));
+});
 const _for2 = /* @__PURE__ */_loopOf("#text/1", _forBody2);
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _arrB = /* @__PURE__ */_value("arrB", (_scope, arrB) => _for2(_scope, [arrB]));

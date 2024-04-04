@@ -17,8 +17,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<span></span><span></span></div>`);
   _writeScope(_scope0_id, {
-    "#text/0!": _scope1_,
-    "#text/0(": _ifRenderer
+    "value": value,
+    "#text/0(": _ifRenderer,
+    "#text/0!": _scope1_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko");

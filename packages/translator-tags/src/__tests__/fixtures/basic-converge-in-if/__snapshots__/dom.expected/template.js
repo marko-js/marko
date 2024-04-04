@@ -1,4 +1,4 @@
-import { data as _data, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_a_b$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -10,7 +10,7 @@ const _expr_a_b$ifBody = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _b$ifBody = /* @__PURE__ */_closure("b", null, void 0, _expr_a_b$ifBody);
 const _a$ifBody = /* @__PURE__ */_closure("a", null, void 0, _expr_a_b$ifBody);
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-converge-in-if/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, [_a$ifBody, _b$ifBody]));
+const _ifBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, [_a$ifBody, _b$ifBody]);
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _b = /* @__PURE__ */_value("b", null, _inConditionalScope(_b$ifBody, "#text/0"));
 const _a = /* @__PURE__ */_value("a", null, _inConditionalScope(_a$ifBody, "#text/0"));

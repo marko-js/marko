@@ -18,8 +18,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
   _writeScope(_scope0_id, {
     "show": show,
-    "#text/1!": _scope1_,
-    "#text/1(": _ifRenderer
+    "message": message,
+    "#text/1(": _ifRenderer,
+    "#text/1!": _scope1_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko");

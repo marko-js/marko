@@ -1,5 +1,5 @@
 # Write
-  <div><button>0<!M*1 #text/1></button><!M*1 #button/0><!M|0 #text/0 1></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])</script>
+  <div><button>0<!M*1 #text/1></button><!M*1 #button/0><!M|0 #text/0 1></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
       <!--M|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
     </script>
   </body>
 </html>

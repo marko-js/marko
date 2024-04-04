@@ -23,6 +23,7 @@ import {
   getScopeIdIdentifier,
   getScopeIdentifier,
   getSection,
+  checkStatefulClosures,
   startSection,
 } from "../util/sections";
 import {
@@ -78,6 +79,7 @@ export default {
       trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     },
     exit(tag) {
+      const bodySection = getSection(tag.get("body"));
       const extra = tag.node.extra!;
       analyzeAttributeTags(tag);
 
@@ -85,6 +87,8 @@ export default {
         tag,
         tag.node.attributes.map((attr) => attr.value),
       );
+
+      bodySection.upstreamExpression = extra;
 
       extra.singleNodeOptimization = tag.node.body.body.length === 1;
     },
@@ -316,6 +320,7 @@ const translateHTML = {
     const block = t.blockStatement(body);
     const write = writer.writeTo(tag);
     const replacement: t.Node[] = [];
+    const hasStatefulClosures = checkStatefulClosures(bodySection, true);
     let byParams: t.Expression[];
     let keyExpression: t.Expression | undefined = t.identifier("NOO");
 
@@ -323,7 +328,7 @@ const translateHTML = {
       tag.parentPath.parent.extra![kSerializeMarker] = true;
     }
 
-    if (isStateful || bodySection.closures) {
+    if (isStateful || hasStatefulClosures) {
       setRegisterScopeBuilder(tag, (scope: t.Expression) => {
         const tempScopeIdentifier =
           currentProgramPath.scope.generateUidIdentifier("s");
@@ -404,7 +409,7 @@ const translateHTML = {
         valParam = tempValParam;
       }
 
-      if (indexParam || isStateful || bodySection.closures) {
+      if (indexParam || isStateful || hasStatefulClosures) {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         const indexName = tag.scope.generateUidIdentifierBasedOnNode(
           indexParam,
@@ -462,7 +467,7 @@ const translateHTML = {
       const stepName = tag.scope.generateUidIdentifier("step");
       const fromName = tag.scope.generateUidIdentifier("from");
 
-      if (indexParam || isStateful || bodySection.closures) {
+      if (indexParam || isStateful || hasStatefulClosures) {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
         keyExpression = indexParam as t.Identifier;
         block.body.unshift(
@@ -507,7 +512,7 @@ const translateHTML = {
       );
     }
 
-    if ((isStateful || bodySection.closures) && !hasNestedAttributeTags) {
+    if ((isStateful || hasStatefulClosures) && !hasNestedAttributeTags) {
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
       const forScopesIdentifier = getScopeIdentifier(bodySection);
@@ -516,7 +521,8 @@ const translateHTML = {
         t.variableDeclaration(
           "const",
           [
-            singleNodeOptimization &&
+            isStateful &&
+              singleNodeOptimization &&
               t.variableDeclarator(
                 forScopeIdsIdentifier,
                 t.arrayExpression([]),
@@ -529,27 +535,29 @@ const translateHTML = {
         ),
       );
 
-      if (singleNodeOptimization) {
-        block.body.push(
-          t.expressionStatement(
-            t.callExpression(
-              t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
-              [getScopeIdIdentifier(bodySection)],
+      if (isStateful) {
+        if (singleNodeOptimization) {
+          block.body.push(
+            t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
+                [getScopeIdIdentifier(bodySection)],
+              ),
             ),
-          ),
-        );
-        write`${callRuntime(
-          "markResumeControlSingleNodeEnd",
-          getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(nodeRef),
-          forScopeIdsIdentifier,
-        )}`;
-      } else {
-        write`${callRuntime(
-          "markResumeControlEnd",
-          getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(nodeRef),
-        )}`;
+          );
+          write`${callRuntime(
+            "markResumeControlSingleNodeEnd",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeRef),
+            forScopeIdsIdentifier,
+          )}`;
+        } else {
+          write`${callRuntime(
+            "markResumeControlEnd",
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeRef),
+          )}`;
+        }
       }
       getSerializedScopeProperties(tagSection).set(
         t.stringLiteral(

@@ -31,13 +31,6 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""],
 );
 
-const [getRegisterRenderer, setRegisterRenderer] = createSectionState<boolean>(
-  "registerRenderer",
-  () => false,
-);
-
-export { setRegisterRenderer };
-
 export function writeTo(path: t.NodePath<any>) {
   const section = getSection(path);
   return (
@@ -104,7 +97,6 @@ export function getSectionMeta(section: Section) {
     writes:
       toTemplateOrStringLiteral([writePrefix, ...writes, writePostfix]) ||
       t.stringLiteral(""),
-    register: getRegisterRenderer(section),
   };
 }
 
