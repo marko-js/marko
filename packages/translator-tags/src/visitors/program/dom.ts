@@ -1,11 +1,11 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { isStatefulReferences } from "../../util/is-stateful";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSection,
   getSectionPath,
+  isStatefulSection,
 } from "../../util/sections";
 import {
   getClosures,
@@ -42,7 +42,6 @@ export default {
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const closures = getClosures(childSection);
           const identifier = writer.getRenderer(childSection);
-          const upstreamExpression = childSection.upstreamExpression;
           const renderer = callRuntime(
             "createRenderer",
             writes,
@@ -56,8 +55,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 identifier,
-                !upstreamExpression ||
-                  isStatefulReferences(upstreamExpression.referencedBindings)
+                isStatefulSection(childSection)
                   ? callRuntime(
                       "register",
                       t.stringLiteral(

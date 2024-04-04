@@ -743,7 +743,7 @@ export function writeHTMLResumeStatements(
       // we're setting it to an empty builder from if/for purely for this check
       const isDynamicClosure =
         !getSubscribeBuilder(section) || !isImmediateOwner;
-      if (isDynamicClosure && isStatefulReferences(closure)) {
+      if (isDynamicClosure) {
         path.pushContainer(
           "body",
           t.expressionStatement(
