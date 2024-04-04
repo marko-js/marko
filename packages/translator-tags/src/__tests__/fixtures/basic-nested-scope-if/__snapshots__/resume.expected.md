@@ -12,7 +12,7 @@
       <!--M|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
       <!--M|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
     </script>
   </body>
 </html>
@@ -68,7 +68,7 @@ container.querySelector("button").click()
       <!--M|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
     </script>
   </body>
 </html>
@@ -95,7 +95,7 @@ container.querySelector("button").click()
       <!--M|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
     </script>
   </body>
 </html>

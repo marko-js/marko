@@ -5,6 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
+import { isStatefulReferences } from "./is-stateful";
 import type { Binding } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -20,7 +21,7 @@ export type Section = {
   name: string;
   depth: number;
   parent?: Section;
-  closures?: Binding[];
+  closures: Set<Binding>;
   bindings: Set<Binding>;
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
@@ -63,6 +64,7 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      closures: new Set(),
       bindings: new Set(),
       startNodeContentType: getStartNodeContentType(path),
       endNodeContentType: getEndNodeContentType(path),
@@ -219,3 +221,25 @@ function getNodeContentType(
   }
   return ContentType.Dynamic;
 }
+
+export const isStatefulSection = (section: Section) => {
+  const upstreamExpression = section.upstreamExpression;
+  return (
+    !upstreamExpression ||
+    isStatefulReferences(upstreamExpression.referencedBindings)
+  );
+};
+
+export const checkStatefulClosures = (
+  section: Section,
+  immediateOnly: boolean,
+) => {
+  for (const binding of section.closures) {
+    if (
+      (!immediateOnly || section.parent === binding.section) &&
+      isStatefulReferences(binding)
+    ) {
+      return true;
+    }
+  }
+};

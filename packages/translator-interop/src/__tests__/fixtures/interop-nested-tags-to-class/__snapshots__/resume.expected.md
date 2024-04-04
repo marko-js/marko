@@ -21,7 +21,7 @@
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>
@@ -77,7 +77,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>
@@ -122,7 +122,7 @@ container.querySelector("#class").click()
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>
@@ -167,7 +167,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>
@@ -212,7 +212,7 @@ container.querySelector("#class").click()
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>
@@ -257,7 +257,7 @@ container.querySelector("#tags").click()
       </button>
       <!--M*1 #button/0-->
       <script>
-        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",])
+        M$h.push((b,s)=&gt;({1:s[1]}),[1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber",1,"packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count",])
       </script>
     </div>
     <script>

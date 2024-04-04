@@ -19,8 +19,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "show": show,
     "count": count,
-    "#text/2!": _scope1_,
-    "#text/2(": _ifRenderer
+    "#text/2(": _ifRenderer,
+    "#text/2!": _scope1_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko");

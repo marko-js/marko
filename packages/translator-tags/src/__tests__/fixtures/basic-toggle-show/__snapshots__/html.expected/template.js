@@ -15,8 +15,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko_0_show");
   _writeScope(_scope0_id, {
     "show": show,
-    "#text/0!": _scope1_,
-    "#text/0(": _ifRenderer
+    "#text/0(": _ifRenderer,
+    "#text/0!": _scope1_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko");

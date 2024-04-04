@@ -7,6 +7,7 @@ import {
   currentProgramPath,
   scopeIdentifier,
 } from "../visitors/program";
+import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
 import { type Opt, push } from "./optional";
 import {
@@ -642,7 +643,10 @@ export function writeSignals(section: Section) {
       );
     }
 
-    if (signal.isDynamicClosure) {
+    if (
+      signal.isDynamicClosure &&
+      isStatefulReferences(signal.referencedBindings)
+    ) {
       value = callRuntime(
         "registerSubscriber",
         t.stringLiteral(
@@ -719,10 +723,9 @@ export function writeHTMLResumeStatements(
   const section = getSection(path);
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
-  const closures = section.closures;
 
-  if (closures) {
-    for (const closure of closures) {
+  for (const closure of section.closures) {
+    if (isStatefulReferences(closure)) {
       let currentSection = section;
       while (currentSection !== closure.section) {
         getSerializedScopeProperties(currentSection).set(
@@ -730,6 +733,27 @@ export function writeHTMLResumeStatements(
           callRuntime(
             "serializedScope",
             getScopeIdIdentifier((currentSection = currentSection.parent!)),
+          ),
+        );
+      }
+      setForceResumeScope(closure.section);
+      const isImmediateOwner = section.parent?.id === closure.section.id;
+      // TODO: getSubscribeBuilder is not the right check
+      // the builder shouldn't get set for the HTML output
+      // we're setting it to an empty builder from if/for purely for this check
+      const isDynamicClosure =
+        !getSubscribeBuilder(section) || !isImmediateOwner;
+      if (isDynamicClosure && isStatefulReferences(closure)) {
+        path.pushContainer(
+          "body",
+          t.expressionStatement(
+            callRuntime(
+              "writeEffect",
+              scopeIdIdentifier,
+              t.stringLiteral(
+                getResumeRegisterId(section, closure, "subscriber"),
+              ),
+            ),
           ),
         );
       }
@@ -758,37 +782,10 @@ export function writeHTMLResumeStatements(
   section.bindings.forEach((binding) => {
     if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
-      if (binding.section.id === section.id) {
-        serializedProperties.push(
-          t.objectProperty(accessor, t.identifier(binding.name)),
-        );
-        accessors.add(accessor.value);
-      } else {
-        const isImmediateOwner = section.parent?.id === binding.section.id;
-        // TODO: getSubscribeBuilder is not the right check
-        // the builder shouldn't get set for the HTML output
-        // we're setting it to an empty builder from if/for purely for this check
-        const isDynamicClosure =
-          !getSubscribeBuilder(section) || !isImmediateOwner;
-        if (isDynamicClosure) {
-          path.pushContainer(
-            "body",
-            t.expressionStatement(
-              callRuntime(
-                "writeEffect",
-                scopeIdIdentifier,
-                t.stringLiteral(
-                  getResumeRegisterId(section, binding, "subscriber"),
-                ),
-              ),
-            ),
-          );
-        }
-        getSerializedScopeProperties(binding.section).set(
-          accessor,
-          t.identifier(binding.name),
-        );
-      }
+      serializedProperties.push(
+        t.objectProperty(accessor, t.identifier(binding.name)),
+      );
+      accessors.add(accessor.value);
     }
   });
 

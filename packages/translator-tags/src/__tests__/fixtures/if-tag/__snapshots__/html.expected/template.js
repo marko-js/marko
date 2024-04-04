@@ -41,12 +41,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _ifScopeId3)}</div>`);
   _writeScope(_scope0_id, {
-    "#text/0!": _scope1_,
     "#text/0(": _ifRenderer,
-    "#text/1!": _scope2_,
+    "#text/0!": _scope1_,
     "#text/1(": _ifRenderer2,
-    "#text/2!": _scope3_,
-    "#text/2(": _ifRenderer3
+    "#text/1!": _scope2_,
+    "#text/2(": _ifRenderer3,
+    "#text/2!": _scope3_
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko");

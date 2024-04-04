@@ -1,0 +1,15 @@
+static const a = 1;
+const/b = 2;
+let/c = 3;
+
+<button onClick() { c = 4 }/>
+<custom-tag>
+  ${a} ${b} ${c}
+</custom-tag>
+<div>
+  <if=Math.random()>
+    <if=Math.random()>
+      ${a} ${b} ${c}
+    </if>
+  </if>
+</div>
