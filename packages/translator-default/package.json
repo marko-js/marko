@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-default",
-  "version": "5.32.12",
+  "version": "5.32.13",
   "description": "Translates Marko templates to the default Marko runtime.",
   "keywords": [
     "babel",

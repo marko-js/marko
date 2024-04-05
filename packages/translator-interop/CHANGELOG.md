@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.13
+
+### Patch Changes
+
+- [#2196](https://github.com/marko-js/marko/pull/2196) [`e98d1b2`](https://github.com/marko-js/marko/commit/e98d1b256499b8346fca20b89f0943d515573c9d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix collision with tags-api-preview
+
+- Updated dependencies [[`e98d1b2`](https://github.com/marko-js/marko/commit/e98d1b256499b8346fca20b89f0943d515573c9d)]:
+  - @marko/translator-default@5.32.13
+  - @marko/translator-tags@0.1.14
+
 ## 0.1.12
 
 ### Patch Changes

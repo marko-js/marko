@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.13
+
+### Patch Changes
+
+- [#2196](https://github.com/marko-js/marko/pull/2196) [`e98d1b2`](https://github.com/marko-js/marko/commit/e98d1b256499b8346fca20b89f0943d515573c9d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix collision with tags-api-preview
+
 ## 5.32.12
 
 ### Patch Changes
