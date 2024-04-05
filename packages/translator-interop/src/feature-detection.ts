@@ -28,12 +28,12 @@ export function isTagsAPI(path: t.NodePath) {
   }
 
   const program = file.path;
-  let featureType = program.node.extra?.___featureType;
+  let featureType = program.node.extra?.featureType;
   if (!featureType) {
     const state = {} as FeatureState;
     program.node.extra ??= {};
     program.traverse(featureDetectionVisitor, state);
-    featureType = program.node.extra.___featureType =
+    featureType = program.node.extra.featureType =
       state.feature?.type || DEFAULT_FEATURE_TYPE;
   }
   return featureType === FeatureType.Tags;
