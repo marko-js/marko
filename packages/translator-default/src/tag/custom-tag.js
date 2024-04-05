@@ -43,7 +43,7 @@ export default function (path, isNullable) {
     const childFile = loadFileForTag(path);
     const childProgram = childFile?.ast.program;
 
-    if (childProgram?.extra?.___featureType === "tags") {
+    if (childProgram?.extra?.featureType === "tags") {
       const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
         markoOpts.output === "html" ? "html" : "dom"
       }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;

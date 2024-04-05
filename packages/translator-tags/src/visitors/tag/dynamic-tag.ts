@@ -112,7 +112,7 @@ export default {
         tagExpression = importDefault(file, relativePath, tagExpression.value);
       }
 
-      if (extra.___featureType === "class") {
+      if (extra.featureType === "class") {
         const { markoOpts } = tag.hub.file;
         const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
           isOutputHTML() ? "html" : "dom"
