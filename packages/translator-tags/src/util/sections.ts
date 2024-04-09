@@ -11,9 +11,12 @@ import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
-  Static,
+  Comment,
   Dynamic,
   Empty,
+  Placeholder,
+  Tag,
+  Text,
 }
 
 export type Section = {
@@ -180,12 +183,11 @@ export function getNodeContentType(
   path: t.NodePath<t.Statement>,
   extraMember: "startNodeContentType" | "endNodeContentType",
 ) {
-  if (
-    t.isMarkoText(path) ||
-    t.isMarkoPlaceholder(path) ||
-    t.isMarkoCDATA(path)
-  ) {
-    return ContentType.Static;
+  if (t.isMarkoText(path)) {
+    return ContentType.Text;
+  }
+  if (t.isMarkoPlaceholder(path)) {
+    return ContentType.Placeholder;
   }
   if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
     return ContentType.Empty;
@@ -193,7 +195,7 @@ export function getNodeContentType(
   if (t.isMarkoTag(path.node)) {
     const tag = path as t.NodePath<t.MarkoTag>;
     if (isNativeTag(tag)) {
-      return ContentType.Static;
+      return ContentType.Tag;
     }
     if (isAttributeTag(tag)) {
       return ContentType.Empty;
@@ -201,7 +203,7 @@ export function getNodeContentType(
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
         case "html-comment":
-          return ContentType.Static;
+          return ContentType.Comment;
         case "let":
         case "const":
         case "attrs":
@@ -209,7 +211,6 @@ export function getNodeContentType(
         case "lifecycle":
         case "return":
         case "id":
-        case "context":
         case "define":
           return ContentType.Empty;
       }

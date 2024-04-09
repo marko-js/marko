@@ -150,6 +150,7 @@ export default {
       walks.enter(tag);
       write`<!--`;
 
+      // TODO: If the tag is completely empty, make the marker node the same as the comment node.
       if (isOutputHTML()) {
         for (const child of tag.node.body.body) {
           if (t.isMarkoText(child)) {

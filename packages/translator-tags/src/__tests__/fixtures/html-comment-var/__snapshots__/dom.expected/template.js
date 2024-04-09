@@ -8,7 +8,7 @@ const _setup = _scope => {
   _setTagVar(_scope, "#childScope/2", _spanName);
   _parentEl(_scope["#childScope/2"]);
 };
-export const template = `<div>${_parentEl_template}<!></div><span>${_parentEl_template}<!></span>`;
-export const walks = /* next(1), beginChild, _parentEl_walks, endChild, replace, out(1), next(1), beginChild, _parentEl_walks, endChild, replace, out(1) */`D/${_parentEl_walks}&%lD/${_parentEl_walks}&%l`;
+export const template = `<div>${_parentEl_template} </div><span>${_parentEl_template} </span>`;
+export const walks = /* next(1), beginChild, _parentEl_walks, endChild, get, out(1), next(1), beginChild, _parentEl_walks, endChild, get, out(1) */`D/${_parentEl_walks}& lD/${_parentEl_walks}& l`;
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko");

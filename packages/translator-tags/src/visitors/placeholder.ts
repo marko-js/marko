@@ -25,9 +25,9 @@ import { scopeIdentifier } from "./program";
 const kBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
 enum SiblingText {
-  none,
-  before,
-  after,
+  None,
+  Before,
+  After,
 }
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
@@ -83,10 +83,12 @@ export default {
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
-        if (siblingText) {
-          if (isHTML && isStateful && siblingText === SiblingText.before) {
+        if (siblingText === SiblingText.Before) {
+          if (isHTML && isStateful) {
             write`<!>`;
           }
+          walks.visit(placeholder, WalkCode.Replace);
+        } else if (siblingText === SiblingText.After) {
           walks.visit(placeholder, WalkCode.Replace);
         } else {
           if (!isHTML) write` `;
@@ -143,39 +145,47 @@ function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
   let prev = placeholder.getPrevSibling();
-
-  while (
-    prev.node &&
-    getNodeContentType(
+  while (prev.node) {
+    const contentType = getNodeContentType(
       prev as t.NodePath<t.Statement>,
       "endNodeContentType",
-    ) === ContentType.Empty
-  ) {
-    prev = prev.getPrevSibling();
+    );
+    if (contentType === ContentType.Empty) {
+      prev = prev.getPrevSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.Before);
+    } else {
+      break;
+    }
   }
-  if (
-    (prev.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(prev) && isNativeTag(prev as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholderExtra[kSiblingText] = SiblingText.before);
+  if (!prev.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }
-
   let next = placeholder.getNextSibling();
-  while (
-    next.node &&
-    getNodeContentType(
+  while (next.node) {
+    const contentType = getNodeContentType(
       next as t.NodePath<t.Statement>,
       "startNodeContentType",
-    ) === ContentType.Empty
-  ) {
-    next = next.getNextSibling();
+    );
+    if (contentType === ContentType.Empty) {
+      next = next.getNextSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.After);
+    } else {
+      break;
+    }
   }
-  if (
-    (next.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(next) && isNativeTag(next as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholderExtra[kSiblingText] = SiblingText.after);
+  if (!next.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholderExtra[kSiblingText] = SiblingText.none);
+  return (placeholderExtra[kSiblingText] = SiblingText.None);
 }
