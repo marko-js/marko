@@ -163,20 +163,20 @@ export default {
         const templateQuasis: t.TemplateElement[] = [];
         const templateExpressions: t.Expression[] = [];
         let currentQuasi = "";
-        for (const child of tag.get("body").get("body")) {
-          if (child.isMarkoText()) {
-            currentQuasi += child.node.value;
-          } else if (child.isMarkoPlaceholder()) {
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            currentQuasi += child.value;
+          } else if (t.isMarkoPlaceholder(child)) {
             templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-            templateExpressions.push(child.node.value);
+            templateExpressions.push(child.value);
             currentQuasi = "";
           }
         }
-        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
 
         if (templateExpressions.length === 0) {
-          write`${t.templateLiteral(templateQuasis, [])}`;
+          write`${currentQuasi}`;
         } else {
+          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
           addStatement(
             "render",
             getSection(tag),
