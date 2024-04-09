@@ -5,10 +5,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write("<div>");
   const _childScope = _peekSerializedScope();
   const divName = _parentEl._({}, _register( /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_divName", _scope0_id));
-  _write(`${_escapeXML(divName)}${_markResumeNode(_scope0_id, "#text/1")}</div><span>`);
+  _write(`<!>${_escapeXML(divName)}${_markResumeNode(_scope0_id, "#text/1")}</div><span>`);
   const _childScope2 = _peekSerializedScope();
   const spanName = _parentEl._({}, _register( /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_spanName", _scope0_id));
-  _write(`${_escapeXML(spanName)}${_markResumeNode(_scope0_id, "#text/3")}</span>`);
+  _write(`<!>${_escapeXML(spanName)}${_markResumeNode(_scope0_id, "#text/3")}</span>`);
   _writeScope(_scope0_id, {
     "#childScope/0": _childScope,
     "#childScope/2": _childScope2

@@ -8,24 +8,39 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  ReserveType,
+  BindingType,
+  type Binding,
+  createBinding,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  mergeReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
   createScopeReadExpression,
   getScopeExpression,
 } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
+import { addStatement } from "../util/signals";
 import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
+export const kCommentTagBinding = Symbol("comment tag binding");
+declare module "@marko/compiler/dist/types" {
+  export interface NodeExtra {
+    [kCommentTagBinding]?: Binding;
+  }
+}
+
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoParams(tag);
+      assertNoAttributes(tag);
+      assertNoAttributeTags(tag);
+
+      let needsBinding = false;
       if (tag.has("var")) {
         if (!t.isIdentifier(tag.node.var)) {
           throw tag
@@ -34,20 +49,38 @@ export default {
               "The `<html-comment>` tag's return value cannot be destructured.",
             );
         }
-
-        reserveScope(
-          ReserveType.Visit,
-          getOrCreateSection(tag),
-          tag.node,
-          tag.node.var.name,
-          "#comment",
-        );
+        needsBinding = true;
       }
+
+      const referenceNodes: t.Node[] = [];
+      for (const child of tag.get("body").get("body")) {
+        if (child.isMarkoPlaceholder()) {
+          referenceNodes.push(child.node.value);
+          needsBinding = true;
+        } else if (!child.isMarkoText()) {
+          throw child.buildCodeFrameError(
+            "Invalid child. Only text is allowed inside an html comment.",
+          );
+        }
+      }
+      if (needsBinding) {
+        const section = getOrCreateSection(tag);
+        const tagExtra = (tag.node.extra ??= {});
+
+        tagExtra[kCommentTagBinding] = createBinding(
+          "#comment",
+          BindingType.dom,
+          section,
+        );
+        mergeReferences(tag, referenceNodes);
+      }
+      tag.skip();
     },
   },
   translate: {
     enter(tag) {
-      const extra = tag.node.extra!;
+      const tagExtra = tag.node.extra!;
+      const commentBinding = tagExtra[kCommentTagBinding];
       if (tag.has("var")) {
         if (isOutputHTML()) {
           translateVar(
@@ -74,7 +107,7 @@ export default {
             if (reference.parentPath?.isCallExpression()) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, extra.reserve!),
+                  createScopeReadExpression(referenceSection, commentBinding!),
                 ),
               );
             } else {
@@ -82,7 +115,7 @@ export default {
               reference.replaceWith(
                 callRuntime(
                   "bindFunction",
-                  getScopeExpression(referenceSection, extra.reserve!.section),
+                  getScopeExpression(referenceSection, getSection(tag)),
                   createElFunction,
                 ),
               );
@@ -98,7 +131,7 @@ export default {
                     [scopeIdentifier],
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(extra.reserve!),
+                      getScopeAccessorLiteral(commentBinding!),
                       true,
                     ),
                   ),
@@ -109,25 +142,64 @@ export default {
         }
       }
 
-      if (extra.reserve) {
+      if (tagExtra[kCommentTagBinding]) {
         walks.visit(tag, WalkCode.Get);
       }
+      const write = writer.writeTo(tag);
 
       walks.enter(tag);
-      writer.writeTo(tag)`<!--`;
-      // TODO: for the DOM side this needs to normalize placeholders and text content into a string.
-      // This should also error if other tags are discovered, including control flow probably.
-    },
-    exit(tag) {
-      assertNoParams(tag);
-      assertNoAttributes(tag);
-      assertNoAttributeTags(tag);
+      write`<!--`;
+
+      if (isOutputHTML()) {
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            write`${child.value}`;
+          } else if (t.isMarkoPlaceholder(child)) {
+            write`${callRuntime("escapeXML", child.value)}`;
+          }
+        }
+      } else {
+        const templateQuasis: t.TemplateElement[] = [];
+        const templateExpressions: t.Expression[] = [];
+        let currentQuasi = "";
+        for (const child of tag.get("body").get("body")) {
+          if (child.isMarkoText()) {
+            currentQuasi += child.node.value;
+          } else if (child.isMarkoPlaceholder()) {
+            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+            templateExpressions.push(child.node.value);
+            currentQuasi = "";
+          }
+        }
+        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+
+        if (templateExpressions.length === 0) {
+          write`${t.templateLiteral(templateQuasis, [])}`;
+        } else {
+          addStatement(
+            "render",
+            getSection(tag),
+            tagExtra.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "data",
+                t.memberExpression(
+                  scopeIdentifier,
+                  getScopeAccessorLiteral(commentBinding!),
+                  true,
+                ),
+                t.templateLiteral(templateQuasis, templateExpressions),
+              ),
+            ),
+          );
+        }
+      }
 
       walks.exit(tag);
-      writer.writeTo(tag)`-->`;
+      write`-->`;
 
-      if (tag.node.extra?.reserve) {
-        writer.markNode(tag);
+      if (commentBinding) {
+        writer.markNode(tag, commentBinding);
       }
 
       tag.remove();

@@ -2,7 +2,6 @@ import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import evaluate from "../util/evaluate";
-import { isCoreTag } from "../util/is-core-tag";
 import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -23,17 +22,6 @@ import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
-const noOutputCoreTags = new Set([
-  "attrs",
-  "const",
-  "define",
-  "effect",
-  "get",
-  "id",
-  "let",
-  "lifecycle",
-  "return",
-]);
 const kBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
 enum SiblingText {
@@ -150,22 +138,6 @@ function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
       (parentPath.node.name as t.StringLiteral).value) ||
     ""
   );
-}
-
-function noOutput(path: t.NodePath<t.Node>) {
-  if (path.node) {
-    if (t.isMarkoComment(path)) {
-      return true;
-    }
-
-    if (t.isMarkoTag(path)) {
-      if (isCoreTag(path) && noOutputCoreTags.has(path.node.name.value)) {
-        return true;
-      }
-    }
-  }
-
-  return false;
 }
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
