@@ -123,7 +123,7 @@ const _setup = _scope => {
   _for9(_scope, [10, 0, 1]);
   _for10(_scope, [10, 0, 1]);
 };
-export const template = "<!><!><!><!><!><!><!><!><!><!><!>";
-export const walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"%b%b%b%b%b%b%b%b%b%bD";
+export const template = "<!><!><!><!><!><!><!><!><!><!><!><!>";
+export const walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"D%b%b%b%b%b%b%b%b%b%bD";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko");

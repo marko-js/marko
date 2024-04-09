@@ -11,9 +11,12 @@ import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
-  Static,
+  Comment,
   Dynamic,
   Empty,
+  Placeholder,
+  Tag,
+  Text,
 }
 
 export type Section = {
@@ -85,7 +88,8 @@ export function getOrCreateSection(path: t.NodePath<any>) {
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
-          TagNameType.NativeTag)
+          TagNameType.NativeTag &&
+        (cur.parent as { name: t.StringLiteral }).name.value !== "html-comment")
     ) {
       return startSection(cur)!;
     }
@@ -175,34 +179,31 @@ function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   return ContentType.Empty;
 }
 
-/**
- * @returns null if the node should be skipped
- */
-function getNodeContentType(
+export function getNodeContentType(
   path: t.NodePath<t.Statement>,
   extraMember: "startNodeContentType" | "endNodeContentType",
 ) {
-  if (
-    t.isMarkoText(path) ||
-    t.isMarkoComment(path) ||
-    t.isMarkoPlaceholder(path) ||
-    t.isMarkoCDATA(path)
-  ) {
-    return ContentType.Static;
+  if (t.isMarkoText(path)) {
+    return ContentType.Text;
   }
-  if (t.isMarkoScriptlet(path)) {
+  if (t.isMarkoPlaceholder(path)) {
+    return ContentType.Placeholder;
+  }
+  if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
     return ContentType.Empty;
   }
   if (t.isMarkoTag(path.node)) {
     const tag = path as t.NodePath<t.MarkoTag>;
     if (isNativeTag(tag)) {
-      return ContentType.Static;
+      return ContentType.Tag;
     }
     if (isAttributeTag(tag)) {
       return ContentType.Empty;
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
+        case "html-comment":
+          return ContentType.Comment;
         case "let":
         case "const":
         case "attrs":

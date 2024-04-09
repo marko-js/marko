@@ -2,7 +2,6 @@ import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import evaluate from "../util/evaluate";
-import { isCoreTag } from "../util/is-core-tag";
 import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -12,29 +11,23 @@ import {
   type Binding,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  ContentType,
+  getNodeContentType,
+  getOrCreateSection,
+  getSection,
+} from "../util/sections";
 import { addStatement } from "../util/signals";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
-const noOutputCoreTags = new Set([
-  "attrs",
-  "const",
-  "define",
-  "effect",
-  "get",
-  "id",
-  "let",
-  "lifecycle",
-  "return",
-]);
 const kBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
 enum SiblingText {
-  none,
-  before,
-  after,
+  None,
+  Before,
+  After,
 }
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
@@ -90,10 +83,12 @@ export default {
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
-        if (siblingText) {
-          if (isHTML && isStateful && siblingText === SiblingText.before) {
+        if (siblingText === SiblingText.Before) {
+          if (isHTML && isStateful) {
             write`<!>`;
           }
+          walks.visit(placeholder, WalkCode.Replace);
+        } else if (siblingText === SiblingText.After) {
           walks.visit(placeholder, WalkCode.Replace);
         } else {
           if (!isHTML) write` `;
@@ -147,45 +142,50 @@ function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
   );
 }
 
-function noOutput(path: t.NodePath<t.Node>) {
-  if (path.node) {
-    if (t.isMarkoComment(path)) {
-      return true;
-    }
-
-    if (t.isMarkoTag(path)) {
-      if (isCoreTag(path) && noOutputCoreTags.has(path.node.name.value)) {
-        return true;
-      }
-    }
-  }
-
-  return false;
-}
-
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;
   let prev = placeholder.getPrevSibling();
-  while (noOutput(prev)) {
-    prev = prev.getPrevSibling();
+  while (prev.node) {
+    const contentType = getNodeContentType(
+      prev as t.NodePath<t.Statement>,
+      "endNodeContentType",
+    );
+    if (contentType === ContentType.Empty) {
+      prev = prev.getPrevSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.Before);
+    } else {
+      break;
+    }
   }
-  if (
-    (prev.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(prev) && isNativeTag(prev as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholderExtra[kSiblingText] = SiblingText.before);
+  if (!prev.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }
-
   let next = placeholder.getNextSibling();
-  while (noOutput(next)) {
-    next = next.getNextSibling();
+  while (next.node) {
+    const contentType = getNodeContentType(
+      next as t.NodePath<t.Statement>,
+      "startNodeContentType",
+    );
+    if (contentType === ContentType.Empty) {
+      next = next.getNextSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.After);
+    } else {
+      break;
+    }
   }
-  if (
-    (next.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(next) && isNativeTag(next as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholderExtra[kSiblingText] = SiblingText.after);
+  if (!next.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholderExtra[kSiblingText] = SiblingText.none);
+  return (placeholderExtra[kSiblingText] = SiblingText.None);
 }
