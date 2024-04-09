@@ -57,22 +57,19 @@ export default {
       const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
       const tagBody = tag.get("body");
-      startSection(tagBody);
-
-      trackVarReferences(tag, BindingType.derived);
-      trackParamsReferences(tagBody, BindingType.param);
-
-      tagExtra[kDOMBinding] = createBinding(
+      const domBinding = (tagExtra[kDOMBinding] = createBinding(
         "#text",
         BindingType.dom,
         section,
         undefined,
         tagExtra,
-      );
-    },
-    exit(tag: t.NodePath<t.MarkoTag>) {
+      ));
+
+      startSection(tagBody);
+      trackVarReferences(tag, BindingType.derived);
+      trackParamsReferences(tagBody, BindingType.param);
+
       const referenceNodes: t.Node[] = [];
-      const tagExtra = tag.node.extra!;
       if (tag.node.arguments) {
         for (const arg of tag.node.arguments) {
           referenceNodes.push(arg);
@@ -84,7 +81,7 @@ export default {
       }
 
       mergeReferences(tag, referenceNodes);
-      addReferenceToExpression(tag, tagExtra[kDOMBinding]!);
+      addReferenceToExpression(tag, domBinding);
     },
   },
   translate: {

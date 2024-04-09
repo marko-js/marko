@@ -20,20 +20,15 @@ import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
-  analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
-      const tagBody = tag.get("body");
-      startSection(tagBody);
-
-      trackVarReferences(tag, BindingType.derived);
-      trackParamsReferences(tagBody, BindingType.param);
-    },
-    exit(tag: t.NodePath<t.MarkoTag>) {
-      mergeReferences(
-        tag,
-        tag.node.attributes.map((attr) => attr.value),
-      );
-    },
+  analyze(tag: t.NodePath<t.MarkoTag>) {
+    const tagBody = tag.get("body");
+    startSection(tagBody);
+    trackVarReferences(tag, BindingType.derived);
+    trackParamsReferences(tagBody, BindingType.param);
+    mergeReferences(
+      tag,
+      tag.node.attributes.map((attr) => attr.value),
+    );
   },
   translate: {
     enter(tag) {

@@ -8,10 +8,7 @@ import * as writer from "../../util/writer";
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
-      const body = tag.get("body");
-      if (body.get("body").length) {
-        startSection(body);
-      }
+      startSection(tag.get("body"));
     },
   },
   translate: {

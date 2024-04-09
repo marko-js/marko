@@ -75,19 +75,15 @@ export default {
         childProgramExtra?.isInteractive ||
         childProgramExtra?.hasInteractiveChild;
 
+      // TODO: only if dynamic attributes
+      mergeReferences(
+        tag,
+        tag.node.attributes.map((attr) => attr.value),
+      );
+
       if (hasInteractiveChild) {
         (currentProgramPath.node.extra ?? {}).hasInteractiveChild = true;
         // TODO: should check individual inputs to see if they are intersecting with state
-      }
-    },
-    exit(tag: t.NodePath<t.MarkoTag>) {
-      // TODO: only if dynamic attributes
-      const template = getTagTemplate(tag);
-      if (template) {
-        mergeReferences(
-          tag,
-          tag.node.attributes.map((attr) => attr.value),
-        );
       }
     },
   },
