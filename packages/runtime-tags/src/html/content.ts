@@ -6,29 +6,20 @@ export const escapeXML = escapeIfNeeded((val: string) => {
   let result = "";
   let lastPos = 0;
 
-  for (let i = 0, len = val.length; i < len; i++) {
-    let replacement: string;
-
+  for (let i = 0; i < val.length; i++) {
     switch (val[i]) {
       case "<":
-        replacement = "&lt;";
+        result += val.slice(lastPos, i) + "&lt;";
+        lastPos = i + 1;
         break;
       case "&":
-        replacement = "&amp;";
+        result += val.slice(lastPos, i) + "&amp;";
+        lastPos = i + 1;
         break;
-      default:
-        continue;
     }
-
-    result += val.slice(lastPos, i) + replacement;
-    lastPos = i + 1;
   }
 
-  if (lastPos) {
-    return result + val.slice(lastPos);
-  }
-
-  return val;
+  return lastPos ? result + val.slice(lastPos) : val;
 });
 
 export const escapeScript = escapeIfNeeded(escapeTagEnding("script"));
@@ -48,11 +39,7 @@ function escapeTagEnding(tagName: string) {
       i = val.indexOf(openTag, lastPos);
     }
 
-    if (lastPos) {
-      return result + val.slice(lastPos);
-    }
-
-    return val;
+    return lastPos ? result + val.slice(lastPos) : val;
   };
 }
 
@@ -71,11 +58,8 @@ export function escapeAttrValue(val: string) {
       case "\r":
       case "\f":
         return quoteValue(val, i + 1, '"', "&#34;");
-      default:
-        i++;
-        break;
     }
-  } while (i < len);
+  } while (++i < len);
 
   return val;
 }
@@ -108,7 +92,7 @@ function quoteValue(
   let result = quote;
   let lastPos = 0;
 
-  for (let i = startPos, len = val.length; i < len; i++) {
+  for (let i = startPos; i < val.length; i++) {
     if (val[i] === quote) {
       result += val.slice(lastPos, i) + escaped;
       lastPos = i + 1;
