@@ -24,33 +24,29 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze: {
-    enter(tag) {
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
+  analyze(tag) {
+    assertNoParams(tag);
+    assertNoBodyContent(tag);
 
-      const { node } = tag;
-      const tagExtra = (node.extra ??= {});
-      tagExtra[kRef] = createBinding(
-        tag.scope.generateUid("lifecycle"),
-        BindingType.derived,
-        getOrCreateSection(tag),
-        undefined,
-        tagExtra,
-      );
+    const { node } = tag;
+    const tagExtra = (node.extra ??= {});
+    tagExtra[kRef] = createBinding(
+      tag.scope.generateUid("lifecycle"),
+      BindingType.derived,
+      getOrCreateSection(tag),
+      undefined,
+      tagExtra,
+    );
 
-      for (const attr of node.attributes) {
-        (attr.value.extra ??= {}).isEffect = true;
-      }
+    for (const attr of node.attributes) {
+      (attr.value.extra ??= {}).isEffect = true;
+    }
 
-      (currentProgramPath.node.extra ??= {}).isInteractive = true;
-    },
-    exit(tag) {
-      mergeReferences(
-        tag,
-        tag.node.attributes.map((attr) => attr.value),
-      );
-    },
+    (currentProgramPath.node.extra ??= {}).isInteractive = true;
+    mergeReferences(
+      tag,
+      tag.node.attributes.map((attr) => attr.value),
+    );
   },
   translate: {
     exit(tag) {

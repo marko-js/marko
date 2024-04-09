@@ -21,10 +21,14 @@ export default {
         return;
       }
 
+      if (type === TagNameType.NativeTag) {
+        NativeTag.analyze.enter(tag);
+        return;
+      }
+
+      analyzeAttributeTags(tag);
+
       switch (type) {
-        case TagNameType.NativeTag:
-          NativeTag.analyze.enter(tag);
-          break;
         case TagNameType.CustomTag:
           CustomTag.analyze.enter(tag);
           break;
@@ -37,32 +41,27 @@ export default {
       }
     },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      const tagDef = getTagDef(tag);
-      const type = analyzeTagNameType(tag);
-      const hook = tagDef?.analyzer?.hook as Plugin;
+      const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
       if (hook) {
         hooks.exit(hook, tag);
         return;
       }
 
-      if (type === TagNameType.NativeTag) {
-        // NativeTag.analyze.exit(tag);
-        return;
-      }
-
-      analyzeAttributeTags(tag);
-      switch (type) {
-        case TagNameType.CustomTag:
-          CustomTag.analyze.exit(tag);
-          break;
-        case TagNameType.AttributeTag:
-          // AttributeTag.analyze.exit(tag);
-          break;
-        case TagNameType.DynamicTag:
-          DynamicTag.analyze.exit(tag);
-          break;
-      }
+      // switch (analyzeTagNameType(tag)) {
+      //   case TagNameType.NativeTag:
+      //     // NativeTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.CustomTag:
+      //     // CustomTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.AttributeTag:
+      //     // AttributeTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.DynamicTag:
+      //     // DynamicTag.analyze.exit(tag);
+      //     break;
+      // }
     },
   },
   translate: {

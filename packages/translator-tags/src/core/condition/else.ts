@@ -1,21 +1,9 @@
 import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
-import { startSection } from "../../util/sections";
-import {
-  enterBranchTranslate,
-  exitBranchAnalyze,
-  exitBranchTranslate,
-} from "./if";
+import { analyze, translate } from "./if";
 
 export default {
-  analyze: {
-    enter(tag) {
-      startSection(tag.get("body"));
-    },
-    exit(tag) {
-      exitBranchAnalyze(tag);
-    },
-  },
+  analyze,
   translate: {
     enter(tag) {
       const { node } = tag;
@@ -43,10 +31,10 @@ export default {
         }
       }
 
-      enterBranchTranslate(tag);
+      translate.enter(tag);
     },
     exit(tag) {
-      exitBranchTranslate(tag);
+      translate.exit(tag);
     },
   },
   attributes: {},

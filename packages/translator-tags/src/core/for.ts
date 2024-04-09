@@ -52,46 +52,37 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze: {
-    enter(tag) {
-      const isOnlyChild = checkOnlyChild(tag);
-      const tagExtra = (tag.node.extra ??= {});
-      const tagBody = tag.get("body");
-      const section = getOrCreateSection(tag);
-      startSection(tagBody);
+  analyze(tag) {
+    const isOnlyChild = checkOnlyChild(tag);
+    const tagExtra = (tag.node.extra ??= {});
+    const tagBody = tag.get("body");
+    const section = getOrCreateSection(tag);
+    const bodySection = startSection(tagBody)!;
 
-      if (isOnlyChild) {
-        const parentTag = tag.parentPath.parent as t.MarkoTag;
-        const parentTagName = (parentTag.name as t.StringLiteral)?.value;
-        (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
-          "#" + parentTagName,
-          BindingType.dom,
-          section,
-        );
-      } else {
-        tagExtra[kForMarkerBinding] = createBinding(
-          "#text",
-          BindingType.dom,
-          section,
-        );
-      }
-
-      trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
-    },
-    exit(tag) {
-      const bodySection = getSection(tag.get("body"));
-      const extra = tag.node.extra!;
-      analyzeAttributeTags(tag);
-
-      mergeReferences(
-        tag,
-        tag.node.attributes.map((attr) => attr.value),
+    if (isOnlyChild) {
+      const parentTag = tag.parentPath.parent as t.MarkoTag;
+      const parentTagName = (parentTag.name as t.StringLiteral)?.value;
+      (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
+        "#" + parentTagName,
+        BindingType.dom,
+        section,
       );
+    } else {
+      tagExtra[kForMarkerBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        section,
+      );
+    }
 
-      bodySection.upstreamExpression = extra;
-
-      extra.singleNodeOptimization = tag.node.body.body.length === 1;
-    },
+    trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
+    analyzeAttributeTags(tag);
+    mergeReferences(
+      tag,
+      tag.node.attributes.map((attr) => attr.value),
+    );
+    bodySection.upstreamExpression = tagExtra;
+    tagExtra.singleNodeOptimization = tag.node.body.body.length === 1;
   },
   translate: {
     enter(tag) {
