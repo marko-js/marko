@@ -181,25 +181,24 @@ export function dynamicClosure<T>(
     intersection,
     valueWithIntersection,
   );
-  return Object.assign(signalFn, {
-    ___subscribe(scope: Scope) {
-      const ownerScope = getOwnerScope(scope);
-      const providerSubscriptionsAccessor =
-        getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-      ownerScope[providerSubscriptionsAccessor] ??= new Set();
-      ownerScope[providerSubscriptionsAccessor].add(
-        bindFunction(scope, signalFn as any),
-      );
-    },
-    ___unsubscribe(scope: Scope) {
-      const ownerScope = getOwnerScope(scope);
-      const providerSubscriptionsAccessor =
-        getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-      ownerScope[providerSubscriptionsAccessor]?.delete(
-        bindFunction(scope, signalFn as any),
-      );
-    },
-  });
+  signalFn.___subscribe = (scope: Scope) => {
+    const ownerScope = getOwnerScope(scope);
+    const providerSubscriptionsAccessor =
+      getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
+    ownerScope[providerSubscriptionsAccessor] ??= new Set();
+    ownerScope[providerSubscriptionsAccessor].add(
+      bindFunction(scope, signalFn as any),
+    );
+  };
+  signalFn.___unsubscribe = (scope: Scope) => {
+    const ownerScope = getOwnerScope(scope);
+    const providerSubscriptionsAccessor =
+      getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
+    ownerScope[providerSubscriptionsAccessor]?.delete(
+      bindFunction(scope, signalFn as any),
+    );
+  };
+  return signalFn;
 }
 
 export function childClosures(
@@ -212,20 +211,19 @@ export function childClosures(
       closureSignal(childScope, clean);
     }
   };
-  return Object.assign(signal, {
-    ___subscribe(scope: Scope) {
-      const childScope = scope[childAccessor] as Scope;
-      for (const closureSignal of closureSignals) {
-        closureSignal.___subscribe?.(childScope);
-      }
-    },
-    ___unsubscribe(scope: Scope) {
-      const childScope = scope[childAccessor] as Scope;
-      for (const closureSignal of closureSignals) {
-        closureSignal.___unsubscribe?.(childScope);
-      }
-    },
-  });
+  signal.___subscribe = (scope: Scope) => {
+    const childScope = scope[childAccessor] as Scope;
+    for (const closureSignal of closureSignals) {
+      closureSignal.___subscribe?.(childScope);
+    }
+  };
+  signal.___unsubscribe = (scope: Scope) => {
+    const childScope = scope[childAccessor] as Scope;
+    for (const closureSignal of closureSignals) {
+      closureSignal.___unsubscribe?.(childScope);
+    }
+  };
+  return signal;
 }
 
 export function dynamicSubscribers(valueAccessor: Accessor) {
