@@ -3,7 +3,7 @@ export function classValue(value: unknown) {
 }
 
 function stringifyClassObject(name: string, value: unknown) {
-  return isVoid(value) ? "" : name;
+  return value ? name : "";
 }
 
 export function styleValue(value: unknown) {
@@ -12,9 +12,9 @@ export function styleValue(value: unknown) {
 
 const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name: string, value: unknown) {
-  return isVoid(value)
-    ? ""
-    : `${name}:${typeof value === "number" && value && !NON_DIMENSIONAL.test(name) ? value + "px" : value}`;
+  return value || value === 0
+    ? `${name}:${typeof value === "number" && value && !NON_DIMENSIONAL.test(name) ? value + "px" : value}`
+    : "";
 }
 
 function toDelimitedString(
