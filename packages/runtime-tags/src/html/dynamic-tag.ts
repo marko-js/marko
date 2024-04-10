@@ -10,24 +10,10 @@ import {
   writeScope,
 } from "./writer";
 
-const voidElements = new Set([
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr",
-]);
+const voidElementsReg =
+  /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface RenderBodyObject {
-  [x: string]: unknown;
+  [x: PropertyKey]: unknown;
   renderBody: Renderer;
 }
 
@@ -53,7 +39,7 @@ export function dynamicTagInput(
     nextScopeId();
     write(`<${tag}${attrs(input)}>`);
 
-    if (!voidElements.has(tag)) {
+    if (!voidElementsReg.test(tag)) {
       if (renderBody) {
         renderBody();
       }
@@ -91,14 +77,11 @@ export function dynamicTagArgs(
 
   if (typeof tag === "string") {
     nextScopeId();
-    write(`<${tag}${attrs(args[0] as Record<string, unknown>)}></${tag}>`);
+    write(`<${tag}${attrs(args[0] as Record<string, unknown>)}>`);
 
-    // if (!voidElements.has(tag)) {
-    //   if (renderBody) {
-    //     renderBody();
-    //   }
-    //   write(`</${tag}>`);
-    // }
+    if (!voidElementsReg.test(tag)) {
+      write(`</${tag}>`);
+    }
 
     return futureScope;
   }
