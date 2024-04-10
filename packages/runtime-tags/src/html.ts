@@ -1,10 +1,4 @@
-export {
-  toString,
-  escapeScript,
-  escapeStyle,
-  escapeXML,
-  escapeAttrValue,
-} from "./html/content";
+export { toString, escapeScript, escapeStyle, escapeXML } from "./html/content";
 
 export { attr, attrs, classAttr, styleAttr } from "./html/attrs";
 

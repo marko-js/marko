@@ -1,5 +1,4 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
-import { escapeAttrValue } from "./content";
 
 export function classAttr(val: unknown) {
   return stringAttr("class", classValue(val));
@@ -10,7 +9,7 @@ export function styleAttr(val: unknown) {
 }
 
 export function attr(name: string, val: unknown) {
-  return isVoid(val) ? "" : nonVoidUntypedAttr(name, val);
+  return isVoid(val) ? "" : nonVoidAttr(name, val);
 }
 
 export function attrs(data: Record<string, unknown>) {
@@ -31,7 +30,7 @@ export function attrs(data: Record<string, unknown>) {
         // Avoids outputting attribute names that would be invalid or
         // be an event handler / renderBody.
         if (!(isVoid(val) || /^on[A-Z-]|^renderBody$|[\s/>"'=]/.test(name))) {
-          result += nonVoidUntypedAttr(name, val);
+          result += nonVoidAttr(name, val);
         }
         break;
     }
@@ -44,7 +43,7 @@ function stringAttr(name: string, val: string) {
   return val && ` ${name}=${escapeAttrValue(val)}`;
 }
 
-function nonVoidUntypedAttr(name: string, val: unknown) {
+function nonVoidAttr(name: string, val: unknown) {
   switch (typeof val) {
     case "string":
       return ` ${name + attrAssignment(val)}`;
@@ -64,4 +63,42 @@ function nonVoidUntypedAttr(name: string, val: unknown) {
 
 function attrAssignment(val: string) {
   return val ? `=${escapeAttrValue(val)}` : "";
+}
+
+function escapeAttrValue(val: string) {
+  for (let i = 0; i < val.length; i++) {
+    switch (val[i]) {
+      case '"':
+        return escapeQuotes(val, i + 1, "'", "&#39;");
+      case "'":
+      case ">":
+      case " ":
+      case "\t":
+      case "\n":
+      case "\r":
+      case "\f":
+        return escapeQuotes(val, i + 1, '"', "&#34;");
+    }
+  }
+
+  return val;
+}
+
+function escapeQuotes(
+  val: string,
+  startPos: number,
+  quote: string,
+  escaped: string,
+) {
+  let result = quote;
+  let lastPos = 0;
+
+  for (let i = startPos; i < val.length; i++) {
+    if (val[i] === quote) {
+      result += val.slice(lastPos, i) + escaped;
+      lastPos = i + 1;
+    }
+  }
+
+  return result + (lastPos ? val.slice(lastPos) : val) + quote;
 }
