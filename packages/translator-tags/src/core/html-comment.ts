@@ -34,48 +34,46 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
-      assertNoParams(tag);
-      assertNoAttributes(tag);
-      assertNoAttributeTags(tag);
+  analyze(tag: t.NodePath<t.MarkoTag>) {
+    assertNoParams(tag);
+    assertNoAttributes(tag);
+    assertNoAttributeTags(tag);
 
-      let needsBinding = false;
-      if (tag.has("var")) {
-        if (!t.isIdentifier(tag.node.var)) {
-          throw tag
-            .get("var")
-            .buildCodeFrameError(
-              "The `<html-comment>` tag's return value cannot be destructured.",
-            );
-        }
-        needsBinding = true;
-      }
-
-      const referenceNodes: t.Node[] = [];
-      for (const child of tag.get("body").get("body")) {
-        if (child.isMarkoPlaceholder()) {
-          referenceNodes.push(child.node.value);
-          needsBinding = true;
-        } else if (!child.isMarkoText()) {
-          throw child.buildCodeFrameError(
-            "Invalid child. Only text is allowed inside an html comment.",
+    let needsBinding = false;
+    if (tag.has("var")) {
+      if (!t.isIdentifier(tag.node.var)) {
+        throw tag
+          .get("var")
+          .buildCodeFrameError(
+            "The `<html-comment>` tag's return value cannot be destructured.",
           );
-        }
       }
-      if (needsBinding) {
-        const section = getOrCreateSection(tag);
-        const tagExtra = (tag.node.extra ??= {});
+      needsBinding = true;
+    }
 
-        tagExtra[kCommentTagBinding] = createBinding(
-          "#comment",
-          BindingType.dom,
-          section,
+    const referenceNodes: t.Node[] = [];
+    for (const child of tag.get("body").get("body")) {
+      if (child.isMarkoPlaceholder()) {
+        referenceNodes.push(child.node.value);
+        needsBinding = true;
+      } else if (!child.isMarkoText()) {
+        throw child.buildCodeFrameError(
+          "Invalid child. Only text is allowed inside an html comment.",
         );
-        mergeReferences(tag, referenceNodes);
       }
-      tag.skip();
-    },
+    }
+    if (needsBinding) {
+      const section = getOrCreateSection(tag);
+      const tagExtra = (tag.node.extra ??= {});
+
+      tagExtra[kCommentTagBinding] = createBinding(
+        "#comment",
+        BindingType.dom,
+        section,
+      );
+      mergeReferences(tag, referenceNodes);
+    }
+    tag.skip();
   },
   translate: {
     enter(tag) {

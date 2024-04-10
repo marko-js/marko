@@ -15,39 +15,37 @@ import translateVar from "../util/translate-var";
 import { currentProgramPath } from "../visitors/program";
 
 export default {
-  analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
-      const { node } = tag;
-      const tagVar = node.var;
-      const defaultAttr = node.attributes.find(
-        (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
-      );
+  analyze(tag: t.NodePath<t.MarkoTag>) {
+    const { node } = tag;
+    const tagVar = node.var;
+    const defaultAttr = node.attributes.find(
+      (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
+    );
 
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
+    assertNoParams(tag);
+    assertNoBodyContent(tag);
 
-      if (!tagVar) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError("The 'let' tag requires a tag variable.");
-      }
+    if (!tagVar) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The 'let' tag requires a tag variable.");
+    }
 
-      if (!t.isIdentifier(tagVar)) {
-        throw tag
-          .get("var")
-          .buildCodeFrameError("The 'let' cannot be destructured.");
-      }
+    if (!t.isIdentifier(tagVar)) {
+      throw tag
+        .get("var")
+        .buildCodeFrameError("The 'let' cannot be destructured.");
+    }
 
-      const upstreamExpressionExtra = defaultAttr
-        ? (defaultAttr.value.extra ??= {})
-        : undefined;
-      trackVarReferences(
-        tag,
-        BindingType.let,
-        undefined,
-        upstreamExpressionExtra,
-      );
-    },
+    const upstreamExpressionExtra = defaultAttr
+      ? (defaultAttr.value.extra ??= {})
+      : undefined;
+    trackVarReferences(
+      tag,
+      BindingType.let,
+      undefined,
+      upstreamExpressionExtra,
+    );
   },
   translate(tag) {
     const { node } = tag;

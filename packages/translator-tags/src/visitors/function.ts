@@ -11,35 +11,33 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze: {
-    exit(fn: t.NodePath<t.Function>) {
-      const { node } = fn;
-      const extra = (node.extra ??= {});
-      const {
-        markoOpts: { optimize },
-        opts: { filename },
-      } = currentProgramPath.hub.file;
+  analyze(fn: t.NodePath<t.Function>) {
+    const { node } = fn;
+    const extra = (node.extra ??= {});
+    const {
+      markoOpts: { optimize },
+      opts: { filename },
+    } = currentProgramPath.hub.file;
 
-      const section = getSection(fn);
-      let functionNameCounts = functionIdsBySection.get(section);
-      if (!functionNameCounts) {
-        functionNameCounts = new Map();
-        functionIdsBySection.set(section, functionNameCounts);
-      }
+    const section = getSection(fn);
+    let functionNameCounts = functionIdsBySection.get(section);
+    if (!functionNameCounts) {
+      functionNameCounts = new Map();
+      functionIdsBySection.set(section, functionNameCounts);
+    }
 
-      const name = (extra.name as string | undefined) || "anonymous";
-      const index = functionNameCounts.get(name);
-      let id = "";
-      if (index === undefined) {
-        functionNameCounts.set(name, 0);
-      } else {
-        id = `_${index}`;
-      }
+    const name = (extra.name as string | undefined) || "anonymous";
+    const index = functionNameCounts.get(name);
+    let id = "";
+    if (index === undefined) {
+      functionNameCounts.set(name, 0);
+    } else {
+      id = `_${index}`;
+    }
 
-      extra.registerId = getTemplateId(
-        optimize,
-        `${filename}_${section.id}/${name + id}`,
-      );
-    },
+    extra.registerId = getTemplateId(
+      optimize,
+      `${filename}_${section.id}/${name + id}`,
+    );
   },
 };
