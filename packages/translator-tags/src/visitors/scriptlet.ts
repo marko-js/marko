@@ -5,10 +5,8 @@ import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 
 export default {
-  analyze: {
-    exit(scriptlet: t.NodePath<t.MarkoScriptlet>) {
-      mergeReferences(scriptlet, scriptlet.node.body);
-    },
+  analyze(scriptlet: t.NodePath<t.MarkoScriptlet>) {
+    mergeReferences(scriptlet, scriptlet.node.body);
   },
   translate: {
     exit(scriptlet: t.NodePath<t.MarkoScriptlet>) {
