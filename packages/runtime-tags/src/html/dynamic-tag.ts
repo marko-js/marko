@@ -40,10 +40,7 @@ export function dynamicTagInput(
     write(`<${tag}${attrs(input)}>`);
 
     if (!voidElementsReg.test(tag)) {
-      if (renderBody) {
-        renderBody();
-      }
-
+      renderBody?.();
       write(`</${tag}>`);
     } else if (MARKO_DEBUG && renderBody) {
       throw new Error(
@@ -56,12 +53,14 @@ export function dynamicTagInput(
 
   const renderer = getDynamicRenderer(tag);
 
-  if (typeof renderer === "function") {
-    renderer(renderBody ? { ...input, renderBody } : input);
-    return futureScope;
-  } else if (MARKO_DEBUG) {
-    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+  if (MARKO_DEBUG) {
+    if (typeof renderer !== "function") {
+      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+    }
   }
+
+  renderer(renderBody ? { ...input, renderBody } : input);
+  return futureScope;
 }
 
 export function dynamicTagArgs(
@@ -88,12 +87,14 @@ export function dynamicTagArgs(
 
   const renderer = getDynamicRenderer(tag);
 
-  if (typeof renderer === "function") {
-    renderer(...args);
-    return futureScope;
-  } else if (MARKO_DEBUG) {
-    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+  if (MARKO_DEBUG) {
+    if (typeof renderer !== "function") {
+      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+    }
   }
+
+  renderer(...args);
+  return futureScope;
 }
 
 let getDynamicRenderer = (
