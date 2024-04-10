@@ -29,16 +29,26 @@ export function getRegisteredWithScope(registryId: string, scope: Scope) {
 
 export const scopeLookup = {} as Record<number | string, Scope>;
 
-export function init(
-  runtimeId = ResumeSymbol.DefaultRuntimeId /* [a-zA-Z0-9]+ */,
-) {
+export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
   const runtimeLength = runtimeId.length;
   const resumeVar = runtimeId + ResumeSymbol.VarResume;
-  // TODO: check if this is a fakeArray
-  // and warn in dev that there are conflicting runtime ids
   const initialHydration = (window as any)[resumeVar];
-  const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
 
+  if (MARKO_DEBUG) {
+    if (!runtimeId.match(/^[_$a-z][_$a-z0-9]*$/i)) {
+      throw new Error(
+        `Invalid runtimeId: "${runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+      );
+    }
+
+    if (initialHydration && !Array.isArray(initialHydration)) {
+      throw new Error(
+        "Marko tried to initialize multiple times. It could be that there are multiple instances of Marko running on the page.",
+      );
+    }
+  }
+
+  const walker = doc.createTreeWalker(doc, 128 /** NodeFilter.SHOW_COMMENT */);
   let currentScopeId: number;
   let currentNode: Node & ChildNode;
   // const scopeLookup: Record<number, Scope> = {};
