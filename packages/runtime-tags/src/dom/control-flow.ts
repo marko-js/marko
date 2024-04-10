@@ -41,17 +41,21 @@ export let conditional = function conditional(
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRenderer, clean) => {
-    newRenderer = newRenderer
-      ? (newRenderer as any as Template)._ ||
-        (newRenderer as any).renderBody ||
-        newRenderer
-      : undefined;
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;
-    if (!clean && !(clean = currentRenderer === newRenderer)) {
-      currentRenderer = scope[rendererAccessor] = newRenderer;
-      setConditionalRenderer(scope, nodeAccessor, newRenderer);
+    if (
+      !clean &&
+      !(clean =
+        currentRenderer ===
+        (currentRenderer = newRenderer
+          ? (newRenderer as any as Template)._ ||
+            (newRenderer as any).renderBody ||
+            newRenderer
+          : undefined))
+    ) {
+      scope[rendererAccessor] = currentRenderer;
+      setConditionalRenderer(scope, nodeAccessor, currentRenderer);
       dynamicTagAttrs?.(scope);
     } else {
       valueWithIntersection?.(scope, 0, clean);
@@ -157,11 +161,11 @@ const emptyArray = [] as Scope[];
 
 export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
   return loop(nodeAccessor, renderer, (value, cb) => {
-    const [all, getKey = keyBySecondArg] = value as typeof value &
-      [all: unknown[], getKey?: (item: unknown, index: number) => unknown];
+    const [all, by = bySecondArg] = value as typeof value &
+      [all: unknown[], by?: (item: unknown, index: number) => unknown];
     let i = 0;
     for (const item of all) {
-      cb(getKey(item, i), [item, i, all]);
+      cb(by(item, i), [item, i, all]);
       i++;
     }
   });
@@ -169,30 +173,27 @@ export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
 
 export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
   return loop(nodeAccessor, renderer, (value, cb) => {
-    const [all, getKey = keyByFirstArg] = value as typeof value &
-      [
-        all: Record<string, unknown>,
-        getKey?: (key: string, v: unknown) => unknown,
-      ];
+    const [all, by = byFirstArg] = value as typeof value &
+      [all: Record<string, unknown>, by?: (key: string, v: unknown) => unknown];
     for (const key in all) {
       const v = all[key];
-      cb(getKey(key, v), [key, v, all]);
+      cb(by(key, v), [key, v, all]);
     }
   });
 }
 
 export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
   return loop(nodeAccessor, renderer, (value, cb) => {
-    const [to, from = 0, step = 1, getKey = keyByFirstArg] = value as [
+    const [to, from = 0, step = 1, by = byFirstArg] = value as [
       to: number,
       from: number,
       step: number,
-      getKey?: (v: number) => unknown,
+      by?: (v: number) => unknown,
     ];
     const steps = (to - from) / step;
     for (let i = 0; i <= steps; i++) {
       const v = from + i * step;
-      cb(getKey(v), [v]);
+      cb(by(v), [v]);
     }
   });
 }
@@ -326,10 +327,10 @@ export function inLoopScope(
   };
 }
 
-function keyBySecondArg(_item: unknown, index: unknown) {
+function bySecondArg(_item: unknown, index: unknown) {
   return index;
 }
 
-function keyByFirstArg(name: unknown) {
+function byFirstArg(name: unknown) {
   return name;
 }
