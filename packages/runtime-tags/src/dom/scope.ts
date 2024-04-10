@@ -19,18 +19,6 @@ export function getEmptyScope(marker: Comment) {
   return emptyScope;
 }
 
-export function write<S extends Scope, K extends keyof S>(
-  scope: S,
-  localIndex: K,
-  value: S[K],
-) {
-  if (scope[localIndex] !== value) {
-    scope[localIndex] = value;
-    return 1;
-  }
-  return 0;
-}
-
 function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
   return (scope: Scope, value: T): U => {
     scope.___bound ??= new Map();

@@ -6,7 +6,6 @@ import {
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
-import { write } from "./scope";
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
@@ -81,8 +80,9 @@ export function html(scope: Scope, value: unknown, index: Accessor) {
 
   parser.innerHTML = value || value === 0 ? `${value}` : "<!>";
   const newContent = parser.content;
-  write(scope, index, newContent.firstChild);
-  write(scope, (index + "-") as any as number, newContent.lastChild);
+  scope[index] = newContent.firstChild;
+  scope[index + AccessorChar.DynamicPlaceholderLastChild] =
+    newContent.lastChild;
   parentNode.insertBefore(newContent, firstChild);
 
   let current = firstChild;

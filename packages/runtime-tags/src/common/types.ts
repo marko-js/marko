@@ -43,6 +43,7 @@ export enum AccessorChar {
   Stale = "&",
   Subscribers = "*",
   LifecycleAbortController = "-",
+  DynamicPlaceholderLastChild = "-",
   TagVariable = "/",
   ConditionalScope = "!",
   ConditionalRenderer = "(",

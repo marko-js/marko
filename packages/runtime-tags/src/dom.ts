@@ -39,7 +39,7 @@ export {
   runEffects,
 } from "./dom/queue";
 
-export { write, bindFunction, bindRenderer, createScope } from "./dom/scope";
+export { bindFunction, bindRenderer, createScope } from "./dom/scope";
 
 export type { Scope } from "./common/types";
 
