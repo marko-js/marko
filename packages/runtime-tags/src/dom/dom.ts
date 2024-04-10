@@ -6,26 +6,34 @@ import {
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
+import { on } from "./event";
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
 export function attr(element: Element, name: string, value: unknown) {
-  const normalizedValue = normalizeAttrValue(value);
-  if (normalizedValue === undefined) {
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+
+function setAttribute(
+  element: Element,
+  name: string,
+  value: string | undefined,
+) {
+  if (value === undefined) {
     element.removeAttribute(name);
   } else {
-    element.setAttribute(name, normalizedValue);
+    element.setAttribute(name, value);
   }
 }
 
 export function classAttr(element: Element, value: unknown) {
-  attr(element, "class", classValue(value) || false);
+  setAttribute(element, "class", classValue(value) || undefined);
 }
 
 export function styleAttr(element: Element, value: unknown) {
-  attr(element, "style", styleValue(value) || false);
+  setAttribute(element, "style", styleValue(value) || undefined);
 }
 
 export function data(node: Text | Comment, value: unknown) {
@@ -41,9 +49,8 @@ export function attrs(
   elementAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const prevAttrs = scope[elementAccessor + AccessorChar.PreviousAttributes] as
-    | typeof nextAttrs
-    | undefined;
+  const prevAttrs: typeof nextAttrs =
+    scope[elementAccessor + AccessorChar.PreviousAttributes] || {};
   const element = scope[elementAccessor] as Element;
 
   if (prevAttrs) {
@@ -55,13 +62,30 @@ export function attrs(
   }
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
-    if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
-      if (name === "class") {
-        classAttr(element, nextAttrs[name]);
-      } else if (name === "style") {
-        styleAttr(element, nextAttrs[name]);
-      } else if (name !== "renderBody") {
-        attr(element, name, nextAttrs[name]);
+    const value = nextAttrs[name];
+    if (value !== prevAttrs[name]) {
+      switch (name) {
+        case "class":
+          classAttr(element, value);
+          break;
+        case "style":
+          styleAttr(element, value);
+          break;
+        case "renderBody":
+          break;
+        default:
+          if (/^on[A-Z-]/.test(name)) {
+            on(
+              element,
+              (name[2] === "-"
+                ? name.slice(3)
+                : name.slice(2).toLowerCase()) as any,
+              value as any,
+            );
+          } else {
+            attr(element, name, value);
+          }
+          break;
       }
     }
   }
