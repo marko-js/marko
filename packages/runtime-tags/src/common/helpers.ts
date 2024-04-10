@@ -3,11 +3,7 @@ export function classValue(value: unknown) {
 }
 
 function stringifyClassObject(name: string, value: unknown) {
-  if (isVoid(value)) {
-    return "";
-  }
-
-  return name;
+  return isVoid(value) ? "" : name;
 }
 
 export function styleValue(value: unknown) {
@@ -16,15 +12,9 @@ export function styleValue(value: unknown) {
 
 const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name: string, value: unknown) {
-  if (isVoid(value)) {
-    return "";
-  }
-
-  if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
-    (value as unknown as string) += "px";
-  }
-
-  return `${name}:${value}`;
+  return isVoid(value)
+    ? ""
+    : `${name}:${typeof value === "number" && value && !NON_DIMENSIONAL.test(name) ? value + "px" : value}`;
 }
 
 function toDelimitedString(
