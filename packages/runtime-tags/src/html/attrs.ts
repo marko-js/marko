@@ -73,11 +73,5 @@ function attrAssignment(val: string) {
 // In practice however the only character that does not become an attribute name
 // is when there is a >.
 function isInvalidAttrName(name: string) {
-  for (let i = name.length; i--; ) {
-    if (name[i] === ">") {
-      return true;
-    }
-  }
-
-  return false;
+  return name.includes(">");
 }
