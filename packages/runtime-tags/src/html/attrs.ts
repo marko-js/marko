@@ -17,10 +17,6 @@ export function attrs(data: Record<string, unknown>) {
   let result = "";
 
   for (const name in data) {
-    if (/^on[A-Z-]/.test(name)) {
-      continue;
-    }
-
     const val = data[name];
 
     switch (name) {
@@ -30,12 +26,14 @@ export function attrs(data: Record<string, unknown>) {
       case "style":
         result += styleAttr(val);
         break;
-      case "renderBody":
-        break;
       default:
-        if (!(isVoid(val) || isInvalidAttrName(name))) {
+        // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+        // Avoids outputting attribute names that would be invalid or
+        // be an event handler / renderBody.
+        if (!(isVoid(val) || /^on[A-Z-]|^renderBody$|[\s/>"'=]/.test(name))) {
           result += nonVoidUntypedAttr(name, val);
         }
+        break;
     }
   }
 
@@ -66,12 +64,4 @@ function nonVoidUntypedAttr(name: string, val: unknown) {
 
 function attrAssignment(val: string) {
   return val ? `=${escapeAttrValue(val)}` : "";
-}
-
-// https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-// Technically the above includes more invalid characters for attributes.
-// In practice however the only character that does not become an attribute name
-// is when there is a >.
-function isInvalidAttrName(name: string) {
-  return name.includes(">");
 }
