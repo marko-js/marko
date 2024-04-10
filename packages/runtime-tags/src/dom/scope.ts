@@ -4,12 +4,14 @@ import type { Renderer } from "./renderer";
 let debugID = 0;
 
 export function createScope($global: Scope["$global"]): Scope {
-  const scope = {} as Scope;
+  const scope = {
+    ___client: 1,
+    $global,
+  } as Scope;
+
   if (MARKO_DEBUG) {
     scope.___debugId = debugID++;
   }
-  scope.___client = true;
-  scope.$global = $global;
   return scope;
 }
 
