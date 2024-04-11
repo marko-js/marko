@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.15
+
+### Patch Changes
+
+- [#2201](https://github.com/marko-js/marko/pull/2201) [`e0602bb`](https://github.com/marko-js/marko/commit/e0602bb245fbdd95dbdccba91762ea9375cabd12) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve the html content escape helpers. The existing implementations no longer maintain an edge in newer versions of node and the regexp based versions are faster.
+
 ## 5.33.14
 
 ### Patch Changes
