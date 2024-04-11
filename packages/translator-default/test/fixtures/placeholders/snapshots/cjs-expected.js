@@ -19,12 +19,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w("Hello world <a/>");
   out.w("<script>");
   out.w("\n    ");
-  out.w("Hello <b> \\u003C/script>");
+  out.w("Hello <b> \\x3C/script>");
   out.w("\n  ");
   out.w("</script>");
   out.w("<style>");
   out.w("\n    ");
-  out.w("Hello <b> \\003C/style>");
+  out.w("Hello <b> \\3C/style>");
   out.w("\n  ");
   out.w("</style>");
   out.w("</div>");
