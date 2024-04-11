@@ -1,51 +1,28 @@
 export function toString(val: unknown) {
-  return val || val === 0 ? val + "" : "";
+  return val ? val + "" : val === 0 ? "0" : "";
 }
 
+const unsafeXMLReg = /[<&]/g;
+const replaceUnsafeXML = (c: string) => (c === "&" ? "&amp;" : "&lt;");
+const escapeXMLStr = (str: string) =>
+  unsafeXMLReg.test(str) ? str.replace(unsafeXMLReg, replaceUnsafeXML) : str;
 export function escapeXML(val: unknown) {
-  if (!(val || val === 0)) return "&zwj;";
-
-  const str = val + "";
-  let result = "";
-  let lastPos = 0;
-
-  for (let i = 0; i < str.length; i++) {
-    switch (str[i]) {
-      case "<":
-        result += str.slice(lastPos, i) + "&lt;";
-        lastPos = i + 1;
-        break;
-      case "&":
-        result += str.slice(lastPos, i) + "&amp;";
-        lastPos = i + 1;
-        break;
-    }
-  }
-
-  return lastPos ? result + str.slice(lastPos) : str;
+  return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "&zwj;";
 }
 
-export const escapeScript = escapeTagEnding("script");
-export const escapeStyle = escapeTagEnding("style");
-function escapeTagEnding(tagName: string) {
-  const openTag = `</${tagName}`;
-  const escaped = `<\\/${tagName}`;
-  const escapedSize = escaped.length - 1;
+const unsafeScriptReg = /<\/script/g;
+const escapeScriptStr = (str: string) =>
+  unsafeScriptReg.test(str)
+    ? str.replace(unsafeScriptReg, "\\x3C/script")
+    : str;
+export function escapeScript(val: unknown) {
+  return val ? escapeScriptStr(val + "") : val === 0 ? "0" : "";
+}
 
-  return (val: unknown) => {
-    if (!(val || val === 0)) return "";
+const unsafeStyleReg = /<\/style/g;
+const escapeStyleStr = (str: string) =>
+  unsafeStyleReg.test(str) ? str.replace(unsafeStyleReg, "\\3C/style") : str;
 
-    const str = val + "";
-    let result = "";
-    let lastPos = 0;
-    let i = str.indexOf(openTag, lastPos);
-
-    while (i !== -1) {
-      result += str.slice(lastPos, i) + escaped;
-      lastPos = i + escapedSize;
-      i = str.indexOf(openTag, lastPos);
-    }
-
-    return lastPos ? result + str.slice(lastPos) : str;
-  };
+export function escapeStyle(val: unknown) {
+  return val ? escapeStyleStr(val + "") : val === 0 ? "0" : "";
 }

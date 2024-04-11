@@ -37,7 +37,7 @@ describe("runtime-tags/html/content", () => {
     it("should escape </script", () => {
       assert.equal(
         helpers.escapeScript("foo </script> bar"),
-        "foo <\\/script> bar",
+        "foo \\x3C/script> bar",
       );
     });
 
@@ -64,7 +64,7 @@ describe("runtime-tags/html/content", () => {
     it("should escape </style", () => {
       assert.equal(
         helpers.escapeStyle("foo </style> bar"),
-        "foo <\\/style> bar",
+        "foo \\3C/style> bar",
       );
     });
 
