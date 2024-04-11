@@ -1,4 +1,8 @@
 "use strict";
+const unsafeCharsReg = /<\/script/g;
+const replaceMatch = () => "\\x3C/script";
+const escape = (str) =>
+  unsafeCharsReg.test(str) ? str.replace(unsafeCharsReg, replaceMatch) : str;
 
 /**
  * Escapes the '</' sequence in the body of a <script> body to avoid the `<script>` being
@@ -15,9 +19,10 @@
  * prematurely ended and a new script tag could then be started that could then execute
  * arbitrary code.
  */
-var escapeEndingScriptTagRegExp = /<\/script/g;
-module.exports = function escapeScriptHelper(val) {
-  return typeof val === "string"
-    ? val.replace(escapeEndingScriptTagRegExp, "\\u003C/script")
-    : val + "";
+module.exports = function escapeScriptHelper(value) {
+  if (value == null) {
+    return "";
+  }
+
+  return escape(value + "");
 };
