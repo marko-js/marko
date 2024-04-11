@@ -65,40 +65,16 @@ function attrAssignment(val: string) {
   return val ? `=${escapeAttrValue(val)}` : "";
 }
 
-function escapeAttrValue(val: string) {
-  for (let i = 0; i < val.length; i++) {
-    switch (val[i]) {
-      case '"':
-        return escapeQuotes(val, i + 1, "'", "&#39;");
-      case "'":
-      case ">":
-      case " ":
-      case "\t":
-      case "\n":
-      case "\r":
-      case "\f":
-        return escapeQuotes(val, i + 1, '"', "&#34;");
-    }
+const unsafeAttrChars = /["'>\s]/g;
+function escapeAttrValue(str: string) {
+  if (unsafeAttrChars.test(str)) {
+    const c = str[unsafeAttrChars.lastIndex - 1];
+    unsafeAttrChars.lastIndex = 0;
+
+    return c === '"'
+      ? `'${str.replace(/'/g, "&#39;")}'`
+      : `"${str.replace(/"/g, "&#34;")}"`;
   }
 
-  return val;
-}
-
-function escapeQuotes(
-  val: string,
-  startPos: number,
-  quote: string,
-  escaped: string,
-) {
-  let result = quote;
-  let lastPos = 0;
-
-  for (let i = startPos; i < val.length; i++) {
-    if (val[i] === quote) {
-      result += val.slice(lastPos, i) + escaped;
-      lastPos = i + 1;
-    }
-  }
-
-  return result + (lastPos ? val.slice(lastPos) : val) + quote;
+  return str;
 }
