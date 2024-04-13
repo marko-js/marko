@@ -20,9 +20,5 @@ const escape = (str) =>
  * arbitrary code.
  */
 module.exports = function escapeScriptHelper(value) {
-  if (value == null) {
-    return "";
-  }
-
   return escape(value + "");
 };
