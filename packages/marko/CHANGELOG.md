@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.33.16
+
+### Patch Changes
+
+- [#2205](https://github.com/marko-js/marko/pull/2205) [`af4adcd`](https://github.com/marko-js/marko/commit/af4adcd1eecbb82930cef94dfb4b1917a2dc04f0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where native tags with `no-update` were not having their key serialized from the server causing a hydration diffing issue in some cases.
+
+- [#2204](https://github.com/marko-js/marko/pull/2204) [`11acdf6`](https://github.com/marko-js/marko/commit/11acdf6f8766bc9b18373243a59e78e091f0b9db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where interpolating null/undefined in a script/style tag was being replaced with an empty string instead of toString'd and added.
+
+  Eg `<script>${undefined}</>` was changed to render nothing, when previously it output `undefined` as a string inside the script.
+
+  Note this behavior should not be relied on and will change in the next major of Marko to normalize the interpolated value to an empty string for nullish values.
+
 ## 5.33.15
 
 ### Patch Changes
