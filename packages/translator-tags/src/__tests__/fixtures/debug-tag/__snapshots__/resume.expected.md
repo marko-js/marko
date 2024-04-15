@@ -1,9 +1,0 @@
-# Render undefined
-```html
-
-```
-
-# Mutations
-```
-
-```
