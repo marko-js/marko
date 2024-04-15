@@ -597,7 +597,12 @@ var proto = (AsyncStream.prototype = {
     var str =
       "<" +
       tagName +
-      markoAttr(this, componentDef, props, key) +
+      markoAttr(
+        this,
+        componentDef,
+        props,
+        key && key[0] === "@" ? key : undefined,
+      ) +
       attrsHelper(elementAttrs);
 
     if (selfClosingTags.voidElements.indexOf(tagName) !== -1) {

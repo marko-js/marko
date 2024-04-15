@@ -102,12 +102,12 @@ export default function (path, isNullable) {
         dataMarkoArgs.push(t.objectExpression(tagProperties));
       }
 
-      if (hasUserKey(path)) {
+      if (hasUserKey(path) || (key && node.isPreserved)) {
         if (dataMarkoArgs.length === 2) {
           dataMarkoArgs.push(t.numericLiteral(0));
         }
 
-        dataMarkoArgs.push(key, file._componentDefIdentifier);
+        dataMarkoArgs.push(key);
       }
 
       if (dataMarkoArgs.length > 2) {

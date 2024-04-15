@@ -6,6 +6,7 @@ var _index = require("marko/src/runtime/html/index.js");
 var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 var _preserveTag = _interopRequireDefault(require("marko/src/core-tags/components/preserve-tag.js"));
+var _dataMarko = _interopRequireDefault(require("marko/src/runtime/html/helpers/data-marko.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/no-update-directives/template.marko",
@@ -128,7 +129,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   (0, _renderTag.default)(_preserveTag.default, {
     "n": true,
     "renderBody": out => {
-      out.w("<div class=test></div>");
+      out.w(`<div${(0, _dataMarko.default)(out, _componentDef, 0, "18")} class=test></div>`);
     }
   }, out, _componentDef, "18");
 }, {
