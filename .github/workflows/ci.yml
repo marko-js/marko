@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  format:
+  build:
     runs-on: ubuntu-latest
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
@@ -31,16 +31,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run @ci:build
-      - name: Format Code
-        run: npm run @ci:format
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "[ci] format"
-          commit_user_name: "github-actions[bot]"
-          commit_user_email: "github-actions[bot]@users.noreply.github.com"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint Code
+        run: npm run @ci:lint
   test:
     runs-on: ubuntu-latest
     name: "test: node@${{ matrix.node }}"
@@ -66,7 +58,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
   release:
     runs-on: ubuntu-latest
-    needs: [format, test]
+    needs: [build, test]
     if: "${{ github.repository_owner == 'marko-js' && github.event_name == 'push' }}"
     steps:
       - name: Checkout code
