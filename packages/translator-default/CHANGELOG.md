@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.14
+
+### Patch Changes
+
+- [`c8fe951`](https://github.com/marko-js/marko/commit/c8fe951813bf6c7d11e581faf9e43522ae76ae98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bump compiler and translator to pull in Marko runtime changes.
+
 ## 5.32.13
 
 ### Patch Changes
