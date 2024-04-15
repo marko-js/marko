@@ -9,5 +9,3 @@ module.exports = function (helpers) {
 
   expect(component.getEl("list").textContent).to.equal("123");
 };
-
-module.exports.fails_hydrate = true;

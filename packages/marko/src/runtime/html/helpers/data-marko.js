@@ -23,7 +23,7 @@ module.exports = function dataMarko(out, componentDef, props, key) {
       }
     }
 
-    if (key && key[0] === "@") {
+    if (key) {
       result +=
         ' data-marko-key="' +
         escapeDoubleQuotes(
