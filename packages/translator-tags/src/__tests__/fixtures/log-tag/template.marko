@@ -1,5 +1,17 @@
-<log="identifer"/>
+import testLog from "./test-log"
+
+<do() {
+  console.log = function(msg: keyof typeof testLog) {
+    testLog[msg] = true;
+  }
+}/>
+
+<log="identifier"/>
 <const/tagVar="tag var"/>
 <log=tagVar/>
 static const staticVar = "static var";
 <log=staticVar/>
+
+<let/output=JSON.stringify(testLog)/>
+<effect() { output = JSON.stringify(testLog) }/>
+-- ${output}
