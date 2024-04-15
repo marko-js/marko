@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.33.17
+
+### Patch Changes
+
+- [`c8fe951`](https://github.com/marko-js/marko/commit/c8fe951813bf6c7d11e581faf9e43522ae76ae98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bump compiler and translator to pull in Marko runtime changes.
+
+- Updated dependencies [[`c8fe951`](https://github.com/marko-js/marko/commit/c8fe951813bf6c7d11e581faf9e43522ae76ae98)]:
+  - @marko/compiler@5.35.12
+  - @marko/translator-default@5.32.14
+
 ## 5.33.16
 
 ### Patch Changes
