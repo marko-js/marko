@@ -6,6 +6,7 @@ import ElseIfTag from "./condition/else-if";
 import IfTag from "./condition/if";
 import ConstTag from "./const";
 import DefineTag from "./define";
+import DoTag from "./do";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
@@ -32,6 +33,7 @@ export default {
   "<const>": ConstTag,
   "<define>": DefineTag,
   "<effect>": EffectTag,
+  "<do>": DoTag,
   "<lifecycle>": LifecycleTag,
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
