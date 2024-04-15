@@ -1,16 +1,23 @@
+import log from "./test-log";
 function fromStatic() {
-  console.log("from static");
+  log.static += "rendered";
 }
-import { value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _logOutput = /* @__PURE__ */_value("logOutput", (_scope, logOutput) => _data(_scope["#text/0"], logOutput));
+const _str = /* @__PURE__ */_value("str", (_scope, str) => log.let += str);
 const _fromConst = /* @__PURE__ */_value("fromConst", (_scope, fromConst) => fromConst(_scope));
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0", _scope => _queueSource(_scope, _logOutput, JSON.stringify(log)));
 const _setup = _scope => {
-  console.log("from block");
+  log.block += "rendered";
   fromStatic(_scope);
+  _queueEffect(_scope, _setup_effect);
   _fromConst(_scope, function () {
-    console.log("from const");
+    log.const += "rendered";
   });
+  _str(_scope, "rendered");
+  _logOutput(_scope, JSON.stringify(log));
 };
 export const template = "<!><!>";
-export const walks = /*  */"DD";
+export const walks = /* replace, over(1) */"D%b";
 export const setup = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko");
