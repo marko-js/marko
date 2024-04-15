@@ -26,9 +26,9 @@ export default {
       node,
       hub: { file },
     } = tag;
-    const [defaultAttr] = node.attributes;
+    const [valueAttr] = node.attributes;
 
-    if (!t.isMarkoAttribute(defaultAttr) || !defaultAttr.default) {
+    if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
       throw tag
         .get("name")
         .buildCodeFrameError(
@@ -52,7 +52,7 @@ export default {
       }
     }
 
-    const { value } = defaultAttr;
+    const { value } = valueAttr;
 
     if (isOutputHTML()) {
       writer.flushBefore(tag);

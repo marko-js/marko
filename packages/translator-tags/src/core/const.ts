@@ -12,7 +12,7 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
     const { node } = tag;
-    const [defaultAttr] = node.attributes;
+    const [valueAttr] = node.attributes;
 
     if (!node.var) {
       throw tag
@@ -20,7 +20,7 @@ export default {
         .buildCodeFrameError("The 'const' tag requires a tag variable.");
     }
 
-    if (!defaultAttr) {
+    if (!valueAttr) {
       throw tag
         .get("name")
         .buildCodeFrameError("The 'const' tag requires a default attribute.");
@@ -28,8 +28,8 @@ export default {
 
     if (
       node.attributes.length > 1 ||
-      !t.isMarkoAttribute(defaultAttr) ||
-      (!defaultAttr.default && defaultAttr.name !== "value")
+      !t.isMarkoAttribute(valueAttr) ||
+      (!valueAttr.default && valueAttr.name !== "value")
     ) {
       throw tag
         .get("name")
@@ -38,21 +38,21 @@ export default {
         );
     }
 
-    const upstreamAlias = t.isIdentifier(defaultAttr.value)
-      ? tag.scope.getBinding(defaultAttr.value.name)?.identifier.extra?.binding
+    const upstreamAlias = t.isIdentifier(valueAttr.value)
+      ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
 
     trackVarReferences(
       tag,
       BindingType.derived,
       upstreamAlias,
-      (defaultAttr.value.extra ??= {}),
+      (valueAttr.value.extra ??= {}),
     );
   },
   translate(tag) {
     const { node } = tag;
-    const [defaultAttr] = node.attributes;
-    const { value } = defaultAttr;
+    const [valueAttr] = node.attributes;
+    const { value } = valueAttr;
 
     if (isOutputDOM()) {
       const section = getSection(tag);

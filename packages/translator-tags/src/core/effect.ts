@@ -9,40 +9,40 @@ import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 export default {
   analyze(tag) {
     const { node } = tag;
-    const [defaultAttr] = node.attributes;
+    const [valueAttr] = node.attributes;
     assertNoParams(tag);
     assertNoBodyContent(tag);
 
     if (
       node.attributes.length > 1 ||
-      !t.isMarkoAttribute(defaultAttr) ||
-      (!defaultAttr.default && defaultAttr.name !== "value")
+      !t.isMarkoAttribute(valueAttr) ||
+      (!valueAttr.default && valueAttr.name !== "value")
     ) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'effect' tag only supports the 'default' attribute.",
+          "The 'effect' tag only supports the 'value' attribute.",
         );
     }
 
-    if (!defaultAttr) {
+    if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'effect' tag requires a default attribute.");
+        .buildCodeFrameError("The 'effect' tag requires a 'value' attribute.");
     }
 
-    (defaultAttr.value.extra ??= {}).isEffect = true;
+    (valueAttr.value.extra ??= {}).isEffect = true;
     (currentProgramPath.node.extra ??= {}).isInteractive = true;
   },
   translate: {
     exit(tag) {
       const { node } = tag;
-      const [defaultAttr] = node.attributes;
+      const [valueAttr] = node.attributes;
       const section = getSection(tag);
-      const { value } = defaultAttr;
+      const { value } = valueAttr;
       const referencedBindings = value.extra?.referencedBindings;
       if (isOutputDOM()) {
-        const { value } = defaultAttr;
+        const { value } = valueAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;
         if (
           t.isFunctionExpression(value) ||
