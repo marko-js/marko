@@ -12,6 +12,12 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
 
+    if (!valueAttr) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The 'do' tag requires a 'value' attribute.");
+    }
+
     if (
       tag.node.attributes.length > 1 ||
       !t.isMarkoAttribute(valueAttr) ||
@@ -22,12 +28,6 @@ export default {
         .buildCodeFrameError(
           "The 'do' tag only supports the 'value' attribute.",
         );
-    }
-
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'do' tag requires a 'value' attribute.");
     }
   },
   translate(tag) {

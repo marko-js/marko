@@ -11,36 +11,25 @@ export default {
     assertNoParams(tag);
     assertNoBodyContent(tag);
 
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'log' tag requires a 'value' attribute.");
-    }
-
     if (
       tag.node.attributes.length > 1 ||
-      !t.isMarkoAttribute(valueAttr) ||
-      (!valueAttr.default && valueAttr.name !== "value")
+      (tag.node.attributes.length === 1 &&
+        (!t.isMarkoAttribute(valueAttr) ||
+          (!valueAttr.default && valueAttr.name !== "value")))
     ) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'log' tag only supports the 'value' attribute.",
+          "The 'debug' tag only supports the 'value' attribute.",
         );
     }
   },
   translate(tag) {
     const section = getSection(tag);
     const [valueAttr] = tag.node.attributes;
-    const { value } = valueAttr;
-    const referencedBindings = value.extra?.referencedBindings;
+    const referencedBindings = valueAttr?.value.extra?.referencedBindings;
 
-    const statement = t.expressionStatement(
-      t.callExpression(
-        t.memberExpression(t.identifier("console"), t.identifier("log")),
-        [value],
-      ),
-    );
+    const statement = t.debuggerStatement();
 
     if (isOutputHTML()) {
       tag.insertBefore(statement);
@@ -53,9 +42,9 @@ export default {
   attributes: {},
   autocomplete: [
     {
-      description: "Use to log a value to the console.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#log",
+      description: "Debug on value change.",
+      descriptionMoreURL: "https://markojs.com/docs/core-tags/#debug",
     },
   ],
-  types: "@marko/translator-tags/tag-types/log.d.marko",
+  types: "@marko/translator-tags/tag-types/debug.d.marko",
 } as Tag;
