@@ -15,6 +15,7 @@ import IdTag from "./id";
 import ImportTag from "./import";
 import LetTag from "./let";
 import LifecycleTag from "./lifecycle";
+import LogTag from "./log";
 import NoopTag from "./noop";
 import ReturnTag from "./return";
 import StaticTag from "./static";
@@ -34,6 +35,7 @@ export default {
   "<define>": DefineTag,
   "<effect>": EffectTag,
   "<do>": DoTag,
+  "<log>": LogTag,
   "<lifecycle>": LifecycleTag,
   "<id>": IdTag,
   "<html-comment>": HTMLCommentTag,
