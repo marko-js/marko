@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.33.18
+
+### Patch Changes
+
+- [#2210](https://github.com/marko-js/marko/pull/2210) [`7d1bbdb`](https://github.com/marko-js/marko/commit/7d1bbdb9af63164448697ceb20490ee0776bc70f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - I completely messed up the release of https://github.com/marko-js/marko/pull/2205, this fixes that.
+
+- [#2210](https://github.com/marko-js/marko/pull/2210) [`7d1bbdb`](https://github.com/marko-js/marko/commit/7d1bbdb9af63164448697ceb20490ee0776bc70f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where native tags with `no-update` were not having their key serialized from the server causing a hydration diffing issue in some cases.
+
+- Updated dependencies [[`7d1bbdb`](https://github.com/marko-js/marko/commit/7d1bbdb9af63164448697ceb20490ee0776bc70f)]:
+  - @marko/translator-default@5.32.15
+  - @marko/compiler@5.35.13
+
 ## 5.33.17
 
 ### Patch Changes
