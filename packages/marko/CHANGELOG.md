@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.33.19
+
+### Patch Changes
+
+- [#2212](https://github.com/marko-js/marko/pull/2212) [`a1a91a4`](https://github.com/marko-js/marko/commit/a1a91a474853a4b6dc31217d374ee0e7e1179cec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues related to hydrating sections under a native tag with the `no-update` directive.
+
+- Updated dependencies [[`a1a91a4`](https://github.com/marko-js/marko/commit/a1a91a474853a4b6dc31217d374ee0e7e1179cec)]:
+  - @marko/compiler@5.35.14
+  - @marko/translator-default@5.32.16
+
 ## 5.33.18
 
 ### Patch Changes
