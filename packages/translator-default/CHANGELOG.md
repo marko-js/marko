@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.32.16
+
+### Patch Changes
+
+- [#2212](https://github.com/marko-js/marko/pull/2212) [`a1a91a4`](https://github.com/marko-js/marko/commit/a1a91a474853a4b6dc31217d374ee0e7e1179cec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues related to hydrating sections under a native tag with the `no-update` directive.
+
 ## 5.32.15
 
 ### Patch Changes
