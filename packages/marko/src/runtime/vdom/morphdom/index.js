@@ -596,9 +596,9 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                 curFromNodeType === TEXT_NODE &&
                 toNextSibling.___nodeType === TEXT_NODE &&
                 curFromNodeValue.startsWith(curToNodeValue) &&
-                toNextSibling.___nodeValue.startsWith(
-                  curFromNodeValue.slice(curToNodeValue.length),
-                )
+                curFromNodeValue
+                  .slice(curToNodeValue.length)
+                  .startsWith(toNextSibling.___nodeValue)
               ) {
                 // In hydrate mode we can use splitText to more efficiently handle
                 // adjacent text vdom nodes that were merged.
