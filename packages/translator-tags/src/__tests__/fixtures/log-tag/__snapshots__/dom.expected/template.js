@@ -5,9 +5,6 @@ const _output = /* @__PURE__ */_value("output", (_scope, output) => _data(_scope
 const _tagVar = /* @__PURE__ */_value("tagVar", (_scope, tagVar) => console.log(tagVar));
 const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0", _scope => _queueSource(_scope, _output, JSON.stringify(testLog)));
 const _setup = _scope => {
-  console.log = function (msg) {
-    testLog[msg] = true;
-  };
   console.log("identifier");
   console.log(staticVar);
   _queueEffect(_scope, _setup_effect);

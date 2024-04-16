@@ -34,6 +34,11 @@ type TestConfig = {
   error_runtime?: boolean;
 };
 
+type TestHooks = {
+  before?: () => void;
+  after?: () => void;
+};
+
 type Result = {
   browser: ReturnType<typeof createBrowser>;
   tracker: ReturnType<typeof createMutationTracker>;
@@ -173,6 +178,16 @@ describe("translator-tags", () => {
 
       const ssr = async () => {
         if (ssrResult) return ssrResult;
+        const hooks: TestHooks = (() => {
+          try {
+            return require(resolve("hooks.ts"));
+            // eslint-disable-next-line no-empty
+          } catch {
+            return {};
+          }
+        })();
+
+        hooks.before?.();
 
         const serverTemplate = require(manualSSR ? serverFile : templateFile)
           .default as Template;
@@ -220,6 +235,8 @@ describe("translator-tags", () => {
 
         tracker.cleanup();
 
+        hooks.after?.();
+
         return (ssrResult = { browser, tracker });
       };
 
@@ -233,6 +250,17 @@ describe("translator-tags", () => {
             extensions: {},
           }),
         });
+
+        const hooks: TestHooks = (() => {
+          try {
+            return browser.require(resolve("hooks.ts"));
+            // eslint-disable-next-line no-empty
+          } catch {
+            return {};
+          }
+        })();
+
+        hooks.before?.();
 
         const { window } = browser;
         const { document } = window;
@@ -276,6 +304,8 @@ describe("translator-tags", () => {
         }
 
         tracker.cleanup();
+
+        hooks.after?.();
 
         return (csrResult = { browser, tracker });
       };

@@ -1,11 +1,5 @@
 import testLog from "./test-log"
 
-<do() {
-  console.log = function(msg: keyof typeof testLog) {
-    testLog[msg] = true;
-  }
-}/>
-
 <log="identifier"/>
 <const/tagVar="tag var"/>
 <log=tagVar/>
