@@ -55,8 +55,8 @@ export default {
       // TODO: Check attributes?
       // if (
       //   node.attributes.length > 1 ||
-      //   !t.isMarkoAttribute(defaultAttr) ||
-      //   (!defaultAttr.default && defaultAttr.name !== "default")
+      //   !t.isMarkoAttribute(valueAttr) ||
+      //   (!valueAttr.default && valueAttr.name !== "default")
       // ) {
       //   throw tag
       //     .get("name")

@@ -18,7 +18,7 @@ export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     const { node } = tag;
     const tagVar = node.var;
-    const defaultAttr = node.attributes.find(
+    const valueAttr = node.attributes.find(
       (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
     );
 
@@ -37,8 +37,8 @@ export default {
         .buildCodeFrameError("The 'let' cannot be destructured.");
     }
 
-    const upstreamExpressionExtra = defaultAttr
-      ? (defaultAttr.value.extra ??= {})
+    const upstreamExpressionExtra = valueAttr
+      ? (valueAttr.value.extra ??= {})
       : undefined;
     trackVarReferences(
       tag,
@@ -50,7 +50,7 @@ export default {
   translate(tag) {
     const { node } = tag;
     const tagVar = node.var!;
-    const defaultAttr =
+    const valueAttr =
       node.attributes.find(
         (attr) =>
           t.isMarkoAttribute(attr) && (attr.default || attr.name === "value"),
@@ -60,7 +60,7 @@ export default {
       const section = getSection(tag);
       const binding = tagVar.extra!.binding!;
       const signal = initValue(binding);
-      const referencedBindings = defaultAttr.value.extra?.referencedBindings;
+      const referencedBindings = valueAttr.value.extra?.referencedBindings;
       const isSetup = !referencedBindings;
 
       if (!isSetup) {
@@ -95,10 +95,10 @@ export default {
               return signal.hasDownstreamIntersections();
             },
           },
-          defaultAttr.value,
+          valueAttr.value,
         );
       } else {
-        addValue(section, referencedBindings, signal, defaultAttr.value);
+        addValue(section, referencedBindings, signal, valueAttr.value);
       }
 
       registerAssignmentGenerator(
@@ -107,7 +107,7 @@ export default {
           queueSource(signal, value, getSection(assignment)),
       );
     } else {
-      translateVar(tag, defaultAttr.value);
+      translateVar(tag, valueAttr.value);
     }
 
     tag.remove();

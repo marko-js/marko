@@ -7,12 +7,12 @@ export default {
   translate: {
     enter(tag) {
       const { node } = tag;
-      const [defaultAttr] = node.attributes;
+      const [valueAttr] = node.attributes;
 
       assertNoVar(tag);
       assertNoParams(tag);
 
-      if (!t.isMarkoAttribute(defaultAttr) || !defaultAttr.default) {
+      if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
         throw tag
           .get("name")
           .buildCodeFrameError(
