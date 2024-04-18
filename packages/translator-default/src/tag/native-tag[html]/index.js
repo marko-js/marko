@@ -92,6 +92,7 @@ export default function (path, isNullable) {
   if (isHTML) {
     if (
       (!meta.hasStatefulTagParams &&
+        !meta.hasFunctionEventHandlers &&
         (meta.hasComponentBrowser || !meta.hasComponent)) ||
       isPreserved(path)
     ) {

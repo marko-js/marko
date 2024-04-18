@@ -49,8 +49,8 @@ export const analyze = {
     exit(program) {
       const { file } = program.hub;
       const meta = file.metadata.marko;
-      const { styleFile, packageFile, componentBrowserFile } =
-        getComponentFiles(program);
+      const componentFiles = getComponentFiles(program);
+      const { styleFile, packageFile, componentBrowserFile } = componentFiles;
 
       if (packageFile) {
         meta.deps.unshift(`package: ${packageFile}`);
@@ -62,8 +62,16 @@ export const analyze = {
 
       if (meta.hasComponentBrowser) {
         meta.component = componentBrowserFile;
-      } else if (meta.hasComponent || meta.hasStatefulTagParams) {
+      } else if (
+        meta.hasComponent ||
+        meta.hasStatefulTagParams ||
+        meta.hasFunctionEventHandlers
+      ) {
         meta.component = file.opts.filename;
+      } else if (meta.hasStringEventHandlers) {
+        meta.component = componentFiles.componentBrowserFile =
+          "marko/src/runtime/helpers/empty-component.js";
+        meta.hasComponentBrowser = true;
       }
 
       meta.component =
@@ -114,6 +122,26 @@ export const analyze = {
       }
     }
 
+    if (!meta.hasFunctionEventHandlers || !meta.hasStringEventHandlers) {
+      for (const attr of tag.node.attributes) {
+        if (
+          t.isMarkoAttribute(attr) &&
+          attr.arguments &&
+          /^on[-A-Z]/.test(attr.name)
+        ) {
+          if (
+            attr.arguments.length >= 1 &&
+            attr.arguments[0].type === "StringLiteral"
+          ) {
+            meta.hasStringEventHandlers = true;
+          } else {
+            meta.hasFunctionEventHandlers = true;
+          }
+          break;
+        }
+      }
+    }
+
     if (
       meta.hasStatefulTagParams ||
       isNativeTag(tag) ||
@@ -138,6 +166,7 @@ export const analyze = {
     meta.hasStatefulTagParams =
       childMeta &&
       (childMeta.hasStatefulTagParams ||
+        childMeta.hasFunctionEventHandlers ||
         (childMeta.hasComponent && !childMeta.hasComponentBrowser));
   },
   ImportDeclaration: {

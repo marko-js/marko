@@ -1,7 +1,7 @@
 import path from "path";
 import { escapeRegExp } from "./escape-regexp";
 
-const COMPONENT_FILES_KEY = Symbol();
+const COMPONENT_FILES_KEY = "___marko_component_files___";
 
 export default function getComponentFiles({ hub: { file } }) {
   const meta = file.metadata.marko;

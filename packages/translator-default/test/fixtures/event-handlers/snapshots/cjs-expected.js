@@ -27,6 +27,6 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   (0, _renderTag.default)(_customTag2.default, {}, out, _componentDef, "5", [["camelcasedEvent", "handle", false]]);
 }, {
   t: _marko_componentType,
-  i: true,
+  s: true,
   d: true
 }, _marko_component);
