@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.33.0
+
+### Minor Changes
+
+- [#2214](https://github.com/marko-js/marko/pull/2214) [`2d0a566`](https://github.com/marko-js/marko/commit/2d0a566a569e0d8caab2fd9abc960e6810e29b56) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Using event handlers now causes a template to become an implicit component or split component (depending on if a string event handler is used).
+
 ## 5.32.16
 
 ### Patch Changes
