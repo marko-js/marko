@@ -11,7 +11,7 @@ _marko_registerComponent(_marko_componentType, () => _marko_template);
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   out.n(_marko_node, _component);
-  out.be("div", null, "1", _component, null, 0);
+  out.be("div", null, "7", _component, null, 0);
   scriptletA();
   scriptletB();
   out.t("Hello ", _component);

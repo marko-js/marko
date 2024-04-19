@@ -8,7 +8,7 @@ import {
 import { types as t } from "@marko/compiler";
 import { decode } from "he";
 import translateAttributes from "../tag/native-tag[vdom]/attributes";
-import { hasUserKey } from "./key-manager";
+import { getKeyManager, hasUserKey } from "./key-manager";
 import write from "./vdom-out-write";
 
 const skipDirectives = new Set([
@@ -40,6 +40,7 @@ const mergeStaticCreateVisitor = {
     );
   },
   MarkoTag(path, state) {
+    getKeyManager(path).resolveKey(path);
     state.currentRoot = t.callExpression(
       t.memberExpression(state.currentRoot, t.identifier("e")),
       getConstElementArgs(path),
