@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.34.1
+
+### Patch Changes
+
+- [#2217](https://github.com/marko-js/marko/pull/2217) [`4fc4614`](https://github.com/marko-js/marko/commit/4fc46149ae046dd0fac0e7cc7e904b188f616f7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where element keys could be different because of hoisted const elements not always being keyed. This could cause a hydration issue since the server and client compilations would not agree on the keys.
+
+- Updated dependencies [[`4fc4614`](https://github.com/marko-js/marko/commit/4fc46149ae046dd0fac0e7cc7e904b188f616f7f)]:
+  - @marko/translator-default@5.33.1
+  - @marko/compiler@5.36.1
+
 ## 5.34.0
 
 ### Minor Changes
