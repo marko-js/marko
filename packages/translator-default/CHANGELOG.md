@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.0
+
+### Major Changes
+
+- [#2219](https://github.com/marko-js/marko/pull/2219) [`0ee141c`](https://github.com/marko-js/marko/commit/0ee141c525899dcccd0ffa69b8012c8c23ed5d4f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update runtime entry files
+
 ## 5.33.1
 
 ### Patch Changes

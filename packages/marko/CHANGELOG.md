@@ -1,5 +1,12 @@
 # Change Log
 
+## 5.34.2
+
+### Patch Changes
+
+- Updated dependencies [[`0ee141c`](https://github.com/marko-js/marko/commit/0ee141c525899dcccd0ffa69b8012c8c23ed5d4f)]:
+  - @marko/translator-default@6.0.0
+
 ## 5.34.1
 
 ### Patch Changes
