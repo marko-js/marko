@@ -1,6 +1,7 @@
 import { taglibId } from "../util/is-core-tag";
 import FlushHereAndAfter from "./__flush_here_and_after__";
 import AttrsTag from "./attrs";
+import ClientTag from "./client";
 import ElseTag from "./condition/else";
 import ElseIfTag from "./condition/else-if";
 import IfTag from "./condition/if";
@@ -19,6 +20,7 @@ import LifecycleTag from "./lifecycle";
 import LogTag from "./log";
 import NoopTag from "./noop";
 import ReturnTag from "./return";
+import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
 
@@ -47,5 +49,7 @@ export default {
   "<init-widgets>": NoopTag,
   "<init-components>": NoopTag,
   "<static>": StaticTag,
+  "<server>": ServerTag,
+  "<client>": ClientTag,
   "<__flush_here_and_after__>": FlushHereAndAfter,
 };

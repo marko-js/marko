@@ -15,7 +15,9 @@ export default {
         if (node.static) return; // handled in program exit for html currently.
         scriptlet.replaceWithMultiple(node.body);
       } else {
-        if (node.static) {
+        if (node.location && node.location !== "client") {
+          scriptlet.remove();
+        } else if (node.static) {
           scriptlet.replaceWithMultiple(node.body);
         } else {
           addStatement(

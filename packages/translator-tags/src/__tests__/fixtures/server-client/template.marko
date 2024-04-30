@@ -1,0 +1,8 @@
+server const server_x = 1;
+client const client_x = 2;
+static const x = typeof server_x === "undefined" ? client_x : server_x;
+<div>
+  <span>
+    ${x}
+  </span>
+</div>
