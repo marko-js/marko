@@ -256,7 +256,7 @@ function trackReference(
 
   // TODO: remove
   if (fnRoot) {
-    const name = (fnRoot.node as t.FunctionExpression).id?.name;
+    let name = (fnRoot.node as t.FunctionExpression).id?.name;
     let fnExtra = exprExtra;
 
     if (fnRoot !== exprRoot) {
@@ -269,10 +269,20 @@ function trackReference(
     }
 
     if (!name) {
-      if (markoRoot.isMarkoAttribute() && !markoRoot.node.default) {
-        fnExtra.name = markoRoot.node.name;
+      if (markoRoot.isMarkoAttribute()) {
+        name = markoRoot.node.default
+          ? t.toIdentifier(
+              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
+                "name",
+              ),
+            )
+          : markoRoot.node.name;
+      } else {
+        name = "anonymous";
       }
     }
+
+    fnExtra.name = name;
   }
 }
 

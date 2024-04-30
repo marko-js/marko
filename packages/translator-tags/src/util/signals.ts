@@ -635,7 +635,7 @@ export function writeSignals(section: Section) {
 
     if (signal.register) {
       value = callRuntime(
-        "register",
+        "registerBoundSignal",
         t.stringLiteral(
           getResumeRegisterId(section, signal.referencedBindings),
         ),
@@ -847,42 +847,35 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  const referencedBindings = extra?.referencedBindings;
-  const program = fn.hub.file.path;
-  const functionIdentifier = program.scope.generateUidIdentifier(extra?.name);
+  if (!extra) return;
+  const { name, referencedBindings } = extra;
+  const fnId = fn.hub.file.path.scope.generateUidIdentifier(name);
 
-  if (referencedBindings) {
-    if (node.body.type !== "BlockStatement") {
-      node.body = t.blockStatement([t.returnStatement(node.body)]);
-    }
-
-    node.body.body.unshift(
+  root
+    .insertBefore(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(section, referencedBindings),
-          scopeIdentifier,
+          fnId,
+          t.arrowFunctionExpression(
+            [scopeIdentifier],
+            referencedBindings
+              ? t.blockStatement([
+                  t.variableDeclaration("const", [
+                    t.variableDeclarator(
+                      createScopeReadPattern(section, referencedBindings),
+                      scopeIdentifier,
+                    ),
+                  ]),
+                  t.returnStatement(node),
+                ])
+              : node,
+          ),
         ),
       ]),
-    );
-  }
+    )[0]
+    .skip();
 
-  let parent: t.NodePath | null = fn.parentPath;
-  while (parent) {
-    if (parent.isFunction()) return;
-    if (parent === root) return;
-    parent = parent.parentPath;
-  }
-
-  root.insertBefore(
-    t.variableDeclaration("const", [
-      t.variableDeclarator(functionIdentifier, node),
-    ]),
-  );
-
-  node.params.unshift(scopeIdentifier);
-  fn.replaceWith(
-    callRuntime("bindFunction", scopeIdentifier, functionIdentifier),
-  );
+  fn.replaceWith(t.callExpression(fnId, [scopeIdentifier]))[0].skip();
 }
 
 export function getSetup(section: Section) {

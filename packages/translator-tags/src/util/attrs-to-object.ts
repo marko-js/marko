@@ -52,37 +52,42 @@ function domFunctionVisit(
   const extra = node.extra;
   if (!extra) return;
 
+  const { referencedBindings } = extra;
   const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
-  if (extra.referencedBindings) {
-    if (node.body.type !== "BlockStatement") {
-      node.body = t.blockStatement([t.returnStatement(node.body)]);
-    }
-
-    node.body.body.unshift(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          createScopeReadPattern(state.section, extra.referencedBindings),
-          scopeIdentifier,
-        ),
-      ]),
-    );
-  }
-
-  node.params.unshift(scopeIdentifier);
   currentProgramPath
     .pushContainer(
       "body",
       t.variableDeclaration("const", [
         t.variableDeclarator(
           fnId,
-          callRuntime("register", t.stringLiteral(extra.registerId!), node),
+          callRuntime(
+            "register",
+            t.stringLiteral(extra.registerId!),
+            t.arrowFunctionExpression(
+              [scopeIdentifier],
+              referencedBindings
+                ? t.blockStatement([
+                    t.variableDeclaration("const", [
+                      t.variableDeclarator(
+                        createScopeReadPattern(
+                          state.section,
+                          referencedBindings,
+                        ),
+                        scopeIdentifier,
+                      ),
+                    ]),
+                    t.returnStatement(node),
+                  ])
+                : node,
+            ),
+          ),
         ),
       ]),
     )[0]
     .skip();
 
-  fn.replaceWith(callRuntime("bindFunction", scopeIdentifier, fnId))[0].skip();
+  fn.replaceWith(t.callExpression(fnId, [scopeIdentifier]))[0].skip();
 }
 
 export default function attrsToObject(

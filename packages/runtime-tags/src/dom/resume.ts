@@ -1,30 +1,43 @@
 import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
-import { bindFunction, bindRenderer } from "./scope";
+import { bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredObjects = new Map<
-  string,
-  RegisteredFn | ValueSignal | Renderer
->();
+const registeredValues = new Map<string, unknown>();
 const doc = document;
 
 export function register<T>(id: string, obj: T): T {
-  registeredObjects.set(id, obj as any);
+  registeredValues.set(id, obj);
   return obj;
 }
 
-export function getRegisteredWithScope(registryId: string, scope: Scope) {
-  const obj = registeredObjects.get(registryId);
-  if (!scope) {
-    return obj;
-  } else if ((obj as Renderer).___template) {
-    return bindRenderer(scope, obj as Renderer);
-  } else {
-    return bindFunction(scope, obj as RegisteredFn);
+export function registerBoundSignal<T extends ValueSignal>(
+  id: string,
+  signal: T,
+): T {
+  registeredValues.set(
+    id,
+    (scope: Scope) => (value: unknown, clean?: boolean | 1) =>
+      signal(scope, value, clean),
+  );
+  return signal;
+}
+
+export function getRegisteredWithScope(registryId: string, scope?: Scope) {
+  const val = registeredValues.get(registryId);
+  if (scope) {
+    if (val) {
+      if ((val as Renderer).___template) {
+        return bindRenderer(scope, val as Renderer);
+      }
+
+      return (val as RegisteredFn)(scope);
+    }
   }
+
+  return val;
 }
 
 export const scopeLookup = {} as Record<number | string, Scope>;
@@ -155,7 +168,7 @@ export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      (registeredObjects.get(calls[i + 1] as string) as RegisteredFn)(
+      (registeredValues.get(calls[i + 1] as string) as RegisteredFn)(
         scopeLookup[calls[i] as number]!,
       );
     }
