@@ -15,7 +15,7 @@ export default {
         if (node.static) return; // handled in program exit for html currently.
         scriptlet.replaceWithMultiple(node.body);
       } else {
-        if (node.location && node.location !== "client") {
+        if (node.target && node.target !== "client") {
           scriptlet.remove();
         } else if (node.static) {
           scriptlet.replaceWithMultiple(node.body);

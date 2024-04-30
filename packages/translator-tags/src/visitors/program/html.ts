@@ -28,7 +28,7 @@ export default {
           renderContent.push(child.node);
           child.remove();
         } else if (child.isMarkoScriptlet()) {
-          if (child.node.location && child.node.location !== "server") {
+          if (child.node.target && child.node.target !== "server") {
             child.remove();
           } else {
             child.replaceWithMultiple(child.node.body);

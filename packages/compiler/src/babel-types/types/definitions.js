@@ -76,7 +76,7 @@ const MarkoDefinitions = {
 
   MarkoScriptlet: {
     aliases: ["Marko", "Statement"],
-    builder: ["body", "static", "location"],
+    builder: ["body", "static", "target"],
     visitor: ["body"],
     fields: {
       body: {
@@ -86,7 +86,7 @@ const MarkoDefinitions = {
         validate: assertValueType("boolean"),
         default: false,
       },
-      location: {
+      target: {
         validate: assertValueType("string"),
         optional: true,
       },
