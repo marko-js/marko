@@ -324,7 +324,7 @@ declare global {
       Return extends Element,
     > {
       input: Input;
-      return: () => Return;
+      return: { value: () => Return };
     }
     export interface NativeTags {
       [name: string]: NativeTag<Record<string, any>, Element>;
