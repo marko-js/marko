@@ -49,7 +49,7 @@ Object.assign(Printer.prototype, {
       this.token("\n");
     }
 
-    this.token(`${node.static ? "static" : "$"} `);
+    this.token(`${node.static ? node.target ?? "static" : "$"} `);
 
     if (
       node.body.length === 1 &&
