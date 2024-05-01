@@ -14,12 +14,12 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName
 const _setup = _scope => {
   _count(_scope, 0);
 };
-export const args = (_scope, _destructure, _clean) => {
+export const _args_ = (_scope, _destructure, _clean) => {
   let input;
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export const template = "<button id=tags> </button><div><!></div>";
-export const walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko");
+export const _template_ = "<button id=tags> </button><div><!></div>";
+export const _walks_ = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko");

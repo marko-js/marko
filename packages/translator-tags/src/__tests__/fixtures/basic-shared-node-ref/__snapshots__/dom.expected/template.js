@@ -32,7 +32,7 @@ const _setup = _scope => {
   _open(_scope, true);
   _list(_scope, [1, 2, 3]);
 };
-export const template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
-export const walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko");
+export const _template_ = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
+export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko");

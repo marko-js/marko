@@ -237,24 +237,36 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const { file } = tag.hub;
   const tagName = t.isIdentifier(node.name)
     ? node.name.name
-    : (node.name as t.StringLiteral).value;
+    : t.isStringLiteral(node.name)
+      ? node.name.value
+      : "tag";
   const relativePath = getTagRelativePath(tag);
   const childFile = loadFileForTag(tag)!;
   const childProgram = childFile.ast.program;
-  const tagIdentifier = importNamed(file, relativePath, "setup", tagName);
+  const tagIdentifier = importNamed(
+    file,
+    relativePath,
+    childProgram.extra.domExports!.setup,
+    tagName,
+  );
   let tagAttrsIdentifier: t.Identifier | undefined;
   if (childProgram.params[0].extra?.binding?.downstreamExpressions.size) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,
-      "args",
+      childProgram.extra.domExports!.args,
       `${tagName}_args`,
     );
   }
-  write`${importNamed(file, relativePath, "template", `${tagName}_template`)}`;
+  write`${importNamed(file, relativePath, childProgram.extra.domExports!.template, `${tagName}_template`)}`;
   walks.injectWalks(
     tag,
-    importNamed(file, relativePath, "walks", `${tagName}_walks`),
+    importNamed(
+      file,
+      relativePath,
+      childProgram.extra.domExports!.walks,
+      `${tagName}_walks`,
+    ),
   );
 
   let attrsObject = attrsToObject(tag); // TODO: need to build each attribute individually

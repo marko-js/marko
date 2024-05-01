@@ -20,7 +20,7 @@ const _arrA = /* @__PURE__ */_value("arrA", (_scope, arrA) => {
 const _setup = _scope => {
   _arrA(_scope, [1, 2, 3]);
 };
-export const template = "<div></div><div><!><div></div></div>";
-export const walks = /* get, over(1), next(1), replace, out(1) */" bD%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-tag-siblings/template.marko");
+export const _template_ = "<div></div><div><!><div></div></div>";
+export const _walks_ = /* get, over(1), next(1), replace, out(1) */" bD%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-tag-siblings/template.marko");

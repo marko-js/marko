@@ -5,12 +5,12 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _attr(_scope["#div/0"], "bar", `a ${input.bar} b`);
   _attr(_scope["#div/0"], "nested", `a ${input.foo + ` nested ${input.bar}`} b`);
 });
-export const args = (_scope, _destructure, _clean) => {
+export const _args_ = (_scope, _destructure, _clean) => {
   let input;
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export const template = "<div></div>";
-export const walks = /* get, over(1) */" b";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/attr-escape/template.marko");
+export const _template_ = "<div></div>";
+export const _walks_ = /* get, over(1) */" b";
+export const _setup_ = function () {};
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/attr-escape/template.marko");

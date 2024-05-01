@@ -30,12 +30,12 @@ const _setup = _scope => {
   _x(_scope, 1);
   _y(_scope, 10);
 };
-export const args = (_scope, _destructure, _clean) => {
+export const _args_ = (_scope, _destructure, _clean) => {
   let input;
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export const template = "<button class=inc><!>,<!></button><!><!>";
-export const walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");
+export const _template_ = "<button class=inc><!>,<!></button><!><!>";
+export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");

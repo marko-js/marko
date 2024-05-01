@@ -19,12 +19,12 @@ const _input = /* @__PURE__ */_value("input", (_scope, input) => {
   _for(_scope, [input.children]);
   _for2(_scope, [input.children]);
 });
-export const args = (_scope, _destructure3, _clean) => {
+export const _args_ = (_scope, _destructure3, _clean) => {
   let input;
   if (!_clean) [input] = _destructure3;
   _input(_scope, input, _clean);
 };
-export const template = "<div><!><!></div>";
-export const walks = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko");
+export const _template_ = "<div><!><!></div>";
+export const _walks_ = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
+export const _setup_ = function () {};
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko");

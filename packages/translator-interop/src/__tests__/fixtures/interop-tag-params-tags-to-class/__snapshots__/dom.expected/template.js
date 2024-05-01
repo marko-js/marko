@@ -38,7 +38,7 @@ const _setup = _scope => {
   _multiplier(_scope, 1);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody);
 };
-export const template = "<!><!><!>";
-export const walks = /* replace, over(1) */"D%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");

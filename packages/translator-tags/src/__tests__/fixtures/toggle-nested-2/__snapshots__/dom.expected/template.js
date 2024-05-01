@@ -46,7 +46,7 @@ const _setup = _scope => {
   _inner(_scope, true);
   _count(_scope, 0);
 };
-export const template = "<div><button id=outer></button><!></div>";
-export const walks = /* next(1), get, over(1), replace, out(1) */"D b%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko");
+export const _template_ = "<div><button id=outer></button><!></div>";
+export const _walks_ = /* next(1), get, over(1), replace, out(1) */"D b%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko");

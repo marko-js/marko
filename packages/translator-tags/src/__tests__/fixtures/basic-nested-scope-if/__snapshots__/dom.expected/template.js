@@ -19,7 +19,7 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => 
 const _setup = _scope => {
   _clickCount(_scope, 0);
 };
-export const template = "<div><!></div>";
-export const walks = /* next(1), replace, out(1) */"D%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko");
+export const _template_ = "<div><!></div>";
+export const _walks_ = /* next(1), replace, out(1) */"D%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko");

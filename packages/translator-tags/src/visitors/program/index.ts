@@ -27,6 +27,18 @@ const previousProgramPath: WeakMap<
   t.NodePath<t.Program> | undefined
 > = new WeakMap();
 
+declare module "@marko/compiler/dist/types" {
+  export interface ProgramExtra {
+    domExports?: {
+      template: string;
+      walks: string;
+      setup: string;
+      args: string;
+      closures: string;
+    };
+  }
+}
+
 export default {
   migrate: {
     enter(program: t.NodePath<t.Program>) {
@@ -57,6 +69,15 @@ export default {
         );
         trackReferencesForBinding(inputBinding);
       }
+      const { extra } = program.node;
+      const { scope } = program;
+      extra.domExports = {
+        template: scope.generateUid("template_"),
+        walks: scope.generateUid("walks_"),
+        setup: scope.generateUid("setup_"),
+        args: scope.generateUid("args_"),
+        closures: scope.generateUid("closures_"),
+      };
     },
 
     exit() {

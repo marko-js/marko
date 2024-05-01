@@ -13,7 +13,7 @@ const _disabled = /* @__PURE__ */_value("disabled", (_scope, disabled) => {
 const _setup = _scope => {
   _disabled(_scope, true);
 };
-export const template = "<input><button> </button>";
-export const walks = /* get, over(1), get, next(1), get, out(1) */" b D l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko");
+export const _template_ = "<input><button> </button>";
+export const _walks_ = /* get, over(1), get, next(1), get, out(1) */" b D l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko");

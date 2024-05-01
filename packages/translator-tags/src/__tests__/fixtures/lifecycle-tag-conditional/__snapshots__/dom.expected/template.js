@@ -47,7 +47,7 @@ const _setup = _scope => {
   _x(_scope, 0);
   _show(_scope, true);
 };
-export const template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
-export const walks = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");
+export const _template_ = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
+export const _walks_ = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

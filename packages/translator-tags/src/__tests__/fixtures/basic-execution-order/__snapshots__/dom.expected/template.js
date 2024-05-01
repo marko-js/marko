@@ -15,7 +15,7 @@ const _setup = _scope => {
   });
   _show(_scope, true);
 };
-export const template = "<button>hide</button><!><!>";
-export const walks = /* get, over(1), replace, over(1) */" b%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko");
+export const _template_ = "<button>hide</button><!><!>";
+export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko");

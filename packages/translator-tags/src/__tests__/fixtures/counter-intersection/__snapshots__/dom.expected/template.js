@@ -21,7 +21,7 @@ const _setup = _scope => {
   _a(_scope, 0);
   _b(_scope, 0);
 };
-export const template = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
-export const walks = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko");
+export const _template_ = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
+export const _walks_ = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko");

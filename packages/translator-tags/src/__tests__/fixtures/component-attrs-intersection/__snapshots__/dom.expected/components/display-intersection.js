@@ -19,12 +19,12 @@ const _input = /* @__PURE__ */_value2("input", (_scope, input) => _destructure2(
 const _setup = _scope => {
   _dummy(_scope, {});
 };
-export const args = (_scope, _destructure3, _clean) => {
+export const _args_ = (_scope, _destructure3, _clean) => {
   let input;
   if (!_clean) [input] = _destructure3;
   _input(_scope, input, _clean);
 };
-export const template = "<div> </div>";
-export const walks = /* next(1), get, out(1) */"D l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");
+export const _template_ = "<div> </div>";
+export const _walks_ = /* next(1), get, out(1) */"D l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");

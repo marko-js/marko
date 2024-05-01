@@ -23,7 +23,7 @@ const _setup = _scope => {
   _x(_scope, 1);
   _dynamicTagName(_scope, tags[0]);
 };
-export const template = "<!><button>Count: <!></button><!><!>";
-export const walks = /* get, next(1), over(1), replace, out(1), replace, over(1) */"D Db%l%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko");
+export const _template_ = "<!><button>Count: <!></button><!><!>";
+export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1) */"D Db%l%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko");
